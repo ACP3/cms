@@ -9,6 +9,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@contact.model.repository.data_grid_repository'
+      - '@core.data_grid.data_grid'
 
   contact.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Settings

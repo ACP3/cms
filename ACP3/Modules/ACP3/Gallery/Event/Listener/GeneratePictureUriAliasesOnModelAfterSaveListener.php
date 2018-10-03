@@ -35,39 +35,27 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
     /**
      * UpdateUriAliasesOnModelAfterSaveListener constructor.
      *
-     * @param Gallery\Model\Repository\PictureRepository $pictureRepository
+     * @param Gallery\Model\Repository\PictureRepository         $pictureRepository
+     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases|null    $aliases
+     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null $uriAliasManager
+     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements|null  $metaStatements
      */
-    public function __construct(Gallery\Model\Repository\PictureRepository $pictureRepository)
-    {
+    public function __construct(
+        Gallery\Model\Repository\PictureRepository $pictureRepository,
+        ?Aliases $aliases = null,
+        ?UriAliasManager $uriAliasManager = null,
+        ?MetaStatements $metaStatements = null
+    ) {
         $this->pictureRepository = $pictureRepository;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases $aliases
-     */
-    public function setAliases(Aliases $aliases)
-    {
         $this->aliases = $aliases;
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
-     */
-    public function setMetaStatements(MetaStatements $metaStatements)
-    {
+        $this->uriAliasManager = $uriAliasManager;
         $this->metaStatements = $metaStatements;
     }
 
     /**
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager $uriAliasManager
-     */
-    public function setUriAliasManager(UriAliasManager $uriAliasManager)
-    {
-        $this->uriAliasManager = $uriAliasManager;
-    }
-
-    /**
      * @param ModelSaveEvent $event
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function __invoke(ModelSaveEvent $event)
     {
@@ -112,12 +100,12 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
         $rawData = $event->getRawData();
 
         return isset(
-            $rawData['alias'],
-            $rawData['seo_title'],
-            $rawData['seo_keywords'],
-            $rawData['seo_description'],
-            $rawData['seo_robots'],
-            $rawData['seo_uri_pattern']
-        ) && $rawData['seo_uri_pattern'] === Gallery\Helpers::URL_KEY_PATTERN_GALLERY;
+                $rawData['alias'],
+                $rawData['seo_title'],
+                $rawData['seo_keywords'],
+                $rawData['seo_description'],
+                $rawData['seo_robots'],
+                $rawData['seo_uri_pattern']
+            ) && $rawData['seo_uri_pattern'] === Gallery\Helpers::URL_KEY_PATTERN_GALLERY;
     }
 }

@@ -92,6 +92,7 @@ deploy:generate-artifact:
     name: "release-${CI_COMMIT_TAG}"
     paths:
       - ACP3
+      - bin
       - build/gulp
       - designs
       - installation

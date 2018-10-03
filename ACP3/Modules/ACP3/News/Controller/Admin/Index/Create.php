@@ -10,12 +10,9 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
-use ACP3\Modules\ACP3\News\Controller\CommentsHelperTrait;
 
 class Create extends AbstractFormAction
 {
-    use CommentsHelperTrait;
-
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
@@ -56,6 +53,8 @@ class Create extends AbstractFormAction
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -72,7 +71,7 @@ class Create extends AbstractFormAction
             'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
             'categories' => $this->categoriesHelpers->categoriesList(
                 News\Installer\Schema::MODULE_NAME,
-                '',
+                null,
                 true
             ),
             'options' => $this->fetchOptions(0, 0),
@@ -86,6 +85,8 @@ class Create extends AbstractFormAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

@@ -12,6 +12,7 @@
         <item key="details">Bilddetails</item>
         <item key="filename">Dateiname</item>
         <item key="gallery">Fotogalerien</item>
+        <item key="gallery_pictures">Fotogaleriebilder</item>
         <item key="image_dimensions">Bildabmessungen</item>
         <item key="image_filesize">Maximale Dateigröße des Bildes</item>
         <item key="image_height">Maximal anzuzeigende Bildhöhe</item>

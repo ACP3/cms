@@ -8,18 +8,22 @@
 namespace ACP3\Modules\ACP3\Categories\Model\Repository;
 
 use ACP3\Core;
+use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 
-class CategoryRepository extends Core\Model\Repository\AbstractRepository
+class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetRepository implements BlockAwareNestedSetRepositoryInterface
 {
     const TABLE_NAME = 'categories';
+    const BLOCK_COLUMN_NAME = 'module_id';
 
     /**
      * @param int $categoryId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists($categoryId)
+    public function resultExists(int $categoryId)
     {
         return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = ?", [$categoryId]) > 0;
     }
@@ -30,8 +34,10 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      * @param int    $categoryId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultIsDuplicate($title, $moduleId, $categoryId)
+    public function resultIsDuplicate(string $title, int $moduleId, int $categoryId)
     {
         return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?", [$title, $moduleId, $categoryId]) > 0;
     }
@@ -40,6 +46,8 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      * @param int $categoryId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getOneById($categoryId)
     {
@@ -50,8 +58,10 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      * @param int $categoryId
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getTitleById($categoryId)
+    public function getTitleById(int $categoryId)
     {
         return $this->db->fetchColumn("SELECT `title` FROM {$this->getTableName()} WHERE id = ?", [$categoryId]);
     }
@@ -60,11 +70,13 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      * @param string $moduleName
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllByModuleName($moduleName)
+    public function getAllByModuleName(string $moduleName)
     {
         return $this->db->fetchAll(
-            'SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE m.name = ? ORDER BY c.title ASC',
+            'SELECT c.*, COUNT(*)-1 AS `level`, ROUND((c.right_id - c.left_id - 1) / 2) AS children FROM ' . $this->getTableName() . ' AS main, ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE m.name = ? AND c.left_id BETWEEN main.left_id AND main.right_id GROUP BY c.left_id ORDER BY c.left_id ASC',
             [$moduleName]
         );
     }
@@ -73,8 +85,10 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      * @param int $categoryId
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getModuleNameFromCategoryId($categoryId)
+    public function getModuleNameFromCategoryId(int $categoryId)
     {
         return $this->db->fetchColumn(
             'SELECT m.name FROM ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m JOIN ' . $this->getTableName() . ' AS c ON(m.id = c.module_id) WHERE c.id = ?',
@@ -86,8 +100,10 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      * @param int $categoryId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getModuleIdByCategoryId($categoryId)
+    public function getModuleIdByCategoryId(int $categoryId)
     {
         return (int) $this->db->fetchColumn("SELECT `module_id` FROM {$this->getTableName()} WHERE `id` = ?", [$categoryId]);
     }
@@ -96,8 +112,10 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      * @param int $categoryId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getCategoryDeleteInfosById($categoryId)
+    public function getCategoryDeleteInfosById(int $categoryId)
     {
         return $this->db->fetchAssoc(
             'SELECT c.picture, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?',
@@ -110,12 +128,101 @@ class CategoryRepository extends Core\Model\Repository\AbstractRepository
      * @param string $moduleName
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByTitleAndModule($title, $moduleName)
+    public function getOneByTitleAndModule(string $title, string $moduleName)
     {
         return $this->db->fetchAssoc(
             'SELECT c.* FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.title = ? AND m.name = ?',
             [$title, $moduleName]
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function fetchAllSortedByBlock()
+    {
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY `module_id` ASC");
+    }
+
+    /**
+     * @param int $categoryId
+     *
+     * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getAllSiblingsAsId(int $categoryId)
+    {
+        $categoryIds = [];
+        foreach ($this->fetchNodeWithSiblings($categoryId) as $category) {
+            $categoryIds[] = $category['id'];
+        }
+
+        return $categoryIds;
+    }
+
+    /**
+     * @param int $categoryId
+     *
+     * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getAllDirectSiblings(int $categoryId)
+    {
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()} WHERE `parent_id` = ?",
+            [$categoryId]
+        );
+    }
+
+    /**
+     * @param int $moduleId
+     *
+     * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getAllRootCategoriesByModuleId(int $moduleId)
+    {
+        return $this->db->fetchAll(
+            "SELECT * FROM {$this->getTableName()} WHERE `module_id` = ? AND `parent_id` = ?",
+            [$moduleId, 0]
+        );
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getAllRootCategoriesByModuleName(string $moduleName)
+    {
+        return $this->db->fetchAll(
+            "SELECT c.* FROM {$this->getTableName()} AS c JOIN {$this->getTableName(ModulesRepository::TABLE_NAME)} AS m ON(m.id = c.module_id) WHERE m.`name` = ? AND c.`parent_id` = ?",
+            [$moduleName, 0]
+        );
+    }
+
+    /**
+     * @param int $moduleId
+     *
+     * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getAllByModuleId(int $moduleId)
+    {
+        return $this->db->fetchAll(
+            'SELECT c.*, COUNT(*)-1 AS `level`, ROUND((c.right_id - c.left_id - 1) / 2) AS children FROM ' . $this->getTableName() . ' AS main, ' . $this->getTableName() . ' AS c WHERE c.module_id = ? AND c.left_id BETWEEN main.left_id AND main.right_id GROUP BY c.left_id ORDER BY c.left_id ASC',
+            [$moduleId]
         );
     }
 }

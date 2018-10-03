@@ -35,6 +35,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@emoticons.model.data_grid_repository'
+      - '@core.data_grid.data_grid'
 
   emoticons.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Settings

@@ -14,23 +14,23 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
+     * @var \ACP3\Core\DataGrid\DataGrid
      */
-    protected $commentRepository;
-
+    private $dataGrid;
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsByModuleDataGridRepository
      */
+    private $dataGridRepository;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Comments\Model\Repository\CommentRepository $commentRepository
+        Comments\Model\Repository\CommentsByModuleDataGridRepository $dataGridRepository,
+        Core\DataGrid\DataGrid $dataGrid
     ) {
         parent::__construct($context);
 
-        $this->commentRepository = $commentRepository;
+        $this->dataGrid = $dataGrid;
+        $this->dataGridRepository = $dataGridRepository;
     }
 
     /**
@@ -38,38 +38,34 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        /** @var Core\Helpers\DataGrid $dataGrid */
-        $dataGrid = $this->get('core.helpers.data_grid');
-        $dataGrid
-            ->setResults($this->commentRepository->getCommentsGroupedByModule())
+        $input = (new Core\DataGrid\Input())
+            ->setUseAjax(true)
+            ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#comments-data-grid')
             ->setResourcePathDelete('admin/comments/index/delete')
             ->setResourcePathEdit('admin/comments/details/index');
 
-        $this->addDataGridColumns($dataGrid);
+        $this->addDataGridColumns($input);
 
-        return [
-            'grid' => $dataGrid->render(),
-            'show_mass_delete_button' => $dataGrid->countDbResults() > 0,
-        ];
+        return $this->dataGrid->render($input);
     }
 
     /**
-     * @param Core\Helpers\DataGrid $dataGrid
+     * @param \ACP3\Core\DataGrid\Input $input
      */
-    protected function addDataGridColumns(Core\Helpers\DataGrid $dataGrid)
+    protected function addDataGridColumns(Core\DataGrid\Input $input)
     {
-        $dataGrid
+        $input
             ->addColumn([
                 'label' => $this->translator->t('comments', 'module'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
                 'fields' => ['module'],
                 'default_sort' => true,
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('comments', 'comments_count'),
-                'type' => Core\Helpers\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['comments_count'],
             ], 20)
             ->addColumn([

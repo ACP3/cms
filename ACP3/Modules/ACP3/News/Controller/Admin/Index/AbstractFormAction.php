@@ -45,6 +45,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      * @param array $formData
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function fetchCategoryIdForSave(array $formData)
     {
@@ -59,7 +61,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      *
      * @return array
      */
-    protected function fetchOptions($readMoreValue, $commentsValue)
+    protected function fetchOptions(int $readMoreValue, int $commentsValue)
     {
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
         $options = [];

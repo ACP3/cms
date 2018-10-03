@@ -19,8 +19,7 @@ services:
     arguments:
       - '@core.modules'
       - '@core.validation.validation_rules.internal_uri_validation_rule'
-    calls:
-      - ['setArticleExistsValidationRule', ['@?articles.validation.validation_rules.article_exists_validation_rule']]
+      - '@?articles.validation.validation_rules.article_exists_validation_rule'
     tags:
       - { name: core.validation.validation_rule }
 

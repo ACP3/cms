@@ -8,6 +8,8 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\ACL;
+use ACP3\Core\DataGrid\ConfigProcessor;
+use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface;
 use ACP3\Core\Helpers\DataGrid\ColumnRenderer\HeaderColumnRenderer;
@@ -16,16 +18,11 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Model\Repository\DataGridRepository;
 
+/**
+ * @deprecated Since version 4.30.0, to be removed in 5.0.0. Use class ACP3\Core\DataGrid\DataGrid instead
+ */
 class DataGrid
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
     /**
      * @var \ACP3\Core\Model\Repository\DataGridRepository
      */
@@ -35,17 +32,17 @@ class DataGrid
      */
     protected $results = [];
     /**
-     * @var string
+     * @var string|null
      */
-    protected $resourcePathEdit = '';
+    protected $resourcePathEdit;
     /**
-     * @var string
+     * @var string|null
      */
-    protected $resourcePathDelete = '';
+    protected $resourcePathDelete;
     /**
-     * @var string
+     * @var string|null
      */
-    protected $identifier = '';
+    protected $identifier;
     /**
      * @var int
      */
@@ -63,25 +60,40 @@ class DataGrid
      */
     protected $columns;
     /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer[]
+     * @var string|null
+     */
+    private $primaryKey;
+    /**
+     * @var array
      */
     protected $columnRenderer = [];
     /**
-     * @var string
+     * @var \ACP3\Core\ACL
      */
-    protected $primaryKey = '';
+    protected $acl;
+    /**
+     * @var \ACP3\Core\I18n\Translator
+     */
+    protected $translator;
+    /**
+     * @var \ACP3\Core\DataGrid\ConfigProcessor
+     */
+    private $configProcessor;
 
     /**
-     * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $translator
+     * @param \ACP3\Core\ACL                      $acl
+     * @param \ACP3\Core\I18n\Translator          $translator
+     * @param \ACP3\Core\DataGrid\ConfigProcessor $configProcessor
      */
     public function __construct(
         ACL $acl,
-        Translator $translator
+        Translator $translator,
+        ConfigProcessor $configProcessor
     ) {
         $this->acl = $acl;
         $this->translator = $translator;
         $this->columns = new ColumnPriorityQueue();
+        $this->configProcessor = $configProcessor;
     }
 
     /**
@@ -233,13 +245,22 @@ class DataGrid
         $this->addDefaultColumns($canDelete, $canEdit);
         $this->findPrimaryKey();
 
+        $input = (new Input())
+            ->setUseAjax(false)
+            ->setIdentifier($this->identifier);
+
+        foreach (clone $this->columns as $key => $column) {
+            $input->addColumn($column, $key * 10);
+        }
+
         return [
             'can_edit' => $canEdit,
             'can_delete' => $canDelete,
             'identifier' => \substr($this->identifier, 1),
             'header' => $this->renderTableHeader(),
-            'config' => $this->generateDataTableConfig(),
+            'config' => $this->configProcessor->generateDataTableConfig($input),
             'results' => $this->mapTableColumnsToDbFields(),
+            'num_results' => $this->countDbResults(),
         ];
     }
 

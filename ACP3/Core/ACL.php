@@ -161,11 +161,11 @@ class ACL
     /**
      * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat.
      *
-     * @param string $resource
+     * @param string|null $resource
      *
      * @return bool
      */
-    public function hasPermission(string $resource)
+    public function hasPermission(?string $resource)
     {
         if (!empty($resource) && $this->controllerActionExists->controllerActionExists($resource) === true) {
             $resourceParts = \explode('/', $resource);

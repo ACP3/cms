@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
@@ -30,20 +30,24 @@ class Edit extends Core\Controller\AbstractFrontendAction
     private $categoriesUploadHelper;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param Categories\Model\CategoriesModel                             $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\Upload                                    $categoriesUploadHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
+     * @param Categories\Model\CategoriesModel                                  $categoriesModel
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation      $adminFormValidation
+     * @param \ACP3\Core\Helpers\Upload                                         $categoriesUploadHelper
+     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoriesModel $categoriesModel,
+        Categories\Model\Repository\CategoryRepository $categoryRepository,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\Upload $categoriesUploadHelper,
         Core\Helpers\FormToken $formTokenHelper
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper, $categoryRepository);
 
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
@@ -57,8 +61,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $category = $this->categoriesModel->getOneById($id);
 
@@ -67,6 +72,12 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
             return [
                 'form' => \array_merge($category, $this->request->getPost()->all()),
+                'category_tree' => $this->fetchCategoryTree(
+                    $category['module_id'],
+                    $category['parent_id'],
+                    $category['left_id'],
+                    $category['right_id']
+                ),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
@@ -78,8 +89,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -87,7 +100,6 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setSettings($this->config->getSettings(Categories\Installer\Schema::MODULE_NAME))
                 ->setCategoryId($id)
                 ->validate($formData);
 

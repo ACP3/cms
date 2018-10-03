@@ -7,25 +7,13 @@
 
 namespace ACP3\Modules\ACP3\Categories\Model;
 
-use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\NestedSet\Model\AbstractNestedSetModel;
 use ACP3\Modules\ACP3\Categories\Installer\Schema;
 
-class CategoriesModel extends AbstractModel
+class CategoriesModel extends AbstractNestedSetModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function save(array $data, $entryId = null)
-    {
-        if (isset($data['module'])) {
-            $data['module_id'] = $data['module'];
-        }
-
-        return parent::save($data, $entryId);
-    }
 
     /**
      * @return array
@@ -33,6 +21,7 @@ class CategoriesModel extends AbstractModel
     protected function getAllowedColumns()
     {
         return [
+            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,

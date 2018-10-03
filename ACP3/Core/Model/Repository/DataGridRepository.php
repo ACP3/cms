@@ -10,6 +10,9 @@ namespace ACP3\Core\Model\Repository;
 use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
 use Doctrine\DBAL\Query\QueryBuilder;
 
+/**
+ * @deprecated since version 4.30.0, to be removed with 5.0.0. Use class ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository instead
+ */
 class DataGridRepository extends AbstractRepository
 {
     /**

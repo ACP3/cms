@@ -5,7 +5,6 @@ services:
       - '@core.config'
       - '@core.router'
       - '@core.i18n.translator'
-    calls:
-      - ['setNewsletterSubscribe', ['@?newsletter.helper.subscribe']]
+      - '@?newsletter.helper.subscribe'
     tags:
       - { name: core.eventListener, event: guestbook.model.guestbook.after_save }

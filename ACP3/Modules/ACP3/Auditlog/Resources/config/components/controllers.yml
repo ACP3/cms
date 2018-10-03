@@ -8,3 +8,12 @@ services:
     class: ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index\Index
     arguments:
     - '@core.context.frontend'
+    - '@core.data_grid.data_grid'
+    - '@auditlog.models.repository.audit_log_data_grid_repository'
+
+  auditlog.controller.admin.index.table:
+    class: ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index\Table
+    arguments:
+    - '@core.context.frontend'
+    - '@core.data_grid.data_grid'
+    - '@auditlog.models.repository.audit_log_by_table_data_grid_repository'

@@ -9,6 +9,9 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Router\RouterInterface;
 
+/**
+ * @deprecated Since version 4.30.0, to be removed in 5.0.0. Use class ACP3\Core\DataGrid\ColumnRenderer\PictureColumnRenderer instead
+ */
 class PictureColumnRenderer extends AbstractColumnRenderer
 {
     /**
@@ -38,6 +41,8 @@ class PictureColumnRenderer extends AbstractColumnRenderer
             $value = $this->getDefaultValue($column);
         } elseif (isset($column['custom']['pattern'])) {
             $value = '<img src="' . $this->getUrl($column['custom'], $value) . '" alt="">';
+        } elseif (isset($column['custom']['callback']) && \is_callable($column['custom']['callback'])) {
+            $value = '<img src="' . $column['custom']['callback']($value) . '" alt="">';
         }
 
         return $value;

@@ -18,8 +18,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      * @param int $menuItemId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function menuItemExists($menuItemId)
+    public function menuItemExists(int $menuItemId)
     {
         return (int) $this->db->fetchColumn(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id",
@@ -31,8 +33,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      * @param string $uri
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneMenuItemByUri($uri)
+    public function getOneMenuItemByUri(string $uri)
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE uri = ?",
@@ -44,8 +48,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      * @param int $menuId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllItemsByBlockId($menuId)
+    public function getAllItemsByBlockId(int $menuId)
     {
         return $this->db->fetchAll(
             "SELECT `id` FROM {$this->getTableName()} WHERE block_id = ?",
@@ -57,8 +63,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      * @param int $menuItemId
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getMenuItemUriById($menuItemId)
+    public function getMenuItemUriById(int $menuItemId)
     {
         return $this->db->fetchColumn(
             "SELECT `uri` FROM {$this->getTableName()} WHERE id = ?",
@@ -70,8 +78,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      * @param int $menuItemId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getMenuIdByMenuItemId($menuItemId)
+    public function getMenuIdByMenuItemId(int $menuItemId)
     {
         return (int) $this->db->fetchColumn(
             "SELECT `block_id` FROM {$this->getTableName()} WHERE id = ?",
@@ -83,8 +93,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      * @param string $uri
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getMenuItemIdByUri($uri)
+    public function getMenuItemIdByUri(string $uri)
     {
         return (int) $this->db->fetchColumn(
             "SELECT `id` FROM {$this->getTableName()} WHERE uri = ?",
@@ -94,6 +106,8 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllMenuItems()
     {
@@ -106,8 +120,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      * @param string $blockName
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getVisibleMenuItemsByBlockName($blockName)
+    public function getVisibleMenuItemsByBlockName(string $blockName)
     {
         return $this->db->fetchAll(
             "SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM {$this->getTableName()} AS p, {$this->getTableName()} AS n JOIN {$this->getTableName(MenuRepository::TABLE_NAME)} AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id",
@@ -123,7 +139,7 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLeftIdByUris($menuName, array $uris)
+    public function getLeftIdByUris(string $menuName, array $uris)
     {
         return (int) $this->db->executeQuery(
             "SELECT m.left_id FROM {$this->getTableName()} AS m JOIN {$this->getTableName(MenuRepository::TABLE_NAME)} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
@@ -148,5 +164,15 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
             [\array_unique($uris)],
             [\Doctrine\DBAL\Connection::PARAM_STR_ARRAY]
         )->fetchAll();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function fetchAllSortedByBlock(): array
+    {
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY `block_id` ASC");
     }
 }

@@ -1,6 +1,10 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
+    {if !empty($categories)}
+        {include file="asset:Files/Partials/categories_list.tpl" categories=$categories title={lang t="files|further_categories"}}
+        <hr>
+    {/if}
     {if !empty($files)}
         {foreach $files as $row}
             <div class="dataset-box">

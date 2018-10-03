@@ -50,8 +50,9 @@ class Create extends AbstractAction
      * @param \ACP3\Core\Helpers\Forms                               $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
      * @param \ACP3\Core\Helpers\SendEmail                           $sendEmailHelper
-     * @param Guestbook\Model\GuestbookModel                         $guestbookModel
+     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookModel      $guestbookModel
      * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe|null    $newsletterSubscribeHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -59,7 +60,8 @@ class Create extends AbstractAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\Validation\FormValidation $formValidation
+        Guestbook\Validation\FormValidation $formValidation,
+        ?Newsletter\Helper\Subscribe $newsletterSubscribeHelper = null
     ) {
         parent::__construct($context);
 
@@ -68,6 +70,7 @@ class Create extends AbstractAction
         $this->formValidation = $formValidation;
         $this->guestbookModel = $guestbookModel;
         $this->sendEmailHelper = $sendEmailHelper;
+        $this->newsletterSubscribeHelper = $newsletterSubscribeHelper;
     }
 
     public function preDispatch()
@@ -75,18 +78,6 @@ class Create extends AbstractAction
         parent::preDispatch();
 
         $this->newsletterActive = ($this->guestbookSettings['newsletter_integration'] == 1);
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe $newsletterSubscribeHelper
-     *
-     * @return $this
-     */
-    public function setNewsletterSubscribeHelper(Newsletter\Helper\Subscribe $newsletterSubscribeHelper)
-    {
-        $this->newsletterSubscribeHelper = $newsletterSubscribeHelper;
-
-        return $this;
     }
 
     /**
@@ -117,6 +108,8 @@ class Create extends AbstractAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

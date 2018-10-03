@@ -15,6 +15,8 @@ trait DuplicationAwareTrait
      * @param int $entryId
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function duplicate($entryId)
     {

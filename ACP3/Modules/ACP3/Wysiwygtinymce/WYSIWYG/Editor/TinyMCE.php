@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Filemanager\Helpers;
 
 /**
  * Implementation of the AbstractWYSIWYG class for TinyMCE.
@@ -27,7 +28,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
      */
     protected $appPath;
     /**
-     * @var \ACP3\Modules\ACP3\Filemanager\Helpers
+     * @var \ACP3\Modules\ACP3\Filemanager\Helpers|null
      */
     protected $filemanagerHelpers;
 
@@ -40,15 +41,18 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
      * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
      * @param \ACP3\Core\I18n\Translator                   $translator
      * @param \ACP3\Core\Environment\ApplicationPath       $appPath
+     * @param \ACP3\Modules\ACP3\Filemanager\Helpers|null  $filemanagerHelpers
      */
     public function __construct(
         Core\Assets\Minifier\MinifierInterface $minifier,
         Core\I18n\Translator $translator,
-        Core\Environment\ApplicationPath $appPath
+        Core\Environment\ApplicationPath $appPath,
+        ?Helpers $filemanagerHelpers = null
     ) {
         $this->minifier = $minifier;
         $this->translator = $translator;
         $this->appPath = $appPath;
+        $this->filemanagerHelpers = $filemanagerHelpers;
     }
 
     /**
@@ -57,18 +61,6 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     public function getFriendlyName()
     {
         return 'TinyMCE';
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Filemanager\Helpers $filemanagerHelpers
-     *
-     * @return $this
-     */
-    public function setFilemanagerHelpers(\ACP3\Modules\ACP3\Filemanager\Helpers $filemanagerHelpers)
-    {
-        $this->filemanagerHelpers = $filemanagerHelpers;
-
-        return $this;
     }
 
     /**

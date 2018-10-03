@@ -194,4 +194,18 @@ class Date
     {
         return $this->format($value, self::DEFAULT_DATE_FORMAT_FULL, true, $isLocalTime);
     }
+
+    /**
+     * @param string|int $time
+     *
+     * @return \DateTime
+     */
+    public function toDateTime($time = 'now')
+    {
+        if (\is_numeric($time)) {
+            $time = \date('c', $time);
+        }
+
+        return new \DateTime($time, $this->dateTimeZone);
+    }
 }

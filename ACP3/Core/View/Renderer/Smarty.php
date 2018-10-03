@@ -55,6 +55,8 @@ class Smarty implements RendererInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \SmartyException
      */
     public function fetch($template, $cacheId = null, $compileId = null, $parent = null)
     {
@@ -63,6 +65,8 @@ class Smarty implements RendererInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \SmartyException
      */
     public function display($template, $cacheId = null, $compileId = null, $parent = null)
     {
@@ -71,6 +75,8 @@ class Smarty implements RendererInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \SmartyException
      */
     public function templateExists($template)
     {

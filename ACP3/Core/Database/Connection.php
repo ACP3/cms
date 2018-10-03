@@ -104,30 +104,30 @@ class Connection
      *
      * @return string
      */
-    public function getPrefixedTableName($tableName)
+    public function getPrefixedTableName(string $tableName)
     {
         return $this->prefix . $tableName;
     }
 
     /**
-     * @param string $statement
-     * @param array  $params
-     * @param array  $types
-     * @param bool   $cache
-     * @param int    $lifetime
-     * @param null   $cacheKey
+     * @param string      $statement
+     * @param array       $params
+     * @param array       $types
+     * @param bool        $cache
+     * @param int         $lifetime
+     * @param string|null $cacheKey
      *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchAll(
-        $statement,
+        string $statement,
         array $params = [],
         array $types = [],
-        $cache = false,
-        $lifetime = 0,
-        $cacheKey = null
+        bool $cache = false,
+        int $lifetime = 0,
+        ?string $cacheKey = null
     ) {
         $stmt = $this->executeQuery($statement, $params, $types, $cache, $lifetime, $cacheKey);
         $data = $stmt->fetchAll();
@@ -145,7 +145,7 @@ class Connection
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function fetchArray($statement, array $params = [], array $types = [])
+    public function fetchArray(string $statement, array $params = [], array $types = [])
     {
         return $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_BOTH);
     }
@@ -159,7 +159,7 @@ class Connection
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function fetchAssoc($statement, array $params = [], array $types = [])
+    public function fetchAssoc(string $statement, array $params = [], array $types = [])
     {
         return $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_ASSOC);
     }
@@ -174,30 +174,30 @@ class Connection
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function fetchColumn($statement, array $params = [], $column = 0, array $types = [])
+    public function fetchColumn(string $statement, array $params = [], int $column = 0, array $types = [])
     {
         return $this->executeQuery($statement, $params, $types)->fetchColumn($column);
     }
 
     /**
-     * @param string $query
-     * @param array  $params
-     * @param array  $types
-     * @param bool   $cache
-     * @param int    $lifetime
-     * @param null   $cacheKey
+     * @param string      $query
+     * @param array       $params
+     * @param array       $types
+     * @param bool        $cache
+     * @param int         $lifetime
+     * @param string|null $cacheKey
      *
      * @return \Doctrine\DBAL\Driver\ResultStatement|\Doctrine\DBAL\Driver\Statement
      *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function executeQuery(
-        $query,
+        string $query,
         array $params = [],
         array $types = [],
-        $cache = false,
-        $lifetime = 0,
-        $cacheKey = null
+        bool $cache = false,
+        int $lifetime = 0,
+        ?string $cacheKey = null
     ) {
         return $this->connection->executeQuery(
             $query,

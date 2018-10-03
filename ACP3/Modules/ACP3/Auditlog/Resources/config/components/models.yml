@@ -3,3 +3,13 @@ services:
     class: ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository
     arguments:
       - '@core.db'
+
+  auditlog.models.repository.audit_log_by_table_data_grid_repository:
+    class: ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogByTableDataGridRepository
+    arguments:
+      - '@core.db'
+
+  auditlog.models.repository.audit_log_data_grid_repository:
+    class: ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogDataGridRepository
+    arguments:
+      - '@core.db'

@@ -7,10 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Share\Model\Repository;
 
-use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
+class DataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = ShareRepository::TABLE_NAME;
 

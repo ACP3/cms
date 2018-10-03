@@ -8,12 +8,23 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Picture\Exception\PictureGenerateException;
-use FastImageSize\FastImageSize;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use ACP3\Core\Picture\Input;
+use ACP3\Core\Picture\Output;
 
+/**
+ * @deprecated Deprecated since version 4.30.0, to be removed with version 5.0.0. Use class ACP3\Core\Picture\Picture instead
+ */
 class Picture
 {
+    /**
+     * @var Picture\Picture
+     */
+    private $picture;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    private $appPath;
+
     /**
      * @var bool
      */
@@ -45,7 +56,7 @@ class Picture
     /**
      * @var bool
      */
-    protected $preferHeight = false;
+    protected $preferHeight = true;
     /**
      * @var string
      */
@@ -58,50 +69,23 @@ class Picture
      * @var int|null
      */
     protected $type;
-
     /**
-     * @var FastImageSize
+     * @var \ACP3\Core\Picture\Output|null
      */
-    private $fastImageSize;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
-     * @var string
-     */
-    protected $environment = '';
-
-    /**
-     * @var resource
-     */
-    protected $image;
+    private $output;
 
     public function __construct(
-        FastImageSize $fastImageSize,
-        ApplicationPath $appPath,
-        string $environment
+        Picture\Picture $picture,
+        ApplicationPath $appPath
     ) {
-        $this->fastImageSize = $fastImageSize;
         $this->appPath = $appPath;
-        $this->environment = $environment;
-
+        $this->picture = $picture;
         $this->cacheDir = $this->appPath->getCacheDir() . 'images/';
-    }
-
-    /**
-     * Gibt den während der Bearbeitung belegten Speicher wieder frei.
-     */
-    public function __destruct()
-    {
-        $this->freeMemory();
     }
 
     public function freeMemory(): void
     {
-        if (\is_resource($this->image) === true) {
-            \imagedestroy($this->image);
-        }
+        // Intentionally omitted
     }
 
     /**
@@ -109,9 +93,9 @@ class Picture
      *
      * @return $this
      */
-    public function setEnableCache($enableCache)
+    public function setEnableCache(bool $enableCache)
     {
-        $this->enableCache = (bool) $enableCache;
+        $this->enableCache = $enableCache;
 
         return $this;
     }
@@ -121,7 +105,7 @@ class Picture
      *
      * @return $this
      */
-    public function setCacheDir($cacheDir)
+    public function setCacheDir(string $cacheDir)
     {
         if (empty($cacheDir)) {
             throw new \InvalidArgumentException('The cache directory for the images must not be empty.');
@@ -137,7 +121,7 @@ class Picture
      *
      * @return $this
      */
-    public function setCachePrefix($cachePrefix)
+    public function setCachePrefix(string $cachePrefix)
     {
         $this->cachePrefix = $cachePrefix;
 
@@ -149,9 +133,9 @@ class Picture
      *
      * @return $this
      */
-    public function setMaxWidth($maxWidth)
+    public function setMaxWidth(int $maxWidth)
     {
-        $this->maxWidth = (int) $maxWidth;
+        $this->maxWidth = $maxWidth;
 
         return $this;
     }
@@ -161,9 +145,9 @@ class Picture
      *
      * @return $this
      */
-    public function setMaxHeight($maxHeight)
+    public function setMaxHeight(int $maxHeight)
     {
-        $this->maxHeight = (int) $maxHeight;
+        $this->maxHeight = $maxHeight;
 
         return $this;
     }
@@ -173,9 +157,9 @@ class Picture
      *
      * @return $this
      */
-    public function setJpgQuality($jpgQuality)
+    public function setJpgQuality(int $jpgQuality)
     {
-        $this->jpgQuality = (int) $jpgQuality;
+        $this->jpgQuality = $jpgQuality;
 
         return $this;
     }
@@ -185,9 +169,10 @@ class Picture
      *
      * @return $this
      */
-    public function setPreferWidth($preferWidth)
+    public function setPreferWidth(bool $preferWidth)
     {
-        $this->preferWidth = (bool) $preferWidth;
+        $this->preferWidth = $preferWidth;
+        $this->preferHeight = !$preferWidth;
 
         return $this;
     }
@@ -197,9 +182,10 @@ class Picture
      *
      * @return $this
      */
-    public function setPreferHeight($preferHeight)
+    public function setPreferHeight(bool $preferHeight)
     {
-        $this->preferHeight = (bool) $preferHeight;
+        $this->preferHeight = $preferHeight;
+        $this->preferWidth = !$preferHeight;
 
         return $this;
     }
@@ -209,7 +195,7 @@ class Picture
      *
      * @return $this
      */
-    public function setFile($file)
+    public function setFile(string $file)
     {
         $this->file = $file;
 
@@ -218,11 +204,19 @@ class Picture
 
     public function getFile(): string
     {
+        if ($this->output instanceof Output) {
+            return $this->output->getFile();
+        }
+
         return $this->file;
     }
 
     public function getFileWeb(): string
     {
+        if ($this->output instanceof Output) {
+            return $this->output->getFileWeb();
+        }
+
         return $this->appPath->getWebRoot() . \str_replace(ACP3_ROOT_DIR, '', $this->getFile());
     }
 
@@ -231,9 +225,9 @@ class Picture
      *
      * @return $this
      */
-    public function setForceResample($forceResample)
+    public function setForceResample(bool $forceResample)
     {
-        $this->forceResample = (bool) $forceResample;
+        $this->forceResample = $forceResample;
 
         return $this;
     }
@@ -243,210 +237,28 @@ class Picture
      */
     public function process(): void
     {
-        $this->type = null;
+        $input = (new Input())
+            ->setEnableCache($this->enableCache)
+            ->setCacheDir($this->cacheDir)
+            ->setCachePrefix($this->cachePrefix)
+            ->setFile($this->file)
+            ->setForceResample($this->forceResample)
+            ->setJpgQuality($this->jpgQuality)
+            ->setMaxHeight($this->maxHeight)
+            ->setMaxWidth($this->maxWidth)
+            ->setPreferHeight($this->preferHeight)
+            ->setPreferWidth($this->preferWidth);
 
-        if (\is_file($this->file) === true) {
-            $cacheFile = $this->getCacheFileName();
-
-            $picInfo = $this->fastImageSize->getImageSize($this->file);
-            $width = $picInfo['width'];
-            $height = $picInfo['height'];
-            $this->type = $picInfo['type'];
-
-            // Direct output of the picture, if it is already cached
-            if ($this->enableCache === true && \is_file($cacheFile) === true) {
-                $this->file = $cacheFile;
-            } elseif ($this->resamplingIsNecessary($width, $height, $this->type)) { // Resize the picture
-                $dimensions = $this->calcNewDimensions($width, $height);
-
-                $this->createCacheDir();
-
-                $this->resample(
-                    $dimensions['width'],
-                    $dimensions['height'],
-                    $width,
-                    $height,
-                    $this->type,
-                    $cacheFile
-                );
-                $this->file = $cacheFile;
-            }
-
-            return;
-        }
-
-        throw new PictureGenerateException(
-            \sprintf('Could not find picture: %s', $this->file)
-        );
-    }
-
-    /**
-     * @param int $pictureType
-     *
-     * @return string
-     */
-    private function getMimeType($pictureType)
-    {
-        switch ($pictureType) {
-            case IMAGETYPE_GIF:
-                return 'image/gif';
-            case IMAGETYPE_JPEG:
-                return 'image/jpeg';
-            case IMAGETYPE_PNG:
-                return 'image/png';
-        }
-
-        return 'image/jpeg';
+        $this->output = $this->picture->process($input);
     }
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \ACP3\Core\Picture\Exception\PictureResponseException
      */
     public function sendResponse()
     {
-        $response = new BinaryFileResponse($this->file);
-        $this->setHeaders($response, $this->getMimeType($this->type));
-
-        return $response;
-    }
-
-    /**
-     * Get the name of a possibly cached picture.
-     *
-     * @return string
-     */
-    protected function getCacheFileName()
-    {
-        return $this->cacheDir . $this->getCacheName();
-    }
-
-    /**
-     * Generiert den Namen des zu cachenden Bildes.
-     *
-     * @return string
-     */
-    protected function getCacheName()
-    {
-        return $this->cachePrefix . \substr($this->file, \strrpos($this->file, '/') + 1);
-    }
-
-    /**
-     * Reads the contents of the requested picture.
-     *
-     * @return string
-     */
-    protected function readFromFile()
-    {
-        return \file_get_contents($this->file);
-    }
-
-    /**
-     * Berechnet die neue Breite/Höhe eines Bildes.
-     *
-     * @param int $width  Ausgangsbreite des Bildes
-     * @param int $height Ausgangshöhe des Bildes
-     *
-     * @return array
-     */
-    protected function calcNewDimensions($width, $height)
-    {
-        if (($width >= $height || $this->preferWidth === true) && $this->preferHeight === false) {
-            $newWidth = $this->maxWidth;
-            $newHeight = (int) ($height * $newWidth / $width);
-        } else {
-            $newHeight = $this->maxHeight;
-            $newWidth = (int) ($width * $newHeight / $height);
-        }
-
-        return ['width' => $newWidth, 'height' => $newHeight];
-    }
-
-    /**
-     * Resamples the picture to the given values.
-     *
-     * @param int    $newWidth
-     * @param int    $newHeight
-     * @param int    $width
-     * @param int    $height
-     * @param int    $type
-     * @param string $cacheFile
-     */
-    protected function resample($newWidth, $newHeight, $width, $height, $type, $cacheFile)
-    {
-        $this->image = \imagecreatetruecolor($newWidth, $newHeight);
-        switch ($type) {
-            case IMAGETYPE_GIF:
-                $origPicture = \imagecreatefromgif($this->file);
-                $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
-                \imagegif($this->image, $cacheFile);
-
-                break;
-            case IMAGETYPE_JPEG:
-                $origPicture = \imagecreatefromjpeg($this->file);
-                $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
-                \imagejpeg($this->image, $cacheFile, $this->jpgQuality);
-
-                break;
-            case IMAGETYPE_PNG:
-                \imagealphablending($this->image, false);
-                $origPicture = \imagecreatefrompng($this->file);
-                $this->scalePicture($newWidth, $newHeight, $width, $height, $origPicture);
-                \imagesavealpha($this->image, true);
-                \imagepng($this->image, $cacheFile, 9);
-
-                break;
-        }
-
-        \imagedestroy($this->image);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\BinaryFileResponse $response
-     * @param string                                               $mimeType
-     */
-    protected function setHeaders(BinaryFileResponse $response, string $mimeType)
-    {
-        $response->headers->add([
-            'Content-type' => $mimeType,
-            'Cache-Control' => 'public',
-            'Pragma' => 'public',
-            'Last-Modified' => \gmdate('D, d M Y H:i:s', \filemtime($this->file)) . ' GMT',
-            'Expires' => \gmdate('D, d M Y H:i:s', \time() + 31536000) . ' GMT',
-        ]);
-    }
-
-    /**
-     * @param int      $newWidth
-     * @param int      $newHeight
-     * @param int      $width
-     * @param int      $height
-     * @param resource $origPicture
-     */
-    protected function scalePicture($newWidth, $newHeight, $width, $height, $origPicture)
-    {
-        \imagecopyresampled($this->image, $origPicture, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-    }
-
-    /**
-     * @param int $width
-     * @param int $height
-     * @param int $type
-     *
-     * @return bool
-     */
-    protected function resamplingIsNecessary($width, $height, $type)
-    {
-        return ($this->forceResample === true || ($width > $this->maxWidth || $height > $this->maxHeight))
-            && \in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG]);
-    }
-
-    /**
-     * Creates the cache directory if it's not already present.
-     */
-    protected function createCacheDir()
-    {
-        if (!\is_dir($this->cacheDir)) {
-            @\mkdir($this->cacheDir);
-        }
+        return $this->output->sendResponse();
     }
 }

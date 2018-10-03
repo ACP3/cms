@@ -7,20 +7,9 @@
 
 namespace ACP3\Core\Helpers\DataGrid;
 
-class ColumnPriorityQueue extends \SplPriorityQueue
+/**
+ * @deprecated Since version 4.30.0, to be removed in 5.0.0. Use class ACP3\Core\DataGrid\ColumnPriorityQuery instead
+ */
+class ColumnPriorityQueue extends \ACP3\Core\DataGrid\ColumnPriorityQueue
 {
-    /**
-     * @var int
-     */
-    protected $serial = PHP_INT_MAX;
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see http://php.net/manual/en/splpriorityqueue.compare.php#93999
-     */
-    public function insert($value, $priority)
-    {
-        parent::insert($value, [$priority, $this->serial--]);
-    }
 }

@@ -11,16 +11,19 @@
     text-indent: -9999em;
   }
 
+  .btn-group {
+    display: flex;
+
+    > .btn {
+      float: none;
+    }
+  }
+
   .datagrid-column__actions {
     width: 7%;
 
     .btn-group {
-      display: flex;
       visibility: hidden;
-
-      > .btn {
-        float: none;
-      }
     }
   }
 

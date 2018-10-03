@@ -54,13 +54,8 @@ class Image extends AbstractAction
         $picture = $this->pictureRepository->getFileById($id);
         $action = $action === 'thumb' ? 'thumb' : '';
 
-        /** @var Core\Picture $image */
-        $image = $this->get('core.image');
-
         try {
-            $this->thumbnailGenerator->generateThumbnail($image, $action, $picture);
-
-            return new RedirectResponse($image->getFileWeb());
+            return new RedirectResponse($this->thumbnailGenerator->generateThumbnail($picture, $action)->getFileWeb());
         } catch (Core\Picture\Exception\PictureGenerateException $e) {
             throw new Core\Controller\Exception\ResultNotExistsException('', 0, $e);
         }

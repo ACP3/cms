@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 
-class Create extends Core\Controller\AbstractFrontendAction
+class Create extends AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
@@ -21,10 +21,6 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $formTokenHelper;
     /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var Categories\Model\CategoriesModel
      */
     protected $categoriesModel;
@@ -34,24 +30,25 @@ class Create extends Core\Controller\AbstractFrontendAction
     private $categoriesUploadHelper;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param Categories\Model\CategoriesModel                             $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\Upload                                    $categoriesUploadHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
+     * @param Categories\Model\CategoriesModel                                  $categoriesModel
+     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation      $adminFormValidation
+     * @param \ACP3\Core\Helpers\Upload                                         $categoriesUploadHelper
+     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoriesModel $categoriesModel,
+        Categories\Model\Repository\CategoryRepository $categoryRepository,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\Upload $categoriesUploadHelper,
         Core\Helpers\FormToken $formTokenHelper
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $formsHelper, $categoryRepository);
 
-        $this->formsHelper = $formsHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
@@ -60,18 +57,32 @@ class Create extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
         return [
-            'form' => \array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
+            'form' => \array_merge($this->getDefaultFormData(), $this->request->getPost()->all()),
+            'category_tree' => $this->fetchCategoryTree(),
             'mod_list' => $this->fetchModules(),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
+    private function getDefaultFormData(): array
+    {
+        return [
+            'parent_id' => 0,
+            'title' => '',
+            'description' => '',
+        ];
+    }
+
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {
@@ -81,7 +92,6 @@ class Create extends Core\Controller\AbstractFrontendAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setSettings($this->config->getSettings(Categories\Installer\Schema::MODULE_NAME))
                 ->validate($formData);
 
             if (!empty($file)) {
@@ -101,7 +111,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $name => $info) {
             if ($info['active'] && \in_array('categories', $info['dependencies']) === true) {
-                $modules[$name]['selected'] = $this->formsHelper->selectEntry('module', $info['id']);
+                $modules[$name]['selected'] = $this->formsHelper->selectEntry('module_id', $info['id']);
             } else {
                 unset($modules[$name]);
             }

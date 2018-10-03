@@ -12,6 +12,9 @@ use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRendere
 use ACP3\Core\I18n\Translator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @deprecated Since version 4.30.0, to be removed in 5.0.0. Use class ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer instead
+ */
 class OptionColumnRenderer extends AbstractColumnRenderer
 {
     /**

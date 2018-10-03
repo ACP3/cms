@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Categories;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\CategoriesModel;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
 class Helpers
@@ -44,6 +45,10 @@ class Helpers
      * @var \ACP3\Core\Helpers\Secure
      */
     protected $secureHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Categories\Model\CategoriesModel
+     */
+    private $categoriesModel;
 
     /**
      * @param \ACP3\Core\ACL                                                    $acl
@@ -53,6 +58,7 @@ class Helpers
      * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
      * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
      * @param \ACP3\Modules\ACP3\Categories\Cache                               $categoriesCache
+     * @param \ACP3\Modules\ACP3\Categories\Model\CategoriesModel               $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
@@ -63,6 +69,7 @@ class Helpers
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\Secure $secureHelper,
         Cache $categoriesCache,
+        CategoriesModel $categoriesModel,
         CategoryRepository $categoryRepository
     ) {
         $this->acl = $acl;
@@ -73,75 +80,81 @@ class Helpers
         $this->secureHelper = $secureHelper;
         $this->categoriesCache = $categoriesCache;
         $this->categoryRepository = $categoryRepository;
+        $this->categoriesModel = $categoriesModel;
     }
 
     /**
      * Erzeugt eine neue Kategorie und gibt ihre ID zurück.
      *
-     * @param string $title
-     * @param string $module
+     * @param string $categoryTitle
+     * @param string $moduleName
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function categoriesCreate($title, $module)
+    public function categoriesCreate(string $categoryTitle, string $moduleName)
     {
-        $moduleInfo = $this->modules->getModuleInfo($module);
-        if ($this->categoryRepository->resultIsDuplicate($title, $moduleInfo['id'], '') === false) {
+        $moduleInfo = $this->modules->getModuleInfo($moduleName);
+        if ($this->categoryRepository->resultIsDuplicate($categoryTitle, $moduleInfo['id'], 0) === false) {
             $insertValues = [
-                'id' => '',
-                'title' => $this->secureHelper->strEncode($title),
-                'picture' => '',
-                'description' => '',
+                'title' => $this->secureHelper->strEncode($categoryTitle),
                 'module_id' => $moduleInfo['id'],
+                'parent_id' => 0,
             ];
-            $result = $this->categoryRepository->insert($insertValues);
 
-            $this->categoriesCache->saveCache($module);
-
-            return $result;
+            return $this->categoriesModel->save($insertValues);
         }
 
-        return $this->categoryRepository->getOneByTitleAndModule($title, $module)['id'];
+        return $this->categoryRepository->getOneByTitleAndModule($categoryTitle, $moduleName)['id'];
     }
 
     /**
      * Listet alle Kategorien eines Moduls auf.
      *
-     * @param string $module
-     * @param string $categoryId
-     * @param bool   $categoryCreate
-     * @param string $formFieldName
-     * @param string $customText
+     * @param string      $moduleName
+     * @param int         $categoryId
+     * @param bool        $categoryCreate
+     * @param string      $formFieldName
+     * @param string|null $customText
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function categoriesList(
-        $module,
-        $categoryId = '',
-        $categoryCreate = false,
-        $formFieldName = 'cat',
-        $customText = ''
+        string $moduleName,
+        int $categoryId = null,
+        bool $categoryCreate = false,
+        string $formFieldName = 'cat',
+        string $customText = null
     ) {
-        $categories = [];
-
-        $categories['custom_text'] = !empty($customText) ? $customText : $this->translator->t('system', 'pls_select');
-        $categories['name'] = $formFieldName;
-
-        $categories['categories'] = $this->categoriesCache->getCache($module);
-        $cData = \count($categories['categories']);
-        for ($i = 0; $i < $cData; ++$i) {
-            $categories['categories'][$i]['selected'] = $this->formsHelper->selectEntry(
+        $categories = $this->categoriesCache->getCache($moduleName);
+        foreach ($categories as &$category) {
+            $category['title'] = \str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
+            $category['selected'] = $this->formsHelper->selectEntry(
                 $formFieldName,
-                $categories['categories'][$i]['id'],
+                $category['id'],
                 $categoryId
             );
         }
 
+        return [
+            'custom_text' => $customText ?: $this->translator->t('system', 'pls_select'),
+            'name' => $formFieldName,
+            'categories' => $categories,
+            'create' => $this->addCreateCategoryFormFields($categoryCreate, $formFieldName),
+        ];
+    }
+
+    private function addCreateCategoryFormFields(bool $categoryCreate, string $formFieldName): array
+    {
+        $formFields = [];
         if ($categoryCreate === true && $this->acl->hasPermission('admin/categories/index/create') === true) {
-            $categories['create']['name'] = $formFieldName . '_create';
-            $categories['create']['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
+            $formFields['name'] = $formFieldName . '_create';
+            $formFields['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
         }
 
-        return $categories;
+        return $formFields;
     }
 }

@@ -8,15 +8,10 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 
 abstract class AbstractAction extends AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Helpers
-     */
-    protected $emoticonsHelpers;
     /**
      * @var array
      */
@@ -27,17 +22,5 @@ abstract class AbstractAction extends AbstractFrontendAction
         parent::preDispatch();
 
         $this->guestbookSettings = $this->config->getSettings(Schema::MODULE_NAME);
-    }
-
-    /**
-     * @param \ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelpers
-     *
-     * @return $this
-     */
-    public function setEmoticonsHelpers(Emoticons\Helpers $emoticonsHelpers)
-    {
-        $this->emoticonsHelpers = $emoticonsHelpers;
-
-        return $this;
     }
 }

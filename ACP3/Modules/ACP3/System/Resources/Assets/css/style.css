@@ -155,15 +155,17 @@
 .datagrid th.datagrid-column__actions {
   text-indent: -9999em;
 }
+.datagrid .btn-group {
+  display: flex;
+}
+.datagrid .btn-group > .btn {
+  float: none;
+}
 .datagrid .datagrid-column__actions {
   width: 7%;
 }
 .datagrid .datagrid-column__actions .btn-group {
-  display: flex;
   visibility: hidden;
-}
-.datagrid .datagrid-column__actions .btn-group > .btn {
-  float: none;
 }
 .datagrid tr:hover td.datagrid-column__actions .btn-group,
 .datagrid tr.info td.datagrid-column__actions .btn-group {

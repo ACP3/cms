@@ -31,10 +31,10 @@ services:
       - '@newsletter.helper.accountstatus'
       - '@newsletter.model.accountrepository'
 
-  newsletter.helper.data_grid.column_renderer.account_status_column_renderer:
-    class: ACP3\Modules\ACP3\Newsletter\Helper\DataGrid\ColumnRenderer\AccountStatusColumnRenderer
+  newsletter.data_grid.column_renderer.account_status_column_renderer:
+    class: ACP3\Modules\ACP3\Newsletter\DataGrid\ColumnRenderer\AccountStatusColumnRenderer
     arguments:
       - '@core.i18n.translator'
       - '@core.router'
     tags:
-      - { name: core.helpers.data_grid.column_renderer }
+      - { name: core.data_grid.column_renderer }

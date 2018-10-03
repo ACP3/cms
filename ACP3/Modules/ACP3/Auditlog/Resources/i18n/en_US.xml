@@ -6,8 +6,17 @@
 
 <language>
     <keys>
+        <item key="admin_index_module">Grouped by database table</item>
         <item key="auditlog">Audit log</item>
+        <item key="created">Created</item>
+        <item key="database_table">Database table</item>
+        <item key="deleted">Deleted</item>
+        <item key="entry_id">Entry ID</item>
+        <item key="last_action">Last action</item>
         <item key="mod_description">Logs every user action within the ACP3 CMS.</item>
-        <item key="nothing_to_see_here_yet">Nothing to see here yet.</item>
+        <item key="results_count">Results count</item>
+        <item key="table_name">table name</item>
+        <item key="updated">Updated</item>
+        <item key="versions_count">Versions count</item>
     </keys>
 </language>

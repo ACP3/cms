@@ -4,7 +4,7 @@
 
 {block HEADER_BAR_OPTIONS}
     {check_access mode="link" path="acp/gallery/pictures/create/id_`$gallery_id`" class="glyphicon glyphicon-plus text-success"}
-    {if $show_mass_delete_button}
+    {if $grid.show_mass_delete}
         {check_access mode="button" path="acp/gallery/pictures/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
     {/if}
 {/block}

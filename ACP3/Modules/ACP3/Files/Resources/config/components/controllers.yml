@@ -45,6 +45,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@files.model.data_grid_repository'
+      - '@core.data_grid.data_grid'
 
   files.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Settings
@@ -55,8 +56,7 @@ services:
       - '@core.helpers.secure'
       - '@core.helpers.date'
       - '@files.validation.admin_settings_form_validation'
-    calls:
-      - ['setCommentsHelpers', ['@?comments.helpers']]
+      - '@?comments.helpers'
 
   files.controller.admin.index.sort:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Sort
@@ -82,7 +82,6 @@ services:
       - '@core.helpers.string_formatter'
       - '@files.model.filesrepository'
       - '@files.cache'
-      - '@categories.model.categories_repository'
 
   files.controller.frontend.index.files:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Files
@@ -96,7 +95,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@categories.cache'
+      - '@categories.model.categories_repository'
 
   files.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Files\Controller\Widget\Index\Index

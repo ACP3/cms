@@ -7,11 +7,12 @@
 
 namespace ACP3\Modules\ACP3\News\Model\Repository;
 
-use ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class DataGridRepository extends \ACP3\Core\Model\Repository\DataGridRepository
+class DataGridRepository extends AbstractDataGridRepository
 {
     const TABLE_NAME = NewsRepository::TABLE_NAME;
 

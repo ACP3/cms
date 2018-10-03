@@ -8,7 +8,7 @@
 namespace ACP3\Core\Model\Event\Listener;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
+use ACP3\Core\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
 use ACP3\Core\I18n\Translator;
 
 abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
@@ -23,7 +23,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
     private $translator;
 
     /**
-     * OnDataGridCustomOptionBeforeListener constructor.
+     * AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener constructor.
      *
      * @param \ACP3\Core\ACL             $acl
      * @param \ACP3\Core\I18n\Translator $translator
@@ -37,7 +37,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
+     * @param \ACP3\Core\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
      */
     public function __invoke(CustomOptionEvent $customOptionEvent)
     {

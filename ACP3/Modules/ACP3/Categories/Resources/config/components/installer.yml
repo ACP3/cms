@@ -6,5 +6,7 @@ services:
 
   categories.installer.migration:
     class: ACP3\Modules\ACP3\Categories\Installer\Migration
+    arguments:
+      - '@categories.nested_set.operation.repair'
     tags:
       - { name: core.installer.migration }

@@ -14,6 +14,9 @@ use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @method RuleRepository getRepository()
+ */
 class RulesModel extends AbstractModel
 {
     const EVENT_PREFIX = Schema::MODULE_NAME;
@@ -45,12 +48,12 @@ class RulesModel extends AbstractModel
     /**
      * @param array $privileges
      * @param int   $roleId
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function updateRules(array $privileges, $roleId)
     {
-        $this->repository->delete($roleId, 'role_id');
-
-        $this->cache->getCacheDriver()->deleteAll();
+        $rules = $this->getRepository()->getAllRulesByRoleIds([$roleId]);
 
         foreach ($privileges as $moduleId => $modulePrivileges) {
             foreach ($modulePrivileges as $privilegeId => $permission) {
@@ -61,9 +64,22 @@ class RulesModel extends AbstractModel
                     'permission' => $permission,
                 ];
 
-                $this->save($ruleInsertValues);
+                $this->save($ruleInsertValues, $this->findRuleId($rules, $moduleId, $privilegeId));
             }
         }
+
+        $this->cache->getCacheDriver()->deleteAll();
+    }
+
+    private function findRuleId(array $rules, int $moduleId, int $privilegeId): ?int
+    {
+        foreach ($rules as $rule) {
+            if ($rule['module_id'] == $moduleId && $rule['privilege_id'] == $privilegeId) {
+                return $rule['id'];
+            }
+        }
+
+        return null;
     }
 
     /**

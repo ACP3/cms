@@ -18,12 +18,7 @@ class Javascripts extends AbstractBlock
     }
 
     /**
-     * @param                           $params
-     * @param                           $content
-     * @param \Smarty_Internal_Template $smarty
-     * @param                           $repeat
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function process($params, $content, \Smarty_Internal_Template $smarty, &$repeat)
     {

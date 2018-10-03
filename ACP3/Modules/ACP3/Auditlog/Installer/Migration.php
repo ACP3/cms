@@ -23,6 +23,13 @@ class Migration implements MigrationInterface
                 'ALTER TABLE `{pre}auditlog` MODIFY COLUMN `action` VARCHAR(255) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}auditlog` CONVERT TO {charset};',
             ],
+            3 => [
+                'ALTER TABLE `{pre}auditlog` ADD COLUMN `table_name` VARCHAR(255) NOT NULL AFTER `module_id`;',
+                'TRUNCATE TABLE `{pre}auditlog`;',
+            ],
+            4 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES ('', {moduleId}, 'admin', 'index', 'table', '', 3);",
+            ],
         ];
     }
 

@@ -8,8 +8,11 @@
 namespace ACP3\Modules\ACP3\Categories\Validation;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Installer\Schema;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\AllowedSuperiorCategoryValidationRule;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule;
+use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\ParentIdValidationRule;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
@@ -33,11 +36,13 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
+     * @param \ACP3\Core\Settings\SettingsInterface                             $settings
      * @param \ACP3\Core\I18n\Translator                                        $translator
      * @param \ACP3\Core\Validation\Validator                                   $validator
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
+        Core\Settings\SettingsInterface $settings,
         Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         CategoryRepository $categoryRepository
@@ -45,6 +50,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         parent::__construct($translator, $validator);
 
         $this->categoryRepository = $categoryRepository;
+        $this->settings = $settings;
     }
 
     /**
@@ -55,18 +61,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setFile($file)
     {
         $this->file = $file;
-
-        return $this;
-    }
-
-    /**
-     * @param array $settings
-     *
-     * @return AdminFormValidation
-     */
-    public function setSettings($settings)
-    {
-        $this->settings = $settings;
 
         return $this;
     }
@@ -85,9 +79,14 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function validate(array $formData)
     {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
@@ -105,9 +104,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'picture',
                     'message' => $this->translator->t('categories', 'invalid_image_selected'),
                     'extra' => [
-                        'width' => $this->settings['width'],
-                        'height' => $this->settings['height'],
-                        'filesize' => $this->settings['filesize'],
+                        'width' => $settings['width'],
+                        'height' => $settings['height'],
+                        'filesize' => $settings['filesize'],
                         'required' => false,
                     ],
                 ]
@@ -119,9 +118,25 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'title',
                     'message' => $this->translator->t('categories', 'category_already_exists'),
                     'extra' => [
-                        'module_id' => empty($this->categoryId) ? $formData['module'] : $this->categoryRepository->getModuleIdByCategoryId($this->categoryId),
+                        'module_id' => empty($this->categoryId) ? $formData['module_id'] : $this->categoryRepository->getModuleIdByCategoryId($this->categoryId),
                         'category_id' => $this->categoryId,
                     ],
+                ]
+            )
+            ->addConstraint(
+                ParentIdValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'parent_id',
+                    'message' => $this->translator->t('categories', 'select_superior_category'),
+                ]
+            )
+            ->addConstraint(
+                AllowedSuperiorCategoryValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => ['parent_id', 'module_id'],
+                    'message' => $this->translator->t('categories', 'superior_category_not_allowed'),
                 ]
             );
 
@@ -130,7 +145,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 Core\Validation\ValidationRules\NotEmptyValidationRule::class,
                 [
                     'data' => $formData,
-                    'field' => 'module',
+                    'field' => 'module_id',
                     'message' => $this->translator->t('categories', 'select_module'),
                 ]
             );

@@ -7,59 +7,9 @@
 
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer\Event;
 
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer;
-use Symfony\Component\EventDispatcher\Event;
-
-class CustomOptionEvent extends Event
+/**
+ * @deprecated Since version 4.30.0, to be removed in 5.0.0. Use class ACP3\Core\DataGrid\ColumnRenderer\Event\CustomOptionEvent instead
+ */
+class CustomOptionEvent extends \ACP3\Core\DataGrid\ColumnRenderer\Event\CustomOptionEvent
 {
-    /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
-     */
-    protected $optionRenderer;
-    /**
-     * @var array
-     */
-    private $dbResultRow;
-    /**
-     * @var string
-     */
-    protected $identifier;
-
-    /**
-     * CustomOptionEvent constructor.
-     *
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer $optionRenderer
-     * @param array                                                                          $dbResultRow
-     * @param string                                                                         $identifier
-     */
-    public function __construct(OptionRenderer $optionRenderer, array $dbResultRow, $identifier)
-    {
-        $this->optionRenderer = $optionRenderer;
-        $this->identifier = $identifier;
-        $this->dbResultRow = $dbResultRow;
-    }
-
-    /**
-     * @return \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
-     */
-    public function getOptionRenderer()
-    {
-        return $this->optionRenderer;
-    }
-
-    /**
-     * @return array
-     */
-    public function getDbResultRow()
-    {
-        return $this->dbResultRow;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdentifier()
-    {
-        return $this->identifier;
-    }
 }

@@ -74,7 +74,7 @@ HTML;
 
         $this->assertEquals(
             $expected,
-            $this->plugin->process($this->getTemplateContent(), $this->smartyInternalTemplateMock)
+            $this->plugin->__invoke($this->getTemplateContent(), $this->smartyInternalTemplateMock)
         );
     }
 
@@ -146,7 +146,7 @@ HTML;
 
         $this->assertEquals(
             $expected,
-            $this->plugin->process($this->getTemplateContent(), $this->smartyInternalTemplateMock)
+            $this->plugin->__invoke($this->getTemplateContent(), $this->smartyInternalTemplateMock)
         );
     }
 
@@ -168,7 +168,7 @@ HTML;
 
         $this->assertEquals(
             $expected,
-            $this->plugin->process($this->getTemplateContent(), $this->smartyInternalTemplateMock)
+            $this->plugin->__invoke($this->getTemplateContent(), $this->smartyInternalTemplateMock)
         );
     }
 
@@ -180,7 +180,7 @@ HTML;
 
         $this->assertEquals(
             $templateContent,
-            $this->plugin->process($templateContent, $this->smartyInternalTemplateMock)
+            $this->plugin->__invoke($templateContent, $this->smartyInternalTemplateMock)
         );
     }
 }

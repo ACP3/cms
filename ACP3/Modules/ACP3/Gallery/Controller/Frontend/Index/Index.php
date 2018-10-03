@@ -97,10 +97,7 @@ class Index extends AbstractAction
         );
 
         foreach ($galleries as &$gallery) {
-            /** @var \ACP3\Core\Picture $image */
-            $image = $this->get('core.image');
-            $this->thumbnailGenerator->generateThumbnail($image, 'thumb', $gallery['file']);
-            $gallery['file'] = $image->getFileWeb();
+            $gallery['file'] = $this->thumbnailGenerator->generateThumbnail($gallery['file'], 'thumb')->getFileWeb();
         }
 
         return $galleries;

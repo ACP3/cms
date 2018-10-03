@@ -24,6 +24,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@guestbook.model.data_grid_repository'
+      - '@core.data_grid.data_grid'
 
   guestbook.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Settings
@@ -44,8 +45,7 @@ services:
       - '@core.helpers.sendEmail'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.form_validation'
-    calls:
-      - ['setNewsletterSubscribeHelper', ['@?newsletter.helper.subscribe']]
+      - '@?newsletter.helper.subscribe'
 
   guestbook.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Index
@@ -53,5 +53,4 @@ services:
       - '@core.context.frontend'
       - '@core.pagination'
       - '@guestbook.model.guestbookrepository'
-    calls:
-      - ['setEmoticonsHelpers', ['@?emoticons.helpers']]
+      - '@?emoticons.helpers'

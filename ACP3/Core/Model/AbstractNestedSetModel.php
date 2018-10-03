@@ -13,6 +13,11 @@ use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @property \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository $repository
+ *
+ * @deprecated since version 4.30.0, to be removed with 5.0.0. Use class ACP3\Core\NestedSet\Model\AbstractNestedSetModel instead
+ */
 abstract class AbstractNestedSetModel extends AbstractModel
 {
     /**
@@ -59,7 +64,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
      *
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function save(array $rawData, $entryId = null)
     {
@@ -81,7 +86,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
             $result = $this->editOperation->execute(
                 $entryId,
                 $filteredData['parent_id'],
-                $filteredData['block_id'] ?? 0,
+                $filteredData[$this->repository::BLOCK_COLUMN_NAME] ?? 0,
                 $filteredData
             );
         }
@@ -97,7 +102,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
      *
      * @return int
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function delete($entryId)
     {

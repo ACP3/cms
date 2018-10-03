@@ -58,8 +58,10 @@ class SendNewsletter
      * @param bool         $bcc
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function sendNewsletter($newsletterId, $recipients, $bcc = false)
+    public function sendNewsletter(int $newsletterId, $recipients, bool $bcc = false)
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
@@ -69,8 +71,7 @@ class SendNewsletter
             'name' => $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['site_title'],
         ];
 
-        $this->mailer
-            ->reset()
+        $message = (new Core\Mailer\MailerMessage())
             ->setBcc($bcc)
             ->setFrom($sender)
             ->setSubject($newsletter['title'])
@@ -78,14 +79,16 @@ class SendNewsletter
             ->setMailSignature($settings['mailsig']);
 
         if ($newsletter['html'] == 1) {
-            $this->mailer->setTemplate('newsletter/layout.email.tpl');
-            $this->mailer->setHtmlBody($newsletter['text']);
+            $message->setTemplate('newsletter/layout.email.tpl');
+            $message->setHtmlBody($newsletter['text']);
         } else {
-            $this->mailer->setBody($newsletter['text']);
+            $message->setBody($newsletter['text']);
         }
 
-        $this->mailer->setRecipients($recipients);
+        $message->setRecipients($recipients);
 
-        return $this->mailer->send();
+        return $this->mailer
+            ->reset()
+            ->send($message);
     }
 }

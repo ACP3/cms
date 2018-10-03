@@ -39,39 +39,66 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->menuRepository = $menuRepository;
     }
 
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function execute()
     {
         $menus = $this->menuRepository->getAllMenus();
-        $cMenus = \count($menus);
 
-        if ($cMenus > 0) {
+        if (\count($menus) > 0) {
             $canDeleteItem = $this->acl->hasPermission('admin/menus/items/delete');
             $canEditItem = $this->acl->hasPermission('admin/menus/items/edit');
             $canSortItem = $this->acl->hasPermission('admin/menus/items/order');
-            $this->view->assign('can_delete_item', $canDeleteItem);
-            $this->view->assign('can_edit_item', $canEditItem);
-            $this->view->assign('can_order_item', $canSortItem);
-            $this->view->assign('can_delete', $this->acl->hasPermission('admin/menus/index/delete'));
-            $this->view->assign('can_edit', $this->acl->hasPermission('admin/menus/index/edit'));
 
-            $colspan = 4;
-            if ($canDeleteItem || $canEditItem) {
-                ++$colspan;
-            }
-            if ($canSortItem) {
-                ++$colspan;
-            }
-            $this->view->assign('colspan', $colspan);
-
-            $menuItems = $this->menusHelpers->menuItemsList();
-            for ($i = 0; $i < $cMenus; ++$i) {
-                if (isset($menuItems[$menus[$i]['index_name']]) === false) {
-                    $menuItems[$menus[$i]['index_name']]['title'] = $menus[$i]['title'];
-                    $menuItems[$menus[$i]['index_name']]['menu_id'] = $menus[$i]['id'];
-                    $menuItems[$menus[$i]['index_name']]['items'] = [];
-                }
-            }
-            $this->view->assign('pages_list', $menuItems);
+            $this->view->assign([
+                'pages_list' => $this->fetchMenuItems($menus),
+                'can_delete_item' => $canDeleteItem,
+                'can_edit_item' => $canEditItem,
+                'can_order_item' => $canSortItem,
+                'can_delete' => $this->acl->hasPermission('admin/menus/index/delete'),
+                'can_edit' => $this->acl->hasPermission('admin/menus/index/edit'),
+                'colspan' => $this->getColspan($canDeleteItem, $canEditItem, $canSortItem),
+            ]);
         }
+    }
+
+    /**
+     * @param array $menus
+     *
+     * @return array
+     */
+    private function fetchMenuItems(array $menus): array
+    {
+        $menuItems = $this->menusHelpers->menuItemsList();
+        foreach ($menus as $menu) {
+            if (isset($menuItems[$menu['index_name']]) === false) {
+                $menuItems[$menu['index_name']]['title'] = $menu['title'];
+                $menuItems[$menu['index_name']]['menu_id'] = $menu['id'];
+                $menuItems[$menu['index_name']]['items'] = [];
+            }
+        }
+
+        return $menuItems;
+    }
+
+    /**
+     * @param bool $canDeleteItem
+     * @param bool $canEditItem
+     * @param bool $canSortItem
+     *
+     * @return int
+     */
+    private function getColspan(bool $canDeleteItem, bool $canEditItem, bool $canSortItem): int
+    {
+        $colspan = 4;
+        if ($canDeleteItem || $canEditItem) {
+            ++$colspan;
+        }
+        if ($canSortItem) {
+            ++$colspan;
+        }
+
+        return $colspan;
     }
 }

@@ -50,6 +50,7 @@
         <item key="service_xing">Xing</item>
         <item key="services">Dienste</item>
         <item key="share">Social sharing</item>
+        <item key="share_ratings">Content ratings</item>
         <item key="total_1_rating"><![CDATA[based on <span itemprop="reviewCount">1</span> rating]]></item>
         <item key="total_x_ratings"><![CDATA[based on <span itemprop="reviewCount">%ratings%</span> ratings]]></item>
         <item key="type_in_valid_resource">Please type in a valid path to an ACP3 internal resource.</item>

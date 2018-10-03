@@ -23,7 +23,7 @@ class Asset extends AbstractResource
     private $theme;
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getExtensionName()
     {
@@ -138,11 +138,11 @@ class Asset extends AbstractResource
         $compiled->exists = false;
     }
 
-    /*
-       * Disable timestamp checks for recompiled resource.
-       *
-       * @return bool
-       */
+    /**
+     * Disable timestamp checks for recompiled resource.
+     *
+     * @return bool
+     */
     public function checkTimestamps()
     {
         return false;

@@ -80,7 +80,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     private function setUpContainer()
     {
         $this->setParameter('cache_driver', 'Array');
-        $this->setParameter('core.environment', $this->applicationMode);
         $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
         $this->set('core.logger.system_logger', $this->logger);

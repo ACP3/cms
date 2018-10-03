@@ -4,6 +4,7 @@ services:
     arguments:
       - '@core.environment.application_path'
       - '@core.config'
+      - '@core.picture.picture'
 
   gallery.helpers:
     class: ACP3\Modules\ACP3\Gallery\Helpers

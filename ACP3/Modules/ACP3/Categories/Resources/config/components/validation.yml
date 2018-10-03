@@ -2,6 +2,7 @@ services:
   categories.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
     arguments:
+      - '@core.config'
       - '@core.i18n.translator'
       - '@core.validator'
       - '@categories.model.categories_repository'
@@ -9,6 +10,13 @@ services:
   categories.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation
     parent: core.validator.abstract
+
+  categories.validation.validation_rules.allowed_category_validation_rule:
+    class: ACP3\Modules\ACP3\Categories\Validation\ValidationRules\AllowedSuperiorCategoryValidationRule
+    arguments:
+    - '@categories.model.categories_repository'
+    tags:
+    - { name: core.validation.validation_rule }
 
   categories.validation.validation_rules.category_exists_validation_rule:
     class: ACP3\Modules\ACP3\Categories\Validation\ValidationRules\CategoryExistsValidationRule
@@ -23,3 +31,10 @@ services:
       - '@categories.model.categories_repository'
     tags:
       - { name: core.validation.validation_rule }
+
+  categories.validation.validation_rules.parent_id_validation_rule:
+    class: ACP3\Modules\ACP3\Categories\Validation\ValidationRules\ParentIdValidationRule
+    arguments:
+    - '@categories.model.categories_repository'
+    tags:
+    - { name: core.validation.validation_rule }

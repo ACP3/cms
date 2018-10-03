@@ -7,6 +7,9 @@
 
 namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
+/**
+ * @deprecated Since version 4.30.0, to be removed in 5.0.0. Use class ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer instead
+ */
 abstract class AbstractColumnRenderer implements ColumnRendererInterface
 {
     const CELL_TYPE = 'td';
@@ -16,16 +19,20 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected $identifier = '';
     /**
-     * @var string
+     * @var string|null
      */
-    protected $primaryKey = '';
+    protected $primaryKey;
+    /**
+     * @var bool
+     */
+    private $useAjax = false;
 
     /**
      * @param string $identifier
      *
      * @return $this
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier(string $identifier): self
     {
         $this->identifier = $identifier;
 
@@ -33,13 +40,33 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param string $primaryKey
+     * @param string|null $primaryKey
      *
      * @return $this
      */
-    public function setPrimaryKey($primaryKey)
+    public function setPrimaryKey(?string $primaryKey): self
     {
         $this->primaryKey = $primaryKey;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUseAjax(): bool
+    {
+        return $this->useAjax;
+    }
+
+    /**
+     * @param bool $useAjax
+     *
+     * @return $this
+     */
+    public function setUseAjax(bool $useAjax): self
+    {
+        $this->useAjax = $useAjax;
 
         return $this;
     }
@@ -60,12 +87,33 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function render(array $column, $value = '')
     {
+        if ($this->getUseAjax()) {
+            return $this->renderAjax($column, $value);
+        }
+
         $type = static::CELL_TYPE;
         $attribute = $this->addHtmlAttribute($column['attribute']);
         $class = $this->addHtmlAttribute('class', $column['class']);
         $style = $this->addHtmlAttribute('style', $column['style']);
 
         return "<{$type}{$attribute}{$class}{$style}>{$value}</{$type}>";
+    }
+
+    /**
+     * @param array  $column
+     * @param string $value
+     *
+     * @return string|array
+     */
+    private function renderAjax(array $column, string $value = '')
+    {
+        if (\is_array($column['attribute']) && \count($column['attribute'])) {
+            $column['attribute']['_'] = $value;
+
+            return $column['attribute'];
+        }
+
+        return $value;
     }
 
     /**
@@ -83,7 +131,11 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
             }
 
             return $data;
-        } elseif (!empty($attributeData)) {
+        } elseif ($attributeData !== null && $attributeData !== '') {
+            if (\in_array($attributeName, static::mandatoryAttributes())) {
+                $attributeName = 'data-' . $attributeName;
+            }
+
             return ' ' . $attributeName . '="' . $attributeData . '"';
         }
 
@@ -153,5 +205,10 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     protected function getDbFields(array $column)
     {
         return $column['fields'];
+    }
+
+    public static function mandatoryAttributes(): array
+    {
+        return [];
     }
 }

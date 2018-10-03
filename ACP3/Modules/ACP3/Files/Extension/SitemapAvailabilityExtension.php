@@ -64,6 +64,8 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchSitemapUrls($isSecure = null)
     {
@@ -76,7 +78,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         foreach ($this->filesRepository->getAll($this->date->getCurrentDateTime()) as $result) {
             $this->addUrl(
                 \sprintf(Helpers::URL_KEY_PATTERN, $result['id']),
-                $this->date->format($result['updated_at'], 'Y-m-d'),
+                $this->date->toDateTime($result['updated_at']),
                 $isSecure
             );
         }

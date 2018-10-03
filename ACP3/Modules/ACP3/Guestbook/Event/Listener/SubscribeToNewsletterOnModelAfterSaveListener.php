@@ -29,37 +29,28 @@ class SubscribeToNewsletterOnModelAfterSaveListener
      */
     private $translator;
     /**
-     * @var Subscribe
+     * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe|null
      */
     private $subscribe;
 
     /**
      * SubscribeToNewsletterOnModelAfterSaveListener constructor.
      *
-     * @param SettingsInterface $settings
-     * @param RouterInterface   $router
-     * @param Translator        $translator
+     * @param \ACP3\Core\Settings\SettingsInterface               $settings
+     * @param \ACP3\Core\Router\RouterInterface                   $router
+     * @param \ACP3\Core\I18n\Translator                          $translator
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe|null $subscribe
      */
     public function __construct(
         SettingsInterface $settings,
         RouterInterface $router,
-        Translator $translator
+        Translator $translator,
+        ?Subscribe $subscribe = null
     ) {
         $this->settings = $settings;
         $this->router = $router;
         $this->translator = $translator;
-    }
-
-    /**
-     * @param Subscribe $subscribe
-     *
-     * @return $this
-     */
-    public function setNewsletterSubscribe(Subscribe $subscribe)
-    {
         $this->subscribe = $subscribe;
-
-        return $this;
     }
 
     /**

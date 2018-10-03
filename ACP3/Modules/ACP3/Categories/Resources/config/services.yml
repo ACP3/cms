@@ -12,6 +12,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.secure'
       - '@categories.cache'
+      - '@categories.model.categories_model'
       - '@categories.model.categories_repository'
 
   categories.helpers.upload:

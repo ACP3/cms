@@ -7,17 +7,27 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core\View\Renderer\Smarty\AbstractPlugin;
 use ACP3\Core\View\Renderer\Smarty\PluginInterface;
+use ACP3\Core\View\Renderer\Smarty\PluginTypeEnum;
 
-abstract class AbstractFunction extends AbstractPlugin
+abstract class AbstractFunction implements PluginInterface
 {
     /**
      * @return string
      */
     public function getExtensionType()
     {
-        return PluginInterface::EXTENSION_TYPE_FUNCTION;
+        return PluginTypeEnum::FUNCTION;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \SmartyException
+     */
+    public function register(\Smarty $smarty)
+    {
+        $smarty->registerPlugin(PluginTypeEnum::FUNCTION, $this->getExtensionName(), $this);
     }
 
     /**
@@ -25,6 +35,19 @@ abstract class AbstractFunction extends AbstractPlugin
      * @param \Smarty_Internal_Template $smarty
      *
      * @return mixed
+     */
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    {
+        return $this->process($params, $smarty);
+    }
+
+    /**
+     * @param array                     $params
+     * @param \Smarty_Internal_Template $smarty
+     *
+     * @return mixed
+     *
+     * @deprecated since version 4.30.0, to be remove with 5.0.0. Implement method __invoke() instead
      */
     abstract public function process(array $params, \Smarty_Internal_Template $smarty);
 }

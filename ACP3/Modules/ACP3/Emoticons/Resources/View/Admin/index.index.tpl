@@ -5,7 +5,7 @@
 {block HEADER_BAR_OPTIONS}
     {check_access mode="link" path="acp/emoticons/index/create" class="glyphicon glyphicon-plus text-success"}
     {check_access mode="link" path="acp/emoticons/index/settings" class="glyphicon glyphicon-cog"}
-    {if show_mass_delete_button}
+    {if $grid.show_mass_delete}
         {check_access mode="button" path="acp/emoticons/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
     {/if}
 {/block}

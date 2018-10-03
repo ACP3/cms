@@ -69,6 +69,8 @@ class Create extends AbstractFrontendAction
      * @param string $redirectUrl
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost($module, $entryId, $redirectUrl)
     {

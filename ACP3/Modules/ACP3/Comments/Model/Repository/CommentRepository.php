@@ -7,10 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Comments\Model\Repository;
 
-use ACP3\Core;
+use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 
-class CommentRepository extends Core\Model\Repository\AbstractRepository implements Core\Model\Repository\FloodBarrierAwareRepositoryInterface
+class CommentRepository extends AbstractRepository implements FloodBarrierAwareRepositoryInterface
 {
     const TABLE_NAME = 'comments';
 
@@ -132,6 +133,8 @@ class CommentRepository extends Core\Model\Repository\AbstractRepository impleme
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
+     *
+     * @deprecated since version 4.30.0, to removed with version 5.0.0
      */
     public function getAllByModuleInAcp(int $moduleId)
     {
@@ -145,6 +148,8 @@ class CommentRepository extends Core\Model\Repository\AbstractRepository impleme
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
+     *
+     * @deprecated since version 4.30.0, to removed with version 5.0.0
      */
     public function getCommentsGroupedByModule()
     {

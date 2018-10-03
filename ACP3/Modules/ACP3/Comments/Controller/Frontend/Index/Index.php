@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
+use ACP3\Modules\ACP3\Emoticons\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends AbstractFrontendAction
@@ -28,13 +29,15 @@ class Index extends AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
      * @param \ACP3\Core\Pagination                                          $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
+     * @param \ACP3\Modules\ACP3\Emoticons\Helpers|null                      $emoticonsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
-        Comments\Model\Repository\CommentRepository $commentRepository
+        Comments\Model\Repository\CommentRepository $commentRepository,
+        ?Helpers $emoticonsHelpers = null
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $emoticonsHelpers);
 
         $this->pagination = $pagination;
         $this->commentRepository = $commentRepository;
