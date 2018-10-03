@@ -7,14 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.30.0] - 2018-10-03
 ### Added
 - Extended the audit log module
-- back ported the nested categories from ACP3.next 
+- back ported the nested categories from ACP3.next
+- added and used the possibility to retrieve the results for the data grids via AJAX 
 
 ### Changes
 - reworked how ACL rules are getting updated
 - introduce `DataGridRepository` classes for the following modules:
     - Comments
     - Gallery pictures
-- updated the `pixeldeveloper/sitemap` to version 5.1.3
+- updated the `pixeldeveloper/sitemap` package to version 5.x
 
 ### Minor BC breaks
 - Changed the signature of the `AbstraactSitemapAvailabilityExtension::addUrl()` method to only accept `\DateTimeInterface` objects for the `$lastModificationDate` argument
