@@ -2,6 +2,7 @@ services:
   categories.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
     arguments:
+      - '@core.config'
       - '@core.i18n.translator'
       - '@core.validator'
       - '@categories.model.categories_repository'

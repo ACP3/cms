@@ -100,7 +100,6 @@ class Edit extends AbstractFormAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setSettings($this->config->getSettings(Categories\Installer\Schema::MODULE_NAME))
                 ->setCategoryId($id)
                 ->validate($formData);
 

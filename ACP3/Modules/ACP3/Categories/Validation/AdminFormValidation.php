@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Categories\Validation;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Installer\Schema;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\AllowedSuperiorCategoryValidationRule;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule;
@@ -35,11 +36,13 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
+     * @param \ACP3\Core\Settings\SettingsInterface                             $settings
      * @param \ACP3\Core\I18n\Translator                                        $translator
      * @param \ACP3\Core\Validation\Validator                                   $validator
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      */
     public function __construct(
+        Core\Settings\SettingsInterface $settings,
         Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
         CategoryRepository $categoryRepository
@@ -47,6 +50,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         parent::__construct($translator, $validator);
 
         $this->categoryRepository = $categoryRepository;
+        $this->settings = $settings;
     }
 
     /**
@@ -57,18 +61,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function setFile($file)
     {
         $this->file = $file;
-
-        return $this;
-    }
-
-    /**
-     * @param array $settings
-     *
-     * @return AdminFormValidation
-     */
-    public function setSettings($settings)
-    {
-        $this->settings = $settings;
 
         return $this;
     }
@@ -93,6 +85,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      */
     public function validate(array $formData)
     {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
@@ -110,9 +104,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'picture',
                     'message' => $this->translator->t('categories', 'invalid_image_selected'),
                     'extra' => [
-                        'width' => $this->settings['width'],
-                        'height' => $this->settings['height'],
-                        'filesize' => $this->settings['filesize'],
+                        'width' => $settings['width'],
+                        'height' => $settings['height'],
+                        'filesize' => $settings['filesize'],
                         'required' => false,
                     ],
                 ]
