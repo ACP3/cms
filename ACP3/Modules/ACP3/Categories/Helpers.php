@@ -71,8 +71,7 @@ class Helpers
         Cache $categoriesCache,
         CategoriesModel $categoriesModel,
         CategoryRepository $categoryRepository
-    )
-    {
+    ) {
         $this->acl = $acl;
         $this->translator = $translator;
         $this->modules = $modules;
@@ -129,8 +128,7 @@ class Helpers
         bool $categoryCreate = false,
         string $formFieldName = 'cat',
         ?string $customText = null
-    )
-    {
+    ) {
         $categories = $this->categoriesCache->getCache($moduleName);
         foreach ($categories as &$category) {
             $category['title'] = \str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
