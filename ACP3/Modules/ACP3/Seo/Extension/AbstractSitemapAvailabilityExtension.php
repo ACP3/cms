@@ -41,17 +41,21 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     }
 
     /**
-     * @param $routeName
-     * @param null|string $lastModificationDate
-     * @param bool|null   $isSecure
+     * @param string                  $routeName
+     * @param \DateTimeInterface|null $lastModificationDate
+     * @param bool|null               $isSecure
      *
      * @return $this
      */
-    protected function addUrl($routeName, $lastModificationDate = null, $isSecure = null)
+    protected function addUrl(string $routeName, ?\DateTimeInterface $lastModificationDate = null, ?bool $isSecure = null)
     {
         if ($this->pageIsIndexable($routeName)) {
-            $this->urls[] = (new Url($this->router->route($routeName, true, $isSecure)))
-                ->setLastMod($lastModificationDate);
+            $url = new Url($this->router->route($routeName, true, $isSecure));
+            if ($lastModificationDate !== null) {
+                $url->setLastMod($lastModificationDate);
+            }
+
+            $this->urls[] = $url;
         }
 
         return $this;
@@ -62,7 +66,7 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
      *
      * @return bool
      */
-    private function pageIsIndexable($routeName)
+    private function pageIsIndexable(string $routeName)
     {
         return \in_array($this->metaStatements->getRobotsSetting($routeName), ['index,follow', 'index,nofollow']);
     }

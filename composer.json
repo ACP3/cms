@@ -43,7 +43,7 @@
     "symfony/http-foundation": "^4.1",
     "symfony/http-kernel": "^4.1",
     "symfony/yaml": "^4.1",
-    "thepixeldeveloper/sitemap": "^4.4.2",
+    "thepixeldeveloper/sitemap": "^5.0",
     "tinymce/tinymce": "^4.8",
     "toflar/psr6-symfony-http-cache-store": "^1.0",
     "marcj/topsort": "^1.1",

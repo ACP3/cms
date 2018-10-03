@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "728a38b0f623149ab77f082a77be5099",
+    "content-hash": "26efbe8c247dec7e381c27445bf3a023",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -3291,23 +3291,25 @@
         },
         {
             "name": "thepixeldeveloper/sitemap",
-            "version": "4.5.5",
+            "version": "5.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ThePixelDeveloper/Sitemap.git",
-                "reference": "65063910023c62cb4e3293c64a75acfe06189866"
+                "reference": "a8bca8d8f8dbd478e88c4559c0d3565b28acf600"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ThePixelDeveloper/Sitemap/zipball/65063910023c62cb4e3293c64a75acfe06189866",
-                "reference": "65063910023c62cb4e3293c64a75acfe06189866",
+                "url": "https://api.github.com/repos/ThePixelDeveloper/Sitemap/zipball/a8bca8d8f8dbd478e88c4559c0d3565b28acf600",
+                "reference": "a8bca8d8f8dbd478e88c4559c0d3565b28acf600",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "php": ">=7.1"
             },
             "require-dev": {
-                "phpspec/phpspec": "^4.0"
+                "phpstan/phpstan": "^0",
+                "phpstan/phpstan-phpunit": "^0",
+                "phpunit/phpunit": "^7"
             },
             "type": "library",
             "autoload": {
@@ -3322,16 +3324,21 @@
             "authors": [
                 {
                     "name": "Mathew Davies",
-                    "homepage": "http://mathew-davies.co.uk",
                     "role": "Developer"
                 }
             ],
-            "description": "XML sitemap generation",
+            "description": "PHP XML sitemap generation",
             "keywords": [
                 "Sitemap",
-                "xml"
+                "php",
+                "sitemap-builder",
+                "sitemap-generator",
+                "sitemap-php",
+                "sitemap-xml",
+                "xml",
+                "xml-sitemap"
             ],
-            "time": "2017-10-02T20:06:17+00:00"
+            "time": "2018-06-24T16:00:39+00:00"
         },
         {
             "name": "tinymce/tinymce",
