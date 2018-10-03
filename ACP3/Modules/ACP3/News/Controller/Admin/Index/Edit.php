@@ -59,7 +59,7 @@ class Edit extends AbstractFormAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $news = $this->newsModel->getOneById($id);
 
@@ -92,7 +92,7 @@ class Edit extends AbstractFormAction
      *
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

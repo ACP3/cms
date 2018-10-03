@@ -72,6 +72,7 @@ class Create extends AbstractFormAction
 
     /**
      * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -93,7 +94,11 @@ class Create extends AbstractFormAction
             'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
             'options' => $this->getOptions(['comments' => '0']),
             'units' => $this->formsHelper->choicesGenerator('units', $this->getUnits(), ''),
-            'categories' => $this->categoriesHelpers->categoriesList(Files\Installer\Schema::MODULE_NAME, '', true),
+            'categories' => $this->categoriesHelpers->categoriesList(
+                Files\Installer\Schema::MODULE_NAME,
+                null,
+                true
+            ),
             'external' => $this->formsHelper->checkboxGenerator('external', $external),
             'form' => \array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
@@ -104,6 +109,7 @@ class Create extends AbstractFormAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {
