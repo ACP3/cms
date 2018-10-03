@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - updated the `pixeldeveloper/sitemap` package to version 5.x
 
 ### Minor BC breaks
-- Changed the signature of the `AbstraactSitemapAvailabilityExtension::addUrl()` method to only accept `\DateTimeInterface` objects for the `$lastModificationDate` argument
+- Changed the signature of the `AbstractSitemapAvailabilityExtension::addUrl()` method to only accept `\DateTimeInterface` objects for the `$lastModificationDate` argument
 
 ### Deprecations (to be removed with version 5.0.0)
 - Reworked the Smarty plugins:
