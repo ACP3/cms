@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.30.0] - 2018-10-03
 ### Added
 - Extended the audit log module
 - back ported the nested categories from ACP3.next 
@@ -721,7 +721,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.29.4...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.30.0...HEAD
+[4.30.0]: https://gitlab.com/ACP3/cms/compare/v4.29.4...v4.30.0
 [4.29.4]: https://gitlab.com/ACP3/cms/compare/v4.29.3...v4.29.4
 [4.29.3]: https://gitlab.com/ACP3/cms/compare/v4.29.2...v4.29.3
 [4.29.2]: https://gitlab.com/ACP3/cms/compare/v4.29.1...v4.29.2
