@@ -54,9 +54,9 @@ class Output
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getSrcFile(): ?string
+    public function getSrcFile(): string
     {
         return $this->srcFile;
     }
