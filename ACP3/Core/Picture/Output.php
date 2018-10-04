@@ -18,10 +18,6 @@ class Output
      */
     private $appPath;
     /**
-     * @var string
-     */
-    private $file;
-    /**
      * @var int
      */
     private $type;
@@ -50,17 +46,17 @@ class Output
      */
     private $destHeight;
 
-    public function __construct(ApplicationPath $appPath, string $file, int $type)
+    public function __construct(ApplicationPath $appPath, string $srcFile, int $type)
     {
         $this->appPath = $appPath;
-        $this->file = $file;
+        $this->srcFile = $srcFile;
         $this->type = $type;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getSrcFile(): ?string
+    public function getSrcFile(): string
     {
         return $this->srcFile;
     }
@@ -180,11 +176,7 @@ class Output
 
     public function getFile(): string
     {
-        if (!$this->getDestFile()) {
-            return $this->getSrcFile();
-        }
-
-        return $this->getDestFile();
+        return $this->getDestFile() ?? $this->getSrcFile();
     }
 
     public function getWidth(): int

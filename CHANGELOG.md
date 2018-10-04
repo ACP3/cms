@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.30.3] - 2018-10-04
+### Fixed
+- fixed a possible TypeError with the `ACP3\Core\Picture\Output` class
+
 ## [4.30.2] - 2018-10-04
 ### Fixed
 - fixed a possible TypeError when creating a download
@@ -11,17 +15,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.30.0] - 2018-10-03
 ### Added
 - Extended the audit log module
-- back ported the nested categories from ACP3.next 
+- back ported the nested categories from ACP3.next
+- added and used the possibility to retrieve the results for the data grids via AJAX 
 
 ### Changes
 - reworked how ACL rules are getting updated
 - introduce `DataGridRepository` classes for the following modules:
     - Comments
     - Gallery pictures
-- updated the `pixeldeveloper/sitemap` to version 5.1.3
+- updated the `pixeldeveloper/sitemap` package to version 5.x
 
 ### Minor BC breaks
-- Changed the signature of the `AbstraactSitemapAvailabilityExtension::addUrl()` method to only accept `\DateTimeInterface` objects for the `$lastModificationDate` argument
+- Changed the signature of the `AbstractSitemapAvailabilityExtension::addUrl()` method to only accept `\DateTimeInterface` objects for the `$lastModificationDate` argument
 
 ### Deprecations (to be removed with version 5.0.0)
 - Reworked the Smarty plugins:
@@ -725,7 +730,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.30.2...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.30.3...HEAD
+[4.30.3]: https://gitlab.com/ACP3/cms/compare/v4.30.2...v4.30.3
 [4.30.2]: https://gitlab.com/ACP3/cms/compare/v4.30.1...v4.30.2
 [4.30.1]: https://gitlab.com/ACP3/cms/compare/v4.30.0...v4.30.1
 [4.30.0]: https://gitlab.com/ACP3/cms/compare/v4.29.4...v4.30.0
