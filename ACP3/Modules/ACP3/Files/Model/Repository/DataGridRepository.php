@@ -24,8 +24,8 @@ class DataGridRepository extends AbstractDataGridRepository
         return [
             'main.*',
             'c.title AS cat',
-            "(SELECT MIN(`sort`) FROM {$this->getTableName()}) AS `first`",
-            "(SELECT MAX(`sort`) FROM {$this->getTableName()}) AS `last`",
+            "(SELECT MIN(fmin.`sort`) FROM {$this->getTableName()} fmin WHERE fmin.category_id = main.category_id) AS `first`",
+            "(SELECT MAX(fmax.`sort`) FROM {$this->getTableName()} fmax WHERE fmax.category_id = main.category_id) AS `last`",
         ];
     }
 

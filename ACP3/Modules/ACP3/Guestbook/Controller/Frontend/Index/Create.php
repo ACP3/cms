@@ -38,10 +38,6 @@ class Create extends AbstractAction
      * @var \ACP3\Core\Helpers\SendEmail
      */
     private $sendEmailHelper;
-    /**
-     * @var bool
-     */
-    protected $newsletterActive = false;
 
     /**
      * Create constructor.
@@ -73,19 +69,12 @@ class Create extends AbstractAction
         $this->newsletterSubscribeHelper = $newsletterSubscribeHelper;
     }
 
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        $this->newsletterActive = ($this->guestbookSettings['newsletter_integration'] == 1);
-    }
-
     /**
      * @return array
      */
     public function execute()
     {
-        if ($this->newsletterActive === true && $this->newsletterSubscribeHelper) {
+        if ($this->guestbookSettings['newsletter_integration'] == 1 && $this->newsletterSubscribeHelper) {
             $newsletterSubscription = [
                 1 => $this->translator->t(
                     'guestbook',
@@ -120,7 +109,6 @@ class Create extends AbstractAction
 
                 $this->formValidation
                     ->setIpAddress($ipAddress)
-                    ->setNewsletterAccess($this->newsletterActive)
                     ->validate($formData);
 
                 $formData['date'] = 'now';

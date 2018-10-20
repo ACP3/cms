@@ -26,4 +26,7 @@
         <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
         {$form_token}
     </div>
+    {javascripts}
+        {include_js module="guestbook" file="frontend/index.create_modal"}
+    {/javascripts}
 {/block}

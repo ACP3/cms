@@ -55,7 +55,7 @@ class LinkModeValidationRule extends AbstractValidationRule
             $uri = \next($field);
             $articleId = \next($field);
 
-            return $this->isValidLink($data[$mode], $data[$moduleName], $data[$uri], $data[$articleId]);
+            return $this->isValidLink((int) $data[$mode], $data[$moduleName], $data[$uri], (int) $data[$articleId]);
         }
 
         return false;
