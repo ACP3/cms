@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed a possible JavaScript bug when reCaptcha was activated, but no captcha was displayed on the current page
+- fixed the guestbook modal form submission using the AJAX form
+- improved sorting of the entries within the files data grid
+
 ## [4.30.3] - 2018-10-04
 ### Fixed
 - fixed a possible TypeError with the `ACP3\Core\Picture\Output` class
