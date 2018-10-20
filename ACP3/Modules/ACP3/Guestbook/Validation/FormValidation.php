@@ -8,6 +8,9 @@
 namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
+use ACP3\Core\I18n\Translator;
+use ACP3\Core\Validation\Validator;
+use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 use ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule;
 use ACP3\Modules\ACP3\Newsletter;
 
@@ -18,9 +21,19 @@ class FormValidation extends Core\Validation\AbstractFormValidation
      */
     protected $ipAddress = '';
     /**
-     * @var bool
+     * @var \ACP3\Core\Settings\SettingsInterface
      */
-    protected $newsletterAccess = false;
+    private $settings;
+
+    public function __construct(
+        Translator $translator,
+        Validator $validator,
+        Core\Settings\SettingsInterface $settings)
+    {
+        parent::__construct($translator, $validator);
+
+        $this->settings = $settings;
+    }
 
     /**
      * @param string $ipAddress
@@ -35,22 +48,14 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param bool $newsletterAccess
-     *
-     * @return $this
-     */
-    public function setNewsletterAccess($newsletterAccess)
-    {
-        $this->newsletterAccess = (bool) $newsletterAccess;
-
-        return $this;
-    }
-
-    /**
      * {@inheritdoc}
+     *
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function validate(array $formData)
     {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
@@ -89,29 +94,18 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                         'message' => $this->translator->t('system', 'wrong_email_format'),
                     ]
                 );
-        }
 
-        if ($this->newsletterAccess === true && isset($formData['subscribe_newsletter'])) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\EmailValidationRule::class,
-                    [
-                        'data' => $formData,
-                        'field' => 'mail',
-                        'message' => $this->translator->t(
-                            'guestbook',
-                            'type_in_email_address_to_subscribe_to_newsletter'
-                        ),
-                    ]
-                )
-                ->addConstraint(
-                    Newsletter\Validation\ValidationRules\AccountExistsValidationRule::class,
-                    [
-                        'data' => $formData,
-                        'field' => 'mail',
-                        'message' => $this->translator->t('newsletter', 'account_exists'),
-                    ]
-                );
+            if ($settings['newsletter_integration'] == 1 && isset($formData['subscribe_newsletter'])) {
+                $this->validator
+                    ->addConstraint(
+                        Newsletter\Validation\ValidationRules\AccountExistsValidationRule::class,
+                        [
+                            'data' => $formData,
+                            'field' => 'mail',
+                            'message' => $this->translator->t('newsletter', 'account_exists'),
+                        ]
+                    );
+            }
         }
 
         $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);

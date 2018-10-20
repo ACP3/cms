@@ -22,7 +22,11 @@ jQuery(document).on('acp3.captcha.recaptcha', function () {
 });
 
 jQuery(document).on('acp3.ajaxFrom.submit.fail', function (event, ajaxForm) {
-    grecaptcha.reset(
-        jQuery(ajaxForm.element).find('.recaptcha-placeholder').data('recaptchaId')
-    );
+    const $reCaptchaPlaceholder = jQuery(ajaxForm.element).find('.recaptcha-placeholder');
+
+    if ($reCaptchaPlaceholder && $reCaptchaPlaceholder.length > 0) {
+        grecaptcha.reset(
+            $reCaptchaPlaceholder.data('recaptchaId')
+        );
+    }
 });

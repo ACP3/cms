@@ -1,7 +1,10 @@
 services:
   guestbook.validation.form_validation:
     class: ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
-    parent: core.validator.abstract
+    arguments:
+      - '@core.i18n.translator'
+      - '@core.validator'
+      - '@core.config'
 
   guestbook.validation.admin_form_validation:
     class: ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation

@@ -101,6 +101,9 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param string $layout
      *
      * @return string
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function buildCacheId(string $type, string $layout): string
     {
@@ -112,6 +115,9 @@ abstract class AbstractMinifier implements MinifierInterface
      * @param string $layout
      *
      * @return string
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function generateFilenameHash(string $group, string $layout): string
     {
@@ -132,6 +138,9 @@ abstract class AbstractMinifier implements MinifierInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getURI(string $layout = 'layout'): string
     {
