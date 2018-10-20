@@ -76,6 +76,9 @@ class Migration extends Modules\Installer\AbstractMigration
             44 => [
                 'ALTER TABLE `{pre}gallery_pictures` ADD COLUMN `title` VARCHAR(120) NOT NULL AFTER `file`;',
             ],
+            45 => [
+                'ALTER TABLE `{pre}gallery` ADD COLUMN `description` TEXT NOT NULL AFTER `title`;',
+            ],
         ];
     }
 

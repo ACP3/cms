@@ -65,7 +65,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 44;
+        return 45;
     }
 
     /**
@@ -80,6 +80,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `end` DATETIME NOT NULL,
                 `updated_at` DATETIME NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
+                `description` TEXT NOT NULL,
                 `user_id` INT UNSIGNED,
                 PRIMARY KEY (`id`),
                 INDEX (`user_id`),

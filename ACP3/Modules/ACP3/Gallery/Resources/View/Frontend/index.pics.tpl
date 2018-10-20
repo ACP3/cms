@@ -1,6 +1,9 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
+    {if !empty($gallery.description)}
+        {$gallery.description}
+    {/if}
     {if !empty($pictures)}
         {if $overlay == 1}
             {foreach $pictures as $row}

@@ -9,6 +9,7 @@
             <div id="tab-1" class="tab-pane fade in active">
                 {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="gallery|title"}}
+                {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="description" value=$form.description toolbar="simple" label={lang t="system|description"}}
             </div>
             {event name="core.layout.form_extension"  uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
         </div>
