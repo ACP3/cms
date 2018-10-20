@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.30.4] - 2018-10-20
 ### Fixed
 - fixed a possible JavaScript bug when reCaptcha was activated, but no captcha was displayed on the current page
 - fixed the guestbook modal form submission using the AJAX form
@@ -736,7 +736,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.30.3...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.30.4...HEAD
+[4.30.4]: https://gitlab.com/ACP3/cms/compare/v4.30.3...v4.30.4
 [4.30.3]: https://gitlab.com/ACP3/cms/compare/v4.30.2...v4.30.3
 [4.30.2]: https://gitlab.com/ACP3/cms/compare/v4.30.1...v4.30.2
 [4.30.1]: https://gitlab.com/ACP3/cms/compare/v4.30.0...v4.30.1
