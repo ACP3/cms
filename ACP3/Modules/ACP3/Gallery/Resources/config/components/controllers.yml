@@ -8,6 +8,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.model.gallery_model'
       - '@gallery.validation.gallery_form_validation'
@@ -27,6 +28,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.model.gallery_model'
       - '@gallery.validation.gallery_form_validation'

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
+        <item key="active">Active</item>
         <item key="admin_index_create">Create new gallery</item>
         <item key="admin_index_delete">Delete galleries</item>
         <item key="admin_index_edit">Edit gallery</item>

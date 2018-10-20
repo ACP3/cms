@@ -61,7 +61,7 @@ class Download extends Core\Controller\AbstractFrontendAction
      * @throws Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $file = $this->filesCache->getCache($id);

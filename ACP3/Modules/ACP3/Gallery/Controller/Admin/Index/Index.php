@@ -66,10 +66,20 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $input
             ->addColumn([
+                'label' => $this->translator->t('gallery', 'active'),
+                'type' => Core\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer::class,
+                'fields' => ['active'],
+                'custom' => [
+                    'search' => [0, 1],
+                    'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')],
+                ],
+            ], 40)
+            ->addColumn([
                 'label' => $this->translator->t('system', 'publication_period'),
                 'type' => Core\DataGrid\ColumnRenderer\DateColumnRenderer::class,
                 'fields' => ['start', 'end'],
                 'default_sort' => true,
+                'default_sort_direction' => 'desc',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'title'),

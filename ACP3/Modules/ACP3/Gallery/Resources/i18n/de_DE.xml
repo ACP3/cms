@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
+        <item key="active">Aktiv</item>
         <item key="admin_index_create">Neue Fotogalerie erstellen</item>
         <item key="admin_index_delete">Fotogalerien löschen</item>
         <item key="admin_index_edit">Fotogalerie bearbeiten</item>

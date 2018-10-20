@@ -58,7 +58,7 @@ class Files extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($cat)
+    public function execute(int $cat)
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);

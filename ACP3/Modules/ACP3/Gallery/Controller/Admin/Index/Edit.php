@@ -24,17 +24,23 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var Gallery\Model\GalleryModel
      */
     protected $galleryModel;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    private $formsHelper;
 
     /**
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext               $context
+     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
      * @param Gallery\Model\GalleryModel                                  $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation
@@ -44,6 +50,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->formTokenHelper = $formTokenHelper;
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
+        $this->formsHelper = $formsHelper;
     }
 
     /**
@@ -62,6 +69,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
             $this->title->setPageTitlePrefix($gallery['title']);
 
             return [
+                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $gallery['active']),
                 'form' => \array_merge($gallery, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
                 'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
