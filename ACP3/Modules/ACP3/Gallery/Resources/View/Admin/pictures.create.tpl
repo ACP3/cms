@@ -6,6 +6,7 @@
     {block GALLERY_PICTURE_UPLOAD}
         {include file="asset:System/Partials/form_group.input_file.tpl" name="file" required=true label={lang t="gallery|select_picture"}}
     {/block}
+    {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title label={lang t="gallery|title"}}
     {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="description" value=$form.description toolbar="simple" label={lang t="system|description"}}
     {if isset($options)}
         {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}

@@ -69,8 +69,9 @@ class Edit extends AbstractFormAction
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $picture = $this->pictureModel->getOneById($id);
 
@@ -104,8 +105,10 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         $picture = $this->pictureModel->getOneById($id);
 

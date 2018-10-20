@@ -73,6 +73,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}gallery_pictures` MODIFY COLUMN `description` TEXT {charset} NOT NULL;',
                 'ALTER TABLE `{pre}gallery_pictures` CONVERT TO {charset};',
             ],
+            44 => [
+                'ALTER TABLE `{pre}gallery_pictures` ADD COLUMN `title` VARCHAR(120) NOT NULL AFTER `file`;',
+            ],
         ];
     }
 

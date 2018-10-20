@@ -42,7 +42,10 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getGalleryTitle(int $galleryId)
     {
-        return $this->db->fetchColumn('SELECT title FROM ' . $this->getTableName() . ' WHERE id = ?', [$galleryId]);
+        return $this->db->fetchColumn(
+            'SELECT title FROM ' . $this->getTableName() . ' WHERE id = ?',
+            [$galleryId]
+        );
     }
 
     /**

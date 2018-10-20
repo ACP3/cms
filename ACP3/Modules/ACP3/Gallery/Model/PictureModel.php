@@ -74,6 +74,7 @@ class PictureModel extends AbstractModel
     {
         return [
             'gallery_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'comments' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,

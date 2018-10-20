@@ -65,7 +65,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 43;
+        return 44;
     }
 
     /**
@@ -90,6 +90,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `pic` INT(10) UNSIGNED NOT NULL,
                 `gallery_id` INT(10) UNSIGNED NOT NULL,
                 `file` VARCHAR(120) NOT NULL,
+                `title` VARCHAR(120) NOT NULL,
                 `description` TEXT NOT NULL,
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`),
