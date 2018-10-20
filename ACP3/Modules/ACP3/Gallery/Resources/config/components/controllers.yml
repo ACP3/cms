@@ -79,6 +79,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.helpers'
+      - '@gallery.model.galleryrepository'
       - '@gallery.model.picture_model'
       - '@gallery.validation.picture_form_validation'
       - '@gallery.helpers.upload'

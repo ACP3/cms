@@ -113,7 +113,7 @@ class Create extends AbstractFormAction
                 $this->pictureFormValidation
                     ->setFileRequired(true)
                     ->setFile($file)
-                    ->validate([]);
+                    ->validate($formData);
 
                 $result = $this->galleryUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
 

@@ -60,11 +60,30 @@ class PictureModel extends AbstractModel
         ]);
 
         if ($entryId === null) {
-            $picNum = $this->repository->getLastPictureByGalleryId($data['gallery_id']);
-            $data['pic'] = !\is_null($picNum) ? $picNum + 1 : 1;
+            $data['pic'] = $this->getPictureSortIndex($data['gallery_id']);
+        } else {
+            $picture = $this->repository->getOneById($entryId);
+
+            if ((int) $data['gallery_id'] !== (int) $picture['gallery_id']) {
+                $data['pic'] = $this->getPictureSortIndex($data['gallery_id']);
+            }
         }
 
         return parent::save($data, $entryId);
+    }
+
+    /**
+     * @param int $galleryId
+     *
+     * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function getPictureSortIndex(int $galleryId): int
+    {
+        $picNum = $this->repository->getLastPictureByGalleryId($galleryId);
+
+        return !\is_null($picNum) ? $picNum + 1 : 1;
     }
 
     /**

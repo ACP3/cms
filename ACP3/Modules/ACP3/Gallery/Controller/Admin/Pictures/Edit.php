@@ -33,23 +33,29 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Core\Helpers\Upload
      */
     private $galleryUploadHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     */
+    private $galleryRepository;
 
     /**
      * Edit constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
-     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                          $galleryHelpers
-     * @param Gallery\Model\PictureModel                                  $pictureModel
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation $pictureFormValidation
-     * @param \ACP3\Core\Helpers\Upload                                   $galleryUploadHelper
+     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
+     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
+     * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
+     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
+     * @param Gallery\Model\PictureModel                                    $pictureModel
+     * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation   $pictureFormValidation
+     * @param \ACP3\Core\Helpers\Upload                                     $galleryUploadHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
+        Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\PictureModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation,
         Core\Helpers\Upload $galleryUploadHelper
@@ -61,6 +67,7 @@ class Edit extends AbstractFormAction
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
         $this->galleryUploadHelper = $galleryUploadHelper;
+        $this->galleryRepository = $galleryRepository;
     }
 
     /**
@@ -93,12 +100,32 @@ class Edit extends AbstractFormAction
 
             return [
                 'form' => \array_merge($picture, $this->request->getPost()->all()),
+                'galleries' => $this->formsHelper->choicesGenerator(
+                    'gallery_id',
+                    $this->getGalleries(),
+                    $picture['gallery_id']
+                ),
                 'gallery_id' => $picture['gallery_id'],
                 'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
+    }
+
+    /**
+     * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function getGalleries(): array
+    {
+        $galleries = [];
+        foreach ($this->galleryRepository->getAll() as $gallery) {
+            $galleries[$gallery['id']] = $gallery['title'];
+        }
+
+        return $galleries;
     }
 
     /**
@@ -122,7 +149,7 @@ class Edit extends AbstractFormAction
                 $this->pictureFormValidation
                     ->setFileRequired(false)
                     ->setFile($file)
-                    ->validate([]);
+                    ->validate($formData);
 
                 if (!empty($file)) {
                     $result = $this->galleryUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
@@ -131,8 +158,6 @@ class Edit extends AbstractFormAction
 
                     $formData['file'] = $result['name'];
                 }
-
-                $formData['gallery_id'] = $picture['gallery_id'];
 
                 return $this->pictureModel->save($formData, $id);
             },
