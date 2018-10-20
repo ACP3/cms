@@ -138,3 +138,9 @@ services:
       - '@core.date'
       - '@gallery.model.galleryrepository'
 
+  gallery.controller.widget.index.pictures:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Pictures
+    arguments:
+    - '@core.context.widget'
+    - '@gallery.model.galleryrepository'
+    - '@gallery.cache'

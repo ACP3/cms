@@ -47,6 +47,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
+                    'pictures' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
             ],
         ];
@@ -65,7 +66,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 45;
+        return 46;
     }
 
     /**

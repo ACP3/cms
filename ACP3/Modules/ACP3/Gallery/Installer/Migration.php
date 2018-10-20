@@ -79,6 +79,9 @@ class Migration extends Modules\Installer\AbstractMigration
             45 => [
                 'ALTER TABLE `{pre}gallery` ADD COLUMN `description` TEXT NOT NULL AFTER `title`;',
             ],
+            46 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'widget', 'index', 'pictures', '', 1);",
+            ],
         ];
     }
 

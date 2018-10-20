@@ -68,6 +68,7 @@ class Create extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
