@@ -35,6 +35,7 @@ abstract class AbstractFormValidation
     /**
      * @param array $formData
      *
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */

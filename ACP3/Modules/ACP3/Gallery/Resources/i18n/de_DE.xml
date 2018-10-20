@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
+        <item key="active">Aktiv</item>
         <item key="admin_index_create">Neue Fotogalerie erstellen</item>
         <item key="admin_index_delete">Fotogalerien löschen</item>
         <item key="admin_index_edit">Fotogalerie bearbeiten</item>
@@ -17,6 +18,7 @@
         <item key="image_filesize">Maximale Dateigröße des Bildes</item>
         <item key="image_height">Maximal anzuzeigende Bildhöhe</item>
         <item key="image_width">Maximal anzuzeigende Bildbreite</item>
+        <item key="invalid_gallery_selected">Bitte wählen Sie eine gültige Fotogalerie aus.</item>
         <item key="invalid_image_filesize_entered">Bitte geben Sie die maximale Dateigröße des Bildes in Byte an.</item>
         <item key="invalid_image_height_entered">Bitte geben Sie die maximale Bildhöhe in Pixel an.</item>
         <item key="invalid_image_selected">Entweder haben Sie ein unerlaubtes Dateiformat verwendet oder das Bild ist zu breit, zu hoch oder zu groß.</item>
@@ -25,6 +27,7 @@
         <item key="max_image_height">Maximale Bildhöhe</item>
         <item key="max_image_width">Maximale Bildbreite</item>
         <item key="mod_description">Mit diesem Modul können die Fotogalerien verwaltet werden.</item>
+        <item key="move_to_gallery">Zu anderer Galerie verschieben</item>
         <item key="next_image">Nächstes Bild</item>
         <item key="no_picture_selected">Bitte wählen Sie ein Bild aus.</item>
         <item key="no_pictures">Zu dieser Fotogalerie wurden noch keine Bilder hinzugefügt.</item>

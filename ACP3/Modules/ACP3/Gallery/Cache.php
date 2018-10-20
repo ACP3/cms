@@ -59,6 +59,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @return array
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getCache(int $galleryId)
     {
@@ -77,6 +78,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      * @return bool
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function saveCache(int $galleryId)
     {

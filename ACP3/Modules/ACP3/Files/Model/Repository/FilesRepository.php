@@ -84,6 +84,8 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      * @param int|null $categoryId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function countAll(string $time = '', ?int $categoryId = null)
     {
