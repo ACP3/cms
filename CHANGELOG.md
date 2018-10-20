@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- added the possibility to add a description to galleries
+- added the possibility to add a title to gallery pictures
+- added the possibility to move existing gallery pictures to an other gallery
+
 ## [4.30.4] - 2018-10-20
 ### Fixed
 - fixed a possible JavaScript bug when reCaptcha was activated, but no captcha was displayed on the current page
