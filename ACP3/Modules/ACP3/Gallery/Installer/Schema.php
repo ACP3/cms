@@ -47,6 +47,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'widget' => [
                 'index' => [
                     'index' => PrivilegeEnum::FRONTEND_VIEW,
+                    'pictures' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
             ],
         ];
@@ -65,7 +66,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 43;
+        return 47;
     }
 
     /**
@@ -76,10 +77,12 @@ class Schema implements Modules\Installer\SchemaInterface
         return [
             'CREATE TABLE `{pre}gallery` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `active` TINYINT(1) NOT NULL,
                 `start` DATETIME NOT NULL,
                 `end` DATETIME NOT NULL,
                 `updated_at` DATETIME NOT NULL,
                 `title` VARCHAR(120) NOT NULL,
+                `description` TEXT NOT NULL,
                 `user_id` INT UNSIGNED,
                 PRIMARY KEY (`id`),
                 INDEX (`user_id`),
@@ -90,6 +93,7 @@ class Schema implements Modules\Installer\SchemaInterface
                 `pic` INT(10) UNSIGNED NOT NULL,
                 `gallery_id` INT(10) UNSIGNED NOT NULL,
                 `file` VARCHAR(120) NOT NULL,
+                `title` VARCHAR(120) NOT NULL,
                 `description` TEXT NOT NULL,
                 `comments` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`),

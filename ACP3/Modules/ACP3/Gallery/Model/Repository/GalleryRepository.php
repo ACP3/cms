@@ -25,11 +25,11 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function galleryExists(int $galleryId, string $time = '')
     {
-        $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() : '';
+        $period = !empty($time) ? ' AND `active` = :active AND ' . $this->getPublicationPeriod() : '';
 
         return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
-                ['id' => $galleryId, 'time' => $time]
+                ['id' => $galleryId, 'active' => 1, 'time' => $time]
         ) > 0;
     }
 
@@ -42,7 +42,10 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getGalleryTitle(int $galleryId)
     {
-        return $this->db->fetchColumn('SELECT title FROM ' . $this->getTableName() . ' WHERE id = ?', [$galleryId]);
+        return $this->db->fetchColumn(
+            'SELECT title FROM ' . $this->getTableName() . ' WHERE id = ?',
+            [$galleryId]
+        );
     }
 
     /**
@@ -54,11 +57,11 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function countAll(string $time)
     {
-        $where = $time !== '' ? ' WHERE ' . $this->getPublicationPeriod() : '';
+        $where = !empty($time) ? ' WHERE `active` = :active AND ' . $this->getPublicationPeriod() : '';
 
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
-            ['time' => $time]
+            ['active' => 1, 'time' => $time]
         );
     }
 
@@ -73,7 +76,7 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
     {
-        $where = $time !== '' ? ' WHERE ' . $this->getPublicationPeriod('g.') : '';
+        $where = !empty($time) ? ' WHERE `active` = :active AND ' . $this->getPublicationPeriod('g.') : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 
         return $this->db->fetchAll(
@@ -83,13 +86,13 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
                        (SELECT fp.`file` FROM {$this->getTableName(PictureRepository::TABLE_NAME)} AS fp WHERE fp.gallery_id = g.id ORDER BY fp.pic ASC LIMIT 1) AS file
                        FROM {$this->getTableName()} AS g
                   LEFT JOIN {$this->getTableName(PictureRepository::TABLE_NAME)} AS p ON(g.id = p.gallery_id)
-                  {$where}
+                   {$where}
                    GROUP BY g.id
                    ORDER BY g.start DESC,
                             g.end DESC,
                             g.id DESC
                    {$limitStmt};",
-            ['time' => $time]
+            ['active' => 1, 'time' => $time]
         );
     }
 }

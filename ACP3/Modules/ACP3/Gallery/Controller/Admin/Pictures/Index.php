@@ -103,6 +103,11 @@ class Index extends AbstractFrontendAction
                 ],
             ], 40)
             ->addColumn([
+                'label' => $this->translator->t('gallery', 'title'),
+                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
+                'fields' => ['title'],
+            ], 35)
+            ->addColumn([
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],

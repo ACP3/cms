@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Validation;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Gallery\Validation\ValidationRules\GalleryExistsValidationRule;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PictureFormValidation extends Core\Validation\AbstractFormValidation
@@ -63,6 +64,18 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
                     ],
                 ]
             );
+
+        if (!empty($formData['gallery_id'])) {
+            $this->validator
+                ->addConstraint(
+                    GalleryExistsValidationRule::class,
+                    [
+                        'data' => $formData,
+                        'field' => 'gallery_id',
+                        'message' => $this->translator->t('gallery', 'invalid_gallery_selected'),
+                    ]
+                );
+        }
 
         $this->validator->validate();
     }

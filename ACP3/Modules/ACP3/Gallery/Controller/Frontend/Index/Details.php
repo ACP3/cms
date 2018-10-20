@@ -70,10 +70,16 @@ class Details extends AbstractAction
 
             $this->breadcrumb
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')
-                ->append($picture['gallery_title'], 'gallery/index/pics/id_' . $picture['gallery_id'])
-                ->append($this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
+                ->append($picture['gallery_title'], 'gallery/index/pics/id_' . $picture['gallery_id']);
 
-            $this->title->setPageTitlePrefix($picture['gallery_title']);
+            if (!empty($picture['title'])) {
+                $this->breadcrumb->append($picture['title']);
+            } else {
+                $this->breadcrumb
+                    ->append($this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
+            }
+
+            $this->title->setPageTitlePostfix($picture['gallery_title']);
 
             $output = $this->thumbnailGenerator->generateThumbnail($picture['file'], '');
             $picture['file'] = $output->getFileWeb();

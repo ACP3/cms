@@ -22,6 +22,7 @@ class GalleryDataGridRepository extends AbstractDataGridRepository
     {
         return [
             'main.id',
+            'main.active',
             'main.start',
             'main.end',
             'main.title',
@@ -48,16 +49,5 @@ class GalleryDataGridRepository extends AbstractDataGridRepository
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {
         $queryBuilder->addGroupBy('main.id');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
-    {
-        $queryBuilder
-            ->addOrderBy('main.start', 'DESC')
-            ->addOrderBy('main.end', 'DESC')
-            ->addOrderBy('main.id', 'DESC');
     }
 }

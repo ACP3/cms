@@ -69,8 +69,9 @@ class Create extends AbstractFormAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->galleryRepository->galleryExists($id) === true) {
             $gallery = $this->galleryRepository->getGalleryTitle($id);
@@ -84,7 +85,7 @@ class Create extends AbstractFormAction
             }
 
             return [
-                'form' => \array_merge(['description' => ''], $this->request->getPost()->all()),
+                'form' => \array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
                 'gallery_id' => $id,
                 'form_token' => $this->formTokenHelper->renderFormToken(),
             ];
@@ -97,8 +98,10 @@ class Create extends AbstractFormAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(
             function () use ($id) {
@@ -110,7 +113,7 @@ class Create extends AbstractFormAction
                 $this->pictureFormValidation
                     ->setFileRequired(true)
                     ->setFile($file)
-                    ->validate([]);
+                    ->validate($formData);
 
                 $result = $this->galleryUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
 

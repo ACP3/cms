@@ -73,6 +73,19 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}gallery_pictures` MODIFY COLUMN `description` TEXT {charset} NOT NULL;',
                 'ALTER TABLE `{pre}gallery_pictures` CONVERT TO {charset};',
             ],
+            44 => [
+                'ALTER TABLE `{pre}gallery_pictures` ADD COLUMN `title` VARCHAR(120) NOT NULL AFTER `file`;',
+            ],
+            45 => [
+                'ALTER TABLE `{pre}gallery` ADD COLUMN `description` TEXT NOT NULL AFTER `title`;',
+            ],
+            46 => [
+                "INSERT INTO `{pre}acl_resources` (`id`, `module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES('', '{moduleId}', 'widget', 'index', 'pictures', '', 1);",
+            ],
+            47 => [
+                'ALTER TABLE `{pre}gallery` ADD COLUMN `active` TINYINT(1) NOT NULL AFTER `id`;',
+                'UPDATE `{pre}gallery` SET `active` = 1',
+            ],
         ];
     }
 

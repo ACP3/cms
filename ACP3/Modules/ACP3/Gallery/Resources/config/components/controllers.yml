@@ -8,6 +8,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.model.gallery_model'
       - '@gallery.validation.gallery_form_validation'
@@ -27,6 +28,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.model.gallery_model'
       - '@gallery.validation.gallery_form_validation'
@@ -77,6 +79,7 @@ services:
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.helpers'
+      - '@gallery.model.galleryrepository'
       - '@gallery.model.picture_model'
       - '@gallery.validation.picture_form_validation'
       - '@gallery.helpers.upload'
@@ -138,3 +141,9 @@ services:
       - '@core.date'
       - '@gallery.model.galleryrepository'
 
+  gallery.controller.widget.index.pictures:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Pictures
+    arguments:
+    - '@core.context.widget'
+    - '@gallery.model.galleryrepository'
+    - '@gallery.cache'
