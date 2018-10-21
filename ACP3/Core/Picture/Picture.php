@@ -47,7 +47,7 @@ class Picture
         if (\is_file($input->getFile()) === true) {
             $cacheFile = $this->getCacheFileName($input);
 
-            $picInfo = $this->fastImageSize->getImageSize($input->getFile());
+            $picInfo = $this->getPictureInfo($input->getFile());
 
             $output = new Output($this->appPath, $input->getFile(), $picInfo['type']);
             $output->setSrcWidth($picInfo['width']);
@@ -94,6 +94,37 @@ class Picture
     private function getCacheName(Input $input): string
     {
         return $input->getCachePrefix() . \substr($input->getFile(), \strrpos($input->getFile(), '/') + 1);
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return array
+     *
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     */
+    private function getPictureInfo(string $fileName): array
+    {
+        $picInfo = $this->fastImageSize->getImageSize($fileName);
+
+        // If fastImageSize fails, try it with PHP's standard getimagesize() function
+        if ($picInfo === false) {
+            $info = \getimagesize($fileName);
+
+            if ($info === false) {
+                throw new PictureGenerateException(
+                    \sprintf('Could not get image size information for picture <%s>!', $fileName)
+                );
+            }
+
+            $picInfo = [
+                'width' => $info[0],
+                'height' => $info[1],
+                'type' => $info[2],
+            ];
+        }
+
+        return $picInfo;
     }
 
     /**

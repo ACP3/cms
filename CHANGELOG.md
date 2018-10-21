@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fallback to PHP's standard `getimagesize()` function if the FastImageSize library fails to retrieve the information of a picture
+
 ## [4.31.0] - 2018-10-21
 ### Added
 - added the possibility to add a description to galleries
