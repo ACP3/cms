@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.31.1] - 2018-10-21
 ### Fixed
 - fallback to PHP's standard `getimagesize()` function if the FastImageSize library fails to retrieve the information of a picture
 
@@ -746,7 +746,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.31.0...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.31.1...HEAD
+[4.31.1]: https://gitlab.com/ACP3/cms/compare/v4.31.0...v4.31.1
 [4.31.0]: https://gitlab.com/ACP3/cms/compare/v4.30.4...v4.31.0
 [4.30.4]: https://gitlab.com/ACP3/cms/compare/v4.30.3...v4.30.4
 [4.30.3]: https://gitlab.com/ACP3/cms/compare/v4.30.2...v4.30.3
