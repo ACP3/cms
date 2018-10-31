@@ -43,7 +43,7 @@ class RouteColumnRenderer extends AbstractColumnRenderer
         if (!empty($column['custom']['path'])) {
             $route = $this->router->route(\sprintf($column['custom']['path'], $value));
             $pattern = <<<HTML
-<a href="%s" target="_blank" title="%s">%s <small><i class="glyphicon glyphicon-link"></i></small></a>
+<a href="%s" target="_blank" title="%s">%s <small><i class="fas fa-link"></i></small></a>
 HTML;
             $value = \sprintf(
                 $pattern,

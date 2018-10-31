@@ -5,17 +5,17 @@
 {/block}
 {block CONTENT_AJAX_FORM}
     <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
-            <li><a href="#tab-site-title" data-toggle="tab">{lang t="system|site_title"}</a></li>
-            <li><a href="#tab-2" data-toggle="tab">{lang t="system|localization"}</a></li>
-            <li><a href="#tab-cookie-consent" data-toggle="tab">{lang t="system|cookie_consent"}</a></li>
-            <li><a href="#tab-3" data-toggle="tab">{lang t="system|maintenance"}</a></li>
-            <li><a href="#tab-5" data-toggle="tab">{lang t="system|performance"}</a></li>
-            <li><a href="#tab-6" data-toggle="tab">{lang t="system|email"}</a></li>
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item"><a href="#tab-1" class="nav-link active" data-toggle="tab">{lang t="system|general"}</a></li>
+            <li class="nav-item"><a href="#tab-site-title" class="nav-link" data-toggle="tab">{lang t="system|site_title"}</a></li>
+            <li class="nav-item"><a href="#tab-2" class="nav-link" data-toggle="tab">{lang t="system|localization"}</a></li>
+            <li class="nav-item"><a href="#tab-cookie-consent" class="nav-link" data-toggle="tab">{lang t="system|cookie_consent"}</a></li>
+            <li class="nav-item"><a href="#tab-3" class="nav-link" data-toggle="tab">{lang t="system|maintenance"}</a></li>
+            <li class="nav-item"><a href="#tab-5" class="nav-link" data-toggle="tab">{lang t="system|performance"}</a></li>
+            <li class="nav-item"><a href="#tab-6" class="nav-link" data-toggle="tab">{lang t="system|email"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane fade in active">
+            <div id="tab-1" class="tab-pane fade show active">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="homepage" value=$form.homepage required=true label={lang t="system|homepage"} help={lang t="system|homepage_description"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$entries required=true label={lang t="system|records_per_page"}}
                 {include file="asset:System/Partials/form_group.input_number.tpl" name="flood" value=$form.flood required=true label={lang t="system|flood_barrier"} help={lang t="system|flood_barrier_description"}}
@@ -31,8 +31,8 @@
                 </div>
             </div>
             <div id="tab-2" class="tab-pane fade">
-                <div class="form-group">
-                    <label for="language" class="col-sm-2 control-label required">{lang t="system|language"}</label>
+                <div class="form-group row">
+                    <label for="language" class="col-sm-2 col-form-label required">{lang t="system|language"}</label>
 
                     <div class="col-sm-10">
                         <select class="form-control" name="language" id="language" size="{count($languages)}" required>
@@ -44,8 +44,8 @@
                 </div>
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="system|date_format_short"} help={lang t="system|php_date_function"}}
-                <div class="form-group">
-                    <label for="date-time-zone" class="col-sm-2 control-label required">{lang t="system|time_zone"}</label>
+                <div class="form-group row">
+                    <label for="date-time-zone" class="col-sm-2 col-form-label required">{lang t="system|time_zone"}</label>
 
                     <div class="col-sm-10">
                         <select class="form-control" name="date_time_zone" id="date-time-zone">

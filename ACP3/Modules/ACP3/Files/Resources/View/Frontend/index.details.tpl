@@ -2,33 +2,26 @@
 
 {block CONTENT}
     <article>
-        <section class="dataset-box">
-            <header class="navbar navbar-default">
-                <div class="navbar-header">
-                    <h3 class="navbar-brand">{$file.title}</h3>
-                </div>
-                <time class="navbar-text small pull-right" datetime="{date_format date=$file.start format="c"}">
-                    {date_format date=$file.start format=$dateformat}
-                </time>
-            </header>
-            <div class="content">
-                {$file.text|rewrite_uri}
-                <footer class="well well-sm hyperlink">
-                    <a href="{uri args="files/index/download/id_`$file.id`"}" class="download-file">
-                        <i class="glyphicon glyphicon-download-alt"></i>
-                        {lang t="files|download_file"}
-                        {if !empty($file.size)}
-                            ({$file.size})
-                        {else}
-                            ({lang t="files|unknown_filesize"})
-                        {/if}
-                    </a>
-                </footer>
+        <time class="navbar-text small pull-right" datetime="{date_format date=$file.start format="c"}">
+            {date_format date=$file.start format=$dateformat}
+        </time>
+        {$file.text|rewrite_uri}
+        <footer class="card">
+            <div class="card-body p-2">
+                <a href="{uri args="files/index/download/id_`$file.id`"}">
+                    <i class="fas fa-download"></i>
+                    {lang t="files|download_file"}
+                    {if !empty($file.size)}
+                        ({$file.size})
+                    {else}
+                        ({lang t="files|unknown_filesize"})
+                    {/if}
+                </a>
             </div>
-            {event name="share.layout.add_social_sharing"}
-        </section>
+        </footer>
+        {event name="share.layout.add_social_sharing"}
         {if $comments_allowed === true}
-            <section>
+            <section class="pt-3">
                 {load_module module="frontend/comments" args=['module' => 'files', 'entryId' => $file.id]}
                 {load_module module="frontend/comments/index/create" args=['module' => 'files', 'entryId' => $file.id, 'redirectUrl' => base64_encode("files/index/details/id_`$file.id`")]}
             </section>

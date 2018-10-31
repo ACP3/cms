@@ -1,13 +1,11 @@
 {if !empty($sidebar_article)}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <a href="{uri args="articles/index/details/id_`$sidebar_article.id`"}">
-                    {$sidebar_article.title}
-                </a>
-            </h3>
+    <div class="card mb-3">
+        <div class="card-header">
+            <a href="{uri args="articles/index/details/id_`$sidebar_article.id`"}">
+                {$sidebar_article.title}
+            </a>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             {$sidebar_article.text|rewrite_uri}
         </div>
     </div>

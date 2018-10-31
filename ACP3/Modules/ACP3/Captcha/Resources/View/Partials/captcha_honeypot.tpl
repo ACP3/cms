@@ -1,6 +1,6 @@
 {extends file="asset:System/Partials/form_group.base.tpl"}
 
-{$formGroupSelector=' hidden'}
+{$formGroupSelector='d-none'}
 {if $captcha.input_only}
     {$cssSelector=''}
 {else}

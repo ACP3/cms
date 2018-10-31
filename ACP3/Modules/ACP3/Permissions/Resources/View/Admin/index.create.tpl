@@ -2,16 +2,16 @@
 
 {block CONTENT_AJAX_FORM}
     <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general_statements"}</a></li>
-            <li><a href="#tab-2" data-toggle="tab">{lang t="permissions|permissions"}</a></li>
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item"><a href="#tab-1" class="nav-link active" data-toggle="tab">{lang t="system|general_statements"}</a></li>
+            <li class="nav-item"><a href="#tab-2" class="nav-link" data-toggle="tab">{lang t="permissions|permissions"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane fade in active">
+            <div id="tab-1" class="tab-pane fade show active">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="name" value=$form.name required=true maxlength=100 label={lang t="system|name"}}
                 {if !empty($parent)}
-                    <div class="form-group">
-                        <label for="parent-id" class="col-sm-2 control-label required">{lang t="permissions|superior_role"}</label>
+                    <div class="form-group row">
+                        <label for="parent-id" class="col-sm-2 col-form-label required">{lang t="permissions|superior_role"}</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="parent_id" id="parent-id" required>
                                 {foreach $parent as $row}
@@ -30,13 +30,13 @@
                     <fieldset class="col-sm-6">
                         <legend>{lang t="`$module`|`$module`"}</legend>
                         {foreach $values.privileges as $privilege}
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</label>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"{if !empty($privilege.description)} title="{$privilege.description}"{/if}>{$privilege.key}</label>
 
                                 <div class="col-sm-10">
                                     <div class="btn-group" data-toggle="buttons">
                                         {foreach $privilege.select as $row}
-                                            <label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn btn-default{if !empty($row.selected)} active{/if}">
+                                            <label for="privileges-{$values.id}-{$privilege.id}-{$row.value}" class="btn btn-light{if !empty($row.selected)} active{/if}">
                                                 <input type="radio" name="privileges[{$values.id}][{$privilege.id}]" id="privileges-{$values.id}-{$privilege.id}-{$row.value}" value="{$row.value}"{$row.selected}>
                                                 {$row.lang}
                                                 {if $row.value === 2 && isset($privilege.calculated)}

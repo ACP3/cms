@@ -8,40 +8,36 @@
 {block FORM_GROUP_LABEL_ID}for="{$datepicker.id_start}-input"{/block}
 {block FORM_GROUP_FORM_FIELD}
     <div class="row" data-datepicker-range='{$datepicker.range_json}'>
-        <div class="col-sm-6">
-            <div class="input-group date" id="{$datepicker.id_start}">
-                <input class="form-control"
+        <div class="col-sm-6 mb-2 mb-sm-0">
+            <div class="input-group date" id="{$datepicker.id_start}" data-target-input="nearest">
+                <input class="form-control datetimepicker-input"
                        type="text"
                        id="{$datepicker.id_start}-input"
                        name="{$datepicker.name_start}"
                        value="{$datepicker.value_start}"
                        maxlength="{$datepicker.length}"
                        title="{lang t="system|start_date"}"
-                       data-date-format="{$datepicker.params.format}"
-                       data-date-picktime="{$datepicker.with_time}"
                        required>
-                <span class="input-group-addon">
-                <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
-            </span>
+                <div class="input-group-append" data-target="#{$datepicker.id_start}" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fas fa-calendar" aria-hidden="true"></i></div>
+                </div>
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="input-group date" id="{$datepicker.id_end}">
-                <input class="form-control"
+            <div class="input-group date" id="{$datepicker.id_end}" data-target-input="nearest">
+                <input class="form-control datetimepicker-input"
                        type="text"
                        id="{$datepicker.id_end}-input"
                        name="{$datepicker.name_end}"
                        value="{$datepicker.value_end}"
                        maxlength="{$datepicker.length}"
                        title="{lang t="system|end_date"}"
-                       data-date-format="{$datepicker.params.format}"
-                       data-date-picktime="{$datepicker.with_time}"
                        required>
-                <span class="input-group-addon">
-                <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
-            </span>
+                <div class="input-group-append" data-target="#{$datepicker.id_end}" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fas fa-calendar" aria-hidden="true"></i></div>
+                </div>
             </div>
         </div>
     </div>
-    <span class="help-block">{lang t="system|date_description"}</span>
+    <small class="form-text text-muted">{lang t="system|date_description"}</small>
 {/block}

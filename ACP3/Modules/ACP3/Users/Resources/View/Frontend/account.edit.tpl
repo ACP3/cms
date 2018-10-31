@@ -2,13 +2,13 @@
 
 {block CONTENT_AJAX_FORM}
     <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
-            <li><a href="#tab-2" data-toggle="tab">{lang t="users|contact"}</a></li>
-            <li><a href="#tab-3" data-toggle="tab">{lang t="users|address"}</a></li>
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item"><a href="#tab-1" class="nav-link active" data-toggle="tab">{lang t="system|general"}</a></li>
+            <li class="nav-item"><a href="#tab-2" class="nav-link" data-toggle="tab">{lang t="users|contact"}</a></li>
+            <li class="nav-item"><a href="#tab-3" class="nav-link" data-toggle="tab">{lang t="users|address"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane fade in active">
+            <div id="tab-1" class="tab-pane fade show active">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="nickname" value=$form.nickname required=true maxlength=30 label={lang t="users|nickname"}}
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="realname" value=$form.realname maxlength=80 label={lang t="users|realname"}}
                 {include file="asset:System/Partials/form_group.select.tpl" options=$gender required=true label={lang t="users|gender"}}

@@ -5,36 +5,16 @@
 @import "modules/datagrid";
 @import "modules/bootstrap-overrides";
 
-/* Datensätze */
-.table {
-  .sub-table-header {
-    background: #f6f6f6;
-    line-height: 26px;
-    font-weight: bold;
-
-    .has-buttons {
-      line-height: 30px;
-    }
-
-    span,
-    div {
-      font-weight: normal;
-    }
-  }
-}
-
 /* Position Bootstrap modal dialogs statically */
 .modal {
-  &.static {
-    margin: 0 auto;
-    position: static;
+  &.modal-static {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    z-index: 1;
     display: block;
-    overflow: auto;
-
-    .modal-footer {
-      margin-top: 0;
-      border-top: none;
-    }
   }
 }
 
@@ -67,11 +47,6 @@
 /* Inline validation errors */
 .validation-failed {
   margin: 15px 0 0;
-}
-
-/* Cache management */
-.cache-type {
-  line-height: 34px;
 }
 
 .alert {

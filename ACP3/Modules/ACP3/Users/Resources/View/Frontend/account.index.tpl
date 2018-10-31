@@ -1,8 +1,8 @@
 {extends file="asset:System/layout.header-bar.tpl"}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="users/account/edit" class="glyphicon glyphicon-pencil text-info"}
-    {check_access mode="link" path="users/account/settings" class="glyphicon glyphicon-cog"}
+    {check_access mode="link" path="users/account/edit" class="fas fa-user-edit text-info"}
+    {check_access mode="link" path="users/account/settings" class="fas fa-cog"}
     {event name="users.account.index.header_bar"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}

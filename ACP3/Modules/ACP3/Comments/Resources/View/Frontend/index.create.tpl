@@ -5,7 +5,6 @@
     <form action="{$REQUEST_URI}#comments"
           method="post"
           accept-charset="UTF-8"
-          class="form-horizontal"
           data-ajax-form="true"
           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
         {include file="asset:System/Partials/form_group.input_text.tpl" name="name" value=$form.name required=true maxlength=20 readonly=$form.name_disabled label={lang t="system|name"}}

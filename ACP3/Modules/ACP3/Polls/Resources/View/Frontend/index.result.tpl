@@ -28,6 +28,6 @@
         </tbody>
     </table>
     <p class="text-center">
-        <a href="{uri args="polls"}" class="btn btn-default">{lang t="polls|polls_archive"}</a>
+        <a href="{uri args="polls"}" class="btn btn-light">{lang t="polls|polls_archive"}</a>
     </p>
 {/block}

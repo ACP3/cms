@@ -2,12 +2,12 @@
 
 {block CONTENT_AJAX_FORM}
     <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-contact" data-toggle="tab">{lang t="contact|contact"}</a></li>
-            <li><a href="#tab-legal" data-toggle="tab">{lang t="contact|legal_statements"}</a></li>
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item"><a href="#tab-contact" class="nav-link active" data-toggle="tab">{lang t="contact|contact"}</a></li>
+            <li class="nav-item"><a href="#tab-legal" class="nav-link" data-toggle="tab">{lang t="contact|legal_statements"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-contact" class="tab-pane fade in active">
+            <div id="tab-contact" class="tab-pane fade show active">
                 {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="address" value=$form.address toolbar="simple" label={lang t="contact|address"}}
                 {include file="asset:System/Partials/form_group.input_email.tpl" name="mail" value=$form.mail maxlength=120 label={lang t="system|email_address"}}
                 {include file="asset:System/Partials/form_group.input_tel.tpl" name="telephone" value=$form.telephone maxlength=120 label={lang t="contact|telephone"}}

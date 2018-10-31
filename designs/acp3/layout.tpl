@@ -8,7 +8,7 @@
 {load_module module="widget/users/index/login"}
 {load_module module="widget/users/index/user_menu"}
 <div id="wrapper" class="container">
-    <h1 id="logo" class="hidden-xs">
+    <h1 id="logo" class="my-2 mx-3 d-none d-sm-block">
         {if $IS_HOMEPAGE}
             <img src="{image file="logo.png"}"
                  srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
@@ -21,29 +21,29 @@
             </a>
         {/if}
     </h1>
-    <nav id="main-navigation" class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="sr-only">{lang t="system|toggle_navigation"}</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="{$ROOT_DIR}" class="navbar-brand hidden-sm hidden-md hidden-lg">
-                    <img src="{image file="logo.png"}"
-                         srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
-                         alt="{site_title}">
-                </a>
-            </div>
-            <div id="navbar-collapse" class="collapse navbar-collapse">
-                {navbar block="main"}
-                {load_module module="widget/search"}
-            </div>
+    <nav id="main-navigation" class="navbar navbar-expand-lg navbar-light bg-light my-3 mt-sm-0">
+        <a href="{$ROOT_DIR}" class="navbar-brand d-sm-none">
+            <img src="{image file="logo.png"}"
+                 srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
+                 alt="{site_title}">
+        </a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#main-navigation-collapse"
+                aria-controls="main-navigation-collapse"
+                aria-expanded="false"
+                aria-label="{lang t="system|toggle_navigation"}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="main-navigation-collapse">
+            {navbar block="main"}
+            {load_module module="widget/search"}
         </div>
     </nav>
     <div class="row">
-        <main id="content" class="col-sm-12 col-md-9">
+        <main id="content" class="col-sm-12{if !$IN_ADM} col-md-9{/if}">
             <div id="breadcrumb">
                 {block BREADCRUMB}
                     {include file="asset:System/Partials/breadcrumb.tpl" breadcrumb=$BREADCRUMB}
@@ -57,7 +57,7 @@
             {event name="layout.content_after"}
         </main>
         {if !$IN_ADM}
-            <aside id="sidebar" class="col-md-3 hidden-xs hidden-sm">
+            <aside id="sidebar" class="col-md-3 d-none d-sm-block">
                 {load_module module="widget/newsletter"}
                 {load_module module="widget/news"}
                 {load_module module="widget/files"}
@@ -68,12 +68,12 @@
             </aside>
         {/if}
     </div>
-    <footer class="row footer">
-        <div class="col-xs-5 copyright">
+    <footer class="row footer mb-3">
+        <div class="col-5 copyright">
             &copy; {site_title}
         </div>
-        <div class="col-xs-7">
-            {navbar block="sidebar" class="list-inline text-right" use_bootstrap=false}
+        <div class="col-7">
+            {navbar block="sidebar" class="list-inline text-right mb-0" itemSelectors="list-inline-item" use_bootstrap=false}
         </div>
     </footer>
 </div>

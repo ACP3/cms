@@ -14,18 +14,18 @@
     {$page.text|rewrite_uri}
     {event name="articles.event.article_details_after" id=$page.id title=$page.title}
     {if !empty($page.next) || !empty($page.previous)}
-        <ul class="pager" style="clear:both">
+        <div class="row">
             {if !empty($page.previous)}
-                <li class="previous">
-                    <a href="{$page.previous}" rel="prev" class="previous">&laquo; {lang t="system|previous_page"}</a>
-                </li>
+                <div class="col">
+                    <a href="{$page.previous}" rel="prev" class="btn btn-outline-primary">&laquo; {lang t="system|previous_page"}</a>
+                </div>
             {/if}
             {if !empty($page.next)}
-                <li class="next">
-                    <a href="{$page.next}" rel="next" class="next">{lang t="system|next_page"} &raquo;</a>
-                </li>
+                <div class="col text-right">
+                    <a href="{$page.next}" rel="next" class="btn btn-outline-primary">{lang t="system|next_page"} &raquo;</a>
+                </div>
             {/if}
-        </ul>
+        </div>
     {/if}
     {event name="share.layout.add_social_sharing"}
 {/block}

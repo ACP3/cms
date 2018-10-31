@@ -1,8 +1,8 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">{lang t="newsletter|subscribe_newsletter"}</h3>
+<div class="card mb-3">
+    <div class="card-header">
+        {lang t="newsletter|subscribe_newsletter"}
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <form action="{uri args="newsletter"}" method="post" accept-charset="UTF-8">
             <div class="form-group">
                 <input class="form-control" type="email" name="mail" maxlength="120" placeholder="{lang t="system|email_address"}" required>

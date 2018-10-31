@@ -5,6 +5,7 @@
     <title>{$TITLE} | {$PAGE_TITLE}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}Assets/css/style.css">
     <!-- STYLESHEETS -->
     <!--[if lt IE 9]>
@@ -14,33 +15,33 @@
 
 <body>
 <div class="container">
-    <h1 id="logo" class="text-center hidden-xs">
+    <h1 id="logo" class="my-2 text-center d-none d-sm-block">
         <img src="{$DESIGN_PATH}Assets/img/logo.png"
              srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
              alt="{$PAGE_TITLE}">
     </h1>
-    <nav id="main-navigation" class="navbar navbar-default{if empty($navbar)} visible-xs{/if}">
-        <div class="navbar-header">
-            {if !empty($navbar)}
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="sr-only">{lang t="install|toggle_navigation"}</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            {/if}
-            <span class="navbar-brand hidden-sm hidden-md hidden-lg">
-                <img src="{$DESIGN_PATH}Assets/img/logo.png"
-                     srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
-                     alt="{$PAGE_TITLE}">
-            </span>
-        </div>
+    <nav id="main-navigation" class="navbar navbar-expand-lg navbar-light bg-light my-3 mt-sm-0">
+        <a href="{$ROOT_DIR}" class="navbar-brand d-sm-none">
+            <img src="{$DESIGN_PATH}Assets/img/logo.png"
+                 srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                 alt="{$PAGE_TITLE}">
+        </a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#main-navigation-collapse"
+                aria-controls="main-navigation-collapse"
+                aria-expanded="false"
+                aria-label="{lang t="install|toggle_navigation"}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
         {if !empty($navbar)}
-            <div id="navbar-collapse" class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" id="main-navigation-collapse">
                 <ul class="nav navbar-nav">
                     {foreach $navbar as $key => $value}
-                        <li {if $value.active === true} class="active"{elseif $value.complete === true} class="complete"{/if}>
-                            <a href="#">{$value.lang}</a>
+                        <li class="nav-item{if $value.active === true} active{/if}">
+                            <span class="nav-link{if $value.complete === true} text-success{/if}">{$value.lang}</span>
                         </li>
                     {/foreach}
                 </ul>
@@ -51,27 +52,25 @@
         <h2>{$TITLE}</h2>
         {block CONTENT}{/block}
     </main>
-    <footer id="footer">
-        <div class="row">
-            <div class="col-sm-6">
-                &copy; ACP3 CMS
-            </div>
-            <div class="col-sm-6 text-right">
-                <form action="{$REQUEST_URI}" method="post" id="languages" class="form-inline">
-                    <select name="lang"
-                            id="lang"
-                            class="form-control input-sm"
-                            title="{lang t="install|select_language"}"
-                            data-change-language-warning="{lang t="install|form_change_warning"}">
-                        {foreach $LANGUAGES as $row}
-                            <option value="{$row.language}"{$row.selected}>{$row.name}</option>
-                        {/foreach}
-                    </select>
-                    <button type="submit" name="languages" class="btn btn-primary btn-sm">
-                        {lang t="install|submit"}
-                    </button>
-                </form>
-            </div>
+    <footer id="footer" class="row align-items-sm-center my-3">
+        <div class="col-sm-6 text-center text-sm-left mb-2 mb-sm-0">
+            &copy; ACP3 CMS
+        </div>
+        <div class="col-sm-6">
+            <form action="{$REQUEST_URI}" method="post" id="languages" class="form-inline justify-content-end">
+                <select name="lang"
+                        id="lang"
+                        class="form-control form-control-sm"
+                        title="{lang t="install|select_language"}"
+                        data-change-language-warning="{lang t="install|form_change_warning"}">
+                    {foreach $LANGUAGES as $row}
+                        <option value="{$row.language}"{$row.selected}>{$row.name}</option>
+                    {/foreach}
+                </select>
+                <button type="submit" name="languages" class="btn btn-primary btn-sm">
+                    {lang t="install|submit"}
+                </button>
+            </form>
         </div>
     </footer>
 </div>

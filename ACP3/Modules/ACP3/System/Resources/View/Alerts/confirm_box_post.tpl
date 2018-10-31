@@ -13,7 +13,7 @@
         {/foreach}
         {if isset($confirm.backward)}
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|yes"}</button>
-            <a href="{$confirm.backward}" class="btn btn-default">{lang t="system|no"}</a>
+            <a href="{$confirm.backward}" class="btn btn-light">{lang t="system|no"}</a>
         {else}
             <button type="submit" name="submit" class="btn btn-primary">{lang t="system|forward"}</button>
         {/if}

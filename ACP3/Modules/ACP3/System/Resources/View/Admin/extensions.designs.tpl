@@ -21,10 +21,10 @@
                 <td>{$row.version}</td>
                 <td>
                     {if $row.selected == 1}
-                        <i class="glyphicon glyphicon-ok text-success"></i>
+                        <i class="fas fa-check text-success"></i>
                     {else}
                         <a href="{uri args="acp/system/extensions/designs/dir_`$row.dir`"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                            <i class="glyphicon glyphicon-remove text-danger"></i>
+                            <i class="fas fa-trash text-danger"></i>
                         </a>
                     {/if}
                 </td>

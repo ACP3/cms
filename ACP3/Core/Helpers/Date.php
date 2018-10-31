@@ -132,14 +132,12 @@ class Date
     ) {
         $datePicker = [
             'range' => $this->isRange($name),
-            'with_time' => (bool) $showTime,
             'length' => $showTime === true ? 16 : 10,
             'input_only' => (bool) $inputFieldOnly,
-            'params' => [
+            'params' => \json_encode([
                 'format' => $this->getPickerDateFormat($showTime),
-                'changeMonth' => 'true',
-                'changeYear' => 'true',
-            ],
+                'locale' => $this->translator->getLocale(),
+            ]),
         ];
 
         if ($this->isRange($name) === true) {
@@ -152,10 +150,19 @@ class Date
 
             $datePicker['range_json'] = \json_encode(
                 [
-                    'start' => '#' . $datePicker['id_start'],
-                    'startDefaultDate' => $datePicker['value_start_r'],
-                    'end' => '#' . $datePicker['id_end'],
-                    'endDefaultDate' => $datePicker['value_end_r'],
+                    [
+                        'element' => '#' . $datePicker['id_start'],
+                        'defaultDate' => $datePicker['value_start_r'],
+                        'format' => $this->getPickerDateFormat($showTime),
+                        'locale' => $this->translator->getLocale(),
+                    ],
+                    [
+                        'element' => '#' . $datePicker['id_end'],
+                        'defaultDate' => $datePicker['value_end_r'],
+                        'format' => $this->getPickerDateFormat($showTime),
+                        'minDate' => $datePicker['value_start_r'],
+                        'locale' => $this->translator->getLocale(),
+                    ],
                 ]
             );
         } else { // Einfaches Inputfeld mit Datepicker

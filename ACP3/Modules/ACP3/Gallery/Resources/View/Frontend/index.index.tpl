@@ -6,24 +6,24 @@
         <div class="row">
             {foreach $galleries as $row}
                 <div class="col-sm-3">
-                    <div class="thumbnail">
+                    <div class="card">
                         {if !empty($row.file)}
                             <a href="{uri args="gallery/index/pics/id_`$row.id`"}">
-                                <img src="{$row.file}" alt="{$row.title}">
+                                <img src="{$row.file}" alt="{$row.title}" class="card-img-top">
                             </a>
                         {/if}
-                        <div class="caption">
-                            <h3>{$row.title}</h3>
-                            <p>
-                                <time datetime="{date_format date=$row.start format="c"}">
+                        <div class="card-body p-2">
+                            <h3 class="h5 card-title mb-0">{$row.title}</h3>
+                            <div class="mb-2">
+                                <time class="small" datetime="{date_format date=$row.start format="c"}">
                                     {date_format date=$row.start format=$dateformat}
                                 </time>
-                            </p>
-                            <p>
-                                <a href="{uri args="gallery/index/pics/id_`$row.id`"}" class="btn btn-primary btn-block" role="button">
-                                    {lang t="gallery|show_pictures" args=['%pictures%' => {$row.pics}]}
-                                </a>
-                            </p>
+                            </div>
+                            <a href="{uri args="gallery/index/pics/id_`$row.id`"}"
+                               class="btn btn-primary btn-block"
+                               role="button">
+                                {lang t="gallery|show_pictures" args=['%pictures%' => {$row.pics}]}
+                            </a>
                         </div>
                     </div>
                 </div>

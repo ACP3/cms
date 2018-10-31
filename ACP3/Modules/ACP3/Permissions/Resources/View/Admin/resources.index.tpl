@@ -3,9 +3,9 @@
 {$DELETE_ROUTE={uri args="acp/permissions/resources/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/permissions/resources/create"  class="glyphicon glyphicon-plus text-success"}
+    {check_access mode="link" path="acp/permissions/resources/create"  class="fas fa-plus text-success"}
     {if isset($resources)}
-        {check_access mode="button" path="acp/permissions/resources/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+        {check_access mode="button" path="acp/permissions/resources/delete" class="fas fa-trash text-danger" lang="system|delete_marked"}
     {/if}
 {/block}
 {block ADMIN_GRID_CONTENT}
@@ -16,7 +16,8 @@
                 <tr>
                     {if $can_delete_resource === true}
                         <th class="datagrid-column__mass-action">
-                            <input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
+                            <input type="checkbox" id="mark-all" value="1" {mark name="entries"}>
+                        </th>
                     {/if}
                     <th>{lang t="permissions|route"}</th>
                     <th>{lang t="permissions|assigned_privilege"}</th>
@@ -28,7 +29,7 @@
                 </thead>
                 <tbody>
                 {foreach $resources as $module => $values}
-                    <tr class="sub-table-header">
+                    <tr class="bg-light">
                         <th colspan="{if $can_delete_resource === true}5{else}4{/if}">{$module}</th>
                     </tr>
                     {foreach $values as $row}
@@ -41,19 +42,19 @@
                             <td>{$row.resource_id}</td>
                             {if $can_edit_resource === true || $can_delete_resource === true}
                                 <td class="datagrid-column__actions">
-                                    <div class="btn-group pull-right">
+                                    <div class="btn-group btn-group-sm pull-right">
                                         {if $can_edit_resource === true}
                                             <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
-                                               class="btn btn-default btn-xs"
+                                               class="btn btn-light"
                                                title="{lang t="permissions|admin_resources_edit"}">
-                                                <i class="glyphicon glyphicon-edit"></i>
+                                                <i class="fas fa-edit"></i>
                                             </a>
                                         {/if}
                                         {if $can_delete_resource === true}
                                             <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
-                                               class="btn btn-danger btn-xs"
+                                               class="btn btn-danger"
                                                title="{lang t="permissions|admin_resources_delete"}">
-                                                <i class="glyphicon glyphicon-remove"></i>
+                                                <i class="fas fa-trash"></i>
                                             </a>
                                         {/if}
                                     </div>

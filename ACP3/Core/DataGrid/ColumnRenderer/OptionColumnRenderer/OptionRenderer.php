@@ -41,12 +41,12 @@ class OptionRenderer
         string $route,
         string $translationPhrase,
         string $iconClass,
-        string $buttonClass = 'btn-default',
+        string $buttonClass = 'btn-light',
         bool $useAjax = false
     ) {
         $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
-        $value = ' <a href="' . $this->router->route($route) . '" class="btn btn-xs ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
-        $value .= '<i class="glyphicon ' . $iconClass . '"></i>';
+        $value = ' <a href="' . $this->router->route($route) . '" class="btn ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
+        $value .= '<i class="fas ' . $iconClass . '"></i>';
         $value .= '<span class="sr-only">' . $translationPhrase . '</span>';
         $value .= '</a>';
 

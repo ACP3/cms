@@ -2,12 +2,12 @@
 
 {block CONTENT_AJAX_FORM}
     <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication"}</a></li>
-            <li><a href="#tab-2" data-toggle="tab">{lang t="system|general_statements"}</a></li>
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item"><a href="#tab-1" class="nav-link active" data-toggle="tab">{lang t="system|publication"}</a></li>
+            <li class="nav-item"><a href="#tab-2" class="nav-link" data-toggle="tab">{lang t="system|general_statements"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane fade in active">
+            <div id="tab-1" class="tab-pane fade show active">
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$active name="active" required=true label={lang t="files|active"}}
                 <div id="publication-period-wrapper">
                     {datepicker name=['start', 'end'] value=[$form.start, $form.end]}

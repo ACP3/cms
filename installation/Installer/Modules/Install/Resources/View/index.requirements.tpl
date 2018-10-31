@@ -37,8 +37,8 @@
                             {foreach $files_dirs as $row}
                                 <li>
                                     <strong>{$row.path}</strong>
-                                    <span class="label label-{$row.class_1}">{$row.exists}</span>
-                                    <span class="label label-{$row.class_2}">{$row.writable}</span>
+                                    <span class="badge badge-{$row.class_1}">{$row.exists}</span>
+                                    <span class="badge badge-{$row.class_2}">{$row.writable}</span>
                                 </li>
                             {/foreach}
                         </ul>
@@ -67,12 +67,22 @@
             <strong>{lang t="install|stop_installation"}</strong>
         </div>
     {else}
-        <div class="well well-sm text-center">
-            {if $check_again === true}
-                <a href="{$REQUEST_URI}" class="btn btn-warning">{lang t="install|check_again"}</a>
-            {else}
-                <a href="{uri args="install/install"}" class="btn btn-default">{lang t="install|install_index"}</a>
-            {/if}
+        <div class="card bg-light">
+            <div class="card-body p-2">
+                {if $check_again === true}
+                    <a href="{$REQUEST_URI}" class="btn btn-warning">
+                        <i class="fas fa-sync"></i>
+                        {lang t="install|check_again"}
+                    </a>
+                {else}
+                    <div class="text-right">
+                        <a href="{uri args="install/install"}" class="btn btn-primary">
+                            {lang t="install|install_index"}
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                {/if}
+            </div>
         </div>
     {/if}
 {/block}

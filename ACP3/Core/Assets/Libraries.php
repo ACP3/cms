@@ -27,25 +27,30 @@ class Libraries
         'bootbox' => [
             'enabled' => false,
             'dependencies' => ['bootstrap'],
-            'js' => 'bootbox.js',
+            'js' => 'bootbox.min.js',
         ],
         'bootstrap' => [
             'enabled' => false,
-            'dependencies' => ['jquery'],
+            'dependencies' => ['jquery', 'popper'],
             'css' => 'bootstrap.min.css',
             'js' => 'bootstrap.min.js',
         ],
         'datatables' => [
             'enabled' => false,
             'dependencies' => ['bootstrap'],
-            'css' => 'dataTables.bootstrap.css',
-            'js' => 'jquery.dataTables.js',
+            'css' => 'dataTables.bootstrap4.css',
+            'js' => 'jquery.dataTables.min.js',
+        ],
+        'datetimepicker-core' => [
+            'enabled' => false,
+            'dependencies' => ['jquery', 'moment'],
+            'js' => 'tempusdominus-core.js',
         ],
         'datetimepicker' => [
             'enabled' => false,
-            'dependencies' => ['jquery', 'moment'],
-            'css' => 'bootstrap-datetimepicker.css',
-            'js' => 'bootstrap-datetimepicker.min.js',
+            'dependencies' => ['datetimepicker-core'],
+            'css' => 'tempusdominus-bootstrap-4.css',
+            'js' => 'tempusdominus-bootstrap-4.min.js',
         ],
         'fancybox' => [
             'enabled' => false,
@@ -54,12 +59,9 @@ class Libraries
             'js' => 'jquery.fancybox.min.js',
         ],
         'font-awesome' => [
-            'enabled' => false,
+            'enabled' => true,
             'css' => [
-                'brands.css',
-                'regular.css',
-                'solid.css',
-                'fontawesome.css',
+                'all.min.css',
             ],
         ],
         'jquery' => [
@@ -74,7 +76,11 @@ class Libraries
         ],
         'moment' => [
             'enabled' => false,
-            'js' => 'moment.min.js',
+            'js' => 'moment-with-locales.min.js',
+        ],
+        'popper' => [
+            'enabled' => false,
+            'js' => 'popper.min.js',
         ],
     ];
     /**

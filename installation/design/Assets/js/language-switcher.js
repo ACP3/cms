@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
         $doc.data('has-changes', true);
     });
 
-    $languages.find('.btn').addClass('hidden');
+    $languages.find('.btn').addClass('d-none');
     $('#lang').change(function () {
         let submitForm = true;
         if ($doc.length > 0 && $doc.data('has-changes') === true) {

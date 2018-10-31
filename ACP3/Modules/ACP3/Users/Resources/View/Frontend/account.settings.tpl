@@ -2,12 +2,12 @@
 
 {block CONTENT_AJAX_FORM}
     <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-privacy" data-toggle="tab">{lang t="users|privacy"}</a></li>
-            <li><a href="#tab-password" data-toggle="tab">{lang t="users|pwd"}</a></li>
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item"><a href="#tab-privacy" class="nav-link active" data-toggle="tab">{lang t="users|privacy"}</a></li>
+            <li class="nav-item"><a href="#tab-password" class="nav-link" data-toggle="tab">{lang t="users|pwd"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-privacy" class="tab-pane fade in active">
+            <div id="tab-privacy" class="tab-pane fade show active">
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$mail_display required=true label={lang t="users|display_mail"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$address_display required=true label={lang t="users|display_address"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$country_display required=true label={lang t="users|display_country"}}

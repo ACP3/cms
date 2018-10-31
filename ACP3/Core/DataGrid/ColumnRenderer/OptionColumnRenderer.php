@@ -58,8 +58,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
             $this->optionRenderer->addOption(
                 $this->getEditRoute($dbResultRow, $resourcePathEdit),
                 $this->translator->t('system', 'edit'),
-                'glyphicon-edit',
-                'btn-default'
+                'fa-edit'
             );
         }
 
@@ -74,7 +73,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
             $this->optionRenderer->addOption(
                 $resourcePathDelete . 'entries_' . $dbResultRow[$this->getPrimaryKey()],
                 $this->translator->t('system', 'delete'),
-                'glyphicon-remove',
+                'fa-trash',
                 'btn-danger'
             );
         }
@@ -92,7 +91,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
      */
     protected function collectOptions()
     {
-        $value = '<div class="btn-group pull-right">';
+        $value = '<div class="btn-group btn-group-sm pull-right">';
 
         foreach ($this->optionRenderer->getOptions() as $option) {
             $value .= $option;

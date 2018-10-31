@@ -13,7 +13,12 @@
             <li>{lang t="install|step_1_list_item_4"}</li>
         </ol>
     </fieldset>
-    <div class="well well-sm text-center">
-        <a href="{uri args="install/index/licence"}" class="btn btn-default">{lang t="install|forward"}</a>
+    <div class="card bg-light">
+        <div class="card-body text-right p-2">
+            <a href="{uri args="install/index/licence"}" class="btn btn-primary">
+                {lang t="install|forward"}
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
     </div>
 {/block}

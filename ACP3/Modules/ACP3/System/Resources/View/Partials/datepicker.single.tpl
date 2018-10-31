@@ -8,17 +8,16 @@
 {block FORM_GROUP_FORM_FIELD}
     <div class="input-group date"
          id="{$datepicker.id}"
-         data-datepicker="#{$datepicker.id}">
-        <input class="form-control"
+         data-target-input="nearest"
+         data-datepicker='{$datepicker.params}'>
+        <input class="form-control datetimepicker-input"
                type="text"
                name="{$datepicker.name}"
                id="{$datepicker.id}-input"
                value="{$datepicker.value}"
-               maxlength="{$datepicker.length}"
-               data-date-format="{$datepicker.params.format}"
-               data-date-picktime="{$datepicker.with_time}">
-        <span class="input-group-addon">
-            <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
-        </span>
+               maxlength="{$datepicker.length}">
+        <div class="input-group-append" data-target="#{$datepicker.id}" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fas fa-calendar" aria-hidden="true"></i></div>
+        </div>
     </div>
 {/block}

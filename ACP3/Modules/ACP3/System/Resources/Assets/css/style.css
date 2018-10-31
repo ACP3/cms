@@ -1,27 +1,3 @@
-@-webkit-keyframes rotate {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(350deg);
-  }
-}
-@-moz-keyframes rotate {
-  from {
-    -moz-transform: rotate(0deg);
-  }
-  to {
-    -moz-transform: rotate(350deg);
-  }
-}
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(350deg);
-  }
-}
 .loading-layer {
   align-items: center;
   background: rgba(255, 255, 255, 0.5);
@@ -49,53 +25,6 @@
   margin: 0;
   font-size: 26px;
   text-align: center;
-}
-.loading-layer .glyphicon {
-  margin-bottom: 10px;
-  display: block;
-  -webkit-animation: rotate 2s linear infinite;
-  -moz-animation: rotate 2s linear infinite;
-  -o-animation: rotate 2s linear infinite;
-  animation: rotate 2s linear infinite;
-}
-.dataset-box {
-  margin: 0 auto 10px;
-}
-.dataset-box .navbar-brand {
-  height: auto;
-  margin: 0;
-}
-.dataset-box .navbar-header {
-  float: left;
-}
-.dataset-box .navbar-header .navbar-text {
-  margin-right: 15px;
-  margin-left: 15px;
-  float: left;
-}
-.dataset-box small.navbar-text,
-.dataset-box .small.navbar-text {
-  line-height: 20px;
-}
-@media (max-width: 767px) {
-  .dataset-box small.navbar-text,
-  .dataset-box .small.navbar-text {
-    margin-right: 15px;
-  }
-}
-.dataset-box .content {
-  margin: -8px 15px 10px;
-}
-.dataset-box .hyperlink a.download-file {
-  font-weight: bold;
-  display: block;
-}
-.dataset-box .hyperlink a.download-file:hover,
-.dataset-box .hyperlink a.download-file:focus {
-  text-decoration: none;
-}
-.dataset-box .hyperlink .glyphicon-download-alt {
-  color: #333;
 }
 /* Table of contents */
 #toc {
@@ -130,20 +59,17 @@
   color: #333;
 }
 #adm-list .navbar-text .btn-link {
+  border: 0;
   margin-left: 8px;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0;
 }
-#adm-list .navbar-text .glyphicon {
-  font-size: 32px;
-}
-#adm-list .navbar-text .glyphicon-plus:before {
-  position: relative;
-  top: -2px;
+#adm-list .navbar-text .fas {
+  font-size: 1.25rem;
 }
 #adm-list a,
-#adm-list input {
-  margin: 8px 0 0 8px;
+#adm-list input,
+#adm-list button {
+  margin: 0 0 0 8px;
   float: right;
 }
 .datagrid .datagrid-column__mass-action {
@@ -171,27 +97,18 @@
 .datagrid tr.info td.datagrid-column__actions .btn-group {
   visibility: visible;
 }
-.tab-content > .tab-pane {
-  padding-top: 15px;
-}
-.control-label {
+.control-label,
+.col-form-label {
   overflow: hidden;
+  position: relative;
   text-overflow: ellipsis;
 }
-.control-label.required:after {
+.control-label.required:after,
+.col-form-label.required:after {
+  color: #dc3545;
   content: ' *';
-}
-.form-horizontal .control-label.required {
-  position: relative;
-}
-.form-horizontal .control-label.required:after {
+  margin-left: 5px;
   position: absolute;
-  right: 5px;
-}
-@media (min-width: 768px) {
-  .form-horizontal .control-label.required:after {
-    top: 7px;
-  }
 }
 input[placeholder],
 textarea[placeholder] {
@@ -204,29 +121,24 @@ textarea[placeholder] {
 .pagination {
   margin: 0 0 10px;
 }
-/* Datensätze */
-.table .sub-table-header {
-  background: #f6f6f6;
-  line-height: 26px;
-  font-weight: bold;
+.blockquote p:last-of-type {
+  margin-bottom: 0;
 }
-.table .sub-table-header .has-buttons {
-  line-height: 30px;
-}
-.table .sub-table-header span,
-.table .sub-table-header div {
-  font-weight: normal;
+.datepicker .table tbody + tbody,
+.datepicker .table td,
+.datepicker .table th,
+.datepicker .table thead th {
+  border: 0;
 }
 /* Position Bootstrap modal dialogs statically */
-.modal.static {
-  margin: 0 auto;
-  position: static;
+.modal.modal-static {
+  position: relative;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  z-index: 1;
   display: block;
-  overflow: auto;
-}
-.modal.static .modal-footer {
-  margin-top: 0;
-  border-top: none;
 }
 .list-group-item.dropdown {
   padding: 0;
@@ -247,10 +159,6 @@ textarea[placeholder] {
 /* Inline validation errors */
 .validation-failed {
   margin: 15px 0 0;
-}
-/* Cache management */
-.cache-type {
-  line-height: 34px;
 }
 .alert.alert-sm {
   padding: 8px;

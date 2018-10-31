@@ -1,8 +1,8 @@
 {extends file="asset:System/layout.header-bar.tpl"}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/system/maintenance/update_check" class="glyphicon glyphicon-refresh text-success"}
-    {check_access mode="link" path="acp/system/maintenance/cache" class="glyphicon glyphicon-asterisk text-warning"}
+    {check_access mode="link" path="acp/system/maintenance/update_check" class="fas fa-sync text-success"}
+    {check_access mode="link" path="acp/system/maintenance/cache" class="fas fa-asterisk text-warning"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
     {redirect_message}

@@ -51,7 +51,7 @@
                 }
             }).on('change', function () {
                 if (that.isFormValid === false) {
-                    that.removeAllPreviousErrors();
+                    that.removeAllPreviousErrors(that.element);
                     that.checkFormElementsForErrors(that.element);
                 }
             });
@@ -78,16 +78,14 @@
             });
         },
         preValidateForm: function (form) {
-            this.removeAllPreviousErrors();
+            this.removeAllPreviousErrors(form);
             this.checkFormElementsForErrors(form);
             this.focusTabWithFirstErrorMessage();
 
             return this.isFormValid;
         },
-        removeAllPreviousErrors: function () {
-            $('form .form-group.has-error')
-                .removeClass('has-error')
-                .find('.validation-failed').remove();
+        removeAllPreviousErrors: function (form) {
+            $(form).find('.is-invalid, .invalid-feedback').remove();
         },
         checkFormElementsForErrors: function (form) {
             for (let i = 0; i < form.elements.length; i++) {
@@ -98,33 +96,31 @@
                 }
 
                 if (!field.checkValidity()) {
-                    this.addErrorDecorationToFormGroup($(field));
                     this.addErrorMessageToFormField($(field), field.validationMessage);
 
                     this.isFormValid = false;
                 }
             }
         },
-        addErrorDecorationToFormGroup: function ($elem) {
-            $elem.closest('.form-group').addClass('has-error');
-        },
         removeErrorMessageFromFormField: function ($elem) {
-            $elem.closest('div').find('.validation-failed').remove();
+            $elem.closest('div').find('.invalid-feedback').remove();
         },
         addErrorMessageToFormField: function ($formField, errorMessage) {
             this.removeErrorMessageFromFormField($formField);
 
+            $formField.addClass('is-invalid');
+
+            const template = '<div class="invalid-feedback d-block"><i class="fas fa-exclamation-triangle"></i> ' + errorMessage + '</div>';
+
             $formField
                 .closest('div:not(.input-group):not(.btn-group)')
-                .append(
-                    '<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + errorMessage + '</small>'
-                );
+                .append(template);
         },
         focusTabWithFirstErrorMessage: function () {
             if ($('.tabbable').length > 0) {
-                let $elem = $('.tabbable .form-group.has-error:first'),
+                let $elem = $('.tabbable .form-group:has(.invalid-feedback):first'),
                     tabId = $elem.closest('.tab-pane').prop('id');
-                $('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab('show');
+                $('.tabbable .nav-tabs .nav-link[href="#' + tabId + '"]').tab('show');
 
                 $elem.find(':input').focus();
             }
@@ -217,7 +213,7 @@
             if ($loadingLayer.length === 0) {
                 let $body = $('body'),
                     loadingText = this.settings.loadingText || '',
-                    html = '<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span>' + loadingText + '</h1></div>';
+                    html = '<div id="loading-layer" class="loading-layer"><h1><span class="fas fa-cog fa-spin"></span>' + loadingText + '</h1></div>';
 
                 $(html).appendTo($body);
             }
@@ -276,23 +272,25 @@
             $('#loading-layer').removeClass('loading-layer__active');
         },
         handleFormErrorMessages: function ($form, errorMessagesHtml) {
-            const $errorBox = $('#error-box'),
-                $modalBody = $form.find('.modal-body');
+            let $errorBox = $('#error-box');
+            const $modalBody = $form.find('.modal-body');
 
             $errorBox.remove();
 
             // Place the error messages inside the modal body for a better styling
-            $(errorMessagesHtml)
+            $errorBox = $(errorMessagesHtml);
+
+            $errorBox
                 .hide()
                 .prependTo(($modalBody.length > 0 && $modalBody.is(':visible')) ? $modalBody : $form)
                 .fadeIn();
 
-            this.prettyPrintResponseErrorMessages($($errorBox.selector));
+            this.prettyPrintResponseErrorMessages($errorBox);
         },
         prettyPrintResponseErrorMessages: function ($errorBox) {
             const that = this;
 
-            this.removeAllPreviousErrors();
+            this.removeAllPreviousErrors(that.element);
 
             // highlight all input fields where the validation has failed
             $errorBox.find('li').each(function () {
@@ -301,8 +299,6 @@
                 if (errorClass.length > 0) {
                     let $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
                     if ($elem.length > 0) {
-                        that.addErrorDecorationToFormGroup($elem);
-
                         // Move the error message to the responsible input field(s)
                         // and remove the list item from the error box container
                         if ($elem.length === 1) {

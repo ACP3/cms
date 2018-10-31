@@ -5,16 +5,15 @@
 jQuery(document).ready(function ($) {
     const ajaxUrl = $('#config-form').data('available-databases-url'),
         $dbName = $('#db-name'),
-        $formFields = $('#db-host, #db-user, #db-password'),
-        $formGroup = $formFields.closest('.form-group');
+        $formFields = $('#db-host, #db-user, #db-password');
 
     $formFields.change(function () {
         $dbName
             .prop('disabled', true)
             .find('option').not(':first').remove();
-        $formGroup
-            .removeClass('has-success')
-            .removeClass('has-error');
+
+        $formFields.removeClass('is-invalid');
+        $formFields.removeClass('is-valid');
 
         $.post(
             ajaxUrl,
@@ -24,17 +23,18 @@ jQuery(document).ready(function ($) {
                 'db_password': $('#db-password').val()
             },
             function (response) {
-                if (response.length > 0) {
-                    for (let i = 0; i < response.length; ++i) {
-                        $dbName.append('<option value="' + response[i] + '">' + response[i] + '</option>');
-                    }
-
-                    $formGroup.addClass('has-success');
-                } else {
-                    $formGroup.addClass('has-error');
+                if (response.length === 0) {
+                    $formFields.addClass('is-invalid');
+                    return;
                 }
+
+                for (let i = 0; i < response.length; ++i) {
+                    $dbName.append('<option value="' + response[i] + '">' + response[i] + '</option>');
+                }
+
+                $formFields.addClass('is-valid');
             }
-        ).always(function() {
+        ).always(function () {
             $dbName.prop('disabled', false);
         });
     });

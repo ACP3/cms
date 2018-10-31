@@ -1,4 +1,4 @@
-<div id="cookie-consent" class="cookie-consent clearfix hidden">
+<div id="cookie-consent" class="cookie-consent clearfix d-none">
     <div class="container">
         <button id="accept-cookies" class="cookie-consent__button btn btn-sm btn-success pull-right">
             {lang t="system|accept"}

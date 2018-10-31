@@ -14,6 +14,6 @@ jQuery(document).ready(function ($) {
     });
 
     if (!Cookies.get(cookieName)) {
-        $cookieNotice.removeClass('hidden');
+        $cookieNotice.removeClass('d-none');
     }
 });

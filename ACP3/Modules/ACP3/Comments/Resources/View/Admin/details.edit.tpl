@@ -6,8 +6,8 @@
     {elseif $form.user_id != '0'}
         <input type="hidden" name="user_id" value="{$form.user_id}">
     {/if}
-    <div class="form-group">
-        <label for="message" class="col-sm-2 control-label required">{lang t="system|message"}</label>
+    <div class="form-group row">
+        <label for="message" class="col-sm-2 col-form-label required">{lang t="system|message"}</label>
 
         <div class="col-sm-10">
             {if $can_use_emoticons}

@@ -3,6 +3,7 @@
 {$required=true}
 {if $captcha.input_only}
     {$cssSelector=''}
+    {$formGroupSelector=''}
 {/if}
 
 {block FORM_GROUP_FORM_FIELD}

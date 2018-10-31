@@ -49,8 +49,7 @@ class OnDataGridCustomOptionBeforeListener
             $customOptionEvent->getOptionRenderer()->addOption(
                 'acp/gallery/pictures/index/id_' . $dbResultRow['id'],
                 $this->translator->t('gallery', 'admin_pictures_index'),
-                'glyphicon-picture',
-                'btn-default'
+                'fa-images'
             );
         }
     }

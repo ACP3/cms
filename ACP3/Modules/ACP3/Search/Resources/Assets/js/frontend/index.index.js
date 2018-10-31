@@ -5,6 +5,6 @@
 
 jQuery(document).ready(function($) {
     $('#search-advanced-toggle').click(function() {
-        $('#search-advanced-wrapper').toggleClass('hidden');
+        $('#search-advanced-wrapper').toggleClass('d-none');
     });
 });

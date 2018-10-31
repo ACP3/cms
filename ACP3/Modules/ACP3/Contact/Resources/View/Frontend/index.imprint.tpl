@@ -35,7 +35,7 @@
             <dd>{$imprint.picture_credits|rewrite_uri}</dd>
         {/if}
     </dl>
-    <p class="powered-by text-center">
+    <p class="border-top pt-1 text-center">
         {$powered_by}
     </p>
 {/block}

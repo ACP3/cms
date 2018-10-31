@@ -1,8 +1,8 @@
 {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
 <div id="manage-menu-item-container">
     {include file="asset:System/Partials/form_group.input_text.tpl" name="menu_item_title" value=$form.menu_item_title labelRequired=true maxlength=120 label={lang t="menus|title"}}
-    <div class="form-group">
-        <label for="block-id" class="col-sm-2 control-label required">{lang t="menus|menu_bar"}</label>
+    <div class="form-group row">
+        <label for="block-id" class="col-sm-2 col-form-label required">{lang t="menus|menu_bar"}</label>
 
         <div class="col-sm-10">
             <select class="form-control" name="block_id" id="block-id" required>
@@ -12,8 +12,8 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
-        <label for="parent-id" class="col-sm-2 control-label required">{lang t="menus|superior_page"}</label>
+    <div class="form-group row">
+        <label for="parent-id" class="col-sm-2 col-form-label required">{lang t="menus|superior_page"}</label>
 
         <div class="col-sm-10">
             <select class="form-control" name="parent_id" id="parent-id">

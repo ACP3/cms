@@ -5,21 +5,21 @@
 {/block}
 {block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="search_term" value=$form.search_term required=true label={lang t="search|search_term"}}
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="button" id="search-advanced-toggle" class="btn btn-default">
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+            <button type="button" id="search-advanced-toggle" class="btn btn-light">
                 {lang t="search|advanced_search"}
             </button>
         </div>
     </div>
-    <div id="search-advanced-wrapper" class="hidden">
-        <div class="form-group">
-            <label class="col-sm-2 control-label required">{lang t="search|search_after_modules"}</label>
+    <div id="search-advanced-wrapper" class="d-none">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label required">{lang t="search|search_after_modules"}</label>
 
             <div class="col-sm-10">
                 <div class="btn-group" data-toggle="buttons">
                     {foreach $search_mods as $row}
-                        <label for="mods-{$row.dir}" class="btn btn-default{if !empty($row.checked)} active{/if}">
+                        <label for="mods-{$row.dir}" class="btn btn-light{if !empty($row.checked)} active{/if}">
                             <input type="checkbox" name="mods[]" id="mods-{$row.dir}" value="{$row.dir}"{$row.checked}>
                             {lang t="`$row.name`|`$row.name`"}
                         </label>

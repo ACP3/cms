@@ -4,7 +4,14 @@
  */
 
 jQuery(document).ready(function ($) {
-    $('#modal-create').on('shown.bs.modal', function () {
-        $(this).find('[data-ajax-form="true"]').formSubmit();
+    $('#modal-create').on('show.bs.modal', function (event) {
+        const $target = $(event.relatedTarget);
+        const $modal = $(this);
+
+        $.ajax($target.attr('href'))
+            .done((responseData) => {
+                $modal.find('.modal-content').html(responseData);
+                $modal.find('[data-ajax-form="true"]').formSubmit();
+            });
     });
 });

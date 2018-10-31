@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
             $tabContent = $element.closest('.tab-content'),
             $tabs = $tabContent.prev('.nav-tabs'),
             tabTitle = $(this).data('add-tab-title'),
-            newTabItem = '<li><a href="' +  tabIdentifier + '" data-toggle="tab">' + tabTitle + '</a></li>';
+            newTabItem = '<li class="nav-item"><a href="' +  tabIdentifier + '" class="nav-link" data-toggle="tab">' + tabTitle + '</a></li>';
 
         $tabs.append(newTabItem);
     });

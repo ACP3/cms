@@ -4,12 +4,12 @@
 
 {block CONTENT_AJAX_FORM}
     <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication"}</a></li>
-            <li><a href="#tab-2" data-toggle="tab">{lang t="files|file_statements"}</a></li>
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item"><a href="#tab-1" class="nav-link active" data-toggle="tab">{lang t="system|publication"}</a></li>
+            <li class="nav-item"><a href="#tab-2" class="nav-link" data-toggle="tab">{lang t="files|file_statements"}</a></li>
         </ul>
         <div class="tab-content">
-            <div id="tab-1" class="tab-pane fade in active">
+            <div id="tab-1" class="tab-pane fade show active">
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$active name="active" required=true label={lang t="files|active"}}
                 <div id="publication-period-wrapper">
                     {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
@@ -24,8 +24,8 @@
                 {/block}
                 <div id="file-external-toggle">
                     {include file="asset:System/Partials/form_group.input_url.tpl" name="file_external" value=$form.file_external labelRequired=true maxlength=120 label={lang t="files|uri"}}
-                    <div class="form-group">
-                        <label for="filesize" class="col-sm-2 control-label required">{lang t="files|filesize"}</label>
+                    <div class="form-group row">
+                        <label for="filesize" class="col-sm-2 col-form-label required">{lang t="files|filesize"}</label>
 
                         <div class="col-sm-4">
                             <div class="row">
@@ -46,8 +46,8 @@
                 </div>
                 {include file="asset:System/Partials/form_group.checkbox.tpl" options=$external}
                 {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true toolbar="simple" label={lang t="system|description"}}
-                <div class="form-group">
-                    <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
+                <div class="form-group row">
+                    <label for="cat" class="col-sm-2 col-form-label required">{lang t="categories|category"}</label>
 
                     <div class="col-sm-10">
                         {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}

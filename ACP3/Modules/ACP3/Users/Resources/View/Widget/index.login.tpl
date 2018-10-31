@@ -10,24 +10,26 @@
             <div class="form-group">
                 <input class="form-control" type="password" name="pwd" id="nav-pwd" placeholder="{lang t="users|pwd"}" required>
             </div>
-            <div class="checkbox">
-                <label for="nav-remember">
-                    <input type="checkbox" name="remember" id="nav-remember" value="1">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="remember" id="nav-remember" value="1">
+                <label for="nav-remember" class="form-check-label">
                     {lang t="users|remember_me"}
                 </label>
             </div>
             <button type="submit" name="submit" class="btn btn-primary">
-                <i class="glyphicon glyphicon-lock"></i> {lang t="users|log_in"}</button>
+                <i class="fas fa-sign-in-alt"></i>
+                {lang t="users|log_in"}
+            </button>
         </form>
     </div>
     <div class="list-group">
         <a href="{uri args="users/index/forgot_pwd"}" class="list-group-item">
-            <i class="glyphicon glyphicon-question-sign"></i>
+            <i class="fas fa-question-circle"></i>
             {lang t="users|forgot_pwd"}
         </a>
         {if $enable_registration == 1}
             <a href="{uri args="users/index/register"}" class="list-group-item">
-                <i class="glyphicon glyphicon-star"></i>
+                <i class="fas fa-star"></i>
                 {lang t="users|register"}
             </a>
         {/if}

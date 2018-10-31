@@ -3,11 +3,11 @@
 {block CONTENT}
     {if !empty($results_mods)}
         <div class="tabbable">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs mb-3">
                 {$i=0}
                 {foreach $results_mods as $module => $values}
-                    <li{if $values@first} class="active"{/if}>
-                        <a href="#tab-{$module}" data-toggle="tab">
+                    <li class="nav-item">
+                        <a href="#tab-{$module}" class="nav-link{if $values@first} active{/if}" data-toggle="tab">
                             {lang t="`$module`|`$module`"}
                             <span class="badge">{count($values)}</span>
                         </a>

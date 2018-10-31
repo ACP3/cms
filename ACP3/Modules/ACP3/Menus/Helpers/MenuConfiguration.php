@@ -41,6 +41,10 @@ class MenuConfiguration
      * @var string
      */
     protected $inlineStyle = '';
+    /**
+     * @var string
+     */
+    private $itemSelectors;
 
     /**
      * @param bool   $useBootstrap
@@ -51,16 +55,18 @@ class MenuConfiguration
      * @param string $dropdownWrapperTag
      * @param string $linkSelectors
      * @param string $inlineStyle
+     * @param string $itemSelectors
      */
     public function __construct(
-        $useBootstrap = true,
-        $class = '',
-        $dropdownItemSelector = '',
-        $tag = 'ul',
-        $itemTag = 'li',
-        $dropdownWrapperTag = 'li',
-        $linkSelectors = '',
-        $inlineStyle = ''
+        bool $useBootstrap = true,
+        string $class = '',
+        string $dropdownItemSelector = '',
+        string $tag = 'ul',
+        string $itemTag = 'li',
+        string $dropdownWrapperTag = 'li',
+        string $linkSelectors = '',
+        string $inlineStyle = '',
+        string $itemSelectors = ''
     ) {
         $this->useBootstrap = $useBootstrap;
         $this->selector = $class;
@@ -70,6 +76,7 @@ class MenuConfiguration
         $this->dropdownWrapperTag = $dropdownWrapperTag;
         $this->linkSelector = $linkSelectors;
         $this->inlineStyle = $inlineStyle;
+        $this->itemSelectors = $itemSelectors;
     }
 
     /**
@@ -134,6 +141,14 @@ class MenuConfiguration
     public function getInlineStyle()
     {
         return $this->inlineStyle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemSelectors(): string
+    {
+        return $this->itemSelectors;
     }
 
     /**

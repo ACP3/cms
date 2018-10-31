@@ -1,10 +1,9 @@
 **/*min.js
 ACP3/Modules/ACP3/Filemanager/libraries/kcfinder/*
 ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/*
-ACP3/Modules/ACP3/System/Resources/Assets/js/bootbox.js
-ACP3/Modules/ACP3/System/Resources/Assets/js/dataTables.bootstrap.js
+ACP3/Modules/ACP3/System/Resources/Assets/js/dataTables.bootstrap4.js
 ACP3/Modules/ACP3/System/Resources/Assets/js/js.cookie.js
-ACP3/Modules/ACP3/System/Resources/Assets/js/jquery.dataTables.js
+ACP3/Modules/ACP3/System/Resources/Assets/js/tempusdominus-core.js
 build/*
 cache/*
 vendor/*

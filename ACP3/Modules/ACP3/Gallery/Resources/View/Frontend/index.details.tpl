@@ -19,41 +19,41 @@
                      class="img-thumbnail">
             {/if}
             <div class="description">
-                {$picture.description}
+                {$picture.description|rewrite_uri}
             </div>
             {event name="share.layout.add_social_sharing"}
             <footer>
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     {if !empty($picture_previous)}
-                        <li>
-                            <a href="{uri args="gallery/index/details/id_`$picture_previous`"}" rel="prev">
+                        <li class="page-item">
+                            <a href="{uri args="gallery/index/details/id_`$picture_previous`"}" class="page-link" rel="prev">
                                 &laquo;
                                 {lang t="gallery|previous_image"}
                             </a>
                         </li>
                     {else}
-                        <li class="disabled">
-                            <span>
+                        <li class="page-item disabled">
+                            <span class="page-link">
                                 &laquo;
                                 {lang t="gallery|previous_image"}
                             </span>
                         </li>
                     {/if}
-                    <li>
-                        <a href="{uri args="gallery/index/pics/id_`$picture.gallery_id`"}">
+                    <li class="page-item">
+                        <a href="{uri args="gallery/index/pics/id_`$picture.gallery_id`"}" class="page-link">
                             {lang t="gallery|picture_index"}
                         </a>
                     </li>
                     {if !empty($picture_next)}
-                        <li>
-                            <a href="{uri args="gallery/index/details/id_`$picture_next`"}" rel="next">
+                        <li class="page-item">
+                            <a href="{uri args="gallery/index/details/id_`$picture_next`"}" class="page-link" rel="next">
                                 {lang t="gallery|next_image"}
                                 &raquo;
                             </a>
                         </li>
                     {else}
-                        <li class="disabled">
-                            <span>
+                        <li class="page-item disabled">
+                            <span class="page-link">
                                 {lang t="gallery|next_image"}
                                 &raquo;
                             </span>
