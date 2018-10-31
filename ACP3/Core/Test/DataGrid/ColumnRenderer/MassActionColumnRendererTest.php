@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\MassActionColumnRenderer;
+use ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 
 class MassActionColumnRendererTest extends AbstractColumnRendererTest
 {

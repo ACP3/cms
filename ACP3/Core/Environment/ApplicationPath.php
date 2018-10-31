@@ -41,18 +41,6 @@ class ApplicationPath
      * @var string
      */
     protected $designRootPathInternal;
-    /**
-     * @var string
-     */
-    protected $designPathInternal;
-    /**
-     * @var string
-     */
-    protected $designPathWeb;
-    /**
-     * @var string
-     */
-    protected $designPathAbsolute;
 
     /**
      * ApplicationPath constructor.
@@ -143,82 +131,6 @@ class ApplicationPath
     public function setDesignRootPathInternal($designRootPathInternal)
     {
         $this->designRootPathInternal = $designRootPathInternal;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     *
-     * @deprecated since 4.28.0, to be removed with version 5.0.0. Use Theme::getDesignPathInternal instead
-     */
-    public function getDesignPathInternal(): string
-    {
-        return $this->designPathInternal;
-    }
-
-    /**
-     * @param string $designPathInternal
-     *
-     * @return ApplicationPath
-     *
-     * @deprecated since 4.28.0, to be removed with version 5.0.0.
-     */
-    public function setDesignPathInternal($designPathInternal)
-    {
-        $this->designPathInternal = $this->designRootPathInternal . $designPathInternal;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     *
-     * @deprecated since 4.28.0, to be removed with version 5.0.0. Use Theme::getDesignPathWeb instead
-     */
-    public function getDesignPathWeb(): string
-    {
-        return $this->designPathWeb;
-    }
-
-    /**
-     * @param string $designPathWeb
-     *
-     * @return ApplicationPath
-     *
-     * @deprecated since 4.28.0, to be removed with version 5.0.0.
-     */
-    public function setDesignPathWeb($designPathWeb)
-    {
-        $this->designPathWeb = $designPathWeb;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     *
-     * @deprecated Will be removed with version 5.0.0
-     */
-    public function getDesignPathAbsolute(): string
-    {
-        return $this->designPathAbsolute;
-    }
-
-    /**
-     * @param string $designPathAbsolute
-     *
-     * @return ApplicationPath
-     *
-     * @deprecated Will be removed with version 5.0.0
-     */
-    public function setDesignPathAbsolute($designPathAbsolute)
-    {
-        if (!\preg_match('=^(http(s?))://=', $designPathAbsolute)) {
-            throw new \InvalidArgumentException('The given absolute design path (' . $designPathAbsolute . ') doesn\'t start with a valid protocol.');
-        }
-
-        $this->designPathAbsolute = $designPathAbsolute;
 
         return $this;
     }

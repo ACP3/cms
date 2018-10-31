@@ -47,30 +47,10 @@ class ControllerActionBeforeDispatchEvent extends Event
 
     /**
      * @return string
-     *
-     * @deprecated since 4.28.0, to be removed with version 5.0.0. Use ::getArea instead
-     */
-    public function getControllerArea()
-    {
-        return isset($this->serviceIdParts[2]) ? $this->serviceIdParts[2] : '';
-    }
-
-    /**
-     * @return string
      */
     public function getArea()
     {
         return isset($this->serviceIdParts[2]) ? $this->serviceIdParts[2] : '';
-    }
-
-    /**
-     * @return string
-     *
-     * @deprecated since 4.28.0, to be removed with version 5.0.0. Use ::getModule instead
-     */
-    public function getControllerModule()
-    {
-        return isset($this->serviceIdParts[0]) ? $this->serviceIdParts[0] : '';
     }
 
     /**

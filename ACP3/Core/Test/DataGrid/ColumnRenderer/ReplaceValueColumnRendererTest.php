@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer;
+use ACP3\Core\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer;
 
 class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
 {

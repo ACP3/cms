@@ -30,7 +30,7 @@ class PageCssClasses extends AbstractFunction
      *
      * @return mixed
      */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         if (isset($params['type'])) {
             switch ($params['type']) {

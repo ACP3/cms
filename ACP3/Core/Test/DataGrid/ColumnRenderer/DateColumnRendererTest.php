@@ -7,9 +7,9 @@
 
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
+use ACP3\Core\DataGrid\ColumnRenderer\DateColumnRenderer;
 use ACP3\Core\Date;
 use ACP3\Core\Date\DateTranslator;
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\DateColumnRenderer;
 use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
@@ -77,7 +77,7 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
             'date' => '2015-10-20 20:20:21',
         ];
 
-        $expected = '<td data-order="1445372421"><time datetime="2015-10-20T22:20:21+02:00" title="2015-10-20 22:20">2015-10-20 22:20</time></td>';
+        $expected = '<td data-sort="1445372421"><time datetime="2015-10-20T22:20:21+02:00" title="2015-10-20 22:20">2015-10-20 22:20</time></td>';
         $this->compareResults($expected);
     }
 
@@ -91,7 +91,7 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
             'end' => '2015-10-25 20:20:21',
         ];
 
-        $expected = '<td data-order="1445372421"><time datetime="2015-10-20T22:20:21+02:00">2015-10-20 22:20</time>&ndash;<time datetime="2015-10-25T21:20:21+01:00">2015-10-25 21:20</time></td>';
+        $expected = '<td data-sort="1445372421"><time datetime="2015-10-20T22:20:21+02:00">2015-10-20 22:20</time>&ndash;<time datetime="2015-10-25T21:20:21+01:00">2015-10-25 21:20</time></td>';
         $this->compareResults($expected);
     }
 }

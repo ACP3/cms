@@ -20,7 +20,7 @@ class Stylesheets extends AbstractBlock
     /**
      * {@inheritdoc}
      */
-    public function process($params, $content, \Smarty_Internal_Template $smarty, &$repeat)
+    public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat)
     {
         if (!$repeat) {
             if (isset($content)) {

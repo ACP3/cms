@@ -36,18 +36,5 @@ abstract class AbstractFunction implements PluginInterface
      *
      * @return mixed
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
-    {
-        return $this->process($params, $smarty);
-    }
-
-    /**
-     * @param array                     $params
-     * @param \Smarty_Internal_Template $smarty
-     *
-     * @return mixed
-     *
-     * @deprecated since version 4.30.0, to be remove with 5.0.0. Implement method __invoke() instead
-     */
-    abstract public function process(array $params, \Smarty_Internal_Template $smarty);
+    abstract public function __invoke(array $params, \Smarty_Internal_Template $smarty);
 }

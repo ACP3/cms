@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions;
 use ACP3\Core;
 use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 use ACP3\Modules\ACP3\Menus;
+use ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration;
 
 class Navbar extends AbstractFunction
 {
@@ -68,21 +69,33 @@ class Navbar extends AbstractFunction
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         return $this->getMenuByKey(
             $params['block'],
-            new Menus\Helpers\MenuConfiguration(
-                isset($params['use_bootstrap']) ? (bool) $params['use_bootstrap'] : true,
-                !empty($params['class']) ? $params['class'] : '',
-                !empty($params['dropdownItemClass']) ? $params['dropdownItemClass'] : '',
-                !empty($params['tag']) ? $params['tag'] : 'ul',
-                $params['itemTag'] ?? 'li',
-                !empty($params['dropdownWrapperTag']) ? $params['dropdownWrapperTag'] : 'li',
-                !empty($params['classLink']) ? $params['classLink'] : '',
-                !empty($params['inlineStyles']) ? $params['inlineStyles'] : ''
-            )
+            $this->createMenuConfiguration($params)
+        );
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration
+     */
+    private function createMenuConfiguration(array $params): MenuConfiguration
+    {
+        return new MenuConfiguration(
+            isset($params['use_bootstrap']) ? (bool) $params['use_bootstrap'] : true,
+            !empty($params['class']) ? $params['class'] : '',
+            !empty($params['dropdownItemClass']) ? $params['dropdownItemClass'] : '',
+            !empty($params['tag']) ? $params['tag'] : 'ul',
+            $params['itemTag'] ?? 'li',
+            !empty($params['dropdownWrapperTag']) ? $params['dropdownWrapperTag'] : 'li',
+            !empty($params['classLink']) ? $params['classLink'] : '',
+            !empty($params['inlineStyles']) ? $params['inlineStyles'] : ''
         );
     }
 
@@ -90,56 +103,60 @@ class Navbar extends AbstractFunction
      * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
      * falls diese sich ebenfalls in der Navigationsleiste befindet.
      *
-     * @param string                                             $menu
+     * @param string                                             $menuName
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function getMenuByKey(
-        $menu,
-        Menus\Helpers\MenuConfiguration $menuConfig
+        string $menuName,
+        MenuConfiguration $menuConfig
     ) {
-        $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
+        $cacheKey = $this->buildMenuCacheKey($menuName, $menuConfig);
         if (isset($this->menus[$cacheKey])) {
             return $this->menus[$cacheKey];
         }
 
-        return $this->generateMenu($menu, $menuConfig);
+        return $this->generateMenu($menuName, $menuConfig);
     }
 
     /**
-     * @param string                          $menu
+     * @param string                          $menuName
      * @param Menus\Helpers\MenuConfiguration $menuConfig
      *
      * @return string
      */
-    protected function buildMenuCacheKey($menu, Menus\Helpers\MenuConfiguration $menuConfig)
+    protected function buildMenuCacheKey(string $menuName, MenuConfiguration $menuConfig)
     {
-        return $menu . ':' . $menuConfig->__toString();
+        return $menuName . ':' . $menuConfig->__toString();
     }
 
     /**
-     * @param string                                             $menu
+     * @param string                                             $menuName
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
      *
      * @return string
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function generateMenu($menu, Menus\Helpers\MenuConfiguration $menuConfig)
+    protected function generateMenu(string $menuName, MenuConfiguration $menuConfig)
     {
-        $items = $this->menusCache->getVisibleMenuItems($menu);
+        $items = $this->menusCache->getVisibleMenuItems($menuName);
         $cItems = \count($items);
 
         if ($cItems > 0) {
-            $selected = $this->selectMenuItem($menu);
+            $selected = $this->selectMenuItem($menuName);
 
-            $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
+            $cacheKey = $this->buildMenuCacheKey($menuName, $menuConfig);
 
             $this->menus[$cacheKey] = '';
 
             for ($i = 0; $i < $cItems; ++$i) {
                 if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $items[$i]['level']) {
                     $this->menus[$cacheKey] .= $this->processMenuItemWithChildren(
-                        $menu,
+                        $menuName,
                         $menuConfig,
                         $items[$i],
                         $this->getMenuItemSelector($items[$i], $selected)
@@ -162,7 +179,7 @@ class Navbar extends AbstractFunction
                 $this->menus[$cacheKey] = \sprintf(
                     '<%1$s%2$s>%3$s</%1$s>',
                     $menuConfig->getTag(),
-                    $this->prepareMenuHtmlAttributes($menu, $menuConfig),
+                    $this->prepareMenuHtmlAttributes($menuName, $menuConfig),
                     $this->menus[$cacheKey]
                 );
             } else {
@@ -176,11 +193,13 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @param string $menu
+     * @param string $menuName
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function selectMenuItem($menu)
+    protected function selectMenuItem(string $menuName)
     {
         if ($this->request->getArea() !== Core\Controller\AreaEnum::AREA_ADMIN) {
             $in = [
@@ -191,7 +210,7 @@ class Navbar extends AbstractFunction
                 $this->request->getModule(),
             ];
 
-            return $this->menuItemRepository->getLeftIdByUris($menu, $in);
+            return $this->menuItemRepository->getLeftIdByUris($menuName, $in);
         }
 
         return 0;
@@ -204,7 +223,7 @@ class Navbar extends AbstractFunction
      *
      * @return string
      */
-    protected function processMenuItemWithoutChildren(Menus\Helpers\MenuConfiguration $menuConfig, $item, $cssSelectors)
+    protected function processMenuItemWithoutChildren(MenuConfiguration $menuConfig, array $item, string $cssSelectors)
     {
         $link = \sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s</a>',
@@ -222,20 +241,24 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @param string                                             $menu
+     * @param string                                             $menuName
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
      * @param array                                              $item
      * @param string                                             $cssSelectors
      *
      * @return string
      */
-    protected function processMenuItemWithChildren($menu, Menus\Helpers\MenuConfiguration $menuConfig, $item, $cssSelectors)
-    {
+    protected function processMenuItemWithChildren(
+        string $menuName,
+        MenuConfiguration $menuConfig,
+        array $item,
+        string $cssSelectors
+    ) {
         $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig);
         $caret = $subMenuCss = '';
         // Special styling for bootstrap enabled navigation bars
         if ($menuConfig->isUseBootstrap() === true) {
-            $dropDownItemClassName = 'navigation-' . $menu . '-subnav-' . $item['id'] . '-dropdown';
+            $dropDownItemClassName = 'navigation-' . $menuName . '-subnav-' . $item['id'] . '-dropdown';
             $cssSelectors .= !empty($menuConfig->getDropdownItemSelector()) ? ' ' . $menuConfig->getDropdownItemSelector() : ' dropdown';
             $cssSelectors .= ' ' . $dropDownItemClassName;
             $caret = $item['level'] == 0 ? ' <b class="caret"></b>' : '';
@@ -259,7 +282,7 @@ class Navbar extends AbstractFunction
             $cssSelectors,
             $link,
             $subMenuCss,
-            $menu,
+            $menuName,
             $item['id']
         );
     }
@@ -273,7 +296,7 @@ class Navbar extends AbstractFunction
      *
      * @return string
      */
-    protected function closeOpenedMenus(Menus\Helpers\MenuConfiguration $menuConfig, $items, $currentIndex)
+    protected function closeOpenedMenus(MenuConfiguration $menuConfig, array $items, int $currentIndex)
     {
         $data = '';
         if ((isset($items[$currentIndex + 1]) && $items[$currentIndex + 1]['level'] < $items[$currentIndex]['level']) ||
@@ -296,7 +319,7 @@ class Navbar extends AbstractFunction
      *
      * @return string
      */
-    protected function getMenuItemHref($mode, $uri)
+    protected function getMenuItemHref(int $mode, string $uri)
     {
         if ($mode == 1 || $mode == 2 || $mode == 4) {
             return $this->router->route($uri);
@@ -310,7 +333,7 @@ class Navbar extends AbstractFunction
      *
      * @return string
      */
-    protected function getMenuItemHrefTarget($target)
+    protected function getMenuItemHrefTarget(string $target)
     {
         return $target == 2 ? ' target="_blank"' : '';
     }
@@ -321,7 +344,7 @@ class Navbar extends AbstractFunction
      *
      * @return int
      */
-    protected function calculateChildParentLevelDiff($items, $currentIndex)
+    protected function calculateChildParentLevelDiff(array $items, int $currentIndex)
     {
         $diff = $items[$currentIndex]['level'];
         if (isset($items[$currentIndex + 1]['level'])) {
@@ -338,7 +361,7 @@ class Navbar extends AbstractFunction
      *
      * @return string
      */
-    protected function getMenuItemSelector($item, $selectedItemValue)
+    protected function getMenuItemSelector(array $item, int $selectedItemValue)
     {
         $css = 'navi-' . $item['id'];
 
@@ -353,16 +376,16 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @param string                                             $menu
+     * @param string                                             $menuName
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration $menuConfig
      *
      * @return string
      */
-    protected function prepareMenuHtmlAttributes($menu, Menus\Helpers\MenuConfiguration $menuConfig)
+    protected function prepareMenuHtmlAttributes(string $menuName, MenuConfiguration $menuConfig)
     {
         $bootstrapSelector = $menuConfig->isUseBootstrap() === true ? ' nav navbar-nav' : '';
         $navigationSelectors = !empty($menuConfig->getSelector()) ? ' ' . $menuConfig->getSelector() : $bootstrapSelector;
-        $attributes = ' class="navigation-' . $menu . $navigationSelectors . '"';
+        $attributes = ' class="navigation-' . $menuName . $navigationSelectors . '"';
         $attributes .= !empty($menuConfig->getInlineStyle()) ? ' style="' . $menuConfig->getInlineStyle() . '"' : '';
 
         return $attributes;
@@ -373,7 +396,7 @@ class Navbar extends AbstractFunction
      *
      * @return string
      */
-    protected function prepareMenuItemHtmlAttributes(Menus\Helpers\MenuConfiguration $menuConfig)
+    protected function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig)
     {
         return !empty($menuConfig->getLinkSelector()) ? ' class="' . $menuConfig->getLinkSelector() . '"' : '';
     }

@@ -35,7 +35,7 @@ class HasPermission extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         if (isset($params['path']) === true) {
             return $this->acl->hasPermission($params['path']);

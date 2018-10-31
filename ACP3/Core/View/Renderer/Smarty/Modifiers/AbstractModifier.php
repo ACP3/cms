@@ -35,17 +35,5 @@ abstract class AbstractModifier implements PluginInterface
      *
      * @return string
      */
-    public function __invoke($value): string
-    {
-        return $this->process($value);
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return string
-     *
-     * @deprecated since version 4.30.0, to be remove with 5.0.0. Implement method __invoke() instead
-     */
-    abstract public function process($value);
+    abstract public function __invoke($value): string;
 }

@@ -9,12 +9,6 @@ services:
     arguments:
       - '@core.context.frontend'
 
-  core.controller.admin:
-    abstract: true
-    arguments:
-      - '@core.context.frontend'
-    deprecated: 'The "%service_id%" service is deprecated. Use "core.controller.frontend" instead'
-
   core.controller.controller_action_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
@@ -25,6 +19,3 @@ services:
     class: ACP3\Core\Controller\Helper\ControllerActionExists
     arguments:
     - '@core.controller.controller_action_locator'
-
-  core.modules.helper.controllerActionExists:
-    alias: core.controller.helper.controller_action_exists

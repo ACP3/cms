@@ -126,33 +126,4 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
             [$moduleId, $resultId]
         );
     }
-
-    /**
-     * @param int $moduleId
-     *
-     * @return array
-     *
-     * @throws \Doctrine\DBAL\DBALException
-     *
-     * @deprecated since version 4.30.0, to removed with version 5.0.0
-     */
-    public function getAllByModuleInAcp(int $moduleId)
-    {
-        return $this->db->fetchAll(
-            'SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.id, c.ip, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\Repository\UserRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? ORDER BY c.entry_id ASC, c.date ASC',
-            [$moduleId]
-        );
-    }
-
-    /**
-     * @return array
-     *
-     * @throws \Doctrine\DBAL\DBALException
-     *
-     * @deprecated since version 4.30.0, to removed with version 5.0.0
-     */
-    public function getCommentsGroupedByModule()
-    {
-        return $this->db->fetchAll('SELECT c.module_id, m.name AS module, COUNT(c.module_id) AS `comments_count` FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) GROUP BY c.module_id ORDER BY m.name');
-    }
 }

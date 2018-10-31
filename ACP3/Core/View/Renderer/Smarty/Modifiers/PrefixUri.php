@@ -20,7 +20,7 @@ class PrefixUri extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function process($value)
+    public function __invoke($value): string
     {
         if (!empty($value) && (bool) \preg_match('=^http(s)?://=', $value) === false) {
             return 'http://' . $value;

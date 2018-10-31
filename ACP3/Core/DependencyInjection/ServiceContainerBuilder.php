@@ -82,7 +82,6 @@ class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterAuthenticationsCompilerPass())
             ->addCompilerPass(new RegisterSmartyPluginsPass())
             ->addCompilerPass(new RegisterColumnRendererPass())
-            ->addCompilerPass(new \ACP3\Core\Helpers\DataGrid\DependencyInjection\RegisterColumnRendererPass())
             ->addCompilerPass(new RegisterValidationRulesPass())
             ->addCompilerPass(new RegisterWysiwygEditorsCompilerPass())
             ->addCompilerPass(new RegisterControllerActionsPass())

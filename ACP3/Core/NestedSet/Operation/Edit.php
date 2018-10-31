@@ -80,7 +80,7 @@ class Edit extends AbstractOperation
     protected function nodeIsRootItemAndNoChangeNeed(int $parentId, int $blockId, array $items)
     {
         return empty($parentId) &&
-            ($this->isBlockAware === false || ($this->isBlockAware === true && $blockId == $items[$this->nestedSetRepository::BLOCK_COLUMN_NAME])) &&
+            ($this->isBlockAware() === false || ($this->isBlockAware() === true && $blockId == $items[$this->nestedSetRepository::BLOCK_COLUMN_NAME])) &&
             $this->nestedSetRepository->nodeIsRootItem($items['left_id'], $items['right_id']) === true;
     }
 
@@ -96,7 +96,7 @@ class Edit extends AbstractOperation
     protected function nodeBecomesRootNode(int $id, int $blockId, array $nodes)
     {
         $itemDiff = $this->calcDiffBetweenNodes($nodes[0]['left_id'], $nodes[0]['right_id']);
-        if ($this->isBlockAware === true) {
+        if ($this->isBlockAware() === true) {
             if ($nodes[0][$this->nestedSetRepository::BLOCK_COLUMN_NAME] != $blockId) {
                 $diff = $this->nodeBecomesRootNodeInNewBlock($blockId, $nodes, $itemDiff);
             } else {
@@ -188,7 +188,7 @@ class Edit extends AbstractOperation
                 $node['left_id'],
                 $node['right_id']
             );
-            if ($this->isBlockAware === true) {
+            if ($this->isBlockAware() === true) {
                 $bool = $this->db->getConnection()->executeUpdate(
                     "UPDATE {$this->nestedSetRepository->getTableName()} SET " . $this->nestedSetRepository::BLOCK_COLUMN_NAME . ' = ?, root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?',
                     [

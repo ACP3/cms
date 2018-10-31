@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\PictureColumnRenderer;
+use ACP3\Core\DataGrid\ColumnRenderer\PictureColumnRenderer;
 use ACP3\Core\Router\RouterInterface;
 
 class PictureColumnRendererTest extends AbstractColumnRendererTest

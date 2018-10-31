@@ -35,8 +35,6 @@ class SendEmail
      * @param string                           $mailSignature
      *
      * @return bool
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0. Use the 'core.mailer' service directly instead
      */
     public function execute(
         $recipientName,

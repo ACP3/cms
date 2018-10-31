@@ -30,18 +30,5 @@ abstract class AbstractFilter implements PluginInterface
         $smarty->registerFilter($this->getExtensionName(), $this, \get_class($this));
     }
 
-    public function __invoke($tplOutput, \Smarty_Internal_Template $smarty)
-    {
-        return $this->process($tplOutput, $smarty);
-    }
-
-    /**
-     * @param string                    $tplOutput
-     * @param \Smarty_Internal_Template $smarty
-     *
-     * @return string
-     *
-     * @deprecated since version 4.30.0, to be remove with 5.0.0. Implement method __invoke() instead
-     */
-    abstract public function process($tplOutput, \Smarty_Internal_Template $smarty);
+    abstract public function __invoke($tplOutput, \Smarty_Internal_Template $smarty);
 }

@@ -38,20 +38,5 @@ abstract class AbstractBlock implements PluginInterface
      *
      * @return string
      */
-    public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat)
-    {
-        return $this->process($params, $content, $smarty, $repeat);
-    }
-
-    /**
-     * @param array                     $params
-     * @param string|null               $content
-     * @param \Smarty_Internal_Template $smarty
-     * @param bool                      $repeat
-     *
-     * @return string
-     *
-     * @deprecated since version 4.30.0, to be remove with 5.0.0. Implement method __invoke() instead
-     */
-    abstract public function process($params, $content, \Smarty_Internal_Template $smarty, &$repeat);
+    abstract public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat);
 }

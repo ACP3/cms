@@ -41,7 +41,7 @@ class Event extends AbstractFunction
      *
      * @return string
      */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         if (isset($params['name'])) {
             \ob_start();

@@ -6,9 +6,6 @@ services:
       - '@core.i18n.dictionary_cache'
       - 'en_US'
 
-  core.lang:
-    alias: core.i18n.translator
-
   core.i18n.dictionary_cache:
     class: ACP3\Installer\Core\I18n\DictionaryCache
     arguments:

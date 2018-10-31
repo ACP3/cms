@@ -198,36 +198,6 @@ class Action
      * @param callable    $callback
      * @param null|string $path
      *
-     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @deprecated since 4.4.4, to be removed with version 5.0.0
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     */
-    public function handleCreatePostAction(callable $callback, $path = null)
-    {
-        return $this->handleSaveAction($callback, $path);
-    }
-
-    /**
-     * @param callable    $callback
-     * @param null|string $path
-     *
-     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @deprecated since 4.4.4, to be removed with version 5.0.0
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     */
-    public function handleEditPostAction(callable $callback, $path = null)
-    {
-        return $this->handleSaveAction($callback, $path);
-    }
-
-    /**
-     * @param callable    $callback
-     * @param null|string $path
-     *
      * @return array|string|JsonResponse|RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException

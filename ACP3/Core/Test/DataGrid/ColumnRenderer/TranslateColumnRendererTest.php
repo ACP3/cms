@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\TranslateColumnRenderer;
+use ACP3\Core\DataGrid\ColumnRenderer\TranslateColumnRenderer;
 use ACP3\Core\I18n\Translator;
 
 class TranslateColumnRendererTest extends AbstractColumnRendererTest

@@ -7,22 +7,13 @@
 
 namespace ACP3\Core\Test\Helpers\ColumnRenderer;
 
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\Nl2pColumnRenderer;
-use ACP3\Core\Helpers\StringFormatter;
-use Cocur\Slugify\Slugify;
+use ACP3\Core\DataGrid\ColumnRenderer\IntegerColumnRenderer;
 
-class Nl2pColumnRendererTest extends AbstractColumnRendererTest
+class IntegerColumnRendererTest extends AbstractColumnRendererTest
 {
-    /**
-     * @var StringFormatter
-     */
-    protected $stringFormatter;
-
     protected function setUp()
     {
-        $this->stringFormatter = new StringFormatter(new Slugify());
-
-        $this->columnRenderer = new Nl2pColumnRenderer($this->stringFormatter);
+        $this->columnRenderer = new IntegerColumnRenderer();
 
         parent::setUp();
     }
@@ -33,23 +24,23 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
             'fields' => ['text'],
         ]);
         $this->dbData = [
-            'text' => 'Lorem Ipsum',
+            'text' => '1',
         ];
 
-        $expected = '<td><p>Lorem Ipsum</p></td>';
+        $expected = '<td>1</td>';
         $this->compareResults($expected);
     }
 
-    public function testValidFieldWithMultipleLines()
+    public function testValidFieldStringToIntegerConversion()
     {
         $this->columnData = \array_merge($this->columnData, [
             'fields' => ['text'],
         ]);
         $this->dbData = [
-            'text' => "Lorem Ipsum\n\nDolor",
+            'text' => 'Test',
         ];
 
-        $expected = "<td><p>Lorem Ipsum</p>\n<p>Dolor</p></td>";
+        $expected = '<td>0</td>';
         $this->compareResults($expected);
     }
 }

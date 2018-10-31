@@ -42,6 +42,10 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
             $value = $this->translator->t($domain, $value);
         }
 
+        if (empty($value) && !empty($this->getDefaultValue($column))) {
+            $value = $this->getDefaultValue($column);
+        }
+
         return $value;
     }
 }
