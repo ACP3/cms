@@ -80,7 +80,7 @@
         preValidateForm: function (form) {
             this.removeAllPreviousErrors(form);
             this.checkFormElementsForErrors(form);
-            this.focusTabWithFirstErrorMessage();
+            this.focusTabWithFirstErrorMessage(form);
 
             return this.isFormValid;
         },
@@ -116,11 +116,13 @@
                 .closest('div:not(.input-group):not(.btn-group)')
                 .append(template);
         },
-        focusTabWithFirstErrorMessage: function () {
-            if ($('.tabbable').length > 0) {
-                let $elem = $('.tabbable .form-group:has(.invalid-feedback):first'),
+        focusTabWithFirstErrorMessage: function (form) {
+            const $form = $(form),
+                $tabs = $form.find('.nav-tabs');
+            if ($tabs.length > 0) {
+                let $elem = $form.find('.tab-content .form-group:has(.invalid-feedback):first'),
                     tabId = $elem.closest('.tab-pane').prop('id');
-                $('.tabbable .nav-tabs .nav-link[href="#' + tabId + '"]').tab('show');
+                $tabs.find('.nav-link[href="#' + tabId + '"]').tab('show');
 
                 $elem.find(':input').focus();
             }
@@ -314,7 +316,7 @@
                 $errorBox.remove();
             }
 
-            this.focusTabWithFirstErrorMessage();
+            this.focusTabWithFirstErrorMessage(that.element);
         }
     });
 
