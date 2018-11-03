@@ -2,7 +2,7 @@
 
 {block CONTENT}
     <article>
-        <section class="picture">
+        <section class="my-2 text-center">
             {if !empty($picture_next)}
                 <a href="{uri args="gallery/index/details/id_`$picture_next`"}">
                     <img src="{$picture.file}"
@@ -18,7 +18,7 @@
                      alt="{$picture.description|strip_tags|trim}"
                      class="img-thumbnail">
             {/if}
-            <div class="description">
+            <div class="w-75 my-2 mx-auto">
                 {$picture.description|rewrite_uri}
             </div>
             {event name="share.layout.add_social_sharing"}
