@@ -5,7 +5,7 @@
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         <div class="row">
             {foreach $galleries as $row}
-                <div class="col-sm-3">
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-3 mb-md-0">
                     <div class="card">
                         {if !empty($row.file)}
                             <a href="{uri args="gallery/index/pics/id_`$row.id`"}">

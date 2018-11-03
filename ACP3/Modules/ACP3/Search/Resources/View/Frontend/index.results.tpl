@@ -8,25 +8,23 @@
                 <li class="nav-item">
                     <a href="#tab-{$module}" class="nav-link{if $values@first} active{/if}" data-toggle="tab">
                         {lang t="`$module`|`$module`"}
-                        <span class="badge">{count($values)}</span>
+                        <span class="badge badge-secondary">{count($values)}</span>
                     </a>
                 </li>
             {/foreach}
         </ul>
         <div class="tab-content">
             {foreach $results_mods as $module => $results}
-                <div id="tab-{$module}" class="tab-pane fade{if $results@first} in active{/if}">
+                <div id="tab-{$module}" class="tab-pane fade{if $results@first} show active{/if}">
                     {foreach $results as $result}
-                        <div class="dataset-box">
-                            <header class="navbar navbar-default">
-                                <div class="navbar-header">
-                                    <h3 class="navbar-brand">
-                                        <a href="{$result.hyperlink}">{$result.title}</a>
-                                    </h3>
-                                </div>
+                        <div class="card mb-3">
+                            <header class="card-header">
+                                <h3 class="h5 card-title mb-0">
+                                    <a href="{$result.hyperlink}">{$result.title}</a>
+                                </h3>
                             </header>
                             {if !empty($result.text)}
-                                <div class="content">
+                                <div class="card-body">
                                     {$result.text|strip_tags|truncate:200}
                                 </div>
                             {/if}

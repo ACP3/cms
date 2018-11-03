@@ -17,10 +17,14 @@
             <label class="col-sm-2 col-form-label required">{lang t="search|search_after_modules"}</label>
 
             <div class="col-sm-10">
-                <div class="btn-group" data-toggle="buttons">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     {foreach $search_mods as $row}
                         <label for="mods-{$row.dir}" class="btn btn-light{if !empty($row.checked)} active{/if}">
-                            <input type="checkbox" name="mods[]" id="mods-{$row.dir}" value="{$row.dir}"{$row.checked}>
+                            <input type="checkbox"
+                                   name="mods[]"
+                                   id="mods-{$row.dir}"
+                                   autocomplete="off"
+                                   value="{$row.dir}"{$row.checked}>
                             {lang t="`$row.name`|`$row.name`"}
                         </label>
                     {/foreach}

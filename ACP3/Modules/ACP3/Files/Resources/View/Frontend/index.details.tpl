@@ -2,11 +2,11 @@
 
 {block CONTENT}
     <article>
-        <time class="navbar-text small pull-right" datetime="{date_format date=$file.start format="c"}">
+        <time class="text-muted small" datetime="{date_format date=$file.start format="c"}">
             {date_format date=$file.start format=$dateformat}
         </time>
         {$file.text|rewrite_uri}
-        <footer class="card">
+        <footer class="card bg-light">
             <div class="card-body p-2">
                 <a href="{uri args="files/index/download/id_`$file.id`"}">
                     <i class="fas fa-download"></i>

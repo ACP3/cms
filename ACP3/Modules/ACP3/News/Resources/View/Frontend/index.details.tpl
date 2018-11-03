@@ -7,7 +7,7 @@
         </time>
         {$news.text|rewrite_uri}
         {if $news.uri != '' && $news.link_title != ''}
-            <footer class="card">
+            <footer class="card bg-light">
                 <div class="card-body p-2">
                     <strong>{lang t="news|hyperlink"}:</strong>
                     <a href="{$news.uri|prefix_uri}"{$news.target}>{$news.link_title}</a>

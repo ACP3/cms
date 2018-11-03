@@ -57,7 +57,7 @@
             {event name="layout.content_after"}
         </main>
         {if !$IN_ADM}
-            <aside id="sidebar" class="col-md-3 d-none d-sm-block">
+            <aside id="sidebar" class="col-md-3 d-none d-md-block">
                 {load_module module="widget/newsletter"}
                 {load_module module="widget/news"}
                 {load_module module="widget/files"}
@@ -68,7 +68,7 @@
             </aside>
         {/if}
     </div>
-    <footer class="row footer mb-3">
+    <footer class="row footer my-3">
         <div class="col-5 copyright">
             &copy; {site_title}
         </div>

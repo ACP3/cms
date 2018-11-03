@@ -4,14 +4,14 @@
         <button class="navbar-toggler"
                 type="button"
                 data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
+                data-target="#nav-user-menu-collapse"
+                aria-controls="nav-user-menu-collapse"
                 aria-expanded="false"
                 aria-label="{lang t="system|toggle_navigation"}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="nav-user-menu-collapse">
             {if !empty($user_sidebar.modules) || !empty($user_sidebar.system)}
                 <ul class="navbar-nav">
                     {if !empty($user_sidebar.modules)}
