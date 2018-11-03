@@ -30,8 +30,9 @@
   white-space: nowrap;
 
   .rating__star {
+    font-weight: 900;
+
     &::before {
-      content: "\e006";
       color: @rating-star-color-active;
     }
   }
@@ -39,7 +40,7 @@
 
 .rating__star {
   cursor: pointer;
-  font-family: 'Glyphicons Halflings', sans-serif;
+  font-family: "Font Awesome 5 Free";
   font-size: 24px;
   font-style: normal;
   font-weight: normal;
@@ -47,7 +48,7 @@
 
   &::before {
     color: @rating-star-color-default;
-    content: "\e007";
+    content: "\f005";
     padding-right: 5px;
   }
 
