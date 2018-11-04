@@ -52,8 +52,7 @@ class Navbar extends AbstractFunction
         Core\Router\RouterInterface $router,
         Menus\Model\Repository\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache
-    )
-    {
+    ) {
         $this->request = $request;
         $this->router = $router;
         $this->menuItemRepository = $menuItemRepository;
@@ -95,8 +94,7 @@ class Navbar extends AbstractFunction
     protected function getMenuByKey(
         string $menuName,
         MenuConfiguration $menuConfig
-    ): string
-    {
+    ): string {
         $cacheKey = $this->buildMenuCacheKey($menuName, $menuConfig);
 
         if (!isset($this->menus[$cacheKey])) {
@@ -236,8 +234,7 @@ class Navbar extends AbstractFunction
         MenuConfiguration $menuConfig,
         array $item,
         array $itemSelectors
-    ): string
-    {
+    ): string {
         $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig, ['dropdown-toggle']);
         // Special styling for bootstrap enabled navigation bars
         if ($menuConfig->isUseBootstrap() === true) {
@@ -351,8 +348,7 @@ class Navbar extends AbstractFunction
         array $item,
         int $selectedItemValue,
         Menus\Helpers\MenuConfiguration $menuConfig
-    ): array
-    {
+    ): array {
         $selectors = ['navi-' . $item['id']];
 
         if (!empty($selectedItemValue) &&
@@ -390,8 +386,7 @@ class Navbar extends AbstractFunction
     private function prepareMenuItemHtmlAttributes(
         MenuConfiguration $menuConfig,
         array $selectors = []
-    ): string
-    {
+    ): string {
         $selectors = \array_merge($selectors, $menuConfig->getLinkSelectors());
 
         return !empty($selectors) ? ' class="' . $this->glueCssSelectors($selectors) . '"' : '';
