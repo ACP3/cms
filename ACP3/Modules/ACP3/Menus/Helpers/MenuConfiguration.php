@@ -12,71 +12,86 @@ class MenuConfiguration
     /**
      * @var bool
      */
-    protected $useBootstrap = true;
+    private $useBootstrap = true;
+    /**
+     * @var string[]
+     */
+    private $selectors;
+    /**
+     * @var string[]
+     */
+    private $dropdownItemSelector;
     /**
      * @var string
      */
-    protected $selector = '';
+    private $tag = 'ul';
     /**
      * @var string
      */
-    protected $dropdownItemSelector = '';
+    private $itemTag = 'li';
     /**
      * @var string
      */
-    protected $tag = 'ul';
+    private $dropdownWrapperTag = 'li';
+    /**
+     * @var string[]
+     */
+    private $linkSelectors;
     /**
      * @var string
      */
-    protected $itemTag = 'li';
+    private $inlineStyle = '';
     /**
-     * @var string
-     */
-    protected $dropdownWrapperTag = 'li';
-    /**
-     * @var string
-     */
-    protected $linkSelector = '';
-    /**
-     * @var string
-     */
-    protected $inlineStyle = '';
-    /**
-     * @var string
+     * @var string[]
      */
     private $itemSelectors;
+    /**
+     * @var string[]
+     */
+    private $subMenuSelectors;
 
     /**
-     * @param bool   $useBootstrap
-     * @param string $class
-     * @param string $dropdownItemSelector
-     * @param string $tag
-     * @param string $itemTag
-     * @param string $dropdownWrapperTag
-     * @param string $linkSelectors
-     * @param string $inlineStyle
-     * @param string $itemSelectors
+     * @param bool     $useBootstrap
+     * @param string[] $selectors
+     * @param string[] $dropdownItemSelector
+     * @param string   $tag
+     * @param string   $itemTag
+     * @param string   $dropdownWrapperTag
+     * @param string[] $linkSelectors
+     * @param string   $inlineStyle
+     * @param string[] $itemSelectors
+     * @param string[] $subMenuSelectors
      */
     public function __construct(
         bool $useBootstrap = true,
-        string $class = '',
-        string $dropdownItemSelector = '',
+        array $selectors = [],
+        array $dropdownItemSelector = [],
         string $tag = 'ul',
         string $itemTag = 'li',
         string $dropdownWrapperTag = 'li',
-        string $linkSelectors = '',
+        array $linkSelectors = [],
         string $inlineStyle = '',
-        string $itemSelectors = ''
+        array $itemSelectors = [],
+        array $subMenuSelectors = []
     ) {
         $this->useBootstrap = $useBootstrap;
-        $this->selector = $class;
+        $this->selectors = $selectors;
         $this->dropdownItemSelector = $dropdownItemSelector;
         $this->tag = $tag;
         $this->itemTag = $itemTag;
         $this->dropdownWrapperTag = $dropdownWrapperTag;
-        $this->linkSelector = $linkSelectors;
+        $this->linkSelectors = $linkSelectors;
         $this->inlineStyle = $inlineStyle;
         $this->itemSelectors = $itemSelectors;
+        $this->subMenuSelectors = $subMenuSelectors;
+
+        if ($this->useBootstrap) {
+            $this->selectors[] = 'nav navbar-nav';
+            $this->dropdownItemSelector[] = 'dropdown';
+            $this->linkSelectors[] = 'nav-link';
+            $this->itemSelectors[] = 'nav-item';
+            $this->subMenuSelectors[] = 'dropdown-menu';
+        }
     }
 
     /**
@@ -88,17 +103,17 @@ class MenuConfiguration
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getSelector()
+    public function getSelectors(): array
     {
-        return $this->selector;
+        return $this->selectors;
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getDropdownItemSelector()
+    public function getDropdownItemSelector(): array
     {
         return $this->dropdownItemSelector;
     }
@@ -128,11 +143,11 @@ class MenuConfiguration
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getLinkSelector()
+    public function getLinkSelectors(): array
     {
-        return $this->linkSelector;
+        return $this->linkSelectors;
     }
 
     /**
@@ -144,11 +159,19 @@ class MenuConfiguration
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getItemSelectors(): string
+    public function getItemSelectors(): array
     {
         return $this->itemSelectors;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSubMenuSelectors(): array
+    {
+        return $this->subMenuSelectors;
     }
 
     /**
@@ -156,6 +179,6 @@ class MenuConfiguration
      */
     public function __toString()
     {
-        return \implode(':', \get_object_vars($this));
+        return \serialize(\get_object_vars($this));
     }
 }

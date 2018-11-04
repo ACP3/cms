@@ -73,7 +73,7 @@
             &copy; {site_title}
         </div>
         <div class="col-7">
-            {navbar block="sidebar" class="list-inline text-right mb-0" itemSelectors="list-inline-item" use_bootstrap=false}
+            {navbar block="sidebar" class=["list-inline", "text-right", "mb-0"] itemSelectors=["list-inline-item"] use_bootstrap=false}
         </div>
     </footer>
 </div>
