@@ -1,10 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {if !empty($categories)}
-        {include file="asset:Files/Partials/categories_list.tpl" categories=$categories title={lang t="files|further_categories"}}
-        <hr>
-    {/if}
+    {include file="asset:Files/Partials/categories_list.tpl" categories=$categories title={lang t="files|further_categories"}}
     {if !empty($files)}
         {foreach $files as $row}
             <div class="card mb-3">
