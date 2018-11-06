@@ -2,13 +2,13 @@
 
 {block CONTENT}
     {redirect_message}
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover datagrid">
         <thead>
         <tr>
             <th>{lang t="system|name"}</th>
-            <th>{lang t="system|description"}</th>
+            <th class="datagrid-column__max-width">{lang t="system|description"}</th>
             <th>{lang t="system|author"}</th>
-            <th>{lang t="system|version"}</th>
+            <th class="text-right">{lang t="system|version"}</th>
             <th>{lang t="system|options"}</th>
         </tr>
         </thead>
@@ -18,7 +18,7 @@
                 <td>{$row.name}</td>
                 <td>{$row.description}</td>
                 <td>{$row.author}</td>
-                <td>{$row.version}</td>
+                <td class="text-right">{$row.version}</td>
                 <td>
                     {if $row.selected == 1}
                         <i class="fas fa-check text-success"></i>

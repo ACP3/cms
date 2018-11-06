@@ -92,6 +92,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['text'],
+                'class' => 'datagrid-column__max-width',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('files', 'filesize'),
@@ -100,6 +101,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'customer' => [
                     'default_value' => $this->translator->t('files', 'unknown_filesize'),
                 ],
+                'class' => 'text-right',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -109,6 +111,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'custom' => [
                     'path' => Helpers::URL_KEY_PATTERN,
                 ],
+                'class' => 'text-right',
             ], 10);
 
         if ($this->acl->hasPermission('admin/files/index/sort') && $settings['order_by'] === 'custom') {
@@ -122,6 +125,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                         'route_sort_down' => 'acp/files/index/sort/id_%d/action_down',
                         'route_sort_up' => 'acp/files/index/sort/id_%d/action_up',
                     ],
+                    'class' => 'text-center',
                 ], 15);
         }
     }

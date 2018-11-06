@@ -64,11 +64,13 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
                 'fields' => ['module_name', 'table_name'],
                 'default_sort' => true,
+                'class' => 'datagrid-column__max-width',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('auditlog', 'results_count'),
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['results_count'],
+                'class' => 'text-right',
             ], 10);
     }
 }

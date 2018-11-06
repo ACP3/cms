@@ -81,6 +81,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('system', 'message'),
                 'type' => Core\DataGrid\ColumnRenderer\Nl2pColumnRenderer::class,
                 'fields' => ['message'],
+                'class' => 'datagrid-column__max-width',
             ], 10);
     }
 }

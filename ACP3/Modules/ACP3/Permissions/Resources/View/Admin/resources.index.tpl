@@ -19,9 +19,9 @@
                             <input type="checkbox" id="mark-all" value="1" {mark name="entries"}>
                         </th>
                     {/if}
-                    <th>{lang t="permissions|route"}</th>
+                    <th class="datagrid-column__max-width">{lang t="permissions|route"}</th>
                     <th>{lang t="permissions|assigned_privilege"}</th>
-                    <th style="width:5%">{lang t="system|id"}</th>
+                    <th class="text-right">{lang t="system|id"}</th>
                     {if $can_edit_resource === true || $can_delete_resource === true}
                         <th class="datagrid-column__actions">{lang t="system|action"}</th>
                     {/if}
@@ -39,20 +39,20 @@
                             {/if}
                             <td>{$row.area}/{$row.controller}/{$row.page}/</td>
                             <td>{$row.privilege_name}</td>
-                            <td>{$row.resource_id}</td>
+                            <td class="text-right">{$row.resource_id}</td>
                             {if $can_edit_resource === true || $can_delete_resource === true}
                                 <td class="datagrid-column__actions">
-                                    <div class="btn-group btn-group-sm pull-right">
+                                    <div class="d-flex justify-content-end datagrid-column__action-buttons">
                                         {if $can_edit_resource === true}
                                             <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
-                                               class="btn btn-light"
+                                               class="ml-1 btn btn-sm btn-light"
                                                title="{lang t="permissions|admin_resources_edit"}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                         {/if}
                                         {if $can_delete_resource === true}
                                             <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
-                                               class="btn btn-danger"
+                                               class="ml-1 btn btn-sm btn-danger"
                                                title="{lang t="permissions|admin_resources_delete"}">
                                                 <i class="fas fa-trash"></i>
                                             </a>

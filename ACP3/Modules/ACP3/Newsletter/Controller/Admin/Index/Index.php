@@ -75,6 +75,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('newsletter', 'subject'),
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
+                'class' => 'datagrid-column__max-width',
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'status'),
@@ -93,6 +94,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
+                'class' => 'text-right',
             ], 10);
     }
 }

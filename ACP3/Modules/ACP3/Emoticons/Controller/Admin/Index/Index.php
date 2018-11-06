@@ -66,6 +66,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
                 'default_sort' => true,
+                'class' => 'datagrid-column__max-width',
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('emoticons', 'code'),
@@ -85,6 +86,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
+                'class' => 'text-right',
             ], 10);
     }
 }

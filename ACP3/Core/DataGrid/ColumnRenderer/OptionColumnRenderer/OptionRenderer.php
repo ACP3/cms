@@ -45,7 +45,7 @@ class OptionRenderer
         bool $useAjax = false
     ) {
         $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
-        $value = ' <a href="' . $this->router->route($route) . '" class="btn ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
+        $value = ' <a href="' . $this->router->route($route) . '" class="ml-1 btn btn-sm ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
         $value .= '<i class="fas ' . $iconClass . '"></i>';
         $value .= '<span class="sr-only">' . $translationPhrase . '</span>';
         $value .= '</a>';

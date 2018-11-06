@@ -55,6 +55,7 @@ class Index extends AbstractFrontendAction
      * @return array
      *
      * @throws Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(int $id)
     {
@@ -111,6 +112,7 @@ class Index extends AbstractFrontendAction
                 'label' => $this->translator->t('system', 'description'),
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['description'],
+                'class' => 'datagrid-column__max-width',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -120,6 +122,7 @@ class Index extends AbstractFrontendAction
                 'custom' => [
                     'path' => Helpers::URL_KEY_PATTERN_PICTURE,
                 ],
+                'class' => 'text-right',
             ], 10);
 
         if ($this->acl->hasPermission('admin/gallery/pictures/order')) {
@@ -133,6 +136,7 @@ class Index extends AbstractFrontendAction
                         'route_sort_down' => 'acp/gallery/pictures/order/id_%d/action_down',
                         'route_sort_up' => 'acp/gallery/pictures/order/id_%d/action_up',
                     ],
+                    'class' => 'text-center',
                 ], 20);
         }
     }

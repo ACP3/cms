@@ -76,6 +76,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('polls', 'question'),
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
+                'class' => 'datagrid-column__max-width',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -85,6 +86,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'custom' => [
                     'path' => Helpers::URL_KEY_PATTERN,
                 ],
+                'class' => 'text-right',
             ], 10);
     }
 }

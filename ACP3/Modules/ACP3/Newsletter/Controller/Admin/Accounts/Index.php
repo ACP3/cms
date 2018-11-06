@@ -74,6 +74,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['mail'],
                 'default_sort' => true,
+                'class' => 'datagrid-column__max-width',
             ], 60)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'salutation'),
@@ -108,6 +109,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
+                'class' => 'text-right',
             ], 10);
     }
 }

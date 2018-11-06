@@ -72,8 +72,14 @@
   margin: 0 0 0 8px;
   float: right;
 }
+.datagrid thead th {
+  white-space: nowrap;
+}
 .datagrid .datagrid-column__mass-action {
   width: 5%;
+}
+.datagrid .datagrid-column__max-width {
+  width: 100%;
 }
 .datagrid .datagrid-column__date-range {
   width: 22%;
@@ -84,11 +90,11 @@
 .datagrid .datagrid-column__actions {
   width: 7%;
 }
-.datagrid .datagrid-column__actions .btn-group {
+.datagrid .datagrid-column__action-buttons {
   visibility: hidden;
 }
-.datagrid tr:hover td.datagrid-column__actions .btn-group,
-.datagrid tr.info td.datagrid-column__actions .btn-group {
+.datagrid tr:hover .datagrid-column__action-buttons,
+.datagrid tr.row-selected .datagrid-column__action-buttons {
   visibility: visible;
 }
 .control-label,

@@ -85,11 +85,13 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('gallery', 'title'),
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
+                'class' => 'datagrid-column__max-width',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'pictures'),
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['pictures'],
+                'class' => 'text-right',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -99,6 +101,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'custom' => [
                     'path' => Helpers::URL_KEY_PATTERN_GALLERY,
                 ],
+                'class' => 'text-right',
             ], 10);
     }
 }

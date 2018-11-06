@@ -62,11 +62,13 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
                 'fields' => ['module'],
                 'default_sort' => true,
+                'class' => 'datagrid-column__max-width',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('comments', 'comments_count'),
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['comments_count'],
+                'class' => 'text-right',
             ], 20)
             ->addColumn([
                 'fields' => ['module_id'],

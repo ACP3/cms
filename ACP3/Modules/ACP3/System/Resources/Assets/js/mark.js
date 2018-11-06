@@ -1,4 +1,4 @@
-const cssClassName = 'info';
+const cssClassName = 'row-selected bg-light';
 
 /**
  * Marks all visible results

@@ -84,6 +84,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['title'],
                 'default_sort' => true,
+                'class' => 'datagrid-column__max-width',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -93,6 +94,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'custom' => [
                     'path' => Helpers::URL_KEY_PATTERN,
                 ],
+                'class' => 'text-right',
             ], 10);
     }
 }

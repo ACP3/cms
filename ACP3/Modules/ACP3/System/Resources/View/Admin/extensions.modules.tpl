@@ -13,9 +13,9 @@
                     <thead>
                     <tr>
                         <th>{lang t="system|module_name"}</th>
-                        <th>{lang t="system|description"}</th>
-                        <th>{lang t="system|version"}</th>
+                        <th class="datagrid-column__max-width">{lang t="system|description"}</th>
                         <th>{lang t="system|author"}</th>
+                        <th class="text-right">{lang t="system|version"}</th>
                         <th class="datagrid-column__actions">{lang t="system|action"}</th>
                     </tr>
                     </thead>
@@ -24,8 +24,8 @@
                         <tr>
                             <td>{lang t="`$row.name`|`$row.name`"}</td>
                             <td>{lang t="`$row.name`|mod_description"}</td>
-                            <td>{$row.version}</td>
                             <td>{$row.author}</td>
+                            <td class="text-right">{$row.version}</td>
                             <td class="text-center">
                                 {if $row.protected === true}
                                     <i class="fas fa-ban text-danger"

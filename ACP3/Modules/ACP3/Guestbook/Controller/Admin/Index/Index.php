@@ -80,17 +80,20 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'label' => $this->translator->t('system', 'message'),
                 'type' => Core\DataGrid\ColumnRenderer\Nl2pColumnRenderer::class,
                 'fields' => ['message'],
+                'class' => 'datagrid-column__max-width',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('guestbook', 'ip'),
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['ip'],
+                'class' => 'text-right',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
+                'class' => 'text-right',
             ], 10);
     }
 }

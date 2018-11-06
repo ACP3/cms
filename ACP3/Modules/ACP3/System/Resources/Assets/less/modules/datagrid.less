@@ -1,6 +1,16 @@
 .datagrid {
+  thead {
+    th {
+      white-space: nowrap;
+    }
+  }
+
   .datagrid-column__mass-action {
     width: 5%;
+  }
+
+  .datagrid-column__max-width {
+    width: 100%;
   }
 
   .datagrid-column__date-range {
@@ -13,18 +23,16 @@
 
   .datagrid-column__actions {
     width: 7%;
+  }
 
-    .btn-group {
-      visibility: hidden;
-    }
+  .datagrid-column__action-buttons {
+    visibility: hidden;
   }
 
   tr:hover,
-  tr.info {
-    td.datagrid-column__actions {
-      .btn-group {
-        visibility: visible;
-      }
+  tr.row-selected {
+    .datagrid-column__action-buttons {
+      visibility: visible;
     }
   }
 }

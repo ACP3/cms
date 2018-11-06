@@ -81,6 +81,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'custom' => [
                     'path' => '%s',
                 ],
+                'class' => 'datagrid-column__max-width',
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('share', 'average_rating'),
@@ -89,17 +90,20 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'custom' => [
                     'precision' => 2,
                 ],
+                'class' => 'text-right',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('share', 'ratings_count'),
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['ratings_count'],
+                'class' => 'text-right',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
                 'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
                 'fields' => ['id'],
                 'primary' => true,
+                'class' => 'text-right',
             ], 10);
     }
 }

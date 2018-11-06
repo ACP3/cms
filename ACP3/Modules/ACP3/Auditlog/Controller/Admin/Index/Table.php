@@ -68,11 +68,13 @@ class Table extends AbstractFrontendAction
                 'primary' => true,
                 'default_sort' => true,
                 'default_sort_direction' => 'desc',
+                'class' => 'text-right',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('auditlog', 'versions_count'),
                 'type' => IntegerColumnRenderer::class,
                 'fields' => ['versions_count'],
+                'class' => 'text-right',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('auditlog', 'last_action'),

@@ -59,6 +59,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
                 'fields' => ['name_nested'],
                 'sortable' => false,
+                'class' => 'datagrid-column__max-width',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
@@ -66,6 +67,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'fields' => ['id'],
                 'primary' => true,
                 'sortable' => false,
+                'class' => 'text-right',
             ], 10);
 
         if ($this->acl->hasPermission('admin/permissions/index/order')) {
@@ -79,6 +81,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                         'route_sort_down' => 'acp/permissions/index/order/id_%d/action_down',
                         'route_sort_up' => 'acp/permissions/index/order/id_%d/action_up',
                     ],
+                    'class' => 'text-center',
                 ], 20);
         }
     }
