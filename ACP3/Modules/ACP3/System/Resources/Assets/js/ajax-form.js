@@ -11,7 +11,8 @@
             targetElement: '#content',
             loadingOverlay: true,
             loadingText: '',
-            customFormData: null
+            customFormData: null,
+            scrollOffsetElement: null
         };
 
     function Plugin(element, options) {
@@ -81,6 +82,7 @@
             this.removeAllPreviousErrors();
             this.checkFormElementsForErrors(form);
             this.focusTabWithFirstErrorMessage();
+            this.scrollToFirstFormError();
 
             return this.isFormValid;
         },
@@ -111,13 +113,13 @@
         removeErrorMessageFromFormField: function ($elem) {
             $elem.closest('div').find('.validation-failed').remove();
         },
-        addErrorMessageToFormField: function ($formField, errorMessage) {
-            this.removeErrorMessageFromFormField($formField);
+        addErrorMessageToFormField: function ($element, errorMessage) {
+            this.removeErrorMessageFromFormField($element);
 
-            $formField
+            $element
                 .closest('div:not(.input-group):not(.btn-group)')
                 .append(
-                    '<small class="help-block validation-failed"><i class="glyphicon glyphicon-remove"></i> ' + errorMessage + '</small>'
+                    '<small class="help-block validation-failed"><i class="glyphicon glyphicon-exclamation-sign"></i> ' + errorMessage + '</small>'
                 );
         },
         focusTabWithFirstErrorMessage: function () {
@@ -195,7 +197,7 @@
             }).fail((jqXHR) => {
                 if (jqXHR.status === 400) {
                     this.handleFormErrorMessages($form, jqXHR.responseText);
-                    this.scrollIntoView();
+                    this.scrollToFirstFormError();
 
                     $(document).trigger('acp3.ajaxFrom.submit.fail', [this]);
                 } else if (jqXHR.responseText.length > 0) {
@@ -276,20 +278,22 @@
             $('#loading-layer').removeClass('loading-layer__active');
         },
         handleFormErrorMessages: function ($form, errorMessagesHtml) {
-            const $errorBox = $('#error-box'),
-                $modalBody = $form.find('.modal-body');
+            let $errorBox = $('#error-box');
+            const $modalBody = $form.find('.modal-body');
 
             $errorBox.remove();
 
             // Place the error messages inside the modal body for a better styling
-            $(errorMessagesHtml)
+            $errorBox = $(errorMessagesHtml);
+
+            $errorBox
                 .hide()
                 .prependTo(($modalBody.length > 0 && $modalBody.is(':visible')) ? $modalBody : $form)
                 .fadeIn();
 
-            this.prettyPrintResponseErrorMessages($($errorBox.selector));
+            this.prettyPrintResponseErrorMessages($form, $errorBox);
         },
-        prettyPrintResponseErrorMessages: function ($errorBox) {
+        prettyPrintResponseErrorMessages: function ($form, $errorBox) {
             const that = this;
 
             this.removeAllPreviousErrors();
@@ -298,8 +302,10 @@
             $errorBox.find('li').each(function () {
                 let $this = $(this),
                     errorClass = $this.data('error');
+
                 if (errorClass.length > 0) {
-                    let $elem = $('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
+                    let $elem = $form.find('#' + errorClass) || $form.find('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
+
                     if ($elem.length > 0) {
                         that.addErrorDecorationToFormGroup($elem);
 
@@ -319,6 +325,55 @@
             }
 
             this.focusTabWithFirstErrorMessage();
+        },
+        scrollToFirstFormError: function () {
+            const $form = $(this.element);
+            const $formErrors = $form.find('.form-group.has-error');
+
+            if (!$formErrors || $formErrors.length === 0) {
+                return;
+            }
+
+            if (this.isElementInViewport($form.find('.help-block.validation-failed'))) {
+                return;
+            }
+
+            let offsetTop = $formErrors.offset().top;
+
+            if (this.settings.scrollOffsetElement) {
+                const $scrollOffsetElement = $(this.settings.scrollOffsetElement);
+
+                if ($scrollOffsetElement && $scrollOffsetElement.length > 0) {
+                    offsetTop -= $scrollOffsetElement.height();
+                }
+            }
+
+            $('html, body').animate(
+                {
+                    scrollTop: offsetTop
+                },
+                'fast'
+            );
+        },
+        isElementInViewport: function (element) {
+            // special bonus for those using jQuery
+            if (typeof jQuery === 'function' && element instanceof jQuery) {
+                element = element[0];
+            }
+
+            const $scrollOffsetElement = $(this.settings.scrollOffsetElement);
+            let offsetTop = 0;
+
+            if ($scrollOffsetElement) {
+                offsetTop = $scrollOffsetElement.height();
+            }
+
+            const rect = element.getBoundingClientRect();
+
+            return rect.top >= offsetTop
+                && rect.left >= 0
+                && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+                && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
         }
     });
 

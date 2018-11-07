@@ -6,9 +6,10 @@
 {/if}
 
 {block FORM_GROUP_FORM_FIELD}
-    <div id="{$captcha.id}"
+    <div id="recaptcha-{$captcha.id}"
          class="recaptcha-placeholder"
          data-sitekey="{$captcha.sitekey}"{if $captcha.length < 5} data-size="compact"{/if}></div>
+    <div id="{$captcha.id}"></div>
     {javascripts}
         <script>
             jQuery(document).trigger('acp3.captcha.recaptcha');
