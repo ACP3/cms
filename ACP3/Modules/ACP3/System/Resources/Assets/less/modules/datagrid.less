@@ -21,18 +21,26 @@
 
   .datagrid-column__actions {
     width: 7%;
+  }
 
-    .btn-group {
-      visibility: hidden;
+  .datagrid-column__action-buttons {
+    display: flex;
+    justify-content: end;
+    visibility: hidden;
+
+    .btn {
+      margin-left: 3px;
+
+      &:first-child {
+        margin-left: 0;
+      }
     }
   }
 
   tr:hover,
   tr.info {
-    td.datagrid-column__actions {
-      .btn-group {
-        visibility: visible;
-      }
+    .datagrid-column__action-buttons {
+      visibility: visible;
     }
   }
 }

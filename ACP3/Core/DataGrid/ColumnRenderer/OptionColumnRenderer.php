@@ -92,7 +92,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
      */
     protected function collectOptions()
     {
-        $value = '<div class="btn-group pull-right">';
+        $value = '<div class="datagrid-column__action-buttons">';
 
         foreach ($this->optionRenderer->getOptions() as $option) {
             $value .= $option;

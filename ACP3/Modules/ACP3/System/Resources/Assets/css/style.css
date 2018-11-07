@@ -164,11 +164,19 @@
 .datagrid .datagrid-column__actions {
   width: 7%;
 }
-.datagrid .datagrid-column__actions .btn-group {
+.datagrid .datagrid-column__action-buttons {
+  display: flex;
+  justify-content: end;
   visibility: hidden;
 }
-.datagrid tr:hover td.datagrid-column__actions .btn-group,
-.datagrid tr.info td.datagrid-column__actions .btn-group {
+.datagrid .datagrid-column__action-buttons .btn {
+  margin-left: 3px;
+}
+.datagrid .datagrid-column__action-buttons .btn:first-child {
+  margin-left: 0;
+}
+.datagrid tr:hover .datagrid-column__action-buttons,
+.datagrid tr.info .datagrid-column__action-buttons {
   visibility: visible;
 }
 .tab-content > .tab-pane {
