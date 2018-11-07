@@ -56,10 +56,7 @@ module.exports = function (gulp) {
                         nodeBasePath + '/@fancyapps/fancybox/dist/jquery.fancybox.css',
                         nodeBasePath + '/bootstrap/dist/css/bootstrap.min.css',
                         nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css',
-                        nodeBasePath + '/@fortawesome/fontawesome-free/css/brands.css',
-                        nodeBasePath + '/@fortawesome/fontawesome-free/css/regular.css',
-                        nodeBasePath + '/@fortawesome/fontawesome-free/css/solid.css',
-                        nodeBasePath + '/@fortawesome/fontawesome-free/css/fontawesome.css',
+                        nodeBasePath + '/@fortawesome/fontawesome-free/css/all.css',
                         nodeBasePath + '/datatables.net-bs/css/dataTables.bootstrap.css'
 
                     ],

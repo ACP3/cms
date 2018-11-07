@@ -56,10 +56,7 @@ class Libraries
         'font-awesome' => [
             'enabled' => false,
             'css' => [
-                'brands.css',
-                'regular.css',
-                'solid.css',
-                'fontawesome.css',
+                'all.css',
             ],
         ],
         'jquery' => [
