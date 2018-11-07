@@ -12,6 +12,7 @@
               accept-charset="UTF-8"
               {if !empty($form_id)}id="{$form_id}"{/if}
               {if isset($is_multipart) && $is_multipart === true}enctype="multipart/form-data"{/if}
+              {if isset($scroll_offset_element)}data-scroll-offset-element="{$scroll_offset_element}"{/if}
               data-ajax-form="true"
               data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
             {block CONTENT_AJAX_FORM}{/block}
