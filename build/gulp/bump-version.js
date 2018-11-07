@@ -174,8 +174,8 @@ module.exports = (gulp, plugins) => {
             return content
                 .replace('## [Unreleased]', `## [${newVersion}] - ${currentDate}`)
                 .replace(
-                    `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...HEAD`,
-                    `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${newVersion}...HEAD\n` +
+                    `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...4.x`,
+                    `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${newVersion}...4.x\n` +
                     `[${newVersion}]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...v${newVersion}`
                 );
         })).pipe(gulp.dest('./'));
