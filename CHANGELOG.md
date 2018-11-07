@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Improved the error handling when the ajax-form.js is used
+- Separated the action buttons within the data grid so that they can be clicked much more easily
+
 ## [4.31.1] - 2018-10-21
 ### Fixed
 - fallback to PHP's standard `getimagesize()` function if the FastImageSize library fails to retrieve the information of a picture
