@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.32.0] - 2018-11-07
 ### Changed
 - Improved the error handling when the ajax-form.js is used
 - Separated the action buttons within the data grid so that they can be clicked much more easily
@@ -751,7 +751,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.31.1...HEAD
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.32.0...4.x
+[4.32.0]: https://gitlab.com/ACP3/cms/compare/v4.31.1...v4.32.0
 [4.31.1]: https://gitlab.com/ACP3/cms/compare/v4.31.0...v4.31.1
 [4.31.0]: https://gitlab.com/ACP3/cms/compare/v4.30.4...v4.31.0
 [4.30.4]: https://gitlab.com/ACP3/cms/compare/v4.30.3...v4.30.4
