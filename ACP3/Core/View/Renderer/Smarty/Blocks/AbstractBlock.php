@@ -7,29 +7,8 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 
-use ACP3\Core\View\Renderer\Smarty\PluginInterface;
-use ACP3\Core\View\Renderer\Smarty\PluginTypeEnum;
-
-abstract class AbstractBlock implements PluginInterface
+abstract class AbstractBlock
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensionType()
-    {
-        return PluginTypeEnum::BLOCK;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \SmartyException
-     */
-    public function register(\Smarty $smarty)
-    {
-        $smarty->registerPlugin(PluginTypeEnum::BLOCK, $this->getExtensionName(), [$this, '__invoke']);
-    }
-
     /**
      * @param array                     $params
      * @param string|null               $content

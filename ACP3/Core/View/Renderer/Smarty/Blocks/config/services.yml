@@ -2,9 +2,11 @@ services:
   smarty.plugin.javascripts:
     class: ACP3\Core\View\Renderer\Smarty\Blocks\Javascripts
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.block, pluginName: javascripts }
+    public: true
 
   smarty.plugin.stylesheets:
     class: ACP3\Core\View\Renderer\Smarty\Blocks\Stylesheets
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.block, pluginName: stylesheets }
+    public: true

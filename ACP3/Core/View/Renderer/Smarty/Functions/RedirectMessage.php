@@ -27,14 +27,6 @@ class RedirectMessage extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'redirect_message';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         $smarty->smarty->assign('redirect', $this->redirectMessages->getMessage());

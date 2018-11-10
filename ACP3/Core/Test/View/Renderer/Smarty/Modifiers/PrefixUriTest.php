@@ -7,15 +7,15 @@
 
 namespace ACP3\Core\Test\View\Renderer\Smarty\Modifiers;
 
-use ACP3\Core\Test\View\Renderer\Smarty\AbstractPluginTest;
 use ACP3\Core\View\Renderer\Smarty\Modifiers\PrefixUri;
+use PHPUnit\Framework\TestCase;
 
-class PrefixUriTest extends AbstractPluginTest
+class PrefixUriTest extends TestCase
 {
     /**
      * @var PrefixUri
      */
-    protected $plugin;
+    private $plugin;
 
     protected function setUp()
     {
@@ -34,13 +34,5 @@ class PrefixUriTest extends AbstractPluginTest
         $value = 'http://www.example.com';
         $expected = 'http://www.example.com';
         $this->assertEquals($expected, $this->plugin->__invoke($value));
-    }
-
-    /**
-     * @return string
-     */
-    protected function getExpectedExtensionName()
-    {
-        return 'prefix_uri';
     }
 }

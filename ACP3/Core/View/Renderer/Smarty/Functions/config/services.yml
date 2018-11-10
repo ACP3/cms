@@ -3,43 +3,50 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\Functions\CheckAccess
     arguments: ['@core.helpers.view.checkAccess']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: check_access }
+    public: true
 
   smarty.plugin.date_format:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateFormat
     arguments: ['@core.date']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: date_format }
+    public: true
 
   smarty.plugin.date_picker:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Datepicker
     arguments: ['@core.helpers.date']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: datepicker }
+    public: true
 
   smarty.plugin.date_ramge:
     class: ACP3\Core\View\Renderer\Smarty\Functions\DateRange
     arguments: ['@core.helpers.formatter.date_range']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: date_range }
+    public: true
 
   smarty.plugin.event:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Event
     arguments: ['@core.event_dispatcher']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: event }
+    public: true
 
   smarty.plugin.redirect_message:
     class: ACP3\Core\View\Renderer\Smarty\Functions\RedirectMessage
     arguments: ['@core.helpers.redirect']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: redirect_message }
+    public: true
 
   smarty.plugin.has_permission:
     class: ACP3\Core\View\Renderer\Smarty\Functions\HasPermission
     arguments: ['@core.acl']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: has_permission }
+    public: true
 
   smarty.plugin.image:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Image
@@ -48,19 +55,22 @@ services:
       - '@core.assets.file_resolver'
       - '@core.environment.application_path'
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: image }
+    public: true
 
   smarty.plugin.include_js:
     class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeJs
     arguments: ['@core.assets', '@core.assets.file_resolver', '@core.environment.application_path']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: include_js }
+    public: true
 
   smarty.plugin.js_libraries:
     class: ACP3\Core\View\Renderer\Smarty\Functions\JsLibraries
     arguments: ['@core.assets']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: js_libraries }
+    public: true
 
   smarty.plugin.load_module:
     class: ACP3\Core\View\Renderer\Smarty\Functions\LoadModule
@@ -69,65 +79,75 @@ services:
       - '@core.router'
       - '%core.environment%'
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: load_module }
+    public: true
 
   smarty.plugin.mark:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Mark
     arguments: ['@core.helpers.formatter.mark_entries']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: mark }
+    public: true
 
   smarty.plugin.page_css_classes:
     class: ACP3\Core\View\Renderer\Smarty\Functions\PageCssClasses
     arguments: ['@core.assets.page_css_classes']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: page_css_classes }
+    public: true
 
   smarty.plugin.page_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\PageTitle
     arguments:
       - '@core.breadcrumb.title'
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: page_title }
+    public: true
 
   smarty.plugin.site_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteTitle
     arguments:
       - '@core.breadcrumb.title'
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: site_title }
+    public: true
 
   smarty.plugin.site_and_page_title:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteAndPageTitle
     arguments:
       - '@core.breadcrumb.title'
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: site_and_page_title }
+    public: true
 
   smarty.plugin.site_subtitle:
     class: ACP3\Core\View\Renderer\Smarty\Functions\SiteSubtitle
     arguments:
       - '@core.breadcrumb.title'
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: site_subtitle }
+    public: true
 
   smarty.plugin.template_path:
     class: ACP3\Core\View\Renderer\Smarty\Functions\TemplatePath
     arguments: ['@core.assets.file_resolver']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: template_path }
+    public: true
 
   smarty.plugin.translate:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Translate
     arguments: ['@core.i18n.translator']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: lang }
+    public: true
 
   smarty.plugin.uri:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Uri
     arguments: ['@core.router']
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: uri }
+    public: true
 
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG
@@ -135,4 +155,5 @@ services:
       - '@core.wysiwyg.wysiwyg_factory'
       - '@core.config'
     tags:
-      - { name: core.view.extension }
+      - { name: smarty.plugin.function, pluginName: wysiwyg }
+    public: true

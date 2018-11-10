@@ -8,15 +8,15 @@
 namespace ACP3\Core\Test\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Router\RouterInterface;
-use ACP3\Core\Test\View\Renderer\Smarty\AbstractPluginTest;
 use ACP3\Core\View\Renderer\Smarty\Functions\Uri;
+use PHPUnit\Framework\TestCase;
 
-class UriTest extends AbstractPluginTest
+class UriTest extends TestCase
 {
     /**
      * @var Uri
      */
-    protected $plugin;
+    private $plugin;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -37,14 +37,6 @@ class UriTest extends AbstractPluginTest
     {
         $this->routerMock = $this->createMock(RouterInterface::class);
         $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getExpectedExtensionName()
-    {
-        return 'uri';
     }
 
     public function testUriWithRouteOnly()

@@ -64,14 +64,8 @@ class Image extends AbstractFunction
             return $path . '?v=' . BootstrapInterface::VERSION;
         }
 
-        throw new \Exception('Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!');
-    }
-
-    /**
-     * @return string
-     */
-    public function getExtensionName()
-    {
-        return 'image';
+        throw new \InvalidArgumentException(
+            'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!'
+        );
     }
 }

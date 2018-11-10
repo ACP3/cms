@@ -61,14 +61,6 @@ class Navbar extends AbstractFunction
 
     /**
      * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'navbar';
-    }
-
-    /**
-     * {@inheritdoc}
      *
      * @throws \Doctrine\DBAL\DBALException
      */

@@ -16,12 +16,4 @@ class PageTitle extends SiteTitle
     {
         return $this->title->getPageTitle();
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'page_title';
-    }
 }

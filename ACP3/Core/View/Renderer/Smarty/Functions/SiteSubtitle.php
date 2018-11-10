@@ -34,12 +34,4 @@ class SiteSubtitle extends AbstractFunction
     {
         return $this->title->getSiteSubtitle();
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'site_subtitle';
-    }
 }

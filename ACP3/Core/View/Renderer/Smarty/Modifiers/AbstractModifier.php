@@ -7,29 +7,8 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
-use ACP3\Core\View\Renderer\Smarty\PluginInterface;
-use ACP3\Core\View\Renderer\Smarty\PluginTypeEnum;
-
-abstract class AbstractModifier implements PluginInterface
+abstract class AbstractModifier
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensionType()
-    {
-        return PluginTypeEnum::MODIFIER;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \SmartyException
-     */
-    public function register(\Smarty $smarty)
-    {
-        $smarty->registerPlugin(PluginTypeEnum::MODIFIER, $this->getExtensionName(), $this);
-    }
-
     /**
      * @param string $value
      *

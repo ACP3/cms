@@ -7,29 +7,8 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core\View\Renderer\Smarty\PluginInterface;
-use ACP3\Core\View\Renderer\Smarty\PluginTypeEnum;
-
-abstract class AbstractFunction implements PluginInterface
+abstract class AbstractFunction
 {
-    /**
-     * @return string
-     */
-    public function getExtensionType()
-    {
-        return PluginTypeEnum::FUNCTION;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \SmartyException
-     */
-    public function register(\Smarty $smarty)
-    {
-        $smarty->registerPlugin(PluginTypeEnum::FUNCTION, $this->getExtensionName(), $this);
-    }
-
     /**
      * @param array                     $params
      * @param \Smarty_Internal_Template $smarty

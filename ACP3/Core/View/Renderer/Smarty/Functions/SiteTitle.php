@@ -34,12 +34,4 @@ class SiteTitle extends AbstractFunction
     {
         return $this->title->getSiteTitle();
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'site_title';
-    }
 }

@@ -31,14 +31,6 @@ class JsLibraries extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'js_libraries';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         $this->assets->enableLibraries(\explode(',', $params['enable']));

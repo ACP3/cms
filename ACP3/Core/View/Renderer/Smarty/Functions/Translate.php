@@ -27,14 +27,6 @@ class Translate extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'lang';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         $values = \explode('|', $params['t']);

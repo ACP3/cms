@@ -25,14 +25,6 @@ class Asset extends AbstractResource
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'asset';
-    }
-
-    /**
      * fetch template and its modification time from data source.
      *
      * @param string $name    template name

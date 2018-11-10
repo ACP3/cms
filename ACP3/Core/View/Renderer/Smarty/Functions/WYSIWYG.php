@@ -36,14 +36,6 @@ class WYSIWYG extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'wysiwyg';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];

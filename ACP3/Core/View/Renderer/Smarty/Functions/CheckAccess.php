@@ -27,14 +27,6 @@ class CheckAccess extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'check_access';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         $return = $this->checkAccess->outputLinkOrButton($params);

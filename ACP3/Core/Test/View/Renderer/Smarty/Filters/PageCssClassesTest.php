@@ -9,15 +9,15 @@ namespace ACP3\Core\Test\View\Renderer\Smarty\Filters;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\Request;
-use ACP3\Core\Test\View\Renderer\Smarty\AbstractPluginTest;
 use ACP3\Core\View\Renderer\Smarty\Filters\PageCssClasses;
+use PHPUnit\Framework\TestCase;
 
-class PageCssClassesTest extends AbstractPluginTest
+class PageCssClassesTest extends TestCase
 {
     /**
      * @var PageCssClasses
      */
-    protected $plugin;
+    private $plugin;
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -46,14 +46,6 @@ class PageCssClassesTest extends AbstractPluginTest
         $this->pageCssClassesMock = $this->createMock(\ACP3\Core\Assets\PageCssClasses::class);
         $this->requestMock = $this->createMock(Request::class);
         $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getExpectedExtensionName()
-    {
-        return 'output';
     }
 
     public function testProcessInFrontend()

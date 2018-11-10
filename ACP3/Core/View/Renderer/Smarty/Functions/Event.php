@@ -28,14 +28,6 @@ class Event extends AbstractFunction
     }
 
     /**
-     * @return string
-     */
-    public function getExtensionName()
-    {
-        return 'event';
-    }
-
-    /**
      * @param array                     $params
      * @param \Smarty_Internal_Template $smarty
      *

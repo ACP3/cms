@@ -44,6 +44,7 @@ services:
     class: ACP3\Core\View\Renderer\Smarty
     arguments:
       - '@smarty'
+      - '@service_container'
 
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\EventDispatcher

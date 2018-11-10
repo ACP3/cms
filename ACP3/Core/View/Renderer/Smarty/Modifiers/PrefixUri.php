@@ -12,14 +12,6 @@ class PrefixUri extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'prefix_uri';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke($value): string
     {
         if (!empty($value) && (bool) \preg_match('=^http(s)?://=', $value) === false) {

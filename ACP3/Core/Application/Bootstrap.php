@@ -11,6 +11,7 @@ use ACP3\Core\Application\Exception\MaintenanceModeActiveException;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
 use Patchwork\Utf8;
+use Symfony\Bridge\ProxyManager\LazyProxy\PhpDumper\ProxyDumper;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -53,10 +54,13 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * @param SymfonyRequest $symfonyRequest
-     * @param string         $filePath
+     * @param \Symfony\Component\HttpFoundation\Request $symfonyRequest
+     * @param string                                    $filePath
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function dumpContainer(SymfonyRequest $symfonyRequest, $filePath)
+    private function dumpContainer(SymfonyRequest $symfonyRequest, string $filePath)
     {
         $containerConfigCache = new ConfigCache($filePath, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
@@ -66,6 +70,7 @@ class Bootstrap extends AbstractBootstrap
             );
 
             $dumper = new PhpDumper($containerBuilder);
+            $dumper->setProxyDumper(new ProxyDumper());
             $containerConfigCache->write(
                 $dumper->dump(['class' => 'ACP3ServiceContainer']),
                 $containerBuilder->getResources()

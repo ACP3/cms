@@ -45,12 +45,4 @@ class PageCssClasses extends AbstractFunction
 
         return '';
     }
-
-    /**
-     * @return string
-     */
-    public function getExtensionName()
-    {
-        return 'page_css_classes';
-    }
 }

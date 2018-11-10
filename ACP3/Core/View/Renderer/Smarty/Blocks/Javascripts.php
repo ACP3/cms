@@ -12,14 +12,6 @@ class Javascripts extends AbstractBlock
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'javascripts';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat)
     {
         if (!$repeat) {
