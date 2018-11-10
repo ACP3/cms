@@ -4,10 +4,10 @@
     <div class="modal modal-static" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center">{$confirm.text}</h5>
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title">{$confirm.text}</h5>
                 </div>
-                <div class="modal-footer text-center">
+                <div class="modal-footer justify-content-center">
                     {block CONFIRM_BOX_MODAL_FOOTER}
                         {if isset($confirm.backward)}
                             <a href="{$confirm.forward}" class="btn btn-primary">{lang t="system|yes"}</a>
