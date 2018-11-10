@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
-use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Comments;
 
 class Edit extends Core\Controller\AbstractFrontendAction
@@ -53,8 +52,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $comment = $this->commentsModel->getOneById($id);
 
@@ -83,8 +83,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         $comment = $this->commentsModel->getOneById($id);
 
@@ -96,9 +97,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
                 $updateValues = [
                     'message' => $formData['message'],
                 ];
-                if ((empty($comment['user_id']) || $this->validator->is(IntegerValidationRule::class, $comment['user_id']) === false) &&
-                    !empty($formData['name'])
-                ) {
+                if ($comment['user_id'] === null && !empty($formData['name'])) {
                     $updateValues['name'] = $formData['name'];
                 }
 

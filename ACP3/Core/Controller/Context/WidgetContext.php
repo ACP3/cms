@@ -16,7 +16,6 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\Validation\Validator;
 use ACP3\Core\View;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -57,10 +56,6 @@ class WidgetContext
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Validation\Validator
-     */
-    protected $validator;
-    /**
      * @var \ACP3\Core\View
      */
     protected $view;
@@ -92,7 +87,6 @@ class WidgetContext
      * @param \ACP3\Core\Modules                                          $modules
      * @param \ACP3\Core\Http\RequestInterface                            $request
      * @param \ACP3\Core\Router\RouterInterface                           $router
-     * @param \ACP3\Core\Validation\Validator                             $validator
      * @param \ACP3\Core\View                                             $view
      * @param \ACP3\Core\Settings\SettingsInterface                       $config
      * @param \ACP3\Core\Environment\ApplicationPath                      $appPath
@@ -108,7 +102,6 @@ class WidgetContext
         Modules $modules,
         RequestInterface $request,
         RouterInterface $router,
-        Validator $validator,
         View $view,
         SettingsInterface $config,
         ApplicationPath $appPath,
@@ -123,7 +116,6 @@ class WidgetContext
         $this->modules = $modules;
         $this->request = $request;
         $this->router = $router;
-        $this->validator = $validator;
         $this->view = $view;
         $this->config = $config;
         $this->appPath = $appPath;
@@ -193,14 +185,6 @@ class WidgetContext
     public function getRouter()
     {
         return $this->router;
-    }
-
-    /**
-     * @return \ACP3\Core\Validation\Validator
-     */
-    public function getValidator()
-    {
-        return $this->validator;
     }
 
     /**

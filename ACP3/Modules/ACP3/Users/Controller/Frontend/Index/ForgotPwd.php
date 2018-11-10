@@ -37,6 +37,10 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Alerts
      */
     private $alertsHelper;
+    /**
+     * @var \ACP3\Core\Validation\Validator
+     */
+    private $validator;
 
     /**
      * ForgotPwd constructor.

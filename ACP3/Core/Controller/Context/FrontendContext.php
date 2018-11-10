@@ -63,7 +63,6 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
             $context->getModules(),
             $context->getRequest(),
             $context->getRouter(),
-            $context->getValidator(),
             $context->getView(),
             $context->getConfig(),
             $context->getAppPath(),

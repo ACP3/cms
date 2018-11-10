@@ -10,7 +10,6 @@ services:
     - '@core.modules'
     - '@core.http.request'
     - '@core.router'
-    - '@core.validator'
     - '@core.view'
     - '@core.config'
     - '@core.environment.application_path'
