@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Files;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class Download extends Core\Controller\AbstractFrontendAction
+class Download extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Date
@@ -31,15 +31,8 @@ class Download extends Core\Controller\AbstractFrontendAction
      */
     protected $filesCache;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
-     * @param \ACP3\Core\Date                                           $date
-     * @param \ACP3\Core\Helpers\StringFormatter                        $stringFormatter
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                            $filesCache
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Date $date,
         Core\Helpers\StringFormatter $stringFormatter,
         Files\Model\Repository\FilesRepository $filesRepository,

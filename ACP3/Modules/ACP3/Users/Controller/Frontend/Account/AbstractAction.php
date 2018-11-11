@@ -8,10 +8,15 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
 use ACP3\Core\Authentication\Exception\UnauthorizedAccessException;
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractFormAction;
 
-abstract class AbstractAction extends AbstractFrontendAction
+abstract class AbstractAction extends AbstractFormAction
 {
+    /**
+     * @return \ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\AbstractFormAction|void
+     *
+     * @throws \ACP3\Core\Authentication\Exception\UnauthorizedAccessException
+     */
     public function preDispatch()
     {
         parent::preDispatch();

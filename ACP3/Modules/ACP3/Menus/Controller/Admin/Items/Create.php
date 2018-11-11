@@ -38,20 +38,8 @@ class Create extends AbstractFormAction
      */
     protected $menuItemsModel;
 
-    /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository   $menuRepository
-     * @param Menus\Model\MenuItemsModel                                 $menuItemsModel
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields        $menuItemFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
-     * @param \ACP3\Modules\ACP3\Articles\Helpers|null                   $articlesHelpers
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\Repository\MenuRepository $menuRepository,

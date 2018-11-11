@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-class Order extends Core\Controller\AbstractFrontendAction
+class Order extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
@@ -25,16 +25,8 @@ class Order extends Core\Controller\AbstractFrontendAction
      */
     protected $sortOperation;
 
-    /**
-     * Order constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param Core\NestedSet\Operation\Sort                                $sortOperation
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                               $menusCache
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\NestedSet\Operation\Sort $sortOperation,
         Menus\Model\Repository\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache
@@ -50,11 +42,12 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @param int    $id
      * @param string $action
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if ($this->menuItemRepository->menuItemExists($id) === true) {
             $this->sortOperation->execute($id, $action);

@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-class Settings extends Core\Controller\AbstractFrontendAction
+class Settings extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation
@@ -33,18 +33,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     private $dateHelper;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
-     * @param \ACP3\Core\Helpers\Forms                                           $formsHelper
-     * @param \ACP3\Core\Helpers\Secure                                          $secureHelper
-     * @param \ACP3\Core\Helpers\Date                                            $dateHelper
-     * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Date $dateHelper,
@@ -82,6 +72,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

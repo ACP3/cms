@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Share\Helpers\ShareFormFields;
 use ACP3\Modules\ACP3\Share\Model\ShareModel;
 use ACP3\Modules\ACP3\Share\Validation\AdminFormValidation;
 
-class Create extends Core\Controller\AbstractFrontendAction
+class Create extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -31,17 +31,8 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     private $shareModel;
 
-    /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields        $shareFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Share\Model\ShareModel               $shareModel
-     * @param \ACP3\Modules\ACP3\Share\Validation\AdminFormValidation $adminFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         ShareFormFields $shareFormFieldsHelper,
         ShareModel $shareModel,
@@ -71,6 +62,8 @@ class Create extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

@@ -10,26 +10,26 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 
-class Logout extends Core\Controller\AbstractFrontendAction
+class Logout extends Core\Controller\AbstractFormAction
 {
     /**
      * @var Users\Model\AuthenticationModel
      */
     protected $authenticationModel;
-
     /**
-     * Login constructor.
-     *
-     * @param Core\Controller\Context\FrontendContext $context
-     * @param Users\Model\AuthenticationModel         $authenticationModel
+     * @var \ACP3\Core\Router\RouterInterface
      */
+    private $router;
+
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
+        Core\Router\RouterInterface $router,
         Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;
+        $this->router = $router;
     }
 
     /**

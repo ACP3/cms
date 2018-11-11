@@ -24,15 +24,14 @@ class Index extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     protected $commentRepository;
-
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Core\Pagination                                          $pagination
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
-     * @param \ACP3\Modules\ACP3\Emoticons\Helpers|null                      $emoticonsHelpers
+     * @var \ACP3\Core\Helpers\ResultsPerPage
      */
+    private $resultsPerPage;
+
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Core\Pagination $pagination,
         Comments\Model\Repository\CommentRepository $commentRepository,
         ?Helpers $emoticonsHelpers = null
@@ -41,6 +40,7 @@ class Index extends AbstractFrontendAction
 
         $this->pagination = $pagination;
         $this->commentRepository = $commentRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**
@@ -48,8 +48,10 @@ class Index extends AbstractFrontendAction
      * @param int    $entryId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($module, $entryId)
+    public function execute(string $module, int $entryId)
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 

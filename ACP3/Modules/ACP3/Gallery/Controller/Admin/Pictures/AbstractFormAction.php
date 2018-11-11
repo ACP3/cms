@@ -7,25 +7,18 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Gallery;
 
-class AbstractFormAction extends AbstractFrontendAction
+class AbstractFormAction extends \ACP3\Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
 
-    /**
-     * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms                      $formsHelper
-     */
-    public function __construct(FrontendContext $context, Forms $formsHelper)
+    public function __construct(FormContext $context, Forms $formsHelper)
     {
         parent::__construct($context);
 

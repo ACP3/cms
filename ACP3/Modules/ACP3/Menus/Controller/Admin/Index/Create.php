@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-class Create extends Core\Controller\AbstractFrontendAction
+class Create extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -25,16 +25,8 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     protected $menusModel;
 
-    /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param Menus\Model\MenusModel                                 $menusModel
-     * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenusModel $menusModel,
         Menus\Validation\MenuFormValidation $menuFormValidation
@@ -59,6 +51,8 @@ class Create extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

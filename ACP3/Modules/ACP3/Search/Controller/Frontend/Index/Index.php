@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Search;
 
-class Index extends Core\Controller\AbstractFrontendAction
+class Index extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Search\Helpers
@@ -33,16 +33,8 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     private $secureHelper;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Helpers\Forms                            $formsHelper
-     * @param \ACP3\Core\Helpers\Secure                           $secureHelper
-     * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
-     * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
-     * @param Search\Utility\SearchAvailabilityRegistrar          $availableModulesRegistrar
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\Secure $secureHelper,
         Search\Helpers $searchHelpers,
@@ -62,8 +54,10 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param string $q
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function execute($q = '')
+    public function execute(string $q = '')
     {
         if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all());
@@ -98,6 +92,8 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param array $formData
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     protected function executePost(array $formData)
     {

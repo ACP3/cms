@@ -25,16 +25,8 @@ class Create extends AbstractFormAction
      */
     protected $resourcesModel;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param Permissions\Model\ResourcesModel                                    $resourcesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation    $resourceFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
@@ -67,6 +59,8 @@ class Create extends AbstractFormAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

@@ -7,8 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\AbstractFormAction;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Captcha\Installer\Schema;
 use ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar;
 use ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation;
 
-class Settings extends AbstractFrontendAction
+class Settings extends AbstractFormAction
 {
     /**
      * @var Forms
@@ -35,17 +35,8 @@ class Settings extends AbstractFrontendAction
      */
     private $formValidation;
 
-    /**
-     * Settings constructor.
-     *
-     * @param FrontendContext             $context
-     * @param Forms                       $forms
-     * @param FormToken                   $formToken
-     * @param CaptchaRegistrar            $captchaRegistrar
-     * @param AdminSettingsFormValidation $formValidation
-     */
     public function __construct(
-        FrontendContext $context,
+        FormContext $context,
         Forms $forms,
         FormToken $formToken,
         CaptchaRegistrar $captchaRegistrar,
@@ -81,6 +72,8 @@ class Settings extends AbstractFrontendAction
 
     /**
      * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

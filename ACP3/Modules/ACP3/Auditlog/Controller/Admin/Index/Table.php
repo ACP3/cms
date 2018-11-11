@@ -15,6 +15,7 @@ use ACP3\Core\DataGrid\ColumnRenderer\TranslateColumnRenderer;
 use ACP3\Core\DataGrid\DataGrid;
 use ACP3\Core\DataGrid\Input;
 use ACP3\Core\DataGrid\QueryOption;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Modules\ACP3\Auditlog\Installer\Schema;
 use ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogByTableDataGridRepository;
 
@@ -28,16 +29,22 @@ class Table extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogByTableDataGridRepository
      */
     private $dataGridRepository;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         FrontendContext $context,
+        ResultsPerPage $resultsPerPage,
         DataGrid $dataGrid,
-        AuditLogByTableDataGridRepository $dataGridRepository)
-    {
+        AuditLogByTableDataGridRepository $dataGridRepository
+    ) {
         parent::__construct($context);
 
         $this->dataGrid = $dataGrid;
         $this->dataGridRepository = $dataGridRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     public function execute(string $table)

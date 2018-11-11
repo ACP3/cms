@@ -23,27 +23,36 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext            $context
      * @param \ACP3\Core\Pagination                                    $pagination
+     * @param \ACP3\Core\Helpers\ResultsPerPage                        $resultsPerPage
      * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Users\Model\Repository\UserRepository $userRepository
     ) {
         parent::__construct($context);
 
         $this->pagination = $pagination;
         $this->userRepository = $userRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {

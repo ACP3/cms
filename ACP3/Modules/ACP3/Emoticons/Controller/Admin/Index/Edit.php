@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -29,17 +29,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     private $emoticonsUploadHelper;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param Emoticons\Model\EmoticonsModel                              $emoticonsModel
-     * @param \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\Upload                                   $emoticonsUploadHelper
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
         Emoticons\Validation\AdminFormValidation $adminFormValidation,
@@ -59,8 +50,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $emoticon = $this->emoticonsModel->getOneById($id);
 
@@ -78,8 +70,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Emoticons\Helpers;
 use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Index extends AbstractAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
@@ -28,17 +28,27 @@ class Index extends AbstractAction
      * @var \ACP3\Modules\ACP3\Emoticons\Helpers|null
      */
     protected $emoticonsHelpers;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
+    /**
+     * @var array
+     */
+    private $guestbookSettings = [];
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
+     * @param \ACP3\Core\Helpers\ResultsPerPage                                 $resultsPerPage
      * @param \ACP3\Core\Pagination                                             $pagination
      * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
      * @param \ACP3\Modules\ACP3\Emoticons\Helpers|null                         $emoticonsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Core\Pagination $pagination,
         Guestbook\Model\Repository\GuestbookRepository $guestbookRepository,
         ?Helpers $emoticonsHelpers = null
@@ -48,6 +58,14 @@ class Index extends AbstractAction
         $this->pagination = $pagination;
         $this->guestbookRepository = $guestbookRepository;
         $this->emoticonsHelpers = $emoticonsHelpers;
+        $this->resultsPerPage = $resultsPerPage;
+    }
+
+    public function preDispatch()
+    {
+        parent::preDispatch();
+
+        $this->guestbookSettings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
     }
 
     /**

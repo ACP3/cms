@@ -7,14 +7,14 @@ services:
   comments.controller.admin.details.delete:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Delete
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@comments.model.comments_model'
       - '@comments.model.commentrepository'
 
   comments.controller.admin.details.edit:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@comments.model.comments_model'
       - '@comments.validation.admin_form_validation'
       - '@core.helpers.formToken'
@@ -23,6 +23,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@comments.model.comments_data_grid_repository'
       - '@system.model.modulerepository'
       - '@core.data_grid.data_grid'
@@ -30,20 +31,21 @@ services:
   comments.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Delete
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@comments.model.commentrepository'
 
   comments.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@comments.model.comments_by_module_data_grid_repository'
       - '@core.data_grid.data_grid'
 
   comments.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.forms'
       - '@core.helpers.secure'
       - '@core.helpers.date'
@@ -53,7 +55,7 @@ services:
   comments.controller.frontend.index.create:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@comments.model.comments_model'
       - '@comments.validation.form_validation'
       - '@core.helpers.formToken'
@@ -61,7 +63,8 @@ services:
   comments.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Index
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
+      - '@core.helpers.results_per_page'
       - '@core.pagination'
       - '@comments.model.commentrepository'
       - '@?emoticons.helpers'

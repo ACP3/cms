@@ -25,14 +25,8 @@ class Create extends AbstractFrontendAction
      */
     protected $commentsModel;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param Comments\Model\CommentsModel                          $commentsModel
-     * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\FormValidation $formValidation,
         Core\Helpers\FormToken $formTokenHelper
@@ -51,7 +45,7 @@ class Create extends AbstractFrontendAction
      *
      * @return array
      */
-    public function execute($module, $entryId, $redirectUrl)
+    public function execute(string $module, int $entryId, string $redirectUrl)
     {
         return [
             'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
@@ -72,7 +66,7 @@ class Create extends AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($module, $entryId, $redirectUrl)
+    public function executePost(string $module, int $entryId, string $redirectUrl)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($module, $entryId, $redirectUrl) {

@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 
-class Order extends Core\Controller\AbstractFrontendAction
+class Order extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\Sort
@@ -25,16 +25,8 @@ class Order extends Core\Controller\AbstractFrontendAction
      */
     protected $pictureRepository;
 
-    /**
-     * Order constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Core\Helpers\Sort                                       $sortHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Sort $sortHelper,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache
@@ -50,11 +42,14 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @param int    $id
      * @param string $action
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->pictureRepository->pictureExists($id) === true) {
             if ($action === 'up') {

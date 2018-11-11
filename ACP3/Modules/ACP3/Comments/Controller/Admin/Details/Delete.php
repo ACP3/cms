@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
@@ -21,15 +21,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
      */
     protected $commentsModel;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param Comments\Model\CommentsModel                                   $commentsModel
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Model\Repository\CommentRepository $commentRepository
     ) {
@@ -47,7 +40,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $action = '')
+    public function execute(int $id, string $action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,

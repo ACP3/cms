@@ -43,10 +43,6 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    protected $router;
-    /**
      * @var \ACP3\Core\View
      */
     protected $view;
@@ -62,10 +58,6 @@ abstract class AbstractWidgetAction implements ActionInterface
      * @var Response
      */
     protected $response;
-    /**
-     * @var Core\Helpers\ResultsPerPage
-     */
-    protected $resultsPerPage;
 
     /**
      * WidgetController constructor.
@@ -80,13 +72,11 @@ abstract class AbstractWidgetAction implements ActionInterface
         $this->user = $context->getUser();
         $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
-        $this->router = $context->getRouter();
         $this->view = $context->getView();
         $this->modules = $context->getModules();
         $this->config = $context->getConfig();
         $this->appPath = $context->getAppPath();
         $this->response = $context->getResponse();
-        $this->resultsPerPage = $context->getResultsPerPage();
     }
 
     /**

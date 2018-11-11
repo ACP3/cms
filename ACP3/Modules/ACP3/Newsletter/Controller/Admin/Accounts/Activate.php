@@ -10,21 +10,15 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-class Activate extends Core\Controller\AbstractFrontendAction
+class Activate extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
      */
     protected $accountStatusHelper;
 
-    /**
-     * Activate constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext      $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Newsletter\Helper\AccountStatus $accountStatusHelper
     ) {
         parent::__construct($context);
@@ -37,7 +31,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $bool = $this->accountStatusHelper->changeAccountStatus(
             Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,

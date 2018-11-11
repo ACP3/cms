@@ -10,21 +10,15 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractFormAction
 {
     /**
      * @var Polls\Model\PollsModel
      */
     protected $pollsModel;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Polls\Model\PollsModel                        $pollsModel
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Polls\Model\PollsModel $pollsModel
     ) {
         parent::__construct($context);
@@ -39,7 +33,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($action = '')
+    public function execute(string $action = '')
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

@@ -7,7 +7,7 @@ services:
   system.controller.admin.extensions.designs:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Designs
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.xml'
 
   system.controller.admin.extensions.index:
@@ -18,7 +18,7 @@ services:
   system.controller.admin.extensions.modules:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.i18n.dictionary_cache'
       - '@core.modules.moduleInfoCache'
       - '@system.model.modulerepository'
@@ -31,7 +31,7 @@ services:
   system.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
@@ -47,7 +47,7 @@ services:
   system.controller.admin.maintenance.cache:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache
     arguments:
-    - '@core.context.frontend'
+    - '@core.context.form'
 
   system.controller.admin.maintenance.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index

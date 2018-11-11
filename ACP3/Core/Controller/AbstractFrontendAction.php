@@ -12,10 +12,6 @@ use ACP3\Core;
 abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Core\Assets
-     */
-    protected $assets;
-    /**
      * @var \ACP3\Core\Breadcrumb\Steps
      */
     protected $breadcrumb;
@@ -28,14 +24,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      */
     protected $actionHelper;
     /**
-     * @var Core\Helpers\RedirectMessages
-     */
-    private $redirectMessages;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
      * @var string
      */
     private $layout = 'layout.tpl';
@@ -47,20 +35,14 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     {
         parent::__construct($context);
 
-        $this->assets = $context->getAssets();
         $this->breadcrumb = $context->getBreadcrumb();
         $this->title = $context->getTitle();
-        $this->actionHelper = $context->getActionHelper();
-        $this->redirectMessages = $context->getRedirectMessagesHelper();
-        $this->redirectResponse = $context->getRedirectResponse();
     }
 
     /**
      * Helper function for initializing models, etc.
      *
      * @return $this
-     *
-     * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
     {
@@ -160,21 +142,5 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
         $this->layout = $layout;
 
         return $this;
-    }
-
-    /**
-     * @return Core\Helpers\RedirectMessages
-     */
-    public function redirectMessages()
-    {
-        return $this->redirectMessages;
-    }
-
-    /**
-     * @return \ACP3\Core\Http\RedirectResponse
-     */
-    public function redirect()
-    {
-        return $this->redirectResponse;
     }
 }

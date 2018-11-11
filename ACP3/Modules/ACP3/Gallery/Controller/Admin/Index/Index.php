@@ -22,16 +22,22 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\DataGrid\DataGrid
      */
     private $dataGrid;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                         $context
+     * @param \ACP3\Core\Helpers\ResultsPerPage                                     $resultsPerPage
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository $dataGridRepository
      * @param \ACP3\Core\DataGrid\DataGrid                                          $dataGrid
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Gallery\Model\Repository\GalleryDataGridRepository $dataGridRepository,
         Core\DataGrid\DataGrid $dataGrid
     ) {
@@ -39,6 +45,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->dataGridRepository = $dataGridRepository;
         $this->dataGrid = $dataGrid;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

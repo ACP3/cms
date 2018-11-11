@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
-class Modules extends Core\Controller\AbstractFrontendAction
+class Modules extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Modules\ModuleInfoCacheInterface
@@ -46,21 +46,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     private $aclInstaller;
 
-    /**
-     * Modules constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param \ACP3\Core\I18n\DictionaryCache                              $dictionaryCache
-     * @param \ACP3\Core\Modules\ModuleInfoCacheInterface                  $moduleInfoCache
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Helper\Installer                   $installerHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
-     * @param \ACP3\Core\Installer\SchemaRegistrar                         $schemaRegistrar
-     * @param \ACP3\Core\Modules\SchemaInstaller                           $schemaInstaller
-     * @param \ACP3\Core\Modules\AclInstaller                              $aclInstaller
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\I18n\DictionaryCache $dictionaryCache,
         Core\Modules\ModuleInfoCacheInterface $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
@@ -93,7 +80,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute($action = '', $dir = '')
+    public function execute(string $action = '', string $dir = '')
     {
         switch ($action) {
             case 'activate':
@@ -116,7 +103,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function enableModule($moduleDirectory)
+    protected function enableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -150,7 +137,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws System\Exception\ModuleInstallerException
      */
-    private function checkPreconditions($moduleDirectory)
+    private function checkPreconditions(string $moduleDirectory)
     {
         $info = $this->modules->getModuleInfo($moduleDirectory);
         if (empty($info) || $info['protected'] === true || $info['installable'] === false) {
@@ -165,7 +152,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws System\Exception\ModuleInstallerException
      */
-    protected function moduleInstallerExists($serviceId)
+    protected function moduleInstallerExists(string $serviceId)
     {
         if ($this->schemaRegistrar->has($serviceId) === false) {
             throw new System\Exception\ModuleInstallerException(
@@ -180,7 +167,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      */
-    protected function checkForFailedModuleDependencies(array $dependencies, $phrase)
+    protected function checkForFailedModuleDependencies(array $dependencies, string $phrase)
     {
         if (!empty($dependencies)) {
             throw new System\Exception\ModuleInstallerException(
@@ -201,7 +188,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function saveModuleState($moduleDirectory, $active)
+    protected function saveModuleState(string $moduleDirectory, int $active)
     {
         return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
@@ -236,7 +223,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function disableModule($moduleDirectory)
+    protected function disableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -272,7 +259,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function installModule($moduleDirectory)
+    protected function installModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -313,7 +300,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    protected function uninstallModule($moduleDirectory)
+    protected function uninstallModule(string $moduleDirectory)
     {
         $result = false;
 

@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Helpers
@@ -35,18 +35,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
      */
     private $socialSharingManager;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null            $uriAliasManager
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null    $socialSharingManager
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
@@ -70,7 +60,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $action = '')
+    public function execute(int $id, string $action = '')
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

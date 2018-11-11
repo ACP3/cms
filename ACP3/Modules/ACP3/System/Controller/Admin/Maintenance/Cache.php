@@ -10,14 +10,14 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 
-class Cache extends Core\Controller\AbstractFrontendAction
+class Cache extends Core\Controller\AbstractFormAction
 {
     /**
      * @param string $action
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($action = '')
+    public function execute(string $action = '')
     {
         if (!empty($action)) {
             return $this->executePurge($action);
@@ -39,7 +39,7 @@ class Cache extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePurge($action)
+    protected function executePurge(string $action)
     {
         $cacheTypes = [
             'general' => [

@@ -37,19 +37,8 @@ class Settings extends AbstractAction
      */
     protected $authenticationModel;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
-     * @param Core\Helpers\Secure                                               $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                            $userFormsHelper
-     * @param Users\Model\AuthenticationModel                                   $authenticationModel
-     * @param Users\Model\UsersModel                                            $usersModel
-     * @param \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Helpers\Forms $userFormsHelper,
@@ -69,6 +58,8 @@ class Settings extends AbstractAction
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -91,6 +82,8 @@ class Settings extends AbstractAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

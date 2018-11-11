@@ -8,13 +8,14 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@contact.model.repository.data_grid_repository'
       - '@core.data_grid.data_grid'
 
   contact.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.secure'
       - '@core.helpers.formToken'
       - '@contact.validation.admin_settings_form_validation'
@@ -27,7 +28,8 @@ services:
   contact.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
+      - '@core.router'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.alerts'

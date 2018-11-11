@@ -7,24 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter;
 
-class AbstractFormAction extends AbstractFrontendAction
+class AbstractFormAction extends \ACP3\Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
      */
     protected $newsletterHelpers;
 
-    /**
-     * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
-     */
-    public function __construct(FrontendContext $context, SendNewsletter $newsletterHelpers)
+    public function __construct(FormContext $context, SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context);
 
@@ -38,8 +31,10 @@ class AbstractFormAction extends AbstractFrontendAction
      * @param string $testEmailAddress
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function sendTestNewsletter($isTest, $id, $dbResult, $testEmailAddress)
+    protected function sendTestNewsletter(bool $isTest, int $id, bool $dbResult, string $testEmailAddress)
     {
         if ($isTest === true) {
             $bool2 = $this->newsletterHelpers->sendNewsletter($id, $testEmailAddress);

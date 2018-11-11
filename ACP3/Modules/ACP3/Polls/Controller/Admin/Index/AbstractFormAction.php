@@ -8,10 +8,9 @@
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Polls;
 
-abstract class AbstractFormAction extends AbstractFrontendAction
+abstract class AbstractFormAction extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
@@ -22,15 +21,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected $formsHelper;
 
-    /**
-     * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Polls\Model\Repository\AnswerRepository $answerRepository
     ) {

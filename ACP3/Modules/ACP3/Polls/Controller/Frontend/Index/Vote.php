@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-class Vote extends Core\Controller\AbstractFrontendAction
+class Vote extends Core\Controller\AbstractFormAction
 {
     /**
      * @var Core\Date
@@ -33,16 +33,8 @@ class Vote extends Core\Controller\AbstractFrontendAction
      */
     protected $voteValidation;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param Core\Date                                                  $date
-     * @param Polls\Validation\VoteValidation                            $voteValidation
-     * @param Polls\Model\VoteModel                                      $pollsModel
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Date $date,
         Polls\Validation\VoteValidation $voteValidation,
         Polls\Model\VoteModel $pollsModel,
@@ -64,8 +56,9 @@ class Vote extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $answer = $this->request->getPost()->get('answer');
         $time = $this->date->getCurrentDateTime();
@@ -85,9 +78,11 @@ class Vote extends Core\Controller\AbstractFrontendAction
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($id) {

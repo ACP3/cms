@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -29,17 +29,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $seoModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
-     * @param Seo\Model\SeoModel                                    $seoModel
-     * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Model\SeoModel $seoModel,
@@ -59,8 +50,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $seo = $this->seoModel->getOneById($id);
 
@@ -81,8 +73,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

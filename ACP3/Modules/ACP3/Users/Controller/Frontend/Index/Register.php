@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
-class Register extends Core\Controller\AbstractFrontendAction
+class Register extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Date
@@ -47,21 +47,8 @@ class Register extends Core\Controller\AbstractFrontendAction
      */
     private $alertsHelper;
 
-    /**
-     * Register constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Core\Date                                                $date
-     * @param \ACP3\Core\Helpers\Alerts                                      $alertsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                   $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository       $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation $registrationFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers                         $permissionsHelpers
-     * @param \ACP3\Core\Helpers\SendEmail                                   $sendEmail
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Date $date,
         Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -113,6 +100,8 @@ class Register extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

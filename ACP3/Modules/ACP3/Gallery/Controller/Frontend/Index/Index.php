@@ -31,11 +31,16 @@ class Index extends AbstractAction
      * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
     private $thumbnailGenerator;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     /**
      * Index constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
+     * @param \ACP3\Core\Helpers\ResultsPerPage                             $resultsPerPage
      * @param \ACP3\Core\Date                                               $date
      * @param \ACP3\Core\Pagination                                         $pagination
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
@@ -43,6 +48,7 @@ class Index extends AbstractAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Core\Date $date,
         Core\Pagination $pagination,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
@@ -54,6 +60,7 @@ class Index extends AbstractAction
         $this->pagination = $pagination;
         $this->galleryRepository = $galleryRepository;
         $this->thumbnailGenerator = $thumbnailGenerator;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

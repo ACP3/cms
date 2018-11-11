@@ -22,15 +22,21 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RolesDataGridRepository
      */
     private $dataGridRepository;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         FrontendContext $context,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Core\DataGrid\DataGrid $dataGrid,
         RolesDataGridRepository $dataGridRepository
     ) {
         parent::__construct($context);
         $this->dataGrid = $dataGrid;
         $this->dataGridRepository = $dataGridRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

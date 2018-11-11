@@ -33,9 +33,14 @@ class Index extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesDataGridRepository
      */
     private $picturesDataGridRepository;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Gallery\Model\Repository\GalleryPicturesDataGridRepository $picturesDataGridRepository,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
@@ -47,6 +52,7 @@ class Index extends AbstractFrontendAction
         $this->thumbnailGenerator = $thumbnailGenerator;
         $this->dataGrid = $dataGrid;
         $this->picturesDataGridRepository = $picturesDataGridRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

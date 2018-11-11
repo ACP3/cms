@@ -7,25 +7,18 @@
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
 
-class Duplicate extends AbstractFrontendAction
+class Duplicate extends \ACP3\Core\Controller\AbstractFormAction
 {
     /**
      * @var ArticlesModel
      */
     private $articlesModel;
 
-    /**
-     * Duplicate constructor.
-     *
-     * @param FrontendContext $context
-     * @param ArticlesModel   $articlesModel
-     */
     public function __construct(
-        FrontendContext $context,
+        FormContext $context,
         ArticlesModel $articlesModel
     ) {
         parent::__construct($context);
@@ -37,8 +30,10 @@ class Duplicate extends AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $result = $this->articlesModel->duplicate($id);
 

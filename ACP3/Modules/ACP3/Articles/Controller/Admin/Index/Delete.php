@@ -10,19 +10,15 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractFormAction
 {
     /**
      * @var Articles\Model\ArticlesModel
      */
     protected $articlesModel;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Articles\Model\ArticlesModel                  $articlesModel
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Articles\Model\ArticlesModel $articlesModel
     ) {
         parent::__construct($context);
@@ -37,7 +33,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($action = '')
+    public function execute(string $action = '')
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

@@ -23,14 +23,20 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
     protected $newsletterRepository;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
+     * @param \ACP3\Core\Helpers\ResultsPerPage                                   $resultsPerPage
      * @param Core\Pagination                                                     $pagination
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Core\Pagination $pagination,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
     ) {
@@ -38,10 +44,13 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->pagination = $pagination;
         $this->newsletterRepository = $newsletterRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {

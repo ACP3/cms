@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
-class Order extends Core\Controller\AbstractFrontendAction
+class Order extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
@@ -21,15 +21,8 @@ class Order extends Core\Controller\AbstractFrontendAction
      */
     private $sortOperation;
 
-    /**
-     * Order constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\NestedSet\Operation\Sort                               $sortOperation
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoriesRepository
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\NestedSet\Operation\Sort $sortOperation,
         CategoryRepository $categoriesRepository
     ) {

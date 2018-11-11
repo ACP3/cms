@@ -36,9 +36,14 @@ class Details extends AbstractAction
      * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
     private $thumbnailGenerator;
+    /**
+     * @var \ACP3\Core\Router\RouterInterface
+     */
+    private $router;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Router\RouterInterface $router,
         Core\Date $date,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
@@ -50,6 +55,7 @@ class Details extends AbstractAction
         $this->pictureRepository = $pictureRepository;
         $this->thumbnailGenerator = $thumbnailGenerator;
         $this->metaStatements = $metaStatements;
+        $this->router = $router;
     }
 
     /**

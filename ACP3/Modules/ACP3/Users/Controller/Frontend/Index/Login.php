@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class Login extends Core\Controller\AbstractFrontendAction
+class Login extends Core\Controller\AbstractFormAction
 {
     /**
      * @var Users\Model\AuthenticationModel
@@ -26,16 +26,8 @@ class Login extends Core\Controller\AbstractFrontendAction
      */
     private $secureHelper;
 
-    /**
-     * Login constructor.
-     *
-     * @param Core\Controller\Context\FrontendContext $context
-     * @param Core\Helpers\Forms                      $forms
-     * @param \ACP3\Core\Helpers\Secure               $secureHelper
-     * @param Users\Model\AuthenticationModel         $authenticationModel
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $forms,
         Core\Helpers\Secure $secureHelper,
         Users\Model\AuthenticationModel $authenticationModel
@@ -67,6 +59,8 @@ class Login extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

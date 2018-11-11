@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\Newsletter;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Create extends AbstractAction
+class Create extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -38,20 +38,18 @@ class Create extends AbstractAction
      * @var \ACP3\Core\Helpers\SendEmail
      */
     private $sendEmailHelper;
-
     /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Core\Helpers\SendEmail                           $sendEmailHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookModel      $guestbookModel
-     * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe|null    $newsletterSubscribeHelper
+     * @var \ACP3\Core\Router\RouterInterface
      */
+    private $router;
+    /**
+     * @var array
+     */
+    private $guestbookSettings = [];
+
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
+        Core\Router\RouterInterface $router,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
@@ -67,6 +65,14 @@ class Create extends AbstractAction
         $this->guestbookModel = $guestbookModel;
         $this->sendEmailHelper = $sendEmailHelper;
         $this->newsletterSubscribeHelper = $newsletterSubscribeHelper;
+        $this->router = $router;
+    }
+
+    public function preDispatch()
+    {
+        parent::preDispatch();
+
+        $this->guestbookSettings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
     }
 
     /**
@@ -133,7 +139,7 @@ class Create extends AbstractAction
     /**
      * @param int $entryId
      */
-    protected function sendNotificationEmail($entryId)
+    protected function sendNotificationEmail(int $entryId)
     {
         $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $entryId;
         $body = \sprintf(

@@ -10,21 +10,15 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractFormAction
 {
     /**
      * @var Newsletter\Model\NewsletterModel
      */
     protected $newsletterModel;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Newsletter\Model\NewsletterModel              $newsletterModel
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Newsletter\Model\NewsletterModel $newsletterModel
     ) {
         parent::__construct($context);
@@ -39,7 +33,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($action = '')
+    public function execute(string $action = '')
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

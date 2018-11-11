@@ -9,20 +9,22 @@ services:
     - '@core.i18n.translator'
     - '@core.modules'
     - '@core.http.request'
-    - '@core.router'
     - '@core.view'
     - '@core.config'
     - '@core.environment.application_path'
     - '@core.http.response'
-    - '@core.helpers.results_per_page'
 
   core.context.frontend:
     class: ACP3\Core\Controller\Context\FrontendContext
     arguments:
     - '@core.context.widget'
-    - '@core.assets'
     - '@core.breadcrumb'
     - '@core.breadcrumb.title'
+
+  core.context.form:
+    class: ACP3\Core\Controller\Context\FormContext
+    arguments:
+    - '@core.context.frontend'
     - '@core.modules.helper.action'
     - '@core.helpers.redirect'
     - '@core.http.redirect_response'

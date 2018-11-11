@@ -10,21 +10,15 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractFormAction
 {
     /**
      * @var Menus\Model\MenusModel
      */
     protected $menusModel;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Menus\Model\MenusModel                        $menusModel
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Menus\Model\MenusModel $menusModel
     ) {
         parent::__construct($context);
@@ -36,8 +30,10 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @param string $action
      *
      * @return mixed
+     *
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($action = '')
+    public function execute(string $action = '')
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

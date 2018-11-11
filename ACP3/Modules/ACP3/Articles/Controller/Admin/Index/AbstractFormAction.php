@@ -7,18 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Core\Environment\ThemePathInterface;
 
-abstract class AbstractFormAction extends AbstractFrontendAction
+abstract class AbstractFormAction extends \ACP3\Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Environment\ThemePathInterface
      */
     private $theme;
 
-    public function __construct(FrontendContext $context, ThemePathInterface $theme)
+    public function __construct(FormContext $context, ThemePathInterface $theme)
     {
         parent::__construct($context);
 

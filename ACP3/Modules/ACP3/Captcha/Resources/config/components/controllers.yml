@@ -12,7 +12,7 @@ services:
   captcha.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Captcha\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@captcha.utility.captcha_registrar'

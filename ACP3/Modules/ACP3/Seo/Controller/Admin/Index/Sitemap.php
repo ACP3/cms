@@ -7,26 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\AbstractFormAction;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel;
 
-class Sitemap extends AbstractFrontendAction
+class Sitemap extends AbstractFormAction
 {
     /**
      * @var SitemapGenerationModel
      */
     protected $sitemapGenerationModel;
 
-    /**
-     * Sitemap constructor.
-     *
-     * @param FrontendContext        $context
-     * @param SitemapGenerationModel $sitemapGenerationModel
-     */
     public function __construct(
-        FrontendContext $context,
+        FormContext $context,
         SitemapGenerationModel $sitemapGenerationModel
     ) {
         parent::__construct($context);
@@ -36,6 +30,8 @@ class Sitemap extends AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException
      */
     public function execute()
     {

@@ -29,17 +29,8 @@ class Edit extends AbstractFormAction
      */
     protected $pollsModel;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Core\Date                                            $date
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     * @param Polls\Model\PollsModel                                     $pollsModel
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation    $pollsValidator
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -61,8 +52,9 @@ class Edit extends AbstractFormAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $poll = $this->pollsModel->getOneById($id);
 
@@ -84,8 +76,10 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

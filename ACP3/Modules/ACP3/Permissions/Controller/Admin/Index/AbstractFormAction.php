@@ -8,10 +8,9 @@
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Permissions;
 
-abstract class AbstractFormAction extends AbstractFrontendAction
+abstract class AbstractFormAction extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\Forms
@@ -30,18 +29,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected $permissionsCache;
 
-    /**
-     * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                                $permissionsCache
-     *
-     * @internal param Permissions\Model\Repository\RuleRepository $ruleRepository
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Cache $permissionsCache

@@ -42,7 +42,7 @@ class RedirectResponse
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function toNewPage($url)
+    public function toNewPage(string $url)
     {
         if ($this->request->isXmlHttpRequest() === true) {
             return $this->createAjaxRedirectResponse($url);
@@ -58,7 +58,7 @@ class RedirectResponse
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function temporary($path)
+    public function temporary(string $path)
     {
         return $this->createRedirectResponse($path, Response::HTTP_FOUND);
     }
@@ -71,7 +71,7 @@ class RedirectResponse
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRedirectResponse($path, $statusCode)
+    protected function createRedirectResponse(string $path, int $statusCode)
     {
         $path = $this->router->route($path, true);
 
@@ -89,7 +89,7 @@ class RedirectResponse
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function createAjaxRedirectResponse($path)
+    protected function createAjaxRedirectResponse(string $path)
     {
         return new JsonResponse(['redirect_url' => $path]);
     }
@@ -101,7 +101,7 @@ class RedirectResponse
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function permanent($path)
+    public function permanent(string $path)
     {
         return $this->createRedirectResponse($path, Response::HTTP_MOVED_PERMANENTLY);
     }

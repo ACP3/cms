@@ -50,22 +50,19 @@ class Index extends AbstractAction
      * @var \ACP3\Modules\ACP3\Comments\Helpers
      */
     private $commentsHelpers;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Date                                                   $date
-     * @param \ACP3\Core\Helpers\StringFormatter                                $stringFormatter
-     * @param \ACP3\Core\Pagination                                             $pagination
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                             $categoriesHelpers
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements|null                 $metaStatements
-     * @param \ACP3\Modules\ACP3\Comments\Helpers                               $commentsHelpers
+     * @var \ACP3\Core\Helpers\ResultsPerPage
      */
+    private $resultsPerPage;
+    /**
+     * @var \ACP3\Core\Router\RouterInterface
+     */
+    private $router;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Router\RouterInterface $router,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Core\Date $date,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Pagination $pagination,
@@ -85,6 +82,8 @@ class Index extends AbstractAction
         $this->categoryRepository = $categoryRepository;
         $this->metaStatements = $metaStatements;
         $this->commentsHelpers = $commentsHelpers;
+        $this->resultsPerPage = $resultsPerPage;
+        $this->router = $router;
     }
 
     /**

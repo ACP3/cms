@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-class Send extends Core\Controller\AbstractFrontendAction
+class Send extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
@@ -25,16 +25,8 @@ class Send extends Core\Controller\AbstractFrontendAction
      */
     protected $accountRepository;
 
-    /**
-     * Send constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository    $accountRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter                 $newsletterHelpers
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
         Newsletter\Model\Repository\AccountRepository $accountRepository,
         Newsletter\Helper\SendNewsletter $newsletterHelpers
@@ -49,11 +41,12 @@ class Send extends Core\Controller\AbstractFrontendAction
     /**
      * @param int $id
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->newsletterRepository->newsletterExists($id) === true) {
             $accounts = $this->accountRepository->getAllActiveAccounts();

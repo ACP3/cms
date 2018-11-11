@@ -21,9 +21,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsByModuleDataGridRepository
      */
     private $dataGridRepository;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Comments\Model\Repository\CommentsByModuleDataGridRepository $dataGridRepository,
         Core\DataGrid\DataGrid $dataGrid
     ) {
@@ -31,6 +36,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->dataGrid = $dataGrid;
         $this->dataGridRepository = $dataGridRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

@@ -40,20 +40,8 @@ class Edit extends AbstractFormAction
      */
     private $filesUploadHelper;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param \ACP3\Core\Date                                         $date
-     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param Files\Model\FilesModel                                  $filesModel
-     * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\Upload                               $filesUploadHelper
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -162,8 +150,10 @@ class Edit extends AbstractFormAction
      * @param string              $currentFileName
      *
      * @return array
+     *
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */
-    protected function updateAssociatedFile($file, array $formData, $currentFileName)
+    protected function updateAssociatedFile($file, array $formData, string $currentFileName)
     {
         if ($file instanceof UploadedFile) {
             $result = $this->filesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());

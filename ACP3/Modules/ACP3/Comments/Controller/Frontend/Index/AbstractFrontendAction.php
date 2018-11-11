@@ -7,12 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction as CoreAbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\AbstractFormAction;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Modules\ACP3\Comments\Installer\Schema;
 use ACP3\Modules\ACP3\Emoticons;
 
-abstract class AbstractFrontendAction extends CoreAbstractFrontendAction
+abstract class AbstractFrontendAction extends AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Helpers
@@ -27,7 +27,7 @@ abstract class AbstractFrontendAction extends CoreAbstractFrontendAction
      */
     protected $commentsSettings = [];
 
-    public function __construct(FrontendContext $context, ?Emoticons\Helpers $emoticonsHelpers = null)
+    public function __construct(FormContext $context, ?Emoticons\Helpers $emoticonsHelpers = null)
     {
         parent::__construct($context);
 

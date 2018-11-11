@@ -23,9 +23,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogDataGridRepository
      */
     private $dataGridRepository;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         FrontendContext $context,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         DataGrid $dataGrid,
         AuditLogDataGridRepository $dataGridRepository
     ) {
@@ -33,6 +38,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->dataGrid = $dataGrid;
         $this->dataGridRepository = $dataGridRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

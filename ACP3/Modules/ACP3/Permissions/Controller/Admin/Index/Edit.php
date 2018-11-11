@@ -29,20 +29,8 @@ class Edit extends AbstractFormAction
      */
     protected $rulesModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param Permissions\Model\RolesModel                                        $rolesModel
-     * @param Permissions\Model\RulesModel                                        $rulesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                                $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation        $roleFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\RulesModel $rulesModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
@@ -65,8 +53,9 @@ class Edit extends AbstractFormAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $role = $this->rolesModel->getOneById($id);
 
@@ -93,7 +82,7 @@ class Edit extends AbstractFormAction
      *
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

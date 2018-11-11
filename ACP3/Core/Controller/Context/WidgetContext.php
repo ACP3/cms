@@ -10,11 +10,9 @@ namespace ACP3\Core\Controller\Context;
 use ACP3\Core\ACL;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
-use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -71,10 +69,6 @@ class WidgetContext
      * @var \Symfony\Component\HttpFoundation\Response
      */
     private $response;
-    /**
-     * @var ResultsPerPage
-     */
-    private $resultsPerPage;
 
     /**
      * WidgetContext constructor.
@@ -86,12 +80,10 @@ class WidgetContext
      * @param \ACP3\Core\I18n\Translator                                  $translator
      * @param \ACP3\Core\Modules                                          $modules
      * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router\RouterInterface                           $router
      * @param \ACP3\Core\View                                             $view
      * @param \ACP3\Core\Settings\SettingsInterface                       $config
      * @param \ACP3\Core\Environment\ApplicationPath                      $appPath
      * @param \Symfony\Component\HttpFoundation\Response                  $response
-     * @param \ACP3\Core\Helpers\ResultsPerPage                           $resultsPerPage
      */
     public function __construct(
         ContainerInterface $container,
@@ -101,12 +93,10 @@ class WidgetContext
         Translator $translator,
         Modules $modules,
         RequestInterface $request,
-        RouterInterface $router,
         View $view,
         SettingsInterface $config,
         ApplicationPath $appPath,
-        Response $response,
-        ResultsPerPage $resultsPerPage
+        Response $response
     ) {
         $this->container = $container;
         $this->eventDispatcher = $eventDispatcher;
@@ -115,12 +105,10 @@ class WidgetContext
         $this->translator = $translator;
         $this->modules = $modules;
         $this->request = $request;
-        $this->router = $router;
         $this->view = $view;
         $this->config = $config;
         $this->appPath = $appPath;
         $this->response = $response;
-        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**
@@ -217,13 +205,5 @@ class WidgetContext
     public function getResponse()
     {
         return $this->response;
-    }
-
-    /**
-     * @return ResultsPerPage
-     */
-    public function getResultsPerPage()
-    {
-        return $this->resultsPerPage;
     }
 }

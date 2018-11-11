@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Share\Helpers\ShareFormFields;
 use ACP3\Modules\ACP3\Share\Model\ShareModel;
 use ACP3\Modules\ACP3\Share\Validation\AdminFormValidation;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -31,17 +31,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     private $shareModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields        $shareFormFields
-     * @param \ACP3\Modules\ACP3\Share\Model\ShareModel               $shareModel
-     * @param \ACP3\Modules\ACP3\Share\Validation\AdminFormValidation $adminFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         ShareFormFields $shareFormFields,
         ShareModel $shareModel,
@@ -63,7 +54,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $sharingInfo = $this->shareModel->getOneById($id);
 
@@ -82,6 +73,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost(int $id)
     {

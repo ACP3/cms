@@ -7,13 +7,13 @@ services:
   guestbook.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Delete
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@guestbook.model.guestbook_model'
 
   guestbook.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Edit
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@guestbook.model.guestbook_model'
@@ -23,13 +23,14 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@guestbook.model.data_grid_repository'
       - '@core.data_grid.data_grid'
 
   guestbook.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
@@ -39,7 +40,8 @@ services:
   guestbook.controller.frontend.index.create:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Create
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
+      - '@core.router'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.sendEmail'
@@ -51,6 +53,7 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@core.pagination'
       - '@guestbook.model.guestbookrepository'
       - '@?emoticons.helpers'

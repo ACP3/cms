@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -29,17 +29,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     private $guestbookModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
-     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param Guestbook\Model\GuestbookModel                              $guestbookModel
-     * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
@@ -59,8 +50,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $guestbook = $this->guestbookModel->getOneById($id);
         if (empty($guestbook) === false) {
@@ -85,8 +77,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

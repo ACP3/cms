@@ -7,7 +7,7 @@ services:
   seo.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.formToken'
       - '@seo.helper.meta_form_fields'
       - '@seo.helper.uri_alias_manager'
@@ -17,14 +17,14 @@ services:
   seo.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Delete
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@seo.cache'
       - '@seo.model.seo_model'
 
   seo.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Edit
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.formToken'
       - '@seo.helper.meta_form_fields'
       - '@seo.model.seo_model'
@@ -34,6 +34,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@seo.model.data_grid_repository'
       - '@seo.helper.meta_statements'
       - '@core.data_grid.data_grid'
@@ -41,7 +42,7 @@ services:
   seo.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
@@ -50,7 +51,7 @@ services:
   seo.controller.admin.index.sitemap:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Sitemap
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@seo.model.sitemap_generation_model'
 
   seo.controller.admin.index.suggest:

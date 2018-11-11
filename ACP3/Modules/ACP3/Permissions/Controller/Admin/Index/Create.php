@@ -29,20 +29,8 @@ class Create extends AbstractFormAction
      */
     protected $rulesModel;
 
-    /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param Permissions\Model\RolesModel                                        $rolesModel
-     * @param Permissions\Model\RulesModel                                        $rulesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                                $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation        $roleFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\RulesModel $rulesModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
@@ -74,6 +62,8 @@ class Create extends AbstractFormAction
 
     /**
      * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

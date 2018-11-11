@@ -7,7 +7,7 @@ services:
   articles.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.environment.theme'
       - '@core.helpers.forms'
       - '@articles.model'
@@ -17,19 +17,19 @@ services:
   articles.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@articles.model'
 
   articles.controller.admin.index.duplicate:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Duplicate
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@articles.model'
 
   articles.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.environment.theme'
       - '@core.helpers.forms'
       - '@articles.model'
@@ -40,6 +40,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@articles.model.data_grid_repository'
       - '@core.data_grid.data_grid'
 
@@ -57,6 +58,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
+      - '@core.helpers.results_per_page'
       - '@core.pagination'
       - '@articles.model.articlerepository'
 

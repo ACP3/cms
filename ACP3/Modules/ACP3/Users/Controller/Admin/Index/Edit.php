@@ -42,21 +42,8 @@ class Edit extends AbstractFormAction
      */
     private $userFormsHelpers;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                               $secureHelper
-     * @param \ACP3\Core\Helpers\Forms                                $formsHelpers
-     * @param Users\Helpers\Forms                                     $userFormsHelpers
-     * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel      $authenticationModel
-     * @param Users\Model\UsersModel                                  $usersModel
-     * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers                  $permissionsHelpers
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
@@ -84,7 +71,7 @@ class Edit extends AbstractFormAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $user = $this->user->getUserInfo($id);
 
@@ -129,8 +116,10 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -158,8 +147,10 @@ class Edit extends AbstractFormAction
 
     /**
      * @param int $userId
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function updateCurrentlyLoggedInUserCookie($userId)
+    protected function updateCurrentlyLoggedInUserCookie(int $userId)
     {
         if ($userId == $this->user->getUserId() && $this->request->getCookies()->has(Users\Model\AuthenticationModel::AUTH_NAME)) {
             $user = $this->usersModel->getOneById($userId);

@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Designs extends Core\Controller\AbstractFrontendAction
+class Designs extends Core\Controller\AbstractFormAction
 {
     use System\Helper\AvailableDesignsTrait;
 
@@ -20,14 +20,8 @@ class Designs extends Core\Controller\AbstractFrontendAction
      */
     protected $xml;
 
-    /**
-     * Designs constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\XML                                $xml
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\XML $xml
     ) {
         parent::__construct($context);
@@ -40,7 +34,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($dir = '')
+    public function execute(string $dir = '')
     {
         if (!empty($dir)) {
             return $this->executePost($dir);
@@ -56,7 +50,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost($design)
+    protected function executePost(string $design)
     {
         $bool = false;
 

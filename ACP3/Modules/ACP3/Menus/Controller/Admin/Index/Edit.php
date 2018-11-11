@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -25,16 +25,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $menusModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param Menus\Model\MenusModel                                 $menusModel
-     * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenusModel $menusModel,
         Menus\Validation\MenuFormValidation $menuFormValidation
@@ -52,8 +44,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $menu = $this->menusModel->getOneById($id);
 
@@ -73,8 +66,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

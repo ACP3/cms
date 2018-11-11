@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-class Settings extends Core\Controller\AbstractFrontendAction
+class Settings extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -29,17 +29,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     protected $secureHelper;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                        $context
-     * @param \ACP3\Core\Helpers\Forms                                             $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                         $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                            $secureHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
@@ -69,6 +60,8 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

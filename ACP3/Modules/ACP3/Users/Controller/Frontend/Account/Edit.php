@@ -29,17 +29,8 @@ class Edit extends AbstractAction
      */
     protected $usersModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
-     * @param \ACP3\Core\Helpers\FormToken                              $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                    $userFormsHelper
-     * @param Users\Model\UsersModel                                    $usersModel
-     * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\FormToken $formTokenHelper,
         Users\Helpers\Forms $userFormsHelper,
         Users\Model\UsersModel $usersModel,
@@ -82,6 +73,8 @@ class Edit extends AbstractAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

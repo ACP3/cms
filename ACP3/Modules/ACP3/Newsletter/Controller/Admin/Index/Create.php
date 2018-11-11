@@ -29,18 +29,8 @@ class Create extends AbstractFormAction
      */
     protected $newsletterModel;
 
-    /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param Newsletter\Model\NewsletterModel                             $newsletterModel
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterModel $newsletterModel,
@@ -75,7 +65,9 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

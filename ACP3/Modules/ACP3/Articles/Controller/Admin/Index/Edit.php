@@ -29,16 +29,8 @@ class Edit extends AbstractFormAction
      */
     protected $formsHelper;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Core\Environment\ThemePathInterface                  $theme
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param Articles\Model\ArticlesModel                               $articlesModel
-     * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Environment\ThemePathInterface $theme,
         Core\Helpers\Forms $formsHelper,
         Articles\Model\ArticlesModel $articlesModel,
@@ -59,8 +51,9 @@ class Edit extends AbstractFormAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $article = $this->articlesModel->getOneById($id);
 
@@ -91,7 +84,7 @@ class Edit extends AbstractFormAction
      *
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

@@ -10,21 +10,19 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Users;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
     protected $userRepository;
-
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Users\Model\UsersModel                        $usersModel
+     * @var \ACP3\Modules\ACP3\Users\Model\UsersModel
      */
+    private $usersModel;
+
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Users\Model\UsersModel $usersModel
     ) {
         parent::__construct($context);
@@ -39,7 +37,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($action = '')
+    public function execute(string $action = '')
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,

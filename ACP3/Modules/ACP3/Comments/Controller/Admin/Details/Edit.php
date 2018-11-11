@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation
@@ -25,16 +25,8 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     protected $commentsModel;
 
-    /**
-     * Details constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param Comments\Model\CommentsModel                               $commentsModel
-     * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
@@ -83,6 +75,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost(int $id)

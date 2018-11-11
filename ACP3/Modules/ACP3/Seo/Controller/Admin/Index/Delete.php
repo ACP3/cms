@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Cache
@@ -21,15 +21,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
      */
     protected $seoModel;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Seo\Cache                  $seoCache
-     * @param Seo\Model\SeoModel                            $seoModel
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Seo\Cache $seoCache,
         Seo\Model\SeoModel $seoModel
     ) {
@@ -46,7 +39,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($action = '')
+    public function execute(string $action = '')
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

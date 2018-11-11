@@ -7,7 +7,7 @@ services:
   news.controller.admin.index.create:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@news.model'
@@ -17,19 +17,19 @@ services:
   news.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@news.model'
 
   news.controller.admin.index.duplicate:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Duplicate
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@news.model'
 
   news.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@news.model'
@@ -40,13 +40,14 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@news.model.data_grid_repository'
       - '@core.data_grid.data_grid'
 
   news.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.secure'
@@ -67,6 +68,8 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.router'
+      - '@core.helpers.results_per_page'
       - '@core.date'
       - '@core.helpers.string_formatter'
       - '@core.pagination'

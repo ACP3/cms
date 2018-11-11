@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-class Index extends Core\Controller\AbstractFrontendAction
+class Index extends Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -33,18 +33,8 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     private $alertsHelper;
 
-    /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                    $context
-     * @param \ACP3\Core\Helpers\Alerts                                        $alertsHelper
-     * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe                   $subscribeHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -86,6 +76,8 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function executePost()
     {

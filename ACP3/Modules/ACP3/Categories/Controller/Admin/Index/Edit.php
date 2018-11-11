@@ -29,17 +29,8 @@ class Edit extends AbstractFormAction
      */
     private $categoriesUploadHelper;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
-     * @param Categories\Model\CategoriesModel                                  $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation      $adminFormValidation
-     * @param \ACP3\Core\Helpers\Upload                                         $categoriesUploadHelper
-     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Model\Repository\CategoryRepository $categoryRepository,

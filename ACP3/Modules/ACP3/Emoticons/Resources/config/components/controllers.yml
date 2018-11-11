@@ -7,7 +7,7 @@ services:
   emoticons.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Create
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.formToken'
       - '@emoticons.model'
       - '@emoticons.validation.admin_form_validation'
@@ -17,13 +17,13 @@ services:
   emoticons.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Delete
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@emoticons.model'
 
   emoticons.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Edit
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.formToken'
       - '@emoticons.model'
       - '@emoticons.validation.admin_form_validation'
@@ -34,12 +34,13 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@emoticons.model.data_grid_repository'
       - '@core.data_grid.data_grid'
 
   emoticons.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Settings
     arguments:
-      - '@core.context.frontend'
+      - '@core.context.form'
       - '@core.helpers.formToken'
       - '@emoticons.validation.admin_settings_form_validation'

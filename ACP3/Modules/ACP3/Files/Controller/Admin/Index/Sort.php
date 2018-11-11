@@ -8,11 +8,10 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
-class Sort extends AbstractFrontendAction
+class Sort extends Core\Controller\AbstractFormAction
 {
     /**
      * @var FilesRepository
@@ -23,15 +22,11 @@ class Sort extends AbstractFrontendAction
      */
     private $sortHelper;
 
-    /**
-     * Sort constructor.
-     *
-     * @param FrontendContext         $context
-     * @param FilesRepository         $filesRepository
-     * @param \ACP3\Core\Helpers\Sort $sortHelper
-     */
-    public function __construct(FrontendContext $context, FilesRepository $filesRepository, Core\Helpers\Sort $sortHelper)
-    {
+    public function __construct(
+        FormContext $context,
+        FilesRepository $filesRepository,
+        Core\Helpers\Sort $sortHelper
+    ) {
         parent::__construct($context);
 
         $this->filesRepository = $filesRepository;
@@ -44,9 +39,11 @@ class Sort extends AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws Core\Controller\Exception\ResultNotExistsException
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->filesRepository->resultExists($id) === true) {
             if ($action === 'up') {

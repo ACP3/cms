@@ -30,19 +30,8 @@ class Edit extends AbstractFormAction
      */
     protected $menuItemsModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     * @param Menus\Model\MenuItemsModel                                 $menuItemsModel
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields        $menuItemFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
-     * @param \ACP3\Modules\ACP3\Articles\Helpers|null                   $articlesHelpers
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenuItemsModel $menuItemsModel,
@@ -64,8 +53,9 @@ class Edit extends AbstractFormAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $menuItem = $this->menuItemsModel->getOneById($id);
 
@@ -110,8 +100,10 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(
             function () use ($id) {

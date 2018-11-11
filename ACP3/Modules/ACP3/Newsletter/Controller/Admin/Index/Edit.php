@@ -29,18 +29,8 @@ class Edit extends AbstractFormAction
      */
     protected $newsletterModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param Newsletter\Model\NewsletterModel                             $newsletterModel
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterModel $newsletterModel,
@@ -61,8 +51,9 @@ class Edit extends AbstractFormAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $newsletter = $this->newsletterModel->getOneById($id);
 
@@ -92,8 +83,10 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handlePostAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

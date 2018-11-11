@@ -7,12 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
-class AbstractFormAction extends AbstractFrontendAction
+class AbstractFormAction extends \ACP3\Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Core\Helpers\Forms
@@ -23,7 +22,7 @@ class AbstractFormAction extends AbstractFrontendAction
      */
     private $categoryRepository;
 
-    public function __construct(FrontendContext $context, Forms $formsHelper, CategoryRepository $categoryRepository)
+    public function __construct(FormContext $context, Forms $formsHelper, CategoryRepository $categoryRepository)
     {
         parent::__construct($context);
 

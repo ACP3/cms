@@ -10,21 +10,15 @@ namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Emoticons;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractFormAction
 {
     /**
      * @var Emoticons\Model\EmoticonsModel
      */
     protected $emoticonsModel;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Emoticons\Model\EmoticonsModel                $emoticonsModel
-     */
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\FormContext $context,
         Emoticons\Model\EmoticonsModel $emoticonsModel
     ) {
         parent::__construct($context);
@@ -35,11 +29,11 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @param string $action
      *
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|void
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($action = '')
+    public function execute(string $action = '')
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

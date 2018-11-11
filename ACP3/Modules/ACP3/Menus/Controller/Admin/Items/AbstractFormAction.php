@@ -7,13 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\FormContext;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 
-abstract class AbstractFormAction extends AbstractFrontendAction
+abstract class AbstractFormAction extends \ACP3\Core\Controller\AbstractFormAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Helpers
@@ -24,15 +23,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected $formsHelper;
 
-    /**
-     * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms                      $formsHelper
-     * @param \ACP3\Modules\ACP3\Articles\Helpers|null      $articlesHelpers
-     */
     public function __construct(
-        FrontendContext $context,
+        FormContext $context,
         Forms $formsHelper,
         ?Articles\Helpers $articlesHelpers = null)
     {
