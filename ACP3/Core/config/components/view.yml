@@ -19,4 +19,10 @@ services:
     class: ACP3\Core\View\Renderer\Smarty
     arguments:
       - '@smarty'
-      - '@service_container'
+      - '@core.view.renderer.smarty.plugin_service_locator'
+
+  core.view.renderer.smarty.plugin_service_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - []
+    tags: ['container.service_locator']

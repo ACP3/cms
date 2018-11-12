@@ -20,23 +20,23 @@
              srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
              alt="{$PAGE_TITLE}">
     </h1>
-    <nav id="main-navigation" class="navbar navbar-expand-lg navbar-light bg-light my-3 mt-sm-0">
-        <a href="{$ROOT_DIR}" class="navbar-brand d-sm-none">
-            <img src="{$DESIGN_PATH}Assets/img/logo.png"
-                 srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
-                 alt="{$PAGE_TITLE}">
-        </a>
-        <button class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#main-navigation-collapse"
-                aria-controls="main-navigation-collapse"
-                aria-expanded="false"
-                aria-label="{lang t="install|toggle_navigation"}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    {if !empty($navbar)}
+        <nav id="main-navigation" class="navbar navbar-expand-lg navbar-light bg-light my-3 mt-sm-0">
+            <a href="{$ROOT_DIR}" class="navbar-brand d-sm-none">
+                <img src="{$DESIGN_PATH}Assets/img/logo.png"
+                     srcset="{$DESIGN_PATH}Assets/img/logo.png 1x, {$DESIGN_PATH}Assets/img/logo@2x.png 2x"
+                     alt="{$PAGE_TITLE}">
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#main-navigation-collapse"
+                    aria-controls="main-navigation-collapse"
+                    aria-expanded="false"
+                    aria-label="{lang t="install|toggle_navigation"}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        {if !empty($navbar)}
             <div class="collapse navbar-collapse" id="main-navigation-collapse">
                 <ul class="nav navbar-nav">
                     {foreach $navbar as $key => $value}
@@ -46,8 +46,8 @@
                     {/foreach}
                 </ul>
             </div>
-        {/if}
-    </nav>
+        </nav>
+    {/if}
     <main id="content">
         <h2>{$TITLE}</h2>
         {block CONTENT}{/block}

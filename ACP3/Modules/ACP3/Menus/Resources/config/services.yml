@@ -11,4 +11,3 @@ services:
       - '@menus.cache'
     tags:
       - { name: smarty.plugin.function, pluginName: navbar }
-    public: true

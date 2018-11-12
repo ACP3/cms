@@ -3,18 +3,15 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\PrefixUri
     tags:
       - { name: smarty.plugin.modifier, pluginName: prefix_uri }
-    public: true
 
   smarty.plugin.nl2p:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\Nl2p
     arguments: ['@core.helpers.string_formatter']
     tags:
       - { name: smarty.plugin.modifier, pluginName: nl2p }
-    public: true
 
   smarty.plugin.rewrite_uri:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\RewriteUri
     arguments: ['@core.helpers.formatter.rewrite_internal_uri']
     tags:
       - { name: smarty.plugin.modifier, pluginName: rewrite_uri }
-    public: true

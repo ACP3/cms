@@ -15,6 +15,11 @@ use Symfony\Component\DependencyInjection\Reference;
 class RegisterSmartyPluginsPass implements CompilerPassInterface
 {
     /**
+     * @var Reference[]
+     */
+    private $locatablePlugins = [];
+
+    /**
      * You can modify the container here before it is dumped to PHP code.
      *
      * @param ContainerBuilder $container
@@ -30,6 +35,9 @@ class RegisterSmartyPluginsPass implements CompilerPassInterface
         $this->registerFunctions($definition, $container);
         $this->registerModifiers($definition, $container);
         $this->registerResources($definition, $container);
+
+        $service = $container->findDefinition('core.view.renderer.smarty.plugin_service_locator');
+        $service->replaceArgument(0, $this->locatablePlugins);
     }
 
     private function registerBlocks(Definition $smartyDefinition, ContainerBuilder $container): void
@@ -41,6 +49,8 @@ class RegisterSmartyPluginsPass implements CompilerPassInterface
                 'registerBlock',
                 [$tags[0]['pluginName'], $serviceId]
             );
+
+            $this->locatablePlugins[$serviceId] = new Reference($serviceId);
         }
     }
 
@@ -53,6 +63,8 @@ class RegisterSmartyPluginsPass implements CompilerPassInterface
                 'registerFilter',
                 [$tags[0]['filterType'], $serviceId]
             );
+
+            $this->locatablePlugins[$serviceId] = new Reference($serviceId);
         }
     }
 
@@ -65,6 +77,8 @@ class RegisterSmartyPluginsPass implements CompilerPassInterface
                 'registerFunction',
                 [$tags[0]['pluginName'], $serviceId]
             );
+
+            $this->locatablePlugins[$serviceId] = new Reference($serviceId);
         }
     }
 
@@ -77,6 +91,8 @@ class RegisterSmartyPluginsPass implements CompilerPassInterface
                 'registerModifier',
                 [$tags[0]['pluginName'], $serviceId]
             );
+
+            $this->locatablePlugins[$serviceId] = new Reference($serviceId);
         }
     }
 
@@ -89,6 +105,8 @@ class RegisterSmartyPluginsPass implements CompilerPassInterface
                 'registerResource',
                 [$tags[0]['pluginName'], new Reference($serviceId)]
             );
+
+            $this->locatablePlugins[$serviceId] = new Reference($serviceId);
         }
     }
 }
