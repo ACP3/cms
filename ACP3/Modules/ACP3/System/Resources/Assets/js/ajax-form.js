@@ -110,11 +110,11 @@
         addErrorMessageToFormField: function ($element, errorMessage) {
             this.removeErrorMessageFromFormField($element);
 
-            $formField.addClass('is-invalid');
+            $element.addClass('is-invalid');
 
             const template = '<div class="invalid-feedback d-block"><i class="fas fa-exclamation-triangle"></i> ' + errorMessage + '</div>';
 
-            $formField
+            $element
                 .closest('div:not(.input-group):not(.btn-group)')
                 .append(template);
         },
