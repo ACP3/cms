@@ -20,11 +20,17 @@ class RegisterValidationRulesPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('core.validator');
         $plugins = $container->findTaggedServiceIds('core.validation.validation_rule');
 
+        $serviceLocator = $container->findDefinition('core.validator.validation_rule_locator');
+        $locatableServices = [];
+
         foreach ($plugins as $serviceId => $tags) {
-            $definition->addMethodCall('registerValidationRule', [new Reference($serviceId)]);
+            $validationRule = $container->findDefinition($serviceId);
+
+            $locatableServices[$validationRule->getClass()] = new Reference($serviceId);
         }
+
+        $serviceLocator->replaceArgument(0, $locatableServices);
     }
 }

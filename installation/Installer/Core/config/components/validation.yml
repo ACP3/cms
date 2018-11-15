@@ -3,6 +3,13 @@ services:
     class: ACP3\Core\Validation\Validator
     arguments:
       - '@core.event_dispatcher'
+      - '@core.validator.validation_rule_locator'
+
+  core.validator.validation_rule_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+    - []
+    tags: ['container.service_locator']
 
   core.validation.validation_rules.birthday_validation_rule:
     class: ACP3\Core\Validation\ValidationRules\BirthdayValidationRule

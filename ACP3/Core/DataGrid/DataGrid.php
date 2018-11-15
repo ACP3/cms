@@ -8,12 +8,12 @@
 namespace ACP3\Core\DataGrid;
 
 use ACP3\Core\ACL;
-use ACP3\Core\DataGrid\ColumnRenderer\ColumnRendererInterface;
 use ACP3\Core\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGrid
@@ -27,10 +27,6 @@ class DataGrid
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer[]
-     */
-    protected $columnRenderer = [];
-    /**
      * @var \ACP3\Core\DataGrid\ConfigProcessor
      */
     private $configProcessor;
@@ -38,14 +34,20 @@ class DataGrid
      * @var \ACP3\Core\Http\RequestInterface
      */
     private $request;
+    /**
+     * @var \Psr\Container\ContainerInterface
+     */
+    private $container;
 
     /**
+     * @param \Psr\Container\ContainerInterface   $container
      * @param \ACP3\Core\Http\RequestInterface    $request
      * @param \ACP3\Core\DataGrid\ConfigProcessor $configProcessor
      * @param \ACP3\Core\ACL                      $acl
      * @param \ACP3\Core\I18n\Translator          $translator
      */
     public function __construct(
+        ContainerInterface $container,
         RequestInterface $request,
         ConfigProcessor $configProcessor,
         ACL $acl,
@@ -55,18 +57,7 @@ class DataGrid
         $this->translator = $translator;
         $this->configProcessor = $configProcessor;
         $this->request = $request;
-    }
-
-    /**
-     * @param \ACP3\Core\DataGrid\ColumnRenderer\ColumnRendererInterface $columnRenderer
-     *
-     * @return $this
-     */
-    public function registerColumnRenderer(ColumnRendererInterface $columnRenderer)
-    {
-        $this->columnRenderer[\get_class($columnRenderer)] = $columnRenderer;
-
-        return $this;
+        $this->container = $container;
     }
 
     /**
@@ -125,8 +116,8 @@ class DataGrid
         foreach ($input->getResults() as $result) {
             $row = [];
             foreach (clone $input->getColumns() as $column) {
-                if (\array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
-                    $row[] = $this->columnRenderer[$column['type']]
+                if ($this->container->has($column['type']) && !empty($column['label'])) {
+                    $row[] = $this->container->get($column['type'])
                         ->setIdentifier($input->getIdentifier())
                         ->setPrimaryKey($input->getPrimaryKey())
                         ->setUseAjax($this->isRequiredAjaxRequest($input))
@@ -150,7 +141,7 @@ class DataGrid
         $header = '';
         foreach (clone $input->getColumns() as $column) {
             if (!empty($column['label'])) {
-                $header .= $this->columnRenderer[HeaderColumnRenderer::class]
+                $header .= $this->container->get(HeaderColumnRenderer::class)
                     ->setIdentifier($input->getIdentifier())
                     ->setPrimaryKey($input->getPrimaryKey())
                     ->fetchDataAndRenderColumn($column, []);
@@ -175,8 +166,8 @@ class DataGrid
         foreach ($input->getResults() as $result) {
             $renderedResults .= '<tr>';
             foreach (clone $input->getColumns() as $column) {
-                if (\array_key_exists($column['type'], $this->columnRenderer) && !empty($column['label'])) {
-                    $renderedResults .= $this->columnRenderer[$column['type']]
+                if ($this->container->has($column['type']) && !empty($column['label'])) {
+                    $renderedResults .= $this->container->get($column['type'])
                         ->setIdentifier($input->getIdentifier())
                         ->setPrimaryKey($input->getPrimaryKey())
                         ->setUseAjax($this->isRequiredAjaxRequest($input))
