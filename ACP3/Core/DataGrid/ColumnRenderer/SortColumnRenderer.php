@@ -60,7 +60,12 @@ class SortColumnRenderer extends AbstractColumnRenderer
         }
 
         $column['attribute'] += [
-            'sort' => $dbResultRow[$this->getFirstDbField($column)],
+            'sort' => \str_pad(
+                $dbResultRow[$this->getFirstDbField($column)],
+                \strlen($dbResultRow['last']),
+                '0',
+                STR_PAD_LEFT
+            ),
         ];
 
         return $this->render($column, $value);
@@ -72,7 +77,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
      *
      * @return string
      */
-    protected function fetchSortDirectionHtml($url, $direction)
+    protected function fetchSortDirectionHtml(string $url, string $direction)
     {
         $html = <<<HTML
 <a href="%s" title="%s" data-ajax-form="true" data-ajax-form-loading-text="%s">
