@@ -1,6 +1,5 @@
 services:
   _defaults:
-    public: true
     tags:
     - { name: acp3.controller.action }
 

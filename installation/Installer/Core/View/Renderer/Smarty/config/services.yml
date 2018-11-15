@@ -4,14 +4,12 @@ services:
     arguments: ['@core.i18n.translator']
     tags:
       - { name: smarty.plugin.function, pluginName: lang }
-    public: true
 
   smarty.plugin.uri:
     class: ACP3\Core\View\Renderer\Smarty\Functions\Uri
     arguments: ['@core.router']
     tags:
       - { name: smarty.plugin.function, pluginName: uri }
-    public: true
 
   smarty.resource.asset:
     class: ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
@@ -20,16 +18,13 @@ services:
       - '@core.environment.theme'
     tags:
       - { name: smarty.plugin.resource, pluginName: asset }
-    public: true
 
   smarty.filter.move_to_bottom:
     class: ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom
     tags:
       - { name: smarty.plugin.filter, filterType: output }
-    public: true
 
   smarty.filter.move_to_head:
     class: ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead
     tags:
     - { name: smarty.plugin.filter, filterType: output }
-    public: true

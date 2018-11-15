@@ -8,10 +8,17 @@ services:
   core.data_grid.data_grid:
     class: ACP3\Core\DataGrid\DataGrid
     arguments:
+      - '@core.data_grid.column_renderer_locator'
       - '@core.http.request'
       - '@core.data_grid.config_processor'
       - '@core.acl'
       - '@core.i18n.translator'
+
+  core.data_grid.column_renderer_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - []
+    tags: ['container.service_locator']
 
   core.data_grid.column_renderer.date_column_renderer:
     class: ACP3\Core\DataGrid\ColumnRenderer\DateColumnRenderer

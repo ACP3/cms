@@ -18,10 +18,15 @@ class RegisterColumnRendererPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('core.data_grid.data_grid');
+        $serviceLocator = $container->findDefinition('core.data_grid.column_renderer_locator');
 
+        $locatableServices = [];
         foreach ($container->findTaggedServiceIds('core.data_grid.column_renderer') as $serviceId => $tags) {
-            $definition->addMethodCall('registerColumnRenderer', [new Reference($serviceId)]);
+            $columnRendererDefinition = $container->findDefinition($serviceId);
+
+            $locatableServices[$columnRendererDefinition->getClass()] = new Reference($serviceId);
         }
+
+        $serviceLocator->replaceArgument(0, $locatableServices);
     }
 }
