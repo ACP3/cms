@@ -85,24 +85,25 @@ class Bootstrap extends AbstractBootstrap
      */
     public function outputPage()
     {
-        /** @var \ACP3\Core\Http\RedirectResponse $redirect */
-        $redirect = $this->container->get('core.http.redirect_response');
+        $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
 
         try {
             $this->container->get('core.authentication')->authenticate();
 
-            $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
+            $response = $controllerActionDispatcher->dispatch();
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
-            $response = $redirect->temporary('errors/index/not_found');
+            $response = $controllerActionDispatcher->dispatch('errors.controller.frontend.index.not_found');
         } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {
+            /** @var \ACP3\Core\Http\RedirectResponse $redirect */
+            $redirect = $this->container->get('core.http.redirect_response');
             /** @var \ACP3\Core\Http\Request $request */
             $request = $this->container->get('core.http.request');
             $redirectUri = \base64_encode($request->getPathInfo());
             $response = $redirect->temporary('users/index/login/redirect_' . $redirectUri);
         } catch (\ACP3\Core\ACL\Exception\AccessForbiddenException $e) {
-            $response = $redirect->temporary('errors/index/access_forbidden');
+            $response = $controllerActionDispatcher->dispatch('errors.controller.frontend.index.access_forbidden');
         } catch (\ACP3\Core\Controller\Exception\ControllerActionNotFoundException $e) {
-            $response = $redirect->temporary('errors/index/not_found');
+            $response = $controllerActionDispatcher->dispatch('errors.controller.frontend.index.not_found');
         } catch (MaintenanceModeActiveException $e) {
             $response = new Response($e->getMessage(), $e->getCode());
         } catch (\Exception $e) {
