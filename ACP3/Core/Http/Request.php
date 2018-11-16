@@ -121,8 +121,6 @@ class Request extends AbstractRequest
      */
     public function processQuery()
     {
-        $this->setPathInfo();
-
         $this->query = $this->pathInfo;
 
         // It's an request for the admin panel page
@@ -204,9 +202,17 @@ class Request extends AbstractRequest
         return \preg_replace('/\/page_(\d+)\//', '/', $this->query);
     }
 
-    protected function setPathInfo()
+    /**
+     * @inheritdoc
+     */
+    public function setPathInfo(?string $pathInfo = null): void
     {
-        $this->pathInfo = \substr($this->symfonyRequest->getPathInfo(), 1);
+        if ($pathInfo !== null) {
+            $this->pathInfo = $pathInfo;
+        } else {
+            $this->pathInfo = \substr($this->symfonyRequest->getPathInfo(), 1);
+        }
+
         $this->pathInfo .= !\preg_match('/\/$/', $this->pathInfo) ? '/' : '';
     }
 
