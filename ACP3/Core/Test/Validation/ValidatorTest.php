@@ -10,6 +10,7 @@ namespace ACP3\Core\Test\Validation\ValidationRules;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Core\Validation\Validator;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class ValidatorTest extends \PHPUnit\Framework\TestCase
@@ -22,14 +23,19 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
      * @var Validator
      */
     protected $validator;
+    /**
+     * @var Container
+     */
+    private $container;
 
     protected function setUp()
     {
         parent::setUp();
 
         $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
+        $this->container = new Container();
 
-        $this->validator = new Validator($this->eventDispatcherMock);
+        $this->validator = new Validator($this->eventDispatcherMock, $this->container);
     }
 
     public function testValidateValidValidationRuleWithValidValue()
@@ -40,9 +46,9 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             ->method('validate')
             ->with($this->validator, 'test@example.com', 'mail', []);
 
-        $this->validator->registerValidationRule($emailValidationRuleMock);
+        $this->container->set(EmailValidationRule::class, $emailValidationRuleMock);
 
-        $this->validator->addConstraint(\get_class($emailValidationRuleMock), [
+        $this->validator->addConstraint(EmailValidationRule::class, [
             'data' => 'test@example.com',
             'field' => 'mail',
             'message' => 'Invalid E-mail address',
@@ -57,7 +63,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
 
     public function testValidateValidValidationRuleWithInvalidValue()
     {
-        $this->validator->registerValidationRule(new EmailValidationRule());
+        $this->container->set(EmailValidationRule::class, new EmailValidationRule());
 
         $this->validator->addConstraint(EmailValidationRule::class, [
             'data' => 'testexample.com',
@@ -81,7 +87,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
 
     public function testValidateValidValidationRuleWithInvalidValueWithoutFormField()
     {
-        $this->validator->registerValidationRule(new EmailValidationRule());
+        $this->container->set(EmailValidationRule::class, new EmailValidationRule());
 
         $this->validator->addConstraint(EmailValidationRule::class, [
             'data' => 'testexample.com',
@@ -106,7 +112,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(\ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException::class);
 
-        $this->validator->registerValidationRule(new EmailValidationRule());
+        $this->container->set(EmailValidationRule::class, new EmailValidationRule());
 
         $this->validator->addConstraint('invalid_validation_rule', [
             'data' => 'testexample.com',
@@ -121,10 +127,12 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
      *
      * @param string $value
      * @param bool   $expected
+     *
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function testIs($value, $expected)
     {
-        $this->validator->registerValidationRule(new EmailValidationRule());
+        $this->container->set(EmailValidationRule::class, new EmailValidationRule());
 
         $actual = $this->validator->is(EmailValidationRule::class, $value);
         $this->assertEquals($expected, $actual);
@@ -134,7 +142,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
     {
         $this->expectException(\ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException::class);
 
-        $this->validator->registerValidationRule(new EmailValidationRule());
+        $this->container->set(EmailValidationRule::class, new EmailValidationRule());
 
         $this->validator->is('invalid_validation_rule', 'test@example.com');
     }
