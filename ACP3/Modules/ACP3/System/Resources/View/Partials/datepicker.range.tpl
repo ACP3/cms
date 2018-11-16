@@ -14,7 +14,6 @@
                        type="text"
                        id="{$datepicker.id_start}-input"
                        name="{$datepicker.name_start}"
-                       value="{$datepicker.value_start}"
                        maxlength="{$datepicker.length}"
                        title="{lang t="system|start_date"}"
                        required>
@@ -29,7 +28,6 @@
                        type="text"
                        id="{$datepicker.id_end}-input"
                        name="{$datepicker.name_end}"
-                       value="{$datepicker.value_end}"
                        maxlength="{$datepicker.length}"
                        title="{lang t="system|end_date"}"
                        required>

@@ -14,7 +14,6 @@
                type="text"
                name="{$datepicker.name}"
                id="{$datepicker.id}-input"
-               value="{$datepicker.value}"
                maxlength="{$datepicker.length}">
         <div class="input-group-append" data-target="#{$datepicker.id}" data-toggle="datetimepicker">
             <div class="input-group-text"><i class="fas fa-calendar" aria-hidden="true"></i></div>
