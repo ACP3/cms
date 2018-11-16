@@ -10,7 +10,7 @@ namespace ACP3\Core\Validation;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
-use ACP3\Core\Validation\ValidationRules\ValidationRuleInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Validator
@@ -31,27 +31,21 @@ class Validator
      * @var array
      */
     protected $constraints = [];
+    /**
+     * @var \Psr\Container\ContainerInterface
+     */
+    private $container;
 
     /**
      * Validator constructor.
      *
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param EventDispatcherInterface          $eventDispatcher
+     * @param \Psr\Container\ContainerInterface $container
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(EventDispatcherInterface $eventDispatcher, ContainerInterface $container)
     {
         $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
-     * @param \ACP3\Core\Validation\ValidationRules\ValidationRuleInterface $validationRule
-     *
-     * @return $this
-     */
-    public function registerValidationRule(ValidationRuleInterface $validationRule)
-    {
-        $this->validationRules[\get_class($validationRule)] = $validationRule;
-
-        return $this;
+        $this->container = $container;
     }
 
     /**
@@ -60,7 +54,7 @@ class Validator
      *
      * @return $this
      */
-    public function addConstraint($validationRule, array $params = [])
+    public function addConstraint(string $validationRule, array $params = [])
     {
         $this->constraints[] = [
             'rule' => $validationRule,
@@ -89,7 +83,7 @@ class Validator
      *
      * @return $this
      */
-    public function addError($message, $field = '')
+    public function addError(string $message, $field = '')
     {
         if (!empty($field)) {
             $fieldName = $this->mapField($field);
@@ -120,7 +114,7 @@ class Validator
      * @param array  $formData
      * @param array  $extra
      */
-    public function dispatchValidationEvent($eventName, array $formData, array $extra = [])
+    public function dispatchValidationEvent(string $eventName, array $formData, array $extra = [])
     {
         $this->eventDispatcher->dispatch($eventName, new FormValidationEvent($this, $formData, $extra));
     }
@@ -136,8 +130,8 @@ class Validator
         $this->errors = [];
 
         foreach ($this->constraints as $constraint) {
-            if (isset($this->validationRules[$constraint['rule']])) {
-                $validationRule = $this->validationRules[$constraint['rule']];
+            if ($this->container->has($constraint['rule'])) {
+                $validationRule = $this->container->get($constraint['rule']);
                 $params = $constraint['params'];
 
                 if (!empty($params['message'])) {
@@ -184,10 +178,10 @@ class Validator
      *
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
-    public function is($validationRule, $field)
+    public function is(string $validationRule, $field)
     {
-        if (isset($this->validationRules[$validationRule])) {
-            return $this->validationRules[$validationRule]->isValid($field);
+        if ($this->container->has($validationRule)) {
+            return $this->container->get($validationRule)->isValid($field);
         }
 
         throw new ValidationRuleNotFoundException(\sprintf($this->getExceptionMessage(), $validationRule));

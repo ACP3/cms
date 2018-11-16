@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Test\Validation;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Core\Test\Validation\AbstractFormValidationTest;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
+use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
 use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 use ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation;
@@ -32,17 +33,12 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
 
     protected function registerValidationRules()
     {
-        $this->validator->registerValidationRule($this->setUpFormTokenRule());
-
-        $inArrayRule = new InArrayValidationRule();
-        $this->validator->registerValidationRule($inArrayRule);
-
-        $emailRule = new EmailValidationRule();
-        $this->validator->registerValidationRule($emailRule);
+        $this->container->set(FormTokenValidationRule::class, $this->setUpFormTokenRule());
+        $this->container->set(InArrayValidationRule::class, new InArrayValidationRule());
+        $this->container->set(EmailValidationRule::class, new EmailValidationRule());
 
         $this->accountRepositoryMock = $this->createMock(AccountRepository::class);
-        $accountNotExistsRule = new AccountNotExistsValidationRule($this->accountRepositoryMock);
-        $this->validator->registerValidationRule($accountNotExistsRule);
+        $this->container->set(AccountNotExistsValidationRule::class, new AccountNotExistsValidationRule($this->accountRepositoryMock));
     }
 
     /**

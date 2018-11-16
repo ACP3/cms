@@ -35,6 +35,7 @@ class RequestFactory
     {
         $request = new Request($this->symfonyRequest);
         $request->setHomepage($homepage);
+        $request->setPathInfo();
         $request->processQuery();
 
         return $request;

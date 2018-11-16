@@ -64,10 +64,12 @@ class ControllerActionDispatcher
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ReflectionException
      */
-    public function dispatch($serviceId = '', array $arguments = [])
+    public function dispatch(string $serviceId = '', array $arguments = [])
     {
         if (empty($serviceId)) {
             $serviceId = $this->buildControllerServiceId();
+        } else {
+            $this->modifyRequest($serviceId);
         }
 
         if ($this->container->has($serviceId)) {
@@ -104,6 +106,14 @@ class ControllerActionDispatcher
             . $this->request->getArea()
             . '.' . $this->request->getController()
             . '.' . $this->request->getAction();
+    }
+
+    protected function modifyRequest(string $serviceId)
+    {
+        list($module, , , $controller, $action) = \explode('.', $serviceId);
+
+        $this->request->setPathInfo($module . '/' . $controller . '/' . $action);
+        $this->request->processQuery();
     }
 
     /**

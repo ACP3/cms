@@ -16,6 +16,7 @@ use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\Formatter\MarkEntries;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use Symfony\Component\DependencyInjection\Container;
 
 class DataGridTest extends \PHPUnit\Framework\TestCase
 {
@@ -43,15 +44,21 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
      * @var Input
      */
     private $inputOptions;
+    /**
+     * @var Container
+     */
+    private $container;
 
     protected function setUp()
     {
+        $this->container = new Container();
         $this->requestMock = $this->createMock(RequestInterface::class);
         $this->configProcessorMock = $this->createMock(ConfigProcessor::class);
         $this->aclMock = $this->createMock(ACL::class);
         $this->langMock = $this->createMock(Translator::class);
 
         $this->dataGrid = new DataGrid(
+            $this->container,
             $this->requestMock,
             $this->configProcessorMock,
             $this->aclMock,
@@ -104,8 +111,8 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         /** @var MarkEntries|\PHPUnit_Framework_MockObject_MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
-        $this->dataGrid->registerColumnRenderer(new HeaderColumnRenderer($markEntriesMock));
-        $this->dataGrid->registerColumnRenderer(new TextColumnRenderer());
+        $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));
+        $this->container->set(TextColumnRenderer::class, new TextColumnRenderer());
 
         $this->inputOptions->addColumn([
             'label' => 'Foo',
@@ -137,8 +144,8 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         /** @var MarkEntries|\PHPUnit_Framework_MockObject_MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
-        $this->dataGrid->registerColumnRenderer(new HeaderColumnRenderer($markEntriesMock));
-        $this->dataGrid->registerColumnRenderer(new TextColumnRenderer());
+        $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));
+        $this->container->set(TextColumnRenderer::class, new TextColumnRenderer());
 
         $this->inputOptions->addColumn([
             'label' => 'Foo',
