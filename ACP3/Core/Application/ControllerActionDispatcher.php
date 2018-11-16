@@ -64,7 +64,7 @@ class ControllerActionDispatcher
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ReflectionException
      */
-    public function dispatch($serviceId = '', array $arguments = [])
+    public function dispatch(string $serviceId = '', array $arguments = [])
     {
         if (empty($serviceId)) {
             $serviceId = $this->buildControllerServiceId();

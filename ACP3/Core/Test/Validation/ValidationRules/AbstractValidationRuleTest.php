@@ -7,6 +7,9 @@
 
 namespace ACP3\Core\Test\Validation\ValidationRules;
 
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+
 abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -22,7 +25,15 @@ abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
     {
         $this->validationRule->setMessage('Invalid value.');
 
-        $this->validator = $this->createMock(\ACP3\Core\Validation\Validator::class);
+        $eventDispatcherMock = $this->createMock(EventDispatcher::class);
+        $container = new Container();
+
+        $this->validator = $this
+            ->getMockBuilder(\ACP3\Core\Validation\Validator::class)
+            ->setConstructorArgs([$eventDispatcherMock, $container])
+            ->getMock();
+
+        $container->set(\get_class($this->validationRule), $this->validationRule);
     }
 
     /**
