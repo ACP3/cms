@@ -8,6 +8,7 @@
 namespace ACP3\Core\Application;
 
 use ACP3\Core\Application\Exception\MaintenanceModeActiveException;
+use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
 use Patchwork\Utf8;
@@ -87,6 +88,7 @@ class Bootstrap extends AbstractBootstrap
      */
     public function outputPage()
     {
+        /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
         $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
 
         try {
@@ -98,19 +100,8 @@ class Bootstrap extends AbstractBootstrap
             $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
 
             $response = $controllerActionDispatcher->dispatch();
-        } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
-            $response = $controllerActionDispatcher->dispatch('errors.controller.frontend.index.not_found');
-        } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {
-            /** @var \ACP3\Core\Http\RedirectResponse $redirect */
-            $redirect = $this->container->get('core.http.redirect_response');
-            /** @var \ACP3\Core\Http\Request $request */
-            $request = $this->container->get('core.http.request');
-            $redirectUri = \base64_encode($request->getPathInfo());
-            $response = $redirect->temporary('users/index/login/redirect_' . $redirectUri);
-        } catch (\ACP3\Core\ACL\Exception\AccessForbiddenException $e) {
-            $response = $controllerActionDispatcher->dispatch('errors.controller.frontend.index.access_forbidden');
-        } catch (\ACP3\Core\Controller\Exception\ControllerActionNotFoundException $e) {
-            $response = $controllerActionDispatcher->dispatch('errors.controller.frontend.index.not_found');
+        } catch (ForwardControllerActionAwareExceptionInterface $e) {
+            $response = $controllerActionDispatcher->dispatch($e->getServiceId(), $e->routeArguments());
         } catch (MaintenanceModeActiveException $e) {
             $response = new Response($e->getMessage(), $e->getCode());
         } catch (\Exception $e) {

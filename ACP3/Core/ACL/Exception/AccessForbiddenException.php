@@ -7,6 +7,15 @@
 
 namespace ACP3\Core\ACL\Exception;
 
-class AccessForbiddenException extends \Exception
+use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
+
+class AccessForbiddenException extends \Exception implements ForwardControllerActionAwareExceptionInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getServiceId(): string
+    {
+        return 'errors.controller.frontend.index.access_forbidden';
+    }
 }

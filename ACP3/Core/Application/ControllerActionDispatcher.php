@@ -56,8 +56,8 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @param string $serviceId
-     * @param array  $arguments
+     * @param string|null $serviceId
+     * @param array       $arguments
      *
      * @return Response|string
      *
@@ -65,12 +65,12 @@ class ControllerActionDispatcher
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ReflectionException
      */
-    public function dispatch(string $serviceId = '', array $arguments = [])
+    public function dispatch(?string $serviceId = null, array $arguments = [])
     {
         if (empty($serviceId)) {
             $serviceId = $this->buildControllerServiceId();
         } else {
-            $this->modifyRequest($serviceId);
+            $this->modifyRequest($serviceId, $arguments);
         }
 
         if ($this->container->has($serviceId)) {
@@ -109,11 +109,16 @@ class ControllerActionDispatcher
             . '.' . $this->request->getAction();
     }
 
-    protected function modifyRequest(string $serviceId)
+    protected function modifyRequest(string $serviceId, array $arguments)
     {
         list($module, , , $controller, $action) = explode('.', $serviceId);
 
-        $this->request->setPathInfo($module . '/' . $controller . '/' . $action);
+        $params = '';
+        foreach ($arguments as $key => $value) {
+            $params .= "/{$key}_{$value}";
+        }
+
+        $this->request->setPathInfo($module . '/' . $controller . '/' . $action . $params);
         $this->request->processQuery();
     }
 

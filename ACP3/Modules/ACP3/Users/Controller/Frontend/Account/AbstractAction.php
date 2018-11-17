@@ -17,7 +17,7 @@ abstract class AbstractAction extends AbstractFrontendAction
         parent::preDispatch();
 
         if ($this->user->isAuthenticated() === false) {
-            throw new UnauthorizedAccessException();
+            throw new UnauthorizedAccessException(['redirect' => \base64_encode($this->request->getPathInfo())]);
         }
     }
 }
