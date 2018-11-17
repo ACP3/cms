@@ -7,6 +7,41 @@
 
 namespace ACP3\Core\Authentication\Exception;
 
-class UnauthorizedAccessException extends \Exception
+use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
+
+class UnauthorizedAccessException extends \Exception implements ForwardControllerActionAwareExceptionInterface
 {
+    /**
+     * @var array
+     */
+    private $routeArguments;
+
+    public function __construct(
+        array $routeArguments = [],
+        string $message = '',
+        int $code = 0,
+        \Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+
+        $this->routeArguments = $routeArguments;
+    }
+
+    /**
+     * Returns the serviceId of the controller action to forward to.
+     *
+     * @return string
+     */
+    public function getServiceId(): string
+    {
+        return 'users.controller.frontend.index.login';
+    }
+
+    /**
+     * @return array
+     */
+    public function routeArguments(): array
+    {
+        return $this->routeArguments;
+    }
 }
