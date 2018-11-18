@@ -16,8 +16,7 @@ module.exports = function (gulp, plugins) {
                 [
                     './ACP3/Modules/*/*/Resources/Assets/scss/style.scss',
                     './ACP3/Modules/*/*/Resources/Assets/scss/append.scss',
-                    './designs/*/*/Assets/scss/style.scss',
-                    './designs/*/*/Assets/scss/append.scss',
+                    './designs/*/*/Assets/scss/*.scss',
                     './designs/*/Assets/scss/*.scss',
                     './installation/design/Assets/scss/*.scss',
                     './installation/Installer/Modules/*/Resources/Assets/scss/style.scss'
@@ -25,9 +24,10 @@ module.exports = function (gulp, plugins) {
                 {base: './'}
             )
             .pipe(plugins.plumber())
-            .pipe(sass().on('error', sass.logError))
+            .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
             .pipe(plugins.rename(function (path) {
                 path.dirname = path.dirname.substring(0, path.dirname.length - 4) + 'css';
+                path.basename += '.min';
             }))
             .pipe(gulp.dest('./'));
     };

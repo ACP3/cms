@@ -17,8 +17,7 @@
     gulp.task('bump-version', getTask('bump-version'));
     gulp.task('autoprefixer', getTask('autoprefixer'));
     gulp.task('scss', getTask('scss'));
-    gulp.task('bootstrap', getTask('bootstrap'));
-    gulp.task('watch', gulp.series('scss', 'bootstrap', 'autoprefixer', getTask('watch')));
+    gulp.task('watch', gulp.series('scss', 'autoprefixer', getTask('watch')));
 
     gulp.task('default', gulp.series('watch'));
 })();
