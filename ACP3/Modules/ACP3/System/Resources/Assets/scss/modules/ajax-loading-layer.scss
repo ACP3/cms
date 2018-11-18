@@ -10,8 +10,6 @@
   position: fixed;
   top: 0;
   transition: opacity 0.5s, visibility 0.5s;
-  -webkit-transition: opacity 0.5s, visibility 0.5s;
-  -moz-transition: opacity 0.5s, visibility 0.5s;
   visibility: hidden;
   width: 100%;
   z-index: 999999;

@@ -1,10 +1,9 @@
 #main-navigation .navbar-brand {
   padding-top: 5px;
-  padding-bottom: 5px;
-}
+  padding-bottom: 5px; }
+
 #main-navigation img {
-  height: 40px;
-}
+  height: 40px; }
+
 .in-admin #content {
-  width: auto;
-}
+  width: auto; }

@@ -1,0 +1,34 @@
+/*
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licencing details.
+ */
+
+module.exports = function (gulp, plugins) {
+    'use strict';
+
+    const sass = require('gulp-sass');
+
+    sass.compiler = require('node-sass');
+
+    return function () {
+        return gulp
+            .src(
+                [
+                    './ACP3/Modules/*/*/Resources/Assets/scss/style.scss',
+                    './ACP3/Modules/*/*/Resources/Assets/scss/append.scss',
+                    './designs/*/*/Assets/scss/style.scss',
+                    './designs/*/*/Assets/scss/append.scss',
+                    './designs/*/Assets/scss/*.scss',
+                    './installation/design/Assets/scss/*.scss',
+                    './installation/Installer/Modules/*/Resources/Assets/scss/style.scss'
+                ],
+                {base: './'}
+            )
+            .pipe(plugins.plumber())
+            .pipe(sass().on('error', sass.logError))
+            .pipe(plugins.rename(function (path) {
+                path.dirname = path.dirname.substring(0, path.dirname.length - 4) + 'css';
+            }))
+            .pipe(gulp.dest('./'));
+    };
+};
