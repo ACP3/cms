@@ -3,10 +3,10 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-module.exports = function (gulp) {
+module.exports = (gulp) => {
     'use strict';
 
-    return function () {
+    return () => {
         // Watch all the .less files, then run the less task
         return gulp.watch(
             [
@@ -17,7 +17,7 @@ module.exports = function (gulp) {
                 'installation/Installer/Modules/*/Resources/Assets/scss/style.scss'
             ],
             {cwd: './'},
-            gulp.series('scss', 'autoprefixer')
+            gulp.series('scss')
         );
     };
 };

@@ -3,14 +3,14 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-module.exports = function (gulp, plugins) {
+module.exports = (gulp, plugins) => {
     'use strict';
 
     const sass = require('gulp-sass');
 
     sass.compiler = require('node-sass');
 
-    return function () {
+    return () => {
         return gulp
             .src(
                 [

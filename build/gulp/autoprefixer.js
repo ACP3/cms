@@ -3,12 +3,12 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-module.exports = function (gulp, plugins) {
+module.exports = (gulp, plugins) => {
     'use strict';
 
     const autoprefixer = require('autoprefixer');
 
-    return function () {
+    return () => {
         return gulp
             .src(
                 [
