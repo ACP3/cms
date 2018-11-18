@@ -20,6 +20,7 @@
   "homepage": "https://www.acp3-cms.net",
   "private": true,
   "devDependencies": {
+    "autoprefixer": "^9.3.1",
     "eslint": "^5.8.0",
     "gulp": "^4.0.0",
     "gulp-bump": "^3.1.1",
@@ -27,6 +28,7 @@
     "gulp-less": "^4.0.1",
     "gulp-load-plugins": "^1.5.0",
     "gulp-plumber": "^1.2.0",
+    "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "node-sass": "^4.10.0",
@@ -50,5 +52,17 @@
     "shariff": "^3.0.1",
     "tempusdominus-bootstrap-4": "^5.1.2",
     "tempusdominus-core": "^5.0.3"
-  }
+  },
+  "browserslist": [
+    "last 1 major version",
+    ">= 1%",
+    "Chrome >= 45",
+    "Firefox >= 38",
+    "Edge >= 12",
+    "Explorer >= 10",
+    "iOS >= 9",
+    "Safari >= 9",
+    "Android >= 4.4",
+    "Opera >= 30"
+  ]
 }

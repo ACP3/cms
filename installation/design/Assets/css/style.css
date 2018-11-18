@@ -1,8 +1,11 @@
 .loading-layer {
-  align-items: center;
+  -ms-flex-align: center;
+      align-items: center;
   background: rgba(255, 255, 255, 0.5);
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -ms-flex-pack: center;
+      justify-content: center;
   left: 0;
   height: 100%;
   opacity: 0;
@@ -10,8 +13,6 @@
   position: fixed;
   top: 0;
   transition: opacity 0.5s, visibility 0.5s;
-  -webkit-transition: opacity 0.5s, visibility 0.5s;
-  -moz-transition: opacity 0.5s, visibility 0.5s;
   visibility: hidden;
   width: 100%;
   z-index: 999999; }

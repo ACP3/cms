@@ -17,7 +17,7 @@ module.exports = function (gulp) {
                 'installation/Installer/Modules/*/Resources/Assets/scss/style.scss'
             ],
             {cwd: './'},
-            gulp.series('scss')
+            gulp.series('scss', 'autoprefixer')
         );
     };
 };
