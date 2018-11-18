@@ -1,9 +1,0 @@
-@media (min-width: 768px) {
-  #nav-user-login {
-    margin-bottom: 0;
-  }
-}
-#nav-user-login .navbar-form {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
