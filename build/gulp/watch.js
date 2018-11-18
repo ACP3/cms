@@ -17,7 +17,7 @@ module.exports = function (gulp) {
                 'installation/Installer/Modules/*/Resources/Assets/less/style.less'
             ],
             {cwd: './'},
-            gulp.series('less')
+            gulp.series('less', 'autoprefixer')
         );
     };
 };

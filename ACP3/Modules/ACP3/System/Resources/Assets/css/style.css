@@ -1,32 +1,31 @@
 @-webkit-keyframes rotate {
   from {
     -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
   to {
     -webkit-transform: rotate(350deg);
-  }
-}
-@-moz-keyframes rotate {
-  from {
-    -moz-transform: rotate(0deg);
-  }
-  to {
-    -moz-transform: rotate(350deg);
+            transform: rotate(350deg);
   }
 }
 @keyframes rotate {
   from {
-    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
   to {
-    transform: rotate(350deg);
+    -webkit-transform: rotate(350deg);
+            transform: rotate(350deg);
   }
 }
 .loading-layer {
-  align-items: center;
+  -ms-flex-align: center;
+      align-items: center;
   background: rgba(255, 255, 255, 0.5);
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -ms-flex-pack: center;
+      justify-content: center;
   left: 0;
   height: 100%;
   opacity: 0;
@@ -34,8 +33,6 @@
   position: fixed;
   top: 0;
   transition: opacity 0.5s, visibility 0.5s;
-  -webkit-transition: opacity 0.5s, visibility 0.5s;
-  -moz-transition: opacity 0.5s, visibility 0.5s;
   visibility: hidden;
   width: 100%;
   z-index: 999999;
@@ -54,9 +51,7 @@
   margin-bottom: 10px;
   display: block;
   -webkit-animation: rotate 2s linear infinite;
-  -moz-animation: rotate 2s linear infinite;
-  -o-animation: rotate 2s linear infinite;
-  animation: rotate 2s linear infinite;
+          animation: rotate 2s linear infinite;
 }
 .dataset-box {
   margin: 0 auto 10px;
@@ -156,6 +151,7 @@
   text-indent: -9999em;
 }
 .datagrid .btn-group {
+  display: -ms-flexbox;
   display: flex;
 }
 .datagrid .btn-group > .btn {
@@ -165,8 +161,10 @@
   width: 7%;
 }
 .datagrid .datagrid-column__action-buttons {
+  display: -ms-flexbox;
   display: flex;
-  justify-content: end;
+  -ms-flex-pack: end;
+      justify-content: end;
   visibility: hidden;
 }
 .datagrid .datagrid-column__action-buttons .btn {
