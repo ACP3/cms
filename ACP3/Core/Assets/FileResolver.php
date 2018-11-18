@@ -15,23 +15,11 @@ class FileResolver
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
     /**
      * @var \ACP3\Core\Assets\Cache
      */
-    protected $resourcesCache;
-    /**
-     * @var array
-     */
-    protected $cachedPaths = [];
-    /**
-     * @var bool
-     */
-    protected $newAssetPathsAdded = false;
-    /**
-     * @var string
-     */
-    protected $designAssetsPath;
+    private $resourcesCache;
     /**
      * @var \ACP3\Core\Modules
      */
@@ -40,11 +28,23 @@ class FileResolver
      * @var \ACP3\Core\Environment\Theme
      */
     private $theme;
-
     /**
      * @var \ACP3\Core\Assets\FileResolver\FileCheckerStrategyInterface[]
      */
     private $strategies = [];
+
+    /**
+     * @var array
+     */
+    private $cachedPaths = [];
+    /**
+     * @var bool
+     */
+    private $newAssetPathsAdded = false;
+    /**
+     * @var string
+     */
+    private $designAssetsPath;
     /**
      * @var string
      */
