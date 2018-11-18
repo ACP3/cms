@@ -14,8 +14,7 @@ module.exports = function (gulp, plugins) {
                 [
                     './ACP3/Modules/*/*/Resources/Assets/css/style.css',
                     './ACP3/Modules/*/*/Resources/Assets/css/append.css',
-                    './designs/*/*/Assets/css/style.css',
-                    './designs/*/*/Assets/css/append.css',
+                    './designs/*/*/Assets/css/*.css',
                     './designs/**/Assets/css/*.css',
                     './installation/design/Assets/css/*.css',
                     './installation/Installer/Modules/*/Resources/Assets/css/style.css',

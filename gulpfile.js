@@ -15,9 +15,10 @@
 
     gulp.task('copy', getTask('copy'));
     gulp.task('bump-version', getTask('bump-version'));
-    gulp.task('scss', getTask('scss'));
     gulp.task('autoprefixer', getTask('autoprefixer'));
-    gulp.task('watch', gulp.series('scss', 'autoprefixer', getTask('watch')));
+    gulp.task('scss', getTask('scss'));
+    gulp.task('bootstrap', getTask('bootstrap'));
+    gulp.task('watch', gulp.series('scss', 'bootstrap', 'autoprefixer', getTask('watch')));
 
     gulp.task('default', gulp.series('watch'));
 })();
