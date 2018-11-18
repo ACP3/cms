@@ -1,0 +1,13 @@
+@import "../../../../ACP3/Modules/ACP3/System/Resources/Assets/scss/modules/ajax-loading-layer";
+@import "../../../../ACP3/Modules/ACP3/System/Resources/Assets/scss/modules/bootstrap-overrides";
+
+#main-navigation {
+  .navbar-brand {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  img {
+    height: 40px;
+  }
+}

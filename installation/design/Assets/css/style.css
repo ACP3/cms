@@ -14,55 +14,51 @@
   -moz-transition: opacity 0.5s, visibility 0.5s;
   visibility: hidden;
   width: 100%;
-  z-index: 999999;
-}
-.loading-layer.loading-layer__active {
-  opacity: 1;
-  visibility: visible;
-}
-.loading-layer h1 {
-  width: 100%;
-  margin: 0;
-  font-size: 26px;
-  text-align: center;
-}
+  z-index: 999999; }
+  .loading-layer.loading-layer__active {
+    opacity: 1;
+    visibility: visible; }
+  .loading-layer h1 {
+    width: 100%;
+    margin: 0;
+    font-size: 26px;
+    text-align: center; }
+
 .control-label,
 .col-form-label {
   overflow: hidden;
   position: relative;
-  text-overflow: ellipsis;
-}
-.control-label.required:after,
-.col-form-label.required:after {
-  color: #dc3545;
-  content: ' *';
-  margin-left: 5px;
-  position: absolute;
-}
+  text-overflow: ellipsis; }
+  .control-label.required:after,
+  .col-form-label.required:after {
+    color: #dc3545;
+    content: ' *';
+    margin-left: 5px;
+    position: absolute; }
+
 input[placeholder],
 textarea[placeholder] {
-  font-style: italic;
-}
+  font-style: italic; }
+
 .btn-block.text-left {
-  text-align: left;
-}
+  text-align: left; }
+
 /* Pagination */
 .pagination {
-  margin: 0 0 10px;
-}
+  margin: 0 0 10px; }
+
 .blockquote p:last-of-type {
-  margin-bottom: 0;
-}
+  margin-bottom: 0; }
+
 .datepicker .table tbody + tbody,
 .datepicker .table td,
 .datepicker .table th,
 .datepicker .table thead th {
-  border: 0;
-}
+  border: 0; }
+
 #main-navigation .navbar-brand {
   padding-top: 5px;
-  padding-bottom: 5px;
-}
+  padding-bottom: 5px; }
+
 #main-navigation img {
-  height: 40px;
-}
+  height: 40px; }
