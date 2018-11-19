@@ -1,0 +1,7 @@
+parameters:
+  paths:
+    - %rootDir%/../../../ACP3
+    - %rootDir%/../../../installation
+    - %rootDir%/../../../tests
+  excludes_analyse:
+  - %rootDir%/../../../ACP3/Modules/ACP3/Filemanager/libraries/*
