@@ -9,7 +9,6 @@ namespace ACP3\Core\Console\DependencyInjection;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
-use ACP3\Core\Modules\Modules;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -37,6 +36,8 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
      * @param string          $applicationMode
+     *
+     * @throws \Exception
      */
     public function __construct(
         LoggerInterface $logger,
@@ -52,6 +53,9 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->setUpContainer();
     }
 
+    /**
+     * @throws \Exception
+     */
     private function setUpContainer()
     {
         $this->set('core.logger.system_logger', $this->logger);
@@ -71,8 +75,9 @@ class ServiceContainerBuilder extends ContainerBuilder
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getClassesDir() . 'config/console.yml');
 
-        /** @var Modules $modules */
+        /** @var \ACP3\Core\Modules $modules */
         $modules = $this->get('core.modules');
+
         foreach ($modules->getAllModulesTopSorted() as $module) {
             $modulePath = $this->applicationPath->getModulesDir() . $module['vendor'] . '/' . $module['dir'];
             $path = $modulePath . '/Resources/config/services.yml';
@@ -86,16 +91,18 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param LoggerInterface                        $logger
+     * @param \Psr\Log\LoggerInterface               $logger
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
      * @param string                                 $applicationMode
      *
-     * @return ContainerBuilder
+     * @return \ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder
+     *
+     * @throws \Exception
      */
     public static function create(
         LoggerInterface $logger,
         ApplicationPath $applicationPath,
-        $applicationMode
+        string $applicationMode
     ) {
         return new static($logger, $applicationPath, $applicationMode);
     }

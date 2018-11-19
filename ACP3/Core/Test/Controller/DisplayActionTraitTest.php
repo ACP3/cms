@@ -9,7 +9,6 @@ namespace ACP3\Core\Test\Controller;
 
 use ACP3\Core\View;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
 {
@@ -18,7 +17,7 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
      */
     private $displayAction;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject|Response
      */
     private $responseMock;
     /**
@@ -37,8 +36,7 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
 
     private function setUpMockObjects()
     {
-        $this->responseMock = $this->createMock(Response::class);
-        $this->responseMock->headers = new ResponseHeaderBag();
+        $this->responseMock = $this->getMockBuilder(Response::class)->getMock();
         $this->viewMock = $this->createMock(View::class);
     }
 

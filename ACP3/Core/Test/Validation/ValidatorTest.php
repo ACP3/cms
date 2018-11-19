@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Test\Validation\ValidationRules;
+namespace ACP3\Core\Test\Validation;
 
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;

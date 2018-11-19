@@ -103,7 +103,9 @@ class ServiceContainerBuilder extends ContainerBuilder
         if ($this->applicationMode === ApplicationMode::UPDATER) {
             $loader->load($this->applicationPath->getInstallerClassesDir() . 'config/services_extended.yml');
 
+            /** @var RequestInterface $request */
             $request = $this->get('core.http.request');
+            /** @var RouterInterface $router */
             $router = $this->get('core.router');
 
             if ($this->canIncludeModules() === true) {
@@ -150,6 +152,7 @@ class ServiceContainerBuilder extends ContainerBuilder
 
         $request = $request ?: $this->get('core.http.request');
         $router = $router ?: $this->get('core.router');
+        /** @var \ACP3\Core\Modules $modules */
         $modules = $this->get('core.modules');
 
         foreach ($modules->getAllModulesTopSorted() as $module) {

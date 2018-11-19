@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Helpers\DataGrid;
+namespace ACP3\Core\DataGrid;
 
 class Options
 {

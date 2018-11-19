@@ -38,6 +38,9 @@ class MoveToBottom extends AbstractMoveElementFilter
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function __invoke($tplOutput, \Smarty_Internal_Template $smarty)
     {
@@ -60,11 +63,10 @@ class MoveToBottom extends AbstractMoveElementFilter
      */
     protected function addElementFromMinifier()
     {
-        $minifyJs = '';
-        if (!$this->request->isXmlHttpRequest()) {
-            $minifyJs = '<script src="' . $this->minifier->getURI() . '"></script>' . "\n";
+        if ($this->request->isXmlHttpRequest() === true) {
+            return '';
         }
 
-        return $minifyJs;
+        return "<script src=\"{$this->minifier->getURI()}\"></script>\n";
     }
 }

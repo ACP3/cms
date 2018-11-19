@@ -4,6 +4,11 @@ services:
     arguments:
       - '@core.environment.application_path'
       - '@core.i18n.dictionary_cache'
+    configurator: 'core.i18n.translator_configurator:configure'
+
+  core.i18n.translator_configurator:
+    class: ACP3\Core\I18n\TranslatorConfigurator
+    arguments:
       - '@core.config'
 
   core.i18n.dictionary_cache:

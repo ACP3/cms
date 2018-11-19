@@ -21,13 +21,13 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      */
     protected $categoryRepository;
     /**
-     * @var array
+     * @var \ACP3\Core\Settings\SettingsInterface|array
      */
-    protected $file = [];
+    protected $settings;
     /**
      * @var array
      */
-    protected $settings = [];
+    protected $file = [];
     /**
      * @var int
      */
@@ -80,8 +80,13 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @param array $formData
+     *
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function validate(array $formData)
     {

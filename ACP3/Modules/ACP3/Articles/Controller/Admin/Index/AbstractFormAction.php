@@ -26,6 +26,9 @@ abstract class AbstractFormAction extends \ACP3\Core\Controller\AbstractFormActi
 
     /**
      * @return string[]
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function getAvailableLayouts(): array
     {
@@ -48,7 +51,7 @@ abstract class AbstractFormAction extends \ACP3\Core\Controller\AbstractFormActi
 
         $layouts = \array_combine($layouts, $layouts);
 
-        $layouts = ['' => $this->translator->t('articles', 'default_layout')] + $layouts;
+        $layouts = \array_merge(['' => $this->translator->t('articles', 'default_layout')], $layouts);
 
         return $layouts;
     }

@@ -25,7 +25,7 @@ test:php71-unit: &php-unit-base
   <<: *php-base
   stage: test
   script:
-    - php composer.phar install -n -o
+    - php composer.phar install -n
     - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
@@ -38,8 +38,15 @@ static-analysis:phpcs:
   <<: *php-base
   stage: static-analysis
   script:
-    - php composer.phar install -n -o
+    - php composer.phar install -n
     - php composer.phar run-script lint
+
+static-analysis:phpstan:
+  <<: *php-base
+  stage: static-analysis
+  script:
+    - php composer.phar install -n
+    - php composer.phar run-script phpstan
 
 static-analysis:eslint:
   image: node:slim

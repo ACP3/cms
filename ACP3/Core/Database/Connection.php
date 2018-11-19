@@ -51,9 +51,9 @@ class Connection
      * @param LoggerInterface    $logger
      * @param ApplicationPath    $appPath
      * @param CacheDriverFactory $cacheDriverFactory
-     * @param                    $appMode
+     * @param string             $appMode
      * @param array              $connectionParams
-     * @param                    $tablePrefix
+     * @param string             $tablePrefix
      *
      * @throws \Doctrine\DBAL\DBALException
      */

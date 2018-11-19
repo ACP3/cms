@@ -68,9 +68,12 @@ class Install
     private function install(
         Core\Modules\Installer\SchemaInterface $schema,
         ContainerInterface $container,
-        $installerServiceId
+        string $installerServiceId
     ) {
-        return $container->get($installerServiceId)->install($schema);
+        /** @var \ACP3\Core\Modules\InstallerInterface $installer */
+        $installer = $container->get($installerServiceId);
+
+        return $installer->install($schema);
     }
 
     /**

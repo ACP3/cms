@@ -7,11 +7,11 @@
 
 namespace ACP3\Installer\Modules\Install\Controller\Install;
 
+use ACP3\Core\Date;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\XML;
 use ACP3\Installer\Core;
-use ACP3\Installer\Core\Date;
 use ACP3\Installer\Modules\Install\Controller\AbstractAction;
 use ACP3\Installer\Modules\Install\Helpers\Navigation;
 use ACP3\Installer\Modules\Install\Model\InstallModel;
@@ -26,7 +26,7 @@ class Index extends AbstractAction
     use AvailableDesignsTrait;
 
     /**
-     * @var \ACP3\Installer\Core\Date
+     * @var \ACP3\Core\Date
      */
     protected $date;
     /**
@@ -63,7 +63,7 @@ class Index extends AbstractAction
      * @param \Psr\Log\LoggerInterface                                  $logger
      * @param \ACP3\Installer\Core\Helpers\Alerts                       $alertsHelper
      * @param Navigation                                                $navigation
-     * @param \ACP3\Installer\Core\Date                                 $date
+     * @param \ACP3\Core\Date                                           $date
      * @param XML                                                       $xml
      * @param \ACP3\Core\Helpers\Date                                   $dateHelper
      * @param Forms                                                     $forms

@@ -90,7 +90,9 @@ class Bootstrap extends AbstractBootstrap
         $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
 
         try {
-            $this->container->get('core.authentication')->authenticate();
+            /** @var \ACP3\Core\Authentication\AuthenticationInterface $authentication */
+            $authentication = $this->container->get('core.authentication');
+            $authentication->authenticate();
 
             $response = $controllerActionDispatcher->dispatch();
         } catch (ForwardControllerActionAwareExceptionInterface $e) {

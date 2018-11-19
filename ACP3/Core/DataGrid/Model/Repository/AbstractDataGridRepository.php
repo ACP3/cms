@@ -16,7 +16,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
 {
     /**
      * @param \ACP3\Core\DataGrid\ColumnPriorityQueue $columns
-     * @param QueryOption[]                           $queryOptions
+     * @param \ACP3\Core\DataGrid\QueryOption         ...$queryOptions
      *
      * @return array
      */
@@ -37,7 +37,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
     }
 
     /**
-     * @param QueryOption[] $queryOptions
+     * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
      *
      * @return int
      */
@@ -95,7 +95,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
 
     /**
      * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
-     * @param QueryOption[]                     $queryOptions
+     * @param \ACP3\Core\DataGrid\QueryOption   ...$queryOptions
      */
     protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)
     {
@@ -133,7 +133,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
     }
 
     /**
-     * @param QueryOption[] $queryOptions
+     * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
      *
      * @return array
      */

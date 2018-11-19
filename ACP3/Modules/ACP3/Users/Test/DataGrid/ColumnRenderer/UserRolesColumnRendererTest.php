@@ -8,13 +8,13 @@
 namespace ACP3\Modules\ACP3\Users\Test\DataGrid\ColumnRenderer;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Test\Helpers\ColumnRenderer\AbstractColumnRendererTest;
+use ACP3\Core\Test\DataGrid\ColumnRenderer\AbstractColumnRendererTest;
 use ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer\UserRolesColumnRenderer;
 
 class UserRolesColumnRendererTest extends AbstractColumnRendererTest
 {
     /**
-     * @var ACL|\PHPUnit_Framework_MockObject_MockObject
+     * @var ACL&\PHPUnit_Framework_MockObject_MockObject
      */
     protected $aclMock;
 

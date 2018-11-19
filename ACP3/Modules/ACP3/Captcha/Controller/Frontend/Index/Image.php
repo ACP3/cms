@@ -36,7 +36,7 @@ class Image extends Core\Controller\AbstractFrontendAction
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function execute($path)
+    public function execute(string $path)
     {
         $this->response->headers->set('Content-type', 'image/gif');
         $this->response->headers->addCacheControlDirective('no-cache', true);
@@ -50,10 +50,7 @@ class Image extends Core\Controller\AbstractFrontendAction
         return $this->response;
     }
 
-    /**
-     * @param $captchaText
-     */
-    protected function generateCaptcha($captchaText)
+    protected function generateCaptcha(string $captchaText)
     {
         $captchaLength = \strlen($captchaText);
         $width = $captchaLength * 25;
