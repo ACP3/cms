@@ -94,7 +94,7 @@ class Bootstrap extends AbstractBootstrap
 
             $response = $controllerActionDispatcher->dispatch();
         } catch (ForwardControllerActionAwareExceptionInterface $e) {
-            $response = $controllerActionDispatcher->dispatch($e->getServiceId(), $e->routeArguments());
+            $response = $controllerActionDispatcher->dispatch($e->getServiceId(), $e->routeParams());
         } catch (MaintenanceModeActiveException $e) {
             $response = new Response($e->getMessage(), $e->getCode());
         } catch (\Exception $e) {

@@ -20,7 +20,7 @@ class ResultNotExistsException extends \Exception implements ForwardControllerAc
     /**
      * {@inheritdoc}
      */
-    public function routeArguments(): array
+    public function routeParams(): array
     {
         return [];
     }
