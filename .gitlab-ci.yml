@@ -1,4 +1,4 @@
-image: php:7.1
+image: registry.gitlab.com/acp3/php-docker:7.1
 
 variables:
   COMPOSER_HOME: .composerhome
@@ -19,33 +19,32 @@ stages:
       - .php_cs.cache
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
-    - bash ./build/gitlab/before_script_php.sh > /dev/null
 
 test:php71-unit: &php-unit-base
   <<: *php-base
   stage: test
   script:
-    - php composer.phar install -n
+    - composer install -n
     - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
 test:php72-unit:
   <<: *php-unit-base
-  image: php:7.2
+  image: registry.gitlab.com/acp3/php-docker:7.2
   coverage: ~
 
 static-analysis:phpcs:
   <<: *php-base
   stage: static-analysis
   script:
-    - php composer.phar install -n
-    - php composer.phar run-script lint
+    - composer install -n
+    - composer run-script lint
 
 static-analysis:phpstan:
   <<: *php-base
   stage: static-analysis
   script:
-    - php composer.phar install -n
+    - composer install -n
     - php -d memory_limit=-1 vendor/bin/phpstan analyse
 
 static-analysis:eslint:
@@ -94,7 +93,7 @@ deploy:generate-artifact:
       - .php_cs.cache
     policy: pull
   script:
-    - php composer.phar install --no-dev --prefer-dist -o -n --ignore-platform-reqs
+    - composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs
   artifacts:
     name: "release-${CI_COMMIT_TAG}"
     paths:
