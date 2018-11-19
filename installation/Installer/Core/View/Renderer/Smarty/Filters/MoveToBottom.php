@@ -7,10 +7,27 @@
 
 namespace ACP3\Installer\Core\View\Renderer\Smarty\Filters;
 
-class MoveToBottom extends \ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom
+use ACP3\Core\View\Renderer\Smarty\Filters\AbstractMoveElementFilter;
+
+class MoveToBottom extends AbstractMoveElementFilter
 {
-    public function __construct()
+    const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
+    const PLACEHOLDER = '<!-- JAVASCRIPTS -->';
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __invoke($tplOutput, \Smarty_Internal_Template $smarty)
     {
+        if (\strpos($tplOutput, static::PLACEHOLDER) !== false) {
+            return \str_replace(
+                static::PLACEHOLDER,
+                $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),
+                $this->getCleanedUpTemplateOutput($tplOutput)
+            );
+        }
+
+        return $tplOutput;
     }
 
     /**

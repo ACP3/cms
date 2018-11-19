@@ -35,11 +35,13 @@ class Helpers
 
     /**
      * @param array $roles
-     * @param       $userId
+     * @param int   $userId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function updateUserRoles(array $roles, $userId)
+    public function updateUserRoles(array $roles, int $userId)
     {
         $bool = $this->userRoleRepository->delete($userId, 'user_id');
 

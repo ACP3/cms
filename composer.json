@@ -52,7 +52,8 @@
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.0.0",
     "phpunit/phpunit": "^7.3",
-    "phpstan/phpstan": "^0.10.5"
+    "phpstan/phpstan": "^0.10.5",
+    "phpstan/phpstan-phpunit": "^0.10.0"
   },
   "autoload": {
     "psr-4": {
@@ -99,7 +100,7 @@
     "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --dry-run --show-progress=estimating -v",
     "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --show-progress=estimating -v",
     "php-cs-fixer-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --show-progress=estimating -v",
-    "phpstan": "./vendor/bin/phpstan analyse --level=0",
-    "phpstan-windows": ".\\vendor\\bin\\phpstan.bat analyse --level=0"
+    "phpstan": "./vendor/bin/phpstan analyse",
+    "phpstan-windows": ".\\vendor\\bin\\phpstan.bat analyse"
   }
 }

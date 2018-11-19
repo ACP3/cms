@@ -16,13 +16,7 @@ class ColumnTypeStrategyFactory
      */
     protected $columnTypes = [];
 
-    /**
-     * @param ColumnTypeStrategyInterface $columnTypeStrategy
-     * @param $columnTypeName
-     *
-     * @return $this
-     */
-    public function registerColumnType(ColumnTypeStrategyInterface $columnTypeStrategy, $columnTypeName)
+    public function registerColumnType(ColumnTypeStrategyInterface $columnTypeStrategy, string $columnTypeName)
     {
         $this->columnTypes[$columnTypeName] = $columnTypeStrategy;
 
@@ -34,7 +28,7 @@ class ColumnTypeStrategyFactory
      *
      * @return ColumnTypeStrategyInterface
      */
-    public function getStrategy($columnType)
+    public function getStrategy(string $columnType): ColumnTypeStrategyInterface
     {
         if (!isset($this->columnTypes[$columnType])) {
             throw new \InvalidArgumentException('Invalid column type constraint given: ' . $columnType);

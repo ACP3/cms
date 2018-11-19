@@ -113,7 +113,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      *
      * @return array
      */
-    private function fetchLayoutPaths($layoutFileName, $defaultLayoutName)
+    private function fetchLayoutPaths(string $layoutFileName, string $defaultLayoutName)
     {
         return [
             $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl',
@@ -125,9 +125,9 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     }
 
     /**
-     * @param $paths
+     * @param string[] $paths
      */
-    private function iterateOverLayoutPaths($paths)
+    private function iterateOverLayoutPaths(array $paths)
     {
         if ($this->getLayout() !== 'layout.tpl') {
             return;
@@ -155,7 +155,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      *
      * @return $this
      */
-    public function setLayout($layout)
+    public function setLayout(string $layout)
     {
         $this->layout = $layout;
 

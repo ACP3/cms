@@ -84,7 +84,9 @@ class Bootstrap extends AbstractBootstrap
         $redirect = $this->container->get('core.http.redirect_response');
 
         try {
-            $this->container->get('core.authentication')->authenticate();
+            /** @var \ACP3\Core\Authentication\AuthenticationInterface $authentication */
+            $authentication = $this->container->get('core.authentication');
+            $authentication->authenticate();
 
             $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {

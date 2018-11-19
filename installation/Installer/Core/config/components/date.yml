@@ -1,8 +1,12 @@
 services:
   core.date:
-    class: ACP3\Installer\Core\Date
+    class: ACP3\Core\Date
     arguments:
       - '@core.date.date_translator'
+    configurator: 'core.date.date_configurator:configure'
+
+  core.date.date_configurator:
+    class: ACP3\Installer\Core\Date\DateConfigurator
 
   core.date.date_translator:
     class: ACP3\Core\Date\DateTranslator

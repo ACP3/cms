@@ -8,8 +8,6 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Date\DateTranslator;
-use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Date
 {
@@ -34,35 +32,11 @@ class Date
      * @var \ACP3\Core\Date\DateTranslator
      */
     protected $dateTranslator;
-    /**
-     * @var SettingsInterface
-     */
-    protected $config;
 
-    /**
-     * Date constructor.
-     *
-     * @param DateTranslator    $dateTranslator
-     * @param SettingsInterface $config
-     */
     public function __construct(
-        DateTranslator $dateTranslator,
-        SettingsInterface $config
+        DateTranslator $dateTranslator
     ) {
         $this->dateTranslator = $dateTranslator;
-        $this->config = $config;
-
-        $this->setFormatAndTimeZone();
-    }
-
-    protected function setFormatAndTimeZone()
-    {
-        $settings = $this->config->getSettings(Schema::MODULE_NAME);
-
-        $this->dateFormatLong = $settings['date_format_long'];
-        $this->dateFormatShort = $settings['date_format_short'];
-        $timeZone = $settings['date_time_zone'];
-        $this->dateTimeZone = new \DateTimeZone($timeZone);
     }
 
     /**
@@ -78,7 +52,7 @@ class Date
      *
      * @return $this
      */
-    public function setDateFormatLong($dateFormatLong)
+    public function setDateFormatLong(string $dateFormatLong)
     {
         $this->dateFormatLong = $dateFormatLong;
 
@@ -98,9 +72,21 @@ class Date
      *
      * @return $this
      */
-    public function setDateFormatShort($dateFormatShort)
+    public function setDateFormatShort(string $dateFormatShort)
     {
         $this->dateFormatShort = $dateFormatShort;
+
+        return $this;
+    }
+
+    /**
+     * @param \DateTimeZone $dateTimeZone
+     *
+     * @return $this
+     */
+    public function setDateTimeZone(\DateTimeZone $dateTimeZone)
+    {
+        $this->dateTimeZone = $dateTimeZone;
 
         return $this;
     }

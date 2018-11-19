@@ -29,7 +29,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
      */
     protected $editOperation;
     /**
-     * @var
+     * @var Delete
      */
     protected $deleteOperation;
 

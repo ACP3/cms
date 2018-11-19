@@ -11,14 +11,9 @@ use ACP3\Core\Date;
 use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Settings\SettingsInterface;
 
 class DateRangeTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
-     */
-    private $configMock;
     /**
      * @var DateTranslator
      */
@@ -39,22 +34,17 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->langMock = $this->createMock(Translator::class);
-        $this->configMock = $this->createMock(SettingsInterface::class);
-
-        $this->configMock->expects($this->once())
-            ->method('getSettings')
-            ->willReturn([
-                'date_format_long' => 'Y-m-d H:i',
-                'date_format_short' => 'Y-m-d',
-                'date_time_zone' => 'Europe/Berlin',
-            ]);
 
         $this->dateTranslator = new DateTranslator($this->langMock);
 
         $this->date = new Date(
-            $this->dateTranslator,
-            $this->configMock
+            $this->dateTranslator
         );
+        $this->date
+            ->setDateFormatLong('Y-m-d H:i')
+            ->setDateFormatShort('Y-m-d')
+            ->setDateTimeZone(new \DateTimeZone('Europe/Berlin'));
+
         $this->dateRange = new DateRange(
             $this->date,
             $this->langMock

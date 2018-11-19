@@ -8,58 +8,36 @@
 namespace ACP3\Core\I18n;
 
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\I18n\DictionaryCache as LanguageCache;
-use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Translator
 {
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
     /**
-     * @var \ACP3\Core\I18n\DictionaryCache
+     * @var \ACP3\Core\I18n\DictionaryCacheInterface
      */
-    protected $dictionaryCache;
-    /**
-     * @var SettingsInterface
-     */
-    protected $config;
-    /**
-     * Die zur Zeit eingestellte Sprache.
-     *
-     * @var string
-     */
-    protected $locale = '';
+    private $dictionaryCache;
     /**
      * @var string
      */
-    protected $lang2Characters = '';
+    private $locale = '';
     /**
      * @var array
      */
-    protected $languagePacks = [];
+    private $languagePacks = [];
     /**
      * @var array
      */
-    protected $buffer = [];
+    private $buffer = [];
 
-    /**
-     * Translator constructor.
-     *
-     * @param ApplicationPath   $appPath
-     * @param DictionaryCache   $dictionaryCache
-     * @param SettingsInterface $config
-     */
     public function __construct(
         ApplicationPath $appPath,
-        LanguageCache $dictionaryCache,
-        SettingsInterface $config
+        DictionaryCacheInterface $dictionaryCache
     ) {
         $this->appPath = $appPath;
         $this->dictionaryCache = $dictionaryCache;
-        $this->config = $config;
     }
 
     /**
@@ -69,10 +47,10 @@ class Translator
      *
      * @return bool
      */
-    public function languagePackExists($locale)
+    public function languagePackExists(string $locale)
     {
         return !\preg_match('=/=', $locale)
-        && \is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
+            && \is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
     }
 
     /**
@@ -80,10 +58,6 @@ class Translator
      */
     public function getLocale()
     {
-        if ($this->locale === '') {
-            $this->locale = $this->config->getSettings(Schema::MODULE_NAME)['lang'];
-        }
-
         return $this->locale;
     }
 
@@ -100,7 +74,7 @@ class Translator
      *
      * @return $this
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale)
     {
         if ($this->languagePackExists($locale) === true) {
             $this->locale = $locale;
@@ -113,8 +87,11 @@ class Translator
      * Gets the writing direction of the language.
      *
      * @return string
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function getDirection()
+    public function getDirection(): string
     {
         if (isset($this->buffer[$this->getLocale()]) === false) {
             $this->buffer[$this->getLocale()] = $this->dictionaryCache->getLanguageCache($this->getLocale());
@@ -129,6 +106,9 @@ class Translator
      * @param array  $arguments
      *
      * @return string
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function t($module, $phrase, array $arguments = [])
     {
@@ -150,7 +130,7 @@ class Translator
      *
      * @return array
      */
-    public function getLanguagePack($currentLanguage)
+    public function getLanguagePack(string $currentLanguage)
     {
         if (empty($this->languagePacks)) {
             $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();

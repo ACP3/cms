@@ -125,9 +125,6 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $requestMock
-     */
     private function setRequestMockExpectations(\PHPUnit\Framework\MockObject\MockObject $requestMock)
     {
         $requestMock->expects($this->any())
@@ -143,9 +140,6 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
             ->willReturn(self::XSRF_QUERY_STRING);
     }
 
-    /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $sessionMock
-     */
     private function setSessionMockExpectations(\PHPUnit\Framework\MockObject\MockObject $sessionMock)
     {
         $sessionMock->expects($this->any())

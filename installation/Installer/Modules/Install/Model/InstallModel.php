@@ -39,10 +39,6 @@ class InstallModel
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\Database\Connection
-     */
-    protected $db;
-    /**
      * @var ModuleInstaller
      */
     protected $moduleInstaller;
@@ -133,9 +129,12 @@ class InstallModel
      */
     public function installModules()
     {
+        /** @var \ACP3\Core\Installer\SchemaRegistrar $schemaRegistrar */
+        $schemaRegistrar = $this->container->get('core.installer.schema_registrar');
+
         $this->moduleInstaller->installModules(
             $this->container,
-            $this->container->get('core.installer.schema_registrar')->all()
+            $schemaRegistrar->all()
         );
     }
 
@@ -144,7 +143,10 @@ class InstallModel
      */
     public function installAclResources()
     {
-        foreach ($this->container->get('core.installer.schema_registrar')->all() as $schema) {
+        /** @var \ACP3\Core\Installer\SchemaRegistrar $schemaRegistrar */
+        $schemaRegistrar = $this->container->get('core.installer.schema_registrar');
+
+        foreach ($schemaRegistrar->all() as $schema) {
             if ($this->installHelper->installResources($schema, $this->container) === false) {
                 throw new \Exception(
                     \sprintf('Error while installing ACL resources for the module %s.', $schema->getModuleName())
@@ -157,6 +159,9 @@ class InstallModel
      * Set the module settings.
      *
      * @param array $formData
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function configureModules(array $formData)
     {
@@ -175,8 +180,11 @@ class InstallModel
             ],
         ];
 
+        /** @var \ACP3\Core\Settings\SettingsInterface $config */
+        $config = $this->container->get('core.config');
+
         foreach ($settings as $module => $data) {
-            $this->container->get('core.config')->saveSettings($data, $module);
+            $config->saveSettings($data, $module);
         }
     }
 
@@ -187,8 +195,8 @@ class InstallModel
      */
     public function createSuperUser(array $formData)
     {
-        /* @var \ACP3\Core\Database\Connection db */
-        $this->db = $this->container->get('core.db');
+        /** @var \ACP3\Core\Database\Connection $db */
+        $db = $this->container->get('core.db');
 
         $salt = $this->secure->salt(UserModel::SALT_LENGTH);
         $currentDate = \gmdate('Y-m-d H:i:s');
@@ -197,11 +205,14 @@ class InstallModel
             "INSERT INTO
                 `{pre}users`
             VALUES
-                (1, 1, {$this->db->getConnection()->quote($formData['user_name'])}, '{$this->secure->generateSaltedPassword($salt, $formData['user_pwd'], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData['mail']}', 0, '', '', '', '', '', '', '', '', 0, 0, '{$currentDate}');",
+                (1, 1, {$db->getConnection()->quote($formData['user_name'])}, '{$this->secure->generateSaltedPassword($salt, $formData['user_pwd'], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData['mail']}', 0, '', '', '', '', '', '', '', '', 0, 0, '{$currentDate}');",
             'INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);',
         ];
 
-        if ($this->container->get('core.modules.schemaHelper')->executeSqlQueries($queries) === false) {
+        /** @var \ACP3\Core\Modules\SchemaHelper $schemaHelper */
+        $schemaHelper = $this->container->get('core.modules.schemaHelper');
+
+        if ($schemaHelper->executeSqlQueries($queries) === false) {
             throw new \Exception('Error while creating the super user.');
         }
     }
@@ -211,10 +222,15 @@ class InstallModel
      */
     public function installSampleData()
     {
-        foreach ($this->container->get('core.installer.sample_data_registrar')->all() as $sampleData) {
+        /** @var \ACP3\Core\Installer\SampleDataRegistrar $sampleDataRegistrar */
+        $sampleDataRegistrar = $this->container->get('core.installer.sample_data_registrar');
+        /** @var \ACP3\Core\Modules\SchemaHelper $schemaHelper */
+        $schemaHelper = $this->container->get('core.modules.schemaHelper');
+
+        foreach ($sampleDataRegistrar->all() as $sampleData) {
             $sampleDataInstallResult = $this->installHelper->installSampleData(
                 $sampleData,
-                $this->container->get('core.modules.schemaHelper')
+                $schemaHelper
             );
 
             if ($sampleDataInstallResult === false) {
