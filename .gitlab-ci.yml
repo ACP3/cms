@@ -46,7 +46,7 @@ static-analysis:phpstan:
   stage: static-analysis
   script:
     - php composer.phar install -n
-    - php composer.phar run-script phpstan
+    - php -d memory_limit=-1 vendor/bin/phpstan analyse
 
 static-analysis:eslint:
   image: node:slim
