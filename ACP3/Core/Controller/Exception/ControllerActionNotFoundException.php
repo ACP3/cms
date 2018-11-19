@@ -20,7 +20,7 @@ class ControllerActionNotFoundException extends \Exception implements ForwardCon
     /**
      * {@inheritdoc}
      */
-    public function routeArguments(): array
+    public function routeParams(): array
     {
         return [];
     }

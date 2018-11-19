@@ -40,7 +40,7 @@ class UnauthorizedAccessException extends \Exception implements ForwardControlle
     /**
      * @return array
      */
-    public function routeArguments(): array
+    public function routeParams(): array
     {
         return $this->routeArguments;
     }

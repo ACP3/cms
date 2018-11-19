@@ -18,4 +18,12 @@ class AccessForbiddenException extends \Exception implements ForwardControllerAc
     {
         return 'errors.controller.frontend.index.access_forbidden';
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function routeParams(): array
+    {
+        return [];
+    }
 }

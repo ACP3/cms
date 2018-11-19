@@ -19,5 +19,5 @@ interface ForwardControllerActionAwareExceptionInterface extends \Throwable
     /**
      * @return array
      */
-    public function routeArguments(): array;
+    public function routeParams(): array;
 }
