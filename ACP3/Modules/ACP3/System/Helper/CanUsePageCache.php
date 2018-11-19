@@ -22,22 +22,13 @@ class CanUsePageCache
      */
     private $environment;
 
-    /**
-     * CanUsePageCache constructor.
-     *
-     * @param SettingsInterface $settings
-     * @param $environment
-     */
-    public function __construct(SettingsInterface $settings, $environment)
+    public function __construct(SettingsInterface $settings, string $environment)
     {
         $this->settings = $settings;
         $this->environment = $environment;
     }
 
-    /**
-     * @return bool
-     */
-    public function canUsePageCache()
+    public function canUsePageCache(): bool
     {
         $systemSettings = $this->settings->getSettings(Schema::MODULE_NAME);
 

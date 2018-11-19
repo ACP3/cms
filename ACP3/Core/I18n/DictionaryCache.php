@@ -14,7 +14,7 @@ use ACP3\Core\Modules;
 use ACP3\Core\Modules\Vendor;
 use Fisharebest\Localization\Locale;
 
-class DictionaryCache
+class DictionaryCache implements DictionaryCacheInterface
 {
     use ExtractFromPathTrait;
 
@@ -63,11 +63,7 @@ class DictionaryCache
     }
 
     /**
-     * Returns the cached language strings.
-     *
-     * @param string $language
-     *
-     * @return array
+     * {@inheritdoc}
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
@@ -82,11 +78,7 @@ class DictionaryCache
     }
 
     /**
-     * Saves the language cache.
-     *
-     * @param string $language
-     *
-     * @return bool
+     * {@inheritdoc}
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
@@ -160,9 +152,7 @@ class DictionaryCache
     }
 
     /**
-     * Gets the cache for all registered languages.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getLanguagePacksCache(): array
     {

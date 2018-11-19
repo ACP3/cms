@@ -12,7 +12,6 @@ use ACP3\Core\Date;
 use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Settings\SettingsInterface;
 
 class DateColumnRendererTest extends AbstractColumnRendererTest
 {
@@ -41,20 +40,14 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
     {
         $this->langMock = $this->createMock(Translator::class);
         $this->dateTranslator = new DateTranslator($this->langMock);
-        $this->configMock = $this->createMock(SettingsInterface::class);
-
-        $this->configMock->expects($this->once())
-            ->method('getSettings')
-            ->willReturn([
-                'date_format_long' => 'Y-m-d H:i',
-                'date_format_short' => 'Y-m-d',
-                'date_time_zone' => 'Europe/Berlin',
-            ]);
 
         $this->date = new Date(
-            $this->dateTranslator,
-            $this->configMock
+            $this->dateTranslator
         );
+        $this->date
+            ->setDateFormatLong('Y-m-d H:i')
+            ->setDateFormatShort('Y-m-d')
+            ->setDateTimeZone(new \DateTimeZone('Europe/Berlin'));
         $this->dateRange = new DateRange(
             $this->date,
             $this->langMock

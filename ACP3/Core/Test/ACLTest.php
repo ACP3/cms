@@ -35,7 +35,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
      */
     private $permissionsCacheMock;
     /**
-     * @var ControllerActionExists|\PHPUnit_Framework_MockObject_MockObject
+     * @var ControllerActionExists&\PHPUnit_Framework_MockObject_MockObject
      */
     private $controllerActionExistsMock;
 
@@ -79,10 +79,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $this->acl->getUserRoleIds($userId));
     }
 
-    /**
-     * @param $userId
-     */
-    private function setUpUserRoleExpectations($userId)
+    private function setUpUserRoleExpectations(int $userId)
     {
         $returnValue = [
             [

@@ -74,7 +74,9 @@ class SchemaUpdateModel
      */
     public function updateModules()
     {
-        foreach ($this->container->get('core.modules')->getAllModulesTopSorted() as $moduleInfo) {
+        /** @var \ACP3\Core\Modules $modules */
+        $modules = $this->container->get('core.modules');
+        foreach ($modules->getAllModulesTopSorted() as $moduleInfo) {
             $module = \strtolower($moduleInfo['dir']);
             $this->results[$module] = $this->updateModule($module);
         }
@@ -95,16 +97,22 @@ class SchemaUpdateModel
     {
         $result = false;
 
+        /** @var \ACP3\Core\Installer\SchemaRegistrar $schemaRegistrar */
         $schemaRegistrar = $this->container->get('core.installer.schema_registrar');
+        /** @var \ACP3\Core\Installer\MigrationRegistrar $migrationRegistrar */
         $migrationRegistrar = $this->container->get('core.installer.migration_registrar');
+        /** @var \ACP3\Core\Modules $modules */
+        $modules = $this->container->get('core.modules');
+        /** @var \ACP3\Core\Modules\SchemaUpdater $schemaUpdater */
+        $schemaUpdater = $this->container->get('core.modules.schemaUpdater');
         $serviceIdMigration = $moduleName . '.installer.migration';
         if ($schemaRegistrar->has($moduleName) === true &&
             $migrationRegistrar->has($serviceIdMigration) === true
         ) {
             $moduleSchema = $schemaRegistrar->get($moduleName);
             $moduleMigration = $migrationRegistrar->get($serviceIdMigration);
-            if ($this->container->get('core.modules')->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
-                $result = $this->container->get('core.modules.schemaUpdater')->updateSchema(
+            if ($modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
+                $result = $schemaUpdater->updateSchema(
                     $moduleSchema,
                     $moduleMigration
                 );

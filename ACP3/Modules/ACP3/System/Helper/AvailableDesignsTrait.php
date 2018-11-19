@@ -50,7 +50,7 @@ trait AvailableDesignsTrait
     /**
      * @param string $file
      *
-     * @return bool|string
+     * @return string
      */
     private function getDesignDirectory(string $file): string
     {

@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer\UserRolesColumnRenderer;
 class UserRolesColumnRendererTest extends AbstractColumnRendererTest
 {
     /**
-     * @var ACL|\PHPUnit_Framework_MockObject_MockObject
+     * @var ACL&\PHPUnit_Framework_MockObject_MockObject
      */
     protected $aclMock;
 

@@ -47,9 +47,9 @@ class Asset extends AbstractResource
     /**
      * fetch template and its modification time from data source.
      *
-     * @param string $name    template name
-     * @param string &$source template source
-     * @param int    &$mtime  template modification timestamp (epoch)
+     * @param string $name   template name
+     * @param string $source template source
+     * @param int    $mtime  template modification timestamp (epoch)
      */
     protected function fetch($name, &$source, &$mtime)
     {
@@ -64,12 +64,7 @@ class Asset extends AbstractResource
         }
     }
 
-    /**
-     * @param string $template
-     *
-     * @return string
-     */
-    protected function resolveTemplatePath($template)
+    protected function resolveTemplatePath(string $template): string
     {
         // If an template with directory is given, uppercase the first letter
         if (\strpos($template, '/') !== false) {

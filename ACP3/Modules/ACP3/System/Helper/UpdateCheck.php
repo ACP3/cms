@@ -67,12 +67,7 @@ class UpdateCheck
         return $update;
     }
 
-    /**
-     * @param string $lastUpdateTimestamp
-     *
-     * @return bool
-     */
-    private function canRequestUpdateURI($lastUpdateTimestamp)
+    private function canRequestUpdateURI(int $lastUpdateTimestamp): bool
     {
         return $this->date->timestamp() - $lastUpdateTimestamp >= static::UPDATE_CHECK_DATE_OFFSET;
     }

@@ -7,11 +7,12 @@
 
 namespace ACP3\Installer\Core\I18n;
 
+use ACP3\Core\I18n\DictionaryCacheInterface;
 use ACP3\Core\I18n\ExtractFromPathTrait;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Fisharebest\Localization\Locale;
 
-class DictionaryCache
+class DictionaryCache implements DictionaryCacheInterface
 {
     use ExtractFromPathTrait;
 
@@ -35,29 +36,21 @@ class DictionaryCache
     }
 
     /**
-     * Gibt die gecacheten Sprachstrings aus.
-     *
-     * @param string $language
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getLanguageCache(string $language): array
     {
         if (isset($this->buffer[$language]) === false) {
-            $this->buffer[$language] = $this->setLanguageCache($language);
+            $this->saveLanguageCache($language);
         }
 
         return $this->buffer[$language];
     }
 
     /**
-     * Cacht die Sprachfiles, um diese schneller verarbeiten zu können.
-     *
-     * @param string $language
-     *
-     * @return array
+     * {@inheritdoc}
      */
-    public function setLanguageCache(string $language): array
+    public function saveLanguageCache(string $language): bool
     {
         $locale = Locale::create($language);
         $data = [
@@ -77,6 +70,16 @@ class DictionaryCache
             }
         }
 
-        return $data;
+        $this->buffer[$language] = $data;
+
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLanguagePacksCache(): array
+    {
+        return [];
     }
 }
