@@ -5,7 +5,7 @@
     <title>{$TITLE} | {$PAGE_TITLE}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}Assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}Assets/css/style.min.css">
     <!-- STYLESHEETS -->
     <!--[if lt IE 9]>
         <script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/html5shiv.min.js"></script>
