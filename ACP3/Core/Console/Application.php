@@ -30,6 +30,10 @@ class Application
      * @var ContainerInterface
      */
     private $container;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     /**
      * Application constructor.
