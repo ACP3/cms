@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Added PHPStan as a static analysis tool
+
+### Fixed
+- Fixed the sort direction of the SortColumnRenderer when using the data grids in AJAX mode
+
 ## [4.32.0] - 2018-11-07
 ### Changed
 - Improved the error handling when the ajax-form.js is used
