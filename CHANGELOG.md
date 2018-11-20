@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.32.1] - 2018-11-21
 ### Added
 - Added PHPStan as a static analysis tool
 
@@ -758,7 +758,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.32.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.32.1...4.x
+[4.32.1]: https://gitlab.com/ACP3/cms/compare/v4.32.0...v4.32.1
 [4.32.0]: https://gitlab.com/ACP3/cms/compare/v4.31.1...v4.32.0
 [4.31.1]: https://gitlab.com/ACP3/cms/compare/v4.31.0...v4.31.1
 [4.31.0]: https://gitlab.com/ACP3/cms/compare/v4.30.4...v4.31.0
