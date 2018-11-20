@@ -330,6 +330,10 @@
             const $form = $(this.element);
             const $formErrors = $form.find('.form-group.has-error');
 
+            if ($form.closest('.modal').length > 0) {
+                return;
+            }
+
             if (!$formErrors || $formErrors.length === 0) {
                 return;
             }

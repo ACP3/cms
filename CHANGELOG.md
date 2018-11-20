@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Fixed the sort direction of the SortColumnRenderer when using the data grids in AJAX mode
+- do not scroll to the first form error if the AJAX form is inside a modal
 
 ## [4.32.0] - 2018-11-07
 ### Changed
