@@ -77,7 +77,7 @@ class Logger
     }
 
     /**
-     * @param $message
+     * @param mixed $message
      *
      * @return string
      */

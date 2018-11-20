@@ -88,7 +88,10 @@ class Bootstrap extends AbstractBootstrap
             $authentication = $this->container->get('core.authentication');
             $authentication->authenticate();
 
-            $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
+            /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
+            $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
+
+            $response = $controllerActionDispatcher->dispatch();
         } catch (\ACP3\Core\Controller\Exception\ResultNotExistsException $e) {
             $response = $redirect->temporary('errors/index/not_found');
         } catch (\ACP3\Core\Authentication\Exception\UnauthorizedAccessException $e) {

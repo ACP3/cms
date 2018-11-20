@@ -17,7 +17,15 @@ class MoveToHead extends AbstractMoveElementFilter
     /**
      * {@inheritdoc}
      */
-    public function __invoke($tplOutput, \Smarty_Internal_Template $smarty)
+    protected function addElementFromMinifier()
+    {
+        return '';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function process($tplOutput, \Smarty_Internal_Template $smarty)
     {
         if (\strpos($tplOutput, static::PLACEHOLDER) !== false) {
             $tplOutput = \str_replace(
@@ -33,8 +41,8 @@ class MoveToHead extends AbstractMoveElementFilter
     /**
      * {@inheritdoc}
      */
-    protected function addElementFromMinifier()
+    public function getExtensionName()
     {
-        return '';
+        return 'output';
     }
 }

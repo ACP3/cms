@@ -65,10 +65,14 @@ class Bootstrap extends Core\Application\AbstractBootstrap
      */
     public function outputPage()
     {
+        /** @var \ACP3\Core\Http\RedirectResponse $redirect */
         $redirect = $this->container->get('core.http.redirect_response');
 
         try {
-            $response = $this->container->get('core.application.controller_action_dispatcher')->dispatch();
+            /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
+            $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
+
+            $response = $controllerActionDispatcher->dispatch();
         } catch (Core\Controller\Exception\ControllerActionNotFoundException $e) {
             $response = $redirect->temporary('errors/index/not_found');
         } catch (\Exception $e) {

@@ -21,15 +21,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 abstract class AbstractNestedSetModel extends AbstractModel
 {
     /**
-     * @var Insert
+     * @var \ACP3\Core\NestedSet\Operation\Insert
      */
     protected $insertOperation;
     /**
-     * @var Edit
+     * @var \ACP3\Core\NestedSet\Operation\Edit
      */
     protected $editOperation;
     /**
-     * @var
+     * @var \ACP3\Core\NestedSet\Operation\Delete
      */
     protected $deleteOperation;
 

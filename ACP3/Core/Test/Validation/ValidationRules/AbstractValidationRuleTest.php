@@ -22,12 +22,7 @@ abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
     {
         $this->validationRule->setMessage('Invalid value.');
 
-        $this->validator = $this
-            ->getMockBuilder(\ACP3\Core\Validation\Validator::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->validator->registerValidationRule($this->validationRule);
+        $this->validator = $this->createMock(\ACP3\Core\Validation\Validator::class);
     }
 
     /**

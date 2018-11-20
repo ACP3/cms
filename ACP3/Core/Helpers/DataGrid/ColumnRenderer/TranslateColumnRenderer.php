@@ -15,7 +15,7 @@ use ACP3\Core\I18n\Translator;
 class TranslateColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @var
+     * @var \ACP3\Core\I18n\Translator
      */
     protected $translator;
 
