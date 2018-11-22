@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
+- Changed the loading of Smarty plugins to be lazy
 - Changed the loading of validation rules inside the Validator class to be lazy
 - Changed the loading of column renderers inside the DataGrid class to be lazy
 
