@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Changed the loading of validation rules inside the Validator class to be lazy
+- Changed the loading of column renderers inside the DataGrid class to be lazy
+
 ## [4.32.1] - 2018-11-21
 ### Added
 - Added PHPStan as a static analysis tool
