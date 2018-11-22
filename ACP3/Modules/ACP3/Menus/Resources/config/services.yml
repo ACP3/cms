@@ -10,4 +10,4 @@ services:
       - '@menus.model.menuitemrepository'
       - '@menus.cache'
     tags:
-      - { name: core.view.extension }
+    - { name: smarty.plugin.function, pluginName: navbar }

@@ -13,6 +13,7 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
+use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterLegacySmartyPluginsPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Psr\Log\LoggerInterface;
@@ -92,6 +93,7 @@ class ServiceContainerBuilder extends ContainerBuilder
                 )
             )
             ->addCompilerPass(new RegisterSmartyPluginsPass())
+            ->addCompilerPass(new RegisterLegacySmartyPluginsPass())
             ->addCompilerPass(new RegisterControllerActionsPass())
             ->addCompilerPass(new RegisterValidationRulesPass())
             ->addCompilerPass(new RegisterInstallersCompilerPass());
