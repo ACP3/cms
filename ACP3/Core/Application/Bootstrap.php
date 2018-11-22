@@ -42,10 +42,11 @@ class Bootstrap extends AbstractBootstrap
         Utf8\Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 
         $file = $this->appPath->getCacheDir() . 'container.php';
+        $cache = new ConfigCache($file, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
-        $this->dumpContainer($symfonyRequest, $file);
+        $this->dumpContainer($symfonyRequest, $cache);
 
-        require_once $file;
+        require_once $cache->getPath();
 
         $this->container = new \ACP3ServiceContainer();
         $this->container->set('core.environment.application_path', $this->appPath);
@@ -53,21 +54,25 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * @param SymfonyRequest $symfonyRequest
-     * @param string         $filePath
+     * @param SymfonyRequest                        $symfonyRequest
+     * @param \Symfony\Component\Config\ConfigCache $cache
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function dumpContainer(SymfonyRequest $symfonyRequest, $filePath)
+    private function dumpContainer(SymfonyRequest $symfonyRequest, ConfigCache $cache)
     {
-        $containerConfigCache = new ConfigCache($filePath, ($this->appMode === ApplicationMode::DEVELOPMENT));
-
-        if (!$containerConfigCache->isFresh()) {
+        if (!$cache->isFresh()) {
             $containerBuilder = ServiceContainerBuilder::create(
                 $this->appPath, $symfonyRequest, $this->appMode
             );
 
             $dumper = new PhpDumper($containerBuilder);
-            $containerConfigCache->write(
-                $dumper->dump(['class' => 'ACP3ServiceContainer']),
+            $cache->write(
+                $dumper->dump([
+                    'class' => 'ACP3ServiceContainer',
+                    'debug' => $this->appMode === ApplicationMode::DEVELOPMENT,
+                ]),
                 $containerBuilder->getResources()
             );
         }
