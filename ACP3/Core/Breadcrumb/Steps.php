@@ -203,7 +203,7 @@ class Steps
      * @param string $path
      * @param bool   $dbSteps
      *
-     * @return $this
+     * @return self
      */
     public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): self
     {
@@ -267,7 +267,7 @@ class Steps
     /**
      * @param string $path
      *
-     * @return $this
+     * @return self
      */
     public function removeByPath(string $path): self
     {

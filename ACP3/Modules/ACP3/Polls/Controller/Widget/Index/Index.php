@@ -53,6 +53,8 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -86,12 +88,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         ];
     }
 
-    /**
-     * @param int $pollId
-     *
-     * @return int
-     */
-    protected function hasAlreadyVoted($pollId)
+    protected function hasAlreadyVoted(int $pollId): bool
     {
         // Check, whether the logged user has already voted
         if ($this->user->isAuthenticated() === true) {

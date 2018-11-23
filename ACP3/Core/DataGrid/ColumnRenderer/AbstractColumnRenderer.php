@@ -183,7 +183,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      * @param array  $dbResultRow
      * @param string $field
      *
-     * @return string|null
+     * @return mixed
      */
     protected function getDbValueIfExists(array $dbResultRow, $field)
     {

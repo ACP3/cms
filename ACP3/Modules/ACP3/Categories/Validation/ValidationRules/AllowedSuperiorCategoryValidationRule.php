@@ -32,7 +32,7 @@ class AllowedSuperiorCategoryValidationRule extends AbstractValidationRule
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid($data, $field = '', array $extra = []): bool
     {
         if (\is_array($data) && \is_array($field)) {
             $parentId = \reset($field);

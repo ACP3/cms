@@ -49,7 +49,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * @param int $id
      *
-     * @return array
+     * @return array|JsonResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */

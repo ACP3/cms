@@ -121,11 +121,9 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * {@inheritdoc}
      */
-    public function setHomepage($homepage)
+    public function setHomepage(string $homepage): void
     {
         $this->homepage = $homepage;
-
-        return $this;
     }
 
     protected function fillParameterBags()

@@ -9,38 +9,13 @@ namespace ACP3\Core\Model\Repository;
 
 interface ModuleAwareRepositoryInterface extends RepositoryInterface
 {
-    /**
-     * @param string $moduleName
-     *
-     * @return int
-     */
-    public function getModuleId($moduleName);
+    public function getModuleId(string $moduleName): ?int;
 
-    /**
-     * @param string $moduleName
-     *
-     * @return int
-     */
-    public function getModuleSchemaVersion($moduleName);
+    public function getModuleSchemaVersion(string $moduleName): ?int;
 
-    /**
-     * @param string $moduleName
-     *
-     * @return bool
-     */
-    public function moduleExists($moduleName);
+    public function moduleExists(string $moduleName): bool;
 
-    /**
-     * @param string $moduleName
-     *
-     * @return array
-     */
-    public function getInfoByModuleName($moduleName);
+    public function getInfoByModuleName(string $moduleName): array;
 
-    /**
-     * @param int $moduleId
-     *
-     * @return string
-     */
-    public function getModuleNameById($moduleId);
+    public function getModuleNameById(int $moduleId): ?string;
 }

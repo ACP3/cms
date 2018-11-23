@@ -51,7 +51,7 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * {@inheritdoc}
      */
-    public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): Core\Breadcrumb\Steps
+    public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): parent
     {
         if ($dbSteps === true) {
             \end($this->stepsFromDb);
@@ -192,7 +192,7 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * {@inheritdoc}
      */
-    public function removeByPath(string $path): Core\Breadcrumb\Steps
+    public function removeByPath(string $path): parent
     {
         parent::removeByPath($path);
 

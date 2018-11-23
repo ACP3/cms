@@ -14,29 +14,27 @@ interface ValidationRuleInterface
     /**
      * @return string
      */
-    public function getMessage();
+    public function getMessage(): string;
 
     /**
      * @param string $message
-     *
-     * @return $this
      */
-    public function setMessage($message);
+    public function setMessage(string $message): void;
 
     /**
      * @param \ACP3\Core\Validation\Validator $validator
      * @param mixed                           $data
-     * @param string                          $field
+     * @param string|array                    $field
      * @param array                           $extra
      */
-    public function validate(Validator $validator, $data, $field = '', array $extra = []);
+    public function validate(Validator $validator, $data, $field = '', array $extra = []): void;
 
     /**
      * @param bool|int|float|string|array $data
-     * @param string                      $field
+     * @param string|array                $field
      * @param array                       $extra
      *
      * @return bool
      */
-    public function isValid($data, $field = '', array $extra = []);
+    public function isValid($data, $field = '', array $extra = []): bool;
 }

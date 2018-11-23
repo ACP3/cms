@@ -25,7 +25,7 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     {
         $where = empty($status) === false ? ' AND status = :status' : '';
 
-        return (int) $this->db->fetchAssoc(
+        return (int) $this->db->fetchColumn(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $where,
                 ['id' => $newsletterId, 'status' => $status]
             ) > 0;
@@ -35,11 +35,11 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
      * @param int $newsletterId
      * @param int $status
      *
-     * @return mixed
+     * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByIdAndStatus(int $newsletterId, int $status)
+    public function getOneByIdAndStatus(int $newsletterId, int $status): array
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE id = :id  AND status = :status;",
@@ -54,7 +54,7 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll(?int $status = null)
+    public function countAll(?int $status = null): int
     {
         $where = empty($time) === false ? ' WHERE status = :status' : '';
 
@@ -73,7 +73,7 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll(?int $status = null, ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAll(?int $status = null, ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = empty($status) === false ? ' WHERE status = :status' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

@@ -62,17 +62,17 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @param int $commentId
+     * @param int $entryId
      *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneById($commentId)
+    public function getOneById(int $entryId): array
     {
         return $this->db->fetchAssoc(
             'SELECT c.*, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?',
-            [$commentId]
+            [$entryId]
         );
     }
 

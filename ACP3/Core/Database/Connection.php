@@ -141,13 +141,13 @@ class Connection
      * @param array  $params
      * @param array  $types
      *
-     * @return mixed
+     * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchArray(string $statement, array $params = [], array $types = [])
     {
-        return $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_BOTH);
+        return $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_BOTH) ?: [];
     }
 
     /**
@@ -155,13 +155,13 @@ class Connection
      * @param array  $params
      * @param array  $types
      *
-     * @return mixed
+     * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchAssoc(string $statement, array $params = [], array $types = [])
     {
-        return $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_ASSOC);
+        return $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_ASSOC) ?: [];
     }
 
     /**
@@ -176,7 +176,7 @@ class Connection
      */
     public function fetchColumn(string $statement, array $params = [], int $column = 0, array $types = [])
     {
-        return $this->executeQuery($statement, $params, $types)->fetchColumn($column);
+        return $this->executeQuery($statement, $params, $types)->fetchColumn($column) ?: null;
     }
 
     /**

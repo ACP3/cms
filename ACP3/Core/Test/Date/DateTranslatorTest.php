@@ -13,7 +13,7 @@ use ACP3\Core\I18n\Translator;
 class DateTranslatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \ACP3\Installer\Core\I18n\Translator|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $translatorMock;
     /**

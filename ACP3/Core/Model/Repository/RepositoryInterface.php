@@ -23,7 +23,7 @@ interface RepositoryInterface
      *
      * @return string
      */
-    public function getTableName($tableName = '');
+    public function getTableName(string $tableName = ''): string;
 
     /**
      * Executes the SQL delete statement.
@@ -33,7 +33,7 @@ interface RepositoryInterface
      *
      * @return bool|int
      */
-    public function delete($entryId, $columnName = 'id');
+    public function delete($entryId, string $columnName = 'id');
 
     /**
      * Executes the SQL update statement.
@@ -50,5 +50,5 @@ interface RepositoryInterface
      *
      * @return array
      */
-    public function getOneById($entryId);
+    public function getOneById(int $entryId): array;
 }

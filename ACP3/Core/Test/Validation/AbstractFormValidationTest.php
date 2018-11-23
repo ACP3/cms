@@ -34,7 +34,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
      */
     protected $eventDispatcherMock;
     /**
-     * @var Translator|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $translatorMock;
     /**

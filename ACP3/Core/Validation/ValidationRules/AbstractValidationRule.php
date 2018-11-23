@@ -19,7 +19,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -27,17 +27,15 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setMessage($message)
+    public function setMessage(string $message): void
     {
         $this->message = $message;
-
-        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function validate(Validator $validator, $data, $field = '', array $extra = [])
+    public function validate(Validator $validator, $data, $field = '', array $extra = []): void
     {
         if (!$this->isValid($data, $field, $extra)) {
             $validator->addError($this->getMessage(), $field);

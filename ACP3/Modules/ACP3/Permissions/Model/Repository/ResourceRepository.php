@@ -15,15 +15,17 @@ class ResourceRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'acl_resources';
 
     /**
-     * @param int $resourceId
+     * @param int $entryId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneById($resourceId)
+    public function getOneById(int $entryId): array
     {
         return $this->db->fetchAssoc(
             'SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->getTableName() . ' AS r JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = r.module_id) WHERE r.id = ?',
-            [$resourceId]
+            [$entryId]
         );
     }
 

@@ -40,7 +40,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function validate(Validator $validator, $data, $field = '', array $extra = [])
+    public function validate(Validator $validator, $data, $field = '', array $extra = []): void
     {
         if (!$this->isValid($data, $field, $extra)) {
             throw new InvalidFormTokenException();
@@ -50,7 +50,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid($data, $field = '', array $extra = []): bool
     {
         $tokenName = SessionHandlerInterface::XSRF_TOKEN_NAME;
         $sessionToken = $this->sessionHandler->get($tokenName, '');

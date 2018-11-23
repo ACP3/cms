@@ -44,7 +44,7 @@ class CheckAccess
     /**
      * @param array $params
      *
-     * @return string
+     * @return string|array
      */
     public function outputLinkOrButton(array $params)
     {
@@ -81,13 +81,13 @@ class CheckAccess
     }
 
     /**
-     * @param array  $params
-     * @param string $action
-     * @param string $area
+     * @param array    $params
+     * @param string[] $action
+     * @param string   $area
      *
      * @return array
      */
-    private function collectData(array $params, $action, $area)
+    private function collectData(array $params, array $action, string $area)
     {
         $accessCheck = [];
         $accessCheck['uri'] = $this->router->route($params['path']);

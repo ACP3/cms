@@ -18,7 +18,7 @@ class RequestFactory
      */
     protected $config;
     /**
-     * @var Request
+     * @var SymfonyRequest
      */
     protected $symfonyRequest;
 

@@ -51,7 +51,7 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return string
      */
-    public function getTableName($tableName = '')
+    public function getTableName(string $tableName = ''): string
     {
         return $this->db->getPrefixedTableName(!empty($tableName) ? $tableName : static::TABLE_NAME);
     }
@@ -65,8 +65,9 @@ abstract class AbstractRepository implements RepositoryInterface
      * @return bool|int
      *
      * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception\InvalidArgumentException
      */
-    public function delete($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
+    public function delete($entryId, string $columnName = 'id')
     {
         return $this->db->getConnection()->delete(
             $this->getTableName(),
@@ -130,7 +131,7 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneById($entryId)
+    public function getOneById(int $entryId): array
     {
         return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$entryId]);
     }

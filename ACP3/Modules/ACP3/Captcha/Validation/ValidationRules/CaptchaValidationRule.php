@@ -39,7 +39,7 @@ class CaptchaValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid($data, $field = '', array $extra = []): bool
     {
         if ($this->user->isAuthenticated() === false) {
             return $this->captcha->isCaptchaValid($data, $field, $extra);

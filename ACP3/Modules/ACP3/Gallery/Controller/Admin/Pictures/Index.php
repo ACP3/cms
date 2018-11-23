@@ -58,9 +58,9 @@ class Index extends AbstractFrontendAction
     /**
      * @param int $id
      *
-     * @return array
+     * @return array|JsonResponse
      *
-     * @throws Core\Controller\Exception\ResultNotExistsException
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(int $id)

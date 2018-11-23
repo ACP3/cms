@@ -23,14 +23,14 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists(int $articleId, string $time = '')
+    public function resultExists(int $articleId, string $time = ''): bool
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id{$period}",
-            ['id' => $articleId, 'time' => $time, 'active' => 1]
-        ) > 0;
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id{$period}",
+                ['id' => $articleId, 'time' => $time, 'active' => 1]
+            ) > 0;
     }
 
     /**
@@ -40,11 +40,11 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll(string $time = '')
+    public function countAll(string $time = ''): int
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
-        return $this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
             ['time' => $time, 'active' => 1]
         );
@@ -59,7 +59,7 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -79,7 +79,7 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLatest(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getLatest(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

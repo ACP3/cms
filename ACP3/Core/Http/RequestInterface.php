@@ -163,10 +163,8 @@ interface RequestInterface
 
     /**
      * @param string $homepage
-     *
-     * @return $this
      */
-    public function setHomepage($homepage);
+    public function setHomepage(string $homepage): void;
 
     /**
      * @param null|string $pathInfo

@@ -12,7 +12,7 @@ class PasswordValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid($data, $field = '', array $extra = []): bool
     {
         if (\is_array($data) && \is_array($field)) {
             $password = \reset($field);

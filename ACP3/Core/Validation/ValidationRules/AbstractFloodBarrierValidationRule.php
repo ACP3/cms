@@ -38,7 +38,7 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid($data, $field = '', array $extra = []): bool
     {
         $date = $this->repository->getLastDateFromIp($extra['ip']);
         $floodTime = !empty($date) ? $this->date->timestamp($date, true) + 30 : 0;

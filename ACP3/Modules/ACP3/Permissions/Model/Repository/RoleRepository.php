@@ -18,10 +18,15 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
      * @param int $roleId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function roleExists($roleId)
+    public function roleExists(int $roleId): bool
     {
-        return (int) $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id', ['id' => $roleId]) > 0;
+        return (int) $this->db->fetchColumn(
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id',
+            ['id' => $roleId]
+            ) > 0;
     }
 
     /**
@@ -29,10 +34,12 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
      * @param int    $roleId
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function roleExistsByName($roleName, $roleId = 0)
+    public function roleExistsByName(string $roleName, ?int $roleId = null): bool
     {
-        if ($roleId !== 0) {
+        if ($roleId !== null) {
             return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?', [(int) $roleId, $roleName]) == 1;
         }
 
@@ -41,10 +48,14 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllRoles()
+    public function getAllRoles(): array
     {
-        return $this->db->fetchAll('SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS `level`, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $this->getTableName() . ' AS p, ' . $this->getTableName() . ' AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id');
+        return $this->db->fetchAll(
+            'SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS `level`, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $this->getTableName() . ' AS p, ' . $this->getTableName() . ' AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id ORDER BY n.left_id'
+        );
     }
 
     /**
@@ -53,8 +64,10 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
      * @param int    $roleId
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getPermissionByKeyAndRoleId(string $privilegeKey, int $moduleId, int $roleId)
+    public function getPermissionByKeyAndRoleId(string $privilegeKey, int $moduleId, int $roleId): int
     {
         $query = <<<SQL
 SELECT ru.permission 
@@ -67,7 +80,7 @@ ORDER BY parent.left_id DESC
 LIMIT 1;
 SQL;
 
-        return $this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             $query,
             ['roleId' => $roleId, 'privilege' => $privilegeKey, 'moduleId' => $moduleId, 'permission' => 2]
         );

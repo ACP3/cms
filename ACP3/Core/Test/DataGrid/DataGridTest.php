@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\Container;
 class DataGridTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $requestMock;
     /**
@@ -29,15 +29,15 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
      */
     protected $dataGrid;
     /**
-     * @var ConfigProcessor|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $configProcessorMock;
     /**
-     * @var ACL|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $aclMock;
     /**
-     * @var Translator|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $langMock;
     /**

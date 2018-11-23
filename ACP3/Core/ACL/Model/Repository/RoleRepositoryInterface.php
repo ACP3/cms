@@ -12,5 +12,5 @@ interface RoleRepositoryInterface
     /**
      * @return array
      */
-    public function getAllRoles();
+    public function getAllRoles(): array;
 }

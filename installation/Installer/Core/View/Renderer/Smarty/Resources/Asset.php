@@ -98,7 +98,7 @@ class Asset extends AbstractResource
         $compiled->file_dependency = [];
         $compiled->includes = [];
         $compiled->nocache_hash = null;
-        $compiled->unifunc = null;
+        $compiled->unifunc = '';
         $level = \ob_get_level();
         \ob_start();
         $_smarty_tpl->loadCompiler();
@@ -128,7 +128,7 @@ class Asset extends AbstractResource
      */
     public function populateCompiledFilepath(\Smarty_Template_Compiled $compiled, \Smarty_Internal_Template $_template)
     {
-        $compiled->filepath = false;
+        $compiled->filepath = '';
         $compiled->timestamp = false;
         $compiled->exists = false;
     }

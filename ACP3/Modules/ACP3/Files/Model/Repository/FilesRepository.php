@@ -53,17 +53,17 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $fileId
+     * @param int $entryId
      *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneById($fileId)
+    public function getOneById(int $entryId): array
     {
         return $this->db->fetchAssoc(
             'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
-            [$fileId]
+            [$entryId]
         );
     }
 

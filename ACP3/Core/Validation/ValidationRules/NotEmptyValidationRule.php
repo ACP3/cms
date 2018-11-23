@@ -12,7 +12,7 @@ class NotEmptyValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid($data, $field = '', array $extra = []): bool
     {
         if (\is_scalar($data)) {
             return !empty(\trim($data));

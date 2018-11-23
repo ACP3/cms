@@ -17,7 +17,7 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
      */
     private $displayAction;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Response
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     private $responseMock;
     /**

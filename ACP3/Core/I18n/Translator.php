@@ -106,9 +106,6 @@ class Translator
      * @param array  $arguments
      *
      * @return string
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function t($module, $phrase, array $arguments = [])
     {

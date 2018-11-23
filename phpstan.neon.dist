@@ -1,5 +1,5 @@
 parameters:
-  level: 2
+  level: 3
   paths:
     - %rootDir%/../../../ACP3
     - %rootDir%/../../../installation
@@ -8,5 +8,5 @@ parameters:
   excludes_analyse:
     - %rootDir%/../../../ACP3/Modules/ACP3/Filemanager/libraries/*
   includes:
-    - vendor/phpstan/phpstan-phpunit/extension.neon
-    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - %rootDir%/../../../vendor/phpstan/phpstan-phpunit/extension.neon
+    - %rootDir%/../../../vendor/phpstan/phpstan-phpunit/rules.neon

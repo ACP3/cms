@@ -14,7 +14,7 @@ class ConfigFileValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid($data, $field = '', array $extra = []): bool
     {
         return \is_file($data) === true && \is_writable($data) === true;
     }
