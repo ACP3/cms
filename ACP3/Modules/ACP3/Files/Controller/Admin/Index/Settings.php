@@ -26,7 +26,7 @@ class Settings extends Core\Controller\AbstractFormAction
      */
     protected $adminSettingsFormValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Helpers
+     * @var \ACP3\Modules\ACP3\Comments\Helpers|null
      */
     protected $commentsHelpers;
     /**

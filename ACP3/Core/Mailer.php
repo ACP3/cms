@@ -35,7 +35,7 @@ class Mailer
      */
     protected $stringFormatter;
     /**
-     * @var PHPMailer
+     * @var PHPMailer|null
      */
     private $phpMailer;
 

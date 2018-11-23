@@ -45,8 +45,10 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @param string $template
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($categoryId = 0, $template = '')
+    public function execute(int $categoryId = 0, string $template = '')
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
@@ -65,12 +67,14 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @param array $settings
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    private function fetchNews($categoryId, array $settings)
+    private function fetchNews(int $categoryId, array $settings)
     {
         if (!empty($categoryId)) {
             $news = $this->newsRepository->getAllByCategoryId(
-                (int) $categoryId,
+                $categoryId,
                 $this->date->getCurrentDateTime(),
                 $settings['sidebar']
             );

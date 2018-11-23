@@ -93,21 +93,21 @@ class Pagination
      *
      * @return $this
      */
-    public function setResultsPerPage($results)
+    public function setResultsPerPage(int $results)
     {
-        $this->resultsPerPage = (int) $results;
+        $this->resultsPerPage = $results;
 
         return $this;
     }
 
     /**
-     * @param int $results
+     * @param int $totalResults
      *
      * @return $this
      */
-    public function setTotalResults($results)
+    public function setTotalResults(int $totalResults)
     {
-        $this->totalResults = (int) $results;
+        $this->totalResults = $totalResults;
 
         return $this;
     }
@@ -117,7 +117,7 @@ class Pagination
      *
      * @return $this
      */
-    public function setUrlFragment($fragment)
+    public function setUrlFragment(string $fragment)
     {
         $this->urlFragment = $fragment;
 
@@ -129,9 +129,9 @@ class Pagination
      *
      * @return $this
      */
-    public function setPagesToDisplay($pagesToDisplay)
+    public function setPagesToDisplay(int $pagesToDisplay)
     {
-        $this->pagesToDisplay = (int) $pagesToDisplay;
+        $this->pagesToDisplay = $pagesToDisplay;
 
         return $this;
     }
@@ -162,9 +162,9 @@ class Pagination
      *
      * @return $this
      */
-    public function setShowFirstLast($showFirstLast)
+    public function setShowFirstLast(int $showFirstLast)
     {
-        $this->showFirstLast = (int) $showFirstLast;
+        $this->showFirstLast = $showFirstLast;
 
         return $this;
     }
@@ -174,9 +174,9 @@ class Pagination
      *
      * @return $this
      */
-    public function setShowPreviousNext($showPreviousNext)
+    public function setShowPreviousNext(int $showPreviousNext)
     {
-        $this->showPreviousNext = (int) $showPreviousNext;
+        $this->showPreviousNext = $showPreviousNext;
 
         return $this;
     }
@@ -317,7 +317,7 @@ class Pagination
             'page' => $pageNumber,
             'uri' => $uri,
             'title' => $title,
-            'selected' => (bool) $selected,
+            'selected' => $selected,
             'selector' => $selector,
         ];
     }

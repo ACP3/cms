@@ -22,7 +22,7 @@ class OnNewsModelAfterDeleteListener
      */
     protected $modules;
     /**
-     * @var UriAliasManager
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null
      */
     protected $uriAliasManager;
     /**

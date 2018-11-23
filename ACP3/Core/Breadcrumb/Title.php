@@ -79,7 +79,7 @@ class Title
      *
      * @return $this
      */
-    public function setSiteTitle($title)
+    public function setSiteTitle(string $title)
     {
         $this->siteTitle = $title;
 
@@ -87,7 +87,7 @@ class Title
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getSiteSubtitle()
     {
@@ -99,7 +99,7 @@ class Title
      *
      * @return $this
      */
-    public function setSiteSubtitle($siteSubtitle)
+    public function setSiteSubtitle(string $siteSubtitle)
     {
         $this->siteSubtitle = $siteSubtitle;
 
@@ -126,7 +126,7 @@ class Title
      *
      * @return $this
      */
-    public function setPageTitle($title)
+    public function setPageTitle(string $title)
     {
         $this->pageTitle = $title;
 
@@ -146,7 +146,7 @@ class Title
      *
      * @return $this
      */
-    public function setPageTitlePostfix($value)
+    public function setPageTitlePostfix(string $value)
     {
         $this->pageTitlePostfix = $value;
 
@@ -158,7 +158,7 @@ class Title
      *
      * @return $this
      */
-    public function setPageTitlePrefix($value)
+    public function setPageTitlePrefix(string $value)
     {
         $this->pageTitlePrefix = $value;
 
@@ -178,7 +178,7 @@ class Title
      *
      * @return $this
      */
-    public function setPageTitleSeparator($value)
+    public function setPageTitleSeparator(string $value)
     {
         $this->pageTitleSeparator = $value;
 
@@ -218,7 +218,7 @@ class Title
      *
      * @return $this
      */
-    public function setSiteTitleSeparator($value)
+    public function setSiteTitleSeparator(string $value)
     {
         $this->siteTitleSeparator = $value;
 

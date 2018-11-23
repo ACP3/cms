@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Emoticons;
 abstract class AbstractFrontendAction extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Helpers
+     * @var \ACP3\Modules\ACP3\Emoticons\Helpers|null
      */
     protected $emoticonsHelpers;
     /**

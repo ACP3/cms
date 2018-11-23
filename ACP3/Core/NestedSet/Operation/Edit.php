@@ -21,7 +21,7 @@ class Edit extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($resultId, $parentId, $blockId, array $updateValues)
+    public function execute(int $resultId, int $parentId, int $blockId, array $updateValues)
     {
         $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
 
@@ -201,7 +201,7 @@ class Edit extends AbstractOperation
                     ]
                 );
             } else {
-                $bool = $this->db->getConnection()->executeUpdate(
+                $bool = (bool) $this->db->getConnection()->executeUpdate(
                     "UPDATE {$this->nestedSetRepository->getTableName()} SET root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?",
                     [
                         $rootId,

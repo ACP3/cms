@@ -68,14 +68,14 @@ class UserModel implements UserModelInterface
      * @param int $userId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function getUserInfo($userId = 0)
+    public function getUserInfo(int $userId = 0): array
     {
         if (empty($userId) && $this->isAuthenticated() === true) {
             $userId = $this->getUserId();
         }
-
-        $userId = (int) $userId;
 
         if (empty($this->userInfo[$userId])) {
             $countries = $this->countryList->worldCountries();
@@ -94,7 +94,7 @@ class UserModel implements UserModelInterface
      *
      * @return bool
      */
-    public function isAuthenticated()
+    public function isAuthenticated(): bool
     {
         return $this->isAuthenticated === true && $this->getUserId() !== 0;
     }
@@ -104,9 +104,9 @@ class UserModel implements UserModelInterface
      *
      * @return $this
      */
-    public function setIsAuthenticated($isAuthenticated)
+    public function setIsAuthenticated(bool $isAuthenticated)
     {
-        $this->isAuthenticated = (bool) $isAuthenticated;
+        $this->isAuthenticated = $isAuthenticated;
 
         return $this;
     }
@@ -116,7 +116,7 @@ class UserModel implements UserModelInterface
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -126,7 +126,7 @@ class UserModel implements UserModelInterface
      *
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId)
     {
         $this->userId = $userId;
 
@@ -138,7 +138,7 @@ class UserModel implements UserModelInterface
      *
      * @return bool
      */
-    public function isSuperUser()
+    public function isSuperUser(): bool
     {
         return $this->superUser;
     }
@@ -148,9 +148,9 @@ class UserModel implements UserModelInterface
      *
      * @return $this
      */
-    public function setIsSuperUser($isSuperUser)
+    public function setIsSuperUser(bool $isSuperUser)
     {
-        $this->superUser = (bool) $isSuperUser;
+        $this->superUser = $isSuperUser;
 
         return $this;
     }

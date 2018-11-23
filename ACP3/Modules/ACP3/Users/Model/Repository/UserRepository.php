@@ -42,7 +42,7 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND nickname = ?';
 
-            return !empty($nickname) && $this->db->fetchColumn($query, [(int) $userId, $nickname]) == 1;
+            return !empty($nickname) && $this->db->fetchColumn($query, [$userId, $nickname]) == 1;
         }
 
         $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE nickname = ?';
@@ -65,10 +65,13 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND mail = ?';
 
-            return $this->db->fetchColumn($query, [(int) $userId, $mail]) > 0;
+            return $this->db->fetchColumn($query, [$userId, $mail]) > 0;
         }
 
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE mail = ?', [$mail]) > 0;
+        return $this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE mail = ?',
+                [$mail]
+            ) > 0;
     }
 
     /**

@@ -22,9 +22,9 @@ class AdminFormValidation extends AbstractUserFormValidation
      *
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId)
     {
-        $this->userId = (int) $userId;
+        $this->userId = $userId;
 
         return $this;
     }

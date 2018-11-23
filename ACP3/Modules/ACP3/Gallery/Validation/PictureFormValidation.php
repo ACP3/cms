@@ -27,9 +27,9 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
      *
      * @return $this
      */
-    public function setFileRequired($fileRequired)
+    public function setFileRequired(bool $fileRequired)
     {
-        $this->fileRequired = (bool) $fileRequired;
+        $this->fileRequired = $fileRequired;
 
         return $this;
     }

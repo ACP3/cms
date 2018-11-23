@@ -48,7 +48,7 @@ class Delete extends Core\Controller\AbstractFormAction
                 $result = $this->commentsModel->delete($items);
 
                 // If there are no comments for the given module, redirect to the general comments admin panel page
-                if ($this->commentRepository->countAll($id) == 0) {
+                if ($this->commentRepository->countAll($id) === 0) {
                     $redirectUrl = 'acp/comments';
                 } else {
                     $redirectUrl = 'acp/comments/details/index/id_' . $id;

@@ -57,7 +57,7 @@ class Delete extends Core\Controller\AbstractFormAction
                 $this->permissionsCache->getCacheDriver()->deleteAll();
 
                 if ($levelNotDeletable === true) {
-                    $result = !$levelNotDeletable;
+                    $result = false;
                     $text = $this->translator->t('permissions', 'role_not_deletable');
                 } else {
                     $result = $bool !== false;

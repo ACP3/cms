@@ -120,7 +120,7 @@ class Input
      */
     public function setRecordsPerPage(int $recordsPerPage): self
     {
-        $this->recordsPerPage = (int) $recordsPerPage;
+        $this->recordsPerPage = $recordsPerPage;
 
         return $this;
     }
@@ -144,7 +144,7 @@ class Input
      */
     public function setEnableMassAction(bool $enableMassAction): self
     {
-        $this->enableMassAction = (bool) $enableMassAction;
+        $this->enableMassAction = $enableMassAction;
 
         return $this;
     }
@@ -156,7 +156,7 @@ class Input
      */
     public function setEnableOptions(bool $enableOptions): self
     {
-        $this->enableOptions = (bool) $enableOptions;
+        $this->enableOptions = $enableOptions;
 
         return $this;
     }

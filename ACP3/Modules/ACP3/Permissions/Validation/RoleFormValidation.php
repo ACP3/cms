@@ -23,9 +23,9 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
      *
      * @return $this
      */
-    public function setRoleId($roleId)
+    public function setRoleId(int $roleId)
     {
-        $this->roleId = (int) $roleId;
+        $this->roleId = $roleId;
 
         return $this;
     }

@@ -73,6 +73,8 @@ class UriAliasManager
      * @param string $title
      *
      * @return bool
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function insertUriAlias(
         string $path,
@@ -89,7 +91,7 @@ class UriAliasManager
             'seo_title' => $title,
             'seo_keywords' => $keywords,
             'seo_description' => $description,
-            'seo_robots' => (int) $robots,
+            'seo_robots' => $robots,
         ];
 
         $seo = $this->seoRepository->getOneByUri($path);

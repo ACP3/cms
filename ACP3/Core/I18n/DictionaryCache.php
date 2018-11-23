@@ -107,7 +107,7 @@ class DictionaryCache implements DictionaryCacheInterface
         foreach ($themeDependenciesReversed as $theme) {
             $i18nFiles = \glob(ACP3_ROOT_DIR . "designs/{$theme}/*/i18n/{$language}.xml");
 
-            if ($i18nFiles === false) {
+            if (\count($i18nFiles) === 0) {
                 continue;
             }
 

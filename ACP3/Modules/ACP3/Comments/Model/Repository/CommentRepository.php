@@ -22,9 +22,12 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists(int $commentId)
+    public function resultExists(int $commentId): bool
     {
-        return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?', [$commentId]) > 0;
+        return $this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?',
+                [$commentId]
+            ) > 0;
     }
 
     /**
@@ -37,28 +40,30 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     public function resultsExistByModuleId(int $moduleId)
     {
         return $this->db->fetchColumn(
-            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
-            [$moduleId]
-        ) > 0;
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+                [$moduleId]
+            ) > 0;
     }
 
     /**
      * @param int $moduleId
      *
-     * @return bool
+     * @return int|null
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll(int $moduleId = 0)
+    public function countAll(int $moduleId = 0): ?int
     {
         if ($moduleId === 0) {
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName());
+            $results = $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName());
+        } else {
+            $results = $this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+                [$moduleId]
+            );
         }
 
-        return $this->db->fetchColumn(
-            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
-            [$moduleId]
-        );
+        return $results === null ? null : (int) $results;
     }
 
     /**

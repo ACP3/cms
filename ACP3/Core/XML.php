@@ -29,7 +29,7 @@ class XML
      *
      * @return array
      */
-    public function parseXmlFile($path, $xpath)
+    public function parseXmlFile(string $path, string $xpath)
     {
         if (!empty($this->info[$path][$xpath])) {
             return $this->info[$path][$xpath];
@@ -70,13 +70,13 @@ class XML
      * @param string            $xpath
      * @param string            $key
      */
-    protected function parseAttributes(\SimpleXMLElement $attributes, $path, $xpath, $key)
+    protected function parseAttributes(\SimpleXMLElement $attributes, string $path, string $xpath, string $key)
     {
         foreach ($attributes as $attrKey => $attrValue) {
             if ($key === 'version' && $attrKey === 'core' && (string) $attrValue === 'true') {
                 $this->info[$path][$xpath]['version'] = Bootstrap::VERSION;
             } else {
-                $this->info[$path][$xpath][(string) $key][(string) $attrKey] = (string) $attrValue;
+                $this->info[$path][$xpath][$key][$attrKey] = $attrValue;
             }
         }
     }

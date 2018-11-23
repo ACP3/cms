@@ -24,8 +24,8 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
     public function roleExists(int $roleId): bool
     {
         return (int) $this->db->fetchColumn(
-            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id',
-            ['id' => $roleId]
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `id` = :id',
+                ['id' => $roleId]
             ) > 0;
     }
 
@@ -40,7 +40,7 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
     public function roleExistsByName(string $roleName, ?int $roleId = null): bool
     {
         if ($roleId !== null) {
-            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?', [(int) $roleId, $roleName]) == 1;
+            return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND `name` = ?', [$roleId, $roleName]) == 1;
         }
 
         return !empty($roleName) && $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$roleName]) == 1;

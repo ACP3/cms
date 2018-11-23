@@ -64,7 +64,7 @@ class Date
      *
      * @return array
      */
-    public function getTimeZones($currentValue = '')
+    public function getTimeZones(string $currentValue = '')
     {
         $timeZones = [
             'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),
@@ -104,7 +104,7 @@ class Date
      *
      * @return array
      */
-    public function dateFormatDropdown($currentDateFormat = '')
+    public function dateFormatDropdown(string $currentDateFormat = '')
     {
         $dateFormats = [
             'short' => $this->translator->t('system', 'date_format_short'),
@@ -127,13 +127,13 @@ class Date
     public function datepicker(
         $name,
         $value = '',
-        $showTime = true,
-        $inputFieldOnly = false
+        bool $showTime = true,
+        bool $inputFieldOnly = false
     ) {
         $datePicker = [
             'range' => $this->isRange($name),
             'length' => $showTime === true ? 16 : 10,
-            'input_only' => (bool) $inputFieldOnly,
+            'input_only' => $inputFieldOnly,
             'params' => \json_encode([
                 'format' => $this->getPickerDateFormat($showTime),
                 'locale' => $this->translator->getLocale(),
@@ -179,7 +179,7 @@ class Date
      *
      * @return string
      */
-    protected function getInputId($fieldName)
+    protected function getInputId(string $fieldName)
     {
         return 'date-' . \str_replace('_', '-', $fieldName);
     }
@@ -191,7 +191,7 @@ class Date
      *
      * @return array
      */
-    protected function fetchRangeDatePickerValues(array $name, $value, $showTime)
+    protected function fetchRangeDatePickerValues(array $name, $value, bool $showTime)
     {
         if ($this->request->getPost()->has($name[0]) && $this->request->getPost()->has($name[1])) {
             $valueStart = $this->request->getPost()->get($name[0]);
@@ -225,7 +225,7 @@ class Date
      *
      * @return string
      */
-    protected function fetchSimpleDatePickerValue($name, $value, $showTime)
+    protected function fetchSimpleDatePickerValue(string $name, string $value, bool $showTime)
     {
         if ($this->request->getPost()->has($name)) {
             return $this->request->getPost()->get($name, '');
@@ -241,7 +241,7 @@ class Date
      *
      * @return string
      */
-    protected function getPickerDateFormat($showTime)
+    protected function getPickerDateFormat(bool $showTime)
     {
         return 'YYYY-MM-DD' . ($showTime === true ? ' HH:mm' : '');
     }
@@ -261,7 +261,7 @@ class Date
      *
      * @return string
      */
-    protected function getDateFormat($showTime)
+    protected function getDateFormat(bool $showTime)
     {
         return $showTime === true ? \ACP3\Core\Date::DEFAULT_DATE_FORMAT_LONG : \ACP3\Core\Date::DEFAULT_DATE_FORMAT_SHORT;
     }

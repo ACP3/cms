@@ -76,8 +76,8 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @param int|array $entryId
-     * @param string    $columnName
+     * @param mixed  $entryId
+     * @param string $columnName
      *
      * @return array
      */

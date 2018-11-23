@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Menus;
 abstract class AbstractFormAction extends \ACP3\Core\Controller\AbstractFormAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Helpers
+     * @var \ACP3\Modules\ACP3\Articles\Helpers|null
      */
     protected $articlesHelpers;
     /**
@@ -65,7 +65,7 @@ abstract class AbstractFormAction extends \ACP3\Core\Controller\AbstractFormActi
      *
      * @return array
      */
-    protected function fetchMenuItemTypes($value = '')
+    protected function fetchMenuItemTypes(string $value = '')
     {
         $menuItemTypes = [
             1 => $this->translator->t('menus', 'module'),

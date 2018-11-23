@@ -73,7 +73,7 @@ class Theme implements ThemePathInterface
     {
         $designs = \glob(ACP3_ROOT_DIR . '/designs/*/info.xml');
 
-        if ($designs === false) {
+        if (\count($designs) === 0) {
             return;
         }
 

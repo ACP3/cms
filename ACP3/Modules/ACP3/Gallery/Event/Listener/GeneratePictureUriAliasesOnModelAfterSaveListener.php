@@ -20,15 +20,15 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
      */
     private $pictureRepository;
     /**
-     * @var Aliases
+     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases|null
      */
     private $aliases;
     /**
-     * @var MetaStatements
+     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements|null
      */
     private $metaStatements;
     /**
-     * @var UriAliasManager
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null
      */
     private $uriAliasManager;
 

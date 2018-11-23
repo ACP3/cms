@@ -27,7 +27,7 @@ class Delete extends Core\Controller\AbstractFormAction
      */
     protected $pictureRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null
      */
     protected $uriAliasManager;
     /**

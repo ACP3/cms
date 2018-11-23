@@ -67,7 +67,7 @@ class Details extends AbstractAction
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->pictureRepository->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
@@ -94,12 +94,12 @@ class Details extends AbstractAction
 
             $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($previousPicture)) {
-                $this->setPreviousPage((int) $previousPicture);
+                $this->setPreviousPage($previousPicture);
             }
 
             $nextPicture = $this->pictureRepository->getNextPictureId($picture['pic'], $picture['gallery_id']);
             if (!empty($nextPicture)) {
-                $this->setNextPage((int) $nextPicture);
+                $this->setNextPage($nextPicture);
             }
 
             return [

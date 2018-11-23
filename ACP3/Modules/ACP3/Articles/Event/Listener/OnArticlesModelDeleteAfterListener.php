@@ -21,11 +21,11 @@ class OnArticlesModelDeleteAfterListener
      */
     protected $articlesCache;
     /**
-     * @var ManageMenuItem
+     * @var \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem|null
      */
     protected $manageMenuItemHelper;
     /**
-     * @var UriAliasManager
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null
      */
     protected $uriAliasManager;
     /**

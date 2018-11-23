@@ -46,13 +46,15 @@ class MenuItemFormFields
      * @param int $selected
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function menusDropDown($selected = 0)
+    protected function menusDropDown(int $selected = 0)
     {
         $menus = $this->menusModel->getAllMenus();
         $cMenus = \count($menus);
         for ($i = 0; $i < $cMenus; ++$i) {
-            $menus[$i]['selected'] = $this->formsHelper->selectEntry('block_id', (int) $menus[$i]['id'], (int) $selected);
+            $menus[$i]['selected'] = $this->formsHelper->selectEntry('block_id', (int) $menus[$i]['id'], $selected);
         }
 
         return $menus;
@@ -66,9 +68,16 @@ class MenuItemFormFields
      * @param int $displayMenuItem
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function createMenuItemFormFields($blockId = 0, $parentId = 0, $leftId = 0, $rightId = 0, $displayMenuItem = 1)
-    {
+    public function createMenuItemFormFields(
+        int $blockId = 0,
+        int $parentId = 0,
+        int $leftId = 0,
+        int $rightId = 0,
+        int $displayMenuItem = 1
+    ) {
         return [
             'blocks' => $this->menusDropDown($blockId),
             'display' => $this->formsHelper->yesNoCheckboxGenerator('display', $displayMenuItem),

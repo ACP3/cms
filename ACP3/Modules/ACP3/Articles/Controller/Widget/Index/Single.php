@@ -51,10 +51,12 @@ class Single extends Core\Controller\AbstractWidgetAction
      * @param int $id
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
-        if ($this->articleRepository->resultExists((int) $id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             return [

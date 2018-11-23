@@ -61,18 +61,18 @@ class RedirectMessages
     /**
      * Sets a redirect messages and redirects to the given internal path.
      *
-     * @param int|bool    $success
+     * @param bool        $isSuccess
      * @param string      $text
      * @param string|null $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function setMessage($success, $text, $path = null)
+    public function setMessage(bool $isSuccess, string $text, ?string $path = null)
     {
         $this->sessionHandler->set(
             'redirect_message',
             [
-                'success' => \is_int($success) ? true : (bool) $success,
+                'success' => $isSuccess,
                 'text' => $text,
             ]
         );

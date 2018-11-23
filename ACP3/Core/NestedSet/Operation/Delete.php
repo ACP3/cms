@@ -20,11 +20,11 @@ class Delete extends AbstractOperation
      */
     public function execute(int $resultId)
     {
-        $nodes = $this->nestedSetRepository->fetchNodeWithSiblings((int) $resultId);
+        $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
         if (!empty($nodes)) {
             $this->db->getConnection()->delete(
                 $this->nestedSetRepository->getTableName(),
-                ['id' => (int) $resultId]
+                ['id' => $resultId]
             );
 
             $this->moveSiblingsOneLevelUp($nodes);

@@ -20,7 +20,7 @@ class ModelSaveEvent extends Event
      */
     private $filteredData;
     /**
-     * @var int|null
+     * @var int|null|array
      */
     private $entryId;
     /**

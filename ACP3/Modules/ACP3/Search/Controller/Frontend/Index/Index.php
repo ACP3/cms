@@ -62,7 +62,7 @@ class Index extends Core\Controller\AbstractFormAction
         if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all());
         } elseif (!empty($q)) {
-            return $this->executePost(['search_term' => (string) $q]);
+            return $this->executePost(['search_term' => $q]);
         }
 
         $searchAreas = [

@@ -41,13 +41,15 @@ class Latest extends Core\Controller\AbstractWidgetAction
      * @param int $categoryId
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($categoryId = 0)
+    public function execute(int $categoryId = 0)
     {
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
         if (!empty($categoryId)) {
-            $news = $this->newsRepository->getLatestByCategoryId((int) $categoryId, $this->date->getCurrentDateTime());
+            $news = $this->newsRepository->getLatestByCategoryId($categoryId, $this->date->getCurrentDateTime());
         } else {
             $news = $this->newsRepository->getLatest($this->date->getCurrentDateTime());
         }

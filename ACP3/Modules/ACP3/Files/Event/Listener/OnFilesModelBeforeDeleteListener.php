@@ -33,11 +33,11 @@ class OnFilesModelBeforeDeleteListener
      */
     protected $cache;
     /**
-     * @var CommentsHelpers
+     * @var \ACP3\Modules\ACP3\Comments\Helpers|null
      */
     protected $commentsHelpers;
     /**
-     * @var UriAliasManager
+     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null
      */
     protected $uriAliasManager;
     /**

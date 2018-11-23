@@ -23,7 +23,7 @@ class Create extends Core\Controller\AbstractFormAction
      */
     protected $formValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
+     * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe|null
      */
     protected $newsletterSubscribeHelper;
     /**

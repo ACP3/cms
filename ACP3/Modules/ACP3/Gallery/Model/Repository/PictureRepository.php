@@ -66,16 +66,18 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int $galleryId
      *
-     * @return int
+     * @return int|null
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLastPictureByGalleryId(int $galleryId)
+    public function getLastPictureByGalleryId(int $galleryId): ?int
     {
-        return (int) $this->db->fetchColumn(
+        $result = $this->db->fetchColumn(
             'SELECT MAX(pic) FROM ' . $this->getTableName() . ' WHERE gallery_id = ?',
             [$galleryId]
         );
+
+        return $result === null ? null : (int) $result;
     }
 
     /**
@@ -104,32 +106,36 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
      * @param int $pictureNumber
      * @param int $galleryId
      *
-     * @return int
+     * @return int|null
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getPreviousPictureId(int $pictureNumber, int $galleryId)
+    public function getPreviousPictureId(int $pictureNumber, int $galleryId): ?int
     {
-        return (int) $this->db->fetchColumn(
+        $result = $this->db->fetchColumn(
             'SELECT id FROM ' . $this->getTableName() . ' WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1',
             [$pictureNumber, $galleryId]
         );
+
+        return $result === null ? null : (int) $result;
     }
 
     /**
      * @param int $pictureNumber
      * @param int $galleryId
      *
-     * @return int
+     * @return int|null
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getNextPictureId(int $pictureNumber, int $galleryId)
+    public function getNextPictureId(int $pictureNumber, int $galleryId): ?int
     {
-        return (int) $this->db->fetchColumn(
+        $result = $this->db->fetchColumn(
             'SELECT id FROM ' . $this->getTableName() . ' WHERE pic > ? AND gallery_id = ? ORDER BY pic ASC LIMIT 1',
             [$pictureNumber, $galleryId]
         );
+
+        return $result === null ? null : (int) $result;
     }
 
     /**

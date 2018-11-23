@@ -23,9 +23,9 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
      *
      * @return $this
      */
-    public function setMenuId($menuId)
+    public function setMenuId(int $menuId)
     {
-        $this->menuId = (int) $menuId;
+        $this->menuId = $menuId;
 
         return $this;
     }
