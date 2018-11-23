@@ -7,9 +7,6 @@ parameters:
   bootstrap: %rootDir%/../../../tests/bootstrap.php
   excludes_analyse:
     - %rootDir%/../../../ACP3/Modules/ACP3/Filemanager/libraries/*
-  ignoreErrors:
-    - '#Instantiated class ACP3ServiceContainer not found\.#'
-    - '#Call to method set\(\) on an unknown class ACP3ServiceContainer\.#'
   includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon
