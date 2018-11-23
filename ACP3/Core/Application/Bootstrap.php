@@ -23,6 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Bootstrap extends AbstractBootstrap
 {
+    private $containerName = 'ACP3ServiceContainer';
+
     /**
      * {@inheritdoc}
      */
@@ -50,7 +52,7 @@ class Bootstrap extends AbstractBootstrap
 
         require_once $cache->getPath();
 
-        $this->container = new \ACP3ServiceContainer();
+        $this->container = new $this->containerName();
         $this->container->set('core.environment.application_path', $this->appPath);
         $this->container->set('core.http.symfony_request', $symfonyRequest);
     }
