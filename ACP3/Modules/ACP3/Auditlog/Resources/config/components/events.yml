@@ -2,6 +2,7 @@ services:
   auditlog.events.on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Auditlog\Event\Listener\OnModelAfterSaveListener
     arguments:
+      - '@core.logger.system_logger'
       - '@core.date'
       - '@users.model.user_model'
       - '@system.model.modulerepository'
