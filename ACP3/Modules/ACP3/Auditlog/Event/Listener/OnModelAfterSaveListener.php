@@ -13,6 +13,7 @@ use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
 use Doctrine\DBAL\DBALException;
+use Psr\Log\LoggerInterface;
 
 class OnModelAfterSaveListener
 {
@@ -32,16 +33,22 @@ class OnModelAfterSaveListener
      * @var \ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository
      */
     private $auditLogRepository;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     /**
      * OnModelAfterSaveListener constructor.
      *
+     * @param \Psr\Log\LoggerInterface                                        $logger
      * @param \ACP3\Core\Date                                                 $date
      * @param \ACP3\Modules\ACP3\Users\Model\UserModel                        $userModel
      * @param \ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface      $moduleAwareRepository
      * @param \ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository $auditLogRepository
      */
     public function __construct(
+        LoggerInterface $logger,
         Date $date,
         UserModel $userModel,
         ModuleAwareRepositoryInterface $moduleAwareRepository,
@@ -51,6 +58,7 @@ class OnModelAfterSaveListener
         $this->userModel = $userModel;
         $this->moduleAwareRepository = $moduleAwareRepository;
         $this->auditLogRepository = $auditLogRepository;
+        $this->logger = $logger;
     }
 
     public function __invoke(ModelSaveEvent $event): void
@@ -74,6 +82,7 @@ class OnModelAfterSaveListener
                 ]);
             }
         } catch (DBALException $e) {
+            $this->logger->error($e->getMessage(), $e->getTrace());
         }
     }
 
