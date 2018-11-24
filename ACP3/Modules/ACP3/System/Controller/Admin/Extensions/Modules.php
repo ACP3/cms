@@ -80,7 +80,7 @@ class Modules extends Core\Controller\AbstractFormAction
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute(string $action = '', string $dir = '')
+    public function execute(?string $action = null, string $dir = '')
     {
         switch ($action) {
             case 'activate':
