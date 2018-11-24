@@ -10,9 +10,11 @@
 {/if}
 
 {block CONTENT}
-    {$page.toc}
-    {$page.text|rewrite_uri}
-    {event name="articles.event.article_details_after" id=$page.id title=$page.title}
+    <div class="clearfix">
+        {$page.toc}
+        {$page.text|rewrite_uri}
+        {event name="articles.event.article_details_after" id=$page.id title=$page.title}
+    </div>
     {if !empty($page.next) || !empty($page.previous)}
         <hr>
         <div class="row no-gutters">
