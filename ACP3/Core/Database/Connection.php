@@ -54,8 +54,6 @@ class Connection
      * @param string             $appMode
      * @param array              $connectionParams
      * @param string             $tablePrefix
-     *
-     * @throws \Doctrine\DBAL\DBALException
      */
     public function __construct(
         LoggerInterface $logger,
@@ -71,15 +69,19 @@ class Connection
         $this->appMode = $appMode;
         $this->connectionParams = $connectionParams;
         $this->prefix = $tablePrefix;
-
-        $this->connection = $this->connect();
     }
 
     /**
      * @return DBAL\Connection
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getConnection()
     {
+        if ($this->connection === null) {
+            $this->connection = $this->connect();
+        }
+
         return $this->connection;
     }
 
@@ -199,7 +201,7 @@ class Connection
         int $lifetime = 0,
         ?string $cacheKey = null
     ) {
-        return $this->connection->executeQuery(
+        return $this->getConnection()->executeQuery(
             $query,
             $params,
             $types,
@@ -217,14 +219,14 @@ class Connection
      */
     public function executeTransactionalQuery(callable $callback)
     {
-        $this->connection->beginTransaction();
+        $this->getConnection()->beginTransaction();
 
         try {
             $result = $callback();
 
-            $this->connection->commit();
+            $this->getConnection()->commit();
         } catch (DBAL\DBALException $e) {
-            $this->connection->rollBack();
+            $this->getConnection()->rollBack();
 
             throw $e;
         }
