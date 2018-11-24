@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\TableOfContents;
 use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
-class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
+class PageBreaks extends Core\Helpers\PageBreaks
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
@@ -40,7 +40,7 @@ class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
     /**
      * {@inheritdoc}
      */
-    public function splitTextIntoPages($text, $baseUrlPath)
+    public function splitTextIntoPages(string $text, string $baseUrlPath)
     {
         $pages = parent::splitTextIntoPages($text, $baseUrlPath);
 

@@ -72,22 +72,24 @@ class TableOfContents
      *
      * @return string
      */
-    public function generateTOC(array $pages, $baseUrlPath = '', $titlesFromDb = false, $customUris = false)
-    {
+    public function generateTOC(
+        array $pages,
+        string $baseUrlPath = '',
+        bool $titlesFromDb = false,
+        bool $customUris = false
+    ) {
         if (!empty($pages)) {
             $baseUrlPath = $baseUrlPath === '' ? $this->request->getUriWithoutPages() : $baseUrlPath;
             $toc = [];
-            $i = 0;
-            foreach ($pages as $page) {
-                $pageNumber = $i + 1;
-                $toc[$i]['title'] = $this->fetchTocPageTitle($page, $pageNumber, $titlesFromDb);
-                $toc[$i]['uri'] = $this->fetchTocPageUri($customUris, $page, $pageNumber, $baseUrlPath);
-                $toc[$i]['selected'] = $this->isCurrentPage($customUris, $page, $pageNumber, $i);
+            foreach ($pages as $index => $page) {
+                $pageNumber = $index + 1;
+                $toc[$index]['title'] = $this->fetchTocPageTitle($page, $pageNumber, $titlesFromDb);
+                $toc[$index]['uri'] = $this->fetchTocPageUri($customUris, $page, $pageNumber, $baseUrlPath);
+                $toc[$index]['selected'] = $this->isCurrentPage($customUris, $page, $pageNumber, $index);
 
-                if ($toc[$i]['selected'] === true) {
-                    $this->title->setPageTitlePostfix($toc[$i]['title']);
+                if ($toc[$index]['selected'] === true) {
+                    $this->title->setPageTitlePostfix($toc[$index]['title']);
                 }
-                ++$i;
             }
             $this->view->assign('toc', $toc);
 
@@ -105,7 +107,7 @@ class TableOfContents
      *
      * @return array
      */
-    protected function getHtmlAttributes($string)
+    protected function getHtmlAttributes(string $string)
     {
         $matches = [];
         \preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
@@ -129,7 +131,7 @@ class TableOfContents
      *
      * @return bool
      */
-    protected function isCurrentPage($customUris, $page, $pageNumber, $currentIndex)
+    protected function isCurrentPage(bool $customUris, $page, int $pageNumber, int $currentIndex)
     {
         if ($customUris === true) {
             if (\is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery())
@@ -153,7 +155,7 @@ class TableOfContents
      *
      * @return string
      */
-    protected function fetchTocPageTitle($page, $pageNumber, $titlesFromDb)
+    protected function fetchTocPageTitle($page, int $pageNumber, bool $titlesFromDb)
     {
         if ($titlesFromDb === false && \is_array($page) === false) {
             $page = $this->getHtmlAttributes($page);
@@ -172,7 +174,7 @@ class TableOfContents
      *
      * @return string
      */
-    protected function fetchTocPageUri($customUris, $page, $pageNumber, $requestQuery)
+    protected function fetchTocPageUri(bool $customUris, $page, int $pageNumber, string $requestQuery)
     {
         if ($customUris === true && \is_array($page) === true) {
             return $page['uri'];

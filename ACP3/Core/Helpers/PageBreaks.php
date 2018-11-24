@@ -49,7 +49,7 @@ class PageBreaks
      *
      * @return array
      */
-    public function splitTextIntoPages($text, $baseUrlPath)
+    public function splitTextIntoPages(string $text, string $baseUrlPath)
     {
         $matches = [];
         \preg_match_all($this->getSplitPagesRegex(), $text, $matches);
