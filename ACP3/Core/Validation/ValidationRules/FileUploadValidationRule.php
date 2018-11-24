@@ -29,7 +29,7 @@ class FileUploadValidationRule extends AbstractValidationRule
     protected function isFileUpload($data)
     {
         if ($data instanceof UploadedFile) {
-            return $data->isValid() && $data->getClientSize() > 0;
+            return $data->isValid() && $data->getSize() > 0;
         }
 
         return \is_array($data) && !empty($data['tmp_name']) && !empty($data['size']) && $data['error'] === UPLOAD_ERR_OK;
