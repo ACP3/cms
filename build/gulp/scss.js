@@ -15,7 +15,6 @@ module.exports = (gulp, plugins) => {
             .src(
                 [
                     './ACP3/Modules/*/*/Resources/Assets/scss/style.scss',
-                    './ACP3/Modules/*/*/Resources/Assets/scss/append.scss',
                     './designs/*/*/Assets/scss/*.scss',
                     './designs/*/Assets/scss/*.scss',
                     './installation/design/Assets/scss/*.scss',

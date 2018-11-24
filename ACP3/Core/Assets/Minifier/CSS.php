@@ -113,17 +113,6 @@ class CSS extends AbstractMinifier
             if ('' !== $stylesheet && $module['dir'] !== 'System') {
                 $this->stylesheets[] = $stylesheet;
             }
-
-            // Append custom styles to the default module styling
-            $appendStylesheet = $this->fileResolver->getStaticAssetPath(
-                $modulePath,
-                $designPath,
-                static::ASSETS_PATH_CSS,
-                'append.css'
-            );
-            if ('' !== $appendStylesheet) {
-                $this->stylesheets[] = $appendStylesheet;
-            }
         }
     }
 }
