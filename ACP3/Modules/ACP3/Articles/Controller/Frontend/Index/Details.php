@@ -71,7 +71,7 @@ class Details extends Core\Controller\AbstractFrontendAction
 
             $article = $this->articlesCache->getCache($id);
 
-            $this->breadcrumb->append($article['title']);
+            $this->breadcrumb->append($article['title'], $this->request->getUriWithoutPages());
             $this->title->setPageTitle($article['title']);
 
             if ($this->view->templateExists($article['layout'])) {
