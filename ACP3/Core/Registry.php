@@ -17,7 +17,7 @@ class Registry
      * @param string $key
      * @param mixed  $value
      */
-    public function set($key, $value)
+    public function set(string $key, $value): void
     {
         if (isset(self::$registry[$key]) === false) {
             self::$registry[$key] = $value;
@@ -29,7 +29,7 @@ class Registry
      *
      * @return bool
      */
-    public function has($key)
+    public function has(string $key): bool
     {
         return isset(self::$registry[$key]);
     }
@@ -38,11 +38,11 @@ class Registry
      * Get an object from the registry.
      *
      * @param string $key
-     * @param null   $default
+     * @param mixed  $default
      *
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         return $this->has($key) ? self::$registry[$key] : $default;
     }
@@ -52,7 +52,7 @@ class Registry
      *
      * @param string $key
      */
-    public function remove($key)
+    public function remove(string $key): void
     {
         if (isset(self::$registry[$key])) {
             unset(self::$registry[$key]);
