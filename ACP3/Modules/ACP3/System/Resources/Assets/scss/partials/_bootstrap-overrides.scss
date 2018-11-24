@@ -1,3 +1,6 @@
+@import "../../../../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../../../../node_modules/bootstrap/scss/variables";
+
 .control-label,
 .col-form-label {
   overflow: hidden;
@@ -6,7 +9,7 @@
 
   &.required {
     &:after {
-      color: #dc3545;
+      color: $red;
       content: ' *';
       margin-left: 5px;
       position: absolute;

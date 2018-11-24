@@ -1,0 +1,30 @@
+@import "../../../../../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../../../../../node_modules/bootstrap/scss/variables";
+
+/* ACP */
+#adm-list {
+  .navbar-text {
+    margin: 0;
+
+    a {
+      color: $gray-900;
+    }
+
+    .btn-link {
+      border: 0;
+      margin-left: $spacer * 0.5;
+      padding: 0;
+    }
+
+    .fas {
+      font-size: 1.25rem;
+    }
+  }
+
+  a,
+  input,
+  button {
+    margin: 0 0 0 ($spacer * 0.5);
+    float: right;
+  }
+}

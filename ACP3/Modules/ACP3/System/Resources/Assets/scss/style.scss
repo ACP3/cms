@@ -1,9 +1,9 @@
-@import "modules/ajax-loading-layer";
-@import "modules/content-elements";
-@import "modules/cookie-consent";
-@import "modules/admin";
-@import "modules/datagrid";
-@import "modules/bootstrap-overrides";
+@import "partials/ajax-loading-layer";
+@import "partials/content-elements";
+@import "partials/cookie-consent";
+@import "partials/admin";
+@import "partials/datagrid";
+@import "partials/bootstrap-overrides";
 
 /* Position Bootstrap modal dialogs statically */
 .modal {
