@@ -4,7 +4,6 @@ services:
     arguments:
       - '@core.environment.application_path'
       - '@gallery.helpers.thumbnail_generator'
-      - '@service_container'
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picturerepository'
     tags:

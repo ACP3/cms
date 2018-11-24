@@ -13,7 +13,6 @@ use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,10 +35,6 @@ class GenerateThumbnailsCommand extends Command
      */
     private $thumbnailGenerator;
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-    /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     private $appPath;
@@ -47,7 +42,6 @@ class GenerateThumbnailsCommand extends Command
     public function __construct(
         ApplicationPath $appPath,
         ThumbnailGenerator $thumbnailGenerator,
-        ContainerInterface $container,
         GalleryRepository $galleryRepository,
         PictureRepository $galleryPicturesRepository
     ) {
@@ -56,7 +50,6 @@ class GenerateThumbnailsCommand extends Command
         $this->galleryRepository = $galleryRepository;
         $this->galleryPicturesRepository = $galleryPicturesRepository;
         $this->thumbnailGenerator = $thumbnailGenerator;
-        $this->container = $container;
         $this->appPath = $appPath;
     }
 
@@ -141,7 +134,6 @@ class GenerateThumbnailsCommand extends Command
      */
     private function generateThumbnail(string $pictureFileName, string $action): void
     {
-        $image = $this->container->get('core.image');
         $this->thumbnailGenerator->generateThumbnail($pictureFileName, $action);
     }
 }
