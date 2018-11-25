@@ -41,6 +41,18 @@ class DataProcessor
             }
         }
 
+        $missingColumns = \array_diff(
+            \array_keys($columnConstraints),
+            \array_intersect(
+                \array_keys($columnData),
+                \array_keys($columnConstraints)
+            )
+        );
+
+        foreach ($missingColumns as $columnName) {
+            $data[$columnName] = $this->factory->getStrategy($columnConstraints[$columnName])->getDefaultValue();
+        }
+
         return $data;
     }
 }

@@ -18,4 +18,12 @@ class DoubleColumnType implements ColumnTypeStrategyInterface
     {
         return (float) $value;
     }
+
+    /**
+     * @return string|int
+     */
+    public function getDefaultValue()
+    {
+        return 0;
+    }
 }

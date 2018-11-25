@@ -18,4 +18,12 @@ class RawColumnType implements ColumnTypeStrategyInterface
     {
         return $value;
     }
+
+    /**
+     * @return string|int
+     */
+    public function getDefaultValue()
+    {
+        return '';
+    }
 }

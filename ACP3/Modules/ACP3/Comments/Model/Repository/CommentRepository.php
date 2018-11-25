@@ -153,6 +153,6 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
      */
     public function getCommentsGroupedByModule()
     {
-        return $this->db->fetchAll('SELECT c.module_id, m.name AS module, COUNT(c.module_id) AS `comments_count` FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) GROUP BY c.module_id ORDER BY m.name');
+        return $this->db->fetchAll('SELECT c.module_id, m.name AS module, COUNT(c.module_id) AS `comments_count` FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) GROUP BY c.module_id, m.name ORDER BY m.name');
     }
 }

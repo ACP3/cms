@@ -147,7 +147,6 @@ class AclInstaller implements InstallerInterface
         foreach ($roles as $role) {
             foreach ($privileges as $privilege) {
                 $insertValues = [
-                    'id' => '',
                     'role_id' => $role['id'],
                     'module_id' => $moduleId,
                     'privilege_id' => $privilege['id'],

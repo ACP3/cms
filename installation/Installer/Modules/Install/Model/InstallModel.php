@@ -205,7 +205,7 @@ class InstallModel
             "INSERT INTO
                 `{pre}users`
             VALUES
-                (1, 1, {$db->getConnection()->quote($formData['user_name'])}, '{$this->secure->generateSaltedPassword($salt, $formData['user_pwd'], 'sha512')}', '{$salt}', '', 0, '', '1', '', 0, '{$formData['mail']}', 0, '', '', '', '', '', '', '', '', 0, 0, '{$currentDate}');",
+                (1, 1, {$db->getConnection()->quote($formData['user_name'])}, '{$this->secure->generateSaltedPassword($salt, $formData['user_pwd'], 'sha512')}', '{$salt}', '', 0, '', 1, '', 0, '{$formData['mail']}', 0, '', '', '', '', '', '', '', 0, 0, 0, '{$currentDate}');",
             'INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);',
         ];
 

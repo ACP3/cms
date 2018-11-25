@@ -16,6 +16,14 @@ class BooleanColumnType implements ColumnTypeStrategyInterface
      */
     public function doEscape($value)
     {
-        return (bool) $value;
+        return (int) ((bool) $value);
+    }
+
+    /**
+     * @return string|int
+     */
+    public function getDefaultValue()
+    {
+        return 0;
     }
 }

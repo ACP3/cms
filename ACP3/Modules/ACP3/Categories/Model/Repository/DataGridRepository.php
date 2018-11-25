@@ -114,7 +114,17 @@ class DataGridRepository extends AbstractDataGridRepository
 
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->addGroupBy('c.left_id');
+        $queryBuilder
+            ->addGroupBy('c.left_id')
+            ->addGroupBy('c.id')
+            ->addGroupBy('c.root_id')
+            ->addGroupBy('c.parent_id')
+            ->addGroupBy('c.right_id')
+            ->addGroupBy('c.title')
+            ->addGroupBy('c.picture')
+            ->addGroupBy('c.description')
+            ->addGroupBy('c.module_id')
+            ->addGroupBy('m.name');
     }
 
     /**

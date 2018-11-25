@@ -15,4 +15,9 @@ interface ColumnTypeStrategyInterface
      * @return mixed
      */
     public function doEscape($value);
+
+    /**
+     * @return string|int
+     */
+    public function getDefaultValue();
 }

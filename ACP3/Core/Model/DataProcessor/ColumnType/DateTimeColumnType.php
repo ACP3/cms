@@ -35,4 +35,12 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
     {
         return $this->date->toSQL($value);
     }
+
+    /**
+     * @return string|int
+     */
+    public function getDefaultValue()
+    {
+        return $this->doEscape('now');
+    }
 }

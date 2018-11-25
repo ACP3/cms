@@ -18,9 +18,9 @@ class BooleanColumnTypeTest extends AbstractColumnTypeTest
 
     public function testDoEscape()
     {
-        $this->assertInternalType('bool', $this->columnType->doEscape('foo'));
-        $this->assertInternalType('bool', $this->columnType->doEscape(0));
-        $this->assertInternalType('bool', $this->columnType->doEscape('0'));
-        $this->assertInternalType('bool', $this->columnType->doEscape(null));
+        $this->assertInternalType('int', $this->columnType->doEscape('foo'));
+        $this->assertInternalType('int', $this->columnType->doEscape(0));
+        $this->assertInternalType('int', $this->columnType->doEscape('0'));
+        $this->assertInternalType('int', $this->columnType->doEscape(null));
     }
 }

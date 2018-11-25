@@ -35,4 +35,12 @@ class TextColumnType implements ColumnTypeStrategyInterface
     {
         return $this->secure->strEncode($value);
     }
+
+    /**
+     * @return string|int
+     */
+    public function getDefaultValue()
+    {
+        return '';
+    }
 }

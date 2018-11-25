@@ -102,7 +102,14 @@ class RolesDataGridRepository extends AbstractDataGridRepository
 
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->addGroupBy('r.left_id');
+        $queryBuilder
+            ->addGroupBy('r.left_id')
+            ->addGroupBy('r.id')
+            ->addGroupBy('r.name')
+            ->addGroupBy('r.root_id')
+            ->addGroupBy('r.parent_id')
+            ->addGroupBy('r.right_id')
+        ;
     }
 
     /**

@@ -87,7 +87,7 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
                        FROM {$this->getTableName()} AS g
                   LEFT JOIN {$this->getTableName(PictureRepository::TABLE_NAME)} AS p ON(g.id = p.gallery_id)
                    {$where}
-                   GROUP BY g.id
+                   GROUP BY g.id, g.active, g.start, g.end, g.updated_at, g.title, g.description, g.user_id
                    ORDER BY g.start DESC,
                             g.end DESC,
                             g.id DESC

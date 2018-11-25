@@ -14,7 +14,7 @@ trait CreateRawColumnTypeMockTrait
     public function getRawColumnTypeInstance(\PHPUnit\Framework\TestCase $testCase)
     {
         return $testCase->getMockBuilder(ColumnTypeStrategyInterface::class)
-            ->setMethods(['doEscape'])
+            ->setMethods(['doEscape', 'getDefaultValue'])
             ->getMock();
     }
 }
