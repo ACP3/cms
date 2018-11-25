@@ -57,7 +57,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     protected function addToModulesTable(string $moduleName, int $schemaVersion)
     {
         $insertValues = [
-            'id' => '',
             'name' => $moduleName,
             'version' => $schemaVersion,
             'active' => 1,
@@ -85,7 +84,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
                 $moduleId = $this->getModuleId($moduleName);
                 foreach ($settings as $key => $value) {
                     $insertValues = [
-                        'id' => '',
                         'module_id' => $moduleId,
                         'name' => $key,
                         'value' => $value,
@@ -117,7 +115,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     public function uninstall(SchemaInterface $schema)
     {
         return $this->executeSqlQueries($schema->removeTables(), $schema->getModuleName()) &&
-        $this->removeFromModulesTable($schema->getModuleName());
+            $this->removeFromModulesTable($schema->getModuleName());
     }
 
     /**

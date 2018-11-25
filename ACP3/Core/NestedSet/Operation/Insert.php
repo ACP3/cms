@@ -24,6 +24,7 @@ class Insert extends AbstractOperation
             // Select the last result set
             $maxRightId = $this->fetchMaximumRightId($insertValues[$this->nestedSetRepository::BLOCK_COLUMN_NAME]);
 
+            $insertValues['root_id'] = 0;
             $insertValues['left_id'] = $maxRightId + 1;
             $insertValues['right_id'] = $maxRightId + 2;
 

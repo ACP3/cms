@@ -18,4 +18,12 @@ class IntegerColumnType implements ColumnTypeStrategyInterface
     {
         return (int) $value;
     }
+
+    /**
+     * @return string|int
+     */
+    public function getDefaultValue()
+    {
+        return 0;
+    }
 }

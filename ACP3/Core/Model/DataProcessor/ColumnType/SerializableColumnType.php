@@ -18,4 +18,12 @@ class SerializableColumnType implements ColumnTypeStrategyInterface
     {
         return \serialize($value);
     }
+
+    /**
+     * @return string|int
+     */
+    public function getDefaultValue()
+    {
+        return \serialize('');
+    }
 }

@@ -22,4 +22,9 @@ class IntegerNullableColumnType extends IntegerColumnType
 
         return $value;
     }
+
+    public function getDefaultValue()
+    {
+        return null;
+    }
 }

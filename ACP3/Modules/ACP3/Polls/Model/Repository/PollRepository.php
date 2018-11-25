@@ -63,7 +63,7 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 
         return $this->db->fetchAll(
-            'SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt,
+            'SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id, p.start, p.end, p.title ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt,
             ['time' => $time]
         );
     }
@@ -80,7 +80,7 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
         $period = $this->getPublicationPeriod('p.');
 
         return $this->db->fetchAssoc(
-            'SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id ORDER BY p.start DESC LIMIT 1',
+            'SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id, p.title, p.multiple ORDER BY p.start DESC LIMIT 1',
             ['time' => $time]
         );
     }
