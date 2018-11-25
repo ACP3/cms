@@ -6,9 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
+- Changed the establishing of the connection to the database to be lazy 
 - Changed the loading of Smarty plugins to be lazy
 - Changed the loading of validation rules inside the Validator class to be lazy
 - Changed the loading of column renderers inside the DataGrid class to be lazy
+
+### Fixed
+- when an erroneously generated breadcrumb when paginating an article 
 
 ## [4.32.1] - 2018-11-21
 ### Added
