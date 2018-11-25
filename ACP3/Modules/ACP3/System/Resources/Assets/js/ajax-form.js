@@ -87,7 +87,8 @@
             return this.isFormValid;
         },
         removeAllPreviousErrors: function (form) {
-            $(form).find('.is-invalid, .invalid-feedback').remove();
+            $(form).find('.is-invalid').removeClass('.is-invalid');
+            $(form).find('.invalid-feedback').remove();
         },
         checkFormElementsForErrors: function (form) {
             for (let i = 0; i < form.elements.length; i++) {
