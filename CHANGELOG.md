@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- restricted the symfony components to version 4.1.x so that the ACP3 doesn't break
+
 ## [4.33.1] - 2018-11-30
 ### Added
 - added support for the new (much more stricter) configuration for MySQL version > 5.7.4
