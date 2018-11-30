@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- added support for the new (much more stricter) configuration for MySQL version > 5.7.4
+- added a simple docker-compose development environment
+
 ## [4.33.0] - 2018-11-25
 ### Changed
 - Changed the establishing of the connection to the database to be lazy 
