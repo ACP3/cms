@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.33.1] - 2018-11-30
 ### Added
 - added support for the new (much more stricter) configuration for MySQL version > 5.7.4
 - added a simple docker-compose development environment
@@ -774,7 +774,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.33.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.33.1...4.x
+[4.33.1]: https://gitlab.com/ACP3/cms/compare/v4.33.0...v4.33.1
 [4.33.0]: https://gitlab.com/ACP3/cms/compare/v4.32.1...v4.33.0
 [4.32.1]: https://gitlab.com/ACP3/cms/compare/v4.32.0...v4.32.1
 [4.32.0]: https://gitlab.com/ACP3/cms/compare/v4.31.1...v4.32.0
