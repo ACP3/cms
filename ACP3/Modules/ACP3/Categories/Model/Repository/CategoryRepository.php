@@ -76,7 +76,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     public function getAllByModuleName(string $moduleName)
     {
         return $this->db->fetchAll(
-            'SELECT c.*, COUNT(*)-1 AS `level`, ROUND((c.right_id - c.left_id - 1) / 2) AS children FROM ' . $this->getTableName() . ' AS main, ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE m.name = ? AND c.left_id BETWEEN main.left_id AND main.right_id GROUP BY c.left_id, c.id, c.title, c.picture, c.description, c.module_id ORDER BY c.left_id ASC',
+            'SELECT c.*, COUNT(*)-1 AS `level`, ROUND((c.right_id - c.left_id - 1) / 2) AS children FROM ' . $this->getTableName() . ' AS main, ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE m.name = ? AND c.left_id BETWEEN main.left_id AND main.right_id GROUP BY c.left_id, c.right_id, c.root_id, c.parent_id, c.id, c.title, c.picture, c.description, c.module_id ORDER BY c.left_id ASC',
             [$moduleName]
         );
     }

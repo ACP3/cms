@@ -48,6 +48,12 @@ class GalleryDataGridRepository extends AbstractDataGridRepository
      */
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->addGroupBy('main.id');
+        $queryBuilder->addGroupBy([
+            'main.id',
+            'main.active',
+            'main.start',
+            'main.end',
+            'main.title',
+        ]);
     }
 }

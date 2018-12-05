@@ -65,7 +65,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
         return $this->db->fetchColumn(
-            'SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' ORDER BY `start` DESC, `end` DESC, `id` DESC',
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . $where . ' GROUP BY `id` ORDER BY `start` DESC, `end` DESC, `id` DESC',
             ['time' => $time, 'active' => 1]
         );
     }
@@ -83,7 +83,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
         return (int) $this->db->fetchColumn(
-            'SELECT COUNT(*) FROM ' . $this->getTableName() . " WHERE `category_id` IN(:categoryId) {$where} ORDER BY `start` DESC, `end` DESC, `id` DESC",
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . " WHERE `category_id` IN(:categoryId) {$where} GROUP BY `id` ORDER BY `start` DESC, `end` DESC, `id` DESC",
             ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
             0,
             ['time' => \PDO::PARAM_STR, 'categoryId' => \Doctrine\DBAL\Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
