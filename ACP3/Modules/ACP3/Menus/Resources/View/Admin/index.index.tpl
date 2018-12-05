@@ -83,7 +83,7 @@
                             <td>{$row.id}</td>
                             {if $can_delete_item === true || $can_edit_item === true}
                                 <td class="datagrid-column datagrid-column__actions">
-                                    <div class="btn-group pull-right">
+                                    <div class="datagrid-column__action-buttons">
                                         {if $can_edit_item === true}
                                             <a href="{uri args="acp/menus/items/edit/id_`$row.id`"}" class="btn btn-default btn-xs" title="{lang t="menus|admin_items_edit"}">
                                                 <i class="glyphicon glyphicon-edit"></i>
