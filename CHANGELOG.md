@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed some more bugs related to MySQL/MariaDB servers configured in TRADITIONAL sql_mode + ONLY_FULL_GROUP_BY
+- fixed a minor styling bug in the menu items data grid
+
 ## [4.33.2] - 2018-12-01
 ### Changed
 - restricted the symfony components to version 4.1.x so that the ACP3 doesn't break
