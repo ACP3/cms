@@ -46,6 +46,6 @@ class CommentsByModuleDataGridRepository extends AbstractDataGridRepository
      */
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->addGroupBy('main.module_id');
+        $queryBuilder->addGroupBy(['main.module_id', 'm.name']);
     }
 }
