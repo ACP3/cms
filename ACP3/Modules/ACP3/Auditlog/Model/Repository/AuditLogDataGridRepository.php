@@ -33,6 +33,6 @@ class AuditLogDataGridRepository extends AbstractDataGridRepository
 
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->addGroupBy('main.table_name');
+        $queryBuilder->addGroupBy(['main.table_name', 'main.module_id', 'm.name']);
     }
 }
