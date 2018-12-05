@@ -23,7 +23,7 @@
     "acp3/module-permissions": "^4.33.1",
     "acp3/module-system": "^4.33.0",
     "acp3/module-users": "^4.33.0",
-    "acp3/module-categories": "^4.33.1"
+    "acp3/module-categories": "^4.33.3"
   },
   "suggest": {
     "acp3/module-seo": "Provides additional SEO capabilities"

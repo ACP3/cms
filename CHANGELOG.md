@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.33.3] - 2018-12-05
 ### Fixed
 - fixed some more bugs related to MySQL/MariaDB servers configured in TRADITIONAL sql_mode + ONLY_FULL_GROUP_BY
 - fixed a minor styling bug in the menu items data grid
@@ -783,7 +783,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.33.2...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.33.3...4.x
+[4.33.3]: https://gitlab.com/ACP3/cms/compare/v4.33.2...v4.33.3
 [4.33.2]: https://gitlab.com/ACP3/cms/compare/v4.33.1...v4.33.2
 [4.33.1]: https://gitlab.com/ACP3/cms/compare/v4.33.0...v4.33.1
 [4.33.0]: https://gitlab.com/ACP3/cms/compare/v4.32.1...v4.33.0
