@@ -193,12 +193,15 @@ class Pagination
 
     /**
      * @return array
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function render()
     {
         if ($this->totalResults > $this->resultsPerPage) {
             $areaPrefix = $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '';
-            $link = $this->router->route($areaPrefix . $this->request->getUriWithoutPages());
+            $link = $areaPrefix . $this->request->getUriWithoutPages();
 
             $this->currentPage = (int) $this->request->getParameters()->get('page', 1);
             $this->totalPages = (int) \ceil($this->totalResults / $this->resultsPerPage);
@@ -212,7 +215,7 @@ class Pagination
             for ($pageNumber = $rangeStart; $pageNumber <= $rangeEnd; ++$pageNumber) {
                 $this->addPageNumber(
                     $pageNumber,
-                    $link . ($pageNumber > 1 ? 'page_' . $pageNumber . '/' : '') . $this->urlFragment,
+                    $link . ($pageNumber > 1 ? 'page_' . $pageNumber . '/' : ''),
                     '',
                     $this->currentPage === $pageNumber
                 );
@@ -225,6 +228,10 @@ class Pagination
         return $this->pagination;
     }
 
+    /**
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
     protected function setMetaStatements()
     {
         if ($this->currentPage > 1) {
@@ -262,13 +269,16 @@ class Pagination
     /**
      * @param string $link
      * @param int    $rangeStart
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function addFirstPageLink(string $link, int $rangeStart): void
     {
         if ($this->totalPages > $this->showFirstLast && $rangeStart > 1) {
             $this->addPageNumber(
                 '&laquo;',
-                $link . $this->urlFragment,
+                $link,
                 $this->translator->t('system', 'first_page'),
                 false,
                 'pagination__first-page'
@@ -315,7 +325,7 @@ class Pagination
     ): array {
         return [
             'page' => $pageNumber,
-            'uri' => $uri,
+            'uri' => $this->router->route($uri) . $this->urlFragment,
             'title' => $title,
             'selected' => (bool) $selected,
             'selector' => $selector,
@@ -324,13 +334,16 @@ class Pagination
 
     /**
      * @param string $link
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function addPreviousPageLink(string $link): void
     {
         if ($this->canShowPreviousPageLink()) {
             $this->addPageNumber(
                 '&lsaquo;',
-                $link . ($this->currentPage - 1 > 1 ? 'page_' . ($this->currentPage - 1) . '/' : '') . $this->urlFragment,
+                $link . ($this->currentPage - 1 > 1 ? 'page_' . ($this->currentPage - 1) . '/' : ''),
                 $this->translator->t('system', 'previous_page'),
                 false,
                 'pagination__previous-page'
@@ -348,13 +361,16 @@ class Pagination
 
     /**
      * @param string $link
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function addNextPageLink(string $link): void
     {
         if ($this->canShowNextPageLink()) {
             $this->addPageNumber(
                 '&rsaquo;',
-                $link . 'page_' . ($this->currentPage + 1) . '/' . $this->urlFragment,
+                $link . 'page_' . ($this->currentPage + 1),
                 $this->translator->t('system', 'next_page'),
                 false,
                 'pagination__next-page'
@@ -373,13 +389,16 @@ class Pagination
     /**
      * @param string $link
      * @param int    $rangeEnd
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function addLastPageLink(string $link, int $rangeEnd): void
     {
         if ($this->totalPages > $this->showFirstLast && $this->totalPages !== $rangeEnd) {
             $this->addPageNumber(
                 '&raquo;',
-                $link . 'page_' . $this->totalPages . '/' . $this->urlFragment,
+                $link . 'page_' . $this->totalPages,
                 $this->translator->t('system', 'last_page'),
                 false,
                 'pagination__last-page'

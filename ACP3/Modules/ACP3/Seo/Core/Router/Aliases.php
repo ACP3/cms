@@ -56,10 +56,20 @@ class Aliases
         }
 
         $path .= (!\preg_match('/\/$/', $path) ? '/' : '');
+        $pathParts = \preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
+        $routeArguments = [];
 
-        return !empty($this->aliasesCache[$path]['alias'])
-            ? $this->aliasesCache[$path]['alias']
-            : ($emptyOnNoResult === true ? '' : $path);
+        while (\count($pathParts) >= 3) {
+            $newPath = \implode('/', $pathParts) . '/';
+            if (!empty($this->aliasesCache[$newPath]['alias'])) {
+                return $this->aliasesCache[$newPath]['alias']
+                    . (!empty($routeArguments) ? '/' . \implode('/', $routeArguments) : '');
+            }
+
+            $routeArguments[] = \array_pop($pathParts);
+        }
+
+        return $emptyOnNoResult === true ? '' : $path;
     }
 
     /**
