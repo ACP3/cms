@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- made the building of the URI aliases a little bit more smarter
+
+### Fixed
+- fixed the links of the pagination if it was displayed on the homepage
+- fixed an incorrect SQL query of the news module
+
 ## [4.33.3] - 2018-12-05
 ### Fixed
 - fixed some more bugs related to MySQL/MariaDB servers configured in TRADITIONAL sql_mode + ONLY_FULL_GROUP_BY
