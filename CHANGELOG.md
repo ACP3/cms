@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
+- allow Symfony 4.2.x components again, as version 4.2.1 fixed the issues the container
 - made the building of the URI aliases a little bit more smarter
 
 ### Fixed
