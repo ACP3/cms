@@ -68,7 +68,7 @@ abstract class AbstractNestedSetModel extends AbstractModel
      */
     public function save(array $rawData, $entryId = null)
     {
-        $filteredData = $this->prepareData($rawData);
+        $filteredData = $this->prepareData($rawData, $entryId);
 
         $isNewEntry = $entryId === null;
         $hasDataChanges = $this->hasDataChanges($filteredData, $entryId);

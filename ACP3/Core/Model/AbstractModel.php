@@ -55,7 +55,7 @@ abstract class AbstractModel
      */
     public function save(array $rawData, $entryId = null)
     {
-        $filteredData = $this->prepareData($rawData);
+        $filteredData = $this->prepareData($rawData, $entryId);
 
         $isNewEntry = $entryId === null;
         $hasDataChanges = $this->hasDataChanges($filteredData, $entryId);
@@ -164,10 +164,16 @@ abstract class AbstractModel
     /**
      * @param array $rawData
      *
+     * @param int|null $entryId
      * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function prepareData(array $rawData)
+    protected function prepareData(array $rawData, ?int $entryId)
     {
+        if ($entryId !== null) {
+            $rawData = \array_merge($this->getOneById($entryId), $rawData);
+        }
+
         return $this->dataProcessor->processColumnData($rawData, $this->getAllowedColumns());
     }
 
