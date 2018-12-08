@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.33.6] - 2018-12-08
 ### Fixed
 - fixed a code style issue
 
@@ -800,7 +800,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.33.5...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.33.6...4.x
+[4.33.6]: https://gitlab.com/ACP3/cms/compare/v4.33.5...v4.33.6
 [4.33.5]: https://gitlab.com/ACP3/cms/compare/v4.33.4...v4.33.5
 [4.33.4]: https://gitlab.com/ACP3/cms/compare/v4.33.3...v4.33.4
 [4.33.3]: https://gitlab.com/ACP3/cms/compare/v4.33.2...v4.33.3
