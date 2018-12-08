@@ -162,10 +162,11 @@ abstract class AbstractModel
     }
 
     /**
-     * @param array $rawData
-     *
+     * @param array    $rawData
      * @param int|null $entryId
+     *
      * @return array
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function prepareData(array $rawData, ?int $entryId)
