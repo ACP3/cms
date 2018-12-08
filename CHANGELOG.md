@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed a code style issue
+
 ## [4.33.5] - 2018-12-08
 ### Fixed
 - fixed a bug when patching an existing DB result using the *Model classes
