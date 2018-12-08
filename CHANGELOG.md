@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed a bug when patching an existing DB result using the *Model classes
+
 ## [4.33.4] - 2018-12-07
 ### Changed
 - allow Symfony 4.2.x components again, as version 4.2.1 fixed the issues the container
