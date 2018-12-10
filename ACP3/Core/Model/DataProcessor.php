@@ -31,19 +31,6 @@ class DataProcessor
      * @param array $columnConstraints
      *
      * @return array
-     *
-     * @deprecated since version 4.33.7, to be removed with version 5.0.0. Use ::escape() instead
-     */
-    public function processColumnData(array $columnData, array $columnConstraints)
-    {
-        return $this->escape($columnData, $columnConstraints);
-    }
-
-    /**
-     * @param array $columnData
-     * @param array $columnConstraints
-     *
-     * @return array
      */
     public function escape(array $columnData, array $columnConstraints)
     {
