@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed a possible TypeError with the CategoryExistsValidationRule
+- fixed the data grid of social sharing module when a MySQL/MariaDB server is configured with ONLY_FULL_GROUP_BY
+
 ## [4.33.6] - 2018-12-08
 ### Fixed
 - fixed a code style issue
