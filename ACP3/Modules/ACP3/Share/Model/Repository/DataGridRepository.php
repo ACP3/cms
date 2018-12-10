@@ -36,6 +36,13 @@ class DataGridRepository extends AbstractDataGridRepository
 
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->addGroupBy('sr.share_id');
+        $queryBuilder->addGroupBy([
+            'sr.share_id',
+            'main.id',
+            'main.uri',
+            'main.active',
+            'main.services',
+            'main.ratings_active',
+        ]);
     }
 }
