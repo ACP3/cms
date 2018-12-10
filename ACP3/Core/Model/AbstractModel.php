@@ -45,6 +45,11 @@ abstract class AbstractModel
         $this->dataProcessor = $dataProcessor;
     }
 
+    protected function getDataProcessor(): DataProcessor
+    {
+        return $this->dataProcessor;
+    }
+
     /**
      * @param array    $rawData
      * @param null|int $entryId
@@ -175,7 +180,7 @@ abstract class AbstractModel
             $rawData = \array_merge($this->getOneById($entryId), $rawData);
         }
 
-        return $this->dataProcessor->processColumnData($rawData, $this->getAllowedColumns());
+        return $this->dataProcessor->escape($rawData, $this->getAllowedColumns());
     }
 
     /**

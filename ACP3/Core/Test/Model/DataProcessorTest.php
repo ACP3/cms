@@ -47,7 +47,7 @@ class DataProcessorTest extends \PHPUnit\Framework\TestCase
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
         ];
-        $this->assertEquals($expected, $this->dataProcessor->processColumnData($columnData, $columnConstraints));
+        $this->assertEquals($expected, $this->dataProcessor->escape($columnData, $columnConstraints));
     }
 
     private function setUpColumnTypeStrategyFactoryExpectations()

@@ -37,8 +37,12 @@ class Duplicate extends AbstractFrontendAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $result = $this->articlesModel->duplicate($id);
 

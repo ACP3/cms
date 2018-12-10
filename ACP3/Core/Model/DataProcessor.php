@@ -31,8 +31,21 @@ class DataProcessor
      * @param array $columnConstraints
      *
      * @return array
+     *
+     * @deprecated since version 4.33.7, to be removed with version 5.0.0. Use ::escape() instead
      */
     public function processColumnData(array $columnData, array $columnConstraints)
+    {
+        return $this->escape($columnData, $columnConstraints);
+    }
+
+    /**
+     * @param array $columnData
+     * @param array $columnConstraints
+     *
+     * @return array
+     */
+    public function escape(array $columnData, array $columnConstraints)
     {
         $data = [];
         foreach ($columnData as $column => $value) {
@@ -41,6 +54,43 @@ class DataProcessor
             }
         }
 
+        foreach ($this->findMissingColumns($columnData, $columnConstraints) as $columnName) {
+            $data[$columnName] = $this->factory->getStrategy($columnConstraints[$columnName])->getDefaultValue();
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array $columnData
+     * @param array $columnConstraints
+     *
+     * @return array
+     */
+    public function unescape(array $columnData, array $columnConstraints)
+    {
+        $data = [];
+        foreach ($columnData as $column => $value) {
+            if (\array_key_exists($column, $columnConstraints)) {
+                $data[$column] = $this->factory->getStrategy($columnConstraints[$column])->doUnescape($value);
+            }
+        }
+
+        foreach ($this->findMissingColumns($columnData, $columnConstraints) as $columnName) {
+            $data[$columnName] = $this->factory->getStrategy($columnConstraints[$columnName])->getDefaultValue();
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array $columnData
+     * @param array $columnConstraints
+     *
+     * @return array
+     */
+    private function findMissingColumns(array $columnData, array $columnConstraints): array
+    {
         $missingColumns = \array_diff(
             \array_keys($columnConstraints),
             \array_intersect(
@@ -49,10 +99,6 @@ class DataProcessor
             )
         );
 
-        foreach ($missingColumns as $columnName) {
-            $data[$columnName] = $this->factory->getStrategy($columnConstraints[$columnName])->getDefaultValue();
-        }
-
-        return $data;
+        return $missingColumns;
     }
 }

@@ -20,6 +20,14 @@ class BooleanColumnType implements ColumnTypeStrategyInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function doUnescape($value)
+    {
+        return $value;
+    }
+
+    /**
      * @return string|int
      */
     public function getDefaultValue()
