@@ -37,6 +37,14 @@ class TextColumnType implements ColumnTypeStrategyInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function doUnescape($value)
+    {
+        return \html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
      * @return string|int
      */
     public function getDefaultValue()

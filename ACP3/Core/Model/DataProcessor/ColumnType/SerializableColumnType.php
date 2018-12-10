@@ -20,6 +20,14 @@ class SerializableColumnType implements ColumnTypeStrategyInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function doUnescape($value)
+    {
+        return \unserialize($value);
+    }
+
+    /**
      * @return string|int
      */
     public function getDefaultValue()

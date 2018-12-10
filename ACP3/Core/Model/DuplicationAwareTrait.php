@@ -18,12 +18,14 @@ trait DuplicationAwareTrait
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function duplicate($entryId)
+    public function duplicate(int $entryId)
     {
         $resultSet = $this->getRepository()->getOneById($entryId);
 
         if (!empty($resultSet)) {
-            return $this->save(\array_merge($resultSet, $this->getDefaultDataForDuplication()));
+            $data = $this->getDataProcessor()->unescape($resultSet, $this->getAllowedColumns());
+
+            return $this->save(\array_merge($data, $this->getDefaultDataForDuplication()));
         }
 
         return false;
@@ -33,6 +35,13 @@ trait DuplicationAwareTrait
      * @return AbstractRepository
      */
     abstract protected function getRepository();
+
+    abstract protected function getDataProcessor(): DataProcessor;
+
+    /**
+     * @return array
+     */
+    abstract protected function getAllowedColumns();
 
     /**
      * @param array    $rawData

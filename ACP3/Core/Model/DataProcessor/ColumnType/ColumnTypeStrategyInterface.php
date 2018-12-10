@@ -17,6 +17,15 @@ interface ColumnTypeStrategyInterface
     public function doEscape($value);
 
     /**
+     * This method is the counterpart of the ::doEscape() method.
+     *
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function doUnescape($value);
+
+    /**
      * @return string|int
      */
     public function getDefaultValue();

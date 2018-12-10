@@ -16,4 +16,12 @@ class TextWysiwygColumnType extends TextColumnType
     {
         return $this->secure->strEncode($value, true);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function doUnescape($value)
+    {
+        return $value;
+    }
 }
