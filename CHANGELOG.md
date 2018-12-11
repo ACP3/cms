@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.33.8] - 2018-12-11
 ### Fixed
 - fixed the usage of deprecated code with the Symfony HTTP foundation >= 4.2
-- fixed the saving of new auditlog records for unauthenticated users
+- [#74](https://gitlab.com/ACP3/cms/issues/74) fixed the saving of new auditlog records for unauthenticated users
 
 ## [4.33.7] - 2018-12-10
 ### Fixed
