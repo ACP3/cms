@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.33.8] - 2018-12-11
 ### Fixed
 - fixed the usage of deprecated code with the Symfony HTTP foundation >= 4.2
 - fixed the saving of new auditlog records for unauthenticated users
@@ -811,7 +811,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.33.7...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.33.8...4.x
+[4.33.8]: https://gitlab.com/ACP3/cms/compare/v4.33.7...v4.33.8
 [4.33.7]: https://gitlab.com/ACP3/cms/compare/v4.33.6...v4.33.7
 [4.33.6]: https://gitlab.com/ACP3/cms/compare/v4.33.5...v4.33.6
 [4.33.5]: https://gitlab.com/ACP3/cms/compare/v4.33.4...v4.33.5
