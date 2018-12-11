@@ -127,7 +127,7 @@ class AuthenticationModel implements AuthenticationModelInterface
             $expiry = static::REMEMBER_ME_COOKIE_LIFETIME;
         }
 
-        return new Cookie(
+        return Cookie::create(
             self::AUTH_NAME,
             $userId . '|' . $token,
             (new \DateTime())->modify('+' . $expiry . ' seconds'),
