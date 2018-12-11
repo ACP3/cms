@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed the usage of deprecated code with the Symfony HTTP foundation >= 4.2
+- fixed the saving of new auditlog records for unauthenticated users
+
 ## [4.33.7] - 2018-12-10
 ### Fixed
 - fixed a double escaping bug when duplicating DB results
