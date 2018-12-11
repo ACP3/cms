@@ -78,7 +78,7 @@ class OnModelAfterSaveListener
                     'entry_id' => (int) $entryId,
                     'action' => $this->getAction($event),
                     'data' => \serialize($event->getData()),
-                    'user_id' => $this->userModel->getUserId(),
+                    'user_id' => $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null,
                 ]);
             }
         } catch (DBALException $e) {
