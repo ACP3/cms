@@ -153,7 +153,7 @@ class SessionHandler extends AbstractSessionHandler
         $this->secureSession();
 
         if ($this->request->getCookies()->has(self::SESSION_NAME)) {
-            $cookie = new Cookie(
+            $cookie = Cookie::create(
                 self::SESSION_NAME,
                 '',
                 (new \DateTime())->modify('-3600 seconds'),
