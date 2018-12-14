@@ -73,6 +73,9 @@ class Action
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handlePostAction(callable $callback, $path = null)
     {
@@ -123,6 +126,8 @@ class Action
      * @return array|JsonResponse|RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handleDeleteAction(
         $action,
@@ -150,7 +155,9 @@ class Action
      *
      * @return array|JsonResponse|RedirectResponse
      *
-     * @throws Core\Controller\Exception\ResultNotExistsException
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handleCustomDeleteAction(
         $action,
@@ -184,6 +191,9 @@ class Action
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handleSettingsPostAction(callable $callback, $path = null)
     {
@@ -200,9 +210,12 @@ class Action
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @deprecated since 4.4.4, to be removed with version 5.0.0
-     *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     *
+     * @deprecated since 4.4.4, to be removed with version 5.0.0
      */
     public function handleCreatePostAction(callable $callback, $path = null)
     {
@@ -215,9 +228,12 @@ class Action
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @deprecated since 4.4.4, to be removed with version 5.0.0
-     *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     *
+     * @deprecated since 4.4.4, to be removed with version 5.0.0
      */
     public function handleEditPostAction(callable $callback, $path = null)
     {
@@ -231,6 +247,9 @@ class Action
      * @return array|string|JsonResponse|RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handleSaveAction(callable $callback, $path = null)
     {
@@ -247,12 +266,31 @@ class Action
      * @param null|string $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function prepareRedirectMessageAfterPost($result, $phrase, $path = null)
+    private function prepareRedirectMessageAfterPost($result, string $phrase, ?string $path = null)
+    {
+        return $this->setRedirectMessage(
+            $result,
+            $this->translator->t('system', $phrase . ($result !== false ? '_success' : '_error')),
+            $path
+        );
+    }
+
+    /**
+     * @param bool|int    $result
+     * @param string      $translatedText
+     * @param null|string $path
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function setRedirectMessage($result, string $translatedText, ?string $path = null)
     {
         return $this->redirectMessages->setMessage(
             $result,
-            $this->translator->t('system', $phrase . ($result !== false ? '_success' : '_error')),
+            $translatedText,
             $this->request->getPost()->has('continue') ? $this->request->getPathInfo() : $path
         );
     }
@@ -263,7 +301,7 @@ class Action
      *
      * @return array
      */
-    private function generateDefaultConfirmationBoxUris($moduleConfirmUrl, $moduleIndexUrl)
+    private function generateDefaultConfirmationBoxUris(?string $moduleConfirmUrl, ?string $moduleIndexUrl)
     {
         if ($moduleConfirmUrl === null) {
             $moduleConfirmUrl = $this->request->getFullPath();
@@ -284,8 +322,11 @@ class Action
      * @param string|null $moduleIndexUrl
      *
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function deleteItem($action, $moduleConfirmUrl = null, $moduleIndexUrl = null)
+    private function deleteItem(string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null)
     {
         $entries = $this->prepareRequestData();
 
@@ -315,7 +356,7 @@ class Action
     /**
      * @return array
      */
-    private function prepareRequestData()
+    private function prepareRequestData(): array
     {
         $entries = [];
         if (\is_array($this->request->getPost()->get('entries')) === true) {
@@ -331,8 +372,11 @@ class Action
      * @param array $entries
      *
      * @return string
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function prepareConfirmationBoxText(array $entries)
+    private function prepareConfirmationBoxText(array $entries): string
     {
         $entriesCount = \count($entries);
         if ($entriesCount === 1) {

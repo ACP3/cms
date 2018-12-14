@@ -61,8 +61,11 @@ class Edit extends AbstractFormAction
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         $newsletter = $this->newsletterModel->getOneById($id);
 
@@ -92,8 +95,13 @@ class Edit extends AbstractFormAction
      * @param int $id
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handlePostAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -112,7 +120,7 @@ class Edit extends AbstractFormAction
                 $settings['mail']
             );
 
-            return $this->redirectMessages()->setMessage($result, $text);
+            return $this->actionHelper->setRedirectMessage($result, $text);
         });
     }
 }

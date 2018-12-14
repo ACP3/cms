@@ -52,8 +52,11 @@ class Send extends Core\Controller\AbstractFrontendAction
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($this->newsletterRepository->newsletterExists($id) === true) {
             $accounts = $this->accountRepository->getAllActiveAccounts();
@@ -64,17 +67,19 @@ class Send extends Core\Controller\AbstractFrontendAction
                 $recipients[] = $accounts[$i]['mail'];
             }
 
-            $bool = $this->newsletterHelpers->sendNewsletter($id, $recipients);
-            $bool2 = false;
-            if ($bool === true) {
-                $bool2 = $this->newsletterRepository->update(['status' => '1'], $id);
+            $sendNewsletterResult = $this->newsletterHelpers->sendNewsletter($id, $recipients);
+            $newsletterUpdateResult = false;
+            if ($sendNewsletterResult === true) {
+                $newsletterUpdateResult = $this->newsletterRepository->update(['status' => '1'], $id);
             }
 
             return $this->redirectMessages()->setMessage(
-                $bool === true && $bool2 !== false,
+                $sendNewsletterResult === true && $newsletterUpdateResult !== false,
                 $this->translator->t(
                     'newsletter',
-                    $bool === true && $bool2 !== false ? 'create_success' : 'create_save_error'
+                    $sendNewsletterResult === true && $newsletterUpdateResult !== false
+                        ? 'create_success'
+                        : 'create_save_error'
                 )
             );
         }
