@@ -73,6 +73,7 @@ class Action
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function handlePostAction(callable $callback, ?string $path = null)
     {
@@ -150,7 +151,7 @@ class Action
      *
      * @return array|JsonResponse|RedirectResponse
      *
-     * @throws Core\Controller\Exception\ResultNotExistsException
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(
         string $action,
@@ -184,6 +185,7 @@ class Action
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function handleSettingsPostAction(callable $callback, ?string $path = null)
     {
@@ -201,6 +203,7 @@ class Action
      * @return array|string|JsonResponse|RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function handleSaveAction(callable $callback, ?string $path = null)
     {
@@ -220,9 +223,25 @@ class Action
      */
     private function prepareRedirectMessageAfterPost($result, string $phrase, ?string $path = null)
     {
-        return $this->redirectMessages->setMessage(
+        return $this->setRedirectMessage(
             $result,
             $this->translator->t('system', $phrase . ($result !== false ? '_success' : '_error')),
+            $path
+        );
+    }
+
+    /**
+     * @param bool|int    $result
+     * @param string      $translatedText
+     * @param null|string $path
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function setRedirectMessage($result, string $translatedText, ?string $path = null)
+    {
+        return $this->redirectMessages->setMessage(
+            $result,
+            $translatedText,
             $this->request->getPost()->has('continue') ? $this->request->getPathInfo() : $path
         );
     }
@@ -285,7 +304,7 @@ class Action
     /**
      * @return array
      */
-    private function prepareRequestData()
+    private function prepareRequestData(): array
     {
         $entries = [];
         if (\is_array($this->request->getPost()->get('entries')) === true) {
@@ -302,7 +321,7 @@ class Action
      *
      * @return string
      */
-    private function prepareConfirmationBoxText(array $entries)
+    private function prepareConfirmationBoxText(array $entries): string
     {
         $entriesCount = \count($entries);
         if ($entriesCount === 1) {

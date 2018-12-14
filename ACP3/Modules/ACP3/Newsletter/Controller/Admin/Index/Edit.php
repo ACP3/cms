@@ -85,6 +85,7 @@ class Edit extends AbstractFormAction
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost(int $id)
     {
@@ -105,7 +106,7 @@ class Edit extends AbstractFormAction
                 $settings['mail']
             );
 
-            return $this->redirectMessages()->setMessage($result, $text);
+            return $this->actionHelper->setRedirectMessage($result, $text);
         });
     }
 }

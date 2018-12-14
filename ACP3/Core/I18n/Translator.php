@@ -87,9 +87,6 @@ class Translator
      * Gets the writing direction of the language.
      *
      * @return string
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getDirection(): string
     {
