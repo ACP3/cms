@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- reworked the inner working of the `Title` class
+
+### Fixed
+- fixed the `site_subtitle` Smarty plugin
+
 ## [4.33.8] - 2018-12-11
 ### Fixed
 - fixed the usage of deprecated code with the Symfony HTTP foundation >= 4.2
