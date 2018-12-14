@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - fixed the `site_subtitle` Smarty plugin
+- fixed the wrong redirect target when saving a newsletter
 
 ## [4.33.8] - 2018-12-11
 ### Fixed
