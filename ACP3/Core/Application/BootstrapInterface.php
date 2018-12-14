@@ -16,7 +16,7 @@ interface BootstrapInterface extends HttpKernelInterface
     /**
      * Contains the current ACP3 version string.
      */
-    const VERSION = '4.33.8';
+    const VERSION = '4.34.0';
 
     /**
      * Performs some startup checks.
