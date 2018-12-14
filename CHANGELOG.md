@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 - reworked the inner working of the `Title` class
+- updated the CKEditor to the latest 4.x version
 
 ### Fixed
 - fixed the `site_subtitle` Smarty plugin
