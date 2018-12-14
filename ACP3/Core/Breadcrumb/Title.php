@@ -237,21 +237,51 @@ class Title
             new GetSiteAndPageTitleBeforeEvent($this)
         );
 
-        $title = !empty($this->getMetaTitle()) ? $this->getMetaTitle() : $this->getPageTitle();
+        return $this->renderPageTitlePrefix()
+            . $this->renderPageTitle()
+            . $this->renderPageTitleSuffix()
+            . $this->renderSiteTitle()
+            . $this->renderSiteSubTitle();
+    }
 
+    protected function renderPageTitle(): string
+    {
+        return !empty($this->getMetaTitle()) ? $this->getMetaTitle() : $this->getPageTitle();
+    }
+
+    protected function renderPageTitlePrefix(): string
+    {
         if (!empty($this->pageTitlePrefix)) {
-            $title = $this->pageTitlePrefix . $this->getPageTitleSeparator() . $title;
-        }
-        if (!empty($this->getPageTitlePostfix())) {
-            $title .= $this->getPageTitleSeparator() . $this->getPageTitlePostfix();
-        }
-        if (!empty($this->getSiteTitle())) {
-            $title .= $this->getSiteTitleSeparator() . $this->getSiteTitle();
-        }
-        if (!empty($this->getSiteSubtitle())) {
-            $title .= $this->getPageTitleSeparator() . $this->getSiteSubtitle();
+            return $this->pageTitlePrefix . $this->getPageTitleSeparator();
         }
 
-        return $title;
+        return '';
+    }
+
+    protected function renderPageTitleSuffix(): string
+    {
+        if (!empty($this->getPageTitlePostfix())) {
+            return $this->getPageTitleSeparator() . $this->getPageTitlePostfix();
+        }
+
+        return '';
+    }
+
+    protected function renderSiteTitle(): string
+    {
+        if (!empty($this->getSiteTitle())) {
+            return $this->getSiteTitleSeparator() . $this->getSiteTitle();
+        }
+
+        return '';
+    }
+
+    protected function renderSiteSubTitle(): string
+    {
+        if (!empty($this->getSiteSubtitle())) {
+            return $this->getPageTitleSeparator() . $this->getSiteSubtitle();
+        }
+
+        return '';
     }
 }
