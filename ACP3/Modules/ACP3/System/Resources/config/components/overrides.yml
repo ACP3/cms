@@ -6,3 +6,9 @@ services:
       - '@core.breadcrumb'
       - '@core.event_dispatcher'
       - '@core.config'
+    configurator: 'core.breadcrumb.title_configurator:configure'
+
+  core.breadcrumb.title_configurator:
+    class: ACP3\Modules\ACP3\System\Core\Breadcrumb\TitleConfigurator
+    arguments:
+      - '@core.config'

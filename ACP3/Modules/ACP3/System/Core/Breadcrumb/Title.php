@@ -49,27 +49,6 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getSiteTitle()
-    {
-        if (empty(parent::getSiteTitle())) {
-            $this->addSiteTitle();
-        }
-
-        return parent::getSiteTitle();
-    }
-
-    private function addSiteTitle()
-    {
-        $settings = $this->getSettings();
-
-        if (isset($settings['site_title'])) {
-            $this->setSiteTitle($settings['site_title']);
-        }
-    }
-
-    /**
      * @return array
      */
     private function getSettings()
@@ -79,27 +58,6 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         }
 
         return $this->systemSettings;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSiteSubtitle()
-    {
-        if (parent::getSiteSubtitle() === null) {
-            $this->addSiteSubtitle();
-        }
-
-        return parent::getSiteSubtitle();
-    }
-
-    private function addSiteSubtitle()
-    {
-        $settings = $this->getSettings();
-
-        if ($this->allowSystemSubtitle() && !empty($settings['site_subtitle'])) {
-            $this->setSiteSubtitle($settings['site_subtitle']);
-        }
     }
 
     public function getSiteAndPageTitle()
@@ -122,10 +80,17 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         return parent::getSiteAndPageTitle();
     }
 
-    private function allowSystemSubtitle()
+    private function allowSystemSubtitle(): bool
     {
-        $settings = $this->getSettings();
+        return $this->getSettings()['site_subtitle_mode'] != 3;
+    }
 
-        return $settings['site_subtitle_mode'] != 3;
+    protected function renderSiteSubTitle(): string
+    {
+        if ($this->allowSystemSubtitle()) {
+            return parent::renderSiteSubTitle();
+        }
+
+        return '';
     }
 }

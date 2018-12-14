@@ -49,7 +49,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('Foo', $this->title->getSiteAndPageTitle());
     }
 
-    protected function setUpStepsExpectations($callCount)
+    protected function setUpStepsExpectations(int $callCount)
     {
         $steps = [
             [
