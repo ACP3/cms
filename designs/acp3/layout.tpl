@@ -5,6 +5,7 @@
 </head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
+{event name="layout.body_start"}
 {load_module module="widget/users/index/login"}
 {load_module module="widget/users/index/user_menu"}
 <div id="wrapper" class="container">
