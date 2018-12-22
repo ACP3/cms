@@ -4,9 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- add the new template event `layout.body_start` at the beginning of the HTML <body>
+
+### Changed
+- updated the Bootstrap to version 3.4.0
+
 ## [4.34.0] - 2018-12-14
 ### Changed
-- reworked the inner working of the `Title` class
+- reworked the inner workings of the `Title` class
 - updated the CKEditor to the latest 4.x version
 
 ### Fixed
