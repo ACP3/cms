@@ -8,9 +8,9 @@ stages:
   - test
   - static-analysis
   - deploy
-  - post-deploy
+#  - post-deploy
 
-.php-base: &php-base
+.php-base:
   cache:
     key: $CI_COMMIT_REF_NAME
     paths:
@@ -20,8 +20,8 @@ stages:
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
 
-test:php71-unit: &php-unit-base
-  <<: *php-base
+test:php71-unit:
+  extends: .php-base
   stage: test
   script:
     - composer install -n
@@ -29,19 +29,19 @@ test:php71-unit: &php-unit-base
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
 test:php72-unit:
-  <<: *php-unit-base
+  extends: test:php71-unit
   image: registry.gitlab.com/acp3/php-docker:7.2
   coverage: ~
 
 static-analysis:phpcs:
-  <<: *php-base
+  extends: .php-base
   stage: static-analysis
   script:
     - composer install -n
     - composer run-script lint
 
 static-analysis:phpstan:
-  <<: *php-base
+  extends: .php-base
   stage: static-analysis
   script:
     - composer install -n
@@ -83,7 +83,7 @@ deploy:subtree-split:
     - gitsplit --ref "${CI_COMMIT_REF_NAME}"
 
 deploy:generate-artifact:
-  <<: *php-base
+  extends: .php-base
   stage: deploy
   cache:
     key: $CI_COMMIT_REF_NAME
@@ -118,16 +118,6 @@ deploy:generate-artifact:
       - README.md
   only:
     - tags
-
-post-deploy:notify-packagist: &post-deploy-base
-  stage: post-deploy
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
-  script:
-    - bash ./build/gitlab/notify_packagist.sh
-  only:
-    - tags
-    - schedules
 
 #post-deploy:update-version-check:
 #  <<: *post-deploy-base
