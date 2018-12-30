@@ -6,7 +6,6 @@ variables:
 
 stages:
   - test
-  - static-analysis
   - deploy
 #  - post-deploy
 
@@ -35,21 +34,21 @@ test:php72-unit:
 
 static-analysis:phpcs:
   extends: .php-base
-  stage: static-analysis
+  stage: test
   script:
     - composer install -n
     - composer run-script lint
 
 static-analysis:phpstan:
   extends: .php-base
-  stage: static-analysis
+  stage: test
   script:
     - composer install -n
     - php -d memory_limit=-1 vendor/bin/phpstan analyse
 
 static-analysis:eslint:
   image: node:slim
-  stage: static-analysis
+  stage: test
   cache:
     key: node-$CI_COMMIT_REF_NAME
     paths:
