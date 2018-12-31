@@ -16,6 +16,7 @@ stages:
     paths:
       - ${COMPOSER_HOME}
       - vendor
+      - .php_cs.cache
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
 
@@ -42,8 +43,6 @@ test:php72-unit:
 static-analysis:phpcs:
   extends: .php-base
   stage: test
-  cache:
-    policy: pull
   script:
     - composer run-script lint
 
