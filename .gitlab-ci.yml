@@ -5,25 +5,32 @@ variables:
   COMPOSER_ALLOW_SUPERUSER: 1
 
 stages:
+  - build
   - test
   - deploy
 #  - post-deploy
 
 .php-base:
   cache:
-    key: $CI_COMMIT_REF_NAME
+    key: composer-$CI_COMMIT_REF_NAME
     paths:
       - ${COMPOSER_HOME}
       - vendor
-      - .php_cs.cache
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
+
+build:composer:
+  extends: .php-base
+  stage: build
+  script:
+    - composer install -n --prefer-dist
 
 test:php71-unit:
   extends: .php-base
   stage: test
+  cache:
+    policy: pull
   script:
-    - composer install -n
     - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
@@ -35,15 +42,17 @@ test:php72-unit:
 static-analysis:phpcs:
   extends: .php-base
   stage: test
+  cache:
+    policy: pull
   script:
-    - composer install -n
     - composer run-script lint
 
 static-analysis:phpstan:
   extends: .php-base
   stage: test
+  cache:
+    policy: pull
   script:
-    - composer install -n
     - php -d memory_limit=-1 vendor/bin/phpstan analyse
 
 static-analysis:eslint:
@@ -85,11 +94,6 @@ deploy:generate-artifact:
   extends: .php-base
   stage: deploy
   cache:
-    key: $CI_COMMIT_REF_NAME
-    paths:
-      - ${COMPOSER_HOME}
-      - vendor
-      - .php_cs.cache
     policy: pull
   script:
     - composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs
