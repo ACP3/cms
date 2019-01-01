@@ -8,8 +8,7 @@ variables:
 stages:
   - build
   - test
-  - deploy
-#  - post-deploy
+  - release
 
 .php-base:
   cache:
@@ -41,13 +40,13 @@ test:php72-unit:
   image: registry.gitlab.com/acp3/php-docker:7.2
   coverage: ~
 
-static-analysis:phpcs:
+test:phpcs:
   extends: .php-base
   stage: test
   script:
     - composer run-script lint
 
-static-analysis:phpstan:
+test:phpstan:
   extends: .php-base
   stage: test
   cache:
@@ -55,7 +54,7 @@ static-analysis:phpstan:
   script:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse
 
-static-analysis:eslint:
+test:eslint:
   image: node:slim
   stage: test
   cache:
@@ -68,9 +67,9 @@ static-analysis:eslint:
     - npm ci
     - npm run-script eslint
 
-deploy:subtree-split:
+release:subtree-split:
   image: jderusse/gitsplit
-  stage: deploy
+  stage: release
   cache:
     key: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
     paths:
@@ -90,9 +89,9 @@ deploy:subtree-split:
     - git fetch --prune --unshallow || git fetch --prune
     - gitsplit --ref "${CI_COMMIT_REF_NAME}"
 
-deploy:generate-artifact:
+release:generate-artifact:
   extends: .php-base
-  stage: deploy
+  stage: release
   cache:
     policy: pull
   script:
@@ -121,22 +120,3 @@ deploy:generate-artifact:
       - README.md
   only:
     - tags
-
-#post-deploy:update-version-check:
-#  <<: *post-deploy-base
-#  script:
-#    - bash ./build/gitlab/update_version_check.sh
-#  only:
-#    - tags
-
-#post-deploy:apidocs:
-#  <<: *post-deploy-base
-#  before_script:
-#    - bash ./build/gitlab/before_script.sh > /dev/null
-#    - bash ./build/gitlab/before_script_php.sh > /dev/null
-#    - git config --global user.email "mail@acp3-cms.net"
-#    - git config --global user.name "Tino Goratsch"
-#  script:
-#    - bash ./build/gitlab/generate_api_docs.sh
-#  only:
-#    - tags
