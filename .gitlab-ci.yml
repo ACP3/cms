@@ -3,6 +3,7 @@ image: registry.gitlab.com/acp3/php-docker:7.1
 variables:
   COMPOSER_HOME: .composerhome
   COMPOSER_ALLOW_SUPERUSER: 1
+  npm_config_cache: .npmhome
 
 stages:
   - build
@@ -60,7 +61,7 @@ static-analysis:eslint:
   cache:
     key: node-$CI_COMMIT_REF_NAME
     paths:
-      - node_modules
+      - ${npm_config_cache}
   before_script:
     - bash ./build/gitlab/before_script.sh > /dev/null
   script:
