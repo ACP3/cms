@@ -73,11 +73,11 @@ class MetaStatements
     /**
      * MetaStatements constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface       $request
-     * @param RouterInterface                        $router
-     * @param Modules                                $modules
-     * @param \ACP3\Modules\ACP3\Seo\Cache           $seoCache
-     * @param \ACP3\Core\Settings\SettingsInterface  $config
+     * @param \ACP3\Core\Http\RequestInterface      $request
+     * @param RouterInterface                       $router
+     * @param Modules                               $modules
+     * @param \ACP3\Modules\ACP3\Seo\Cache          $seoCache
+     * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
         RequestInterface $request,
@@ -85,8 +85,7 @@ class MetaStatements
         Modules $modules,
         SeoCache $seoCache,
         SettingsInterface $config
-    )
-    {
+    ) {
         $this->request = $request;
         $this->seoCache = $seoCache;
         $this->config = $config;
@@ -137,7 +136,7 @@ class MetaStatements
         if (!empty($this->canonicalUrl)) {
             return;
         }
-        if (strpos($this->request->getQuery(), 'errors/') === 0) {
+        if (\strpos($this->request->getQuery(), 'errors/') === 0) {
             return;
         }
 
