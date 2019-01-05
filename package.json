@@ -48,6 +48,7 @@
     "js-cookie": "^2.2.0",
     "moment": "^2.23.0",
     "popper.js": "^1.14.6",
+    "rich-filemanager": "^2.7.6",
     "shariff": "^3.0.1",
     "tempusdominus-bootstrap-4": "^5.1.2",
     "tempusdominus-core": "^5.0.3"

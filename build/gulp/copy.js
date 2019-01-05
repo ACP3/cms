@@ -10,6 +10,7 @@ module.exports = (gulp) => {
         const nodeBasePath = './node_modules',
             systemBasePath = './ACP3/Modules/ACP3/System/Resources/Assets',
             ckeditorBasePath = './ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets',
+            filemanagerBashPath = './ACP3/Modules/ACP3/Filemanager/Resources/Assets',
             shareBasePath = './ACP3/Modules/ACP3/Share/Resources/Assets',
             paths = [
                 {
@@ -57,7 +58,31 @@ module.exports = (gulp) => {
 
                     ],
                     'dest': systemBasePath + '/css'
-                }
+                },
+                {
+                    src: nodeBasePath + '/rich-filemanager/index.html',
+                    dest: filemanagerBashPath + '/rich-filemanager',
+                },
+                {
+                    src: nodeBasePath + '/rich-filemanager/images/**',
+                    dest: filemanagerBashPath + '/rich-filemanager/images',
+                },
+                {
+                    src: nodeBasePath + '/rich-filemanager/languages/**',
+                    dest: filemanagerBashPath + '/rich-filemanager/languages',
+                },
+                {
+                    src: nodeBasePath + '/rich-filemanager/libs/**',
+                    dest: filemanagerBashPath + '/rich-filemanager/libs',
+                },
+                {
+                    src: nodeBasePath + '/rich-filemanager/src/**',
+                    dest: filemanagerBashPath + '/rich-filemanager/src',
+                },
+                {
+                    src: nodeBasePath + '/rich-filemanager/themes/**',
+                    dest: filemanagerBashPath + '/rich-filemanager/themes',
+                },
             ];
 
         for (const path of paths) {

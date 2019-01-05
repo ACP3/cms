@@ -1,7 +1,7 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->exclude('ACP3/Modules/ACP3/Filemanager/libraries')
+    ->notPath('#ACP3/Modules/.*/.*/Resources#')
     ->exclude('build')
     ->exclude('cache')
     ->exclude('designs')

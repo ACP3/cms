@@ -37,6 +37,10 @@ class CKEditor extends Textarea
      * @var \ACP3\Modules\ACP3\Filemanager\Helpers|null
      */
     protected $filemanagerHelpers;
+    /**
+     * @var \ACP3\Core\ACL
+     */
+    private $acl;
 
     /**
      * @var bool
@@ -46,6 +50,7 @@ class CKEditor extends Textarea
     /**
      * CKEditor constructor.
      *
+     * @param \ACP3\Core\ACL                                                        $acl
      * @param \ACP3\Core\Modules                                                    $modules
      * @param \ACP3\Core\I18n\Translator                                            $translator
      * @param \ACP3\Core\Environment\ApplicationPath                                $appPath
@@ -53,6 +58,7 @@ class CKEditor extends Textarea
      * @param \ACP3\Modules\ACP3\Filemanager\Helpers|null                           $filemanagerHelpers
      */
     public function __construct(
+        Core\ACL $acl,
         Core\Modules $modules,
         Core\I18n\Translator $translator,
         Core\Environment\ApplicationPath $appPath,
@@ -64,6 +70,7 @@ class CKEditor extends Textarea
         $this->appPath = $appPath;
         $this->emoticonRepository = $emoticonRepository;
         $this->filemanagerHelpers = $filemanagerHelpers;
+        $this->acl = $acl;
     }
 
     /**
@@ -234,27 +241,23 @@ class CKEditor extends Textarea
         $this->config['smiley_descriptions'] = $descriptions;
     }
 
-    private function applyFileManagerPaths()
+    private function addFileManager()
     {
-        $kcfinderPath = $this->filemanagerHelpers->getFilemanagerPath();
-        $fileBrowserUri = $kcfinderPath . 'browse.php?opener=ckeditor%s&cms=acp3';
-        $uploadUri = $kcfinderPath . 'upload.php?opener=ckeditor%s&cms=acp3';
+        if ($this->filemanagerHelpers === null) {
+            return;
+        }
+        if (!$this->acl->hasPermission('admin/filemanager/index/richfilemanager')) {
+            return;
+        }
 
-        $this->config['filebrowserBrowseUrl'] = \sprintf($fileBrowserUri, '&type=files');
-        $this->config['filebrowserImageBrowseUrl'] = \sprintf($fileBrowserUri, '&type=gallery');
-        $this->config['filebrowserFlashBrowseUrl'] = \sprintf($fileBrowserUri, '&type=files');
-        $this->config['filebrowserUploadUrl'] = \sprintf($uploadUri, '&type=files');
-        $this->config['filebrowserImageUploadUrl'] = \sprintf($uploadUri, '&type=gallery');
-        $this->config['filebrowserFlashUploadUrl'] = \sprintf($uploadUri, '&type=files');
+        $this->config['filebrowserBrowseUrl'] = $this->filemanagerHelpers->getFilemanagerPath();
     }
 
     private function configureFullToolbar()
     {
         $this->config['extraPlugins'] = 'codemirror,divarea,embedbase,embed';
 
-        if ($this->filemanagerHelpers instanceof \ACP3\Modules\ACP3\Filemanager\Helpers) {
-            $this->applyFileManagerPaths();
-        }
+        $this->addFileManager();
 
         // Toolbar configuration
         $this->config['toolbarGroups'] = [

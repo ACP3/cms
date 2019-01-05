@@ -18,7 +18,11 @@ class Migration implements Modules\Installer\MigrationInterface
      */
     public function schemaUpdates()
     {
-        return [];
+        return [
+            2 => [
+                "INSERT INTO `{pre}acl_resources` (`module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES ('{moduleId}', 'admin', 'index', 'richfilemanager', '', 3);",
+            ],
+        ];
     }
 
     /**

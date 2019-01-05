@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Filemanager\Installer;
 
+use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\Modules;
 
 class Schema implements Modules\Installer\SchemaInterface
@@ -18,7 +19,13 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function specialResources()
     {
-        return [];
+        return [
+            'admin' => [
+                'index' => [
+                    'richfilemanager' => PrivilegeEnum::ADMIN_VIEW,
+                ],
+            ],
+        ];
     }
 
     /**
@@ -34,7 +41,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 1;
+        return 2;
     }
 
     /**

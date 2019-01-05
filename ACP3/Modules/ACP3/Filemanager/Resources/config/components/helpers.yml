@@ -1,8 +1,5 @@
 services:
-  filemanager.helpers.kcfinder_authentication_helper:
-    class: ACP3\Modules\ACP3\Filemanager\Helper\KCFinderAuthenticationHelper
-    public: true
+  filemanager.helpers:
+    class: ACP3\Modules\ACP3\Filemanager\Helpers
     arguments:
-    - '@core.authentication'
-    - '@users.model.user_model'
-    - '%core.environment%'
+      - '@core.environment.application_path'

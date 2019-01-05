@@ -48,6 +48,7 @@
     "toflar/psr6-symfony-http-cache-store": "^1.0",
     "marcj/topsort": "^1.1",
     "heise/shariff": "^7.1",
+    "servocoder/richfilemanager-php": "^1.2",
     "symfony/proxy-manager-bridge": "^4.1"
   },
   "require-dev": {

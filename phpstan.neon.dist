@@ -6,7 +6,7 @@ parameters:
     - %rootDir%/../../../tests
   bootstrap: %rootDir%/../../../tests/bootstrap.php
   excludes_analyse:
-    - %rootDir%/../../../ACP3/Modules/ACP3/Filemanager/libraries/*
+    - %rootDir%/../../../ACP3/Modules/*/*/Resources/*
   includes:
     - %rootDir%/../../../vendor/phpstan/phpstan-phpunit/extension.neon
     - %rootDir%/../../../vendor/phpstan/phpstan-phpunit/rules.neon
