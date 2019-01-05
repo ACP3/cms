@@ -31,6 +31,10 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
      * @var \ACP3\Modules\ACP3\Filemanager\Helpers|null
      */
     protected $filemanagerHelpers;
+    /**
+     * @var \ACP3\Core\ACL
+     */
+    private $acl;
 
     /**
      * @var bool
@@ -38,12 +42,14 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     private $initialized = false;
 
     /**
+     * @param \ACP3\Core\ACL                               $acl
      * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
      * @param \ACP3\Core\I18n\Translator                   $translator
      * @param \ACP3\Core\Environment\ApplicationPath       $appPath
      * @param \ACP3\Modules\ACP3\Filemanager\Helpers|null  $filemanagerHelpers
      */
     public function __construct(
+        Core\ACL $acl,
         Core\Assets\Minifier\MinifierInterface $minifier,
         Core\I18n\Translator $translator,
         Core\Environment\ApplicationPath $appPath,
@@ -53,6 +59,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         $this->translator = $translator;
         $this->appPath = $appPath;
         $this->filemanagerHelpers = $filemanagerHelpers;
+        $this->acl = $acl;
     }
 
     /**
@@ -100,7 +107,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
      */
     private function configure()
     {
-        $config = [
+        $this->config['tinymce'] = [
             'is_initialized' => $this->initialized,
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
@@ -112,37 +119,70 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             $this->initialized = true;
         }
 
-        // Basic editor
-        if (isset($this->config['toolbar']) && $this->config['toolbar'] === 'simple') {
+        $this->configurePlugins();
+        $this->configureToolbar();
+        $this->configureAdvancedImages();
+        $this->addFileManager();
+
+        return [
+            'template' => 'Wysiwygtinymce/tinymce.tpl',
+            'config' => $this->config['tinymce'],
+        ];
+    }
+
+    private function addFileManager()
+    {
+        if ($this->filemanagerHelpers === null) {
+            return;
+        }
+        if (!$this->acl->hasPermission('admin/filemanager/index/richfilemanager')) {
+            return;
+        }
+        if ($this->isSimpleEditor()) {
+            return;
+        }
+
+        $this->config['tinymce']['filemanager_path'] = $this->filemanagerHelpers->getFilemanagerPath();
+    }
+
+    private function configurePlugins(): void
+    {
+        if ($this->isSimpleEditor()) {
             $plugins = [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table contextmenu paste',
             ];
-            $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image';
-            $imagesAdvanced = 'false';
-        } else { // Full editor
+        } else {
             $plugins = [
                 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
                 'searchreplace wordcount visualblocks visualchars code fullscreen',
                 'insertdatetime media nonbreaking save table contextmenu directionality',
                 'emoticons template paste textcolor colorpicker',
             ];
-            $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons';
-            $imagesAdvanced = 'true';
-
-            if ($this->filemanagerHelpers instanceof \ACP3\Modules\ACP3\Filemanager\Helpers) {
-                $config['filemanager_path'] = $this->filemanagerHelpers->getFilemanagerPath();
-            }
         }
 
-        $config['plugins'] = \json_encode($plugins);
-        $config['toolbar'] = $toolbar;
-        $config['image_advtab'] = $imagesAdvanced;
+        $this->config['tinymce']['plugins'] = \json_encode($plugins);
+    }
 
-        return [
-            'template' => 'Wysiwygtinymce/tinymce.tpl',
-            'config' => $config,
-        ];
+    private function configureToolbar(): void
+    {
+        if ($this->isSimpleEditor()) {
+            $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image';
+        } else {
+            $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons';
+        }
+
+        $this->config['tinymce']['toolbar'] = $toolbar;
+    }
+
+    private function configureAdvancedImages(): void
+    {
+        $this->config['tinymce']['image_advtab'] = $this->isSimpleEditor() ? 'false' : 'true';
+    }
+
+    private function isSimpleEditor(): bool
+    {
+        return isset($this->config['toolbar']) && $this->config['toolbar'] === 'simple';
     }
 }

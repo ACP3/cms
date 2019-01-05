@@ -45,6 +45,7 @@
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
     "moment": "^2.23.0",
+    "rich-filemanager": "^2.7.6",
     "shariff": "^3.0.1"
   }
 }

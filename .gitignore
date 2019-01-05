@@ -10,11 +10,11 @@
 /node_modules
 /tests/cache/
 /uploads/.htaccess
+/uploads/_thumbs/*
 /uploads/assets/*
 /uploads/categories/*
 /uploads/files/*
 /uploads/gallery/*
-/uploads/kcfinder/*
 /vendor
 /.htaccess
 /sitemap*.xml

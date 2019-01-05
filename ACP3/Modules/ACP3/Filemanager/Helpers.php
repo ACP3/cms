@@ -31,6 +31,6 @@ class Helpers
      */
     public function getFilemanagerPath()
     {
-        return $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/Filemanager/libraries/kcfinder/';
+        return $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/Filemanager/Resources/Assets/rich-filemanager/index.html';
     }
 }

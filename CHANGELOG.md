@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- replaced the KCFinder with the RichFilemanager
+
 ## [4.35.1] - 2019-01-05
 ### Changed
 - do not use self referencing canonicals for the errors module

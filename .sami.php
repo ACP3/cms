@@ -12,7 +12,7 @@ $iterator = Finder::create()
     ->name('*.php')
     ->exclude('Resources')
     ->exclude('Tests')
-    ->exclude('Modules/ACP3/Filemanager/libraries/kcfinder')
+    ->notPath('#ACP3/Modules/.*/.*/Resources#')
     ->in($dir = __DIR__ . '/ACP3');
 
 return new Sami($iterator, array(

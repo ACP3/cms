@@ -1,7 +1,7 @@
 {if !$config.is_initialized}
-    <script defer src="{$ROOT_DIR}vendor/tinymce/tinymce/tinymce.min.js"></script>
+    <script src="{$ROOT_DIR}vendor/tinymce/tinymce/tinymce.min.js"></script>
 {/if}
-<script defer>
+<script>
     tinymce.init({
         selector: '{$config.selector}',
         theme: '{$config.theme}',
@@ -12,19 +12,27 @@
         image_advtab: {$config.image_advtab}
         {if isset($config.filemanager_path)}
             ,
-            file_browser_callback: function(field, url, type, win) {
+            file_browser_callback: function (field, url, type, win) {
+                const elem = document.documentElement,
+                    body = document.getElementsByTagName('body')[0],
+                    x = win.innerWidth || elem.clientWidth || body.clientWidth,
+                    y = win.innerHeight|| elem.clientHeight|| body.clientHeight;
+
+                let fileBrowserUrl = '{$config.filemanager_path}?field_name=' + field;
+                if (type === 'image') {
+                    fileBrowserUrl += '&filter=image';
+                }
+
                 tinyMCE.activeEditor.windowManager.open({
-                    file: '{$config.filemanager_path}browse.php?opener=tinymce4&field=' + field + '&cms=acp3&type=' + (type === "image" ? "gallery" : "files"),
+                    file: fileBrowserUrl,
                     title: '{lang t="filemanager|filemanager"}',
-                    width: 700,
-                    height: 500,
-                    inline: true,
+                    width: x * 0.8,
+                    height: y * 0.8,
                     close_previous: false
                 }, {
                     window: win,
                     input: field
                 });
-                return false;
             }
         {/if}
     });
