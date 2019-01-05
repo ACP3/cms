@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - add the new template event `layout.body_start` at the beginning of the HTML <body>
 
 ### Changed
+- reduce the redirects if a 403/404/500 error has occurred
 - updated Bootstrap to version 3.4.0
 
 ## [4.34.0] - 2018-12-14
