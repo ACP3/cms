@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.35.0] - 2019-01-05
 ### Added
 - add the new template event `layout.body_start` at the beginning of the HTML <body>
 
@@ -828,7 +828,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.34.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.35.0...4.x
+[4.35.0]: https://gitlab.com/ACP3/cms/compare/v4.34.0...v4.35.0
 [4.34.0]: https://gitlab.com/ACP3/cms/compare/v4.33.8...v4.34.0
 [4.33.8]: https://gitlab.com/ACP3/cms/compare/v4.33.7...v4.33.8
 [4.33.7]: https://gitlab.com/ACP3/cms/compare/v4.33.6...v4.33.7
