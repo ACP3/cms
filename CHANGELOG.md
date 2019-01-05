@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- do not use self referencing canonicals for the errors module
+
 ## [4.35.0] - 2019-01-05
 ### Added
 - add the new template event `layout.body_start` at the beginning of the HTML <body>

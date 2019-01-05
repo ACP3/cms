@@ -26,6 +26,10 @@ class MetaStatements
      */
     private $router;
     /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+    /**
      * @var \ACP3\Core\Settings\SettingsInterface
      */
     protected $config;
@@ -58,10 +62,6 @@ class MetaStatements
      * @var string
      */
     private $metaRobots = '';
-    /**
-     * @var bool
-     */
-    private $isActive;
 
     private static $robotSettingsMaps = [
         1 => 'index,follow',
@@ -73,11 +73,11 @@ class MetaStatements
     /**
      * MetaStatements constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface      $request
-     * @param RouterInterface                       $router
-     * @param Modules                               $modules
-     * @param \ACP3\Modules\ACP3\Seo\Cache          $seoCache
-     * @param \ACP3\Core\Settings\SettingsInterface $config
+     * @param \ACP3\Core\Http\RequestInterface       $request
+     * @param RouterInterface                        $router
+     * @param Modules                                $modules
+     * @param \ACP3\Modules\ACP3\Seo\Cache           $seoCache
+     * @param \ACP3\Core\Settings\SettingsInterface  $config
      */
     public function __construct(
         RequestInterface $request,
@@ -85,12 +85,13 @@ class MetaStatements
         Modules $modules,
         SeoCache $seoCache,
         SettingsInterface $config
-    ) {
+    )
+    {
         $this->request = $request;
         $this->seoCache = $seoCache;
         $this->config = $config;
-        $this->isActive = $modules->isActive(Schema::MODULE_NAME);
         $this->router = $router;
+        $this->modules = $modules;
     }
 
     /**
@@ -112,22 +113,35 @@ class MetaStatements
      */
     public function getMetaTags(): array
     {
-        if ($this->isActive) {
-            if (!$this->isInAdmin() && empty($this->canonicalUrl)) {
-                $this->canonicalUrl = $this->router->route($this->request->getQuery());
-            }
-
-            return [
-                'description' => $this->isInAdmin() ? '' : $this->getPageDescription(),
-                'keywords' => $this->isInAdmin() ? '' : $this->getPageKeywords(),
-                'robots' => $this->isInAdmin() ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
-                'previous_page' => $this->previousPage,
-                'next_page' => $this->nextPage,
-                'canonical' => $this->canonicalUrl,
-            ];
+        if ($this->modules->isActive(Schema::MODULE_NAME) === false) {
+            return [];
         }
 
-        return [];
+        $this->addSelfReferencingCanonical();
+
+        return [
+            'description' => $this->isInAdmin() ? '' : $this->getPageDescription(),
+            'keywords' => $this->isInAdmin() ? '' : $this->getPageKeywords(),
+            'robots' => $this->isInAdmin() ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
+            'previous_page' => $this->previousPage,
+            'next_page' => $this->nextPage,
+            'canonical' => $this->canonicalUrl,
+        ];
+    }
+
+    private function addSelfReferencingCanonical(): void
+    {
+        if ($this->isInAdmin()) {
+            return;
+        }
+        if (!empty($this->canonicalUrl)) {
+            return;
+        }
+        if (strpos($this->request->getQuery(), 'errors/') === 0) {
+            return;
+        }
+
+        $this->canonicalUrl = $this->router->route($this->request->getQuery());
     }
 
     /**
@@ -235,7 +249,7 @@ class MetaStatements
      */
     public function getSeoInformation(string $path, string $key, string $defaultValue = ''): string
     {
-        if (!$this->isActive) {
+        if (!$this->modules->isActive(Schema::MODULE_NAME)) {
             return '';
         }
 
