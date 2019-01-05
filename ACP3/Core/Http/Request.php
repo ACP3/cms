@@ -203,7 +203,7 @@ class Request extends AbstractRequest
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setPathInfo(?string $pathInfo = null): void
     {

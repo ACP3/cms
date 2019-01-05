@@ -47,8 +47,7 @@ class ControllerActionDispatcher
         RequestInterface $request,
         ContainerInterface $container,
         ArgumentResolverInterface $argumentResolver
-    )
-    {
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->request = $request;
         $this->container = $container;
@@ -111,7 +110,7 @@ class ControllerActionDispatcher
 
     protected function modifyRequest(string $serviceId, array $arguments)
     {
-        list($module, , , $controller, $action) = explode('.', $serviceId);
+        list($module, , , $controller, $action) = \explode('.', $serviceId);
 
         $params = '';
         foreach ($arguments as $key => $value) {
