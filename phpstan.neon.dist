@@ -10,3 +10,5 @@ parameters:
   includes:
     - %rootDir%/../../../vendor/phpstan/phpstan-phpunit/extension.neon
     - %rootDir%/../../../vendor/phpstan/phpstan-phpunit/rules.neon
+  ignoreErrors:
+    - '#Property RFM\\Application::\$api \(RFM\\API\\ApiInterface\) does not accept RFM\\Api\\LocalApi\.#'
