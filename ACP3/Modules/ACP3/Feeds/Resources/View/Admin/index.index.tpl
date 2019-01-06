@@ -1,7 +1,7 @@
 {extends file="asset:System/layout.header-bar.tpl"}
 
-{block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/feeds/index/settings" class="fas fa-cog"}
+{block HEADER_BAR}
+    {check_access mode="link" path="acp/feeds/index/settings" class="fas fa-cog" btn_class="btn btn-secondary" title={lang t="feeds|admin_index_settings"}}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
     {redirect_message}

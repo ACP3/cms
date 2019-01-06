@@ -2,8 +2,8 @@
 
 {$DELETE_ROUTE={uri args="acp/permissions/resources/delete"}}
 
-{block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/permissions/resources/create"  class="fas fa-plus text-success"}
+{block HEADER_BAR}
+    {check_access mode="link" path="acp/permissions/resources/create"  class="fas fa-plus" btn_class="btn btn-primary" title={lang t="permissions|admin_resources_create"}}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if isset($resources)}

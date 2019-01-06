@@ -2,9 +2,9 @@
 
 {$DELETE_ROUTE={uri args="acp/menus/items/delete"}}
 
-{block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/menus/items/create" class="fas fa-plus text-success"}
-    {check_access mode="link" path="acp/menus/index/create" class="fas fa-th-list text-info"}
+{block HEADER_BAR}
+    {check_access mode="link" path="acp/menus/items/create" class="fas fa-plus" btn_class="btn btn-primary" title={lang t="menus|admin_index_create"}}
+    {check_access mode="link" path="acp/menus/index/create" class="fas fa-th-list" btn_class="btn btn-secondary"}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if isset($pages_list)}

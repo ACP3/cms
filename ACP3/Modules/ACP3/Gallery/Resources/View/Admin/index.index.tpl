@@ -2,9 +2,9 @@
 
 {$DELETE_ROUTE={uri args="acp/gallery/index/delete"}}
 
-{block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/gallery/index/create" class="fas fa-plus text-success"}
-    {check_access mode="link" path="acp/gallery/index/settings" class="fas fa-cog"}
+{block HEADER_BAR}
+    {check_access mode="link" path="acp/gallery/index/create" class="fas fa-plus" btn_class="btn btn-primary" title={lang t="gallery|admin_index_create"}}
+    {check_access mode="link" path="acp/gallery/index/settings" class="fas fa-cog" btn_class="btn btn-secondary"}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {include file="asset:System/Partials/datagrid.tpl" dataTable=$grid}

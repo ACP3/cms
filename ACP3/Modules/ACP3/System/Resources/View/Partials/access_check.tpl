@@ -1,5 +1,6 @@
 {if $access_check.mode == 'link'}
     <a href="{$access_check.uri}"
+       {if isset($access_check.btn_class)}class="{$access_check.btn_class}"{/if}
        title="{$access_check.lang}">
         {if isset($access_check.class)}
             <i class="{$access_check.class}" aria-hidden="true"></i>

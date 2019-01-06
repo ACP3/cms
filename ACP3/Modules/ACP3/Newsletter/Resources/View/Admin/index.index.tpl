@@ -2,10 +2,10 @@
 
 {$DELETE_ROUTE={uri args="acp/newsletter/index/delete"}}
 
-{block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/newsletter/index/create" class="fas fa-plus text-success"}
-    {check_access mode="link" path="acp/newsletter/accounts" class="fas fa-users text-info"}
-    {check_access mode="link" path="acp/newsletter/index/settings" class="fas fa-cog"}
+{block HEADER_BAR}
+    {check_access mode="link" path="acp/newsletter/index/create" class="fas fa-plus" btn_class="btn btn-primary" title={lang t="newsletter|admin_index_create"}}
+    {check_access mode="link" path="acp/newsletter/accounts" class="fas fa-users" btn_class="btn btn-secondary"}
+    {check_access mode="link" path="acp/newsletter/index/settings" class="fas fa-cog" btn_class="btn btn-secondary"}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {include file="asset:System/Partials/datagrid.tpl" dataTable=$grid}

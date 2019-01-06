@@ -1,9 +1,9 @@
 {extends file="asset:System/layout.header-bar.tpl"}
 
-{block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/system/maintenance" class="fas fa-wrench"}
-    {check_access mode="link" path="acp/system/extensions" class="fas fa-adjust"}
-    {check_access mode="link" path="acp/system/index/settings" class="fas fa-cog"}
+{block HEADER_BAR}
+    {check_access mode="link" path="acp/system/index/settings" class="fas fa-cog" btn_class="btn btn-primary" title={lang t="system|admin_index_settings"}}
+    {check_access mode="link" path="acp/system/extensions" class="fas fa-adjust" btn_class="btn btn-secondary"}
+    {check_access mode="link" path="acp/system/maintenance" class="fas fa-wrench" btn_class="btn btn-secondary"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
     {redirect_message}

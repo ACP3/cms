@@ -2,8 +2,8 @@
 
 {$DELETE_ROUTE={uri args="acp/polls/index/delete"}}
 
-{block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/polls/index/create" class="fas fa-plus text-success"}
+{block HEADER_BAR}
+    {check_access mode="link" path="acp/polls/index/create" class="fas fa-plus" btn_class="btn btn-primary" title={lang t="polls|admin_index_create"}}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {include file="asset:System/Partials/datagrid.tpl" dataTable=$grid}
