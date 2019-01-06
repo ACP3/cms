@@ -104,6 +104,9 @@ class CheckAccess
         if (isset($params['class'])) {
             $accessCheck['class'] = $params['class'];
         }
+        if (isset($params['btn_class'])) {
+            $accessCheck['btn_class'] = $params['btn_class'];
+        }
 
         $accessCheck['mode'] = $params['mode'];
 

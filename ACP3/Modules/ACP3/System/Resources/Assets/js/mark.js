@@ -3,23 +3,52 @@ const cssClassName = 'row-selected bg-light';
 /**
  * Marks all visible results
  *
- * @param $markAllElem
+ * @param $massActionCheckbox
  * @param name
  * @param action
  */
-function markEntries($markAllElem, name, action) {
-    const fields = $markAllElem.parents('thead:first').next('tbody').find('input[name="' + name + '[]"]:visible');
+const markEntries = ($massActionCheckbox, name, action) => {
+    const $visibleCheckboxes = $massActionCheckbox
+        .parents('thead:first')
+        .next('tbody')
+        .find('input[name="' + name + '[]"]:visible');
 
-    jQuery.each(fields, function () {
-        const $tableRows = $(this).prop('checked', (action === 'add')).parents('tr:first');
+    jQuery.each($visibleCheckboxes, function () {
+        const $tableRows = jQuery(this)
+            .prop('checked', (action === 'add'))
+            .parents('tr:first');
 
-        if (action === 'add') {
-            $tableRows.addClass(cssClassName);
-        } else {
-            $tableRows.removeClass(cssClassName);
-        }
+        $tableRows.toggleClass(cssClassName, action === 'add');
     });
-}
+};
+
+const toggleMassActionsBar = () => {
+    const $massActionsBar = jQuery('.datagrid-mass-actions');
+
+    if ($massActionsBar.find('.container').children().length === 0) {
+        return;
+    }
+
+    const $markedEntries = jQuery('.datagrid-column__mass-action:not(th) :checkbox:checked');
+
+    $massActionsBar.toggleClass('d-none', $markedEntries.length === 0);
+};
+
+const setMassActionCheckboxState = ($massActionCheckbox, $dataGridBody, checkboxName) => {
+    const visibleCheckboxes = $dataGridBody.find('input[name="' + checkboxName + '[]"]:visible').length,
+        checkedCheckboxes = $dataGridBody.find('input[name="' + checkboxName + '[]"]:checked').length;
+
+    if (visibleCheckboxes === 0 || checkedCheckboxes === 0) {
+        $massActionCheckbox.prop('checked', false);
+        $massActionCheckbox.prop('indeterminate', false);
+    } else if (checkedCheckboxes < visibleCheckboxes) {
+        $massActionCheckbox.prop('checked', false);
+        $massActionCheckbox.prop('indeterminate', true);
+    } else {
+        $massActionCheckbox.prop('checked', true);
+        $massActionCheckbox.prop('indeterminate', false);
+    }
+};
 
 /**
  *
@@ -27,9 +56,9 @@ function markEntries($markAllElem, name, action) {
  * @returns {*|jQuery|HTMLElement}
  */
 jQuery.fn.highlightTableRow = function (checkboxName) {
-    const $markAllCheckbox = $(this);
+    const $massActionCheckbox = $(this);
 
-    $markAllCheckbox
+    $massActionCheckbox
         .closest('table')
         .on(
             'click', 'tr:has(td :checkbox)',
@@ -48,15 +77,12 @@ jQuery.fn.highlightTableRow = function (checkboxName) {
 
                 $tableRow.toggleClass(cssClassName);
 
-                // Alle Datensätze auf einer Seite wurden markiert
-                $markAllCheckbox.prop(
-                    'checked',
-                    ($tbody.find('input[name="' + checkboxName + '[]"]:visible').length === $tbody.find('tr.' + cssClassName + ':visible').length)
-                );
+                toggleMassActionsBar();
+                setMassActionCheckboxState($massActionCheckbox, $tbody, checkboxName);
             }
         );
 
-    return $markAllCheckbox;
+    return $massActionCheckbox;
 };
 
 /**
@@ -105,19 +131,20 @@ jQuery.fn.deleteMarkedResults = function (options) {
 };
 
 jQuery(document).ready(function ($) {
-    const $markAll = $('[data-mark-all-id]');
+    const $massActionCheckboxes = $('[data-mark-all-id]');
 
-    $markAll.each((index, element) => {
+    $massActionCheckboxes.each((index, element) => {
         const $this = $(element);
 
         $this
             .click(function () {
                 markEntries($this, $this.data('checkbox-name'), $this.is(':checked') ? 'add' : 'remove');
+                toggleMassActionsBar();
             })
             .highlightTableRow($this.data('checkbox-name'));
     });
 
-    $('form #adm-list .fa-trash')
+    $('.datagrid-mass-actions .fa-trash')
         .closest('.btn')
-        .deleteMarkedResults($markAll.data('delete-options'));
+        .deleteMarkedResults($massActionCheckboxes.data('delete-options'));
 });

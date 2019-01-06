@@ -4,14 +4,11 @@
 
 {block HEADER_BAR_OPTIONS}
     {check_access mode="link" path="acp/permissions/resources/create"  class="fas fa-plus text-success"}
-    {if isset($resources)}
-        {check_access mode="button" path="acp/permissions/resources/delete" class="fas fa-trash text-danger" lang="system|delete_marked"}
-    {/if}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if isset($resources)}
         <div class="table-responsive">
-            <table id="resources-table" class="table table-hover datagrid">
+            <table id="resources-table" class="table table-striped table-hover datagrid">
                 <thead>
                 <tr>
                     {if $can_delete_resource === true}
@@ -35,7 +32,9 @@
                     {foreach $values as $row}
                         <tr>
                             {if $can_delete_resource === true}
-                                <td><input type="checkbox" name="entries[]" value="{$row.resource_id}"></td>
+                                <td class="datagrid-column__mass-action">
+                                    <input type="checkbox" name="entries[]" value="{$row.resource_id}">
+                                </td>
                             {/if}
                             <td>{$row.area}/{$row.controller}/{$row.page}/</td>
                             <td>{$row.privilege_name}</td>
@@ -69,10 +68,12 @@
         {if $can_delete_resource === true}
             {include file="asset:System/Partials/mark.tpl"}
         {/if}
-        {javascripts}
-        {include_js module="permissions" file="admin/resources.index"}
-        {/javascripts}
     {else}
         {include file="asset:System/Partials/no_results.tpl"}
+    {/if}
+{/block}
+{block ADMIN_GRID_MASS_ACTIONS}
+    {if isset($resources) && $can_delete_resource === true}
+        {check_access mode="button" path="acp/permissions/resources/delete" class="fas fa-trash" btn_class="btn-sm btn-danger" lang="system|delete_marked" title={lang t="system|delete_marked"}}
     {/if}
 {/block}

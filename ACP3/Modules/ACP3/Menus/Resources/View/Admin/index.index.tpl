@@ -5,9 +5,6 @@
 {block HEADER_BAR_OPTIONS}
     {check_access mode="link" path="acp/menus/items/create" class="fas fa-plus text-success"}
     {check_access mode="link" path="acp/menus/index/create" class="fas fa-th-list text-info"}
-    {if isset($pages_list)}
-        {check_access mode="button" path="acp/menus/items/delete" class="fas fa-trash text-danger" lang="system|delete_marked"}
-    {/if}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if isset($pages_list)}
@@ -121,5 +118,10 @@
         {/if}
     {else}
         {include file="asset:System/Partials/no_results.tpl"}
+    {/if}
+{/block}
+{block ADMIN_GRID_MASS_ACTIONS}
+    {if isset($pages_list)}
+        {check_access mode="button" path="acp/menus/items/delete" class="fas fa-trash" btn_class="btn-sm btn-danger" lang="system|delete_marked" title={lang t="system|delete_marked"}}
     {/if}
 {/block}
