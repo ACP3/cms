@@ -18,7 +18,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      */
     protected $uriAlias = '';
     /**
-     * @var null|array
+     * @var array|null
      */
     protected $file;
 

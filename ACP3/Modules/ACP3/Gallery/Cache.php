@@ -101,7 +101,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * @param string      $fileName
-     * @param null|string $action
+     * @param string|null $action
      *
      * @return \ACP3\Core\Picture\Output
      *

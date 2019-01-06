@@ -228,7 +228,7 @@ class Input
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getResourcePathEdit(): ?string
     {
@@ -236,7 +236,7 @@ class Input
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getResourcePathDelete(): ?string
     {
@@ -244,7 +244,7 @@ class Input
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getIdentifier(): ?string
     {

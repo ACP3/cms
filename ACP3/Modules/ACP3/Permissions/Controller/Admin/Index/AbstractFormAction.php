@@ -78,7 +78,7 @@ abstract class AbstractFormAction extends Core\Controller\AbstractFormAction
      * @param int      $moduleId
      * @param int      $privilegeId
      * @param int      $value
-     * @param null|int $defaultValue
+     * @param int|null $defaultValue
      *
      * @return string
      */

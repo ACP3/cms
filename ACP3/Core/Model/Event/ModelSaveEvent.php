@@ -20,7 +20,7 @@ class ModelSaveEvent extends Event
      */
     private $filteredData;
     /**
-     * @var int|null|array
+     * @var int|array|null
      */
     private $entryId;
     /**
@@ -46,7 +46,7 @@ class ModelSaveEvent extends Event
      * @param string         $moduleName
      * @param array          $filteredData
      * @param array          $rawData
-     * @param int|null|array $entryId
+     * @param int|array|null $entryId
      * @param bool           $isNewEntry
      * @param bool           $hasDataChanges
      * @param string         $tableName
@@ -94,7 +94,7 @@ class ModelSaveEvent extends Event
     }
 
     /**
-     * @return int|null|array
+     * @return int|array|null
      */
     public function getEntryId()
     {

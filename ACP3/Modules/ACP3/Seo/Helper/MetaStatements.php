@@ -39,7 +39,7 @@ class MetaStatements
     protected $seoCache;
 
     /**
-     * @var null|array
+     * @var array|null
      */
     protected $aliasesCache;
     /**

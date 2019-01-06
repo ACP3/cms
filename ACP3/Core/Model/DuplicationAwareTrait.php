@@ -45,7 +45,7 @@ trait DuplicationAwareTrait
 
     /**
      * @param array    $rawData
-     * @param null|int $entryId
+     * @param int|null $entryId
      *
      * @return int|bool
      */

@@ -52,7 +52,7 @@ abstract class AbstractModel
 
     /**
      * @param array    $rawData
-     * @param null|int $entryId
+     * @param int|null $entryId
      *
      * @return bool|int
      *

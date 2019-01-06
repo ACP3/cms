@@ -12,7 +12,7 @@ use ACP3\Core;
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var null|array
+     * @var array|null
      */
     protected $file;
     /**

@@ -172,7 +172,7 @@ class Connection
      * @param int    $column
      * @param array  $types
      *
-     * @return null|string
+     * @return string|null
      *
      * @throws \Doctrine\DBAL\DBALException
      */

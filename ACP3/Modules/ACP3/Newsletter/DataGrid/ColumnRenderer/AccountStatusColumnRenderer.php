@@ -58,7 +58,7 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * @param array       $column
      * @param array       $dbResultRow
-     * @param null|string $dbValue
+     * @param string|null $dbValue
      *
      * @return string
      */

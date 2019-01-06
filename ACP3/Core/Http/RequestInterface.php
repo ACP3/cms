@@ -167,7 +167,7 @@ interface RequestInterface
     public function setHomepage(string $homepage): void;
 
     /**
-     * @param null|string $pathInfo
+     * @param string|null $pathInfo
      */
     public function setPathInfo(?string $pathInfo = null): void;
 }
