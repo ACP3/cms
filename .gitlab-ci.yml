@@ -1,5 +1,3 @@
-image: registry.gitlab.com/acp3/php-docker:7.1
-
 variables:
   COMPOSER_HOME: .composerhome
   COMPOSER_ALLOW_SUPERUSER: 1
@@ -11,6 +9,7 @@ stages:
   - release
 
 .php-base:
+  image: registry.gitlab.com/acp3/php-docker:7.2
   cache:
     key: composer-$CI_COMMIT_REF_NAME
     paths:
@@ -27,6 +26,11 @@ build:composer:
     - composer install -n --prefer-dist
 
 test:php71-unit:
+  extends: test:php72-unit
+  image: registry.gitlab.com/acp3/php-docker:7.1
+  coverage: ~
+
+test:php72-unit:
   extends: .php-base
   stage: test
   cache:
@@ -34,11 +38,6 @@ test:php71-unit:
   script:
     - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
-
-test:php72-unit:
-  extends: test:php71-unit
-  image: registry.gitlab.com/acp3/php-docker:7.2
-  coverage: ~
 
 test:phpcs:
   extends: .php-base
