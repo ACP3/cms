@@ -39,6 +39,11 @@ test:php72-unit:
     - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
 
+test:php73-unit:
+  extends: test:php72-unit
+  image: registry.gitlab.com/acp3/php-docker:7.3
+  coverage: ~
+
 test:phpcs:
   extends: .php-base
   stage: test
