@@ -89,7 +89,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      * @param int      $moduleId
      * @param int      $privilegeId
      * @param int      $value
-     * @param null|int $defaultValue
+     * @param int|null $defaultValue
      *
      * @return string
      */

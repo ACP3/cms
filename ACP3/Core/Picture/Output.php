@@ -102,7 +102,7 @@ class Output
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getDestFile(): ?string
     {

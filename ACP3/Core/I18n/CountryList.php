@@ -16,11 +16,11 @@ class CountryList
      */
     private $translator;
     /**
-     * @var null|array
+     * @var array|null
      */
     private $countries;
     /**
-     * @var null|array
+     * @var array|null
      */
     private $supportedLocales;
 

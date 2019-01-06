@@ -68,7 +68,7 @@ class Action
 
     /**
      * @param callable    $callback
-     * @param null|string $path
+     * @param string|null $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -186,7 +186,7 @@ class Action
 
     /**
      * @param callable    $callback
-     * @param null|string $path
+     * @param string|null $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -206,7 +206,7 @@ class Action
 
     /**
      * @param callable    $callback
-     * @param null|string $path
+     * @param string|null $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -224,7 +224,7 @@ class Action
 
     /**
      * @param callable    $callback
-     * @param null|string $path
+     * @param string|null $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -242,7 +242,7 @@ class Action
 
     /**
      * @param callable    $callback
-     * @param null|string $path
+     * @param string|null $path
      *
      * @return array|string|JsonResponse|RedirectResponse
      *
@@ -263,7 +263,7 @@ class Action
     /**
      * @param bool|int    $result
      * @param string      $phrase
-     * @param null|string $path
+     * @param string|null $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
@@ -282,7 +282,7 @@ class Action
     /**
      * @param bool|int    $result
      * @param string      $translatedText
-     * @param null|string $path
+     * @param string|null $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */

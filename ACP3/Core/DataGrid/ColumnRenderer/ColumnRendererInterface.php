@@ -22,7 +22,7 @@ interface ColumnRendererInterface
     public function setIdentifier(string $identifier);
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getPrimaryKey(): ?string;
 
