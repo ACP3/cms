@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - the copy of a contact form message will be send to the sender by default now
 
 ### Changed
+- improved the rendering of the homepage meta title
 - replaced the KCFinder with the RichFilemanager
 
 ## [4.35.1] - 2019-01-05
