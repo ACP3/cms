@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.36.1] - 2019-01-10
+### Fixed
+- added a missing composer dependency to the composer.json of the Filemanager module
+
 ## [4.36.0] - 2019-01-10
 ### Added
 - made it possible to delete contact form messages
@@ -841,7 +845,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.36.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.36.1...4.x
+[4.36.1]: https://gitlab.com/ACP3/cms/compare/v4.36.0...v4.36.1
 [4.36.0]: https://gitlab.com/ACP3/cms/compare/v4.35.1...v4.36.0
 [4.35.1]: https://gitlab.com/ACP3/cms/compare/v4.35.0...v4.35.1
 [4.35.0]: https://gitlab.com/ACP3/cms/compare/v4.34.0...v4.35.0
