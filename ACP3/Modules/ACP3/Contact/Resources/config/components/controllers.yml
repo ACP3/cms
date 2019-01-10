@@ -29,7 +29,6 @@ services:
     arguments:
       - '@core.context.form'
       - '@core.router'
-      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.alerts'
       - '@contact.validation.form_validation'

@@ -21,10 +21,6 @@ class Index extends Core\Controller\AbstractFormAction
      */
     protected $formValidation;
     /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var Contact\Model\ContactFormModel
      */
     protected $contactFormModel;
@@ -41,10 +37,18 @@ class Index extends Core\Controller\AbstractFormAction
      */
     private $router;
 
+    /**
+     * @param \ACP3\Core\Controller\Context\FormContext            $context
+     * @param \ACP3\Core\Router\RouterInterface                    $router
+     * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
+     * @param \ACP3\Core\Helpers\Alerts                            $alertsHelper
+     * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $formValidation
+     * @param \ACP3\Modules\ACP3\Contact\Model\ContactsModel       $contactsModel
+     * @param \ACP3\Modules\ACP3\Contact\Model\ContactFormModel    $contactFormModel
+     */
     public function __construct(
         Core\Controller\Context\FormContext $context,
         Core\Router\RouterInterface $router,
-        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Alerts $alertsHelper,
         Contact\Validation\FormValidation $formValidation,
@@ -53,7 +57,6 @@ class Index extends Core\Controller\AbstractFormAction
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->contactFormModel = $contactFormModel;
@@ -67,13 +70,8 @@ class Index extends Core\Controller\AbstractFormAction
      */
     public function execute()
     {
-        $copy = [
-            1 => $this->translator->t('contact', 'send_copy_to_sender'),
-        ];
-
         return [
             'form' => \array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
-            'copy' => $this->formsHelper->checkboxGenerator('copy', $copy, 0),
             'contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
@@ -83,6 +81,7 @@ class Index extends Core\Controller\AbstractFormAction
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -94,10 +93,7 @@ class Index extends Core\Controller\AbstractFormAction
                 $this->contactsModel->save($formData);
 
                 $bool = $this->contactFormModel->sendContactFormEmail($formData);
-
-                if (isset($formData['copy'])) {
-                    $this->contactFormModel->sendContactFormEmailCopy($formData);
-                }
+                $this->contactFormModel->sendContactFormEmailCopy($formData);
 
                 $this->setTemplate($this->alertsHelper->confirmBox(
                     $this->translator->t('contact', $bool === true ? 'send_mail_success' : 'send_mail_error'),
