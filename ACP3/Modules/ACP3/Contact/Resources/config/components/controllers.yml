@@ -27,7 +27,6 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.alerts'
       - '@contact.validation.form_validation'

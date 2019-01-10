@@ -21,10 +21,6 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     protected $formValidation;
     /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
      * @var Contact\Model\ContactFormModel
      */
     protected $contactFormModel;
@@ -39,7 +35,6 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext        $context
-     * @param \ACP3\Core\Helpers\Forms                             $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
      * @param \ACP3\Core\Helpers\Alerts                            $alertsHelper
      * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $formValidation
@@ -48,7 +43,6 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Alerts $alertsHelper,
         Contact\Validation\FormValidation $formValidation,
@@ -57,7 +51,6 @@ class Index extends Core\Controller\AbstractFrontendAction
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->contactFormModel = $contactFormModel;
@@ -70,20 +63,17 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute()
     {
-        $copy = [
-            1 => $this->translator->t('contact', 'send_copy_to_sender'),
-        ];
-
         return [
             'form' => \array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
-            'copy' => $this->formsHelper->checkboxGenerator('copy', $copy, 0),
             'contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -95,10 +85,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 $this->contactsModel->save($formData);
 
                 $bool = $this->contactFormModel->sendContactFormEmail($formData);
-
-                if (isset($formData['copy'])) {
-                    $this->contactFormModel->sendContactFormEmailCopy($formData);
-                }
+                $this->contactFormModel->sendContactFormEmailCopy($formData);
 
                 $this->setTemplate($this->alertsHelper->confirmBox(
                     $this->translator->t('contact', $bool === true ? 'send_mail_success' : 'send_mail_error'),
