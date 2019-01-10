@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- made it possible to delete contact form messages
+- the copy of a contact form message will be send to the sender by default now
+
 ### Changed
 - replaced the KCFinder with the RichFilemanager
 
