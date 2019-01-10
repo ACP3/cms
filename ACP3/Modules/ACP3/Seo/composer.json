@@ -17,11 +17,11 @@
   "prefer-stable": true,
   "require": {
     "acp3/composer-installer": "^1.0",
-    "acp3/core": "^4.33.4",
-    "acp3/setup": "^4.33.0",
+    "acp3/core": "^4.36.0",
+    "acp3/setup": "^4.36.0",
     "acp3/module-errors": "^4.33.0",
-    "acp3/module-permissions": "^4.33.0",
-    "acp3/module-system": "^4.33.0",
+    "acp3/module-permissions": "^4.36.0",
+    "acp3/module-system": "^4.36.0",
     "acp3/module-users": "^4.33.0",
     "thepixeldeveloper/sitemap": "^5.0"
   },
