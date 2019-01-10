@@ -67,6 +67,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}contacts` MODIFY COLUMN `message` TEXT {charset} NOT NULL;',
                 'ALTER TABLE `{pre}contacts` CONVERT TO {charset};',
             ],
+            43 => [
+                "INSERT INTO `{pre}acl_resources` (`module_id`, `area`, `controller`, `page`, `params`, `privilege_id`) VALUES ('{moduleId}', 'admin', 'index', 'delete', '', 6);",
+            ],
         ];
     }
 

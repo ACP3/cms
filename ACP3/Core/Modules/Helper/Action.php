@@ -116,7 +116,7 @@ class Action
     }
 
     /**
-     * @param string      $action
+     * @param string|null $action
      * @param callable    $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
@@ -144,7 +144,7 @@ class Action
     }
 
     /**
-     * @param string      $action
+     * @param string|null $action
      * @param callable    $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
@@ -300,13 +300,13 @@ class Action
     /**
      * helper function for deleting a result set.
      *
-     * @param string      $action
+     * @param string|null $action
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function deleteItem(string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null)
+    private function deleteItem(?string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null)
     {
         $entries = $this->prepareRequestData();
 
