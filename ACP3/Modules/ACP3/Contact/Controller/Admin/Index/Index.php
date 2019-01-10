@@ -54,7 +54,7 @@ class Index extends Core\Controller\AbstractFrontendAction
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#contact-data-grid')
-            ->setEnableOptions(false);
+            ->setResourcePathDelete('admin/contact/index/delete');
 
         $this->addDataGridColumns($input);
 
@@ -89,6 +89,13 @@ class Index extends Core\Controller\AbstractFrontendAction
                 'type' => Core\DataGrid\ColumnRenderer\Nl2pColumnRenderer::class,
                 'fields' => ['message'],
                 'class' => 'datagrid-column__max-width',
-            ], 10);
+            ], 10)
+            ->addColumn([
+                'label' => $this->translator->t('system', 'id'),
+                'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
+                'fields' => ['id'],
+                'primary' => true,
+            ], 5)
+        ;
     }
 }

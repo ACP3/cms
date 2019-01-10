@@ -3,6 +3,12 @@ services:
     tags:
     - { name: acp3.controller.action }
 
+  contact.controller.admin.index.delete:
+    class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Delete
+    arguments:
+      - '@core.context.form'
+      - '@contact.model.contacts_model'
+
   contact.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index
     arguments:
