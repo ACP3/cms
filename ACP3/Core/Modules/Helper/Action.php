@@ -74,8 +74,6 @@ class Action
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handlePostAction(callable $callback, $path = null)
     {
@@ -126,8 +124,6 @@ class Action
      * @return array|JsonResponse|RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handleDeleteAction(
         $action,
@@ -156,8 +152,6 @@ class Action
      * @return array|JsonResponse|RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handleCustomDeleteAction(
         $action,
@@ -192,8 +186,6 @@ class Action
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handleSettingsPostAction(callable $callback, $path = null)
     {
@@ -212,8 +204,6 @@ class Action
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      *
      * @deprecated since 4.4.4, to be removed with version 5.0.0
      */
@@ -230,8 +220,6 @@ class Action
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      *
      * @deprecated since 4.4.4, to be removed with version 5.0.0
      */
@@ -248,8 +236,6 @@ class Action
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function handleSaveAction(callable $callback, $path = null)
     {
@@ -266,9 +252,6 @@ class Action
      * @param string|null $path
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function prepareRedirectMessageAfterPost($result, string $phrase, ?string $path = null)
     {
@@ -322,9 +305,6 @@ class Action
      * @param string|null $moduleIndexUrl
      *
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function deleteItem(string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null)
     {
@@ -372,9 +352,6 @@ class Action
      * @param array $entries
      *
      * @return string
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function prepareConfirmationBoxText(array $entries): string
     {
