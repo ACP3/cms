@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\System\Core\Breadcrumb;
 
+use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
 use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
@@ -76,6 +77,11 @@ class Title extends \ACP3\Core\Breadcrumb\Title
 
     private function renderHomepageTitle(): string
     {
+        $this->eventDispatcher->dispatch(
+            'core.breadcrumb.title.get_site_and_page_title_before',
+            new GetSiteAndPageTitleBeforeEvent($this)
+        );
+
         if ($this->allowSystemSubtitle()) {
             $settings = $this->getSettings();
 
