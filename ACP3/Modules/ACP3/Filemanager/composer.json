@@ -22,7 +22,8 @@
     "acp3/module-errors": "^4.33.0",
     "acp3/module-permissions": "^4.36.0",
     "acp3/module-system": "^4.36.0",
-    "acp3/module-users": "^4.33.0"
+    "acp3/module-users": "^4.33.0",
+    "servocoder/richfilemanager-php": "^1.2"
   },
   "autoload": {
     "psr-4": {
