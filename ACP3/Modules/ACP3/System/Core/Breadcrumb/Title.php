@@ -62,22 +62,34 @@ class Title extends \ACP3\Core\Breadcrumb\Title
 
     public function getSiteAndPageTitle()
     {
+        if ($this->request->isHomepage()) {
+            return $this->renderHomepageTitle();
+        }
+
         $settings = $this->getSettings();
+        if ($this->allowSystemSubtitle() && $settings['site_subtitle_mode'] == 2) {
+            $this->setSiteSubtitle('');
+        }
 
+        return parent::getSiteAndPageTitle();
+    }
+
+    private function renderHomepageTitle(): string
+    {
         if ($this->allowSystemSubtitle()) {
-            if ($this->request->isHomepage()) {
-                if ($settings['site_subtitle_homepage_mode'] == 1) {
-                    $title = $this->getSiteSubtitle();
-                    $title .= $this->getSiteTitleSeparator() . $this->getSiteTitle();
+            $settings = $this->getSettings();
 
-                    return $title;
-                }
-            } elseif ($settings['site_subtitle_mode'] == 2) {
+            if ($settings['site_subtitle_homepage_mode'] == 1) {
+                $this->setMetaTitle($this->getSiteSubtitle());
                 $this->setSiteSubtitle('');
             }
         }
 
-        return parent::getSiteAndPageTitle();
+        return $this->renderSiteTitle()
+            . $this->renderSiteSubTitle()
+            . $this->renderPageTitlePrefix()
+            . $this->renderPageTitle()
+            . $this->renderPageTitleSuffix();
     }
 
     private function allowSystemSubtitle(): bool
@@ -88,9 +100,22 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     protected function renderSiteSubTitle(): string
     {
         if ($this->allowSystemSubtitle()) {
+            if ($this->request->isHomepage() && !empty($this->getSiteSubtitle())) {
+                return $this->getSiteSubtitle() . $this->getPageTitleSeparator();
+            }
+
             return parent::renderSiteSubTitle();
         }
 
         return '';
+    }
+
+    protected function renderSiteTitle(): string
+    {
+        if ($this->request->isHomepage() && !empty($this->getSiteTitle())) {
+            return $this->getSiteTitle() . $this->getPageTitleSeparator();
+        }
+
+        return parent::renderSiteTitle();
     }
 }

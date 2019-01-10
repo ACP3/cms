@@ -104,21 +104,21 @@ class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
     {
         $this->setUpStepsExpectations(0);
 
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects($this->atLeastOnce())
             ->method('isHomepage')
             ->willReturn(true);
 
         $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 1);
         $this->titleConfigurator->configure($this->title);
 
-        $this->assertEquals('Subtitle | SEO Title', $this->title->getSiteAndPageTitle());
+        $this->assertEquals('SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
     }
 
     public function testGetSiteAndPageTitleForNotHomepage()
     {
         $this->setUpStepsExpectations(1);
 
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects($this->atLeastOnce())
             ->method('isHomepage')
             ->willReturn(false);
 
