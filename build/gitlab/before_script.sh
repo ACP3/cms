@@ -1,15 +1,11 @@
-#!/bin/bash
-
-# We need to install dependencies only for Docker
-[[ ! -e /.dockerenv ]] && [[ ! -e /.dockerinit ]] && exit 0
-
-which git || (apt-get update -yqq && apt-get install apt-utils git -yqq)
-which ssh-agent || (apt-get install openssh-client -y )
+#!/bin/sh
 
 eval $(ssh-agent -s)
 
 mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+
 echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
-ssh-add <(echo "$SSH_PRIVATE_KEY")
+echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
 ssh-add -l
