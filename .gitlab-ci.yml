@@ -16,8 +16,6 @@ stages:
       - ${COMPOSER_HOME}
       - vendor
       - .php_cs.cache
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
 
 build:composer:
   extends: .php-base
@@ -59,14 +57,12 @@ test:phpstan:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse
 
 test:eslint:
-  image: node:slim
+  image: node:lts-alpine
   stage: test
   cache:
     key: node-$CI_COMMIT_REF_NAME
     paths:
       - ${npm_config_cache}
-  before_script:
-    - bash ./build/gitlab/before_script.sh > /dev/null
   script:
     - npm ci
     - npm run-script eslint
