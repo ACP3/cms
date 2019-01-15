@@ -19,6 +19,9 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 
 class ControllerActionDispatcher
 {
+    private const ACTION_METHOD_DEFAULT = 'execute';
+    private const ACTION_METHOD_POST = 'executePost';
+
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
@@ -149,16 +152,27 @@ class ControllerActionDispatcher
      */
     private function getCallable(ActionInterface $controller)
     {
-        $callable = [$controller, 'execute'];
-        if (($this->request->getPost()->has('submit') || $this->request->getPost()->has('continue'))
-            && \method_exists($controller, 'executePost')) {
-            $reflection = new \ReflectionMethod($controller, 'executePost');
+        $callable = [$controller, self::ACTION_METHOD_DEFAULT];
+        if ($this->isValidPostRequest($controller)) {
+            $reflection = new \ReflectionMethod($controller, self::ACTION_METHOD_POST);
 
             if ($reflection->isPublic()) {
-                $callable = [$controller, 'executePost'];
+                $callable = [$controller, self::ACTION_METHOD_POST];
             }
         }
 
         return $callable;
+    }
+
+    private function isValidPostRequest(ActionInterface $controller): bool
+    {
+        if ($this->request->getSymfonyRequest()->isMethod('POST')
+            && \method_exists($controller, self::ACTION_METHOD_POST)) {
+            return $this->request->getPost()->has('submit')
+                || $this->request->getPost()->has('continue')
+                || \method_exists($controller, self::ACTION_METHOD_DEFAULT) === false;
+        }
+
+        return false;
     }
 }
