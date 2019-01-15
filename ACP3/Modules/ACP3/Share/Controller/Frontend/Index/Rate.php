@@ -60,9 +60,9 @@ class Rate extends AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function executePost(int $id): array
     {
-        $stars = $this->request->getPost()->get('stars');
+        $stars = (int) $this->request->getPost()->get('stars', 0);
         $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
         if ($this->canSaveRating($id, $stars, $ipAddress) === true) {
