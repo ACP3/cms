@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed some regular expressions to be compatible with PHP 7.3
+
 ## [4.36.2] - 2019-01-11
 ### Fixed
 - added the missing `core.breadcrumb.title.get_site_and_page_title_before` event when rendering the homepage title
