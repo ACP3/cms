@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- it's now possible to have POST-only controller actions
+
+### Fixed
+- added the missing event prefix of the `ContactsModel`
+
 ## [4.36.4] - 2019-01-15
 ### Fixed
 - fixed some regular expressions to be compatible with PHP 7.3
