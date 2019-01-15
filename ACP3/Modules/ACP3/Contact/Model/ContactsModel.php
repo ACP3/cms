@@ -9,9 +9,12 @@ namespace ACP3\Modules\ACP3\Contact\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor\ColumnTypes;
+use ACP3\Modules\ACP3\Contact\Installer\Schema;
 
 class ContactsModel extends AbstractModel
 {
+    const EVENT_PREFIX = Schema::MODULE_NAME;
+
     /**
      * {@inheritdoc}
      */
