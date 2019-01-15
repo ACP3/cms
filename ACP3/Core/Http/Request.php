@@ -229,7 +229,7 @@ class Request extends AbstractRequest
                     $this->symfonyRequest->attributes->add(['page' => (int) \substr($query[$i], 5)]);
                 } elseif (\preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
                     $this->symfonyRequest->attributes->add(['id' => (int) \substr($query[$i], 3)]);
-                } elseif (\preg_match('/^(([a-zA-Z0-9-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
+                } elseif (\preg_match('/^(([a-zA-Z0-9\-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = \explode('_', $query[$i], 2);
                     $this->symfonyRequest->attributes->add([$param[0] => $param[1]]);
                 }
