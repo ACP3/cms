@@ -19,7 +19,7 @@ class RichFileManager extends AbstractFrontendAction
         $app = new \RFM\Application();
 
         $local = new \RFM\Repository\Local\Storage($this->getFileManagerConfig());
-        $local->setRoot($this->appPath->getUploadsDir(), true, false);
+        $local->setRoot($this->appPath->getWebRoot() . 'uploads/', true, true);
 
         $app->setStorage($local);
 
