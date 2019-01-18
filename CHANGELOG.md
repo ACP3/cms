@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- backported the autoprefixer from the ACP3 5.x branch
+
+### Fixed
+- fixed the path to the uploads folder after selecting a file from the filemanager
+
 ## [4.36.5] - 2019-01-16
 ### Added
 - it's now possible to have POST-only controller actions
