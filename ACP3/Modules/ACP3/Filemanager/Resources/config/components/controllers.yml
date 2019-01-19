@@ -7,3 +7,4 @@ services:
     class: ACP3\Modules\ACP3\Filemanager\Controller\Admin\Index\RichFileManager
     arguments:
       - '@core.context.frontend'
+      - '%core.environment%'
