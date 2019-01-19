@@ -8,9 +8,23 @@
 namespace ACP3\Modules\ACP3\Filemanager\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Environment\ApplicationMode;
 
 class RichFileManager extends AbstractFrontendAction
 {
+    /**
+     * @var string
+     */
+    private $applicationMode;
+
+    public function __construct(FrontendContext $context, string $applicationMode)
+    {
+        parent::__construct($context);
+
+        $this->applicationMode = $applicationMode;
+    }
+
     /**
      * @throws \Exception
      */
@@ -34,6 +48,10 @@ class RichFileManager extends AbstractFrontendAction
     private function getFileManagerConfig(): array
     {
         return [
+            'logger' => [
+                'enabled' => $this->applicationMode === ApplicationMode::DEVELOPMENT,
+                'file' => $this->appPath->getCacheDir() . 'logs/filemanager.log',
+            ],
             'security' => [
                 'patterns' => [
                     'policy' => 'DISALLOW_LIST',
