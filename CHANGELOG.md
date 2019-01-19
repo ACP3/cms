@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- disable the logging of the RichFilemanager if the ACP3 in operating in production mode
+
+### Fixed
+- fixed the path to the uploads folder after selecting a file from the filemanager
+
 ## [4.36.6] - 2019-01-19
 ### Added
 - backported the autoprefixer from the ACP3 5.x branch
