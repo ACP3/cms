@@ -4,12 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.36.7] - 2019-01-19
 ### Changed
 - disable the logging of the RichFilemanager if the ACP3 in operating in production mode
-
-### Fixed
-- fixed the path to the uploads folder after selecting a file from the filemanager
 
 ## [4.36.6] - 2019-01-19
 ### Added
@@ -874,7 +871,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.36.6...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.36.7...4.x
+[4.36.7]: https://gitlab.com/ACP3/cms/compare/v4.36.6...v4.36.7
 [4.36.6]: https://gitlab.com/ACP3/cms/compare/v4.36.5...v4.36.6
 [4.36.5]: https://gitlab.com/ACP3/cms/compare/v4.36.4...v4.36.5
 [4.36.4]: https://gitlab.com/ACP3/cms/compare/v4.36.3...v4.36.4
