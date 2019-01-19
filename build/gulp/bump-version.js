@@ -44,10 +44,18 @@ module.exports = (gulp, plugins) => {
     };
 
     /**
-     * Reads the current ACP3 CMS version from the package.json
+     * Returns the latest tag of the current branch
      */
     function getCurrentVersion() {
-        return require('../../package.json').version;
+        return git()
+            .raw(['describe', '--abbrev=0'])
+            .then((latestTagInBranch) => {
+                if (latestTagInBranch.indexOf('v') === 0) {
+                    return latestTagInBranch.substring(1).trim();
+                }
+
+                return latestTagInBranch.trim();
+            });
     }
 
     /**
@@ -57,6 +65,7 @@ module.exports = (gulp, plugins) => {
      * @returns {Promise<*>}
      */
     async function findChangedModules(isMajorUpdate, currentVersion) {
+        // If we are dealing with a major version, return all modules
         if (isMajorUpdate) {
             return Object.values(modules);
         }
@@ -183,7 +192,7 @@ module.exports = (gulp, plugins) => {
 
     return async () => {
         try {
-            const currentVersion = getCurrentVersion();
+            const currentVersion = await getCurrentVersion();
             const newVersion = getNewVersion(argv, currentVersion);
 
             bumpChangelog(currentVersion, newVersion);
