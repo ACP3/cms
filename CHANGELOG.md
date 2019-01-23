@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - disable the logging of the RichFilemanager if the ACP3 in operating in production mode
 
-## [Unreleased]
+## [4.37.0] - 2019-01-23
 ### Added
 - reworked and extended the possibilities of the files widget
 
@@ -878,7 +878,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.36.7...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.37.0...4.x
+[4.37.0]: https://gitlab.com/ACP3/cms/compare/v4.36.7...v4.37.0
 [4.36.7]: https://gitlab.com/ACP3/cms/compare/v4.36.6...v4.36.7
 [4.36.6]: https://gitlab.com/ACP3/cms/compare/v4.36.5...v4.36.6
 [4.36.5]: https://gitlab.com/ACP3/cms/compare/v4.36.4...v4.36.5
