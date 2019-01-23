@@ -23,6 +23,10 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      * @var bool
      */
     private $useAjax = false;
+    /**
+     * @var int|null
+     */
+    private $totalResults;
 
     /**
      * {@inheritdoc}
@@ -74,6 +78,24 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     public function setUseAjax(bool $useAjax): self
     {
         $this->useAjax = $useAjax;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTotalResults(): ?int
+    {
+        return $this->totalResults;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setTotalResults(int $totalResults)
+    {
+        $this->totalResults = $totalResults;
 
         return $this;
     }

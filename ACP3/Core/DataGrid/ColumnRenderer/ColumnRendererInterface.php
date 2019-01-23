@@ -46,6 +46,18 @@ interface ColumnRendererInterface
     public function setUseAjax(bool $useAjax);
 
     /**
+     * @return int|null
+     */
+    public function getTotalResults(): ?int;
+
+    /**
+     * @param int $totalResults
+     *
+     * @return $this
+     */
+    public function setTotalResults(int $totalResults);
+
+    /**
      * @param array $column
      * @param array $dbResultRow
      *
