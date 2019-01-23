@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Widget\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -23,60 +24,69 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
     protected $filesRepository;
-
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext               $context
-     * @param \ACP3\Core\Date                                           $date
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
+     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
+    private $categoryRepository;
+
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Files\Model\Repository\FilesRepository $filesRepository
+        Files\Model\Repository\FilesRepository $filesRepository,
+        CategoryRepository $categoryRepository
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->filesRepository = $filesRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
-     * @param int    $categoryId
-     * @param string $template
+     * @param int|null $limit
+     * @param int      $categoryId
+     * @param string   $template
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($categoryId = 0, $template = '')
+    public function execute(?int $limit = null, ?int $categoryId = null, string $template = '')
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
-
-        $this->setTemplate($template);
+        $this->setTemplate(\urldecode($template));
 
         return [
-            'sidebar_files' => $this->fetchFiles($categoryId, $settings),
+            'category' => $this->categoryRepository->getOneById($categoryId),
+            'sidebar_files' => $this->fetchFiles($categoryId, $limit),
         ];
     }
 
     /**
-     * @param int   $categoryId
-     * @param array $settings
+     * @param int|null $categoryId
+     *
+     * @param int|null $limit
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    private function fetchFiles($categoryId, array $settings)
+    private function fetchFiles(?int $categoryId, ?int $limit): array
     {
+        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
+
         if (!empty($categoryId)) {
-            $files = $this->filesRepository->getAllByCategoryId(
-                (int) $categoryId,
+            return $this->filesRepository->getAllByCategoryId(
+                $categoryId,
                 $this->date->getCurrentDateTime(),
-                $settings['sidebar']
+                $limit ?? $settings['sidebar']
             );
-        } else {
-            $files = $this->filesRepository->getAll($this->date->getCurrentDateTime(), $settings['sidebar']);
         }
 
-        return $files;
+        return $this->filesRepository->getAll(
+            $this->date->getCurrentDateTime(),
+            $limit ?? $settings['sidebar']
+        );
     }
 }

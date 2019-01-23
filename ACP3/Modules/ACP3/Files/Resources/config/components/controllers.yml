@@ -102,3 +102,4 @@ services:
       - '@core.context.widget'
       - '@core.date'
       - '@files.model.filesrepository'
+      - '@categories.model.categories_repository'
