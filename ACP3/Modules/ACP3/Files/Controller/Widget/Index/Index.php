@@ -65,7 +65,6 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     /**
      * @param int|null $categoryId
-     *
      * @param int|null $limit
      *
      * @return array
