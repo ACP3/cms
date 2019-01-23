@@ -93,7 +93,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function setTotalResults(int $totalResults)
+    public function setTotalResults(int $totalResults): self
     {
         $this->totalResults = $totalResults;
 
