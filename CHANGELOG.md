@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - disable the logging of the RichFilemanager if the ACP3 in operating in production mode
 
+## [Unreleased]
+### Added
+- reworked and extended the possibilities of the files widget
+
+### Fixed
+- fixed the sorting of the result set inside the data grids
+
 ## [4.36.6] - 2019-01-19
 ### Added
 - backported the autoprefixer from the ACP3 5.x branch
