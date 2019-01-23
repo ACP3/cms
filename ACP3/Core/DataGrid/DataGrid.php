@@ -8,6 +8,7 @@
 namespace ACP3\Core\DataGrid;
 
 use ACP3\Core\ACL;
+use ACP3\Core\DataGrid\ColumnRenderer\ColumnRendererInterface;
 use ACP3\Core\DataGrid\ColumnRenderer\HeaderColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer;
@@ -113,14 +114,19 @@ class DataGrid
     private function mapTableColumnsToDbFieldsAjax(Input $input): array
     {
         $renderedResults = [];
+        $totalResults = $input->getResultsCount();
         foreach ($input->getResults() as $result) {
             $row = [];
             foreach (clone $input->getColumns() as $column) {
                 if ($this->container->has($column['type']) && !empty($column['label'])) {
-                    $row[] = $this->container->get($column['type'])
+                    /** @var ColumnRendererInterface $columnRenderer */
+                    $columnRenderer = $this->container->get($column['type']);
+
+                    $row[] = $columnRenderer
                         ->setIdentifier($input->getIdentifier())
                         ->setPrimaryKey($input->getPrimaryKey())
                         ->setUseAjax($this->isRequiredAjaxRequest($input))
+                        ->setTotalResults($totalResults)
                         ->fetchDataAndRenderColumn($column, $result);
                 }
             }
@@ -163,14 +169,19 @@ class DataGrid
         }
 
         $renderedResults = '';
+        $totalResults = $input->getResultsCount();
         foreach ($input->getResults() as $result) {
             $renderedResults .= '<tr>';
             foreach (clone $input->getColumns() as $column) {
                 if ($this->container->has($column['type']) && !empty($column['label'])) {
-                    $renderedResults .= $this->container->get($column['type'])
+                    /** @var ColumnRendererInterface $columnRenderer */
+                    $columnRenderer = $this->container->get($column['type']);
+
+                    $renderedResults .= $columnRenderer
                         ->setIdentifier($input->getIdentifier())
                         ->setPrimaryKey($input->getPrimaryKey())
                         ->setUseAjax($this->isRequiredAjaxRequest($input))
+                        ->setTotalResults($totalResults)
                         ->fetchDataAndRenderColumn($column, $result);
                 }
             }

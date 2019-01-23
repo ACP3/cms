@@ -33,7 +33,12 @@ class NestedSetSortColumnRenderer extends SortColumnRenderer
         }
 
         $column['attribute'] += [
-            'sort' => $dbResultRow[$this->getFirstDbField($column)],
+            'sort' => \str_pad(
+                $dbResultRow[$this->getFirstDbField($column)],
+                \strlen($this->getTotalResults()),
+                '0',
+                STR_PAD_LEFT
+            ),
         ];
 
         return $this->render($column, $value);
