@@ -193,9 +193,6 @@ class Pagination
 
     /**
      * @return array
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function render()
     {
@@ -228,10 +225,6 @@ class Pagination
         return $this->pagination;
     }
 
-    /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
     protected function setMetaStatements()
     {
         if ($this->currentPage > 1) {
@@ -269,9 +262,6 @@ class Pagination
     /**
      * @param string $link
      * @param int    $rangeStart
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function addFirstPageLink(string $link, int $rangeStart): void
     {
@@ -334,9 +324,6 @@ class Pagination
 
     /**
      * @param string $link
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function addPreviousPageLink(string $link): void
     {
@@ -361,9 +348,6 @@ class Pagination
 
     /**
      * @param string $link
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function addNextPageLink(string $link): void
     {
@@ -389,9 +373,6 @@ class Pagination
     /**
      * @param string $link
      * @param int    $rangeEnd
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     private function addLastPageLink(string $link, int $rangeEnd): void
     {
