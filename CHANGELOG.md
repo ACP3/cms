@@ -4,10 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.38.0] - 2019-01-26
 ### Changed
 - removed the hard coded logger from the app's bootstrap class
 - increased the default logging level of the LoggerFactory from "debug" to "warning"
+- updated Moment.js to version 2.24.0
 
 ## [4.37.0] - 2019-01-23
 ### Added
@@ -883,7 +884,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.37.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.38.0...4.x
+[4.38.0]: https://gitlab.com/ACP3/cms/compare/v4.37.0...v4.38.0
 [4.37.0]: https://gitlab.com/ACP3/cms/compare/v4.36.7...v4.37.0
 [4.36.7]: https://gitlab.com/ACP3/cms/compare/v4.36.6...v4.36.7
 [4.36.6]: https://gitlab.com/ACP3/cms/compare/v4.36.5...v4.36.6
