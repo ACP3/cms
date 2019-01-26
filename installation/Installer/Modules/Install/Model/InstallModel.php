@@ -17,7 +17,6 @@ use ACP3\Installer\Modules\Install\Helpers\Install;
 use ACP3\Installer\Modules\Install\Helpers\ModuleInstaller;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\Model\UserModel;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class InstallModel
@@ -47,10 +46,6 @@ class InstallModel
      */
     protected $vendor;
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
      * @var \ACP3\Core\Helpers\Secure
      */
     private $secure;
@@ -58,7 +53,6 @@ class InstallModel
     /**
      * InstallModel constructor.
      *
-     * @param LoggerInterface    $logger
      * @param ContainerInterface $container
      * @param ApplicationPath    $appPath
      * @param Vendor             $vendor
@@ -68,7 +62,6 @@ class InstallModel
      * @param ModuleInstaller    $moduleInstaller
      */
     public function __construct(
-        LoggerInterface $logger,
         ContainerInterface $container,
         ApplicationPath $appPath,
         Vendor $vendor,
@@ -84,7 +77,6 @@ class InstallModel
         $this->translator = $translator;
         $this->installHelper = $installHelper;
         $this->moduleInstaller = $moduleInstaller;
-        $this->logger = $logger;
     }
 
     /**
@@ -116,7 +108,6 @@ class InstallModel
     public function updateContainer(RequestInterface $request)
     {
         $this->container = ServiceContainerBuilder::create(
-            $this->logger,
             $this->appPath,
             $request->getSymfonyRequest(),
             $this->container->getParameter('core.environment'),
