@@ -33,3 +33,10 @@ services:
     - '@core.acl'
     tags:
     - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
+
+  core.application.event.on_output_page_listener:
+    class: ACP3\Core\Application\Event\Listener\OnOutputPageExceptionListener
+    arguments:
+      - '@core.logger.system_logger'
+    tags:
+      - { name: core.eventListener, event: core.output_page_exception }

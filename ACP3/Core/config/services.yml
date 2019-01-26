@@ -46,3 +46,4 @@ services:
 
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\EventDispatcher
+    public: true

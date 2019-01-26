@@ -8,6 +8,7 @@
 namespace ACP3\Installer\Core\Application;
 
 use ACP3\Core;
+use ACP3\Core\Application\Event\OutputPageExceptionEvent;
 use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -57,7 +58,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
      */
     public function initializeClasses(SymfonyRequest $symfonyRequest)
     {
-        $this->container = ServiceContainerBuilder::create($this->logger, $this->appPath, $symfonyRequest, $this->appMode);
+        $this->container = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
     }
 
     /**
@@ -72,8 +73,11 @@ class Bootstrap extends Core\Application\AbstractBootstrap
             $response = $controllerActionDispatcher->dispatch();
         } catch (Core\Controller\Exception\ControllerActionNotFoundException $e) {
             $response = $controllerActionDispatcher->dispatch('errors.controller.install.index.not_found');
-        } catch (\Exception $e) {
-            $this->logger->critical($e);
+        } catch (\Throwable $e) {
+            /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+            $eventDispatcher = $this->container->get('core.event_dispatcher');
+
+            $eventDispatcher->dispatch('core.output_page_exception', new OutputPageExceptionEvent($e));
 
             $response = $controllerActionDispatcher->dispatch('errors.controller.install.index.server_error');
         }

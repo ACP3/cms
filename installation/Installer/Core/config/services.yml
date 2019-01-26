@@ -17,11 +17,6 @@ services:
     arguments:
       - '@core.environment.application_path'
 
-  core.logger:
-    class: ACP3\Core\Logger
-    arguments:
-      - '@core.environment.application_path'
-
   core.router:
     class: ACP3\Installer\Core\Router\Router
     arguments:
@@ -59,6 +54,7 @@ services:
 
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\EventDispatcher
+    public: true
 
   core.xml:
     class: ACP3\Core\XML
