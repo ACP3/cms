@@ -164,7 +164,7 @@
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: end;
-      justify-content: end;
+      justify-content: flex-end;
   visibility: hidden;
 }
 .datagrid .datagrid-column__action-buttons .btn {
