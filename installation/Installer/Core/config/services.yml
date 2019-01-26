@@ -54,6 +54,7 @@ services:
 
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\EventDispatcher
+    public: true
 
   core.xml:
     class: ACP3\Core\XML

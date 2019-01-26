@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Application;
 
+use ACP3\Core\Application\Event\OutputPageExceptionEvent;
 use ACP3\Core\Application\Exception\MaintenanceModeActiveException;
 use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
@@ -86,7 +87,7 @@ class Bootstrap extends AbstractBootstrap
     /**
      * {@inheritdoc}
      *
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function outputPage()
     {
@@ -103,8 +104,11 @@ class Bootstrap extends AbstractBootstrap
             $response = $controllerActionDispatcher->dispatch($e->getServiceId(), $e->routeParams());
         } catch (MaintenanceModeActiveException $e) {
             $response = new Response($e->getMessage(), $e->getCode());
-        } catch (\Exception $e) {
-            $this->logger->critical($e);
+        } catch (\Throwable $e) {
+            /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+            $eventDispatcher = $this->container->get('core.event_dispatcher');
+
+            $eventDispatcher->dispatch('core.output_page_exception', new OutputPageExceptionEvent($e));
 
             throw $e;
         }

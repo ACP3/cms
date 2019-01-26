@@ -15,7 +15,6 @@ use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -24,10 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ServiceContainerBuilder extends ContainerBuilder
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
     /**
      * @var ApplicationPath
      */
@@ -48,7 +43,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * ServiceContainerBuilder constructor.
      *
-     * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
      * @param Request         $symfonyRequest
      * @param string          $applicationMode
@@ -57,7 +51,6 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @throws \Exception
      */
     public function __construct(
-        LoggerInterface $logger,
         ApplicationPath $applicationPath,
         Request $symfonyRequest,
         string $applicationMode,
@@ -65,7 +58,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     ) {
         parent::__construct();
 
-        $this->logger = $logger;
         $this->applicationPath = $applicationPath;
         $this->symfonyRequest = $symfonyRequest;
         $this->applicationMode = $applicationMode;
@@ -82,7 +74,6 @@ class ServiceContainerBuilder extends ContainerBuilder
         $this->setParameter('cache_driver', 'Array');
         $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
-        $this->set('core.logger.system_logger', $this->logger);
         $this
             ->addCompilerPass(
                 new RegisterListenersPass(
@@ -169,7 +160,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
      * @param Request         $symfonyRequest
      * @param string          $applicationMode
@@ -180,12 +170,11 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @throws \Exception
      */
     public static function create(
-        LoggerInterface $logger,
         ApplicationPath $applicationPath,
         Request $symfonyRequest,
         string $applicationMode,
         bool $includeModules = false
     ) {
-        return new static($logger, $applicationPath, $symfonyRequest, $applicationMode, $includeModules);
+        return new static($applicationPath, $symfonyRequest, $applicationMode, $includeModules);
     }
 }
