@@ -10,7 +10,6 @@ namespace ACP3\Installer\Modules\Update\Model;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SchemaUpdateModel
@@ -27,26 +26,19 @@ class SchemaUpdateModel
      * @var \ACP3\Installer\Core\Environment\ApplicationPath
      */
     private $appPath;
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
 
     /**
      * ModuleUpdateModel constructor.
      *
      * @param \ACP3\Installer\Core\Environment\ApplicationPath          $appPath
-     * @param \Psr\Log\LoggerInterface                                  $logger
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(
         ApplicationPath $appPath,
-        LoggerInterface $logger,
         ContainerInterface $container
     ) {
         $this->container = $container;
         $this->appPath = $appPath;
-        $this->logger = $logger;
     }
 
     /**
@@ -57,7 +49,6 @@ class SchemaUpdateModel
     public function updateContainer(RequestInterface $request)
     {
         $this->container = ServiceContainerBuilder::create(
-            $this->logger,
             $this->appPath,
             $request->getSymfonyRequest(),
             $this->container->getParameter('core.environment'),
