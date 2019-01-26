@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.36.7] - 2019-01-19
+## [Unreleased]
 ### Changed
-- disable the logging of the RichFilemanager if the ACP3 in operating in production mode
+- removed the hard coded logger from the app's bootstrap class
+- increased the default logging level of the LoggerFactory from "debug" to "warning"
 
 ## [4.37.0] - 2019-01-23
 ### Added
@@ -14,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - fixed the sorting of the result set inside the data grids
+
+## [4.36.7] - 2019-01-19
+### Changed
+- disable the logging of the RichFilemanager if the ACP3 in operating in production mode
 
 ## [4.36.6] - 2019-01-19
 ### Added
