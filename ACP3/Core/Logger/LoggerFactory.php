@@ -38,7 +38,7 @@ class LoggerFactory
      *
      * @throws \Exception
      */
-    public function create($channel, $level = LogLevel::DEBUG)
+    public function create($channel, $level = LogLevel::WARNING)
     {
         $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
 

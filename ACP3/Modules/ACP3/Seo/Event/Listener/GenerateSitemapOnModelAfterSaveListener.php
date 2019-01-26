@@ -75,7 +75,7 @@ class GenerateSitemapOnModelAfterSaveListener
             try {
                 $this->sitemapGenerationModel->save();
             } catch (SitemapGenerationException $e) {
-                $this->logger->info($e->getMessage());
+                $this->logger->warning($e->getMessage());
             }
         }
     }
