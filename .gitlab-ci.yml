@@ -63,6 +63,8 @@ test:eslint:
     key: node-$CI_COMMIT_REF_NAME
     paths:
       - ${npm_config_cache}
+  before_script:
+    - apk update && apk add --no-cache git
   script:
     - npm ci
     - npm run-script eslint
