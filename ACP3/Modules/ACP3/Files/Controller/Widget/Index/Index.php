@@ -58,7 +58,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->setTemplate(\urldecode($template));
 
         return [
-            'category' => $this->categoryRepository->getOneById($categoryId),
+            'category' => $categoryId !== null ? $this->categoryRepository->getOneById($categoryId) : [],
             'sidebar_files' => $this->fetchFiles($categoryId, $limit),
         ];
     }
