@@ -1,8 +1,8 @@
 {extends file="asset:System/layout.header-bar.tpl"}
 
-{block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="users/account/edit" class="fas fa-user-edit text-info"}
-    {check_access mode="link" path="users/account/settings" class="fas fa-cog"}
+{block HEADER_BAR}
+    {check_access mode="link" path="users/account/edit" class="fas fa-user-edit" btn_class="btn btn-primary" title={lang t="users|frontend_account_edit"}}
+    {check_access mode="link" path="users/account/settings" class="fas fa-cog" btn_class="btn btn-secondary"}
     {event name="users.account.index.header_bar"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
