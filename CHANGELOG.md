@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- fetch the RichFilemanager from a fork to greatly enhance its security and memory footprint
+
 ## [4.38.0] - 2019-01-26
 ### Changed
 - removed the hard coded logger from the app's bootstrap class
