@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- updated Fontawesome to version 5.7.1
+- removed Google+ from the supported services of the social sharing module
+- updated the Composer dependencies
+
 ### Fixed
 - fixed a possible `method not exists`-error while resolving a controller action
 
