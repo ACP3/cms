@@ -15,7 +15,6 @@ class SocialServices
     private static $servicesMap = [
         'twitter' => null,
         'facebook' => 'Facebook',
-        'googleplus' => null,
         'linkedin' => 'LinkedIn',
         'pinterest' => 'Pinterest',
         'xing' => 'Xing',

@@ -30,7 +30,6 @@
         <item key="service_diaspora">diaspora</item>
         <item key="service_facebook">Facebook</item>
         <item key="service_flattr">Flattr</item>
-        <item key="service_googleplus">Google+</item>
         <item key="service_info">Info</item>
         <item key="service_linkedin">LinkedIn</item>
         <item key="service_mail">E-Mail</item>
