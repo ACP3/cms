@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.39.0] - 2019-02-09
 ### Changed
 - updated Fontawesome to version 5.7.1
 - removed Google+ from the supported services of the social sharing module
@@ -897,7 +897,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.38.1...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.39.0...4.x
+[4.39.0]: https://gitlab.com/ACP3/cms/compare/v4.38.1...v4.39.0
 [4.38.1]: https://gitlab.com/ACP3/cms/compare/v4.38.0...v4.38.1
 [4.38.0]: https://gitlab.com/ACP3/cms/compare/v4.37.0...v4.38.0
 [4.37.0]: https://gitlab.com/ACP3/cms/compare/v4.36.7...v4.37.0
