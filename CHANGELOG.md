@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed a possible `method not exists`-error while resolving a controller action
+
 ## [4.38.1] - 2019-01-29
 ### Changed
 - fetch the RichFilemanager from a fork to greatly enhance its security and memory footprint
