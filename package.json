@@ -20,8 +20,8 @@
   "homepage": "https://www.acp3-cms.net",
   "private": true,
   "devDependencies": {
-    "autoprefixer": "^9.4.3",
-    "eslint": "^5.10.0",
+    "autoprefixer": "^9.4.7",
+    "eslint": "^5.13.0",
     "gulp": "^4.0.0",
     "gulp-bump": "^3.1.1",
     "gulp-change": "^1.0.2",
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@fancyapps/fancybox": "^3.5.6",
-    "@fortawesome/fontawesome-free": "^5.6.3",
+    "@fortawesome/fontawesome-free": "^5.7.1",
     "bootbox": "^4.4.0",
     "bootstrap": "^4.2.1",
     "ckeditor-codemirror-plugin": "^1.17.3",
@@ -49,7 +49,7 @@
     "moment": "^2.23.0",
     "popper.js": "^1.14.6",
     "rich-filemanager": "git+https://github.com/tinogo/RichFilemanager.git#rework-dependencies",
-    "shariff": "^3.0.1",
+    "shariff": "^3.1.1",
     "tempusdominus-bootstrap-4": "^5.1.2",
     "tempusdominus-core": "^5.0.3"
   },
