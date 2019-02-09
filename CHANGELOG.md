@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Changed
-- updated Bootstrap from version 3.3.7 to version 4.1.3
+- updated Bootstrap from version 3 to version 4
 - changed the CSS preprocessor from LESS to SCSS
 - removed all deprecated code
 - replaced the Bootstrap datetime picker library with the Tempus Dominus Bootstrap 4 Datetime Picker
