@@ -130,6 +130,7 @@ class ControllerActionDispatcher
      *
      * @return mixed
      *
+     * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
      * @throws \ReflectionException
      */
     private function executeControllerAction(ActionInterface $controller, array $arguments)
@@ -149,19 +150,26 @@ class ControllerActionDispatcher
      * @return array
      *
      * @throws \ReflectionException
+     * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
      */
     private function getCallable(ActionInterface $controller)
     {
-        $callable = [$controller, self::ACTION_METHOD_DEFAULT];
         if ($this->isValidPostRequest($controller)) {
             $reflection = new \ReflectionMethod($controller, self::ACTION_METHOD_POST);
 
             if ($reflection->isPublic()) {
-                $callable = [$controller, self::ACTION_METHOD_POST];
+                return [$controller, self::ACTION_METHOD_POST];
             }
+        } elseif (\method_exists($controller, self::ACTION_METHOD_DEFAULT) === true) {
+            return [$controller, self::ACTION_METHOD_DEFAULT];
         }
 
-        return $callable;
+        throw new ControllerActionNotFoundException(\sprintf(
+            'Could not find method <%s> in controller <%s>',
+                self::ACTION_METHOD_DEFAULT,
+                \get_class($controller)
+            )
+        );
     }
 
     private function isValidPostRequest(ActionInterface $controller): bool
