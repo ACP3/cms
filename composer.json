@@ -47,7 +47,7 @@
     "tinymce/tinymce": "^4.8",
     "toflar/psr6-symfony-http-cache-store": "^1.0",
     "marcj/topsort": "^1.1",
-    "heise/shariff": "^7.1",
+    "heise/shariff": "^8.0",
     "servocoder/richfilemanager-php": "^1.2",
     "symfony/proxy-manager-bridge": "^4.1"
   },

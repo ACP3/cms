@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c2d5b1f56a50a70e35a54ab888bc542",
+    "content-hash": "d8a77f3f2b77407b37ffbe08b014e9ed",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -971,21 +971,21 @@
         },
         {
             "name": "heise/shariff",
-            "version": "7.1.4",
+            "version": "8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heiseonline/shariff-backend-php.git",
-                "reference": "b31ebfe759e73c07893ff9df6a7c7a9037a9b124"
+                "reference": "d16aaacc2e471484913b36b41e2b5a9e7c7c353a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heiseonline/shariff-backend-php/zipball/b31ebfe759e73c07893ff9df6a7c7a9037a9b124",
-                "reference": "b31ebfe759e73c07893ff9df6a7c7a9037a9b124",
+                "url": "https://api.github.com/repos/heiseonline/shariff-backend-php/zipball/d16aaacc2e471484913b36b41e2b5a9e7c7c353a",
+                "reference": "d16aaacc2e471484913b36b41e2b5a9e7c7c353a",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.1",
-                "php": "^5.6 || ^7.0",
+                "php": "^7.1",
                 "psr/log": "^1.0",
                 "zendframework/zend-cache": "^2.7"
             },
@@ -1015,7 +1015,7 @@
                 "shariff",
                 "social buttons"
             ],
-            "time": "2018-08-31T11:36:53+00:00"
+            "time": "2018-11-29T09:25:15+00:00"
         },
         {
             "name": "illuminate/config",
