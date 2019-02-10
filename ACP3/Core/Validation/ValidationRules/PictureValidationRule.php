@@ -27,7 +27,11 @@ class PictureValidationRule extends AbstractValidationRule
     }
 
     /**
-     * {@inheritdoc}
+     * @param array|bool|float|int|string|UploadedFile $data
+     * @param string|array                             $field
+     * @param array                                    $extra
+     *
+     * @return bool
      */
     public function isValid($data, $field = '', array $extra = []): bool
     {
@@ -41,9 +45,9 @@ class PictureValidationRule extends AbstractValidationRule
         if ($this->fileUploadValidationRule->isValid($data)) {
             return $this->isPicture(
                 $data instanceof UploadedFile ? $data->getPathname() : $data['tmp_name'],
-                $params['width'],
-                $params['height'],
-                $params['filesize']
+                (int) $params['width'],
+                (int) $params['height'],
+                (int) $params['filesize']
             );
         } elseif ($params['required'] === false && empty($data)) {
             return true;
@@ -60,7 +64,7 @@ class PictureValidationRule extends AbstractValidationRule
      *
      * @return bool
      */
-    protected function isPicture($file, $width = 0, $height = 0, $filesize = 0)
+    protected function isPicture(string $file, int $width = 0, int $height = 0, int $filesize = 0)
     {
         $info = \getimagesize($file);
         $isPicture = ($info[2] >= 1 && $info[2] <= 3);
@@ -87,10 +91,10 @@ class PictureValidationRule extends AbstractValidationRule
      *
      * @return bool
      */
-    protected function validateOptionalParameters($file, array $info, $width, $height, $filesize)
+    protected function validateOptionalParameters(string $file, array $info, int $width, int $height, int $filesize)
     {
-        return $width > 0 && $info[0] > $width ||
-        $height > 0 && $info[1] > $height ||
-        $filesize > 0 && \filesize($file) > $filesize;
+        return $width > 0 && $info[0] > $width
+            || $height > 0 && $info[1] > $height
+            || $filesize > 0 && \filesize($file) > $filesize;
     }
 }

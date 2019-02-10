@@ -56,7 +56,7 @@ class Delete extends Core\Controller\AbstractFormAction
 
                 return $this->redirectMessages()->setMessage(
                     $result,
-                    $this->translator->t('system', $result !== false ? 'delete_success' : 'delete_error'),
+                    $this->translator->t('system', $result > 0 ? 'delete_success' : 'delete_error'),
                     $redirectUrl
                 );
             },
