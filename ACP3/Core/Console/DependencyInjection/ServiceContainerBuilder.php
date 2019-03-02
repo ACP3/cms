@@ -9,11 +9,13 @@ namespace ACP3\Core\Console\DependencyInjection;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
+use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+use Symfony\Component\HttpFoundation\Request;
 
 class ServiceContainerBuilder extends ContainerBuilder
 {
@@ -58,6 +60,7 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     private function setUpContainer()
     {
+        $this->set('core.http.symfony_request', Request::create(''));
         $this->set('core.logger.system_logger', $this->logger);
         $this->set('core.environment.application_path', $this->applicationPath);
 
@@ -70,7 +73,8 @@ class ServiceContainerBuilder extends ContainerBuilder
                 )
             )
             ->addCompilerPass(new RegisterInstallersCompilerPass())
-            ->addCompilerPass(new RegisterCommandsCompilerPass());
+            ->addCompilerPass(new RegisterCommandsCompilerPass())
+            ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getClassesDir() . 'config/console.yml');
