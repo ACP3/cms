@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- updated the composer dependencies
+- updated the NPM dependencies
+
+### Fixed
+- made it possible to use the `*Model` classes via the CLI
+
 ## [4.39.0] - 2019-02-09
 ### Changed
 - updated Fontawesome to version 5.7.1
