@@ -7,17 +7,21 @@ module.exports = (gulp) => {
     'use strict';
 
     return () => {
-        // Watch all the .less files, then run the less task
         return gulp.watch(
             [
                 'ACP3/Modules/*/*/Resources/Assets/less/**/*.less',
                 'designs/*/**/Assets/less/*.less',
                 'designs/*/**/Assets/less/**/*.less',
                 'installation/design/Assets/less/*.less',
-                'installation/Installer/Modules/*/Resources/Assets/less/style.less'
+                'installation/Installer/Modules/*/Resources/Assets/less/style.less',
+                'ACP3/Modules/*/*/Resources/Assets/scss/**/*.scss',
+                'designs/*/**/Assets/scss/*.scss',
+                'designs/*/**/Assets/scss/**/*.scss',
+                'installation/design/Assets/scss/*.scss',
+                'installation/Installer/Modules/*/Resources/Assets/scss/style.scss'
             ],
             {cwd: './'},
-            gulp.series('less')
+            gulp.series('less', 'scss')
         );
     };
 };
