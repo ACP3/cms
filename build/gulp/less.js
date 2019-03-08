@@ -3,10 +3,12 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-module.exports = function (gulp, plugins) {
+module.exports = (gulp, plugins) => {
     'use strict';
 
-    return function () {
+    const autoprefixer = require('autoprefixer');
+
+    return () => {
         return gulp
             .src(
                 [
@@ -22,7 +24,8 @@ module.exports = function (gulp, plugins) {
             )
             .pipe(plugins.plumber())
             .pipe(plugins.less())
-            .pipe(plugins.rename(function (path) {
+            .pipe(plugins.postcss([autoprefixer()]))
+            .pipe(plugins.rename((path) => {
                 path.dirname = path.dirname.substring(0, path.dirname.length - 4) + 'css';
             }))
             .pipe(gulp.dest('./'));

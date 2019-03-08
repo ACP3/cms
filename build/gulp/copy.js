@@ -3,10 +3,10 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-module.exports = function (gulp) {
+module.exports = (gulp) => {
     'use strict';
 
-    return function (done) {
+    return (done) => {
         const nodeBasePath = './node_modules',
             systemBasePath = './ACP3/Modules/ACP3/System/Resources/Assets',
             ckeditorBasePath = './ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets',
