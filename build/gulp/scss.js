@@ -6,8 +6,8 @@
 module.exports = (gulp, plugins) => {
     'use strict';
 
+    const autoprefixer = require('autoprefixer');
     const sass = require('gulp-sass');
-
     sass.compiler = require('node-sass');
 
     return () => {
@@ -24,7 +24,8 @@ module.exports = (gulp, plugins) => {
             )
             .pipe(plugins.plumber())
             .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-            .pipe(plugins.rename(function (path) {
+            .pipe(plugins.postcss([autoprefixer()]))
+            .pipe(plugins.rename((path) => {
                 path.dirname = path.dirname.substring(0, path.dirname.length - 4) + 'css';
                 path.basename += '.min';
             }))
