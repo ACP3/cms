@@ -17,7 +17,7 @@ module.exports = (gulp) => {
                     'src': [
                         nodeBasePath + '/@fancyapps/fancybox/dist/jquery.fancybox.min.js',
                         nodeBasePath + '/jquery/dist/jquery.min.js',
-                        nodeBasePath + '/bootbox/bootbox.js',
+                        nodeBasePath + '/bootbox/dist/bootbox.all.min.js',
                         nodeBasePath + '/moment/min/moment.min.js',
                         nodeBasePath + '/datatables.net/js/jquery.dataTables.js',
                         nodeBasePath + '/datatables.net-bs/js/dataTables.bootstrap.js',

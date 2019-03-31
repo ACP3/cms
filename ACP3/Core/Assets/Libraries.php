@@ -27,7 +27,7 @@ class Libraries
         'bootbox' => [
             'enabled' => false,
             'dependencies' => ['bootstrap'],
-            'js' => 'bootbox.js',
+            'js' => 'bootbox.all.min.js',
         ],
         'bootstrap' => [
             'enabled' => false,
