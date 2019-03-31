@@ -97,7 +97,8 @@ jQuery.fn.deleteMarkedResults = function (options) {
                 confirmationTextSingle: '',
                 confirmationTextMultiple: '',
                 noEntriesSelectedText: ''
-            }
+            },
+            bootboxLocale: 'en'
         },
         $this = $(this),
         settings = $.extend(defaults, options);
@@ -108,22 +109,31 @@ jQuery.fn.deleteMarkedResults = function (options) {
         const $entries = $('form .table input[name="' + settings.checkBoxName + '[]"]:checked');
 
         if ($entries.length > 0) {
-            const data = {
-                action: 'confirmed'
-            };
+            const confirmationText = $entries.length === 1
+                ? settings.language.confirmationTextSingle
+                : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
 
-            const confirmationText = $entries.length === 1 ? settings.language.confirmationTextSingle : (settings.language.confirmationTextMultiple.replace('{items}', $entries.length));
+            bootbox.confirm({
+                message: confirmationText,
+                locale: settings.bootboxLocale,
+                callback: (result) => {
+                    if (result) {
+                        const $form = $this.closest('form');
 
-            bootbox.confirm(confirmationText, function (result) {
-                if (result) {
-                    const $form = $this.closest('form');
-
-                    $form.formSubmit({customFormData: data});
-                    $form.triggerHandler('submit');
+                        $form.formSubmit({
+                            customFormData: {
+                                action: 'confirmed'
+                            }
+                        });
+                        $form.triggerHandler('submit');
+                    }
                 }
             });
         } else {
-            bootbox.alert(settings.language.noEntriesSelectedText);
+            bootbox.alert({
+                message: settings.language.noEntriesSelectedText,
+                locale: settings.bootboxLocale
+            });
         }
     });
 

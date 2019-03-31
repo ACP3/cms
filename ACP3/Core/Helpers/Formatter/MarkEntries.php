@@ -43,6 +43,7 @@ class MarkEntries
                     'confirmationTextMultiple' => $this->translator->t('system', 'confirm_delete_multiple'),
                     'noEntriesSelectedText' => $this->translator->t('system', 'no_entries_selected'),
                 ],
+                'bootboxLocale' => $this->translator->getShortIsoCode(),
             ]
         );
 
