@@ -12,7 +12,8 @@ class MinifiedAwareFileCheckerStrategy implements FileCheckerStrategyInterface
     public function findResource(string $resourcePath): ?string
     {
         $fileExtDot = \strrpos($resourcePath, '.');
-        $resourcePath = \substr($resourcePath, 0, $fileExtDot) . '.min.css';
+        $fileExt = \substr($resourcePath, $fileExtDot + 1);
+        $resourcePath = \substr($resourcePath, 0, $fileExtDot) . '.min.' . $fileExt;
 
         if (\is_file($resourcePath)) {
             return $resourcePath;
@@ -23,6 +24,6 @@ class MinifiedAwareFileCheckerStrategy implements FileCheckerStrategyInterface
 
     public function isAllowed(string $resourcePath): bool
     {
-        return (bool) \preg_match('/.+(?<!\.min)\.css$/', $resourcePath);
+        return (bool) \preg_match('/.+(?<!\.min)\.(css|js)$/', $resourcePath);
     }
 }
