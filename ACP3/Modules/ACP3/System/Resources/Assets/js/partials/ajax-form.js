@@ -3,30 +3,29 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-(function ($, window, document) {
+(($, window, document) => {
     'use strict';
 
-    let pluginName = 'formSubmit',
-        defaults = {
-            targetElement: '#content',
-            loadingOverlay: true,
-            loadingText: '',
-            customFormData: null,
-            scrollOffsetElement: null
-        };
+    const pluginName = 'formSubmit';
 
-    function Plugin(element, options) {
-        this.element = element;
-        this.isFormValid = true;
+    class AjaxForm {
+        constructor(element, options) {
+            this.element = element;
+            this.isFormValid = true;
 
-        this.settings = $.extend({}, defaults, options);
-        this._defaults = defaults;
-        this._name = pluginName;
-        this.init();
-    }
+            this._defaults = {
+                targetElement: '#content',
+                loadingOverlay: true,
+                loadingText: '',
+                customFormData: null,
+                scrollOffsetElement: null
+            };
+            this.settings = $.extend({}, this._defaults, options);
+            this._name = pluginName;
+            this.init();
+        }
 
-    $.extend(Plugin.prototype, {
-        init: function () {
+        init() {
             const that = this;
 
             this.mergeSettings();
@@ -34,15 +33,15 @@
             this.addLoadingLayer();
             this.element.noValidate = true;
 
-            $(this.element).on('submit', function (e) {
+            $(this.element).on('submit', (e) => {
                 e.preventDefault();
 
-                that.isFormValid = true;
+                this.isFormValid = true;
 
-                $(document).trigger('acp3.ajaxFrom.submit.before', [that]);
+                $(document).trigger('acp3.ajaxFrom.submit.before', [this]);
 
-                if (that.isFormValid && that.preValidateForm(that.element)) {
-                    that.processAjaxRequest();
+                if (this.isFormValid && this.preValidateForm(this.element)) {
+                    this.processAjaxRequest();
                 }
             }).on('click', function (e) {
                 if ($(this).prop('tagName') === 'A') {
@@ -50,14 +49,15 @@
 
                     that.processAjaxRequest();
                 }
-            }).on('change', function () {
-                if (that.isFormValid === false) {
-                    that.removeAllPreviousErrors(that.element);
-                    that.checkFormElementsForErrors(that.element);
+            }).on('change', () => {
+                if (this.isFormValid === false) {
+                    this.removeAllPreviousErrors(this.element);
+                    this.checkFormElementsForErrors(this.element);
                 }
             });
-        },
-        mergeSettings: function () {
+        }
+
+        mergeSettings() {
             const data = $(this.element).data();
             for (let key in data) {
                 if (data.hasOwnProperty(key)) {
@@ -68,32 +68,35 @@
                     }
                 }
             }
-        },
-        lowerCaseFirstLetter: function (string) {
+        }
+
+        lowerCaseFirstLetter(string) {
             return string.charAt(0).toLowerCase() + string.slice(1);
-        },
-        findSubmitButton: function () {
+        }
+
+        findSubmitButton() {
             $(this.element).find(':submit').click(function () {
                 $(':submit', $(this).closest('form')).removeAttr('data-clicked');
                 $(this).attr('data-clicked', 'true');
             });
-        },
-        preValidateForm: function (form) {
+        }
+
+        preValidateForm(form) {
             this.removeAllPreviousErrors(form);
             this.checkFormElementsForErrors(form);
             this.focusTabWithFirstErrorMessage(form);
             this.scrollToFirstFormError();
 
             return this.isFormValid;
-        },
-        removeAllPreviousErrors: function (form) {
+        }
+
+        removeAllPreviousErrors(form) {
             $(form).find('.is-invalid').removeClass('.is-invalid');
             $(form).find('.invalid-feedback').remove();
-        },
-        checkFormElementsForErrors: function (form) {
-            for (let i = 0; i < form.elements.length; i++) {
-                const field = form.elements[i];
+        }
 
+        checkFormElementsForErrors(form) {
+            for (const field of form.elements) {
                 if (field.nodeName !== 'INPUT' && field.nodeName !== 'TEXTAREA' && field.nodeName !== 'SELECT') {
                     continue;
                 }
@@ -104,11 +107,13 @@
                     this.isFormValid = false;
                 }
             }
-        },
-        removeErrorMessageFromFormField: function ($elem) {
+        }
+
+        removeErrorMessageFromFormField($elem) {
             $elem.closest('div').find('.invalid-feedback').remove();
-        },
-        addErrorMessageToFormField: function ($element, errorMessage) {
+        }
+
+        addErrorMessageToFormField($element, errorMessage) {
             this.removeErrorMessageFromFormField($element);
 
             $element.addClass('is-invalid');
@@ -118,8 +123,9 @@
             $element
                 .closest('div:not(.input-group):not(.btn-group)')
                 .append(template);
-        },
-        focusTabWithFirstErrorMessage: function (form) {
+        }
+
+        focusTabWithFirstErrorMessage(form) {
             const $form = $(form),
                 $tabs = $form.find('.nav-tabs');
             if ($tabs.length > 0) {
@@ -129,8 +135,9 @@
 
                 $elem.find(':input').focus();
             }
-        },
-        processAjaxRequest: function () {
+        }
+
+        processAjaxRequest() {
             const $form = $(this.element),
                 hasCustomData = !$.isEmptyObject(this.settings.customFormData);
 
@@ -208,46 +215,53 @@
                 this.hideLoadingLayer();
                 this.enableSubmitButton($submitButton);
             });
-        },
-        addLoadingLayer: function () {
+        }
+
+        addLoadingLayer() {
             if (this.settings.loadingOverlay === false) {
                 return;
             }
 
-            let $loadingLayer = $('#loading-layer');
+            const $loadingLayer = $('#loading-layer');
+
             if ($loadingLayer.length === 0) {
-                let $body = $('body'),
+                const $body = $('body'),
                     loadingText = this.settings.loadingText || '',
-                    html = '<div id="loading-layer" class="loading-layer"><h1><span class="fas fa-cog fa-spin"></span>' + loadingText + '</h1></div>';
+                    html = `<div id="loading-layer" class="loading-layer"><h1><span class="fas fa-cog fa-spin"></span> ${loadingText}</h1></div>`;
 
                 $(html).appendTo($body);
             }
-        },
-        showLoadingLayer: function () {
+        }
+
+        showLoadingLayer() {
             $('#loading-layer').addClass('loading-layer__active');
-        },
-        disableSubmitButton: ($submitButton) => {
+        }
+
+        disableSubmitButton($submitButton) {
             if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', true);
             }
-        },
-        enableSubmitButton: ($submitButton) => {
+        }
+
+        enableSubmitButton($submitButton) {
             if (typeof $submitButton !== 'undefined') {
                 $submitButton.prop('disabled', false);
             }
-        },
-        redirectToNewPage: function (hash, responseData) {
+        }
+
+        redirectToNewPage(hash, responseData) {
             if (typeof hash !== 'undefined') {
                 window.location.href = responseData.redirect_url + hash;
                 window.location.reload();
             } else {
                 window.location.href = responseData.redirect_url;
             }
-        },
+        }
+
         /**
          * Scroll to the beginning of the content area, if the current viewport is near the bottom
          */
-        scrollIntoView: function () {
+        scrollIntoView() {
             const offsetTop = $(this.settings.targetElement).offset().top;
 
             if ($(document).scrollTop() > offsetTop) {
@@ -258,25 +272,29 @@
                     'fast'
                 );
             }
-        },
-        replaceContent: function (hash, responseData) {
+        }
+
+        replaceContent(hash, responseData) {
             if (hash && $(hash).length) {
                 $(hash).html($(responseData).find(hash).html());
             } else {
                 $(this.settings.targetElement).html(responseData);
             }
-        },
-        rebindHandlers: function (hash) {
+        }
+
+        rebindHandlers(hash) {
             const $bindingTarget = (hash && $(hash).length) ? $(hash) : $(this.settings.targetElement);
 
             $bindingTarget.find('[data-ajax-form="true"]').formSubmit();
 
             this.findSubmitButton();
-        },
-        hideLoadingLayer: function () {
+        }
+
+        hideLoadingLayer() {
             $('#loading-layer').removeClass('loading-layer__active');
-        },
-        handleFormErrorMessages: function ($form, errorMessagesHtml) {
+        }
+
+        handleFormErrorMessages($form, errorMessagesHtml) {
             let $errorBox = $('#error-box');
             const $modalBody = $form.find('.modal-body');
 
@@ -291,15 +309,14 @@
                 .fadeIn();
 
             this.prettyPrintResponseErrorMessages($form, $errorBox);
-        },
-        prettyPrintResponseErrorMessages: function ($form, $errorBox) {
-            const that = this;
+        }
 
-            this.removeAllPreviousErrors(that.element);
+        prettyPrintResponseErrorMessages($form, $errorBox) {
+            this.removeAllPreviousErrors(this.element);
 
             // highlight all input fields where the validation has failed
-            $errorBox.find('li').each(function () {
-                let $this = $(this),
+            $errorBox.find('li').each((index, element) => {
+                let $this = $(element),
                     errorClass = $this.data('error');
 
                 if (errorClass.length > 0) {
@@ -309,7 +326,7 @@
                         // Move the error message to the responsible input field(s)
                         // and remove the list item from the error box container
                         if ($elem.length === 1) {
-                            that.addErrorMessageToFormField($elem, $this.html());
+                            this.addErrorMessageToFormField($elem, $this.html());
                             $this.remove();
                         }
                     }
@@ -322,8 +339,9 @@
             }
 
             this.focusTabWithFirstErrorMessage(that.element);
-        },
-        scrollToFirstFormError: function () {
+        }
+
+        scrollToFirstFormError() {
             const $form = $(this.element);
             const $formErrors = $form.find('.form-group.has-error');
 
@@ -351,8 +369,9 @@
                 },
                 'fast'
             );
-        },
-        isElementInViewport: function (element) {
+        }
+
+        isElementInViewport(element) {
             // special bonus for those using jQuery
             if (typeof jQuery === 'function' && element instanceof jQuery) {
                 element = element[0];
@@ -372,12 +391,12 @@
                 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
                 && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
         }
-    });
+    }
 
     $.fn[pluginName] = function (options) {
         return this.each(function () {
             if (!$.data(this, 'plugin_' + pluginName)) {
-                $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
+                $.data(this, 'plugin_' + pluginName, new AjaxForm(this, options));
             }
         });
     };
@@ -386,7 +405,7 @@
 jQuery(document).ready(($) => {
     $('[data-ajax-form="true"]').formSubmit();
 
-    $(document).on('draw.dt', function (e) {
+    $(document).on('draw.dt', (e) => {
         $(e.target).find('[data-ajax-form="true"]').formSubmit();
     });
 });
