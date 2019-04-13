@@ -13,12 +13,13 @@ module.exports = (gulp, plugins) => {
             .src(
                 [
                     './ACP3/Modules/*/*/Resources/Assets/js/{admin,frontend,partials}/*.js',
-                    './designs/**/Assets/js/**/*.js',
+                    './designs/*/*/Assets/js/{admin,frontend,partials}/*.js',
+                    './designs/*/Assets/js/*.js',
                     './installation/design/Assets/js/*.js',
                     './installation/Installer/Modules/*/Resources/Assets/js/*.js',
                     // Exclude all already minified files
                     '!./ACP3/Modules/*/*/Resources/Assets/js/{admin,frontend,partials}/*.min.js',
-                    '!./designs/**/Assets/js/**/*.min.js',
+                    '!./designs/*/Assets/js/*.min.js',
                     '!./installation/design/Assets/js/*.min.js',
                     '!./installation/Installer/Modules/*/Resources/Assets/js/*.min.js'
                 ],

@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-(function () {
+(() => {
     'use strict';
 
     const gulp = require('gulp'),
@@ -18,7 +18,7 @@
     gulp.task('scss', getTask('scss'));
     gulp.task('less', getTask('less'));
     gulp.task('babel', getTask('babel'));
-    gulp.task('watch', gulp.series('less', 'scss', getTask('watch')));
+    gulp.task('watch', gulp.series(gulp.parallel('less', 'scss', 'babel'), getTask('watch')));
 
     gulp.task('default', gulp.series('watch'));
 })();
