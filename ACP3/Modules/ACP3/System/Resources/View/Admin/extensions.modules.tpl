@@ -113,6 +113,6 @@
         </div>
     </div>
     {javascripts}
-        {include_js module="system" file="hash-change"}
+        {include_js module="system" file="partials/hash-change"}
     {/javascripts}
 {/block}
