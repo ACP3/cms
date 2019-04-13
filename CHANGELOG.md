@@ -5,9 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- added Babel.js to transform the ES6 compatible JS files
+- extended the usage of the `MinifiedAwareFileCheckerStrategy` to JavaScript files to
+
 ### Changed
 - converted all LESS files to SCSS files
 - reworked the LESS/SCSS gulp tasks to include the autoprefixer
+- reworked the `gulp watch` task
 - updated Bootbox to version 5
 
 ### Fixed
