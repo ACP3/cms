@@ -383,7 +383,7 @@
     };
 })(jQuery, window, document);
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('[data-ajax-form="true"]').formSubmit();
 
     $(document).on('draw.dt', function (e) {

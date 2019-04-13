@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     const $datepickerRange = $('[data-datepicker-range]'),
         $datepicker = $('[data-datepicker]');
 
@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
 
     if ($datepickerRange.length > 0) {
         $datepickerRange.each(function () {
-            const datepickers = $datepickerRange.data('datepicker-range');
+            const datepickers = $(this).data('datepicker-range');
 
             const $datepickerStart = $(datepickers[0].element),
                 $datepickerEnd = $(datepickers[1].element);

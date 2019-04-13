@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('input[name="readmore"]').on('click change', function () {
         $('#readmore-container').toggle(this.value === '1');
     }).filter(':checked').click();

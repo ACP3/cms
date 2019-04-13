@@ -11,6 +11,6 @@
         </div>
     </form>
     {javascripts}
-        <script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/ajax-form.js"></script>
+        <script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/partials/ajax-form.min.js"></script>
     {/javascripts}
 {/block}

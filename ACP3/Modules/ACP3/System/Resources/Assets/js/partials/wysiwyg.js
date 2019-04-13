@@ -1,6 +1,6 @@
 /* global wysiwygCallback */
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('#page-break-form').find('.modal-footer button.btn-primary').click(function (e) {
         e.preventDefault();
 

@@ -1,7 +1,7 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('input[name="overlay"]')
         .on('change click', function () {
-            $('#comments-container').toggle(this.value == 0);
+            $('#comments-container').toggle(Number(this.value) === 0);
         })
         .filter(':checked').trigger('click');
 });

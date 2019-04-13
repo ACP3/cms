@@ -140,7 +140,7 @@ jQuery.fn.deleteMarkedResults = function (options) {
     return $this;
 };
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     const $massActionCheckboxes = $('[data-mark-all-id]');
 
     $massActionCheckboxes.each((index, element) => {

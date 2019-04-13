@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     const $cookieNotice = $('#cookie-consent'),
         cookieName = 'ACCEPT_COOKIES';
 

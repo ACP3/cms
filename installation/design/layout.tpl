@@ -75,7 +75,7 @@
 </div>
 <script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/jquery.min.js"></script>
 <script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/bootstrap.min.js"></script>
-<script defer src="{$DESIGN_PATH}Assets/js/language-switcher.js"></script>
+<script defer src="{$DESIGN_PATH}Assets/js/language-switcher.min.js"></script>
 <!-- JAVASCRIPTS -->
 </body>
 </html>

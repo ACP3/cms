@@ -4,7 +4,7 @@
  */
 
 /* global onloadCallback:true */
-onloadCallback = function () {
+onloadCallback = () => {
     jQuery('.recaptcha-placeholder').each(function () {
         if (jQuery(this).children().length === 0) {
             const widgetId = grecaptcha.render(this.id, {
@@ -17,11 +17,11 @@ onloadCallback = function () {
     });
 };
 
-jQuery(document).on('acp3.captcha.recaptcha', function () {
+jQuery(document).on('acp3.captcha.recaptcha', () => {
     onloadCallback();
 });
 
-jQuery(document).on('acp3.ajaxFrom.submit.fail', function (event, ajaxForm) {
+jQuery(document).on('acp3.ajaxFrom.submit.fail', (event, ajaxForm) => {
     const $reCaptchaPlaceholder = jQuery(ajaxForm.element).find('.recaptcha-placeholder');
 
     if ($reCaptchaPlaceholder && $reCaptchaPlaceholder.length > 0) {

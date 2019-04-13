@@ -67,11 +67,11 @@ jQuery.fn.insertEmoticon = function (textareaId) {
     });
 
     // Aktuelle Cursorposition speichern
-    textarea.blur(function () {
+    textarea.blur(() => {
         caretPosition = textarea.getCaretPosition();
     });
 };
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('.icons a').insertEmoticon($('.icons').data('emoticons-input'));
 });

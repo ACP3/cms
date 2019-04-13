@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('#modal-create').on('show.bs.modal', function (event) {
         const $target = $(event.relatedTarget);
         const $modal = $(this);

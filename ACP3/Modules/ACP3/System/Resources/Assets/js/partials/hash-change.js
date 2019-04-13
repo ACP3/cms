@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     const $window = $(window);
 
     $window.on('hashchange', function () {

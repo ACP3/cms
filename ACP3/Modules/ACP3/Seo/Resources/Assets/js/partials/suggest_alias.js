@@ -79,7 +79,7 @@
     };
 })(jQuery);
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('#seo-alias-suggestion').suggestAlias({
         prefix: $('[data-seo-slug-prefix]').data('seo-slug-prefix'),
         slugBaseElement: $('[data-seo-slug-base="true"]'),
