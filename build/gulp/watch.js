@@ -6,9 +6,8 @@
 module.exports = (gulp) => {
     'use strict';
 
-    return () => {
-        // Watch all the .less files, then run the less task
-        return gulp.watch(
+    return (done) => {
+        gulp.watch(
             [
                 'ACP3/Modules/*/*/Resources/Assets/scss/**/*.scss',
                 'designs/*/**/Assets/scss/*.scss',
@@ -17,7 +16,25 @@ module.exports = (gulp) => {
                 'installation/Installer/Modules/*/Resources/Assets/scss/style.scss'
             ],
             {cwd: './'},
-            gulp.series('scss')
+            gulp.task('scss')
         );
+        gulp.watch(
+            [
+                './ACP3/Modules/*/*/Resources/Assets/js/{admin,frontend,partials}/*.js',
+                './designs/*/*/Assets/js/{admin,frontend,partials}/*.js',
+                './designs/*/Assets/js/*.js',
+                './installation/design/Assets/js/*.js',
+                './installation/Installer/Modules/*/Resources/Assets/js/*.js',
+                // Exclude all already minified files
+                '!./ACP3/Modules/*/*/Resources/Assets/js/{admin,frontend,partials}/*.min.js',
+                '!./designs/*/Assets/js/*.min.js',
+                '!./installation/design/Assets/js/*.min.js',
+                '!./installation/Installer/Modules/*/Resources/Assets/js/*.min.js'
+            ],
+            {cwd: './'},
+            gulp.task('babel')
+        );
+
+        done();
     };
 };
