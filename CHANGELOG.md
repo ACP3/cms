@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- converted all LESS files to SCSS files
+- reworked the LESS/SCSS gulp tasks to include the autoprefixer
+- updated Bootbox to version 5
+
+### Fixed
+- fixed a possible `\RuntimeException` within the `ControllerActionResolver` if there are missing route arguments.
+
 ## [4.40.0] - 2019-03-02
 ### Changed
 - updated the composer dependencies
