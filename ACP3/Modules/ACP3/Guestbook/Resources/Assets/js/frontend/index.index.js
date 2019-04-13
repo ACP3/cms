@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('#modal-create').on('shown.bs.modal', function () {
         $(this).find('[data-ajax-form="true"]').formSubmit();
     });

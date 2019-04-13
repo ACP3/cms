@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $(':radio[name="sitemap_is_enabled"]').on('click change', function () {
         $('#seo-sitemap-wrapper').toggle(parseInt(this.value) === 1);
     }).filter(':checked').triggerHandler('click');

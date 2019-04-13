@@ -2,7 +2,7 @@
  * Copyright (c) by the ACP3 Developers.
  * See the LICENSE file at the top-level module directory for licencing details.
  */
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     const ajaxUrl = $('#config-form').data('available-databases-url'),
         $dbName = $('#db-name'),
         $formFields = $('#db-host, #db-user, #db-password'),

@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     const $module = $('#module-container'),
         $link = $('#link-container'),
         $hints = $link.find('.help-block'),
@@ -8,9 +8,10 @@ jQuery(document).ready(function ($) {
 
     // Wenn Menüpunkt nicht angezeigt werden soll, Linkziel verstecken
     $('input[name="display"]').change(function () {
-        $target.toggle(this.value == 1);
+        const value = Number(this.value);
+        $target.toggle(value === 1);
 
-        if (this.value == 0) {
+        if (value === 0) {
             // Force the link target to open on the same page programmatically,
             // as the user can not select it for them self
             $('#target').val(1);

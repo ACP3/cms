@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('input[name="active"]').on('click change', function () {
         $('#publication-period-wrapper').toggle(this.value === '1');
     }).filter(':checked').click();

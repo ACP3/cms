@@ -3,6 +3,6 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('#modal-create [data-ajax-form="true"]').formSubmit();
 });

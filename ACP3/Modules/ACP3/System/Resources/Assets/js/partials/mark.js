@@ -114,7 +114,7 @@ jQuery.fn.deleteMarkedResults = function (options) {
     return $this;
 };
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     const $markAll = $('[data-mark-all-id]');
 
     $markAll.each((index, element) => {

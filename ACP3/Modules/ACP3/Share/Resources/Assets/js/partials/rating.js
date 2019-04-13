@@ -3,7 +3,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready(($) => {
     $('#rating-wrapper')
         .on('change', ':radio', function () {
             $('.rating__average').remove();
