@@ -15,7 +15,8 @@
 
     gulp.task('copy', getTask('copy'));
     gulp.task('bump-version', getTask('bump-version'));
-    gulp.task('scss', gulp.series(getTask('scss')));
+    gulp.task('scss', getTask('scss'));
+    gulp.task('babel-js', getTask('babel-js'));
     gulp.task('watch', gulp.series('scss', getTask('watch')));
 
     gulp.task('default', gulp.series('watch'));
