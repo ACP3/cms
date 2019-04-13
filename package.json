@@ -20,7 +20,7 @@
   "homepage": "https://www.acp3-cms.net",
   "private": true,
   "devDependencies": {
-    "autoprefixer": "^9.5.0",
+    "autoprefixer": "^9.5.1",
     "eslint": "^5.16.0",
     "gulp": "^4.0.0",
     "gulp-bump": "^3.1.3",
@@ -39,18 +39,18 @@
   "dependencies": {
     "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/fontawesome-free": "^5.8.1",
-    "bootbox": "^5.0.1",
+    "bootbox": "^5.1.0",
     "bootstrap": "^3.4.1",
     "ckeditor-codemirror-plugin": "^1.17.3",
     "datatables.net": "^1.10.19",
     "datatables.net-bs": "^1.10.19",
     "eonasdan-bootstrap-datetimepicker": "^4.17.42",
     "html5shiv": "^3.7.3",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.0",
     "js-cookie": "^2.2.0",
     "moment": "^2.24.0",
     "rich-filemanager": "git+https://github.com/tinogo/RichFilemanager.git#rework-dependencies",
-    "shariff": "^3.1.1"
+    "shariff": "^3.2.0"
   },
   "browserslist": [
     "last 1 major version",
