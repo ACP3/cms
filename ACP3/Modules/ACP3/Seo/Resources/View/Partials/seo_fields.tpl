@@ -31,6 +31,6 @@
 {/if}
 {if !isset($disable_alias_suggest)}
     {javascripts}
-        {include_js module="seo" file="suggest_alias"}
+        {include_js module="seo" file="partials/suggest_alias"}
     {/javascripts}
 {/if}

@@ -54,7 +54,7 @@ class Helpers
             $this->view->assign('emoticons_field_id', empty($formFieldId) ? 'message' : $formFieldId);
             $this->view->assign('emoticons', $this->emoticonsCache->getCache());
 
-            return $this->view->fetchTemplate('emoticons/emoticons.tpl');
+            return $this->view->fetchTemplate('Emoticons/Partials/emoticons.tpl');
         }
 
         return '';

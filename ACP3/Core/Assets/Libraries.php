@@ -22,7 +22,7 @@ class Libraries
             'enabled' => true,
             'enabled_for_ajax' => false,
             'dependencies' => ['bootstrap', 'jquery'],
-            'js' => 'ajax-form.js',
+            'js' => 'partials/ajax-form.js',
         ],
         'bootbox' => [
             'enabled' => false,

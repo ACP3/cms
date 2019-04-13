@@ -32,5 +32,5 @@
     <input type="hidden" name="menu_item_uri_pattern" value="{$uri_pattern}">
 </div>
 {javascripts}
-    {include_js module="menus" file="manage-menu-item"}
+    {include_js module="menus" file="partials/manage-menu-item"}
 {/javascripts}

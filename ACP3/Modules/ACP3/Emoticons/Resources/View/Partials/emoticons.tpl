@@ -1,5 +1,5 @@
 {javascripts}
-    {include_js module="emoticons" file="emoticons"}
+    {include_js module="emoticons" file="partials/emoticons"}
 {/javascripts}
 <div class="icons my-1" data-emoticons-input="#{$emoticons_field_id}">
     {foreach $emoticons as $key => $value}

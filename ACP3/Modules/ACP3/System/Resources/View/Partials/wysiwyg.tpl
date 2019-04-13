@@ -33,6 +33,6 @@
                 {$wysiwyg.advanced_replace_content}
             };
         </script>
-        {include_js module="system" file="wysiwyg" depends="bootstrap"}
+        {include_js module="system" file="partials/wysiwyg" depends="bootstrap"}
     {/javascripts}
 {/if}

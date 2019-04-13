@@ -1,5 +1,5 @@
 {javascripts}
-    {include_js module="system" file="datepicker" depends="datetimepicker"}
+    {include_js module="system" file="partials/datepicker" depends="datetimepicker"}
 {/javascripts}
 {if $datepicker.range == 1}
     {include file="asset:System/Partials/datepicker.range.tpl" datepicker=$datepicker}
