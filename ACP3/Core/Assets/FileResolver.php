@@ -36,7 +36,7 @@ class FileResolver
     /**
      * @var array
      */
-    private $cachedPaths = [];
+    private $cachedPaths;
     /**
      * @var bool
      */
