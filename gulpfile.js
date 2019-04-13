@@ -17,6 +17,7 @@
     gulp.task('bump-version', getTask('bump-version'));
     gulp.task('scss', getTask('scss'));
     gulp.task('less', getTask('less'));
+    gulp.task('babel-js', getTask('babel-js'));
     gulp.task('watch', gulp.series('less', 'scss', getTask('watch')));
 
     gulp.task('default', gulp.series('watch'));
