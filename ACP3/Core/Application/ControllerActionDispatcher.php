@@ -138,7 +138,15 @@ class ControllerActionDispatcher
         $callable = $this->getCallable($controller);
 
         if (empty($arguments)) {
-            $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
+            try {
+                $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
+            } catch (\RuntimeException $e) {
+                throw new ControllerActionNotFoundException(
+                    $e->getMessage(),
+                    0,
+                    $e
+                );
+            }
         }
 
         return \call_user_func_array($callable, $arguments);
