@@ -54,7 +54,7 @@ test:phpstan:
   cache:
     policy: pull
   script:
-    - php -d memory_limit=-1 vendor/bin/phpstan analyse
+    - php -d memory_limit=-1 vendor/bin/phpstan analyse --no-progress
 
 test:eslint:
   image: node:lts-alpine
