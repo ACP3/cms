@@ -49,7 +49,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
     public function testDefaultLibrariesEnabled()
     {
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('jquery,popper,bootstrap,ajax-form,font-awesome', $libraries);
+        $this->assertEquals('polyfill,jquery,popper,bootstrap,ajax-form,font-awesome', $libraries);
     }
 
     public function testEnableDatepicker()
@@ -57,7 +57,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         $this->assets->enableLibraries(['datetimepicker']);
 
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('jquery,popper,bootstrap,ajax-form,moment,datetimepicker-core,datetimepicker,font-awesome', $libraries);
+        $this->assertEquals('polyfill,jquery,popper,bootstrap,ajax-form,moment,datetimepicker-core,datetimepicker,font-awesome', $libraries);
     }
 
     public function testFetchAdditionalThemeCssFiles()

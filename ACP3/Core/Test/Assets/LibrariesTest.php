@@ -53,6 +53,6 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
         $this->libraries->enableLibraries(['foobar']);
 
-        $this->assertEquals(['jquery', 'ajax-form', 'font-awesome', 'foobar'], $this->libraries->getEnabledLibraries());
+        $this->assertEquals(['polyfill', 'jquery', 'ajax-form', 'font-awesome', 'foobar'], $this->libraries->getEnabledLibraries());
     }
 }
