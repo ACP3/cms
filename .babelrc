@@ -1,8 +1,17 @@
 {
     "presets": [
-        "@babel/preset-env",
-        ["minify", {
-            "builtIns": false
-        }]
+        [
+            "@babel/preset-env",
+            {
+                "corejs": 3,
+                "useBuiltIns": "entry"
+            }
+        ],
+        [
+            "minify",
+            {
+                "builtIns": false
+            }
+        ]
     ]
 }
