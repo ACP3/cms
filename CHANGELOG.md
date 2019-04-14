@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.41.2] - 2019-04-14
+## [4.41.3] - 2019-04-14
 ### Added
 - added the `@babel/polyfill` package to make the transpiled JavaScript files actually work in old browsers
 
@@ -928,8 +928,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.41.2...4.x
-[4.41.2]: https://gitlab.com/ACP3/cms/compare/v4.41.1...v4.41.2
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.41.3...4.x
+[4.41.3]: https://gitlab.com/ACP3/cms/compare/v4.41.1...v4.41.3
 [4.41.1]: https://gitlab.com/ACP3/cms/compare/v4.41.0...v4.41.1
 [4.41.0]: https://gitlab.com/ACP3/cms/compare/v4.40.0...v4.41.0
 [4.40.0]: https://gitlab.com/ACP3/cms/compare/v4.39.0...v4.40.0
