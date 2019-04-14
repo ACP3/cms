@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.41.1] - 2019-04-14
+### Fixed
+- fixed a bug inside the `babel` gulp task
+- fixed the styling of the cookie consent 
+
 ## [4.41.0] - 2019-04-13
 ### Added
 - added Babel.js to transform the ES6 compatible JS files
@@ -919,7 +924,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.41.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.41.1...4.x
+[4.41.1]: https://gitlab.com/ACP3/cms/compare/v4.41.0...v4.41.1
 [4.41.0]: https://gitlab.com/ACP3/cms/compare/v4.40.0...v4.41.0
 [4.40.0]: https://gitlab.com/ACP3/cms/compare/v4.39.0...v4.40.0
 [4.39.0]: https://gitlab.com/ACP3/cms/compare/v4.38.1...v4.39.0
