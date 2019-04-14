@@ -18,6 +18,12 @@ class Libraries
      * @var array
      */
     protected $libraries = [
+        'polyfill' => [
+            'enabled' => true,
+            'enabled_for_ajax' => false,
+            'dependencies' => [],
+            'js' => 'polyfill.min.js',
+        ],
         'ajax-form' => [
             'enabled' => true,
             'enabled_for_ajax' => false,

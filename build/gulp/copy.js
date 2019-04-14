@@ -15,6 +15,7 @@ module.exports = (gulp) => {
             paths = [
                 {
                     'src': [
+                        nodeBasePath + '/@babel/polyfill/dist/polyfill.min.js',
                         nodeBasePath + '/@fancyapps/fancybox/dist/jquery.fancybox.min.js',
                         nodeBasePath + '/jquery/dist/jquery.min.js',
                         nodeBasePath + '/bootbox/dist/bootbox.all.min.js',
