@@ -128,7 +128,7 @@ class Edit extends AbstractOperation
 
         // Falls die Knoten in einen leeren Block verschoben werden sollen,
         // die right_id des letzten Elementes verwenden
-        if (empty($newBlockLeftId) || \is_null($newBlockLeftId) === true) {
+        if (empty($newBlockLeftId)) {
             $newBlockLeftId = $this->nestedSetRepository->fetchMaximumRightId();
             ++$newBlockLeftId;
         }
