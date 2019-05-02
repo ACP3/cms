@@ -338,7 +338,7 @@
                 $errorBox.remove();
             }
 
-            this.focusTabWithFirstErrorMessage(that.element);
+            this.focusTabWithFirstErrorMessage(this.element);
         }
 
         scrollToFirstFormError() {
