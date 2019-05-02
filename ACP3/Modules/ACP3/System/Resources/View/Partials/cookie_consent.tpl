@@ -1,6 +1,6 @@
 <div id="cookie-consent" class="cookie-consent clearfix d-none">
     <div class="container">
-        <button id="accept-cookies" class="cookie-consent__button btn btn-sm btn-success pull-right">
+        <button id="accept-cookies" class="cookie-consent__button btn btn-sm btn-success">
             {lang t="system|accept"}
         </button>
         <div class="cookie-consent__body">
