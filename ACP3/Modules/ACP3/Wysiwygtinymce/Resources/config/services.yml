@@ -6,6 +6,7 @@ services:
       - '@core.assets.minifier.css'
       - '@core.i18n.translator'
       - '@core.environment.application_path'
+      - '@core.view'
       - '@?filemanager.helpers'
     tags:
       - { name: core.wysiwyg.editor }

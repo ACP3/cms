@@ -35,24 +35,22 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
      * @var \ACP3\Core\ACL
      */
     private $acl;
+    /**
+     * @var \ACP3\Core\View
+     */
+    private $view;
 
     /**
      * @var bool
      */
     private $initialized = false;
 
-    /**
-     * @param \ACP3\Core\ACL                               $acl
-     * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
-     * @param \ACP3\Core\I18n\Translator                   $translator
-     * @param \ACP3\Core\Environment\ApplicationPath       $appPath
-     * @param \ACP3\Modules\ACP3\Filemanager\Helpers|null  $filemanagerHelpers
-     */
     public function __construct(
         Core\ACL $acl,
         Core\Assets\Minifier\MinifierInterface $minifier,
         Core\I18n\Translator $translator,
         Core\Environment\ApplicationPath $appPath,
+        Core\View $view,
         ?Helpers $filemanagerHelpers = null
     ) {
         $this->minifier = $minifier;
@@ -60,6 +58,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         $this->appPath = $appPath;
         $this->filemanagerHelpers = $filemanagerHelpers;
         $this->acl = $acl;
+        $this->view = $view;
     }
 
     /**
@@ -77,8 +76,8 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     {
         parent::setParameters($params);
 
-        $this->config['toolbar'] = (isset($params['toolbar'])) ? $params['toolbar'] : '';
-        $this->config['height'] = ((isset($params['height'])) ? $params['height'] : 250) . 'px';
+        $this->config['toolbar'] = $params['toolbar'] ?? '';
+        $this->config['height'] = ($params['height'] ?? 250) . 'px';
     }
 
     /**
@@ -91,8 +90,9 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             'id' => $this->id,
             'name' => $this->name,
             'value' => $this->value,
-            'js' => $this->configure(),
+            'js' => $this->init(),
             'advanced' => $this->advanced,
+            'data_config' => $this->configure(),
         ];
 
         if ($wysiwyg['advanced'] === true) {
@@ -102,50 +102,62 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         return ['wysiwyg' => $wysiwyg];
     }
 
-    /**
-     * @return array
-     */
-    private function configure()
+    private function init(): string
     {
-        $this->config['tinymce'] = [
-            'is_initialized' => $this->initialized,
+        if ($this->initialized) {
+            return '';
+        }
+
+        $this->view->assign('tinymce', [
+            'initialized' => $this->initialized,
+            'filemanager_path' => $this->getFileManagerPath(),
+        ]);
+
+        $this->initialized = true;
+
+        return $this->view->fetchTemplate('Wysiwygtinymce/tinymce.tpl');
+    }
+
+    private function getFileManagerPath(): ?string
+    {
+        if ($this->filemanagerHelpers === null) {
+            return null;
+        }
+        if (!$this->acl->hasPermission('admin/filemanager/index/richfilemanager')) {
+            return null;
+        }
+        if ($this->isSimpleEditor()) {
+            return null;
+        }
+
+        return $this->filemanagerHelpers->getFilemanagerPath();
+    }
+
+    /**
+     * @return string
+     */
+    private function configure(): string
+    {
+        $config = [
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
             'height' => $this->config['height'],
             'content_css' => $this->minifier->getURI(),
         ];
 
-        if ($this->initialized === false) {
-            $this->initialized = true;
-        }
-
         $this->configurePlugins();
         $this->configureToolbar();
         $this->configureAdvancedImages();
-        $this->addFileManager();
 
-        return [
-            'template' => 'Wysiwygtinymce/tinymce.tpl',
-            'config' => $this->config['tinymce'],
-        ];
+        return \json_encode(\array_merge(
+            $config,
+            $this->configurePlugins(),
+            $this->configureToolbar(),
+            $this->configureAdvancedImages()
+        ));
     }
 
-    private function addFileManager()
-    {
-        if ($this->filemanagerHelpers === null) {
-            return;
-        }
-        if (!$this->acl->hasPermission('admin/filemanager/index/richfilemanager')) {
-            return;
-        }
-        if ($this->isSimpleEditor()) {
-            return;
-        }
-
-        $this->config['tinymce']['filemanager_path'] = $this->filemanagerHelpers->getFilemanagerPath();
-    }
-
-    private function configurePlugins(): void
+    private function configurePlugins(): array
     {
         if ($this->isSimpleEditor()) {
             $plugins = [
@@ -162,10 +174,10 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             ];
         }
 
-        $this->config['tinymce']['plugins'] = \json_encode($plugins);
+        return ['plugins' => $plugins];
     }
 
-    private function configureToolbar(): void
+    private function configureToolbar(): array
     {
         if ($this->isSimpleEditor()) {
             $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image';
@@ -173,12 +185,14 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons';
         }
 
-        $this->config['tinymce']['toolbar'] = $toolbar;
+        return ['toolbar' => $toolbar];
     }
 
-    private function configureAdvancedImages(): void
+    private function configureAdvancedImages(): array
     {
-        $this->config['tinymce']['image_advtab'] = $this->isSimpleEditor() ? 'false' : 'true';
+        return [
+            'image_advtab' => !$this->isSimpleEditor(),
+        ];
     }
 
     private function isSimpleEditor(): bool
