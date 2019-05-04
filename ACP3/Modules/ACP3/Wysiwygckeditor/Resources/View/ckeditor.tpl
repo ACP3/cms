@@ -1,11 +1,1 @@
-<script defer>
-    jQuery(document).ready(function ($) {
-        $(document).on('acp3.ajaxFrom.submit.before', function () {
-            if (typeof CKEDITOR !== "undefined") {
-                for (var instance in CKEDITOR.instances) {
-                    CKEDITOR.instances[instance].updateElement();
-                }
-            }
-        });
-    });
-</script>
+{include_js module="Wysiwygckeditor" file="partials/ckeditor"}

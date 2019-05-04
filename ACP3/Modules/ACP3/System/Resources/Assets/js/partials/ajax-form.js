@@ -193,12 +193,14 @@
                         this.replaceContent(hash, responseData);
                         this.rebindHandlers(hash);
 
+                        $(document).trigger('acp3.ajaxFrom.complete');
+
                         if (typeof hash !== 'undefined') {
                             window.location.hash = hash;
                         }
                     }
-                } catch (err) {
-                    console.error(err.message);
+                } catch (e) {
+                    console.error(e);
                 }
             }).fail((jqXHR) => {
                 if (jqXHR.status === 400) {
