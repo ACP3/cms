@@ -52,7 +52,8 @@ services:
 
   smarty.plugin.include_js:
     class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeJs
-    arguments: ['@core.assets', '@core.assets.file_resolver', '@core.environment.application_path']
+    arguments:
+      - '@core.assets.include_js'
     tags:
     - { name: smarty.plugin.function, pluginName: include_js }
 

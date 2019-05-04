@@ -1,5 +1,10 @@
 {event name="core.wysiwyg.`$wysiwyg.friendly_name|lower`.before" id=$wysiwyg.id}
-<textarea name="{$wysiwyg.name}" id="{$wysiwyg.id}" cols="60" rows="6" class="form-control">{$wysiwyg.value|escape:'html'}</textarea>
+<textarea name="{$wysiwyg.name}"
+          id="{$wysiwyg.id}"
+          cols="60"
+          rows="6"
+          {if !empty($wysiwyg.data_config)}data-wysiwyg-config='{$wysiwyg.data_config}'{/if}
+          class="wysiwyg-{$wysiwyg.friendly_name|lower} form-control">{$wysiwyg.value|escape:'html'}</textarea>
 {javascripts}
     {include file="asset:System/Partials/wysiwyg_config.tpl" js=$wysiwyg.js}
 {/javascripts}

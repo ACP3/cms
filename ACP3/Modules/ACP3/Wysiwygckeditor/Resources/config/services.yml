@@ -3,6 +3,7 @@ services:
     class: ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor\CKEditor
     arguments:
       - '@core.acl'
+      - '@core.assets.include_js'
       - '@core.modules'
       - '@core.i18n.translator'
       - '@core.environment.application_path'

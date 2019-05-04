@@ -44,6 +44,13 @@ services:
       - '@core.environment.theme'
       - '@core.modules'
 
+  core.assets.include_js:
+    class: ACP3\Core\Assets\IncludeJs
+    arguments:
+      - '@core.assets'
+      - '@core.assets.file_resolver'
+      - '@core.environment.application_path'
+
   core.assets.libraries:
     class: ACP3\Core\Assets\Libraries
     arguments:

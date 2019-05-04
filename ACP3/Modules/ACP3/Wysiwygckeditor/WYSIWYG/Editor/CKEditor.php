@@ -41,24 +41,19 @@ class CKEditor extends Textarea
      * @var \ACP3\Core\ACL
      */
     private $acl;
+    /**
+     * @var \ACP3\Core\Assets\IncludeJs
+     */
+    private $includeJs;
 
     /**
      * @var bool
      */
     private $isInitialized = false;
 
-    /**
-     * CKEditor constructor.
-     *
-     * @param \ACP3\Core\ACL                                                        $acl
-     * @param \ACP3\Core\Modules                                                    $modules
-     * @param \ACP3\Core\I18n\Translator                                            $translator
-     * @param \ACP3\Core\Environment\ApplicationPath                                $appPath
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository|null $emoticonRepository
-     * @param \ACP3\Modules\ACP3\Filemanager\Helpers|null                           $filemanagerHelpers
-     */
     public function __construct(
         Core\ACL $acl,
+        Core\Assets\IncludeJs $includeJs,
         Core\Modules $modules,
         Core\I18n\Translator $translator,
         Core\Environment\ApplicationPath $appPath,
@@ -71,6 +66,7 @@ class CKEditor extends Textarea
         $this->emoticonRepository = $emoticonRepository;
         $this->filemanagerHelpers = $filemanagerHelpers;
         $this->acl = $acl;
+        $this->includeJs = $includeJs;
     }
 
     /**
@@ -89,7 +85,7 @@ class CKEditor extends Textarea
         parent::setParameters($params);
 
         $this->config['toolbar'] = (isset($params['toolbar']) && $params['toolbar'] === 'simple') ? 'Basic' : 'Full';
-        $this->config['height'] = (($params['height'] ?? 250)) . 'px';
+        $this->config['height'] = ($params['height'] ?? 250) . 'px';
     }
 
     /**
@@ -102,8 +98,9 @@ class CKEditor extends Textarea
             'id' => $this->id,
             'name' => $this->name,
             'value' => $this->value,
-            'js' => $this->editor(),
+            'js' => $this->init(),
             'advanced' => $this->advanced,
+            'data_config' => $this->configure(),
         ];
 
         if ($wysiwyg['advanced'] === true) {
@@ -118,7 +115,7 @@ class CKEditor extends Textarea
      *
      * @return string
      */
-    private function configure()
+    private function configure(): string
     {
         $this->config['entities'] = false;
         $this->config['extraPlugins'] = 'divarea,embed,codemirror';
@@ -145,7 +142,7 @@ class CKEditor extends Textarea
         ];
 
         // Full toolbar
-        if ((!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic')) {
+        if (!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic') {
             $this->configureFullToolbar();
         } else { // basic toolbar
             $this->configureBasicToolbar();
@@ -155,44 +152,13 @@ class CKEditor extends Textarea
     }
 
     /**
-     * @return array
-     */
-    private function editor()
-    {
-        $out = $this->init();
-
-        // Add custom plugins
-        $ckeditorPluginsDir = $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/plugins/';
-
-        $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('embedbase', '" . $ckeditorPluginsDir . "embedbase/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('embed', '" . $ckeditorPluginsDir . "embed/');\n";
-        $js .= 'CKEDITOR.dtd.$removeEmpty[\'i\'] = false;' . "\n";
-
-        $config = $this->configure();
-        if (!empty($config)) {
-            $js .= "CKEDITOR.replace('" . $this->id . "', " . $config . ');';
-        } else {
-            $js .= "CKEDITOR.replace('" . $this->id . "');";
-        }
-
-        $out .= $this->script($js);
-
-        return [
-            'template' => 'Wysiwygckeditor/ckeditor.tpl',
-            'config' => $out,
-        ];
-    }
-
-    /**
      * Prints javascript code.
      *
      * @param string $js
      *
      * @return string
      */
-    private function script($js)
+    private function script(string $js): string
     {
         $out = '<script type="text/javascript">';
         $out .= $js;
@@ -204,7 +170,7 @@ class CKEditor extends Textarea
     /**
      * @return string
      */
-    private function init()
+    private function init(): string
     {
         if ($this->isInitialized === true) {
             return '';
@@ -221,18 +187,29 @@ class CKEditor extends Textarea
 
         $out .= '<script type="text/javascript" src="' . $basePath . "ckeditor.js\"></script>\n";
 
+        // Add custom plugins
+        $ckeditorPluginsDir = $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/plugins/';
+
+        $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
+        $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
+        $js .= "CKEDITOR.plugins.addExternal('embedbase', '" . $ckeditorPluginsDir . "embedbase/');\n";
+        $js .= "CKEDITOR.plugins.addExternal('embed', '" . $ckeditorPluginsDir . "embed/');\n";
+        $js .= 'CKEDITOR.dtd.$removeEmpty[\'i\'] = false;' . "\n";
+
+        $out .= $this->script($js);
+        $out .= $this->includeJs->add('Wysiwygckeditor', 'partials/ckeditor');
+
         return $out;
     }
 
-    private function applyEmoticons()
+    private function applyEmoticons(): void
     {
         $this->config['smiley_path'] = $this->appPath->getWebRoot() . 'uploads/emoticons/';
         $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
         $emoticons = $this->emoticonRepository->getAll();
-        $cEmoticons = \count($emoticons);
 
         $images = $descriptions = [];
-        for ($i = 0; $i < $cEmoticons; ++$i) {
+        foreach ($emoticons as $i => $emoticon) {
             $images[] = $emoticons[$i]['img'];
             $descriptions[] = $emoticons[$i]['description'];
         }
@@ -241,7 +218,7 @@ class CKEditor extends Textarea
         $this->config['smiley_descriptions'] = $descriptions;
     }
 
-    private function addFileManager()
+    private function addFileManager(): void
     {
         if ($this->filemanagerHelpers === null) {
             return;
@@ -253,7 +230,7 @@ class CKEditor extends Textarea
         $this->config['filebrowserBrowseUrl'] = $this->filemanagerHelpers->getFilemanagerPath();
     }
 
-    private function configureFullToolbar()
+    private function configureFullToolbar(): void
     {
         $this->config['extraPlugins'] = 'codemirror,divarea,embedbase,embed';
 
@@ -284,7 +261,7 @@ class CKEditor extends Textarea
         }
     }
 
-    private function configureBasicToolbar()
+    private function configureBasicToolbar(): void
     {
         $this->config['extraPlugins'] = 'divarea,codemirror';
         $this->config['toolbar'] = [
