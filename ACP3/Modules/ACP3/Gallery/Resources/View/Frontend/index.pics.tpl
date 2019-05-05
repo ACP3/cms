@@ -17,9 +17,7 @@
                          class="img-thumbnail mb-1">
                 </a>
             {/foreach}
-            {javascripts}
-                {include_js depends="fancybox"}
-            {/javascripts}
+            {js_libraries enable="fancybox"}
         {else}
             {foreach $pictures as $row}
                 <a href="{uri args="gallery/index/details/id_`$row.id`"}"
