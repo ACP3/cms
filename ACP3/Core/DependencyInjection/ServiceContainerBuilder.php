@@ -18,6 +18,7 @@ use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterLegacySmartyPluginsPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Core\WYSIWYG\DependencyInjection\RegisterWysiwygEditorsCompilerPass;
+use Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -51,7 +52,8 @@ class ServiceContainerBuilder extends ContainerBuilder
      */
     public function __construct(
         ApplicationPath $applicationPath,
-        SymfonyRequest $symfonyRequest, $applicationMode
+        SymfonyRequest $symfonyRequest,
+        string $applicationMode
     ) {
         parent::__construct();
 
@@ -67,8 +69,10 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @throws \MJS\TopSort\ElementNotFoundException
      * @throws \Exception
      */
-    private function setUpContainer()
+    private function setUpContainer(): void
     {
+        $this->setProxyInstantiator(new RuntimeInstantiator());
+
         $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
 
@@ -117,14 +121,14 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param SymfonyRequest                         $symfonyRequest
      * @param string                                 $applicationMode
      *
-     * @return ContainerBuilder
+     * @return \ACP3\Core\DependencyInjection\ServiceContainerBuilder
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
     public static function create(
         ApplicationPath $applicationPath, SymfonyRequest $symfonyRequest, string $applicationMode
-    ) {
+    ): ServiceContainerBuilder {
         return new static($applicationPath, $symfonyRequest, $applicationMode);
     }
 
@@ -132,7 +136,7 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @param string $vendor
      * @param string $moduleName
      */
-    private function registerCompilerPass(string $vendor, string $moduleName)
+    private function registerCompilerPass(string $vendor, string $moduleName): void
     {
         $fqn = '\\ACP3\\Modules\\' . $vendor . '\\' . $moduleName . '\\ModuleRegistration';
 
