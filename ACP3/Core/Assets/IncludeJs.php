@@ -72,13 +72,9 @@ class IncludeJs
             return '';
         }
 
-        if (empty($dependencies)) {
-            throw new \InvalidArgumentException(
-                'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!'
-            );
-        }
-
-        return '';
+        throw new \InvalidArgumentException(
+            'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!'
+        );
     }
 
     /**
