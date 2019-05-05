@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- backported the lazy loading of services from ACP3 5.x
+
+### Changed
+- Reworked how the WYSIWYG editors get initialized
+- The `{include_js}`-Smarty plugin doesn't allow the usage for the sole purpose of adding a JS library anymore. Please use the `{js_libraries}`-Smarty plugin for that.
+
 ## [4.41.4] - 2019-04-20
 ### Fixed
 - fixed the reCaptcha
