@@ -89,9 +89,8 @@ class IncludeJs
      */
     private function hasValidParams(string $module, string $filePath): bool
     {
-        return isset($module, $filePath) === true
-            && (bool) \preg_match('=/=', $module) === false
-            && (bool) \preg_match('=\./=', $filePath) === false;
+        return \preg_match('=/=', $module) === 0
+            && \preg_match('=\./=', $filePath) === 0;
     }
 
     /**
