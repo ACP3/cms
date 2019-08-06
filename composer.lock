@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b16688d232a994259ee0c0292a90d444",
+    "content-hash": "33f8fe2a75278eae7ec3cbe51dd4d3dc",
     "packages": [
         {
             "name": "ckeditor/ckeditor",
@@ -4666,16 +4666,16 @@
         },
         {
             "name": "toflar/psr6-symfony-http-cache-store",
-            "version": "1.1.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Toflar/psr6-symfony-http-cache-store.git",
-                "reference": "d1c761c090420a14e4caa3b874c7ce8ac7bfcc99"
+                "reference": "9d111555590f960e1ac21e2230e18d9a7545291c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Toflar/psr6-symfony-http-cache-store/zipball/d1c761c090420a14e4caa3b874c7ce8ac7bfcc99",
-                "reference": "d1c761c090420a14e4caa3b874c7ce8ac7bfcc99",
+                "url": "https://api.github.com/repos/Toflar/psr6-symfony-http-cache-store/zipball/9d111555590f960e1ac21e2230e18d9a7545291c",
+                "reference": "9d111555590f960e1ac21e2230e18d9a7545291c",
                 "shasum": ""
             },
             "require": {
@@ -4708,7 +4708,7 @@
                 }
             ],
             "description": "An alternative store implementation for Symfony's HttpCache reverse proxy that supports auto-pruning of expired entries and cache invalidation by tags.",
-            "time": "2018-08-08T07:00:00+00:00"
+            "time": "2019-07-26T07:03:51+00:00"
         },
         {
             "name": "tubalmartin/cssmin",

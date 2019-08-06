@@ -46,7 +46,7 @@
     "symfony/yaml": "^4.3.0",
     "thepixeldeveloper/sitemap": "^5.0",
     "tinymce/tinymce": "^4.8",
-    "toflar/psr6-symfony-http-cache-store": "^1.0",
+    "toflar/psr6-symfony-http-cache-store": "^2.0",
     "marcj/topsort": "^1.1",
     "heise/shariff": "^8.0",
     "servocoder/richfilemanager-php": "^1.2"
