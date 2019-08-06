@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.43.0] - 2019-08-07
 ### Changed
 - the file extension of uploaded files will now be lower cased
 - Changed the caption for FancyBox enabled gallery pictures from the picture description to the picture title
@@ -950,7 +950,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.42.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.43.0...4.x
+[4.43.0]: https://gitlab.com/ACP3/cms/compare/v4.42.0...v4.43.0
 [4.42.0]: https://gitlab.com/ACP3/cms/compare/v4.41.4...v4.42.0
 [4.41.4]: https://gitlab.com/ACP3/cms/compare/v4.41.3...v4.41.4
 [4.41.3]: https://gitlab.com/ACP3/cms/compare/v4.41.1...v4.41.3
