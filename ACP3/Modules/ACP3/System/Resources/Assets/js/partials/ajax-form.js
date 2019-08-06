@@ -60,7 +60,7 @@
         mergeSettings() {
             const data = $(this.element).data();
             for (let key in data) {
-                if (data.hasOwnProperty(key)) {
+                if (Object.prototype.hasOwnProperty.call(data, key)) {
                     const keyStripped = this.lowerCaseFirstLetter(key.replace('ajaxForm', ''));
 
                     if (keyStripped.length > 0 && typeof this.settings[keyStripped] !== 'undefined') {
@@ -160,7 +160,7 @@
 
                 if (hasCustomData) {
                     for (let key in this.settings.customFormData) {
-                        if (this.settings.customFormData.hasOwnProperty(key)) {
+                        if (Object.prototype.hasOwnProperty.call(this.settings.customFormData, key)) {
                             data.append(key, this.settings.customFormData[key]);
                         }
                     }

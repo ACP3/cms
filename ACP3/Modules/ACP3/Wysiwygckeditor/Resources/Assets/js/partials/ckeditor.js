@@ -28,7 +28,7 @@ jQuery(document).ready(($) => {
         }
 
         for (const instance in CKEDITOR.instances) {
-            if (!CKEDITOR.instances.hasOwnProperty(instance)) {
+            if (!Object.prototype.hasOwnProperty.call(CKEDITOR.instances, instance)) {
                 return;
             }
 
