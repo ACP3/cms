@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- the file extension of uploaded files will now be lower cased
+- Changed the caption for FancyBox enabled gallery pictures from the picture description to the picture title
+- Updated the composer dependencies
+- Updated the NPM dependencies
+
+### Fixed
+- fixed a wrong translation key inside the gallery module
+
 ## [4.42.0] - 2019-05-05
 ### Added
 - backported the lazy loading of services from ACP3 5.x
