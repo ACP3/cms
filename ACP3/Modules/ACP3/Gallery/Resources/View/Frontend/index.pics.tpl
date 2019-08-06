@@ -11,7 +11,7 @@
                    class="gallery-picture-thumb"
                    data-fancybox="gallery"
                    data-type="image"
-                   {if !empty($row.description)}data-caption="{$row.description|strip_tags|trim}"{/if}>
+                   {if !empty($row.title)}data-caption="{$row.title|strip_tags|trim}"{/if}>
                     <img src="{$row.uri_thumb}"
                          alt="{$row.description|strip_tags|trim}"
                          class="img-thumbnail">
