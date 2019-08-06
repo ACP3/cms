@@ -8,7 +8,7 @@
         </ul>
         <div class="tab-content">
             <div id="tab-1" class="tab-pane fade in active">
-                {include file="asset:System/Partials/form_group.button_group.tpl" options=$active name="active" required=true label={lang t="files|active"}}
+                {include file="asset:System/Partials/form_group.button_group.tpl" options=$active name="active" required=true label={lang t="gallery|active"}}
                 <div id="publication-period-wrapper">
                     {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
                 </div>
