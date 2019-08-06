@@ -77,8 +77,8 @@ class ControllerActionDispatcher
 
         if ($this->container->has($serviceId)) {
             $this->eventDispatcher->dispatch(
-                'core.application.controller_action_dispatcher.before_dispatch',
-                new ControllerActionBeforeDispatchEvent($serviceId)
+                new ControllerActionBeforeDispatchEvent($serviceId),
+                ControllerActionBeforeDispatchEvent::NAME
             );
 
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
@@ -87,8 +87,8 @@ class ControllerActionDispatcher
             $response = $controller->display($this->executeControllerAction($controller, $arguments));
 
             $this->eventDispatcher->dispatch(
-                'core.application.controller_action_dispatcher.after_dispatch',
-                new ControllerActionAfterDispatchEvent($serviceId, $response)
+                new ControllerActionAfterDispatchEvent($serviceId, $response),
+                ControllerActionAfterDispatchEvent::NAME
             );
 
             return $response;

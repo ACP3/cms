@@ -105,7 +105,7 @@ class Libraries
 
     public function dispatchAddLibraryEvent(): void
     {
-        $this->eventDispatcher->dispatch('core.assets.add_libraries', new AddLibraryEvent($this));
+        $this->eventDispatcher->dispatch(new AddLibraryEvent($this), AddLibraryEvent::NAME);
     }
 
     /**

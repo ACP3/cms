@@ -8,10 +8,12 @@
 namespace ACP3\Core\Controller\Event;
 
 use ACP3\Core\View;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class CustomTemplateVariableEvent extends Event
 {
+    public const NAME = 'core.controller.custom_template_variable';
+
     /**
      * @var \ACP3\Core\View
      */

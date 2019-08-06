@@ -8,6 +8,7 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Event\CustomTemplateVariableEvent;
 
 abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
 {
@@ -86,8 +87,8 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
         $this->view->assign('LAYOUT', $this->fetchLayoutViaInheritance());
 
         $this->eventDispatcher->dispatch(
-            'core.controller.custom_template_variable',
-            new Core\Controller\Event\CustomTemplateVariableEvent($this->view)
+            new CustomTemplateVariableEvent($this->view),
+            CustomTemplateVariableEvent::NAME
         );
     }
 

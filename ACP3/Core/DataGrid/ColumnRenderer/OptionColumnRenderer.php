@@ -48,8 +48,8 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
         $this->eventDispatcher->dispatch(
-            'data_grid.column_renderer.custom_option_before',
-            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier())
+            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier()),
+            'data_grid.column_renderer.custom_option_before'
         );
 
         if ($column['custom']['can_edit']) {
@@ -64,8 +64,8 @@ class OptionColumnRenderer extends AbstractColumnRenderer
         }
 
         $this->eventDispatcher->dispatch(
-            'data_grid.column_renderer.custom_option_between',
-            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier())
+            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier()),
+            'data_grid.column_renderer.custom_option_between'
         );
 
         if ($column['custom']['can_delete']) {
@@ -80,8 +80,8 @@ class OptionColumnRenderer extends AbstractColumnRenderer
         }
 
         $this->eventDispatcher->dispatch(
-            'data_grid.column_renderer.custom_option_after',
-            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier())
+            new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier()),
+            'data_grid.column_renderer.custom_option_after'
         );
 
         return $this->render($column, $this->collectOptions());

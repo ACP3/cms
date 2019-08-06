@@ -7,10 +7,12 @@
 
 namespace ACP3\Core\Application\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class OutputPageExceptionEvent extends Event
 {
+    public const NAME = 'core.output_page_exception';
+
     /**
      * @var \Throwable
      */

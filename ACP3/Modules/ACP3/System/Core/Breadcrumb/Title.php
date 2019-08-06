@@ -78,8 +78,8 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     private function renderHomepageTitle(): string
     {
         $this->eventDispatcher->dispatch(
-            'core.breadcrumb.title.get_site_and_page_title_before',
-            new GetSiteAndPageTitleBeforeEvent($this)
+            new GetSiteAndPageTitleBeforeEvent($this),
+            GetSiteAndPageTitleBeforeEvent::NAME
         );
 
         if ($this->allowSystemSubtitle()) {

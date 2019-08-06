@@ -109,7 +109,7 @@ class Bootstrap extends AbstractBootstrap
             /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
             $eventDispatcher = $this->container->get('core.event_dispatcher');
 
-            $eventDispatcher->dispatch('core.output_page_exception', new OutputPageExceptionEvent($e));
+            $eventDispatcher->dispatch(new OutputPageExceptionEvent($e), OutputPageExceptionEvent::NAME);
 
             throw $e;
         }

@@ -8,7 +8,7 @@
 namespace ACP3\Core\Validation\Event;
 
 use ACP3\Core\Validation\Validator;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class FormValidationEvent extends Event
 {

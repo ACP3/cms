@@ -89,8 +89,8 @@ class Steps
     private function buildBreadcrumbCache(): void
     {
         $this->eventDispatcher->dispatch(
-            'core.breadcrumb.steps.build_cache',
-            new StepsBuildCacheEvent($this)
+            new StepsBuildCacheEvent($this),
+            'core.breadcrumb.steps.build_cache'
         );
 
         if ($this->request->getArea() === AreaEnum::AREA_ADMIN) {
@@ -122,8 +122,8 @@ class Steps
         }
 
         $this->eventDispatcher->dispatch(
-            'core.breadcrumb.steps.build_admin_cache_not_empty_steps_after',
-            new StepsBuildCacheEvent($this)
+            new StepsBuildCacheEvent($this),
+            'core.breadcrumb.steps.build_admin_cache_not_empty_steps_after'
         );
 
         $this->breadcrumbCache = $this->steps;
@@ -189,8 +189,8 @@ class Steps
         }
 
         $this->eventDispatcher->dispatch(
-            'core.breadcrumb.steps.build_frontend_cache_after',
-            new StepsBuildCacheEvent($this)
+            new StepsBuildCacheEvent($this),
+            'core.breadcrumb.steps.build_frontend_cache_after'
         );
 
         $this->breadcrumbCache = $this->steps;

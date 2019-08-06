@@ -45,7 +45,7 @@ class Event extends AbstractFunction
     {
         if (isset($params['name'])) {
             \ob_start();
-            $this->eventDispatcher->dispatch($params['name'], new TemplateEvent($this->parseArguments($params)));
+            $this->eventDispatcher->dispatch(new TemplateEvent($this->parseArguments($params)), $params['name']);
             $result = \ob_get_contents();
             \ob_end_clean();
 

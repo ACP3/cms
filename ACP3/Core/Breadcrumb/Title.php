@@ -233,8 +233,8 @@ class Title
     public function getSiteAndPageTitle()
     {
         $this->eventDispatcher->dispatch(
-            'core.breadcrumb.title.get_site_and_page_title_before',
-            new GetSiteAndPageTitleBeforeEvent($this)
+            new GetSiteAndPageTitleBeforeEvent($this),
+            GetSiteAndPageTitleBeforeEvent::NAME
         );
 
         return $this->renderPageTitlePrefix()

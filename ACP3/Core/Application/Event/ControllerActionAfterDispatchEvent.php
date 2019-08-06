@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ControllerActionAfterDispatchEvent extends ControllerActionBeforeDispatchEvent
 {
+    public const NAME = 'core.application.controller_action_dispatcher.after_dispatch';
     /**
      * @var Response
      */

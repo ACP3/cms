@@ -75,8 +75,8 @@ class Steps extends Core\Breadcrumb\Steps
         }
 
         $this->eventDispatcher->dispatch(
-            'menus.breadcrumb.steps.build_frontend_cache_after',
-            new StepsBuildCacheEvent($this)
+            new StepsBuildCacheEvent($this),
+            'menus.breadcrumb.steps.build_frontend_cache_after'
         );
 
         if (!empty($this->stepsFromDb)) {

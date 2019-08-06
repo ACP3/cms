@@ -143,8 +143,8 @@ abstract class AbstractModel
         ModelSaveEvent $event)
     {
         $this->eventDispatcher->dispatch(
-            $eventName,
-            $event
+            $event,
+            $eventName
         );
     }
 

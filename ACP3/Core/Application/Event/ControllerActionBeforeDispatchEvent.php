@@ -7,10 +7,12 @@
 
 namespace ACP3\Core\Application\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class ControllerActionBeforeDispatchEvent extends Event
 {
+    public const NAME = 'core.application.controller_action_dispatcher.before_dispatch';
+
     /**
      * @var string
      */

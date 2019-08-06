@@ -116,7 +116,7 @@ class Validator
      */
     public function dispatchValidationEvent(string $eventName, array $formData, array $extra = [])
     {
-        $this->eventDispatcher->dispatch($eventName, new FormValidationEvent($this, $formData, $extra));
+        $this->eventDispatcher->dispatch(new FormValidationEvent($this, $formData, $extra), $eventName);
     }
 
     /**

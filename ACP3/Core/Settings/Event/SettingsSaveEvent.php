@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Settings\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class SettingsSaveEvent extends Event
 {
@@ -20,24 +20,18 @@ class SettingsSaveEvent extends Event
      */
     private $data;
 
-    public function __construct($module, array $data)
+    public function __construct(string $module, array $data)
     {
         $this->data = $data;
         $this->module = $module;
     }
 
-    /**
-     * @return string
-     */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
 
-    /**
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }

@@ -75,12 +75,12 @@ class Settings implements SettingsInterface
         $moduleId = $this->systemModuleRepository->getModuleId($module);
         if (!empty($moduleId)) {
             $this->eventDispatcher->dispatch(
-                'core.settings.save_before',
-                new SettingsSaveEvent($module, $data)
+                new SettingsSaveEvent($module, $data),
+                'core.settings.save_before'
             );
             $this->eventDispatcher->dispatch(
-                $module . '.settings.save_before',
-                new SettingsSaveEvent($module, $data)
+                new SettingsSaveEvent($module, $data),
+                $module . '.settings.save_before'
             );
 
             foreach ($data as $key => $value) {

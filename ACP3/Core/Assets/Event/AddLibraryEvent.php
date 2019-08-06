@@ -8,10 +8,12 @@
 namespace ACP3\Core\Assets\Event;
 
 use ACP3\Core\Assets\Libraries;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class AddLibraryEvent extends Event
 {
+    public const NAME = 'core.assets.add_libraries';
+
     /**
      * @var Libraries
      */
