@@ -23,6 +23,21 @@ build:composer:
   script:
     - composer install -n --prefer-dist
 
+build:npm:
+  image: node:lts-alpine
+  stage: build
+  cache:
+    key: node-$CI_COMMIT_REF_NAME
+    paths:
+      - ${npm_config_cache}
+  before_script:
+    - apk update && apk add --no-cache git
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules
+
 test:php71-unit:
   extends: test:php72-unit
   image: registry.gitlab.com/acp3/php-docker:7.1
@@ -36,6 +51,8 @@ test:php72-unit:
   script:
     - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+  needs:
+    - build:composer
 
 test:php73-unit:
   extends: test:php72-unit
@@ -47,6 +64,8 @@ test:phpcs:
   stage: test
   script:
     - composer run-script lint
+  needs:
+    - build:composer
 
 test:phpstan:
   extends: .php-base
@@ -55,19 +74,18 @@ test:phpstan:
     policy: pull
   script:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse --no-progress
+  needs:
+    - build:composer
 
 test:eslint:
   image: node:lts-alpine
   stage: test
-  cache:
-    key: node-$CI_COMMIT_REF_NAME
-    paths:
-      - ${npm_config_cache}
-  before_script:
-    - apk update && apk add --no-cache git
   script:
-    - npm ci
     - npm run-script eslint
+  needs:
+    - build:npm
+  dependencies:
+    - build:npm
 
 release:subtree-split:
   image: jderusse/gitsplit
