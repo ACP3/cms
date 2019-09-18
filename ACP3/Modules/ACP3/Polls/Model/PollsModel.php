@@ -77,7 +77,7 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function saveAnswers(array $answers, int  $pollId)
+    public function saveAnswers(array $answers, int $pollId)
     {
         $bool = false;
         foreach ($answers as $row) {
