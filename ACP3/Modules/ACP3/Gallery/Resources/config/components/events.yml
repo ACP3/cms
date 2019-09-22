@@ -14,7 +14,7 @@ services:
       - '@?seo.helper.uri_alias_manager'
       - '@?seo.helper.meta_statements'
     tags:
-      - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save__invoke, priority: -250 }
+      - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save, priority: -250 }
 
   gallery.event.generate_picture_uri_aliases_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Gallery\Event\Listener\GeneratePictureUriAliasesOnModelAfterSaveListener

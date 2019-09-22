@@ -151,7 +151,7 @@ class Edit extends AbstractFormAction
                     ->setFile($file)
                     ->validate($formData);
 
-                if (!empty($file)) {
+                if ($file !== null) {
                     $result = $this->galleryUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
 
                     $this->galleryHelpers->removePicture($picture['file']);
