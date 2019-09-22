@@ -20,7 +20,7 @@ services:
       - '@core.modules'
       - '@emoticons.helpers'
     tags:
-      - { name: core.eventListener, event: core.wysiwyg.textarea.before__invoke }
+      - { name: core.eventListener, event: core.wysiwyg.textarea.before }
 
   emoticons.event.on_render_emoticons_list_listener:
     class: ACP3\Modules\ACP3\Emoticons\Event\Listener\RenderEmoticonsListListener
