@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -51,8 +53,11 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return array
+     *
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
@@ -68,9 +73,13 @@ class Index extends Core\Controller\AbstractFrontendAction
             $resultsPerPage
         );
 
-        return [
-            'articles' => $articles,
-            'pagination' => $this->pagination->render(),
-        ];
+        try {
+            return [
+                'articles' => $articles,
+                'pagination' => $this->pagination->render(),
+            ];
+        } catch (InvalidPageException $e) {
+            throw new ResultNotExistsException();
+        }
     }
 }

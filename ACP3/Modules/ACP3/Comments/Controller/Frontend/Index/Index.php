@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Emoticons\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -48,8 +50,11 @@ class Index extends AbstractFrontendAction
      * @param int    $entryId
      *
      * @return array
+     *
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($module, $entryId)
+    public function execute($module, $entryId): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
@@ -77,10 +82,14 @@ class Index extends AbstractFrontendAction
             }
         }
 
-        return [
-            'comments' => $comments,
-            'dateformat' => $this->commentsSettings['dateformat'],
-            'pagination' => $this->pagination->render(),
-        ];
+        try {
+            return [
+                'comments' => $comments,
+                'dateformat' => $this->commentsSettings['dateformat'],
+                'pagination' => $this->pagination->render(),
+            ];
+        } catch (InvalidPageException $e) {
+            throw new ResultNotExistsException();
+        }
     }
 }

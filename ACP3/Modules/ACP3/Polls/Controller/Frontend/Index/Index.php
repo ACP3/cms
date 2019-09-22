@@ -61,7 +61,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         for ($i = 0; $i < $cPolls; ++$i) {
             if ($this->hasAlreadyVoted($polls[$i]['id']) ||
-                $polls[$i]['start'] !== $polls[$i]['end'] && $this->date->timestamp($polls[$i]['end']) <= $this->date->timestamp()
+                ($polls[$i]['start'] !== $polls[$i]['end'] && $this->date->timestamp($polls[$i]['end']) <= $this->date->timestamp())
             ) {
                 $polls[$i]['link'] = 'result';
             } else {

@@ -11,6 +11,7 @@ use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Core\Router\RouterInterface;
 
 class Pagination
@@ -193,9 +194,17 @@ class Pagination
 
     /**
      * @return array
+     *
+     * @throws \ACP3\Core\Pagination\Exception\InvalidPageException
      */
     public function render()
     {
+        if ($this->getResultsStartOffset() > $this->totalResults) {
+            throw new InvalidPageException(
+                \sprintf('Could not find any entries for page %d', $this->currentPage)
+            );
+        }
+
         if ($this->totalResults > $this->resultsPerPage) {
             $areaPrefix = $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '';
             $link = $areaPrefix . $this->request->getUriWithoutPages();

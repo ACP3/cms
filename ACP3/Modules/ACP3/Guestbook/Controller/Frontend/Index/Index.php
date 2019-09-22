@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Emoticons\Helpers;
 use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -54,8 +56,9 @@ class Index extends AbstractAction
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute()
+    public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
@@ -69,19 +72,22 @@ class Index extends AbstractAction
             $this->pagination->getResultsStartOffset(),
             $resultsPerPage
         );
-        $cGuestbook = \count($guestbook);
 
-        for ($i = 0; $i < $cGuestbook; ++$i) {
-            if ($this->guestbookSettings['emoticons'] == 1 && $this->emoticonsHelpers) {
-                $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($guestbook[$i]['message']);
+        foreach ($guestbook as $i => $row) {
+            if ($this->emoticonsHelpers && $this->guestbookSettings['emoticons'] == 1) {
+                $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($row['message']);
             }
         }
 
-        return [
-            'guestbook' => $guestbook,
-            'overlay' => $this->guestbookSettings['overlay'],
-            'pagination' => $this->pagination->render(),
-            'dateformat' => $this->guestbookSettings['dateformat'],
-        ];
+        try {
+            return [
+                'guestbook' => $guestbook,
+                'overlay' => $this->guestbookSettings['overlay'],
+                'pagination' => $this->pagination->render(),
+                'dateformat' => $this->guestbookSettings['dateformat'],
+            ];
+        } catch (InvalidPageException $e) {
+            throw new ResultNotExistsException();
+        }
     }
 }

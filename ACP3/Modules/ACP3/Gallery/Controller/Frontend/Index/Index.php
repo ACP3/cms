@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -59,8 +61,9 @@ class Index extends AbstractAction
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -72,11 +75,15 @@ class Index extends AbstractAction
             ->setResultsPerPage($resultsPerPage)
             ->setTotalResults($this->galleryRepository->countAll($time));
 
-        return [
-            'galleries' => $this->getGalleries($time, $resultsPerPage),
-            'dateformat' => $this->settings['dateformat'],
-            'pagination' => $this->pagination->render(),
-        ];
+        try {
+            return [
+                'galleries' => $this->getGalleries($time, $resultsPerPage),
+                'dateformat' => $this->settings['dateformat'],
+                'pagination' => $this->pagination->render(),
+            ];
+        } catch (InvalidPageException $e) {
+            throw new ResultNotExistsException();
+        }
     }
 
     /**

@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Newsletter;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -42,6 +44,9 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return array
+     *
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -52,13 +57,17 @@ class Index extends Core\Controller\AbstractFrontendAction
             ->setResultsPerPage($resultsPerPage)
             ->setTotalResults($this->newsletterRepository->countAll(1));
 
-        return [
-            'newsletters' => $this->newsletterRepository->getAll(
-                Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
-                $this->pagination->getResultsStartOffset(),
-                $resultsPerPage
-            ),
-            'pagination' => $this->pagination->render(),
-        ];
+        try {
+            return [
+                'newsletters' => $this->newsletterRepository->getAll(
+                    Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
+                    $this->pagination->getResultsStartOffset(),
+                    $resultsPerPage
+                ),
+                'pagination' => $this->pagination->render(),
+            ];
+        } catch (InvalidPageException $e) {
+            throw new ResultNotExistsException();
+        }
     }
 }

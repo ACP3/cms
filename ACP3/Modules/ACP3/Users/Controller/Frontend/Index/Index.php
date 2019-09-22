@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
@@ -44,6 +46,9 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return array
+     *
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -60,10 +65,14 @@ class Index extends Core\Controller\AbstractFrontendAction
             $resultsPerPage
         );
 
-        return [
-            'users' => $users,
-            'pagination' => $this->pagination->render(),
-            'all_users' => $allUsers,
-        ];
+        try {
+            return [
+                'users' => $users,
+                'pagination' => $this->pagination->render(),
+                'all_users' => $allUsers,
+            ];
+        } catch (InvalidPageException $e) {
+            throw new ResultNotExistsException();
+        }
     }
 }

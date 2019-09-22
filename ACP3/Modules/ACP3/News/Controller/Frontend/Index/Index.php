@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Comments\Helpers;
 use ACP3\Modules\ACP3\News;
@@ -92,6 +94,7 @@ class Index extends AbstractAction
      *
      * @return array
      *
+     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(int $cat = 0)
@@ -121,12 +124,16 @@ class Index extends AbstractAction
             }
         }
 
-        return [
-            'news' => $news,
-            'dateformat' => $this->newsSettings['dateformat'],
-            'categories' => $this->categoriesHelpers->categoriesList('news', $cat),
-            'pagination' => $this->pagination->render(),
-        ];
+        try {
+            return [
+                'news' => $news,
+                'dateformat' => $this->newsSettings['dateformat'],
+                'categories' => $this->categoriesHelpers->categoriesList('news', $cat),
+                'pagination' => $this->pagination->render(),
+            ];
+        } catch (InvalidPageException $e) {
+            throw new ResultNotExistsException();
+        }
     }
 
     /**
