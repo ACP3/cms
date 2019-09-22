@@ -43,7 +43,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
     "@fancyapps/fancybox": "^3.5.7",
-    "@fortawesome/fontawesome-free": "^5.11.0",
+    "@fortawesome/fontawesome-free": "^5.11.1",
     "bootbox": "^5.3.2",
     "bootstrap": "^3.4.1",
     "ckeditor-codemirror-plugin": "^1.17.3",
