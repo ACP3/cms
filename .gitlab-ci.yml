@@ -38,13 +38,22 @@ build:npm:
     paths:
       - node_modules
 
+.test:php-base:
+  extends: .php-base
+  only:
+    changes:
+      - '**/*.php'
+      - composer.json
+      - composer.lock
+      - tests/phpunit.dist.xml
+
 test:php71-unit:
   extends: test:php72-unit
   image: registry.gitlab.com/acp3/php-docker:7.1
   coverage: ~
 
 test:php72-unit:
-  extends: .php-base
+  extends: .test:php-base
   stage: test
   cache:
     policy: pull
@@ -60,7 +69,7 @@ test:php73-unit:
   coverage: ~
 
 test:phpcs:
-  extends: .php-base
+  extends: .test:php-base
   stage: test
   script:
     - composer run-script lint
@@ -68,7 +77,7 @@ test:phpcs:
     - build:composer
 
 test:phpstan:
-  extends: .php-base
+  extends: .test:php-base
   stage: test
   cache:
     policy: pull
@@ -86,6 +95,13 @@ test:eslint:
     - build:npm
   dependencies:
     - build:npm
+  only:
+    changes:
+      - 'ACP3/**/*.js'
+      - 'design/**/*.js'
+      - 'installation/**/*.js'
+      - package.json
+      - package-lock.json
 
 release:subtree-split:
   image: jderusse/gitsplit
