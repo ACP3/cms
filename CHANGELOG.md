@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Updated the composer dependencies
+- Updated the NPM dependencies
+
+### Fixed
+- fixed the gallery picture upload when editing an existing gallery picture
+
 ## [4.43.0] - 2019-08-07
 ### Changed
 - the file extension of uploaded files will now be lower cased
