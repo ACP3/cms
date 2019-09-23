@@ -225,7 +225,7 @@ class Steps
     {
         return [
             'title' => $title,
-            'uri' => !empty($path) ? $this->router->route($path) : '',
+            'uri' => !empty($path) ? $this->router->route($path, true) : '',
         ];
     }
 
