@@ -22,7 +22,10 @@ class Imprint extends Core\Controller\AbstractFrontendAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $this->breadcrumb->append($this->translator->t('contact', 'frontend_index_imprint'));
+        $this->breadcrumb->append(
+            $this->translator->t('contact', 'frontend_index_imprint'),
+            $this->request->getQuery()
+        );
 
         return [
             'imprint' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),

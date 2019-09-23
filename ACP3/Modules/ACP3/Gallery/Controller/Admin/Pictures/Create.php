@@ -78,7 +78,10 @@ class Create extends AbstractFormAction
 
             $this->breadcrumb
                 ->append($gallery, 'acp/gallery/pictures/index/id_' . $id)
-                ->append($this->translator->t('gallery', 'admin_pictures_create'));
+                ->append(
+                    $this->translator->t('gallery', 'admin_pictures_create'),
+                    $this->request->getQuery()
+                );
 
             if ($this->canUseComments() === true) {
                 $this->view->assign('options', $this->getOptions('0'));

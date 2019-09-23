@@ -61,7 +61,10 @@ class Index extends Core\Controller\AbstractFrontendAction
         if ($input->getResultsCount() > 0) {
             $moduleName = $this->systemModuleRepository->getModuleNameById($id);
 
-            $this->breadcrumb->append($this->translator->t($moduleName, $moduleName));
+            $this->breadcrumb->append(
+                $this->translator->t($moduleName, $moduleName),
+                $this->request->getQuery()
+            );
 
             $this->addDataGridColumns($input);
 

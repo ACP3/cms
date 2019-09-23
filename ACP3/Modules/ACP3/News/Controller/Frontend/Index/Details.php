@@ -106,7 +106,10 @@ class Details extends AbstractAction
                 $this->breadcrumb->append($category['title'], 'news/index/index/cat_' . $category['id']);
             }
         }
-        $this->breadcrumb->append($news['title']);
+        $this->breadcrumb->append(
+            $news['title'],
+            $this->request->getQuery()
+        );
         $this->title->setPageTitle($news['title']);
     }
 }

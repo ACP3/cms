@@ -99,7 +99,10 @@ class Details extends Core\Controller\AbstractFrontendAction
             $this->breadcrumb->append($category['title'], 'files/index/files/cat_' . $category['id']);
         }
 
-        $this->breadcrumb->append($file['title']);
+        $this->breadcrumb->append(
+            $file['title'],
+            $this->request->getQuery()
+        );
         $this->title->setPageTitle($file['title']);
     }
 }

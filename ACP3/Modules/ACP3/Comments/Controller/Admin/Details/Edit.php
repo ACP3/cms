@@ -64,7 +64,10 @@ class Edit extends Core\Controller\AbstractFrontendAction
                     $this->translator->t($comment['module'], $comment['module']),
                     'acp/comments/details/index/id_' . $comment['module_id']
                 )
-                ->append($this->translator->t('comments', 'admin_details_edit'));
+                ->append(
+                    $this->translator->t('comments', 'admin_details_edit'),
+                    $this->request->getQuery()
+                );
 
             $this->title->setPageTitlePrefix($comment['name']);
 

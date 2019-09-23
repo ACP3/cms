@@ -5,22 +5,12 @@
         </a>
         <meta itemprop="position" content="1" />
     </li>
-    {if isset($breadcrumb)}
-        {foreach $breadcrumb as $row}
-            {if !isset($row.last) && !empty($row.uri)}
-                <li itemprop="itemListElement"
-                    itemscope
-                    itemtype="http://schema.org/ListItem"><a itemprop="item" href="{$row.uri}"><span itemprop="name">{$row.title}</span></a>
-                    <meta itemprop="position" content="{($row@iteration + 1)}" />
-                </li>
-            {elseif isset($row.last)}
-                <li class="active"
-                    itemprop="itemListElement"
-                    itemscope
-                    itemtype="http://schema.org/ListItem"><span itemprop="item"><span itemprop="name">{$row.title}</span></span>
-                    <meta itemprop="position" content="{($row@iteration + 1)}" />
-                </li>
-            {/if}
-        {/foreach}
-    {/if}
+    {foreach $breadcrumb as $row}
+        <li {if isset($row.last) && $row.last === true}class="active"{/if}
+            itemprop="itemListElement"
+            itemscope
+            itemtype="http://schema.org/ListItem"><a itemprop="item" href="{$row.uri}"><span itemprop="name">{$row.title}</span></a>
+            <meta itemprop="position" content="{($row@iteration + 1)}" />
+        </li>
+    {/foreach}
 </ul>

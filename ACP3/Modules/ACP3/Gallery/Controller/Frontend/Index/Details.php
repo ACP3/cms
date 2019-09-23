@@ -73,10 +73,15 @@ class Details extends AbstractAction
                 ->append($picture['gallery_title'], 'gallery/index/pics/id_' . $picture['gallery_id']);
 
             if (!empty($picture['title'])) {
-                $this->breadcrumb->append($picture['title']);
+                $this->breadcrumb->append(
+                    $picture['title'],
+                    $this->request->getQuery()
+                );
             } else {
-                $this->breadcrumb
-                    ->append($this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]));
+                $this->breadcrumb->append(
+                    $this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']]),
+                    $this->request->getQuery()
+                );
             }
 
             $this->title->setPageTitlePostfix($picture['gallery_title']);

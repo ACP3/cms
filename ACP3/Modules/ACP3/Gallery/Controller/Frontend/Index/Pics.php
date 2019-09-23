@@ -67,7 +67,10 @@ class Pics extends AbstractAction
 
             $this->breadcrumb
                 ->append($this->translator->t('gallery', 'gallery'), 'gallery')
-                ->append($gallery['title']);
+                ->append(
+                    $gallery['title'],
+                    $this->request->getQuery()
+                );
             $this->title->setPageTitle($gallery['title']);
 
             return [

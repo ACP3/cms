@@ -156,7 +156,10 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $this->breadcrumb
             ->append($this->translator->t('search', 'search'), 'search')
-            ->append($this->translator->t('search', 'search_results'));
+            ->append(
+                $this->translator->t('search', 'search_results'),
+                $this->request->getQuery()
+            );
 
         $this->setTemplate('Search/Frontend/index.results.tpl');
 

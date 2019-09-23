@@ -14,7 +14,10 @@ class AccessForbidden extends Core\Controller\AbstractFrontendAction
 {
     public function execute()
     {
-        $this->breadcrumb->append($this->translator->t('errors', 'frontend_index_access_forbidden'));
+        $this->breadcrumb->append(
+            $this->translator->t('errors', 'frontend_index_access_forbidden'),
+            $this->request->getQuery()
+        );
 
         $this->response->setStatusCode(Response::HTTP_FORBIDDEN);
     }
