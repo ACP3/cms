@@ -15,8 +15,10 @@ use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterLegacySmartyPluginsPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
+use ACP3\Core\XML;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
@@ -70,7 +72,7 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @throws \Exception
      */
-    private function setUpContainer()
+    private function setUpContainer(): void
     {
         $this->setParameter('cache_driver', 'Array');
         $this->set('core.http.symfony_request', $this->symfonyRequest);
@@ -102,11 +104,11 @@ class ServiceContainerBuilder extends ContainerBuilder
             $router = $this->get('core.router');
 
             if ($this->canIncludeModules() === true) {
-                $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
+                $this->includeCoreServices($loader);
             }
         } else {
             if ($this->canIncludeModules() === true) {
-                $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
+                $this->includeCoreServices($loader);
             }
 
             $loader->load($this->applicationPath->getInstallerClassesDir() . 'config/services.yml');
@@ -120,9 +122,27 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @return bool
      */
-    private function canIncludeModules()
+    private function canIncludeModules(): bool
     {
         return $this->includeModules === true;
+    }
+
+    /**
+     * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
+     *
+     * @throws \Exception
+     */
+    private function includeCoreServices(LoaderInterface $loader): void
+    {
+        // As the ACP3 core package can be located inside the composer vendor dir,
+        // we need to find its current path
+        $reflection = new \ReflectionClass(XML::class);
+
+        $packageDir = \dirname($reflection->getFileName());
+
+        $loader->load($this->applicationPath->getAppDir() . 'config.yml');
+        $loader->load($this->applicationPath->getModulesDir() . 'ACP3/System/Resources/config/services.yml');
+        $loader->load($packageDir . '/config/services.yml');
     }
 
     /**
@@ -138,7 +158,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         YamlFileLoader $loader,
         ?RequestInterface $request,
         ?RouterInterface $router
-    ) {
+    ): void {
         if (!$this->canIncludeModules()) {
             return;
         }
@@ -176,7 +196,7 @@ class ServiceContainerBuilder extends ContainerBuilder
         Request $symfonyRequest,
         string $applicationMode,
         bool $includeModules = false
-    ) {
+    ): ServiceContainerBuilder {
         return new static($applicationPath, $symfonyRequest, $applicationMode, $includeModules);
     }
 }

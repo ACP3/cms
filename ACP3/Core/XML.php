@@ -33,35 +33,39 @@ class XML
     {
         if (!empty($this->info[$path][$xpath])) {
             return $this->info[$path][$xpath];
-        } elseif (\is_file($path) === true) {
-            /** @var \SimpleXMLElement $xml */
-            $xml = \simplexml_load_file($path);
-            $data = $xml->xpath($xpath);
+        }
 
-            if (!empty($data)) {
-                foreach ($data as $row) {
-                    foreach ($row as $key => $value) {
-                        /** @var \SimpleXMLElement $value */
-                        if ($value->attributes()) {
-                            $this->parseAttributes($value->attributes(), $path, $xpath, $key);
-                        } elseif (isset($this->info[$path][$xpath][(string) $key]) && \is_array($this->info[$path][$xpath][(string) $key])) {
-                            $this->info[$path][$xpath][(string) $key][] = (string) $value;
-                        } elseif (isset($this->info[$path][$xpath][(string) $key])) {
-                            $tmp = $this->info[$path][$xpath][(string) $key];
-                            $this->info[$path][$xpath][(string) $key] = [];
-                            $this->info[$path][$xpath][(string) $key][] = $tmp;
-                            $this->info[$path][$xpath][(string) $key][] = (string) $value;
-                        } else {
-                            $this->info[$path][$xpath][(string) $key] = (string) $value;
-                        }
-                    }
+        if (\is_file($path) === false) {
+            return [];
+        }
+
+        /** @var \SimpleXMLElement $xml */
+        $xml = \simplexml_load_string(\file_get_contents($path));
+        $data = $xml->xpath($xpath);
+
+        if (empty($data)) {
+            return [];
+        }
+
+        foreach ($data as $row) {
+            foreach ($row as $key => $value) {
+                /** @var \SimpleXMLElement $value */
+                if ($value->attributes()) {
+                    $this->parseAttributes($value->attributes(), $path, $xpath, $key);
+                } elseif (isset($this->info[$path][$xpath][(string) $key]) && \is_array($this->info[$path][$xpath][(string) $key])) {
+                    $this->info[$path][$xpath][(string) $key][] = (string) $value;
+                } elseif (isset($this->info[$path][$xpath][(string) $key])) {
+                    $tmp = $this->info[$path][$xpath][(string) $key];
+                    $this->info[$path][$xpath][(string) $key] = [];
+                    $this->info[$path][$xpath][(string) $key][] = $tmp;
+                    $this->info[$path][$xpath][(string) $key][] = (string) $value;
+                } else {
+                    $this->info[$path][$xpath][(string) $key] = (string) $value;
                 }
-
-                return $this->info[$path][$xpath];
             }
         }
 
-        return [];
+        return $this->info[$path][$xpath];
     }
 
     /**

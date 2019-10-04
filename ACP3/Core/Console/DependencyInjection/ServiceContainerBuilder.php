@@ -27,30 +27,23 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @var ApplicationPath
      */
     private $applicationPath;
-    /**
-     * @var string
-     */
-    private $applicationMode;
 
     /**
      * ServiceContainerBuilder constructor.
      *
      * @param LoggerInterface $logger
      * @param ApplicationPath $applicationPath
-     * @param string          $applicationMode
      *
      * @throws \Exception
      */
     public function __construct(
         LoggerInterface $logger,
-        ApplicationPath $applicationPath,
-        string $applicationMode
+        ApplicationPath $applicationPath
     ) {
         parent::__construct();
 
         $this->logger = $logger;
         $this->applicationPath = $applicationPath;
-        $this->applicationMode = $applicationMode;
 
         $this->setUpContainer();
     }
@@ -77,7 +70,9 @@ class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
-        $loader->load($this->applicationPath->getClassesDir() . 'config/console.yml');
+        $loader->load($this->applicationPath->getAppDir() . 'config.yml');
+        $loader->load($this->applicationPath->getModulesDir() . 'ACP3/System/Resources/config/services.yml');
+        $loader->load(\dirname(__DIR__, 2) . '/config/console.yml');
 
         /** @var \ACP3\Core\Modules $modules */
         $modules = $this->get('core.modules');
@@ -97,17 +92,14 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @param \Psr\Log\LoggerInterface               $logger
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
-     * @param string                                 $applicationMode
      *
      * @return \ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder
      *
      * @throws \Exception
      */
     public static function create(
-        LoggerInterface $logger,
-        ApplicationPath $applicationPath,
-        string $applicationMode
+        LoggerInterface $logger, ApplicationPath $applicationPath
     ) {
-        return new static($logger, $applicationPath, $applicationMode);
+        return new static($logger, $applicationPath);
     }
 }

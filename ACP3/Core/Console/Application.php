@@ -88,9 +88,7 @@ class Application
         Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 
         $this->container = ServiceContainerBuilder::create(
-            $this->logger,
-            $this->appPath,
-            $this->environment
+            $this->logger, $this->appPath
         );
     }
 }

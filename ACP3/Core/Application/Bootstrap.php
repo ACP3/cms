@@ -68,7 +68,7 @@ class Bootstrap extends AbstractBootstrap
     {
         if (!$cache->isFresh()) {
             $containerBuilder = ServiceContainerBuilder::create(
-                $this->appPath, $symfonyRequest, $this->appMode
+                $this->appPath, $symfonyRequest
             );
 
             $dumper = new PhpDumper($containerBuilder);

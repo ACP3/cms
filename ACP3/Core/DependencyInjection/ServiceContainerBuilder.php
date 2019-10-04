@@ -35,31 +35,24 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @var SymfonyRequest
      */
     private $symfonyRequest;
-    /**
-     * @var string
-     */
-    private $applicationMode;
 
     /**
      * ServiceContainerBuilder constructor.
      *
      * @param ApplicationPath $applicationPath
      * @param SymfonyRequest  $symfonyRequest
-     * @param string          $applicationMode
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function __construct(
         ApplicationPath $applicationPath,
-        SymfonyRequest $symfonyRequest,
-        string $applicationMode
+        SymfonyRequest $symfonyRequest
     ) {
         parent::__construct();
 
         $this->applicationPath = $applicationPath;
         $this->symfonyRequest = $symfonyRequest;
-        $this->applicationMode = $applicationMode;
 
         $this->setUpContainer();
     }
@@ -96,7 +89,9 @@ class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
-        $loader->load($this->applicationPath->getClassesDir() . 'config/services.yml');
+        $loader->load($this->applicationPath->getAppDir() . 'config.yml');
+        $loader->load($this->applicationPath->getModulesDir() . 'ACP3/System/Resources/config/services.yml');
+        $loader->load(\dirname(__DIR__) . '/config/services.yml');
 
         // Try to get all available services
         /** @var Modules $modules */
@@ -119,7 +114,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
      * @param SymfonyRequest                         $symfonyRequest
-     * @param string                                 $applicationMode
      *
      * @return \ACP3\Core\DependencyInjection\ServiceContainerBuilder
      *
@@ -127,9 +121,9 @@ class ServiceContainerBuilder extends ContainerBuilder
      * @throws \MJS\TopSort\ElementNotFoundException
      */
     public static function create(
-        ApplicationPath $applicationPath, SymfonyRequest $symfonyRequest, string $applicationMode
+        ApplicationPath $applicationPath, SymfonyRequest $symfonyRequest
     ): ServiceContainerBuilder {
-        return new static($applicationPath, $symfonyRequest, $applicationMode);
+        return new static($applicationPath, $symfonyRequest);
     }
 
     /**
