@@ -157,13 +157,15 @@ class Connection
      * @param array  $params
      * @param array  $types
      *
-     * @return mixed
+     * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchAssoc(string $statement, array $params = [], array $types = [])
     {
-        return $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_ASSOC);
+        $result = $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_ASSOC);
+
+        return $result !== false ? $result : [];
     }
 
     /**
