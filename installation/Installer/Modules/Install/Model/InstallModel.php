@@ -203,9 +203,7 @@ class InstallModel
         /** @var \ACP3\Core\Modules\SchemaHelper $schemaHelper */
         $schemaHelper = $this->container->get('core.modules.schemaHelper');
 
-        if ($schemaHelper->executeSqlQueries($queries) === false) {
-            throw new \Exception('Error while creating the super user.');
-        }
+        $schemaHelper->executeSqlQueries($queries);
     }
 
     /**

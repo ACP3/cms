@@ -284,7 +284,7 @@ class Migration extends Modules\Installer\AbstractMigration
                     $seoModuleId = $this->schemaHelper->getDb()->fetchColumn(
                         "SELECT `id` FROM `{$this->schemaHelper->getDb()->getPrefixedTableName('modules')}` WHERE `name` = 'seo'"
                     );
-                    $result = $this->schemaHelper->executeSqlQueries([
+                    $this->schemaHelper->executeSqlQueries([
                         "DELETE FROM `{pre}settings` WHERE `module_id` = {$seoModuleId};",
                         "UPDATE `{pre}settings` SET `module_id` = {$seoModuleId}, `name` = SUBSTRING(`name`, 5) WHERE `module_id` = '{moduleId}' AND `name` LIKE 'seo_%';",
                     ], 'system');
@@ -322,7 +322,7 @@ class Migration extends Modules\Installer\AbstractMigration
             $result = true;
             if ($this->schemaHelper->getSystemModuleRepository()->moduleExists('minify') === true) {
                 $minifyModuleId = $this->schemaHelper->getDb()->fetchColumn("SELECT `id` FROM `{$this->schemaHelper->getDb()->getPrefixedTableName('modules')}` WHERE `name` = 'minify'");
-                $result = $this->schemaHelper->executeSqlQueries([
+                $this->schemaHelper->executeSqlQueries([
                     "DELETE FROM `{pre}acl_resources` WHERE `module_id` = {$minifyModuleId};",
                     "DELETE FROM `{pre}modules` WHERE `id` = {$minifyModuleId};",
                 ]);
