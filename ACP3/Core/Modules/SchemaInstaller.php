@@ -20,16 +20,20 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function install(SchemaInterface $schema)
+    public function install(SchemaInterface $schema): bool
     {
         if (!$this->moduleNeedsInstallation($schema)) {
             return true;
         }
 
-        return
-            $this->executeSqlQueries($schema->createTables(), $schema->getModuleName()) &&
-            $this->addToModulesTable($schema->getModuleName(), $schema->getSchemaVersion()) &&
-            $this->installSettings($schema->getModuleName(), $schema->settings());
+        try {
+            $this->executeSqlQueries($schema->createTables(), $schema->getModuleName());
+        } catch (\Throwable $e) {
+            return false;
+        }
+
+        return $this->addToModulesTable($schema->getModuleName(), $schema->getSchemaVersion())
+            && $this->installSettings($schema->getModuleName(), $schema->settings());
     }
 
     /**
@@ -39,7 +43,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function moduleNeedsInstallation(SchemaInterface $schema)
+    protected function moduleNeedsInstallation(SchemaInterface $schema): bool
     {
         $modulesTableExists = $this->db->fetchColumn("SHOW TABLES LIKE '{$this->systemModuleRepository->getTableName()}'");
 
@@ -54,7 +58,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      *
      * @return bool
      */
-    protected function addToModulesTable(string $moduleName, int $schemaVersion)
+    protected function addToModulesTable(string $moduleName, int $schemaVersion): bool
     {
         $insertValues = [
             'name' => $moduleName,
@@ -74,8 +78,9 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      * @return bool
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function installSettings(string $moduleName, array $settings)
+    protected function installSettings(string $moduleName, array $settings): bool
     {
         if (\count($settings) > 0) {
             $this->db->getConnection()->beginTransaction();
@@ -109,13 +114,16 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
      * @return bool
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function uninstall(SchemaInterface $schema)
+    public function uninstall(SchemaInterface $schema): bool
     {
-        return $this->executeSqlQueries($schema->removeTables(), $schema->getModuleName()) &&
-            $this->removeFromModulesTable($schema->getModuleName());
+        try {
+            $this->executeSqlQueries($schema->removeTables(), $schema->getModuleName());
+        } catch (\Throwable $e) {
+            return false;
+        }
+
+        return $this->removeFromModulesTable($schema->getModuleName());
     }
 
     /**
@@ -125,8 +133,8 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      *
      * @return bool
      */
-    protected function removeFromModulesTable(string $moduleName)
+    protected function removeFromModulesTable(string $moduleName): bool
     {
-        return $this->systemModuleRepository->delete((int) $this->getModuleId($moduleName)) !== false;
+        return $this->systemModuleRepository->delete($this->getModuleId($moduleName)) !== false;
     }
 }

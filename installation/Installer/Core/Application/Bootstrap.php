@@ -77,7 +77,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
             /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
             $eventDispatcher = $this->container->get('core.event_dispatcher');
 
-            $eventDispatcher->dispatch('core.output_page_exception', new OutputPageExceptionEvent($e));
+            $eventDispatcher->dispatch(new OutputPageExceptionEvent($e), 'core.output_page_exception');
 
             $response = $controllerActionDispatcher->dispatch('errors.controller.install.index.server_error');
         }

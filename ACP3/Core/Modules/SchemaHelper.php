@@ -10,6 +10,7 @@ namespace ACP3\Core\Modules;
 use ACP3\Core;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SchemaHelper
 {
@@ -55,7 +56,7 @@ class SchemaHelper
     /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    public function getContainer()
+    public function getContainer(): ContainerInterface
     {
         return $this->container;
     }
@@ -63,7 +64,7 @@ class SchemaHelper
     /**
      * @return \ACP3\Core\Database\Connection
      */
-    public function getDb()
+    public function getDb(): Core\Database\Connection
     {
         return $this->db;
     }
@@ -71,7 +72,7 @@ class SchemaHelper
     /**
      * @return Core\Model\Repository\ModuleAwareRepositoryInterface
      */
-    public function getSystemModuleRepository()
+    public function getSystemModuleRepository(): Core\Model\Repository\ModuleAwareRepositoryInterface
     {
         return $this->systemModuleRepository;
     }
@@ -82,42 +83,49 @@ class SchemaHelper
      * @param array  $queries
      * @param string $moduleName
      *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executeSqlQueries(array $queries, string $moduleName = '')
+    public function executeSqlQueries(array $queries, string $moduleName = ''): void
     {
-        if (\count($queries) > 0) {
-            $search = ['{pre}', '{engine}', '{charset}'];
-            $replace = [$this->db->getPrefix(), 'ENGINE=InnoDB', 'CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`'];
-
-            $this->db->getConnection()->beginTransaction();
-
-            try {
-                foreach ($queries as $query) {
-                    if (\is_object($query) && ($query instanceof \Closure)) {
-                        if ($query() === false) {
-                            return false;
-                        }
-                    } elseif (!empty($query)) {
-                        if (\strpos($query, '{moduleId}') !== false) {
-                            $query = \str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
-                        }
-                        $this->db->getConnection()->query(\str_ireplace($search, $replace, $query));
-                    }
-                }
-                $this->db->getConnection()->commit();
-            } catch (\Exception $e) {
-                $this->db->getConnection()->rollBack();
-
-                $this->logger->warning($e);
-
-                return false;
-            }
+        if (\count($queries) === 0) {
+            return;
         }
 
-        return true;
+        $search = ['{pre}', '{engine}', '{charset}'];
+        $replace = [$this->db->getPrefix(), 'ENGINE=InnoDB', 'CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`'];
+
+        $this->db->getConnection()->beginTransaction();
+
+        try {
+            foreach ($queries as $query) {
+                if (\is_object($query) && ($query instanceof \Closure)) {
+                    if ($query() === false) {
+                        throw new Core\Modules\Exception\ModuleMigrationException(
+                            \sprintf(
+                                'An error occurred while executing a migration inside a closure for module "%s"',
+                                $moduleName
+                            )
+                        );
+                    }
+                } elseif (!empty($query)) {
+                    if (\strpos($query, '{moduleId}') !== false) {
+                        $query = \str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
+                    }
+                    $this->db->getConnection()->query(\str_ireplace($search, $replace, $query));
+                }
+            }
+            $this->db->getConnection()->commit();
+        } catch (\Exception $e) {
+            $this->db->getConnection()->rollBack();
+
+            throw new Core\Modules\Exception\ModuleMigrationException(
+                \sprintf('An error occurred while executing a migration for module "%s"', $moduleName),
+                0,
+                $e
+            );
+        }
     }
 
     /**
@@ -127,7 +135,7 @@ class SchemaHelper
      *
      * @return int
      */
-    public function getModuleId(string $moduleName)
+    public function getModuleId(string $moduleName): int
     {
         return $this->systemModuleRepository->getModuleId($moduleName) ?: 0;
     }
@@ -139,7 +147,7 @@ class SchemaHelper
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function moduleIsInstalled(string $moduleName)
+    public function moduleIsInstalled(string $moduleName): bool
     {
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->systemModuleRepository->getTableName()} WHERE `name` = ?",

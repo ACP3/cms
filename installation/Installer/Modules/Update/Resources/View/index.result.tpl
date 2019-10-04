@@ -5,13 +5,11 @@
         {foreach $results as $module => $result}
             <li>
                 {lang t="update|db_update_text" args=['%module%' => $module]}
-                <span class="label label-{if $result === 1}success{elseif $result === 0}danger{else}info{/if}">
-                    {if $result === 1}
+                <span class="label label-{if $result === true}success{else}danger{/if}">
+                    {if $result === true}
                         {lang t="update|db_update_success"}
-                    {elseif $result === 0}
-                        {lang t="update|db_update_error"}
                     {else}
-                        {lang t="update|db_update_no_update"}
+                        {lang t="update|db_update_error"}
                     {/if}
                 </span>
             </li>

@@ -8,6 +8,7 @@
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Modules\SchemaHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Yaml\Dumper;
@@ -22,7 +23,7 @@ class Install
      *
      * @return bool
      */
-    public function writeConfigFile(string $configFilePath, array $data)
+    public function writeConfigFile(string $configFilePath, array $data): bool
     {
         if (\is_writable($configFilePath) === true) {
             \ksort($data);
@@ -42,7 +43,7 @@ class Install
      *
      * @return bool
      */
-    public function installModule(Core\Modules\Installer\SchemaInterface $schema, ContainerInterface $container)
+    public function installModule(SchemaInterface $schema, ContainerInterface $container): bool
     {
         return $this->install($schema, $container, 'core.modules.schemaInstaller');
     }
@@ -53,7 +54,7 @@ class Install
      *
      * @return bool
      */
-    public function installResources(Core\Modules\Installer\SchemaInterface $schema, ContainerInterface $container)
+    public function installResources(SchemaInterface $schema, ContainerInterface $container): bool
     {
         return $this->install($schema, $container, 'core.modules.aclInstaller');
     }
@@ -66,10 +67,10 @@ class Install
      * @return bool
      */
     private function install(
-        Core\Modules\Installer\SchemaInterface $schema,
+        SchemaInterface $schema,
         ContainerInterface $container,
         string $installerServiceId
-    ) {
+    ): bool {
         /** @var \ACP3\Core\Modules\InstallerInterface $installer */
         $installer = $container->get($installerServiceId);
 
@@ -81,13 +82,17 @@ class Install
      * @param SchemaHelper                               $schemaHelper
      *
      * @return bool
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function installSampleData(
         Core\Modules\Installer\SampleDataInterface $sampleData,
         SchemaHelper $schemaHelper
-    ) {
-        return $schemaHelper->executeSqlQueries($sampleData->sampleData());
+    ): bool {
+        try {
+            $schemaHelper->executeSqlQueries($sampleData->sampleData());
+
+            return true;
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 }

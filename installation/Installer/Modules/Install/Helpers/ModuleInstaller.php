@@ -68,7 +68,7 @@ class ModuleInstaller
      *
      * @throws \Exception
      */
-    public function installModules(ContainerInterface $container, array $schemas)
+    public function installModules(ContainerInterface $container, array $schemas): array
     {
         foreach ($schemas as $schema) {
             foreach ($this->vendor->getVendors() as $vendor) {
@@ -85,7 +85,9 @@ class ModuleInstaller
                     }
 
                     if ($this->installHelper->installModule($schema, $container) === false) {
-                        throw new \Exception("Error while installing module {$module}.");
+                        throw new \Exception(
+                            \sprintf('Error while installing module "%s"', $module)
+                        );
                     }
 
                     $this->installedModules[$module] = true;
@@ -103,7 +105,7 @@ class ModuleInstaller
      *
      * @return bool
      */
-    private function isValidModule($moduleConfigPath)
+    private function isValidModule(string $moduleConfigPath): bool
     {
         if (\is_file($moduleConfigPath)) {
             $config = $this->xml->parseXmlFile($moduleConfigPath, '/module/info');
@@ -120,7 +122,7 @@ class ModuleInstaller
      *
      * @return SchemaInterface[]
      */
-    private function collectDependentSchemas(ContainerInterface $container, array $modules)
+    private function collectDependentSchemas(ContainerInterface $container, array $modules): array
     {
         /** @var SchemaRegistrar $schemaRegistrar */
         $schemaRegistrar = $container->get('core.installer.schema_registrar');

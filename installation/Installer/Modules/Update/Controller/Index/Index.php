@@ -36,26 +36,26 @@ class Index extends Core\Controller\AbstractInstallerAction
      *
      * @return array
      *
-     * @throws \Doctrine\DBAL\ConnectionException
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute($action = '')
+    public function execute($action = ''): ?array
     {
         if ($action === 'confirmed') {
             return $this->executePost();
         }
+
+        return null;
     }
 
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\ConnectionException
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      * @throws \Exception
      */
-    protected function executePost()
+    protected function executePost(): array
     {
         $this->schemaUpdateModel->updateContainer($this->request);
         $results = $this->schemaUpdateModel->updateModules();
@@ -69,7 +69,7 @@ class Index extends Core\Controller\AbstractInstallerAction
         ];
     }
 
-    protected function clearCaches()
+    protected function clearCaches(): void
     {
         Cache\Purge::doPurge([
             ACP3_ROOT_DIR . 'cache/',

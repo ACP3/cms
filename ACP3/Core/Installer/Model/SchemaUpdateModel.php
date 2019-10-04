@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Installer\Model;
 
-use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Installer\Exception\MissingInstallerException;
 use ACP3\Core\Installer\MigrationRegistrar;
 use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Modules;
@@ -26,14 +26,6 @@ class SchemaUpdateModel
      * @var SchemaUpdater
      */
     private $schemaUpdater;
-    /**
-     * @var \ACP3\Core\Modules\Vendor
-     */
-    private $vendor;
-    /**
-     * @var ApplicationPath
-     */
-    private $applicationPath;
     /**
      * @var SchemaRegistrar
      */
@@ -54,25 +46,19 @@ class SchemaUpdateModel
     /**
      * SchemaUpdateModel constructor.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath  $applicationPath
      * @param \ACP3\Core\Installer\SchemaRegistrar    $schemaRegistrar
      * @param \ACP3\Core\Installer\MigrationRegistrar $migrationRegistrar
-     * @param \ACP3\Core\Modules\Vendor               $vendor
      * @param \ACP3\Core\Modules                      $modules
      * @param \ACP3\Core\Modules\SchemaUpdater        $schemaUpdater
      * @param \ACP3\Core\XML                          $xml
      */
     public function __construct(
-        ApplicationPath $applicationPath,
         SchemaRegistrar $schemaRegistrar,
         MigrationRegistrar $migrationRegistrar,
-        Modules\Vendor $vendor,
         Modules $modules,
         SchemaUpdater $schemaUpdater,
         XML $xml
     ) {
-        $this->applicationPath = $applicationPath;
-        $this->vendor = $vendor;
         $this->modules = $modules;
         $this->schemaUpdater = $schemaUpdater;
         $this->schemaRegistrar = $schemaRegistrar;
@@ -85,13 +71,19 @@ class SchemaUpdateModel
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
-     * @throws \Doctrine\DBAL\ConnectionException
      */
     public function updateModules(): array
     {
         foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
             $module = \strtolower($moduleInfo['dir']);
-            $this->results[$module] = $this->updateModule($module);
+
+            try {
+                $this->updateModule($module);
+
+                $this->results[$module] = true;
+            } catch (\Throwable $e) {
+                $this->results[$module] = false;
+            }
         }
 
         return $this->results;
@@ -102,26 +94,29 @@ class SchemaUpdateModel
      *
      * @param string $moduleName
      *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \ACP3\Core\Installer\Exception\MissingInstallerException
+     * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
      */
-    private function updateModule(string $moduleName)
+    private function updateModule(string $moduleName): void
     {
-        $result = false;
-
-        $serviceIdMigration = $moduleName . '.installer.migration';
-        if ($this->schemaRegistrar->has($moduleName) === true &&
-            $this->migrationRegistrar->has($serviceIdMigration) === true
-        ) {
-            $moduleSchema = $this->schemaRegistrar->get($moduleName);
-            $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
-            if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
-                $result = $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
-            }
+        if (!$this->modules->isInstallable($moduleName)) {
+            return;
         }
 
-        return $result;
+        $serviceIdMigration = $moduleName . '.installer.migration';
+        if (!$this->schemaRegistrar->has($moduleName) || !$this->migrationRegistrar->has($serviceIdMigration)) {
+            throw new MissingInstallerException(
+                \sprintf('Could not find any schema or migration files for module "%s"', $moduleName)
+            );
+        }
+
+        $moduleSchema = $this->schemaRegistrar->get($moduleName);
+        $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
+        if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
+            $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
+        }
     }
 
     /**

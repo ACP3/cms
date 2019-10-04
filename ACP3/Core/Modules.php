@@ -128,7 +128,21 @@ class Modules
     {
         $info = $this->getModuleInfo($moduleName);
 
-        return !empty($info) && $info['installed'] === true || $info['installable'] === false;
+        return !empty($info) && ($info['installed'] === true || $info['installable'] === false);
+    }
+
+    /**
+     * Checks whether a module is installable or not.
+     *
+     * @param string $moduleName
+     *
+     * @return bool
+     */
+    public function isInstallable(string $moduleName): bool
+    {
+        $info = $this->getModuleInfo($moduleName);
+
+        return !empty($info) && $info['installable'] === true;
     }
 
     /**
@@ -138,7 +152,7 @@ class Modules
      */
     public function getActiveModules(): array
     {
-        return \array_filter($this->getAllModulesAlphabeticallySorted(), function (array $module) {
+        return \array_filter($this->getAllModulesAlphabeticallySorted(), static function (array $module) {
             return $module['active'] === true;
         });
     }
@@ -150,7 +164,7 @@ class Modules
      */
     public function getInstalledModules(): array
     {
-        return \array_filter($this->getAllModulesAlphabeticallySorted(), function (array $module) {
+        return \array_filter($this->getAllModulesAlphabeticallySorted(), static function (array $module) {
             return $module['installed'] === true;
         });
     }

@@ -44,6 +44,11 @@ class ModulesUpdateCommand extends Command
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -51,7 +56,7 @@ class ModulesUpdateCommand extends Command
         $io->title('Updating installed modules...');
 
         foreach ($this->schemaUpdateModel->updateModules() as $module => $result) {
-            $output->writeln($result === 1 ? "<info>{$module}</info>" : "<error>{$module}</error>");
+            $output->writeln($result ? "<info>{$module}</info>" : "<error>{$module}</error>");
         }
     }
 }

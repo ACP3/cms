@@ -8,6 +8,7 @@
 namespace ACP3\Installer\Modules\Update\Model;
 
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Installer\Exception\MissingInstallerException;
 use ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Installer\Core\Environment\ApplicationPath;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -46,7 +47,7 @@ class SchemaUpdateModel
      *
      * @throws \Exception
      */
-    public function updateContainer(RequestInterface $request)
+    public function updateContainer(RequestInterface $request): void
     {
         $this->container = ServiceContainerBuilder::create(
             $this->appPath,
@@ -59,17 +60,23 @@ class SchemaUpdateModel
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\ConnectionException
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function updateModules()
+    public function updateModules(): array
     {
         /** @var \ACP3\Core\Modules $modules */
         $modules = $this->container->get('core.modules');
         foreach ($modules->getAllModulesTopSorted() as $moduleInfo) {
             $module = \strtolower($moduleInfo['dir']);
-            $this->results[$module] = $this->updateModule($module);
+
+            try {
+                $this->updateModule($module);
+
+                $this->results[$module] = true;
+            } catch (\Throwable $e) {
+                $this->results[$module] = false;
+            }
         }
 
         return $this->results;
@@ -80,36 +87,39 @@ class SchemaUpdateModel
      *
      * @param string $moduleName
      *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function updateModule(string $moduleName)
+    public function updateModule(string $moduleName): void
     {
-        $result = false;
+        /** @var \ACP3\Core\Modules $modules */
+        $modules = $this->container->get('core.modules');
+
+        if (!$modules->isInstallable($moduleName)) {
+            return;
+        }
 
         /** @var \ACP3\Core\Installer\SchemaRegistrar $schemaRegistrar */
         $schemaRegistrar = $this->container->get('core.installer.schema_registrar');
         /** @var \ACP3\Core\Installer\MigrationRegistrar $migrationRegistrar */
         $migrationRegistrar = $this->container->get('core.installer.migration_registrar');
-        /** @var \ACP3\Core\Modules $modules */
-        $modules = $this->container->get('core.modules');
         /** @var \ACP3\Core\Modules\SchemaUpdater $schemaUpdater */
         $schemaUpdater = $this->container->get('core.modules.schemaUpdater');
+
         $serviceIdMigration = $moduleName . '.installer.migration';
-        if ($schemaRegistrar->has($moduleName) === true &&
-            $migrationRegistrar->has($serviceIdMigration) === true
-        ) {
-            $moduleSchema = $schemaRegistrar->get($moduleName);
-            $moduleMigration = $migrationRegistrar->get($serviceIdMigration);
-            if ($modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
-                $result = $schemaUpdater->updateSchema(
-                    $moduleSchema,
-                    $moduleMigration
-                );
-            }
+        if (!$schemaRegistrar->has($moduleName) || !$migrationRegistrar->has($serviceIdMigration)) {
+            throw new MissingInstallerException(
+                \sprintf('Could not find any schema or migration files for module "%s"', $moduleName)
+            );
         }
 
-        return $result;
+        $moduleSchema = $schemaRegistrar->get($moduleName);
+        $moduleMigration = $migrationRegistrar->get($serviceIdMigration);
+        if ($modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
+            $schemaUpdater->updateSchema(
+                $moduleSchema,
+                $moduleMigration
+            );
+        }
     }
 }

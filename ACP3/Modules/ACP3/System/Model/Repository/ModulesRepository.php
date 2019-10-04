@@ -17,7 +17,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     /**
      * {@inheritdoc}
      */
-    public function getModuleId($moduleName)
+    public function getModuleId(string $moduleName): int
     {
         return $this->db->fetchColumn(
             'SELECT `id` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
@@ -30,7 +30,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getModuleSchemaVersion($moduleName)
+    public function getModuleSchemaVersion(string $moduleName): int
     {
         return $this->db->fetchColumn(
             'SELECT `version` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
@@ -43,7 +43,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function moduleExists($moduleName)
+    public function moduleExists(string $moduleName): bool
     {
         return $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?',
@@ -56,7 +56,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getInfoByModuleName($moduleName)
+    public function getInfoByModuleName(string $moduleName): array
     {
         return $this->db->fetchAssoc(
             'SELECT `id`, `version`, `active` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
@@ -69,7 +69,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getModuleNameById($moduleId)
+    public function getModuleNameById(int $moduleId): string
     {
         return $this->db->fetchColumn(
             'SELECT `name` FROM ' . $this->getTableName() . ' WHERE `id` = ?',

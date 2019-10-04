@@ -18,21 +18,20 @@ class SchemaUpdater extends SchemaHelper
      * @param \ACP3\Core\Modules\Installer\SchemaInterface    $schema
      * @param \ACP3\Core\Modules\Installer\MigrationInterface $migration
      *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
      */
-    public function updateSchema(SchemaInterface $schema, MigrationInterface $migration)
+    public function updateSchema(SchemaInterface $schema, MigrationInterface $migration): void
     {
         $module = $this->systemModuleRepository->getModuleSchemaVersion($schema->getModuleName());
-        $installedSchemaVersion = !empty($module) ? (int) $module : 0;
-        $result = -1;
+        $installedSchemaVersion = !empty($module) ? $module : 0;
 
         // Falls eine Methode zum Umbenennen des Moduls existiert,
         // diese mit der aktuell installierten Schemaverion aufrufen
         $moduleNames = $migration->renameModule();
         if (\count($moduleNames) > 0) {
-            $result = $this->iterateOverSchemaUpdates(
+            $this->iterateOverSchemaUpdates(
                 $schema->getModuleName(),
                 $schema->getSchemaVersion(),
                 $moduleNames,
@@ -45,15 +44,13 @@ class SchemaUpdater extends SchemaHelper
             // Nur für den Fall der Fälle... ;)
             \ksort($queries);
 
-            $result = $this->iterateOverSchemaUpdates(
+            $this->iterateOverSchemaUpdates(
                 $schema->getModuleName(),
                 $schema->getSchemaVersion(),
                 $queries,
                 $installedSchemaVersion
             );
         }
-
-        return $result;
     }
 
     /**
@@ -62,32 +59,26 @@ class SchemaUpdater extends SchemaHelper
      * @param array  $schemaUpdates
      * @param int    $installedSchemaVersion
      *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
      */
     protected function iterateOverSchemaUpdates(
         $moduleName,
         $schemaVersion,
         array $schemaUpdates,
         $installedSchemaVersion
-    ) {
-        $result = -1;
+    ): void {
         foreach ($schemaUpdates as $schemaUpdateVersion => $queries) {
             // Do schema updates only, if the current schema version is older then the new one
-            if ($installedSchemaVersion < $schemaUpdateVersion &&
-                $schemaUpdateVersion <= $schemaVersion &&
-                !empty($queries)
+            if ($installedSchemaVersion < $schemaUpdateVersion
+                && $schemaUpdateVersion <= $schemaVersion
+                && !empty($queries)
             ) {
-                $result = $this->executeSqlQueries($this->forceSqlQueriesToArray($queries), $moduleName) === true ? 1 : 0;
-
-                if ($result !== 0) {
-                    $this->updateSchemaVersion($moduleName, $schemaUpdateVersion);
-                }
+                $this->executeSqlQueries($this->forceSqlQueriesToArray($queries), $moduleName);
+                $this->updateSchemaVersion($moduleName, $schemaUpdateVersion);
             }
         }
-
-        return $result;
     }
 
     /**
@@ -98,9 +89,9 @@ class SchemaUpdater extends SchemaHelper
      *
      * @return bool
      */
-    public function updateSchemaVersion(string $moduleName, int $schemaVersion)
+    public function updateSchemaVersion(string $moduleName, int $schemaVersion): bool
     {
-        return $this->systemModuleRepository->update(['version' => (int) $schemaVersion], ['name' => $moduleName]) !== false;
+        return $this->systemModuleRepository->update(['version' => $schemaVersion], ['name' => $moduleName]) !== false;
     }
 
     /**
@@ -108,7 +99,7 @@ class SchemaUpdater extends SchemaHelper
      *
      * @return array
      */
-    protected function forceSqlQueriesToArray($queries)
+    protected function forceSqlQueriesToArray($queries): array
     {
         return (\is_array($queries) === false) ? (array) $queries : $queries;
     }
