@@ -110,7 +110,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setFrom($from)
+    public function setFrom($from): self
     {
         $this->from = $from;
 
@@ -124,7 +124,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setMailSignature($mailSignature)
+    public function setMailSignature($mailSignature): self
     {
         $this->mailSignature = $mailSignature;
 
@@ -138,7 +138,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setHtmlBody($htmlText)
+    public function setHtmlBody($htmlText): self
     {
         $this->htmlBody = $htmlText;
 
@@ -152,7 +152,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setUrlWeb($urlWeb)
+    public function setUrlWeb($urlWeb): self
     {
         $this->urlWeb = $urlWeb;
 
@@ -166,7 +166,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setBcc($bcc)
+    public function setBcc($bcc): self
     {
         $this->bcc = (bool) $bcc;
 
@@ -180,7 +180,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setSubject($subject)
+    public function setSubject($subject): self
     {
         $this->subject = $subject;
 
@@ -194,7 +194,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setBody($body)
+    public function setBody($body): self
     {
         $this->body = $body;
 
@@ -208,7 +208,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setRecipients($recipients)
+    public function setRecipients($recipients): self
     {
         $this->recipients = $recipients;
 
@@ -222,7 +222,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setAttachments($attachments)
+    public function setAttachments($attachments): self
     {
         if (\is_array($attachments)) {
             $this->attachments = $attachments;
@@ -240,7 +240,7 @@ class Mailer
      *
      * @deprecated since version 4.8.0, to be removed with version 5.0.0
      */
-    public function setTemplate($template)
+    public function setTemplate($template): self
     {
         $this->template = $template;
 
@@ -254,7 +254,7 @@ class Mailer
      *
      * @deprecated since version 4.30.0, to be removed with version 5.0.0
      */
-    public function setData(MailerMessage $data)
+    public function setData(MailerMessage $data): self
     {
         $this->mailerMessage = $data;
 
@@ -268,7 +268,7 @@ class Mailer
      *
      * @return bool
      */
-    public function send(?MailerMessage $message = null)
+    public function send(?MailerMessage $message = null): bool
     {
         $message = $this->createMailerMessage($message);
 
@@ -304,9 +304,9 @@ class Mailer
     /**
      * @param \ACP3\Core\Mailer\MailerMessage|null $message
      *
-     * @return \ACP3\Core\Mailer\MailerMessage|null
+     * @return \ACP3\Core\Mailer\MailerMessage
      */
-    private function createMailerMessage(?MailerMessage $message)
+    private function createMailerMessage(?MailerMessage $message): MailerMessage
     {
         if ($message === null) {
             if ($this->mailerMessage instanceof MailerMessage) {
@@ -333,12 +333,17 @@ class Mailer
      *
      * @return string
      */
-    protected function generateSubject(MailerMessage $message)
+    protected function generateSubject(MailerMessage $message): string
     {
-        return '=?utf-8?b?' . \base64_encode($this->decodeHtmlEntities($message->getSubject())) . '?=';
+        return $message->getSubject();
     }
 
-    private function addReplyTo(MailerMessage $message)
+    /**
+     * @param \ACP3\Core\Mailer\MailerMessage $message
+     *
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
+    private function addReplyTo(MailerMessage $message): void
     {
         $replyTo = $message->getReplyTo();
 
@@ -354,7 +359,7 @@ class Mailer
      *
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function addFrom(MailerMessage $message)
+    private function addFrom(MailerMessage $message): void
     {
         if (\is_array($message->getFrom()) === true) {
             $this->phpMailer->setFrom($message->getFrom()['email'], $message->getFrom()['name']);
@@ -363,7 +368,7 @@ class Mailer
         }
     }
 
-    private function addSender(MailerMessage $message)
+    private function addSender(MailerMessage $message): void
     {
         if (!empty($message->getSender())) {
             $this->phpMailer->Sender = $message->getSender();
@@ -377,7 +382,7 @@ class Mailer
      *
      * @return $this
      */
-    private function generateBody(MailerMessage $message)
+    private function generateBody(MailerMessage $message): self
     {
         if (!empty($message->getTemplate())) {
             $mail = [
@@ -415,7 +420,7 @@ class Mailer
      *
      * @return string
      */
-    private function getHtmlSignature(MailerMessage $message)
+    private function getHtmlSignature(MailerMessage $message): string
     {
         if (!empty($message->getMailSignature())) {
             if ($message->getMailSignature() === \strip_tags($message->getMailSignature())) {
@@ -433,7 +438,7 @@ class Mailer
      *
      * @return string
      */
-    private function decodeHtmlEntities($data)
+    private function decodeHtmlEntities($data): string
     {
         return \html_entity_decode($data, ENT_QUOTES, 'UTF-8');
     }
@@ -443,7 +448,7 @@ class Mailer
      *
      * @return string
      */
-    private function getTextSignature(MailerMessage $message)
+    private function getTextSignature(MailerMessage $message): string
     {
         if (!empty($message->getMailSignature())) {
             return "\n-- \n" . $this->phpMailer->html2text($message->getMailSignature(), true);
@@ -461,7 +466,7 @@ class Mailer
      *
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function sendBcc(MailerMessage $message)
+    private function sendBcc(MailerMessage $message): bool
     {
         if (\is_array($message->getRecipients()) === false || isset($message->getRecipients()['email']) === true) {
             $message->setRecipients([$message->getRecipients()]);
@@ -483,8 +488,10 @@ class Mailer
      * @param bool         $bcc
      *
      * @return $this
+     *
+     * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function addRecipients($recipients, $bcc = false)
+    private function addRecipients($recipients, $bcc = false): self
     {
         if (\is_array($recipients) === true) {
             if (isset($recipients['email'], $recipients['name']) === true) {
@@ -513,8 +520,10 @@ class Mailer
      * @param bool   $bcc
      *
      * @return $this
+     *
+     * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function addRecipient($email, $name = '', $bcc = false)
+    private function addRecipient($email, $name = '', $bcc = false): self
     {
         if ($bcc === true) {
             $this->phpMailer->addBCC($email, $name);
@@ -534,7 +543,7 @@ class Mailer
      *
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function sendTo(MailerMessage $message)
+    private function sendTo(MailerMessage $message): bool
     {
         if (\is_array($message->getRecipients()) === false || isset($message->getRecipients()['email']) === true) {
             $message->setRecipients([$message->getRecipients()]);
@@ -555,7 +564,7 @@ class Mailer
      *
      * @return $this
      */
-    public function reset()
+    public function reset(): self
     {
         $this->subject = '';
         $this->body = '';
@@ -581,7 +590,7 @@ class Mailer
      *
      * @return $this
      */
-    private function configure()
+    private function configure(): self
     {
         if ($this->phpMailer === null) {
             $this->phpMailer = new PHPMailer(true);
