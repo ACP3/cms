@@ -14,7 +14,6 @@ use ACP3\Core\Logger\LoggerFactory;
 use Patchwork\Utf8\Bootup;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Debug\ErrorHandler;
-use Symfony\Component\Debug\ExceptionHandler;
 
 class Application
 {
@@ -74,8 +73,6 @@ class Application
      */
     private function setErrorHandler()
     {
-        ExceptionHandler::register(true);
-
         $errorHandler = new ErrorHandler();
         $errorHandler->setDefaultLogger($this->logger);
         ErrorHandler::register($errorHandler);
