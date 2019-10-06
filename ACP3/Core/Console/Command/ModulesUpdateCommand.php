@@ -45,8 +45,6 @@ class ModulesUpdateCommand extends Command
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -55,8 +53,16 @@ class ModulesUpdateCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Updating installed modules...');
 
+        $hasError = false;
+
         foreach ($this->schemaUpdateModel->updateModules() as $module => $result) {
             $output->writeln($result ? "<info>{$module}</info>" : "<error>{$module}</error>");
+
+            if (!$result) {
+                $hasError = true;
+            }
         }
+
+        return $hasError ? 1 : 0;
     }
 }
