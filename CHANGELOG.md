@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.44.1] - 2019-10-06
+### Changed
+- add a proper return value for the `acp3:modules:update` CLI command
+- do not use the Symfony debug error handler for the console application
+
+### Fixed
+- fixed the erroneous encoding of e-mail subjects after the PHPMailer update
+
 ## [4.44.0] - 2019-10-05
 ### Changed
 - Allow the `acp3-core`-package to reside within the `vendor`-dir
@@ -971,7 +979,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.44.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.44.1...4.x
+[4.44.1]: https://gitlab.com/ACP3/cms/compare/v4.44.0...v4.44.1
 [4.44.0]: https://gitlab.com/ACP3/cms/compare/v4.43.2...v4.44.0
 [4.43.2]: https://gitlab.com/ACP3/cms/compare/v4.43.1...v4.43.2
 [4.43.1]: https://gitlab.com/ACP3/cms/compare/v4.43.0...v4.43.1
