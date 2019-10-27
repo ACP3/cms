@@ -70,7 +70,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * @return array
      */
-    public function execute()
+    public function execute(): array
     {
         $systemSettings = $this->config->getSettings(System\Installer\Schema::MODULE_NAME);
 
@@ -112,7 +112,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
             ),
             'entries' => $this->formsHelper->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $this->fetchWysiwygEditors($systemSettings['wysiwyg']),
-            'languages' => $this->translator->getLanguagePack($systemSettings['lang']),
+            'languages' => $this->translator->getLanguagePacks($systemSettings['lang']),
             'mod_rewrite' => $this->formsHelper->yesNoCheckboxGenerator('mod_rewrite', $systemSettings['mod_rewrite']),
             'time_zones' => $this->dateHelper->getTimeZones($systemSettings['date_time_zone']),
             'maintenance' => $this->formsHelper->yesNoCheckboxGenerator(
@@ -152,7 +152,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -203,7 +206,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
      *
      * @return array
      */
-    protected function fetchWysiwygEditors($currentWysiwygEditor)
+    private function fetchWysiwygEditors(string $currentWysiwygEditor): array
     {
         $wysiwyg = [];
         foreach ($this->editorRegistrar->all() as $serviceId => $editorInstance) {

@@ -12,10 +12,6 @@ use ACP3\Core;
 class Installer
 {
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
      * @var Core\Modules
      */
     protected $modules;
@@ -28,19 +24,11 @@ class Installer
      */
     private $schemaRegistrar;
 
-    /**
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules                     $modules
-     * @param Core\Installer\SchemaRegistrar         $schemaRegistrar
-     * @param \ACP3\Core\Modules\SchemaInstaller     $schemaInstaller
-     */
     public function __construct(
-        Core\Environment\ApplicationPath $appPath,
         Core\Modules $modules,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
         Core\Modules\SchemaInstaller $schemaInstaller
     ) {
-        $this->appPath = $appPath;
         $this->modules = $modules;
         $this->schemaInstaller = $schemaInstaller;
         $this->schemaRegistrar = $schemaRegistrar;
@@ -53,17 +41,18 @@ class Installer
      *
      * @return array
      */
-    public function checkInstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
+    public function checkInstallDependencies(Core\Modules\Installer\SchemaInterface $schema): array
     {
         $dependencies = $this->getDependencies($schema->getModuleName());
         $modulesToEnable = [];
-        if (!empty($dependencies)) {
-            foreach ($dependencies as $dependency) {
-                if ($this->modules->isActive($dependency) === false) {
-                    $moduleInfo = $this->modules->getModuleInfo($dependency);
-                    $modulesToEnable[] = $moduleInfo['name'];
-                }
+
+        foreach ($dependencies as $dependency) {
+            if ($this->modules->isActive($dependency)) {
+                continue;
             }
+
+            $moduleInfo = $this->modules->getModuleInfo($dependency);
+            $modulesToEnable[] = $moduleInfo['name'];
         }
 
         return $modulesToEnable;
@@ -74,21 +63,24 @@ class Installer
      *
      * @return array
      */
-    public function checkUninstallDependencies(Core\Modules\Installer\SchemaInterface $schema)
+    public function checkUninstallDependencies(Core\Modules\Installer\SchemaInterface $schema): array
     {
         $modules = $this->modules->getInstalledModules();
         $moduleDependencies = [];
 
         foreach ($modules as $module) {
-            $moduleName = \strtolower($module['dir']);
-            if ($moduleName !== $schema->getModuleName()) {
-                if ($this->schemaRegistrar->has($moduleName) === true) {
-                    $dependencies = $this->getDependencies($moduleName);
+            if ($module['name'] === $schema->getModuleName()) {
+                continue;
+            }
 
-                    if (\in_array($schema->getModuleName(), $dependencies) === true) {
-                        $moduleDependencies[] = $module['name'];
-                    }
-                }
+            if ($this->schemaRegistrar->has($module['name']) === false) {
+                continue;
+            }
+
+            $dependencies = $this->getDependencies($module['name']);
+
+            if (\in_array($schema->getModuleName(), $dependencies, true) === true) {
+                $moduleDependencies[] = $module['name'];
             }
         }
 
@@ -102,7 +94,7 @@ class Installer
      *
      * @return array
      */
-    protected function getDependencies(string $moduleName)
+    protected function getDependencies(string $moduleName): array
     {
         return $this->modules->getModuleInfo($moduleName)['dependencies'] ?? [];
     }

@@ -46,6 +46,9 @@
     "psr-4": {
       "ACP3\\Core\\": ""
     },
+    "files": [
+      "registration.php"
+    ],
     "exclude-from-classmap": [
       "/Test/"
     ]

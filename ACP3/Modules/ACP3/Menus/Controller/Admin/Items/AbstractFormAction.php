@@ -87,19 +87,13 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         return $this->formsHelper->choicesGenerator('mode', $menuItemTypes, $value);
     }
 
-    /**
-     * @param array $menuItem
-     *
-     * @return array
-     */
-    protected function fetchModules(array $menuItem = [])
+    protected function fetchModules(array $menuItem = []): array
     {
         $modules = $this->modules->getAllModulesAlphabeticallySorted();
         foreach ($modules as $row) {
-            $row['dir'] = \strtolower($row['dir']);
             $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(
                 'module',
-                $row['dir'],
+                $row['name'],
                 !empty($menuItem) && $menuItem['mode'] == 1 ? $menuItem['uri'] : ''
             );
         }

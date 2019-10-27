@@ -1,0 +1,29 @@
+imports:
+  - { resource: components/*.yml }
+  - { resource: ../../View/Renderer/Smarty/config/services.yml }
+
+parameters:
+  cache_driver: 'Array'
+
+services:
+  core.environment.theme:
+    class: ACP3\Installer\Core\Environment\Theme
+    arguments:
+      - '@core.environment.application_path'
+
+  core.router:
+    class: ACP3\Installer\Core\Router\Router
+    arguments:
+      - '@core.http.request'
+      - '@core.environment.application_path'
+
+  core.session:
+    class: ACP3\Installer\Core\Session\SessionHandler
+
+  core.view.renderer.smarty.smarty_configurator:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\SmartyConfigurator
+    arguments:
+      - '%core.environment%'
+
+  system.model.settingsrepository:
+    class: ACP3\Installer\Core\Repository\SettingsRepository

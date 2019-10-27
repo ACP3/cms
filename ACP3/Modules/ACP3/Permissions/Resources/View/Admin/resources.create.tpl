@@ -8,7 +8,7 @@
             <div class="col-sm-10">
                 <select class="form-control" name="modules" id="modules" required>
                     {foreach $modules as $row}
-                        <option value="{$row.dir}"{$row.selected}>{lang t="`$row.name`|`$row.name`"}</option>
+                        <option value="{$row.name}"{$row.selected}>{lang t="`$row.name`|`$row.name`"}</option>
                     {/foreach}
                 </select>
             </div>

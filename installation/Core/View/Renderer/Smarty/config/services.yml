@@ -1,0 +1,25 @@
+services:
+  smarty.resource.asset:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
+    arguments:
+    - '@core.environment.application_path'
+    - '@core.environment.theme'
+    tags:
+    - { name: smarty.plugin.resource, pluginName: asset }
+
+  smarty.filter.move_to_bottom:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom
+    tags:
+    - { name: smarty.plugin.filter, filterType: output }
+
+  smarty.filter.move_to_head:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead
+    tags:
+    - { name: smarty.plugin.filter, filterType: output }
+
+  smarty.filter.page_css_classes:
+    class: ACP3\Installer\Core\View\Renderer\Smarty\Filters\PageCssClasses
+    arguments:
+      - '@core.http.request'
+    tags:
+      - { name: smarty.plugin.filter, filterType: output }

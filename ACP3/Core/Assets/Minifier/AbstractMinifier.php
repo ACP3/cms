@@ -10,6 +10,7 @@ namespace ACP3\Core\Assets\Minifier;
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Cache;
+use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
@@ -19,8 +20,9 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractMinifier implements MinifierInterface
 {
-    const ASSETS_PATH_CSS = 'Assets/css';
-    const ASSETS_PATH_JS = 'Assets/js';
+    protected const ASSETS_PATH_CSS = 'Assets/css';
+    protected const ASSETS_PATH_JS = 'Assets/js';
+    protected const SYSTEM_MODULE_NAME = 'system';
 
     /**
      * @var \ACP3\Core\Assets
@@ -50,30 +52,11 @@ abstract class AbstractMinifier implements MinifierInterface
      * @var string
      */
     protected $environment;
-
-    /**
-     * @var string
-     */
-    protected $systemAssetsModulePath = 'System/Resources/';
-    /**
-     * @var string
-     */
-    protected $systemAssetsDesignPath = 'System/';
     /**
      * @var LoggerInterface
      */
     private $logger;
 
-    /**
-     * @param LoggerInterface                        $logger
-     * @param \ACP3\Core\Assets                      $assets
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Cache                       $systemCache
-     * @param SettingsInterface                      $config
-     * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\Assets\FileResolver         $fileResolver
-     * @param string                                 $environment
-     */
     public function __construct(
         LoggerInterface $logger,
         Assets $assets,
@@ -82,7 +65,7 @@ abstract class AbstractMinifier implements MinifierInterface
         SettingsInterface $config,
         Modules $modules,
         FileResolver $fileResolver,
-        $environment
+        string $environment
     ) {
         $this->assets = $assets;
         $this->appPath = $appPath;
@@ -144,7 +127,7 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     public function getURI(string $layout = 'layout'): string
     {
-        $debug = $this->environment === 'dev';
+        $debug = $this->environment === ApplicationMode::DEVELOPMENT;
         $filenameHash = $this->generateFilenameHash($this->getAssetGroup(), $layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
@@ -155,11 +138,11 @@ abstract class AbstractMinifier implements MinifierInterface
         $path = $this->buildAssetPath($debug, $this->getAssetGroup(), $filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
-        if (\is_file($this->appPath->getUploadsDir() . $path) === false || $debug === true) {
+        if ($debug === true || \is_file($this->appPath->getUploadsDir() . $path) === false) {
             // Get the enabled libraries and filter out empty entries
             $files = \array_filter(
                 $this->processLibraries($layout),
-                function ($var) {
+                static function ($var) {
                     return !empty($var);
                 }
             );

@@ -10,7 +10,6 @@ namespace ACP3\Core;
 use ACP3\Core\Controller\Helper\ControllerActionExists;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\ModuleInfoCacheInterface;
-use ACP3\Core\Modules\Vendor;
 use MJS\TopSort\Implementations\StringSort;
 
 class Modules
@@ -28,10 +27,6 @@ class Modules
      */
     protected $moduleInfoCache;
     /**
-     * @var \ACP3\Core\Modules\Vendor
-     */
-    protected $vendors;
-    /**
      * @var array
      */
     private $modulesInfo = [];
@@ -40,24 +35,14 @@ class Modules
      */
     private $allModulesTopSorted = [];
 
-    /**
-     * Modules constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath              $appPath
-     * @param \ACP3\Core\Controller\Helper\ControllerActionExists $controllerActionExists
-     * @param \ACP3\Core\Modules\ModuleInfoCacheInterface         $moduleInfoCache
-     * @param \ACP3\Core\Modules\Vendor                           $vendors
-     */
     public function __construct(
         ApplicationPath $appPath,
         ControllerActionExists $controllerActionExists,
-        ModuleInfoCacheInterface $moduleInfoCache,
-        Vendor $vendors
+        ModuleInfoCacheInterface $moduleInfoCache
     ) {
         $this->appPath = $appPath;
         $this->controllerActionExists = $controllerActionExists;
         $this->moduleInfoCache = $moduleInfoCache;
-        $this->vendors = $vendors;
     }
 
     /**
@@ -206,8 +191,9 @@ class Modules
             $topSort = new StringSort();
 
             $modules = $this->getAllModules();
+
             foreach ($modules as $module) {
-                $topSort->add(\strtolower($module['dir']), $module['dependencies']);
+                $topSort->add(\strtolower($module['name']), $module['dependencies']);
             }
 
             foreach ($topSort->sort() as $module) {

@@ -7,14 +7,8 @@
 
 namespace ACP3\Core\I18n;
 
-use ACP3\Core\Environment\ApplicationPath;
-
 class Translator
 {
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
     /**
      * @var \ACP3\Core\I18n\DictionaryCacheInterface
      */
@@ -33,10 +27,8 @@ class Translator
     private $buffer = [];
 
     public function __construct(
-        ApplicationPath $appPath,
         DictionaryCacheInterface $dictionaryCache
     ) {
-        $this->appPath = $appPath;
         $this->dictionaryCache = $dictionaryCache;
     }
 
@@ -47,16 +39,23 @@ class Translator
      *
      * @return bool
      */
-    public function languagePackExists(string $locale)
+    public function languagePackExists(string $locale): bool
     {
-        return !\preg_match('=/=', $locale)
-            && \is_file($this->appPath->getModulesDir() . 'ACP3/System/Resources/i18n/' . $locale . '.xml') === true;
+        if (empty($this->languagePacks)) {
+            $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
+        }
+
+        $foundLanguagePack = \array_filter($this->languagePacks, static function ($languagePack) use ($locale) {
+            return $languagePack['iso'] === $locale;
+        });
+
+        return !empty($foundLanguagePack);
     }
 
     /**
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -64,7 +63,7 @@ class Translator
     /**
      * @return string
      */
-    public function getShortIsoCode()
+    public function getShortIsoCode(): string
     {
         return \substr($this->getLocale(), 0, \strpos($this->getLocale(), '_'));
     }
@@ -74,7 +73,7 @@ class Translator
      *
      * @return $this
      */
-    public function setLocale(string $locale)
+    public function setLocale(string $locale): self
     {
         if ($this->languagePackExists($locale) === true) {
             $this->locale = $locale;
@@ -94,7 +93,7 @@ class Translator
             $this->buffer[$this->getLocale()] = $this->dictionaryCache->getLanguageCache($this->getLocale());
         }
 
-        return isset($this->buffer[$this->getLocale()]['info']['direction']) ? $this->buffer[$this->getLocale()]['info']['direction'] : 'ltr';
+        return $this->buffer[$this->getLocale()]['info']['direction'] ?? 'ltr';
     }
 
     /**
@@ -104,14 +103,15 @@ class Translator
      *
      * @return string
      */
-    public function t($module, $phrase, array $arguments = [])
+    public function t(string $module, string $phrase, array $arguments = []): string
     {
         if (isset($this->buffer[$this->getLocale()]) === false) {
             $this->buffer[$this->getLocale()] = $this->dictionaryCache->getLanguageCache($this->getLocale());
         }
 
-        if (isset($this->buffer[$this->getLocale()]['keys'][$module . $phrase])) {
-            return \strtr($this->buffer[$this->getLocale()]['keys'][$module . $phrase], $arguments);
+        $key = $module . $phrase;
+        if (isset($this->buffer[$this->getLocale()]['keys'][$key])) {
+            return \strtr($this->buffer[$this->getLocale()]['keys'][$key], $arguments);
         }
 
         return \strtoupper('{' . $module . '_' . $phrase . '}');
@@ -120,11 +120,11 @@ class Translator
     /**
      * Gets all currently available languages.
      *
-     * @param string $currentLanguage
+     * @param string $locale
      *
      * @return array
      */
-    public function getLanguagePack(string $currentLanguage)
+    public function getLanguagePacks(string $locale): array
     {
         if (empty($this->languagePacks)) {
             $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
@@ -133,7 +133,7 @@ class Translator
         $languages = $this->languagePacks;
 
         foreach ($languages as $key => $value) {
-            $languages[$key]['selected'] = $languages[$key]['iso'] === $currentLanguage;
+            $languages[$key]['selected'] = $languages[$key]['iso'] === $locale;
         }
 
         return $languages;

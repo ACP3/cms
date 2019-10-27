@@ -11,15 +11,17 @@ use ACP3\Core\Enum\BaseEnum;
 
 class AreaEnum extends BaseEnum
 {
-    const AREA_ADMIN = 'admin';
-    const AREA_FRONTEND = 'frontend';
-    const AREA_INSTALL = 'install';
-    const AREA_WIDGET = 'widget';
+    public const AREA_ADMIN = 'admin';
+    public const AREA_FRONTEND = 'frontend';
+    public const AREA_INSTALL = 'install';
+    public const AREA_WIDGET = 'widget';
 
     /**
      * @return array
+     *
+     * @throws \ReflectionException
      */
-    public static function getAreas()
+    public static function getAreas(): array
     {
         return self::getConstants();
     }

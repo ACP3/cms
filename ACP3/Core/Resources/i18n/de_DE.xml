@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) by the ACP3 Developers.
+  ~ See the LICENSE file at the top-level module directory for licensing details.
+  -->
+
+<language>
+    <keys>
+        <item key="core">ACP3 Framework</item>
+        <item key="mod_description">Dieses Module beinhaltet die Kernfunktionen des ACP3.</item>
+    </keys>
+</language>

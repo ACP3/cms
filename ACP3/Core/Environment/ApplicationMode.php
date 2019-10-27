@@ -7,11 +7,13 @@
 
 namespace ACP3\Core\Environment;
 
-class ApplicationMode
+use ACP3\Core\Enum\BaseEnum;
+
+class ApplicationMode extends BaseEnum
 {
-    const CLI = 'console';
-    const DEVELOPMENT = 'dev';
-    const INSTALLER = 'installer';
-    const PRODUCTION = 'prod';
-    const UPDATER = 'updater';
+    public const CLI = 'console';
+    public const DEVELOPMENT = 'dev';
+    public const INSTALLER = 'installer';
+    public const PRODUCTION = 'prod';
+    public const UPDATER = 'updater';
 }

@@ -59,14 +59,14 @@ class CheckMaintenanceModeListener
      *
      * @return bool
      */
-    private function canShowMaintenanceMessage()
+    private function canShowMaintenanceMessage(): bool
     {
         return (bool) $this->settings->getSettings('system')['maintenance_mode'] === true &&
-            \in_array($this->request->getArea(), [AreaEnum::AREA_ADMIN, AreaEnum::AREA_WIDGET]) === false &&
+            \in_array($this->request->getArea(), [AreaEnum::AREA_ADMIN, AreaEnum::AREA_WIDGET], true) === false &&
             \strpos($this->request->getQuery(), 'users/index/login/') !== 0;
     }
 
-    private function renderMaintenanceMessage()
+    private function renderMaintenanceMessage(): void
     {
         $this->view->assign([
             'PAGE_TITLE' => 'ACP3',

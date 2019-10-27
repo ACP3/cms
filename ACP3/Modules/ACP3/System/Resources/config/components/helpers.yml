@@ -2,7 +2,6 @@ services:
   system.helpers.installer:
     class: ACP3\Modules\ACP3\System\Helper\Installer
     arguments:
-      - '@core.environment.application_path'
       - '@core.modules'
       - '@core.installer.schema_registrar'
       - '@core.modules.schemaInstaller'

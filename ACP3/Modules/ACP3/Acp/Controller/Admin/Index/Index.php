@@ -14,26 +14,22 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * @return array
      */
-    public function execute()
+    public function execute(): array
     {
         return [
             'modules' => $this->getAllowedModules(),
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedModules()
+    protected function getAllowedModules(): array
     {
         $allowedModules = [];
 
-        foreach ($this->modules->getActiveModules() as $name => $info) {
-            $dir = \strtolower($info['dir']);
-            if ($this->acl->hasPermission('admin/' . $dir) === true && $dir !== 'acp') {
-                $allowedModules[$name] = [
-                    'name' => $name,
-                    'dir' => $dir,
+        foreach ($this->modules->getActiveModules() as $info) {
+            $moduleName = \strtolower($info['name']);
+            if ($moduleName !== 'acp' && $this->acl->hasPermission('admin/' . $moduleName) === true) {
+                $allowedModules[$moduleName] = [
+                    'name' => $moduleName,
                 ];
             }
         }

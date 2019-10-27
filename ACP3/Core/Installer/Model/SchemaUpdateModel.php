@@ -75,14 +75,14 @@ class SchemaUpdateModel
     public function updateModules(): array
     {
         foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
-            $module = \strtolower($moduleInfo['dir']);
+            $moduleName = \strtolower($moduleInfo['name']);
 
             try {
-                $this->updateModule($module);
+                $this->updateModule($moduleName);
 
-                $this->results[$module] = true;
+                $this->results[$moduleName] = true;
             } catch (\Throwable $e) {
-                $this->results[$module] = false;
+                $this->results[$moduleName] = false;
             }
         }
 

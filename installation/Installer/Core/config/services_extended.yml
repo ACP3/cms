@@ -1,7 +1,0 @@
-parameters:
-  default_request: 'update'
-  core.environment: !php/const ACP3\Core\Environment\ApplicationMode::UPDATER
-
-imports:
-  - { resource: services.yml }
-  - { resource: ../../Modules/Update/Resources/config/services.yml }

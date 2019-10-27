@@ -44,64 +44,61 @@ class IncludeJs
     }
 
     /**
-     * @param string   $module
+     * @param string   $moduleName
      * @param string   $filePath
      * @param string[] $dependencies
      *
      * @return string
      */
-    public function add(string $module, string $filePath, array $dependencies = []): string
+    public function add(string $moduleName, string $filePath, array $dependencies = []): string
     {
         if (!empty($dependencies)) {
             $this->assets->enableLibraries($dependencies);
         }
 
-        if ($this->hasValidParams($module, $filePath)) {
-            $key = $module . '/' . $filePath;
+        if (!$this->hasValidParams($moduleName, $filePath)) {
+            throw new \InvalidArgumentException(
+                'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!'
+            );
+        }
 
-            // Do not include the same file multiple times
-            if (isset($this->alreadyIncluded[$key]) === false) {
-                $this->alreadyIncluded[$key] = true;
+        $key = $moduleName . '/' . $filePath;
 
-                return \sprintf(
-                    '<script defer src="%s"></script>',
-                    $this->resolvePath($module, $filePath) . '?v=' . Core\Application\BootstrapInterface::VERSION
-                );
-            }
-
+        // Do not include the same file multiple times
+        if (isset($this->alreadyIncluded[$key])) {
             return '';
         }
 
-        throw new \InvalidArgumentException(
-            'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!'
+        $this->alreadyIncluded[$key] = true;
+
+        return \sprintf(
+            '<script defer src="%s"></script>',
+            $this->resolvePath($moduleName, $filePath) . '?v=' . Core\Application\BootstrapInterface::VERSION
         );
     }
 
     /**
-     * @param string $module
+     * @param string $moduleName
      * @param string $filePath
      *
      * @return bool
      */
-    private function hasValidParams(string $module, string $filePath): bool
+    private function hasValidParams(string $moduleName, string $filePath): bool
     {
-        return \preg_match('=/=', $module) === 0
+        return \preg_match('=/=', $moduleName) === 0
             && \preg_match('=\./=', $filePath) === 0;
     }
 
     /**
-     * @param string $module
+     * @param string $moduleName
      * @param string $filePath
      *
      * @return string
      */
-    protected function resolvePath(string $module, string $filePath): string
+    protected function resolvePath(string $moduleName, string $filePath): string
     {
-        $module = \ucfirst($module);
-
         $path = $this->fileResolver->getStaticAssetPath(
-            $module . '/Resources/',
-            $module . '/',
+            $moduleName,
             'Assets/js',
             $filePath . '.js'
         );

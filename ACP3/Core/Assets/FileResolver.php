@@ -9,6 +9,7 @@ namespace ACP3\Core\Assets;
 
 use ACP3\Core;
 use ACP3\Core\Assets\FileResolver\FileCheckerStrategyInterface;
+use ACP3\Core\Component\ComponentRegistry;
 
 class FileResolver
 {
@@ -21,11 +22,7 @@ class FileResolver
      */
     private $resourcesCache;
     /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\Environment\Theme
+     * @var \ACP3\Core\Environment\ThemePathInterface
      */
     private $theme;
     /**
@@ -50,22 +47,14 @@ class FileResolver
      */
     private $currentTheme;
 
-    /**
-     * @param \ACP3\Core\Assets\Cache                $resourcesCache
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Environment\Theme           $theme
-     * @param \ACP3\Core\Modules                     $modules
-     */
     public function __construct(
         Core\Assets\Cache $resourcesCache,
         Core\Environment\ApplicationPath $appPath,
-        Core\Environment\Theme $theme,
-        Core\Modules $modules
+        Core\Environment\ThemePathInterface $theme
     ) {
         $this->resourcesCache = $resourcesCache;
         $this->appPath = $appPath;
         $this->cachedPaths = $resourcesCache->getCache();
-        $this->modules = $modules;
         $this->theme = $theme;
 
         $this->addStrategy(new Core\Assets\FileResolver\MinifiedAwareFileCheckerStrategy());
@@ -96,48 +85,41 @@ class FileResolver
     {
         // A path without any slash was given -> has to be a layout file of the current design
         if (\strpos($templatePath, '/') === false) {
-            return $this->getStaticAssetPath('', '', '', $templatePath);
+            return $this->getStaticAssetPath('', '', $templatePath);
         }
+
         // Split the template path in its components
         $fragments = \explode('/', \ucfirst($templatePath));
 
         if (isset($fragments[2])) {
             $fragments[1] = \ucfirst($fragments[1]);
         }
-        $modulesPath = $fragments[0] . '/Resources/';
-        $designPath = $fragments[0];
+
+        $moduleName = $fragments[0];
         $templatePath = \implode('/', \array_slice($fragments, 1));
 
-        return $this->getStaticAssetPath($modulesPath, $designPath, 'View', $templatePath);
+        return $this->getStaticAssetPath($moduleName, 'View', $templatePath);
     }
 
     /**
-     * @param string $modulePath
-     * @param string $designPath
-     * @param string $dir
+     * @param string $moduleName
+     * @param string $resourceDirectory
      * @param string $file
      *
      * @return string
      */
     public function getStaticAssetPath(
-        string $modulePath,
-        string $designPath,
-        string $dir = '',
+        string $moduleName,
+        string $resourceDirectory = '',
         string $file = ''
     ): string {
-        if ($this->needsTrailingSlash($modulePath)) {
-            $modulePath .= '/';
-        }
-        if ($this->needsTrailingSlash($designPath)) {
-            $designPath .= '/';
-        }
-        if (!empty($dir) && !\preg_match('=/$=', $dir)) {
-            $dir .= '/';
+        if (!empty($resourceDirectory) && !\preg_match('=/$=', $resourceDirectory)) {
+            $resourceDirectory .= '/';
         }
 
-        $systemAssetPath = $this->appPath->getModulesDir() . $modulePath . $dir . $file;
+        $systemAssetPath = $moduleName . '-' . $resourceDirectory . '-' . $file;
         if (!isset($this->cachedPaths[$systemAssetPath])) {
-            $this->cachedPaths[$systemAssetPath] = $this->resolveAssetPath($modulePath, $designPath, $dir, $file);
+            $this->cachedPaths[$systemAssetPath] = $this->resolveAssetPath($moduleName, $resourceDirectory, $file);
 
             $this->newAssetPathsAdded = true;
         }
@@ -146,45 +128,41 @@ class FileResolver
     }
 
     /**
-     * @param string $path
-     *
-     * @return bool
-     */
-    protected function needsTrailingSlash(string $path): bool
-    {
-        return $path !== '' && \strpos($path, '.') === false && !\preg_match('=/$=', $path);
-    }
-
-    /**
-     * @param string $modulePath
-     * @param string $designPath
-     * @param string $dir
+     * @param string $moduleName
+     * @param string $resourceDirectory
      * @param string $file
      *
      * @return string|null
      */
-    private function resolveAssetPath(string $modulePath, string $designPath, string $dir, string $file): ?string
+    private function resolveAssetPath(string $moduleName, string $resourceDirectory, string $file): ?string
     {
         if ($this->designAssetsPath === null) {
             $this->resetTheme();
         }
 
-        $assetPath = $this->findAssetInInheritedThemes($modulePath, $designPath, $dir, $file);
+        $assetPath = $this->findAssetInInheritedThemes(
+            \ucfirst($moduleName),
+            !empty($resourceDirectory) ? '/' . $resourceDirectory : '',
+            $file
+        );
 
-        return $assetPath ?: $this->findAssetInModules($modulePath, $dir, $file);
+        return $assetPath ?: $this->findAssetInModules(
+            $moduleName,
+            '/Resources/' . $resourceDirectory,
+            $file
+        );
     }
 
     /**
-     * @param string $modulePath
-     * @param string $designPath
-     * @param string $dir
+     * @param string $moduleName
+     * @param string $resourceDirectory
      * @param string $file
      *
      * @return string|null
      */
-    private function findAssetInInheritedThemes(string $modulePath, string $designPath, string $dir, string $file): ?string
+    private function findAssetInInheritedThemes(string $moduleName, string $resourceDirectory, string $file): ?string
     {
-        $designAssetPath = $this->designAssetsPath . $designPath . $dir . $file;
+        $designAssetPath = $this->designAssetsPath . $moduleName . $resourceDirectory . $file;
 
         if (null !== ($resourcePath = $this->findAssetInStrategies($designAssetPath))) {
             return $resourcePath;
@@ -196,7 +174,7 @@ class FileResolver
         // Recursively iterate over the nested themes
         if ($parentTheme !== false) {
             $this->changeTheme($parentTheme);
-            $assetPath = $this->getStaticAssetPath($modulePath, $designPath, $dir, $file);
+            $assetPath = $this->getStaticAssetPath($moduleName, $resourceDirectory, $file);
             $this->resetTheme();
 
             return $assetPath;
@@ -227,17 +205,16 @@ class FileResolver
         $this->changeTheme($this->theme->getCurrentTheme());
     }
 
-    private function findAssetInModules(string $modulePath, string $dir, string $file): ?string
+    private function findAssetInModules(string $moduleName, string $resourceDirectory, string $file): ?string
     {
-        $moduleName = \substr($modulePath, 0, \strpos($modulePath, '/'));
-        $moduleInfo = $this->modules->getModuleInfo($moduleName);
-
-        if (!empty($moduleInfo)) {
-            $moduleAssetPath = $this->appPath->getModulesDir() . $moduleInfo['vendor'] . '/' . $modulePath . $dir . $file;
+        try {
+            $moduleAssetPath = ComponentRegistry::getPathByComponentName($moduleName) . $resourceDirectory . $file;
 
             if (null !== ($resourcePath = $this->findAssetInStrategies($moduleAssetPath))) {
                 return $resourcePath;
             }
+        } catch (Core\Component\Exception\ComponentNotFoundException $e) {
+            // Intentionally omitted
         }
 
         return null;

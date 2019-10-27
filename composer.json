@@ -60,8 +60,41 @@
   "autoload": {
     "psr-4": {
       "ACP3\\": "./ACP3",
-      "ACP3\\Installer\\": "./installation/Installer"
-    }
+      "ACP3\\Installer\\": "./installation"
+    },
+    "files": [
+      "ACP3/Core/registration.php",
+      "ACP3/Modules/ACP3/Acp/registration.php",
+      "ACP3/Modules/ACP3/Articles/registration.php",
+      "ACP3/Modules/ACP3/Auditlog/registration.php",
+      "ACP3/Modules/ACP3/Captcha/registration.php",
+      "ACP3/Modules/ACP3/Categories/registration.php",
+      "ACP3/Modules/ACP3/Comments/registration.php",
+      "ACP3/Modules/ACP3/Contact/registration.php",
+      "ACP3/Modules/ACP3/Emoticons/registration.php",
+      "ACP3/Modules/ACP3/Errors/registration.php",
+      "ACP3/Modules/ACP3/Feeds/registration.php",
+      "ACP3/Modules/ACP3/Filemanager/registration.php",
+      "ACP3/Modules/ACP3/Files/registration.php",
+      "ACP3/Modules/ACP3/Gallery/registration.php",
+      "ACP3/Modules/ACP3/Guestbook/registration.php",
+      "ACP3/Modules/ACP3/Menus/registration.php",
+      "ACP3/Modules/ACP3/News/registration.php",
+      "ACP3/Modules/ACP3/Newsletter/registration.php",
+      "ACP3/Modules/ACP3/Permissions/registration.php",
+      "ACP3/Modules/ACP3/Polls/registration.php",
+      "ACP3/Modules/ACP3/Search/registration.php",
+      "ACP3/Modules/ACP3/Seo/registration.php",
+      "ACP3/Modules/ACP3/Share/registration.php",
+      "ACP3/Modules/ACP3/System/registration.php",
+      "ACP3/Modules/ACP3/Users/registration.php",
+      "ACP3/Modules/ACP3/Wysiwygckeditor/registration.php",
+      "ACP3/Modules/ACP3/Wysiwygtinymce/registration.php",
+      "installation/Core/registration.php",
+      "installation/Modules/Errors/registration.php",
+      "installation/Modules/Install/registration.php",
+      "installation/Modules/Update/registration.php"
+    ]
   },
   "replace": {
     "acp3/core": "self.version",

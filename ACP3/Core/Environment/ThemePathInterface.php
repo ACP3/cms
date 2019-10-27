@@ -14,4 +14,8 @@ interface ThemePathInterface
     public function getDesignPathInternal(): string;
 
     public function getDesignPathWeb(): string;
+
+    public function getThemeDependencies(string $themeName): array;
+
+    public function getCurrentThemeDependencies(): array;
 }

@@ -40,14 +40,13 @@ class AbstractFormAction extends AbstractFrontendAction
      *
      * @return array
      */
-    protected function fetchPrivileges($privilegeId)
+    protected function fetchPrivileges(int $privilegeId): array
     {
         $privileges = $this->privilegeRepository->getAllPrivileges();
-        $cPrivileges = \count($privileges);
-        for ($i = 0; $i < $cPrivileges; ++$i) {
+        foreach ($privileges as $i => $privilege) {
             $privileges[$i]['selected'] = $this->formsHelper->selectEntry(
                 'privileges',
-                $privileges[$i]['id'],
+                $privilege['id'],
                 $privilegeId
             );
         }
@@ -60,13 +59,13 @@ class AbstractFormAction extends AbstractFrontendAction
      *
      * @return array
      */
-    protected function fetchActiveModules($currentModule = '')
+    protected function fetchActiveModules(string $currentModule = ''): array
     {
         $modules = $this->modules->getActiveModules();
         foreach ($modules as $row) {
             $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(
                 'modules',
-                $row['dir'],
+                $row['name'],
                 \ucfirst(\trim($currentModule))
             );
         }
@@ -79,7 +78,7 @@ class AbstractFormAction extends AbstractFrontendAction
      *
      * @return int
      */
-    protected function fetchModuleId($moduleName)
+    protected function fetchModuleId(string $moduleName): int
     {
         $moduleInfo = $this->modules->getModuleInfo($moduleName);
 
@@ -90,8 +89,9 @@ class AbstractFormAction extends AbstractFrontendAction
      * @param string $currentArea
      *
      * @return array
+     * @throws \ReflectionException
      */
-    protected function fetchAreas($currentArea = '')
+    protected function fetchAreas(string $currentArea = ''): array
     {
         $areas = \array_values(AreaEnum::getAreas());
 

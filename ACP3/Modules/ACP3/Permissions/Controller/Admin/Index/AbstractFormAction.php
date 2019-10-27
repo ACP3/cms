@@ -22,10 +22,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected $privilegeRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
-     */
-    protected $ruleRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
@@ -53,15 +49,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         $this->permissionsCache = $permissionsCache;
     }
 
-    /**
-     * @param int $roleId
-     * @param int $moduleId
-     * @param int $privilegeId
-     * @param int $defaultValue
-     *
-     * @return array
-     */
-    protected function generatePrivilegeCheckboxes($roleId, $moduleId, $privilegeId, $defaultValue)
+    protected function generatePrivilegeCheckboxes(int $roleId, int $moduleId, int $privilegeId, int $defaultValue): array
     {
         $permissions = [
             0 => 'deny_access',
@@ -93,10 +81,10 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      *
      * @return string
      */
-    protected function privilegeIsChecked($moduleId, $privilegeId, $value = 0, $defaultValue = null)
+    protected function privilegeIsChecked(int $moduleId, int $privilegeId, int $value = 0, ?int $defaultValue = null): string
     {
-        if (\count($this->request->getPost()->all()) == 0 && $defaultValue === $value ||
-            $this->request->getPost()->count() !== 0 && (int) $this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value
+        if (($this->request->getPost()->count() === 0 && $defaultValue === $value) ||
+            ($this->request->getPost()->count() !== 0 && (int) $this->request->getPost()->get('privileges')[$moduleId][$privilegeId] === $value)
         ) {
             return ' checked="checked"';
         }
@@ -111,7 +99,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      *
      * @return string
      */
-    protected function calculatePermission(array $rules, $moduleDir, $key)
+    protected function calculatePermission(array $rules, string $moduleDir, string $key): string
     {
         return \sprintf(
             $this->translator->t('permissions', 'calculated_permission'),
@@ -129,16 +117,15 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      *
      * @return array
      */
-    protected function fetchRoles($roleParentId = 0, $roleLeftId = 0, $roleRightId = 0)
+    protected function fetchRoles(int $roleParentId = 0, int $roleLeftId = 0, int $roleRightId = 0): array
     {
         $roles = $this->acl->getAllRoles();
-        $cRoles = \count($roles);
-        for ($i = 0; $i < $cRoles; ++$i) {
-            if ($roles[$i]['left_id'] >= $roleLeftId && $roles[$i]['right_id'] <= $roleRightId) {
+        foreach ($roles as $i => $role) {
+            if ($role['left_id'] >= $roleLeftId && $role['right_id'] <= $roleRightId) {
                 unset($roles[$i]);
             } else {
-                $roles[$i]['selected'] = $this->formsHelper->selectEntry('roles', $roles[$i]['id'], $roleParentId);
-                $roles[$i]['name'] = \str_repeat('&nbsp;&nbsp;', $roles[$i]['level']) . $roles[$i]['name'];
+                $roles[$i]['selected'] = $this->formsHelper->selectEntry('roles', $role['id'], $roleParentId);
+                $roles[$i]['name'] = \str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
             }
         }
 
@@ -150,25 +137,25 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      * @param int $defaultValue
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function fetchModulePermissions($roleId, $defaultValue = 0)
+    protected function fetchModulePermissions(int $roleId, int $defaultValue = 0): array
     {
         $rules = $this->permissionsCache->getRulesCache([$roleId]);
         $modules = $this->modules->getActiveModules();
         $privileges = $this->privilegeRepository->getAllPrivileges();
-        $cPrivileges = \count($privileges);
 
         foreach ($modules as $name => $moduleInfo) {
-            $moduleDir = \strtolower($moduleInfo['dir']);
-            for ($j = 0; $j < $cPrivileges; ++$j) {
+            foreach ($privileges as $j => $privilege) {
                 $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
                     $roleId,
                     $moduleInfo['id'],
-                    $privileges[$j]['id'],
-                    isset($rules[$moduleDir][$privileges[$j]['key']]['permission']) ? (int) $rules[$moduleDir][$privileges[$j]['key']]['permission'] : $defaultValue
+                    $privilege['id'],
+                    isset($rules[$moduleInfo['name']][$privilege['key']]['permission']) ? (int) $rules[$moduleInfo['name']][$privilege['key']]['permission'] : $defaultValue
                 );
                 if ($roleId !== 0) {
-                    $privileges[$j]['calculated'] = $this->calculatePermission($rules, $moduleDir, $privileges[$j]['key']);
+                    $privileges[$j]['calculated'] = $this->calculatePermission($rules, $moduleInfo['name'], $privilege['key']);
                 }
             }
             $modules[$name]['privileges'] = $privileges;

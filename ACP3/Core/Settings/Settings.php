@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class Settings implements SettingsInterface
 {
-    const CACHE_ID = 'settings';
+    private const CACHE_ID = 'settings';
 
     /**
      * @var EventDispatcherInterface
@@ -41,14 +41,6 @@ class Settings implements SettingsInterface
      */
     protected $settings = [];
 
-    /**
-     * Settings constructor.
-     *
-     * @param EventDispatcherInterface         $eventDispatcher
-     * @param Cache                            $coreCache
-     * @param ModuleAwareRepositoryInterface   $systemModuleRepository
-     * @param SettingsAwareRepositoryInterface $systemSettingsRepository
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         Cache $coreCache,
@@ -71,30 +63,35 @@ class Settings implements SettingsInterface
      */
     public function saveSettings(array $data, $module)
     {
-        $bool = $bool2 = false;
         $moduleId = $this->systemModuleRepository->getModuleId($module);
-        if (!empty($moduleId)) {
-            $this->eventDispatcher->dispatch(
-                new SettingsSaveEvent($module, $data),
-                'core.settings.save_before'
-            );
-            $this->eventDispatcher->dispatch(
-                new SettingsSaveEvent($module, $data),
-                $module . '.settings.save_before'
-            );
 
-            foreach ($data as $key => $value) {
-                $updateValues = [
-                    'value' => $value,
-                ];
-                $where = [
-                    'module_id' => $moduleId,
-                    'name' => $key,
-                ];
-                $bool = $this->systemSettingsRepository->update($updateValues, $where);
-            }
-            $bool2 = $this->saveCache();
+        if (empty($moduleId)) {
+            return false;
         }
+
+        $this->eventDispatcher->dispatch(
+            new SettingsSaveEvent($module, $data),
+            'core.settings.save_before'
+        );
+        $this->eventDispatcher->dispatch(
+            new SettingsSaveEvent($module, $data),
+            $module . '.settings.save_before'
+        );
+
+        $bool = $bool2 = false;
+
+        foreach ($data as $key => $value) {
+            $updateValues = [
+                'value' => $value,
+            ];
+            $where = [
+                'module_id' => $moduleId,
+                'name' => $key,
+            ];
+            $bool = $this->systemSettingsRepository->update($updateValues, $where);
+        }
+
+        $bool2 = $this->saveCache();
 
         return $bool !== false && $bool2 !== false;
     }
@@ -104,7 +101,7 @@ class Settings implements SettingsInterface
      *
      * @return bool
      */
-    protected function saveCache()
+    protected function saveCache(): bool
     {
         $settings = $this->systemSettingsRepository->getAllSettings();
 
@@ -133,6 +130,6 @@ class Settings implements SettingsInterface
             $this->settings = $this->coreCache->fetch(static::CACHE_ID);
         }
 
-        return isset($this->settings[$module]) ? $this->settings[$module] : [];
+        return $this->settings[$module] ?? [];
     }
 }

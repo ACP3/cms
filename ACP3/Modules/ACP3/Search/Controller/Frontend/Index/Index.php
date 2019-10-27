@@ -61,13 +61,18 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * @param string $q
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($q = '')
+    public function execute(string $q = '')
     {
         if ($this->request->getPost()->count() !== 0) {
             return $this->executePost($this->request->getPost()->all());
-        } elseif (!empty($q)) {
+        }
+
+        if (!empty($q)) {
             return $this->executePost(['search_term' => (string) $q]);
         }
 
@@ -97,7 +102,10 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * @param array $formData
      *
-     * @return array|\Symfony\Component\HttpFoundation\Response
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function executePost(array $formData)
     {
@@ -122,7 +130,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      *
      * @return array
      */
-    protected function prepareFormData(array $formData)
+    protected function prepareFormData(array $formData): array
     {
         if (isset($formData['search_term']) === true) {
             if (isset($formData['mods']) === false) {
@@ -130,7 +138,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
                 $formData['mods'] = [];
                 foreach ($modules as $row) {
-                    $formData['mods'][] = $row['dir'];
+                    $formData['mods'][] = $row['name'];
                 }
             }
             if (isset($formData['area']) === false) {
@@ -152,7 +160,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      *
      * @return array
      */
-    protected function renderSearchResults(array $modules, $searchTerm, $area, $sort)
+    protected function renderSearchResults(array $modules, string $searchTerm, string $area, string $sort): array
     {
         $this->breadcrumb
             ->append($this->translator->t('search', 'search'), 'search')
@@ -177,11 +185,11 @@ class Index extends Core\Controller\AbstractFrontendAction
      *
      * @return array
      */
-    protected function processSearchResults(array $modules, $searchTerm, $area, $sort)
+    protected function processSearchResults(array $modules, string $searchTerm, string $area, string $sort): array
     {
         $searchResults = [];
         foreach ($this->availableModulesRegistrar->getAvailableModules() as $moduleName => $searchAvailability) {
-            if (\in_array($moduleName, $modules) && $this->acl->hasPermission('frontend/' . $moduleName)) {
+            if (\in_array($moduleName, $modules, true) && $this->acl->hasPermission('frontend/' . $moduleName)) {
                 $results = $searchAvailability->fetchSearchResults($searchTerm, $area, $sort);
 
                 if (!empty($results)) {

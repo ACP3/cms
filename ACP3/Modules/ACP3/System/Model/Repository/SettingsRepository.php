@@ -12,15 +12,17 @@ use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 
 class SettingsRepository extends AbstractRepository implements SettingsAwareRepositoryInterface
 {
-    const TABLE_NAME = 'settings';
+    public const TABLE_NAME = 'settings';
 
     /**
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllSettings()
     {
         return $this->db->fetchAll(
-            'SELECT m.name AS module_name, s.name, s.value FROM ' . $this->getTableName() . ' AS s JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = s.module_id) ORDER BY s.module_id'
+            "SELECT m.name AS module_name, s.name, s.value FROM {$this->getTableName()} AS s JOIN {$this->getTableName(ModulesRepository::TABLE_NAME)} AS m ON(m.id = s.module_id) ORDER BY s.module_id"
         );
     }
 }

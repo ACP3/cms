@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Feeds;
 use ACP3\Modules\ACP3\Feeds\DependencyInjection\FeedAvailabilityCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class ModuleRegistration extends \ACP3\Modules\ACP3\Search\ModuleRegistration
+class ModuleRegistration extends \ACP3\Core\Modules\ModuleRegistration
 {
     public function build(ContainerBuilder $containerBuilder)
     {

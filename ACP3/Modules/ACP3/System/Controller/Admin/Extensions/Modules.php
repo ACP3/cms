@@ -46,19 +46,6 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     private $aclInstaller;
 
-    /**
-     * Modules constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param \ACP3\Core\I18n\DictionaryCache                              $dictionaryCache
-     * @param \ACP3\Core\Modules\ModuleInfoCacheInterface                  $moduleInfoCache
-     * @param \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository $systemModuleRepository
-     * @param \ACP3\Modules\ACP3\System\Helper\Installer                   $installerHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                         $permissionsCache
-     * @param \ACP3\Core\Installer\SchemaRegistrar                         $schemaRegistrar
-     * @param \ACP3\Core\Modules\SchemaInstaller                           $schemaInstaller
-     * @param \ACP3\Core\Modules\AclInstaller                              $aclInstaller
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\I18n\DictionaryCache $dictionaryCache,
@@ -88,12 +75,11 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute($action = '', $dir = '')
+    public function execute(?string $action = null, ?string $dir = null)
     {
         switch ($action) {
             case 'activate':
@@ -112,11 +98,11 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * @param string $moduleDirectory
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function enableModule($moduleDirectory)
+    protected function enableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -148,9 +134,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * @param string $moduleDirectory
      *
-     * @throws System\Exception\ModuleInstallerException
+     * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      */
-    private function checkPreconditions($moduleDirectory)
+    private function checkPreconditions(string $moduleDirectory): void
     {
         $info = $this->modules->getModuleInfo($moduleDirectory);
         if (empty($info) || $info['protected'] === true || $info['installable'] === false) {
@@ -165,7 +151,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws System\Exception\ModuleInstallerException
      */
-    protected function moduleInstallerExists($serviceId)
+    protected function moduleInstallerExists(string $serviceId): void
     {
         if ($this->schemaRegistrar->has($serviceId) === false) {
             throw new System\Exception\ModuleInstallerException(
@@ -180,7 +166,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      */
-    protected function checkForFailedModuleDependencies(array $dependencies, $phrase)
+    protected function checkForFailedModuleDependencies(array $dependencies, string $phrase): void
     {
         if (!empty($dependencies)) {
             throw new System\Exception\ModuleInstallerException(
@@ -201,12 +187,12 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function saveModuleState($moduleDirectory, $active)
+    protected function saveModuleState(string $moduleDirectory, int $active)
     {
         return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
 
-    protected function purgeCaches()
+    protected function purgeCaches(): void
     {
         Core\Cache\Purge::doPurge([
             $this->appPath->getCacheDir() . 'http',
@@ -222,7 +208,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function renewCaches()
+    protected function renewCaches(): void
     {
         $this->dictionaryCache->saveLanguageCache($this->translator->getLocale());
         $this->moduleInfoCache->saveModulesInfoCache();
@@ -232,11 +218,11 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * @param string $moduleDirectory
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function disableModule($moduleDirectory)
+    protected function disableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -268,11 +254,11 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * @param string $moduleDirectory
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function installModule($moduleDirectory)
+    protected function installModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -309,17 +295,15 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * @param string $moduleDirectory
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function uninstallModule($moduleDirectory)
+    protected function uninstallModule(string $moduleDirectory)
     {
         $result = false;
 
         try {
             $info = $this->modules->getModuleInfo($moduleDirectory);
-            if ($this->modules->isInstalled($moduleDirectory) === false || $info['protected'] === true) {
+            if ($info['protected'] === true || $this->modules->isInstalled($moduleDirectory) === false) {
                 throw new System\Exception\ModuleInstallerException(
                     $this->translator->t('system', 'protected_module_description')
                 );
@@ -354,15 +338,14 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function outputPage()
+    protected function outputPage(): array
     {
         $this->renewCaches();
 
         $installedModules = $newModules = [];
 
         foreach ($this->modules->getAllModulesAlphabeticallySorted() as $key => $values) {
-            $values['dir'] = \strtolower($values['dir']);
-            if ($this->modules->isInstalled($values['dir']) === true || $values['installable'] === false) {
+            if ($values['installable'] === false || $this->modules->isInstalled($values['name']) === true) {
                 $installedModules[$key] = $values;
             } else {
                 $newModules[$key] = $values;

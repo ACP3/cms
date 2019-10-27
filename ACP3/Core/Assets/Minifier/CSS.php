@@ -21,6 +21,9 @@ class CSS extends AbstractMinifier
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function processLibraries(string $layout): array
     {
@@ -54,8 +57,7 @@ class CSS extends AbstractMinifier
 
             foreach ($stylesheets as $stylesheet) {
                 $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                    !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
-                    $library['module'] ?? $this->systemAssetsDesignPath,
+                    !empty($library['module']) ? $library['module'] : static::SYSTEM_MODULE_NAME,
                     static::ASSETS_PATH_CSS,
                     $stylesheet
                 );
@@ -73,7 +75,6 @@ class CSS extends AbstractMinifier
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
             $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
                 '',
-                '',
                 static::ASSETS_PATH_CSS,
                 \trim($file)
             );
@@ -81,13 +82,11 @@ class CSS extends AbstractMinifier
 
         // Include general system styles and the stylesheet of the current theme
         $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-            $this->systemAssetsModulePath,
-            $this->systemAssetsDesignPath,
+            static::SYSTEM_MODULE_NAME,
             static::ASSETS_PATH_CSS,
             'style.css'
         );
         $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-            '',
             '',
             static::ASSETS_PATH_CSS,
             $layout . '.css'
@@ -99,25 +98,19 @@ class CSS extends AbstractMinifier
      */
     protected function fetchModuleStylesheets(): void
     {
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $module) {
-            $modulePath = $module['dir'] . '/Resources/';
-            $designPath = $module['dir'] . '/';
-
+        foreach ($this->modules->getActiveModules() as $module) {
             $stylesheet = $this->fileResolver->getStaticAssetPath(
-                $modulePath,
-                $designPath,
+                $module['name'],
                 static::ASSETS_PATH_CSS,
                 'style.css'
             );
-            if ('' !== $stylesheet && $module['dir'] !== 'System') {
+            if ('' !== $stylesheet && $module['name'] !== self::SYSTEM_MODULE_NAME) {
                 $this->stylesheets[] = $stylesheet;
             }
 
             // Append custom styles to the default module styling
             $appendStylesheet = $this->fileResolver->getStaticAssetPath(
-                $modulePath,
-                $designPath,
+                $module['name'],
                 static::ASSETS_PATH_CSS,
                 'append.css'
             );

@@ -21,6 +21,9 @@ class JavaScript extends AbstractMinifier
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function processLibraries(string $layout): array
     {
@@ -44,8 +47,7 @@ class JavaScript extends AbstractMinifier
         foreach ($this->assets->getLibraries() as $library) {
             if ($library['enabled'] === true && isset($library[$this->getAssetGroup()]) === true) {
                 $this->javascript[] = $this->fileResolver->getStaticAssetPath(
-                    !empty($library['module']) ? $library['module'] . '/Resources' : $this->systemAssetsModulePath,
-                    !empty($library['module']) ? $library['module'] : $this->systemAssetsDesignPath,
+                    !empty($library['module']) ? $library['module'] : static::SYSTEM_MODULE_NAME,
                     static::ASSETS_PATH_JS,
                     $library[$this->getAssetGroup()]
                 );
@@ -61,10 +63,10 @@ class JavaScript extends AbstractMinifier
     protected function fetchThemeJavaScript(string $layout): void
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
-            $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $file);
+            $this->javascript[] = $this->fileResolver->getStaticAssetPath('', static::ASSETS_PATH_JS, $file);
         }
 
         // Include general js file of the layout
-        $this->javascript[] = $this->fileResolver->getStaticAssetPath('', '', static::ASSETS_PATH_JS, $layout . '.js');
+        $this->javascript[] = $this->fileResolver->getStaticAssetPath('', static::ASSETS_PATH_JS, $layout . '.js');
     }
 }

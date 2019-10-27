@@ -31,6 +31,9 @@
     },
     "exclude-from-classmap": [
       "/Test/"
+    ],
+    "files": [
+      "registration.php"
     ]
   },
   "extra": {

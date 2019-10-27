@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Console\DependencyInjection;
 
+use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
@@ -71,15 +72,10 @@ class ServiceContainerBuilder extends ContainerBuilder
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getAppDir() . 'config.yml');
-        $loader->load($this->applicationPath->getModulesDir() . 'ACP3/System/Resources/config/services.yml');
-        $loader->load(\dirname(__DIR__, 2) . '/config/console.yml');
+        $loader->load(ComponentRegistry::getPathByComponentName('core') . '/Resources/config/console.yml');
 
-        /** @var \ACP3\Core\Modules $modules */
-        $modules = $this->get('core.modules');
-
-        foreach ($modules->getAllModulesTopSorted() as $module) {
-            $modulePath = $this->applicationPath->getModulesDir() . $module['vendor'] . '/' . $module['dir'];
-            $path = $modulePath . '/Resources/config/services.yml';
+        foreach (ComponentRegistry::getAllComponentsTopSorted() as $module) {
+            $path = $module->getPath() . '/Resources/config/services.yml';
 
             if (\is_file($path)) {
                 $loader->load($path);

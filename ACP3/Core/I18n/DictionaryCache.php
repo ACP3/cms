@@ -8,10 +8,9 @@
 namespace ACP3\Core\I18n;
 
 use ACP3\Core\Cache;
-use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Environment\Theme;
-use ACP3\Core\Modules;
-use ACP3\Core\Modules\Vendor;
+use ACP3\Core\Component\ComponentRegistry;
+use ACP3\Core\Environment\ThemePathInterface;
+use DomainException;
 use Fisharebest\Localization\Locale;
 
 class DictionaryCache implements DictionaryCacheInterface
@@ -23,43 +22,16 @@ class DictionaryCache implements DictionaryCacheInterface
      */
     protected $cache;
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
-     * @var \ACP3\Core\Modules\Vendor
-     */
-    protected $vendors;
-    /**
-     * @var \ACP3\Core\Environment\Theme
+     * @var \ACP3\Core\Environment\ThemePathInterface
      */
     private $theme;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
 
-    /**
-     * DictionaryCache constructor.
-     *
-     * @param \ACP3\Core\Cache                       $cache
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Modules                     $modules
-     * @param \ACP3\Core\Modules\Vendor              $vendors
-     * @param \ACP3\Core\Environment\Theme           $theme
-     */
     public function __construct(
         Cache $cache,
-        ApplicationPath $appPath,
-        Modules $modules,
-        Vendor $vendors,
-        Theme $theme
+        ThemePathInterface $theme
     ) {
         $this->cache = $cache;
-        $this->appPath = $appPath;
-        $this->vendors = $vendors;
         $this->theme = $theme;
-        $this->modules = $modules;
     }
 
     /**
@@ -93,14 +65,14 @@ class DictionaryCache implements DictionaryCacheInterface
             'keys' => [],
         ];
 
-        foreach ($this->modules->getAllModulesTopSorted() as $module) {
-            $i18nFile = "{$this->appPath->getModulesDir()}{$module['vendor']}/{$module['dir']}/Resources/i18n/{$language}.xml";
+        foreach (ComponentRegistry::getAllComponentsTopSorted() as $module) {
+            $i18nFile = "{$module->getPath()}/Resources/i18n/{$language}.xml";
 
             if (\is_file($i18nFile) === false) {
                 continue;
             }
 
-            $data['keys'] += $this->parseI18nFile($i18nFile, $module['dir']);
+            $data['keys'] += $this->parseI18nFile($i18nFile, $module->getName());
         }
 
         $themeDependenciesReversed = \array_reverse($this->theme->getCurrentThemeDependencies());
@@ -131,9 +103,9 @@ class DictionaryCache implements DictionaryCacheInterface
     private function parseI18nFile(string $i18nFile, string $moduleName): array
     {
         $data = [];
-        $xml = \simplexml_load_file($i18nFile);
+        $xml = \simplexml_load_string(\file_get_contents($i18nFile));
         foreach ($xml->keys->item as $item) {
-            $data[\strtolower($moduleName . (string) $item['key'])] = \trim((string) $item);
+            $data[\strtolower($moduleName . $item['key'])] = \trim((string) $item);
         }
 
         return $data;
@@ -171,17 +143,26 @@ class DictionaryCache implements DictionaryCacheInterface
     protected function saveLanguagePacksCache(): bool
     {
         $languagePacks = [];
-        $languageFiles = \glob($this->appPath->getModulesDir() . '*/*/Resources/i18n/*.xml');
 
-        if ($languageFiles !== false) {
+        foreach (ComponentRegistry::getAllComponents() as $component) {
+            $languageFiles = \glob($component->getPath() . '/Resources/i18n/*.xml');
+
+            if ($languageFiles === false) {
+                continue;
+            }
+
             foreach ($languageFiles as $file) {
-                $languagePack = $this->registerLanguagePack($file);
+                $isoCode = $this->getLanguagePackIsoCode($file);
 
-                if (empty($languagePack)) {
+                if (isset($languagePacks[$isoCode])) {
                     continue;
                 }
 
-                $languagePacks += $languagePack;
+                try {
+                    $languagePacks[$isoCode] = $this->getLanguagePack($isoCode);
+                } catch (DomainException $e) {
+                    // Intentionally omitted
+                }
             }
         }
 
@@ -189,25 +170,17 @@ class DictionaryCache implements DictionaryCacheInterface
     }
 
     /**
-     * @param string $file
+     * @param string $languageIsoCode
      *
      * @return array
+     *
+     * @throws DomainException
      */
-    protected function registerLanguagePack(string $file): array
+    private function getLanguagePack(string $languageIsoCode): array
     {
-        $languageIso = $this->getLanguagePackIsoCode($file);
-
-        try {
-            $locale = Locale::create($languageIso);
-
-            return [
-                $languageIso => [
-                    'iso' => $languageIso,
-                    'name' => $locale->endonym(),
-                ],
-            ];
-        } catch (\DomainException $e) {
-            return [];
-        }
+        return [
+            'iso' => $languageIsoCode,
+            'name' => Locale::create($languageIsoCode)->endonym(),
+        ];
     }
 }

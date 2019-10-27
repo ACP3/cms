@@ -8,12 +8,14 @@
 namespace ACP3\Core\DependencyInjection;
 
 use ACP3\Core\Authentication\DependencyInjection\RegisterAuthenticationsCompilerPass;
+use ACP3\Core\Component\ComponentRegistry;
+use ACP3\Core\Component\ComponentTypeEnum;
+use ACP3\Core\Component\Dto\ComponentDataDto;
 use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
 use ACP3\Core\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
-use ACP3\Core\Modules;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterLegacySmartyPluginsPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
@@ -90,22 +92,23 @@ class ServiceContainerBuilder extends ContainerBuilder
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getAppDir() . 'config.yml');
-        $loader->load($this->applicationPath->getModulesDir() . 'ACP3/System/Resources/config/services.yml');
-        $loader->load(\dirname(__DIR__) . '/config/services.yml');
 
-        // Try to get all available services
-        /** @var Modules $modules */
-        $modules = $this->get('core.modules');
+        $modules = ComponentRegistry::filterComponentsByType(
+            ComponentRegistry::getAllComponentsTopSorted(),
+            [
+                ComponentTypeEnum::CORE,
+                ComponentTypeEnum::MODULE,
+            ]
+        );
 
-        foreach ($modules->getAllModulesTopSorted() as $module) {
-            $modulePath = $this->applicationPath->getModulesDir() . $module['vendor'] . '/' . $module['dir'];
-            $path = $modulePath . '/Resources/config/services.yml';
+        foreach ($modules as $module) {
+            $path = $module->getPath() . '/Resources/config/services.yml';
 
             if (\is_file($path)) {
                 $loader->load($path);
             }
 
-            $this->registerCompilerPass($module['vendor'], $module['dir']);
+            $this->registerCompilerPass($module);
         }
 
         $this->compile();
@@ -127,19 +130,12 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param string $vendor
-     * @param string $moduleName
+     * @param \ACP3\Core\Component\Dto\ComponentDataDto $moduleCoreData
      */
-    private function registerCompilerPass(string $vendor, string $moduleName): void
+    private function registerCompilerPass(ComponentDataDto $moduleCoreData): void
     {
-        $fqn = '\\ACP3\\Modules\\' . $vendor . '\\' . $moduleName . '\\ModuleRegistration';
-
-        if (\class_exists($fqn)) {
-            $instance = new $fqn();
-
-            if ($instance instanceof Modules\ModuleRegistration) {
-                $instance->build($this);
-            }
+        if ($moduleCoreData->getModuleRegistration()) {
+            $moduleCoreData->getModuleRegistration()->build($this);
         }
     }
 }

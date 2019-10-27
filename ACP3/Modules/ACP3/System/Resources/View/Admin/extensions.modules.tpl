@@ -36,7 +36,7 @@
                                            title="{lang t="system|not_installable_module_description"}"></i>
                                     {else}
                                         {if $row.active === true}
-                                            <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_deactivate"}"
+                                            <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_deactivate"}"
                                                class="btn btn-block btn-default btn-xs"
                                                title="{lang t="system|disable_module"}"
                                                data-ajax-form="true"
@@ -45,7 +45,7 @@
                                                 {lang t="system|disable"}
                                             </a>
                                         {else}
-                                            <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_activate"}"
+                                            <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_activate"}"
                                                class="btn btn-block btn-primary btn-xs"
                                                title="{lang t="system|enable_module"}"
                                                data-ajax-form="true"
@@ -54,7 +54,7 @@
                                                 {lang t="system|enable"}
                                             </a>
                                         {/if}
-                                        <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_uninstall"}"
+                                        <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_uninstall"}"
                                            class="btn btn-block btn-danger btn-xs"
                                            title="{lang t="system|uninstall_module"}"
                                            data-ajax-form="true"
@@ -91,7 +91,7 @@
                                     <td>{$row.version}</td>
                                     <td>{$row.author}</td>
                                     <td class="text-center">
-                                        <a href="{uri args="acp/system/extensions/modules/dir_`$row.dir`/action_install"}"
+                                        <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_install"}"
                                            class="btn btn-block btn-success btn-xs"
                                            title="{lang t="system|install_module"}"
                                            data-ajax-form="true"

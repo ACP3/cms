@@ -49,7 +49,7 @@ class Image extends AbstractFunction
         if (isset($params['file']) === true && (bool) \preg_match('=\./=', $params['file']) === false) {
             $file = $params['file'];
 
-            $path = $this->fileResolver->getStaticAssetPath('/', '/', 'Assets/img', $file);
+            $path = $this->fileResolver->getStaticAssetPath('/', 'Assets/img', $file);
 
             if (\strpos($path, '/ACP3/Modules/') !== false) {
                 $path = $this->appPath->getWebRoot() . \substr($path, \strpos($path, '/ACP3/Modules/') + 1);

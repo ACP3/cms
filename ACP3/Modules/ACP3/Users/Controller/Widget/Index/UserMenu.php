@@ -40,7 +40,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
      *
      * @return array
      */
-    public function execute()
+    public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
@@ -49,8 +49,8 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
 
             $userSidebar = [
                 'current_page' => \base64_encode($prefix . $this->request->getQuery()),
-                'modules' => $this->addModules(),
-                'system' => $this->addSystemActions(),
+                'modules' => $this->getModules(),
+                'system' => $this->getSystemActions(),
             ];
 
             return [
@@ -66,7 +66,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     /**
      * @return array
      */
-    protected function addSystemActions()
+    protected function getSystemActions(): array
     {
         $navSystem = [];
         foreach ($this->systemActions as $action) {
@@ -87,17 +87,17 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     /**
      * @return array
      */
-    protected function addModules()
+    protected function getModules(): array
     {
         $activeModules = $this->modules->getActiveModules();
         $navMods = [];
         foreach ($activeModules as $name => $info) {
-            $dir = \strtolower($info['dir']);
-            if (!\in_array($dir, ['acp', 'system']) && $this->acl->hasPermission('admin/' . $dir . '/index') === true) {
+            if (!\in_array($info['name'], ['acp', 'system'])
+                && $this->acl->hasPermission('admin/' . $info['name'] . '/index') === true
+            ) {
                 $navMods[$name] = [
-                    'path' => $dir,
                     'name' => $name,
-                    'is_active' => $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $dir === $this->request->getModule(),
+                    'is_active' => $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN && $info['name'] === $this->request->getModule(),
                 ];
             }
         }

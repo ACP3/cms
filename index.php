@@ -5,18 +5,25 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
+use ACP3\Core\Application\Bootstrap;
+use ACP3\Core\Application\BootstrapCache;
+use ACP3\Core\Application\BootstrapCache\Esi;
+use ACP3\Core\Environment\ApplicationMode;
+use Symfony\Component\HttpFoundation\Request;
+use Toflar\Psr6HttpCacheStore\Psr6Store;
+
 \define('ACP3_ROOT_DIR', \realpath(__DIR__) . '/');
 
 require ACP3_ROOT_DIR . 'vendor/autoload.php';
 
-$request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+$request = Request::createFromGlobals();
 
-$appMode = \ACP3\Core\Environment\ApplicationMode::PRODUCTION;
-if (\getenv('ACP3_APPLICATION_MODE') === \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT) {
-    $appMode = \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT;
+$appMode = ApplicationMode::PRODUCTION;
+if (\getenv('ACP3_APPLICATION_MODE') === ApplicationMode::DEVELOPMENT) {
+    $appMode = ApplicationMode::DEVELOPMENT;
 }
 
-$kernel = new \ACP3\Core\Application\Bootstrap($appMode);
+$kernel = new Bootstrap($appMode);
 
 if (!$kernel->startupChecks()) {
     echo <<<HTML
@@ -27,15 +34,15 @@ HTML;
     exit;
 }
 
-$cacheStore = new \Toflar\Psr6HttpCacheStore\Psr6Store([
+$cacheStore = new Psr6Store([
     'cache_directory' => __DIR__ . '/cache/' . $appMode . '/http',
 ]);
 
-$appCache = new \ACP3\Core\Application\BootstrapCache(
+$appCache = new BootstrapCache(
     $kernel,
     $cacheStore,
-    new \ACP3\Core\Application\BootstrapCache\Esi(),
-    ['debug' => $appMode === \ACP3\Core\Environment\ApplicationMode::DEVELOPMENT]
+    new Esi(),
+    ['debug' => $appMode === ApplicationMode::DEVELOPMENT]
 );
 
 $appCache->handle($request)->send();

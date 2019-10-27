@@ -15,8 +15,14 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Installer\\": "/Installer"
-    }
+      "ACP3\\Installer\\": ""
+    },
+    "files": [
+      "Core/registration.php",
+      "Modules/Errors/registration.php",
+      "Modules/Install/registration.php",
+      "Modules/Update/registration.php"
+    ]
   },
   "require": {
     "acp3/composer-installer": "^1.0",

@@ -10,6 +10,7 @@ namespace ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\Common\Cache\PhpFileCache;
 
 class CacheDriverFactory
@@ -34,7 +35,7 @@ class CacheDriverFactory
      * @param string                                 $cacheDriver
      * @param string                                 $environment
      */
-    public function __construct(ApplicationPath $appPath, $cacheDriver, $environment)
+    public function __construct(ApplicationPath $appPath, string $cacheDriver, string $environment)
     {
         $this->appPath = $appPath;
         $this->cacheDriver = $cacheDriver;
@@ -46,7 +47,7 @@ class CacheDriverFactory
      *
      * @return \Doctrine\Common\Cache\CacheProvider
      */
-    public function create($namespace)
+    public function create(string $namespace): CacheProvider
     {
         $driver = $this->initializeCacheDriver($this->getCacheDriverName());
         $driver->setNamespace($namespace);
@@ -57,7 +58,7 @@ class CacheDriverFactory
     /**
      * @return string
      */
-    protected function getCacheDriverName()
+    protected function getCacheDriverName(): string
     {
         return $this->environment !== ApplicationMode::DEVELOPMENT ? $this->cacheDriver : 'Array';
     }
@@ -69,7 +70,7 @@ class CacheDriverFactory
      *
      * @throws \InvalidArgumentException
      */
-    protected function initializeCacheDriver($driverName)
+    protected function initializeCacheDriver(string $driverName): CacheProvider
     {
         /* @var \Doctrine\Common\Cache\CacheProvider $driver */
         switch (\strtolower($driverName)) {

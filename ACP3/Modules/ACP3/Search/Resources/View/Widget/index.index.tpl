@@ -13,7 +13,7 @@
         <i class="glyphicon glyphicon-search"></i>
     </button>
     {foreach $search_mods as $row}
-        <input type="hidden" name="mods[]" value="{$row.dir}">
+        <input type="hidden" name="mods[]" value="{$row.name}">
     {/foreach}
     <input type="hidden" name="area" value="title_content">
     <input type="hidden" name="sort" value="asc">

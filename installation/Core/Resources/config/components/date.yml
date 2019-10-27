@@ -1,0 +1,3 @@
+services:
+  core.date.date_configurator:
+    class: ACP3\Installer\Core\Date\DateConfigurator
