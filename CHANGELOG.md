@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### BC break
+- Added a component registry for all the ACP3 components
+    - You need add a file `registration.php` which calls the method `ACP3\Core\Component\ComponentRegistry::add()`
+    - You will also need to add this file to your module's `composer.json`
+
+### Added
+- extended the `gulp watch` task so that JS files within the widget namespace get picked up
+
 ## [4.44.1] - 2019-10-06
 ### Changed
 - add a proper return value for the `acp3:modules:update` CLI command
