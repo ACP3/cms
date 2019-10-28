@@ -73,7 +73,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
     {
         $infos = [];
 
-        foreach (ComponentRegistry::getAllComponents() as $module) {
+        foreach (ComponentRegistry::all() as $module) {
             $moduleInfo = $this->fetchModuleInfo($module);
 
             if (!empty($moduleInfo)) {

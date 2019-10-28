@@ -93,8 +93,8 @@ class ServiceContainerBuilder extends ContainerBuilder
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getAppDir() . 'config.yml');
 
-        $modules = ComponentRegistry::filterComponentsByType(
-            ComponentRegistry::getAllComponentsTopSorted(),
+        $modules = ComponentRegistry::filterByType(
+            ComponentRegistry::allTopSorted(),
             [
                 ComponentTypeEnum::CORE,
                 ComponentTypeEnum::MODULE,

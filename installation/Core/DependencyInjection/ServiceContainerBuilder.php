@@ -93,16 +93,16 @@ class ServiceContainerBuilder extends ContainerBuilder
 
         $this->includeCoreServices($loader);
 
-        foreach (ComponentRegistry::getAllComponentsTopSorted() as $module) {
+        foreach (ComponentRegistry::allTopSorted() as $module) {
             $loader->load($module->getPath() . '/Resources/config/services.yml');
         }
 
         if ($this->isInstallingOrUpdating === false) {
-            $loader->load(ComponentRegistry::getPathByComponentName('installer') . '/Resources/config/services_overrides.yml');
+            $loader->load(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_overrides.yml');
         }
 
         if ($this->applicationMode === ApplicationMode::UPDATER) {
-            $loader->load(ComponentRegistry::getPathByComponentName('installer') . '/Resources/config/services_updater.yml');
+            $loader->load(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_updater.yml');
         }
 
         $this->compile();

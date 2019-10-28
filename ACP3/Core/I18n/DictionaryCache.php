@@ -65,7 +65,7 @@ class DictionaryCache implements DictionaryCacheInterface
             'keys' => [],
         ];
 
-        foreach (ComponentRegistry::getAllComponentsTopSorted() as $module) {
+        foreach (ComponentRegistry::allTopSorted() as $module) {
             $i18nFile = "{$module->getPath()}/Resources/i18n/{$language}.xml";
 
             if (\is_file($i18nFile) === false) {
@@ -144,7 +144,7 @@ class DictionaryCache implements DictionaryCacheInterface
     {
         $languagePacks = [];
 
-        foreach (ComponentRegistry::getAllComponents() as $component) {
+        foreach (ComponentRegistry::all() as $component) {
             $languageFiles = \glob($component->getPath() . '/Resources/i18n/*.xml');
 
             if ($languageFiles === false) {

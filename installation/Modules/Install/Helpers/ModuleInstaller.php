@@ -47,7 +47,7 @@ class ModuleInstaller
         /** @var SchemaRegistrar $schemaRegistrar */
         $schemaRegistrar = $container->get('core.installer.schema_registrar');
 
-        foreach (ComponentRegistry::getAllComponentsTopSorted() as $module) {
+        foreach (ComponentRegistry::allTopSorted() as $module) {
             $moduleConfigPath = $module->getPath() . '/Resources/config/module.xml';
 
             if (!$this->isValidModule($moduleConfigPath)) {

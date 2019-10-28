@@ -72,9 +72,9 @@ class ServiceContainerBuilder extends ContainerBuilder
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->load($this->applicationPath->getAppDir() . 'config.yml');
-        $loader->load(ComponentRegistry::getPathByComponentName('core') . '/Resources/config/console.yml');
+        $loader->load(ComponentRegistry::getPathByName('core') . '/Resources/config/console.yml');
 
-        foreach (ComponentRegistry::getAllComponentsTopSorted() as $module) {
+        foreach (ComponentRegistry::allTopSorted() as $module) {
             $path = $module->getPath() . '/Resources/config/services.yml';
 
             if (\is_file($path)) {

@@ -208,7 +208,7 @@ class FileResolver
     private function findAssetInModules(string $moduleName, string $resourceDirectory, string $file): ?string
     {
         try {
-            $moduleAssetPath = ComponentRegistry::getPathByComponentName($moduleName) . $resourceDirectory . $file;
+            $moduleAssetPath = ComponentRegistry::getPathByName($moduleName) . $resourceDirectory . $file;
 
             if (null !== ($resourcePath = $this->findAssetInStrategies($moduleAssetPath))) {
                 return $resourcePath;

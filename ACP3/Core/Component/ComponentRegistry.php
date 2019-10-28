@@ -38,7 +38,7 @@ class ComponentRegistry
      *
      * @return ComponentDataDto[]
      */
-    public static function getAllComponents(): array
+    public static function all(): array
     {
         return self::$components;
     }
@@ -50,7 +50,7 @@ class ComponentRegistry
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public static function getAllComponentsTopSorted(): array
+    public static function allTopSorted(): array
     {
         if (self::$componentsTopSorted !== null) {
             return self::$componentsTopSorted;
@@ -58,11 +58,11 @@ class ComponentRegistry
 
         $topSort = new StringSort();
 
-        $components = self::getAllComponents();
+        $components = self::all();
 
         foreach ($components as $component) {
             $dependencies = \array_map(static function (string $componentName) {
-                $coreData = self::findComponentByName($componentName);
+                $coreData = self::findByName($componentName);
 
                 return $coreData ? $coreData->getPath() : null;
             }, $component->getDependencies());
@@ -83,14 +83,14 @@ class ComponentRegistry
      *
      * @return ComponentDataDto[]
      */
-    public static function filterComponentsByType(array $components, array $componentTypes): array
+    public static function filterByType(array $components, array $componentTypes): array
     {
         return \array_filter($components, static function (ComponentDataDto $component) use ($componentTypes) {
             return \in_array($component->getComponentType(), $componentTypes, true);
         });
     }
 
-    private static function findComponentByName(string $componentName): ?ComponentDataDto
+    private static function findByName(string $componentName): ?ComponentDataDto
     {
         $componentName = \strtolower($componentName);
         $filteredComponents = \array_filter(self::$components, static function (ComponentDataDto $component) use ($componentName) {
@@ -110,9 +110,9 @@ class ComponentRegistry
      *
      * @throws ComponentNotFoundException
      */
-    public static function getPathByComponentName(string $componentName): string
+    public static function getPathByName(string $componentName): string
     {
-        $component = self::findComponentByName($componentName);
+        $component = self::findByName($componentName);
 
         if ($component === null) {
             throw new ComponentNotFoundException(
