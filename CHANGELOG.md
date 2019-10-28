@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.45.1] - 2019-10-28
+### Fixed
+- fix the news module registration
+
 ## [4.45.0] - 2019-10-28
 ### BC break
 - Added a component registry for all the ACP3 components
@@ -988,7 +992,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.45.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.45.1...4.x
+[4.45.1]: https://gitlab.com/ACP3/cms/compare/v4.45.0...v4.45.1
 [4.45.0]: https://gitlab.com/ACP3/cms/compare/v4.44.1...v4.45.0
 [4.44.1]: https://gitlab.com/ACP3/cms/compare/v4.44.0...v4.44.1
 [4.44.0]: https://gitlab.com/ACP3/cms/compare/v4.43.2...v4.44.0
