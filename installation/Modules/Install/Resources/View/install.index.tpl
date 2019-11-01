@@ -173,8 +173,8 @@
             </div>
         </form>
         {javascripts}
-            <script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/partials/ajax-form.min.js"></script>
-            <script defer src="{$INSTALLER_ROOT_DIR}Modules/Install/Resources/Assets/js/available_databases.min.js"></script>
+            {include_js module="system" file="partials/ajax-form"}
+            {include_js module="install" file="available_databases"}
         {/javascripts}
     {/if}
 {/block}

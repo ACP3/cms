@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>{$TITLE} | {$PAGE_TITLE}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{$DESIGN_PATH}Assets/css/style.min.css">
+    {include_stylesheet module="system" file="bootstrap"}
+    {include_stylesheet file="style" depends="bootstrap"}
     <!-- STYLESHEETS -->
     <!--[if lt IE 9]>
-        <script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/html5shiv.min.js"></script>
+        {include_js module="system" file="html5shiv"}
     <![endif]-->
 </head>
 
@@ -75,10 +75,10 @@
         </div>
     </footer>
 </div>
-<script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/polyfill.min.js"></script>
-<script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/jquery.min.js"></script>
-<script defer src="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/js/bootstrap.min.js"></script>
-<script defer src="{$DESIGN_PATH}Assets/js/language-switcher.min.js"></script>
+{include_js module="system" file="polyfill"}
+{include_js module="system" file="jquery"}
+{include_js module="system" file="bootstrap"}
+{include_js file="language-switcher"}
 <!-- JAVASCRIPTS -->
 </body>
 </html>

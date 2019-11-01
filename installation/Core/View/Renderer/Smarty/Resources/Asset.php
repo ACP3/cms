@@ -7,20 +7,15 @@
 
 namespace ACP3\Installer\Core\View\Renderer\Smarty\Resources;
 
+use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
-use ACP3\Installer\Core\Environment\ApplicationPath;
-use ACP3\Installer\Core\Environment\Theme;
 
 class Asset extends AbstractResource
 {
     /**
-     * @var \ACP3\Installer\Core\Environment\ApplicationPath
+     * @var \ACP3\Core\Assets\FileResolver
      */
-    protected $appPath;
-    /**
-     * @var \ACP3\Installer\Core\Environment\Theme
-     */
-    private $theme;
+    private $fileResolver;
 
     /**
      * {@inheritdoc}
@@ -30,18 +25,11 @@ class Asset extends AbstractResource
         return 'asset';
     }
 
-    /**
-     * Asset constructor.
-     *
-     * @param \ACP3\Installer\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Installer\Core\Environment\Theme           $theme
-     */
-    public function __construct(ApplicationPath $appPath, Theme $theme)
+    public function __construct(FileResolver $fileResolver)
     {
-        $this->appPath = $appPath;
-        $this->theme = $theme;
         $this->recompiled = true;
         $this->hasCompiledHandler = true;
+        $this->fileResolver = $fileResolver;
     }
 
     /**
@@ -53,7 +41,7 @@ class Asset extends AbstractResource
      */
     protected function fetch($name, &$source, &$mtime)
     {
-        $asset = $this->resolveTemplatePath($name);
+        $asset = $this->fileResolver->resolveTemplatePath($name);
 
         if ($asset !== '') {
             $source = \file_get_contents($asset);
@@ -62,27 +50,6 @@ class Asset extends AbstractResource
             $source = null;
             $mtime = null;
         }
-    }
-
-    protected function resolveTemplatePath(string $template): string
-    {
-        // If an template with directory is given, uppercase the first letter
-        if (\strpos($template, '/') !== false) {
-            $template = \ucfirst($template);
-
-            // Pfad zerlegen
-            $fragments = \explode('/', $template);
-
-            if (\count($fragments) === 3) {
-                $path = $fragments[0] . '/Resources/View/' . $fragments[1] . '/' . $fragments[2];
-            } else {
-                $path = $fragments[0] . '/Resources/View/' . $fragments[1];
-            }
-
-            return $this->appPath->getInstallerModulesDir() . $path;
-        }
-
-        return $this->theme->getDesignPathInternal() . $template;
     }
 
     /**

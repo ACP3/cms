@@ -9,19 +9,16 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
 
-class IncludeJs extends AbstractFunction
+class IncludeStylesheet extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Assets\IncludeJs
+     * @var \ACP3\Core\Assets\IncludeStylesheet
      */
-    private $includeJs;
+    private $includeStylesheet;
 
-    /**
-     * @param \ACP3\Core\Assets\IncludeJs $includeJs
-     */
-    public function __construct(Core\Assets\IncludeJs $includeJs)
+    public function __construct(Core\Assets\IncludeStylesheet $includeStylesheet)
     {
-        $this->includeJs = $includeJs;
+        $this->includeStylesheet = $includeStylesheet;
     }
 
     /**
@@ -29,7 +26,7 @@ class IncludeJs extends AbstractFunction
      */
     public function getExtensionName()
     {
-        return 'include_js';
+        return 'include_stylesheet';
     }
 
     /**
@@ -45,6 +42,6 @@ class IncludeJs extends AbstractFunction
             $dependencies = \explode(',', $dependencies);
         }
 
-        return $this->includeJs->add($params['module'] ?? '', $params['file'], $dependencies);
+        return $this->includeStylesheet->add($params['module'] ?? '', $params['file'], $dependencies);
     }
 }

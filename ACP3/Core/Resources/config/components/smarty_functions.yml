@@ -57,6 +57,13 @@ services:
     tags:
     - { name: smarty.plugin.function, pluginName: include_js }
 
+  smarty.plugin.include_stylesheet:
+    class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeStylesheet
+    arguments:
+      - '@core.assets.include_stylesheet'
+    tags:
+    - { name: smarty.plugin.function, pluginName: include_stylesheet }
+
   smarty.plugin.js_libraries:
     class: ACP3\Core\View\Renderer\Smarty\Functions\JsLibraries
     arguments: ['@core.assets']

@@ -2,7 +2,7 @@
 
 {block CONTENT}
     {stylesheets}
-        <link rel="stylesheet" type="text/css" href="{$INSTALLER_ROOT_DIR}Installer/Modules/Install/Resources/Assets/css/style.min.css">
+        {include_stylesheet module="install" file="style"}
     {/stylesheets}
 
     <div class="well well-sm licence">

@@ -7,20 +7,20 @@
 
 namespace ACP3\Core\Assets;
 
-class IncludeJs extends AbstractIncludeAsset
+class IncludeStylesheet extends AbstractIncludeAsset
 {
     protected function getResourceDirectory(): string
     {
-        return 'Assets/js';
+        return 'Assets/css';
     }
 
     protected function getFileExtension(): string
     {
-        return 'js';
+        return 'css';
     }
 
     protected function getHtmlTag(): string
     {
-        return '<script defer src="%s"></script>';
+        return '<link rel="stylesheet" type="text/css" href="%s">';
     }
 }
