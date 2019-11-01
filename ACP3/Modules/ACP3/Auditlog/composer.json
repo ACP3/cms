@@ -1,7 +1,7 @@
 {
   "name": "acp3/module-audit-log",
   "description": "Provides a simple audit log.",
-  "type": "acp3-module",
+  "type": "library",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
@@ -34,8 +34,5 @@
     "files": [
       "registration.php"
     ]
-  },
-  "extra": {
-    "installer-name": "ACP3/Auditlog"
   }
 }

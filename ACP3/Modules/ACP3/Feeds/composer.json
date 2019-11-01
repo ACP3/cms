@@ -1,7 +1,7 @@
 {
   "name": "acp3/module-feeds",
   "description": "Provides the feeds module for the ACP3 CMS.",
-  "type": "acp3-module",
+  "type": "library",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
@@ -35,8 +35,5 @@
     "files": [
       "registration.php"
     ]
-  },
-  "extra": {
-    "installer-name": "ACP3/Feeds"
   }
 }
