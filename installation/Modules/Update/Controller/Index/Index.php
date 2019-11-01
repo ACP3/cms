@@ -67,7 +67,7 @@ class Index extends Core\Controller\AbstractInstallerAction
     protected function clearCaches(): void
     {
         Cache\Purge::doPurge([
-            ACP3_ROOT_DIR . 'cache/',
+            ACP3_ROOT_DIR . '/cache/',
             $this->appPath->getUploadsDir() . 'assets',
         ]);
     }

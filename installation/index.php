@@ -9,9 +9,9 @@ use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Installer\Core\Application\Bootstrap;
 use Symfony\Component\HttpFoundation\Request;
 
-\define('ACP3_ROOT_DIR', \dirname(__DIR__) . '/');
+\define('ACP3_ROOT_DIR', \dirname(__DIR__));
 
-require ACP3_ROOT_DIR . 'vendor/autoload.php';
+require ACP3_ROOT_DIR . '/vendor/autoload.php';
 
 $request = Request::createFromGlobals();
 $kernel = new Bootstrap(ApplicationMode::INSTALLER);

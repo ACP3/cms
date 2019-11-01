@@ -14,10 +14,6 @@ use ACP3\Modules\ACP3\Seo;
 class UriAliasValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
      * @var \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule
      */
     protected $internalUriValidationRule;
@@ -30,21 +26,11 @@ class UriAliasValidationRule extends AbstractValidationRule
      */
     protected $seoRepository;
 
-    /**
-     * UriAliasValidationRule constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath                          $appPath
-     * @param \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
-     * @param \ACP3\Core\Validation\ValidationRules\UriSafeValidationRule     $uriSafeValidationRule
-     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository           $seoRepository
-     */
     public function __construct(
-        Core\Environment\ApplicationPath $appPath,
         Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule,
         Core\Validation\ValidationRules\UriSafeValidationRule $uriSafeValidationRule,
         Seo\Model\Repository\SeoRepository $seoRepository
     ) {
-        $this->appPath = $appPath;
         $this->internalUriValidationRule = $internalUriValidationRule;
         $this->uriSafeValidationRule = $uriSafeValidationRule;
         $this->seoRepository = $seoRepository;
@@ -75,10 +61,6 @@ class UriAliasValidationRule extends AbstractValidationRule
         }
 
         if ($this->uriSafeValidationRule->isValid($alias)) {
-            if (\is_dir($this->appPath->getModulesDir() . $alias) === true) {
-                return false;
-            }
-
             $path .= !\preg_match('=/$=', $path) ? '/' : '';
             if ($path !== '/' && $this->internalUriValidationRule->isValid($path) === false) {
                 return false;

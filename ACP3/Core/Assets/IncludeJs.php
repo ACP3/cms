@@ -103,12 +103,6 @@ class IncludeJs
             $filePath . '.js'
         );
 
-        if (\strpos($path, '/ACP3/Modules/') !== false) {
-            $path = $this->appPath->getWebRoot() . \substr($path, \strpos($path, '/ACP3/Modules/') + 1);
-        } else {
-            $path = $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR));
-        }
-
-        return $path;
+        return $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR));
     }
 }

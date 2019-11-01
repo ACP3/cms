@@ -5,9 +5,12 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-\define('ACP3_ROOT_DIR', \realpath(__DIR__ . '/../') . '/');
+use ACP3\Core\Console\Application;
+use ACP3\Core\Environment\ApplicationMode;
 
-require ACP3_ROOT_DIR . 'vendor/autoload.php';
+\define('ACP3_ROOT_DIR', \dirname(__DIR__));
 
-$app = new \ACP3\Core\Console\Application(\ACP3\Core\Environment\ApplicationMode::CLI);
+require ACP3_ROOT_DIR . '/vendor/autoload.php';
+
+$app = new Application(ApplicationMode::CLI);
 $app->run();

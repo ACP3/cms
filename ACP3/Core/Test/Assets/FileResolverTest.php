@@ -39,7 +39,7 @@ class FileResolverTest extends TestCase
 
         $this->appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
         $this->appPath
-            ->setDesignRootPathInternal(ACP3_ROOT_DIR . 'tests/designs/');
+            ->setDesignRootPathInternal(ACP3_ROOT_DIR . '/tests/designs/');
 
         $this->fileResolver = new FileResolver(
             $this->assetsCache,
@@ -58,7 +58,7 @@ class FileResolverTest extends TestCase
     {
         $this->setUpThemeMockExpectations('acp3', ['acp3']);
 
-        $expected = $this->appPath->getModulesDir() . 'ACP3/System/Resources/View/Partials/breadcrumb.tpl';
+        $expected = ACP3_ROOT_DIR . '/ACP3/Modules/ACP3/System/Resources/View/Partials/breadcrumb.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/breadcrumb.tpl');
         $this->assertSamePath($expected, $actual);
     }
@@ -89,7 +89,7 @@ class FileResolverTest extends TestCase
             ->method('getThemeDependencies')
             ->willReturnOnConsecutiveCalls(['acp3-inherit', 'acp3'], ['acp3']);
 
-        $expected = ACP3_ROOT_DIR . 'tests/designs/acp3/layout.tpl';
+        $expected = ACP3_ROOT_DIR . '/tests/designs/acp3/layout.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('layout.tpl');
         $this->assertSamePath($expected, $actual);
     }
@@ -114,7 +114,7 @@ class FileResolverTest extends TestCase
             ->method('getThemeDependencies')
             ->willReturnOnConsecutiveCalls(['acp3-inherit', 'acp3'], ['acp3']);
 
-        $expected = ACP3_ROOT_DIR . 'tests/designs/acp3-inherit/System/View/Partials/Foo/bar/baz.tpl';
+        $expected = ACP3_ROOT_DIR . '/tests/designs/acp3-inherit/System/View/Partials/Foo/bar/baz.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/Foo/bar/baz.tpl');
         $this->assertSamePath($expected, $actual);
     }

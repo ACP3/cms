@@ -44,7 +44,7 @@ trait AvailableDesignsTrait
      */
     private function getDesignPaths(): array
     {
-        return \glob(ACP3_ROOT_DIR . 'designs/*/info.xml');
+        return \glob(ACP3_ROOT_DIR . '/designs/*/info.xml');
     }
 
     /**
@@ -54,7 +54,7 @@ trait AvailableDesignsTrait
      */
     private function getDesignDirectory(string $file): string
     {
-        $pathLength = \strlen(ACP3_ROOT_DIR . 'designs/');
+        $pathLength = \strlen(ACP3_ROOT_DIR . '/designs/');
         $lastDS = \strrpos($file, '/');
 
         return \substr($file, $pathLength, $lastDS - $pathLength);

@@ -12,9 +12,9 @@ use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\HttpFoundation\Request;
 use Toflar\Psr6HttpCacheStore\Psr6Store;
 
-\define('ACP3_ROOT_DIR', \realpath(__DIR__) . '/');
+\define('ACP3_ROOT_DIR', \realpath(__DIR__));
 
-require ACP3_ROOT_DIR . 'vendor/autoload.php';
+require ACP3_ROOT_DIR . '/vendor/autoload.php';
 
 $request = Request::createFromGlobals();
 

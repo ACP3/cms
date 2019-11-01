@@ -34,7 +34,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         $theme = $this->createMock(ThemePathInterface::class);
         $theme->expects($this->once())
             ->method('getDesignPathInternal')
-            ->willReturn(ACP3_ROOT_DIR . 'tests/designs/acp3/');
+            ->willReturn(ACP3_ROOT_DIR . '/tests/designs/acp3/');
         $libraries = new Assets\Libraries($this->requestMock, $this->eventDispatcherMock);
 
         $this->assets = new Assets($theme, $libraries);

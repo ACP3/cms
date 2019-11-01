@@ -49,13 +49,9 @@ class Image extends AbstractFunction
         if (isset($params['file']) === true && (bool) \preg_match('=\./=', $params['file']) === false) {
             $file = $params['file'];
 
-            $path = $this->fileResolver->getStaticAssetPath('/', 'Assets/img', $file);
+            $path = $this->fileResolver->getStaticAssetPath('', 'Assets/img', $file);
 
-            if (\strpos($path, '/ACP3/Modules/') !== false) {
-                $path = $this->appPath->getWebRoot() . \substr($path, \strpos($path, '/ACP3/Modules/') + 1);
-            } else {
-                $path = $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR));
-            }
+            $path = $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR));
 
             if (isset($params['absolute']) && $params['absolute'] === true) {
                 $path = $this->request->getScheme() . '://' . $this->request->getHttpHost() . $path;
@@ -64,7 +60,11 @@ class Image extends AbstractFunction
             return $path . '?v=' . BootstrapInterface::VERSION;
         }
 
-        throw new \Exception('Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!');
+        throw new \InvalidArgumentException(\sprintf(
+            'Not all necessary arguments for the function %s were passed!',
+            __FUNCTION__
+            )
+        );
     }
 
     /**

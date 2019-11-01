@@ -9,17 +9,17 @@ module.exports = (gulp, plugins) => {
     const autoprefixer = require('autoprefixer');
     const sass = require('gulp-sass');
     sass.compiler = require('node-sass');
+    const componentPaths = require('./component-paths');
 
     return () => {
         return gulp
             .src(
-                [
-                    './ACP3/Modules/*/*/Resources/Assets/scss/style.scss',
-                    './designs/*/*/Assets/scss/*.scss',
-                    './designs/*/Assets/scss/*.scss',
-                    './installation/design/Assets/scss/*.scss',
-                    './installation/Installer/Modules/*/Resources/Assets/scss/style.scss'
-                ],
+                componentPaths.scss.process.concat([
+                        './designs/*/*/Assets/scss/*.scss',
+                        './designs/*/Assets/scss/*.scss',
+                        './installation/design/Assets/scss/*.scss',
+                    ],
+                ),
                 {base: './'}
             )
             .pipe(plugins.plumber())

@@ -114,7 +114,7 @@ class SitemapGenerationModel
      */
     protected function getSitemapFilePath(string $filename)
     {
-        return ACP3_ROOT_DIR . $filename;
+        return ACP3_ROOT_DIR . '/' . $filename;
     }
 
     /**

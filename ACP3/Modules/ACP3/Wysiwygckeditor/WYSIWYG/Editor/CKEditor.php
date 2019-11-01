@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor;
 
 use ACP3\Core;
+use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\WYSIWYG\Editor\Textarea;
 use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
 use ACP3\Modules\ACP3\Filemanager\Helpers;
@@ -188,7 +189,11 @@ class CKEditor extends Textarea
         $out .= '<script type="text/javascript" src="' . $basePath . "ckeditor.js\"></script>\n";
 
         // Add custom plugins
-        $ckeditorPluginsDir = $this->appPath->getWebRoot() . 'ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/plugins/';
+        $path = ComponentRegistry::getPathByName('wysiwygckeditor');
+
+        $ckeditorPluginsDir = $this->appPath->getWebRoot()
+            . $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
+            . 'Resources/Assets/js/ckeditor/plugins/';
 
         $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";

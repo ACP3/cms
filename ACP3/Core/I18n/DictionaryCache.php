@@ -77,7 +77,7 @@ class DictionaryCache implements DictionaryCacheInterface
 
         $themeDependenciesReversed = \array_reverse($this->theme->getCurrentThemeDependencies());
         foreach ($themeDependenciesReversed as $theme) {
-            $i18nFiles = \glob(ACP3_ROOT_DIR . "designs/{$theme}/*/i18n/{$language}.xml");
+            $i18nFiles = \glob(ACP3_ROOT_DIR . "/designs/{$theme}/*/i18n/{$language}.xml");
 
             if ($i18nFiles === false) {
                 continue;

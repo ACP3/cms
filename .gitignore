@@ -2,6 +2,7 @@
 /.idea
 /.php_cs
 /.php_cs.cache
+/.component-paths.json
 /ACP3/config.yml
 /build/docker/mysql/dump/
 /build/logs/

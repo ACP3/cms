@@ -8,7 +8,6 @@
 namespace ACP3\Installer\Modules\Install\Helpers;
 
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Filesystem;
 use ACP3\Core\I18n\Translator;
 
 class Requirements
@@ -131,17 +130,17 @@ class Requirements
         $result = [];
         $result['path'] = $fileOrDirectory;
         // Überprüfen, ob es eine Datei oder ein Ordner ist
-        if (\is_file(ACP3_ROOT_DIR . $fileOrDirectory) === true) {
+        if (\is_file(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true) {
             $result['class_1'] = self::CLASS_SUCCESS;
             $result['exists'] = $this->translator->t('install', 'found');
-        } elseif (\is_dir(ACP3_ROOT_DIR . $fileOrDirectory) === true) {
+        } elseif (\is_dir(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true) {
             $result['class_1'] = self::CLASS_SUCCESS;
             $result['exists'] = $this->translator->t('install', 'found');
         } else {
             $result['class_1'] = self::CLASS_ERROR;
             $result['exists'] = $this->translator->t('install', 'not_found');
         }
-        $result['class_2'] = \is_writable(ACP3_ROOT_DIR . $fileOrDirectory) === true ? self::CLASS_SUCCESS : self::CLASS_ERROR;
+        $result['class_2'] = \is_writable(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true ? self::CLASS_SUCCESS : self::CLASS_ERROR;
         $result['writable'] = $result['class_2'] === self::CLASS_SUCCESS ? $this->translator->t(
             'install',
             'writable'
@@ -150,20 +149,8 @@ class Requirements
         return $result;
     }
 
-    /**
-     * @return array
-     */
-    private function fetchRequiredFilesAndDirectories()
+    private function fetchRequiredFilesAndDirectories(): array
     {
-        $defaults = ['ACP3/config.yml', 'cache/', 'uploads/', 'uploads/assets/'];
-
-        foreach (Filesystem::scandir($this->appPath->getModulesDir()) as $row) {
-            $path = 'uploads/' . $row . '/';
-            if (\is_dir(ACP3_ROOT_DIR . $path) === true) {
-                $defaults[] = $path;
-            }
-        }
-
-        return $defaults;
+        return ['/ACP3/config.yml', '/cache/', '/uploads/', '/uploads/assets/'];
     }
 }

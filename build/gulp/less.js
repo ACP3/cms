@@ -7,19 +7,19 @@ module.exports = (gulp, plugins) => {
     'use strict';
 
     const autoprefixer = require('autoprefixer');
+    const componentPaths = require('./component-paths');
+
+    console.log(componentPaths.less);
 
     return () => {
         return gulp
             .src(
-                [
-                    './ACP3/Modules/*/*/Resources/Assets/less/style.less',
-                    './ACP3/Modules/*/*/Resources/Assets/less/append.less',
+                componentPaths.less.process.concat([
                     './designs/*/*/Assets/less/style.less',
                     './designs/*/*/Assets/less/append.less',
                     './designs/*/Assets/less/*.less',
                     './installation/design/Assets/less/*.less',
-                    './installation/Installer/Modules/*/Resources/Assets/less/style.less'
-                ],
+                ]),
                 {base: './'}
             )
             .pipe(plugins.plumber())

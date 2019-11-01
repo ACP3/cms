@@ -34,7 +34,7 @@ class DesignExistsValidationRule extends AbstractValidationRule
      */
     private function checkDesignExists($design)
     {
-        $path = ACP3_ROOT_DIR . 'designs/' . $design . '/info.xml';
+        $path = ACP3_ROOT_DIR . '/designs/' . $design . '/info.xml';
 
         return !\preg_match('=/=', $design) && \is_file($path) === true;
     }

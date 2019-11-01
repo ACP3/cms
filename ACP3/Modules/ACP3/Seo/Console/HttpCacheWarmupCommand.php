@@ -17,11 +17,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class HttpCacheWarmupCommand extends Command
 {
-    private $defaultSitemapName = ACP3_ROOT_DIR . 'sitemap.xml';
+    private $defaultSitemapName = ACP3_ROOT_DIR . '/sitemap.xml';
 
     private $splitSitemapNames = [
-        ACP3_ROOT_DIR . 'sitemap_http.xml',
-        ACP3_ROOT_DIR . 'sitemap_https.xml',
+        ACP3_ROOT_DIR . '/sitemap_http.xml',
+        ACP3_ROOT_DIR . '/sitemap_https.xml',
     ];
 
     /**
