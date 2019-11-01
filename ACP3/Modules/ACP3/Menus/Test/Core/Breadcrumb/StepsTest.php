@@ -11,7 +11,7 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 
-class StepsTest extends \ACP3\Core\Test\Breadcrumb\StepsTest
+class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

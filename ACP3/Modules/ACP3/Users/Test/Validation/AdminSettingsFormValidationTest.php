@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Users\Test\Validation;
 
-use ACP3\Core\Test\Validation\AbstractFormValidationTest;
+use ACP3\Core\Validation\AbstractFormValidationTest;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;

@@ -4,8 +4,9 @@
         bootstrap="./bootstrap.php">
     <testsuites>
         <testsuite name="ACP3-CMS Test Suite">
-            <directory>./../ACP3/Core/Test/</directory>
+            <directory>./../ACP3/Core/tests/</directory>
             <directory>./../ACP3/Modules/*/*/Test/</directory>
+            <directory>./../ACP3/Modules/*/*/tests/</directory>
             <exclude>./../vendor/*</exclude>
         </testsuite>
     </testsuites>
@@ -15,8 +16,9 @@
             <directory suffix=".php">./../ACP3/Modules/</directory>
             <directory suffix=".php">./../installation/Installer/</directory>
             <exclude>
-                <directory>./../ACP3/Core/Test/</directory>
+                <directory>./../ACP3/Core/tests/</directory>
                 <directory>./../ACP3/Modules/*/*/Test/</directory>
+                <directory>./../ACP3/Modules/*/*/tests/</directory>
                 <directory>./../ACP3/Modules/*/*/Resources/</directory>
                 <directory>./../vendor/</directory>
             </exclude>

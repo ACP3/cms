@@ -12,7 +12,7 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Core\Breadcrumb\Title;
 use ACP3\Modules\ACP3\System\Core\Breadcrumb\TitleConfigurator;
 
-class TitleTest extends \ACP3\Core\Test\Breadcrumb\TitleTest
+class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
 {
     /**
      * @var Title

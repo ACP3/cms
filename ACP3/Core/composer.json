@@ -44,13 +44,13 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Core\\": ""
+      "ACP3\\Core\\": "src"
     },
     "files": [
       "registration.php"
-    ],
-    "exclude-from-classmap": [
-      "/Test/"
     ]
+  },
+  "autoload-dev": {
+    "ACP3\\Core\\": "test"
   }
 }

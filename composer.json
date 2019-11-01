@@ -59,7 +59,8 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\": "./ACP3",
+      "ACP3\\Core\\": "./ACP3/Core/src",
+      "ACP3\\Modules\\": "./ACP3/Modules",
       "ACP3\\Installer\\": "./installation"
     },
     "files": [
@@ -95,6 +96,11 @@
       "installation/Modules/Install/registration.php",
       "installation/Modules/Update/registration.php"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ACP3\\Core\\": "./ACP3/Core/tests"
+    }
   },
   "replace": {
     "acp3/core": "self.version",
