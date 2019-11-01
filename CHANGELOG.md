@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - reworked the watch, less, scss and babel `gulp` tasks, so that they can pick up the components from arbitrary filesystem locations
 
+### Changed
+- reworked the static handling of the installer
+- changed the bundled ACP3 modules to act a "normal" composer packages
+
 ### Fixed
 - minor bug fixes and improvements
 
