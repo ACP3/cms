@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- reworked the watch, less, scss and babel `gulp` tasks, so that they can pick up the components from arbitrary filesystem locations
+
+### Fixed
+- minor bug fixes and improvements
+
 ## [4.45.1] - 2019-10-28
 ### Fixed
 - fix the news module registration
