@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [4.46.0] - 2019-11-01
 ### Added
 - reworked the watch, less, scss and babel `gulp` tasks, so that they can pick up the components from arbitrary filesystem locations
 
@@ -1003,7 +1003,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials 
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.45.1...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.46.0...4.x
+[4.46.0]: https://gitlab.com/ACP3/cms/compare/v4.45.1...v4.46.0
 [4.45.1]: https://gitlab.com/ACP3/cms/compare/v4.45.0...v4.45.1
 [4.45.0]: https://gitlab.com/ACP3/cms/compare/v4.44.1...v4.45.0
 [4.44.1]: https://gitlab.com/ACP3/cms/compare/v4.44.0...v4.44.1
