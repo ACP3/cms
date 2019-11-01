@@ -9,8 +9,6 @@ module.exports = (gulp, plugins) => {
     const autoprefixer = require('autoprefixer');
     const componentPaths = require('./component-paths');
 
-    console.log(componentPaths.less);
-
     return () => {
         return gulp
             .src(
