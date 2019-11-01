@@ -125,7 +125,7 @@ module.exports = (gulp, plugins) => {
 
         if (changedModules.includes('acp3/core')) {
             return gulp.src(
-                './ACP3/Core/Application/BootstrapInterface.php',
+                './ACP3/Core/src/Application/BootstrapInterface.php',
                 {
                     base: './'
                 }
