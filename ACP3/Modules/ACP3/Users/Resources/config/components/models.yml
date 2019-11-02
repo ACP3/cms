@@ -13,9 +13,14 @@ services:
   users.model.user_model:
     class: ACP3\Modules\ACP3\Users\Model\UserModel
     arguments:
-      - '@core.i18n.translator'
       - '@core.i18n.country_list'
       - '@users.model.userrepository'
+    configurator: 'users.model.user_model_configurator:configure'
+
+  users.model.user_model_configurator:
+    class: ACP3\Modules\ACP3\Users\Model\UserModelConfigurator
+    arguments:
+      - '@core.authentication.native'
 
   users.model.users_model:
     class: ACP3\Modules\ACP3\Users\Model\UsersModel

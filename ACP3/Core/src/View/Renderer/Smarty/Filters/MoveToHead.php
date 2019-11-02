@@ -11,8 +11,8 @@ use ACP3\Core\Assets\Minifier\MinifierInterface;
 
 class MoveToHead extends AbstractMoveElementFilter
 {
-    const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';
-    const PLACEHOLDER = '<!-- STYLESHEETS -->';
+    public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';
+    protected const PLACEHOLDER = '<!-- STYLESHEETS -->';
 
     /**
      * @var \ACP3\Core\Assets\Minifier\MinifierInterface

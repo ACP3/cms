@@ -6,7 +6,7 @@
  */
 
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Installer\Core\Application\Bootstrap;
+use ACP3\Modules\ACP3\Installer\Core\Application\Bootstrap;
 use Symfony\Component\HttpFoundation\Request;
 
 \define('ACP3_ROOT_DIR', \dirname(__DIR__));

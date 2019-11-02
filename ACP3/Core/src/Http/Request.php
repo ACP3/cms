@@ -11,8 +11,9 @@ use ACP3\Core\Controller\AreaEnum;
 
 class Request extends AbstractRequest
 {
-    const ADMIN_PANEL_PATTERN = '=^acp/=';
-    const WIDGET_PATTERN = '=^widget/=';
+    private const ADMIN_PANEL_PATTERN = 'acp/';
+    private const WIDGET_PATTERN = 'widget/';
+    private const FRONTEND_PATTERN = 'frontend/';
 
     /**
      * @var string
@@ -124,18 +125,18 @@ class Request extends AbstractRequest
         $this->query = $this->pathInfo;
 
         // It's an request for the admin panel page
-        if (\preg_match(self::ADMIN_PANEL_PATTERN, $this->query)) {
+        if (\strpos($this->query, self::ADMIN_PANEL_PATTERN) === 0) {
             $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_ADMIN);
             // strip "acp/"
-            $this->query = \substr($this->query, 4);
-        } elseif (\preg_match(self::WIDGET_PATTERN, $this->query)) {
+            $this->query = \substr($this->query, \strlen(self::ADMIN_PANEL_PATTERN));
+        } elseif (\strpos($this->query, self::WIDGET_PATTERN) === 0) {
             $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_WIDGET);
 
             // strip "widget/"
-            $this->query = \substr($this->query, 7);
+            $this->query = \substr($this->query, \strlen(self::WIDGET_PATTERN));
         } else {
-            if (\strpos($this->query, 'frontend/') === 0) {
-                $this->query = \substr($this->query, 9);
+            if (\strpos($this->query, self::FRONTEND_PATTERN) === 0) {
+                $this->query = \substr($this->query, \strlen(self::FRONTEND_PATTERN));
             }
 
             $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_FRONTEND);

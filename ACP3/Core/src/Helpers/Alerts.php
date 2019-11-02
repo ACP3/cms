@@ -115,7 +115,7 @@ class Alerts
     {
         $this->setErrorBoxData($errors);
 
-        return 'system/alerts/error_box.tpl';
+        return 'System/Alerts/error_box.tpl';
     }
 
     /**

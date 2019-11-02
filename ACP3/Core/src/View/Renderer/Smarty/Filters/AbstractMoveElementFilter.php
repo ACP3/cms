@@ -9,8 +9,8 @@ namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
 abstract class AbstractMoveElementFilter extends AbstractFilter
 {
-    const ELEMENT_CATCHER_REGEX_PATTERN = '';
-    const PLACEHOLDER = '';
+    public const ELEMENT_CATCHER_REGEX_PATTERN = '';
+    protected const PLACEHOLDER = '';
 
     /**
      * @param string $tplOutput

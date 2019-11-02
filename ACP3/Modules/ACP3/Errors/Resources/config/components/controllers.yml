@@ -17,4 +17,3 @@ services:
     class: ACP3\Modules\ACP3\Errors\Controller\Frontend\Index\ServerError
     arguments:
     - '@core.context.frontend'
-

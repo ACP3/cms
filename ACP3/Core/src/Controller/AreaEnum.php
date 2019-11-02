@@ -13,7 +13,7 @@ class AreaEnum extends BaseEnum
 {
     public const AREA_ADMIN = 'admin';
     public const AREA_FRONTEND = 'frontend';
-    public const AREA_INSTALL = 'install';
+    public const AREA_INSTALL = 'installer';
     public const AREA_WIDGET = 'widget';
 
     /**

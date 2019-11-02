@@ -35,7 +35,9 @@ trait DisplayActionTrait
             }
 
             return $actionResult;
-        } elseif (\is_string($actionResult)) {
+        }
+
+        if (\is_string($actionResult)) {
             $this->setContent($actionResult);
         } elseif (\is_array($actionResult)) {
             $this->getView()->assign($actionResult);

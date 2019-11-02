@@ -7,7 +7,9 @@
 
 namespace ACP3\Core\Authentication;
 
+use ACP3\Core\Authentication\Model\UserModelInterface;
+
 interface AuthenticationInterface
 {
-    public function authenticate();
+    public function authenticate(UserModelInterface $userModel): void;
 }

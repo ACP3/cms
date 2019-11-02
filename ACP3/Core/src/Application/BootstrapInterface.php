@@ -16,29 +16,26 @@ interface BootstrapInterface extends HttpKernelInterface
     /**
      * Contains the current ACP3 version string.
      */
-    const VERSION = '4.46.0';
+    public const VERSION = '4.46.0';
 
     /**
-     * Performs some startup checks.
+     * Checks whether the ACP3 is correctly installed.
+     *
+     * @return bool
      */
-    public function startUpChecks();
+    public function isInstalled(): bool;
 
     /**
      * Initializes the dependency injection container.
      *
      * @param SymfonyRequest $symfonyRequest
      */
-    public function initializeClasses(SymfonyRequest $symfonyRequest);
+    public function initializeClasses(SymfonyRequest $symfonyRequest): void;
 
     /**
      * Handle the request and output the page.
      *
      * @return Response
      */
-    public function outputPage();
-
-    /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    public function getContainer();
+    public function outputPage(): Response;
 }

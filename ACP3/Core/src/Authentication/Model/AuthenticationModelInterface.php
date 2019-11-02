@@ -11,14 +11,14 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 interface AuthenticationModelInterface
 {
-    const AUTH_NAME = 'ACP3_AUTH';
+    public const AUTH_NAME = 'ACP3_AUTH';
 
     /**
      * Authenticates the user.
      *
-     * @param array|int|null $userData
+     * @param array|null $userData
      */
-    public function authenticate($userData);
+    public function authenticate(?array $userData): void;
 
     /**
      * Logs out the current user.

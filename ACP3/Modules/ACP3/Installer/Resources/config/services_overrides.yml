@@ -1,0 +1,70 @@
+parameters:
+  cache_driver: 'Array'
+
+services:
+  core.breadcrumb:
+    class: ACP3\Core\Breadcrumb\Steps
+    arguments:
+      - '@core.controller.controller_action_locator'
+      - '@core.i18n.translator'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.event_dispatcher'
+
+  core.breadcrumb.title:
+    class: ACP3\Core\Breadcrumb\Title
+    arguments:
+      - '@core.breadcrumb'
+      - '@core.event_dispatcher'
+
+  core.environment.theme:
+    class: ACP3\Modules\ACP3\Installer\Core\Environment\Theme
+    arguments:
+      - '@core.environment.application_path'
+
+  core.http.request:
+    class: ACP3\Modules\ACP3\Installer\Core\Http\Request
+    public: true
+    factory: ['@core.request_factory', create]
+
+  core.request_factory:
+    class: ACP3\Modules\ACP3\Installer\Core\Http\RequestFactory
+    arguments:
+      - '@core.http.symfony_request'
+      - '@core.config'
+
+  core.modules.moduleInfoCache:
+    class: ACP3\Modules\ACP3\Installer\Core\Modules\ModuleInfoCache
+    arguments:
+      - '@core.xml'
+
+  core.session:
+    class: ACP3\Modules\ACP3\Installer\Core\Session\SessionHandler
+
+  system.model.settingsrepository:
+    class: ACP3\Modules\ACP3\Installer\Core\Repository\SettingsRepository
+    arguments:
+      - '%core.environment%'
+
+  smarty.resource.asset:
+    class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
+    arguments:
+      - '@core.assets.file_resolver'
+    tags:
+      - { name: smarty.plugin.resource, pluginName: asset }
+
+  smarty.filter.move_to_bottom:
+    class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom
+    tags:
+      - { name: smarty.plugin.filter, filterType: output }
+
+  smarty.filter.move_to_head:
+    class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead
+    tags:
+      - { name: smarty.plugin.filter, filterType: output }
+
+  users.model.user_model:
+    class: ACP3\Modules\ACP3\Users\Model\UserModel
+    arguments:
+      - '@core.i18n.country_list'
+      - '@users.model.userrepository'

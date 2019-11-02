@@ -1,0 +1,20 @@
+services:
+  installer.helpers.install:
+    class: ACP3\Modules\ACP3\Installer\Helpers\Install
+
+  installer.helpers.requirements:
+    class: ACP3\Modules\ACP3\Installer\Helpers\Requirements
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.i18n.translator'
+
+  installer.helpers.module_installer:
+    class: ACP3\Modules\ACP3\Installer\Helpers\ModuleInstaller
+    arguments:
+      - '@core.xml'
+      - '@installer.helpers.install'
+
+  installer.helpers.navigation:
+    class: ACP3\Modules\ACP3\Installer\Helpers\Navigation
+    arguments:
+      - '@core.i18n.translator'

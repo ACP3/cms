@@ -1,3 +1,0 @@
-parameters:
-  default_request: 'update'
-  core.environment: !php/const ACP3\Core\Environment\ApplicationMode::UPDATER

@@ -18,7 +18,6 @@ class ServerError extends Core\Controller\AbstractFrontendAction
             $this->translator->t('errors', 'frontend_index_server_error'),
             $this->request->getQuery()
         );
-        $this->setLayout('Errors/layout.tpl');
 
         $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
     }

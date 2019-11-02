@@ -1,6 +1,0 @@
-services:
-  core.helpers.alerts:
-    class: ACP3\Installer\Core\Helpers\Alerts
-    arguments:
-      - '@core.http.request'
-      - '@core.view'

@@ -1,6 +1,0 @@
-services:
-  update.model.schema_update_model:
-    class: ACP3\Installer\Modules\Update\Model\SchemaUpdateModel
-    arguments:
-      - '@core.environment.application_path'
-      - '@service_container'

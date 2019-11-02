@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Core\Authentication;
 
 use ACP3\Core\Authentication\AuthenticationInterface;
-use ACP3\Core\Authentication\Exception\AuthenticationException;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
@@ -19,72 +19,65 @@ class Native implements AuthenticationInterface
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Session\SessionHandlerInterface
      */
-    protected $sessionHandler;
-    /**
-     * @var AuthenticationModel
-     */
-    protected $authenticationModel;
+    private $sessionHandler;
     /**
      * @var UserRepository
      */
-    protected $userRepository;
+    private $userRepository;
 
-    /**
-     * Native constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface           $request
-     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param AuthenticationModel                        $authenticationModel
-     * @param UserRepository                             $userRepository
-     */
     public function __construct(
         RequestInterface $request,
         SessionHandlerInterface $sessionHandler,
-        AuthenticationModel $authenticationModel,
         UserRepository $userRepository
     ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
-        $this->authenticationModel = $authenticationModel;
         $this->userRepository = $userRepository;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function authenticate()
+    public function authenticate(UserModelInterface $userModel): void
     {
-        $userData = 0;
+        $userData = null;
         if ($this->sessionHandler->has(AuthenticationModel::AUTH_NAME)) {
-            $userData = $this->sessionHandler->get(AuthenticationModel::AUTH_NAME, []);
+            $userData = $this->sessionHandler->get(AuthenticationModel::AUTH_NAME);
         } elseif ($this->request->getCookies()->has(AuthenticationModel::AUTH_NAME)) {
-            list($userId, $token) = \explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
+            [$userId, $token] = \explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
 
             $userData = $this->verifyCredentials($userId, $token);
         }
 
-        $this->authenticationModel->authenticate($userData);
+        if ($userData !== null) {
+            $userModel
+                ->setIsAuthenticated(true)
+                ->setUserId($userData['id'])
+                ->setIsSuperUser($userData['super_user']);
+        }
     }
 
     /**
      * @param int    $userId
      * @param string $token
      *
-     * @return array|int
+     * @return array|null
      *
-     * @throws AuthenticationException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function verifyCredentials($userId, $token)
+    protected function verifyCredentials(int $userId, string $token): ?array
     {
         $user = $this->userRepository->getOneById($userId);
         if (!empty($user) && $user['remember_me_token'] === $token) {
             return $user;
         }
 
-        return 0;
+        return null;
     }
 }

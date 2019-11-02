@@ -36,6 +36,8 @@ splits:
     target: "git@gitlab.com:ACP3/module-gallery.git"
   - prefix: "ACP3/Modules/ACP3/Guestbook"
     target: "git@gitlab.com:ACP3/module-guestbook.git"
+  - prefix: "ACP3/Modules/ACP3/Installer"
+    target: "git@gitlab.com:ACP3/module-installer.git"
   - prefix: "ACP3/Modules/ACP3/Menus"
     target: "git@gitlab.com:ACP3/module-menus.git"
   - prefix: "ACP3/Modules/ACP3/News"

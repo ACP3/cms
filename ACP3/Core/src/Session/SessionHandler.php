@@ -93,6 +93,8 @@ class SessionHandler extends AbstractSessionHandler
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function close()
     {
@@ -103,7 +105,7 @@ class SessionHandler extends AbstractSessionHandler
 
             $this->gcCalled = false;
             $this->db->getConnection()->executeUpdate(
-                "DELETE FROM `{$this->db->getPrefix()}sessions` WHERE `session_starttime` + ? < ?;",
+                "DELETE FROM `{$this->db->getPrefixedTableName('sessions')}` WHERE `session_starttime` + ? < ?;",
                 [$this->expireTime, \time()]
             );
         }
@@ -121,11 +123,13 @@ class SessionHandler extends AbstractSessionHandler
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function read($sessionId)
     {
         $session = $this->db->fetchColumn(
-            "SELECT `session_data` FROM `{$this->db->getPrefix()}sessions` WHERE `session_id` = ?;",
+            "SELECT `session_data` FROM `{$this->db->getPrefixedTableName('sessions')}` WHERE `session_id` = ?;",
             [$sessionId]
         );
 
@@ -134,11 +138,13 @@ class SessionHandler extends AbstractSessionHandler
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function write($sessionId, $data)
     {
         $this->db->getConnection()->executeUpdate(
-            "INSERT INTO `{$this->db->getPrefix()}sessions` (`session_id`, `session_starttime`, `session_data`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?;",
+            "INSERT INTO `{$this->db->getPrefixedTableName('sessions')}` (`session_id`, `session_starttime`, `session_data`) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `session_data` = ?;",
             [$sessionId, \time(), $data, $data]
         );
 
@@ -147,6 +153,8 @@ class SessionHandler extends AbstractSessionHandler
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function destroy($sessionId)
     {
@@ -165,7 +173,10 @@ class SessionHandler extends AbstractSessionHandler
         }
 
         // Delete the session from the database
-        $this->db->getConnection()->delete($this->db->getPrefix() . 'sessions', ['session_id' => $sessionId]);
+        $this->db->getConnection()->delete(
+            $this->db->getPrefixedTableName('sessions'),
+            ['session_id' => $sessionId]
+        );
 
         return true;
     }

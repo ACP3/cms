@@ -1,5 +1,0 @@
-services:
-  core.modules.moduleInfoCache:
-    class: ACP3\Installer\Core\Modules\ModuleInfoCache
-    arguments:
-      - '@core.xml'

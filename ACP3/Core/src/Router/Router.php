@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Router implements RouterInterface
 {
-    const ADMIN_PANEL_PATTERN = '=^(acp|admin)/=';
+    private const ADMIN_PANEL_PATTERN = '=^(acp|admin)/=';
 
     /**
      * @var \ACP3\Core\Http\RequestInterface
@@ -29,13 +29,6 @@ class Router implements RouterInterface
      */
     protected $config;
 
-    /**
-     * Router constructor.
-     *
-     * @param RequestInterface  $request
-     * @param ApplicationPath   $appPath
-     * @param SettingsInterface $config
-     */
     public function __construct(
         RequestInterface $request,
         ApplicationPath $appPath,
@@ -73,13 +66,13 @@ class Router implements RouterInterface
      */
     protected function preparePath(string $path): string
     {
-        $path = $path . (!\preg_match('/\/$/', $path) ? '/' : '');
+        $path .= (!\preg_match('/\/$/', $path) ? '/' : '');
         if ($path === 'acp/') {
             $path = 'acp/acp/index/index/';
         }
 
         $prefix = 'admin/';
-        if (\substr($path, 0, \strlen($prefix)) == $prefix) {
+        if (\strpos($path, $prefix) === 0) {
             $path = 'acp/' . \substr($path, \strlen($prefix));
         }
 
@@ -116,7 +109,7 @@ class Router implements RouterInterface
      */
     protected function isAdminUri(string $path): bool
     {
-        return \preg_match(self::ADMIN_PANEL_PATTERN, $path) != false;
+        return \preg_match(self::ADMIN_PANEL_PATTERN, $path) === 1;
     }
 
     /**
@@ -134,7 +127,7 @@ class Router implements RouterInterface
             $prefix .= $this->request->getHost();
         }
 
-        if ($this->useModRewrite($path) || $path === '') {
+        if ($path === '' || $this->useModRewrite($path)) {
             $prefix .= $this->appPath->getWebRoot();
         } else {
             $prefix .= $this->appPath->getPhpSelf() . '/';
@@ -152,7 +145,8 @@ class Router implements RouterInterface
     {
         if ($isSecure === null) {
             return $this->request->getScheme() . '://';
-        } elseif ($isSecure === true) {
+        }
+        if ($isSecure === true) {
             return 'https://';
         }
 

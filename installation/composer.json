@@ -1,6 +1,6 @@
 {
   "name": "acp3/setup",
-  "description": "Provides the installation wizard for the ACP3 CMS.",
+  "description": "Provides the installation wizard of the ACP3 CMS.",
   "license": "GPL-2.0-or-later",
   "type": "acp3-core",
   "authors": [
@@ -13,20 +13,10 @@
     "email": "mail@acp3-cms.net",
     "issues": "https://gitlab.com/ACP3/cms/issues"
   },
-  "autoload": {
-    "psr-4": {
-      "ACP3\\Installer\\": ""
-    },
-    "files": [
-      "Core/registration.php",
-      "Modules/Errors/registration.php",
-      "Modules/Install/registration.php",
-      "Modules/Update/registration.php"
-    ]
-  },
   "require": {
     "acp3/composer-installer": "^1.0",
-    "acp3/core": "^4.46.0"
+    "acp3/core": "^4.46.0",
+    "acp3/module-installer": "^4.47.0"
   },
   "extra": {
     "installer-name": "installation"

@@ -46,30 +46,14 @@ abstract class AbstractBootstrap implements BootstrapInterface
     /**
      * Set monolog as the default PHP error handler.
      */
-    public function setErrorHandler()
+    public function setErrorHandler(): void
     {
-        $debug = $this->appMode === ApplicationMode::DEVELOPMENT;
+        $isProduction = $this->appMode === ApplicationMode::PRODUCTION;
 
-        ExceptionHandler::register($debug);
+        ExceptionHandler::register(!$isProduction);
 
         $errorHandler = new ErrorHandler();
         ErrorHandler::register($errorHandler);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
-     * @return ApplicationPath
-     */
-    public function getAppPath()
-    {
-        return $this->appPath;
     }
 
     /**
@@ -77,7 +61,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
      *
      * @return bool
      */
-    protected function databaseConfigExists()
+    protected function databaseConfigExists(): bool
     {
         $path = $this->appPath->getAppDir() . 'config.yml';
 

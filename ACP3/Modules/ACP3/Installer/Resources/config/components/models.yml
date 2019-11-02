@@ -1,0 +1,16 @@
+services:
+  installer.model.install_model:
+    class: ACP3\Modules\ACP3\Installer\Model\InstallModel
+    arguments:
+      - '@service_container'
+      - '@core.environment.application_path'
+      - '@core.helpers.secure'
+      - '@core.i18n.translator'
+      - '@installer.helpers.install'
+      - '@installer.helpers.module_installer'
+
+  installer.model.schema_update_model:
+    class: ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel
+    arguments:
+      - '@core.environment.application_path'
+      - '@service_container'

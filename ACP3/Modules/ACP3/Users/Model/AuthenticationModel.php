@@ -13,54 +13,46 @@ use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users;
+use ACP3\Modules\ACP3\Users\Exception\LoginFailedException;
+use ACP3\Modules\ACP3\Users\Exception\UserAccountLockedException;
+use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticationModel implements AuthenticationModelInterface
 {
-    const SALT_LENGTH = 16;
-    const REMEMBER_ME_COOKIE_LIFETIME = 31104000;
+    private const SALT_LENGTH = 16;
+    private const REMEMBER_ME_COOKIE_LIFETIME = 31104000;
 
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Session\SessionHandlerInterface
      */
-    protected $sessionHandler;
+    private $sessionHandler;
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
-    protected $userRepository;
+    private $userRepository;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
-    protected $secureHelper;
+    private $secureHelper;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
     /**
      * @var Response
      */
-    protected $response;
+    private $response;
     /**
      * @var UserModel
      */
-    protected $userModel;
+    private $userModel;
 
-    /**
-     * User constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface                         $request
-     * @param Response                                                 $response
-     * @param \ACP3\Core\Environment\ApplicationPath                   $appPath
-     * @param \ACP3\Core\Session\SessionHandlerInterface               $sessionHandler
-     * @param \ACP3\Core\Helpers\Secure                                $secureHelper
-     * @param UserModel                                                $userModel
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
-     */
     public function __construct(
         RequestInterface $request,
         Response $response,
@@ -68,7 +60,7 @@ class AuthenticationModel implements AuthenticationModelInterface
         SessionHandlerInterface $sessionHandler,
         Secure $secureHelper,
         UserModel $userModel,
-        Users\Model\Repository\UserRepository $userRepository
+        UserRepository $userRepository
     ) {
         $this->request = $request;
         $this->response = $response;
@@ -82,9 +74,9 @@ class AuthenticationModel implements AuthenticationModelInterface
     /**
      * Authenticates the user.
      *
-     * @param array|int|null $userData
+     * @param array|null $userData
      */
-    public function authenticate($userData)
+    public function authenticate(?array $userData): void
     {
         if (\is_array($userData)) {
             $this->userModel
@@ -98,6 +90,9 @@ class AuthenticationModel implements AuthenticationModelInterface
      * Logs out the current user.
      *
      * @param int $userId
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Exception
      */
     public function logout($userId = 0)
     {
@@ -120,6 +115,8 @@ class AuthenticationModel implements AuthenticationModelInterface
      * @param int|null $expiry
      *
      * @return Cookie
+     *
+     * @throws \Exception
      */
     public function setRememberMeCookie($userId, $token, $expiry = null)
     {
@@ -147,6 +144,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      * @throws Users\Exception\LoginFailedException
      * @throws Users\Exception\UserAccountLockedException
      * @throws \Doctrine\DBAL\DBALException
+     * @throws \Exception
      */
     public function login($username, $password, $rememberMe)
     {
@@ -155,7 +153,7 @@ class AuthenticationModel implements AuthenticationModelInterface
         if (!empty($user)) {
             // The user account has been locked
             if ($user['login_errors'] >= 3) {
-                throw new Users\Exception\UserAccountLockedException();
+                throw new UserAccountLockedException();
             }
 
             if ($this->userHasOldPassword($password, $user)) {
@@ -181,15 +179,17 @@ class AuthenticationModel implements AuthenticationModelInterface
                 $this->setSessionValues();
 
                 return;
-            } elseif ($this->saveFailedLoginAttempts($user) === 3) {
-                throw new Users\Exception\UserAccountLockedException();
+            }
+
+            if ($this->saveFailedLoginAttempts($user) === 3) {
+                throw new UserAccountLockedException();
             }
         }
 
-        throw new Users\Exception\LoginFailedException();
+        throw new LoginFailedException();
     }
 
-    private function setSessionValues()
+    private function setSessionValues(): void
     {
         $this->sessionHandler->set(self::AUTH_NAME, [
             'id' => $this->userModel->getUserId(),
@@ -201,8 +201,10 @@ class AuthenticationModel implements AuthenticationModelInterface
      * @param array $userData
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function saveFailedLoginAttempts(array $userData)
+    protected function saveFailedLoginAttempts(array $userData): int
     {
         $loginErrors = $userData['login_errors'] + 1;
         $this->userRepository->update(['login_errors' => $loginErrors], (int) $userData['id']);
@@ -213,7 +215,7 @@ class AuthenticationModel implements AuthenticationModelInterface
     /**
      * @return string
      */
-    protected function getCookieDomain()
+    protected function getCookieDomain(): string
     {
         if (\strpos($this->request->getServer()->get('HTTP_HOST'), '.') !== false) {
             return $this->request->getServer()->get('HTTP_HOST', '');
@@ -227,9 +229,9 @@ class AuthenticationModel implements AuthenticationModelInterface
      *
      * @return string
      */
-    protected function generateRememberMeToken(array $user)
+    protected function generateRememberMeToken(array $user): string
     {
-        return \hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . \uniqid(\mt_rand()));
+        return \hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . \uniqid(\mt_rand(), true));
     }
 
     /**
@@ -237,6 +239,8 @@ class AuthenticationModel implements AuthenticationModelInterface
      * @param string $token
      *
      * @return bool|int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     private function saveRememberMeToken($userId, $token)
     {
@@ -250,8 +254,10 @@ class AuthenticationModel implements AuthenticationModelInterface
      * @param string $password
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
-    private function migratePasswordHashToSha512($userId, $password)
+    private function migratePasswordHashToSha512($userId, $password): array
     {
         $salt = $this->secureHelper->salt(self::SALT_LENGTH);
         $updateValues = [
@@ -270,7 +276,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      *
      * @return bool
      */
-    protected function userHasOldPassword($password, array $user)
+    protected function userHasOldPassword($password, array $user): bool
     {
         return \strlen($user['pwd']) === 40
         && $user['pwd'] === $this->secureHelper->generateSaltedPassword($user['pwd_salt'], $password);

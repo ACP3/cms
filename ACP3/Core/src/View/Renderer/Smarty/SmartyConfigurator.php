@@ -27,13 +27,6 @@ class SmartyConfigurator
      */
     protected $environment;
 
-    /**
-     * SmartyConfigurator constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Settings\SettingsInterface  $config
-     * @param string                                 $environment
-     */
     public function __construct(ApplicationPath $appPath, SettingsInterface $config, string $environment)
     {
         $this->appPath = $appPath;
@@ -44,11 +37,11 @@ class SmartyConfigurator
     /**
      * @param \Smarty $smarty
      */
-    public function configure(\Smarty $smarty)
+    public function configure(\Smarty $smarty): void
     {
-        $smarty->setErrorReporting($this->isDev() ? E_ALL : 0);
+        $smarty->setErrorReporting($this->isProduction() ? 0 : E_ALL);
         $smarty->setCompileId($this->config->getSettings(Schema::MODULE_NAME)['design']);
-        $smarty->setCompileCheck($this->isDev());
+        $smarty->setCompileCheck($this->isProduction());
         $smarty->setCompileDir($this->appPath->getCacheDir() . 'tpl_compiled/');
         $smarty->setCacheDir($this->appPath->getCacheDir() . 'tpl_cached/');
     }
@@ -56,8 +49,8 @@ class SmartyConfigurator
     /**
      * @return bool
      */
-    protected function isDev()
+    private function isProduction(): bool
     {
-        return $this->environment === ApplicationMode::DEVELOPMENT;
+        return $this->environment === ApplicationMode::PRODUCTION;
     }
 }

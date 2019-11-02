@@ -12,8 +12,8 @@ use ACP3\Core\Http\RequestInterface;
 
 class MoveToBottom extends AbstractMoveElementFilter
 {
-    const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
-    const PLACEHOLDER = '<!-- JAVASCRIPTS -->';
+    public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
+    protected const PLACEHOLDER = '<!-- JAVASCRIPTS -->';
 
     /**
      * @var \ACP3\Core\Assets\Minifier\AbstractMinifier

@@ -27,6 +27,8 @@ class Bootstrap extends AbstractBootstrap
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Throwable
      */
     public function handle(SymfonyRequest $request, $type = self::MASTER_REQUEST, $catch = true)
     {
@@ -38,8 +40,11 @@ class Bootstrap extends AbstractBootstrap
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function initializeClasses(SymfonyRequest $symfonyRequest)
+    public function initializeClasses(SymfonyRequest $symfonyRequest): void
     {
         Utf8\Bootup::initAll(); // Enables the portability layer and configures PHP for UTF-8
         Utf8\Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
@@ -87,16 +92,12 @@ class Bootstrap extends AbstractBootstrap
      *
      * @throws \Throwable
      */
-    public function outputPage()
+    public function outputPage(): Response
     {
         /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
         $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
 
         try {
-            /** @var \ACP3\Core\Authentication\AuthenticationInterface $authentication */
-            $authentication = $this->container->get('core.authentication');
-            $authentication->authenticate();
-
             /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
             $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
 
@@ -120,7 +121,7 @@ class Bootstrap extends AbstractBootstrap
     /**
      * {@inheritdoc}
      */
-    public function startupChecks()
+    public function isInstalled(): bool
     {
         \date_default_timezone_set('UTC');
 
