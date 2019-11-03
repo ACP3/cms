@@ -4,11 +4,6 @@
     <p>
         {lang t="installer|installation_successful_1"}
     </p>
-    <div class="alert alert-warning">
-        {lang t="installer|installation_successful_2"}
-    </div>
-    <div class="well well-sm text-center">
-        <a href="{$ROOT_DIR}" class="btn btn-default">{lang t="installer|go_to_website"}</a>
-        <a href="{$ROOT_DIR}acp/" class="btn btn-default">{lang t="installer|log_into_admin_panel"}</a>
-    </div>
+    {include file="asset:Installer/Partials/delete_installer_directory.tpl"}
+    {include file="asset:Installer/Partials/next_steps.tpl"}
 {/block}

@@ -4,9 +4,7 @@
     <p>
         {lang t="installer|db_update_next_steps"}
     </p>
-    <div class="alert alert-warning">
-        {lang t="installer|installation_successful_2"}
-    </div>
+    {include file="asset:Installer/Partials/delete_installer_directory.tpl"}
     <dl class="dl-horizontal">
         {foreach $results as $module => $result}
             <dt>
@@ -23,7 +21,5 @@
             </dd>
         {/foreach}
     </dl>
-    <div class="well well-sm text-center">
-        <a href="{$ROOT_DIR}" class="btn btn-primary">{lang t="installer|go_to_website"}</a>
-    </div>
+    {include file="asset:Installer/Partials/next_steps.tpl"}
 {/block}
