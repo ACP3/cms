@@ -71,7 +71,7 @@ class AddTemplatesVariablesListener
         ]);
     }
 
-    private function setLanguage()
+    private function setLanguage(): void
     {
         $cookieLocale = $this->request->getCookies()->get('ACP3_INSTALLER_LANG', '');
         if ($this->translator->languagePackExists($cookieLocale)) {

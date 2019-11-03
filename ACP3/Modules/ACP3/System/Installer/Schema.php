@@ -114,7 +114,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'entries' => '20',
             'flood' => '20',
             'homepage' => 'news/index/index/',
-            'lang' => '',
+            'lang' => 'en_US',
             'mailer_smtp_auth' => false,
             'mailer_smtp_host' => '',
             'mailer_smtp_password' => '',

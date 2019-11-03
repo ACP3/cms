@@ -9,11 +9,11 @@ namespace ACP3\Modules\ACP3\System\Event\Listener;
 
 use ACP3\Core\Cache\Purge;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 use ACP3\Modules\ACP3\System\Installer\Schema;
-use ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository;
 
 class InvalidatePageCacheOnSettingsSaveBeforeListener
 {
@@ -26,7 +26,7 @@ class InvalidatePageCacheOnSettingsSaveBeforeListener
      */
     private $settings;
     /**
-     * @var SettingsRepository
+     * @var \ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface
      */
     private $settingsRepository;
     /**
@@ -38,14 +38,11 @@ class InvalidatePageCacheOnSettingsSaveBeforeListener
      */
     private $canUsePageCache;
 
-    /**
-     * InvalidatePageCacheOnSettingsSaveBeforeListener constructor.
-     */
     public function __construct(
         ApplicationPath $applicationPath,
         SettingsInterface $settings,
         Modules $modules,
-        SettingsRepository $settingsRepository,
+        SettingsAwareRepositoryInterface $settingsRepository,
         CanUsePageCache $canUsePageCache
     ) {
         $this->applicationPath = $applicationPath;
@@ -57,16 +54,18 @@ class InvalidatePageCacheOnSettingsSaveBeforeListener
 
     public function __invoke()
     {
-        if ($this->canUsePageCache->canUsePageCache()) {
-            if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_purge_mode'] == 1) {
-                Purge::doPurge($this->applicationPath->getCacheDir() . 'http');
-            } else {
-                $systemModuleId = $this->modules->getModuleId(Schema::MODULE_NAME);
-                $this->settingsRepository->update(
-                    ['value' => false],
-                    ['module_id' => $systemModuleId, 'name' => 'page_cache_is_valid']
-                );
-            }
+        if (!$this->canUsePageCache->canUsePageCache()) {
+            return;
+        }
+
+        if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_purge_mode'] == 1) {
+            Purge::doPurge($this->applicationPath->getCacheDir() . 'http');
+        } else {
+            $systemModuleId = $this->modules->getModuleId(Schema::MODULE_NAME);
+            $this->settingsRepository->update(
+                ['value' => false],
+                ['module_id' => $systemModuleId, 'name' => 'page_cache_is_valid']
+            );
         }
     }
 }

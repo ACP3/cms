@@ -7,6 +7,9 @@
 
 namespace ACP3\Core\I18n;
 
+use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Modules\ACP3\System\Installer\Schema;
+
 class Translator
 {
     /**
@@ -14,9 +17,9 @@ class Translator
      */
     private $dictionaryCache;
     /**
-     * @var string
+     * @var string|null
      */
-    private $locale = '';
+    private $locale;
     /**
      * @var array
      */
@@ -25,11 +28,17 @@ class Translator
      * @var array
      */
     private $buffer = [];
+    /**
+     * @var \ACP3\Core\Settings\SettingsInterface
+     */
+    private $settings;
 
     public function __construct(
-        DictionaryCacheInterface $dictionaryCache
+        DictionaryCacheInterface $dictionaryCache,
+        SettingsInterface $settings
     ) {
         $this->dictionaryCache = $dictionaryCache;
+        $this->settings = $settings;
     }
 
     /**
@@ -50,6 +59,10 @@ class Translator
 
     public function getLocale(): string
     {
+        if ($this->locale === null) {
+            $this->locale = $this->settings->getSettings(Schema::MODULE_NAME)['lang'];
+        }
+
         return $this->locale;
     }
 

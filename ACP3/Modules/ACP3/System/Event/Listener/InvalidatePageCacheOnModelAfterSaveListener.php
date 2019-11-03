@@ -43,12 +43,14 @@ class InvalidatePageCacheOnModelAfterSaveListener
 
     public function __invoke()
     {
-        if ($this->canUsePageCache->canUsePageCache()) {
-            if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_purge_mode'] == 1) {
-                Purge::doPurge($this->applicationPath->getCacheDir() . 'http');
-            } else {
-                $this->settings->saveSettings(['page_cache_is_valid' => false], Schema::MODULE_NAME);
-            }
+        if (!$this->canUsePageCache->canUsePageCache()) {
+            return;
+        }
+
+        if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_purge_mode'] == 1) {
+            Purge::doPurge($this->applicationPath->getCacheDir() . 'http');
+        } else {
+            $this->settings->saveSettings(['page_cache_is_valid' => false], Schema::MODULE_NAME);
         }
     }
 }

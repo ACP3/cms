@@ -30,6 +30,16 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
         return [
             [
                 'module_name' => 'system',
+                'name' => 'page_cache_is_enabled',
+                'value' => 0,
+            ],
+            [
+                'module_name' => 'system',
+                'name' => 'page_cache_purge_mode',
+                'value' => 1,
+            ],
+            [
+                'module_name' => 'system',
                 'name' => 'design',
                 'value' => 'acp3-installer',
             ],
