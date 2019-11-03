@@ -36,11 +36,6 @@ services:
       - '@core.environment.application_path'
       - '@core.http.redirect_response'
 
-  core.i18n.translator_configurator:
-    class: ACP3\Modules\ACP3\Installer\Core\I18n\TranslatorConfigurator
-    arguments:
-      - 'en_US'
-
   core.controller.install:
     abstract: true
     arguments:

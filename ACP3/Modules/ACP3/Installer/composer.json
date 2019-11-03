@@ -18,6 +18,7 @@
   "require": {
     "acp3/composer-installer": "^1.0",
     "acp3/core": "^4.46.0",
+    "acp3/module-system": "^4.46.0",
     "acp3/module-users": "^4.46.0"
   },
   "autoload": {

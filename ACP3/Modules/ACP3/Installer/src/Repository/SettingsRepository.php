@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Installer\Core\Repository;
+namespace ACP3\Modules\ACP3\Installer\Repository;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
@@ -28,6 +28,11 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
     public function getAllSettings()
     {
         return [
+            [
+                'module_name' => 'system',
+                'name' => 'lang',
+                'value' => 'en_US',
+            ],
             [
                 'module_name' => 'system',
                 'name' => 'maintenance_mode',

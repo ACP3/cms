@@ -42,7 +42,7 @@ services:
     class: ACP3\Modules\ACP3\Installer\Core\Session\SessionHandler
 
   system.model.settingsrepository:
-    class: ACP3\Modules\ACP3\Installer\Core\Repository\SettingsRepository
+    class: ACP3\Modules\ACP3\Installer\Repository\SettingsRepository
     arguments:
       - '%core.environment%'
 
