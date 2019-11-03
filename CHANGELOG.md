@@ -4,12 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- reworked the installer
+- updated the Composer dependencies
+- updated the NPM dependencies
+- updated Monolog to version 2.0.0
+
 ## [4.46.0] - 2019-11-01
 ### Added
 - reworked the watch, less, scss and babel `gulp` tasks, so that they can pick up the components from arbitrary filesystem locations
 
 ### Changed
-- reworked the static handling of the installer
+- reworked the static asset handling of the installer
 - changed the bundled ACP3 modules to act a "normal" composer packages
 
 ### Fixed
