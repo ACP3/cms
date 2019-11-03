@@ -63,7 +63,7 @@ p {
       }
 
       @media (min-width: $breakpoint-tablet-min) {
-        &.active {
+        &.complete ~ .active {
           a {
             padding-left: 25px;
           }
