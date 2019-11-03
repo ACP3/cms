@@ -23,7 +23,7 @@
         <div class="navbar-header">
             {if !empty($navbar)}
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="sr-only">{lang t="install|toggle_navigation"}</span>
+                    <span class="sr-only">{lang t="installer|toggle_navigation"}</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -61,14 +61,14 @@
                     <select name="lang"
                             id="lang"
                             class="form-control input-sm"
-                            title="{lang t="install|select_language"}"
-                            data-change-language-warning="{lang t="install|form_change_warning"}">
+                            title="{lang t="installer|select_language"}"
+                            data-change-language-warning="{lang t="installer|form_change_warning"}">
                         {foreach $LANGUAGES as $row}
                             <option value="{$row.iso}"{if $row.selected} selected="selected"{/if}>{$row.name}</option>
                         {/foreach}
                     </select>
                     <button type="submit" name="languages" class="btn btn-primary btn-sm">
-                        {lang t="install|submit"}
+                        {lang t="installer|submit"}
                     </button>
                 </form>
             </div>

@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Installer\Core\Application\Event\Listener;
+namespace ACP3\Modules\ACP3\Installer\Event\Listener;
 
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Core\Http\RequestInterface;
