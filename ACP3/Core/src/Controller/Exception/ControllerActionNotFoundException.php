@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Controller\Exception;
 
-class ControllerActionNotFoundException extends \Exception implements ForwardControllerActionAwareExceptionInterface
+class ControllerActionNotFoundException extends \RuntimeException implements ForwardControllerActionAwareExceptionInterface
 {
     /**
      * {@inheritdoc}

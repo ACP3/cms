@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Controller\Exception;
 
-class ResultNotExistsException extends \Exception implements ForwardControllerActionAwareExceptionInterface
+class ResultNotExistsException extends \RuntimeException implements ForwardControllerActionAwareExceptionInterface
 {
     /**
      * {@inheritdoc}

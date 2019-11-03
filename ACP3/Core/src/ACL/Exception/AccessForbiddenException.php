@@ -9,7 +9,7 @@ namespace ACP3\Core\ACL\Exception;
 
 use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
 
-class AccessForbiddenException extends \Exception implements ForwardControllerActionAwareExceptionInterface
+class AccessForbiddenException extends \RuntimeException implements ForwardControllerActionAwareExceptionInterface
 {
     /**
      * {@inheritdoc}

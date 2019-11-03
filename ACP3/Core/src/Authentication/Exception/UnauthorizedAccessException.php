@@ -9,7 +9,7 @@ namespace ACP3\Core\Authentication\Exception;
 
 use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
 
-class UnauthorizedAccessException extends \Exception implements ForwardControllerActionAwareExceptionInterface
+class UnauthorizedAccessException extends \RuntimeException implements ForwardControllerActionAwareExceptionInterface
 {
     /**
      * @var array

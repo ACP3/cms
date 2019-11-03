@@ -38,7 +38,10 @@ class CheckPermissionListener
         $path = $event->getArea() . '/' . $event->getModule() . '/' . $event->getController() . '/' . $event->getControllerAction();
 
         if ($this->acl->hasPermission($path) === false) {
-            throw new AccessForbiddenException();
+            throw new AccessForbiddenException(\sprintf(
+                'Access forbidden for controller action "%s"',
+                $path
+            ));
         }
     }
 }
