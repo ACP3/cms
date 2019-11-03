@@ -28,6 +28,17 @@
         <item key="module">Modul</item>
         <item key="no_superior_page">Keine übergeordnete Seite</item>
         <item key="page_type">Seitentyp</item>
+        <item key="sample_data_menu_item_contact">Kontakt</item>
+        <item key="sample_data_menu_item_files">Downloads</item>
+        <item key="sample_data_menu_item_gallery">Fotogalerien</item>
+        <item key="sample_data_menu_item_guestbook">Gästebuch</item>
+        <item key="sample_data_menu_item_imprint">Impressum</item>
+        <item key="sample_data_menu_item_news">News</item>
+        <item key="sample_data_menu_item_newsletter">Newsletter</item>
+        <item key="sample_data_menu_item_polls">Umfragen</item>
+        <item key="sample_data_menu_item_search">Suche</item>
+        <item key="sample_data_menu_main">Hauptnavigation</item>
+        <item key="sample_data_menu_sidebar">Sidebar</item>
         <item key="select_item_visibility">Bitte wählen Sie aus, ob der Menüpunkt angezeigt werden soll oder nicht.</item>
         <item key="select_menu_bar">Bitte wählen Sie aus, in welcher Navigationsleiste der Menüpunkt angezeigt werden soll.</item>
         <item key="select_page_type">Bitte wählen Sie den Seitentyp aus.</item>

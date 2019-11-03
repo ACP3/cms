@@ -18,6 +18,11 @@
         <item key="read_newsfeed">Read newsfeed</item>
         <item key="readmore">read more</item>
         <item key="readmore_chars"><![CDATA[Characters required, to enable the &quot;read more...&quot;-function]]></item>
+        <item key="sample_data_category_name">First category</item>
+        <item key="sample_data_category_description">This is the first category.</item>
+        <item key="sample_data_news_headline">Installation successfully finished!</item>
+        <item key="sample_data_news_text">
+            <![CDATA[It looks like that the installation of the ACP3 CMS was successful.<br />This is just a test news, you can now edit or delete in the administration area.]]></item>
         <item key="select_activate_readmore">
             <![CDATA[Please select whether you want to enable or disable the &quot;read more...&quot;-function.]]></item>
         <item key="select_active">Please select, whether this news should be active or not.</item>

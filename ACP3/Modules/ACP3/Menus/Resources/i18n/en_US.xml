@@ -30,6 +30,17 @@
         <item key="module">Module</item>
         <item key="no_superior_page">No superior page</item>
         <item key="page_type">Page type</item>
+        <item key="sample_data_menu_item_contact">Contact</item>
+        <item key="sample_data_menu_item_files">Downloads</item>
+        <item key="sample_data_menu_item_gallery">Galleries</item>
+        <item key="sample_data_menu_item_guestbook">Guestbook</item>
+        <item key="sample_data_menu_item_imprint">Imprint</item>
+        <item key="sample_data_menu_item_news">News</item>
+        <item key="sample_data_menu_item_newsletter">Newsletter</item>
+        <item key="sample_data_menu_item_polls">Polls</item>
+        <item key="sample_data_menu_item_search">Search</item>
+        <item key="sample_data_menu_main">Mainnavigation</item>
+        <item key="sample_data_menu_sidebar">Sidebar</item>
         <item key="select_item_visibility">Please select whether you want to display to menu item or not.</item>
         <item key="select_menu_bar">Please choose in which navigation bar the menu item should appear.</item>
         <item key="select_page_type">Please select the page type.</item>

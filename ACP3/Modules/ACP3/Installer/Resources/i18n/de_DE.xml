@@ -6,8 +6,6 @@
         <item key="admin_account">Administrator Konto</item>
         <item key="advanced">Erweitert</item>
         <item key="back">Zurück</item>
-        <item key="category_name">Erste Kategorie</item>
-        <item key="category_description">Das ist die erste Kategorie.</item>
         <item key="check_again">Erneut prüfen</item>
         <item key="database">Datenbank</item>
         <item key="date_format_long">Langes Datumsformat</item>
@@ -61,9 +59,6 @@
         <item key="log_into_admin_panel">Zum Administrationsbereich</item>
         <item key="maximum_uploadsize">Maximale Uploadgröße:</item>
         <item key="navigation">Navigation</item>
-        <item key="news_headline">Installation erfolgreich beendet!</item>
-        <item key="news_text">
-            <![CDATA[So wie es aussieht, hat bei der Installation des ACP3 CMS alles geklappt.<br />Dies ist nur eine Testnews, die Sie nun im Administrationsbereich bearbeiten oder löschen können.]]></item>
         <item key="newsletter_mailsig">das Newsletterteam</item>
         <item key="nickname">Benutzername</item>
         <item key="not_found">Nicht gefunden!</item>
@@ -75,17 +70,6 @@
         <item key="on">an</item>
         <item key="optional">(optional)</item>
         <item key="overview">Übersicht</item>
-        <item key="pages_contact">Kontakt</item>
-        <item key="pages_files">Downloads</item>
-        <item key="pages_gallery">Fotogalerien</item>
-        <item key="pages_guestbook">Gästebuch</item>
-        <item key="pages_imprint">Impressum</item>
-        <item key="pages_main">Hauptnavigation</item>
-        <item key="pages_news">News</item>
-        <item key="pages_newsletter">Newsletter</item>
-        <item key="pages_polls">Umfragen</item>
-        <item key="pages_search">Suche</item>
-        <item key="pages_sidebar">Sidebar</item>
         <item key="pdo_extension">PDO-Erweiterung</item>
         <item key="php_date_function">
             <![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a>-Funktion von PHP.]]></item>

@@ -6,8 +6,6 @@
         <item key="admin_account">Administrator account</item>
         <item key="advanced">Advanced</item>
         <item key="back">Back</item>
-        <item key="category_name">First category</item>
-        <item key="category_description">This is the first category.</item>
         <item key="check_again">Check again</item>
         <item key="database">Database</item>
         <item key="date_format_long">Short date format</item>
@@ -59,9 +57,6 @@
         <item key="log_into_admin_panel">Log into the administration panel</item>
         <item key="maximum_uploadsize">Maximum uploadsize:</item>
         <item key="navigation">Navigation</item>
-        <item key="news_headline">Installation successfully finished!</item>
-        <item key="news_text">
-            <![CDATA[It looks like that the installation of the ACP3 CMS was successful.<br />This is just a test news, you can now edit or delete in the administration area.]]></item>
         <item key="newsletter_mailsig">the Newsletterteam</item>
         <item key="nickname">User name</item>
         <item key="not_found">Not found!</item>
@@ -73,17 +68,6 @@
         <item key="on">on</item>
         <item key="optional">(optional)</item>
         <item key="overview">Overview</item>
-        <item key="pages_contact">Contact</item>
-        <item key="pages_files">Downloads</item>
-        <item key="pages_gallery">Galleries</item>
-        <item key="pages_guestbook">Guestbook</item>
-        <item key="pages_imprint">Imprint</item>
-        <item key="pages_main">Mainnavigation</item>
-        <item key="pages_news">News</item>
-        <item key="pages_newsletter">Newsletter</item>
-        <item key="pages_polls">Polls</item>
-        <item key="pages_search">Search</item>
-        <item key="pages_sidebar">Sidebar</item>
         <item key="pdo_extension">PDO Extension</item>
         <item key="php_date_function">
             <![CDATA[see <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a> function of PHP.]]></item>
