@@ -17,7 +17,6 @@ module.exports = (gulp, plugins) => {
                 componentPaths.scss.process.concat([
                         './designs/*/*/Assets/scss/*.scss',
                         './designs/*/Assets/scss/*.scss',
-                        './installation/design/Assets/scss/*.scss',
                     ],
                 ),
                 {base: './'}

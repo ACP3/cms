@@ -8,7 +8,7 @@ jQuery(document).ready(($) => {
         $languages = $('#languages');
 
     $doc.data('has-changes', false);
-    $('#content').find(':input').change(function () {
+    $('#content').find(':input').change(() => {
         $doc.data('has-changes', true);
     });
 

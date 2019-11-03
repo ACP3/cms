@@ -16,7 +16,6 @@ module.exports = (gulp, plugins) => {
                     './designs/*/*/Assets/less/style.less',
                     './designs/*/*/Assets/less/append.less',
                     './designs/*/Assets/less/*.less',
-                    './installation/design/Assets/less/*.less',
                 ]),
                 {base: './'}
             )

@@ -16,10 +16,7 @@ module.exports = (gulp, plugins) => {
                     [
                         './designs/*/*/Assets/js/{admin,frontend,partials,widget}/*.js',
                         './designs/*/Assets/js/*.js',
-                        './installation/design/Assets/js/*.js',
-                        // Exclude already minified files
                         '!./designs/**/Assets/js/**/*.min.js',
-                        '!./installation/design/Assets/js/*.min.js',
                     ]
                 ),
                 {base: './'}

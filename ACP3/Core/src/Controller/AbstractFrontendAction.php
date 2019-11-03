@@ -95,7 +95,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     /**
      * @return string
      */
-    protected function fetchLayoutViaInheritance()
+    protected function fetchLayoutViaInheritance(): string
     {
         if ($this->request->isXmlHttpRequest()) {
             $paths = $this->fetchLayoutPaths('layout.ajax', 'System/layout.ajax.tpl');
@@ -114,7 +114,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      *
      * @return array
      */
-    private function fetchLayoutPaths(string $layoutFileName, string $defaultLayoutName)
+    private function fetchLayoutPaths(string $layoutFileName, string $defaultLayoutName): array
     {
         return [
             $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl',
@@ -128,7 +128,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     /**
      * @param string[] $paths
      */
-    private function iterateOverLayoutPaths(array $paths)
+    private function iterateOverLayoutPaths(array $paths): void
     {
         if ($this->getLayout() !== 'layout.tpl') {
             return;

@@ -25,7 +25,6 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
 
         $this->installerWebRoot = $this->webRoot;
         $this->webRoot = \substr($this->webRoot !== '/' ? $this->webRoot . '/' : '/', 0, -14);
-        $this->designRootPathInternal = ACP3_ROOT_DIR . '/installation/design/';
     }
 
     /**

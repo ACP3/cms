@@ -34,22 +34,7 @@ class Theme implements ThemePathInterface
      * @var array
      */
     private $sortedThemeDependencies = [];
-    /**
-     * @var string
-     */
-    protected $designPathInternal;
-    /**
-     * @var string
-     */
-    protected $designPathWeb;
 
-    /**
-     * Design constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Settings\SettingsInterface  $settings
-     * @param \ACP3\Core\XML                         $xml
-     */
     public function __construct(
         ApplicationPath $appPath,
         SettingsInterface $settings,
@@ -152,11 +137,7 @@ class Theme implements ThemePathInterface
      */
     public function getDesignPathInternal(): string
     {
-        if ($this->designPathInternal === null) {
-            $this->designPathInternal = $this->appPath->getDesignRootPathInternal() . $this->getCurrentTheme() . '/';
-        }
-
-        return $this->designPathInternal;
+        return $this->appPath->getDesignRootPathInternal() . $this->getCurrentTheme() . '/';
     }
 
     /**
@@ -164,10 +145,6 @@ class Theme implements ThemePathInterface
      */
     public function getDesignPathWeb(): string
     {
-        if ($this->designPathWeb === null) {
-            $this->designPathWeb = $this->appPath->getWebRoot() . 'designs/' . $this->getCurrentTheme() . '/';
-        }
-
-        return $this->designPathWeb;
+        return $this->appPath->getWebRoot() . 'designs/' . $this->getCurrentTheme() . '/';
     }
 }

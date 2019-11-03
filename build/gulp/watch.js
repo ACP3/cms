@@ -13,7 +13,6 @@ module.exports = (gulp) => {
             componentPaths.less.watch.concat([
                 'designs/*/**/Assets/less/*.less',
                 'designs/*/**/Assets/less/**/*.less',
-                'installation/design/Assets/less/*.less',
             ]),
             {cwd: './'},
             gulp.task('less')
@@ -22,7 +21,6 @@ module.exports = (gulp) => {
             componentPaths.scss.watch.concat([
                 'designs/*/**/Assets/scss/*.scss',
                 'designs/*/**/Assets/scss/**/*.scss',
-                'installation/design/Assets/scss/*.scss',
             ]),
             {cwd: './'},
             gulp.task('scss')
@@ -31,10 +29,7 @@ module.exports = (gulp) => {
             componentPaths.js.concat(
                 [
                     './designs/**/Assets/js/**/*.js',
-                    './installation/design/Assets/js/*.js',
-                    // Exclude already minified files
                     '!./designs/**/Assets/js/**/*.min.js',
-                    '!./installation/design/Assets/js/*.min.js',
                 ]
             ),
             {cwd: './'},

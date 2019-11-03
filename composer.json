@@ -130,7 +130,9 @@
     "acp3/module-system": "self.version",
     "acp3/module-users": "self.version",
     "acp3/module-wysiwyg-ckeditor": "self.version",
-    "acp3/module-wysiwyg-tinymce": "self.version"
+    "acp3/module-wysiwyg-tinymce": "self.version",
+    "acp3/theme-default": "self.version",
+    "acp3/theme-installer": "self.version"
   },
   "scripts": {
     "test": "./vendor/bin/phpunit -c ./tests/phpunit.dist.xml",

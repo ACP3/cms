@@ -17,11 +17,6 @@ services:
       - '@core.breadcrumb'
       - '@core.event_dispatcher'
 
-  core.environment.theme:
-    class: ACP3\Modules\ACP3\Installer\Core\Environment\Theme
-    arguments:
-      - '@core.environment.application_path'
-
   core.http.request:
     class: ACP3\Modules\ACP3\Installer\Core\Http\Request
     public: true

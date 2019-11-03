@@ -30,6 +30,11 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
         return [
             [
                 'module_name' => 'system',
+                'name' => 'design',
+                'value' => 'acp3-installer',
+            ],
+            [
+                'module_name' => 'system',
                 'name' => 'lang',
                 'value' => 'en_US',
             ],
@@ -47,11 +52,6 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
                 'module_name' => 'system',
                 'name' => 'homepage',
                 'value' => $this->getHomepage(),
-            ],
-            [
-                'module_name' => 'system',
-                'name' => 'design',
-                'value' => 'installer',
             ],
             [
                 'module_name' => 'system',
