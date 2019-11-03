@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::INSTALLER,
         'installer',
         __DIR__,
-        ['core']
+        ['core', 'users', 'system']
     )
 );
