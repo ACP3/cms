@@ -182,9 +182,13 @@ class CKEditor extends Textarea
         // Add custom plugins
         $path = ComponentRegistry::getPathByName('wysiwygckeditor');
 
-        $ckeditorPluginsDir = $this->appPath->getWebRoot()
-            . $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
-            . 'Resources/Assets/js/ckeditor/plugins/';
+        $ckeditorPluginsDir = \str_replace(
+            '\\',
+            '/',
+            $this->appPath->getWebRoot()
+            . \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
+            . '/Resources/Assets/js/ckeditor/plugins/'
+        );
 
         $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";

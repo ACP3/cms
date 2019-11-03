@@ -35,8 +35,12 @@ class Helpers
     {
         $path = ComponentRegistry::getPathByName(Schema::MODULE_NAME);
 
-        return $this->appPath->getWebRoot()
-            . $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
-            . '/Resources/Assets/rich-filemanager/index.html';
+        return \str_replace(
+            '\\',
+            '/',
+            $this->appPath->getWebRoot()
+            . \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
+            . '/Resources/Assets/rich-filemanager/index.html'
+        );
     }
 }
