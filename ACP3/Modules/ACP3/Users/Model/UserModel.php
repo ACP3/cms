@@ -51,10 +51,6 @@ class UserModel implements UserModelInterface
     /**
      * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück.
      *
-     * @param int $userId
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getUserInfo(int $userId = 0): array
@@ -77,8 +73,6 @@ class UserModel implements UserModelInterface
 
     /**
      * Returns, whether the current user is an authenticated user or not.
-     *
-     * @return bool
      */
     public function isAuthenticated(): bool
     {
@@ -86,8 +80,6 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * @param bool $isAuthenticated
-     *
      * @return $this
      */
     public function setIsAuthenticated(bool $isAuthenticated)
@@ -99,8 +91,6 @@ class UserModel implements UserModelInterface
 
     /**
      * Returns the user id of the currently logged in user.
-     *
-     * @return int
      */
     public function getUserId(): int
     {
@@ -108,8 +98,6 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * @param int $userId
-     *
      * @return $this
      */
     public function setUserId(int $userId)
@@ -121,8 +109,6 @@ class UserModel implements UserModelInterface
 
     /**
      * Returns, whether the currently logged in user is a super user or not.
-     *
-     * @return bool
      */
     public function isSuperUser(): bool
     {
@@ -130,8 +116,6 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * @param bool $isSuperUser
-     *
      * @return $this
      */
     public function setIsSuperUser(bool $isSuperUser)

@@ -25,9 +25,6 @@ class SaveSharingInfoOnModelAfterSaveListener
 
     /**
      * InsertUriAliasOnModelAfterSaveListener constructor.
-     *
-     * @param ACL                                                   $acl
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager $socialSharingManager
      */
     public function __construct(
         ACL $acl,
@@ -38,8 +35,6 @@ class SaveSharingInfoOnModelAfterSaveListener
     }
 
     /**
-     * @param ModelSaveEvent $event
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __invoke(ModelSaveEvent $event)

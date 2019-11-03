@@ -87,11 +87,6 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param string $time
-     * @param int    $resultsPerPage
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */

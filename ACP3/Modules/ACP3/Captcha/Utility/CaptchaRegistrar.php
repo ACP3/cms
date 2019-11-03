@@ -17,8 +17,7 @@ class CaptchaRegistrar
     protected $availableCaptchas = [];
 
     /**
-     * @param string                    $serviceId
-     * @param CaptchaExtensionInterface $captchaExtension
+     * @param string $serviceId
      */
     public function registerCaptcha($serviceId, CaptchaExtensionInterface $captchaExtension)
     {
@@ -56,8 +55,6 @@ class CaptchaRegistrar
             return $this->availableCaptchas[$serviceId];
         }
 
-        throw new \InvalidArgumentException(
-            \sprintf('Can not find the captcha extension with the name "%s".', $serviceId)
-        );
+        throw new \InvalidArgumentException(\sprintf('Can not find the captcha extension with the name "%s".', $serviceId));
     }
 }

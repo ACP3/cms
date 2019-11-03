@@ -28,11 +28,6 @@ class QueryOption
 
     /**
      * QueryOption constructor.
-     *
-     * @param string $columnName
-     * @param string $value
-     * @param string $tableAlias
-     * @param string $operator
      */
     public function __construct(
         string $columnName,
@@ -46,33 +41,21 @@ class QueryOption
         $this->operator = $operator;
     }
 
-    /**
-     * @return string
-     */
     public function getTableAlias(): string
     {
         return $this->tableAlias;
     }
 
-    /**
-     * @return string
-     */
     public function getColumnName(): string
     {
         return $this->columnName;
     }
 
-    /**
-     * @return string
-     */
     public function getValue(): string
     {
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
     public function getOperator(): string
     {
         return $this->operator;

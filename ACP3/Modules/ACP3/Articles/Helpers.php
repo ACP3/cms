@@ -22,10 +22,6 @@ class Helpers
      */
     protected $articleRepository;
 
-    /**
-     * @param Core\Helpers\Forms $formsHelper
-     * @param ArticleRepository  $articleRepository
-     */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
         ArticleRepository $articleRepository

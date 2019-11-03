@@ -67,12 +67,6 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         $this->assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
     }
 
-    /**
-     * @param string $siteTitle
-     * @param string $siteSubtitle
-     * @param int    $subtitleMode
-     * @param int    $subtitleHomepageMode
-     */
     private function setUpConfigMockExpectations(
         string $siteTitle,
         string $siteSubtitle,

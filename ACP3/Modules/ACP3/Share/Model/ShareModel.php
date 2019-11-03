@@ -25,11 +25,6 @@ class ShareModel extends AbstractModel
         return parent::save($data, $entryId);
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
     private function mapDataFromRequest(array $data): array
     {
         $mappedData = [];

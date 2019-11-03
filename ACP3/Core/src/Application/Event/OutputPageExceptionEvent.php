@@ -23,9 +23,6 @@ class OutputPageExceptionEvent extends Event
         $this->throwable = $throwable;
     }
 
-    /**
-     * @return \Throwable
-     */
     public function getThrowable(): \Throwable
     {
         return $this->throwable;

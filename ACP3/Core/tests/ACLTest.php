@@ -147,11 +147,6 @@ class ACLTest extends \PHPUnit\Framework\TestCase
             ->willReturn($returnValueActionExists);
     }
 
-    /**
-     * @param string $moduleName
-     * @param bool   $returnValueIsActive
-     * @param int    $callCountIsActive
-     */
     private function setUpModulesMockExpectations(
         string $moduleName,
         bool $returnValueIsActive,
@@ -195,10 +190,9 @@ class ACLTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param int   $callCountResourceCache
-     * @param int   $callCountRulesCache
-     * @param array $returnValueRulesCache
-     * @param bool  $hasAccess
+     * @param int  $callCountResourceCache
+     * @param int  $callCountRulesCache
+     * @param bool $hasAccess
      */
     protected function setUpPermissionsCacheMockExpectations(
         $callCountResourceCache,

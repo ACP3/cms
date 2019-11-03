@@ -54,8 +54,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * Bindet die gecachete Galerie anhand ihrer ID ein.
      *
-     * @param int $galleryId
-     *
      * @return array
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
@@ -72,8 +70,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * Erstellt den Galerie-Cache anhand der angegebenen ID.
-     *
-     * @param int $galleryId
      *
      * @return bool
      *
@@ -100,11 +96,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param string      $fileName
-     * @param string|null $action
-     *
-     * @return \ACP3\Core\Picture\Output
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     private function cachePicture(string $fileName, ?string $action): Output

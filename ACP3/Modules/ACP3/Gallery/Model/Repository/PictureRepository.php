@@ -16,9 +16,6 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'gallery_pictures';
 
     /**
-     * @param int    $pictureId
-     * @param string $time
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -49,8 +46,6 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $pictureId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -64,8 +59,6 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $galleryId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -79,8 +72,6 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $galleryId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -101,9 +92,6 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $pictureNumber
-     * @param int $galleryId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -117,9 +105,6 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $pictureNumber
-     * @param int $galleryId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -133,8 +118,6 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $pictureId
-     *
      * @return string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -148,9 +131,6 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $pictureNumber
-     * @param int $galleryId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException

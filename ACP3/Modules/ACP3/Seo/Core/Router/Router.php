@@ -29,11 +29,6 @@ class Router extends \ACP3\Core\Router\Router
         $this->aliases = $aliases;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     protected function preparePath(string $path): string
     {
         $path = parent::preparePath($path);

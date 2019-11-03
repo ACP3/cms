@@ -38,17 +38,11 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         $this->systemModuleRepository = $systemModuleRepository;
     }
 
-    /**
-     * @return string
-     */
     protected function getCacheKey(): string
     {
         return 'modules_info';
     }
 
-    /**
-     * @return array
-     */
     public function getModulesInfoCache(): array
     {
         if ($this->cache->contains($this->getCacheKey()) === false) {
@@ -66,9 +60,6 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         $this->cache->save($this->getCacheKey(), $this->fetchAllModulesInfo());
     }
 
-    /**
-     * @return array
-     */
     protected function fetchAllModulesInfo(): array
     {
         $infos = [];
@@ -84,11 +75,6 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         return $infos;
     }
 
-    /**
-     * @param \ACP3\Core\Component\Dto\ComponentDataDto $moduleCoreData
-     *
-     * @return array
-     */
     protected function fetchModuleInfo(ComponentDataDto $moduleCoreData): array
     {
         $path = $moduleCoreData->getPath() . '/Resources/config/module.xml';

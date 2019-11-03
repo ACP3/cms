@@ -34,7 +34,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Date                                            $date
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     * @param Polls\Model\PollsModel                                     $pollsModel
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
      * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation    $pollsValidator
      */

@@ -73,14 +73,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         return $select;
     }
 
-    /**
-     * @param int      $moduleId
-     * @param int      $privilegeId
-     * @param int      $value
-     * @param int|null $defaultValue
-     *
-     * @return string
-     */
     protected function privilegeIsChecked(int $moduleId, int $privilegeId, int $value = 0, ?int $defaultValue = null): string
     {
         if (($this->request->getPost()->count() === 0 && $defaultValue === $value) ||
@@ -92,13 +84,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         return '';
     }
 
-    /**
-     * @param array  $rules
-     * @param string $moduleDir
-     * @param string $key
-     *
-     * @return string
-     */
     protected function calculatePermission(array $rules, string $moduleDir, string $key): string
     {
         return \sprintf(
@@ -110,13 +95,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         );
     }
 
-    /**
-     * @param int $roleParentId
-     * @param int $roleLeftId
-     * @param int $roleRightId
-     *
-     * @return array
-     */
     protected function fetchRoles(int $roleParentId = 0, int $roleLeftId = 0, int $roleRightId = 0): array
     {
         $roles = $this->acl->getAllRoles();
@@ -133,11 +111,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param int $roleId
-     * @param int $defaultValue
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function fetchModulePermissions(int $roleId, int $defaultValue = 0): array

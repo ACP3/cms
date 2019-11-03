@@ -47,7 +47,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
      * @param \ACP3\Core\Helpers\Date                                        $dateHelper
      * @param \ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Modules\ACP3\Comments\Helpers|null                       $commentsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

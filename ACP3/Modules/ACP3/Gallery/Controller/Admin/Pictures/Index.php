@@ -50,8 +50,6 @@ class Index extends AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
      * @return array
      *
      * @throws Core\Controller\Exception\ResultNotExistsException

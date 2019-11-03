@@ -18,8 +18,6 @@ class AdminFormValidation extends AbstractFormValidation
     protected $settings = [];
 
     /**
-     * @param array $settings
-     *
      * @return $this
      */
     public function setSettings(array $settings)

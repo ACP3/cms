@@ -32,8 +32,6 @@ abstract class AbstractModifier implements PluginInterface
 
     /**
      * @param string $value
-     *
-     * @return string
      */
     public function __invoke($value): string
     {

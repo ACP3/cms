@@ -19,9 +19,6 @@ class Request extends \ACP3\Core\Http\Request
 
     /**
      * Request constructor.
-     *
-     * @param \Symfony\Component\HttpFoundation\Request             $symfonyRequest
-     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
         \Symfony\Component\HttpFoundation\Request $symfonyRequest,

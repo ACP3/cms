@@ -27,9 +27,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     /**
      * AbstractFormAction constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms                      $formsHelper
-     * @param \ACP3\Modules\ACP3\Articles\Helpers|null      $articlesHelpers
+     * @param \ACP3\Modules\ACP3\Articles\Helpers|null $articlesHelpers
      */
     public function __construct(
         FrontendContext $context,
@@ -43,8 +41,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return string
      */
     protected function fetchMenuItemModeForSave(array $formData)
@@ -56,8 +52,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return string
      */
     protected function fetchMenuItemUriForSave(array $formData)

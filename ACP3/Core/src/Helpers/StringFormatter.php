@@ -18,8 +18,6 @@ class StringFormatter
 
     /**
      * StringFormatter constructor.
-     *
-     * @param Slugify $slugify
      */
     public function __construct(Slugify $slugify)
     {

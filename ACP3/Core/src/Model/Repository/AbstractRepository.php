@@ -19,9 +19,6 @@ abstract class AbstractRepository implements RepositoryInterface
      */
     protected $db;
 
-    /**
-     * @param \ACP3\Core\Database\Connection $db
-     */
     public function __construct(Connection $db)
     {
         $this->db = $db;
@@ -29,8 +26,6 @@ abstract class AbstractRepository implements RepositoryInterface
 
     /**
      * Executes the SQL insert statement.
-     *
-     * @param array $data
      *
      * @return int
      *
@@ -76,7 +71,6 @@ abstract class AbstractRepository implements RepositoryInterface
 
     /**
      * @param int|array $entryId
-     * @param string    $columnName
      *
      * @return array
      */
@@ -88,7 +82,6 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * Executes the SQL update statement.
      *
-     * @param array     $data
      * @param int|array $entryId
      *
      * @return bool|int
@@ -106,9 +99,6 @@ abstract class AbstractRepository implements RepositoryInterface
 
     /**
      * Build the SQL limit.
-     *
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
      *
      * @return string
      */

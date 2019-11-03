@@ -56,8 +56,6 @@ class CheckMaintenanceModeListener
 
     /**
      * Checks, whether the maintenance mode is active.
-     *
-     * @return bool
      */
     private function canShowMaintenanceMessage(): bool
     {
@@ -74,9 +72,6 @@ class CheckMaintenanceModeListener
             'CONTENT' => $this->settings->getSettings('system')['maintenance_message'],
         ]);
 
-        throw new MaintenanceModeActiveException(
-            $this->view->fetchTemplate('System/layout.maintenance.tpl'),
-            Response::HTTP_SERVICE_UNAVAILABLE
-        );
+        throw new MaintenanceModeActiveException($this->view->fetchTemplate('System/layout.maintenance.tpl'), Response::HTTP_SERVICE_UNAVAILABLE);
     }
 }

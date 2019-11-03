@@ -76,8 +76,6 @@ class PageBreaks
     }
 
     /**
-     * @param array $pages
-     *
      * @return int
      */
     private function getCurrentPage(array $pages)

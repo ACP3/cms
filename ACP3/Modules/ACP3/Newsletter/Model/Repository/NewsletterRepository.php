@@ -14,9 +14,6 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'newsletters';
 
     /**
-     * @param int      $newsletterId
-     * @param int|null $status
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -32,9 +29,6 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $newsletterId
-     * @param int $status
-     *
      * @return mixed
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -48,8 +42,6 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int|null $status
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -65,10 +57,6 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int|null $status
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

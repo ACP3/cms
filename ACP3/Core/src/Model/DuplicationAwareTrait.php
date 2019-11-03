@@ -12,8 +12,6 @@ use ACP3\Core\Model\Repository\AbstractRepository;
 trait DuplicationAwareTrait
 {
     /**
-     * @param int $entryId
-     *
      * @return bool|int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -44,7 +42,6 @@ trait DuplicationAwareTrait
     abstract protected function getAllowedColumns();
 
     /**
-     * @param array    $rawData
      * @param int|null $entryId
      *
      * @return int|bool

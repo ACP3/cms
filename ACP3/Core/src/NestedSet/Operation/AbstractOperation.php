@@ -28,10 +28,6 @@ abstract class AbstractOperation
      */
     protected $isBlockAware;
 
-    /**
-     * @param \ACP3\Core\Database\Connection                            $db
-     * @param \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository $nestedSetRepository
-     */
     public function __construct(
         Connection $db,
         NestedSetRepository $nestedSetRepository
@@ -43,8 +39,6 @@ abstract class AbstractOperation
 
     /**
      * Returns, whether the data repository is aware of the block handling.
-     *
-     * @return bool
      */
     protected function isBlockAware(): bool
     {

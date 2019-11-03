@@ -23,9 +23,6 @@ class RouteColumnRenderer extends AbstractColumnRenderer
 
     /**
      * RouteColumnRenderer constructor.
-     *
-     * @param RouterInterface $router
-     * @param Translator      $translator
      */
     public function __construct(RouterInterface $router, Translator $translator)
     {

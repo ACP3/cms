@@ -46,9 +46,6 @@ class ComponentDataDto
         $this->moduleRegistration = $moduleRegistration;
     }
 
-    /**
-     * @return string
-     */
     public function getComponentType(): string
     {
         return $this->componentType;
@@ -56,33 +53,22 @@ class ComponentDataDto
 
     /**
      * Returns the lower cased component name.
-     *
-     * @return string
      */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * @return array
-     */
     public function getDependencies(): array
     {
         return $this->dependencies;
     }
 
-    /**
-     * @return \ACP3\Core\Modules\ModuleRegistration|null
-     */
     public function getModuleRegistration(): ?ModuleRegistration
     {
         return $this->moduleRegistration;

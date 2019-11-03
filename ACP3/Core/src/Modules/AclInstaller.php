@@ -49,12 +49,7 @@ class AclInstaller implements InstallerInterface
     /**
      * AclInstaller constructor.
      *
-     * @param \ACP3\Core\Cache                                             $aclCache
-     * @param \ACP3\Core\Modules\SchemaHelper                              $schemaHelper
-     * @param \ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface      $roleRepository
-     * @param \ACP3\Core\Model\Repository\AbstractRepository               $ruleRepository
-     * @param \ACP3\Core\Model\Repository\AbstractRepository               $resourceRepository
-     * @param \ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface $privilegeRepository
+     * @param \ACP3\Core\Modules\SchemaHelper $schemaHelper
      */
     public function __construct(
         Cache $aclCache,
@@ -75,8 +70,7 @@ class AclInstaller implements InstallerInterface
     /**
      * Fügt die zu einen Modul zugehörigen Ressourcen ein.
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
-     * @param int                                          $mode
+     * @param int $mode
      *
      * @return bool
      *
@@ -97,8 +91,6 @@ class AclInstaller implements InstallerInterface
 
     /**
      * Inserts a new resource into the database.
-     *
-     * @param SchemaInterface $schema
      *
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -186,8 +178,6 @@ class AclInstaller implements InstallerInterface
 
     /**
      * Löscht die zu einem Modul zugehörigen Ressourcen.
-     *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
      *
      * @return bool
      */

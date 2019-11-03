@@ -67,8 +67,6 @@ class MailerMessage
     }
 
     /**
-     * @param string $subject
-     *
      * @return $this
      */
     public function setSubject(string $subject)
@@ -87,8 +85,6 @@ class MailerMessage
     }
 
     /**
-     * @param string $body
-     *
      * @return $this
      */
     public function setBody(string $body)
@@ -107,8 +103,6 @@ class MailerMessage
     }
 
     /**
-     * @param string $htmlBody
-     *
      * @return $this
      */
     public function setHtmlBody(string $htmlBody)
@@ -127,8 +121,6 @@ class MailerMessage
     }
 
     /**
-     * @param string $urlWeb
-     *
      * @return $this
      */
     public function setUrlWeb(string $urlWeb)
@@ -147,8 +139,6 @@ class MailerMessage
     }
 
     /**
-     * @param string $mailSignature
-     *
      * @return $this
      */
     public function setMailSignature(string $mailSignature)
@@ -247,8 +237,6 @@ class MailerMessage
     }
 
     /**
-     * @param bool $bcc
-     *
      * @return $this
      */
     public function setBcc(bool $bcc)
@@ -267,8 +255,6 @@ class MailerMessage
     }
 
     /**
-     * @param array $attachments
-     *
      * @return $this
      */
     public function setAttachments(array $attachments)
@@ -279,8 +265,6 @@ class MailerMessage
     }
 
     /**
-     * @param string $attachment
-     *
      * @return $this
      */
     public function addAttachment(string $attachment)
@@ -299,8 +283,6 @@ class MailerMessage
     }
 
     /**
-     * @param string $template
-     *
      * @return $this
      */
     public function setTemplate(string $template)

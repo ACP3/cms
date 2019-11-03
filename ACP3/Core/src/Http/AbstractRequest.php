@@ -28,8 +28,6 @@ abstract class AbstractRequest implements RequestInterface
 
     /**
      * AbstractRequest constructor.
-     *
-     * @param SymfonyRequest $symfonyRequest
      */
     public function __construct(SymfonyRequest $symfonyRequest)
     {

@@ -24,9 +24,6 @@ class UpdateCategoriesCacheOnModelAfterSaveListener
 
     /**
      * UpdateCategoriesCacheOnModelAfterSaveListener constructor.
-     *
-     * @param Cache              $cache
-     * @param CategoryRepository $categoryRepository
      */
     public function __construct(Cache $cache, CategoryRepository $categoryRepository)
     {
@@ -34,9 +31,6 @@ class UpdateCategoriesCacheOnModelAfterSaveListener
         $this->categoryRepository = $categoryRepository;
     }
 
-    /**
-     * @param ModelSaveEvent $event
-     */
     public function __invoke(ModelSaveEvent $event)
     {
         $this->cache->saveCache($this->categoryRepository->getModuleNameFromCategoryId($event->getEntryId()));

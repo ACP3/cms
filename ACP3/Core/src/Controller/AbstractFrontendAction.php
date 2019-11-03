@@ -92,9 +92,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
         );
     }
 
-    /**
-     * @return string
-     */
     protected function fetchLayoutViaInheritance(): string
     {
         if ($this->request->isXmlHttpRequest()) {
@@ -108,12 +105,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
         return $this->getLayout();
     }
 
-    /**
-     * @param string $layoutFileName
-     * @param string $defaultLayoutName
-     *
-     * @return array
-     */
     private function fetchLayoutPaths(string $layoutFileName, string $defaultLayoutName): array
     {
         return [
@@ -152,8 +143,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     }
 
     /**
-     * @param string $layout
-     *
      * @return $this
      */
     public function setLayout(string $layout)

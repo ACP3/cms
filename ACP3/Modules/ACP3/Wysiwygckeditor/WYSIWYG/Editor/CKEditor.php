@@ -113,8 +113,6 @@ class CKEditor extends Textarea
 
     /**
      * Configures the CKEditor instance.
-     *
-     * @return string
      */
     private function configure(): string
     {
@@ -154,10 +152,6 @@ class CKEditor extends Textarea
 
     /**
      * Prints javascript code.
-     *
-     * @param string $js
-     *
-     * @return string
      */
     private function script(string $js): string
     {
@@ -168,9 +162,6 @@ class CKEditor extends Textarea
         return $out;
     }
 
-    /**
-     * @return string
-     */
     private function init(): string
     {
         if ($this->isInitialized === true) {

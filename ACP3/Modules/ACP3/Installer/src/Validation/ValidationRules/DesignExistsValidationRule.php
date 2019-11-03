@@ -14,7 +14,6 @@ class DesignExistsValidationRule extends AbstractValidationRule
     /**
      * @param mixed  $data
      * @param string $field
-     * @param array  $extra
      *
      * @return bool
      */

@@ -24,8 +24,6 @@ class RolesDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @param array $results
-     *
      * @return array
      */
     private function calculateFirstAndLastPage(array $results)
@@ -38,12 +36,6 @@ class RolesDataGridRepository extends AbstractDataGridRepository
         return $results;
     }
 
-    /**
-     * @param int   $index
-     * @param array $nestedSet
-     *
-     * @return bool
-     */
     private function isFirstInSet(int $index, array $nestedSet): bool
     {
         if ($index > 0) {
@@ -57,12 +49,6 @@ class RolesDataGridRepository extends AbstractDataGridRepository
         return true;
     }
 
-    /**
-     * @param int   $index
-     * @param array $nestedSet
-     *
-     * @return bool
-     */
     private function isLastItemInSet(int $index, array $nestedSet): bool
     {
         $cItems = \count($nestedSet);

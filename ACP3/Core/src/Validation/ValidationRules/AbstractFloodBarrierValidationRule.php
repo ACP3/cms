@@ -23,9 +23,6 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
 
     /**
      * FloodBarrierValidationRule constructor.
-     *
-     * @param \ACP3\Core\Date                                                  $date
-     * @param \ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface $repository
      */
     public function __construct(
         Date $date,

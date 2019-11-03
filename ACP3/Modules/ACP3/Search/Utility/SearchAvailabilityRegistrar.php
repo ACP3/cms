@@ -17,8 +17,6 @@ class SearchAvailabilityRegistrar
     protected $availableModules = [];
 
     /**
-     * @param SearchAvailabilityExtensionInterface $searchAvailability
-     *
      * @return $this
      */
     public function registerModule(SearchAvailabilityExtensionInterface $searchAvailability)

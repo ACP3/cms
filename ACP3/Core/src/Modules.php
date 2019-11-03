@@ -48,10 +48,6 @@ class Modules
     /**
      * Returns, whether the given module controller action exists.
      *
-     * @param string $path
-     *
-     * @return bool
-     *
      * @deprecated since version 4.28, will be removed with version 5.0.0. Use ControllerActionExists helper directly
      */
     public function controllerActionExists(string $path): bool
@@ -61,10 +57,6 @@ class Modules
 
     /**
      * Returns, whether a module is active or not.
-     *
-     * @param string $moduleName
-     *
-     * @return bool
      */
     public function isActive(string $moduleName): bool
     {
@@ -75,10 +67,6 @@ class Modules
 
     /**
      * Returns the available information about the given module.
-     *
-     * @param string $moduleName
-     *
-     * @return array
      */
     public function getModuleInfo(string $moduleName): array
     {
@@ -90,11 +78,6 @@ class Modules
         return !empty($this->modulesInfo[$moduleName]) ? $this->modulesInfo[$moduleName] : [];
     }
 
-    /**
-     * @param string $moduleName
-     *
-     * @return int
-     */
     public function getModuleId(string $moduleName): int
     {
         $info = $this->getModuleInfo($moduleName);
@@ -104,10 +87,6 @@ class Modules
 
     /**
      * Checks, whether a module is currently installed or not.
-     *
-     * @param string $moduleName
-     *
-     * @return bool
      */
     public function isInstalled(string $moduleName): bool
     {
@@ -118,10 +97,6 @@ class Modules
 
     /**
      * Checks whether a module is installable or not.
-     *
-     * @param string $moduleName
-     *
-     * @return bool
      */
     public function isInstallable(string $moduleName): bool
     {
@@ -132,8 +107,6 @@ class Modules
 
     /**
      * Returns all currently installed AND active modules.
-     *
-     * @return array
      */
     public function getActiveModules(): array
     {
@@ -144,8 +117,6 @@ class Modules
 
     /**
      * Returns all currently installed modules.
-     *
-     * @return array
      */
     public function getInstalledModules(): array
     {
@@ -156,8 +127,6 @@ class Modules
 
     /**
      * Returns an alphabetically sorted array of all found ACP3 modules.
-     *
-     * @return array
      */
     public function getAllModulesAlphabeticallySorted(): array
     {
@@ -179,8 +148,6 @@ class Modules
 
     /**
      * Returns an array with all modules which is sorted topologically.
-     *
-     * @return array
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException

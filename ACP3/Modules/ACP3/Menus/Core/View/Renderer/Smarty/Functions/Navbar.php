@@ -108,8 +108,7 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @param string                          $menu
-     * @param Menus\Helpers\MenuConfiguration $menuConfig
+     * @param string $menu
      *
      * @return string
      */

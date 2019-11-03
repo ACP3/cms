@@ -27,7 +27,6 @@ class Create extends AbstractFrontendAction
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param Comments\Model\CommentsModel                          $commentsModel
      * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      */

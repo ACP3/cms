@@ -29,10 +29,6 @@ class LoadModule extends AbstractFunction
 
     /**
      * LoadModule constructor.
-     *
-     * @param \ACP3\Core\ACL  $acl
-     * @param RouterInterface $router
-     * @param string          $applicationMode
      */
     public function __construct(
         ACL $acl,
@@ -69,8 +65,6 @@ class LoadModule extends AbstractFunction
     }
 
     /**
-     * @param string $resource
-     *
      * @return array
      */
     protected function convertPathToArray(string $resource)
@@ -88,8 +82,6 @@ class LoadModule extends AbstractFunction
     }
 
     /**
-     * @param array $arguments
-     *
      * @return array
      */
     protected function parseControllerActionArguments(array $arguments)
@@ -104,8 +96,6 @@ class LoadModule extends AbstractFunction
     }
 
     /**
-     * @param array $arguments
-     *
      * @return array
      */
     protected function urlEncodeArguments(array $arguments)
@@ -119,9 +109,6 @@ class LoadModule extends AbstractFunction
     }
 
     /**
-     * @param string $path
-     * @param array  $arguments
-     *
      * @return string
      */
     protected function esiInclude(string $path, array $arguments)

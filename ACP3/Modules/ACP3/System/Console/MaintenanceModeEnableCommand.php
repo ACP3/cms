@@ -24,8 +24,6 @@ class MaintenanceModeEnableCommand extends Command
 
     /**
      * MaintenanceModeEnableCommand constructor.
-     *
-     * @param \ACP3\Core\Settings\SettingsInterface $settings
      */
     public function __construct(SettingsInterface $settings)
     {
@@ -63,9 +61,6 @@ class MaintenanceModeEnableCommand extends Command
         $this->clearCaches($output);
     }
 
-    /**
-     * @param OutputInterface $output
-     */
     private function clearCaches(OutputInterface $output)
     {
         $command = $this->getApplication()->find('acp3:cache:clear');

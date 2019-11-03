@@ -10,7 +10,6 @@ namespace ACP3\Core\DataGrid\ColumnRenderer;
 class IntegerColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @param array  $dbResultRow
      * @param string $field
      *
      * @return int|null

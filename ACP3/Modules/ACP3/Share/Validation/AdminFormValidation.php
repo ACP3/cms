@@ -17,8 +17,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     protected $uriAlias = '';
 
     /**
-     * @param string $uriAlias
-     *
      * @return $this
      */
     public function setUriAlias(string $uriAlias)

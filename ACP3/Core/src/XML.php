@@ -69,10 +69,9 @@ class XML
     }
 
     /**
-     * @param \SimpleXMLElement $attributes
-     * @param string            $path
-     * @param string            $xpath
-     * @param string            $key
+     * @param string $path
+     * @param string $xpath
+     * @param string $key
      */
     protected function parseAttributes(\SimpleXMLElement $attributes, $path, $xpath, $key)
     {

@@ -35,11 +35,6 @@ class SchemaHelper
 
     /**
      * SchemaHelper constructor.
-     *
-     * @param LoggerInterface                                        $logger
-     * @param Core\Database\Connection                               $db
-     * @param Core\Model\Repository\ModuleAwareRepositoryInterface   $systemModuleRepository
-     * @param Core\Model\Repository\SettingsAwareRepositoryInterface $systemSettingsRepository
      */
     public function __construct(
         LoggerInterface $logger,
@@ -53,9 +48,6 @@ class SchemaHelper
         $this->logger = $logger;
     }
 
-    /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
-     */
     public function getContainer(): ContainerInterface
     {
         return $this->container;
@@ -69,9 +61,6 @@ class SchemaHelper
         return $this->db;
     }
 
-    /**
-     * @return Core\Model\Repository\ModuleAwareRepositoryInterface
-     */
     public function getSystemModuleRepository(): Core\Model\Repository\ModuleAwareRepositoryInterface
     {
         return $this->systemModuleRepository;
@@ -79,9 +68,6 @@ class SchemaHelper
 
     /**
      * Executes all given SQL queries.
-     *
-     * @param array  $queries
-     * @param string $moduleName
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
@@ -102,12 +88,7 @@ class SchemaHelper
             foreach ($queries as $query) {
                 if (\is_object($query) && ($query instanceof \Closure)) {
                     if ($query() === false) {
-                        throw new Core\Modules\Exception\ModuleMigrationException(
-                            \sprintf(
-                                'An error occurred while executing a migration inside a closure for module "%s"',
-                                $moduleName
-                            )
-                        );
+                        throw new Core\Modules\Exception\ModuleMigrationException(\sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
                     }
                 } elseif (!empty($query)) {
                     if (\strpos($query, '{moduleId}') !== false) {
@@ -120,20 +101,12 @@ class SchemaHelper
         } catch (\Exception $e) {
             $this->db->getConnection()->rollBack();
 
-            throw new Core\Modules\Exception\ModuleMigrationException(
-                \sprintf('An error occurred while executing a migration for module "%s"', $moduleName),
-                0,
-                $e
-            );
+            throw new Core\Modules\Exception\ModuleMigrationException(\sprintf('An error occurred while executing a migration for module "%s"', $moduleName), 0, $e);
         }
     }
 
     /**
      * Returns the module-ID.
-     *
-     * @param string $moduleName
-     *
-     * @return int
      */
     public function getModuleId(string $moduleName): int
     {
@@ -141,10 +114,6 @@ class SchemaHelper
     }
 
     /**
-     * @param string $moduleName
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function moduleIsInstalled(string $moduleName): bool

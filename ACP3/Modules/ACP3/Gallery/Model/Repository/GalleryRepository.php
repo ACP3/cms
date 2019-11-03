@@ -16,9 +16,6 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'gallery';
 
     /**
-     * @param int    $galleryId
-     * @param string $time
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -34,8 +31,6 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $galleryId
-     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -49,8 +44,6 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $time
-     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -66,10 +59,6 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string   $time
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

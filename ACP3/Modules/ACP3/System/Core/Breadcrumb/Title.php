@@ -31,11 +31,6 @@ class Title extends \ACP3\Core\Breadcrumb\Title
 
     /**
      * Title constructor.
-     *
-     * @param RequestInterface         $request
-     * @param Steps                    $steps
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param SettingsInterface        $settings
      */
     public function __construct(
         RequestInterface $request,

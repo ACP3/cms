@@ -32,7 +32,6 @@ class Create extends AbstractFormAction
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
      * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
-     * @param Categories\Model\CategoriesModel                                  $categoriesModel
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
      * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation      $adminFormValidation
      * @param \ACP3\Core\Helpers\Upload                                         $categoriesUploadHelper

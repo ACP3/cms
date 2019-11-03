@@ -21,10 +21,6 @@ class Forms
      */
     protected $request;
 
-    /**
-     * @param \ACP3\Core\I18n\Translator       $translator
-     * @param \ACP3\Core\Http\RequestInterface $request
-     */
     public function __construct(
         Translator $translator,
         RequestInterface $request
@@ -94,7 +90,6 @@ class Forms
 
     /**
      * @param string           $formFieldName
-     * @param array            $values
      * @param string|int|array $currentValue
      * @param string           $htmlAttribute
      *
@@ -153,7 +148,6 @@ class Forms
 
     /**
      * @param string           $formFieldName
-     * @param array            $values
      * @param string|int|array $currentValue
      *
      * @return array

@@ -21,8 +21,6 @@ class AddLibraryEvent extends Event
 
     /**
      * AddLibraryEvent constructor.
-     *
-     * @param Libraries $libraries
      */
     public function __construct(Libraries $libraries)
     {
@@ -31,7 +29,6 @@ class AddLibraryEvent extends Event
 
     /**
      * @param string $identifier
-     * @param array  $library
      *
      * @return $this
      */

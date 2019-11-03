@@ -37,11 +37,7 @@ class Date
     /**
      * Date constructor.
      *
-     * @param \ACP3\Core\Date                                          $date
-     * @param \ACP3\Core\I18n\Translator                               $translator
-     * @param \ACP3\Core\Http\RequestInterface                         $request
-     * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
-     * @param \ACP3\Core\Validation\ValidationRules\DateValidationRule $dateValidationRule
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
      */
     public function __construct(
         \ACP3\Core\Date $date,
@@ -178,7 +174,6 @@ class Date
     }
 
     /**
-     * @param array $name
      * @param array $value
      * @param bool  $showTime
      *

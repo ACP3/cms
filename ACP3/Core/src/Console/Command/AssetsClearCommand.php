@@ -23,8 +23,6 @@ class AssetsClearCommand extends Command
 
     /**
      * AssetsClearCommand constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
      */
     public function __construct(ApplicationPath $applicationPath)
     {

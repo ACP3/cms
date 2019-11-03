@@ -27,8 +27,7 @@ class Cache
     /**
      * Cache constructor.
      *
-     * @param \ACP3\Core\Cache\CacheDriverFactory $cacheDriverFactory
-     * @param string                              $namespace
+     * @param string $namespace
      */
     public function __construct(CacheDriverFactory $cacheDriverFactory, $namespace)
     {

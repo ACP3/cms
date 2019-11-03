@@ -19,8 +19,6 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
 
     /**
      * UserRolesColumnRenderer constructor.
-     *
-     * @param \ACP3\Core\ACL $acl
      */
     public function __construct(ACL $acl)
     {

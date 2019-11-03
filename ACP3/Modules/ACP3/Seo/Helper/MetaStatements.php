@@ -72,12 +72,6 @@ class MetaStatements
 
     /**
      * MetaStatements constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface      $request
-     * @param RouterInterface                       $router
-     * @param Modules                               $modules
-     * @param \ACP3\Modules\ACP3\Seo\Cache          $seoCache
-     * @param \ACP3\Core\Settings\SettingsInterface $config
      */
     public function __construct(
         RequestInterface $request,
@@ -94,8 +88,6 @@ class MetaStatements
     }
 
     /**
-     * @param string $metaRobots
-     *
      * @return $this
      */
     public function setPageRobotsSettings(string $metaRobots)
@@ -107,8 +99,6 @@ class MetaStatements
 
     /**
      * Returns the meta tags of the current page.
-     *
-     * @return array
      */
     public function getMetaTags(): array
     {
@@ -143,9 +133,6 @@ class MetaStatements
         $this->canonicalUrl = $this->router->route($this->request->getQuery());
     }
 
-    /**
-     * @return bool
-     */
     private function isInAdmin(): bool
     {
         return $this->request->getArea() === AreaEnum::AREA_ADMIN;
@@ -153,8 +140,6 @@ class MetaStatements
 
     /**
      * Returns the SEO description of the current page.
-     *
-     * @return string
      */
     public function getPageDescription(): string
     {
@@ -177,9 +162,6 @@ class MetaStatements
         return $description . $postfix;
     }
 
-    /**
-     * @return array
-     */
     protected function getSeoSettings(): array
     {
         return $this->config->getSettings(Schema::MODULE_NAME);
@@ -187,10 +169,6 @@ class MetaStatements
 
     /**
      * Returns the SEO description of the given page.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     public function getDescription(string $path): string
     {
@@ -199,8 +177,6 @@ class MetaStatements
 
     /**
      * Returns the SEO keywords of the current page.
-     *
-     * @return string
      */
     public function getPageKeywords(): string
     {
@@ -217,10 +193,6 @@ class MetaStatements
 
     /**
      * Returns the SEO keywords of the given page.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     public function getKeywords(string $path): string
     {
@@ -229,23 +201,12 @@ class MetaStatements
 
     /**
      * Returns the meta title of the given page.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     public function getTitle(string $path): string
     {
         return $this->getSeoInformation($path, 'title');
     }
 
-    /**
-     * @param string $path
-     * @param string $key
-     * @param string $defaultValue
-     *
-     * @return string
-     */
     public function getSeoInformation(string $path, string $key, string $defaultValue = ''): string
     {
         if (!$this->modules->isActive(Schema::MODULE_NAME)) {
@@ -264,8 +225,6 @@ class MetaStatements
 
     /**
      * Returns the SEO robots setting for the current page.
-     *
-     * @return string
      */
     public function getPageRobotsSetting(): string
     {
@@ -286,10 +245,6 @@ class MetaStatements
 
     /**
      * Returns the SEO robots settings for the given page.
-     *
-     * @param string $path
-     *
-     * @return string
      */
     public function getRobotsSetting(string $path = ''): string
     {
@@ -314,8 +269,6 @@ class MetaStatements
     /**
      * Sets a SEO description postfix for te current page.
      *
-     * @param string $value
-     *
      * @return $this
      */
     public function setDescriptionPostfix(string $value)
@@ -327,8 +280,6 @@ class MetaStatements
 
     /**
      * Sets the canonical URL for the current page.
-     *
-     * @param string $path
      *
      * @return $this
      */
@@ -342,8 +293,6 @@ class MetaStatements
     /**
      * Sets the next page (useful for pagination).
      *
-     * @param string $path
-     *
      * @return $this
      */
     public function setNextPage(string $path)
@@ -355,8 +304,6 @@ class MetaStatements
 
     /**
      * Sets the previous page (useful for pagination).
-     *
-     * @param string $path
      *
      * @return $this
      */

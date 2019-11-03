@@ -52,8 +52,6 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */

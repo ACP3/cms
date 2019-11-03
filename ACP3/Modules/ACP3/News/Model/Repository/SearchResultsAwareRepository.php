@@ -26,9 +26,6 @@ class SearchResultsAwareRepository extends AbstractRepository implements SearchR
 
     /**
      * SearchResultsAwareRepository constructor.
-     *
-     * @param Connection $db
-     * @param Date       $date
      */
     public function __construct(Connection $db, Date $date)
     {

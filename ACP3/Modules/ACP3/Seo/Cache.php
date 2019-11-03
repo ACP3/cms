@@ -18,8 +18,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $seoRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                      $cache
-     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
+     * @param \ACP3\Core\Cache $cache
      */
     public function __construct(
         Core\Cache $cache,

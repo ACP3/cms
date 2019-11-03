@@ -21,10 +21,6 @@ class DateRange
      */
     protected $translator;
 
-    /**
-     * @param \ACP3\Core\Date            $date
-     * @param \ACP3\Core\I18n\Translator $translator
-     */
     public function __construct(
         Date $date,
         Translator $translator

@@ -42,9 +42,6 @@ class RichFileManager extends AbstractFrontendAction
         $app->run();
     }
 
-    /**
-     * @return array
-     */
     private function getFileManagerConfig(): array
     {
         return [

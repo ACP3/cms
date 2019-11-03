@@ -62,17 +62,11 @@ class Migration extends Modules\Installer\AbstractMigration
         $this->appPath = $appPath;
     }
 
-    /**
-     * @param Modules\Installer\SchemaInterface|null $seoSchema
-     */
     public function setSeoInstallerSchema(?Modules\Installer\SchemaInterface $seoSchema)
     {
         $this->seoSchema = $seoSchema;
     }
 
-    /**
-     * @param Modules\Installer\SchemaInterface|null $minifySchema
-     */
     public function setMinifyInstallerSchema(?Modules\Installer\SchemaInterface $minifySchema)
     {
         $this->minifySchema = $minifySchema;

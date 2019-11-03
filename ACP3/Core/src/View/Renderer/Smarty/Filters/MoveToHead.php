@@ -19,9 +19,6 @@ class MoveToHead extends AbstractMoveElementFilter
      */
     protected $minifier;
 
-    /**
-     * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
-     */
     public function __construct(MinifierInterface $minifier)
     {
         $this->minifier = $minifier;

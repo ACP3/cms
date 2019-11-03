@@ -15,9 +15,6 @@ class SchemaUpdater extends SchemaHelper
     /**
      * Führt die in der Methode schemaUpdates() enthaltenen Tabellenänderungen aus.
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface    $schema
-     * @param \ACP3\Core\Modules\Installer\MigrationInterface $migration
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
@@ -56,7 +53,6 @@ class SchemaUpdater extends SchemaHelper
     /**
      * @param string $moduleName
      * @param int    $schemaVersion
-     * @param array  $schemaUpdates
      * @param int    $installedSchemaVersion
      *
      * @throws \Doctrine\DBAL\ConnectionException
@@ -83,11 +79,6 @@ class SchemaUpdater extends SchemaHelper
 
     /**
      * Setzt die DB-Schema-Version auf die neue Versionsnummer.
-     *
-     * @param string $moduleName
-     * @param int    $schemaVersion
-     *
-     * @return bool
      */
     public function updateSchemaVersion(string $moduleName, int $schemaVersion): bool
     {
@@ -96,8 +87,6 @@ class SchemaUpdater extends SchemaHelper
 
     /**
      * @param string|array|callable $queries
-     *
-     * @return array
      */
     protected function forceSqlQueriesToArray($queries): array
     {

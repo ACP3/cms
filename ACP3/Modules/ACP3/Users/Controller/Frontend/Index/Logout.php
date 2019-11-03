@@ -19,9 +19,6 @@ class Logout extends Core\Controller\AbstractFrontendAction
 
     /**
      * Login constructor.
-     *
-     * @param Core\Controller\Context\FrontendContext $context
-     * @param Users\Model\AuthenticationModel         $authenticationModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

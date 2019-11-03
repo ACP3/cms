@@ -25,9 +25,6 @@ class PageCssClasses extends AbstractFunction
     }
 
     /**
-     * @param array                     $params
-     * @param \Smarty_Internal_Template $smarty
-     *
      * @return mixed
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)

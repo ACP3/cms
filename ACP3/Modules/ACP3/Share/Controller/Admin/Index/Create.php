@@ -34,11 +34,8 @@ class Create extends Core\Controller\AbstractFrontendAction
     /**
      * Create constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields        $shareFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Share\Model\ShareModel               $shareModel
-     * @param \ACP3\Modules\ACP3\Share\Validation\AdminFormValidation $adminFormValidation
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\Helpers\FormToken                  $formTokenHelper
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

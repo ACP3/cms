@@ -96,8 +96,6 @@ class Modules extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $moduleDirectory
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -132,57 +130,37 @@ class Modules extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $moduleDirectory
-     *
      * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      */
     private function checkPreconditions(string $moduleDirectory): void
     {
         $info = $this->modules->getModuleInfo($moduleDirectory);
         if (empty($info) || $info['protected'] === true || $info['installable'] === false) {
-            throw new System\Exception\ModuleInstallerException(
-                $this->translator->t('system', 'could_not_complete_request')
-            );
+            throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'could_not_complete_request'));
         }
     }
 
     /**
-     * @param string $serviceId
-     *
      * @throws System\Exception\ModuleInstallerException
      */
     protected function moduleInstallerExists(string $serviceId): void
     {
         if ($this->schemaRegistrar->has($serviceId) === false) {
-            throw new System\Exception\ModuleInstallerException(
-                $this->translator->t('system', 'module_installer_not_found')
-            );
+            throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'module_installer_not_found'));
         }
     }
 
     /**
-     * @param array  $dependencies
-     * @param string $phrase
-     *
      * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      */
     protected function checkForFailedModuleDependencies(array $dependencies, string $phrase): void
     {
         if (!empty($dependencies)) {
-            throw new System\Exception\ModuleInstallerException(
-                $this->translator->t(
-                    'system',
-                    $phrase,
-                    ['%modules%' => \implode(', ', $dependencies)]
-                )
-            );
+            throw new System\Exception\ModuleInstallerException($this->translator->t('system', $phrase, ['%modules%' => \implode(', ', $dependencies)]));
         }
     }
 
     /**
-     * @param string $moduleDirectory
-     * @param int    $active
-     *
      * @return bool|int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -216,8 +194,6 @@ class Modules extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $moduleDirectory
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -252,8 +228,6 @@ class Modules extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $moduleDirectory
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -264,9 +238,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
         try {
             if ($this->modules->isInstalled($moduleDirectory) === true) {
-                throw new System\Exception\ModuleInstallerException(
-                    $this->translator->t('system', 'module_already_installed')
-                );
+                throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'module_already_installed'));
             }
 
             $this->moduleInstallerExists($moduleDirectory);
@@ -293,8 +265,6 @@ class Modules extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $moduleDirectory
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function uninstallModule(string $moduleDirectory)
@@ -304,9 +274,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         try {
             $info = $this->modules->getModuleInfo($moduleDirectory);
             if ($info['protected'] === true || $this->modules->isInstalled($moduleDirectory) === false) {
-                throw new System\Exception\ModuleInstallerException(
-                    $this->translator->t('system', 'protected_module_description')
-                );
+                throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'protected_module_description'));
             }
 
             $this->moduleInstallerExists($moduleDirectory);
@@ -333,8 +301,6 @@ class Modules extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return array
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */

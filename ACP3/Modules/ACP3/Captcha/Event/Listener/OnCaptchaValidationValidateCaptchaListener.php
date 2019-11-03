@@ -20,17 +20,12 @@ class OnCaptchaValidationValidateCaptchaListener
 
     /**
      * OnCaptchaValidationValidateCaptcha constructor.
-     *
-     * @param Translator $translator
      */
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }
 
-    /**
-     * @param FormValidationEvent $event
-     */
     public function __invoke(FormValidationEvent $event)
     {
         $event

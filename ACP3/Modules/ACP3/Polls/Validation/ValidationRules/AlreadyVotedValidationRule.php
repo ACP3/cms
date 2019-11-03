@@ -24,9 +24,6 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
 
     /**
      * AlreadyVotedValidationRule constructor.
-     *
-     * @param UserModel      $userModel
-     * @param VoteRepository $voteRepository
      */
     public function __construct(
         UserModel $userModel,
@@ -39,7 +36,6 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
     /**
      * @param mixed  $data
      * @param string $field
-     * @param array  $extra
      *
      * @return bool
      */

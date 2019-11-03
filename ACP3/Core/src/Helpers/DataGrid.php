@@ -80,11 +80,6 @@ class DataGrid
      */
     private $configProcessor;
 
-    /**
-     * @param \ACP3\Core\ACL                      $acl
-     * @param \ACP3\Core\I18n\Translator          $translator
-     * @param \ACP3\Core\DataGrid\ConfigProcessor $configProcessor
-     */
     public function __construct(
         ACL $acl,
         Translator $translator,
@@ -97,8 +92,6 @@ class DataGrid
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\ColumnRendererInterface $columnRenderer
-     *
      * @return $this
      */
     public function registerColumnRenderer(ColumnRendererInterface $columnRenderer)
@@ -109,8 +102,6 @@ class DataGrid
     }
 
     /**
-     * @param \ACP3\Core\Model\Repository\DataGridRepository $repository
-     *
      * @return $this
      */
     public function setRepository(DataGridRepository $repository)
@@ -205,8 +196,7 @@ class DataGrid
     }
 
     /**
-     * @param array $columnData
-     * @param int   $priority
+     * @param int $priority
      *
      * @return $this
      */

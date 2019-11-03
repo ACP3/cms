@@ -37,10 +37,6 @@ class ModuleInstaller
     }
 
     /**
-     * @param ContainerInterface $container
-     *
-     * @return array
-     *
      * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
@@ -62,9 +58,7 @@ class ModuleInstaller
             }
 
             if ($this->installHelper->installModule($schemaRegistrar->get($module->getName()), $container) === false) {
-                throw new ModuleInstallerException(
-                    \sprintf('Error while installing module "%s"', $module->getName())
-                );
+                throw new ModuleInstallerException(\sprintf('Error while installing module "%s"', $module->getName()));
             }
 
             $this->installedModules[$module->getName()] = true;
@@ -73,11 +67,6 @@ class ModuleInstaller
         return $this->installedModules;
     }
 
-    /**
-     * @param string $moduleConfigPath
-     *
-     * @return bool
-     */
     private function isValidModule(string $moduleConfigPath): bool
     {
         if (\is_file($moduleConfigPath)) {

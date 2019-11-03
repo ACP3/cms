@@ -71,10 +71,6 @@ class RouterTest extends \PHPUnit\Framework\TestCase
             ->willReturn('example.com');
     }
 
-    /**
-     * @param int $callCountWebRoot
-     * @param int $callCountPhpSelf
-     */
     protected function setAppPathMockExpectations(int $callCountWebRoot, int $callCountPhpSelf)
     {
         $this->appPathMock->expects($this->exactly($callCountWebRoot))
@@ -85,9 +81,6 @@ class RouterTest extends \PHPUnit\Framework\TestCase
             ->willReturn('/index.php');
     }
 
-    /**
-     * @param bool $useModRewrite
-     */
     protected function setUpConfigMockExpectations(bool $useModRewrite = false)
     {
         $this->configMock->expects($this->atLeastOnce())
@@ -206,11 +199,6 @@ class RouterTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider homepageRouteDataProvider()
-     *
-     * @param string    $path
-     * @param bool      $absolute
-     * @param bool|null $isSecure
-     * @param string    $expected
      */
     public function testRouteIsHomepage(string $path, bool $absolute, ?bool $isSecure, string $expected)
     {

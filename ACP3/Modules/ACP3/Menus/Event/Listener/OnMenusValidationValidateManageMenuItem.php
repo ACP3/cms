@@ -29,9 +29,6 @@ class OnMenusValidationValidateManageMenuItem
 
     /**
      * OnMenusValidationValidateManageMenuItem constructor.
-     *
-     * @param ACL        $acl
-     * @param Translator $translator
      */
     public function __construct(ACL $acl, Translator $translator)
     {
@@ -39,9 +36,6 @@ class OnMenusValidationValidateManageMenuItem
         $this->translator = $translator;
     }
 
-    /**
-     * @param FormValidationEvent $event
-     */
     public function __invoke(FormValidationEvent $event)
     {
         $formData = $event->getFormData();

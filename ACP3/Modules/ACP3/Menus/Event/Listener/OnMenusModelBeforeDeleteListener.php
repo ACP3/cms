@@ -34,11 +34,6 @@ class OnMenusModelBeforeDeleteListener
 
     /**
      * OnMenusModelBeforeDeleteListener constructor.
-     *
-     * @param Cache              $cache
-     * @param MenuRepository     $menuRepository
-     * @param MenuItemRepository $menuItemRepository
-     * @param MenuItemsModel     $menuItemsModel
      */
     public function __construct(
         Cache $cache,
@@ -53,8 +48,6 @@ class OnMenusModelBeforeDeleteListener
     }
 
     /**
-     * @param ModelSaveEvent $event
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __invoke(ModelSaveEvent $event)

@@ -16,7 +16,6 @@ use ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule;
 abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array  $formData
      * @param string $passwordField
      * @param string $passwordConfirmationField
      */
@@ -33,7 +32,6 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
     }
 
     /**
-     * @param array  $formData
      * @param string $passwordField
      * @param string $passwordConfirmationField
      */
@@ -50,8 +48,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
     }
 
     /**
-     * @param array $formData
-     * @param int   $userId
+     * @param int $userId
      */
     protected function validateAccountCoreData(array $formData, $userId)
     {
@@ -123,9 +120,6 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
             );
     }
 
-    /**
-     * @param array $formData
-     */
     protected function validateUserSettings(array $formData)
     {
         $this->validator

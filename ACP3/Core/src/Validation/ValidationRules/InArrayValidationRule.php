@@ -27,8 +27,6 @@ class InArrayValidationRule extends AbstractValidationRule
 
     /**
      * @param string|array $data
-     * @param string       $field
-     * @param array        $haystack
      *
      * @return bool
      */

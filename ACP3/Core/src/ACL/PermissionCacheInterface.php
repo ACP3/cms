@@ -34,16 +34,12 @@ interface PermissionCacheInterface
     public function saveRolesCache();
 
     /**
-     * @param array $roles
-     *
      * @return bool|mixed|string
      */
     public function getRulesCache(array $roles);
 
     /**
      * Setzt den Cache für die einzelnen Berechtigungen einer Rolle.
-     *
-     * @param array $roles
      *
      * @return bool
      */

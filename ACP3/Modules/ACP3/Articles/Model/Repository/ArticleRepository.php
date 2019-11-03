@@ -16,9 +16,6 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'articles';
 
     /**
-     * @param int    $articleId
-     * @param string $time
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -34,8 +31,6 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $time
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -51,10 +46,6 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string   $time
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -71,10 +62,6 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string   $time
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

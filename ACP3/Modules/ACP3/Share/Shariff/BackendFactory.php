@@ -35,11 +35,6 @@ class BackendFactory
 
     /**
      * BackendFactory constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath          $applicationPath
-     * @param \ACP3\Core\Settings\SettingsInterface           $settings
-     * @param \ACP3\Core\Http\RequestInterface                $request
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices $socialServices
      */
     public function __construct(
         ApplicationPath $applicationPath,
@@ -72,9 +67,6 @@ class BackendFactory
         return $this->applicationPath->getCacheDir() . 'shariff/';
     }
 
-    /**
-     * @return array
-     */
     private function getOptions(): array
     {
         return \array_merge(
@@ -91,9 +83,6 @@ class BackendFactory
         );
     }
 
-    /**
-     * @return array
-     */
     private function getFacebookCredentials(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);

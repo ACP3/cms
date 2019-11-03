@@ -39,7 +39,6 @@ interface CaptchaExtensionInterface
      *
      * @param mixed  $formData
      * @param string $formFieldName
-     * @param array  $extra
      *
      * @return bool
      */

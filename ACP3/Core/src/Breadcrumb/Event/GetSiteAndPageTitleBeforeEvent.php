@@ -21,8 +21,6 @@ class GetSiteAndPageTitleBeforeEvent extends Event
 
     /**
      * GetSiteAndPageTitleBeforeEvent constructor.
-     *
-     * @param \ACP3\Core\Breadcrumb\Title $title
      */
     public function __construct(Title $title)
     {

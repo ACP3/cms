@@ -14,11 +14,6 @@ class ShareRatingsRepository extends AbstractRepository
     const TABLE_NAME = 'share_ratings';
 
     /**
-     * @param string $ipAddress
-     * @param int    $shareId
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function hasAlreadyRated(string $ipAddress, int $shareId): bool
@@ -30,10 +25,6 @@ class ShareRatingsRepository extends AbstractRepository
     }
 
     /**
-     * @param int $shareId
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getRatingStatistics(int $shareId): array

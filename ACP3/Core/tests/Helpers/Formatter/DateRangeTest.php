@@ -53,7 +53,6 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
     /**
      * @param string $langKey
      * @param string $langValue
-     * @param array  $params
      */
     private function setUpLangMockExpectation($langKey, $langValue, array $params = [])
     {

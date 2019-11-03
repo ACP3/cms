@@ -41,12 +41,6 @@ class GenerateSitemapOnModelAfterSaveListener
 
     /**
      * GenerateSitemapOnModelAfterSaveListener constructor.
-     *
-     * @param LoggerInterface              $logger
-     * @param \ACP3\Core\Modules           $modules
-     * @param SettingsInterface            $settings
-     * @param SitemapAvailabilityRegistrar $sitemapRegistrar
-     * @param SitemapGenerationModel       $sitemapGenerationModel
      */
     public function __construct(
         LoggerInterface $logger,
@@ -62,9 +56,6 @@ class GenerateSitemapOnModelAfterSaveListener
         $this->modules = $modules;
     }
 
-    /**
-     * @param ModelSaveEvent $event
-     */
     public function __invoke(ModelSaveEvent $event)
     {
         if (!$this->modules->isActive(Schema::MODULE_NAME)) {

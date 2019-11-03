@@ -18,8 +18,6 @@ class TextColumnType implements ColumnTypeStrategyInterface
 
     /**
      * TextColumnType constructor.
-     *
-     * @param Secure $secure
      */
     public function __construct(Secure $secure)
     {

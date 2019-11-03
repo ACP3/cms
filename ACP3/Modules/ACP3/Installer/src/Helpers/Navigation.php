@@ -50,9 +50,6 @@ class Navigation
     }
 
     /**
-     * @param string $stepName
-     * @param array  $options
-     *
      * @return $this
      */
     private function addStep(string $stepName, array $options): self
@@ -74,8 +71,6 @@ class Navigation
     }
 
     /**
-     * @param string $stepName
-     *
      * @return $this
      */
     public function markStepComplete(string $stepName): self
@@ -87,19 +82,12 @@ class Navigation
         return $this;
     }
 
-    /**
-     * @param string $stepName
-     *
-     * @return bool
-     */
     public function has(string $stepName): bool
     {
         return isset($this->navbar[$stepName]);
     }
 
     /**
-     * @param string $stepName
-     *
      * @return $this
      */
     public function markStepActive(string $stepName): self

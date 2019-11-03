@@ -24,8 +24,6 @@ class ControllerActionBeforeDispatchEvent extends Event
 
     /**
      * FrontControllerDispatchEvent constructor.
-     *
-     * @param string $controllerServiceId
      */
     public function __construct(string $controllerServiceId)
     {

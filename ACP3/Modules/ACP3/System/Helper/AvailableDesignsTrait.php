@@ -11,9 +11,6 @@ use ACP3\Core\XML;
 
 trait AvailableDesignsTrait
 {
-    /**
-     * @return array
-     */
     protected function getAvailableDesigns(): array
     {
         $designs = [];
@@ -39,19 +36,11 @@ trait AvailableDesignsTrait
      */
     abstract protected function getXml();
 
-    /**
-     * @return array
-     */
     private function getDesignPaths(): array
     {
         return \glob(ACP3_ROOT_DIR . '/designs/*/info.xml');
     }
 
-    /**
-     * @param string $file
-     *
-     * @return string
-     */
     private function getDesignDirectory(string $file): string
     {
         $pathLength = \strlen(ACP3_ROOT_DIR . '/designs/');

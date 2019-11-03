@@ -47,8 +47,6 @@ class Send extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException

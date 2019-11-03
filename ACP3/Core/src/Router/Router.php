@@ -59,11 +59,6 @@ class Router implements RouterInterface
         return $this->addUriPrefix($path, $isAbsolute, $isSecure) . $path;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     protected function preparePath(string $path): string
     {
         $path .= (!\preg_match('/\/$/', $path) ? '/' : '');
@@ -79,11 +74,6 @@ class Router implements RouterInterface
         return $this->addControllerAndAction($path);
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     protected function addControllerAndAction(string $path): string
     {
         $pathArray = \preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
@@ -102,23 +92,11 @@ class Router implements RouterInterface
         return $path;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return bool
-     */
     protected function isAdminUri(string $path): bool
     {
         return \preg_match(self::ADMIN_PANEL_PATTERN, $path) === 1;
     }
 
-    /**
-     * @param string    $path
-     * @param bool      $isAbsolute
-     * @param bool|null $isSecure
-     *
-     * @return string
-     */
     protected function addUriPrefix(string $path, bool $isAbsolute, ?bool $isSecure): string
     {
         $prefix = '';
@@ -136,11 +114,6 @@ class Router implements RouterInterface
         return $prefix;
     }
 
-    /**
-     * @param bool|null $isSecure
-     *
-     * @return string
-     */
     private function getScheme(?bool $isSecure): string
     {
         if ($isSecure === null) {
@@ -155,10 +128,6 @@ class Router implements RouterInterface
 
     /**
      * Check, whether to use urls with mod_rewrite or not.
-     *
-     * @param string $path
-     *
-     * @return bool
      */
     protected function useModRewrite(string $path): bool
     {

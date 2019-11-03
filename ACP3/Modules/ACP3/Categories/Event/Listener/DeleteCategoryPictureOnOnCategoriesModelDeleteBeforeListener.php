@@ -24,9 +24,6 @@ class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
 
     /**
      * OnCategoriesModelDeleteBeforeListener constructor.
-     *
-     * @param \ACP3\Core\Helpers\Upload $categoriesUploadHelper
-     * @param CategoryRepository        $categoryRepository
      */
     public function __construct(
         Upload $categoriesUploadHelper,
@@ -36,9 +33,6 @@ class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
         $this->categoriesUploadHelper = $categoriesUploadHelper;
     }
 
-    /**
-     * @param ModelSaveEvent $event
-     */
     public function __invoke(ModelSaveEvent $event)
     {
         if (!$event->isDeleteStatement()) {

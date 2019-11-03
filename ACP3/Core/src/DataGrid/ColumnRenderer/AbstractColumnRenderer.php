@@ -109,7 +109,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array  $column
      * @param string $value
      *
      * @return string
@@ -129,9 +128,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array  $column
-     * @param string $value
-     *
      * @return string|array
      */
     private function renderAjax(array $column, string $value = '')
@@ -172,8 +168,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array $column
-     *
      * @return string
      */
     protected function getFirstDbField(array $column)
@@ -184,9 +178,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array $column
-     * @param array $dbResultRow
-     *
      * @return string
      */
     protected function getValue(array $column, array $dbResultRow)
@@ -202,7 +193,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array  $dbResultRow
      * @param string $field
      *
      * @return string|null
@@ -213,8 +203,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array $column
-     *
      * @return string
      */
     protected function getDefaultValue(array $column)
@@ -227,8 +215,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array $column
-     *
      * @return array
      */
     protected function getDbFields(array $column)

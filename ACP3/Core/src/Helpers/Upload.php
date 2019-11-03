@@ -23,9 +23,6 @@ class Upload
 
     /**
      * Upload constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param string                                 $directory
      */
     public function __construct(ApplicationPath $appPath, string $directory)
     {
@@ -36,9 +33,8 @@ class Upload
     /**
      * Hochgeladene Dateien verschieben und umbenennen.
      *
-     * @param string $tmpFilename    Temporäre Datei
-     * @param string $filename       Dateiname
-     * @param bool   $retainFilename
+     * @param string $tmpFilename Temporäre Datei
+     * @param string $filename    Dateiname
      *
      * @return array
      *
@@ -52,9 +48,7 @@ class Upload
             $result = @\mkdir($path);
 
             if (!$result) {
-                throw new ValidationFailedException(
-                    [\sprintf('Could not create folder "%s"', $this->directory)]
-                );
+                throw new ValidationFailedException([\sprintf('Could not create folder "%s"', $this->directory)]);
             }
         }
 
@@ -116,8 +110,6 @@ class Upload
 
     /**
      * Löscht eine Datei im uploads Ordner.
-     *
-     * @param string $file
      *
      * @return bool
      */

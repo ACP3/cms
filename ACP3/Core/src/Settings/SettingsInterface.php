@@ -21,7 +21,6 @@ interface SettingsInterface
     /**
      * Saves the module's settings to the database.
      *
-     * @param array  $data
      * @param string $module
      *
      * @return bool

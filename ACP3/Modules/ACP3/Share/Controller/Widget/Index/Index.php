@@ -27,10 +27,6 @@ class Index extends AbstractWidgetAction
 
     /**
      * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\WidgetContext               $context
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices           $socialServices
-     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository $shareRepository
      */
     public function __construct(
         WidgetContext $context,
@@ -44,11 +40,6 @@ class Index extends AbstractWidgetAction
     }
 
     /**
-     * @param string $path
-     * @param string $template
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(string $path, string $template = ''): array
@@ -68,11 +59,6 @@ class Index extends AbstractWidgetAction
         ];
     }
 
-    /**
-     * @param array $sharingInfo
-     *
-     * @return array
-     */
     private function getServices(array $sharingInfo): array
     {
         $services = [];

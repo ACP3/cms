@@ -21,10 +21,6 @@ class Helpers
      */
     protected $userRoleRepository;
 
-    /**
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository     $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository $userRoleRepository
-     */
     public function __construct(
         RoleRepository $roleRepository,
         UserRoleRepository $userRoleRepository
@@ -34,9 +30,6 @@ class Helpers
     }
 
     /**
-     * @param array $roles
-     * @param int   $userId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException

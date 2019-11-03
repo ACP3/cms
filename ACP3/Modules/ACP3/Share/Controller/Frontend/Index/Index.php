@@ -21,9 +21,6 @@ class Index extends AbstractFrontendAction
 
     /**
      * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \Heise\Shariff\Backend                        $shariffBackend
      */
     public function __construct(
         FrontendContext $context,

@@ -19,8 +19,6 @@ class ParentIdValidationRule extends AbstractValidationRule
 
     /**
      * ParentIdValidationRule constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoriesRepository
      */
     public function __construct(CategoryRepository $categoriesRepository)
     {

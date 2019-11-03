@@ -43,9 +43,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                    $context
      * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
-     * @param Core\Helpers\Secure                                              $secure
      * @param \ACP3\Core\Helpers\Date                                          $dateHelper
-     * @param Core\WYSIWYG\WysiwygEditorRegistrar                              $editorRegistrar
      * @param \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation $systemValidator
      */
     public function __construct(
@@ -67,9 +65,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->dateHelper = $dateHelper;
     }
 
-    /**
-     * @return array
-     */
     public function execute(): array
     {
         $systemSettings = $this->config->getSettings(System\Installer\Schema::MODULE_NAME);
@@ -201,11 +196,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
         );
     }
 
-    /**
-     * @param string $currentWysiwygEditor
-     *
-     * @return array
-     */
     private function fetchWysiwygEditors(string $currentWysiwygEditor): array
     {
         $wysiwyg = [];

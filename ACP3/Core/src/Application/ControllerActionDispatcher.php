@@ -39,12 +39,6 @@ class ControllerActionDispatcher
      */
     protected $argumentResolver;
 
-    /**
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \Psr\Container\ContainerInterface                           $container
-     * @param ArgumentResolverInterface                                   $argumentResolver
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         RequestInterface $request,
@@ -58,9 +52,6 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @param string|null $serviceId
-     * @param array       $arguments
-     *
      * @return Response|string
      *
      * @throws ControllerActionNotFoundException
@@ -94,9 +85,7 @@ class ControllerActionDispatcher
             return $response;
         }
 
-        throw new ControllerActionNotFoundException(
-            'Service-Id ' . $serviceId . ' was not found!'
-        );
+        throw new ControllerActionNotFoundException('Service-Id ' . $serviceId . ' was not found!');
     }
 
     /**
@@ -125,9 +114,6 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @param \ACP3\Core\Controller\ActionInterface $controller
-     * @param array                                 $arguments
-     *
      * @return mixed
      *
      * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
@@ -141,11 +127,7 @@ class ControllerActionDispatcher
             try {
                 $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
             } catch (\RuntimeException $e) {
-                throw new ControllerActionNotFoundException(
-                    $e->getMessage(),
-                    0,
-                    $e
-                );
+                throw new ControllerActionNotFoundException($e->getMessage(), 0, $e);
             }
         }
 
@@ -153,8 +135,6 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @param ActionInterface $controller
-     *
      * @return array
      *
      * @throws \ReflectionException
@@ -172,12 +152,7 @@ class ControllerActionDispatcher
             return [$controller, self::ACTION_METHOD_DEFAULT];
         }
 
-        throw new ControllerActionNotFoundException(\sprintf(
-            'Could not find method <%s> in controller <%s>',
-                self::ACTION_METHOD_DEFAULT,
-                \get_class($controller)
-            )
-        );
+        throw new ControllerActionNotFoundException(\sprintf('Could not find method <%s> in controller <%s>', self::ACTION_METHOD_DEFAULT, \get_class($controller)));
     }
 
     private function isValidPostRequest(ActionInterface $controller): bool

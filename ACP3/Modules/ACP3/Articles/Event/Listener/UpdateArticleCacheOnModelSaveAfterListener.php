@@ -19,17 +19,12 @@ class UpdateArticleCacheOnModelSaveAfterListener
 
     /**
      * UpdateArticleCacheOnModelSaveAfterListener constructor.
-     *
-     * @param Cache $cache
      */
     public function __construct(Cache $cache)
     {
         $this->cache = $cache;
     }
 
-    /**
-     * @param ModelSaveEvent $event
-     */
     public function __invoke(ModelSaveEvent $event)
     {
         $this->cache->saveCache($event->getEntryId());

@@ -85,11 +85,6 @@ class Mailer
 
     /**
      * Mailer constructor.
-     *
-     * @param LoggerInterface   $logger
-     * @param View              $view
-     * @param SettingsInterface $config
-     * @param StringFormatter   $stringFormatter
      */
     public function __construct(
         LoggerInterface $logger,
@@ -248,8 +243,6 @@ class Mailer
     }
 
     /**
-     * @param MailerMessage $data
-     *
      * @return $this
      *
      * @deprecated since version 4.30.0, to be removed with version 5.0.0
@@ -263,10 +256,6 @@ class Mailer
 
     /**
      * Sends the email.
-     *
-     * @param \ACP3\Core\Mailer\MailerMessage|null $message
-     *
-     * @return bool
      */
     public function send(?MailerMessage $message = null): bool
     {
@@ -301,11 +290,6 @@ class Mailer
         return false;
     }
 
-    /**
-     * @param \ACP3\Core\Mailer\MailerMessage|null $message
-     *
-     * @return \ACP3\Core\Mailer\MailerMessage
-     */
     private function createMailerMessage(?MailerMessage $message): MailerMessage
     {
         if ($message === null) {
@@ -328,19 +312,12 @@ class Mailer
         return $message;
     }
 
-    /**
-     * @param \ACP3\Core\Mailer\MailerMessage $message
-     *
-     * @return string
-     */
     protected function generateSubject(MailerMessage $message): string
     {
         return $message->getSubject();
     }
 
     /**
-     * @param \ACP3\Core\Mailer\MailerMessage $message
-     *
      * @throws \PHPMailer\PHPMailer\Exception
      */
     private function addReplyTo(MailerMessage $message): void
@@ -355,8 +332,6 @@ class Mailer
     }
 
     /**
-     * @param \ACP3\Core\Mailer\MailerMessage $message
-     *
      * @throws \PHPMailer\PHPMailer\Exception
      */
     private function addFrom(MailerMessage $message): void
@@ -377,8 +352,6 @@ class Mailer
 
     /**
      * Generates the E-mail body.
-     *
-     * @param \ACP3\Core\Mailer\MailerMessage $message
      *
      * @return $this
      */
@@ -415,11 +388,6 @@ class Mailer
         return $this;
     }
 
-    /**
-     * @param \ACP3\Core\Mailer\MailerMessage $message
-     *
-     * @return string
-     */
     private function getHtmlSignature(MailerMessage $message): string
     {
         if (!empty($message->getMailSignature())) {
@@ -435,19 +403,12 @@ class Mailer
 
     /**
      * @param string $data
-     *
-     * @return string
      */
     private function decodeHtmlEntities($data): string
     {
         return \html_entity_decode($data, ENT_QUOTES, 'UTF-8');
     }
 
-    /**
-     * @param \ACP3\Core\Mailer\MailerMessage $message
-     *
-     * @return string
-     */
     private function getTextSignature(MailerMessage $message): string
     {
         if (!empty($message->getMailSignature())) {
@@ -459,10 +420,6 @@ class Mailer
 
     /**
      * Special sending logic for bcc only E-mails.
-     *
-     * @param \ACP3\Core\Mailer\MailerMessage $message
-     *
-     * @return bool
      *
      * @throws \PHPMailer\PHPMailer\Exception
      */
@@ -536,10 +493,6 @@ class Mailer
 
     /**
      * Special sending logic for E-mails without bcc addresses.
-     *
-     * @param \ACP3\Core\Mailer\MailerMessage $message
-     *
-     * @return bool
      *
      * @throws \PHPMailer\PHPMailer\Exception
      */

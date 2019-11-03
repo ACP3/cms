@@ -18,8 +18,6 @@ class DataProcessor
 
     /**
      * DataProcessor constructor.
-     *
-     * @param ColumnTypeStrategyFactory $factory
      */
     public function __construct(ColumnTypeStrategyFactory $factory)
     {
@@ -27,9 +25,6 @@ class DataProcessor
     }
 
     /**
-     * @param array $columnData
-     * @param array $columnConstraints
-     *
      * @return array
      *
      * @deprecated since version 4.33.7, to be removed with version 5.0.0. Use ::escape() instead
@@ -40,9 +35,6 @@ class DataProcessor
     }
 
     /**
-     * @param array $columnData
-     * @param array $columnConstraints
-     *
      * @return array
      */
     public function escape(array $columnData, array $columnConstraints)
@@ -62,9 +54,6 @@ class DataProcessor
     }
 
     /**
-     * @param array $columnData
-     * @param array $columnConstraints
-     *
      * @return array
      */
     public function unescape(array $columnData, array $columnConstraints)
@@ -83,12 +72,6 @@ class DataProcessor
         return $data;
     }
 
-    /**
-     * @param array $columnData
-     * @param array $columnConstraints
-     *
-     * @return array
-     */
     private function findMissingColumns(array $columnData, array $columnConstraints): array
     {
         $missingColumns = \array_diff(

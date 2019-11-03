@@ -21,8 +21,6 @@ class PictureColumnRenderer extends AbstractColumnRenderer
 
     /**
      * PictureColumnRenderer constructor.
-     *
-     * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {
@@ -49,7 +47,6 @@ class PictureColumnRenderer extends AbstractColumnRenderer
     }
 
     /**
-     * @param array  $data
      * @param string $value
      *
      * @return string

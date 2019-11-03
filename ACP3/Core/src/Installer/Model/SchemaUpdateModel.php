@@ -45,12 +45,6 @@ class SchemaUpdateModel
 
     /**
      * SchemaUpdateModel constructor.
-     *
-     * @param \ACP3\Core\Installer\SchemaRegistrar    $schemaRegistrar
-     * @param \ACP3\Core\Installer\MigrationRegistrar $migrationRegistrar
-     * @param \ACP3\Core\Modules                      $modules
-     * @param \ACP3\Core\Modules\SchemaUpdater        $schemaUpdater
-     * @param \ACP3\Core\XML                          $xml
      */
     public function __construct(
         SchemaRegistrar $schemaRegistrar,
@@ -67,8 +61,6 @@ class SchemaUpdateModel
     }
 
     /**
-     * @return array
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -92,8 +84,6 @@ class SchemaUpdateModel
     /**
      * Führt die Updateanweisungen eines Moduls aus.
      *
-     * @param string $moduleName
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      * @throws \ACP3\Core\Installer\Exception\MissingInstallerException
@@ -107,9 +97,7 @@ class SchemaUpdateModel
 
         $serviceIdMigration = $moduleName . '.installer.migration';
         if (!$this->schemaRegistrar->has($moduleName) || !$this->migrationRegistrar->has($serviceIdMigration)) {
-            throw new MissingInstallerException(
-                \sprintf('Could not find any schema or migration files for module "%s"', $moduleName)
-            );
+            throw new MissingInstallerException(\sprintf('Could not find any schema or migration files for module "%s"', $moduleName));
         }
 
         $moduleSchema = $this->schemaRegistrar->get($moduleName);

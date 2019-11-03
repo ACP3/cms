@@ -41,8 +41,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param array $currentAnswers
-     *
      * @return array
      */
     protected function addNewAnswer(array $currentAnswers)

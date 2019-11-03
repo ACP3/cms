@@ -47,8 +47,6 @@ class VoteValidation extends AbstractFormValidation
     }
 
     /**
-     * @param array $formData
-     *
      * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */

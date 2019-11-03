@@ -26,11 +26,6 @@ class RequestFactory extends \ACP3\Core\Http\RequestFactory
 
     /**
      * RequestFactory constructor.
-     *
-     * @param SettingsInterface $config
-     * @param Modules           $modules
-     * @param SymfonyRequest    $symfonyRequest
-     * @param SeoRepository     $seoRepository
      */
     public function __construct(
         SettingsInterface $config,

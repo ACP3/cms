@@ -25,9 +25,6 @@ class DisplayActionTraitImpl
 
     /**
      * DisplayActionTraitImpl constructor.
-     *
-     * @param Response $response
-     * @param View     $view
      */
     public function __construct(Response $response, View $view)
     {

@@ -28,11 +28,6 @@ class SendEmail
      * Generates and sends an E-mail.
      *
      * @param string|Core\Mailer\MailerMessage $recipientName
-     * @param string                           $recipientEmail
-     * @param string                           $from
-     * @param string                           $subject
-     * @param string                           $body
-     * @param string                           $mailSignature
      *
      * @return bool
      *

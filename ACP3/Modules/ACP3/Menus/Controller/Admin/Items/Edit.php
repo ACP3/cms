@@ -36,10 +36,8 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\FrontendContext              $context
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     * @param Menus\Model\MenuItemsModel                                 $menuItemsModel
      * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields        $menuItemFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation $menuItemFormValidation
-     * @param \ACP3\Modules\ACP3\Articles\Helpers|null                   $articlesHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

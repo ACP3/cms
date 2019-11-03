@@ -133,9 +133,6 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         return $this->filemanagerHelpers->getFilemanagerPath();
     }
 
-    /**
-     * @return string
-     */
     private function configure(): string
     {
         $config = [

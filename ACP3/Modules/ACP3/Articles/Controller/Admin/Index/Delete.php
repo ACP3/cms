@@ -19,7 +19,6 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Articles\Model\ArticlesModel                  $articlesModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

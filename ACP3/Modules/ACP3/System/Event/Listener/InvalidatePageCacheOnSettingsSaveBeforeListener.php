@@ -40,12 +40,6 @@ class InvalidatePageCacheOnSettingsSaveBeforeListener
 
     /**
      * InvalidatePageCacheOnSettingsSaveBeforeListener constructor.
-     *
-     * @param ApplicationPath    $applicationPath
-     * @param SettingsInterface  $settings
-     * @param Modules            $modules
-     * @param SettingsRepository $settingsRepository
-     * @param CanUsePageCache    $canUsePageCache
      */
     public function __construct(
         ApplicationPath $applicationPath,

@@ -89,8 +89,6 @@ class Picture
     }
 
     /**
-     * @param bool $enableCache
-     *
      * @return $this
      */
     public function setEnableCache(bool $enableCache)
@@ -101,8 +99,6 @@ class Picture
     }
 
     /**
-     * @param string $cacheDir
-     *
      * @return $this
      */
     public function setCacheDir(string $cacheDir)
@@ -117,8 +113,6 @@ class Picture
     }
 
     /**
-     * @param string $cachePrefix
-     *
      * @return $this
      */
     public function setCachePrefix(string $cachePrefix)
@@ -129,8 +123,6 @@ class Picture
     }
 
     /**
-     * @param int $maxWidth
-     *
      * @return $this
      */
     public function setMaxWidth(int $maxWidth)
@@ -141,8 +133,6 @@ class Picture
     }
 
     /**
-     * @param int $maxHeight
-     *
      * @return $this
      */
     public function setMaxHeight(int $maxHeight)
@@ -153,8 +143,6 @@ class Picture
     }
 
     /**
-     * @param int $jpgQuality
-     *
      * @return $this
      */
     public function setJpgQuality(int $jpgQuality)
@@ -165,8 +153,6 @@ class Picture
     }
 
     /**
-     * @param bool $preferWidth
-     *
      * @return $this
      */
     public function setPreferWidth(bool $preferWidth)
@@ -178,8 +164,6 @@ class Picture
     }
 
     /**
-     * @param bool $preferHeight
-     *
      * @return $this
      */
     public function setPreferHeight(bool $preferHeight)
@@ -191,8 +175,6 @@ class Picture
     }
 
     /**
-     * @param string $file
-     *
      * @return $this
      */
     public function setFile(string $file)
@@ -221,8 +203,6 @@ class Picture
     }
 
     /**
-     * @param bool $forceResample
-     *
      * @return $this
      */
     public function setForceResample(bool $forceResample)

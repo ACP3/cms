@@ -27,9 +27,6 @@ class Smarty implements RendererInterface
 
     /**
      * Smarty constructor.
-     *
-     * @param \Smarty                           $smarty
-     * @param \Psr\Container\ContainerInterface $container
      */
     public function __construct(\Smarty $smarty, ContainerInterface $container)
     {
@@ -48,9 +45,6 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @param string $blockName
-     * @param string $serviceId
-     *
      * @throws \SmartyException
      */
     public function registerBlock(string $blockName, string $serviceId): void
@@ -65,9 +59,6 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @param string $filterName
-     * @param string $serviceId
-     *
      * @throws \SmartyException
      */
     public function registerFilter(string $filterName, string $serviceId): void
@@ -82,9 +73,6 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @param string $pluginName
-     * @param string $serviceId
-     *
      * @throws \SmartyException
      */
     public function registerFunction(string $pluginName, string $serviceId): void
@@ -99,9 +87,6 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @param string $pluginName
-     * @param string $serviceId
-     *
      * @throws \SmartyException
      */
     public function registerModifier(string $pluginName, string $serviceId): void
@@ -115,10 +100,6 @@ class Smarty implements RendererInterface
         );
     }
 
-    /**
-     * @param string                                                     $resourceName
-     * @param \ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource $resource
-     */
     public function registerResource(string $resourceName, AbstractResource $resource): void
     {
         $this->smarty->registerResource($resourceName, $resource);

@@ -20,8 +20,6 @@ class ForbidSuperUserDeleteListener
 
     /**
      * OnUsersModelDeleteBeforeListener constructor.
-     *
-     * @param UserModel $userModel
      */
     public function __construct(UserModel $userModel)
     {
@@ -29,8 +27,6 @@ class ForbidSuperUserDeleteListener
     }
 
     /**
-     * @param ModelSaveEvent $event
-     *
      * @throws SuperUserNotDeletableException
      */
     public function __invoke(ModelSaveEvent $event)

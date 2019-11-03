@@ -125,8 +125,6 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $nickNameOrEmail
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -146,9 +144,6 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array  $user
-     * @param string $newPassword
-     *
      * @return bool
      */
     protected function sendPasswordChangeEmail(array $user, string $newPassword)

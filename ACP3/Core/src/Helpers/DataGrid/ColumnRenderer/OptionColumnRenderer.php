@@ -30,11 +30,6 @@ class OptionColumnRenderer extends AbstractColumnRenderer
      */
     protected $optionRenderer;
 
-    /**
-     * @param \ACP3\Core\I18n\Translator                                                     $translator
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer $optionRenderer
-     * @param \Symfony\Component\EventDispatcher\EventDispatcher                             $eventDispatcher
-     */
     public function __construct(
         Translator $translator,
         OptionRenderer $optionRenderer,

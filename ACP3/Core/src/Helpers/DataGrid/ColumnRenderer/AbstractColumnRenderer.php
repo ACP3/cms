@@ -28,8 +28,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     private $useAjax = false;
 
     /**
-     * @param string $identifier
-     *
      * @return $this
      */
     public function setIdentifier(string $identifier): self
@@ -40,8 +38,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param string|null $primaryKey
-     *
      * @return $this
      */
     public function setPrimaryKey(?string $primaryKey): self
@@ -51,17 +47,12 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getUseAjax(): bool
     {
         return $this->useAjax;
     }
 
     /**
-     * @param bool $useAjax
-     *
      * @return $this
      */
     public function setUseAjax(bool $useAjax): self
@@ -80,7 +71,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array  $column
      * @param string $value
      *
      * @return string
@@ -100,9 +90,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array  $column
-     * @param string $value
-     *
      * @return string|array
      */
     private function renderAjax(array $column, string $value = '')
@@ -143,8 +130,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array $column
-     *
      * @return string
      */
     protected function getFirstDbField(array $column)
@@ -155,9 +140,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array $column
-     * @param array $dbResultRow
-     *
      * @return string
      */
     protected function getValue(array $column, array $dbResultRow)
@@ -173,7 +155,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array  $dbResultRow
      * @param string $field
      *
      * @return string|null
@@ -184,8 +165,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array $column
-     *
      * @return string
      */
     protected function getDefaultValue(array $column)
@@ -198,8 +177,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param array $column
-     *
      * @return array
      */
     protected function getDbFields(array $column)

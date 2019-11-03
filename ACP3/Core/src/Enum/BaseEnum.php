@@ -17,8 +17,6 @@ class BaseEnum
     private static $constCacheArray;
 
     /**
-     * @return array
-     *
      * @throws \ReflectionException
      */
     protected static function getConstants(): array
@@ -39,8 +37,6 @@ class BaseEnum
      * @param string $name
      * @param bool   $strict
      *
-     * @return bool
-     *
      * @throws \ReflectionException
      */
     public static function isValidName($name, $strict = false): bool
@@ -59,8 +55,6 @@ class BaseEnum
     /**
      * @param mixed $value
      * @param bool  $strict
-     *
-     * @return bool
      *
      * @throws \ReflectionException
      */

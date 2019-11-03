@@ -27,10 +27,6 @@ class FormValidationEvent extends Event
 
     /**
      * FormValidationEvent constructor.
-     *
-     * @param Validator $validator
-     * @param array     $formData
-     * @param array     $extra
      */
     public function __construct(
         Validator $validator,

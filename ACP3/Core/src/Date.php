@@ -48,8 +48,6 @@ class Date
     }
 
     /**
-     * @param string $dateFormatLong
-     *
      * @return $this
      */
     public function setDateFormatLong(string $dateFormatLong)
@@ -68,8 +66,6 @@ class Date
     }
 
     /**
-     * @param string $dateFormatShort
-     *
      * @return $this
      */
     public function setDateFormatShort(string $dateFormatShort)
@@ -80,8 +76,6 @@ class Date
     }
 
     /**
-     * @param \DateTimeZone $dateTimeZone
-     *
      * @return $this
      */
     public function setDateTimeZone(\DateTimeZone $dateTimeZone)

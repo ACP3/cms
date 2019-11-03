@@ -24,9 +24,6 @@ class OnEmoticonsModelBeforeDeleteListener
 
     /**
      * OnEmoticonsModelBeforeDeleteListener constructor.
-     *
-     * @param \ACP3\Core\Helpers\Upload $emoticonsUploadHelper
-     * @param EmoticonRepository        $emoticonRepository
      */
     public function __construct(
         Upload $emoticonsUploadHelper,
@@ -36,9 +33,6 @@ class OnEmoticonsModelBeforeDeleteListener
         $this->emoticonsUploadHelper = $emoticonsUploadHelper;
     }
 
-    /**
-     * @param ModelSaveEvent $event
-     */
     public function __invoke(ModelSaveEvent $event)
     {
         if (!$event->isDeleteStatement()) {

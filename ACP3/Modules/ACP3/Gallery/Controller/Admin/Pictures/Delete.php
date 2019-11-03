@@ -42,8 +42,6 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
      * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null            $uriAliasManager
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null    $socialSharingManager
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

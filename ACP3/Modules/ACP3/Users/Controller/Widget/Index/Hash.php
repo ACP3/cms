@@ -22,9 +22,6 @@ class Hash extends AbstractWidgetAction
 
     /**
      * Hash constructor.
-     *
-     * @param WidgetContext        $context
-     * @param DefaultHashGenerator $hashGenerator
      */
     public function __construct(WidgetContext $context, DefaultHashGenerator $hashGenerator)
     {
@@ -33,9 +30,6 @@ class Hash extends AbstractWidgetAction
         $this->hashGenerator = $hashGenerator;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function execute(): Response
     {
         $accept = AcceptHeader::fromString($this->request->getSymfonyRequest()->headers->get('Accept'));

@@ -41,7 +41,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * Settings constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param Core\Cache                                                        $galleryCoreCache
      * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
      * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
@@ -126,8 +125,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return bool
      */
     protected function hasImageDimensionChanges(array $formData)

@@ -19,17 +19,12 @@ class OnCaptchaAdminSettingsCustomFieldsListener
 
     /**
      * OnCaptchaAdminSettingsCustomFieldsListener constructor.
-     *
-     * @param View $view
      */
     public function __construct(View $view)
     {
         $this->view = $view;
     }
 
-    /**
-     * @param TemplateEvent $event
-     */
     public function __invoke(TemplateEvent $event)
     {
         $params = $event->getParameters();

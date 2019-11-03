@@ -24,9 +24,6 @@ class OnWysiwygTextareaBeforeListener
 
     /**
      * OnAfterFormListener constructor.
-     *
-     * @param \ACP3\Core\Modules                   $modules
-     * @param \ACP3\Modules\ACP3\Emoticons\Helpers $emoticonsHelper
      */
     public function __construct(
         Modules $modules,
@@ -36,9 +33,6 @@ class OnWysiwygTextareaBeforeListener
         $this->emoticonsHelper = $emoticonsHelper;
     }
 
-    /**
-     * @param \ACP3\Core\View\Event\TemplateEvent $templateEvent
-     */
     public function __invoke(TemplateEvent $templateEvent)
     {
         $arguments = $templateEvent->getParameters();

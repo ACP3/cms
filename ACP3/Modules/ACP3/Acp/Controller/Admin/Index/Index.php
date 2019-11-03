@@ -11,9 +11,6 @@ use ACP3\Core;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @return array
-     */
     public function execute(): array
     {
         return [

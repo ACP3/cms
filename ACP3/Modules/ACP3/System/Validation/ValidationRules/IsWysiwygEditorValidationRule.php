@@ -19,8 +19,6 @@ class IsWysiwygEditorValidationRule extends AbstractValidationRule
 
     /**
      * IsWysiwygEditorValidationRule constructor.
-     *
-     * @param WysiwygEditorRegistrar $editorRegistrar
      */
     public function __construct(WysiwygEditorRegistrar $editorRegistrar)
     {

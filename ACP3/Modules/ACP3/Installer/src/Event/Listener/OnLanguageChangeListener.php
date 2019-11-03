@@ -23,9 +23,6 @@ class OnLanguageChangeListener
 
     /**
      * OnFrontControllerBeforeDispatchListener constructor.
-     *
-     * @param RequestInterface $request
-     * @param RedirectResponse $redirect
      */
     public function __construct(
         RequestInterface $request,

@@ -16,9 +16,6 @@ class SchemaRegistrar
      */
     private $schemas = [];
 
-    /**
-     * @param SchemaInterface $schema
-     */
     public function set(SchemaInterface $schema)
     {
         $this->schemas[$schema->getModuleName()] = $schema;
@@ -33,8 +30,6 @@ class SchemaRegistrar
     }
 
     /**
-     * @param string $moduleName
-     *
      * @return bool
      */
     public function has(string $moduleName)
@@ -43,8 +38,6 @@ class SchemaRegistrar
     }
 
     /**
-     * @param string $moduleName
-     *
      * @return SchemaInterface
      *
      * @throws \InvalidArgumentException
@@ -55,8 +48,6 @@ class SchemaRegistrar
             return $this->schemas[$moduleName];
         }
 
-        throw new \InvalidArgumentException(
-            \sprintf('The schema with the service id "%s" could not be found.', $moduleName)
-        );
+        throw new \InvalidArgumentException(\sprintf('The schema with the service id "%s" could not be found.', $moduleName));
     }
 }

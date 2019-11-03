@@ -16,7 +16,6 @@ class Filesystem
 
     /**
      * @param string $directory
-     * @param array  $excluded
      *
      * @return array
      */

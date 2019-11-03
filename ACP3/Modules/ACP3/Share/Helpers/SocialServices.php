@@ -43,8 +43,6 @@ class SocialServices
 
     /**
      * AvailableServices constructor.
-     *
-     * @param \ACP3\Core\Settings\SettingsInterface $settings
      */
     public function __construct(SettingsInterface $settings)
     {

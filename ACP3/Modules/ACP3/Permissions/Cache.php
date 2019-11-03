@@ -33,10 +33,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
     protected $ruleRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                                   $cache
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository     $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository     $ruleRepository
+     * @param \ACP3\Core\Cache $cache
      */
     public function __construct(
         Core\Cache $cache,
@@ -174,7 +171,6 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
     }
 
     /**
-     * @param array  $rule
      * @param string $privilegeKey
      *
      * @return bool
@@ -188,10 +184,6 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
 
     /**
      * Ermittelt die Berechtigung einer Privilegie von einer übergeordneten Rolle.
-     *
-     * @param string $privilegeKey
-     * @param int    $moduleId
-     * @param int    $roleId
      *
      * @return int
      */

@@ -18,8 +18,6 @@ class LanguagePackExistsValidationRule extends AbstractValidationRule
 
     /**
      * LanguagePackExistsValidationRule constructor.
-     *
-     * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(Translator $translator)
     {

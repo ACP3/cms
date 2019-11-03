@@ -46,8 +46,6 @@ class Index extends AbstractInstallerAction
     }
 
     /**
-     * @return array
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      * @throws \Exception

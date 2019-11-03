@@ -23,9 +23,6 @@ class SocialSharingManager
 
     /**
      * SocialSharingManager constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Share\Model\ShareModel                 $shareModel
-     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository $shareRepository
      */
     public function __construct(
         ShareModel $shareModel,
@@ -38,10 +35,6 @@ class SocialSharingManager
     /**
      * Deletes the given sharing info.
      *
-     * @param string $path
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function deleteSharingInfo(string $path): bool
@@ -52,11 +45,6 @@ class SocialSharingManager
         return !empty($shareInfo) && $this->shareModel->delete($shareInfo['id']) !== false;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     protected function preparePath(string $path): string
     {
         return !\preg_match('/\/$/', $path) ? '/' : '';
@@ -64,13 +52,6 @@ class SocialSharingManager
 
     /**
      * Inserts/Updates the given sharing info.
-     *
-     * @param string $path
-     * @param bool   $active
-     * @param array  $services
-     * @param bool   $ratingsActive
-     *
-     * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
      */

@@ -10,9 +10,6 @@ namespace ACP3\Core\NestedSet\Operation;
 class Sort extends AbstractOperation
 {
     /**
-     * @param int    $resultId
-     * @param string $mode
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -43,8 +40,6 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @param array $nodes
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -59,8 +54,6 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @param array $nodes
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -75,8 +68,6 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @param array $nodes
-     *
      * @return array
      */
     protected function fetchAffectedNodesForReorder(array $nodes)
@@ -90,9 +81,6 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @param int   $diff
-     * @param array $nodes
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -107,9 +95,6 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @param int   $diff
-     * @param array $nodes
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -124,9 +109,6 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @param array $node
-     * @param array $elem
-     *
      * @return array
      */
     protected function calcDiffBetweenNodes(array $node, array $elem)
@@ -138,8 +120,6 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @param array $node
-     *
      * @return string
      */
     protected function getBlockId(array $node)

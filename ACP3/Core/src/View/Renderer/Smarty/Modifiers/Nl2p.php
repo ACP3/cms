@@ -16,9 +16,6 @@ class Nl2p extends AbstractModifier
      */
     protected $stringFormatter;
 
-    /**
-     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
-     */
     public function __construct(StringFormatter $stringFormatter)
     {
         $this->stringFormatter = $stringFormatter;

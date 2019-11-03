@@ -14,8 +14,6 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'users';
 
     /**
-     * @param int $userId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -29,9 +27,6 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * Überprüft, ob der übergebene Username bereits existiert.
-     *
-     * @param string   $nickname
-     * @param int|null $userId
      *
      * @return bool
      *
@@ -53,9 +48,6 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     /**
      * Überprüft, ob die übergebene E-Mail-Adresse bereits existiert.
      *
-     * @param string   $mail
-     * @param int|null $userId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -72,8 +64,6 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $nickname
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -84,8 +74,6 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $nickname
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -99,8 +87,6 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $email
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -124,9 +110,6 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

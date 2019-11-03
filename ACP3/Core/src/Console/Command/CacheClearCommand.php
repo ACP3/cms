@@ -24,8 +24,6 @@ class CacheClearCommand extends Command
 
     /**
      * ClearCacheCommand constructor.
-     *
-     * @param ApplicationPath $applicationPath
      */
     public function __construct(ApplicationPath $applicationPath)
     {

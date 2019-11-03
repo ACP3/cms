@@ -15,8 +15,6 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     const TABLE_NAME = 'menu_items';
 
     /**
-     * @param int $menuItemId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -30,8 +28,6 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
-     * @param string $uri
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -45,8 +41,6 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
-     * @param int $menuId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -60,8 +54,6 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
-     * @param int $menuItemId
-     *
      * @return string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -75,8 +67,6 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
-     * @param int $menuItemId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -90,8 +80,6 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
-     * @param string $uri
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -117,8 +105,6 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
-     * @param string $blockName
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -132,9 +118,6 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
-     * @param string $menuName
-     * @param array  $uris
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -151,8 +134,6 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
-     * @param array $uris
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

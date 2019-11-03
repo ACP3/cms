@@ -30,7 +30,6 @@ class Create extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext          $context
      * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param Menus\Model\MenusModel                                 $menusModel
      * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
      */
     public function __construct(

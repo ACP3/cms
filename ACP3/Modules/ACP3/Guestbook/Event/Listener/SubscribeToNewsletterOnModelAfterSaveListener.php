@@ -35,11 +35,6 @@ class SubscribeToNewsletterOnModelAfterSaveListener
 
     /**
      * SubscribeToNewsletterOnModelAfterSaveListener constructor.
-     *
-     * @param \ACP3\Core\Settings\SettingsInterface               $settings
-     * @param \ACP3\Core\Router\RouterInterface                   $router
-     * @param \ACP3\Core\I18n\Translator                          $translator
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe|null $subscribe
      */
     public function __construct(
         SettingsInterface $settings,
@@ -53,9 +48,6 @@ class SubscribeToNewsletterOnModelAfterSaveListener
         $this->subscribe = $subscribe;
     }
 
-    /**
-     * @param ModelSaveEvent $event
-     */
     public function __invoke(ModelSaveEvent $event)
     {
         if ($this->settings->getSettings(Schema::MODULE_NAME)['newsletter_integration'] == 1 && $this->subscribe) {

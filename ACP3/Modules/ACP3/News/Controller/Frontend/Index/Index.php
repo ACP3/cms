@@ -63,7 +63,6 @@ class Index extends AbstractAction
      * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
      * @param \ACP3\Modules\ACP3\Categories\Helpers                             $categoriesHelpers
      * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements|null                 $metaStatements
      * @param \ACP3\Modules\ACP3\Comments\Helpers                               $commentsHelpers
      */
     public function __construct(
@@ -90,8 +89,6 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param int $cat
-     *
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
@@ -137,11 +134,6 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param int    $categoryId
-     * @param string $time
-     *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function fetchNewsCount(int $categoryId, string $time): int
@@ -157,9 +149,6 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param int    $categoryId
-     * @param string $time
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -185,8 +174,6 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param array $news
-     *
      * @return string
      */
     protected function addReadMoreLink(array $news)
@@ -203,8 +190,6 @@ class Index extends AbstractAction
     }
 
     /**
-     * @param int $categoryId
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function addBreadcrumbStep(int $categoryId)

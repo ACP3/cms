@@ -16,18 +16,12 @@ class SiteTitle extends AbstractFunction
      */
     protected $title;
 
-    /**
-     * @param \ACP3\Core\Breadcrumb\Title $title
-     */
     public function __construct(Title $title)
     {
         $this->title = $title;
     }
 
     /**
-     * @param array                     $params
-     * @param \Smarty_Internal_Template $smarty
-     *
      * @return string
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)

@@ -29,10 +29,6 @@ class LinkModeValidationRule extends AbstractValidationRule
 
     /**
      * LinkModeValidationRule constructor.
-     *
-     * @param \ACP3\Core\Modules                                                                      $modules
-     * @param \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule                         $internalUriValidationRule
-     * @param \ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule|null $articleExistsValidationRule
      */
     public function __construct(
         Modules $modules,
@@ -62,11 +58,6 @@ class LinkModeValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param int    $mode
-     * @param string $moduleName
-     * @param string $uri
-     * @param int    $articleId
-     *
      * @return bool
      */
     protected function isValidLink(int $mode, string $moduleName, string $uri, int $articleId)

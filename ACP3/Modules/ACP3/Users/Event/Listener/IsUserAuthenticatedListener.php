@@ -36,11 +36,6 @@ class IsUserAuthenticatedListener
 
     /**
      * IsUserAuthenticatedOnControllerActionBeforeDispatchListener constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param RedirectMessages                 $redirectMessages
-     * @param Translator                       $translator
-     * @param UserModel                        $user
      */
     public function __construct(
         RequestInterface $request,
@@ -55,8 +50,6 @@ class IsUserAuthenticatedListener
     }
 
     /**
-     * @param \ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent $event
-     *
      * @throws \ACP3\Core\Authentication\Exception\UnauthorizedAccessException
      */
     public function __invoke(ControllerActionBeforeDispatchEvent $event)

@@ -24,9 +24,6 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 
     /**
      * AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener constructor.
-     *
-     * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(
         ACL $acl,
@@ -36,9 +33,6 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
         $this->translator = $translator;
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
-     */
     public function __invoke(CustomOptionEvent $customOptionEvent)
     {
         if ($customOptionEvent->getIdentifier() === $this->getDataGridIdentifier() &&
@@ -67,8 +61,6 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
     abstract protected function getResource();
 
     /**
-     * @param array $dbResultRow
-     *
      * @return string
      */
     abstract protected function getRoute(array $dbResultRow);

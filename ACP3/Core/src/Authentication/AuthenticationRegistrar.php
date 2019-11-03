@@ -17,8 +17,7 @@ class AuthenticationRegistrar
     private $authentications = [];
 
     /**
-     * @param string                  $serviceId
-     * @param AuthenticationInterface $authentication
+     * @param string $serviceId
      *
      * @return $this
      */
@@ -60,8 +59,6 @@ class AuthenticationRegistrar
             return $this->authentications[$serviceId];
         }
 
-        throw new InvalidAuthenticationMethodException(
-            \sprintf('The authentication with the service id "%s" could not be found.', $serviceId)
-        );
+        throw new InvalidAuthenticationMethodException(\sprintf('The authentication with the service id "%s" could not be found.', $serviceId));
     }
 }

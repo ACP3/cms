@@ -48,12 +48,6 @@ class Steps
 
     /**
      * Breadcrumb constructor.
-     *
-     * @param \Psr\Container\ContainerInterface                           $container
-     * @param \ACP3\Core\I18n\Translator                                  $translator
-     * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router\RouterInterface                           $router
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         ContainerInterface $container,
@@ -71,8 +65,6 @@ class Steps
 
     /**
      * Returns the breadcrumb.
-     *
-     * @return array
      */
     public function getBreadcrumb(): array
     {
@@ -146,9 +138,6 @@ class Steps
         }
     }
 
-    /**
-     * @return string
-     */
     private function getControllerServiceId(): string
     {
         return $this->request->getModule()
@@ -158,17 +147,11 @@ class Steps
         . '.index';
     }
 
-    /**
-     * @return string
-     */
     private function getControllerActionTitle(): string
     {
         return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getAction();
     }
 
-    /**
-     * @return string
-     */
     private function getControllerIndexActionTitle(): string
     {
         return $this->request->getArea() . '_' . $this->request->getController() . '_index';
@@ -199,10 +182,6 @@ class Steps
     /**
      * Ersetzt die aktuell letzte Brotkrume mit neuen Werten.
      *
-     * @param string $title
-     * @param string $path
-     * @param bool   $dbSteps
-     *
      * @return $this
      */
     public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): self
@@ -215,12 +194,6 @@ class Steps
         return $this;
     }
 
-    /**
-     * @param string $title
-     * @param string $path
-     *
-     * @return array
-     */
     protected function buildStepItem(string $title, string $path): array
     {
         return [
@@ -231,9 +204,6 @@ class Steps
 
     /**
      * Zuweisung einer neuen Stufe zur Brotkrümelspur.
-     *
-     * @param string $title
-     * @param string $path
      *
      * @return $this
      */
@@ -249,9 +219,6 @@ class Steps
     /**
      * Fügt Brotkrumen an den Anfang an.
      *
-     * @param string $title
-     * @param string $path
-     *
      * @return $this
      */
     public function prepend(string $title, string $path): self
@@ -265,8 +232,6 @@ class Steps
     }
 
     /**
-     * @param string $path
-     *
      * @return $this
      */
     public function removeByPath(string $path): self
@@ -283,11 +248,6 @@ class Steps
         return $this;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return bool
-     */
     private function stepAlreadyExists(string $path): bool
     {
         $route = $this->router->route($path);

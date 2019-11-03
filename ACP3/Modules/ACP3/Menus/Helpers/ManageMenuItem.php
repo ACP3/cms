@@ -21,10 +21,6 @@ class ManageMenuItem
      */
     protected $menuItemsModel;
 
-    /**
-     * @param MenuItemsModel                                               $menuItemsModel
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
-     */
     public function __construct(
         MenuItemsModel $menuItemsModel,
         MenuItemRepository $menuItemRepository
@@ -34,11 +30,6 @@ class ManageMenuItem
     }
 
     /**
-     * @param string $path
-     * @param array  $data
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function manageMenuItem(string $path, array $data = []): bool

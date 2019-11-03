@@ -51,8 +51,6 @@ class Files extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $cat
-     *
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
@@ -78,8 +76,6 @@ class Files extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $categoryId
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function addBreadcrumbSteps(int $categoryId)

@@ -10,8 +10,7 @@ namespace ACP3\Core\NestedSet\Operation;
 class Insert extends AbstractOperation
 {
     /**
-     * @param array $insertValues
-     * @param int   $parentId
+     * @param int $parentId
      *
      * @return int|bool
      *
@@ -56,8 +55,6 @@ class Insert extends AbstractOperation
     }
 
     /**
-     * @param int $blockId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException

@@ -40,7 +40,6 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager         $uriAliasManager
-     * @param Seo\Model\SeoModel                                    $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(

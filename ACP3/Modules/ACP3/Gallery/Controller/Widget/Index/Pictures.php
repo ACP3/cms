@@ -29,10 +29,6 @@ class Pictures extends AbstractWidgetAction
 
     /**
      * Pictures constructor.
-     *
-     * @param WidgetContext     $context
-     * @param GalleryRepository $galleryRepository
-     * @param Cache             $galleryCache
      */
     public function __construct(
         WidgetContext $context,
@@ -46,9 +42,6 @@ class Pictures extends AbstractWidgetAction
     }
 
     /**
-     * @param int    $id
-     * @param string $template
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

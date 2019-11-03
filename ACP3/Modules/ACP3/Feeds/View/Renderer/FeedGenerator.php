@@ -45,9 +45,6 @@ class FeedGenerator
 
     /**
      * FeedGenerator constructor.
-     *
-     * @param SettingsInterface $config
-     * @param RouterInterface   $router
      */
     public function __construct(
         SettingsInterface $config,
@@ -126,9 +123,6 @@ class FeedGenerator
         }
     }
 
-    /**
-     * @param array $items
-     */
     public function assign(array $items)
     {
         $this->configure();

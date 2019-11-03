@@ -28,9 +28,6 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         $this->xml = $xml;
     }
 
-    /**
-     * @return array
-     */
     public function getModulesInfoCache(): array
     {
         if (empty($this->moduleInfoCache)) {
@@ -48,9 +45,6 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         $this->moduleInfoCache = $this->fetchModules();
     }
 
-    /**
-     * @return array
-     */
     protected function fetchModules(): array
     {
         $infos = [];
@@ -66,11 +60,6 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         return $infos;
     }
 
-    /**
-     * @param \ACP3\Core\Component\Dto\ComponentDataDto $module
-     *
-     * @return array
-     */
     protected function fetchModuleInfo(ComponentDataDto $module): array
     {
         $path = $module->getPath() . '/Resources/config/module.xml';

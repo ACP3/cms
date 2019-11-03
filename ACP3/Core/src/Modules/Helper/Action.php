@@ -67,7 +67,6 @@ class Action
     }
 
     /**
-     * @param callable    $callback
      * @param string|null $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -101,8 +100,6 @@ class Action
     }
 
     /**
-     * @param \Exception $exception
-     *
      * @return array|Response
      */
     public function renderErrorBoxOnFailedFormValidation(\Exception $exception)
@@ -117,7 +114,6 @@ class Action
 
     /**
      * @param string|null $action
-     * @param callable    $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
@@ -145,7 +141,6 @@ class Action
 
     /**
      * @param string|null $action
-     * @param callable    $callback
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
@@ -179,7 +174,6 @@ class Action
     }
 
     /**
-     * @param callable    $callback
      * @param string|null $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -197,7 +191,6 @@ class Action
     }
 
     /**
-     * @param callable    $callback
      * @param string|null $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -213,7 +206,6 @@ class Action
     }
 
     /**
-     * @param callable    $callback
      * @param string|null $path
      *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -229,7 +221,6 @@ class Action
     }
 
     /**
-     * @param callable    $callback
      * @param string|null $path
      *
      * @return array|string|JsonResponse|RedirectResponse
@@ -247,9 +238,7 @@ class Action
     }
 
     /**
-     * @param bool|int    $result
-     * @param string      $phrase
-     * @param string|null $path
+     * @param bool|int $result
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -263,9 +252,7 @@ class Action
     }
 
     /**
-     * @param bool|int    $result
-     * @param string      $translatedText
-     * @param string|null $path
+     * @param bool|int $result
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -279,9 +266,6 @@ class Action
     }
 
     /**
-     * @param string|null $moduleConfirmUrl
-     * @param string|null $moduleIndexUrl
-     *
      * @return array
      */
     private function generateDefaultConfirmationBoxUris(?string $moduleConfirmUrl, ?string $moduleIndexUrl)
@@ -299,10 +283,6 @@ class Action
 
     /**
      * helper function for deleting a result set.
-     *
-     * @param string|null $action
-     * @param string|null $moduleConfirmUrl
-     * @param string|null $moduleIndexUrl
      *
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -333,9 +313,6 @@ class Action
         return $entries;
     }
 
-    /**
-     * @return array
-     */
     private function prepareRequestData(): array
     {
         $entries = [];
@@ -348,11 +325,6 @@ class Action
         return $entries;
     }
 
-    /**
-     * @param array $entries
-     *
-     * @return string
-     */
     private function prepareConfirmationBoxText(array $entries): string
     {
         $entriesCount = \count($entries);

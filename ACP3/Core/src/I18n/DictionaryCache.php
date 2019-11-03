@@ -94,12 +94,6 @@ class DictionaryCache implements DictionaryCacheInterface
         return $this->cache->save($language, $data);
     }
 
-    /**
-     * @param string $i18nFile
-     * @param string $moduleName
-     *
-     * @return array
-     */
     private function parseI18nFile(string $i18nFile, string $moduleName): array
     {
         $data = [];
@@ -111,11 +105,6 @@ class DictionaryCache implements DictionaryCacheInterface
         return $data;
     }
 
-    /**
-     * @param string $filePath
-     *
-     * @return string
-     */
     private function getModuleNameFromThemePath(string $filePath): string
     {
         $pathArray = \explode('/', $filePath);
@@ -137,8 +126,6 @@ class DictionaryCache implements DictionaryCacheInterface
 
     /**
      * Sets the cache for all registered languages.
-     *
-     * @return bool
      */
     protected function saveLanguagePacksCache(): bool
     {
@@ -170,10 +157,6 @@ class DictionaryCache implements DictionaryCacheInterface
     }
 
     /**
-     * @param string $languageIsoCode
-     *
-     * @return array
-     *
      * @throws DomainException
      */
     private function getLanguagePack(string $languageIsoCode): array

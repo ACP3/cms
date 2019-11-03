@@ -80,7 +80,6 @@ class PictureValidationRule extends AbstractValidationRule
 
     /**
      * @param string $file
-     * @param array  $info
      * @param int    $width
      * @param int    $height
      * @param int    $filesize

@@ -73,8 +73,6 @@ class AuthenticationModel implements AuthenticationModelInterface
 
     /**
      * Authenticates the user.
-     *
-     * @param array|null $userData
      */
     public function authenticate(?array $userData): void
     {
@@ -198,10 +196,6 @@ class AuthenticationModel implements AuthenticationModelInterface
     }
 
     /**
-     * @param array $userData
-     *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function saveFailedLoginAttempts(array $userData): int
@@ -212,9 +206,6 @@ class AuthenticationModel implements AuthenticationModelInterface
         return $loginErrors;
     }
 
-    /**
-     * @return string
-     */
     protected function getCookieDomain(): string
     {
         if (\strpos($this->request->getServer()->get('HTTP_HOST'), '.') !== false) {
@@ -224,11 +215,6 @@ class AuthenticationModel implements AuthenticationModelInterface
         return '';
     }
 
-    /**
-     * @param array $user
-     *
-     * @return string
-     */
     protected function generateRememberMeToken(array $user): string
     {
         return \hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . \uniqid(\mt_rand(), true));
@@ -253,8 +239,6 @@ class AuthenticationModel implements AuthenticationModelInterface
      * @param int    $userId
      * @param string $password
      *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function migratePasswordHashToSha512($userId, $password): array
@@ -272,9 +256,6 @@ class AuthenticationModel implements AuthenticationModelInterface
 
     /**
      * @param string $password
-     * @param array  $user
-     *
-     * @return bool
      */
     protected function userHasOldPassword($password, array $user): bool
     {

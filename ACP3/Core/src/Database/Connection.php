@@ -47,13 +47,6 @@ class Connection
 
     /**
      * Connection constructor.
-     *
-     * @param LoggerInterface    $logger
-     * @param ApplicationPath    $appPath
-     * @param CacheDriverFactory $cacheDriverFactory
-     * @param string             $appMode
-     * @param array              $connectionParams
-     * @param string             $tablePrefix
      */
     public function __construct(
         LoggerInterface $logger,
@@ -102,8 +95,6 @@ class Connection
     }
 
     /**
-     * @param string $tableName
-     *
      * @return string
      */
     public function getPrefixedTableName(string $tableName)
@@ -112,13 +103,6 @@ class Connection
     }
 
     /**
-     * @param string      $statement
-     * @param array       $params
-     * @param array       $types
-     * @param bool        $cache
-     * @param int         $lifetime
-     * @param string|null $cacheKey
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -139,10 +123,6 @@ class Connection
     }
 
     /**
-     * @param string $statement
-     * @param array  $params
-     * @param array  $types
-     *
      * @return mixed
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -153,10 +133,6 @@ class Connection
     }
 
     /**
-     * @param string $statement
-     * @param array  $params
-     * @param array  $types
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -169,11 +145,6 @@ class Connection
     }
 
     /**
-     * @param string $statement
-     * @param array  $params
-     * @param int    $column
-     * @param array  $types
-     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -184,13 +155,6 @@ class Connection
     }
 
     /**
-     * @param string      $query
-     * @param array       $params
-     * @param array       $types
-     * @param bool        $cache
-     * @param int         $lifetime
-     * @param string|null $cacheKey
-     *
      * @return \Doctrine\DBAL\Driver\ResultStatement|\Doctrine\DBAL\Driver\Statement
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -212,8 +176,6 @@ class Connection
     }
 
     /**
-     * @param callable $callback
-     *
      * @return mixed
      *
      * @throws DBAL\ConnectionException

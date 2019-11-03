@@ -23,9 +23,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $emoticonRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                                 $cache
-     * @param \ACP3\Core\Environment\ApplicationPath                           $appPath
-     * @param \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository $emoticonRepository
+     * @param \ACP3\Core\Cache                       $cache
+     * @param \ACP3\Core\Environment\ApplicationPath $appPath
      */
     public function __construct(
         Core\Cache $cache,

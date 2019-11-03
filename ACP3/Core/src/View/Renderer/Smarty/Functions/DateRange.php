@@ -14,9 +14,6 @@ class DateRange extends AbstractFunction
      */
     protected $dateRangeFormatter;
 
-    /**
-     * @param \ACP3\Core\Helpers\Formatter\DateRange $dateRangeFormatter
-     */
     public function __construct(\ACP3\Core\Helpers\Formatter\DateRange $dateRangeFormatter)
     {
         $this->dateRangeFormatter = $dateRangeFormatter;

@@ -36,8 +36,6 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
 
     /**
      * SQLLogger constructor.
-     *
-     * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
     {

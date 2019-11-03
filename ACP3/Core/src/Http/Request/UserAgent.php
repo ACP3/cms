@@ -16,9 +16,6 @@ class UserAgent
      */
     protected $server;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\ServerBag $server
-     */
     public function __construct(ServerBag $server)
     {
         $this->server = $server;

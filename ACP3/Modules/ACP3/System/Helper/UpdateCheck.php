@@ -34,10 +34,6 @@ class UpdateCheck
 
     /**
      * UpdateCheck constructor.
-     *
-     * @param Date              $date
-     * @param SettingsInterface $settings
-     * @param UpdateFileParser  $updateFileParser
      */
     public function __construct(Date $date, SettingsInterface $settings, UpdateFileParser $updateFileParser)
     {
@@ -109,8 +105,6 @@ class UpdateCheck
     }
 
     /**
-     * @param array $update
-     *
      * @return bool
      */
     private function saveUpdateSettings(array $update)

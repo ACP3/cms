@@ -18,8 +18,6 @@ class Datepicker extends AbstractFunction
 
     /**
      * Datepicker constructor.
-     *
-     * @param \ACP3\Core\Helpers\Date $dateHelper
      */
     public function __construct(Date $dateHelper)
     {
@@ -27,9 +25,6 @@ class Datepicker extends AbstractFunction
     }
 
     /**
-     * @param array                     $params
-     * @param \Smarty_Internal_Template $smarty
-     *
      * @return string
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)

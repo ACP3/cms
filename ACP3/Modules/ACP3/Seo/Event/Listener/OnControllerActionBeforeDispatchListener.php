@@ -40,12 +40,6 @@ class OnControllerActionBeforeDispatchListener
 
     /**
      * OnFrontControllerBeforeDispatchListener constructor.
-     *
-     * @param ApplicationPath                              $applicationPath
-     * @param \ACP3\Core\Http\RequestInterface             $request
-     * @param \ACP3\Core\Router\RouterInterface            $router
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases   $aliases
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(
         ApplicationPath $applicationPath,
@@ -61,9 +55,6 @@ class OnControllerActionBeforeDispatchListener
         $this->applicationPath = $applicationPath;
     }
 
-    /**
-     * @param \ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent $event
-     */
     public function __invoke(ControllerActionBeforeDispatchEvent $event)
     {
         $this->setCanonicalForExistingUriAlias($event);
@@ -72,8 +63,6 @@ class OnControllerActionBeforeDispatchListener
 
     /**
      * If there is an URI alias available, set the alias as the canonical URI.
-     *
-     * @param \ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent $event
      */
     private function setCanonicalForExistingUriAlias(ControllerActionBeforeDispatchEvent $event)
     {
@@ -83,8 +72,6 @@ class OnControllerActionBeforeDispatchListener
     }
 
     /**
-     * @param \ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent $event
-     *
      * @return bool
      */
     private function isInFrontend(ControllerActionBeforeDispatchEvent $event)

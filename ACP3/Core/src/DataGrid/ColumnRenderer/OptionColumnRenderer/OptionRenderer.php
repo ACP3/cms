@@ -22,21 +22,12 @@ class OptionRenderer
 
     /**
      * OptionRenderer constructor.
-     *
-     * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
 
-    /**
-     * @param string $route
-     * @param string $translationPhrase
-     * @param string $iconClass
-     * @param string $buttonClass
-     * @param bool   $useAjax
-     */
     public function addOption(
         string $route,
         string $translationPhrase,
@@ -53,9 +44,6 @@ class OptionRenderer
         $this->options[] = $value;
     }
 
-    /**
-     * @return array
-     */
     public function getOptions(): array
     {
         return $this->options;

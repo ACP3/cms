@@ -29,10 +29,6 @@ class OnLayoutShareRenderFormFieldsListener
 
     /**
      * OnLayoutShareRenderFormFieldsListener constructor.
-     *
-     * @param \ACP3\Core\ACL                                   $acl
-     * @param \ACP3\Core\View                                  $view
-     * @param \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields $shareFormFields
      */
     public function __construct(
         ACL $acl,
@@ -45,8 +41,6 @@ class OnLayoutShareRenderFormFieldsListener
     }
 
     /**
-     * @param TemplateEvent $event
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __invoke(TemplateEvent $event)

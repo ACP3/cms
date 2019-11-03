@@ -27,11 +27,6 @@ class OptionColumnRenderer extends AbstractColumnRenderer
      */
     protected $optionRenderer;
 
-    /**
-     * @param \ACP3\Core\I18n\Translator                                             $translator
-     * @param \ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer $optionRenderer
-     * @param \Symfony\Component\EventDispatcher\EventDispatcher                     $eventDispatcher
-     */
     public function __construct(
         Translator $translator,
         OptionRenderer $optionRenderer,
@@ -105,12 +100,6 @@ class OptionColumnRenderer extends AbstractColumnRenderer
         return $value;
     }
 
-    /**
-     * @param array  $dbResultRow
-     * @param string $resourcePathEdit
-     *
-     * @return string
-     */
     private function getEditRoute(array $dbResultRow, string $resourcePathEdit): string
     {
         if (\strpos($resourcePathEdit, '%s') === false) {

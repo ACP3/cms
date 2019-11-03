@@ -16,8 +16,6 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     const TABLE_NAME = 'comments';
 
     /**
-     * @param int $commentId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -28,8 +26,6 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @param int $moduleId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -43,8 +39,6 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @param int $moduleId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -92,11 +86,6 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @param int      $moduleId
-     * @param int      $resultId
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -112,9 +101,6 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @param int $moduleId
-     * @param int $resultId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -128,8 +114,6 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @param int $moduleId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

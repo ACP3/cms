@@ -37,7 +37,6 @@ class Index extends AbstractAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
      * @param \ACP3\Core\Pagination                                             $pagination
      * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
-     * @param \ACP3\Modules\ACP3\Emoticons\Helpers|null                         $emoticonsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -53,8 +52,6 @@ class Index extends AbstractAction
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */

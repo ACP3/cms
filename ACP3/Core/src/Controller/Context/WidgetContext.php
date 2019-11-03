@@ -83,21 +83,6 @@ class WidgetContext
 
     /**
      * WidgetContext constructor.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface   $container
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \ACP3\Core\ACL                                              $acl
-     * @param \ACP3\Core\Authentication\Model\UserModelInterface          $user
-     * @param \ACP3\Core\I18n\Translator                                  $translator
-     * @param \ACP3\Core\Modules                                          $modules
-     * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router\RouterInterface                           $router
-     * @param \ACP3\Core\Validation\Validator                             $validator
-     * @param \ACP3\Core\View                                             $view
-     * @param \ACP3\Core\Settings\SettingsInterface                       $config
-     * @param \ACP3\Core\Environment\ApplicationPath                      $appPath
-     * @param \Symfony\Component\HttpFoundation\Response                  $response
-     * @param \ACP3\Core\Helpers\ResultsPerPage                           $resultsPerPage
      */
     public function __construct(
         ContainerInterface $container,

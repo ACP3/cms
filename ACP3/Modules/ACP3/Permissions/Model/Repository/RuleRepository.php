@@ -14,8 +14,6 @@ class RuleRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'acl_rules';
 
     /**
-     * @param array $roles
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

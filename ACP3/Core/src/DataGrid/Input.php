@@ -66,8 +66,6 @@ class Input
     }
 
     /**
-     * @param \ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository $repository
-     *
      * @return $this
      */
     public function setRepository(AbstractDataGridRepository $repository): self
@@ -78,8 +76,6 @@ class Input
     }
 
     /**
-     * @param array $results
-     *
      * @return $this
      */
     public function setResults(array $results): self
@@ -90,8 +86,6 @@ class Input
     }
 
     /**
-     * @param string $resourcePathEdit
-     *
      * @return $this
      */
     public function setResourcePathEdit(string $resourcePathEdit): self
@@ -102,8 +96,6 @@ class Input
     }
 
     /**
-     * @param string $resourcePathDelete
-     *
      * @return $this
      */
     public function setResourcePathDelete(string $resourcePathDelete): self
@@ -114,8 +106,6 @@ class Input
     }
 
     /**
-     * @param int $recordsPerPage
-     *
      * @return $this
      */
     public function setRecordsPerPage(int $recordsPerPage): self
@@ -126,8 +116,6 @@ class Input
     }
 
     /**
-     * @param bool $useAjax
-     *
      * @return $this
      */
     public function setUseAjax(bool $useAjax): self
@@ -138,8 +126,6 @@ class Input
     }
 
     /**
-     * @param bool $enableMassAction
-     *
      * @return $this
      */
     public function setEnableMassAction(bool $enableMassAction): self
@@ -150,8 +136,6 @@ class Input
     }
 
     /**
-     * @param bool $enableOptions
-     *
      * @return $this
      */
     public function setEnableOptions(bool $enableOptions): self
@@ -162,8 +146,6 @@ class Input
     }
 
     /**
-     * @param string $identifier
-     *
      * @return $this
      */
     public function setIdentifier(string $identifier): self
@@ -174,9 +156,6 @@ class Input
     }
 
     /**
-     * @param array $columnData
-     * @param int   $priority
-     *
      * @return $this
      */
     public function addColumn(array $columnData, int $priority): self
@@ -203,9 +182,6 @@ class Input
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getResults(): array
     {
         if (empty($this->results) && $this->repository instanceof AbstractDataGridRepository) {
@@ -227,57 +203,36 @@ class Input
         return \count($this->getResults());
     }
 
-    /**
-     * @return string|null
-     */
     public function getResourcePathEdit(): ?string
     {
         return $this->resourcePathEdit;
     }
 
-    /**
-     * @return string|null
-     */
     public function getResourcePathDelete(): ?string
     {
         return $this->resourcePathDelete;
     }
 
-    /**
-     * @return string|null
-     */
     public function getIdentifier(): ?string
     {
         return $this->identifier;
     }
 
-    /**
-     * @return int
-     */
     public function getRecordsPerPage(): int
     {
         return $this->recordsPerPage;
     }
 
-    /**
-     * @return bool
-     */
     public function isUseAjax(): bool
     {
         return $this->useAjax;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnableMassAction(): bool
     {
         return $this->enableMassAction;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnableOptions(): bool
     {
         return $this->enableOptions;
@@ -292,8 +247,6 @@ class Input
     }
 
     /**
-     * @param string $primaryKey
-     *
      * @return $this
      */
     public function setPrimaryKey(string $primaryKey): self
@@ -303,9 +256,6 @@ class Input
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPrimaryKey(): ?string
     {
         if ($this->primaryKey === null) {

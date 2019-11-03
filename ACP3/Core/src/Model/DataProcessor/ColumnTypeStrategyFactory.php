@@ -23,11 +23,6 @@ class ColumnTypeStrategyFactory
         return $this;
     }
 
-    /**
-     * @param string $columnType
-     *
-     * @return ColumnTypeStrategyInterface
-     */
     public function getStrategy(string $columnType): ColumnTypeStrategyInterface
     {
         if (!isset($this->columnTypes[$columnType])) {

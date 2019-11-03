@@ -23,8 +23,6 @@ class ResultsPerPage
 
     /**
      * ResultsPerPage constructor.
-     *
-     * @param SettingsInterface $settings
      */
     public function __construct(SettingsInterface $settings)
     {

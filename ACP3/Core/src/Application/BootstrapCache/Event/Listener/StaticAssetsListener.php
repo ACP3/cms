@@ -43,21 +43,11 @@ class StaticAssetsListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param string $tplOutput
-     *
-     * @return string
-     */
     private function getCleanedUpTemplateOutput(string $tplOutput): string
     {
         return \preg_replace(static::JAVASCRIPTS_REGEX_PATTERN, '', $tplOutput);
     }
 
-    /**
-     * @param string $tplOutput
-     *
-     * @return string
-     */
     private function addElementsFromTemplates(string $tplOutput): string
     {
         $matches = [];

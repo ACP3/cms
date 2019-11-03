@@ -18,8 +18,6 @@ class TemplateEvent extends Event
 
     /**
      * TemplateEvent constructor.
-     *
-     * @param array $arguments
      */
     public function __construct(array $arguments)
     {

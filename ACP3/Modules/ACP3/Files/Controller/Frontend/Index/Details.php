@@ -34,11 +34,10 @@ class Details extends Core\Controller\AbstractFrontendAction
     private $categoryRepository;
 
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Date                                                   $date
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository         $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                                    $filesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
+     * @param \ACP3\Core\Date                                           $date
+     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
+     * @param \ACP3\Modules\ACP3\Files\Cache                            $filesCache
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -56,8 +55,6 @@ class Details extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
      * @return array
      *
      * @throws Core\Controller\Exception\ResultNotExistsException
@@ -86,9 +83,6 @@ class Details extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $file
-     * @param int   $categoryId
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function addBreadcrumbSteps(array $file, int $categoryId)

@@ -39,7 +39,6 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
-     * @param Polls\Model\PollsModel                                     $pollsModel
      * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
      * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation    $pollsValidator
      */

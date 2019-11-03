@@ -30,11 +30,6 @@ class Logger
      */
     private $channels = [];
 
-    /**
-     * Logger constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     */
     public function __construct(ApplicationPath $appPath)
     {
         $this->appPath = $appPath;
@@ -43,12 +38,11 @@ class Logger
     /**
      * Wrapper method for logging notices, warnings, errors, etc.
      *
-     * @param string $channel
-     * @param string $level
-     * @param mixed  $message
-     * @param array  $context
+     * @param mixed $message
+     *
+     * @throws \Exception
      */
-    private function log($channel, $level, $message, array $context = [])
+    private function log(string $channel, string $level, $message, array $context = []): void
     {
         if (!isset($this->channels[$channel])) {
             $this->createChannel($channel, $level);
@@ -62,10 +56,9 @@ class Logger
     }
 
     /**
-     * @param string $channel
-     * @param string $level
+     * @throws \Exception
      */
-    private function createChannel($channel, $level)
+    private function createChannel(string $channel, string $level): void
     {
         $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
         $logLevelConst = \constant(\Monolog\Logger::class . '::' . \strtoupper($level));
@@ -78,10 +71,8 @@ class Logger
 
     /**
      * @param mixed $message
-     *
-     * @return string
      */
-    private function prettyPrintMessage($message)
+    private function prettyPrintMessage($message): string
     {
         if (\is_array($message) || \is_object($message)) {
             $message = \var_export($message, true);
@@ -95,7 +86,8 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
-     * @param array  $context
+     *
+     * @throws \Exception
      */
     public function debug($channel, $message, array $context = [])
     {
@@ -107,7 +99,8 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
-     * @param array  $context
+     *
+     * @throws \Exception
      */
     public function info($channel, $message, array $context = [])
     {
@@ -119,7 +112,8 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
-     * @param array  $context
+     *
+     * @throws \Exception
      */
     public function notice($channel, $message, array $context = [])
     {
@@ -131,7 +125,8 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
-     * @param array  $context
+     *
+     * @throws \Exception
      */
     public function warning($channel, $message, array $context = [])
     {
@@ -143,7 +138,8 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
-     * @param array  $context
+     *
+     * @throws \Exception
      */
     public function error($channel, $message, array $context = [])
     {
@@ -155,7 +151,8 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
-     * @param array  $context
+     *
+     * @throws \Exception
      */
     public function critical($channel, $message, array $context = [])
     {
@@ -167,7 +164,8 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
-     * @param array  $context
+     *
+     * @throws \Exception
      */
     public function alert($channel, $message, array $context = [])
     {
@@ -179,7 +177,8 @@ class Logger
      *
      * @param string $channel
      * @param mixed  $message
-     * @param array  $context
+     *
+     * @throws \Exception
      */
     public function emergency($channel, $message, array $context = [])
     {

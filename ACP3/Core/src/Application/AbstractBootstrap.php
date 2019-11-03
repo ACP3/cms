@@ -28,8 +28,6 @@ abstract class AbstractBootstrap implements BootstrapInterface
     protected $appPath;
 
     /**
-     * @param string $appMode
-     *
      * @throws \Exception
      */
     public function __construct(string $appMode)
@@ -58,8 +56,6 @@ abstract class AbstractBootstrap implements BootstrapInterface
 
     /**
      * Checks, whether the database configuration file exists.
-     *
-     * @return bool
      */
     protected function databaseConfigExists(): bool
     {

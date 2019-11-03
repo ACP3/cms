@@ -30,10 +30,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $menuItemRepository;
 
     /**
-     * @param Core\Cache                                                   $cache
-     * @param \ACP3\Core\I18n\Translator                                   $translator
-     * @param MenuRepository                                               $menuRepository
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
+     * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(
         Core\Cache $cache,
@@ -139,8 +136,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param int   $index
-     * @param array $menuItems
+     * @param int $index
      *
      * @return bool
      */
@@ -160,8 +156,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     }
 
     /**
-     * @param int   $index
-     * @param array $menuItems
+     * @param int $index
      *
      * @return bool
      */

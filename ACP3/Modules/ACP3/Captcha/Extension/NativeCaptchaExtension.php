@@ -47,15 +47,6 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
 
     /**
      * NativeCaptchaExtension constructor.
-     *
-     * @param Core\ACL                                 $acl
-     * @param Translator                               $translator
-     * @param Core\Http\RequestInterface               $request
-     * @param Core\Router\RouterInterface              $router
-     * @param Core\Session\SessionHandlerInterface     $sessionHandler
-     * @param Core\View                                $view
-     * @param Core\Helpers\Secure                      $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
      */
     public function __construct(
         Core\ACL $acl,

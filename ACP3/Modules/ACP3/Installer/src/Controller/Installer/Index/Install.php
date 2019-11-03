@@ -150,8 +150,6 @@ class Install extends AbstractAction
     }
 
     /**
-     * @param \Exception $exception
-     *
      * @return array|Response
      */
     private function renderErrorBoxOnFailedFormValidation(\Exception $exception)

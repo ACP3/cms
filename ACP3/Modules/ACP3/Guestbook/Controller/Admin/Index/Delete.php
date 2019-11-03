@@ -21,7 +21,6 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * Delete constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Guestbook\Model\GuestbookModel                $guestbookModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

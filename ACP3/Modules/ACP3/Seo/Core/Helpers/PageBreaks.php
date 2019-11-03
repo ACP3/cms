@@ -21,10 +21,8 @@ class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
     /**
      * PageBreaks constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface             $request
-     * @param \ACP3\Core\Router\RouterInterface            $router
-     * @param \ACP3\Core\Helpers\TableOfContents           $tableOfContents
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
+     * @param \ACP3\Core\Http\RequestInterface  $request
+     * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
         Core\Http\RequestInterface $request,

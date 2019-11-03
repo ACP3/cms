@@ -98,9 +98,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
         });
     }
 
-    /**
-     * @return array
-     */
     private function getServices(): array
     {
         $services = [];

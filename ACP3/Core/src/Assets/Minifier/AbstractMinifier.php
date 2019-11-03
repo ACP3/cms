@@ -80,11 +80,6 @@ abstract class AbstractMinifier implements MinifierInterface
     abstract protected function getAssetGroup(): string;
 
     /**
-     * @param string $type
-     * @param string $layout
-     *
-     * @return string
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -94,11 +89,6 @@ abstract class AbstractMinifier implements MinifierInterface
     }
 
     /**
-     * @param string $group
-     * @param string $layout
-     *
-     * @return string
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -112,11 +102,6 @@ abstract class AbstractMinifier implements MinifierInterface
         return \md5($filename);
     }
 
-    /**
-     * @param string $layout
-     *
-     * @return array
-     */
     abstract protected function processLibraries(string $layout): array;
 
     /**
@@ -156,10 +141,6 @@ abstract class AbstractMinifier implements MinifierInterface
         return $this->appPath->getWebRoot() . 'uploads/' . $path . ($debug === true ? '?v=' . $lastGenerated : '');
     }
 
-    /**
-     * @param array  $files
-     * @param string $path
-     */
     protected function saveMinifiedAsset(array $files, string $path): void
     {
         $options = [
@@ -180,14 +161,6 @@ abstract class AbstractMinifier implements MinifierInterface
         \file_put_contents($path, $content, LOCK_EX);
     }
 
-    /**
-     * @param bool   $debug
-     * @param string $group
-     * @param string $filenameHash
-     * @param int    $lastGenerated
-     *
-     * @return string
-     */
     protected function buildAssetPath(bool $debug, string $group, string $filenameHash, int $lastGenerated): string
     {
         if ($debug === true) {

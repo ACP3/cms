@@ -31,7 +31,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param Core\Helpers\Secure                                     $secureHelper
      * @param \ACP3\Core\Helpers\Forms                                $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
      * @param \ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation $adminFormValidation

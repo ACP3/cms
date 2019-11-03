@@ -35,11 +35,6 @@ class ContactFormModel
 
     /**
      * ContactFormModel constructor.
-     *
-     * @param SettingsInterface $config
-     * @param Translator        $translator
-     * @param Secure            $secure
-     * @param SendEmail         $sendEmail
      */
     public function __construct(
         SettingsInterface $config,
@@ -54,8 +49,6 @@ class ContactFormModel
     }
 
     /**
-     * @param array $formData
-     *
      * @return bool
      */
     public function sendContactFormEmail(array $formData)
@@ -64,8 +57,6 @@ class ContactFormModel
     }
 
     /**
-     * @param array $formData
-     *
      * @return bool
      */
     protected function sendEmail(array $formData)
@@ -121,7 +112,6 @@ class ContactFormModel
     }
 
     /**
-     * @param array  $formData
      * @param string $phrase
      *
      * @return string
@@ -140,8 +130,6 @@ class ContactFormModel
     }
 
     /**
-     * @param array $formData
-     *
      * @return bool
      */
     protected function sendEmailCopy(array $formData)
@@ -169,8 +157,6 @@ class ContactFormModel
     }
 
     /**
-     * @param array $formData
-     *
      * @return bool
      */
     public function sendContactFormEmailCopy(array $formData)

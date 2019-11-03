@@ -19,8 +19,6 @@ class MenuAlreadyExistsValidationRule extends AbstractValidationRule
 
     /**
      * MenuExistsValidationRule constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
      */
     public function __construct(MenuRepository $menuRepository)
     {

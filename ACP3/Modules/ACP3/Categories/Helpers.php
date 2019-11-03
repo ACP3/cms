@@ -51,15 +51,13 @@ class Helpers
     private $categoriesModel;
 
     /**
-     * @param \ACP3\Core\ACL                                                    $acl
-     * @param \ACP3\Core\I18n\Translator                                        $translator
-     * @param \ACP3\Core\Modules                                                $modules
-     * @param \ACP3\Core\Http\RequestInterface                                  $request
-     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
-     * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
-     * @param \ACP3\Modules\ACP3\Categories\Cache                               $categoriesCache
-     * @param \ACP3\Modules\ACP3\Categories\Model\CategoriesModel               $categoriesModel
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Core\ACL                      $acl
+     * @param \ACP3\Core\I18n\Translator          $translator
+     * @param \ACP3\Core\Modules                  $modules
+     * @param \ACP3\Core\Http\RequestInterface    $request
+     * @param \ACP3\Core\Helpers\Forms            $formsHelper
+     * @param \ACP3\Core\Helpers\Secure           $secureHelper
+     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
      */
     public function __construct(
         Core\ACL $acl,
@@ -86,9 +84,6 @@ class Helpers
     /**
      * Erzeugt eine neue Kategorie und gibt ihre ID zurück.
      *
-     * @param string $categoryTitle
-     * @param string $moduleName
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -111,12 +106,6 @@ class Helpers
 
     /**
      * Listet alle Kategorien eines Moduls auf.
-     *
-     * @param string      $moduleName
-     * @param int|null    $categoryId
-     * @param bool        $categoryCreate
-     * @param string      $formFieldName
-     * @param string|null $customText
      *
      * @return array
      *

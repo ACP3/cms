@@ -19,8 +19,6 @@ class UserNameValidationRule extends AbstractValidationRule
 
     /**
      * UserNameValidationRule constructor.
-     *
-     * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
      */
     public function __construct(IntegerValidationRule $integerValidationRule)
     {

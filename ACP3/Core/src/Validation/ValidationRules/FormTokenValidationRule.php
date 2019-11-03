@@ -25,9 +25,6 @@ class FormTokenValidationRule extends AbstractValidationRule
 
     /**
      * FormTokenValidationRule constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface           $request
-     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
      */
     public function __construct(
         RequestInterface $request,

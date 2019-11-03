@@ -28,11 +28,6 @@ class RulesModel extends AbstractModel
 
     /**
      * RulesModel constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor            $dataProcessor
-     * @param RuleRepository           $repository
-     * @param Cache                    $cache
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -46,8 +41,7 @@ class RulesModel extends AbstractModel
     }
 
     /**
-     * @param array $privileges
-     * @param int   $roleId
+     * @param int $roleId
      *
      * @throws \Doctrine\DBAL\DBALException
      */

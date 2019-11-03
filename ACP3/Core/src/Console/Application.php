@@ -37,8 +37,6 @@ class Application
     /**
      * Application constructor.
      *
-     * @param string $environment
-     *
      * @throws \Exception
      */
     public function __construct(string $environment)

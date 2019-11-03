@@ -38,8 +38,6 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Helpers\FormToken                         $formTokenHelper
      * @param \ACP3\Core\Helpers\Alerts                            $alertsHelper
      * @param \ACP3\Modules\ACP3\Contact\Validation\FormValidation $formValidation
-     * @param Contact\Model\ContactsModel                          $contactsModel
-     * @param Contact\Model\ContactFormModel                       $contactFormModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

@@ -43,9 +43,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @param int|null $limit
-     * @param int      $categoryId
-     * @param string   $template
+     * @param int $categoryId
      *
      * @return array
      *
@@ -64,11 +62,6 @@ class Index extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @param int|null $categoryId
-     * @param int|null $limit
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function fetchFiles(?int $categoryId, ?int $limit): array

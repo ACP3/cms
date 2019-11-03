@@ -15,8 +15,6 @@ interface AuthenticationModelInterface
 
     /**
      * Authenticates the user.
-     *
-     * @param array|null $userData
      */
     public function authenticate(?array $userData): void;
 

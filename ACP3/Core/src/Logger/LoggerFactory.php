@@ -10,6 +10,7 @@ namespace ACP3\Core\Logger;
 use ACP3\Core\Environment\ApplicationPath;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
@@ -22,8 +23,6 @@ class LoggerFactory
 
     /**
      * LoggerFactory constructor.
-     *
-     * @param ApplicationPath $appPath
      */
     public function __construct(ApplicationPath $appPath)
     {
@@ -31,20 +30,15 @@ class LoggerFactory
     }
 
     /**
-     * @param string $channel
-     * @param string $level
-     *
-     * @return LoggerInterface
-     *
      * @throws \Exception
      */
-    public function create($channel, $level = LogLevel::WARNING)
+    public function create(string $channel, string $level = LogLevel::WARNING): LoggerInterface
     {
         $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
 
         $stream = new StreamHandler($fileName, $level);
         $stream->setFormatter(new LineFormatter(null, null, true));
 
-        return new \Monolog\Logger($channel, [$stream]);
+        return new Logger($channel, [$stream]);
     }
 }

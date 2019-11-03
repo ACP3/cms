@@ -50,17 +50,12 @@ class Input
      */
     private $forceResample = false;
 
-    /**
-     * @return bool
-     */
     public function isEnableCache(): bool
     {
         return $this->enableCache;
     }
 
     /**
-     * @param bool $enableCache
-     *
      * @return $this
      */
     public function setEnableCache(bool $enableCache): self
@@ -70,17 +65,12 @@ class Input
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCacheDir(): string
     {
         return $this->cacheDir;
     }
 
     /**
-     * @param string $cacheDir
-     *
      * @return $this
      */
     public function setCacheDir(string $cacheDir): self
@@ -90,17 +80,12 @@ class Input
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getCachePrefix(): string
     {
         return $this->cachePrefix;
     }
 
     /**
-     * @param string $cachePrefix
-     *
      * @return $this
      */
     public function setCachePrefix(string $cachePrefix): self
@@ -110,17 +95,12 @@ class Input
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getMaxWidth(): int
     {
         return $this->maxWidth;
     }
 
     /**
-     * @param int $maxWidth
-     *
      * @return $this
      */
     public function setMaxWidth(int $maxWidth): self
@@ -130,17 +110,12 @@ class Input
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getMaxHeight(): int
     {
         return $this->maxHeight;
     }
 
     /**
-     * @param int $maxHeight
-     *
      * @return $this
      */
     public function setMaxHeight(int $maxHeight): self
@@ -150,17 +125,12 @@ class Input
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getJpgQuality(): int
     {
         return $this->jpgQuality;
     }
 
     /**
-     * @param int $jpgQuality
-     *
      * @return $this
      */
     public function setJpgQuality(int $jpgQuality): self
@@ -170,17 +140,12 @@ class Input
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isPreferWidth(): bool
     {
         return $this->preferWidth;
     }
 
     /**
-     * @param bool $preferWidth
-     *
      * @return $this
      */
     public function setPreferWidth(bool $preferWidth): self
@@ -191,17 +156,12 @@ class Input
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isPreferHeight(): bool
     {
         return $this->preferHeight;
     }
 
     /**
-     * @param bool $preferHeight
-     *
      * @return $this
      */
     public function setPreferHeight(bool $preferHeight): self
@@ -212,17 +172,12 @@ class Input
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getFile(): string
     {
         return $this->file;
     }
 
     /**
-     * @param string $file
-     *
      * @return $this
      */
     public function setFile(string $file): self
@@ -232,17 +187,12 @@ class Input
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isForceResample(): bool
     {
         return $this->forceResample;
     }
 
     /**
-     * @param bool $forceResample
-     *
      * @return $this
      */
     public function setForceResample(bool $forceResample): self

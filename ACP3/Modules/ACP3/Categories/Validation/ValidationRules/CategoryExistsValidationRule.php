@@ -19,8 +19,6 @@ class CategoryExistsValidationRule extends AbstractValidationRule
 
     /**
      * CategoryExistsValidationRule constructor.
-     *
-     * @param CategoryRepository $categoryRepository
      */
     public function __construct(CategoryRepository $categoryRepository)
     {

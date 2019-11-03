@@ -16,10 +16,6 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'polls';
 
     /**
-     * @param int    $pollId
-     * @param string $time
-     * @param bool   $multiple
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -34,8 +30,6 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $pollId
-     *
      * @return mixed
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -49,10 +43,6 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string   $time
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -69,8 +59,6 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $time
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

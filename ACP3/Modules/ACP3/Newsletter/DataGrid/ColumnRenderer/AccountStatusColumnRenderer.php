@@ -24,9 +24,6 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
 
     /**
      * AccountStatusColumnRenderer constructor.
-     *
-     * @param \ACP3\Core\I18n\Translator        $translator
-     * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
         Translator $translator,
@@ -55,13 +52,6 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
         return ['sort', '_'];
     }
 
-    /**
-     * @param array       $column
-     * @param array       $dbResultRow
-     * @param string|null $dbValue
-     *
-     * @return string
-     */
     private function getHtmlValue(array $column, array $dbResultRow, ?string $dbValue): string
     {
         if ($dbValue === $this->getDefaultValue($column)) {

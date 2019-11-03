@@ -16,9 +16,6 @@ trait InjectSchemaHelperTrait
      */
     protected $schemaHelper;
 
-    /**
-     * @param \ACP3\Core\Modules\SchemaHelper $schemaHelper
-     */
     public function __construct(SchemaHelper $schemaHelper)
     {
         $this->schemaHelper = $schemaHelper;

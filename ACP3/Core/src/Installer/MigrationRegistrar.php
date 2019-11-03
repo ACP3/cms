@@ -17,8 +17,7 @@ class MigrationRegistrar
     private $migrations = [];
 
     /**
-     * @param string             $serviceId
-     * @param MigrationInterface $schema
+     * @param string $serviceId
      */
     public function set($serviceId, MigrationInterface $schema)
     {
@@ -56,8 +55,6 @@ class MigrationRegistrar
             return $this->migrations[$serviceId];
         }
 
-        throw new \InvalidArgumentException(
-            \sprintf('The migration with the service id "%s" could not be found.', $serviceId)
-        );
+        throw new \InvalidArgumentException(\sprintf('The migration with the service id "%s" could not be found.', $serviceId));
     }
 }

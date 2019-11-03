@@ -21,8 +21,6 @@ class CustomTemplateVariableEvent extends Event
 
     /**
      * CustomTemplateVariableEvent constructor.
-     *
-     * @param \ACP3\Core\View $view
      */
     public function __construct(View $view)
     {

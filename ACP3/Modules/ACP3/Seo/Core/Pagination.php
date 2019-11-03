@@ -30,13 +30,6 @@ class Pagination extends \ACP3\Core\Pagination
 
     /**
      * Pagination constructor.
-     *
-     * @param Title             $title
-     * @param Translator        $translator
-     * @param RequestInterface  $request
-     * @param RouterInterface   $router
-     * @param MetaStatements    $metaStatements
-     * @param SettingsInterface $settings
      */
     public function __construct(
         Title $title,

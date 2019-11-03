@@ -19,8 +19,6 @@ class StepsBuildCacheEvent extends Event
 
     /**
      * BreadcrumbStepsBuildCacheEvent constructor.
-     *
-     * @param \ACP3\Core\Breadcrumb\Steps $steps
      */
     public function __construct(Steps $steps)
     {

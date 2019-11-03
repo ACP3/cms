@@ -17,11 +17,6 @@ class Install
 {
     /**
      * Writes the system config file.
-     *
-     * @param string $configFilePath
-     * @param array  $data
-     *
-     * @return bool
      */
     public function writeConfigFile(string $configFilePath, array $data): bool
     {
@@ -39,9 +34,6 @@ class Install
 
     /**
      * @param Core\Modules\Installer\SchemaInterface $schema
-     * @param ContainerInterface                     $container
-     *
-     * @return bool
      */
     public function installModule(SchemaInterface $schema, ContainerInterface $container): bool
     {
@@ -50,9 +42,6 @@ class Install
 
     /**
      * @param Core\Modules\Installer\SchemaInterface $schema
-     * @param ContainerInterface                     $container
-     *
-     * @return bool
      */
     public function installResources(SchemaInterface $schema, ContainerInterface $container): bool
     {
@@ -61,10 +50,6 @@ class Install
 
     /**
      * @param Core\Modules\Installer\SchemaInterface $schema
-     * @param ContainerInterface                     $container
-     * @param string                                 $installerServiceId
-     *
-     * @return bool
      */
     private function install(
         SchemaInterface $schema,
@@ -78,9 +63,6 @@ class Install
     }
 
     /**
-     * @param Core\Modules\Installer\SampleDataInterface $sampleData
-     * @param SchemaHelper                               $schemaHelper
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      */

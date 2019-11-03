@@ -14,8 +14,6 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'menus';
 
     /**
-     * @param int $menuId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -26,9 +24,6 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string   $menuName
-     * @param int|null $menuId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -41,8 +36,6 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $menuId
-     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -56,9 +49,6 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

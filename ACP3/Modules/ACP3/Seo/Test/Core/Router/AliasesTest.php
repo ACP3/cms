@@ -40,11 +40,6 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider uriAliasDataProvider()
-     *
-     * @param string $path
-     * @param string $uriAlias
-     * @param bool   $emptyOnNoResult
-     * @param array  $expectedAliasCache
      */
     public function testGetUriAlias(string $path, string $uriAlias, bool $emptyOnNoResult, array $expectedAliasCache)
     {
@@ -91,9 +86,6 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    /**
-     * @param array $expectedReturn
-     */
     private function setUpSeoCacheExpectations(array $expectedReturn)
     {
         $this->seoCacheMock

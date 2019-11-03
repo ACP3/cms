@@ -51,14 +51,6 @@ class OnFilesModelBeforeDeleteListener
 
     /**
      * OnFilesModelBeforeDeleteListener constructor.
-     *
-     * @param Modules                                                    $modules
-     * @param \ACP3\Core\Helpers\Upload                                  $filesUploadHelper
-     * @param FilesRepository                                            $filesRepository
-     * @param Cache                                                      $cache
-     * @param \ACP3\Modules\ACP3\Comments\Helpers|null                   $commentsHelpers
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null         $uriAliasManager
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null $socialSharingManager
      */
     public function __construct(
         Modules $modules,
@@ -79,8 +71,6 @@ class OnFilesModelBeforeDeleteListener
     }
 
     /**
-     * @param ModelSaveEvent $event
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __invoke(ModelSaveEvent $event)

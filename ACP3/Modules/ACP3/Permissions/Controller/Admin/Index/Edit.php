@@ -33,8 +33,6 @@ class Edit extends AbstractFormAction
      * Edit constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param Permissions\Model\RolesModel                                        $rolesModel
-     * @param Permissions\Model\RulesModel                                        $rulesModel
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper

@@ -46,7 +46,6 @@ class Create extends AbstractFormAction
      * @param \ACP3\Core\Date                                         $date
      * @param \ACP3\Core\Helpers\Forms                                $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param Files\Model\FilesModel                                  $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\Upload                               $filesUploadHelper
      * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers

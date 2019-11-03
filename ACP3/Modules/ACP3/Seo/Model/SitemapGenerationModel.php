@@ -48,11 +48,6 @@ class SitemapGenerationModel
 
     /**
      * SitemapGenerationModel constructor.
-     *
-     * @param ApplicationPath              $applicationPath
-     * @param SettingsInterface            $settings
-     * @param SitemapAvailabilityRegistrar $sitemapRegistrar
-     * @param DriverInterface              $xmlSitemapDriver
      */
     public function __construct(
         ApplicationPath $applicationPath,
@@ -87,8 +82,6 @@ class SitemapGenerationModel
     }
 
     /**
-     * @param string $filename
-     *
      * @throws SitemapGenerationException
      */
     protected function checkSitemapFilePermissions(string $filename)
@@ -100,16 +93,11 @@ class SitemapGenerationModel
         }
 
         if (!\is_file($filePath) || !\is_writable($filePath)) {
-            throw new SitemapGenerationException(
-                'The requested file "' . $filePath . '" either not exists or is not writable.'
-                . 'Aborting sitemap generation.'
-            );
+            throw new SitemapGenerationException('The requested file "' . $filePath . '" either not exists or is not writable.' . 'Aborting sitemap generation.');
         }
     }
 
     /**
-     * @param string $filename
-     *
      * @return string
      */
     protected function getSitemapFilePath(string $filename)
@@ -118,8 +106,6 @@ class SitemapGenerationModel
     }
 
     /**
-     * @param bool|null $isSecure
-     *
      * @return Urlset
      */
     protected function collectSitemapItems(?bool $isSecure)
@@ -135,9 +121,6 @@ class SitemapGenerationModel
     }
 
     /**
-     * @param Urlset $urlSet
-     * @param string $filename
-     *
      * @return bool
      */
     protected function saveSitemap(Urlset $urlSet, string $filename)

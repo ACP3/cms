@@ -20,9 +20,6 @@ class Duplicate extends AbstractFrontendAction
 
     /**
      * Duplicate constructor.
-     *
-     * @param FrontendContext $context
-     * @param FilesModel      $filesModel
      */
     public function __construct(
         FrontendContext $context,

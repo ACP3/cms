@@ -20,22 +20,16 @@ interface BootstrapInterface extends HttpKernelInterface
 
     /**
      * Checks whether the ACP3 is correctly installed.
-     *
-     * @return bool
      */
     public function isInstalled(): bool;
 
     /**
      * Initializes the dependency injection container.
-     *
-     * @param SymfonyRequest $symfonyRequest
      */
     public function initializeClasses(SymfonyRequest $symfonyRequest): void;
 
     /**
      * Handle the request and output the page.
-     *
-     * @return Response
      */
     public function outputPage(): Response;
 }

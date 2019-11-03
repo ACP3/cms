@@ -35,13 +35,6 @@ abstract class AbstractNestedSetModel extends AbstractModel
 
     /**
      * AbstractNestedSetModel constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor            $dataProcessor
-     * @param AbstractRepository       $repository
-     * @param Insert                   $insertOperation
-     * @param Edit                     $editOperation
-     * @param Delete                   $deleteOperation
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -59,7 +52,6 @@ abstract class AbstractNestedSetModel extends AbstractModel
     }
 
     /**
-     * @param array    $rawData
      * @param int|null $entryId
      *
      * @return bool|int

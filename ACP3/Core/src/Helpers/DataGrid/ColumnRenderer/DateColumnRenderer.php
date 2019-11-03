@@ -24,10 +24,6 @@ class DateColumnRenderer extends AbstractColumnRenderer
      */
     protected $dateRangeHelper;
 
-    /**
-     * @param \ACP3\Core\Date                        $date
-     * @param \ACP3\Core\Helpers\Formatter\DateRange $dateRangeHelper
-     */
     public function __construct(
         Date $date,
         DateRange $dateRangeHelper

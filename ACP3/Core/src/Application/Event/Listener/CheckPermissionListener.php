@@ -25,8 +25,6 @@ class CheckPermissionListener
     }
 
     /**
-     * @param \ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent $event
-     *
      * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
      */
     public function __invoke(ControllerActionBeforeDispatchEvent $event)
@@ -38,10 +36,7 @@ class CheckPermissionListener
         $path = $event->getArea() . '/' . $event->getModule() . '/' . $event->getController() . '/' . $event->getControllerAction();
 
         if ($this->acl->hasPermission($path) === false) {
-            throw new AccessForbiddenException(\sprintf(
-                'Access forbidden for controller action "%s"',
-                $path
-            ));
+            throw new AccessForbiddenException(\sprintf('Access forbidden for controller action "%s"', $path));
         }
     }
 }

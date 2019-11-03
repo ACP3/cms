@@ -12,9 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ModuleRegistration extends \ACP3\Core\Modules\ModuleRegistration
 {
-    /**
-     * @param ContainerBuilder $containerBuilder
-     */
     public function build(ContainerBuilder $containerBuilder)
     {
         $containerBuilder->addCompilerPass(new SitemapAvailabilityCompilerPass());

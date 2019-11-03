@@ -57,8 +57,7 @@ class Title
     /**
      * Title constructor.
      *
-     * @param \ACP3\Core\Breadcrumb\Steps                                 $steps
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \ACP3\Core\Breadcrumb\Steps $steps
      */
     public function __construct(Steps $steps, EventDispatcherInterface $eventDispatcher)
     {
@@ -185,17 +184,12 @@ class Title
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getMetaTitle(): string
     {
         return $this->metaTitle;
     }
 
     /**
-     * @param string $metaTitle
-     *
      * @return $this
      */
     public function setMetaTitle(string $metaTitle)

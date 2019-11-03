@@ -25,9 +25,6 @@ class Cache
         $this->cache = $cache;
     }
 
-    /**
-     * @return array
-     */
     public function getCache(): array
     {
         if ($this->cache->contains(self::CACHE_ID) === true) {
@@ -38,8 +35,6 @@ class Cache
     }
 
     /**
-     * @param array $paths
-     *
      * @return bool
      */
     public function saveCache(array $paths)

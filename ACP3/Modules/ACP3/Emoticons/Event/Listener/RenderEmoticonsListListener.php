@@ -19,17 +19,12 @@ class RenderEmoticonsListListener
 
     /**
      * RenderEmoticonsListListener constructor.
-     *
-     * @param Helpers $emoticonsHelpers
      */
     public function __construct(Helpers $emoticonsHelpers)
     {
         $this->emoticonsHelpers = $emoticonsHelpers;
     }
 
-    /**
-     * @param TemplateEvent $event
-     */
     public function __invoke(TemplateEvent $event)
     {
         $parameters = $event->getParameters();

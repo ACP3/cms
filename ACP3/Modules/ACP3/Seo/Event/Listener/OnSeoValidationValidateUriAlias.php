@@ -25,9 +25,6 @@ class OnSeoValidationValidateUriAlias
 
     /**
      * OnSeoValidationValidateUriAlias constructor.
-     *
-     * @param ACL        $acl
-     * @param Translator $translator
      */
     public function __construct(
         ACL $acl,
@@ -37,9 +34,6 @@ class OnSeoValidationValidateUriAlias
         $this->acl = $acl;
     }
 
-    /**
-     * @param FormValidationEvent $event
-     */
     public function __invoke(FormValidationEvent $event)
     {
         if ($this->acl->hasPermission('admin/seo/index/create')) {

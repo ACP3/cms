@@ -42,8 +42,5 @@ interface PluginInterface
      */
     public function getExtensionName();
 
-    /**
-     * @param \Smarty $smarty
-     */
     public function register(\Smarty $smarty);
 }

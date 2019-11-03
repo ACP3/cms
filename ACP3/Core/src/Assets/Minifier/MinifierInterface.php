@@ -11,10 +11,6 @@ interface MinifierInterface
 {
     /**
      * Returns the URI of the minified assets.
-     *
-     * @param string $layout
-     *
-     * @return string
      */
     public function getURI(string $layout = 'layout'): string;
 }

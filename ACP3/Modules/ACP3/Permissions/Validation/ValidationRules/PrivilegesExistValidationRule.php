@@ -20,8 +20,6 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
 
     /**
      * PrivilegesExistValidationRule constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
      */
     public function __construct(PrivilegeRepository $privilegeRepository)
     {
@@ -43,8 +41,6 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
     /**
      * Überprüft, ob die übergebenen Privilegien existieren und
      * plausible Werte enthalten.
-     *
-     * @param array $privilegeIds
      *
      * @return bool
      */
@@ -68,9 +64,8 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param int   $privilegeId
-     * @param array $privilege
-     * @param int   $permission
+     * @param int $privilegeId
+     * @param int $permission
      *
      * @return bool
      */

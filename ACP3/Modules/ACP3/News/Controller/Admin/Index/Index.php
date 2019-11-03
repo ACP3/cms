@@ -60,9 +60,6 @@ class Index extends Core\Controller\AbstractFrontendAction
         return $this->dataGrid->render($input);
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     */
     protected function addDataGridColumns(Input $input)
     {
         $input

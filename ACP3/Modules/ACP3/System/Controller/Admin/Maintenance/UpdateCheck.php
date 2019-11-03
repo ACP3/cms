@@ -20,9 +20,6 @@ class UpdateCheck extends Core\Controller\AbstractFrontendAction
 
     /**
      * UpdateCheck constructor.
-     *
-     * @param Context\FrontendContext   $context
-     * @param System\Helper\UpdateCheck $updateCheck
      */
     public function __construct(Context\FrontendContext $context, System\Helper\UpdateCheck $updateCheck)
     {

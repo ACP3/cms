@@ -21,9 +21,6 @@ class UserContextListener extends \FOS\HttpCache\SymfonyCache\UserContextListene
      * Remove unneeded things from the request for user hash generation.
      *
      * Cleans cookies header to only keep the session identifier cookie and the ACP3 remember me cookie
-     *
-     * @param Request $hashLookupRequest
-     * @param Request $originalRequest
      */
     protected function cleanupHashLookupRequest(Request $hashLookupRequest, Request $originalRequest)
     {

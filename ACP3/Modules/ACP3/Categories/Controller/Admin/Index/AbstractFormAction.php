@@ -32,13 +32,6 @@ class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param int|null $moduleId
-     * @param int|null $parentId
-     * @param int|null $leftId
-     * @param int|null $rightId
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function fetchCategoryTree(

@@ -32,9 +32,6 @@ class AddAdminPanelTitlePostfixListener
         $this->translator = $translator;
     }
 
-    /**
-     * @param \ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent $event
-     */
     public function __invoke(GetSiteAndPageTitleBeforeEvent $event)
     {
         if ($this->request->getArea() === AreaEnum::AREA_ADMIN) {
@@ -42,9 +39,6 @@ class AddAdminPanelTitlePostfixListener
         }
     }
 
-    /**
-     * @param \ACP3\Core\Breadcrumb\Title $title
-     */
     private function addPageTitlePostfix(Title $title)
     {
         if ($this->request->getModule() !== 'acp') {

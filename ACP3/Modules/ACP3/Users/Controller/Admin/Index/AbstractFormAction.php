@@ -33,8 +33,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param array $currentUserRoles
-     *
      * @return array
      */
     protected function fetchUserRoles(array $currentUserRoles = [])

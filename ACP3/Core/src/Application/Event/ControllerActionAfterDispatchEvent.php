@@ -19,9 +19,6 @@ class ControllerActionAfterDispatchEvent extends ControllerActionBeforeDispatchE
 
     /**
      * ControllerActionDispatchAfterEvent constructor.
-     *
-     * @param string   $serviceId
-     * @param Response $response
      */
     public function __construct(string $serviceId, Response $response)
     {

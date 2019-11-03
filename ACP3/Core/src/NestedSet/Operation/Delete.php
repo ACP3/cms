@@ -12,8 +12,6 @@ use Doctrine\DBAL\Connection;
 class Delete extends AbstractOperation
 {
     /**
-     * @param int $resultId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -38,8 +36,6 @@ class Delete extends AbstractOperation
     }
 
     /**
-     * @param array $nodes
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function moveSiblingsOneLevelUp(array $nodes)
@@ -68,8 +64,6 @@ class Delete extends AbstractOperation
     }
 
     /**
-     * @param array $nodes
-     *
      * @return array
      */
     private function getNodeIds(array $nodes)

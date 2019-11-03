@@ -43,13 +43,7 @@ class ModelSaveEvent extends Event
     /**
      * ModelSaveEvent constructor.
      *
-     * @param string         $moduleName
-     * @param array          $filteredData
-     * @param array          $rawData
      * @param int|array|null $entryId
-     * @param bool           $isNewEntry
-     * @param bool           $hasDataChanges
-     * @param string         $tableName
      */
     public function __construct(
         string $moduleName,
@@ -122,9 +116,6 @@ class ModelSaveEvent extends Event
         return $this->hasDataChanges;
     }
 
-    /**
-     * @return string
-     */
     public function getTableName(): string
     {
         return $this->tableName;

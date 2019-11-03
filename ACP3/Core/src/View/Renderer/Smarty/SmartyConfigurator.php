@@ -34,9 +34,6 @@ class SmartyConfigurator
         $this->environment = $environment;
     }
 
-    /**
-     * @param \Smarty $smarty
-     */
     public function configure(\Smarty $smarty): void
     {
         $smarty->setErrorReporting($this->isProduction() ? 0 : E_ALL);
@@ -46,9 +43,6 @@ class SmartyConfigurator
         $smarty->setCacheDir($this->appPath->getCacheDir() . 'tpl_cached/');
     }
 
-    /**
-     * @return bool
-     */
     private function isProduction(): bool
     {
         return $this->environment === ApplicationMode::PRODUCTION;

@@ -29,7 +29,6 @@ class Order extends Core\Controller\AbstractFrontendAction
      * Order constructor.
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param Core\NestedSet\Operation\Sort                                  $sortOperation
      * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
      * @param \ACP3\Modules\ACP3\Permissions\Cache                           $permissionsCache
      */

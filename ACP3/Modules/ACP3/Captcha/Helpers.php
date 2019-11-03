@@ -45,7 +45,6 @@ class Helpers
     /**
      * Helpers constructor.
      *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel   $user
      * @param \ACP3\Core\Http\RequestInterface           $request
      * @param \ACP3\Core\Router\RouterInterface          $router
      * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler

@@ -17,8 +17,7 @@ class SampleDataRegistrar
     private $sampleData = [];
 
     /**
-     * @param string              $serviceId
-     * @param SampleDataInterface $sampleData
+     * @param string $serviceId
      */
     public function set($serviceId, SampleDataInterface $sampleData)
     {
@@ -56,8 +55,6 @@ class SampleDataRegistrar
             return $this->sampleData[$serviceId];
         }
 
-        throw new \InvalidArgumentException(
-            \sprintf('The sample data with the service id "%s" could not be found.', $serviceId)
-        );
+        throw new \InvalidArgumentException(\sprintf('The sample data with the service id "%s" could not be found.', $serviceId));
     }
 }

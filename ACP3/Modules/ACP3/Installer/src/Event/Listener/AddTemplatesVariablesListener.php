@@ -94,10 +94,6 @@ class AddTemplatesVariablesListener
 
     /**
      * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen.
-     *
-     * @param string $selectedLanguage
-     *
-     * @return array
      */
     private function languagesDropdown(string $selectedLanguage): array
     {

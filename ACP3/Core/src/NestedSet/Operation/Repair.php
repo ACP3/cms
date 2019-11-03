@@ -29,8 +29,6 @@ class Repair extends AbstractOperation
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function getResults(): array

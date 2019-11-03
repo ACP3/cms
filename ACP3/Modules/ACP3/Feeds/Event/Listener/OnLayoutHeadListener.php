@@ -29,10 +29,6 @@ class OnLayoutHeadListener
 
     /**
      * OnLayoutHeadListener constructor.
-     *
-     * @param View                      $view
-     * @param Modules                   $modules
-     * @param FeedAvailabilityRegistrar $availableFeedsRegistrar
      */
     public function __construct(
         View $view,

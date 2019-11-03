@@ -16,9 +16,6 @@ class DateFormat extends AbstractFunction
      */
     protected $date;
 
-    /**
-     * @param \ACP3\Core\Date $date
-     */
     public function __construct(Date $date)
     {
         $this->date = $date;

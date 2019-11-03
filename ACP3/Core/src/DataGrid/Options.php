@@ -38,17 +38,12 @@ class Options
      */
     private $resourcePathDelete = '';
 
-    /**
-     * @return string
-     */
     public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
     /**
-     * @param string $identifier
-     *
      * @return Options
      */
     public function setIdentifier(string $identifier): self
@@ -58,17 +53,12 @@ class Options
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getRecordsPerPage(): int
     {
         return $this->recordsPerPage;
     }
 
     /**
-     * @param int $recordsPerPage
-     *
      * @return Options
      */
     public function setRecordsPerPage(int $recordsPerPage): self
@@ -78,17 +68,12 @@ class Options
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnableOptions(): bool
     {
         return $this->enableOptions;
     }
 
     /**
-     * @param bool $enableOptions
-     *
      * @return Options
      */
     public function setEnableOptions(bool $enableOptions): self
@@ -98,17 +83,12 @@ class Options
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isUseAjax(): bool
     {
         return $this->useAjax;
     }
 
     /**
-     * @param bool $useAjax
-     *
      * @return Options
      */
     public function setUseAjax(bool $useAjax): self
@@ -118,17 +98,12 @@ class Options
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getResourcePathEdit(): string
     {
         return $this->resourcePathEdit;
     }
 
     /**
-     * @param string $resourcePathEdit
-     *
      * @return Options
      */
     public function setResourcePathEdit(string $resourcePathEdit): self
@@ -138,17 +113,12 @@ class Options
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getResourcePathDelete(): string
     {
         return $this->resourcePathDelete;
     }
 
     /**
-     * @param string $resourcePathDelete
-     *
      * @return Options
      */
     public function setResourcePathDelete(string $resourcePathDelete): self
@@ -158,17 +128,12 @@ class Options
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnableMassAction(): bool
     {
         return $this->enableMassAction;
     }
 
     /**
-     * @param bool $enableMassAction
-     *
      * @return Options
      */
     public function setEnableMassAction(bool $enableMassAction): self

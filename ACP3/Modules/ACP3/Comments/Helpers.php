@@ -22,8 +22,7 @@ class Helpers
     protected $commentRepository;
 
     /**
-     * @param \ACP3\Core\Modules                                             $modules
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
+     * @param \ACP3\Core\Modules $modules
      */
     public function __construct(
         Core\Modules $modules,

@@ -41,8 +41,6 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException

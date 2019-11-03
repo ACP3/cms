@@ -17,8 +17,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     const BLOCK_COLUMN_NAME = 'module_id';
 
     /**
-     * @param int $categoryId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -29,10 +27,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param string $title
-     * @param int    $moduleId
-     * @param int    $categoryId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -55,8 +49,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param int $categoryId
-     *
      * @return string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -67,8 +59,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param string $moduleName
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -82,8 +72,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param int $categoryId
-     *
      * @return string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -97,8 +85,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param int $categoryId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -109,8 +95,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param int $categoryId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -124,9 +108,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param string $title
-     * @param string $moduleName
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -150,8 +131,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param int $categoryId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -167,8 +146,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param int $categoryId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -182,8 +159,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param int $moduleId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -197,8 +172,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param string $moduleName
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -212,8 +185,6 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @param int $moduleId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

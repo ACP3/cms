@@ -16,8 +16,6 @@ use Doctrine\DBAL\Query\QueryBuilder;
 class DataGridRepository extends AbstractRepository
 {
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $columns
-     *
      * @return array
      */
     public function getAll(ColumnPriorityQueue $columns)
@@ -37,8 +35,6 @@ class DataGridRepository extends AbstractRepository
     }
 
     /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $gridColumns
-     *
      * @return array
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
@@ -67,31 +63,18 @@ class DataGridRepository extends AbstractRepository
         return $this->getTableName();
     }
 
-    /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
-     */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
     }
 
-    /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
-     */
     protected function addWhere(QueryBuilder $queryBuilder)
     {
     }
 
-    /**
-     * @param \Doctrine\DBAL\Query\QueryBuilder $queryBuilder
-     */
     protected function addGroupBy(QueryBuilder $queryBuilder)
     {
     }
 
-    /**
-     * @param \ACP3\Core\Helpers\DataGrid\ColumnPriorityQueue $gridColumns
-     * @param \Doctrine\DBAL\Query\QueryBuilder               $queryBuilder
-     */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
     {
         foreach (clone $gridColumns as $gridColumn) {

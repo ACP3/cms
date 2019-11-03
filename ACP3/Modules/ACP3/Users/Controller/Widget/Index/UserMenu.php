@@ -37,8 +37,6 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
 
     /**
      * Displays the user menu, if the user is logged in.
-     *
-     * @return array
      */
     public function execute(): array
     {
@@ -63,9 +61,6 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
         return [];
     }
 
-    /**
-     * @return array
-     */
     protected function getSystemActions(): array
     {
         $navSystem = [];
@@ -84,9 +79,6 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
         return $navSystem;
     }
 
-    /**
-     * @return array
-     */
     protected function getModules(): array
     {
         $activeModules = $this->modules->getActiveModules();

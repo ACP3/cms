@@ -29,8 +29,6 @@ class ConfigProcessor
 
     /**
      * @param \ACP3\Core\DataGrid\Input $options
-     *
-     * @return array
      */
     public function generateDataTableConfig(Input $options): array
     {
@@ -53,9 +51,6 @@ class ConfigProcessor
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getLengthMenu(): array
     {
         return [
@@ -76,9 +71,6 @@ class ConfigProcessor
         ];
     }
 
-    /**
-     * @return array
-     */
     private function getLanguage(): array
     {
         return [
@@ -97,11 +89,6 @@ class ConfigProcessor
         ];
     }
 
-    /**
-     * @param ColumnPriorityQueue $columns
-     *
-     * @return array
-     */
     protected function getDefaultSorting(ColumnPriorityQueue $columns): array
     {
         $i = 0;
@@ -126,12 +113,6 @@ class ConfigProcessor
         return [];
     }
 
-    /**
-     * @param ColumnPriorityQueue $columns
-     * @param bool                $useAjax
-     *
-     * @return array
-     */
     private function getColumnDefinitions(ColumnPriorityQueue $columns, bool $useAjax): array
     {
         $columnDefinitions = [];

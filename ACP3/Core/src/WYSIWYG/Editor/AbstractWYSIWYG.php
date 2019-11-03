@@ -43,9 +43,6 @@ abstract class AbstractWYSIWYG
      */
     protected $config = [];
 
-    /**
-     * @param array $params
-     */
     abstract public function setParameters(array $params = []);
 
     /**

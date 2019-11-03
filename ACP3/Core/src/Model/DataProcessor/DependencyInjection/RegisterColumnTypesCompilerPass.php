@@ -13,9 +13,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterColumnTypesCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
     public function process(ContainerBuilder $container)
     {
         $definition = $container->findDefinition('core.model.column_type_strategy_factory');

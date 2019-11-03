@@ -19,8 +19,6 @@ abstract class AbstractAnswerValidationRule extends AbstractValidationRule
 
     /**
      * AbstractAnswerValidationRule constructor.
-     *
-     * @param \ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule $notEmptyValidationRule
      */
     public function __construct(NotEmptyValidationRule $notEmptyValidationRule)
     {
@@ -28,8 +26,6 @@ abstract class AbstractAnswerValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param array $answers
-     *
      * @return array
      */
     protected function validateAnswers(array $answers)

@@ -35,11 +35,6 @@ class OnArticlesModelDeleteAfterListener
 
     /**
      * OnArticlesModelDeleteAfterListener constructor.
-     *
-     * @param Cache                                                      $articlesCache
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem|null       $manageMenuItemHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null         $uriAliasManager
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null $socialSharingManager
      */
     public function __construct(
         Cache $articlesCache,
@@ -54,8 +49,6 @@ class OnArticlesModelDeleteAfterListener
     }
 
     /**
-     * @param ModelSaveEvent $event
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __invoke(ModelSaveEvent $event)

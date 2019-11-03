@@ -26,8 +26,6 @@ class Request extends AbstractRequest
 
     /**
      * Request constructor.
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $symfonyRequest
      */
     public function __construct(\Symfony\Component\HttpFoundation\Request $symfonyRequest)
     {
@@ -217,9 +215,6 @@ class Request extends AbstractRequest
         $this->pathInfo .= !\preg_match('/\/$/', $this->pathInfo) ? '/' : '';
     }
 
-    /**
-     * @param array $query
-     */
     protected function setRequestParameters(array $query)
     {
         if (isset($query[3])) {
@@ -247,9 +242,6 @@ class Request extends AbstractRequest
         );
     }
 
-    /**
-     * @param array $query
-     */
     protected function completeQuery(array $query)
     {
         if (!isset($query[0])) {

@@ -45,13 +45,6 @@ class AddSocialSharingListener
 
     /**
      * AddSocialSharingListener constructor.
-     *
-     * @param \ACP3\Core\Modules                                               $modules
-     * @param \ACP3\Core\Http\RequestInterface                                 $request
-     * @param \ACP3\Core\View                                                  $view
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices                  $socialServices
-     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository        $shareRepository
-     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository $shareRatingsRepository
      */
     public function __construct(
         Modules $modules,

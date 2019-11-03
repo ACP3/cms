@@ -30,10 +30,6 @@ class UpdateServicesOnSettingsSaveBeforeListener
 
     /**
      * UpdateServicesOnSettingsSaveAfterListener constructor.
-     *
-     * @param \ACP3\Core\Settings\SettingsInterface                     $settings
-     * @param \ACP3\Modules\ACP3\Share\Model\ShareModel                 $shareModel
-     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository $shareRepository
      */
     public function __construct(
         SettingsInterface $settings,
@@ -46,8 +42,6 @@ class UpdateServicesOnSettingsSaveBeforeListener
     }
 
     /**
-     * @param \ACP3\Core\Settings\Event\SettingsSaveEvent $event
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __invoke(SettingsSaveEvent $event): void
@@ -68,11 +62,6 @@ class UpdateServicesOnSettingsSaveBeforeListener
         }
     }
 
-    /**
-     * @param \ACP3\Core\Settings\Event\SettingsSaveEvent $event
-     *
-     * @return array
-     */
     private function getRemovedServices(SettingsSaveEvent $event): array
     {
         $currentSettings = $this->settings->getSettings(Schema::MODULE_NAME);

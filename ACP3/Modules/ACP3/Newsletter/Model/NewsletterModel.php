@@ -26,11 +26,6 @@ class NewsletterModel extends AbstractModel implements UpdatedAtAwareModelInterf
 
     /**
      * NewsletterModel constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor            $dataProcessor
-     * @param SettingsInterface        $config
-     * @param NewsletterRepository     $newsletterRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,

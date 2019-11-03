@@ -31,7 +31,6 @@ class Index extends AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
      * @param \ACP3\Core\Pagination                                          $pagination
      * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
-     * @param \ACP3\Modules\ACP3\Emoticons\Helpers|null                      $emoticonsHelpers
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -48,8 +47,6 @@ class Index extends AbstractFrontendAction
     /**
      * @param string $module
      * @param int    $entryId
-     *
-     * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException

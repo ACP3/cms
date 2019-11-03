@@ -65,7 +65,6 @@ class TableOfContents
     /**
      * Generates the table of contents.
      *
-     * @param array  $pages
      * @param string $baseUrlPath
      * @param bool   $titlesFromDb
      * @param bool   $customUris

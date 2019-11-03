@@ -14,8 +14,6 @@ use ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaTypeValidationRu
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
     /**
-     * @param array $formData
-     *
      * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */

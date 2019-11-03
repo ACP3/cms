@@ -29,11 +29,6 @@ class PictureModel extends AbstractModel
 
     /**
      * PictureModel constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor            $dataProcessor
-     * @param SettingsInterface        $config
-     * @param PictureRepository        $pictureRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -73,10 +68,6 @@ class PictureModel extends AbstractModel
     }
 
     /**
-     * @param int $galleryId
-     *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function getPictureSortIndex(int $galleryId): int

@@ -29,11 +29,6 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
 
     /**
      * NewsModel constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor            $dataProcessor
-     * @param SettingsInterface        $config
-     * @param NewsRepository           $newsRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -64,9 +59,6 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     *
      * @return int
      */
     protected function useReadMore(array $formData, array $settings)
@@ -75,9 +67,6 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     }
 
     /**
-     * @param array $formData
-     * @param array $settings
-     *
      * @return int
      */
     protected function useComments(array $formData, array $settings)

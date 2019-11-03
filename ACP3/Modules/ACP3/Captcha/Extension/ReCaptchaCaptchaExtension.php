@@ -41,12 +41,6 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 
     /**
      * ReCaptchaCaptchaExtension constructor.
-     *
-     * @param Translator        $translator
-     * @param RequestInterface  $request
-     * @param SettingsInterface $settings
-     * @param View              $view
-     * @param UserModel         $user
      */
     public function __construct(
         Translator $translator,

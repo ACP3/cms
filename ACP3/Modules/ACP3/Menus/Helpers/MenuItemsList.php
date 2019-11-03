@@ -28,8 +28,7 @@ class MenuItemsList
     protected $menusCache;
 
     /**
-     * @param \ACP3\Core\Helpers\Forms       $formsHelper
-     * @param \ACP3\Modules\ACP3\Menus\Cache $menusCache
+     * @param \ACP3\Core\Helpers\Forms $formsHelper
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,

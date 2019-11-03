@@ -37,12 +37,6 @@ class Settings extends AbstractFrontendAction
 
     /**
      * Settings constructor.
-     *
-     * @param FrontendContext             $context
-     * @param Forms                       $forms
-     * @param FormToken                   $formToken
-     * @param CaptchaRegistrar            $captchaRegistrar
-     * @param AdminSettingsFormValidation $formValidation
      */
     public function __construct(
         FrontendContext $context,

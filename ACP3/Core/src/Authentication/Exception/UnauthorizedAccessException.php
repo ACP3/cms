@@ -29,17 +29,12 @@ class UnauthorizedAccessException extends \RuntimeException implements ForwardCo
 
     /**
      * Returns the serviceId of the controller action to forward to.
-     *
-     * @return string
      */
     public function getServiceId(): string
     {
         return 'users.controller.frontend.index.login';
     }
 
-    /**
-     * @return array
-     */
     public function routeParams(): array
     {
         return $this->routeArguments;

@@ -106,8 +106,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param array $data
-     * @param int   $methodCallCount
+     * @param int $methodCallCount
      */
     private function setTranslatorExpectation(array $data, $methodCallCount)
     {

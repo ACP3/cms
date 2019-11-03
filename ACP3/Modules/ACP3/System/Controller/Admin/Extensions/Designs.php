@@ -46,8 +46,6 @@ class Designs extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $design
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executePost(string $design)

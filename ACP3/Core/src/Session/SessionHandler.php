@@ -36,12 +36,6 @@ class SessionHandler extends AbstractSessionHandler
      */
     protected $gcCalled = false;
 
-    /**
-     * @param \ACP3\Core\Database\Connection         $db
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\Http\RequestInterface       $request
-     * @param Response                               $response
-     */
     public function __construct(
         Connection $db,
         ApplicationPath $appPath,

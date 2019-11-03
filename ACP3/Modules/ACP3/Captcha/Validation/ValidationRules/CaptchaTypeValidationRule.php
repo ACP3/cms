@@ -19,8 +19,6 @@ class CaptchaTypeValidationRule extends AbstractValidationRule
 
     /**
      * CaptchaTypeValidationRule constructor.
-     *
-     * @param CaptchaRegistrar $captchaRegistrar
      */
     public function __construct(CaptchaRegistrar $captchaRegistrar)
     {

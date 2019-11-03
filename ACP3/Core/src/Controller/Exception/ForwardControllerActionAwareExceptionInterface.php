@@ -11,13 +11,8 @@ interface ForwardControllerActionAwareExceptionInterface extends \Throwable
 {
     /**
      * Returns the serviceId of the controller action to forward to.
-     *
-     * @return string
      */
     public function getServiceId(): string;
 
-    /**
-     * @return array
-     */
     public function routeParams(): array;
 }

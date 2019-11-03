@@ -35,11 +35,10 @@ class RewriteInternalUri
     /**
      * RewriteInternalUri constructor.
      *
-     * @param \ACP3\Core\Environment\ApplicationPath                    $appPath
-     * @param \ACP3\Core\Controller\Helper\ControllerActionExists       $controllerActionExists
-     * @param \ACP3\Core\Http\RequestInterface                          $request
-     * @param \ACP3\Core\Router\RouterInterface                         $router
-     * @param Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
+     * @param \ACP3\Core\Environment\ApplicationPath              $appPath
+     * @param \ACP3\Core\Controller\Helper\ControllerActionExists $controllerActionExists
+     * @param \ACP3\Core\Http\RequestInterface                    $request
+     * @param \ACP3\Core\Router\RouterInterface                   $router
      */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
@@ -74,8 +73,6 @@ class RewriteInternalUri
     }
 
     /**
-     * @param array $matches
-     *
      * @return string
      */
     private function rewriteInternalUriCallback(array $matches)
@@ -96,8 +93,6 @@ class RewriteInternalUri
     }
 
     /**
-     * @param array $resourceParts
-     *
      * @return string
      */
     private function getResourcePath(array $resourceParts)

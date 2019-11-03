@@ -24,17 +24,14 @@ interface ValidationRuleInterface
     public function setMessage($message);
 
     /**
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param mixed                           $data
-     * @param string                          $field
-     * @param array                           $extra
+     * @param mixed  $data
+     * @param string $field
      */
     public function validate(Validator $validator, $data, $field = '', array $extra = []);
 
     /**
      * @param bool|int|float|string|array $data
      * @param string                      $field
-     * @param array                       $extra
      *
      * @return bool
      */

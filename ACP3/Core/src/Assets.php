@@ -35,9 +35,6 @@ class Assets
 
     /**
      * Checks, whether the current design uses Bootstrap or not.
-     *
-     * @param \ACP3\Core\Environment\ThemePathInterface $theme
-     * @param Libraries                                 $libraries
      */
     public function __construct(ThemePathInterface $theme, Libraries $libraries)
     {
@@ -105,8 +102,6 @@ class Assets
 
     /**
      * Activates frontend libraries.
-     *
-     * @param array $libraries
      *
      * @return $this
      */

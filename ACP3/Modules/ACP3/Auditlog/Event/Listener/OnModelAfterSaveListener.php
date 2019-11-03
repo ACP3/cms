@@ -40,12 +40,6 @@ class OnModelAfterSaveListener
 
     /**
      * OnModelAfterSaveListener constructor.
-     *
-     * @param \Psr\Log\LoggerInterface                                        $logger
-     * @param \ACP3\Core\Date                                                 $date
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel                        $userModel
-     * @param \ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface      $moduleAwareRepository
-     * @param \ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository $auditLogRepository
      */
     public function __construct(
         LoggerInterface $logger,
@@ -87,8 +81,6 @@ class OnModelAfterSaveListener
     }
 
     /**
-     * @param \ACP3\Core\Model\Event\ModelSaveEvent $event
-     *
      * @return array|null
      */
     private function prepareEntryIds(ModelSaveEvent $event)

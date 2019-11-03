@@ -19,8 +19,6 @@ class RolesExistValidationRule extends AbstractValidationRule
 
     /**
      * RolesExistValidationRule constructor.
-     *
-     * @param \ACP3\Core\ACL $acl
      */
     public function __construct(ACL $acl)
     {
@@ -40,8 +38,6 @@ class RolesExistValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param array $roles
-     *
      * @return bool
      */
     protected function aclRolesExist(array $roles)

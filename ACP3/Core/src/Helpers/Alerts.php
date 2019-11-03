@@ -66,7 +66,6 @@ class Alerts
      * Displays a confirmation box, where the forward button triggers a form submit using POST.
      *
      * @param string $text
-     * @param array  $data
      * @param string $forward
      * @param string $backward
      *

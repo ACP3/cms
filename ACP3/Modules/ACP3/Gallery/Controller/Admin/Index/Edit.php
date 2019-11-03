@@ -35,7 +35,6 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext               $context
      * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param Gallery\Model\GalleryModel                                  $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
      */
     public function __construct(
@@ -54,8 +53,6 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
@@ -81,8 +78,6 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException

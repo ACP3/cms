@@ -12,10 +12,9 @@ class Edit extends AbstractOperation
     /**
      * Methode zum Bearbeiten eines Knotens.
      *
-     * @param int   $resultId
-     * @param int   $parentId
-     * @param int   $blockId
-     * @param array $updateValues
+     * @param int $resultId
+     * @param int $parentId
+     * @param int $blockId
      *
      * @return bool
      *
@@ -69,10 +68,6 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @param int   $parentId
-     * @param int   $blockId
-     * @param array $items
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -85,10 +80,6 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @param int   $id
-     * @param int   $blockId
-     * @param array $nodes
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -114,9 +105,8 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @param int   $blockId
-     * @param array $nodes
-     * @param int   $itemDiff
+     * @param int $blockId
+     * @param int $itemDiff
      *
      * @return int
      *
@@ -145,8 +135,7 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @param array $nodes
-     * @param int   $itemDiff
+     * @param int $itemDiff
      *
      * @return int
      *
@@ -167,10 +156,9 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @param int   $blockId
-     * @param array $nodes
-     * @param int   $diff
-     * @param int   $rootId
+     * @param int $blockId
+     * @param int $diff
+     * @param int $rootId
      *
      * @return int|bool
      *
@@ -232,9 +220,6 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @param array $newParent
-     * @param array $nodes
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

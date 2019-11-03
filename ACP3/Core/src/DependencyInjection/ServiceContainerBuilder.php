@@ -41,9 +41,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * ServiceContainerBuilder constructor.
      *
-     * @param ApplicationPath $applicationPath
-     * @param SymfonyRequest  $symfonyRequest
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -115,9 +112,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
-     * @param SymfonyRequest                         $symfonyRequest
-     *
      * @return \ACP3\Core\DependencyInjection\ServiceContainerBuilder
      *
      * @throws \MJS\TopSort\CircularDependencyException
@@ -129,9 +123,6 @@ class ServiceContainerBuilder extends ContainerBuilder
         return new static($applicationPath, $symfonyRequest);
     }
 
-    /**
-     * @param \ACP3\Core\Component\Dto\ComponentDataDto $moduleCoreData
-     */
     private function registerCompilerPass(ComponentDataDto $moduleCoreData): void
     {
         if ($moduleCoreData->getModuleRegistration()) {

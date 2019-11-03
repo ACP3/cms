@@ -63,11 +63,6 @@ class Index extends Core\Controller\AbstractFrontendAction
         }
     }
 
-    /**
-     * @param array $menus
-     *
-     * @return array
-     */
     private function fetchMenuItems(array $menus): array
     {
         $menuItems = $this->menusHelpers->menuItemsList();
@@ -82,13 +77,6 @@ class Index extends Core\Controller\AbstractFrontendAction
         return $menuItems;
     }
 
-    /**
-     * @param bool $canDeleteItem
-     * @param bool $canEditItem
-     * @param bool $canSortItem
-     *
-     * @return int
-     */
     private function getColspan(bool $canDeleteItem, bool $canEditItem, bool $canSortItem): int
     {
         $colspan = 4;

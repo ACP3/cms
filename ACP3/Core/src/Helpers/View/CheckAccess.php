@@ -42,8 +42,6 @@ class CheckAccess
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public function outputLinkOrButton(array $params)
@@ -81,7 +79,6 @@ class CheckAccess
     }
 
     /**
-     * @param array  $params
      * @param string $action
      * @param string $area
      *

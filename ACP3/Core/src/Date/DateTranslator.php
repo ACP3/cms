@@ -51,8 +51,6 @@ class DateTranslator
 
     /**
      * DateTranslator constructor.
-     *
-     * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(Translator $translator)
     {
@@ -85,7 +83,6 @@ class DateTranslator
     }
 
     /**
-     * @param array  $search
      * @param string $translatorPrefix
      *
      * @return array

@@ -26,8 +26,7 @@ class RedirectResponse
     /**
      * Redirect constructor.
      *
-     * @param \ACP3\Core\Http\RequestInterface  $request
-     * @param \ACP3\Core\Router\RouterInterface $router
+     * @param \ACP3\Core\Http\RequestInterface $request
      */
     public function __construct(
         RequestInterface $request,

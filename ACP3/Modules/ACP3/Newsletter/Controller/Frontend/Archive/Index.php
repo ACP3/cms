@@ -28,7 +28,6 @@ class Index extends Core\Controller\AbstractFrontendAction
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param Core\Pagination                                                     $pagination
      * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
      */
     public function __construct(

@@ -18,8 +18,6 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
 
     /**
      * DateTimeColumnType constructor.
-     *
-     * @param Date $date
      */
     public function __construct(Date $date)
     {

@@ -71,11 +71,6 @@ class Theme implements ThemePathInterface
         }
     }
 
-    /**
-     * @param string $file
-     *
-     * @return string
-     */
     private function getThemeInternalName(string $file): string
     {
         $path = \dirname($file);
@@ -89,19 +84,11 @@ class Theme implements ThemePathInterface
         return $this->settings->getSettings(Schema::MODULE_NAME)['design'];
     }
 
-    /**
-     * @return array
-     */
     public function getCurrentThemeDependencies(): array
     {
         return $this->getThemeDependencies($this->getCurrentTheme());
     }
 
-    /**
-     * @param string $themeName
-     *
-     * @return array
-     */
     public function getThemeDependencies(string $themeName): array
     {
         if (!isset($this->sortedThemeDependencies[$themeName])) {
@@ -132,17 +119,11 @@ class Theme implements ThemePathInterface
         $this->sortedThemeDependencies[$themeName] = $parents;
     }
 
-    /**
-     * @return string
-     */
     public function getDesignPathInternal(): string
     {
         return $this->appPath->getDesignRootPathInternal() . $this->getCurrentTheme() . '/';
     }
 
-    /**
-     * @return string
-     */
     public function getDesignPathWeb(): string
     {
         return $this->appPath->getWebRoot() . 'designs/' . $this->getCurrentTheme() . '/';

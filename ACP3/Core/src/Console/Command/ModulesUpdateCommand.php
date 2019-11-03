@@ -22,8 +22,6 @@ class ModulesUpdateCommand extends Command
 
     /**
      * ModulesUpdateCommand constructor.
-     *
-     * @param \ACP3\Core\Installer\Model\SchemaUpdateModel $schemaUpdateModel
      */
     public function __construct(SchemaUpdateModel $schemaUpdateModel)
     {

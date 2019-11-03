@@ -42,8 +42,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return int
      */
     protected function fetchCategoryId(array $formData)
@@ -54,8 +52,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return int
      */
     protected function useComments(array $formData)
@@ -80,8 +76,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param array $file
-     *
      * @return array
      */
     protected function getOptions(array $file)

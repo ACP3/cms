@@ -76,11 +76,6 @@ class FileResolver
         $this->strategies[] = $strategy;
     }
 
-    /**
-     * @param string $templatePath
-     *
-     * @return string
-     */
     public function resolveTemplatePath(string $templatePath): string
     {
         // A path without any slash was given -> has to be a layout file of the current design
@@ -101,13 +96,6 @@ class FileResolver
         return $this->getStaticAssetPath($moduleName, 'View', $templatePath);
     }
 
-    /**
-     * @param string $moduleName
-     * @param string $resourceDirectory
-     * @param string $file
-     *
-     * @return string
-     */
     public function getStaticAssetPath(
         string $moduleName,
         string $resourceDirectory = '',
@@ -127,13 +115,6 @@ class FileResolver
         return $this->cachedPaths[$systemAssetPath] ?: '';
     }
 
-    /**
-     * @param string $moduleName
-     * @param string $resourceDirectory
-     * @param string $file
-     *
-     * @return string|null
-     */
     private function resolveAssetPath(string $moduleName, string $resourceDirectory, string $file): ?string
     {
         if ($this->designAssetsPath === null) {
@@ -153,13 +134,6 @@ class FileResolver
         );
     }
 
-    /**
-     * @param string $moduleName
-     * @param string $resourceDirectory
-     * @param string $file
-     *
-     * @return string|null
-     */
     private function findAssetInInheritedThemes(string $moduleName, string $resourceDirectory, string $file): ?string
     {
         $designAssetPath = $this->designAssetsPath . $moduleName . $resourceDirectory . $file;

@@ -33,12 +33,6 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 
     /**
      * SitemapAvailabilityExtension constructor.
-     *
-     * @param Date              $date
-     * @param RouterInterface   $router
-     * @param GalleryRepository $galleryRepository
-     * @param PictureRepository $pictureRepository
-     * @param MetaStatements    $metaStatements
      */
     public function __construct(
         Date $date,

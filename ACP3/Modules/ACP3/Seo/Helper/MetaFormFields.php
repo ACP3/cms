@@ -39,10 +39,6 @@ class MetaFormFields
      * MetaFormFields constructor.
      *
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
-     * @param \ACP3\Core\I18n\Translator                   $translator
-     * @param \ACP3\Core\Http\RequestInterface             $request
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases   $aliases
-     * @param \ACP3\Core\Helpers\Forms                     $formsHelper
      */
     public function __construct(
         MetaStatements $metaStatements,
@@ -60,10 +56,6 @@ class MetaFormFields
 
     /**
      * Returns the SEO form fields.
-     *
-     * @param string $path
-     *
-     * @return array
      */
     public function formFields(string $path = ''): array
     {
@@ -96,9 +88,6 @@ class MetaFormFields
         ];
     }
 
-    /**
-     * @return array
-     */
     protected function getRobotsChoicesGeneratorValues(): array
     {
         return [

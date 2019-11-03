@@ -32,9 +32,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * ServiceContainerBuilder constructor.
      *
-     * @param LoggerInterface $logger
-     * @param ApplicationPath $applicationPath
-     *
      * @throws \Exception
      */
     public function __construct(
@@ -86,9 +83,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param \Psr\Log\LoggerInterface               $logger
-     * @param \ACP3\Core\Environment\ApplicationPath $applicationPath
-     *
      * @return \ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder
      *
      * @throws \Exception

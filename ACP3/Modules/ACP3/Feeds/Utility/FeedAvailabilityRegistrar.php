@@ -17,8 +17,6 @@ class FeedAvailabilityRegistrar
     protected $availableModules = [];
 
     /**
-     * @param FeedAvailabilityExtensionInterface $searchAvailability
-     *
      * @return $this
      */
     public function registerModule(FeedAvailabilityExtensionInterface $searchAvailability)

@@ -29,10 +29,6 @@ class OnLayoutSeoRenderFormFieldsListener
 
     /**
      * OnLayoutSeoFormFieldsListener constructor.
-     *
-     * @param ACL            $acl
-     * @param View           $view
-     * @param MetaFormFields $metaFormFields
      */
     public function __construct(
         ACL $acl,
@@ -44,9 +40,6 @@ class OnLayoutSeoRenderFormFieldsListener
         $this->metaFormFields = $metaFormFields;
     }
 
-    /**
-     * @param TemplateEvent $event
-     */
     public function __invoke(TemplateEvent $event)
     {
         if ($this->acl->hasPermission('admin/seo/index/create')) {

@@ -19,10 +19,6 @@ class Cache extends Core\Modules\AbstractCacheStorage
      */
     protected $articleRepository;
 
-    /**
-     * @param Core\Cache        $cache
-     * @param ArticleRepository $articleRepository
-     */
     public function __construct(
         Core\Cache $cache,
         ArticleRepository $articleRepository

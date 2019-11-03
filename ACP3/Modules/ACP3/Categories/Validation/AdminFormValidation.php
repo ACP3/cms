@@ -36,10 +36,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * Validator constructor.
      *
-     * @param \ACP3\Core\Settings\SettingsInterface                             $settings
-     * @param \ACP3\Core\I18n\Translator                                        $translator
-     * @param \ACP3\Core\Validation\Validator                                   $validator
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
+     * @param \ACP3\Core\Settings\SettingsInterface $settings
+     * @param \ACP3\Core\I18n\Translator            $translator
+     * @param \ACP3\Core\Validation\Validator       $validator
      */
     public function __construct(
         Core\Settings\SettingsInterface $settings,
@@ -79,8 +78,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
 
     /**
      * {@inheritdoc}
-     *
-     * @param array $formData
      *
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException

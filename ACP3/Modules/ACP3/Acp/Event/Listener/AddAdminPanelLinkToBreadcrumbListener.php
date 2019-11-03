@@ -22,9 +22,6 @@ class AddAdminPanelLinkToBreadcrumbListener
         $this->translator = $translator;
     }
 
-    /**
-     * @param \ACP3\Core\Breadcrumb\Event\StepsBuildCacheEvent $event
-     */
     public function __invoke(StepsBuildCacheEvent $event)
     {
         $event->getSteps()->prepend($this->translator->t('acp', 'acp'), 'acp/acp');

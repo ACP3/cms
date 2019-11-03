@@ -23,9 +23,6 @@ class UriAliasManager
 
     /**
      * UriAliasManager constructor.
-     *
-     * @param SeoModel                                              $seoModel
-     * @param \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository $seoRepository
      */
     public function __construct(
         SeoModel $seoModel,
@@ -38,10 +35,6 @@ class UriAliasManager
     /**
      * Deletes the given URL alias.
      *
-     * @param string $path
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function deleteUriAlias(string $path): bool
@@ -52,11 +45,6 @@ class UriAliasManager
         return !empty($seo) && $this->seoModel->delete($seo['id']) !== false;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
     protected function preparePath(string $path): string
     {
         return !\preg_match('/\/$/', $path) ? '/' : '';
@@ -64,15 +52,6 @@ class UriAliasManager
 
     /**
      * Inserts/Updates a given URL alias.
-     *
-     * @param string $path
-     * @param string $alias
-     * @param string $keywords
-     * @param string $description
-     * @param int    $robots
-     * @param string $title
-     *
-     * @return bool
      */
     public function insertUriAlias(
         string $path,

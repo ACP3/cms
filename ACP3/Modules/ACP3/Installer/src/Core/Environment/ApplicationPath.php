@@ -16,8 +16,6 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
 
     /**
      * ApplicationPath constructor.
-     *
-     * @param string $applicationMode
      */
     public function __construct(string $applicationMode)
     {
@@ -27,9 +25,6 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
         $this->webRoot = \substr($this->webRoot !== '/' ? $this->webRoot . '/' : '/', 0, -14);
     }
 
-    /**
-     * @return string
-     */
     public function getInstallerWebRoot(): string
     {
         return $this->installerWebRoot;

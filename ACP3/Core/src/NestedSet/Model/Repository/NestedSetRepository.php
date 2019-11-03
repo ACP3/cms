@@ -16,8 +16,6 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * Fetch the given node with all its parent nodes.
      *
-     * @param int $nodeId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -33,8 +31,6 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * Die aktuelle Seite mit allen untergeordneten Seiten selektieren.
      *
-     * @param int $nodeId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -48,8 +44,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $leftId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -63,8 +57,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $rightId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -78,8 +70,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $nodeId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -90,9 +80,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $rightId
-     * @param int $blockId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -108,9 +95,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $rightId
-     * @param int $blockId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -126,8 +110,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $nodeId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -141,9 +123,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $leftId
-     * @param int $rightId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -157,9 +136,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $leftId
-     * @param int $rightId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -173,9 +149,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $leftId
-     * @param int $rightId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -189,8 +162,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $blockId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -214,8 +185,6 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @param int $blockId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException

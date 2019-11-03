@@ -39,7 +39,6 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Helpers\Secure                           $secureHelper
      * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
      * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
-     * @param Search\Utility\SearchAvailabilityRegistrar          $availableModulesRegistrar
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -59,8 +58,6 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $q
-     *
      * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
@@ -100,8 +97,6 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
@@ -125,11 +120,6 @@ class Index extends Core\Controller\AbstractFrontendAction
         );
     }
 
-    /**
-     * @param array $formData
-     *
-     * @return array
-     */
     protected function prepareFormData(array $formData): array
     {
         if (isset($formData['search_term']) === true) {
@@ -152,14 +142,6 @@ class Index extends Core\Controller\AbstractFrontendAction
         return $formData;
     }
 
-    /**
-     * @param array  $modules
-     * @param string $searchTerm
-     * @param string $area
-     * @param string $sort
-     *
-     * @return array
-     */
     protected function renderSearchResults(array $modules, string $searchTerm, string $area, string $sort): array
     {
         $this->breadcrumb
@@ -177,14 +159,6 @@ class Index extends Core\Controller\AbstractFrontendAction
         ];
     }
 
-    /**
-     * @param array  $modules
-     * @param string $searchTerm
-     * @param string $area
-     * @param string $sort
-     *
-     * @return array
-     */
     protected function processSearchResults(array $modules, string $searchTerm, string $area, string $sort): array
     {
         $searchResults = [];

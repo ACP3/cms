@@ -160,9 +160,6 @@ abstract class AbstractWidgetAction implements ActionInterface
         return $this->container->getParameter('core.environment');
     }
 
-    /**
-     * @return Core\Http\RequestInterface
-     */
     protected function getRequest(): Core\Http\RequestInterface
     {
         return $this->request;

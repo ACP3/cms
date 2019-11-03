@@ -25,8 +25,6 @@ class ComponentRegistry
 
     /**
      * Adds a new component with its name and its filesystem path to the component registry.
-     *
-     * @param \ACP3\Core\Component\Dto\ComponentDataDto $component
      */
     public static function add(ComponentDataDto $component): void
     {
@@ -104,10 +102,6 @@ class ComponentRegistry
      * Returns the filesystem path of the given component.
      * If the component isn't registered it throws an exception.
      *
-     * @param string $componentName
-     *
-     * @return string
-     *
      * @throws ComponentNotFoundException
      */
     public static function getPathByName(string $componentName): string
@@ -115,9 +109,7 @@ class ComponentRegistry
         $component = self::findByName($componentName);
 
         if ($component === null) {
-            throw new ComponentNotFoundException(
-                \sprintf('Could not find the component with name "%s".', $componentName)
-            );
+            throw new ComponentNotFoundException(\sprintf('Could not find the component with name "%s".', $componentName));
         }
 
         return $component->getPath();

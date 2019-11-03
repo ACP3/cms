@@ -13,8 +13,6 @@ use ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidatio
 class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param array $formData
-     *
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */
     public function validate(array $formData)
@@ -31,9 +29,6 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
         $this->validator->validate();
     }
 
-    /**
-     * @param array $formData
-     */
     protected function validateGeneralSettings(array $formData)
     {
         $this->validator
@@ -136,9 +131,6 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    /**
-     * @param array $formData
-     */
     protected function validateDateSettings(array $formData)
     {
         $this->validator
@@ -168,9 +160,6 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    /**
-     * @param array $formData
-     */
     protected function validateMaintenanceSettings(array $formData)
     {
         $this->validator
@@ -195,9 +184,6 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    /**
-     * @param array $formData
-     */
     protected function validatePerformanceSettings(array $formData)
     {
         $this->validator
@@ -244,9 +230,6 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    /**
-     * @param array $formData
-     */
     protected function validateMailerSettings(array $formData)
     {
         $this->validator

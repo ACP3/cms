@@ -30,10 +30,6 @@ class CacheDriverFactory
 
     /**
      * CacheDriverFactory constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param string                                 $cacheDriver
-     * @param string                                 $environment
      */
     public function __construct(ApplicationPath $appPath, string $cacheDriver, string $environment)
     {
@@ -42,11 +38,6 @@ class CacheDriverFactory
         $this->environment = $environment;
     }
 
-    /**
-     * @param string $namespace
-     *
-     * @return \Doctrine\Common\Cache\CacheProvider
-     */
     public function create(string $namespace): CacheProvider
     {
         $driver = $this->initializeCacheDriver($this->getCacheDriverName());
@@ -55,19 +46,12 @@ class CacheDriverFactory
         return $driver;
     }
 
-    /**
-     * @return string
-     */
     protected function getCacheDriverName(): string
     {
         return $this->environment !== ApplicationMode::DEVELOPMENT ? $this->cacheDriver : 'Array';
     }
 
     /**
-     * @param string $driverName
-     *
-     * @return \Doctrine\Common\Cache\CacheProvider
-     *
      * @throws \InvalidArgumentException
      */
     protected function initializeCacheDriver(string $driverName): CacheProvider
@@ -79,9 +63,7 @@ class CacheDriverFactory
             case 'array':
                 return new ArrayCache();
             default:
-                throw new \InvalidArgumentException(
-                    \sprintf('Could not find the requested cache driver "%s"!', $driverName)
-                );
+                throw new \InvalidArgumentException(\sprintf('Could not find the requested cache driver "%s"!', $driverName));
         }
     }
 }

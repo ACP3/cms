@@ -45,10 +45,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
      * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
-     * @param Gallery\Model\GalleryModel                                    $galleryModel
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null            $uriAliasManager
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null    $socialSharingManager
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -106,8 +103,6 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $galleryId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException

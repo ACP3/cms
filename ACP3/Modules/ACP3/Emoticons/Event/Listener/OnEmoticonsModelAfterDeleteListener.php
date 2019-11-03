@@ -19,17 +19,12 @@ class OnEmoticonsModelAfterDeleteListener
 
     /**
      * OnEmoticonsModelBeforeDeleteListener constructor.
-     *
-     * @param Cache $cache
      */
     public function __construct(Cache $cache)
     {
         $this->cache = $cache;
     }
 
-    /**
-     * @param ModelSaveEvent $event
-     */
     public function __invoke(ModelSaveEvent $event)
     {
         if (!$event->isDeleteStatement()) {

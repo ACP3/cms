@@ -38,9 +38,6 @@ class Validator
 
     /**
      * Validator constructor.
-     *
-     * @param EventDispatcherInterface          $eventDispatcher
-     * @param \Psr\Container\ContainerInterface $container
      */
     public function __construct(EventDispatcherInterface $eventDispatcher, ContainerInterface $container)
     {
@@ -49,9 +46,6 @@ class Validator
     }
 
     /**
-     * @param string $validationRule
-     * @param array  $params
-     *
      * @return $this
      */
     public function addConstraint(string $validationRule, array $params = [])
@@ -78,7 +72,6 @@ class Validator
     }
 
     /**
-     * @param string       $message
      * @param string|array $field
      *
      * @return $this
@@ -109,11 +102,6 @@ class Validator
         return \str_replace('_', '-', $field);
     }
 
-    /**
-     * @param string $eventName
-     * @param array  $formData
-     * @param array  $extra
-     */
     public function dispatchValidationEvent(string $eventName, array $formData, array $extra = [])
     {
         $this->eventDispatcher->dispatch(new FormValidationEvent($this, $formData, $extra), $eventName);
@@ -171,8 +159,7 @@ class Validator
     }
 
     /**
-     * @param string $validationRule
-     * @param mixed  $field
+     * @param mixed $field
      *
      * @return bool
      *

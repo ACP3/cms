@@ -37,8 +37,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param array $settings
-     *
      * @return $this
      */
     public function setSettings(array $settings)

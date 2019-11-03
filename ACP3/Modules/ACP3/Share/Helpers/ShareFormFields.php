@@ -39,11 +39,7 @@ class ShareFormFields
     /**
      * SharingInfoFormFields constructor.
      *
-     * @param \ACP3\Core\Settings\SettingsInterface                     $settings
-     * @param \ACP3\Core\I18n\Translator                                $translator
-     * @param \ACP3\Core\Helpers\Forms                                  $formsHelper
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices           $socialServices
-     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository $shareRepository
+     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices $socialServices
      */
     public function __construct(
         SettingsInterface $settings,
@@ -61,10 +57,6 @@ class ShareFormFields
 
     /**
      * Returns the sharing form fields.
-     *
-     * @param string $path
-     *
-     * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -94,10 +86,6 @@ class ShareFormFields
     }
 
     /**
-     * @param string $path
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function getData(string $path): array
@@ -132,19 +120,11 @@ class ShareFormFields
         return $sharingInfo;
     }
 
-    /**
-     * @param array $services
-     *
-     * @return bool
-     */
     private function hasCustomizedServices(array $services): bool
     {
         return !empty($services) && $services !== $this->socialServices->getActiveServices();
     }
 
-    /**
-     * @return array
-     */
     private function getAvailableServices(): array
     {
         $services = [];
@@ -155,11 +135,6 @@ class ShareFormFields
         return $services;
     }
 
-    /**
-     * @param array $services
-     *
-     * @return array
-     */
     private function getCurrentServices(array $services): array
     {
         return $services ?: $this->socialServices->getActiveServices();

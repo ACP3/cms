@@ -16,8 +16,6 @@ class WysiwygFactory
 
     /**
      * WysiwygFactory constructor.
-     *
-     * @param WysiwygEditorRegistrar $editorRegistrar
      */
     public function __construct(WysiwygEditorRegistrar $editorRegistrar)
     {

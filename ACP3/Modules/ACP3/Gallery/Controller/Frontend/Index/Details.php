@@ -137,8 +137,6 @@ class Details extends AbstractAction
     }
 
     /**
-     * @param array $picture
-     *
      * @return bool
      */
     protected function isCommentsAllowed(array $picture)

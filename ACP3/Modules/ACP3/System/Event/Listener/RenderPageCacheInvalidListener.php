@@ -29,10 +29,6 @@ class RenderPageCacheInvalidListener
 
     /**
      * OnLayoutContentBeforeListener constructor.
-     *
-     * @param ACL               $acl
-     * @param SettingsInterface $settings
-     * @param View              $view
      */
     public function __construct(ACL $acl, SettingsInterface $settings, View $view)
     {

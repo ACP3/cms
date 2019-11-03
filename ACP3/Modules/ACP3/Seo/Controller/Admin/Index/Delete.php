@@ -26,7 +26,6 @@ class Delete extends Core\Controller\AbstractFrontendAction
      *
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      * @param \ACP3\Modules\ACP3\Seo\Cache                  $seoCache
-     * @param Seo\Model\SeoModel                            $seoModel
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

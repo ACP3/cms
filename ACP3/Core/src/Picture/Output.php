@@ -53,25 +53,17 @@ class Output
         $this->type = $type;
     }
 
-    /**
-     * @return string
-     */
     public function getSrcFile(): string
     {
         return $this->srcFile;
     }
 
-    /**
-     * @return int|null
-     */
     public function getSrcWidth(): ?int
     {
         return $this->srcWidth;
     }
 
     /**
-     * @param int|null $srcWidth
-     *
      * @return $this
      */
     public function setSrcWidth(?int $srcWidth): self
@@ -81,17 +73,12 @@ class Output
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getSrcHeight(): ?int
     {
         return $this->srcHeight;
     }
 
     /**
-     * @param int|null $srcHeight
-     *
      * @return $this
      */
     public function setSrcHeight(?int $srcHeight): self
@@ -101,17 +88,12 @@ class Output
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDestFile(): ?string
     {
         return $this->destFile;
     }
 
     /**
-     * @param string $destFile
-     *
      * @return $this
      */
     public function setDestFile(string $destFile): self
@@ -121,17 +103,12 @@ class Output
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getDestWidth(): ?int
     {
         return $this->destWidth;
     }
 
     /**
-     * @param int|null $destWidth
-     *
      * @return $this
      */
     public function setDestWidth(?int $destWidth): self
@@ -141,17 +118,12 @@ class Output
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getDestHeight(): ?int
     {
         return $this->destHeight;
     }
 
     /**
-     * @param int|null $destHeight
-     *
      * @return $this
      */
     public function setDestHeight(?int $destHeight): self
@@ -161,9 +133,6 @@ class Output
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getType(): ?int
     {
         return $this->type;
@@ -203,8 +172,6 @@ class Output
     }
 
     /**
-     * @param int $pictureType
-     *
      * @return string
      *
      * @throws \ACP3\Core\Picture\Exception\PictureResponseException
@@ -220,16 +187,9 @@ class Output
                 return 'image/png';
         }
 
-        throw new PictureResponseException(\sprintf(
-            'Unsupported picture type: %s',
-            $pictureType
-        ));
+        throw new PictureResponseException(\sprintf('Unsupported picture type: %s', $pictureType));
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\BinaryFileResponse $response
-     * @param string                                               $mimeType
-     */
     private function setHeaders(BinaryFileResponse $response, string $mimeType)
     {
         $response->headers->add([

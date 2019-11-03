@@ -16,9 +16,6 @@ class RewriteUri extends AbstractModifier
      */
     protected $rewriteInternalUri;
 
-    /**
-     * @param \ACP3\Core\Helpers\Formatter\RewriteInternalUri $rewriteInternalUri
-     */
     public function __construct(RewriteInternalUri $rewriteInternalUri)
     {
         $this->rewriteInternalUri = $rewriteInternalUri;

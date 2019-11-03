@@ -71,11 +71,6 @@ class Pagination
 
     /**
      * Pagination constructor.
-     *
-     * @param Title            $title
-     * @param Translator       $translator
-     * @param RequestInterface $request
-     * @param RouterInterface  $router
      */
     public function __construct(
         Title $title,
@@ -137,9 +132,6 @@ class Pagination
         return $this;
     }
 
-    /**
-     * @return int
-     */
     private function getPagesToDisplay(): int
     {
         $pagesToDisplay = $this->pagesToDisplay;
@@ -200,9 +192,7 @@ class Pagination
     public function render()
     {
         if ($this->getResultsStartOffset() > $this->totalResults) {
-            throw new InvalidPageException(
-                \sprintf('Could not find any entries for page %d', $this->currentPage)
-            );
+            throw new InvalidPageException(\sprintf('Could not find any entries for page %d', $this->currentPage));
         }
 
         if ($this->totalResults > $this->resultsPerPage) {
@@ -268,10 +258,6 @@ class Pagination
         ];
     }
 
-    /**
-     * @param string $link
-     * @param int    $rangeStart
-     */
     private function addFirstPageLink(string $link, int $rangeStart): void
     {
         if ($this->totalPages > $this->showFirstLast && $rangeStart > 1) {
@@ -287,10 +273,6 @@ class Pagination
 
     /**
      * @param int|string $pageNumber
-     * @param string     $uri
-     * @param string     $title
-     * @param bool       $selected
-     * @param string     $selector
      *
      * @return $this
      */
@@ -308,12 +290,6 @@ class Pagination
 
     /**
      * @param int|string $pageNumber
-     * @param string     $uri
-     * @param string     $title
-     * @param bool       $selected
-     * @param string     $selector
-     *
-     * @return array
      */
     private function buildPageNumber(
         $pageNumber,
@@ -331,9 +307,6 @@ class Pagination
         ];
     }
 
-    /**
-     * @param string $link
-     */
     private function addPreviousPageLink(string $link): void
     {
         if ($this->canShowPreviousPageLink()) {
@@ -347,17 +320,11 @@ class Pagination
         }
     }
 
-    /**
-     * @return bool
-     */
     private function canShowPreviousPageLink(): bool
     {
         return $this->totalPages > $this->showPreviousNext && $this->currentPage !== 1;
     }
 
-    /**
-     * @param string $link
-     */
     private function addNextPageLink(string $link): void
     {
         if ($this->canShowNextPageLink()) {
@@ -371,18 +338,11 @@ class Pagination
         }
     }
 
-    /**
-     * @return bool
-     */
     private function canShowNextPageLink(): bool
     {
         return $this->totalPages > $this->showPreviousNext && $this->currentPage !== $this->totalPages;
     }
 
-    /**
-     * @param string $link
-     * @param int    $rangeEnd
-     */
     private function addLastPageLink(string $link, int $rangeEnd): void
     {
         if ($this->totalPages > $this->showFirstLast && $this->totalPages !== $rangeEnd) {

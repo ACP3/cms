@@ -25,8 +25,7 @@ class CaptchaValidationRule extends AbstractValidationRule
     /**
      * CaptchaValidationRule constructor.
      *
-     * @param \ACP3\Modules\ACP3\Users\Model\UserModel $user
-     * @param CaptchaExtensionInterface                $captcha
+     * @param CaptchaExtensionInterface $captcha
      */
     public function __construct(
         UserModel $user,

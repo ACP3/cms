@@ -56,8 +56,6 @@ class ApplicationPath
 
     /**
      * ApplicationPath constructor.
-     *
-     * @param string $applicationMode
      */
     public function __construct(string $applicationMode)
     {
@@ -71,65 +69,41 @@ class ApplicationPath
         $this->designRootPathInternal = ACP3_ROOT_DIR . '/designs/';
     }
 
-    /**
-     * @return string
-     */
     public function getPhpSelf(): string
     {
         return $this->phpSelf;
     }
 
-    /**
-     * @return string
-     */
     public function getWebRoot(): string
     {
         return $this->webRoot;
     }
 
-    /**
-     * @return string
-     */
     public function getAppDir(): string
     {
         return $this->appDir;
     }
 
-    /**
-     * @return string
-     */
     public function getClassesDir(): string
     {
         return $this->classesDir;
     }
 
-    /**
-     * @return string
-     */
     public function getModulesDir(): string
     {
         return $this->modulesDir;
     }
 
-    /**
-     * @return string
-     */
     public function getUploadsDir(): string
     {
         return $this->uploadsDir;
     }
 
-    /**
-     * @return string
-     */
     public function getCacheDir(): string
     {
         return $this->cacheDir;
     }
 
-    /**
-     * @return string
-     */
     public function getDesignRootPathInternal(): string
     {
         return $this->designRootPathInternal;
@@ -148,8 +122,6 @@ class ApplicationPath
     }
 
     /**
-     * @return string
-     *
      * @deprecated since 4.28.0, to be removed with version 5.0.0. Use Theme::getDesignPathInternal instead
      */
     public function getDesignPathInternal(): string
@@ -172,8 +144,6 @@ class ApplicationPath
     }
 
     /**
-     * @return string
-     *
      * @deprecated since 4.28.0, to be removed with version 5.0.0. Use Theme::getDesignPathWeb instead
      */
     public function getDesignPathWeb(): string
@@ -196,8 +166,6 @@ class ApplicationPath
     }
 
     /**
-     * @return string
-     *
      * @deprecated Will be removed with version 5.0.0
      */
     public function getDesignPathAbsolute(): string

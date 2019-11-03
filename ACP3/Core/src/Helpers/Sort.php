@@ -17,9 +17,6 @@ class Sort
      */
     protected $db;
 
-    /**
-     * @param \ACP3\Core\Database\Connection $db
-     */
     public function __construct(Connection $db)
     {
         $this->db = $db;

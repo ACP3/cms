@@ -102,10 +102,6 @@ class GenerateThumbnailsCommand extends Command
         }
     }
 
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     */
     protected function cleanCachedPictures(InputInterface $input, OutputInterface $output): void
     {
         if ($input->getOption('force')) {
@@ -116,8 +112,6 @@ class GenerateThumbnailsCommand extends Command
     }
 
     /**
-     * @param string $pictureFileName
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     private function generateThumbnails(string $pictureFileName)
@@ -127,9 +121,6 @@ class GenerateThumbnailsCommand extends Command
     }
 
     /**
-     * @param string $pictureFileName
-     * @param string $action
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     private function generateThumbnail(string $pictureFileName, string $action): void

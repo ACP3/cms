@@ -37,8 +37,6 @@ class SchemaUpdateModel
     }
 
     /**
-     * @param RequestInterface $request
-     *
      * @throws \Exception
      */
     public function updateContainer(RequestInterface $request): void
@@ -52,8 +50,6 @@ class SchemaUpdateModel
     }
 
     /**
-     * @return array
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -77,8 +73,6 @@ class SchemaUpdateModel
     /**
      * Führt die Updateanweisungen eines Moduls aus.
      *
-     * @param string $moduleName
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -100,9 +94,7 @@ class SchemaUpdateModel
 
         $serviceIdMigration = $moduleName . '.installer.migration';
         if (!$schemaRegistrar->has($moduleName) || !$migrationRegistrar->has($serviceIdMigration)) {
-            throw new MissingInstallerException(
-                \sprintf('Could not find any schema or migration files for module "%s"', $moduleName)
-            );
+            throw new MissingInstallerException(\sprintf('Could not find any schema or migration files for module "%s"', $moduleName));
         }
 
         $moduleSchema = $schemaRegistrar->get($moduleName);

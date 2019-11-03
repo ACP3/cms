@@ -18,8 +18,6 @@ class ModuleIsInstalledValidationRule extends AbstractValidationRule
 
     /**
      * ModuleIsInstalledValidationRule constructor.
-     *
-     * @param \ACP3\Core\Modules $modules
      */
     public function __construct(Modules $modules)
     {

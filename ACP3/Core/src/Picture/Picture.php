@@ -67,17 +67,13 @@ class Picture
             return $output;
         }
 
-        throw new PictureGenerateException(
-            \sprintf('Could not find picture: %s', $input->getFile())
-        );
+        throw new PictureGenerateException(\sprintf('Could not find picture: %s', $input->getFile()));
     }
 
     /**
      * Returns the name of a possibly cached picture.
      *
      * @param \ACP3\Core\Picture\Input $input
-     *
-     * @return string
      */
     private function getCacheFileName(Input $input): string
     {
@@ -88,8 +84,6 @@ class Picture
      * Generates the file name of the picture to be cached.
      *
      * @param \ACP3\Core\Picture\Input $input
-     *
-     * @return string
      */
     private function getCacheName(Input $input): string
     {
@@ -97,10 +91,6 @@ class Picture
     }
 
     /**
-     * @param string $fileName
-     *
-     * @return array
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     private function getPictureInfo(string $fileName): array
@@ -112,9 +102,7 @@ class Picture
             $info = \getimagesize($fileName);
 
             if ($info === false) {
-                throw new PictureGenerateException(
-                    \sprintf('Could not get image size information for picture <%s>!', $fileName)
-                );
+                throw new PictureGenerateException(\sprintf('Could not get image size information for picture <%s>!', $fileName));
             }
 
             $picInfo = [
@@ -130,8 +118,6 @@ class Picture
     /**
      * @param \ACP3\Core\Picture\Input  $input
      * @param \ACP3\Core\Picture\Output $output
-     *
-     * @return bool
      */
     private function resamplingIsNecessary(Input $input, Output $output): bool
     {
@@ -178,9 +164,7 @@ class Picture
         }
 
         if (!@\mkdir($input->getCacheDir())) {
-            throw new PictureGenerateException(
-                \sprintf('Could not create cache dir: %s', $input->getCacheDir())
-            );
+            throw new PictureGenerateException(\sprintf('Could not create cache dir: %s', $input->getCacheDir()));
         }
     }
 

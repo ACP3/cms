@@ -47,7 +47,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Date                                         $date
      * @param \ACP3\Core\Helpers\Forms                                $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param Files\Model\FilesModel                                  $filesModel
      * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Core\Helpers\Upload                               $filesUploadHelper
      * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
@@ -72,8 +71,6 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int $id
-     *
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
@@ -119,8 +116,6 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int $id
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
@@ -158,7 +153,6 @@ class Edit extends AbstractFormAction
 
     /**
      * @param string|UploadedFile $file
-     * @param array               $formData
      * @param string              $currentFileName
      *
      * @return array

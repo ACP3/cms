@@ -14,8 +14,6 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
     const TABLE_NAME = 'guestbook';
 
     /**
-     * @param int $guestbookId
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -29,8 +27,6 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
     }
 
     /**
-     * @param int|null $notify
-     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -43,10 +39,6 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
     }
 
     /**
-     * @param int|null $notify
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

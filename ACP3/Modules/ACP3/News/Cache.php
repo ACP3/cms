@@ -19,8 +19,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     protected $newsRepository;
 
     /**
-     * @param \ACP3\Core\Cache                                        $cache
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
+     * @param \ACP3\Core\Cache $cache
      */
     public function __construct(
         Core\Cache $cache,

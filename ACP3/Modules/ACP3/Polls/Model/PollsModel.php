@@ -36,13 +36,6 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
 
     /**
      * PollsModel constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor            $dataProcessor
-     * @param Secure                   $secure
-     * @param PollRepository           $pollRepository
-     * @param AnswerRepository         $answerRepository
-     * @param VoteRepository           $voteRepository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -70,9 +63,6 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     }
 
     /**
-     * @param array $answers
-     * @param int   $pollId
-     *
      * @return bool|int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -103,8 +93,6 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     }
 
     /**
-     * @param int $pollId
-     *
      * @return bool|int
      *
      * @throws \Doctrine\DBAL\DBALException

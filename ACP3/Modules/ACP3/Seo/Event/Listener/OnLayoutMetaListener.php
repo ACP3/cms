@@ -23,9 +23,6 @@ class OnLayoutMetaListener
 
     /**
      * OnCustomTemplateVariable constructor.
-     *
-     * @param View                                         $view
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
      */
     public function __construct(
         View $view,

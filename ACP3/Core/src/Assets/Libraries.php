@@ -91,9 +91,6 @@ class Libraries
 
     /**
      * Libraries constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param EventDispatcherInterface         $eventDispatcher
      */
     public function __construct(
         RequestInterface $request,
@@ -109,8 +106,6 @@ class Libraries
     }
 
     /**
-     * @return array
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -130,9 +125,6 @@ class Libraries
     }
 
     /**
-     * @param string $identifier
-     * @param array  $options
-     *
      * @return $this
      */
     public function addLibrary(string $identifier, array $options): self
@@ -150,8 +142,6 @@ class Libraries
 
     /**
      * Activates frontend libraries.
-     *
-     * @param array $libraries
      *
      * @return $this
      */
@@ -173,8 +163,6 @@ class Libraries
     }
 
     /**
-     * @return array
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -195,11 +183,6 @@ class Libraries
         return $enabledLibraries;
     }
 
-    /**
-     * @param array $values
-     *
-     * @return bool
-     */
     private function includeInXmlHttpRequest(array $values): bool
     {
         return $this->request->isXmlHttpRequest()

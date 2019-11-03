@@ -35,7 +35,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Controller\Context\FrontendContext                $context
      * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
      * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param Newsletter\Model\NewsletterModel                             $newsletterModel
      * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
      * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
      */
@@ -56,8 +55,6 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int $id
-     *
      * @return array
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
@@ -92,8 +89,6 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int $id
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException

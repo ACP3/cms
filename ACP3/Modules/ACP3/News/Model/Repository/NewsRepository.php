@@ -16,9 +16,6 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'news';
 
     /**
-     * @param int    $newsId
-     * @param string $time
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -49,9 +46,6 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string   $time
-     * @param int|null $categoryId
-     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -71,11 +65,6 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param array  $categoryId
-     * @param string $time
-     *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function countAllByCategoryId(array $categoryId, string $time = ''): int
@@ -92,9 +81,6 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * @param int[]|int $categoryId
-     * @param string    $time
-     * @param int|null  $limitStart
-     * @param int|null  $resultsPerPage
      *
      * @return array
      *
@@ -121,10 +107,6 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string   $time
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -141,9 +123,6 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int    $categoryId
-     * @param string $time
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -159,8 +138,6 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string $time
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

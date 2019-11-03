@@ -19,8 +19,6 @@ class AllowedMenuValidationRule extends AbstractValidationRule
 
     /**
      * AllowedMenuValidationRule constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(MenuItemRepository $menuItemRepository)
     {

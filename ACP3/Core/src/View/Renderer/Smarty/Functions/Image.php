@@ -29,10 +29,6 @@ class Image extends AbstractFunction
 
     /**
      * Image constructor.
-     *
-     * @param RequestInterface $request
-     * @param FileResolver     $fileResolver
-     * @param ApplicationPath  $appPath
      */
     public function __construct(RequestInterface $request, FileResolver $fileResolver, ApplicationPath $appPath)
     {
@@ -60,11 +56,7 @@ class Image extends AbstractFunction
             return $path . '?v=' . BootstrapInterface::VERSION;
         }
 
-        throw new \InvalidArgumentException(\sprintf(
-            'Not all necessary arguments for the function %s were passed!',
-            __FUNCTION__
-            )
-        );
+        throw new \InvalidArgumentException(\sprintf('Not all necessary arguments for the function %s were passed!', __FUNCTION__));
     }
 
     /**

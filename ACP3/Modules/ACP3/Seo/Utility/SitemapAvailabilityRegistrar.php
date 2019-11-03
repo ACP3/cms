@@ -23,17 +23,12 @@ class SitemapAvailabilityRegistrar
 
     /**
      * SitemapAvailabilityRegistrar constructor.
-     *
-     * @param Modules $modules
      */
     public function __construct(Modules $modules)
     {
         $this->modules = $modules;
     }
 
-    /**
-     * @param SitemapAvailabilityExtensionInterface $availability
-     */
     public function registerModule(SitemapAvailabilityExtensionInterface $availability)
     {
         if ($this->modules->isActive($availability->getModuleName())) {

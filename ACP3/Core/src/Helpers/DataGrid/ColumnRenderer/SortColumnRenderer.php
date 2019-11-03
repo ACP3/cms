@@ -26,9 +26,6 @@ class SortColumnRenderer extends AbstractColumnRenderer
 
     /**
      * PictureSortColumnRenderer constructor.
-     *
-     * @param \ACP3\Core\I18n\Translator        $translator
-     * @param \ACP3\Core\Router\RouterInterface $router
      */
     public function __construct(
         Translator $translator,

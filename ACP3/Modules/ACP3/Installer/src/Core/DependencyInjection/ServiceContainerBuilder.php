@@ -44,11 +44,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     /**
      * ServiceContainerBuilder constructor.
      *
-     * @param \ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath $applicationPath
-     * @param \Symfony\Component\HttpFoundation\Request                     $symfonyRequest
-     * @param string                                                        $applicationMode
-     * @param bool                                                          $isInstallingOrUpdating
-     *
      * @throws \Exception
      */
     public function __construct(
@@ -109,8 +104,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
-     *
      * @throws \Exception
      */
     private function includeCoreServices(LoaderInterface $loader): void
@@ -131,11 +124,6 @@ class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @param ApplicationPath $applicationPath
-     * @param Request         $symfonyRequest
-     * @param string          $applicationMode
-     * @param bool            $isInstallingOrUpdating
-     *
      * @return \ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder
      *
      * @throws \Exception

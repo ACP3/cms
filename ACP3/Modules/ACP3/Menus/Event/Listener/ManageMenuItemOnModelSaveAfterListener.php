@@ -24,9 +24,6 @@ class ManageMenuItemOnModelSaveAfterListener
 
     /**
      * OnModelSaveAfterListener constructor.
-     *
-     * @param ACL            $acl
-     * @param ManageMenuItem $menuItemManager
      */
     public function __construct(ACL $acl, ManageMenuItem $menuItemManager)
     {
@@ -35,8 +32,6 @@ class ManageMenuItemOnModelSaveAfterListener
     }
 
     /**
-     * @param \ACP3\Core\Model\Event\ModelSaveEvent $event
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function __invoke(ModelSaveEvent $event)
@@ -62,8 +57,6 @@ class ManageMenuItemOnModelSaveAfterListener
     }
 
     /**
-     * @param array $formData
-     *
      * @return bool
      */
     private function hasNecessaryMenuItemFormFields(array $formData)

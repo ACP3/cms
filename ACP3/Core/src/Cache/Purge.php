@@ -29,7 +29,6 @@ class Purge
     }
 
     /**
-     * @param array  $directories
      * @param string $cacheId
      *
      * @return bool

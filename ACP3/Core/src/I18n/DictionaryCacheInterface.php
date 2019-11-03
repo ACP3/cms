@@ -11,26 +11,16 @@ interface DictionaryCacheInterface
 {
     /**
      * Returns the cached language strings.
-     *
-     * @param string $language
-     *
-     * @return array
      */
     public function getLanguageCache(string $language): array;
 
     /**
      * Saves the language cache.
-     *
-     * @param string $language
-     *
-     * @return bool
      */
     public function saveLanguageCache(string $language): bool;
 
     /**
      * Gets the cache for all registered languages.
-     *
-     * @return array
      */
     public function getLanguagePacksCache(): array;
 }

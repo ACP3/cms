@@ -23,17 +23,12 @@ class AddEsiSurrogateHeaderListener
 
     /**
      * AddEsiSurrogateHeaderListener constructor.
-     *
-     * @param Request $request
      */
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
-    /**
-     * @param ControllerActionAfterDispatchEvent $event
-     */
     public function __invoke(ControllerActionAfterDispatchEvent $event)
     {
         $response = $event->getResponse();
@@ -46,8 +41,6 @@ class AddEsiSurrogateHeaderListener
     }
 
     /**
-     * @param Response $response
-     *
      * @return bool
      */
     private function isExcludedFromEsi(Response $response)

@@ -19,8 +19,6 @@ class Event extends AbstractFunction
 
     /**
      * Event constructor.
-     *
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
@@ -36,9 +34,6 @@ class Event extends AbstractFunction
     }
 
     /**
-     * @param array                     $params
-     * @param \Smarty_Internal_Template $smarty
-     *
      * @return string
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
@@ -56,8 +51,6 @@ class Event extends AbstractFunction
     }
 
     /**
-     * @param array $arguments
-     *
      * @return array
      */
     protected function parseArguments(array $arguments)

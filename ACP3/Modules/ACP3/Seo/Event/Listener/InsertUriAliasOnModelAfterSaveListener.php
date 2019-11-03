@@ -25,9 +25,6 @@ class InsertUriAliasOnModelAfterSaveListener
 
     /**
      * InsertUriAliasOnModelAfterSaveListener constructor.
-     *
-     * @param ACL             $acl
-     * @param UriAliasManager $uriAliasManager
      */
     public function __construct(
         ACL $acl,
@@ -37,9 +34,6 @@ class InsertUriAliasOnModelAfterSaveListener
         $this->acl = $acl;
     }
 
-    /**
-     * @param ModelSaveEvent $event
-     */
     public function __invoke(ModelSaveEvent $event)
     {
         if ($this->acl->hasPermission('admin/seo/index/create')) {

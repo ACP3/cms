@@ -46,7 +46,6 @@ class Edit extends AbstractFormAction
      * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
      * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
      * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param Gallery\Model\PictureModel                                    $pictureModel
      * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation   $pictureFormValidation
      * @param \ACP3\Core\Helpers\Upload                                     $galleryUploadHelper
      */
@@ -71,8 +70,6 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int $id
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
@@ -117,8 +114,6 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function getGalleries(): array
@@ -132,8 +127,6 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int $id
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException

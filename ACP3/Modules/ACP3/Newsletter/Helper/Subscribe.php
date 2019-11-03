@@ -57,16 +57,15 @@ class Subscribe
     /**
      * Subscribe constructor.
      *
-     * @param \ACP3\Core\Date                                                  $date
-     * @param \ACP3\Core\I18n\Translator                                       $translator
-     * @param \ACP3\Core\Mailer                                                $mailer
-     * @param \ACP3\Core\Http\RequestInterface                                 $request
-     * @param \ACP3\Core\Router\RouterInterface                                $router
-     * @param \ACP3\Core\Helpers\StringFormatter                               $stringFormatter
-     * @param \ACP3\Core\Helpers\Secure                                        $secureHelper
-     * @param \ACP3\Core\Settings\SettingsInterface                            $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus               $accountStatusHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
+     * @param \ACP3\Core\Date                                    $date
+     * @param \ACP3\Core\I18n\Translator                         $translator
+     * @param \ACP3\Core\Mailer                                  $mailer
+     * @param \ACP3\Core\Http\RequestInterface                   $request
+     * @param \ACP3\Core\Router\RouterInterface                  $router
+     * @param \ACP3\Core\Helpers\StringFormatter                 $stringFormatter
+     * @param \ACP3\Core\Helpers\Secure                          $secureHelper
+     * @param \ACP3\Core\Settings\SettingsInterface              $config
+     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
      */
     public function __construct(
         Core\Date $date,
@@ -95,11 +94,6 @@ class Subscribe
     /**
      * Meldet eine E-Mail-Adresse beim Newsletter an.
      *
-     * @param string $emailAddress
-     * @param int    $salutation
-     * @param string $firstName
-     * @param string $lastName
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -114,12 +108,6 @@ class Subscribe
     }
 
     /**
-     * @param string $emailAddress
-     * @param int    $salutation
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $hash
-     *
      * @return bool|int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -138,9 +126,6 @@ class Subscribe
     }
 
     /**
-     * @param string $emailAddress
-     * @param string $hash
-     *
      * @return bool
      */
     protected function sendDoubleOptInEmail(string $emailAddress, string $hash)
@@ -186,12 +171,6 @@ class Subscribe
     }
 
     /**
-     * @param array  $newsletterAccount
-     * @param int    $salutation
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $hash
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -215,12 +194,6 @@ class Subscribe
     }
 
     /**
-     * @param string $emailAddress
-     * @param int    $salutation
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $hash
-     *
      * @return bool|int
      *
      * @throws \Doctrine\DBAL\DBALException

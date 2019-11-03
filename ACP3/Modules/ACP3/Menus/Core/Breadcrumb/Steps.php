@@ -28,11 +28,8 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * Breadcrumb constructor.
      *
-     * @param \Psr\Container\ContainerInterface                            $container
      * @param \ACP3\Core\I18n\Translator                                   $translator
-     * @param \ACP3\Core\Http\RequestInterface                             $request
      * @param \ACP3\Core\Router\RouterInterface                            $router
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface  $eventDispatcher
      * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
      */
     public function __construct(
@@ -107,9 +104,6 @@ class Steps extends Core\Breadcrumb\Steps
         }
     }
 
-    /**
-     * @return array
-     */
     private function getPossiblyMatchingRoutes(): array
     {
         return [
@@ -121,11 +115,6 @@ class Steps extends Core\Breadcrumb\Steps
         ];
     }
 
-    /**
-     * @param array $items
-     *
-     * @return array
-     */
     private function findRestrictionInRoutes(array $items): array
     {
         \rsort($items);
@@ -144,9 +133,6 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * Zuweisung einer neuen Stufe zur Brotkrümelspur.
      *
-     * @param string $title
-     * @param string $path
-     *
      * @return $this
      */
     private function appendFromDB(string $title, string $path = ''): self
@@ -156,9 +142,6 @@ class Steps extends Core\Breadcrumb\Steps
         return $this;
     }
 
-    /**
-     * @return int
-     */
     private function findFirstMatchingStep(): int
     {
         $steps = \array_reverse($this->steps);
@@ -178,12 +161,6 @@ class Steps extends Core\Breadcrumb\Steps
         return $this->hasUseIndex($matched, $lastDbStep['uri']) ? \count($steps) - $offset : 0;
     }
 
-    /**
-     * @param bool   $matched
-     * @param string $uri
-     *
-     * @return bool
-     */
     private function hasUseIndex(bool $matched, string $uri): bool
     {
         return $matched === true || $uri === $this->router->route($this->request->getQuery());

@@ -36,8 +36,7 @@ abstract class AbstractFilter implements PluginInterface
     }
 
     /**
-     * @param string                    $tplOutput
-     * @param \Smarty_Internal_Template $smarty
+     * @param string $tplOutput
      *
      * @return string
      *

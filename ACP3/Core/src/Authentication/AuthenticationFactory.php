@@ -14,9 +14,6 @@ class AuthenticationFactory
      */
     private $authenticationRegistrar;
 
-    /**
-     * @param AuthenticationRegistrar $authenticationRegistrar
-     */
     public function __construct(AuthenticationRegistrar $authenticationRegistrar)
     {
         $this->authenticationRegistrar = $authenticationRegistrar;

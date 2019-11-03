@@ -30,9 +30,6 @@ class Requirements
 
     /**
      * Requirements constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     * @param \ACP3\Core\I18n\Translator             $translator
      */
     public function __construct(
         ApplicationPath $appPath,

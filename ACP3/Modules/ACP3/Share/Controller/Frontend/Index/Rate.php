@@ -34,11 +34,6 @@ class Rate extends AbstractFrontendAction
 
     /**
      * Rate constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                    $context
-     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository        $shareRepository
-     * @param \ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository $shareRatingsRepository
-     * @param \ACP3\Modules\ACP3\Share\Model\ShareRatingModel                  $shareRatingModel
      */
     public function __construct(
         FrontendContext $context,
@@ -54,10 +49,6 @@ class Rate extends AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost(int $id): array
@@ -85,12 +76,6 @@ class Rate extends AbstractFrontendAction
     }
 
     /**
-     * @param int    $shareId
-     * @param int    $stars
-     * @param string $ipAddress
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function canSaveRating(int $shareId, int $stars, string $ipAddress): bool
@@ -109,11 +94,6 @@ class Rate extends AbstractFrontendAction
     }
 
     /**
-     * @param string $ipAddress
-     * @param int    $shareId
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function hasAlreadyRated(string $ipAddress, int $shareId): bool

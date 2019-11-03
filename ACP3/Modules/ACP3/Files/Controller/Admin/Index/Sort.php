@@ -26,8 +26,6 @@ class Sort extends AbstractFrontendAction
     /**
      * Sort constructor.
      *
-     * @param FrontendContext         $context
-     * @param FilesRepository         $filesRepository
      * @param \ACP3\Core\Helpers\Sort $sortHelper
      */
     public function __construct(FrontendContext $context, FilesRepository $filesRepository, Core\Helpers\Sort $sortHelper)

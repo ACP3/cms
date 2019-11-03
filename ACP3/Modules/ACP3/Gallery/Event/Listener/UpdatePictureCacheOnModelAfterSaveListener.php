@@ -19,17 +19,12 @@ class UpdatePictureCacheOnModelAfterSaveListener
 
     /**
      * UpdatePictureCacheOnModelAfterSaveListener constructor.
-     *
-     * @param Cache $cache
      */
     public function __construct(Cache $cache)
     {
         $this->cache = $cache;
     }
 
-    /**
-     * @param ModelSaveEvent $event
-     */
     public function __invoke(ModelSaveEvent $event)
     {
         $data = $event->getData();

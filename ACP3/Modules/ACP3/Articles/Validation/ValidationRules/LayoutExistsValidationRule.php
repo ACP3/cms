@@ -19,8 +19,6 @@ class LayoutExistsValidationRule extends AbstractValidationRule
 
     /**
      * LayoutExistsValidationRule constructor.
-     *
-     * @param \ACP3\Core\View $view
      */
     public function __construct(View $view)
     {

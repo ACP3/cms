@@ -30,10 +30,6 @@ class InvalidatePageCacheOnModelAfterSaveListener
 
     /**
      * InvalidatePageCacheOnModelAfterSaveListener constructor.
-     *
-     * @param ApplicationPath   $applicationPath
-     * @param SettingsInterface $settings
-     * @param CanUsePageCache   $canUsePageCache
      */
     public function __construct(
         ApplicationPath $applicationPath,

@@ -150,8 +150,6 @@ class Register extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return bool
      */
     protected function sendRegistrationEmail(array $formData)

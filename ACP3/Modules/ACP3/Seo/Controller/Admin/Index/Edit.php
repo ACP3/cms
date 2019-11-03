@@ -35,7 +35,6 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @param \ACP3\Core\Controller\Context\FrontendContext         $context
      * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
      * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
-     * @param Seo\Model\SeoModel                                    $seoModel
      * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
      */
     public function __construct(

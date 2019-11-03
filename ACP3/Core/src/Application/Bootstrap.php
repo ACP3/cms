@@ -63,9 +63,6 @@ class Bootstrap extends AbstractBootstrap
     }
 
     /**
-     * @param SymfonyRequest                        $symfonyRequest
-     * @param \Symfony\Component\Config\ConfigCache $cache
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */

@@ -41,11 +41,7 @@ abstract class AbstractIncludeAsset
     }
 
     /**
-     * @param string   $moduleName
-     * @param string   $filePath
      * @param string[] $dependencies
-     *
-     * @return string
      */
     public function add(string $moduleName, string $filePath, array $dependencies = []): string
     {
@@ -54,9 +50,7 @@ abstract class AbstractIncludeAsset
         }
 
         if (!$this->hasValidParams($moduleName, $filePath)) {
-            throw new \InvalidArgumentException(
-                'Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!'
-            );
+            throw new \InvalidArgumentException('Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!');
         }
 
         $key = $moduleName . '/' . $filePath;
@@ -74,24 +68,12 @@ abstract class AbstractIncludeAsset
         );
     }
 
-    /**
-     * @param string $moduleName
-     * @param string $filePath
-     *
-     * @return bool
-     */
     private function hasValidParams(string $moduleName, string $filePath): bool
     {
         return \preg_match('=/=', $moduleName) === 0
             && \preg_match('=\./=', $filePath) === 0;
     }
 
-    /**
-     * @param string $moduleName
-     * @param string $filePath
-     *
-     * @return string
-     */
     private function resolvePath(string $moduleName, string $filePath): string
     {
         $path = $this->fileResolver->getStaticAssetPath(

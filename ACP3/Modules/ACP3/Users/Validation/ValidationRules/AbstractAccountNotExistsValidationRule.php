@@ -19,8 +19,6 @@ abstract class AbstractAccountNotExistsValidationRule extends AbstractValidation
 
     /**
      * AccountExistsByNameValidationRule constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
      */
     public function __construct(UserRepository $userRepository)
     {
@@ -30,7 +28,6 @@ abstract class AbstractAccountNotExistsValidationRule extends AbstractValidation
     /**
      * @param mixed  $data
      * @param string $field
-     * @param array  $extra
      *
      * @return bool
      */

@@ -38,8 +38,6 @@ class Installer
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls.
      *
      * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
-     *
-     * @return array
      */
     public function checkInstallDependencies(Core\Modules\Installer\SchemaInterface $schema): array
     {
@@ -58,11 +56,6 @@ class Installer
         return $modulesToEnable;
     }
 
-    /**
-     * @param Core\Modules\Installer\SchemaInterface $schema
-     *
-     * @return array
-     */
     public function checkUninstallDependencies(Core\Modules\Installer\SchemaInterface $schema): array
     {
         $modules = $this->modules->getInstalledModules();
@@ -89,10 +82,6 @@ class Installer
 
     /**
      * Gibt ein Array mit den Abhängigkeiten zu anderen Modulen eines Moduls zurück.
-     *
-     * @param string $moduleName
-     *
-     * @return array
      */
     protected function getDependencies(string $moduleName): array
     {

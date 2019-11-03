@@ -17,8 +17,7 @@ class WysiwygEditorRegistrar
     protected $wysiwygEditors = [];
 
     /**
-     * @param string                                    $serviceId
-     * @param \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG $wysiwygEditor
+     * @param string $serviceId
      *
      * @return $this
      */
@@ -58,8 +57,6 @@ class WysiwygEditorRegistrar
             return $this->wysiwygEditors[$serviceId];
         }
 
-        throw new \InvalidArgumentException(
-            \sprintf('Can not find the WYSIWYG-Editor with the name: %s', $serviceId)
-        );
+        throw new \InvalidArgumentException(\sprintf('Can not find the WYSIWYG-Editor with the name: %s', $serviceId));
     }
 }

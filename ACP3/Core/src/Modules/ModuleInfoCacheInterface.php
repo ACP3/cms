@@ -9,9 +9,6 @@ namespace ACP3\Core\Modules;
 
 interface ModuleInfoCacheInterface
 {
-    /**
-     * @return array
-     */
     public function getModulesInfoCache(): array;
 
     /**

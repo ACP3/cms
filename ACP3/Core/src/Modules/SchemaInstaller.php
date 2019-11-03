@@ -14,10 +14,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     /**
      * Installs a module.
      *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function install(SchemaInterface $schema): bool
@@ -37,10 +33,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     }
 
     /**
-     * @param SchemaInterface $schema
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function moduleNeedsInstallation(SchemaInterface $schema): bool
@@ -52,11 +44,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
     /**
      * Adds a module to the modules SQL-table.
-     *
-     * @param string $moduleName
-     * @param int    $schemaVersion
-     *
-     * @return bool
      */
     protected function addToModulesTable(string $moduleName, int $schemaVersion): bool
     {
@@ -71,11 +58,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
     /**
      * Installs all module settings.
-     *
-     * @param string $moduleName
-     * @param array  $settings
-     *
-     * @return bool
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
@@ -110,10 +92,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
     /**
      * Method for uninstalling a module.
-     *
-     * @param \ACP3\Core\Modules\Installer\SchemaInterface $schema
-     *
-     * @return bool
      */
     public function uninstall(SchemaInterface $schema): bool
     {
@@ -128,10 +106,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
     /**
      * Löscht ein Modul aus der modules DB-Tabelle.
-     *
-     * @param string $moduleName
-     *
-     * @return bool
      */
     protected function removeFromModulesTable(string $moduleName): bool
     {

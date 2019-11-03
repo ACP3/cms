@@ -64,11 +64,6 @@ class Native implements AuthenticationInterface
     }
 
     /**
-     * @param int    $userId
-     * @param string $token
-     *
-     * @return array|null
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function verifyCredentials(int $userId, string $token): ?array

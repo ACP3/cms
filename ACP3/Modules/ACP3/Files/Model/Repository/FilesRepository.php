@@ -23,9 +23,6 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
 
     /**
      * FilesRepository constructor.
-     *
-     * @param Connection                      $db
-     * @param Core\Settings\SettingsInterface $settings
      */
     public function __construct(Connection $db, Core\Settings\SettingsInterface $settings)
     {
@@ -35,9 +32,6 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int    $fileId
-     * @param string $time
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -68,8 +62,6 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $fileId
-     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -80,9 +72,6 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string   $time
-     * @param int|null $categoryId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -99,11 +88,6 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int      $categoryId
-     * @param string   $time
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -120,10 +104,6 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param string   $time
-     * @param int|null $limitStart
-     * @param int|null $resultsPerPage
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

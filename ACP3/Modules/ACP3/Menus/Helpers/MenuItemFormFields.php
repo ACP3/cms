@@ -26,9 +26,8 @@ class MenuItemFormFields
     protected $menusHelper;
 
     /**
-     * @param \ACP3\Core\Helpers\Forms                                 $formsHelper
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList           $menusHelper
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menusModel
+     * @param \ACP3\Core\Helpers\Forms                       $formsHelper
+     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList $menusHelper
      */
     public function __construct(
         Core\Helpers\Forms $formsHelper,

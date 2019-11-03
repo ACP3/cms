@@ -34,11 +34,6 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
 
     /**
      * UpdateUriAliasesOnModelAfterSaveListener constructor.
-     *
-     * @param Gallery\Model\Repository\PictureRepository         $pictureRepository
-     * @param \ACP3\Modules\ACP3\Seo\Core\Router\Aliases|null    $aliases
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager|null $uriAliasManager
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements|null  $metaStatements
      */
     public function __construct(
         Gallery\Model\Repository\PictureRepository $pictureRepository,
@@ -53,8 +48,6 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
     }
 
     /**
-     * @param ModelSaveEvent $event
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function __invoke(ModelSaveEvent $event)

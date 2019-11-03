@@ -56,7 +56,6 @@ class Settings implements SettingsInterface
     /**
      * Saves the module's settings to the database.
      *
-     * @param array  $data
      * @param string $module
      *
      * @return bool
@@ -98,8 +97,6 @@ class Settings implements SettingsInterface
 
     /**
      * Saves the modules settings to the cache.
-     *
-     * @return bool
      */
     protected function saveCache(): bool
     {

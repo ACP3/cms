@@ -57,8 +57,6 @@ class JavaScript extends AbstractMinifier
 
     /**
      * Fetches the theme javascript files.
-     *
-     * @param string $layout
      */
     protected function fetchThemeJavaScript(string $layout): void
     {

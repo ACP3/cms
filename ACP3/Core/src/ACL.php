@@ -56,11 +56,7 @@ class ACL
     /**
      * ACL constructor.
      *
-     * @param \ACP3\Core\Authentication\Model\UserModelInterface          $user
-     * @param \ACP3\Core\Modules                                          $modules
-     * @param \ACP3\Core\Controller\Helper\ControllerActionExists         $controllerActionExists
-     * @param \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface $userRoleRepository
-     * @param \ACP3\Core\ACL\PermissionCacheInterface                     $permissionsCache
+     * @param \ACP3\Core\Modules $modules
      */
     public function __construct(
         UserModelInterface $user,
@@ -78,8 +74,6 @@ class ACL
 
     /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
-     *
-     * @param int $userId
      *
      * @return array
      */
@@ -102,8 +96,6 @@ class ACL
     /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
      *
-     * @param int $userId
-     *
      * @return array
      */
     public function getUserRoleNames(int $userId)
@@ -125,8 +117,6 @@ class ACL
     }
 
     /**
-     * @param int $roleId
-     *
      * @return bool
      */
     public function userHasRole(int $roleId)
@@ -149,8 +139,6 @@ class ACL
     /**
      * Returns the role permissions.
      *
-     * @param array $roleIds
-     *
      * @return array
      */
     protected function getRules(array $roleIds)
@@ -160,8 +148,6 @@ class ACL
 
     /**
      * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat.
-     *
-     * @param string|null $resource
      *
      * @return bool
      */
@@ -179,8 +165,6 @@ class ACL
     }
 
     /**
-     * @param string $resource
-     *
      * @return bool
      */
     protected function canAccessResource(string $resource)
@@ -202,8 +186,6 @@ class ACL
     }
 
     /**
-     * @param string $resource
-     *
      * @return array
      */
     protected function convertResourcePathToArray(string $resource)
@@ -236,9 +218,6 @@ class ACL
 
     /**
      * Returns, whether the current user has the given privilege.
-     *
-     * @param string $module
-     * @param string $privilegeKey
      *
      * @return bool
      */

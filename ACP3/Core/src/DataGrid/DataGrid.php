@@ -41,11 +41,7 @@ class DataGrid
     private $container;
 
     /**
-     * @param \Psr\Container\ContainerInterface   $container
-     * @param \ACP3\Core\Http\RequestInterface    $request
      * @param \ACP3\Core\DataGrid\ConfigProcessor $configProcessor
-     * @param \ACP3\Core\ACL                      $acl
-     * @param \ACP3\Core\I18n\Translator          $translator
      */
     public function __construct(
         ContainerInterface $container,
@@ -97,8 +93,6 @@ class DataGrid
      * Checks, whether we have the required AJAX request in effect.
      *
      * @param \ACP3\Core\DataGrid\Input $input
-     *
-     * @return bool
      */
     private function isRequiredAjaxRequest(Input $input): bool
     {
@@ -108,8 +102,6 @@ class DataGrid
 
     /**
      * @param \ACP3\Core\DataGrid\Input $input
-     *
-     * @return array
      */
     private function mapTableColumnsToDbFieldsAjax(Input $input): array
     {
@@ -231,8 +223,6 @@ class DataGrid
 
     /**
      * @param \ACP3\Core\DataGrid\Input $input
-     * @param bool                      $canDelete
-     * @param bool                      $canEdit
      */
     protected function addDefaultColumns(Input $input, bool $canDelete, bool $canEdit)
     {

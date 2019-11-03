@@ -60,8 +60,6 @@ class AvailableDatabases extends AbstractInstallerAction
     }
 
     /**
-     * @param Connection $conn
-     *
      * @return array
      */
     private function retrieveAvailableDatabases(Connection $conn)

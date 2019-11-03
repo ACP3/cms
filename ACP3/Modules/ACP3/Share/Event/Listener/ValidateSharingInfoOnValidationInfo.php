@@ -30,10 +30,6 @@ class ValidateSharingInfoOnValidationInfo
 
     /**
      * ValidateSharingInfoOnValidationInfo constructor.
-     *
-     * @param \ACP3\Core\ACL                                  $acl
-     * @param \ACP3\Core\I18n\Translator                      $translator
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices $socialServices
      */
     public function __construct(
         ACL $acl,
@@ -45,9 +41,6 @@ class ValidateSharingInfoOnValidationInfo
         $this->socialServices = $socialServices;
     }
 
-    /**
-     * @param FormValidationEvent $event
-     */
     public function __invoke(FormValidationEvent $event)
     {
         if ($this->acl->hasPermission('admin/share/index/create')) {

@@ -25,9 +25,6 @@ class Helpers
 
     /**
      * Helpers constructor.
-     *
-     * @param \ACP3\Core\Helpers\Upload $cachedImagesUploadHelper
-     * @param \ACP3\Core\Helpers\Upload $galleryUploadHelper
      */
     public function __construct(
         Upload $cachedImagesUploadHelper,
@@ -39,8 +36,6 @@ class Helpers
 
     /**
      * Löscht ein Bild aus dem Dateisystem.
-     *
-     * @param string $file
      */
     public function removePicture(string $file)
     {

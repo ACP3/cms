@@ -42,8 +42,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param array $formData
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -56,9 +54,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param int $readMoreValue
-     * @param int $commentsValue
-     *
      * @return array
      */
     protected function fetchOptions(int $readMoreValue, int $commentsValue)

@@ -20,9 +20,6 @@ class AbstractFormAction extends AbstractFrontendAction
 
     /**
      * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter $newsletterHelpers
      */
     public function __construct(FrontendContext $context, SendNewsletter $newsletterHelpers)
     {

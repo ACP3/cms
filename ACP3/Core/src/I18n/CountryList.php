@@ -26,8 +26,6 @@ class CountryList
 
     /**
      * Country constructor.
-     *
-     * @param Translator $translator
      */
     public function __construct(Translator $translator)
     {

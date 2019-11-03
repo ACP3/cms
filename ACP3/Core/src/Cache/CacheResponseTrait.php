@@ -51,9 +51,6 @@ trait CacheResponseTrait
         }
     }
 
-    /**
-     * @return bool
-     */
     protected function canUsePageCache(): bool
     {
         $systemSettings = $this->getSettings()->getSettings(Schema::MODULE_NAME);

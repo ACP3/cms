@@ -14,8 +14,7 @@ class Registry
     /**
      * Inject an object to the registry.
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function set(string $key, $value): void
     {
@@ -24,11 +23,6 @@ class Registry
         }
     }
 
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
     public function has(string $key): bool
     {
         return isset(self::$registry[$key]);
@@ -37,8 +31,7 @@ class Registry
     /**
      * Get an object from the registry.
      *
-     * @param string $key
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -49,8 +42,6 @@ class Registry
 
     /**
      * Remove an object from the registry.
-     *
-     * @param string $key
      */
     public function remove(string $key): void
     {

@@ -44,13 +44,6 @@ class OnMenusLayoutRenderManageMenuItemListener
 
     /**
      * OnMenusLayoutRenderManageMenuItemListener constructor.
-     *
-     * @param ACL                $acl
-     * @param Translator         $translator
-     * @param View               $view
-     * @param Forms              $forms
-     * @param MenuItemFormFields $menuItemFormFields
-     * @param MenuItemRepository $menuItemRepository
      */
     public function __construct(
         ACL $acl,
@@ -68,9 +61,6 @@ class OnMenusLayoutRenderManageMenuItemListener
         $this->forms = $forms;
     }
 
-    /**
-     * @param TemplateEvent $event
-     */
     public function __invoke(TemplateEvent $event)
     {
         $parameters = $event->getParameters();
@@ -125,8 +115,6 @@ class OnMenusLayoutRenderManageMenuItemListener
     }
 
     /**
-     * @param array $menuItem
-     *
      * @return array|null
      */
     private function modifyFormValues(array $menuItem)
@@ -141,8 +129,6 @@ class OnMenusLayoutRenderManageMenuItemListener
     }
 
     /**
-     * @param array $menuItem
-     *
      * @return array
      */
     protected function addFormFields(array $menuItem)

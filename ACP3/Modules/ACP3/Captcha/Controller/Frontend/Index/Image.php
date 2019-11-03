@@ -32,8 +32,6 @@ class Image extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $path
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function execute(string $path)

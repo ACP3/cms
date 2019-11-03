@@ -30,10 +30,6 @@ abstract class AbstractModel
 
     /**
      * AbstractModel constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param DataProcessor            $dataProcessor
-     * @param AbstractRepository       $repository
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -51,7 +47,6 @@ abstract class AbstractModel
     }
 
     /**
-     * @param array    $rawData
      * @param int|null $entryId
      *
      * @return bool|int
@@ -88,11 +83,6 @@ abstract class AbstractModel
     }
 
     /**
-     * @param array    $filteredData
-     * @param int|null $entryId
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     protected function hasDataChanges(array $filteredData, ?int $entryId): bool
@@ -116,10 +106,6 @@ abstract class AbstractModel
         return false;
     }
 
-    /**
-     * @param \ACP3\Core\Model\Repository\AbstractRepository $repository
-     * @param \ACP3\Core\Model\Event\ModelSaveEvent          $event
-     */
     protected function dispatchBeforeSaveEvent(
         AbstractRepository $repository,
         ModelSaveEvent $event
@@ -134,10 +120,6 @@ abstract class AbstractModel
         );
     }
 
-    /**
-     * @param string                                $eventName
-     * @param \ACP3\Core\Model\Event\ModelSaveEvent $event
-     */
     protected function dispatchEvent(
         string $eventName,
         ModelSaveEvent $event)
@@ -167,9 +149,6 @@ abstract class AbstractModel
     }
 
     /**
-     * @param array    $rawData
-     * @param int|null $entryId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -188,10 +167,6 @@ abstract class AbstractModel
      */
     abstract protected function getAllowedColumns();
 
-    /**
-     * @param \ACP3\Core\Model\Repository\AbstractRepository $repository
-     * @param \ACP3\Core\Model\Event\ModelSaveEvent          $event
-     */
     protected function dispatchAfterSaveEvent(
         AbstractRepository $repository,
         ModelSaveEvent $event
@@ -244,8 +219,6 @@ abstract class AbstractModel
     }
 
     /**
-     * @param int $entryId
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\DBALException

@@ -12,8 +12,6 @@ interface RepositoryInterface
     /**
      * Executes the SQL insert statement.
      *
-     * @param array $data
-     *
      * @return bool|int
      */
     public function insert(array $data);
@@ -38,7 +36,6 @@ interface RepositoryInterface
     /**
      * Executes the SQL update statement.
      *
-     * @param array     $data
      * @param int|array $entryId
      *
      * @return bool|int

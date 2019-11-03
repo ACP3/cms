@@ -18,8 +18,6 @@ class Nl2pColumnRenderer extends AbstractColumnRenderer
 
     /**
      * Nl2pColumnRenderer constructor.
-     *
-     * @param \ACP3\Core\Helpers\StringFormatter $stringFormatter
      */
     public function __construct(StringFormatter $stringFormatter)
     {

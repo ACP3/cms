@@ -31,11 +31,6 @@ abstract class AbstractBlock implements PluginInterface
     }
 
     /**
-     * @param array                     $params
-     * @param string|null               $content
-     * @param \Smarty_Internal_Template $smarty
-     * @param bool                      $repeat
-     *
      * @return string
      */
     public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat)
@@ -44,10 +39,9 @@ abstract class AbstractBlock implements PluginInterface
     }
 
     /**
-     * @param array                     $params
-     * @param string|null               $content
-     * @param \Smarty_Internal_Template $smarty
-     * @param bool                      $repeat
+     * @param array       $params
+     * @param string|null $content
+     * @param bool        $repeat
      *
      * @return string
      *

@@ -24,9 +24,6 @@ class OnDataGridCustomOptionBeforeListener
 
     /**
      * OnDataGridCustomOptionBeforeListener constructor.
-     *
-     * @param \ACP3\Core\ACL             $acl
-     * @param \ACP3\Core\I18n\Translator $translator
      */
     public function __construct(
         ACL $acl,
@@ -36,9 +33,6 @@ class OnDataGridCustomOptionBeforeListener
         $this->translator = $translator;
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\ColumnRenderer\Event\CustomOptionEvent $customOptionEvent
-     */
     public function __invoke(CustomOptionEvent $customOptionEvent)
     {
         if ($customOptionEvent->getIdentifier() === '#newsletter-data-grid' &&

@@ -34,10 +34,6 @@ class Translator
 
     /**
      * Überprüft, ob das angegebene Sprachpaket existiert.
-     *
-     * @param string $locale
-     *
-     * @return bool
      */
     public function languagePackExists(string $locale): bool
     {
@@ -52,25 +48,17 @@ class Translator
         return !empty($foundLanguagePack);
     }
 
-    /**
-     * @return string
-     */
     public function getLocale(): string
     {
         return $this->locale;
     }
 
-    /**
-     * @return string
-     */
     public function getShortIsoCode(): string
     {
         return \substr($this->getLocale(), 0, \strpos($this->getLocale(), '_'));
     }
 
     /**
-     * @param string $locale
-     *
      * @return $this
      */
     public function setLocale(string $locale): self
@@ -84,8 +72,6 @@ class Translator
 
     /**
      * Gets the writing direction of the language.
-     *
-     * @return string
      */
     public function getDirection(): string
     {
@@ -96,13 +82,6 @@ class Translator
         return $this->buffer[$this->getLocale()]['info']['direction'] ?? 'ltr';
     }
 
-    /**
-     * @param string $module
-     * @param string $phrase
-     * @param array  $arguments
-     *
-     * @return string
-     */
     public function t(string $module, string $phrase, array $arguments = []): string
     {
         if (isset($this->buffer[$this->getLocale()]) === false) {
@@ -119,10 +98,6 @@ class Translator
 
     /**
      * Gets all currently available languages.
-     *
-     * @param string $locale
-     *
-     * @return array
      */
     public function getLanguagePacks(string $locale): array
     {

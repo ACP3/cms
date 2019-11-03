@@ -24,9 +24,8 @@ class Order extends Core\Controller\AbstractFrontendAction
     /**
      * Order constructor.
      *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\NestedSet\Operation\Sort                               $sortOperation
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoriesRepository
+     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @param \ACP3\Core\NestedSet\Operation\Sort           $sortOperation
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -40,9 +39,6 @@ class Order extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int    $id
-     * @param string $action
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException

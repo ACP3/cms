@@ -19,8 +19,6 @@ class AccountExistsValidationRule extends AbstractValidationRule
 
     /**
      * AccountExistsValidationRule constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository $accountRepository
      */
     public function __construct(AccountRepository $accountRepository)
     {

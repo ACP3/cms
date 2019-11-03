@@ -35,11 +35,6 @@ class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
 
     /**
      * FeedAvailability constructor.
-     *
-     * @param Date            $date
-     * @param RouterInterface $router
-     * @param StringFormatter $formatter
-     * @param NewsRepository  $newsRepository
      */
     public function __construct(
         Date $date,

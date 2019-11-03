@@ -37,11 +37,6 @@ class ThumbnailGenerator
     }
 
     /**
-     * @param string $fileName
-     * @param string $action
-     *
-     * @return \ACP3\Core\Picture\Output
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     public function generateThumbnail(string $fileName, string $action): Output
