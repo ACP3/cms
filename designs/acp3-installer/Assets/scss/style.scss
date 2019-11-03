@@ -1,5 +1,5 @@
-@import "../../../../ACP3/Modules/ACP3/System/Resources/Assets/scss/modules/ajax-loading-layer";
-@import "../../../../ACP3/Modules/ACP3/System/Resources/Assets/scss/modules/bootstrap-overrides";
+$navbar-complete-bg: #449d44;
+$breakpoint-tablet-min: 768px;
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -37,16 +37,41 @@ p {
       }
 
       &.complete {
+        @media (min-width: $breakpoint-tablet-min) {
+          position: relative;
+
+          &:after {
+            border-bottom: 25px solid transparent;
+            border-top: 25px solid transparent;
+            border-left: 10px solid $navbar-complete-bg;
+            content: "";
+            height: 0;
+            position: absolute;
+            right: -10px;
+            top: 0;
+            width: 0;
+            z-index: 1;
+          }
+        }
+
         > a,
         > a:focus,
         > a:hover {
-          background-color: #449d44;
+          background-color: $navbar-complete-bg;
           color: #fff;
+        }
+      }
+
+      @media (min-width: $breakpoint-tablet-min) {
+        &.active {
+          a {
+            padding-left: 25px;
+          }
         }
       }
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-tablet-min) {
       margin-left: -15px;
     }
   }
