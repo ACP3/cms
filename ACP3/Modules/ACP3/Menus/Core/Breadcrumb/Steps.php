@@ -94,7 +94,7 @@ class Steps extends Core\Breadcrumb\Steps
 
         $matches = $this->findRestrictionInRoutes($items);
         if (!empty($matches)) {
-            list($leftId, $rightId) = $matches;
+            [$leftId, $rightId] = $matches;
 
             foreach ($items as $item) {
                 if ($item['left_id'] <= $leftId && $item['right_id'] >= $rightId) {
@@ -119,7 +119,7 @@ class Steps extends Core\Breadcrumb\Steps
     {
         \rsort($items);
         foreach ($items as $index => $item) {
-            if (\in_array($item['uri'], $this->getPossiblyMatchingRoutes())) {
+            if (\in_array($item['uri'], $this->getPossiblyMatchingRoutes(), true)) {
                 return [
                     $item['left_id'],
                     $item['right_id'],
@@ -163,7 +163,7 @@ class Steps extends Core\Breadcrumb\Steps
 
     private function hasUseIndex(bool $matched, string $uri): bool
     {
-        return $matched === true || $uri === $this->router->route($this->request->getQuery());
+        return $matched === true || $uri === $this->router->route($this->request->getQuery(), true);
     }
 
     /**
@@ -173,11 +173,11 @@ class Steps extends Core\Breadcrumb\Steps
     {
         parent::removeByPath($path);
 
-        $path = $this->router->route($path);
+        $path = $this->router->route($path, true);
 
         $this->stepsFromDb = \array_filter(
             $this->stepsFromDb,
-            function (array $step) use ($path) {
+            static function (array $step) use ($path) {
                 return $step['uri'] !== $path;
             }
         );

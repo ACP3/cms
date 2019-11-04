@@ -236,7 +236,7 @@ class Steps
      */
     public function removeByPath(string $path): self
     {
-        $path = $this->router->route($path);
+        $path = $this->router->route($path, true);
 
         $this->steps = \array_filter(
             $this->steps,
@@ -250,7 +250,7 @@ class Steps
 
     private function stepAlreadyExists(string $path): bool
     {
-        $route = $this->router->route($path);
+        $route = $this->router->route($path, true);
         foreach ($this->steps as $step) {
             if ($step['uri'] === $route) {
                 return true;
