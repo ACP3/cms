@@ -140,7 +140,7 @@ class Output
 
     public function getFileWeb(): string
     {
-        return $this->appPath->getWebRoot() . \str_replace(ACP3_ROOT_DIR, '', $this->getFile());
+        return $this->appPath->getWebRoot() . \substr(\str_replace(ACP3_ROOT_DIR, '', $this->getFile()), 1);
     }
 
     public function getFile(): string
