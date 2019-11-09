@@ -28,7 +28,7 @@ class ComponentRegistry
      */
     public static function add(ComponentDataDto $component): void
     {
-        self::$components[$component->getPath()] = $component;
+        self::$components[] = $component;
     }
 
     /**
@@ -58,6 +58,7 @@ class ComponentRegistry
 
         $components = self::all();
 
+        self::$componentsTopSorted = [];
         foreach ($components as $component) {
             $dependencies = \array_map(static function (string $componentName) {
                 $coreData = self::findByName($componentName);
@@ -69,7 +70,7 @@ class ComponentRegistry
         }
 
         foreach ($topSort->sort() as $componentPath) {
-            self::$componentsTopSorted[$componentPath] = $components[$componentPath];
+            self::$componentsTopSorted[] = self::findByPath($componentPath);
         }
 
         return self::$componentsTopSorted;
@@ -93,6 +94,15 @@ class ComponentRegistry
         $componentName = \strtolower($componentName);
         $filteredComponents = \array_filter(self::$components, static function (ComponentDataDto $component) use ($componentName) {
             return $component->getName() === $componentName;
+        });
+
+        return \reset($filteredComponents) ?: null;
+    }
+
+    private static function findByPath(string $componentPath): ?ComponentDataDto
+    {
+        $filteredComponents = \array_filter(self::$components, static function (ComponentDataDto $component) use ($componentPath) {
+            return $component->getPath() === $componentPath;
         });
 
         return \reset($filteredComponents) ?: null;
