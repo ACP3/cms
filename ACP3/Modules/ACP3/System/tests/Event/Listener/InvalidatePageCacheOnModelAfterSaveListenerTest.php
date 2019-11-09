@@ -5,12 +5,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\System\Test\Event\Listener;
+namespace ACP3\Modules\ACP3\System\Event\Listener;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Event\Listener\InvalidatePageCacheOnModelAfterSaveListener;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 
 class InvalidatePageCacheOnModelAfterSaveListenerTest extends \PHPUnit\Framework\TestCase

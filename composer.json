@@ -61,6 +61,7 @@
     "psr-4": {
       "ACP3\\Core\\": "./ACP3/Core/src",
       "ACP3\\Modules\\": "./ACP3/Modules",
+      "ACP3\\Modules\\ACP3\\System\\": "./ACP3/Modules/ACP3/System/src",
       "ACP3\\Modules\\ACP3\\Installer\\": "./ACP3/Modules/ACP3/Installer/src"
     },
     "files": [
@@ -97,6 +98,7 @@
   "autoload-dev": {
     "psr-4": {
       "ACP3\\Core\\": "./ACP3/Core/tests",
+      "ACP3\\Modules\\ACP3\\System\\": "./ACP3/Modules/ACP3/System/tests",
       "ACP3\\Modules\\ACP3\\Installer\\": "./ACP3/Modules/ACP3/Installer/tests"
     }
   },

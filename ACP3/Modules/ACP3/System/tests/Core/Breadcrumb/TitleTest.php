@@ -5,12 +5,10 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\System\Test\Core\Breadcrumb;
+namespace ACP3\Modules\ACP3\System\Core\Breadcrumb;
 
 use ACP3\Core\Http\Request;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Core\Breadcrumb\Title;
-use ACP3\Modules\ACP3\System\Core\Breadcrumb\TitleConfigurator;
 
 class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
 {

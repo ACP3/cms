@@ -13,8 +13,6 @@ use ACP3\Modules\ACP3\System;
 class Cache extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @param string|null $action
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute(?string $action = null)
@@ -35,8 +33,6 @@ class Cache extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $action
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function executePurge(string $action)

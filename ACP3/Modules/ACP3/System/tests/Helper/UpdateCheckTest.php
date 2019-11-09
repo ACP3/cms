@@ -5,12 +5,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\System\Test\Helper;
+namespace ACP3\Modules\ACP3\System\Helper;
 
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Helper\UpdateCheck;
 
 class UpdateCheckTest extends \PHPUnit\Framework\TestCase
 {
