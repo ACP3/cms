@@ -17,12 +17,11 @@
   "prefer-stable": true,
   "require": {
     "acp3/core": "^4.47.0",
-    "acp3/setup": "^4.47.0",
-    "acp3/module-errors": "^4.47.0",
     "acp3/module-permissions": "^4.47.0",
     "acp3/module-system": "^4.47.0"
   },
   "suggest": {
+    "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI.",
     "acp3/module-captcha": "Provides basic protection against spam bots."
   },
   "autoload": {
