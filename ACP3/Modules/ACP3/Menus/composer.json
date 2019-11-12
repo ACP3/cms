@@ -25,13 +25,15 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Menus\\": ""
+      "ACP3\\Modules\\ACP3\\Menus\\": "src"
     },
-    "exclude-from-classmap": [
-      "/Test/"
-    ],
     "files": [
       "registration.php"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ACP3\\Modules\\ACP3\\Menus\\": "tests"
+    }
   }
 }

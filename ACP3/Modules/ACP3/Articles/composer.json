@@ -27,11 +27,8 @@
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Articles\\": ""
+      "ACP3\\Modules\\ACP3\\Articles\\": "src"
     },
-    "exclude-from-classmap": [
-      "/Test/"
-    ],
     "files": [
       "registration.php"
     ]
