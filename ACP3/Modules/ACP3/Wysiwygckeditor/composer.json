@@ -16,7 +16,6 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/composer-installer": "^1.0",
     "acp3/core": "^4.47.1",
     "acp3/setup": "^4.47.0",
     "acp3/module-errors": "^4.47.0",
