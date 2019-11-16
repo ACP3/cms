@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- changed the directory structure of the ACP3 components
+- reworked the internals of the `ComponentRegistry`
+
+### Fixed
+- fix the Monolog version within the ACP3 core module
+
 ## [4.47.4] - 2019-11-05
 ### Fixed
 - fixed the web output path of generated/resized pictures
