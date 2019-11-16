@@ -7,7 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Console;
 
-use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,21 +22,6 @@ class HttpCacheWarmupCommand extends Command
         ACP3_ROOT_DIR . '/sitemap_http.xml',
         ACP3_ROOT_DIR . '/sitemap_https.xml',
     ];
-
-    /**
-     * @var ApplicationPath
-     */
-    private $applicationPath;
-
-    /**
-     * ClearCacheCommand constructor.
-     */
-    public function __construct(ApplicationPath $applicationPath)
-    {
-        parent::__construct();
-
-        $this->applicationPath = $applicationPath;
-    }
 
     /**
      * {@inheritdoc}
@@ -92,7 +76,7 @@ class HttpCacheWarmupCommand extends Command
     {
         $output->writeln("Crawling URLs of file {$sitemap}...");
 
-        $xml = \simplexml_load_file($sitemap);
+        $xml = \simplexml_load_string(\file_get_contents($sitemap));
 
         $progress = new ProgressBar($output, \count($xml->url));
         ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message%: %result%');

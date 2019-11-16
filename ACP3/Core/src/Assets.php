@@ -38,7 +38,7 @@ class Assets
      */
     public function __construct(ThemePathInterface $theme, Libraries $libraries)
     {
-        $this->designXml = \simplexml_load_file($theme->getDesignPathInternal() . 'info.xml');
+        $this->designXml = \simplexml_load_string(\file_get_contents($theme->getDesignPathInternal() . 'info.xml'));
         $this->libraries = $libraries;
 
         if (isset($this->designXml->use_bootstrap) && (string) $this->designXml->use_bootstrap === 'true') {
