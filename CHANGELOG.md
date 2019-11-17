@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- fixed the HTTP cache warmup CLI command
+
 ## [4.47.5] - 2019-11-16
 ### Changed
 - changed the directory structure of the ACP3 components
