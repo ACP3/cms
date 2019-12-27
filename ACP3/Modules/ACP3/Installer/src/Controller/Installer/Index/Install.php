@@ -113,7 +113,7 @@ class Install extends AbstractAction
     }
 
     /**
-     * @return array|JsonResponse
+     * @return array|JsonResponse|null
      */
     public function executePost()
     {
@@ -147,6 +147,8 @@ class Install extends AbstractAction
             $this->logger->error($e);
             $this->setTemplate('Installer/Installer/index.install.error.tpl');
         }
+
+        return null;
     }
 
     /**

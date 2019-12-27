@@ -59,8 +59,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     /**
      * Helper function for initializing models, etc.
      *
-     * @return $this
-     *
      * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
      */
     public function preDispatch()
@@ -74,8 +72,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
             'IS_HOMEPAGE' => $this->request->isHomepage(),
             'IS_AJAX' => $this->request->isXmlHttpRequest(),
         ]);
-
-        return $this;
     }
 
     /**

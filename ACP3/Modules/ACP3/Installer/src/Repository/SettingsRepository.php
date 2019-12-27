@@ -86,7 +86,7 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
      */
     public function insert(array $data)
     {
-        // Intentionally omitted
+        return 0;
     }
 
     /**
@@ -94,7 +94,7 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
      */
     public function getTableName($tableName = '')
     {
-        // Intentionally omitted
+        return $tableName;
     }
 
     /**
@@ -102,7 +102,7 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
      */
     public function delete($entryId, $columnName = 'id')
     {
-        // Intentionally omitted
+        return 0;
     }
 
     /**
@@ -110,7 +110,7 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
      */
     public function update(array $data, $entryId)
     {
-        // Intentionally omitted
+        return 0;
     }
 
     /**
@@ -118,7 +118,7 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
      */
     public function getOneById($entryId)
     {
-        // Intentionally omitted
+        return [];
     }
 
     private function getHomepage(): string

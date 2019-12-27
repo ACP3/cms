@@ -27,7 +27,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
-class ServiceContainerBuilder extends ContainerBuilder
+final class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
      * @var ApplicationPath

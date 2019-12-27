@@ -47,19 +47,16 @@ class Single extends Core\Controller\AbstractWidgetAction
         $this->articlesCache = $articlesCache;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return array
-     */
-    public function execute($id)
+    public function execute(int $id): ?array
     {
-        if ($this->articleRepository->resultExists((int) $id, $this->date->getCurrentDateTime()) === true) {
+        if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             return [
                 'sidebar_article' => $this->articlesCache->getCache($id),
             ];
         }
+
+        return null;
     }
 }

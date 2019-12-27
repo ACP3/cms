@@ -59,6 +59,8 @@ class MaintenanceModeDisableCommand extends Command
         $output->writeln('');
 
         $this->clearCaches($output);
+
+        return 0;
     }
 
     private function clearCaches(OutputInterface $output)

@@ -16,10 +16,8 @@ class Login extends Core\Controller\AbstractWidgetAction
 
     /**
      * Displays the login mask, if the user is not already logged in.
-     *
-     * @return array|void
      */
-    public function execute()
+    public function execute(): ?array
     {
         $this->setCacheResponseCacheable();
 
@@ -35,5 +33,7 @@ class Login extends Core\Controller\AbstractWidgetAction
         }
 
         $this->setContent(false);
+
+        return null;
     }
 }

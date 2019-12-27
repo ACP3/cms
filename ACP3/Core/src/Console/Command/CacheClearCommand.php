@@ -67,5 +67,7 @@ class CacheClearCommand extends Command
         }
 
         $progress->finish();
+
+        return 0;
     }
 }

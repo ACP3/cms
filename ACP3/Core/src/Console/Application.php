@@ -13,7 +13,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Logger\LoggerFactory;
 use Patchwork\Utf8\Bootup;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\Debug\ErrorHandler;
+use Symfony\Component\ErrorHandler\ErrorHandler;
 
 class Application
 {

@@ -53,5 +53,7 @@ class AssetsClearCommand extends Command
         Purge::doPurge($this->applicationPath->getUploadsDir() . 'assets');
 
         $output->writeln('Done!');
+
+        return 0;
     }
 }

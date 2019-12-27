@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 interface ActionInterface
 {
     /**
-     * @return $this
+     * @return void
      */
     public function preDispatch();
 

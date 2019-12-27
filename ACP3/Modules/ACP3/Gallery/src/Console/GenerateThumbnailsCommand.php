@@ -100,6 +100,8 @@ class GenerateThumbnailsCommand extends Command
             $progress->finish();
             $output->writeln('');
         }
+
+        return 0;
     }
 
     protected function cleanCachedPictures(InputInterface $input, OutputInterface $output): void

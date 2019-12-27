@@ -67,6 +67,8 @@ class HttpCacheWarmupCommand extends Command
                 }
             }
         }
+
+        return 0;
     }
 
     /**

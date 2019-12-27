@@ -9,8 +9,7 @@ namespace ACP3\Core\Application;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
-use Symfony\Component\Debug\ErrorHandler;
-use Symfony\Component\Debug\ExceptionHandler;
+use Symfony\Component\ErrorHandler\ErrorHandler;
 
 abstract class AbstractBootstrap implements BootstrapInterface
 {
@@ -46,11 +45,12 @@ abstract class AbstractBootstrap implements BootstrapInterface
      */
     public function setErrorHandler(): void
     {
-        $isProduction = $this->appMode === ApplicationMode::PRODUCTION;
-
-        ExceptionHandler::register(!$isProduction);
-
         $errorHandler = new ErrorHandler();
+
+        if ($this->appMode === ApplicationMode::PRODUCTION) {
+            $errorHandler->scopeAt(0, true);
+        }
+
         ErrorHandler::register($errorHandler);
     }
 

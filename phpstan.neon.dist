@@ -1,14 +1,11 @@
 parameters:
   level: 2
   paths:
-    - %rootDir%/../../../ACP3
-    - %rootDir%/../../../installation
-    - %rootDir%/../../../tests
-  bootstrap: %rootDir%/../../../tests/bootstrap.php
+    - ./ACP3
+    - ./installation
+    - ./tests
+  bootstrap: ./tests/bootstrap.php
   excludes_analyse:
-    - %rootDir%/../../../ACP3/Modules/*/*/Resources/*
-  includes:
-    - vendor/phpstan/phpstan-phpunit/extension.neon
-    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - %rootDir%/ACP3/Modules/*/*/Resources/*
   ignoreErrors:
     - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#'

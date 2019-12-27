@@ -95,11 +95,10 @@ abstract class AbstractWidgetAction implements ActionInterface
     }
 
     /**
-     * @return $this
+     * @return void
      */
     public function preDispatch()
     {
-        return $this;
     }
 
     /**

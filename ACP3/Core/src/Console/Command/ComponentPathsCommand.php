@@ -38,5 +38,7 @@ class ComponentPathsCommand extends Command
             ACP3_ROOT_DIR . '/.component-paths.json',
             \json_encode(\array_values($paths), JSON_PRETTY_PRINT)
         );
+
+        return 0;
     }
 }
