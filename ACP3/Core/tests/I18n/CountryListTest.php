@@ -14,7 +14,7 @@ class CountryListTest extends \PHPUnit\Framework\TestCase
      */
     private $countryList;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $translatorMock;
 

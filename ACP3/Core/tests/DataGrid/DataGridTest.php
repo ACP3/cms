@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Container;
 class DataGridTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var RequestInterface&\PHPUnit\Framework\MockObject\MockObject
      */
     private $requestMock;
     /**
@@ -26,15 +26,15 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
      */
     protected $dataGrid;
     /**
-     * @var ConfigProcessor|\PHPUnit_Framework_MockObject_MockObject
+     * @var ConfigProcessor&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $configProcessorMock;
     /**
-     * @var ACL|\PHPUnit_Framework_MockObject_MockObject
+     * @var ACL&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $aclMock;
     /**
-     * @var Translator|\PHPUnit_Framework_MockObject_MockObject
+     * @var Translator&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $langMock;
     /**
@@ -105,7 +105,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             ->method('hasPermission')
             ->willReturn(false);
 
-        /** @var MarkEntries|\PHPUnit_Framework_MockObject_MockObject $markEntriesMock */
+        /** @var MarkEntries&\PHPUnit\Framework\MockObject\MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));
@@ -138,7 +138,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             ->method('hasPermission')
             ->willReturn(false);
 
-        /** @var MarkEntries|\PHPUnit_Framework_MockObject_MockObject $markEntriesMock */
+        /** @var MarkEntries&\PHPUnit\Framework\MockObject\MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));

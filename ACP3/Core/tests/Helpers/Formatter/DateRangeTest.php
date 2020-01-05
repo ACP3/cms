@@ -22,7 +22,7 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
      */
     private $date;
     /**
-     * @var Translator|\PHPUnit_Framework_MockObject_MockObject
+     * @var Translator&\PHPUnit\Framework\MockObject\MockObject
      */
     private $langMock;
     /**

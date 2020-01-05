@@ -16,7 +16,7 @@ use Doctrine\Common\Cache\PhpFileCache;
 class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $appPathMock;
     /**

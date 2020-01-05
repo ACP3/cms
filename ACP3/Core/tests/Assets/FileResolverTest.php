@@ -19,7 +19,7 @@ class FileResolverTest extends TestCase
      */
     private $fileResolver;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $assetsCache;
     /**
@@ -27,7 +27,7 @@ class FileResolverTest extends TestCase
      */
     private $appPath;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $themeMock;
 

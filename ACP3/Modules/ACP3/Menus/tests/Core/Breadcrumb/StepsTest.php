@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $menuItemRepositoryMock;
 

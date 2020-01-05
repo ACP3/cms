@@ -17,11 +17,11 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
      */
     private $libraries;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $eventDispatcherMock;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $requestMock;
 

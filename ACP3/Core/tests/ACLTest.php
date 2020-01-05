@@ -17,23 +17,23 @@ class ACLTest extends \PHPUnit\Framework\TestCase
      */
     private $acl;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $userMock;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $modulesMock;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $userRoleRepositoryMock;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $permissionsCacheMock;
     /**
-     * @var ControllerActionExists&\PHPUnit_Framework_MockObject_MockObject
+     * @var ControllerActionExists&\PHPUnit\Framework\MockObject\MockObject
      */
     private $controllerActionExistsMock;
 

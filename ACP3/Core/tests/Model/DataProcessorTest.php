@@ -12,7 +12,7 @@ class DataProcessorTest extends \PHPUnit\Framework\TestCase
     use CreateRawColumnTypeMockTrait;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $columnTypeStrategyFactoryMock;
     /**

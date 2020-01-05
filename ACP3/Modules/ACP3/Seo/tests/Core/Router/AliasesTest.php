@@ -17,11 +17,11 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
      */
     private $aliases;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $seoCacheMock;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $modulesMock;
 

@@ -12,7 +12,7 @@ use ACP3\Core\Date;
 class DateTimeColumnTypeTest extends AbstractColumnTypeTest
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $dateMock;
 

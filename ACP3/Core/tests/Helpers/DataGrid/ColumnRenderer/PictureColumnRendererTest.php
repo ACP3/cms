@@ -12,7 +12,7 @@ use ACP3\Core\Router\RouterInterface;
 class PictureColumnRendererTest extends AbstractColumnRendererTest
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $routerMock;
 

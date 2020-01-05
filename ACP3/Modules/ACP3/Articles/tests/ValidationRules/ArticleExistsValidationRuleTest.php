@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidatio
 class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $articlesRepositoryMock;
 

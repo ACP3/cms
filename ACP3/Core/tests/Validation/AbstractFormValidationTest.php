@@ -29,11 +29,11 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
      */
     protected $formValidation;
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $eventDispatcherMock;
     /**
-     * @var Translator|\PHPUnit_Framework_MockObject_MockObject
+     * @var Translator&\PHPUnit\Framework\MockObject\MockObject
      */
     protected $translatorMock;
     /**
@@ -75,11 +75,11 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return Request|\PHPUnit_Framework_MockObject_MockObject
+     * @return Request&\PHPUnit\Framework\MockObject\MockObject
      */
     private function setUpRequestMock()
     {
-        /** @var Request|\PHPUnit_Framework_MockObject_MockObject $requestMock */
+        /** @var Request&\PHPUnit\Framework\MockObject\MockObject $requestMock */
         $requestMock = $this->createMock(Request::class);
 
         $this->setRequestMockExpectations($requestMock);
@@ -88,11 +88,11 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return SessionHandler|\PHPUnit_Framework_MockObject_MockObject
+     * @return SessionHandler&\PHPUnit\Framework\MockObject\MockObject
      */
     private function setUpSessionMock()
     {
-        /** @var SessionHandler|\PHPUnit_Framework_MockObject_MockObject $sessionMock */
+        /** @var SessionHandler&\PHPUnit\Framework\MockObject\MockObject $sessionMock */
         $sessionMock = $this->createMock(SessionHandler::class);
 
         $this->setSessionMockExpectations($sessionMock);
