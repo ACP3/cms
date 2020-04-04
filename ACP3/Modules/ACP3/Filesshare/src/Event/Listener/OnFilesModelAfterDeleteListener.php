@@ -11,7 +11,7 @@ use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
-class OnFilesModelDeleteAfterListener
+class OnFilesModelAfterDeleteListener
 {
     /**
      * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager
