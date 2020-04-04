@@ -72,7 +72,7 @@ services:
       - '@news.model.newsrepository'
       - '@categories.helpers'
       - '@categories.model.categories_repository'
-      - '@?seo.helper.meta_statements'
+      - '@core.seo.meta_statements_service'
       - '@?comments.helpers'
 
   news.controller.widget.index.index:

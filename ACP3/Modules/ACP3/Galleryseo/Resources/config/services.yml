@@ -19,9 +19,9 @@ services:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\GeneratePictureUriAliasOnModelAfterSaveListener
     arguments:
       - '@gallery.model.picturerepository'
-      - '@?seo.core.router.aliases'
-      - '@?seo.helper.uri_alias_manager'
-      - '@?seo.helper.meta_statements'
+      - '@seo.core.router.aliases'
+      - '@seo.helper.uri_alias_manager'
+      - '@core.seo.meta_statements_service'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save, priority: -250 }
 
@@ -29,9 +29,8 @@ services:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\GeneratePictureUriAliasesOnModelAfterSaveListener
     arguments:
       - '@gallery.model.picturerepository'
-      - '@?seo.core.router.aliases'
-      - '@?seo.helper.uri_alias_manager'
-      - '@?seo.helper.meta_statements'
+      - '@seo.core.router.aliases'
+      - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: core.model.after_save, priority: -250 }
 
