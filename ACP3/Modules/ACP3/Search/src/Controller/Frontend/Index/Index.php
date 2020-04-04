@@ -65,12 +65,9 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     public function execute(string $q = '')
     {
-        if ($this->request->getPost()->count() !== 0) {
-            return $this->executePost($this->request->getPost()->all());
-        }
-
         if (!empty($q)) {
-            return $this->executePost(['search_term' => (string) $q]);
+            $this->request->getPost()->set('search_term', $q);
+            return $this->executePost();
         }
 
         $searchAreas = [
@@ -102,11 +99,11 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function executePost(array $formData)
+    public function executePost()
     {
         return $this->actionHelper->handlePostAction(
-            function () use ($formData) {
-                $formData = $this->prepareFormData($formData);
+            function () {
+                $formData = $this->prepareFormData($this->request->getPost()->all());
 
                 $this->searchValidator->validate($formData);
 
