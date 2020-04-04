@@ -1,0 +1,7 @@
+services:
+  articlesmenus.events.on_articles_model_after_delete_listener:
+    class: ACP3\Modules\ACP3\Articlesmenus\Event\Listener\OnArticlesModelAfterDeleteListener
+    arguments:
+      - '@menus.helpers.managemenuitem'
+    tags:
+      - { name: core.eventListener, event: articles.model.articles.after_delete }

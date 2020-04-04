@@ -49,11 +49,6 @@ jQuery(document).ready(($) => {
             $hints.hide();
             $link.show();
             $articles.hide();
-        } else if (mode === 4) {
-            $module.hide();
-            $hints.hide();
-            $link.hide();
-            $articles.show();
         } else {
             $module.hide();
             $hints.hide();

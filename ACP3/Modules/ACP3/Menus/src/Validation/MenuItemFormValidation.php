@@ -90,7 +90,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                 LinkModeValidationRule::class,
                 [
                     'data' => $formData,
-                    'field' => ['mode', 'module', 'uri', 'articles'],
+                    'field' => ['mode', 'module', 'uri'],
                     'message' => $this->translator->t('menus', 'type_in_uri_and_target'),
                 ]
             );

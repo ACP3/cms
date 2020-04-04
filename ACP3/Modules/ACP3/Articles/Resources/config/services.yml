@@ -1,9 +1,2 @@
 imports:
   - { resource: components/*.yml }
-
-services:
-  articles.helpers:
-    class: ACP3\Modules\ACP3\Articles\Helpers
-    arguments:
-      - '@core.helpers.forms'
-      - '@articles.model.articlerepository'

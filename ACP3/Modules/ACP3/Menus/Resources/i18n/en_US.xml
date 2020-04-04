@@ -8,7 +8,6 @@
         <item key="admin_items_delete">Delete menu items</item>
         <item key="admin_items_edit">Edit menu item</item>
         <item key="admin_items_index">Menu items</item>
-        <item key="article">Article</item>
         <item key="chronology">Chronology</item>
         <item key="create_menu_item">Create menu item for this article</item>
         <item key="display_item">Display menu item</item>

@@ -55,20 +55,6 @@
                 <div id="link-container">
                     {include file="asset:System/Partials/form_group.input_text.tpl" name="uri" value=$form.uri labelRequired=true maxlength=120 label={lang t="menus|uri"} help={lang t="menus|dynamic_page_hints"}}
                 </div>
-                {if isset($articles)}
-                    <div id="articles-container" class="form-group">
-                        <label for="link-articles" class="col-sm-2 control-label required">{lang t="articles|articles"}</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" name="articles" id="link-articles">
-                                <option value="">{lang t="system|pls_select"}</option>
-                                {foreach $articles as $row}
-                                    <option value="{$row.id}"{$row.selected}>{$row.title}</option>
-                                {/foreach}
-                            </select>
-                        </div>
-                    </div>
-                {/if}
                 <div id="target-container">
                     {include file="asset:System/Partials/form_group.select.tpl" options=$target labelRequired=true label={lang t="menus|target_page"}}
                 </div>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <keys>
+        <item key="articlesmenus">Articles Menus-Extension</item>
+        <item key="mod_description">This module integrates the articles module into the menus module.</item>
+    </keys>
+</language>

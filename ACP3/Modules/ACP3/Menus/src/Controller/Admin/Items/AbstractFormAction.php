@@ -16,34 +16,20 @@ use ACP3\Modules\ACP3\Menus;
 abstract class AbstractFormAction extends AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Helpers
-     */
-    protected $articlesHelpers;
-    /**
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
 
-    /**
-     * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Articles\Helpers|null $articlesHelpers
-     */
     public function __construct(
         FrontendContext $context,
-        Forms $formsHelper,
-        ?Articles\Helpers $articlesHelpers = null)
+        Forms $formsHelper)
     {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
-        $this->articlesHelpers = $articlesHelpers;
     }
 
-    /**
-     * @return string
-     */
-    protected function fetchMenuItemModeForSave(array $formData)
+    protected function fetchMenuItemModeForSave(array $formData): string
     {
         return ($formData['mode'] == 2 || $formData['mode'] == 3) && \preg_match(
             Menus\Helpers\MenuItemsList::ARTICLES_URL_KEY_REGEX,
@@ -51,10 +37,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         ) ? '4' : $formData['mode'];
     }
 
-    /**
-     * @return string
-     */
-    protected function fetchMenuItemUriForSave(array $formData)
+    protected function fetchMenuItemUriForSave(array $formData): string
     {
         return $formData['mode'] == 1 ? $formData['module'] : ($formData['mode'] == 4 ? \sprintf(
             Articles\Helpers::URL_KEY_PATTERN,
@@ -62,21 +45,13 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         ) : $formData['uri']);
     }
 
-    /**
-     * @param string $value
-     *
-     * @return array
-     */
-    protected function fetchMenuItemTypes($value = '')
+    protected function fetchMenuItemTypes(string $value = ''): array
     {
         $menuItemTypes = [
             1 => $this->translator->t('menus', 'module'),
             2 => $this->translator->t('menus', 'dynamic_page'),
             3 => $this->translator->t('menus', 'hyperlink'),
         ];
-        if ($this->articlesHelpers) {
-            $menuItemTypes[4] = $this->translator->t('menus', 'article');
-        }
 
         return $this->formsHelper->choicesGenerator('mode', $menuItemTypes, $value);
     }
