@@ -8,9 +8,9 @@
 namespace ACP3\Modules\ACP3\Galleryseo\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
 class GeneratePictureUriAliasOnModelAfterSaveListener
@@ -24,7 +24,7 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
      */
     private $aliases;
     /**
-     * @var MetaStatements
+     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
     private $metaStatements;
     /**
@@ -36,7 +36,7 @@ class GeneratePictureUriAliasOnModelAfterSaveListener
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Aliases $aliases,
         UriAliasManager $uriAliasManager,
-        MetaStatements $metaStatements)
+        MetaStatementsServiceInterface $metaStatements)
     {
         $this->pictureRepository = $pictureRepository;
         $this->aliases = $aliases;

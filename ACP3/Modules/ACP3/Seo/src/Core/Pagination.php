@@ -12,31 +12,28 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
 class Pagination extends \ACP3\Core\Pagination
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
-    protected $metaStatements;
+    private $metaStatements;
     /**
      * @var SettingsInterface
      */
     private $settings;
 
-    /**
-     * Pagination constructor.
-     */
     public function __construct(
         Title $title,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router,
-        MetaStatements $metaStatements,
+        MetaStatementsServiceInterface $metaStatements,
         SettingsInterface $settings
     ) {
         parent::__construct($title, $translator, $request, $router);

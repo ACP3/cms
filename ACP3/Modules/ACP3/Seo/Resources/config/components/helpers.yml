@@ -2,7 +2,7 @@ services:
   seo.helper.meta_form_fields:
     class: ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
     arguments:
-      - '@seo.helper.meta_statements'
+      - '@core.seo.meta_statements_service'
       - '@core.i18n.translator'
       - '@core.http.request'
       - '@seo.core.router.aliases'
@@ -16,6 +16,7 @@ services:
       - '@core.modules'
       - '@seo.cache'
       - '@core.config'
+    deprecated: 'The "%service_id%" service is deprecated since 4.48.0 and will be removed in 5.0.0. Use service "core.seo.meta_statements_service" instead!'
 
   seo.helper.uri_alias_manager:
     class: ACP3\Modules\ACP3\Seo\Helper\UriAliasManager

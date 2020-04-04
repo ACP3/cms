@@ -3,6 +3,6 @@ services:
     class: ACP3\Modules\ACP3\Contactseo\Extension\SitemapAvailabilityExtension
     arguments:
       - '@core.router'
-      - '@seo.helper.meta_statements'
+      - '@core.seo.meta_statements_service'
     tags:
       - { name: seo.extension.sitemap_availability }

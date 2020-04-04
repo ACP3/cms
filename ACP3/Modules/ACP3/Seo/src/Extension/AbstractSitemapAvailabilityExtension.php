@@ -8,13 +8,13 @@
 namespace ACP3\Modules\ACP3\Seo\Extension;
 
 use ACP3\Core\Router\RouterInterface;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use Thepixeldeveloper\Sitemap\Url;
 
 abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabilityExtensionInterface
 {
     /**
-     * @var MetaStatements
+     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
     private $metaStatements;
     /**
@@ -26,12 +26,9 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
      */
     private $urls = [];
 
-    /**
-     * AbstractSitemapAvailabilityExtension constructor.
-     */
     public function __construct(
         RouterInterface $router,
-        MetaStatements $metaStatements
+        MetaStatementsServiceInterface $metaStatements
     ) {
         $this->router = $router;
         $this->metaStatements = $metaStatements;

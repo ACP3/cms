@@ -7,13 +7,13 @@
 
 namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Core\View;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 class OnLayoutMetaListener
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
     protected $metaStatements;
     /**
@@ -21,12 +21,9 @@ class OnLayoutMetaListener
      */
     protected $view;
 
-    /**
-     * OnCustomTemplateVariable constructor.
-     */
     public function __construct(
         View $view,
-        MetaStatements $metaStatements
+        MetaStatementsServiceInterface $metaStatements
     ) {
         $this->view = $view;
         $this->metaStatements = $metaStatements;

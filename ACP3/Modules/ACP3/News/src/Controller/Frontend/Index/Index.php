@@ -10,10 +10,10 @@ namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Comments\Helpers;
 use ACP3\Modules\ACP3\News;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends AbstractAction
@@ -45,7 +45,7 @@ class Index extends AbstractAction
      */
     protected $categoryRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
     protected $metaStatements;
     /**
@@ -53,18 +53,6 @@ class Index extends AbstractAction
      */
     private $commentsHelpers;
 
-    /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Date                                                   $date
-     * @param \ACP3\Core\Helpers\StringFormatter                                $stringFormatter
-     * @param \ACP3\Core\Pagination                                             $pagination
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository           $newsRepository
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                             $categoriesHelpers
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Comments\Helpers                               $commentsHelpers
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
@@ -73,7 +61,7 @@ class Index extends AbstractAction
         News\Model\Repository\NewsRepository $newsRepository,
         Categories\Helpers $categoriesHelpers,
         Categories\Model\Repository\CategoryRepository $categoryRepository,
-        ?MetaStatements $metaStatements = null,
+        MetaStatementsServiceInterface $metaStatements,
         ?Helpers $commentsHelpers = null
     ) {
         parent::__construct($context);
@@ -195,9 +183,7 @@ class Index extends AbstractAction
     protected function addBreadcrumbStep(int $categoryId)
     {
         if ($categoryId !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
-            if ($this->metaStatements !== null) {
-                $this->metaStatements->setCanonicalUri($this->router->route('news', true));
-            }
+            $this->metaStatements->setCanonicalUri($this->router->route('news', true));
 
             $this->breadcrumb->append($this->translator->t('news', 'news'), 'news');
             foreach ($this->categoryRepository->fetchNodeWithParents($categoryId) as $category) {

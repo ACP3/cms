@@ -10,12 +10,13 @@ namespace ACP3\Modules\ACP3\Seo\Helper;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
 class MetaFormFields
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
     protected $metaStatements;
     /**
@@ -35,13 +36,8 @@ class MetaFormFields
      */
     protected $formsHelper;
 
-    /**
-     * MetaFormFields constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaStatements $metaStatements
-     */
     public function __construct(
-        MetaStatements $metaStatements,
+        MetaStatementsServiceInterface $metaStatements,
         Translator $translator,
         RequestInterface $request,
         Aliases $aliases,

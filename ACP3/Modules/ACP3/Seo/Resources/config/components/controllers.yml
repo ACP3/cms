@@ -34,7 +34,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@seo.model.data_grid_repository'
-      - '@seo.helper.meta_statements'
+      - '@core.seo.meta_statements_service'
       - '@core.data_grid.data_grid'
 
   seo.controller.admin.index.settings:

@@ -13,6 +13,6 @@ services:
       - '@core.router'
       - '@files.model.filesrepository'
       - '@categories.model.categories_repository'
-      - '@seo.helper.meta_statements'
+      - '@core.seo.meta_statements_service'
     tags:
       - { name: seo.extension.sitemap_availability }

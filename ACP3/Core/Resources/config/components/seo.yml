@@ -1,0 +1,6 @@
+services:
+  core.seo.meta_statements_service:
+    class: ACP3\Core\SEO\MetaStatementsService
+    arguments:
+      - '@core.http.request'
+      - '@core.router'

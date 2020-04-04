@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Core\Helpers;
 
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 
 class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
 {
@@ -32,7 +32,7 @@ class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
     {
         parent::initializeMockObjects();
 
-        $this->metaStatements = $this->createMock(MetaStatements::class);
+        $this->metaStatements = $this->createMock(MetaStatementsServiceInterface::class);
     }
 
     /**

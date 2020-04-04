@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Seo\Event\Listener;
 
 use ACP3\Core\Breadcrumb\Event\GetSiteAndPageTitleBeforeEvent;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 
 class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
 {
@@ -18,14 +18,11 @@ class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
      */
     private $request;
     /**
-     * @var MetaStatements
+     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
     private $metaStatements;
 
-    /**
-     * OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener constructor.
-     */
-    public function __construct(RequestInterface $request, MetaStatements $metaStatements)
+    public function __construct(RequestInterface $request, MetaStatementsServiceInterface $metaStatements)
     {
         $this->request = $request;
         $this->metaStatements = $metaStatements;

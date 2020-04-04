@@ -9,11 +9,11 @@ namespace ACP3\Modules\ACP3\Newsseo\Extension;
 
 use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
@@ -30,7 +30,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         Date $date,
         RouterInterface $router,
         NewsRepository $newsRepository,
-        MetaStatements $metaStatements
+        MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($router, $metaStatements);
 

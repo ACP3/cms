@@ -5,7 +5,7 @@ services:
       - '@core.http.request'
       - '@core.router'
       - '@core.helpers.toc'
-      - '@seo.helper.meta_statements'
+      - '@core.seo.meta_statements_service'
 
   core.pagination:
     class: ACP3\Modules\ACP3\Seo\Core\Pagination
@@ -14,7 +14,7 @@ services:
       - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
-      - '@seo.helper.meta_statements'
+      - '@core.seo.meta_statements_service'
       - '@core.config'
 
   core.http.request_factory:
@@ -31,4 +31,13 @@ services:
       - '@seo.core.router.aliases'
       - '@core.http.request'
       - '@core.environment.application_path'
+      - '@core.config'
+
+  core.seo.meta_statements_service:
+    class: ACP3\Modules\ACP3\Seo\Core\SEO\MetaStatementsService
+    arguments:
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.modules'
+      - '@seo.cache'
       - '@core.config'

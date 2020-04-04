@@ -9,26 +9,20 @@ namespace ACP3\Modules\ACP3\Seo\Core\Helpers;
 
 use ACP3\Core;
 use ACP3\Core\Helpers\TableOfContents;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 
-class PageBreaks extends \ACP3\Core\Helpers\PageBreaks
+class PageBreaks extends Core\Helpers\PageBreaks
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
     protected $metaStatements;
 
-    /**
-     * PageBreaks constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface  $request
-     * @param \ACP3\Core\Router\RouterInterface $router
-     */
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         TableOfContents $tableOfContents,
-        MetaStatements $metaStatements
+        MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($request, $router, $tableOfContents);
 

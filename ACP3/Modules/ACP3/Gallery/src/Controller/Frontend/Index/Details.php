@@ -8,8 +8,8 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\Seo\Helper\MetaStatements;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Details extends AbstractAction
@@ -25,7 +25,7 @@ class Details extends AbstractAction
      */
     protected $pictureRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaStatements
+     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
     protected $metaStatements;
     /**
@@ -42,7 +42,7 @@ class Details extends AbstractAction
         Core\Date $date,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
-        ?MetaStatements $metaStatements = null
+        MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($context);
 
@@ -117,11 +117,9 @@ class Details extends AbstractAction
      */
     protected function setNextPage($nextPicture)
     {
-        if ($this->metaStatements instanceof MetaStatements) {
-            $this->metaStatements->setNextPage(
-                $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
-            );
-        }
+        $this->metaStatements->setNextPage(
+            $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
+        );
     }
 
     /**
@@ -129,11 +127,9 @@ class Details extends AbstractAction
      */
     protected function setPreviousPage($previousPicture)
     {
-        if ($this->metaStatements instanceof MetaStatements) {
-            $this->metaStatements->setPreviousPage(
-                $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
-            );
-        }
+        $this->metaStatements->setPreviousPage(
+            $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
+        );
     }
 
     /**
