@@ -13,7 +13,6 @@ services:
       - '@core.modules'
       - '@news.cache'
       - '@?comments.helpers'
-      - '@?seo.helper.uri_alias_manager'
       - '@?share.helpers.social_sharing_manager'
     tags:
       - { name: core.eventListener, event: news.model.news.after_delete }

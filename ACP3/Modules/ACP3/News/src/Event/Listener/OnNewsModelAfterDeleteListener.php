@@ -12,7 +12,6 @@ use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\News\Cache;
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnNewsModelAfterDeleteListener
@@ -20,15 +19,11 @@ class OnNewsModelAfterDeleteListener
     /**
      * @var Modules
      */
-    protected $modules;
-    /**
-     * @var UriAliasManager
-     */
-    protected $uriAliasManager;
+    private $modules;
     /**
      * @var Cache
      */
-    protected $cache;
+    private $cache;
     /**
      * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
      */
@@ -45,13 +40,11 @@ class OnNewsModelAfterDeleteListener
         Modules $modules,
         Cache $cache,
         ?\ACP3\Modules\ACP3\Comments\Helpers $commentsHelpers,
-        ?UriAliasManager $uriAliasManager,
         ?SocialSharingManager $socialSharingManager
     ) {
         $this->modules = $modules;
         $this->cache = $cache;
         $this->commentsHelpers = $commentsHelpers;
-        $this->uriAliasManager = $uriAliasManager;
         $this->socialSharingManager = $socialSharingManager;
     }
 
@@ -75,9 +68,6 @@ class OnNewsModelAfterDeleteListener
             $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
 
             $uri = \sprintf(Helpers::URL_KEY_PATTERN, $item);
-            if ($this->uriAliasManager) {
-                $this->uriAliasManager->deleteUriAlias($uri);
-            }
             if ($this->socialSharingManager) {
                 $this->socialSharingManager->deleteSharingInfo($uri);
             }
