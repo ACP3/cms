@@ -23,7 +23,8 @@
   },
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI.",
-    "acp3/module-seo": "Provides additional SEO capabilities"
+    "acp3/module-articles-seo": "Allows you to integrate the articles module into the SEO module.",
+    "acp3/module-articles-search": "Allows you to integrate the articles module into the search module."
   },
   "autoload": {
     "psr-4": {
