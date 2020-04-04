@@ -55,6 +55,7 @@ class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
 
     /**
      * @return array
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchFeedItems()

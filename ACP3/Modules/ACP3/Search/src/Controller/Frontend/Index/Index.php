@@ -67,6 +67,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         if (!empty($q)) {
             $this->request->getPost()->set('search_term', $q);
+
             return $this->executePost();
         }
 

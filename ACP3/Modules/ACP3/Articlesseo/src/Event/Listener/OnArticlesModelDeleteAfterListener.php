@@ -8,11 +8,8 @@
 namespace ACP3\Modules\ACP3\Articlesseo\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Articles\Cache;
 use ACP3\Modules\ACP3\Articles\Helpers;
-use ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
-use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnArticlesModelDeleteAfterListener
 {
