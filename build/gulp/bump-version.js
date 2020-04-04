@@ -85,7 +85,7 @@ module.exports = (gulp, plugins) => {
             return Object.values(modules);
         }
 
-        const diffSummary = await git().diffSummary('v' + currentVersion);
+        const diffSummary = await git().diffSummary(['v' + currentVersion]);
         const changedModules = [];
 
         for (const diffFile of diffSummary.files) {
