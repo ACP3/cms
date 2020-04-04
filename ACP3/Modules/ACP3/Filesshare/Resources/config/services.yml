@@ -1,0 +1,7 @@
+services:
+  filesshare.events.on_files_model_delete_after_listener:
+    class: ACP3\Modules\ACP3\Filesshare\Event\Listener\OnFilesModelDeleteAfterListener
+    arguments:
+      - '@share.helpers.social_sharing_manager'
+    tags:
+      - { name: core.eventListener, event: files.model.files.after_delete }

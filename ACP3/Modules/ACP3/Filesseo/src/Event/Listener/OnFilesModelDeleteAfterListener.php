@@ -11,16 +11,15 @@ use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 
-class OnFilesModelBeforeDeleteListener
+class OnFilesModelDeleteAfterListener
 {
     /**
      * @var UriAliasManager
      */
     private $uriAliasManager;
 
-    public function __construct(
-        UriAliasManager $uriAliasManager
-    ) {
+    public function __construct(UriAliasManager $uriAliasManager)
+    {
         $this->uriAliasManager = $uriAliasManager;
     }
 

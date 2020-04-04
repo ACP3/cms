@@ -15,7 +15,6 @@ services:
       - '@files.model.filesrepository'
       - '@files.cache'
       - '@?comments.helpers'
-      - '@?share.helpers.social_sharing_manager'
     tags:
       - { name: core.eventListener, event: files.model.files.before_delete }
 

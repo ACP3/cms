@@ -1,6 +1,6 @@
 services:
   filesseo.events.on_news_model_delete_after_listener:
-    class: ACP3\Modules\ACP3\Filesseo\Event\Listener\OnFilesModelBeforeDeleteListener
+    class: ACP3\Modules\ACP3\Filesseo\Event\Listener\OnFilesModelDeleteAfterListener
     arguments:
       - '@seo.helper.uri_alias_manager'
     tags:

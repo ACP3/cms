@@ -12,10 +12,8 @@ use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Comments\Helpers as CommentsHelpers;
 use ACP3\Modules\ACP3\Files\Cache;
-use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
-use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnFilesModelBeforeDeleteListener
 {
@@ -36,10 +34,6 @@ class OnFilesModelBeforeDeleteListener
      */
     private $commentsHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
-     */
-    private $socialSharingManager;
-    /**
      * @var \ACP3\Core\Helpers\Upload
      */
     private $filesUploadHelper;
@@ -49,14 +43,12 @@ class OnFilesModelBeforeDeleteListener
         Upload $filesUploadHelper,
         FilesRepository $filesRepository,
         Cache $cache,
-        ?CommentsHelpers $commentsHelpers,
-        ?SocialSharingManager $socialSharingManager
+        ?CommentsHelpers $commentsHelpers
     ) {
         $this->modules = $modules;
         $this->filesRepository = $filesRepository;
         $this->cache = $cache;
         $this->commentsHelpers = $commentsHelpers;
-        $this->socialSharingManager = $socialSharingManager;
         $this->filesUploadHelper = $filesUploadHelper;
     }
 
@@ -80,12 +72,6 @@ class OnFilesModelBeforeDeleteListener
             }
 
             $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
-
-            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $item);
-
-            if ($this->socialSharingManager) {
-                $this->socialSharingManager->deleteSharingInfo($uri);
-            }
         }
     }
 }
