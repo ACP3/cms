@@ -11,7 +11,6 @@ use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Articles\Cache;
 use ACP3\Modules\ACP3\Articles\Helpers;
 use ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem;
-use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnArticlesModelDeleteAfterListener
 {
@@ -23,19 +22,13 @@ class OnArticlesModelDeleteAfterListener
      * @var ManageMenuItem
      */
     private $manageMenuItemHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
-     */
-    private $socialSharingManager;
 
     public function __construct(
         Cache $articlesCache,
-        ?ManageMenuItem $manageMenuItemHelper,
-        ?SocialSharingManager $socialSharingManager
+        ?ManageMenuItem $manageMenuItemHelper
     ) {
         $this->articlesCache = $articlesCache;
         $this->manageMenuItemHelper = $manageMenuItemHelper;
-        $this->socialSharingManager = $socialSharingManager;
     }
 
     /**
@@ -54,10 +47,6 @@ class OnArticlesModelDeleteAfterListener
 
             if ($this->manageMenuItemHelper) {
                 $this->manageMenuItemHelper->manageMenuItem($uri);
-            }
-
-            if ($this->socialSharingManager) {
-                $this->socialSharingManager->deleteSharingInfo($uri);
             }
         }
     }

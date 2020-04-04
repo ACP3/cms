@@ -1,0 +1,7 @@
+services:
+  articlesseo.events.on_articles_model_delete_after_listener:
+    class: ACP3\Modules\ACP3\Articlesshare\Event\Listener\OnArticlesModelDeleteAfterListener
+    arguments:
+      - '@share.helpers.social_sharing_manager'
+    tags:
+      - { name: core.eventListener, event: articles.model.articles.after_delete }

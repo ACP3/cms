@@ -12,7 +12,6 @@ services:
     arguments:
       - '@articles.cache'
       - '@?menus.helpers.managemenuitem'
-      - '@?share.helpers.social_sharing_manager'
     tags:
       - { name: core.eventListener, event: articles.model.articles.after_delete }
 
