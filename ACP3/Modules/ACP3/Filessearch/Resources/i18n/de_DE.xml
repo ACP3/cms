@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
-        <item key="filessearch">Download Sucherweiterung</item>
+        <item key="filessearch">Downloads Sucherweiterung</item>
         <item key="mod_description">Dieses Modul integriert das Downloads-Modul in das Suche-Modul.</item>
     </keys>
 </language>

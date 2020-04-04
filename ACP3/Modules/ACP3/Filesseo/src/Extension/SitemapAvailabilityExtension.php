@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Files\Extension;
+namespace ACP3\Modules\ACP3\Filesseo\Extension;
 
 use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
@@ -21,19 +21,16 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     /**
      * @var Date
      */
-    protected $date;
+    private $date;
     /**
      * @var FilesRepository
      */
-    protected $filesRepository;
+    private $filesRepository;
     /**
      * @var CategoryRepository
      */
-    protected $categoryRepository;
+    private $categoryRepository;
 
-    /**
-     * SitemapAvailabilityExtension constructor.
-     */
     public function __construct(
         Date $date,
         RouterInterface $router,

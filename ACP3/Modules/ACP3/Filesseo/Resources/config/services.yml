@@ -1,0 +1,18 @@
+services:
+  filesseo.events.on_news_model_delete_after_listener:
+    class: ACP3\Modules\ACP3\Filesseo\Event\Listener\OnFilesModelBeforeDeleteListener
+    arguments:
+      - '@seo.helper.uri_alias_manager'
+    tags:
+      - { name: core.eventListener, event: files.model.files.after_delete }
+
+  filesseo.extension.sitemap_availability_extension:
+    class: ACP3\Modules\ACP3\Filesseo\Extension\SitemapAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@files.model.filesrepository'
+      - '@categories.model.categories_repository'
+      - '@seo.helper.meta_statements'
+    tags:
+      - { name: seo.extension.sitemap_availability }

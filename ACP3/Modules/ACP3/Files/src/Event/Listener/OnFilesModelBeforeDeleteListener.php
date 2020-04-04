@@ -15,7 +15,6 @@ use ACP3\Modules\ACP3\Files\Cache;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnFilesModelBeforeDeleteListener
@@ -23,23 +22,19 @@ class OnFilesModelBeforeDeleteListener
     /**
      * @var Modules
      */
-    protected $modules;
+    private $modules;
     /**
      * @var FilesRepository
      */
-    protected $filesRepository;
+    private $filesRepository;
     /**
      * @var Cache
      */
-    protected $cache;
+    private $cache;
     /**
      * @var CommentsHelpers
      */
-    protected $commentsHelpers;
-    /**
-     * @var UriAliasManager
-     */
-    protected $uriAliasManager;
+    private $commentsHelpers;
     /**
      * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
      */
@@ -49,23 +44,18 @@ class OnFilesModelBeforeDeleteListener
      */
     private $filesUploadHelper;
 
-    /**
-     * OnFilesModelBeforeDeleteListener constructor.
-     */
     public function __construct(
         Modules $modules,
         Upload $filesUploadHelper,
         FilesRepository $filesRepository,
         Cache $cache,
         ?CommentsHelpers $commentsHelpers,
-        ?UriAliasManager $uriAliasManager,
         ?SocialSharingManager $socialSharingManager
     ) {
         $this->modules = $modules;
         $this->filesRepository = $filesRepository;
         $this->cache = $cache;
         $this->commentsHelpers = $commentsHelpers;
-        $this->uriAliasManager = $uriAliasManager;
         $this->socialSharingManager = $socialSharingManager;
         $this->filesUploadHelper = $filesUploadHelper;
     }
@@ -92,9 +82,6 @@ class OnFilesModelBeforeDeleteListener
             $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
 
             $uri = \sprintf(Helpers::URL_KEY_PATTERN, $item);
-            if ($this->uriAliasManager) {
-                $this->uriAliasManager->deleteUriAlias($uri);
-            }
 
             if ($this->socialSharingManager) {
                 $this->socialSharingManager->deleteSharingInfo($uri);
