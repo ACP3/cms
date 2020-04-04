@@ -1,5 +1,5 @@
-# ACP3/module-articles
-Repository of the articles module of the ACP3 CMS.
+# ACP3/module-articles-search
+Repository of the articles-search module of the ACP3 CMS.
 
 ## Attention
 Please do not make pull requests to this repository, as it is just a read only repository.
