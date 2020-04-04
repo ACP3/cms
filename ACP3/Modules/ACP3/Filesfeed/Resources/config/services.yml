@@ -1,6 +1,6 @@
 services:
-  files.extenion.feed_availability_extension:
-    class: ACP3\Modules\ACP3\Files\Extension\FeedAvailabilityExtension
+  filesfeed.extenion.feed_availability_extension:
+    class: ACP3\Modules\ACP3\Filesfeed\Extension\FeedAvailabilityExtension
     arguments:
       - '@core.date'
       - '@core.router'
