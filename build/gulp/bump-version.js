@@ -17,6 +17,7 @@ module.exports = (gulp, plugins) => {
         'tests': 'acp3/test',
         'ACP3/Modules/ACP3/Acp': 'acp3/module-acp',
         'ACP3/Modules/ACP3/Articles': 'acp3/module-articles',
+        'ACP3/Modules/ACP3/Articlesmenus': 'acp3/module-articles-menus',
         'ACP3/Modules/ACP3/Articlessearch': 'acp3/module-articles-search',
         'ACP3/Modules/ACP3/Articlesseo': 'acp3/module-articles-seo',
         'ACP3/Modules/ACP3/Articlesshare': 'acp3/module-articles-share',
