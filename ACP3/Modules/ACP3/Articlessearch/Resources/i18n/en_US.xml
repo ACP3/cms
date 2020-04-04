@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <keys>
+        <item key="articlessearch">Articles Search-Extension</item>
+        <item key="mod_description">This module integrates the articles module into the search module.</item>
+    </keys>
+</language>

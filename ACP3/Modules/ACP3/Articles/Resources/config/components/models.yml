@@ -9,12 +9,6 @@ services:
     arguments:
       - '@core.db'
 
-  articles.model.search_results_aware_repository:
-    class: ACP3\Modules\ACP3\Articles\Model\Repository\SearchResultsAwareRepository
-    arguments:
-      - '@core.db'
-      - '@core.date'
-
   articles.model:
     class: ACP3\Modules\ACP3\Articles\Model\ArticlesModel
     arguments:

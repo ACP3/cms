@@ -1,0 +1,14 @@
+services:
+  articlessearch.repository.search_results_aware_repository:
+    class: ACP3\Modules\ACP3\Articlessearch\Repository\SearchResultsAwareRepository
+    arguments:
+      - '@core.db'
+      - '@core.date'
+
+  articlessearch.extension.search_availability_extension:
+    class: ACP3\Modules\ACP3\Articlessearch\Extension\SearchAvailabilityExtension
+    arguments:
+      - '@core.router'
+      - '@articlessearch.repository.search_results_aware_repository'
+    tags:
+      - { name: search.extension.search_availability }

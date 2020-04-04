@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Articles\Extension;
+namespace ACP3\Modules\ACP3\Articlessearch\Extension;
 
 use ACP3\Modules\ACP3\Articles\Helpers;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
