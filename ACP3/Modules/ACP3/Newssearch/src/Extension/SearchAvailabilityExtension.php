@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\News\Extension;
+namespace ACP3\Modules\ACP3\Newssearch\Extension;
 
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
