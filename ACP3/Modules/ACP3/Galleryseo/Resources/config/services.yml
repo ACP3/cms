@@ -1,0 +1,31 @@
+services:
+  galleryseo.event.generate_picture_uri_alias_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\GeneratePictureUriAliasOnModelAfterSaveListener
+    arguments:
+      - '@gallery.model.picturerepository'
+      - '@?seo.core.router.aliases'
+      - '@?seo.helper.uri_alias_manager'
+      - '@?seo.helper.meta_statements'
+    tags:
+      - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save, priority: -250 }
+
+  galleryseo.event.generate_picture_uri_aliases_on_model_after_save_listener:
+    class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\GeneratePictureUriAliasesOnModelAfterSaveListener
+    arguments:
+      - '@gallery.model.picturerepository'
+      - '@?seo.core.router.aliases'
+      - '@?seo.helper.uri_alias_manager'
+      - '@?seo.helper.meta_statements'
+    tags:
+      - { name: core.eventListener, event: core.model.after_save, priority: -250 }
+
+  galleryseo.extension.sitemap_availability_extension:
+    class: ACP3\Modules\ACP3\Galleryseo\Extension\SitemapAvailabilityExtension
+    arguments:
+      - '@core.date'
+      - '@core.router'
+      - '@gallery.model.galleryrepository'
+      - '@gallery.model.picturerepository'
+      - '@seo.helper.meta_statements'
+    tags:
+      - { name: seo.extension.sitemap_availability }

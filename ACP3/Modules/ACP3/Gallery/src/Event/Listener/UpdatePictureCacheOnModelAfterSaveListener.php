@@ -15,11 +15,8 @@ class UpdatePictureCacheOnModelAfterSaveListener
     /**
      * @var Cache
      */
-    protected $cache;
+    private $cache;
 
-    /**
-     * UpdatePictureCacheOnModelAfterSaveListener constructor.
-     */
     public function __construct(Cache $cache)
     {
         $this->cache = $cache;

@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Gallery\Event\Listener;
+namespace ACP3\Modules\ACP3\Galleryseo\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Gallery;
@@ -32,14 +32,11 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
      */
     private $uriAliasManager;
 
-    /**
-     * UpdateUriAliasesOnModelAfterSaveListener constructor.
-     */
     public function __construct(
         Gallery\Model\Repository\PictureRepository $pictureRepository,
-        ?Aliases $aliases = null,
-        ?UriAliasManager $uriAliasManager = null,
-        ?MetaStatements $metaStatements = null
+        Aliases $aliases,
+        UriAliasManager $uriAliasManager,
+        MetaStatements $metaStatements
     ) {
         $this->pictureRepository = $pictureRepository;
         $this->aliases = $aliases;
@@ -56,7 +53,7 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
             return;
         }
 
-        if ($this->hasAllRequiredDependencies() && $this->isGallery($event)) {
+        if ($this->isGallery($event)) {
             $galleryId = $event->getEntryId();
             $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
 
@@ -73,14 +70,6 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
                 );
             }
         }
-    }
-
-    /**
-     * @return bool
-     */
-    private function hasAllRequiredDependencies()
-    {
-        return $this->aliases && $this->metaStatements && $this->uriAliasManager;
     }
 
     /**

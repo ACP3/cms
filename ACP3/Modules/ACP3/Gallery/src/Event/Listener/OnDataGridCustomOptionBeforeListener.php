@@ -16,15 +16,12 @@ class OnDataGridCustomOptionBeforeListener
     /**
      * @var \ACP3\Core\ACL
      */
-    protected $acl;
+    private $acl;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
 
-    /**
-     * OnDataGridCustomOptionBeforeListener constructor.
-     */
     public function __construct(
         ACL $acl,
         Translator $translator

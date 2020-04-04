@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Gallery\Extension;
+namespace ACP3\Modules\ACP3\Galleryseo\Extension;
 
 use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
@@ -31,9 +31,6 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      */
     protected $pictureRepository;
 
-    /**
-     * SitemapAvailabilityExtension constructor.
-     */
     public function __construct(
         Date $date,
         RouterInterface $router,
