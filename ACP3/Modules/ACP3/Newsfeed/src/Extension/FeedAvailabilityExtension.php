@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\News\Extension;
+namespace ACP3\Modules\ACP3\Newsfeed\Extension;
 
 use ACP3\Core\Date;
 use ACP3\Core\Helpers\StringFormatter;
@@ -19,23 +19,20 @@ class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
     /**
      * @var \ACP3\Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \ACP3\Core\Helpers\StringFormatter
      */
-    protected $formatter;
+    private $formatter;
     /**
      * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
      */
-    protected $newsRepository;
+    private $newsRepository;
 
-    /**
-     * FeedAvailability constructor.
-     */
     public function __construct(
         Date $date,
         RouterInterface $router,

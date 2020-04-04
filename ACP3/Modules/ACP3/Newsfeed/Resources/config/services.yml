@@ -1,6 +1,6 @@
 services:
-  news.extension.feed_availability_extension:
-    class: ACP3\Modules\ACP3\News\Extension\FeedAvailabilityExtension
+  newsfeed.extenion.feed_availability_extension:
+    class: ACP3\Modules\ACP3\Newsfeed\Extension\FeedAvailabilityExtension
     arguments:
       - '@core.date'
       - '@core.router'

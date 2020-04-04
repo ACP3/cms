@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <keys>
+        <item key="newsfeed">News Feeds-Extension</item>
+        <item key="mod_description">This module integrates the news module into the feeds module.</item>
+    </keys>
+</language>
