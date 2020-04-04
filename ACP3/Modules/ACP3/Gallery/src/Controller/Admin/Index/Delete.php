@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {
@@ -29,18 +28,13 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var Gallery\Model\GalleryModel
      */
     private $galleryModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
-     */
-    private $socialSharingManager;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryModel $galleryModel,
-        Gallery\Model\Repository\PictureRepository $pictureRepository,
-        ?SocialSharingManager $socialSharingManager
+        Gallery\Model\Repository\PictureRepository $pictureRepository
     ) {
         parent::__construct($context);
 
@@ -48,7 +42,6 @@ class Delete extends Core\Controller\AbstractFrontendAction
         $this->galleryHelpers = $galleryHelpers;
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
-        $this->socialSharingManager = $socialSharingManager;
     }
 
     /**
@@ -70,38 +63,10 @@ class Delete extends Core\Controller\AbstractFrontendAction
                     }
 
                     $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
-
-                    $uri = \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $item);
-                    if ($this->socialSharingManager) {
-                        $this->socialSharingManager->deleteSharingInfo($uri);
-                    }
-
-                    $this->deletePictureAliases($item);
                 }
 
                 return $this->galleryModel->delete($items);
             }
         );
-    }
-
-    /**
-     * @return bool
-     *
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    protected function deletePictureAliases(int $galleryId)
-    {
-        foreach ($this->pictureRepository->getPicturesByGalleryId($galleryId) as $picture) {
-            $uri = \sprintf(
-                Gallery\Helpers::URL_KEY_PATTERN_PICTURE,
-                $picture['id']
-            );
-
-            if ($this->socialSharingManager) {
-                $this->socialSharingManager->deleteSharingInfo($uri);
-            }
-        }
-
-        return true;
     }
 }

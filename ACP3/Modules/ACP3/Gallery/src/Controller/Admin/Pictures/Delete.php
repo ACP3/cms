@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {
@@ -25,24 +24,18 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     private $pictureRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
-     */
-    private $socialSharingManager;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
-        Gallery\Cache $galleryCache,
-        ?SocialSharingManager $socialSharingManager
+        Gallery\Cache $galleryCache
     ) {
         parent::__construct($context);
 
         $this->galleryHelpers = $galleryHelpers;
         $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
-        $this->socialSharingManager = $socialSharingManager;
     }
 
     /**
@@ -66,11 +59,6 @@ class Delete extends Core\Controller\AbstractFrontendAction
                         $this->galleryHelpers->removePicture($picture['file']);
 
                         $bool = $this->pictureRepository->delete($item);
-
-                        $uri = \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item);
-                        if ($this->socialSharingManager) {
-                            $this->socialSharingManager->deleteSharingInfo($uri);
-                        }
 
                         $this->galleryCache->saveCache($picture['gallery_id']);
                     }

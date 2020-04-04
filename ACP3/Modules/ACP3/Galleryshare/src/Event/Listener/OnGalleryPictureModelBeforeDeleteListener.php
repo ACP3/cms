@@ -5,22 +5,22 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Galleryseo\Event\Listener;
+namespace ACP3\Modules\ACP3\Galleryshare\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Gallery\Helpers as GalleryHelpers;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnGalleryPictureModelBeforeDeleteListener
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
+     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager
      */
-    private $uriAliasManager;
+    private $socialSharingManager;
 
-    public function __construct(UriAliasManager $uriAliasManager)
+    public function __construct(SocialSharingManager $socialSharingManager)
     {
-        $this->uriAliasManager = $uriAliasManager;
+        $this->socialSharingManager = $socialSharingManager;
     }
 
     /**
@@ -35,7 +35,7 @@ class OnGalleryPictureModelBeforeDeleteListener
         foreach ($event->getEntryId() as $item) {
             $uri = \sprintf(GalleryHelpers::URL_KEY_PATTERN_PICTURE, $item);
 
-            $this->uriAliasManager->deleteUriAlias($uri);
+            $this->socialSharingManager->saveSharingInfo($uri);
         }
     }
 }

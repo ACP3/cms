@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
-        <item key="galleryeo">Galleries SEO-Extension</item>
-        <item key="mod_description">This module integrates the galleries module into the SEO module.</item>
+        <item key="galleryeo">Gallery SEO-Extension</item>
+        <item key="mod_description">This module integrates the gallery module into the SEO module.</item>
     </keys>
 </language>
