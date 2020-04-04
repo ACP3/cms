@@ -70,7 +70,7 @@
       "ACP3\\Modules\\ACP3\\Categories\\": "./ACP3/Modules/ACP3/Categories/src",
       "ACP3\\Modules\\ACP3\\Comments\\": "./ACP3/Modules/ACP3/Comments/src",
       "ACP3\\Modules\\ACP3\\Contact\\": "./ACP3/Modules/ACP3/Contact/src",
-      "ACP3\\Modules\\ACP3\\Contactseo\\": "./ACP3/Modules/ACP3/Contact/src",
+      "ACP3\\Modules\\ACP3\\Contactseo\\": "./ACP3/Modules/ACP3/Contactseo/src",
       "ACP3\\Modules\\ACP3\\Emoticons\\": "./ACP3/Modules/ACP3/Emoticons/src",
       "ACP3\\Modules\\ACP3\\Errors\\": "./ACP3/Modules/ACP3/Errors/src",
       "ACP3\\Modules\\ACP3\\Feeds\\": "./ACP3/Modules/ACP3/Feeds/src",
