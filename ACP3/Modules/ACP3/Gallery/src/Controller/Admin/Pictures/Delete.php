@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -17,38 +16,25 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Helpers
      */
-    protected $galleryHelpers;
+    private $galleryHelpers;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Cache
      */
-    protected $galleryCache;
+    private $galleryCache;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
-    protected $pictureRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-     */
-    protected $uriAliasManager;
+    private $pictureRepository;
     /**
      * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
      */
     private $socialSharingManager;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
-        ?UriAliasManager $uriAliasManager,
         ?SocialSharingManager $socialSharingManager
     ) {
         parent::__construct($context);
@@ -56,7 +42,6 @@ class Delete extends Core\Controller\AbstractFrontendAction
         $this->galleryHelpers = $galleryHelpers;
         $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
-        $this->uriAliasManager = $uriAliasManager;
         $this->socialSharingManager = $socialSharingManager;
     }
 
@@ -83,9 +68,6 @@ class Delete extends Core\Controller\AbstractFrontendAction
                         $bool = $this->pictureRepository->delete($item);
 
                         $uri = \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $item);
-                        if ($this->uriAliasManager) {
-                            $this->uriAliasManager->deleteUriAlias($uri);
-                        }
                         if ($this->socialSharingManager) {
                             $this->socialSharingManager->deleteSharingInfo($uri);
                         }

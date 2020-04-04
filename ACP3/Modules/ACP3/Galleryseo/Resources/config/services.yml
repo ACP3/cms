@@ -1,4 +1,20 @@
 services:
+  galleryseo.event.on_gallery_model_before_delete_listener:
+    class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\OnGalleryModelBeforeDeleteListener
+    arguments:
+      - '@gallery.model.picturerepository'
+      - '@?seo.helper.uri_alias_manager'
+    tags:
+      - { name: core.eventListener, event: gallery.model.gallery.before_delete }
+
+  galleryseo.event.on_gallery_picture_model_before_delete_listener:
+    class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\OnGalleryPictureModelBeforeDeleteListener
+    arguments:
+      - '@gallery.model.picturerepository'
+      - '@?seo.helper.uri_alias_manager'
+    tags:
+      - { name: core.eventListener, event: gallery.model.gallery_pictures.before_delete }
+
   galleryseo.event.generate_picture_uri_alias_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\GeneratePictureUriAliasOnModelAfterSaveListener
     arguments:
