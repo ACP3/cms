@@ -124,6 +124,7 @@ release:subtree-split:
     - git config remote.origin.mirror true
     - git fetch --prune --unshallow || git fetch --prune
     - gitsplit --ref "${CI_COMMIT_REF_NAME}"
+  dependencies: []
 
 release:generate-artifact:
   extends: .php-base
@@ -156,3 +157,4 @@ release:generate-artifact:
       - README.md
   only:
     - tags
+  dependencies: []
