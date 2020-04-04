@@ -10,9 +10,7 @@ namespace ACP3\Modules\ACP3\News\Event\Listener;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\News\Cache;
-use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
-use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 
 class OnNewsModelAfterDeleteListener
 {
@@ -25,27 +23,18 @@ class OnNewsModelAfterDeleteListener
      */
     private $cache;
     /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager|null
-     */
-    private $socialSharingManager;
-    /**
      * @var \ACP3\Modules\ACP3\Comments\Helpers|null
      */
     private $commentsHelpers;
 
-    /**
-     * OnNewsModelAfterDeleteListener constructor.
-     */
     public function __construct(
         Modules $modules,
         Cache $cache,
-        ?\ACP3\Modules\ACP3\Comments\Helpers $commentsHelpers,
-        ?SocialSharingManager $socialSharingManager
+        ?\ACP3\Modules\ACP3\Comments\Helpers $commentsHelpers
     ) {
         $this->modules = $modules;
         $this->cache = $cache;
         $this->commentsHelpers = $commentsHelpers;
-        $this->socialSharingManager = $socialSharingManager;
     }
 
     /**
@@ -66,11 +55,6 @@ class OnNewsModelAfterDeleteListener
             }
 
             $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
-
-            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $item);
-            if ($this->socialSharingManager) {
-                $this->socialSharingManager->deleteSharingInfo($uri);
-            }
         }
     }
 }
