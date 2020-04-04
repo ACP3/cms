@@ -9,14 +9,6 @@ services:
     tags:
       - { name: feeds.extension.feed_availability }
 
-  files.extension.search_availability_extension:
-    class: ACP3\Modules\ACP3\Files\Extension\SearchAvailabilityExtension
-    arguments:
-      - '@core.router'
-      - '@files.model.search_results_aware_repository'
-    tags:
-      - { name: search.extension.search_availability }
-
   files.extension.sitemap_availability_extension:
     class: ACP3\Modules\ACP3\Files\Extension\SitemapAvailabilityExtension
     arguments:

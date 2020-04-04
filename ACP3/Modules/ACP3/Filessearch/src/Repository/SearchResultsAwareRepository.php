@@ -5,12 +5,13 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Files\Model\Repository;
+namespace ACP3\Modules\ACP3\Filessearch\Repository;
 
 use ACP3\Core\Database\Connection;
 use ACP3\Core\Date;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Model\Repository\PublicationPeriodAwareTrait;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 use ACP3\Modules\ACP3\Search\Model\Repository\SearchResultsAwareRepositoryInterface;
 
 class SearchResultsAwareRepository extends AbstractRepository implements SearchResultsAwareRepositoryInterface
@@ -42,6 +43,7 @@ class SearchResultsAwareRepository extends AbstractRepository implements SearchR
      * @param string $sortDirection
      *
      * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllSearchResults($fields, $searchTerm, $sortDirection)
     {

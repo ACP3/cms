@@ -1,0 +1,14 @@
+services:
+  filessearch.repository.search_results_aware_repository:
+    class: ACP3\Modules\ACP3\Filessearch\Repository\SearchResultsAwareRepository
+    arguments:
+      - '@core.db'
+      - '@core.date'
+
+  filessearch.extension.search_availability_extension:
+    class: ACP3\Modules\ACP3\Filessearch\Extension\SearchAvailabilityExtension
+    arguments:
+      - '@core.router'
+      - '@filessearch.repository.search_results_aware_repository'
+    tags:
+      - { name: search.extension.search_availability }
