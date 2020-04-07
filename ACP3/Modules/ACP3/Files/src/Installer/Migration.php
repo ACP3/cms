@@ -114,6 +114,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}files` MODIFY COLUMN `title` VARCHAR(255) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}files` MODIFY COLUMN `text` TEXT {charset} NOT NULL;',
             ],
+            49 => [
+                'ALTER TABLE `{pre}files` DROP COLUMN `comments`;',
+            ],
         ];
     }
 

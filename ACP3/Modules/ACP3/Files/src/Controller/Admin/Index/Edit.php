@@ -16,44 +16,28 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class Edit extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $formTokenHelper;
+    private $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Helpers
-     */
-    protected $commentsHelpers;
+    private $adminFormValidation;
     /**
      * @var Files\Model\FilesModel
      */
-    protected $filesModel;
+    private $filesModel;
     /**
      * @var \ACP3\Core\Helpers\Upload
      */
     private $filesUploadHelper;
-
     /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param \ACP3\Core\Date                                         $date
-     * @param \ACP3\Core\Helpers\Forms                                $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\Upload                               $filesUploadHelper
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                   $categoriesHelpers
+     * @var \ACP3\Core\Helpers\Forms
      */
+    private $formsHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Files\Model\FilesModel $filesModel,
@@ -61,22 +45,20 @@ class Edit extends AbstractFormAction
         Core\Helpers\Upload $filesUploadHelper,
         Categories\Helpers $categoriesHelpers
     ) {
-        parent::__construct($context, $formsHelper, $categoriesHelpers);
+        parent::__construct($context, $categoriesHelpers);
 
-        $this->date = $date;
         $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->filesModel = $filesModel;
         $this->filesUploadHelper = $filesUploadHelper;
+        $this->formsHelper = $formsHelper;
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         $file = $this->filesModel->getOneById($id);
 
@@ -92,7 +74,6 @@ class Edit extends AbstractFormAction
 
             return [
                 'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $file['active']),
-                'options' => $this->getOptions($file),
                 'units' => $this->formsHelper->choicesGenerator(
                     'units',
                     $this->getUnits(),
@@ -116,9 +97,10 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost(int $id)
     {
@@ -138,7 +120,6 @@ class Edit extends AbstractFormAction
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryId($formData);
-            $formData['comments'] = $this->useComments($formData);
             $formData['user_id'] = $this->user->getUserId();
 
             if (!empty($file)) {
@@ -153,11 +134,10 @@ class Edit extends AbstractFormAction
 
     /**
      * @param string|UploadedFile $file
-     * @param string              $currentFileName
      *
-     * @return array
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */
-    protected function updateAssociatedFile($file, array $formData, $currentFileName)
+    protected function updateAssociatedFile($file, array $formData, string $currentFileName): array
     {
         if ($file instanceof UploadedFile) {
             $result = $this->filesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());

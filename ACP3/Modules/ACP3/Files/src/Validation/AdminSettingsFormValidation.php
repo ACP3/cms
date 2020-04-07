@@ -13,28 +13,6 @@ use ACP3\Core\Validation\AbstractFormValidation;
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
     /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-
-    /**
-     * Validator constructor.
-     *
-     * @param \ACP3\Core\I18n\Translator      $translator
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\Modules              $modules
-     */
-    public function __construct(
-        Core\I18n\Translator $translator,
-        Core\Validation\Validator $validator,
-        Core\Modules $modules
-    ) {
-        parent::__construct($translator, $validator);
-
-        $this->modules = $modules;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function validate(array $formData)
@@ -72,20 +50,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 ]
             );
 
-        if ($this->modules->isActive('comments')) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::class,
-                    [
-                        'data' => $formData,
-                        'field' => 'comments',
-                        'message' => $this->translator->t('files', 'select_allow_comments'),
-                        'extra' => [
-                            'haystack' => [0, 1],
-                        ],
-                    ]
-                );
-        }
+        $this->validator->dispatchValidationEvent('files.validation.admin_settings', $formData);
 
         $this->validator->validate();
     }

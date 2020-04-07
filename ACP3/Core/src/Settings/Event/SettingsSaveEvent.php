@@ -35,4 +35,11 @@ class SettingsSaveEvent extends Event
     {
         return $this->data;
     }
+
+    public function addData(string $key, $values): void
+    {
+        if (!\array_key_exists($key, $this->data)) {
+            $this->data[$key] = $values;
+        }
+    }
 }

@@ -60,7 +60,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 48;
+        return 49;
     }
 
     /**
@@ -81,7 +81,6 @@ class Schema implements Modules\Installer\SchemaInterface
                 `title` VARCHAR(255) NOT NULL,
                 `text` TEXT NOT NULL,
                 `sort` INT(10) UNSIGNED NOT NULL,
-                `comments` TINYINT(1) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED,
                 PRIMARY KEY (`id`),
                 FULLTEXT KEY `fulltext_index` (`title`, `file`, `text`),
@@ -110,7 +109,6 @@ class Schema implements Modules\Installer\SchemaInterface
     public function settings()
     {
         return [
-            'comments' => 1,
             'dateformat' => 'long',
             'sidebar' => 5,
             'order_by' => 'date',

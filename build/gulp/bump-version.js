@@ -32,6 +32,7 @@ module.exports = (gulp, plugins) => {
         'ACP3/Modules/ACP3/Feeds': 'acp3/module-feeds',
         'ACP3/Modules/ACP3/Filemanager': 'acp3/module-filemanager',
         'ACP3/Modules/ACP3/Files': 'acp3/module-files',
+        'ACP3/Modules/ACP3/Filescomments': 'acp3/module-files-comments',
         'ACP3/Modules/ACP3/Filesfeed': 'acp3/module-files-feed',
         'ACP3/Modules/ACP3/Filessearch': 'acp3/module-files-search',
         'ACP3/Modules/ACP3/Filesseo': 'acp3/module-files-seo',

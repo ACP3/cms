@@ -18,27 +18,20 @@ class Validator
     /**
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
-    /**
-     * @var \ACP3\Core\Validation\ValidationRules\ValidationRuleInterface[]
-     */
-    protected $validationRules = [];
+    private $eventDispatcher;
     /**
      * @var array
      */
-    protected $errors = [];
+    private $errors = [];
     /**
      * @var array
      */
-    protected $constraints = [];
+    private $constraints = [];
     /**
      * @var \Psr\Container\ContainerInterface
      */
     private $container;
 
-    /**
-     * Validator constructor.
-     */
     public function __construct(EventDispatcherInterface $eventDispatcher, ContainerInterface $container)
     {
         $this->eventDispatcher = $eventDispatcher;

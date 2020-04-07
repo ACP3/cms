@@ -53,9 +53,7 @@
                         {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
                     </div>
                 </div>
-                {if !empty($options)}
-                    {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
-                {/if}
+                {event name="files.layout.upsert" form_data=$form}
             </div>
             {event name="core.layout.form_extension"  uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
         </div>

@@ -59,7 +59,6 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface
             'category_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
-            'comments' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,

@@ -16,18 +16,12 @@ class TemplateEvent extends Event
      */
     private $parameters;
 
-    /**
-     * TemplateEvent constructor.
-     */
     public function __construct(array $arguments)
     {
         $this->parameters = $arguments;
     }
 
-    /**
-     * @return array
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }

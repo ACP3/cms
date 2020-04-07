@@ -33,12 +33,6 @@ class Details extends Core\Controller\AbstractFrontendAction
      */
     private $categoryRepository;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
-     * @param \ACP3\Core\Date                                           $date
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                            $filesCache
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
@@ -55,12 +49,10 @@ class Details extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return array
-     *
      * @throws Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
@@ -75,7 +67,6 @@ class Details extends Core\Controller\AbstractFrontendAction
             return [
                 'file' => $file,
                 'dateformat' => $settings['dateformat'],
-                'comments_allowed' => $settings['comments'] == 1 && $file['comments'] == 1,
             ];
         }
 
@@ -85,7 +76,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function addBreadcrumbSteps(array $file, int $categoryId)
+    private function addBreadcrumbSteps(array $file, int $categoryId): void
     {
         $this->breadcrumb->append($this->translator->t('files', 'files'), 'files');
 

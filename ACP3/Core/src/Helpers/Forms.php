@@ -15,11 +15,11 @@ class Forms
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
 
     public function __construct(
         Translator $translator,
@@ -32,16 +32,13 @@ class Forms
     /**
      * Liefert ein Array zur Ausgabe als Dropdown-Menü
      * für die Anzahl der anzuzeigenden Datensätze je Seite.
-     *
-     * @param int    $currentValue
-     * @param int    $steps
-     * @param int    $maxValue
-     * @param string $formFieldName
-     *
-     * @return array
      */
-    public function recordsPerPage($currentValue, $steps = 5, $maxValue = 50, $formFieldName = 'entries')
-    {
+    public function recordsPerPage(
+        int $currentValue,
+        int $steps = 5,
+        int $maxValue = 50,
+        string $formFieldName = 'entries'
+    ): array {
         $values = [];
         for ($i = $steps; $i <= $maxValue; $i += $steps) {
             $values[$i] = $i;
@@ -53,33 +50,29 @@ class Forms
     /**
      * Selektion eines Eintrages in einem Dropdown-Menü
      *
-     * @param string           $formFieldName
      * @param mixed            $defaultValue
      * @param string|int|array $currentValue
-     * @param string           $htmlAttribute
-     *
-     * @return string
      */
-    public function selectEntry($formFieldName, $defaultValue, $currentValue = '', $htmlAttribute = '')
-    {
+    public function selectEntry(
+        string $formFieldName,
+        $defaultValue,
+        $currentValue = '',
+        string $htmlAttribute = ''
+    ): string {
         $htmlAttribute = $this->buildHtmlAttribute($htmlAttribute);
         $currentValue = $this->request->getPost()->get($formFieldName, $currentValue);
 
         if (\is_array($currentValue) === false && $currentValue == $defaultValue) {
             return $htmlAttribute;
-        } elseif (\is_array($currentValue) === true && \in_array($defaultValue, $currentValue)) {
+        }
+        if (\is_array($currentValue) === true && \in_array($defaultValue, $currentValue)) {
             return $htmlAttribute;
         }
 
         return '';
     }
 
-    /**
-     * @param string $htmlAttribute
-     *
-     * @return string
-     */
-    private function buildHtmlAttribute($htmlAttribute)
+    private function buildHtmlAttribute(string $htmlAttribute): string
     {
         if (empty($htmlAttribute)) {
             $htmlAttribute = 'selected';
@@ -89,14 +82,14 @@ class Forms
     }
 
     /**
-     * @param string           $formFieldName
      * @param string|int|array $currentValue
-     * @param string           $htmlAttribute
-     *
-     * @return array
      */
-    public function choicesGenerator($formFieldName, array $values, $currentValue = '', $htmlAttribute = 'selected')
-    {
+    public function choicesGenerator(
+        string $formFieldName,
+        array $values,
+        $currentValue = '',
+        string $htmlAttribute = 'selected'
+    ): array {
         $choices = [];
         $id = \str_replace('_', '-', $formFieldName);
         foreach ($values as $value => $phrase) {
@@ -112,15 +105,11 @@ class Forms
         return $choices;
     }
 
-    /**
-     * @param string $formFieldName
-     * @param string $currentValue
-     * @param string $htmlAttribute
-     *
-     * @return array
-     */
-    public function linkTargetChoicesGenerator($formFieldName, $currentValue = '', $htmlAttribute = 'selected')
-    {
+    public function linkTargetChoicesGenerator(
+        string $formFieldName,
+        ?int $currentValue = null,
+        string $htmlAttribute = 'selected'
+    ): array {
         $linkTargets = [
             1 => $this->translator->t('system', 'window_self'),
             2 => $this->translator->t('system', 'window_blank'),
@@ -130,14 +119,13 @@ class Forms
     }
 
     /**
-     * @param string $formFieldName
      * @param string $currentValue
-     * @param string $htmlAttribute
-     *
-     * @return array
      */
-    public function yesNoChoicesGenerator($formFieldName, $currentValue = '', $htmlAttribute = 'selected')
-    {
+    public function yesNoChoicesGenerator(
+        string $formFieldName,
+        $currentValue = '',
+        string $htmlAttribute = 'selected'
+    ): array {
         $values = [
             1 => $this->translator->t('system', 'yes'),
             0 => $this->translator->t('system', 'no'),
@@ -147,23 +135,14 @@ class Forms
     }
 
     /**
-     * @param string           $formFieldName
      * @param string|int|array $currentValue
-     *
-     * @return array
      */
-    public function checkboxGenerator($formFieldName, array $values, $currentValue = '')
+    public function checkboxGenerator(string $formFieldName, array $values, $currentValue = ''): array
     {
         return $this->choicesGenerator($formFieldName, $values, $currentValue, 'checked');
     }
 
-    /**
-     * @param string $formFieldName
-     * @param string $currentValue
-     *
-     * @return array
-     */
-    public function yesNoCheckboxGenerator($formFieldName, $currentValue = '')
+    public function yesNoCheckboxGenerator(string $formFieldName, ?int $currentValue = null): array
     {
         $values = [
             1 => $this->translator->t('system', 'yes'),

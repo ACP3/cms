@@ -10,11 +10,9 @@ services:
   files.event.on_files_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Files\Event\Listener\OnFilesModelBeforeDeleteListener
     arguments:
-      - '@core.modules'
       - '@files.helpers.upload'
       - '@files.model.filesrepository'
       - '@files.cache'
-      - '@?comments.helpers'
     tags:
       - { name: core.eventListener, event: files.model.files.before_delete }
 

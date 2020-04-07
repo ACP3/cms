@@ -1,0 +1,10 @@
+services:
+  filescomments.installer.schema:
+    class: ACP3\Modules\ACP3\Filescomments\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
+
+  filescomments.installer.migration:
+    class: ACP3\Modules\ACP3\Filescomments\Installer\Migration
+    tags:
+      - { name: core.installer.migration }

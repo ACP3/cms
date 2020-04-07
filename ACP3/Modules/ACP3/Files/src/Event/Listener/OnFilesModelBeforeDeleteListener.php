@@ -9,18 +9,11 @@ namespace ACP3\Modules\ACP3\Files\Event\Listener;
 
 use ACP3\Core\Helpers\Upload;
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Comments\Helpers as CommentsHelpers;
 use ACP3\Modules\ACP3\Files\Cache;
-use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
 class OnFilesModelBeforeDeleteListener
 {
-    /**
-     * @var Modules
-     */
-    private $modules;
     /**
      * @var FilesRepository
      */
@@ -30,25 +23,17 @@ class OnFilesModelBeforeDeleteListener
      */
     private $cache;
     /**
-     * @var CommentsHelpers
-     */
-    private $commentsHelpers;
-    /**
      * @var \ACP3\Core\Helpers\Upload
      */
     private $filesUploadHelper;
 
     public function __construct(
-        Modules $modules,
         Upload $filesUploadHelper,
         FilesRepository $filesRepository,
-        Cache $cache,
-        ?CommentsHelpers $commentsHelpers
+        Cache $cache
     ) {
-        $this->modules = $modules;
         $this->filesRepository = $filesRepository;
         $this->cache = $cache;
-        $this->commentsHelpers = $commentsHelpers;
         $this->filesUploadHelper = $filesUploadHelper;
     }
 
@@ -63,13 +48,6 @@ class OnFilesModelBeforeDeleteListener
 
         foreach ($event->getEntryId() as $item) {
             $this->filesUploadHelper->removeUploadedFile($this->filesRepository->getFileById($item));
-
-            if ($this->commentsHelpers) {
-                $this->commentsHelpers->deleteCommentsByModuleAndResult(
-                    $this->modules->getModuleId(Schema::MODULE_NAME),
-                    $item
-                );
-            }
 
             $this->cache->getCacheDriver()->delete(Cache::CACHE_ID . $item);
         }

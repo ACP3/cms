@@ -55,12 +55,8 @@ class Settings implements SettingsInterface
 
     /**
      * Saves the module's settings to the database.
-     *
-     * @param string $module
-     *
-     * @return bool
      */
-    public function saveSettings(array $data, $module)
+    public function saveSettings(array $data, string $module): bool
     {
         $moduleId = $this->systemModuleRepository->getModuleId($module);
 
@@ -68,18 +64,20 @@ class Settings implements SettingsInterface
             return false;
         }
 
+        $settingsSaveEvent = new SettingsSaveEvent($module, $data);
+
         $this->eventDispatcher->dispatch(
-            new SettingsSaveEvent($module, $data),
+            $settingsSaveEvent,
             'core.settings.save_before'
         );
         $this->eventDispatcher->dispatch(
-            new SettingsSaveEvent($module, $data),
+            $settingsSaveEvent,
             $module . '.settings.save_before'
         );
 
         $bool = $bool2 = false;
 
-        foreach ($data as $key => $value) {
+        foreach ($settingsSaveEvent->getData() as $key => $value) {
             $updateValues = [
                 'value' => $value,
             ];
@@ -112,12 +110,8 @@ class Settings implements SettingsInterface
 
     /**
      * Returns the module's settings from the cache.
-     *
-     * @param string $module
-     *
-     * @return array
      */
-    public function getSettings($module)
+    public function getSettings(string $module): array
     {
         if ($this->settings === []) {
             if ($this->coreCache->contains(static::CACHE_ID) === false) {

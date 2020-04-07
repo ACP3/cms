@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Files;
 
 class Settings extends Core\Controller\AbstractFrontendAction
@@ -21,10 +20,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation
      */
     private $adminSettingsFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Helpers
-     */
-    private $commentsHelpers;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
@@ -44,8 +39,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Date $dateHelper,
-        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
-        ?Comments\Helpers $commentsHelpers = null
+        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
@@ -54,19 +48,11 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
         $this->dateHelper = $dateHelper;
-        $this->commentsHelpers = $commentsHelpers;
     }
 
     public function execute(): array
     {
         $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
-
-        if ($this->commentsHelpers) {
-            $this->view->assign(
-                'comments',
-                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
-            );
-        }
 
         $orderBy = [
             'date' => $this->translator->t('files', 'order_by_date_descending'),
@@ -99,10 +85,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 'sidebar' => (int) $formData['sidebar'],
                 'order_by' => $formData['order_by'],
             ];
-
-            if ($this->commentsHelpers) {
-                $data['comments'] = $formData['comments'];
-            }
 
             return $this->config->saveSettings($data, Files\Installer\Schema::MODULE_NAME);
         });

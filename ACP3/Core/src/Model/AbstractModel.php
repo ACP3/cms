@@ -8,6 +8,7 @@
 namespace ACP3\Core\Model;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\ModelSavePrepareDataEvent;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -159,7 +160,17 @@ abstract class AbstractModel
             $rawData = \array_merge($this->getOneById($entryId), $rawData);
         }
 
-        return $this->dataProcessor->escape($rawData, $this->getAllowedColumns());
+        $modelSavePrepareDataEvent = new ModelSavePrepareDataEvent($rawData, $this->getAllowedColumns());
+
+        $this->eventDispatcher->dispatch(
+            $modelSavePrepareDataEvent,
+            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.prepare_data'
+        );
+
+        return $this->dataProcessor->escape(
+            $modelSavePrepareDataEvent->getRawData(),
+            $modelSavePrepareDataEvent->getAllowedColumns()
+        );
     }
 
     /**

@@ -22,7 +22,6 @@
         <item key="mod_description">With this module you are able to administer the downloads.</item>
         <item key="new_file">Replace current file</item>
         <item key="select_active">Please select, whether this file should be active or not.</item>
-        <item key="select_allow_comments">Please select whether you want to allow comments under downloads or not.</item>
         <item key="select_category">Please select a category where do you want to find the download.</item>
         <item key="select_internal_resource">Please select the path to the file you want to upload.</item>
         <item key="select_order_by">Please select in which order you want to display the downloads.</item>

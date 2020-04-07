@@ -42,6 +42,8 @@ splits:
     target: "git@gitlab.com:ACP3/module-filemanager.git"
   - prefix: "ACP3/Modules/ACP3/Files"
     target: "git@gitlab.com:ACP3/module-files.git"
+  - prefix: "ACP3/Modules/ACP3/Filescomments"
+    target: "git@gitlab.com:ACP3/module-files-comments.git"
   - prefix: "ACP3/Modules/ACP3/Filesfeed"
     target: "git@gitlab.com:ACP3/module-files-feed.git"
   - prefix: "ACP3/Modules/ACP3/Filessearch"
