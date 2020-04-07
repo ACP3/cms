@@ -55,6 +55,14 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         $this->titleConfigurator = new TitleConfigurator($this->configMock);
     }
 
+    public function testGetSiteAndPageTitleWithCustomSiteTitle()
+    {
+        $this->setUpConfigMockExpectations('SEO Title', '', 1, 0);
+        $this->titleConfigurator->configure($this->title);
+
+        parent::testGetSiteAndPageTitleWithCustomSiteTitle();
+    }
+
     public function testGetSiteAndPageTitleWithNoCustomSiteTitle()
     {
         $this->setUpStepsExpectations(1);
@@ -92,6 +100,13 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         $this->assertEquals('Foo | SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
     }
 
+    public function testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator()
+    {
+        $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 0);
+
+        parent::testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator();
+    }
+
     public function testGetSiteAndPageTitleForHomepageWithOverride()
     {
         $this->setUpStepsExpectations(0);
@@ -118,5 +133,19 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         $this->titleConfigurator->configure($this->title);
 
         $this->assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
+    }
+
+    public function testGetSiteAndPageTitleWithCustomPageTitle()
+    {
+        $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 0);
+
+        parent::testGetSiteAndPageTitleWithCustomPageTitle();
+    }
+
+    public function testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle()
+    {
+        $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 0);
+
+        parent::testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle();
     }
 }

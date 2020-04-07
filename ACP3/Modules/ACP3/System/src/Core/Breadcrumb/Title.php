@@ -29,9 +29,6 @@ class Title extends \ACP3\Core\Breadcrumb\Title
      */
     private $systemSettings = [];
 
-    /**
-     * Title constructor.
-     */
     public function __construct(
         RequestInterface $request,
         Steps $steps,
@@ -44,10 +41,7 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         $this->request = $request;
     }
 
-    /**
-     * @return array
-     */
-    private function getSettings()
+    private function getSettings(): array
     {
         if (empty($this->systemSettings)) {
             $this->systemSettings = $this->settings->getSettings(Schema::MODULE_NAME);

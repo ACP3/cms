@@ -34,7 +34,7 @@ class Forms
      * für die Anzahl der anzuzeigenden Datensätze je Seite.
      */
     public function recordsPerPage(
-        int $currentValue,
+        ?int $currentValue,
         int $steps = 5,
         int $maxValue = 50,
         string $formFieldName = 'entries'
@@ -82,7 +82,7 @@ class Forms
     }
 
     /**
-     * @param string|int|array $currentValue
+     * @param string|int|array|null $currentValue
      */
     public function choicesGenerator(
         string $formFieldName,
@@ -118,12 +118,9 @@ class Forms
         return $this->choicesGenerator($formFieldName, $linkTargets, $currentValue, $htmlAttribute);
     }
 
-    /**
-     * @param string $currentValue
-     */
     public function yesNoChoicesGenerator(
         string $formFieldName,
-        $currentValue = '',
+        ?int $currentValue = null,
         string $htmlAttribute = 'selected'
     ): array {
         $values = [
@@ -135,7 +132,7 @@ class Forms
     }
 
     /**
-     * @param string|int|array $currentValue
+     * @param string|int|array|null $currentValue
      */
     public function checkboxGenerator(string $formFieldName, array $values, $currentValue = ''): array
     {

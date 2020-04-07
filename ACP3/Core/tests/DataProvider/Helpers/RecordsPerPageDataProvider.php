@@ -18,7 +18,7 @@ class RecordsPerPageDataProvider implements DataProviderInterface
     {
         return [
             'nothing_selected' => [
-                '',
+                null,
                 5,
                 20,
                 null,
@@ -90,7 +90,7 @@ class RecordsPerPageDataProvider implements DataProviderInterface
                 ],
             ],
             'post_selected' => [
-                '',
+                null,
                 5,
                 20,
                 15,

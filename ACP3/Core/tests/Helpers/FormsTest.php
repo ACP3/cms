@@ -86,14 +86,8 @@ class FormsTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider recordsPerPageDataProvider
-     *
-     * @param int   $currentValue
-     * @param int   $steps
-     * @param int   $maxValue
-     * @param int   $postValue
-     * @param array $expected
      */
-    public function testRecordsPerPage($currentValue, $steps, $maxValue, $postValue, $expected)
+    public function testRecordsPerPage(?int $currentValue, int $steps, int $maxValue, ?int $postValue, array $expected)
     {
         $this->setUpRequestExpectations('entries', $postValue);
 
