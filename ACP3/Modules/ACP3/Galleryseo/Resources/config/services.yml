@@ -38,6 +38,7 @@ services:
     arguments:
       - '@core.date'
       - '@core.router'
+      - '@core.config'
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picturerepository'
       - '@core.seo.meta_statements_service'
