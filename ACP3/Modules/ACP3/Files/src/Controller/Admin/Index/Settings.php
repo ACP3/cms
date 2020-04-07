@@ -16,23 +16,19 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
-     */
-    protected $filesRepository;
+    private $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
+    private $adminSettingsFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Comments\Helpers
      */
-    protected $commentsHelpers;
+    private $commentsHelpers;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
-    protected $formsHelper;
+    private $formsHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -42,17 +38,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     private $dateHelper;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                   $context
-     * @param \ACP3\Core\Helpers\Forms                                        $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                       $secureHelper
-     * @param \ACP3\Core\Helpers\Date                                         $dateHelper
-     * @param \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Modules\ACP3\Comments\Helpers|null                        $commentsHelpers
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
@@ -72,10 +57,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->commentsHelpers = $commentsHelpers;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
         $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
 
@@ -100,7 +82,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
