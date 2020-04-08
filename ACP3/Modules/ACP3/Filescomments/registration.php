@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'filescomments',
         __DIR__,
-        ['comments', 'files', 'feeds', 'system']
+        ['comments', 'core', 'files', 'system']
     )
 );
