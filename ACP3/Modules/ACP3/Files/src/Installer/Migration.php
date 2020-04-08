@@ -116,6 +116,7 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             49 => [
                 'ALTER TABLE `{pre}files` DROP COLUMN `comments`;',
+                "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'comments';",
             ],
         ];
     }
