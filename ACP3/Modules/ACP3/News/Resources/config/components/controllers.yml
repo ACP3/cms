@@ -72,7 +72,6 @@ services:
       - '@categories.helpers'
       - '@categories.model.categories_repository'
       - '@core.seo.meta_statements_service'
-      - '@?comments.helpers'
 
   news.controller.widget.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Index

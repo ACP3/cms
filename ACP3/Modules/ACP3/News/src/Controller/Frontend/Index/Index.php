@@ -12,46 +12,45 @@ use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Comments\Helpers;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Index extends AbstractAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
      * @var Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var \ACP3\Core\Helpers\StringFormatter
      */
-    protected $stringFormatter;
+    private $stringFormatter;
     /**
      * @var Core\Pagination
      */
-    protected $pagination;
+    private $pagination;
     /**
      * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
      */
-    protected $newsRepository;
+    private $newsRepository;
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
-    protected $categoriesHelpers;
+    private $categoriesHelpers;
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
-    protected $categoryRepository;
+    private $categoryRepository;
     /**
      * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
-    protected $metaStatements;
+    private $metaStatements;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Helpers
+     * @var array
      */
-    private $commentsHelpers;
+    private $newsSettings = [];
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -61,8 +60,7 @@ class Index extends AbstractAction
         News\Model\Repository\NewsRepository $newsRepository,
         Categories\Helpers $categoriesHelpers,
         Categories\Model\Repository\CategoryRepository $categoryRepository,
-        MetaStatementsServiceInterface $metaStatements,
-        ?Helpers $commentsHelpers = null
+        MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($context);
 
@@ -73,18 +71,17 @@ class Index extends AbstractAction
         $this->categoriesHelpers = $categoriesHelpers;
         $this->categoryRepository = $categoryRepository;
         $this->metaStatements = $metaStatements;
-        $this->commentsHelpers = $commentsHelpers;
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $cat = 0)
+    public function execute(int $cat = 0): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+
+        $this->newsSettings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
         $this->addBreadcrumbStep($cat);
 
@@ -93,25 +90,18 @@ class Index extends AbstractAction
             ->setResultsPerPage($this->resultsPerPage->getResultsPerPage(News\Installer\Schema::MODULE_NAME))
             ->setTotalResults($this->fetchNewsCount($cat, $time));
 
-        $news = $this->fetchNews($cat, $time);
-        $cNews = \count($news);
+        $newsList = $this->fetchNews($cat, $time);
 
-        for ($i = 0; $i < $cNews; ++$i) {
-            $news[$i]['text'] = $this->view->fetchStringAsTemplate($news[$i]['text']);
-            if ($this->commentsActive === true && $news[$i]['comments'] == 1) {
-                $news[$i]['comments_count'] = $this->commentsHelpers->commentsCount(
-                    News\Installer\Schema::MODULE_NAME,
-                    $news[$i]['id']
-                );
-            }
-            if ($this->newsSettings['readmore'] == 1 && $news[$i]['readmore'] == 1) {
-                $news[$i]['text'] = $this->addReadMoreLink($news[$i]);
+        foreach ($newsList as $i => $news) {
+            $newsList[$i]['text'] = $this->view->fetchStringAsTemplate($news['text']);
+            if ($this->newsSettings['readmore'] == 1 && $news['readmore'] == 1) {
+                $newsList[$i]['text'] = $this->addReadMoreLink($news);
             }
         }
 
         try {
             return [
-                'news' => $news,
+                'news' => $newsList,
                 'dateformat' => $this->newsSettings['dateformat'],
                 'categories' => $this->categoriesHelpers->categoriesList('news', $cat),
                 'pagination' => $this->pagination->render(),
@@ -137,11 +127,9 @@ class Index extends AbstractAction
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function fetchNews(int $categoryId, string $time)
+    private function fetchNews(int $categoryId, string $time): array
     {
         if (!empty($categoryId)) {
             $news = $this->newsRepository->getAllByCategoryId(
@@ -161,10 +149,7 @@ class Index extends AbstractAction
         return $news;
     }
 
-    /**
-     * @return string
-     */
-    protected function addReadMoreLink(array $news)
+    protected function addReadMoreLink(array $news): string
     {
         $readMoreLink = '...<a href="' . $this->router->route('news/details/id_' . $news['id']) . '">[';
         $readMoreLink .= $this->translator->t('news', 'readmore') . "]</a>\n";
@@ -180,7 +165,7 @@ class Index extends AbstractAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function addBreadcrumbStep(int $categoryId)
+    protected function addBreadcrumbStep(int $categoryId): void
     {
         if ($categoryId !== 0 && $this->newsSettings['category_in_breadcrumb'] == 1) {
             $this->metaStatements->setCanonicalUri($this->router->route('news', true));

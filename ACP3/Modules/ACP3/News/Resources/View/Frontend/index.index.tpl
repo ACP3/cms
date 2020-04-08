@@ -35,13 +35,7 @@
                 <div class="content">
                     {$row.text|rewrite_uri}
                 </div>
-                {if isset($row.comments_count)}
-                    <footer class="text-center">
-                        <a href="{uri args="news/index/details/id_`$row.id`"}#comments">{lang t="comments|comments"}</a>
-                        <span>({$row.comments_count})</span>
-                    </footer>
-                {/if}
-                {event name="news.event.news_index_after" id=$row.id title=$row.title}
+                {event name="news.layout.item_index_after" news=$row}
             </article>
         {/foreach}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}

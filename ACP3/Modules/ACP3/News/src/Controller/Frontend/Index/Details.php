@@ -12,26 +12,30 @@ use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Details extends AbstractAction
+class Details extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
      * @var Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
      */
-    protected $newsRepository;
+    private $newsRepository;
     /**
      * @var News\Cache
      */
-    protected $newsCache;
+    private $newsCache;
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var array
+     */
+    private $newsSettings = [];
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -49,17 +53,15 @@ class Details extends AbstractAction
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+
+            $this->newsSettings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
 
             $news = $this->newsCache->getCache($id);
 

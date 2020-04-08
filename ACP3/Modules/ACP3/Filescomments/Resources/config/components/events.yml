@@ -30,7 +30,7 @@ services:
     tags:
       - { name: core.eventListener, event: files.model.files.prepare_data }
 
-  filescomments.event.files_layout_upsert_details_after_listener:
+  filescomments.event.files_layout_details_after_listener:
     class: ACP3\Modules\ACP3\Filescomments\Event\Listener\OnFilesLayoutDetailsAfterEventListener
     arguments:
       - '@core.modules'
