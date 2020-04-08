@@ -44,6 +44,7 @@ module.exports = (gulp, plugins) => {
         'ACP3/Modules/ACP3/Installer': 'acp3/module-installer',
         'ACP3/Modules/ACP3/Menus': 'acp3/module-menus',
         'ACP3/Modules/ACP3/News': 'acp3/module-news',
+        'ACP3/Modules/ACP3/Newscomments': 'acp3/module-news-comments',
         'ACP3/Modules/ACP3/Newsfeed': 'acp3/module-news-feed',
         'ACP3/Modules/ACP3/Newssearch': 'acp3/module-news-search',
         'ACP3/Modules/ACP3/Newsseo': 'acp3/module-news-seo',

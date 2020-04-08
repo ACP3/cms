@@ -33,14 +33,6 @@ class Details extends AbstractAction
      */
     private $categoryRepository;
 
-    /**
-     * Details constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param \ACP3\Core\Date                                         $date
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
-     * @param \ACP3\Modules\ACP3\News\Cache                           $newsCache
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
@@ -83,7 +75,6 @@ class Details extends AbstractAction
             return [
                 'news' => $news,
                 'dateformat' => $this->newsSettings['dateformat'],
-                'comments_allowed' => $this->commentsActive === true && $news['comments'] == 1,
             ];
         }
 

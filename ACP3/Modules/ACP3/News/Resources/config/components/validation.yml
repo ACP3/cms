@@ -8,4 +8,3 @@ services:
     arguments:
       - '@core.i18n.translator'
       - '@core.validator'
-      - '@core.modules'

@@ -66,6 +66,8 @@ splits:
     target: "git@gitlab.com:ACP3/module-menus.git"
   - prefix: "ACP3/Modules/ACP3/News"
     target: "git@gitlab.com:ACP3/module-news.git"
+  - prefix: "ACP3/Modules/ACP3/Newscomments"
+    target: "git@gitlab.com:ACP3/module-news-comments.git"
   - prefix: "ACP3/Modules/ACP3/Newsfeed"
     target: "git@gitlab.com:ACP3/module-news-feed.git"
   - prefix: "ACP3/Modules/ACP3/Newssearch"

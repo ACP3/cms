@@ -26,15 +26,6 @@ class Create extends AbstractFormAction
      */
     protected $newsModel;
 
-    /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
@@ -51,11 +42,9 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
         $defaults = [
             'title' => '',
@@ -73,7 +62,7 @@ class Create extends AbstractFormAction
                 null,
                 true
             ),
-            'options' => $this->fetchOptions(0, 0),
+            'options' => $this->fetchOptions(0),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
             'form' => \array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
@@ -83,9 +72,10 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

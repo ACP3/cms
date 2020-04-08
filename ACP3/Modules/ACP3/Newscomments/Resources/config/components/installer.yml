@@ -1,0 +1,10 @@
+services:
+  newscomments.installer.schema:
+    class: ACP3\Modules\ACP3\Newscomments\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
+
+  newscomments.installer.migration:
+    class: ACP3\Modules\ACP3\Newscomments\Installer\Migration
+    tags:
+      - { name: core.installer.migration }

@@ -15,11 +15,8 @@ class UpdateNewsCacheOnModelAfterSaveListener
     /**
      * @var Cache
      */
-    protected $cache;
+    private $cache;
 
-    /**
-     * UpdateNewsCacheOnModelAfterSaveListener constructor.
-     */
     public function __construct(Cache $cache)
     {
         $this->cache = $cache;

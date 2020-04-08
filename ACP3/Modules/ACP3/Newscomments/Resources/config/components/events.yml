@@ -1,0 +1,59 @@
+services:
+  newscomments.event.news_settings_save_before_event_listener:
+    class: ACP3\Modules\ACP3\Newscomments\Event\Listener\OnNewsSettingsSaveBeforeEventListener
+    arguments:
+      - '@core.http.request'
+      - '@core.config'
+    tags:
+      - { name: core.eventListener, event: news.settings.save_before }
+
+  newscomments.event.news_validation_admin_settings_event_listener:
+    class: ACP3\Modules\ACP3\Newscomments\Event\Listener\OnNewsValidationAdminSettingsEventListener
+    arguments:
+      - '@core.i18n.translator'
+    tags:
+      - { name: core.eventListener, event: news.validation.admin_settings }
+
+  newscomments.event.on_news_model_before_delete_listener:
+    class: ACP3\Modules\ACP3\Newscomments\Event\Listener\OnNewsModelBeforeDeleteListener
+    arguments:
+      - '@core.modules'
+      - '@comments.helpers'
+    tags:
+      - { name: core.eventListener, event: news.model.news.before_delete }
+
+  newscomments.event.on_news_model_prepare_data_listener:
+    class: ACP3\Modules\ACP3\Newscomments\Event\Listener\OnNewsModelPrepareDataEventListener
+    arguments:
+      - '@core.http.request'
+      - '@core.config'
+    tags:
+      - { name: core.eventListener, event: news.model.news.prepare_data }
+
+  newscomments.event.news_layout_upsert_details_after_listener:
+    class: ACP3\Modules\ACP3\Newscomments\Event\Listener\OnNewsLayoutDetailsAfterEventListener
+    arguments:
+      - '@core.modules'
+      - '@core.view'
+      - '@core.config'
+    tags:
+      - { name: core.eventListener, event: news.layout.details_after }
+
+  newscomments.event.news_layout_settings_event_listener:
+    class: ACP3\Modules\ACP3\Newscomments\Event\Listener\OnNewsLayoutSettingsEventListener
+    arguments:
+      - '@core.view'
+      - '@core.config'
+      - '@core.helpers.forms'
+    tags:
+      - { name: core.eventListener, event: news.layout.settings }
+
+  newscomments.event.news_layout_upsert_event_listener:
+    class: ACP3\Modules\ACP3\Newscomments\Event\Listener\OnNewsLayoutUpsertEventListener
+    arguments:
+      - '@core.modules'
+      - '@core.view'
+      - '@core.config'
+      - '@core.helpers.forms'
+    tags:
+      - { name: core.eventListener, event: news.layout.upsert }

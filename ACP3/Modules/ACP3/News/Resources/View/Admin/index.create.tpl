@@ -27,6 +27,7 @@
                 {if !empty($options)}
                     {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
                 {/if}
+                {event name="news.layout.upsert" form_data=$form}
             </div>
             <div id="tab-3" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="link_title" value=$form.link_title maxlength=120 label={lang t="news|link_title"}}

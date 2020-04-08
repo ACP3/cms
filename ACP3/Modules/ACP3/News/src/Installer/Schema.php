@@ -58,7 +58,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 44;
+        return 45;
     }
 
     /**
@@ -76,7 +76,6 @@ class Schema implements Modules\Installer\SchemaInterface
                 `title` VARCHAR(120) NOT NULL,
                 `text` TEXT NOT NULL,
                 `readmore` TINYINT(1) UNSIGNED NOT NULL,
-                `comments` TINYINT(1) UNSIGNED NOT NULL,
                 `category_id` INT(10) UNSIGNED,
                 `uri` VARCHAR(120) NOT NULL,
                 `target` TINYINT(1) UNSIGNED NOT NULL,
@@ -109,7 +108,6 @@ class Schema implements Modules\Installer\SchemaInterface
     public function settings()
     {
         return [
-            'comments' => 1,
             'dateformat' => 'long',
             'readmore' => 1,
             'readmore_chars' => 350,

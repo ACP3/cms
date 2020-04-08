@@ -23,13 +23,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      */
     protected $formsHelper;
 
-    /**
-     * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms                      $formsHelper
-     * @param \ACP3\Modules\ACP3\Categories\Helpers         $categoriesHelpers
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
@@ -42,21 +35,16 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function fetchCategoryIdForSave(array $formData)
+    protected function fetchCategoryIdForSave(array $formData): int
     {
         return !empty($formData['cat_create'])
             ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], News\Installer\Schema::MODULE_NAME)
             : $formData['cat'];
     }
 
-    /**
-     * @return array
-     */
-    protected function fetchOptions(int $readMoreValue, int $commentsValue)
+    protected function fetchOptions(int $readMoreValue): array
     {
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
         $options = [];
@@ -66,16 +54,6 @@ abstract class AbstractFormAction extends AbstractFrontendAction
             ];
 
             $options = $this->formsHelper->checkboxGenerator('readmore', $readMore, $readMoreValue);
-        }
-        if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
-            $comments = [
-                '1' => $this->translator->t('system', 'allow_comments'),
-            ];
-
-            $options = \array_merge(
-                $options,
-                $this->formsHelper->checkboxGenerator('comments', $comments, $commentsValue)
-            );
         }
 
         return $options;

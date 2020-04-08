@@ -10,9 +10,7 @@ services:
   news.event.on_news_model_after_delete_listener:
     class: ACP3\Modules\ACP3\News\Event\Listener\OnNewsModelAfterDeleteListener
     arguments:
-      - '@core.modules'
       - '@news.cache'
-      - '@?comments.helpers'
     tags:
       - { name: core.eventListener, event: news.model.news.after_delete }
 

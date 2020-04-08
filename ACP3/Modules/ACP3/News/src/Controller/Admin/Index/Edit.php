@@ -26,15 +26,6 @@ class Edit extends AbstractFormAction
      */
     protected $newsModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\News\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Categories\Helpers                  $categoriesHelpers
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
@@ -51,12 +42,10 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         $news = $this->newsModel->getOneById($id);
 
@@ -70,7 +59,7 @@ class Edit extends AbstractFormAction
                     $news['category_id'],
                     true
                 ),
-                'options' => $this->fetchOptions($news['readmore'], $news['comments']),
+                'options' => $this->fetchOptions($news['readmore']),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $news['target']),
                 'form' => \array_merge($news, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
@@ -83,9 +72,10 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost(int $id)
     {

@@ -51,7 +51,6 @@ services:
       - '@core.helpers.secure'
       - '@core.helpers.date'
       - '@news.validation.admin_settings_form_validation'
-      - '@?comments.helpers'
 
   news.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details

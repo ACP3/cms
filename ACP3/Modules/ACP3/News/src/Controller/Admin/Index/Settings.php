@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Comments\Helpers;
 use ACP3\Modules\ACP3\News;
 
 class Settings extends Core\Controller\AbstractFrontendAction
@@ -16,15 +15,15 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $formTokenHelper;
+    private $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
+    private $adminSettingsFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
-    protected $formsHelper;
+    private $formsHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -33,29 +32,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Date
      */
     private $dateHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Helpers|null
-     */
-    private $commentsHelpers;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Core\Helpers\Forms                                       $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                   $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
-     * @param \ACP3\Core\Helpers\Date                                        $dateHelper
-     * @param \ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Date $dateHelper,
-        News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
-        ?Helpers $commentsHelpers = null
+        News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
@@ -64,22 +48,11 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
         $this->dateHelper = $dateHelper;
-        $this->commentsHelpers = $commentsHelpers;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
         $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
-
-        if ($this->modules->isActive('comments') === true) {
-            $this->view->assign(
-                'allow_comments',
-                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
-            );
-        }
 
         return [
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
@@ -95,9 +68,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -113,10 +87,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 'readmore_chars' => (int) $formData['readmore_chars'],
                 'category_in_breadcrumb' => $formData['category_in_breadcrumb'],
             ];
-
-            if ($this->commentsHelpers !== null) {
-                $data['comments'] = $formData['comments'];
-            }
 
             return $this->config->saveSettings($data, News\Installer\Schema::MODULE_NAME);
         });

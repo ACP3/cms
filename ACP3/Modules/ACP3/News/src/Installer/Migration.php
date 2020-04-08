@@ -76,6 +76,10 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}news` MODIFY COLUMN `link_title` VARCHAR(120) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}news` MODIFY COLUMN `text` TEXT {charset} NOT NULL;',
             ],
+            45 => [
+                'ALTER TABLE `{pre}news` DROP COLUMN `comments`;',
+                "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'comments';",
+            ],
         ];
     }
 

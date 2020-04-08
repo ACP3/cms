@@ -27,9 +27,6 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
      */
     protected $config;
 
-    /**
-     * NewsModel constructor.
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
@@ -51,27 +48,15 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
         $data = \array_merge($data, [
             'updated_at' => 'now',
             'readmore' => $this->useReadMore($data, $settings),
-            'comments' => $this->useComments($data, $settings),
             'category_id' => $data['cat'] ?? $data['category_id'],
         ]);
 
         return parent::save($data, $newsId);
     }
 
-    /**
-     * @return int
-     */
-    protected function useReadMore(array $formData, array $settings)
+    protected function useReadMore(array $formData, array $settings): int
     {
         return $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0;
-    }
-
-    /**
-     * @return int
-     */
-    protected function useComments(array $formData, array $settings)
-    {
-        return $settings['comments'] == 1 && isset($formData['comments']) ? 1 : 0;
     }
 
     /**
@@ -87,7 +72,6 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'readmore' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'comments' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'category_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
             'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
