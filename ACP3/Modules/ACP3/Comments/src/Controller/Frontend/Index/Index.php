@@ -11,7 +11,6 @@ use ACP3\Core;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\Emoticons\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends Core\Controller\AbstractFrontendAction
@@ -26,22 +25,16 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     private $commentRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Helpers|null
-     */
-    private $emoticonsHelpers;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
-        Comments\Model\Repository\CommentRepository $commentRepository,
-        ?Helpers $emoticonsHelpers = null
+        Comments\Model\Repository\CommentRepository $commentRepository
     ) {
         parent::__construct($context);
 
         $this->pagination = $pagination;
         $this->commentRepository = $commentRepository;
-        $this->emoticonsHelpers = $emoticonsHelpers;
     }
 
     /**
@@ -71,9 +64,6 @@ class Index extends Core\Controller\AbstractFrontendAction
         foreach ($comments as $i => $comment) {
             if (empty($comment['name'])) {
                 $comments[$i]['name'] = $this->translator->t('users', 'deleted_user');
-            }
-            if ($this->emoticonsHelpers) {
-                $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comment['message']);
             }
         }
 

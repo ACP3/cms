@@ -51,7 +51,7 @@
                             {mailto address=$row.mail encode="javascript" text='<i class="glyphicon glyphicon-envelope"></i>'}
                         {/if}
                     </div>
-                    {$row.message|nl2p}
+                    {$row.message|decorate}
                 </div>
             </article>
         {/foreach}

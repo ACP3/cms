@@ -23,7 +23,7 @@
                     </time>
                 </header>
                 <div class="content">
-                    {$row.message|nl2p}
+                    {$row.message|decorate}
                 </div>
             </article>
         {/foreach}

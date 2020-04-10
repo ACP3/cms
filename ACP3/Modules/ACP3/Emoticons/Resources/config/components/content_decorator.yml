@@ -1,0 +1,7 @@
+services:
+  emoticons.content_decorator.emoticons:
+    class: ACP3\Modules\ACP3\Emoticons\ContentDecorator\EmoticonsContentDecorator
+    arguments:
+      - '@emoticons.helpers'
+    tags:
+      - { name: core.content_decorator }

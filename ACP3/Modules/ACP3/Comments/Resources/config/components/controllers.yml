@@ -63,4 +63,3 @@ services:
       - '@core.context.frontend'
       - '@core.pagination'
       - '@comments.model.commentrepository'
-      - '@?emoticons.helpers'

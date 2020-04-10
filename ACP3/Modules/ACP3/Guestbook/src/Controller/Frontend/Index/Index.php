@@ -10,7 +10,6 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
-use ACP3\Modules\ACP3\Emoticons\Helpers;
 use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -26,22 +25,16 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
      */
     private $guestbookRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Helpers|null
-     */
-    private $emoticonsHelpers;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
-        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository,
-        ?Helpers $emoticonsHelpers = null
+        Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
     ) {
         parent::__construct($context);
 
         $this->pagination = $pagination;
         $this->guestbookRepository = $guestbookRepository;
-        $this->emoticonsHelpers = $emoticonsHelpers;
     }
 
     /**
@@ -64,12 +57,6 @@ class Index extends Core\Controller\AbstractFrontendAction
             $this->pagination->getResultsStartOffset(),
             $resultsPerPage
         );
-
-        foreach ($guestbook as $i => $row) {
-            if ($this->emoticonsHelpers) {
-                $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($row['message']);
-            }
-        }
 
         try {
             return [
