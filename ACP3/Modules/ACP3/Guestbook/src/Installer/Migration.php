@@ -42,6 +42,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}guestbook` MODIFY COLUMN `mail` VARCHAR(120) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}guestbook` CONVERT TO {charset};',
             ],
+            36 => [
+                "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'emoticons';",
+            ],
         ];
     }
 

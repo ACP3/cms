@@ -14,30 +14,23 @@ use ACP3\Modules\ACP3\Emoticons\Helpers;
 use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Index extends AbstractAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
      * @var \ACP3\Core\Pagination
      */
-    protected $pagination;
+    private $pagination;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
      */
-    protected $guestbookRepository;
+    private $guestbookRepository;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Helpers|null
      */
-    protected $emoticonsHelpers;
+    private $emoticonsHelpers;
 
-    /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Pagination                                             $pagination
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository $guestbookRepository
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
@@ -59,19 +52,21 @@ class Index extends AbstractAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
+        $guestbookSettings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
+
         $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Guestbook\Installer\Schema::MODULE_NAME);
         $this->pagination
             ->setResultsPerPage($resultsPerPage)
-            ->setTotalResults($this->guestbookRepository->countAll($this->guestbookSettings['notify']));
+            ->setTotalResults($this->guestbookRepository->countAll($guestbookSettings['notify']));
 
         $guestbook = $this->guestbookRepository->getAll(
-            $this->guestbookSettings['notify'],
+            $guestbookSettings['notify'],
             $this->pagination->getResultsStartOffset(),
             $resultsPerPage
         );
 
         foreach ($guestbook as $i => $row) {
-            if ($this->emoticonsHelpers && $this->guestbookSettings['emoticons'] == 1) {
+            if ($this->emoticonsHelpers) {
                 $guestbook[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($row['message']);
             }
         }
@@ -79,9 +74,9 @@ class Index extends AbstractAction
         try {
             return [
                 'guestbook' => $guestbook,
-                'overlay' => $this->guestbookSettings['overlay'],
+                'overlay' => $guestbookSettings['overlay'],
                 'pagination' => $this->pagination->render(),
-                'dateformat' => $this->guestbookSettings['dateformat'],
+                'dateformat' => $guestbookSettings['dateformat'],
             ];
         } catch (InvalidPageException $e) {
             throw new ResultNotExistsException();

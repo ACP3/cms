@@ -12,44 +12,33 @@ use ACP3\Modules\ACP3\Guestbook;
 use ACP3\Modules\ACP3\Newsletter;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Create extends AbstractAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $formTokenHelper;
+    private $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
      */
-    protected $formValidation;
+    private $formValidation;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
      */
-    protected $newsletterSubscribeHelper;
+    private $newsletterSubscribeHelper;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
-    protected $formsHelper;
+    private $formsHelper;
     /**
      * @var Guestbook\Model\GuestbookModel
      */
-    protected $guestbookModel;
+    private $guestbookModel;
     /**
      * @var \ACP3\Core\Helpers\SendEmail
      */
     private $sendEmailHelper;
 
-    /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Helpers\Forms                               $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Core\Helpers\SendEmail                           $sendEmailHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Model\GuestbookModel      $guestbookModel
-     * @param \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation $formValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe|null    $newsletterSubscribeHelper
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
@@ -69,12 +58,11 @@ class Create extends AbstractAction
         $this->newsletterSubscribeHelper = $newsletterSubscribeHelper;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        if ($this->guestbookSettings['newsletter_integration'] == 1 && $this->newsletterSubscribeHelper) {
+        $guestbookSettings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
+
+        if ($guestbookSettings['newsletter_integration'] == 1 && $this->newsletterSubscribeHelper) {
             $newsletterSubscription = [
                 1 => $this->translator->t(
                     'guestbook',
@@ -91,19 +79,21 @@ class Create extends AbstractAction
         return [
             'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
-            'can_use_emoticons' => $this->guestbookSettings['emoticons'] == 1,
         ];
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
         return $this->actionHelper->handlePostAction(
             function () {
+                $guestbookSettings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
+
                 $formData = $this->request->getPost()->all();
                 $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
@@ -114,12 +104,12 @@ class Create extends AbstractAction
                 $formData['date'] = 'now';
                 $formData['ip'] = $ipAddress;
                 $formData['user_id'] = $this->user->isAuthenticated() ? $this->user->getUserId() : null;
-                $formData['active'] = $this->guestbookSettings['notify'] == 2 ? 0 : 1;
+                $formData['active'] = $guestbookSettings['notify'] == 2 ? 0 : 1;
 
                 $lastId = $this->guestbookModel->save($formData);
 
-                if ($this->guestbookSettings['notify'] == 1 || $this->guestbookSettings['notify'] == 2) {
-                    $this->sendNotificationEmail($lastId);
+                if ($guestbookSettings['notify'] == 1 || $guestbookSettings['notify'] == 2) {
+                    $this->sendNotificationEmail($lastId, $guestbookSettings);
                 }
 
                 return $this->redirectMessages()->setMessage(
@@ -130,14 +120,11 @@ class Create extends AbstractAction
         );
     }
 
-    /**
-     * @param int $entryId
-     */
-    protected function sendNotificationEmail($entryId)
+    protected function sendNotificationEmail(int $entryId, array $guestbookSettings): void
     {
         $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $entryId;
         $body = \sprintf(
-            $this->guestbookSettings['notify'] == 1
+            $guestbookSettings['notify'] == 1
                 ? $this->translator->t('guestbook', 'notification_email_body_1')
                 : $this->translator->t('guestbook', 'notification_email_body_2'),
             $this->router->route('', true),
@@ -145,17 +132,14 @@ class Create extends AbstractAction
         );
         $this->sendEmailHelper->execute(
             '',
-            $this->guestbookSettings['notify_email'],
-            $this->guestbookSettings['notify_email'],
+            $guestbookSettings['notify_email'],
+            $guestbookSettings['notify_email'],
             $this->translator->t('guestbook', 'notification_email_subject'),
             $body
         );
     }
 
-    /**
-     * @return array
-     */
-    private function fetchFormDefaults()
+    private function fetchFormDefaults(): array
     {
         $defaults = [
             'name' => '',

@@ -9,10 +9,7 @@ services:
 
   comments.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.validator'
-      - '@core.modules'
+    parent: core.validator.abstract
 
   comments.validation.validation_rules.flood_barrier_validation_rule:
     class: ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidationRule

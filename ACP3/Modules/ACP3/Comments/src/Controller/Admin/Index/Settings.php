@@ -33,16 +33,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     private $dateHelper;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
-     * @param \ACP3\Core\Helpers\Forms                                           $formsHelper
-     * @param \ACP3\Core\Helpers\Secure                                          $secureHelper
-     * @param \ACP3\Core\Helpers\Date                                            $dateHelper
-     * @param \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
@@ -60,19 +50,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->dateHelper = $dateHelper;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
         $settings = $this->config->getSettings(Comments\Installer\Schema::MODULE_NAME);
-
-        if ($this->modules->isActive('emoticons') === true) {
-            $this->view->assign(
-                'allow_emoticons',
-                $this->formsHelper->yesNoCheckboxGenerator('emoticons', $settings['emoticons'])
-            );
-        }
 
         return [
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
@@ -81,7 +61,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -91,7 +74,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             $data = [
                 'dateformat' => $this->secureHelper->strEncode($formData['dateformat']),
-                'emoticons' => $formData['emoticons'],
             ];
 
             return $this->config->saveSettings($data, Comments\Installer\Schema::MODULE_NAME);

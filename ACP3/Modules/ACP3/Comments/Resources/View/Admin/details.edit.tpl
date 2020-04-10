@@ -6,15 +6,6 @@
     {elseif $form.user_id != '0'}
         <input type="hidden" name="user_id" value="{$form.user_id}">
     {/if}
-    <div class="form-group">
-        <label for="message" class="col-sm-2 control-label required">{lang t="system|message"}</label>
-
-        <div class="col-sm-10">
-            {if $can_use_emoticons}
-                {event name="emoticons.render_emoticons_list"}
-            {/if}
-            <textarea class="form-control" name="message" id="message" cols="50" rows="5" required>{$form.message}</textarea>
-        </div>
-    </div>
+    {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="message" value=$form.message required=true label={lang t="system|message"} editor="core.wysiwyg.textarea"}
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/comments/details/index/id_`$module_id`"}}
 {/block}

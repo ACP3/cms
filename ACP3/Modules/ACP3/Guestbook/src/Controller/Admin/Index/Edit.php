@@ -53,13 +53,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $guestbook = $this->guestbookModel->getOneById($id);
         if (empty($guestbook) === false) {
@@ -70,7 +66,6 @@ class Edit extends Core\Controller\AbstractFrontendAction
             return [
                 'form' => \array_merge($guestbook, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
-                'can_use_emoticons' => $settings['emoticons'] == 1,
                 'activate' => $settings['notify'] == 2
                     ? $this->formsHelper->yesNoCheckboxGenerator('active', $guestbook['active'])
                     : [],
@@ -81,11 +76,12 @@ class Edit extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int $id
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -98,9 +94,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
 
             $formData['active'] = $settings['notify'] == 2 ? $formData['active'] : 1;
 
-            $bool = $this->guestbookModel->save($formData, $id);
-
-            return $bool;
+            return $this->guestbookModel->save($formData, $id);
         });
     }
 }

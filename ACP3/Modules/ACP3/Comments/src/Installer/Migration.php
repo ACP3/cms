@@ -52,6 +52,9 @@ class Migration implements Modules\Installer\MigrationInterface
                 'ALTER TABLE `{pre}comments` MODIFY COLUMN `message` TEXT {charset} NOT NULL;',
                 'ALTER TABLE `{pre}comments` CONVERT TO {charset};',
             ],
+            38 => [
+                "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'emoticons';",
+            ],
         ];
     }
 

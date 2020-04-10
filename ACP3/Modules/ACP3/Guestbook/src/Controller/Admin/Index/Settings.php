@@ -16,15 +16,15 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $formTokenHelper;
+    private $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
+    private $adminSettingsFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
-    protected $formsHelper;
+    private $formsHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -34,15 +34,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     private $dateHelper;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
-     * @param \ACP3\Core\Helpers\Date                                             $dateHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
@@ -60,10 +51,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->dateHelper = $dateHelper;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
         $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
 
@@ -72,13 +60,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
             1 => $this->translator->t('guestbook', 'notify_on_new_entry'),
             2 => $this->translator->t('guestbook', 'notify_and_enable'),
         ];
-
-        if ($this->modules->isActive('emoticons') === true) {
-            $this->view->assign(
-                'allow_emoticons',
-                $this->formsHelper->yesNoCheckboxGenerator('emoticons', $settings['emoticons'])
-            );
-        }
 
         if ($this->modules->isActive('newsletter') === true) {
             $this->view->assign(
@@ -97,7 +78,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -111,7 +95,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 'notify' => $formData['notify'],
                 'notify_email' => $formData['notify_email'],
                 'overlay' => $formData['overlay'],
-                'emoticons' => $formData['emoticons'],
                 'newsletter_integration' => $formData['newsletter_integration'],
             ];
 

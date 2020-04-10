@@ -15,15 +15,8 @@ class AdminSettingsFormValidation extends AbstractFormValidation
     /**
      * @var \ACP3\Core\Modules
      */
-    protected $modules;
+    private $modules;
 
-    /**
-     * Validator constructor.
-     *
-     * @param \ACP3\Core\I18n\Translator      $translator
-     * @param \ACP3\Core\Validation\Validator $validator
-     * @param \ACP3\Core\Modules              $modules
-     */
     public function __construct(
         Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
@@ -83,21 +76,6 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'data' => $formData,
                         'field' => 'notify_email',
                         'message' => $this->translator->t('system', 'wrong_email_format'),
-                    ]
-                );
-        }
-
-        if ($this->modules->isActive('emoticons') === true) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::class,
-                    [
-                        'data' => $formData,
-                        'field' => 'emoticons',
-                        'message' => $this->translator->t('guestbook', 'select_emoticons'),
-                        'extra' => [
-                            'haystack' => [0, 1],
-                        ],
                     ]
                 );
         }

@@ -54,7 +54,6 @@ class Schema implements Modules\Installer\SchemaInterface
     {
         return [
             'dateformat' => 'long',
-            'emoticons' => 1,
         ];
     }
 
@@ -98,6 +97,6 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 37;
+        return 38;
     }
 }

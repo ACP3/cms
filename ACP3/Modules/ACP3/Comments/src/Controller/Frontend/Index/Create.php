@@ -10,26 +10,21 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-class Create extends AbstractFrontendAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $formTokenHelper;
+    private $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
-    protected $formValidation;
+    private $formValidation;
     /**
      * @var Comments\Model\CommentsModel
      */
-    protected $commentsModel;
+    private $commentsModel;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param \ACP3\Modules\ACP3\Comments\Validation\FormValidation $formValidation
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Comments\Model\CommentsModel $commentsModel,
@@ -43,14 +38,7 @@ class Create extends AbstractFrontendAction
         $this->commentsModel = $commentsModel;
     }
 
-    /**
-     * @param string $module
-     * @param int    $entryId
-     * @param string $redirectUrl
-     *
-     * @return array
-     */
-    public function execute($module, $entryId, $redirectUrl)
+    public function execute(string $module, int $entryId, string $redirectUrl): array
     {
         return [
             'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
@@ -58,20 +46,16 @@ class Create extends AbstractFrontendAction
             'entry_id' => $entryId,
             'redirect_url' => $redirectUrl,
             'form_token' => $this->formTokenHelper->renderFormToken(),
-            'can_use_emoticons' => $this->emoticonsActive === true,
         ];
     }
 
     /**
-     * @param string $module
-     * @param int    $entryId
-     * @param string $redirectUrl
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($module, $entryId, $redirectUrl)
+    public function executePost(string $module, int $entryId, string $redirectUrl)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($module, $entryId, $redirectUrl) {
@@ -99,10 +83,7 @@ class Create extends AbstractFrontendAction
         );
     }
 
-    /**
-     * @return array
-     */
-    private function fetchFormDefaults()
+    private function fetchFormDefaults(): array
     {
         $defaults = [
             'name' => '',

@@ -14,46 +14,45 @@ use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Emoticons\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Index extends AbstractFrontendAction
+class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
      * @var \ACP3\Core\Pagination
      */
-    protected $pagination;
+    private $pagination;
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
-    protected $commentRepository;
-
+    private $commentRepository;
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Core\Pagination                                          $pagination
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
+     * @var \ACP3\Modules\ACP3\Emoticons\Helpers|null
      */
+    private $emoticonsHelpers;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Pagination $pagination,
         Comments\Model\Repository\CommentRepository $commentRepository,
         ?Helpers $emoticonsHelpers = null
     ) {
-        parent::__construct($context, $emoticonsHelpers);
+        parent::__construct($context);
 
         $this->pagination = $pagination;
         $this->commentRepository = $commentRepository;
+        $this->emoticonsHelpers = $emoticonsHelpers;
     }
 
     /**
-     * @param string $module
-     * @param int    $entryId
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($module, $entryId): array
+    public function execute(string $module, int $entryId): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+
+        $commentsSettings = $this->config->getSettings(Comments\Installer\Schema::MODULE_NAME);
 
         $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Comments\Installer\Schema::MODULE_NAME);
         $this->pagination
@@ -68,21 +67,20 @@ class Index extends AbstractFrontendAction
             $this->pagination->getResultsStartOffset(),
             $resultsPerPage
         );
-        $cComments = \count($comments);
 
-        for ($i = 0; $i < $cComments; ++$i) {
-            if (empty($comments[$i]['name'])) {
+        foreach ($comments as $i => $comment) {
+            if (empty($comment['name'])) {
                 $comments[$i]['name'] = $this->translator->t('users', 'deleted_user');
             }
-            if ($this->emoticonsActive === true && $this->emoticonsHelpers) {
-                $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comments[$i]['message']);
+            if ($this->emoticonsHelpers) {
+                $comments[$i]['message'] = $this->emoticonsHelpers->emoticonsReplace($comment['message']);
             }
         }
 
         try {
             return [
                 'comments' => $comments,
-                'dateformat' => $this->commentsSettings['dateformat'],
+                'dateformat' => $commentsSettings['dateformat'],
                 'pagination' => $this->pagination->render(),
             ];
         } catch (InvalidPageException $e) {

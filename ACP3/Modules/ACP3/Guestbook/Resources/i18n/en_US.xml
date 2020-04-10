@@ -6,7 +6,6 @@
         <item key="admin_index_edit">Edit guestbook entry</item>
         <item key="admin_index_settings">Settings</item>
         <item key="activate_entry">Enable entry</item>
-        <item key="allow_emoticons">Allow Emoticons</item>
         <item key="create">New entry</item>
         <item key="frontend_index_create">New entry</item>
         <item key="guestbook">Guestbook</item>
@@ -28,7 +27,6 @@
         </item>
         <item key="notify_and_enable">Notify and activate through administrator</item>
         <item key="notify_on_new_entry">Notify on new entries</item>
-        <item key="select_emoticons">Please select whether you want to allow emoticons or not.</item>
         <item key="select_newsletter_integration">Please select whether you want to allow users to subscribe into the
             newsletter when creating a new guestbook entry.
         </item>
