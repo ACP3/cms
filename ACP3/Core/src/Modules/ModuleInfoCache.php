@@ -93,7 +93,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         return [
             'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
             'dir' => $moduleCoreData->getPath(),
-            'installed' => (!empty($moduleInfoDb)),
+            'installed' => (!empty($moduleInfoDb)) || isset($moduleInfo['no_install']),
             'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1) || isset($moduleInfo['no_install']),
             'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
             'author' => $moduleInfo['author'],
