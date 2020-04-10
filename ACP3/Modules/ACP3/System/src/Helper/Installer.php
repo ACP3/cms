@@ -14,24 +14,11 @@ class Installer
     /**
      * @var Core\Modules
      */
-    protected $modules;
-    /**
-     * @var \ACP3\Core\Modules\SchemaInstaller
-     */
-    protected $schemaInstaller;
-    /**
-     * @var Core\Installer\SchemaRegistrar
-     */
-    private $schemaRegistrar;
+    private $modules;
 
-    public function __construct(
-        Core\Modules $modules,
-        Core\Installer\SchemaRegistrar $schemaRegistrar,
-        Core\Modules\SchemaInstaller $schemaInstaller
-    ) {
+    public function __construct(Core\Modules $modules)
+    {
         $this->modules = $modules;
-        $this->schemaInstaller = $schemaInstaller;
-        $this->schemaRegistrar = $schemaRegistrar;
     }
 
     /**
@@ -63,10 +50,6 @@ class Installer
 
         foreach ($modules as $module) {
             if ($module['name'] === $schema->getModuleName()) {
-                continue;
-            }
-
-            if ($this->schemaRegistrar->has($module['name']) === false) {
                 continue;
             }
 
