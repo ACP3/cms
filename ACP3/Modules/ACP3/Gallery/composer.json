@@ -23,6 +23,7 @@
   },
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI.",
+    "acp3/module-gallery-comments": "Allows you to integrate the gallery module into the comments module.",
     "acp3/module-gallery-seo": "Allows you to integrate the gallery module into the SEO module.",
     "acp3/module-gallery-share": "Allows you to integrate the gallery module into the social sharing module."
   },

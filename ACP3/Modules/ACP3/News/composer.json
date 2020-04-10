@@ -24,6 +24,7 @@
   },
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI.",
+    "acp3/module-news-comments": "Allows you to integrate the news module into the comments module.",
     "acp3/module-news-feed": "Allows you to integrate the news module into the feeds module.",
     "acp3/module-news-search": "Allows you to integrate the news module into the search module.",
     "acp3/module-news-seo": "Allows you to integrate the news module into the SEO module.",
