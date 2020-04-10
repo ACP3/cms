@@ -7,6 +7,8 @@
 
 namespace ACP3\Core\WYSIWYG;
 
+use ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG;
+
 class WysiwygFactory
 {
     /**
@@ -14,28 +16,12 @@ class WysiwygFactory
      */
     private $editorRegistrar;
 
-    /**
-     * WysiwygFactory constructor.
-     */
     public function __construct(WysiwygEditorRegistrar $editorRegistrar)
     {
         $this->editorRegistrar = $editorRegistrar;
     }
 
-    /**
-     * @return \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG[]
-     */
-    public function getWysiwygEditors()
-    {
-        return $this->editorRegistrar->all();
-    }
-
-    /**
-     * @param string $wysiwygEditorName
-     *
-     * @return \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG
-     */
-    public function create($wysiwygEditorName)
+    public function create(string $wysiwygEditorName): AbstractWYSIWYG
     {
         return $this->editorRegistrar->get($wysiwygEditorName);
     }

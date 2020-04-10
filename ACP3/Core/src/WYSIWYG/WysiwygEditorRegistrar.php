@@ -31,27 +31,17 @@ class WysiwygEditorRegistrar
     /**
      * @return \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG[]
      */
-    public function all()
+    public function all(): array
     {
         return $this->wysiwygEditors;
     }
 
-    /**
-     * @param string $serviceId
-     *
-     * @return bool
-     */
-    public function has($serviceId)
+    public function has(string $serviceId): bool
     {
         return isset($this->wysiwygEditors[$serviceId]);
     }
 
-    /**
-     * @param string $serviceId
-     *
-     * @return AbstractWYSIWYG
-     */
-    public function get($serviceId)
+    public function get(string $serviceId): AbstractWYSIWYG
     {
         if ($this->has($serviceId)) {
             return $this->wysiwygEditors[$serviceId];

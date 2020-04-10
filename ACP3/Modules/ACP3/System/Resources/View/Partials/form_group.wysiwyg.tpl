@@ -5,5 +5,6 @@
     {$toolbar=(!empty($toolbar)) ? $toolbar : ''}
     {$advanced=(isset($advanced)) ? $advanced : false}
     {$value=(isset($value)) ? $value : ''}
-    {wysiwyg name=$name value=$value toolbar=$toolbar advanced=$advanced}
+    {$editor=(isset($editor)) ? $editor : null}
+    {wysiwyg name=$name value=$value toolbar=$toolbar editor=$editor advanced=$advanced}
 {/block}

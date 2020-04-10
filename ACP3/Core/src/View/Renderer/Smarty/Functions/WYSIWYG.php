@@ -43,13 +43,16 @@ class WYSIWYG extends AbstractFunction
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \SmartyException
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
+        $editorServiceId = $params['editor'] ?? null;
 
         $serviceId = $this->config->getSettings(Schema::MODULE_NAME)['wysiwyg'];
-        $wysiwyg = $this->wysiwygFactory->create($serviceId);
+        $wysiwyg = $this->wysiwygFactory->create($editorServiceId ?? $serviceId);
 
         $wysiwyg->setParameters($params);
         $smarty->smarty->assign($wysiwyg->getData());
