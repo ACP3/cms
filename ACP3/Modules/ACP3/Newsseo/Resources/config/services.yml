@@ -2,6 +2,7 @@ services:
   newsseo.events.on_news_model_delete_after_listener:
     class: ACP3\Modules\ACP3\Newsseo\Event\Listener\OnNewsModelAfterDeleteListener
     arguments:
+      - '@core.modules'
       - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: news.model.news.after_delete }

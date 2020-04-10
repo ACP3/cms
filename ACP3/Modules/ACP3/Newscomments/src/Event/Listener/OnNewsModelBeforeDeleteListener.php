@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Newscomments\Event\Listener;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Comments\Helpers as CommentsHelpers;
+use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
 use ACP3\Modules\ACP3\News\Installer\Schema;
 
 class OnNewsModelBeforeDeleteListener
@@ -33,6 +34,10 @@ class OnNewsModelBeforeDeleteListener
 
     public function __invoke(ModelSaveEvent $event): void
     {
+        if (!$this->modules->isInstalled(CommentsSchema::MODULE_NAME)) {
+            return;
+        }
+
         if (!$event->isDeleteStatement()) {
             return;
         }

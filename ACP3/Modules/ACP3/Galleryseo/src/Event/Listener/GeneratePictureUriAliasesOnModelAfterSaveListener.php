@@ -8,9 +8,10 @@
 namespace ACP3\Modules\ACP3\Galleryseo\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Gallery;
-use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
 
 class GeneratePictureUriAliasesOnModelAfterSaveListener
 {
@@ -19,22 +20,22 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
      */
     private $pictureRepository;
     /**
-     * @var Aliases
-     */
-    private $aliases;
-    /**
      * @var UriAliasManager
      */
     private $uriAliasManager;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
     public function __construct(
+        Modules $modules,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
-        Aliases $aliases,
         UriAliasManager $uriAliasManager
     ) {
         $this->pictureRepository = $pictureRepository;
-        $this->aliases = $aliases;
         $this->uriAliasManager = $uriAliasManager;
+        $this->modules = $modules;
     }
 
     /**
@@ -42,6 +43,10 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener
      */
     public function __invoke(ModelSaveEvent $event)
     {
+        if (!$this->modules->isActive(SeoSchema::MODULE_NAME)) {
+            return;
+        }
+
         if ($event->isIsNewEntry() || $event->getModuleName() !== Gallery\Installer\Schema::MODULE_NAME) {
             return;
         }

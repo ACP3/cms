@@ -8,8 +8,10 @@
 namespace ACP3\Modules\ACP3\Newsseo\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
 
 class OnNewsModelAfterDeleteListener
 {
@@ -17,13 +19,15 @@ class OnNewsModelAfterDeleteListener
      * @var UriAliasManager
      */
     private $uriAliasManager;
-
     /**
-     * OnNewsModelAfterDeleteListener constructor.
+     * @var \ACP3\Core\Modules
      */
-    public function __construct(UriAliasManager $uriAliasManager)
+    private $modules;
+
+    public function __construct(Modules $modules, UriAliasManager $uriAliasManager)
     {
         $this->uriAliasManager = $uriAliasManager;
+        $this->modules = $modules;
     }
 
     /**
@@ -31,6 +35,10 @@ class OnNewsModelAfterDeleteListener
      */
     public function __invoke(ModelSaveEvent $event)
     {
+        if (!$this->modules->isInstalled(SeoSchema::MODULE_NAME)) {
+            return;
+        }
+
         if (!$event->isDeleteStatement()) {
             return;
         }

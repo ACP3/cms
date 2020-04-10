@@ -8,9 +8,11 @@
 namespace ACP3\Modules\ACP3\Galleryshare\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
+use ACP3\Modules\ACP3\Share\Installer\Schema as ShareSchema;
 
 class OnGalleryModelBeforeDeleteListener
 {
@@ -22,11 +24,16 @@ class OnGalleryModelBeforeDeleteListener
      * @var \ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager
      */
     private $socialSharingManager;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
-    public function __construct(PictureRepository $pictureRepository, SocialSharingManager $socialSharingManager)
+    public function __construct(Modules $modules, PictureRepository $pictureRepository, SocialSharingManager $socialSharingManager)
     {
         $this->pictureRepository = $pictureRepository;
         $this->socialSharingManager = $socialSharingManager;
+        $this->modules = $modules;
     }
 
     /**
@@ -34,6 +41,10 @@ class OnGalleryModelBeforeDeleteListener
      */
     public function __invoke(ModelSaveEvent $event)
     {
+        if (!$this->modules->isInstalled(ShareSchema::MODULE_NAME)) {
+            return;
+        }
+
         if (!$event->isDeleteStatement()) {
             return;
         }

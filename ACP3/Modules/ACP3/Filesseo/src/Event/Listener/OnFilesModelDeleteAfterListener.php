@@ -8,8 +8,10 @@
 namespace ACP3\Modules\ACP3\Filesseo\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
+use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
 
 class OnFilesModelDeleteAfterListener
 {
@@ -17,10 +19,15 @@ class OnFilesModelDeleteAfterListener
      * @var UriAliasManager
      */
     private $uriAliasManager;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
-    public function __construct(UriAliasManager $uriAliasManager)
+    public function __construct(Modules $modules, UriAliasManager $uriAliasManager)
     {
         $this->uriAliasManager = $uriAliasManager;
+        $this->modules = $modules;
     }
 
     /**
@@ -28,12 +35,16 @@ class OnFilesModelDeleteAfterListener
      */
     public function __invoke(ModelSaveEvent $event)
     {
+        if (!$this->modules->isInstalled(SeoSchema::MODULE_NAME)) {
+            return;
+        }
+
         if (!$event->isDeleteStatement()) {
             return;
         }
 
-        foreach ($event->getEntryId() as $item) {
-            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $item);
+        foreach ($event->getEntryId() as $fileId) {
+            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $fileId);
             $this->uriAliasManager->deleteUriAlias($uri);
         }
     }

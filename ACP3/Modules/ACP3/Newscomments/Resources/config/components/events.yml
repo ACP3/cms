@@ -52,6 +52,7 @@ services:
   newscomments.event.news_layout_settings_event_listener:
     class: ACP3\Modules\ACP3\Newscomments\Event\Listener\OnNewsLayoutSettingsEventListener
     arguments:
+      - '@core.modules'
       - '@core.view'
       - '@core.config'
       - '@core.helpers.forms'

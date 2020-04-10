@@ -12,6 +12,7 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Comments\Helpers;
+use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
 use ACP3\Modules\ACP3\News\Installer\Schema as NewsSchema;
 use ACP3\Modules\ACP3\Newscomments\Installer\Schema;
 
@@ -48,10 +49,14 @@ class OnNewsLayoutItemIndexAfterEventListener
 
     public function __invoke(TemplateEvent $event): void
     {
+        if (!$this->modules->isActive(CommentsSchema::MODULE_NAME)) {
+            return;
+        }
+
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
         $news = $event->getParameters()['news'];
 
-        if ($settings['comments'] == 1 && $news['comments'] == 1 && $this->modules->isActive('comments') === true) {
+        if ($settings['comments'] == 1 && $news['comments'] == 1) {
             $news['comments_count'] = $this->commentsHelpers->commentsCount(
                 NewsSchema::MODULE_NAME,
                 $news['id']

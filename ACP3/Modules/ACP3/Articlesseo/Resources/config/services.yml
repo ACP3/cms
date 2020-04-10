@@ -2,6 +2,7 @@ services:
   articlesseo.events.on_articles_model_delete_after_listener:
     class: ACP3\Modules\ACP3\Articlesseo\Event\Listener\OnArticlesModelDeleteAfterListener
     arguments:
+      - '@core.modules'
       - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: articles.model.articles.after_delete }

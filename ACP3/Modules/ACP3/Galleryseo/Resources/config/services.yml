@@ -2,6 +2,7 @@ services:
   galleryseo.event.on_gallery_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\OnGalleryModelBeforeDeleteListener
     arguments:
+      - '@core.modules'
       - '@gallery.model.picturerepository'
       - '@seo.helper.uri_alias_manager'
     tags:
@@ -10,6 +11,7 @@ services:
   galleryseo.event.on_gallery_picture_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\OnGalleryPictureModelBeforeDeleteListener
     arguments:
+      - '@core.modules'
       - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery_pictures.before_delete }
@@ -17,6 +19,7 @@ services:
   galleryseo.event.generate_picture_uri_alias_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\GeneratePictureUriAliasOnModelAfterSaveListener
     arguments:
+      - '@core.modules'
       - '@gallery.model.picturerepository'
       - '@seo.core.router.aliases'
       - '@seo.helper.uri_alias_manager'
@@ -27,8 +30,8 @@ services:
   galleryseo.event.generate_picture_uri_aliases_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\GeneratePictureUriAliasesOnModelAfterSaveListener
     arguments:
+      - '@core.modules'
       - '@gallery.model.picturerepository'
-      - '@seo.core.router.aliases'
       - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: core.model.after_save, priority: -250 }

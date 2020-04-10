@@ -42,6 +42,7 @@ services:
   filescomments.event.files_layout_settings_event_listener:
     class: ACP3\Modules\ACP3\Filescomments\Event\Listener\OnFilesLayoutSettingsEventListener
     arguments:
+      - '@core.modules'
       - '@core.view'
       - '@core.config'
       - '@core.helpers.forms'

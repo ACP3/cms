@@ -8,9 +8,11 @@
 namespace ACP3\Modules\ACP3\Newscomments\Event\Listener;
 
 use ACP3\Core\Helpers\Forms;
+use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
+use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
 use ACP3\Modules\ACP3\Newscomments\Installer\Schema;
 
 class OnNewsLayoutSettingsEventListener
@@ -27,16 +29,25 @@ class OnNewsLayoutSettingsEventListener
      * @var \ACP3\Core\Settings\SettingsInterface
      */
     private $settings;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
-    public function __construct(View $view, SettingsInterface $settings, Forms $formsHelper)
+    public function __construct(Modules $modules, View $view, SettingsInterface $settings, Forms $formsHelper)
     {
         $this->view = $view;
         $this->formsHelper = $formsHelper;
         $this->settings = $settings;
+        $this->modules = $modules;
     }
 
     public function __invoke(TemplateEvent $event): void
     {
+        if (!$this->modules->isActive(CommentsSchema::MODULE_NAME)) {
+            return;
+        }
+
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         $this->view->assign(

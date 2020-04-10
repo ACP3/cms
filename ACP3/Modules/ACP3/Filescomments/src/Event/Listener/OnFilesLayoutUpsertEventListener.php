@@ -12,7 +12,8 @@ use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
-use ACP3\Modules\ACP3\Filescomments\Installer\Schema;
+use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
+use ACP3\Modules\ACP3\Filescomments\Installer\Schema as FilesCommentsSchema;
 
 class OnFilesLayoutUpsertEventListener
 {
@@ -43,9 +44,13 @@ class OnFilesLayoutUpsertEventListener
 
     public function __invoke(TemplateEvent $event): void
     {
-        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+        if (!$this->modules->isActive(CommentsSchema::MODULE_NAME)) {
+            return;
+        }
 
-        if ($settings['comments'] == 1 && $this->modules->isActive('comments') === true) {
+        $settings = $this->settings->getSettings(FilesCommentsSchema::MODULE_NAME);
+
+        if ($settings['comments'] == 1) {
             $formData = $event->getParameters()['form_data'];
 
             $this->view->assign(
