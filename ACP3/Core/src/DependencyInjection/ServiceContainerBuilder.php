@@ -14,6 +14,7 @@ use ACP3\Core\Component\Dto\ComponentDataDto;
 use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
 use ACP3\Core\DataGrid\DependencyInjection\RegisterColumnRendererPass;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Helpers\ContentDecorator\DependencyInjection\RegisterContentDecoratorPass;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
@@ -85,6 +86,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterWysiwygEditorsCompilerPass())
             ->addCompilerPass(new RegisterControllerActionsPass())
             ->addCompilerPass(new RegisterInstallersCompilerPass())
+            ->addCompilerPass(new RegisterContentDecoratorPass())
             ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));

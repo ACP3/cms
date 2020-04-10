@@ -1,0 +1,10 @@
+services:
+  core.content_decorator:
+    class: ACP3\Core\Helpers\ContentDecorator
+
+  core.content_decorator.nl2p:
+    class: ACP3\Core\Helpers\ContentDecorator\Nl2pContentDecorator
+    arguments:
+      - '@core.helpers.string_formatter'
+    tags:
+      - { name: core.content_decorator }
