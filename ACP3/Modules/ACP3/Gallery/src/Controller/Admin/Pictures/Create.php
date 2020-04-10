@@ -11,49 +11,38 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
      */
-    protected $formTokenHelper;
+    private $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
-    protected $galleryRepository;
+    private $galleryRepository;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
      */
-    protected $pictureFormValidation;
+    private $pictureFormValidation;
     /**
      * @var Gallery\Model\PictureModel
      */
-    protected $pictureModel;
+    private $pictureModel;
     /**
      * @var \ACP3\Core\Helpers\Upload
      */
     private $galleryUploadHelper;
 
-    /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation   $pictureFormValidation
-     * @param \ACP3\Core\Helpers\Upload                                     $galleryUploadHelper
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\PictureModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation,
         Core\Helpers\Upload $galleryUploadHelper
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->galleryRepository = $galleryRepository;
@@ -79,10 +68,6 @@ class Create extends AbstractFormAction
                     $this->translator->t('gallery', 'admin_pictures_create'),
                     $this->request->getQuery()
                 );
-
-            if ($this->canUseComments() === true) {
-                $this->view->assign('options', $this->getOptions('0'));
-            }
 
             return [
                 'form' => \array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),

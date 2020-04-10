@@ -38,6 +38,7 @@ module.exports = (gulp, plugins) => {
         'ACP3/Modules/ACP3/Filesseo': 'acp3/module-files-seo',
         'ACP3/Modules/ACP3/Filesshare': 'acp3/module-files-share',
         'ACP3/Modules/ACP3/Gallery': 'acp3/module-gallery',
+        'ACP3/Modules/ACP3/Gallerycomments': 'acp3/module-gallery-comments',
         'ACP3/Modules/ACP3/Galleryseo': 'acp3/module-gallery-seo',
         'ACP3/Modules/ACP3/Galleryshare': 'acp3/module-gallery-share',
         'ACP3/Modules/ACP3/Guestbook': 'acp3/module-guestbook',

@@ -52,7 +52,6 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@gallery.model.galleryrepository'
       - '@gallery.model.picture_model'

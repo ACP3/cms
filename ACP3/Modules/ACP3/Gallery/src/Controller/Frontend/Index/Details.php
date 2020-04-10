@@ -19,19 +19,15 @@ class Details extends AbstractAction
     /**
      * @var \ACP3\Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
-    protected $pictureRepository;
+    private $pictureRepository;
     /**
      * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
-    protected $metaStatements;
-    /**
-     * @var array
-     */
-    protected $settings = [];
+    private $metaStatements;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
@@ -53,15 +49,11 @@ class Details extends AbstractAction
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         if ($this->pictureRepository->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
@@ -105,38 +97,23 @@ class Details extends AbstractAction
                 'picture' => $picture,
                 'picture_next' => $nextPicture,
                 'picture_previous' => $previousPicture,
-                'comments_allowed' => $this->isCommentsAllowed($picture),
             ];
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
-    /**
-     * @param int $nextPicture
-     */
-    protected function setNextPage($nextPicture)
+    protected function setNextPage(int $nextPicture): void
     {
         $this->metaStatements->setNextPage(
             $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
         );
     }
 
-    /**
-     * @param int $previousPicture
-     */
-    protected function setPreviousPage($previousPicture)
+    protected function setPreviousPage(int $previousPicture): void
     {
         $this->metaStatements->setPreviousPage(
             $this->router->route(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
         );
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isCommentsAllowed(array $picture)
-    {
-        return $this->settings['overlay'] == 0 && $this->settings['comments'] == 1 && $picture['comments'] == 1;
     }
 }

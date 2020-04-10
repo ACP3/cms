@@ -70,7 +70,7 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
 
         return $this->db->fetchAll(
             "
-                SELECT g.*, 
+                SELECT g.id, g.active, g.start, g.end, g.updated_at, g.title, g.description, g.user_id,
                        COUNT(p.gallery_id) AS pics,
                        (SELECT fp.`file` FROM {$this->getTableName(PictureRepository::TABLE_NAME)} AS fp WHERE fp.gallery_id = g.id ORDER BY fp.pic ASC LIMIT 1) AS file
                        FROM {$this->getTableName()} AS g

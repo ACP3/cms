@@ -38,7 +38,6 @@
         <item key="picture_x">Picture %picture%</item>
         <item key="pictures">Pictures</item>
         <item key="previous_image">Previous image</item>
-        <item key="select_allow_comments">Please select whether you to allow users to comment pictures.</item>
         <item key="select_new_picture">Select a new picture</item>
         <item key="select_picture">Select picture</item>
         <item key="select_use_overlay">Please select whether use want to use the image overlay or not.</item>
@@ -48,7 +47,5 @@
         <item key="title">Title</item>
         <item key="type_in_gallery_title">The name of the gallery should not be empty.</item>
         <item key="use_overlay">Use image overlay</item>
-        <item key="use_overlay_description">If the image overlay is active, it's not possible to view and post comments.
-        </item>
     </keys>
 </language>

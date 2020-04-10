@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Core\Helpers\FormToken
@@ -37,18 +37,11 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
     private $galleryRepository;
-
     /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Helpers                            $galleryHelpers
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation   $pictureFormValidation
-     * @param \ACP3\Core\Helpers\Upload                                     $galleryUploadHelper
+     * @var \ACP3\Core\Helpers\Forms
      */
+    private $formsHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Forms $formsHelper,
@@ -59,7 +52,7 @@ class Edit extends AbstractFormAction
         Gallery\Validation\PictureFormValidation $pictureFormValidation,
         Core\Helpers\Upload $galleryUploadHelper
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->galleryHelpers = $galleryHelpers;
@@ -67,6 +60,7 @@ class Edit extends AbstractFormAction
         $this->pictureModel = $pictureModel;
         $this->galleryUploadHelper = $galleryUploadHelper;
         $this->galleryRepository = $galleryRepository;
+        $this->formsHelper = $formsHelper;
     }
 
     /**
@@ -93,10 +87,6 @@ class Edit extends AbstractFormAction
                     . $this->title->getPageTitleSeparator()
                     . $this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']])
                 );
-
-            if ($this->canUseComments() === true) {
-                $this->view->assign('options', $this->getOptions($picture['comments']));
-            }
 
             return [
                 'form' => \array_merge($picture, $this->request->getPost()->all()),

@@ -37,16 +37,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     private $dateHelper;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                         $secureHelper
-     * @param \ACP3\Core\Helpers\Date                                           $dateHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Cache $galleryCoreCache,
@@ -66,19 +56,9 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->dateHelper = $dateHelper;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
         $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
-
-        if ($this->modules->isActive('comments') === true) {
-            $this->view->assign(
-                'comments',
-                $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
-            );
-        }
 
         return [
             'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
@@ -90,7 +70,10 @@ class Settings extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -108,9 +91,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 'dateformat' => $this->secureHelper->strEncode($formData['dateformat']),
                 'sidebar' => (int) $formData['sidebar'],
             ];
-            if ($this->modules->isActive('comments') === true) {
-                $data['comments'] = (int) $formData['comments'];
-            }
 
             $bool = $this->config->saveSettings($data, Gallery\Installer\Schema::MODULE_NAME);
 
@@ -124,10 +104,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         });
     }
 
-    /**
-     * @return bool
-     */
-    protected function hasImageDimensionChanges(array $formData)
+    protected function hasImageDimensionChanges(array $formData): bool
     {
         $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 

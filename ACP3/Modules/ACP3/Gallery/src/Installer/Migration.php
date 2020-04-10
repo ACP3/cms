@@ -86,6 +86,10 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}gallery` ADD COLUMN `active` TINYINT(1) NOT NULL AFTER `id`;',
                 'UPDATE `{pre}gallery` SET `active` = 1',
             ],
+            48 => [
+                'ALTER TABLE `{pre}gallery_pictures` DROP COLUMN `comments`;',
+                "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'comments';",
+            ],
         ];
     }
 

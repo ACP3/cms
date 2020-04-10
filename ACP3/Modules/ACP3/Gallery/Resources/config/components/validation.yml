@@ -9,10 +9,7 @@ services:
 
   gallery.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.validator'
-      - '@core.modules'
+    parent: core.validator.abstract
 
   gallery.validation.validation_rules.gallery_exists_validation_rule:
     class: ACP3\Modules\ACP3\Gallery\Validation\ValidationRules\GalleryExistsValidationRule

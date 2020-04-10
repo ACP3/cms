@@ -1,0 +1,5 @@
+services:
+  gallerycomments.repository.gallery_picture_repository:
+    class: ACP3\Modules\ACP3\Gallerycomments\Repository\GalleryPictureRepository
+    arguments:
+      - '@core.db'

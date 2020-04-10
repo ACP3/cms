@@ -1,0 +1,10 @@
+services:
+  gallerycomments.installer.schema:
+    class: ACP3\Modules\ACP3\Gallerycomments\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
+
+  gallerycomments.installer.migration:
+    class: ACP3\Modules\ACP3\Gallerycomments\Installer\Migration
+    tags:
+      - { name: core.installer.migration }

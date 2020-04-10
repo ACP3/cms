@@ -48,12 +48,6 @@ class PictureModel extends AbstractModel
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $data = \array_merge($data, [
-            'comments' => $settings['comments'] == 1
-                ? (isset($data['comments']) && $data['comments'] == 1 ? 1 : 0)
-                : $settings['comments'],
-        ]);
-
         if ($entryId === null) {
             $data['pic'] = $this->getPictureSortIndex($data['gallery_id']);
         } else {
@@ -74,7 +68,7 @@ class PictureModel extends AbstractModel
     {
         $picNum = $this->repository->getLastPictureByGalleryId($galleryId);
 
-        return !\is_null($picNum) ? $picNum + 1 : 1;
+        return $picNum !== null ? $picNum + 1 : 1;
     }
 
     /**
@@ -86,7 +80,6 @@ class PictureModel extends AbstractModel
             'gallery_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
-            'comments' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'pic' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];

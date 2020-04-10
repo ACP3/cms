@@ -54,6 +54,8 @@ splits:
     target: "git@gitlab.com:ACP3/module-files-share.git"
   - prefix: "ACP3/Modules/ACP3/Gallery"
     target: "git@gitlab.com:ACP3/module-gallery.git"
+  - prefix: "ACP3/Modules/ACP3/Gallerycomments"
+    target: "git@gitlab.com:ACP3/module-gallery-comments.git"
   - prefix: "ACP3/Modules/ACP3/Galleryseo"
     target: "git@gitlab.com:ACP3/module-gallery-seo.git"
   - prefix: "ACP3/Modules/ACP3/Galleryshare"

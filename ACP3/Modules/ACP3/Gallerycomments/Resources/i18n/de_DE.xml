@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <keys>
+        <item key="gallerycomments">Fotogalerien Kommentare-Erweiterung</item>
+        <item key="mod_description">Dieses Modul integriert das Fotogalerien-Modul in das Kommentare-Modul.</item>
+        <item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Bildern zugelassen werden sollen oder nicht.</item>
+    </keys>
+</language>
