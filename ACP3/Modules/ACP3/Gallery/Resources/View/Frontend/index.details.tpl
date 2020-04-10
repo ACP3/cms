@@ -62,6 +62,6 @@
                 </ul>
             </footer>
         </section>
-        {event name="gallery.layout.details_after" gallery_picture=$picture.id}
+        {event name="gallery.layout.details_after" gallery_picture=$picture}
     </article>
 {/block}
