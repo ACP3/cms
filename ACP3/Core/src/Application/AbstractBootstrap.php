@@ -45,9 +45,11 @@ abstract class AbstractBootstrap implements BootstrapInterface
      */
     public function setErrorHandler(): void
     {
-        $errorHandler = new ErrorHandler();
+        $isProduction = $this->appMode === ApplicationMode::PRODUCTION;
 
-        if ($this->appMode === ApplicationMode::PRODUCTION) {
+        $errorHandler = new ErrorHandler(null, !$isProduction);
+
+        if ($isProduction) {
             $errorHandler->scopeAt(0, true);
         }
 
