@@ -38,7 +38,7 @@ class SmartyConfigurator
     {
         $smarty->setErrorReporting($this->isProduction() ? 0 : E_ALL);
         $smarty->setCompileId($this->config->getSettings(Schema::MODULE_NAME)['design']);
-        $smarty->setCompileCheck($this->isProduction());
+        $smarty->setCompileCheck(!$this->isProduction());
         $smarty->setCompileDir($this->appPath->getCacheDir() . 'tpl_compiled/');
         $smarty->setCacheDir($this->appPath->getCacheDir() . 'tpl_cached/');
     }
