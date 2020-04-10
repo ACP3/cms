@@ -35,7 +35,7 @@ class OnArticlesModelDeleteAfterListener
      */
     public function __invoke(ModelSaveEvent $event)
     {
-        if (!$this->modules->isActive(ShareSchema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(ShareSchema::MODULE_NAME)) {
             return;
         }
 

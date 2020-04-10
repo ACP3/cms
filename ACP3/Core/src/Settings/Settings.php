@@ -56,15 +56,15 @@ class Settings implements SettingsInterface
     /**
      * Saves the module's settings to the database.
      */
-    public function saveSettings(array $data, string $module): bool
+    public function saveSettings(array $data, string $moduleName): bool
     {
-        $moduleId = $this->systemModuleRepository->getModuleId($module);
+        $moduleId = $this->systemModuleRepository->getModuleId($moduleName);
 
         if (empty($moduleId)) {
-            return false;
+            throw new \InvalidArgumentException(\sprintf('The module "%s" is not installed.', $moduleName));
         }
 
-        $settingsSaveEvent = new SettingsSaveEvent($module, $data);
+        $settingsSaveEvent = new SettingsSaveEvent($moduleName, $data);
 
         $this->eventDispatcher->dispatch(
             $settingsSaveEvent,
@@ -72,7 +72,7 @@ class Settings implements SettingsInterface
         );
         $this->eventDispatcher->dispatch(
             $settingsSaveEvent,
-            $module . '.settings.save_before'
+            $moduleName . '.settings.save_before'
         );
 
         $bool = $bool2 = false;

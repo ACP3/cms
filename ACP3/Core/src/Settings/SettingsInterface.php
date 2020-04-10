@@ -17,5 +17,5 @@ interface SettingsInterface
     /**
      * Saves the module's settings to the database.
      */
-    public function saveSettings(array $data, string $module): bool;
+    public function saveSettings(array $data, string $moduleName): bool;
 }

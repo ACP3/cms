@@ -25,6 +25,7 @@ services:
   emoticons.event.on_render_emoticons_list_listener:
     class: ACP3\Modules\ACP3\Emoticons\Event\Listener\RenderEmoticonsListListener
     arguments:
+      - '@core.modules'
       - '@emoticons.helpers'
     tags:
       - { name: core.eventListener, event: emoticons.render_emoticons_list }

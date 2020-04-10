@@ -2,6 +2,7 @@ services:
   gallerycomments.event.gallery_settings_save_before_event_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGallerySettingsSaveBeforeEventListener
     arguments:
+      - '@core.modules'
       - '@core.http.request'
       - '@core.config'
     tags:
@@ -10,6 +11,7 @@ services:
   gallerycomments.event.gallery_validation_admin_settings_event_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGalleryValidationAdminSettingsEventListener
     arguments:
+      - '@core.modules'
       - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: gallery.validation.admin_settings }
@@ -34,6 +36,7 @@ services:
   gallerycomments.event.on_gallery_model_prepare_data_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGalleryModelPrepareDataEventListener
     arguments:
+      - '@core.modules'
       - '@core.http.request'
       - '@core.config'
     tags:

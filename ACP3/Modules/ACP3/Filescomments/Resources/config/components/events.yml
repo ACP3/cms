@@ -2,6 +2,7 @@ services:
   filescomments.event.files_settings_save_before_event_listener:
     class: ACP3\Modules\ACP3\Filescomments\Event\Listener\OnFilesSettingsSaveBeforeEventListener
     arguments:
+      - '@core.modules'
       - '@core.http.request'
       - '@core.config'
     tags:
@@ -10,6 +11,7 @@ services:
   filescomments.event.files_validation_admin_settings_event_listener:
     class: ACP3\Modules\ACP3\Filescomments\Event\Listener\OnFilesValidationAdminSettingsEventListener
     arguments:
+      - '@core.modules'
       - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: files.validation.admin_settings }
@@ -25,6 +27,7 @@ services:
   filescomments.event.on_files_model_prepare_data_listener:
     class: ACP3\Modules\ACP3\Filescomments\Event\Listener\OnFilesModelPrepareDataEventListener
     arguments:
+      - '@core.modules'
       - '@core.http.request'
       - '@core.config'
     tags:

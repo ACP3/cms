@@ -6,7 +6,6 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Helpers
     arguments:
       - '@core.view'
-      - '@core.modules'
       - '@emoticons.cache'
 
   emoticons.helpers.upload:

@@ -8,8 +8,11 @@
 namespace ACP3\Modules\ACP3\Gallerycomments\Event\Listener;
 
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Modules;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
+use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
+use ACP3\Modules\ACP3\Gallerycomments\Installer\Schema;
 
 class OnGalleryValidationAdminSettingsEventListener
 {
@@ -17,14 +20,23 @@ class OnGalleryValidationAdminSettingsEventListener
      * @var \ACP3\Core\I18n\Translator
      */
     private $translator;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
-    public function __construct(Translator $translator)
+    public function __construct(Modules $modules, Translator $translator)
     {
         $this->translator = $translator;
+        $this->modules = $modules;
     }
 
     public function __invoke(FormValidationEvent $event)
     {
+        if (!$this->modules->isActive(CommentsSchema::MODULE_NAME) || !$this->modules->isActive(Schema::MODULE_NAME)) {
+            return;
+        }
+
         $event->getValidator()
             ->addConstraint(
                 InArrayValidationRule::class,

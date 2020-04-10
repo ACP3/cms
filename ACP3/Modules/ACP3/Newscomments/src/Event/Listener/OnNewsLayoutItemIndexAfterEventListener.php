@@ -49,7 +49,7 @@ class OnNewsLayoutItemIndexAfterEventListener
 
     public function __invoke(TemplateEvent $event): void
     {
-        if (!$this->modules->isActive(CommentsSchema::MODULE_NAME)) {
+        if (!$this->modules->isActive(CommentsSchema::MODULE_NAME) || !$this->modules->isActive(Schema::MODULE_NAME)) {
             return;
         }
 
