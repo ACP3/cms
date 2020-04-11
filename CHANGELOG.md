@@ -1,8 +1,26 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/) 
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [Unreleased] - 2020-xx-xx
+### Added
+- extended the WYSIWYG Smarty plugin with the ability to override the default WYSIWYG editor
+- Added a new way to decorate simple content (i.e. content without HTML)
+
+### Changed
+- extracted the optional module dependencies of the following module into separate modules.
+  - Articles
+  - Files
+  - Gallery
+  - Guestbook
+  - News
+- Updated PHPUnit to version 8.5
+- Dropped support for PHP 7.1. The minimum requirement now is 7.2
+
+### Fixed
+- fixed some errors with handling the production mode
 
 ## [4.47.6] - 2019-11-17
 ### Fixed
@@ -122,7 +140,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.41.1] - 2019-04-14
 ### Fixed
 - fixed a bug inside the `babel` gulp task
-- fixed the styling of the cookie consent 
+- fixed the styling of the cookie consent
 
 ## [4.41.0] - 2019-04-13
 ### Added
@@ -276,13 +294,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.33.0] - 2018-11-25
 ### Changed
-- Changed the establishing of the connection to the database to be lazy 
+- Changed the establishing of the connection to the database to be lazy
 - Changed the loading of Smarty plugins to be lazy
 - Changed the loading of validation rules inside the Validator class to be lazy
 - Changed the loading of column renderers inside the DataGrid class to be lazy
 
 ### Fixed
-- when an erroneously generated breadcrumb when paginating an article 
+- when an erroneously generated breadcrumb when paginating an article
 
 ## [4.32.1] - 2018-11-21
 ### Added
@@ -325,7 +343,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Extended the audit log module
 - back ported the nested categories from ACP3.next
-- added and used the possibility to retrieve the results for the data grids via AJAX 
+- added and used the possibility to retrieve the results for the data grids via AJAX
 
 ### Changes
 - reworked how ACL rules are getting updated
@@ -342,9 +360,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - Removed the class `ACP3\Core\View\Renderer\Smarty\AbstractPlugin`
   - Deprecated the method `ACP3\Core\View\Renderer\Smarty\PluginInterface::getExtensionType()` and all its implementations
   - Deprecated the constants inside `ACP3\Core\View\Renderer\Smarty\PluginInterface`, use class `ACP3\Core\View\Renderer\Smarty\PluginTypeEnum` instead
-  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Blocks\AbstractBlock::process()`, use `ACP3\Core\View\Renderer\Smarty\Blocks\AbstractBlock::__invoke()` instead 
-  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter::process()`, use `ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilters::__invoke()` instead 
-  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction::process()`, use `ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunctions::__invoke()` instead 
+  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Blocks\AbstractBlock::process()`, use `ACP3\Core\View\Renderer\Smarty\Blocks\AbstractBlock::__invoke()` instead
+  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter::process()`, use `ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilters::__invoke()` instead
+  - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction::process()`, use `ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunctions::__invoke()` instead
   - Deprecated the method `ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifier::process()`, use `ACP3\Core\View\Renderer\Smarty\Modifiers\AbstractModifiers::__invoke()` instead
 - Deprecated the class `ACP3\Core\Model\AbstractNestedSetModel`, use `ACP3\Core\NestedSet\Model\AbstractNestedSetModel` instead
 - Deprecated the class `ACP3\Core\Picture`, use `ACP3\Core\Picture\Picture` instead
@@ -580,7 +598,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.18.0] - 2017-11-22
 ### Added
-- Added self referencing canonical URLs to the SEO module 
+- Added self referencing canonical URLs to the SEO module
 
 ### Changed
 - Dropped the support for PHP 5.6. The minimum required PHP version is 7.1 now
@@ -600,20 +618,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Fixed the bug that it was not possible to create new articles when the menu items module was installed and active, but there were no menus at all
-- [#70](https://gitlab.com/ACP3/cms/issues/70) Fixed the sitemap generation with present, but not installed modules 
+- [#70](https://gitlab.com/ACP3/cms/issues/70) Fixed the sitemap generation with present, but not installed modules
 
 ## [4.16.0] - 2017-10-24
 ### Added
-- Added a new option which completely disables the site subtitle program logic 
+- Added a new option which completely disables the site subtitle program logic
 
 ### Changed
 - extracted the gallery pictures data grid into a separate controller action
 
 ## [4.15.0] - 2017-10-23
 ### Added
-- Added the schema.org `BreadcrumbList` markup to the breadcrumb template file 
+- Added the schema.org `BreadcrumbList` markup to the breadcrumb template file
 - Added the possibility to add a separate page title via the SEO form fields
-- Added the new Smarty function `site_subtitle` which exposes the site's subtitle to the frontend 
+- Added the new Smarty function `site_subtitle` which exposes the site's subtitle to the frontend
 - When inside the administration and creating/editing a resultset, you can now choose between `save and close` and `save and continue`
 
 ### Changed
@@ -629,7 +647,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.13.1] - 2017-10-21
 ### Fixed
 - Fixed the inability to create a new menu item which should not be displayed
-- Fixed a bug with the breadcrumbs where the breadcrumbs were sometimes not right when being used in conjunction with the menus module 
+- Fixed a bug with the breadcrumbs where the breadcrumbs were sometimes not right when being used in conjunction with the menus module
 - Fixed the bug that the `parent_id`s of the node's siblings were wrong, when the node was a root node after deleting it
 
 ## [4.13.0] - 2017-09-01
@@ -684,7 +702,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated minify to version 3.0
 
 ### Fixed
-- Fixed the gallery picture upload when the SEO module is active 
+- Fixed the gallery picture upload when the SEO module is active
 
 ## [4.10.1] - 2017-03-30
 ### Fixed
@@ -698,8 +716,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added the possibility to set a reply-to address or sender address to the `Mailer` class
 
 ### Changed
-- Added some guards to various modules to make them more robust 
-- Replaced the library `umpirsky/country-list` with `giggsey/locale` because of its significantly reduced storage footprint 
+- Added some guards to various modules to make them more robust
+- Replaced the library `umpirsky/country-list` with `giggsey/locale` because of its significantly reduced storage footprint
 
 ## [4.9.2] - 2017-03-26
 ### Fixed
@@ -780,7 +798,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - added the umpirsky/country-list lib, so that we have a localized list of the world countries
 - added the possibility to add additional HTML attributes to the form_group.input_*.tpl partials
-- added the possibility to use input-groups for the form_group.input_*.tpl based partials 
+- added the possibility to use input-groups for the form_group.input_*.tpl based partials
 - added the following two new template events to the users account index template
     - `users.account.index.header_bar`
     - `user.account.index.dashboard`
@@ -832,9 +850,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [4.4.2] - 2016-11-17
 ### Added
 - [#56](https://gitlab.com/ACP3/cms/issues/56) Made the cache directory of the `ACP3\Core\Picture` class configurable
- 
+
 ### Changed
-- The cached pictures of the gallery module are now being generated in the uploads/gallery/cache folder 
+- The cached pictures of the gallery module are now being generated in the uploads/gallery/cache folder
 
 ## [4.4.1] - 2016-11-15
 ### Fixed
@@ -855,8 +873,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated the [mibe/feedwriter](https://github.com/mibe/FeedWriter) library to version v1.1.0
 - [#55](https://gitlab.com/ACP3/cms/pull/55) Changed the argument order of the \FeedWriter\Feed::setImage() method (thanks @mibe)
 - [#54](https://gitlab.com/ACP3/cms/issues/54) Moved the password form fields from the users account profile action to the user account settings action
-- The contact module settings have been moved into its own controller action to match the structure of the other modules 
-- The feeds module settings have been moved into its own controller action to match the structure of the other modules 
+- The contact module settings have been moved into its own controller action to match the structure of the other modules
+- The feeds module settings have been moved into its own controller action to match the structure of the other modules
 
 ### Fixed
 - Fixed the pictures count of the gallery data grid
@@ -875,7 +893,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.3.5] - 2016-11-02
 ### Changed
-- Improved the performance of the `\ACP3\Core\Cache\Purge::doPurge()` method 
+- Improved the performance of the `\ACP3\Core\Cache\Purge::doPurge()` method
 
 ### Fixed
 - Fixed a character encoding problem when trying to use formatted HTML/XML code with the WYSIWYG-Editor inputs
@@ -920,9 +938,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - Gallery
     - News
 - The `ModelSaveEvent` class now accepts the raw post data too
-- Applied the `RewriteUri` Smarty modifier to the article module's single article widget action 
+- Applied the `RewriteUri` Smarty modifier to the article module's single article widget action
 - [#20](https://gitlab.com/ACP3/cms/issues/20) Redesigned some parts of the gallery module's templates
-- The template under `System/Partials/no_results.tpl` now accepts the parameter `no_results_text` to render a custom translation phrase 
+- The template under `System/Partials/no_results.tpl` now accepts the parameter `no_results_text` to render a custom translation phrase
 
 ### Changed
 - Unified all module extensions to be located under the same namespace of the specific module
@@ -931,7 +949,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Fixed the wrong initial value of the `mailer_smtp_security` system config entry
-- Fixed `PictureRepository::getNextPictureId()` method 
+- Fixed `PictureRepository::getNextPictureId()` method
 
 ## [4.2.0] - 2016-10-29
 ### Added
@@ -946,7 +964,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fixed the Smarty modifier plugin `PrefixUri` when there is an URL given with a valid protocol
 - Fixed the hardcoded feed links
-- Corrected the package information of the various `suggest` nodes inside the composer.json files 
+- Corrected the package information of the various `suggest` nodes inside the composer.json files
 
 ## [4.1.30] - 2016-10-27
 ### Added
@@ -955,7 +973,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Made it possible to run the ACP3 without the SEO module
-- The SEO form fields are now getting injected via a template event 
+- The SEO form fields are now getting injected via a template event
 
 ### Fixed
 - Fixed the page cache invalidation notification when in production mode
@@ -1025,7 +1043,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.1.19] - 2016-09-25
 ### Enhanced
-- Refactored the Travis CI integration 
+- Refactored the Travis CI integration
 
 ### Fixed
 - Menus with different configuration parameters but the same menu index name should not collide anymore
@@ -1037,7 +1055,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - It should be possible again to save menu items
 - It should be possible again to save ACL roles
-- Silenced a possible PHP warning when trying to login with incorrect credentials 
+- Silenced a possible PHP warning when trying to login with incorrect credentials
 
 [Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.47.6...4.x
 [4.47.6]: https://gitlab.com/ACP3/cms/compare/v4.47.5...v4.47.6
