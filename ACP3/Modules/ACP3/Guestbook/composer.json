@@ -23,7 +23,8 @@
   },
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI.",
-    "acp3/module-captcha": "Provides basic protection against spam bots."
+    "acp3/module-captcha": "Provides basic protection against spam bots.",
+    "acp3/module-guestbook-newsletter": "Allows you to integrate the guestbook module into the newsletter module."
   },
   "autoload": {
     "psr-4": {
