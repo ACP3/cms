@@ -50,7 +50,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 36;
+        return 37;
     }
 
     /**
@@ -93,7 +93,6 @@ class Schema implements Modules\Installer\SchemaInterface
             'dateformat' => 'long',
             'notify' => 0,
             'notify_email' => '',
-            'newsletter_integration' => 0,
             'overlay' => 1,
         ];
     }

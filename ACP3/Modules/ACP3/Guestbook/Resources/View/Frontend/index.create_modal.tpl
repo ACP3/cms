@@ -11,9 +11,7 @@
             {include file="asset:System/Partials/form_group.input_email.tpl" name="mail" value=$form.mail readonly=$form.mail_disabled maxlength=120 label={lang t="system|email_address"}}
             {include file="asset:System/Partials/form_group.input_url.tpl" name="website" value=$form.website readonly=$form.website_disabled maxlength=120 label={lang t="system|website"}}
             {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="message" value=$form.message required=true label={lang t="system|message"} editor="core.wysiwyg.textarea"}
-            {if isset($subscribe_newsletter)}
-                {include file="asset:System/Partials/form_group.checkbox.tpl" options=$subscribe_newsletter}
-            {/if}
+            {event name="guestbook.layout.create"}
             {event name="captcha.event.display_captcha"}
         {/if}
     </div>

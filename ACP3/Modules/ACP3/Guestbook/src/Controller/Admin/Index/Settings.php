@@ -61,13 +61,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
             2 => $this->translator->t('guestbook', 'notify_and_enable'),
         ];
 
-        if ($this->modules->isActive('newsletter') === true) {
-            $this->view->assign(
-                'newsletter_integration',
-                $this->formsHelper->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration'])
-            );
-        }
-
         return [
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'notify' => $this->formsHelper->choicesGenerator('notify', $notificationTypes, $settings['notify']),
@@ -95,7 +88,6 @@ class Settings extends Core\Controller\AbstractFrontendAction
                 'notify' => $formData['notify'],
                 'notify_email' => $formData['notify_email'],
                 'overlay' => $formData['overlay'],
-                'newsletter_integration' => $formData['newsletter_integration'],
             ];
 
             return $this->config->saveSettings($data, Guestbook\Installer\Schema::MODULE_NAME);

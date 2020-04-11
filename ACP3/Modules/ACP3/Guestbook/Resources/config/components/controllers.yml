@@ -39,12 +39,10 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@core.helpers.sendEmail'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.form_validation'
-      - '@?newsletter.helper.subscribe'
 
   guestbook.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Index

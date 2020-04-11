@@ -8,39 +8,19 @@
 namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
-use ACP3\Core\I18n\Translator;
-use ACP3\Core\Validation\Validator;
-use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 use ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\FloodBarrierValidationRule;
-use ACP3\Modules\ACP3\Newsletter;
 
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
      * @var string
      */
-    protected $ipAddress = '';
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        Translator $translator,
-        Validator $validator,
-        Core\Settings\SettingsInterface $settings)
-    {
-        parent::__construct($translator, $validator);
-
-        $this->settings = $settings;
-    }
+    private $ipAddress = '';
 
     /**
-     * @param string $ipAddress
-     *
      * @return $this
      */
-    public function setIpAddress($ipAddress)
+    public function setIpAddress(string $ipAddress)
     {
         $this->ipAddress = $ipAddress;
 
@@ -54,8 +34,6 @@ class FormValidation extends Core\Validation\AbstractFormValidation
      */
     public function validate(array $formData)
     {
-        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
-
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
@@ -94,20 +72,9 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                         'message' => $this->translator->t('system', 'wrong_email_format'),
                     ]
                 );
-
-            if ($settings['newsletter_integration'] == 1 && isset($formData['subscribe_newsletter'])) {
-                $this->validator
-                    ->addConstraint(
-                        Newsletter\Validation\ValidationRules\AccountExistsValidationRule::class,
-                        [
-                            'data' => $formData,
-                            'field' => 'mail',
-                            'message' => $this->translator->t('newsletter', 'account_exists'),
-                        ]
-                    );
-            }
         }
 
+        $this->validator->dispatchValidationEvent('guestbook.validation.create', $formData);
         $this->validator->dispatchValidationEvent('captcha.validation.validate_captcha', $formData);
 
         $this->validator->validate();

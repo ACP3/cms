@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <keys>
+        <item key="guestbooknewsletter">Guestbook Newsletter-Extension</item>
+        <item key="mod_description">This module integrates the guestbook module into the newsletter module.</item>
+        <item key="newsletter_integration">Integrate into the newsletter</item>
+        <item key="select_newsletter_integration">Please select whether you want to allow users to subscribe into the
+            newsletter when creating a new guestbook entry.
+        </item>
+        <item key="subscribe_to_newsletter">Yes, I would like to receive the newsletter of &quot;%title%&quot;.</item>
+        <item key="type_in_email_address_to_subscribe_to_newsletter">To receive the newsletter, you must provide a valid
+            e-mail address.
+        </item>
+    </keys>
+</language>

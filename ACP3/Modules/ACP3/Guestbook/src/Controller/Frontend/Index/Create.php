@@ -9,8 +9,6 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Guestbook;
-use ACP3\Modules\ACP3\Newsletter;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Create extends Core\Controller\AbstractFrontendAction
 {
@@ -23,14 +21,6 @@ class Create extends Core\Controller\AbstractFrontendAction
      */
     private $formValidation;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
-     */
-    private $newsletterSubscribeHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
      * @var Guestbook\Model\GuestbookModel
      */
     private $guestbookModel;
@@ -41,41 +31,21 @@ class Create extends Core\Controller\AbstractFrontendAction
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\SendEmail $sendEmailHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\Validation\FormValidation $formValidation,
-        ?Newsletter\Helper\Subscribe $newsletterSubscribeHelper = null
+        Guestbook\Validation\FormValidation $formValidation
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->guestbookModel = $guestbookModel;
         $this->sendEmailHelper = $sendEmailHelper;
-        $this->newsletterSubscribeHelper = $newsletterSubscribeHelper;
     }
 
     public function execute(): array
     {
-        $guestbookSettings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
-
-        if ($guestbookSettings['newsletter_integration'] == 1 && $this->newsletterSubscribeHelper) {
-            $newsletterSubscription = [
-                1 => $this->translator->t(
-                    'guestbook',
-                    'subscribe_to_newsletter',
-                    ['%title%' => $this->config->getSettings(Schema::MODULE_NAME)['site_title']]
-                ),
-            ];
-            $this->view->assign(
-                'subscribe_newsletter',
-                $this->formsHelper->checkboxGenerator('subscribe_newsletter', $newsletterSubscription, '1')
-            );
-        }
-
         return [
             'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),

@@ -45,6 +45,9 @@ class Migration extends Modules\Installer\AbstractMigration
             36 => [
                 "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'emoticons';",
             ],
+            37 => [
+                "DELETE FROM `{pre}settings` WHERE `module_id` = '{moduleId}' AND `name` = 'newsletter_integration';",
+            ],
         ];
     }
 

@@ -13,21 +13,6 @@ use ACP3\Core\Validation\AbstractFormValidation;
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
     /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    public function __construct(
-        Core\I18n\Translator $translator,
-        Core\Validation\Validator $validator,
-        Core\Modules $modules
-    ) {
-        parent::__construct($translator, $validator);
-
-        $this->modules = $modules;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function validate(array $formData)
@@ -80,20 +65,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 );
         }
 
-        if ($this->modules->isActive('newsletter') === true) {
-            $this->validator
-                ->addConstraint(
-                    Core\Validation\ValidationRules\InArrayValidationRule::class,
-                    [
-                        'data' => $formData,
-                        'field' => 'newsletter_integration',
-                        'message' => $this->translator->t('guestbook', 'select_newsletter_integration'),
-                        'extra' => [
-                            'haystack' => [0, 1],
-                        ],
-                    ]
-                );
-        }
+        $this->validator->dispatchValidationEvent('guestbook.validation.admin_settings', $formData);
 
         $this->validator->validate();
     }

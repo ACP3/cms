@@ -1,0 +1,32 @@
+{
+  "name": "acp3/module-guestbook-newsletter",
+  "description": "This ACP3 module integrates the guestbook module into the newsletter module.",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Tino Goratsch",
+      "email": "mail@acp3-cms.net"
+    }
+  ],
+  "support": {
+    "email": "mail@acp3-cms.net",
+    "issues": "https://gitlab.com/ACP3/cms/issues"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "acp3/core": "^4.47.5",
+    "acp3/module-guestbook": "^4.47.5",
+    "acp3/module-newsletter": "^4.47.5",
+    "acp3/module-system": "^4.47.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "ACP3\\Modules\\ACP3\\Guestbooknewsletter\\": "src"
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}

@@ -42,6 +42,7 @@ module.exports = (gulp, plugins) => {
         'ACP3/Modules/ACP3/Galleryseo': 'acp3/module-gallery-seo',
         'ACP3/Modules/ACP3/Galleryshare': 'acp3/module-gallery-share',
         'ACP3/Modules/ACP3/Guestbook': 'acp3/module-guestbook',
+        'ACP3/Modules/ACP3/Guestbooknewsletter': 'acp3/module-guestbook-newsletter',
         'ACP3/Modules/ACP3/Installer': 'acp3/module-installer',
         'ACP3/Modules/ACP3/Menus': 'acp3/module-menus',
         'ACP3/Modules/ACP3/News': 'acp3/module-news',

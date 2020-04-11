@@ -1,0 +1,11 @@
+services:
+  guestbooknewsletter.installer.schema:
+    class: ACP3\Modules\ACP3\Guestbooknewsletter\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
+
+  guestbooknewsletter.installer.migration:
+    class: ACP3\Modules\ACP3\Guestbooknewsletter\Installer\Migration
+    parent: core.modules.installer.abstractMigration
+    tags:
+      - { name: core.installer.migration }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <keys>
+        <item key="guestbooknewsletter">Gästebuch Newsletter-Erweiterung</item>
+        <item key="mod_description">Dieses Modul integriert das Gästebuch-Modul in das Newsletter-Modul.</item>
+        <item key="newsletter_integration">In Newsletter integrieren</item>
+        <item key="select_newsletter_integration">Bitte wählen Sie aus, ob neue Gästebucheinträge in den Newsletter
+            integriert werden sollen, oder nicht.
+        </item>
+        <item key="subscribe_to_newsletter">Ja, ich möchte in Zukunft den Newsletter von &quot;%title%&quot; erhalten.</item>
+        <item key="type_in_email_address_to_subscribe_to_newsletter">Um den Newsletter erhalten zu können, müssen Sie ihre
+            E-Mail-Adresse angeben.
+        </item>
+    </keys>
+</language>
