@@ -35,7 +35,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
 
     private $controllerActionExistsMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

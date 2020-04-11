@@ -30,7 +30,7 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
      */
     private $updateFileParserMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
 

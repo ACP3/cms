@@ -41,7 +41,7 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
      */
     private $settingsRepositoryMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
 

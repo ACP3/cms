@@ -29,7 +29,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
      */
     private $requestMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
         $this->setUpTitleConfigurator();

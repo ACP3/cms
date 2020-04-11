@@ -18,7 +18,7 @@ class CountryListTest extends \PHPUnit\Framework\TestCase
      */
     private $translatorMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->translatorMock = $this->createPartialMock(Translator::class, ['getLocale']);
 

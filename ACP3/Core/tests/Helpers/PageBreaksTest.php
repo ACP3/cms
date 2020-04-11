@@ -29,7 +29,7 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
      */
     protected $tocMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

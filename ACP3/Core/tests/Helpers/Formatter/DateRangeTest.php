@@ -28,7 +28,7 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
      */
     private $dateRange;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->langMock = $this->createMock(Translator::class);
 

@@ -25,7 +25,7 @@ class UriTest extends AbstractPluginTest
      */
     private $smartyInternalTemplateMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
 

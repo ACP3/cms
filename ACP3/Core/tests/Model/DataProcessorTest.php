@@ -20,7 +20,7 @@ class DataProcessorTest extends \PHPUnit\Framework\TestCase
      */
     private $dataProcessor;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->columnTypeStrategyFactoryMock = $this->createMock(DataProcessor\ColumnTypeStrategyFactory::class);
         $this->dataProcessor = new DataProcessor($this->columnTypeStrategyFactoryMock);

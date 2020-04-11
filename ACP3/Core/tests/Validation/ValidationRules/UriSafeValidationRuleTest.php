@@ -9,7 +9,7 @@ namespace ACP3\Core\Validation\ValidationRules;
 
 class UriSafeValidationRuleTest extends AbstractValidationRuleTest
 {
-    protected function setUp()
+    protected function setup(): void
     {
         $this->validationRule = new UriSafeValidationRule();
 

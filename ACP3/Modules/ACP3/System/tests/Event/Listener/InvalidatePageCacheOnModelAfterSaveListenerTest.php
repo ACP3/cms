@@ -31,7 +31,7 @@ class InvalidatePageCacheOnModelAfterSaveListenerTest extends \PHPUnit\Framework
      */
     private $canUsePageCacheMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
 

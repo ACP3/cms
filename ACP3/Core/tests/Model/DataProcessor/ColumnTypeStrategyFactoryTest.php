@@ -19,7 +19,7 @@ class ColumnTypeStrategyFactoryTest extends \PHPUnit\Framework\TestCase
      */
     private $columnTypeStrategyFactory;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->columnTypeStrategyFactory = new ColumnTypeStrategyFactory();
     }

@@ -29,7 +29,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
      */
     protected $requestMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->translatorMock = $this->createMock(Translator::class);
         $this->requestMock = $this->createMock(Request::class);

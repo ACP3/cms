@@ -14,7 +14,7 @@ class RouterTest extends \ACP3\Core\RouterTest
      */
     private $aliasesMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

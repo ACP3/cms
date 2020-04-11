@@ -31,7 +31,7 @@ class FileResolverTest extends TestCase
      */
     private $themeMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
 

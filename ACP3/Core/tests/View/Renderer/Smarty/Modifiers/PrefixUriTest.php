@@ -16,7 +16,7 @@ class PrefixUriTest extends AbstractPluginTest
      */
     protected $plugin;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->plugin = new PrefixUri();
     }

@@ -26,7 +26,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
      */
     private $requestMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
 

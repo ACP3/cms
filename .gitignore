@@ -10,6 +10,7 @@
 /cache/*
 /node_modules
 /tests/cache/
+/tests/.phpunit.result.cache
 /uploads/.htaccess
 /uploads/_thumbs/*
 /uploads/assets/*

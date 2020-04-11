@@ -16,7 +16,7 @@ class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
      */
     protected $metaStatements;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

@@ -32,7 +32,7 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
      */
     protected $dateRange;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->langMock = $this->createMock(Translator::class);
         $this->dateTranslator = new DateTranslator($this->langMock);

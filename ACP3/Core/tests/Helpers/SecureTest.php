@@ -14,7 +14,7 @@ class SecureTest extends \PHPUnit\Framework\TestCase
      */
     private $secureHelper;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->secureHelper = new Secure();
     }

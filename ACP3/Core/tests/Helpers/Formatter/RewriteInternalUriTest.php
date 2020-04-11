@@ -41,7 +41,7 @@ class RewriteInternalUriTest extends \PHPUnit\Framework\TestCase
      */
     private $internalUriValidationRule;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

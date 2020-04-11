@@ -17,7 +17,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
      */
     private $menuItemRepositoryMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

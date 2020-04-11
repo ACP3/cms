@@ -9,7 +9,7 @@ namespace ACP3\Core\Validation\ValidationRules;
 
 class InternalUriValidationRuleTest extends AbstractValidationRuleTest
 {
-    protected function setUp()
+    protected function setup(): void
     {
         $this->validationRule = new InternalUriValidationRule();
 

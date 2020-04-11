@@ -37,7 +37,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
      */
     private $container;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->container = new Container();
         $this->requestMock = $this->createMock(RequestInterface::class);

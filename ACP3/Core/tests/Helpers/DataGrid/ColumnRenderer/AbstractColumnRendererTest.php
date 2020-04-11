@@ -30,7 +30,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
      */
     protected $primaryKey = '';
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->columnData = $this->getColumnDefaults();
     }

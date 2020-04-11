@@ -22,7 +22,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
      */
     protected $routerMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->langMock = $this->createMock(Translator::class);
         $this->routerMock = $this->createMock(RouterInterface::class);

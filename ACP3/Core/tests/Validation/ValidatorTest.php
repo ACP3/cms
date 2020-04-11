@@ -27,7 +27,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
      */
     private $container;
 
-    protected function setUp()
+    protected function setup(): void
     {
         parent::setUp();
 

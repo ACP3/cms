@@ -16,7 +16,7 @@ class TextColumnTypeTest extends AbstractColumnTypeTest
      */
     protected $secureMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->secureMock = $this->createMock(Secure::class);
 

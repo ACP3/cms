@@ -30,7 +30,7 @@ class PageCssClassesTest extends \PHPUnit\Framework\TestCase
      */
     private $stringFormatterMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
 

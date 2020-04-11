@@ -8,6 +8,7 @@
 namespace ACP3\Core\Assets;
 
 use ACP3\Core\Http\RequestInterface;
+use DMS\PHPUnitExtensions\ArraySubset\Assert;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class LibrariesTest extends \PHPUnit\Framework\TestCase
@@ -25,7 +26,7 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
      */
     private $requestMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->requestMock = $this->getMockForAbstractClass(RequestInterface::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
@@ -43,7 +44,7 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
         ];
         $this->libraries->addLibrary('foobar', $data);
 
-        $this->assertArraySubset(['foobar' => $data], $this->libraries->getLibraries());
+        Assert::assertArraySubset(['foobar' => $data], $this->libraries->getLibraries());
     }
 
     public function testEnableLibraries()

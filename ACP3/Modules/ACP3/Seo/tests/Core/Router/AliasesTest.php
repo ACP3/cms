@@ -25,7 +25,7 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
      */
     private $modulesMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->seoCacheMock = $this->createMock(Cache::class);
         $this->modulesMock = $this->createMock(Modules::class);

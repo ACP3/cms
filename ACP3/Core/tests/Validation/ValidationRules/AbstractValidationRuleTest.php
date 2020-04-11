@@ -19,7 +19,7 @@ abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
 
     protected $validator;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->validationRule->setMessage('Invalid value.');
 

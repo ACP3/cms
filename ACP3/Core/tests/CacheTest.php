@@ -21,7 +21,7 @@ class CacheTest extends \PHPUnit\Framework\TestCase
      */
     private $cacheDriverFactoryMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

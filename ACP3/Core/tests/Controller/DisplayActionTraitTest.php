@@ -25,7 +25,7 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
      */
     private $viewMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
         $this->displayAction = new DisplayActionTraitImpl(

@@ -13,7 +13,7 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
 {
     protected $langMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->langMock = $this->createMock(Translator::class);
 

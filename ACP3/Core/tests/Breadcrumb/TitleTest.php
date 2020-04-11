@@ -24,7 +24,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
      */
     protected $eventDispatcherMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

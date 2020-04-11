@@ -17,7 +17,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
      */
     private $dateTranslator;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->translatorMock = $this->createMock(Translator::class);
 

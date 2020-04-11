@@ -43,7 +43,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
      */
     protected $container;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeFormValidationDependencies();
         $this->initializeFormValidation();

@@ -31,7 +31,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
      */
     protected $configMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

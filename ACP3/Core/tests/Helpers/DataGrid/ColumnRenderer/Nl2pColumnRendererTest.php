@@ -17,7 +17,7 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
      */
     protected $stringFormatter;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->stringFormatter = new StringFormatter(new Slugify());
 

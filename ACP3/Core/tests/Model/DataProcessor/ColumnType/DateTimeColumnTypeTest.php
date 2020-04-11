@@ -16,7 +16,7 @@ class DateTimeColumnTypeTest extends AbstractColumnTypeTest
      */
     private $dateMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->dateMock = $this->createMock(Date::class);
 

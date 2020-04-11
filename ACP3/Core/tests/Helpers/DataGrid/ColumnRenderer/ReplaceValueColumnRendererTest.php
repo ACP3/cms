@@ -9,7 +9,7 @@ namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
 
 class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
 {
-    protected function setUp()
+    protected function setup(): void
     {
         $this->columnRenderer = new ReplaceValueColumnRenderer();
 

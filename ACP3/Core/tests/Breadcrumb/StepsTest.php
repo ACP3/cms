@@ -41,7 +41,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
      */
     protected $steps;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->initializeMockObjects();
 

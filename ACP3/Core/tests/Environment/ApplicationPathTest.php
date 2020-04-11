@@ -14,7 +14,7 @@ class ApplicationPathTest extends \PHPUnit\Framework\TestCase
      */
     private $appPath;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
     }

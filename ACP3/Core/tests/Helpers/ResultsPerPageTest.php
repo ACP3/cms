@@ -20,7 +20,7 @@ class ResultsPerPageTest extends \PHPUnit\Framework\TestCase
      */
     private $settingsMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
 

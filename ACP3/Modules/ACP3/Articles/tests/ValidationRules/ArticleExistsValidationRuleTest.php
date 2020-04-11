@@ -18,7 +18,7 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
      */
     protected $articlesRepositoryMock;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->articlesRepositoryMock = $this->createMock(ArticleRepository::class);
 

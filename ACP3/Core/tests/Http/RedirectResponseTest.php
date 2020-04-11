@@ -25,7 +25,7 @@ class RedirectResponseTest extends \PHPUnit\Framework\TestCase
      */
     private $redirectResponse;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->setUpMockObjects();
 

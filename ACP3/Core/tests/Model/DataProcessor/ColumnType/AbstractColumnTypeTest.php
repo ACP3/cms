@@ -14,7 +14,7 @@ abstract class AbstractColumnTypeTest extends \PHPUnit\Framework\TestCase
      */
     protected $columnType;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->instantiateClassToTest();
     }
