@@ -16,9 +16,7 @@ abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
      * @var \ACP3\Core\Validation\ValidationRules\ValidationRuleInterface
      */
     protected $validationRule;
-    /**
-     * @var \ACP3\Core\Validation\Validator&\PHPUnit\Framework\MockObject\MockObject
-     */
+
     protected $validator;
 
     protected function setUp()

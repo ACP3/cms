@@ -11,9 +11,6 @@ use ACP3\Core\I18n\Translator;
 
 class TranslateColumnRendererTest extends AbstractColumnRendererTest
 {
-    /**
-     * @var Translator&\PHPUnit\Framework\MockObject\MockObject
-     */
     protected $langMock;
 
     protected function setUp()

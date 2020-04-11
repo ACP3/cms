@@ -32,9 +32,7 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
      * @var \PHPUnit\Framework\MockObject\MockObject
      */
     protected $eventDispatcherMock;
-    /**
-     * @var Translator&\PHPUnit\Framework\MockObject\MockObject
-     */
+
     protected $translatorMock;
     /**
      * @var Validator

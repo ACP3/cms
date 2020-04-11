@@ -14,9 +14,6 @@ use ACP3\Core\I18n\Translator;
 
 class DateColumnRendererTest extends AbstractColumnRendererTest
 {
-    /**
-     * @var Translator&\PHPUnit\Framework\MockObject\MockObject
-     */
     protected $langMock;
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject

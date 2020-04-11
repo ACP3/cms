@@ -32,9 +32,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
      * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $permissionsCacheMock;
-    /**
-     * @var ControllerActionExists&\PHPUnit\Framework\MockObject\MockObject
-     */
+
     private $controllerActionExistsMock;
 
     protected function setUp()

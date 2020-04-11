@@ -4,8 +4,6 @@ services:
     arguments:
       - '@core.acl'
       - '@core.assets.minifier.css'
-      - '@core.i18n.translator'
-      - '@core.environment.application_path'
       - '@core.view'
       - '@?filemanager.helpers'
     tags:

@@ -21,23 +21,23 @@ class CKEditor extends Textarea
     /**
      * @var \ACP3\Core\Modules
      */
-    protected $modules;
+    private $modules;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository|null
      */
-    protected $emoticonRepository;
+    private $emoticonRepository;
     /**
      * @var \ACP3\Modules\ACP3\Filemanager\Helpers|null
      */
-    protected $filemanagerHelpers;
+    private $filemanagerHelpers;
     /**
      * @var \ACP3\Core\ACL
      */
