@@ -14,7 +14,7 @@
     "issues": "https://gitlab.com/ACP3/cms/issues"
   },
   "require": {
-    "php": "^7.1",
+    "php": "^7.2",
     "doctrine/dbal": "^2.5",
     "doctrine/cache": "^1.6",
     "fisharebest/localization": "^1.10",

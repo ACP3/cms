@@ -48,11 +48,6 @@ build:npm:
       - tests/phpunit.dist.xml
       - .gitlab-ci.yml
 
-test:php71-unit:
-  extends: test:php72-unit
-  image: registry.gitlab.com/acp3/php-docker:7.1
-  coverage: ~
-
 test:php72-unit:
   extends: .test:php-base
   stage: test
