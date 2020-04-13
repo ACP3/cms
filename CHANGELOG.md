@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - extended the WYSIWYG Smarty plugin with the ability to override the default WYSIWYG editor
 - Added a new way to decorate simple content (i.e. content without HTML)
+- Load gallery thumbnail images
+- Added the following new template events:
+  - `files.layout.settings`
+  - `files.layout.upsert`
+  - `gallery.layout.settings`
+  - `gallery.layout.upsert`
+  - `guestbook.layout.settings`
+  - `news.layout.settings`
+  - `news.layout.upsert`
+- Extended the `ACP3\Core\Model\AbstractModel` class with the event `<moduleName>.model.<tableName>.prepare_data` which allows the extension of the allowed database table columns
+- Extended the `ACP3\Core\Settings\Settings` class with the event `<moduleName>.settings.save_before`
 
 ### Changed
 - extracted the optional module dependencies of the following module into separate modules.
