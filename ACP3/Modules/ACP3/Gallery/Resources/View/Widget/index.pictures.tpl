@@ -5,6 +5,7 @@
                {if !empty($picture.title)}title="{$picture.title}"{/if}>
                 <img src="{$picture.uri_thumb}"
                      alt="{$picture.title}"
+                     loading="lazy"
                      class="img-thumbnail">
             </a>
         </li>

@@ -14,6 +14,7 @@
                    {if !empty($row.title)}data-caption="{$row.title|strip_tags|trim}"{/if}>
                     <img src="{$row.uri_thumb}"
                          alt="{$row.description|strip_tags|trim}"
+                         loading="lazy"
                          class="img-thumbnail">
                 </a>
             {/foreach}
@@ -24,6 +25,7 @@
                    class="gallery-picture-thumb">
                     <img src="{$row.uri_thumb}"
                          alt="{$row.description|strip_tags|trim}"
+                         loading="lazy"
                          class="img-thumbnail">
                 </a>
             {/foreach}
