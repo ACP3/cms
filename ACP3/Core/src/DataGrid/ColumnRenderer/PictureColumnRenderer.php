@@ -35,20 +35,15 @@ class PictureColumnRenderer extends AbstractColumnRenderer
         if ($value === null) {
             $value = $this->getDefaultValue($column);
         } elseif (isset($column['custom']['pattern'])) {
-            $value = '<img src="' . $this->getUrl($column['custom'], $value) . '" alt="">';
+            $value = '<img src="' . $this->getUrl($column['custom'], $value) . '" loading="lazy" alt="">';
         } elseif (isset($column['custom']['callback']) && \is_callable($column['custom']['callback'])) {
-            $value = '<img src="' . $column['custom']['callback']($value) . '" alt="">';
+            $value = '<img src="' . $column['custom']['callback']($value) . '" loading="lazy" alt="">';
         }
 
         return $value;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    protected function getUrl(array $data, $value)
+    protected function getUrl(array $data, string $value): string
     {
         $url = \sprintf($data['pattern'], $value);
         if (isset($data['isRoute']) && $data['isRoute'] === true) {
