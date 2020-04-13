@@ -24,15 +24,10 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var Guestbook\Model\GuestbookModel
      */
     private $guestbookModel;
-    /**
-     * @var \ACP3\Core\Helpers\SendEmail
-     */
-    private $sendEmailHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\FormToken $formTokenHelper,
-        Core\Helpers\SendEmail $sendEmailHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
         Guestbook\Validation\FormValidation $formValidation
     ) {
@@ -41,7 +36,6 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->guestbookModel = $guestbookModel;
-        $this->sendEmailHelper = $sendEmailHelper;
     }
 
     public function execute(): array
@@ -78,34 +72,11 @@ class Create extends Core\Controller\AbstractFrontendAction
 
                 $lastId = $this->guestbookModel->save($formData);
 
-                if ($guestbookSettings['notify'] == 1 || $guestbookSettings['notify'] == 2) {
-                    $this->sendNotificationEmail($lastId, $guestbookSettings);
-                }
-
                 return $this->redirectMessages()->setMessage(
                     $lastId,
                     $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error')
                 );
             }
-        );
-    }
-
-    protected function sendNotificationEmail(int $entryId, array $guestbookSettings): void
-    {
-        $fullPath = $this->router->route('guestbook', true) . '#gb-entry-' . $entryId;
-        $body = \sprintf(
-            $guestbookSettings['notify'] == 1
-                ? $this->translator->t('guestbook', 'notification_email_body_1')
-                : $this->translator->t('guestbook', 'notification_email_body_2'),
-            $this->router->route('', true),
-            $fullPath
-        );
-        $this->sendEmailHelper->execute(
-            '',
-            $guestbookSettings['notify_email'],
-            $guestbookSettings['notify_email'],
-            $this->translator->t('guestbook', 'notification_email_subject'),
-            $body
         );
     }
 
