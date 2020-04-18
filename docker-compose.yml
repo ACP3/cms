@@ -5,14 +5,14 @@ services:
     build:
       context: './build/docker/php/'
       args:
-       PHP_VERSION: ${PHP_VERSION}
+        PHP_VERSION: ${PHP_VERSION}
     depends_on:
      - mysql
     networks:
-      - ra-lauck-dev
+      - acp3-cms
     volumes:
-      - data-htdocs-acp3-sync:/var/www/html/:nocopy
-    container_name: php-acp3
+      - .:/var/www/html/
+    container_name: acp3-php
     environment:
       - ACP3_APPLICATION_MODE=dev
 
@@ -20,35 +20,34 @@ services:
     build:
       context: './build/docker/apache/'
       args:
-       APACHE_VERSION: ${APACHE_VERSION}
+        APACHE_VERSION: ${APACHE_VERSION}
     depends_on:
       - php
     networks:
-      - ra-lauck-dev
+      - acp3-cms
     ports:
       - "80:80"
     volumes:
       - ./build/docker/apache/vhost.conf:/usr/local/apache2/conf/sites-enabled/vhost.conf:ro
-      - data-htdocs-acp3-sync:/var/www/html/:nocopy
-    container_name: apache-acp3
+      - php:/var/www/html/
+    container_name: acp3-apache
 
   mysql:
     image: mysql:${MYSQL_VERSION:-latest}
     networks:
-      - ra-lauck-dev
+      - acp3-cms
     volumes:
-      - data-mysql-acp3:/var/lib/mysql/
+      - acp3-data-mysql:/var/lib/mysql/
       - ./build/docker/mysql/dump:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_DATABASE=acp3
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-    container_name: mysql-acp3
+    container_name: acp3-mysql
 
 volumes:
-  data-htdocs-acp3-sync:
-    external: true
-  data-mysql-acp3:
+  acp3-data-mysql:
+  php:
 
 networks:
-  ra-lauck-dev:
+  acp3-cms:

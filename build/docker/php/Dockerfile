@@ -15,8 +15,8 @@ RUN apt-get update -yqq && \
                                       pdo_mysql && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd && \
-    apt-get autoremove && \
-    apt-get clean
+    apt-get autoremove -y && \
+    apt-get clean -y
 
 RUN usermod -u 1000 www-data
 
