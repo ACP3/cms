@@ -17,7 +17,7 @@
   "prefer-stable": true,
   "require": {
     "acp3/core": "^4.48.0",
-    "acp3/module-gallery": "^4.48.0",
+    "acp3/module-gallery": "^4.48.1",
     "acp3/module-social-sharing": "^4.47.5",
     "acp3/module-system": "^4.48.0"
   },
