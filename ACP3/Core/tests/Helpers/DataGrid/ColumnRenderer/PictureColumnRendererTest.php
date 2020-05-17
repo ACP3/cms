@@ -45,7 +45,7 @@ class PictureColumnRendererTest extends AbstractColumnRendererTest
             ->with('gallery/index/pic/id_1')
             ->willReturn('/gallery/index/pic/id_1/');
 
-        $expected = '<td><img src="/gallery/index/pic/id_1/" alt=""></td>';
+        $expected = '<td><img src="/gallery/index/pic/id_1/" loading="lazy" alt=""></td>';
         $this->compareResults($expected);
     }
 
@@ -64,7 +64,7 @@ class PictureColumnRendererTest extends AbstractColumnRendererTest
         $this->routerMock->expects($this->never())
             ->method('route');
 
-        $expected = '<td><img src="gallery/index/pic/id_1" alt=""></td>';
+        $expected = '<td><img src="gallery/index/pic/id_1" loading="lazy" alt=""></td>';
         $this->compareResults($expected);
     }
 }
