@@ -65,8 +65,6 @@ class Create extends AbstractFormAction
             'text' => '',
         ];
 
-        $this->getAvailableLayouts();
-
         return [
             'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
             'layouts' => $this->formsHelper->choicesGenerator(
