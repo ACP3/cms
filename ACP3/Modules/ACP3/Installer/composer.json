@@ -16,9 +16,9 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^4.47.5",
-    "acp3/module-system": "^4.47.5",
-    "acp3/module-users": "^4.47.5",
+    "acp3/core": "^4.48.0",
+    "acp3/module-system": "^4.48.0",
+    "acp3/module-users": "^4.48.0",
     "acp3/theme-installer": "^4.47.0"
   },
   "autoload": {
