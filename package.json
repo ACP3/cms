@@ -24,7 +24,7 @@
     "@babel/preset-env": "^7.9.6",
     "autoprefixer": "^9.8.0",
     "babel-preset-minify": "^0.5.1",
-    "eslint": "^6.8.0",
+    "eslint": "^7.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-bump": "^3.1.3",
@@ -37,7 +37,7 @@
     "gulp-sass": "^4.1.0",
     "node-sass": "^4.14.1",
     "semver": "^7.3.2",
-    "simple-git": "^2.4.0",
+    "simple-git": "^2.5.0",
     "yargs": "^15.3.1"
   },
   "dependencies": {
@@ -54,7 +54,7 @@
     "html5shiv": "^3.7.3",
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",
-    "moment": "^2.25.3",
+    "moment": "^2.26.0",
     "rich-filemanager": "git+https://github.com/tinogo/RichFilemanager.git#rework-dependencies",
     "shariff": "^3.2.1"
   },
