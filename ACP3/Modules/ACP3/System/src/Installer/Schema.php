@@ -53,7 +53,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 72;
+        return 73;
     }
 
     /**
@@ -70,9 +70,10 @@ class Schema implements Modules\Installer\SchemaInterface
                 PRIMARY KEY (`id`)
             ) {ENGINE} {CHARSET};',
             'CREATE TABLE `{pre}sessions` (
-                `session_id` VARCHAR(32) NOT NULL,
+                `session_id` VARCHAR(128) NOT NULL,
                 `session_starttime` INT(10) UNSIGNED NOT NULL,
-                `session_data` TEXT NOT NULL,
+                `session_lifetime` INT(10) UNSIGNED NOT NULL,
+                `session_data` MEDIUMBLOB NOT NULL,
                 PRIMARY KEY (`session_id`)
             ) {ENGINE} {CHARSET};',
             'CREATE TABLE `{pre}settings` (

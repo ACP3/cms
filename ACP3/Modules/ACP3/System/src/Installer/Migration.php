@@ -248,6 +248,13 @@ class Migration extends Modules\Installer\AbstractMigration
             72 => [
                 $this->migrateToVersion72(),
             ],
+            73 => [
+                'TRUNCATE TABLE `{pre}sessions`;',
+                'ALTER TABLE `{pre}sessions` ADD COLUMN `session_lifetime` INT(10) UNSIGNED NOT NULL AFTER `session_starttime`;',
+                'ALTER TABLE `{pre}sessions` DROP COLUMN `session_data`;',
+                'ALTER TABLE `{pre}sessions` ADD COLUMN `session_data` MEDIUMBLOB NOT NULL;',
+                'ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_id` VARCHAR(128) {charset} NOT NULL;',
+            ],
         ];
     }
 
