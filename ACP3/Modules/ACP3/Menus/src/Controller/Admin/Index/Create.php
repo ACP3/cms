@@ -13,51 +13,41 @@ use ACP3\Modules\ACP3\Menus;
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
      */
-    protected $menuFormValidation;
+    private $menuFormValidation;
     /**
      * @var Menus\Model\MenusModel
      */
-    protected $menusModel;
-
+    private $menusModel;
     /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext          $context
-     * @param \ACP3\Core\Helpers\FormToken                           $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation $menuFormValidation
+     * @var \ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuEditViewProvider
      */
+    private $adminMenuEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenusModel $menusModel,
-        Menus\Validation\MenuFormValidation $menuFormValidation
+        Menus\Validation\MenuFormValidation $menuFormValidation,
+        Menus\ViewProviders\AdminMenuEditViewProvider $adminMenuEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->menusModel = $menusModel;
         $this->menuFormValidation = $menuFormValidation;
+        $this->adminMenuEditViewProvider = $adminMenuEditViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        return [
-            'form' => \array_merge(['index_name' => '', 'title' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminMenuEditViewProvider)(['index_name' => '', 'title' => '']);
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

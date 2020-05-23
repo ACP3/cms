@@ -18,45 +18,33 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
      */
-    protected $userRepository;
-
+    private $userRepository;
     /**
-     * ViewProfile constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext            $context
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository $userRepository
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\UserProfileViewProvider
      */
+    private $userProfileViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Users\ViewProviders\UserProfileViewProvider $userProfileViewProvider,
         Users\Model\Repository\UserRepository $userRepository
     ) {
         parent::__construct($context);
 
         $this->userRepository = $userRepository;
+        $this->userProfileViewProvider = $userProfileViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         if ($this->userRepository->resultExists($id) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $user = $this->user->getUserInfo($id);
-            $user['gender'] = \str_replace(
-                [1, 2, 3],
-                ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')],
-                $user['gender']
-            );
-
-            return [
-                'user' => $user,
-            ];
+            return ($this->userProfileViewProvider)($id);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

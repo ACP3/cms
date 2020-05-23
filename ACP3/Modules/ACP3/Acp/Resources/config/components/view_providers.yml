@@ -1,0 +1,6 @@
+services:
+  acl.view_providers.module_list:
+    class: ACP3\Modules\ACP3\Acp\ViewProviders\ModuleListViewProvider
+    arguments:
+      - '@core.acl'
+      - '@core.modules'

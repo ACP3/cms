@@ -13,70 +13,50 @@ use ACP3\Modules\ACP3\Gallery;
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
      */
-    protected $galleryFormValidation;
+    private $galleryFormValidation;
     /**
      * @var Gallery\Model\GalleryModel
      */
-    protected $galleryModel;
+    private $galleryModel;
     /**
-     * @var \ACP3\Core\Helpers\Forms
+     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryEditViewProvider
      */
-    private $formsHelper;
+    private $adminGalleryEditViewProvider;
 
-    /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
-     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Gallery\Model\GalleryModel $galleryModel,
-        Gallery\Validation\GalleryFormValidation $galleryFormValidation
+        Gallery\Validation\GalleryFormValidation $galleryFormValidation,
+        Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
-        $this->formsHelper = $formsHelper;
+        $this->adminGalleryEditViewProvider = $adminGalleryEditViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
         $defaults = [
+            'id' => null,
+            'active' => 1,
             'title' => '',
             'description' => '',
             'start' => '',
             'end' => '',
         ];
 
-        return [
-            'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
-            'form' => \array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-            'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
-            'SEO_ROUTE_NAME' => '',
-        ];
+        return ($this->adminGalleryEditViewProvider)($defaults);
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

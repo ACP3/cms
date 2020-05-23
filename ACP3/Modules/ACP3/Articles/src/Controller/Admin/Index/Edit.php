@@ -10,87 +10,56 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
+    private $adminFormValidation;
     /**
      * @var Articles\Model\ArticlesModel
      */
-    protected $articlesModel;
+    private $articlesModel;
     /**
-     * @var Core\Helpers\Forms
+     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider
      */
-    protected $formsHelper;
+    private $adminArticleEditViewProvider;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Core\Environment\ThemePathInterface                  $theme
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Environment\ThemePathInterface $theme,
-        Core\Helpers\Forms $formsHelper,
+        Articles\ViewProviders\AdminArticleEditViewProvider $adminArticleEditViewProvider,
         Articles\Model\ArticlesModel $articlesModel,
-        Articles\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Articles\Validation\AdminFormValidation $adminFormValidation
     ) {
-        parent::__construct($context, $theme);
+        parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->articlesModel = $articlesModel;
-        $this->formsHelper = $formsHelper;
+        $this->adminArticleEditViewProvider = $adminArticleEditViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $article = $this->articlesModel->getOneById($id);
 
         if (empty($article) === false) {
-            $this->title->setPageTitlePrefix($article['title']);
-
-            return [
-                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $article['active']),
-                'form' => \array_merge($article, $this->request->getPost()->all()),
-                'layouts' => $this->formsHelper->choicesGenerator(
-                    'layout',
-                    $this->getAvailableLayouts(),
-                    $article['layout']
-                ),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-                'SEO_URI_PATTERN' => Articles\Helpers::URL_KEY_PATTERN,
-                'SEO_ROUTE_NAME' => \sprintf(Articles\Helpers::URL_KEY_PATTERN, $id),
-            ];
+            return ($this->adminArticleEditViewProvider)($article);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int $id
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

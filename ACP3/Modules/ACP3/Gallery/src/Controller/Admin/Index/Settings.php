@@ -13,17 +13,9 @@ use ACP3\Modules\ACP3\Gallery;
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $adminSettingsFormValidation;
     /**
      * @var Core\Cache
      */
@@ -33,40 +25,28 @@ class Settings extends Core\Controller\AbstractFrontendAction
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Core\Helpers\Date
+     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminSettingsViewProvider
      */
-    private $dateHelper;
+    private $adminSettingsViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Cache $galleryCoreCache,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Core\Helpers\Date $dateHelper,
-        Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        Gallery\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->galleryCoreCache = $galleryCoreCache;
         $this->secureHelper = $secureHelper;
-        $this->dateHelper = $dateHelper;
+        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function execute(): array
     {
-        $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
-
-        return [
-            'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
-            'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
-            'form' => \array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminSettingsViewProvider)();
     }
 
     /**

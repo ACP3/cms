@@ -18,35 +18,17 @@ class Index extends Core\Controller\AbstractFrontendAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Core\Date
+     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\ArticleListViewProvider
      */
-    protected $date;
-    /**
-     * @var \ACP3\Core\Pagination
-     */
-    protected $pagination;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
-     */
-    protected $articleRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
+    private $articleListViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        Core\Helpers\ResultsPerPage $resultsPerPage,
-        Core\Pagination $pagination,
-        Articles\Model\Repository\ArticleRepository $articleRepository
+        Articles\ViewProviders\ArticleListViewProvider $articleListViewProvider
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->pagination = $pagination;
-        $this->articleRepository = $articleRepository;
-        $this->resultsPerPage = $resultsPerPage;
+        $this->articleListViewProvider = $articleListViewProvider;
     }
 
     /**
@@ -57,23 +39,8 @@ class Index extends Core\Controller\AbstractFrontendAction
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Articles\Installer\Schema::MODULE_NAME);
-        $time = $this->date->getCurrentDateTime();
-        $this->pagination
-            ->setResultsPerPage($resultsPerPage)
-            ->setTotalResults($this->articleRepository->countAll($time));
-
-        $articles = $this->articleRepository->getAll(
-            $time,
-            $this->pagination->getResultsStartOffset(),
-            $resultsPerPage
-        );
-
         try {
-            return [
-                'articles' => $articles,
-                'pagination' => $this->pagination->render(),
-            ];
+            return ($this->articleListViewProvider)();
         } catch (InvalidPageException $e) {
             throw new ResultNotExistsException();
         }

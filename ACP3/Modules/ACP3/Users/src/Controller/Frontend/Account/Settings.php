@@ -13,81 +13,50 @@ use ACP3\Modules\ACP3\Users;
 class Settings extends AbstractAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation
      */
-    protected $accountSettingsFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
-     */
-    protected $userFormsHelper;
+    private $accountSettingsFormValidation;
     /**
      * @var Users\Model\UsersModel
      */
-    protected $usersModel;
-    /**
-     * @var Core\Helpers\Secure
-     */
-    protected $secureHelper;
+    private $usersModel;
     /**
      * @var Users\Model\AuthenticationModel
      */
-    protected $authenticationModel;
-
+    private $authenticationModel;
     /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                            $userFormsHelper
-     * @param \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\AccountSettingsViewProvider
      */
+    private $accountSettingsViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
-        Core\Helpers\Secure $secureHelper,
-        Users\Helpers\Forms $userFormsHelper,
+        Users\ViewProviders\AccountSettingsViewProvider $accountSettingsViewProvider,
         Users\Model\AuthenticationModel $authenticationModel,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
-        $this->userFormsHelper = $userFormsHelper;
         $this->accountSettingsFormValidation = $accountSettingsFormValidation;
         $this->usersModel = $usersModel;
-        $this->secureHelper = $secureHelper;
         $this->authenticationModel = $authenticationModel;
+        $this->accountSettingsViewProvider = $accountSettingsViewProvider;
     }
 
     /**
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
-        $user = $this->usersModel->getOneById($this->user->getUserId());
-
-        $this->view->assign(
-            $this->userFormsHelper->fetchUserSettingsFormFields(
-                $user['address_display'],
-                $user['birthday_display'],
-                $user['country_display'],
-                $user['mail_display']
-            )
-        );
-
-        return [
-            'form' => \array_merge($user, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->accountSettingsViewProvider)();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -98,10 +67,7 @@ class Settings extends AbstractAction
                 $this->accountSettingsFormValidation->validate($formData);
 
                 if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                    $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
-                    $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
-                    $formData['pwd'] = $newPassword;
-                    $formData['pwd_salt'] = $salt;
+                    $formData['pwd'] = $formData['new_pwd'];
                 }
 
                 $bool = $this->usersModel->save($formData, $this->user->getUserId());

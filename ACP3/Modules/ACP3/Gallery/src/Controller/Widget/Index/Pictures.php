@@ -10,8 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Widget\Index;
 use ACP3\Core\Cache\CacheResponseTrait;
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Modules\ACP3\Gallery\Cache;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListWidgetViewProvider;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Pictures extends AbstractWidgetAction
@@ -19,43 +18,29 @@ class Pictures extends AbstractWidgetAction
     use CacheResponseTrait;
 
     /**
-     * @var GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListWidgetViewProvider
      */
-    private $galleryRepository;
-    /**
-     * @var Cache
-     */
-    private $galleryCache;
+    private $galleryPictureListWidgetViewProvider;
 
-    /**
-     * Pictures constructor.
-     */
     public function __construct(
         WidgetContext $context,
-        GalleryRepository $galleryRepository,
-        Cache $galleryCache
+        GalleryPictureListWidgetViewProvider $galleryPictureListWidgetViewProvider
     ) {
         parent::__construct($context);
 
-        $this->galleryRepository = $galleryRepository;
-        $this->galleryCache = $galleryCache;
+        $this->galleryPictureListWidgetViewProvider = $galleryPictureListWidgetViewProvider;
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    public function execute(int $id, string $template = '')
+    public function execute(int $id, string $template = ''): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         $this->setTemplate(\urldecode($template));
 
-        return [
-            'gallery' => $this->galleryRepository->getOneById($id),
-            'pictures' => $this->galleryCache->getCache($id),
-        ];
+        return ($this->galleryPictureListWidgetViewProvider)($id);
     }
 }

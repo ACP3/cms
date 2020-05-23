@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Feeds;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -18,11 +19,11 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
      */
-    protected $feedGenerator;
+    private $feedGenerator;
     /**
      * @var Feeds\Utility\FeedAvailabilityRegistrar
      */
-    protected $availableFeedsRegistrar;
+    private $availableFeedsRegistrar;
     /**
      * @var \ACP3\Core\ACL
      */
@@ -42,13 +43,9 @@ class Index extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $feed
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($feed)
+    public function execute(string $feed): Response
     {
         if ($this->acl->hasPermission('frontend/' . $feed) === true) {
             $this->setCacheResponseCacheable(

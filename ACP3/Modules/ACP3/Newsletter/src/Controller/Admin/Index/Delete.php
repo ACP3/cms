@@ -15,13 +15,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var Newsletter\Model\NewsletterModel
      */
-    protected $newsletterModel;
+    private $newsletterModel;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Newsletter\Model\NewsletterModel $newsletterModel
@@ -32,11 +27,9 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return mixed
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(string $action = '')
+    public function execute(?string $action = null)
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

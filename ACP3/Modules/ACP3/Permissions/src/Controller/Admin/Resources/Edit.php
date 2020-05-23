@@ -13,70 +13,54 @@ use ACP3\Modules\ACP3\Permissions;
 class Edit extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
-    protected $resourceFormValidation;
+    private $resourceFormValidation;
     /**
      * @var Permissions\Model\ResourcesModel
      */
-    protected $resourcesModel;
+    private $resourcesModel;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\AdminResourceEditViewProvider
+     */
+    private $adminResourceEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Modules $modules,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Model\ResourcesModel $resourcesModel,
-        Permissions\Validation\ResourceFormValidation $resourceFormValidation
+        Permissions\Validation\ResourceFormValidation $resourceFormValidation,
+        Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
     ) {
-        parent::__construct($context, $modules, $formsHelper, $privilegeRepository);
+        parent::__construct($context, $modules);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->resourceFormValidation = $resourceFormValidation;
         $this->resourcesModel = $resourcesModel;
+        $this->adminResourceEditViewProvider = $adminResourceEditViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \ReflectionException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $resource = $this->resourcesModel->getOneById($id);
 
         if (!empty($resource)) {
-            $defaults = [
-                'resource' => $resource['page'],
-                'area' => $resource['area'],
-                'controller' => $resource['controller'],
-            ];
-
-            return [
-                'modules' => $this->fetchActiveModules($resource['module_name']),
-                'areas' => $this->fetchAreas($resource['area']),
-                'privileges' => $this->fetchPrivileges($resource['privilege_id']),
-                'form' => \array_merge($defaults, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-            ];
+            return ($this->adminResourceEditViewProvider)($resource);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int $id
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

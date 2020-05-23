@@ -14,60 +14,34 @@ use ACP3\Modules\ACP3\Guestbook;
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation
      */
     private $adminSettingsFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Core\Helpers\Date
+     * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminSettingsViewProvider
      */
-    private $dateHelper;
+    private $adminSettingsViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Secure $secureHelper,
-        Core\Helpers\Date $dateHelper,
-        Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        Guestbook\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
-        $this->dateHelper = $dateHelper;
+        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function execute(): array
     {
-        $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
-
-        $notificationTypes = [
-            0 => $this->translator->t('guestbook', 'no_notification'),
-            1 => $this->translator->t('guestbook', 'notify_on_new_entry'),
-            2 => $this->translator->t('guestbook', 'notify_and_enable'),
-        ];
-
-        return [
-            'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
-            'notify' => $this->formsHelper->choicesGenerator('notify', $notificationTypes, $settings['notify']),
-            'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
-            'form' => \array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminSettingsViewProvider)();
     }
 
     /**

@@ -18,43 +18,38 @@ class Single extends Core\Controller\AbstractWidgetAction
     /**
      * @var Core\Date
      */
-    protected $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
-     */
-    protected $articlesCache;
+    private $date;
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
-    protected $articleRepository;
-
+    private $articleRepository;
     /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext                    $context
-     * @param \ACP3\Core\Date                                                $date
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                              $articlesCache
+     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\ArticleFullViewProvider
      */
+    private $articleFullViewProvider;
+
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache
+        Articles\ViewProviders\ArticleFullViewProvider $articleFullViewProvider
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->articleRepository = $articleRepository;
-        $this->articlesCache = $articlesCache;
+        $this->articleFullViewProvider = $articleFullViewProvider;
     }
 
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function execute(int $id): ?array
     {
         if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            return [
-                'sidebar_article' => $this->articlesCache->getCache($id),
-            ];
+            return ($this->articleFullViewProvider)($id);
         }
 
         return null;

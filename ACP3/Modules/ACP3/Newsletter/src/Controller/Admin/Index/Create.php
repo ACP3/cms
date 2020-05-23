@@ -13,68 +13,50 @@ use ACP3\Modules\ACP3\Newsletter;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $adminFormValidation;
     /**
      * @var Newsletter\Model\NewsletterModel
      */
-    protected $newsletterModel;
-
+    private $newsletterModel;
     /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
+     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\AdminNewsletterEditViewProvider
      */
+    private $adminNewsletterEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
-        Newsletter\Helper\SendNewsletter $newsletterHelpers
+        Newsletter\Helper\SendNewsletter $newsletterHelpers,
+        Newsletter\ViewProviders\AdminNewsletterEditViewProvider $adminNewsletterEditViewProvider
     ) {
         parent::__construct($context, $newsletterHelpers);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->newsletterModel = $newsletterModel;
         $this->adminFormValidation = $adminFormValidation;
+        $this->adminNewsletterEditViewProvider = $adminNewsletterEditViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $actions = [
-            1 => $this->translator->t('newsletter', 'send_and_save'),
-            0 => $this->translator->t('newsletter', 'only_save'),
+        $defaults = [
+            'action' => 1,
+            'title' => '',
+            'test' => 0,
+            'text' => '',
+            'date' => '',
         ];
 
-        return [
-            'settings' => $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME),
-            'test' => $this->formsHelper->yesNoCheckboxGenerator('test', 0),
-            'action' => $this->formsHelper->checkboxGenerator('action', $actions, 1),
-            'form' => \array_merge(['title' => '', 'text' => '', 'date' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminNewsletterEditViewProvider)($defaults);
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

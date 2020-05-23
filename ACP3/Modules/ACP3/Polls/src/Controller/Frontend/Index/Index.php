@@ -16,85 +16,26 @@ class Index extends Core\Controller\AbstractFrontendAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var Core\Date
+     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\PollListViewProvider
      */
-    protected $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
-     */
-    protected $pollRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository
-     */
-    protected $voteRepository;
+    private $pollListViewProvider;
 
-    /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext            $context
-     * @param \ACP3\Core\Date                                          $date
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository $voteRepository
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        Polls\Model\Repository\PollRepository $pollRepository,
-        Polls\Model\Repository\VoteRepository $voteRepository
+        Polls\ViewProviders\PollListViewProvider $pollListViewProvider
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->pollRepository = $pollRepository;
-        $this->voteRepository = $voteRepository;
+        $this->pollListViewProvider = $pollListViewProvider;
     }
 
     /**
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $polls = $this->pollRepository->getAll($this->date->getCurrentDateTime());
-        $cPolls = \count($polls);
-
-        for ($i = 0; $i < $cPolls; ++$i) {
-            if ($this->hasAlreadyVoted($polls[$i]['id']) ||
-                ($polls[$i]['start'] !== $polls[$i]['end'] && $this->date->timestamp($polls[$i]['end']) <= $this->date->timestamp())
-            ) {
-                $polls[$i]['link'] = 'result';
-            } else {
-                $polls[$i]['link'] = 'vote';
-            }
-        }
-
-        return [
-            'polls' => $polls,
-        ];
-    }
-
-    /**
-     * @param int $pollId
-     *
-     * @return int
-     */
-    protected function hasAlreadyVoted($pollId)
-    {
-        // Check, whether the logged user has already voted
-        if ($this->user->isAuthenticated() === true) {
-            $query = $this->voteRepository->getVotesByUserId(
-                $pollId,
-                $this->user->getUserId(),
-                $this->request->getSymfonyRequest()->getClientIp()
-            );
-        } else { // For guest users check against the IP-address
-            $query = $this->voteRepository->getVotesByIpAddress(
-                $pollId,
-                $this->request->getSymfonyRequest()->getClientIp()
-            );
-        }
-
-        return $query > 0;
+        return ($this->pollListViewProvider)();
     }
 }

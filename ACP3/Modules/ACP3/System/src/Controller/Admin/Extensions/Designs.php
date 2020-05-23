@@ -18,7 +18,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Core\XML
      */
-    protected $xml;
+    private $xml;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

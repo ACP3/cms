@@ -13,64 +13,41 @@ use ACP3\Modules\ACP3\Newsletter;
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $adminSettingsFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
-    protected $secureHelper;
-
+    private $secureHelper;
     /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                        $context
-     * @param \ACP3\Core\Helpers\Forms                                             $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                         $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                            $secureHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\AdminSettingsViewProvider
      */
+    private $adminSettingsViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Newsletter\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        Newsletter\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
+        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
-
-        return [
-            'html' => $this->formsHelper->yesNoCheckboxGenerator('html', $settings['html']),
-            'form' => \array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminSettingsViewProvider)();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

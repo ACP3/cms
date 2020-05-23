@@ -19,13 +19,10 @@ class Index extends AbstractFrontendAction
      */
     private $shariffBackend;
 
-    /**
-     * Index constructor.
-     */
     public function __construct(
         FrontendContext $context,
-        Backend $shariffBackend)
-    {
+        Backend $shariffBackend
+    ) {
         parent::__construct($context);
 
         $this->shariffBackend = $shariffBackend;

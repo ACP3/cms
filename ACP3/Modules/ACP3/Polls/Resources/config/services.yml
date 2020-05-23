@@ -1,2 +1,10 @@
 imports:
   - { resource: components/*.yml }
+
+services:
+  polls.helpers:
+    class: ACP3\Modules\ACP3\Polls\Helpers
+    arguments:
+      - '@polls.model.voterepository'
+      - '@core.http.request'
+      - '@users.model.user_model'

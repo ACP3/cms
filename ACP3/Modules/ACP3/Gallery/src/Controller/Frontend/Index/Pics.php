@@ -11,71 +11,47 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Pics extends AbstractAction
+class Pics extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
      * @var \ACP3\Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
-    protected $galleryRepository;
+    private $galleryRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
+     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListViewProvider
      */
-    protected $galleryCache;
+    private $galleryPictureListViewProvider;
 
-    /**
-     * Pics constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Core\Date                                               $date
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
-        Gallery\Cache $galleryCache
+        Gallery\ViewProviders\GalleryPictureListViewProvider $galleryPictureListViewProvider
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->galleryRepository = $galleryRepository;
-        $this->galleryCache = $galleryCache;
+        $this->galleryPictureListViewProvider = $galleryPictureListViewProvider;
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $gallery = $this->galleryRepository->getOneById($id);
-
-            $this->breadcrumb
-                ->append($this->translator->t('gallery', 'gallery'), 'gallery')
-                ->append(
-                    $gallery['title'],
-                    $this->request->getQuery()
-                );
-            $this->title->setPageTitle($gallery['title']);
-
-            return [
-                'pictures' => $this->galleryCache->getCache($id),
-                'gallery' => $gallery,
-                'overlay' => (int) $this->settings['overlay'],
-            ];
+            return ($this->galleryPictureListViewProvider)($id);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

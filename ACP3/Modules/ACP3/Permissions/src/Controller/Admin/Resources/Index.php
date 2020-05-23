@@ -13,50 +13,24 @@ use ACP3\Modules\ACP3\Permissions;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
+     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\ResourceListDataGridViewProvider
      */
-    protected $resourceRepository;
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
+    private $resourceListDataGridViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\ACL $acl,
-        Core\Modules $modules,
-        Permissions\Model\Repository\ResourceRepository $resourceRepository
+        Permissions\ViewProviders\ResourceListDataGridViewProvider $resourceListDataGridViewProvider
     ) {
         parent::__construct($context);
 
-        $this->resourceRepository = $resourceRepository;
-        $this->acl = $acl;
-        $this->modules = $modules;
+        $this->resourceListDataGridViewProvider = $resourceListDataGridViewProvider;
     }
 
     /**
      * @return array
      */
-    public function execute()
+    public function execute(): array
     {
-        $resources = $this->resourceRepository->getAllResources();
-        $output = [];
-        foreach ($resources as $resource) {
-            if ($this->modules->isActive($resource['module_name']) === true) {
-                $module = $this->translator->t($resource['module_name'], $resource['module_name']);
-                $output[$module][] = $resource;
-            }
-        }
-        \ksort($output);
-
-        return [
-            'resources' => $output,
-            'can_delete_resource' => $this->acl->hasPermission('admin/permissions/resources/delete'),
-            'can_edit_resource' => $this->acl->hasPermission('admin/permissions/resources/edit'),
-        ];
+        return ($this->resourceListDataGridViewProvider)();
     }
 }

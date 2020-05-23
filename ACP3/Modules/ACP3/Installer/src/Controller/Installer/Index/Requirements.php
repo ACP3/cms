@@ -16,7 +16,7 @@ class Requirements extends AbstractAction
     /**
      * @var \ACP3\Modules\ACP3\Installer\Helpers\Requirements
      */
-    protected $requirementsHelpers;
+    private $requirementsHelpers;
 
     public function __construct(
         InstallerContext $context,

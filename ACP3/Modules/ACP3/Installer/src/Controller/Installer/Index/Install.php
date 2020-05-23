@@ -28,27 +28,27 @@ class Install extends AbstractAction
     /**
      * @var \ACP3\Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var XML
      */
-    protected $xml;
+    private $xml;
     /**
      * @var \ACP3\Core\Helpers\Date
      */
-    protected $dateHelper;
+    private $dateHelper;
     /**
      * @var Forms
      */
-    protected $forms;
+    private $forms;
     /**
      * @var InstallModel
      */
-    protected $installModel;
+    private $installModel;
     /**
      * @var \ACP3\Modules\ACP3\Installer\Validation\FormValidation
      */
-    protected $formValidation;
+    private $formValidation;
     /**
      * @var \ACP3\Core\Helpers\Alerts
      */

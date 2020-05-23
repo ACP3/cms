@@ -15,49 +15,32 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $adminSettingsFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Core\Helpers\Date
+     * @var \ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentsSettingsViewProvider
      */
-    private $dateHelper;
+    private $adminCommentsSettingsViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
         Core\Helpers\Secure $secureHelper,
-        Core\Helpers\Date $dateHelper,
         Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Comments\ViewProviders\AdminCommentsSettingsViewProvider $adminCommentsSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;
-        $this->dateHelper = $dateHelper;
+        $this->adminCommentsSettingsViewProvider = $adminCommentsSettingsViewProvider;
     }
 
     public function execute(): array
     {
-        $settings = $this->config->getSettings(Comments\Installer\Schema::MODULE_NAME);
-
-        return [
-            'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminCommentsSettingsViewProvider)();
     }
 
     /**

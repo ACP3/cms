@@ -13,79 +13,47 @@ use ACP3\Modules\ACP3\Newsletter;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
      */
-    protected $subscribeHelper;
+    private $subscribeHelper;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation
      */
-    protected $subscribeFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $subscribeFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Alerts
      */
     private $alertsHelper;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                    $context
-     * @param \ACP3\Core\Helpers\Alerts                                        $alertsHelper
-     * @param \ACP3\Core\Helpers\Forms                                         $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                     $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe                   $subscribeHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation
+     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterSubscribeViewProvider
      */
+    private $newsletterSubscribeViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Alerts $alertsHelper,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\Subscribe $subscribeHelper,
-        Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation
+        Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation,
+        Newsletter\ViewProviders\NewsletterSubscribeViewProvider $newsletterSubscribeViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->subscribeHelper = $subscribeHelper;
         $this->subscribeFormValidation = $subscribeFormValidation;
         $this->alertsHelper = $alertsHelper;
+        $this->newsletterSubscribeViewProvider = $newsletterSubscribeViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $defaults = [
-            'first_name' => '',
-            'last_name' => '',
-            'mail' => '',
-        ];
-
-        $salutations = [
-            0 => $this->translator->t('newsletter', 'salutation_unspecified'),
-            1 => $this->translator->t('newsletter', 'salutation_female'),
-            2 => $this->translator->t('newsletter', 'salutation_male'),
-        ];
-
-        return [
-            'salutation' => $this->formsHelper->choicesGenerator('salutation', $salutations),
-            'form' => \array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->newsletterSubscribeViewProvider)();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -104,9 +72,9 @@ class Index extends Core\Controller\AbstractFrontendAction
 
                 $this->setTemplate(
                     $this->alertsHelper->confirmBox(
-                    $this->translator->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'),
-                    $this->appPath->getWebRoot()
-                )
+                        $this->translator->t('newsletter', $bool !== false ? 'subscribe_success' : 'subscribe_error'),
+                        $this->appPath->getWebRoot()
+                    )
                 );
             }
         );

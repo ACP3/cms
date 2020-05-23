@@ -17,19 +17,19 @@ class Download extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var \ACP3\Core\Helpers\StringFormatter
      */
-    protected $stringFormatter;
+    private $stringFormatter;
     /**
      * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
      */
-    protected $filesRepository;
+    private $filesRepository;
     /**
      * @var \ACP3\Modules\ACP3\Files\Cache
      */
-    protected $filesCache;
+    private $filesCache;
     /**
      * @var \ACP3\Core\Http\RedirectResponse
      */
@@ -75,7 +75,9 @@ class Download extends Core\Controller\AbstractFrontendAction
                 );
 
                 return $response;
-            } elseif (\preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
+            }
+
+            if (\preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
                 return $this->redirectResponse->toNewPage($file['file']);
             }
         }

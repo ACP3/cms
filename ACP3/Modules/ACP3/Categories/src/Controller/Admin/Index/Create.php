@@ -10,61 +10,46 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
-    /**
-     * @var Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
+    private $adminFormValidation;
     /**
      * @var Categories\Model\CategoriesModel
      */
-    protected $categoriesModel;
+    private $categoriesModel;
     /**
      * @var \ACP3\Core\Helpers\Upload
      */
     private $categoriesUploadHelper;
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategoryEditViewProvider
      */
-    private $modules;
+    private $adminCategoryEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Modules $modules,
-        Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoriesModel $categoriesModel,
-        Categories\Model\Repository\CategoryRepository $categoryRepository,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\Upload $categoriesUploadHelper,
-        Core\Helpers\FormToken $formTokenHelper
+        Categories\ViewProviders\AdminCategoryEditViewProvider $adminCategoryEditViewProvider
     ) {
-        parent::__construct($context, $formsHelper, $categoryRepository);
+        parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
         $this->categoriesUploadHelper = $categoriesUploadHelper;
-        $this->modules = $modules;
+        $this->adminCategoryEditViewProvider = $adminCategoryEditViewProvider;
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
-        return [
-            'form' => \array_merge($this->getDefaultFormData(), $this->request->getPost()->all()),
-            'category_tree' => $this->fetchCategoryTree(),
-            'mod_list' => $this->fetchModules(),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminCategoryEditViewProvider)($this->getDefaultFormData());
     }
 
     private function getDefaultFormData(): array
@@ -77,9 +62,10 @@ class Create extends AbstractFormAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -98,22 +84,5 @@ class Create extends AbstractFormAction
 
             return $this->categoriesModel->save($formData);
         });
-    }
-
-    /**
-     * @return array
-     */
-    protected function fetchModules()
-    {
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $name => $info) {
-            if ($info['active'] && \in_array('categories', $info['dependencies']) === true) {
-                $modules[$name]['selected'] = $this->formsHelper->selectEntry('module_id', $info['id']);
-            } else {
-                unset($modules[$name]);
-            }
-        }
-
-        return $modules;
     }
 }

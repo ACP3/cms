@@ -13,58 +13,34 @@ use ACP3\Modules\ACP3\News;
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation
      */
     private $adminSettingsFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Core\Helpers\Date
+     * @var \ACP3\Modules\ACP3\News\ViewProviders\AdminSettingsViewProvider
      */
-    private $dateHelper;
+    private $adminSettingsViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Core\Helpers\Date $dateHelper,
-        News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        News\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        News\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
-        $this->dateHelper = $dateHelper;
+        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function execute(): array
     {
-        $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
-
-        return [
-            'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
-            'readmore' => $this->formsHelper->yesNoCheckboxGenerator('readmore', $settings['readmore']),
-            'readmore_chars' => $this->request->getPost()->get('readmore_chars', $settings['readmore_chars']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
-            'category_in_breadcrumb' => $this->formsHelper->yesNoCheckboxGenerator(
-                'category_in_breadcrumb',
-                $settings['category_in_breadcrumb']
-            ),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminSettingsViewProvider)();
     }
 
     /**

@@ -2,37 +2,37 @@
 
 {block CONTENT}
     <dl>
-        {if !empty($imprint.address)}
+        {if !empty($contact.address)}
             <dt>{lang t="contact|address"}</dt>
-            <dd>{$imprint.address|rewrite_uri}</dd>
+            <dd>{$contact.address|rewrite_uri}</dd>
         {/if}
-        {if !empty($imprint.mail)}
+        {if !empty($contact.mail)}
             <dt>{lang t="system|email_address"}</dt>
-            <dd><a href="{uri args="contact"}">{$imprint.mail}</a></dd>
+            <dd><a href="{uri args="contact"}">{$contact.mail}</a></dd>
         {/if}
-        {if !empty($imprint.telephone)}
+        {if !empty($contact.telephone)}
             <dt>{lang t="contact|telephone"}</dt>
-            <dd><a href="tel:{$imprint.telephone|replace:' ':''}">{$imprint.telephone}</a></dd>
+            <dd><a href="tel:{$contact.telephone|replace:' ':''}">{$contact.telephone}</a></dd>
         {/if}
-        {if !empty($imprint.mobile_phone)}
+        {if !empty($contact.mobile_phone)}
             <dt>{lang t="contact|mobile_phone"}</dt>
-            <dd><a href="tel:{$imprint.mobile_phone|replace:' ':''}">{$imprint.mobile_phone}</a></dd>
+            <dd><a href="tel:{$contact.mobile_phone|replace:' ':''}">{$contact.mobile_phone}</a></dd>
         {/if}
-        {if !empty($imprint.fax)}
+        {if !empty($contact.fax)}
             <dt>{lang t="contact|fax"}</dt>
-            <dd>{$imprint.fax}</dd>
+            <dd>{$contact.fax}</dd>
         {/if}
-        {if !empty($imprint.vat_id)}
+        {if !empty($contact.vat_id)}
             <dt>{lang t="contact|vat_id"}</dt>
-            <dd>{$imprint.vat_id}</dd>
+            <dd>{$contact.vat_id}</dd>
         {/if}
-        {if !empty($imprint.disclaimer)}
+        {if !empty($contact.disclaimer)}
             <dt>{lang t="contact|disclaimer"}</dt>
-            <dd>{$imprint.disclaimer|rewrite_uri}</dd>
+            <dd>{$contact.disclaimer|rewrite_uri}</dd>
         {/if}
-        {if !empty($imprint.picture_credits)}
+        {if !empty($contact.picture_credits)}
             <dt>{lang t="contact|picture_credits"}</dt>
-            <dd>{$imprint.picture_credits|rewrite_uri}</dd>
+            <dd>{$contact.picture_credits|rewrite_uri}</dd>
         {/if}
     </dl>
     <p class="powered-by text-center">

@@ -15,15 +15,15 @@ class Order extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
-    protected $roleRepository;
+    private $roleRepository;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
-    protected $permissionsCache;
+    private $permissionsCache;
     /**
      * @var Core\NestedSet\Operation\Sort
      */
-    protected $sortOperation;
+    private $sortOperation;
     /**
      * @var \ACP3\Core\Http\RedirectResponse
      */
@@ -45,14 +45,11 @@ class Order extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int    $id
-     * @param string $action
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if ($this->roleRepository->roleExists($id) === true) {
             $this->sortOperation->execute($id, $action);

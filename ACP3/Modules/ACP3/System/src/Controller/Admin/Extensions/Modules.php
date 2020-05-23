@@ -16,19 +16,19 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Core\Modules\ModuleInfoCacheInterface
      */
-    protected $moduleInfoCache;
+    private $moduleInfoCache;
     /**
      * @var \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository
      */
-    protected $systemModuleRepository;
+    private $systemModuleRepository;
     /**
      * @var \ACP3\Modules\ACP3\System\Helper\Installer
      */
-    protected $installerHelper;
+    private $installerHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
-    protected $permissionsCache;
+    private $permissionsCache;
     /**
      * @var Core\I18n\DictionaryCache
      */
@@ -49,6 +49,10 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Modules
      */
     private $modules;
+    /**
+     * @var \ACP3\Modules\ACP3\System\ViewProviders\AdminModulesViewProvider
+     */
+    private $adminModulesViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -60,7 +64,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
         Permissions\Cache $permissionsCache,
         Core\Installer\SchemaRegistrar $schemaRegistrar,
         Core\Modules\SchemaInstaller $schemaInstaller,
-        Core\Modules\AclInstaller $aclInstaller
+        Core\Modules\AclInstaller $aclInstaller,
+        System\ViewProviders\AdminModulesViewProvider $adminModulesViewProvider
     ) {
         parent::__construct($context);
 
@@ -73,6 +78,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $this->schemaInstaller = $schemaInstaller;
         $this->aclInstaller = $aclInstaller;
         $this->modules = $modules;
+        $this->adminModulesViewProvider = $adminModulesViewProvider;
     }
 
     /**
@@ -106,7 +112,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function enableModule(string $moduleDirectory)
+    private function enableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -149,7 +155,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * @throws System\Exception\ModuleInstallerException
      */
-    protected function moduleInstallerExists(string $serviceId): void
+    private function moduleInstallerExists(string $serviceId): void
     {
         if ($this->schemaRegistrar->has($serviceId) === false) {
             throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'module_installer_not_found'));
@@ -159,7 +165,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      */
-    protected function checkForFailedModuleDependencies(array $dependencies, string $phrase): void
+    private function checkForFailedModuleDependencies(array $dependencies, string $phrase): void
     {
         if (!empty($dependencies)) {
             throw new System\Exception\ModuleInstallerException($this->translator->t('system', $phrase, ['%modules%' => \implode(', ', $dependencies)]));
@@ -171,12 +177,12 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function saveModuleState(string $moduleDirectory, int $active)
+    private function saveModuleState(string $moduleDirectory, int $active)
     {
         return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
 
-    protected function purgeCaches(): void
+    private function purgeCaches(): void
     {
         Core\Cache\Purge::doPurge([
             $this->appPath->getCacheDir() . 'http',
@@ -192,7 +198,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function renewCaches(): void
+    private function renewCaches(): void
     {
         $this->dictionaryCache->saveLanguageCache($this->translator->getLocale());
         $this->moduleInfoCache->saveModulesInfoCache();
@@ -204,7 +210,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function disableModule(string $moduleDirectory)
+    private function disableModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -238,7 +244,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function installModule(string $moduleDirectory)
+    private function installModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -273,7 +279,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function uninstallModule(string $moduleDirectory)
+    private function uninstallModule(string $moduleDirectory)
     {
         $result = false;
 
@@ -310,23 +316,10 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function outputPage(): array
+    private function outputPage(): array
     {
         $this->renewCaches();
 
-        $installedModules = $newModules = [];
-
-        foreach ($this->modules->getAllModulesAlphabeticallySorted() as $key => $values) {
-            if ($values['installable'] === false || $this->modules->isInstalled($values['name']) === true) {
-                $installedModules[$key] = $values;
-            } else {
-                $newModules[$key] = $values;
-            }
-        }
-
-        return [
-            'installed_modules' => $installedModules,
-            'new_modules' => $newModules,
-        ];
+        return ($this->adminModulesViewProvider)();
     }
 }

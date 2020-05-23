@@ -7,13 +7,9 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@polls.model.pollrepository'
       - '@polls.model.polls_model'
-      - '@polls.model.answerrepository'
       - '@polls.validation.admin_form_validation'
+      - '@polls.view_providers.admin_poll_edit'
 
   polls.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Delete
@@ -25,28 +21,21 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
       - '@polls.model.polls_model'
-      - '@polls.model.answerrepository'
       - '@polls.validation.admin_form_validation'
+      - '@polls.view_providers.admin_poll_edit'
 
   polls.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.results_per_page'
-      - '@polls.model.data_grid_repository'
-      - '@core.data_grid.data_grid'
+      - '@polls.view_providers.data_grid'
 
   polls.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@polls.model.pollrepository'
-      - '@polls.model.voterepository'
+      - '@polls.view_providers.poll_list'
 
   polls.controller.frontend.index.result:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Result
@@ -54,7 +43,7 @@ services:
       - '@core.context.frontend'
       - '@core.date'
       - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
+      - '@polls.view_providers.poll_result'
 
   polls.controller.frontend.index.vote:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Vote
@@ -64,7 +53,7 @@ services:
       - '@polls.validation.vote_validation'
       - '@polls.model.vote_model'
       - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
+      - '@polls.view_providers.poll_vote'
 
   polls.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Widget\Index\Index
@@ -72,6 +61,6 @@ services:
       - '@core.context.widget'
       - '@core.date'
       - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
-      - '@polls.model.voterepository'
+      - '@polls.view_providers.poll_widget'
+      - '@polls.helpers'
 

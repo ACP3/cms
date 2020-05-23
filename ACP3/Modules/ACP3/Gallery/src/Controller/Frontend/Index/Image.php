@@ -11,24 +11,17 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class Image extends AbstractAction
+class Image extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
-    protected $pictureRepository;
+    private $pictureRepository;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
     private $thumbnailGenerator;
 
-    /**
-     * Image constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator          $thumbnailGenerator
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
@@ -41,14 +34,11 @@ class Image extends AbstractAction
     }
 
     /**
-     * @param int    $id
-     * @param string $action
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id, $action = '')
+    public function execute(int $id, ?string $action = null)
     {
         \set_time_limit(20);
         $picture = $this->pictureRepository->getFileById($id);

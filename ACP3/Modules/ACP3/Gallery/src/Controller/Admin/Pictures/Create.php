@@ -14,10 +14,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
      */
     private $galleryRepository;
@@ -33,56 +29,46 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Upload
      */
     private $galleryUploadHelper;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider
+     */
+    private $adminGalleryPictureCreateViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\PictureModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation,
-        Core\Helpers\Upload $galleryUploadHelper
+        Core\Helpers\Upload $galleryUploadHelper,
+        Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider $adminGalleryPictureCreateViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->galleryRepository = $galleryRepository;
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
         $this->galleryUploadHelper = $galleryUploadHelper;
+        $this->adminGalleryPictureCreateViewProvider = $adminGalleryPictureCreateViewProvider;
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         if ($this->galleryRepository->galleryExists($id) === true) {
-            $gallery = $this->galleryRepository->getGalleryTitle($id);
-
-            $this->breadcrumb
-                ->append($gallery, 'acp/gallery/pictures/index/id_' . $id)
-                ->append(
-                    $this->translator->t('gallery', 'admin_pictures_create'),
-                    $this->request->getQuery()
-                );
-
-            return [
-                'form' => \array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
-                'gallery_id' => $id,
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-            ];
+            return ($this->adminGalleryPictureCreateViewProvider)($id);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost(int $id)
     {

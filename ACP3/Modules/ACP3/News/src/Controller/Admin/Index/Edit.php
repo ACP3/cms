@@ -14,31 +14,30 @@ use ACP3\Modules\ACP3\News;
 class Edit extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
+    private $adminFormValidation;
     /**
      * @var News\Model\NewsModel
      */
-    protected $newsModel;
+    private $newsModel;
+    /**
+     * @var \ACP3\Modules\ACP3\News\ViewProviders\AdminNewsEditViewProvider
+     */
+    private $adminNewsEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         News\Model\NewsModel $newsModel,
         News\Validation\AdminFormValidation $adminFormValidation,
-        Categories\Helpers $categoriesHelpers
+        Categories\Helpers $categoriesHelpers,
+        News\ViewProviders\AdminNewsEditViewProvider $adminNewsEditViewProvider
     ) {
-        parent::__construct($context, $formsHelper, $categoriesHelpers);
+        parent::__construct($context, $categoriesHelpers);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->newsModel = $newsModel;
         $this->adminFormValidation = $adminFormValidation;
+        $this->adminNewsEditViewProvider = $adminNewsEditViewProvider;
     }
 
     /**
@@ -50,22 +49,7 @@ class Edit extends AbstractFormAction
         $news = $this->newsModel->getOneById($id);
 
         if (empty($news) === false) {
-            $this->title->setPageTitlePrefix($news['title']);
-
-            return [
-                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $news['active']),
-                'categories' => $this->categoriesHelpers->categoriesList(
-                    News\Installer\Schema::MODULE_NAME,
-                    $news['category_id'],
-                    true
-                ),
-                'options' => $this->fetchOptions($news['readmore']),
-                'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $news['target']),
-                'form' => \array_merge($news, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-                'SEO_URI_PATTERN' => News\Helpers::URL_KEY_PATTERN,
-                'SEO_ROUTE_NAME' => \sprintf(News\Helpers::URL_KEY_PATTERN, $id),
-            ];
+            return ($this->adminNewsEditViewProvider)($news);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

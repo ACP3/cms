@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Widget\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -17,68 +16,28 @@ class Index extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Core\Date
+     * @var \ACP3\Modules\ACP3\Files\ViewProviders\FilesWidgetViewProvider
      */
-    protected $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
-     */
-    protected $filesRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
-     */
-    private $categoryRepository;
+    private $filesWidgetViewProvider;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        Files\Model\Repository\FilesRepository $filesRepository,
-        CategoryRepository $categoryRepository
+        Files\ViewProviders\FilesWidgetViewProvider $filesWidgetViewProvider
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->filesRepository = $filesRepository;
-        $this->categoryRepository = $categoryRepository;
+        $this->filesWidgetViewProvider = $filesWidgetViewProvider;
     }
 
     /**
-     * @param int $categoryId
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(?int $limit = null, ?int $categoryId = null, string $template = '')
+    public function execute(?int $limit = null, ?int $categoryId = null, string $template = ''): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         $this->setTemplate(\urldecode($template));
 
-        return [
-            'category' => $this->categoryRepository->getOneById($categoryId),
-            'sidebar_files' => $this->fetchFiles($categoryId, $limit),
-        ];
-    }
-
-    /**
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    private function fetchFiles(?int $categoryId, ?int $limit): array
-    {
-        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
-
-        if (!empty($categoryId)) {
-            return $this->filesRepository->getAllByCategoryId(
-                $categoryId,
-                $this->date->getCurrentDateTime(),
-                $limit ?? $settings['sidebar']
-            );
-        }
-
-        return $this->filesRepository->getAll(
-            $this->date->getCurrentDateTime(),
-            $limit ?? $settings['sidebar']
-        );
+        return ($this->filesWidgetViewProvider)($categoryId, $limit);
     }
 }

@@ -15,15 +15,15 @@ class Order extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Core\Helpers\Sort
      */
-    protected $sortHelper;
+    private $sortHelper;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Cache
      */
-    protected $galleryCache;
+    private $galleryCache;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
-    protected $pictureRepository;
+    private $pictureRepository;
     /**
      * @var \ACP3\Core\Http\RedirectResponse
      */
@@ -45,14 +45,11 @@ class Order extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int    $id
-     * @param string $action
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->pictureRepository->pictureExists($id) === true) {
             if ($action === 'up') {

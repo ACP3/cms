@@ -1,0 +1,8 @@
+services:
+  feeds.view_providers.admin_settings:
+    class: ACP3\Modules\ACP3\Feeds\ViewProviders\AdminSettingsViewProvider
+    arguments:
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@core.config'

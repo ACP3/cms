@@ -15,14 +15,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var Share\Model\ShareModel
      */
-    protected $shareModel;
+    private $shareModel;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Share\Model\ShareModel     $shareModel
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Share\Model\ShareModel $shareModel
@@ -33,20 +27,14 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $action
-     *
-     * @return mixed
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($action = '')
+    public function execute(?string $action = null)
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
             function (array $items) {
-                $result = $this->shareModel->delete($items);
-
-                return $result;
+                return $this->shareModel->delete($items);
             }
         );
     }

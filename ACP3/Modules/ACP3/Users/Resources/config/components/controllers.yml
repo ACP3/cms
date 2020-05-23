@@ -7,11 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.acl'
-      - '@core.helpers.formToken'
-      - '@core.helpers.secure'
-      - '@core.helpers.forms'
-      - '@users.helpers.forms'
+      - '@users.view_providers.admin_user_edit'
       - '@users.model.users_model'
       - '@users.validation.admin_form_validation'
       - '@permissions.helpers'
@@ -26,12 +22,8 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.acl'
-      - '@core.helpers.formToken'
-      - '@core.helpers.secure'
-      - '@core.helpers.forms'
-      - '@users.helpers.forms'
       - '@users.model.authentication_model'
+      - '@users.view_providers.admin_user_edit'
       - '@users.model.users_model'
       - '@users.validation.admin_form_validation'
       - '@permissions.helpers'
@@ -40,24 +32,20 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.results_per_page'
-      - '@users.model.data_grid_repository'
-      - '@core.data_grid.data_grid'
+      - '@users.view_providers.data_grid'
 
   users.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
-      - '@core.helpers.forms'
+      - '@users.view_providers.admin_settings'
       - '@users.validation.admin_settings_form_validation'
 
   users.controller.frontend.account.edit:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
-      - '@users.helpers.forms'
+      - '@users.view_providers.account_edit'
       - '@users.model.users_model'
       - '@users.validation.account_form_validation'
 
@@ -70,9 +58,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
-      - '@core.helpers.secure'
-      - '@users.helpers.forms'
+      - '@users.view_providers.account_settings'
       - '@users.model.authentication_model'
       - '@users.model.users_model'
       - '@users.validation.account_settings_form_validation'
@@ -84,27 +70,26 @@ services:
       - '@core.http.redirect_response'
       - '@core.validator'
       - '@core.helpers.alerts'
-      - '@core.helpers.formToken'
       - '@core.helpers.secure'
+      - '@users.view_providers.forgot_password'
+      - '@users.model.users_model'
       - '@users.model.userrepository'
       - '@users.validation.account_forgot_password_form_validation'
-      - '@core.helpers.sendEmail'
+      - '@users.helpers.send_password_change_email'
 
   users.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.results_per_page'
-      - '@core.pagination'
-      - '@users.model.userrepository'
+      - '@users.view_providers.user_list'
 
   users.controller.frontend.index.login:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login
     arguments:
       - '@core.context.frontend'
       - '@core.http.redirect_response'
-      - '@core.helpers.forms'
       - '@core.helpers.secure'
+      - '@users.view_providers.login'
       - '@users.model.authentication_model'
 
   users.controller.frontend.index.logout:
@@ -112,27 +97,25 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.http.redirect_response'
-      - '@core.router'
+      - '@users.view_providers.logout'
       - '@users.model.authentication_model'
 
   users.controller.frontend.index.register:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
       - '@core.http.redirect_response'
       - '@core.helpers.alerts'
-      - '@core.helpers.formToken'
-      - '@core.helpers.secure'
-      - '@users.model.userrepository'
+      - '@users.view_providers.registration'
+      - '@users.model.users_model'
       - '@users.validation.registration_form_validation'
       - '@permissions.helpers'
-      - '@core.helpers.sendEmail'
 
   users.controller.frontend.index.view_profile:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ViewProfile
     arguments:
       - '@core.context.frontend'
+      - '@users.view_providers.user_profile'
       - '@users.model.userrepository'
 
   users.controller.widget.index.hash:
@@ -145,10 +128,10 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login
     arguments:
       - '@core.context.widget'
+      - '@users.view_providers.login'
 
   users.controller.widget.index.user_menu:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\UserMenu
     arguments:
       - '@core.context.widget'
-      - '@core.acl'
-      - '@core.modules'
+      - '@users.view_providers.user_menu'

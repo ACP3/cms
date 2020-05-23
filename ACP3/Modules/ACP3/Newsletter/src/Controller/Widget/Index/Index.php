@@ -8,38 +8,28 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterSubscribeWidgetViewProvider;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var Core\Helpers\FormToken
+     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterSubscribeWidgetViewProvider
      */
-    protected $formTokenHelper;
+    private $newsletterSubscribeWidgetViewProvider;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param \ACP3\Core\Helpers\FormToken                $formTokenHelper
-     */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Helpers\FormToken $formTokenHelper
+        NewsletterSubscribeWidgetViewProvider $newsletterSubscribeWidgetViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
+        $this->newsletterSubscribeWidgetViewProvider = $newsletterSubscribeWidgetViewProvider;
     }
 
-    /**
-     * @param string $template
-     *
-     * @return array
-     */
-    public function execute($template = '')
+    public function execute(string $template = ''): array
     {
         $this->setTemplate($template);
 
-        return [
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->newsletterSubscribeWidgetViewProvider)();
     }
 }

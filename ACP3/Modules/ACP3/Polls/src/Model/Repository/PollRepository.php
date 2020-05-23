@@ -13,62 +13,65 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
 {
     use Core\Model\Repository\PublicationPeriodAwareTrait;
 
-    const TABLE_NAME = 'polls';
+    public const TABLE_NAME = 'polls';
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function pollExists(int $pollId, string $time = '', bool $multiple = false)
+    public function pollExists(int $pollId, string $time = '', bool $multiple = false): bool
     {
         $where = !empty($time) ? ' AND ' . $this->getPublicationPeriod() : '';
-        $multiple = ($multiple === true) ? ' AND multiple = :multiple' : '';
-        $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $where . $multiple;
+        $where .= ($multiple === true) ? ' AND multiple = :multiple' : '';
+        $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $where;
 
         return $this->db->fetchColumn($query, ['id' => $pollId, 'time' => $time, 'multiple' => 1]) > 0;
     }
 
     /**
-     * @return mixed
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneByIdWithTotalVotes(int $pollId)
+    public function getOneByIdWithTotalVotes(int $pollId): array
     {
         return $this->db->fetchAssoc(
-            'SELECT p.*, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE p.id = ?',
+            'SELECT p.*, COUNT(pv.poll_id) AS total_votes
+                        FROM ' . $this->getTableName() . ' AS p
+                   LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)
+                       WHERE p.id = ?
+                    GROUP BY p.id, p.start, p.end, p.title, p.multiple, p.user_id, p.updated_at',
             [$pollId]
         );
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 
         return $this->db->fetchAll(
-            'SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)' . $where . ' GROUP BY p.id, p.start, p.end, p.title ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt,
+            'SELECT p.id, p.start, p.end, p.title, COUNT(pv.poll_id) AS votes
+                        FROM ' . $this->getTableName() . ' AS p
+                   LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)' . $where . '
+                    GROUP BY p.id, p.start, p.end, p.title
+                    ORDER BY p.start DESC, p.end DESC, p.id DESC' . $limitStmt,
             ['time' => $time]
         );
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLatestPoll(string $time)
+    public function getLatestPoll(string $time): array
     {
         $period = $this->getPublicationPeriod('p.');
 
         return $this->db->fetchAssoc(
-            'SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes FROM ' . $this->getTableName() . ' AS p LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id) WHERE ' . $period . ' GROUP BY p.id, p.title, p.multiple ORDER BY p.start DESC LIMIT 1',
+            'SELECT p.id, p.title, p.multiple, COUNT(pv.poll_id) AS total_votes
+                        FROM ' . $this->getTableName() . ' AS p
+                   LEFT JOIN ' . $this->getTableName(VoteRepository::TABLE_NAME) . ' AS pv ON(p.id = pv.poll_id)
+                       WHERE ' . $period . ' GROUP BY p.id, p.title, p.multiple ORDER BY p.start DESC LIMIT 1',
             ['time' => $time]
         );
     }

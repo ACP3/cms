@@ -4,6 +4,13 @@ services:
     tags:
       - { name: core.model.column_type, columnType: 'boolean' }
 
+  core.model.column_type.date_column_type_strategy:
+    class: ACP3\Core\Model\DataProcessor\ColumnType\DateColumnType
+    arguments:
+      - '@core.date'
+    tags:
+      - { name: core.model.column_type, columnType: 'date' }
+
   core.model.column_type.date_time_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType
     arguments:

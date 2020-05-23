@@ -13,63 +13,47 @@ use ACP3\Modules\ACP3\Newsletter;
 class Unsubscribe extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
      */
-    protected $accountStatusHelper;
+    private $accountStatusHelper;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation
      */
-    protected $unsubscribeFormValidation;
+    private $unsubscribeFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Alerts
      */
     private $alertsHelper;
-
     /**
-     * Unsubscribe constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
-     * @param \ACP3\Core\Helpers\Alerts                                          $alertsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                       $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                 $accountStatusHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
+     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterUnsubscribeViewProvider
      */
+    private $newsletterUnsubscribeViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Alerts $alertsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
-        Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
+        Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation,
+        Newsletter\ViewProviders\NewsletterUnsubscribeViewProvider $newsletterUnsubscribeViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->accountStatusHelper = $accountStatusHelper;
         $this->unsubscribeFormValidation = $unsubscribeFormValidation;
         $this->alertsHelper = $alertsHelper;
+        $this->newsletterUnsubscribeViewProvider = $newsletterUnsubscribeViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $defaults = [
-            'mail' => '',
-        ];
-
-        return [
-            'form' => \array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->newsletterUnsubscribeViewProvider)();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -86,9 +70,9 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
 
                 $this->setTemplate(
                     $this->alertsHelper->confirmBox(
-                    $this->translator->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
-                    $this->appPath->getWebRoot()
-                )
+                        $this->translator->t('newsletter', $bool !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
+                        $this->appPath->getWebRoot()
+                    )
                 );
             }
         );

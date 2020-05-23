@@ -13,88 +13,51 @@ use ACP3\Modules\ACP3\Newsletter;
 class Edit extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $adminFormValidation;
     /**
      * @var Newsletter\Model\NewsletterModel
      */
-    protected $newsletterModel;
-
+    private $newsletterModel;
     /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param \ACP3\Core\Helpers\Forms                                     $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                 $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter          $newsletterHelpers
+     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\AdminNewsletterEditViewProvider
      */
+    private $adminNewsletterEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
-        Newsletter\Helper\SendNewsletter $newsletterHelpers
+        Newsletter\Helper\SendNewsletter $newsletterHelpers,
+        Newsletter\ViewProviders\AdminNewsletterEditViewProvider $adminNewsletterEditViewProvider
     ) {
         parent::__construct($context, $newsletterHelpers);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->newsletterModel = $newsletterModel;
         $this->adminFormValidation = $adminFormValidation;
+        $this->adminNewsletterEditViewProvider = $adminNewsletterEditViewProvider;
     }
 
     /**
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         $newsletter = $this->newsletterModel->getOneById($id);
 
         if (empty($newsletter) === false) {
-            $this->title->setPageTitlePrefix($newsletter['title']);
-
-            $settings = $this->config->getSettings(Newsletter\Installer\Schema::MODULE_NAME);
-
-            $actions = [
-                1 => $this->translator->t('newsletter', 'send_and_save'),
-                0 => $this->translator->t('newsletter', 'only_save'),
-            ];
-
-            return [
-                'settings' => \array_merge($settings, ['html' => $newsletter['html']]),
-                'test' => $this->formsHelper->yesNoCheckboxGenerator('test', 0),
-                'action' => $this->formsHelper->checkboxGenerator('action', $actions, 1),
-                'form' => \array_merge($newsletter, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-            ];
+            return ($this->adminNewsletterEditViewProvider)($newsletter);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function executePost(int $id)
     {
@@ -108,7 +71,7 @@ class Edit extends AbstractFormAction
             $formData['user_id'] = $this->user->getUserId();
             $bool = $this->newsletterModel->save($formData, $id);
 
-            list($text, $result) = $this->sendTestNewsletter(
+            [$text, $result] = $this->sendTestNewsletter(
                 $formData['test'] == 1,
                 $id,
                 $bool,

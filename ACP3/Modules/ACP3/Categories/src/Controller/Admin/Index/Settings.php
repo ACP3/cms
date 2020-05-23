@@ -15,45 +15,33 @@ class Settings extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
+    private $adminSettingsFormValidation;
     /**
-     * @var Core\Helpers\FormToken
+     * @var \ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategorySettingsViewProvider
      */
-    protected $formTokenHelper;
+    private $adminCategorySettingsViewProvider;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                        $context
-     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                                         $formTokenHelper
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Categories\ViewProviders\AdminCategorySettingsViewProvider $adminCategorySettingsViewProvider
     ) {
         parent::__construct($context);
 
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
+        $this->adminCategorySettingsViewProvider = $adminCategorySettingsViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $settings = $this->config->getSettings(Categories\Installer\Schema::MODULE_NAME);
-
-        return [
-            'form' => \array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminCategorySettingsViewProvider)();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

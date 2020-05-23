@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
-    public function execute()
+    public function execute(): void
     {
     }
 }

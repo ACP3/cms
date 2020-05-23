@@ -1,0 +1,16 @@
+services:
+  users.helpers.forms:
+    class: ACP3\Modules\ACP3\Users\Helpers\Forms
+    arguments:
+      - '@core.i18n.translator'
+      - '@core.i18n.country_list'
+      - '@core.http.request'
+      - '@core.helpers.forms'
+
+  users.helpers.send_password_change_email:
+    class: ACP3\Modules\ACP3\Users\Helpers\SendPasswordChangeEmail
+    arguments:
+      - '@core.http.request'
+      - '@core.helpers.sendEmail'
+      - '@core.config'
+      - '@core.i18n.translator'

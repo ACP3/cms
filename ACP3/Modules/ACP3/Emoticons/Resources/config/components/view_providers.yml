@@ -1,0 +1,22 @@
+services:
+  emoticons.view_providers.admin_emoticon_edit:
+    class: ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminEmoticonEditViewProvider
+    arguments:
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+
+  emoticons.view_providers.admin_settings:
+    class: ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminSettingsViewProvider
+    arguments:
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@core.config'
+
+  emoticons.view_providers.data_grid:
+    class: ACP3\Modules\ACP3\Emoticons\ViewProviders\DataGridViewProvider
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.data_grid.data_grid'
+      - '@emoticons.model.data_grid_repository'
+      - '@core.helpers.results_per_page'
+      - '@core.i18n.translator'

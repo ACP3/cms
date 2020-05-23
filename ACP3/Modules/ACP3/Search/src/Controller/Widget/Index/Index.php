@@ -16,32 +16,23 @@ class Index extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Search\Helpers
+     * @var \ACP3\Modules\ACP3\Search\ViewProviders\SearchWidgetViewProvider
      */
-    protected $searchHelpers;
+    private $searchWidgetViewProvider;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     * @param \ACP3\Modules\ACP3\Search\Helpers           $searchHelpers
-     */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Search\Helpers $searchHelpers
+        Search\ViewProviders\SearchWidgetViewProvider $searchWidgetViewProvider
     ) {
         parent::__construct($context);
 
-        $this->searchHelpers = $searchHelpers;
+        $this->searchWidgetViewProvider = $searchWidgetViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return [
-            'search_mods' => $this->searchHelpers->getModules(),
-        ];
+        return ($this->searchWidgetViewProvider)();
     }
 }

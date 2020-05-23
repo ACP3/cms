@@ -8,86 +8,26 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Helpers\ResultsPerPage;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\DataGridViewProvider
      */
-    protected $dataGridRepository;
-    /**
-     * @var \ACP3\Core\DataGrid\DataGrid
-     */
-    private $dataGrid;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
+    private $dataGridViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        ResultsPerPage $resultsPerPage,
-        Users\Model\Repository\DataGridRepository $dataGridRepository,
-        Core\DataGrid\DataGrid $dataGrid
+        Users\ViewProviders\DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
 
-        $this->dataGridRepository = $dataGridRepository;
-        $this->dataGrid = $dataGrid;
-        $this->resultsPerPage = $resultsPerPage;
+        $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
-    /**
-     * @return array
-     */
     public function execute()
     {
-        $input = (new Core\DataGrid\Input())
-            ->setUseAjax(true)
-            ->setRepository($this->dataGridRepository)
-            ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#users-data-grid')
-            ->setResourcePathDelete('admin/users/index/delete')
-            ->setResourcePathEdit('admin/users/index/edit');
-
-        $this->addDataGridColumns($input);
-
-        return $this->dataGrid->render($input);
-    }
-
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     */
-    protected function addDataGridColumns(Core\DataGrid\Input $input)
-    {
-        $input
-            ->addColumn([
-                'label' => $this->translator->t('users', 'nickname'),
-                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['nickname'],
-                'default_sort' => true,
-            ], 40)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'email_address'),
-                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['mail'],
-            ], 30)
-            ->addColumn([
-                'label' => $this->translator->t('permissions', 'roles'),
-                'type' => Users\DataGrid\ColumnRenderer\UserRolesColumnRenderer::class,
-                'fields' => ['id'],
-            ], 20)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'id'),
-                'type' => Core\DataGrid\ColumnRenderer\RouteColumnRenderer::class,
-                'fields' => ['id'],
-                'primary' => true,
-                'custom' => [
-                    'path' => Users\Helpers::URL_KEY_PATTERN,
-                ],
-            ], 10);
+        return ($this->dataGridViewProvider)();
     }
 }

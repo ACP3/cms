@@ -15,24 +15,16 @@ class Activate extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
      */
-    protected $accountStatusHelper;
+    private $accountStatusHelper;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation
      */
-    protected $activateAccountFormValidation;
+    private $activateAccountFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Alerts
      */
     private $alertsHelper;
 
-    /**
-     * Activate constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                          $context
-     * @param \ACP3\Core\Helpers\Alerts                                              $alertsHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus                     $accountStatusHelper
-     * @param \ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Alerts $alertsHelper,
@@ -46,10 +38,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
         $this->alertsHelper = $alertsHelper;
     }
 
-    /**
-     * @param string $hash
-     */
-    public function execute($hash)
+    public function execute(string $hash): void
     {
         try {
             $this->activateAccountFormValidation->validate(['hash' => $hash]);

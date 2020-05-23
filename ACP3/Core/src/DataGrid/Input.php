@@ -88,7 +88,7 @@ class Input
     /**
      * @return $this
      */
-    public function setResourcePathEdit(string $resourcePathEdit): self
+    public function setResourcePathEdit(?string $resourcePathEdit): self
     {
         $this->resourcePathEdit = $resourcePathEdit;
 
@@ -98,7 +98,7 @@ class Input
     /**
      * @return $this
      */
-    public function setResourcePathDelete(string $resourcePathDelete): self
+    public function setResourcePathDelete(?string $resourcePathDelete): self
     {
         $this->resourcePathDelete = $resourcePathDelete;
 
@@ -110,7 +110,7 @@ class Input
      */
     public function setRecordsPerPage(int $recordsPerPage): self
     {
-        $this->recordsPerPage = (int) $recordsPerPage;
+        $this->recordsPerPage = $recordsPerPage;
 
         return $this;
     }
@@ -130,7 +130,7 @@ class Input
      */
     public function setEnableMassAction(bool $enableMassAction): self
     {
-        $this->enableMassAction = (bool) $enableMassAction;
+        $this->enableMassAction = $enableMassAction;
 
         return $this;
     }
@@ -140,7 +140,7 @@ class Input
      */
     public function setEnableOptions(bool $enableOptions): self
     {
-        $this->enableOptions = (bool) $enableOptions;
+        $this->enableOptions = $enableOptions;
 
         return $this;
     }

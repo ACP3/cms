@@ -1,0 +1,20 @@
+services:
+  search.view_providers.search:
+    class: ACP3\Modules\ACP3\Search\ViewProviders\SearchViewProvider
+    arguments:
+      - '@core.helpers.forms'
+      - '@search.helpers'
+      - '@core.http.request'
+      - '@core.i18n.translator'
+
+  search.view_providers.search_results:
+    class: ACP3\Modules\ACP3\Search\ViewProviders\SearchResultsViewProvider
+    arguments:
+      - '@core.http.request'
+      - '@core.breadcrumb'
+      - '@core.i18n.translator'
+
+  search.view_providers.search_widget:
+    class: ACP3\Modules\ACP3\Search\ViewProviders\SearchWidgetViewProvider
+    arguments:
+      - '@search.helpers'

@@ -11,84 +11,59 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    protected $secureHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
+    private $adminFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Helpers
      */
-    protected $permissionsHelpers;
+    private $permissionsHelpers;
     /**
      * @var Users\Model\UsersModel
      */
-    protected $usersModel;
+    private $usersModel;
     /**
-     * @var Users\Helpers\Forms
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider
      */
-    private $userFormsHelpers;
+    private $adminUserEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\ACL $acl,
-        Core\Helpers\FormToken $formTokenHelper,
-        Core\Helpers\Secure $secureHelper,
-        Core\Helpers\Forms $formsHelpers,
-        Users\Helpers\Forms $userFormsHelpers,
+        Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers
     ) {
-        parent::__construct($context, $acl, $formsHelpers);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
-        $this->secureHelper = $secureHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
         $this->usersModel = $usersModel;
-        $this->userFormsHelpers = $userFormsHelpers;
+        $this->adminUserEditViewProvider = $adminUserEditViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $this->view->assign($this->userFormsHelpers->fetchUserSettingsFormFields());
-        $this->view->assign($this->userFormsHelpers->fetchUserProfileFormFields());
-
         $defaults = [
             'nickname' => '',
             'realname' => '',
-            'mail' => '',
-            'website' => '',
             'street' => '',
             'house_number' => '',
             'zip' => '',
             'city' => '',
         ];
 
-        return [
-            'roles' => $this->fetchUserRoles(),
-            'super_user' => $this->fetchIsSuperUser(),
-            'contact' => $this->userFormsHelpers->fetchContactDetails(),
-            'form' => \array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminUserEditViewProvider)($defaults);
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -96,14 +71,6 @@ class Create extends AbstractFormAction
             $formData = $this->request->getPost()->all();
 
             $this->adminFormValidation->validate($formData);
-
-            $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
-
-            $formData = \array_merge($formData, [
-                'pwd' => $this->secureHelper->generateSaltedPassword($salt, $formData['pwd'], 'sha512'),
-                'pwd_salt' => $salt,
-                'registration_date' => 'now',
-            ]);
 
             $lastId = $this->usersModel->save($formData);
 

@@ -16,11 +16,8 @@ class AbstractFormAction extends AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
      */
-    protected $newsletterHelpers;
+    private $newsletterHelpers;
 
-    /**
-     * AbstractFormAction constructor.
-     */
     public function __construct(FrontendContext $context, SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context);
@@ -29,14 +26,9 @@ class AbstractFormAction extends AbstractFrontendAction
     }
 
     /**
-     * @param bool   $isTest
-     * @param int    $id
-     * @param bool   $dbResult
-     * @param string $testEmailAddress
-     *
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function sendTestNewsletter($isTest, $id, $dbResult, $testEmailAddress)
+    protected function sendTestNewsletter(bool $isTest, int $id, bool $dbResult, string $testEmailAddress): array
     {
         if ($isTest === true) {
             $bool2 = $this->newsletterHelpers->sendNewsletter($id, $testEmailAddress);

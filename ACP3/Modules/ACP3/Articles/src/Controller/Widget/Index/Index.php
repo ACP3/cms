@@ -16,50 +16,28 @@ class Index extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var Core\Date
+     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\LatestArticlesViewProvider
      */
-    protected $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
-     */
-    protected $articlesCache;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
-     */
-    protected $articleRepository;
+    private $latestArticlesViewProvider;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext                    $context
-     * @param \ACP3\Core\Date                                                $date
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                              $articlesCache
-     */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache
+        Articles\ViewProviders\LatestArticlesViewProvider $latestArticlesViewProvider
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->articleRepository = $articleRepository;
-        $this->articlesCache = $articlesCache;
+        $this->latestArticlesViewProvider = $latestArticlesViewProvider;
     }
 
     /**
-     * @param string $template
-     *
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($template = '')
+    public function execute(string $template = ''): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         $this->setTemplate($template);
 
-        return [
-            'sidebar_articles' => $this->articleRepository->getAll($this->date->getCurrentDateTime(), 5),
-        ];
+        return ($this->latestArticlesViewProvider)();
     }
 }

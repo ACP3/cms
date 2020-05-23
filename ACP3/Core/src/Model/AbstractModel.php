@@ -156,11 +156,14 @@ abstract class AbstractModel
      */
     protected function prepareData(array $rawData, ?int $entryId)
     {
+        $currentData = null;
+
         if ($entryId !== null) {
-            $rawData = \array_merge($this->getOneById($entryId), $rawData);
+            $currentData = $this->getOneById($entryId);
+            $rawData = \array_merge($currentData, $rawData);
         }
 
-        $modelSavePrepareDataEvent = new ModelSavePrepareDataEvent($rawData, $this->getAllowedColumns());
+        $modelSavePrepareDataEvent = new ModelSavePrepareDataEvent($rawData, $currentData, $this->getAllowedColumns());
 
         $this->eventDispatcher->dispatch(
             $modelSavePrepareDataEvent,

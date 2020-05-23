@@ -10,60 +10,61 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
      */
-    protected $roleFormValidation;
+    private $roleFormValidation;
     /**
      * @var Permissions\Model\RolesModel
      */
-    protected $roleModel;
+    private $roleModel;
     /**
      * @var Permissions\Model\RulesModel
      */
-    protected $rulesModel;
+    private $rulesModel;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\AdminRoleEditViewProvider
+     */
+    private $adminRoleEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\ACL $acl,
-        Core\Modules $modules,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\RulesModel $rulesModel,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Cache $permissionsCache,
-        Permissions\Validation\RoleFormValidation $roleFormValidation
+        Permissions\Validation\RoleFormValidation $roleFormValidation,
+        Permissions\ViewProviders\AdminRoleEditViewProvider $adminRoleEditViewProvider
     ) {
-        parent::__construct($context, $acl, $modules, $formsHelper, $privilegeRepository, $permissionsCache);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;
         $this->roleModel = $rolesModel;
         $this->rulesModel = $rulesModel;
+        $this->adminRoleEditViewProvider = $adminRoleEditViewProvider;
     }
 
     /**
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
-        return [
-            'modules' => $this->fetchModulePermissions(0, 2),
-            'parent' => $this->fetchRoles(),
-            'form' => \array_merge(['name' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
+        $defaults = [
+            'id' => 0,
+            'name' => '',
+            'parent_id' => 0,
+            'left_id' => 0,
+            'right_id' => 0,
         ];
+
+        return ($this->adminRoleEditViewProvider)($defaults);
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

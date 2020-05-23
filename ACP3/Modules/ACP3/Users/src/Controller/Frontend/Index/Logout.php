@@ -15,31 +15,33 @@ class Logout extends Core\Controller\AbstractFrontendAction
     /**
      * @var Users\Model\AuthenticationModel
      */
-    protected $authenticationModel;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
+    private $authenticationModel;
     /**
      * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirectResponse;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\LogoutViewProvider
+     */
+    private $logoutViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Http\RedirectResponse $redirectResponse,
-        Core\Router\RouterInterface $router,
+        Users\ViewProviders\LogoutViewProvider $logoutViewProvider,
         Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;
-        $this->router = $router;
         $this->redirectResponse = $redirectResponse;
+        $this->logoutViewProvider = $logoutViewProvider;
     }
 
     /**
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute()
     {
@@ -49,15 +51,6 @@ class Logout extends Core\Controller\AbstractFrontendAction
 
         $this->authenticationModel->logout();
 
-        $redirectUrl = $this->appPath->getWebRoot();
-        $referer = $this->request->getSymfonyRequest()->headers->get('referer');
-        if ($referer !== $this->router->route($this->request->getPathInfo())) {
-            $redirectUrl = $referer;
-        }
-
-        return [
-            'url_homepage' => $this->appPath->getWebRoot(),
-            'url_previous_page' => $redirectUrl,
-        ];
+        return ($this->logoutViewProvider)();
     }
 }

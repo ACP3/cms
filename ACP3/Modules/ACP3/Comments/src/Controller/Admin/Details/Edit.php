@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
-use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Modules\ACP3\Comments;
 
 class Edit extends Core\Controller\AbstractFrontendAction
@@ -16,94 +15,62 @@ class Edit extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
+    private $adminFormValidation;
     /**
      * @var Comments\Model\CommentsModel
      */
-    protected $commentsModel;
+    private $commentsModel;
     /**
-     * @var \ACP3\Core\Validation\Validator
+     * @var \ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentEditViewProvider
      */
-    private $validator;
+    private $adminCommentEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Validation\Validator $validator,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Comments\ViewProviders\AdminCommentEditViewProvider $adminCommentEditViewProvider
     ) {
         parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->commentsModel = $commentsModel;
-        $this->validator = $validator;
+        $this->adminCommentEditViewProvider = $adminCommentEditViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $comment = $this->commentsModel->getOneById($id);
 
         if (empty($comment) === false) {
-            $this->breadcrumb
-                ->append(
-                    $this->translator->t($comment['module'], $comment['module']),
-                    'acp/comments/details/index/id_' . $comment['module_id']
-                )
-                ->append(
-                    $this->translator->t('comments', 'admin_details_edit'),
-                    $this->request->getQuery()
-                );
-
-            $this->title->setPageTitlePrefix($comment['name']);
-
-            return [
-                'form' => \array_merge($comment, $this->request->getPost()->all()),
-                'module_id' => (int) $comment['module_id'],
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-                'can_use_emoticons' => true,
-            ];
+            return ($this->adminCommentEditViewProvider)($comment);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int $id
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         $comment = $this->commentsModel->getOneById($id);
 
         return $this->actionHelper->handleSaveAction(
             function () use ($id, $comment) {
                 $formData = $this->request->getPost()->all();
+
+                $formData = \array_merge($comment, $formData);
+
                 $this->adminFormValidation->validate($formData);
 
-                $updateValues = [
-                    'message' => $formData['message'],
-                ];
-                if ((empty($comment['user_id']) || $this->validator->is(IntegerValidationRule::class, $comment['user_id']) === false) &&
-                    !empty($formData['name'])
-                ) {
-                    $updateValues['name'] = $formData['name'];
-                }
-
-                return $this->commentsModel->save($updateValues, $id);
+                return $this->commentsModel->save($formData, $id);
             },
             'acp/comments/details/index/id_' . $comment['module_id']
         );

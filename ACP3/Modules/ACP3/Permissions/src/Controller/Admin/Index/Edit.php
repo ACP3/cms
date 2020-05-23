@@ -10,80 +10,61 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation
      */
-    protected $roleFormValidation;
+    private $roleFormValidation;
     /**
      * @var Permissions\Model\RolesModel
      */
-    protected $rolesModel;
+    private $rolesModel;
     /**
      * @var Permissions\Model\RulesModel
      */
-    protected $rulesModel;
+    private $rulesModel;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\AdminRoleEditViewProvider
+     */
+    private $adminRoleEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\ACL $acl,
-        Core\Modules $modules,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\RulesModel $rulesModel,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Cache $permissionsCache,
-        Permissions\Validation\RoleFormValidation $roleFormValidation
+        Permissions\Validation\RoleFormValidation $roleFormValidation,
+        Permissions\ViewProviders\AdminRoleEditViewProvider $adminRoleEditViewProvider
     ) {
-        parent::__construct($context, $acl, $modules, $formsHelper, $privilegeRepository, $permissionsCache);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;
         $this->rolesModel = $rolesModel;
         $this->rulesModel = $rulesModel;
+        $this->adminRoleEditViewProvider = $adminRoleEditViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $role = $this->rolesModel->getOneById($id);
 
         if (!empty($role)) {
-            $this->title->setPageTitlePrefix($role['name']);
-
-            return [
-                'parent' => $id != 1
-                    ? $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id'])
-                    : [],
-                'modules' => $this->fetchModulePermissions($id),
-                'form' => \array_merge($role, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-            ];
+            return ($this->adminRoleEditViewProvider)($role);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int $id
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

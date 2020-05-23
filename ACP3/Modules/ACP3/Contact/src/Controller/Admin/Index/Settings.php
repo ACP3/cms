@@ -13,53 +13,41 @@ use ACP3\Modules\ACP3\Contact;
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
+    private $adminSettingsFormValidation;
     /**
      * @var Core\Helpers\Secure
      */
-    protected $secureHelper;
-
+    private $secureHelper;
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @var \ACP3\Modules\ACP3\Contact\ViewProviders\AdminSettingsViewProvider
      */
+    private $adminSettingsViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Helpers\Secure $secureHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Contact\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Contact\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        Contact\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
+        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $settings = $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME);
-
-        return [
-            'form' => \array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminSettingsViewProvider)();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

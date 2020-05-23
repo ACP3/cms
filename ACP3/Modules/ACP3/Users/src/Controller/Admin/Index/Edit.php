@@ -10,115 +10,71 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
+use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
 
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    protected $secureHelper;
     /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
+    private $adminFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Helpers
      */
-    protected $permissionsHelpers;
+    private $permissionsHelpers;
     /**
      * @var \ACP3\Modules\ACP3\Users\Model\AuthenticationModel
      */
-    protected $authenticationModel;
+    private $authenticationModel;
     /**
      * @var Users\Model\UsersModel
      */
-    protected $usersModel;
+    private $usersModel;
     /**
-     * @var Users\Helpers\Forms
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider
      */
-    private $userFormsHelpers;
+    private $adminUserEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\ACL $acl,
-        Core\Helpers\FormToken $formTokenHelper,
-        Core\Helpers\Secure $secureHelper,
-        Core\Helpers\Forms $formsHelpers,
-        Users\Helpers\Forms $userFormsHelpers,
-        Users\Model\AuthenticationModel $authenticationModel,
+        AuthenticationModel $authenticationModel,
+        Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers
     ) {
-        parent::__construct($context, $acl, $formsHelpers);
+        parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
-        $this->secureHelper = $secureHelper;
         $this->authenticationModel = $authenticationModel;
         $this->adminFormValidation = $adminFormValidation;
         $this->permissionsHelpers = $permissionsHelpers;
         $this->usersModel = $usersModel;
-        $this->userFormsHelpers = $userFormsHelpers;
+        $this->adminUserEditViewProvider = $adminUserEditViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $user = $this->user->getUserInfo($id);
 
         if (!empty($user)) {
             $this->title->setPageTitlePrefix($user['nickname']);
 
-            $userRoles = $this->acl->getUserRoleIds($id);
-            $this->view->assign(
-                $this->userFormsHelpers->fetchUserSettingsFormFields(
-                    $user['address_display'],
-                    $user['birthday_display'],
-                    $user['country_display'],
-                    $user['mail_display']
-                )
-            );
-            $this->view->assign(
-                $this->userFormsHelpers->fetchUserProfileFormFields(
-                    $user['birthday'],
-                    $user['country'],
-                    $user['gender']
-                )
-            );
-
-            return [
-                'roles' => $this->fetchUserRoles($userRoles),
-                'super_user' => $this->fetchIsSuperUser($user['super_user']),
-                'contact' => $this->userFormsHelpers->fetchContactDetails(
-                    $user['mail'],
-                    $user['website'],
-                    $user['icq'],
-                    $user['skype']
-                ),
-                'form' => \array_merge($user, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-            ];
+            return ($this->adminUserEditViewProvider)($user);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int $id
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -130,10 +86,7 @@ class Edit extends AbstractFormAction
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);
 
             if (!empty($formData['new_pwd']) && !empty($formData['new_pwd_repeat'])) {
-                $salt = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
-                $newPassword = $this->secureHelper->generateSaltedPassword($salt, $formData['new_pwd'], 'sha512');
-                $formData['pwd'] = $newPassword;
-                $formData['pwd_salt'] = $salt;
+                $formData['pwd'] = $formData['new_pwd'];
             }
 
             $bool = $this->usersModel->save($formData, $id);
@@ -145,11 +98,11 @@ class Edit extends AbstractFormAction
     }
 
     /**
-     * @param int $userId
+     * @throws \Exception
      */
-    protected function updateCurrentlyLoggedInUserCookie($userId)
+    protected function updateCurrentlyLoggedInUserCookie(int $userId): void
     {
-        if ($userId == $this->user->getUserId() && $this->request->getCookies()->has(Users\Model\AuthenticationModel::AUTH_NAME)) {
+        if ($userId === $this->user->getUserId() && $this->request->getCookies()->has(AuthenticationModel::AUTH_NAME)) {
             $user = $this->usersModel->getOneById($userId);
             $cookie = $this->authenticationModel->setRememberMeCookie(
                 $userId,

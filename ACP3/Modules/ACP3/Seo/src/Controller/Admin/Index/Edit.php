@@ -13,75 +13,52 @@ use ACP3\Modules\ACP3\Seo;
 class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
+    private $adminFormValidation;
     /**
      * @var Seo\Model\SeoModel
      */
-    protected $seoModel;
-
+    private $seoModel;
     /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
+     * @var \ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider
      */
+    private $adminSeoEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
-        Seo\Helper\MetaFormFields $metaFormFieldsHelper,
         Seo\Model\SeoModel $seoModel,
-        Seo\Validation\AdminFormValidation $adminFormValidation
+        Seo\Validation\AdminFormValidation $adminFormValidation,
+        Seo\ViewProviders\AdminSeoEditViewProvider $adminSeoEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->seoModel = $seoModel;
+        $this->adminSeoEditViewProvider = $adminSeoEditViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $seo = $this->seoModel->getOneById($id);
 
         if (empty($seo) === false) {
-            $this->title->setPageTitlePrefix($seo['alias']);
-
-            return [
-                'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields($seo['uri']),
-                'form' => \array_merge(['uri' => $seo['uri']], $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-            ];
+            return ($this->adminSeoEditViewProvider)($seo);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int $id
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

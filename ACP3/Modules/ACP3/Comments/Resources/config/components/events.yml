@@ -1,0 +1,7 @@
+services:
+  comments.events.update_user_name_on_user_model_prepare_data:
+    class: ACP3\Modules\ACP3\Comments\Event\Listener\UpdateUserNameOnUserModelPrepareDataListener
+    arguments:
+      - '@core.helpers.secure'
+    tags:
+      - { name: core.eventListener, event: comments.model.comments.prepare_data }

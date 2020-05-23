@@ -18,63 +18,38 @@ class Result extends Core\Controller\AbstractFrontendAction
     /**
      * @var Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
      */
-    protected $pollRepository;
+    private $pollRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
+     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\PollResultViewProvider
      */
-    protected $answerRepository;
+    private $pollResultViewProvider;
 
-    /**
-     * Result constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Core\Date                                            $date
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Polls\Model\Repository\PollRepository $pollRepository,
-        Polls\Model\Repository\AnswerRepository $answerRepository
+        Polls\ViewProviders\PollResultViewProvider $pollResultViewProvider
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->pollRepository = $pollRepository;
-        $this->answerRepository = $answerRepository;
+        $this->pollResultViewProvider = $pollResultViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
-            $question = $this->pollRepository->getOneByIdWithTotalVotes($id);
-            $answers = $this->answerRepository->getAnswersWithVotesByPollId($id);
-            $cAnswers = \count($answers);
-            $totalVotes = $question['total_votes'];
-
-            for ($i = 0; $i < $cAnswers; ++$i) {
-                $answers[$i]['percent'] = $totalVotes > 0 ? \round(100 * $answers[$i]['votes'] / $totalVotes, 2) : '0';
-            }
-
-            return [
-                'question' => $question['title'],
-                'answers' => $answers,
-                'total_votes' => $totalVotes,
-            ];
+            return ($this->pollResultViewProvider)($id);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

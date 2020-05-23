@@ -9,102 +9,45 @@ namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
-use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $adminSettingsFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
     private $secureHelper;
-
     /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Core\Helpers\Forms                                      $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                  $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                     $secureHelper
-     * @param \ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+     * @var \ACP3\Modules\ACP3\Seo\ViewProviders\AdminSettingsViewProvider
      */
+    private $adminSettingsViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Seo\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        Seo\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
+        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $seoSettings = $this->config->getSettings(Seo\Installer\Schema::MODULE_NAME);
-
-        $robots = [
-            1 => $this->translator->t('seo', 'robots_index_follow'),
-            2 => $this->translator->t('seo', 'robots_index_nofollow'),
-            3 => $this->translator->t('seo', 'robots_noindex_follow'),
-            4 => $this->translator->t('seo', 'robots_noindex_nofollow'),
-        ];
-
-        $indexPaginatedContent = [
-            IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY => $this->translator->t('seo', 'index_first_page_only'),
-            IndexPaginatedContentEnum::INDEX_ALL_PAGES => $this->translator->t('seo', 'index_all_pages'),
-        ];
-
-        $sitemapSaveMode = [
-            1 => $this->translator->t('seo', 'sitemap_save_mode_automatically'),
-            2 => $this->translator->t('seo', 'sitemap_save_mode_manually'),
-        ];
-
-        return [
-            'robots' => $this->formsHelper->choicesGenerator('robots', $robots, $seoSettings['robots']),
-            'index_paginated_content' => $this->formsHelper->checkboxGenerator(
-                'index_paginated_content',
-                $indexPaginatedContent,
-                $seoSettings['index_paginated_content']
-            ),
-            'sitemap_is_enabled' => $this->formsHelper->yesNoCheckboxGenerator(
-                'sitemap_is_enabled',
-                $seoSettings['sitemap_is_enabled']
-            ),
-            'sitemap_separate' => $this->formsHelper->yesNoCheckboxGenerator(
-                'sitemap_separate',
-                $seoSettings['sitemap_separate']
-            ),
-            'sitemap_save_mode' => $this->formsHelper->checkboxGenerator(
-                'sitemap_save_mode',
-                $sitemapSaveMode,
-                $seoSettings['sitemap_save_mode']
-            ),
-            'form' => \array_merge($seoSettings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminSettingsViewProvider)();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

@@ -13,73 +13,41 @@ use ACP3\Modules\ACP3\Share;
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Share\Validation\AdminSettingsFormValidation
      */
-    protected $adminSettingsFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $adminSettingsFormValidation;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
     private $secure;
     /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialServices
+     * @var \ACP3\Modules\ACP3\Share\ViewProviders\AdminSettingsViewProvider
      */
-    private $socialServices;
+    private $adminSettingsViewProvider;
 
-    /**
-     * Settings constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                   $context
-     * @param \ACP3\Core\Helpers\Forms                                        $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                    $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                       $secure
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices                 $socialServices
-     * @param \ACP3\Modules\ACP3\Share\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secure,
-        Share\Helpers\SocialServices $socialServices,
-        Share\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Share\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        Share\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secure = $secure;
-        $this->socialServices = $socialServices;
+        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $shareSettings = $this->config->getSettings(Share\Installer\Schema::MODULE_NAME);
-
-        return [
-            'services' => $this->formsHelper->choicesGenerator(
-                'services',
-                $this->getServices(),
-                \unserialize($shareSettings['services'])
-            ),
-            'form' => \array_merge($shareSettings, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminSettingsViewProvider)();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -96,15 +64,5 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
             return $this->config->saveSettings($data, Share\Installer\Schema::MODULE_NAME);
         });
-    }
-
-    private function getServices(): array
-    {
-        $services = [];
-        foreach ($this->socialServices->getAllServices() as $service) {
-            $services[$service] = $this->translator->t('share', 'service_' . $service);
-        }
-
-        return $services;
     }
 }

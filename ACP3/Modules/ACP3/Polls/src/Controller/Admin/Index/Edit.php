@@ -10,81 +10,55 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
     /**
      * @var \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
      */
-    protected $pollsValidator;
+    private $pollsValidator;
     /**
      * @var Polls\Model\PollsModel
      */
-    protected $pollsModel;
-
+    private $pollsModel;
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Core\Date                                            $date
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation    $pollsValidator
+     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\AdminPollEditViewProvider
      */
+    private $adminPollEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Polls\Model\PollsModel $pollsModel,
-        Polls\Model\Repository\AnswerRepository $answerRepository,
-        Polls\Validation\AdminFormValidation $pollsValidator
+        Polls\Validation\AdminFormValidation $pollsValidator,
+        Polls\ViewProviders\AdminPollEditViewProvider $adminPollEditViewProvider
     ) {
-        parent::__construct($context, $formsHelper, $answerRepository);
+        parent::__construct($context);
 
-        $this->date = $date;
-        $this->formTokenHelper = $formTokenHelper;
         $this->pollsModel = $pollsModel;
         $this->pollsValidator = $pollsValidator;
+        $this->adminPollEditViewProvider = $adminPollEditViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $poll = $this->pollsModel->getOneById($id);
 
         if (empty($poll) === false) {
-            $this->title->setPageTitlePrefix($poll['title']);
-
-            return [
-                'answers' => $this->getAnswers($id),
-                'options' => $this->fetchOptions($poll['multiple']),
-                'form' => \array_merge($poll, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-            ];
+            return ($this->adminPollEditViewProvider)($poll);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int $id
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -102,36 +76,5 @@ class Edit extends AbstractFormAction
 
             return $bool !== false && $bool2 !== false;
         });
-    }
-
-    /**
-     * @param int $pollId
-     *
-     * @return array
-     */
-    protected function getAnswers($pollId)
-    {
-        if ($this->request->getPost()->has('add_answer')) {
-            $answers = $this->addNewAnswer($this->request->getPost()->get('answers', []));
-        } else {
-            $answers = $this->answerRepository->getAnswersWithVotesByPollId($pollId);
-        }
-
-        return $answers;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function fetchOptions($useMultipleChoice)
-    {
-        $reset = [
-            '1' => $this->translator->t('polls', 'reset_votes'),
-        ];
-
-        return \array_merge(
-            parent::fetchOptions($useMultipleChoice),
-            $this->formsHelper->checkboxGenerator('reset', $reset, '0')
-        );
     }
 }

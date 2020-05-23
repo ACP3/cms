@@ -13,74 +13,44 @@ use ACP3\Modules\ACP3\Users;
 class Edit extends AbstractAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
-     */
-    protected $userFormsHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation
      */
-    protected $accountFormValidation;
+    private $accountFormValidation;
     /**
      * @var Users\Model\UsersModel
      */
-    protected $usersModel;
-
+    private $usersModel;
     /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
-     * @param \ACP3\Core\Helpers\FormToken                              $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Users\Helpers\Forms                    $userFormsHelper
-     * @param \ACP3\Modules\ACP3\Users\Validation\AccountFormValidation $accountFormValidation
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\AccountEditViewProvider
      */
+    private $accountEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
-        Users\Helpers\Forms $userFormsHelper,
+        Users\ViewProviders\AccountEditViewProvider $accountEditViewProvider,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AccountFormValidation $accountFormValidation
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
-        $this->userFormsHelper = $userFormsHelper;
         $this->accountFormValidation = $accountFormValidation;
         $this->usersModel = $usersModel;
+        $this->accountEditViewProvider = $accountEditViewProvider;
     }
 
     /**
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
-        $user = $this->user->getUserInfo();
-
-        $this->view->assign(
-            $this->userFormsHelper->fetchUserProfileFormFields(
-                $user['birthday'],
-                $user['country'],
-                $user['gender']
-            )
-        );
-
-        return [
-            'contact' => $this->userFormsHelper->fetchContactDetails(
-                $user['mail'],
-                $user['website'],
-                $user['icq'],
-                $user['skype']
-            ),
-            'form' => \array_merge($user, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->accountEditViewProvider)();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

@@ -35,7 +35,7 @@ class Cache extends Core\Controller\AbstractFrontendAction
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePurge(string $action)
+    private function executePurge(string $action)
     {
         $cacheTypes = [
             'general' => [

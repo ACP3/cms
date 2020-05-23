@@ -27,7 +27,7 @@ class UsersModel extends AbstractModel
             'pwd_salt' => ColumnTypes::COLUMN_TYPE_RAW,
             'realname' => ColumnTypes::COLUMN_TYPE_TEXT,
             'gender' => ColumnTypes::COLUMN_TYPE_INT,
-            'birthday' => ColumnTypes::COLUMN_TYPE_DATETIME,
+            'birthday' => ColumnTypes::COLUMN_TYPE_DATE,
             'birthday_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,
             'mail' => ColumnTypes::COLUMN_TYPE_TEXT,
             'mail_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,

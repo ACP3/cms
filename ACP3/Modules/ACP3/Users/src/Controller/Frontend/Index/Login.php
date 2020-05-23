@@ -16,11 +16,7 @@ class Login extends Core\Controller\AbstractFrontendAction
     /**
      * @var Users\Model\AuthenticationModel
      */
-    protected $authenticationModel;
-    /**
-     * @var Core\Helpers\Forms
-     */
-    protected $forms;
+    private $authenticationModel;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -29,20 +25,24 @@ class Login extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirectResponse;
+    /**
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\LoginViewProvider
+     */
+    private $loginViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Http\RedirectResponse $redirectResponse,
-        Core\Helpers\Forms $forms,
         Core\Helpers\Secure $secureHelper,
+        Users\ViewProviders\LoginViewProvider $loginViewProvider,
         Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;
-        $this->forms = $forms;
         $this->secureHelper = $secureHelper;
         $this->redirectResponse = $redirectResponse;
+        $this->loginViewProvider = $loginViewProvider;
     }
 
     /**
@@ -54,17 +54,13 @@ class Login extends Core\Controller\AbstractFrontendAction
             return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
         }
 
-        $rememberMe = [
-            1 => $this->translator->t('users', 'remember_me'),
-        ];
-
-        return [
-            'remember_me' => $this->forms->checkboxGenerator('remember', $rememberMe, 0),
-        ];
+        return ($this->loginViewProvider)();
     }
 
     /**
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

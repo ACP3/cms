@@ -8,9 +8,10 @@
 namespace ACP3\Modules\ACP3\Captcha\Controller\Frontend\Index;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class Image extends Core\Controller\AbstractFrontendAction
+class Image extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \Symfony\Component\HttpFoundation\Session\Session
@@ -18,7 +19,7 @@ class Image extends Core\Controller\AbstractFrontendAction
     protected $sessionHandler;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Session $sessionHandler
     ) {
         parent::__construct($context);
@@ -27,9 +28,9 @@ class Image extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
-    public function execute(string $path)
+    public function execute(string $path): Response
     {
         $this->response->headers->set('Content-type', 'image/gif');
         $this->response->headers->addCacheControlDirective('no-cache', true);
@@ -43,7 +44,10 @@ class Image extends Core\Controller\AbstractFrontendAction
         return $this->response;
     }
 
-    protected function generateCaptcha(string $captchaText)
+    /**
+     * @throws \Exception
+     */
+    protected function generateCaptcha(string $captchaText): void
     {
         $captchaLength = \strlen($captchaText);
         $width = $captchaLength * 25;
@@ -59,17 +63,15 @@ class Image extends Core\Controller\AbstractFrontendAction
         $textColor = \imagecolorallocate($image, 0, 0, 0);
 
         for ($i = 0; $i < $captchaLength; ++$i) {
-            $font = \mt_rand(2, 5);
+            $font = \random_int(2, 5);
             $posLeft = 22 * $i + 10;
-            $posTop = \mt_rand(1, $height - \imagefontheight($font) - 3);
+            $posTop = \random_int(1, $height - \imagefontheight($font) - 3);
             \imagestring($image, $font, $posLeft, $posTop, $captchaText[$i], $textColor);
         }
 
         \imagegif($image);
         \imagedestroy($image);
 
-        $this->response->setContent(\ob_get_contents());
-
-        \ob_end_clean();
+        $this->response->setContent(\ob_get_clean());
     }
 }

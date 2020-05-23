@@ -15,24 +15,16 @@ class Send extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
-    protected $newsletterRepository;
+    private $newsletterRepository;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
      */
-    protected $newsletterHelpers;
+    private $newsletterHelpers;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
      */
-    protected $accountRepository;
+    private $accountRepository;
 
-    /**
-     * Send constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository    $accountRepository
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter                 $newsletterHelpers
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
@@ -47,21 +39,17 @@ class Send extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function execute(int $id)
     {
         if ($this->newsletterRepository->newsletterExists($id) === true) {
             $accounts = $this->accountRepository->getAllActiveAccounts();
-            $cAccounts = \count($accounts);
             $recipients = [];
 
-            for ($i = 0; $i < $cAccounts; ++$i) {
+            foreach ($accounts as $i => $account) {
                 $recipients[] = $accounts[$i]['mail'];
             }
 

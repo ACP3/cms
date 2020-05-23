@@ -7,11 +7,9 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.environment.theme'
-      - '@core.helpers.forms'
+      - '@articles.view_providers.admin_article_edit'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'
-      - '@core.helpers.formToken'
 
   articles.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
@@ -29,45 +27,35 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.environment.theme'
-      - '@core.helpers.forms'
+      - '@articles.view_providers.admin_article_edit'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'
-      - '@core.helpers.formToken'
 
   articles.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.results_per_page'
-      - '@articles.model.data_grid_repository'
-      - '@core.data_grid.data_grid'
+      - '@articles.view_providers.data_grid'
 
   articles.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Details
     arguments:
       - '@core.context.frontend'
+      - '@articles.view_providers.article_paginated'
       - '@core.date'
-      - '@core.helpers.pageBreaks'
       - '@articles.model.articlerepository'
-      - '@articles.cache'
 
   articles.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.date'
-      - '@core.helpers.results_per_page'
-      - '@core.pagination'
-      - '@articles.model.articlerepository'
+      - '@articles.view_providers.article_list'
 
   articles.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
-      - '@core.date'
-      - '@articles.model.articlerepository'
-      - '@articles.cache'
+      - '@articles.view_providers.latest_articles'
 
   articles.controller.widget.index.single:
     class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Single
@@ -75,4 +63,4 @@ services:
       - '@core.context.widget'
       - '@core.date'
       - '@articles.model.articlerepository'
-      - '@articles.cache'
+      - '@article.view_providers.article_full'

@@ -1,0 +1,16 @@
+services:
+  system.view_providers.admin_settings:
+    class: ACP3\Modules\ACP3\System\ViewProviders\AdminSettingsViewProvider
+    arguments:
+      - '@core.helpers.date'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@core.config'
+      - '@core.i18n.translator'
+      - '@core.wysiwyg.wysiwyg_editor_registrar'
+
+  system.view_providers.admin_modules:
+    class: ACP3\Modules\ACP3\System\ViewProviders\AdminModulesViewProvider
+    arguments:
+      - '@core.modules'

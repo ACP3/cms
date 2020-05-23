@@ -13,58 +13,34 @@ use ACP3\Modules\ACP3\Files;
 class Settings extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation
      */
     private $adminSettingsFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Core\Helpers\Date
+     * @var \ACP3\Modules\ACP3\Files\ViewProviders\AdminSettingsViewProvider
      */
-    private $dateHelper;
+    private $adminSettingsViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
-        Core\Helpers\Date $dateHelper,
-        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        Files\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
+        Files\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
-        $this->dateHelper = $dateHelper;
+        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function execute(): array
     {
-        $settings = $this->config->getSettings(Files\Installer\Schema::MODULE_NAME);
-
-        $orderBy = [
-            'date' => $this->translator->t('files', 'order_by_date_descending'),
-            'custom' => $this->translator->t('files', 'order_by_custom'),
-        ];
-
-        return [
-            'order_by' => $this->formsHelper->choicesGenerator('order_by', $orderBy, $settings['order_by']),
-            'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
-            'sidebar_entries' => $this->formsHelper->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminSettingsViewProvider)();
     }
 
     /**

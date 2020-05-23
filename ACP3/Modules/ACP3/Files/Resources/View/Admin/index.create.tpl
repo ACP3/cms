@@ -30,7 +30,7 @@
                         <div class="col-sm-4">
                             <div class="row">
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15">
+                                    <input class="form-control" type="number" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15" min="0">
                                 </div>
                                 <div class="col-sm-4">
                                     <label for="unit" class="sr-only">{lang t="files|unit"}</label>

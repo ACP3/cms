@@ -9,72 +9,26 @@ namespace ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context\FrontendContext;
-use ACP3\Core\DataGrid\DataGrid;
-use ACP3\Modules\ACP3\Auditlog\Installer\Schema;
-use ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogDataGridRepository;
+use ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridViewProvider;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\DataGrid\DataGrid
+     * @var \ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridViewProvider
      */
-    private $dataGrid;
-    /**
-     * @var \ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogDataGridRepository
-     */
-    private $dataGridRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
+    private $dataGridViewProvider;
 
     public function __construct(
         FrontendContext $context,
-        Core\Helpers\ResultsPerPage $resultsPerPage,
-        DataGrid $dataGrid,
-        AuditLogDataGridRepository $dataGridRepository
+        DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
 
-        $this->dataGrid = $dataGrid;
-        $this->dataGridRepository = $dataGridRepository;
-        $this->resultsPerPage = $resultsPerPage;
+        $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
-    /**
-     * @return array
-     */
     public function execute()
     {
-        $input = (new Core\DataGrid\Input())
-            ->setUseAjax(true)
-            ->setRepository($this->dataGridRepository)
-            ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#auditlog-data-grid')
-            ->setPrimaryKey('table_name')
-            ->setResourcePathEdit('admin/auditlog/index/table/table_%s');
-
-        $this->addDataGridColumns($input);
-
-        return $this->dataGrid->render($input);
-    }
-
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     */
-    protected function addDataGridColumns(Core\DataGrid\Input $input)
-    {
-        $input
-            ->addColumn([
-                'label' => $this->translator->t('auditlog', 'database_table'),
-                'type' => Core\DataGrid\ColumnRenderer\TranslateColumnRenderer::class,
-                'fields' => ['module_name', 'table_name'],
-                'default_sort' => true,
-            ], 20)
-            ->addColumn([
-                'label' => $this->translator->t('auditlog', 'results_count'),
-                'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
-                'fields' => ['results_count'],
-            ], 10);
+        return ($this->dataGridViewProvider)();
     }
 }

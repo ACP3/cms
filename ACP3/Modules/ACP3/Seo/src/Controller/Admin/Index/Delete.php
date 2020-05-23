@@ -15,18 +15,12 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Seo\Cache
      */
-    protected $seoCache;
+    private $seoCache;
     /**
      * @var Seo\Model\SeoModel
      */
-    protected $seoModel;
+    private $seoModel;
 
-    /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Seo\Cache                  $seoCache
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Seo\Cache $seoCache,
@@ -39,13 +33,9 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $action
-     *
-     * @return mixed
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($action = '')
+    public function execute(?string $action = null)
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

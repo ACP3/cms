@@ -13,41 +13,34 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.admin_form_validation'
+      - '@guestbook.view_providers.admin_guestbook_edit'
 
   guestbook.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.results_per_page'
-      - '@guestbook.model.data_grid_repository'
-      - '@core.data_grid.data_grid'
+      - '@guestbook.view_providers.data_grid'
 
   guestbook.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
       - '@core.helpers.secure'
-      - '@core.helpers.date'
       - '@guestbook.validation.admin_settings_form_validation'
+      - '@guestbook.view_providers.admin_settings'
 
   guestbook.controller.frontend.index.create:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.form_validation'
+      - '@guestbook.view_providers.guestbook_create'
 
   guestbook.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.results_per_page'
-      - '@core.pagination'
-      - '@guestbook.model.guestbookrepository'
+      - '@guestbook.view_providers.guestbook_list'

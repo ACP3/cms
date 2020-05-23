@@ -13,74 +13,51 @@ use ACP3\Modules\ACP3\Gallery;
 class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
      */
-    protected $galleryFormValidation;
+    private $galleryFormValidation;
     /**
      * @var Gallery\Model\GalleryModel
      */
-    protected $galleryModel;
+    private $galleryModel;
     /**
-     * @var \ACP3\Core\Helpers\Forms
+     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryEditViewProvider
      */
-    private $formsHelper;
+    private $adminGalleryEditViewProvider;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
-     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation $galleryFormValidation
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Gallery\Model\GalleryModel $galleryModel,
-        Gallery\Validation\GalleryFormValidation $galleryFormValidation
+        Gallery\Validation\GalleryFormValidation $galleryFormValidation,
+        Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
-        $this->formsHelper = $formsHelper;
+        $this->adminGalleryEditViewProvider = $adminGalleryEditViewProvider;
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         $gallery = $this->galleryModel->getOneById($id);
 
         if (!empty($gallery)) {
-            $this->title->setPageTitlePrefix($gallery['title']);
-
-            return [
-                'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $gallery['active']),
-                'form' => \array_merge($gallery, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-                'SEO_URI_PATTERN' => Gallery\Helpers::URL_KEY_PATTERN_GALLERY,
-                'SEO_ROUTE_NAME' => \sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id),
-            ];
+            return ($this->adminGalleryEditViewProvider)($gallery);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost(int $id)
     {

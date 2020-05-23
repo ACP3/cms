@@ -31,7 +31,7 @@ interface ValidationRuleInterface
 
     /**
      * @param bool|int|float|string|array $data
-     * @param string                      $field
+     * @param string|array                $field
      *
      * @return bool
      */

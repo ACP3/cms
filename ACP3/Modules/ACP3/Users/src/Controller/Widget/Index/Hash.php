@@ -20,9 +20,6 @@ class Hash extends AbstractWidgetAction
      */
     private $hashGenerator;
 
-    /**
-     * Hash constructor.
-     */
     public function __construct(WidgetContext $context, DefaultHashGenerator $hashGenerator)
     {
         parent::__construct($context);

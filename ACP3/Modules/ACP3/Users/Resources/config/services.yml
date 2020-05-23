@@ -23,14 +23,6 @@ services:
     arguments:
       - ['@users.core.application.bootstrap_cache.is_authenticated_provider']
 
-  users.helpers.forms:
-    class: ACP3\Modules\ACP3\Users\Helpers\Forms
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.i18n.country_list'
-      - '@core.http.request'
-      - '@core.helpers.forms'
-
   users.data_grid.column_renderer.user_roles_column_renderer:
     class: ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer\UserRolesColumnRenderer
     arguments:

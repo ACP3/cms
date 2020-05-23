@@ -30,17 +30,14 @@ class Rate extends AbstractFrontendAction
     /**
      * @var bool|null
      */
-    private $alredyRated;
+    private $alreadyRated;
 
-    /**
-     * Rate constructor.
-     */
     public function __construct(
         FrontendContext $context,
         ShareRepository $shareRepository,
         ShareRatingsRepository $shareRatingsRepository,
-        ShareRatingModel $shareRatingModel)
-    {
+        ShareRatingModel $shareRatingModel
+    ) {
         parent::__construct($context);
 
         $this->shareRepository = $shareRepository;
@@ -98,10 +95,10 @@ class Rate extends AbstractFrontendAction
      */
     private function hasAlreadyRated(string $ipAddress, int $shareId): bool
     {
-        if ($this->alredyRated === null) {
-            $this->alredyRated = $this->shareRatingsRepository->hasAlreadyRated($ipAddress, $shareId);
+        if ($this->alreadyRated === null) {
+            $this->alreadyRated = $this->shareRatingsRepository->hasAlreadyRated($ipAddress, $shareId);
         }
 
-        return $this->alredyRated;
+        return $this->alreadyRated;
     }
 }

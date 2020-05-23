@@ -1,0 +1,9 @@
+services:
+  captcha.view_provider.admin_settings:
+    class: ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider
+    arguments:
+      - '@core.helpers.formToken'
+      - '@core.helpers.forms'
+      - '@captcha.utility.captcha_registrar'
+      - '@core.http.request'
+      - '@core.config'

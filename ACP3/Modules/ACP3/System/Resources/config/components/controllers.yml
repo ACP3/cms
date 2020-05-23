@@ -27,17 +27,15 @@ services:
       - '@core.installer.schema_registrar'
       - '@core.modules.schemaInstaller'
       - '@core.modules.aclInstaller'
+      - '@system.view_providers.admin_modules'
 
   system.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
       - '@core.helpers.secure'
-      - '@core.helpers.date'
-      - '@core.wysiwyg.wysiwyg_editor_registrar'
       - '@system.validation.admin_settings_form_validation'
+      - '@system.view_providers.admin_settings'
 
   system.controller.admin.index.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Index

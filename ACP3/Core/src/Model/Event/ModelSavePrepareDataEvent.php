@@ -19,11 +19,16 @@ class ModelSavePrepareDataEvent extends Event
      * @var array
      */
     private $rawData;
+    /**
+     * @var array|null
+     */
+    private $currentData;
 
-    public function __construct(array $rawData, array $allowedColumns)
+    public function __construct(array $rawData, ?array $currentData, array $allowedColumns)
     {
         $this->rawData = $rawData;
         $this->allowedColumns = $allowedColumns;
+        $this->currentData = $currentData;
     }
 
     public function getRawData(): array
@@ -39,6 +44,21 @@ class ModelSavePrepareDataEvent extends Event
         if (!\array_key_exists($key, $this->rawData)) {
             $this->rawData[$key] = $value;
         }
+    }
+
+    /**
+     * @param mixed $value
+     */
+    public function replaceRawData(string $key, $value): void
+    {
+        if (\array_key_exists($key, $this->getAllowedColumns())) {
+            $this->rawData[$key] = $value;
+        }
+    }
+
+    public function getCurrentData(): ?array
+    {
+        return $this->currentData;
     }
 
     public function getAllowedColumns(): array

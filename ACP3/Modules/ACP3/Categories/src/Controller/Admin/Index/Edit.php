@@ -10,82 +10,59 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 
-class Edit extends AbstractFormAction
+class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
-    /**
-     * @var Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
+    private $adminFormValidation;
     /**
      * @var Categories\Model\CategoriesModel
      */
-    protected $categoriesModel;
+    private $categoriesModel;
     /**
      * @var \ACP3\Core\Helpers\Upload
      */
     private $categoriesUploadHelper;
-
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation      $adminFormValidation
-     * @param \ACP3\Core\Helpers\Upload                                         $categoriesUploadHelper
-     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
+     * @var \ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategoryEditViewProvider
      */
+    private $adminCategoryEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoriesModel $categoriesModel,
-        Categories\Model\Repository\CategoryRepository $categoryRepository,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\Upload $categoriesUploadHelper,
-        Core\Helpers\FormToken $formTokenHelper
+        Categories\ViewProviders\AdminCategoryEditViewProvider $adminCategoryEditViewProvider
     ) {
-        parent::__construct($context, $formsHelper, $categoryRepository);
+        parent::__construct($context);
 
         $this->adminFormValidation = $adminFormValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
         $this->categoriesUploadHelper = $categoriesUploadHelper;
+        $this->adminCategoryEditViewProvider = $adminCategoryEditViewProvider;
     }
 
     /**
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         $category = $this->categoriesModel->getOneById($id);
 
         if (empty($category) === false) {
-            $this->title->setPageTitlePrefix($category['title']);
-
-            return [
-                'form' => \array_merge($category, $this->request->getPost()->all()),
-                'category_tree' => $this->fetchCategoryTree(
-                    $category['module_id'],
-                    $category['parent_id'],
-                    $category['left_id'],
-                    $category['right_id']
-                ),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-            ];
+            return ($this->adminCategoryEditViewProvider)($category);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost(int $id)
     {

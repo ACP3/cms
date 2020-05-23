@@ -13,21 +13,17 @@ use ACP3\Modules\ACP3\Contact;
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation
      */
-    protected $formValidation;
+    private $formValidation;
     /**
      * @var Contact\Model\ContactFormModel
      */
-    protected $contactFormModel;
+    private $contactFormModel;
     /**
      * @var Contact\Model\ContactsModel
      */
-    protected $contactsModel;
+    private $contactsModel;
     /**
      * @var \ACP3\Core\Helpers\Alerts
      */
@@ -36,36 +32,33 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Router\RouterInterface
      */
     private $router;
+    /**
+     * @var \ACP3\Modules\ACP3\Contact\ViewProviders\ContactFormViewProvider
+     */
+    private $contactFormViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Router\RouterInterface $router,
-        Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Alerts $alertsHelper,
         Contact\Validation\FormValidation $formValidation,
         Contact\Model\ContactsModel $contactsModel,
-        Contact\Model\ContactFormModel $contactFormModel
+        Contact\Model\ContactFormModel $contactFormModel,
+        Contact\ViewProviders\ContactFormViewProvider $contactFormViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->contactFormModel = $contactFormModel;
         $this->contactsModel = $contactsModel;
         $this->alertsHelper = $alertsHelper;
         $this->router = $router;
+        $this->contactFormViewProvider = $contactFormViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        return [
-            'form' => \array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
-            'contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->contactFormViewProvider)();
     }
 
     /**
@@ -92,29 +85,5 @@ class Index extends Core\Controller\AbstractFrontendAction
                 ));
             }
         );
-    }
-
-    /**
-     * @return array
-     */
-    protected function getFormDefaults()
-    {
-        $defaults = [
-            'name' => '',
-            'name_disabled' => false,
-            'mail' => '',
-            'mail_disabled' => false,
-            'message' => '',
-        ];
-
-        if ($this->user->isAuthenticated() === true) {
-            $user = $this->user->getUserInfo();
-            $defaults['name'] = !empty($user['realname']) ? $user['realname'] : $user['nickname'];
-            $defaults['name_disabled'] = true;
-            $defaults['mail'] = $user['mail'];
-            $defaults['mail_disabled'] = true;
-        }
-
-        return $defaults;
     }
 }

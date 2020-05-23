@@ -9,46 +9,24 @@ namespace ACP3\Modules\ACP3\Acp\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context;
+use ACP3\Modules\ACP3\Acp\ViewProviders\ModuleListViewProvider;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var \ACP3\Modules\ACP3\Acp\ViewProviders\ModuleListViewProvider
      */
-    private $acl;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
+    private $modulesListViewProvider;
 
-    public function __construct(Context\FrontendContext $context, Core\ACL $acl, Core\Modules $modules)
+    public function __construct(Context\FrontendContext $context, ModuleListViewProvider $modulesListViewProvider)
     {
         parent::__construct($context);
 
-        $this->acl = $acl;
-        $this->modules = $modules;
+        $this->modulesListViewProvider = $modulesListViewProvider;
     }
 
     public function execute(): array
     {
-        return [
-            'modules' => $this->getAllowedModules(),
-        ];
-    }
-
-    protected function getAllowedModules(): array
-    {
-        $allowedModules = [];
-
-        foreach ($this->modules->getActiveModules() as $info) {
-            $moduleName = \strtolower($info['name']);
-            if ($moduleName !== 'acp' && $this->acl->hasPermission('admin/' . $moduleName) === true) {
-                $allowedModules[$moduleName] = [
-                    'name' => $moduleName,
-                ];
-            }
-        }
-
-        return $allowedModules;
+        return ($this->modulesListViewProvider)();
     }
 }

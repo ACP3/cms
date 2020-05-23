@@ -14,110 +14,60 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Helpers
      */
-    protected $galleryHelpers;
+    private $galleryHelpers;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
      */
-    protected $pictureFormValidation;
+    private $pictureFormValidation;
     /**
      * @var Gallery\Model\PictureModel
      */
-    protected $pictureModel;
+    private $pictureModel;
     /**
      * @var \ACP3\Core\Helpers\Upload
      */
     private $galleryUploadHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureEditViewProvider
      */
-    private $galleryRepository;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
+    private $adminGalleryPictureEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Gallery\Helpers $galleryHelpers,
-        Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Model\PictureModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation,
-        Core\Helpers\Upload $galleryUploadHelper
+        Core\Helpers\Upload $galleryUploadHelper,
+        Gallery\ViewProviders\AdminGalleryPictureEditViewProvider $adminGalleryPictureEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->galleryHelpers = $galleryHelpers;
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
         $this->galleryUploadHelper = $galleryUploadHelper;
-        $this->galleryRepository = $galleryRepository;
-        $this->formsHelper = $formsHelper;
+        $this->adminGalleryPictureEditViewProvider = $adminGalleryPictureEditViewProvider;
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         $picture = $this->pictureModel->getOneById($id);
 
         if (!empty($picture)) {
-            $this->breadcrumb
-                ->append($picture['gallery_title'], 'acp/gallery/pictures/index/id_' . $picture['gallery_id'])
-                ->append(
-                    $this->translator->t('gallery', 'admin_pictures_edit'),
-                    $this->request->getQuery()
-                );
-
-            $this->title
-                ->setPageTitlePrefix(
-                    $picture['gallery_title']
-                    . $this->title->getPageTitleSeparator()
-                    . $this->translator->t('gallery', 'picture_x', ['%picture%' => $picture['pic']])
-                );
-
-            return [
-                'form' => \array_merge($picture, $this->request->getPost()->all()),
-                'galleries' => $this->formsHelper->choicesGenerator(
-                    'gallery_id',
-                    $this->getGalleries(),
-                    $picture['gallery_id']
-                ),
-                'gallery_id' => $picture['gallery_id'],
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-            ];
+            return ($this->adminGalleryPictureEditViewProvider)($picture);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    private function getGalleries(): array
-    {
-        $galleries = [];
-        foreach ($this->galleryRepository->getAll() as $gallery) {
-            $galleries[$gallery['id']] = $gallery['title'];
-        }
-
-        return $galleries;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException

@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
-use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
@@ -19,58 +18,29 @@ class Index extends Core\Controller\AbstractFrontendAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Core\Pagination
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\UserListViewProvider
      */
-    protected $pagination;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
-     */
-    protected $userRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
+    private $userListViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        ResultsPerPage $resultsPerPage,
-        Core\Pagination $pagination,
-        Users\Model\Repository\UserRepository $userRepository
+        Users\ViewProviders\UserListViewProvider $userListViewProvider
     ) {
         parent::__construct($context);
 
-        $this->pagination = $pagination;
-        $this->userRepository = $userRepository;
-        $this->resultsPerPage = $resultsPerPage;
+        $this->userListViewProvider = $userListViewProvider;
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $resultsPerPage = $this->resultsPerPage->getResultsPerPage(Users\Installer\Schema::MODULE_NAME);
-        $allUsers = $this->userRepository->countAll();
-        $this->pagination
-            ->setResultsPerPage($resultsPerPage)
-            ->setTotalResults($allUsers);
-
-        $users = $this->userRepository->getAll(
-            $this->pagination->getResultsStartOffset(),
-            $resultsPerPage
-        );
-
         try {
-            return [
-                'users' => $users,
-                'pagination' => $this->pagination->render(),
-                'all_users' => $allUsers,
-            ];
+            return ($this->userListViewProvider)();
         } catch (InvalidPageException $e) {
             throw new ResultNotExistsException();
         }

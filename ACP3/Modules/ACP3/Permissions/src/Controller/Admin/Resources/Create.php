@@ -13,53 +13,53 @@ use ACP3\Modules\ACP3\Permissions;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
      */
-    protected $resourceFormValidation;
+    private $resourceFormValidation;
     /**
      * @var Permissions\Model\ResourcesModel
      */
-    protected $resourcesModel;
+    private $resourcesModel;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\AdminResourceEditViewProvider
+     */
+    private $adminResourceEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Modules $modules,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Model\ResourcesModel $resourcesModel,
-        Permissions\Validation\ResourceFormValidation $resourceFormValidation
+        Permissions\Validation\ResourceFormValidation $resourceFormValidation,
+        Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
     ) {
-        parent::__construct($context, $modules, $formsHelper, $privilegeRepository);
+        parent::__construct($context, $modules);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->resourceFormValidation = $resourceFormValidation;
         $this->resourcesModel = $resourcesModel;
+        $this->adminResourceEditViewProvider = $adminResourceEditViewProvider;
     }
 
     /**
-     * @return array
+     * @throws \ReflectionException
      */
-    public function execute()
+    public function execute(): array
     {
-        return [
-            'modules' => $this->fetchActiveModules(),
-            'areas' => $this->fetchAreas(),
-            'privileges' => $this->fetchPrivileges(0),
-            'form' => \array_merge(
-                ['resource' => '', 'area' => '', 'controller' => ''],
-                $this->request->getPost()->all()
-            ),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
+        $defaults = [
+            'page' => '',
+            'area' => '',
+            'controller' => '',
+            'module_name' => null,
+            'privilege_id' => 0,
         ];
+
+        return ($this->adminResourceEditViewProvider)($defaults);
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

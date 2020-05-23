@@ -9,72 +9,42 @@ namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
-use ACP3\Core\Helpers\Forms;
-use ACP3\Core\Helpers\FormToken;
-use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
-use ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar;
 use ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation;
+use ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider;
 
 class Settings extends AbstractFrontendAction
 {
     /**
-     * @var Forms
-     */
-    private $forms;
-    /**
-     * @var FormToken
-     */
-    private $formToken;
-    /**
-     * @var CaptchaRegistrar
-     */
-    private $captchaRegistrar;
-    /**
      * @var AdminSettingsFormValidation
      */
     private $formValidation;
-
     /**
-     * Settings constructor.
+     * @var \ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider
      */
+    private $adminSettingsViewProvider;
+
     public function __construct(
         FrontendContext $context,
-        Forms $forms,
-        FormToken $formToken,
-        CaptchaRegistrar $captchaRegistrar,
+        AdminSettingsViewProvider $adminSettingsViewProvider,
         AdminSettingsFormValidation $formValidation
     ) {
         parent::__construct($context);
 
-        $this->forms = $forms;
-        $this->formToken = $formToken;
-        $this->captchaRegistrar = $captchaRegistrar;
         $this->formValidation = $formValidation;
+        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        $settings = $this->config->getSettings(Schema::MODULE_NAME);
-
-        $captchas = [];
-        foreach ($this->captchaRegistrar->getAvailableCaptchas() as $serviceId => $captcha) {
-            /* @var CaptchaExtensionInterface $captcha */
-            $captchas[$serviceId] = $captcha->getCaptchaName();
-        }
-
-        return [
-            'captchas' => $this->forms->choicesGenerator('captcha', $captchas, $settings['captcha']),
-            'form' => \array_merge($settings, $this->request->getPost()->all()),
-            'form_token' => $this->formToken->renderFormToken(),
-        ];
+        return ($this->adminSettingsViewProvider)();
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

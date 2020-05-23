@@ -180,16 +180,14 @@ class Pagination
     public function getResultsStartOffset()
     {
         return (int) $this->request->getParameters()->get('page') >= 1
-            ? (int) ($this->request->getParameters()->get('page') - 1) * $this->resultsPerPage
+            ? ($this->request->getParameters()->get('page') - 1) * $this->resultsPerPage
             : 0;
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Pagination\Exception\InvalidPageException
      */
-    public function render()
+    public function render(): array
     {
         if ($this->getResultsStartOffset() > $this->totalResults) {
             throw new InvalidPageException(\sprintf('Could not find any entries for page %d', $this->currentPage));

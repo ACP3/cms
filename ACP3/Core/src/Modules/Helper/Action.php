@@ -18,38 +18,28 @@ class Action
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \ACP3\Core\Helpers\Alerts
      */
-    protected $alerts;
+    private $alerts;
     /**
      * @var \ACP3\Core\Helpers\RedirectMessages
      */
-    protected $redirectMessages;
+    private $redirectMessages;
     /**
      * @var \ACP3\Core\Database\Connection
      */
     private $db;
 
-    /**
-     * Action constructor.
-     *
-     * @param \ACP3\Core\Database\Connection      $db
-     * @param \ACP3\Core\I18n\Translator          $translator
-     * @param \ACP3\Core\Http\RequestInterface    $request
-     * @param \ACP3\Core\Router\RouterInterface   $router
-     * @param \ACP3\Core\Helpers\Alerts           $alerts
-     * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
-     */
     public function __construct(
         Core\Database\Connection $db,
         Core\I18n\Translator $translator,
@@ -85,12 +75,16 @@ class Action
 
             return $result;
         } catch (Core\Validation\Exceptions\InvalidFormTokenException $e) {
+            $this->db->getConnection()->rollBack();
+
             return $this->redirectMessages->setMessage(
                 false,
                 $this->translator->t('system', 'form_already_submitted'),
                 $path
             );
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
+            $this->db->getConnection()->rollBack();
+
             return $this->renderErrorBoxOnFailedFormValidation($e);
         } catch (ConnectionException $e) {
             $this->db->getConnection()->rollBack();
@@ -154,7 +148,7 @@ class Action
         $moduleConfirmUrl = null,
         $moduleIndexUrl = null
     ) {
-        list($moduleConfirmUrl, $moduleIndexUrl) = $this->generateDefaultConfirmationBoxUris(
+        [$moduleConfirmUrl, $moduleIndexUrl] = $this->generateDefaultConfirmationBoxUris(
             $moduleConfirmUrl,
             $moduleIndexUrl
         );
@@ -162,7 +156,9 @@ class Action
 
         if ($result instanceof RedirectResponse) {
             return $result;
-        } elseif (\is_array($result)) {
+        }
+
+        if (\is_array($result)) {
             if ($action === 'confirmed') {
                 return $callback($result);
             }
@@ -296,7 +292,9 @@ class Action
                 $this->translator->t('system', 'no_entries_selected'),
                 $moduleIndexUrl
             );
-        } elseif ($action !== 'confirmed') {
+        }
+
+        if ($action !== 'confirmed') {
             $data = [
                 'action' => 'confirmed',
                 'entries' => $entries,

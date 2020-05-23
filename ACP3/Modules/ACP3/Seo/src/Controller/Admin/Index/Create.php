@@ -13,66 +13,46 @@ use ACP3\Modules\ACP3\Seo;
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    protected $metaFormFieldsHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-     */
-    protected $uriAliasManager;
+    private $adminFormValidation;
     /**
      * @var Seo\Model\SeoModel
      */
-    protected $seoModel;
-
+    private $seoModel;
     /**
-     * Create constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext         $context
-     * @param \ACP3\Core\Helpers\FormToken                          $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields          $metaFormFieldsHelper
-     * @param \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager         $uriAliasManager
-     * @param \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation $adminFormValidation
+     * @var \ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider
      */
+    private $adminSeoEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
-        Seo\Helper\MetaFormFields $metaFormFieldsHelper,
-        Seo\Helper\UriAliasManager $uriAliasManager,
         Seo\Model\SeoModel $seoModel,
-        Seo\Validation\AdminFormValidation $adminFormValidation
+        Seo\Validation\AdminFormValidation $adminFormValidation,
+        Seo\ViewProviders\AdminSeoEditViewProvider $adminSeoEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
-        $this->uriAliasManager = $uriAliasManager;
         $this->adminFormValidation = $adminFormValidation;
         $this->seoModel = $seoModel;
+        $this->adminSeoEditViewProvider = $adminSeoEditViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
-        return [
-            'SEO_FORM_FIELDS' => $this->metaFormFieldsHelper->formFields(),
-            'form' => \array_merge(['uri' => ''], $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
+        $defaults = [
+            'alias' => '',
+            'uri' => '',
         ];
+
+        return ($this->adminSeoEditViewProvider)($defaults);
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {

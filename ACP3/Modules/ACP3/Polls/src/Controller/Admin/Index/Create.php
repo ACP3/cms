@@ -10,78 +10,55 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
-     */
-    protected $pollRepository;
     /**
      * @var \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
      */
-    protected $pollsValidator;
+    private $pollsValidator;
     /**
      * @var Polls\Model\PollsModel
      */
-    protected $pollsModel;
-
+    private $pollsModel;
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Core\Date                                            $date
-     * @param \ACP3\Core\Helpers\Forms                                   $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
-     * @param \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation    $pollsValidator
+     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\AdminPollEditViewProvider
      */
+    private $adminPollEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Date $date,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
-        Polls\Model\Repository\PollRepository $pollRepository,
         Polls\Model\PollsModel $pollsModel,
-        Polls\Model\Repository\AnswerRepository $answerRepository,
-        Polls\Validation\AdminFormValidation $pollsValidator
+        Polls\Validation\AdminFormValidation $pollsValidator,
+        Polls\ViewProviders\AdminPollEditViewProvider $adminPollEditViewProvider
     ) {
-        parent::__construct($context, $formsHelper, $answerRepository);
+        parent::__construct($context);
 
-        $this->date = $date;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->pollRepository = $pollRepository;
         $this->pollsModel = $pollsModel;
         $this->pollsValidator = $pollsValidator;
+        $this->adminPollEditViewProvider = $adminPollEditViewProvider;
     }
 
     /**
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
         $defaults = [
+            'id' => null,
+            'multiple' => 0,
             'title' => '',
             'start' => '',
             'end' => '',
         ];
 
-        return [
-            'answers' => $this->getAnswers(),
-            'options' => $this->fetchOptions(0),
-            'form' => \array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->adminPollEditViewProvider)($defaults);
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function executePost()
     {
@@ -100,22 +77,5 @@ class Create extends AbstractFormAction
 
             return $pollId !== false && $bool2 !== false;
         });
-    }
-
-    /**
-     * @return array
-     */
-    protected function getAnswers()
-    {
-        if ($this->request->getPost()->has('add_answer')) {
-            $answers = $this->addNewAnswer($this->request->getPost()->get('answers', []));
-        } else {
-            $answers = [
-                ['text' => ''],
-                ['text' => ''],
-            ];
-        }
-
-        return $answers;
     }
 }

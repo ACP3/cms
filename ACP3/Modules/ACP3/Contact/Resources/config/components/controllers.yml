@@ -1,7 +1,7 @@
 services:
   _defaults:
     tags:
-    - { name: acp3.controller.action }
+      - { name: acp3.controller.action }
 
   contact.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Delete
@@ -13,36 +13,36 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.results_per_page'
-      - '@contact.model.repository.data_grid_repository'
-      - '@core.data_grid.data_grid'
+      - '@contact.view_provider.data_grid'
 
   contact.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.secure'
-      - '@core.helpers.formToken'
       - '@contact.validation.admin_settings_form_validation'
+      - '@contact.view_providers.admin_settings'
 
   contact.controller.frontend.index.imprint:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Imprint
     arguments:
-    - '@core.context.frontend'
+      - '@core.context.frontend'
+      - '@contact.view_providers.contact_details'
 
   contact.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
       - '@core.router'
-      - '@core.helpers.formToken'
       - '@core.helpers.alerts'
       - '@contact.validation.form_validation'
       - '@contact.model.contacts_model'
       - '@contact.model.contact_form_model'
+      - '@contact.view_providers.contact_form'
 
   contact.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Widget\Index\Index
     arguments:
       - '@core.context.widget'
+      - '@contact.view_providers.contact_details'
 

@@ -13,43 +13,29 @@ use ACP3\Modules\ACP3\Guestbook;
 class Edit extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
+    private $adminFormValidation;
     /**
      * @var Guestbook\Model\GuestbookModel
      */
     private $guestbookModel;
-
     /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
-     * @param \ACP3\Core\Helpers\Forms                                    $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation $adminFormValidation
+     * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminGuestbookEditViewProvider
      */
+    private $adminGuestbookEditViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\Validation\AdminFormValidation $adminFormValidation
+        Guestbook\Validation\AdminFormValidation $adminFormValidation,
+        Guestbook\ViewProviders\AdminGuestbookEditViewProvider $adminGuestbookEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
         $this->adminFormValidation = $adminFormValidation;
         $this->guestbookModel = $guestbookModel;
+        $this->adminGuestbookEditViewProvider = $adminGuestbookEditViewProvider;
     }
 
     /**
@@ -57,19 +43,9 @@ class Edit extends Core\Controller\AbstractFrontendAction
      */
     public function execute(int $id): array
     {
-        $guestbook = $this->guestbookModel->getOneById($id);
-        if (empty($guestbook) === false) {
-            $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
-
-            $this->title->setPageTitlePrefix($guestbook['name']);
-
-            return [
-                'form' => \array_merge($guestbook, $this->request->getPost()->all()),
-                'form_token' => $this->formTokenHelper->renderFormToken(),
-                'activate' => $settings['notify'] == 2
-                    ? $this->formsHelper->yesNoCheckboxGenerator('active', $guestbook['active'])
-                    : [],
-            ];
+        $guestbookEntry = $this->guestbookModel->getOneById($id);
+        if (empty($guestbookEntry) === false) {
+            return ($this->adminGuestbookEditViewProvider)($guestbookEntry);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

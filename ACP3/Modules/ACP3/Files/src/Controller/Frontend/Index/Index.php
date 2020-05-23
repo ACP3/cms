@@ -8,46 +8,35 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Files\Installer\Schema;
+use ACP3\Modules\ACP3\Files\ViewProviders\RootCategoriesListViewProvider;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Files\ViewProviders\RootCategoriesListViewProvider
      */
-    private $categoryRepository;
+    private $rootCategoriesListViewProvider;
 
-    /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Categories\Model\Repository\CategoryRepository $categoryRepository
+        RootCategoriesListViewProvider $rootCategoriesListViewProvider
     ) {
         parent::__construct($context);
 
-        $this->categoryRepository = $categoryRepository;
+        $this->rootCategoriesListViewProvider = $rootCategoriesListViewProvider;
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): array
     {
         $this->setCacheResponseCacheable(
             $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['cache_lifetime']
         );
 
-        return [
-            'categories' => $this->categoryRepository->getAllRootCategoriesByModuleName(Schema::MODULE_NAME),
-        ];
+        return ($this->rootCategoriesListViewProvider)();
     }
 }

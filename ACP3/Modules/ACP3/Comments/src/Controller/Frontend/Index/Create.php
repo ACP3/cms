@@ -13,10 +13,6 @@ use ACP3\Modules\ACP3\Comments;
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
      */
     private $formValidation;
@@ -28,31 +24,29 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Modules
      */
     private $modules;
+    /**
+     * @var \ACP3\Modules\ACP3\Comments\ViewProviders\CommentCreateViewProvider
+     */
+    private $commentCreateViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Modules $modules,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\FormValidation $formValidation,
-        Core\Helpers\FormToken $formTokenHelper
+        Comments\ViewProviders\CommentCreateViewProvider $commentCreateViewProvider
     ) {
         parent::__construct($context);
 
         $this->formValidation = $formValidation;
-        $this->formTokenHelper = $formTokenHelper;
         $this->commentsModel = $commentsModel;
         $this->modules = $modules;
+        $this->commentCreateViewProvider = $commentCreateViewProvider;
     }
 
     public function execute(string $module, int $entryId, string $redirectUrl): array
     {
-        return [
-            'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
-            'module' => $module,
-            'entry_id' => $entryId,
-            'redirect_url' => $redirectUrl,
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->commentCreateViewProvider)($module, $entryId, $redirectUrl);
     }
 
     /**
@@ -87,23 +81,5 @@ class Create extends Core\Controller\AbstractFrontendAction
                 );
             }
         );
-    }
-
-    private function fetchFormDefaults(): array
-    {
-        $defaults = [
-            'name' => '',
-            'name_disabled' => false,
-            'message' => '',
-        ];
-
-        if ($this->user->isAuthenticated() === true) {
-            $user = $this->user->getUserInfo();
-            $defaults['name'] = $user['nickname'];
-            $defaults['name_disabled'] = true;
-            $defaults['message'] = '';
-        }
-
-        return $defaults;
     }
 }

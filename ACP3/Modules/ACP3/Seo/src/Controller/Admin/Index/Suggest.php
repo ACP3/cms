@@ -17,11 +17,8 @@ class Suggest extends AbstractFrontendAction
     /**
      * @var StringFormatter
      */
-    protected $stringFormatter;
+    private $stringFormatter;
 
-    /**
-     * Suggest constructor.
-     */
     public function __construct(FrontendContext $context, StringFormatter $stringFormatter)
     {
         parent::__construct($context);
@@ -29,10 +26,7 @@ class Suggest extends AbstractFrontendAction
         $this->stringFormatter = $stringFormatter;
     }
 
-    /**
-     * @return JsonResponse
-     */
-    public function execute()
+    public function execute(): JsonResponse
     {
         $response = [];
         if ($this->request->getPost()->count() > 0) {

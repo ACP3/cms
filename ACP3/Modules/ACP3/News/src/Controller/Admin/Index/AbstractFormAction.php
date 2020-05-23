@@ -18,19 +18,13 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
     protected $categoriesHelpers;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context);
 
-        $this->formsHelper = $formsHelper;
         $this->categoriesHelpers = $categoriesHelpers;
     }
 
@@ -42,20 +36,5 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         return !empty($formData['cat_create'])
             ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], News\Installer\Schema::MODULE_NAME)
             : $formData['cat'];
-    }
-
-    protected function fetchOptions(int $readMoreValue): array
-    {
-        $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
-        $options = [];
-        if ($settings['readmore'] == 1) {
-            $readMore = [
-                '1' => $this->translator->t('news', 'activate_readmore'),
-            ];
-
-            $options = $this->formsHelper->checkboxGenerator('readmore', $readMore, $readMoreValue);
-        }
-
-        return $options;
     }
 }

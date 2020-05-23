@@ -1,0 +1,42 @@
+services:
+  guestbook.view_providers.admin_guestbook_edit:
+    class: ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminGuestbookEditViewProvider
+    arguments:
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@core.config'
+      - '@core.breadcrumb.title'
+
+  guestbook.view_providers.admin_settings:
+    class: ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminSettingsViewProvider
+    arguments:
+      - '@core.helpers.date'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@core.config'
+      - '@core.i18n.translator'
+
+  guestbook.view_providers.data_grid:
+    class: ACP3\Modules\ACP3\Guestbook\ViewProviders\DataGridViewProvider
+    arguments:
+      - '@core.data_grid.data_grid'
+      - '@guestbook.model.data_grid_repository'
+      - '@core.helpers.results_per_page'
+      - '@core.i18n.translator'
+
+  guestbook.view_providers.guestbook_create:
+    class: ACP3\Modules\ACP3\Guestbook\ViewProviders\GuestbookCreateViewProvider
+    arguments:
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@users.model.user_model'
+
+  guestbook.view_providers.guestbook_list:
+    class: ACP3\Modules\ACP3\Guestbook\ViewProviders\GuestbookListViewProvider
+    arguments:
+      - '@guestbook.model.guestbookrepository'
+      - '@core.pagination'
+      - '@core.helpers.results_per_page'
+      - '@core.config'

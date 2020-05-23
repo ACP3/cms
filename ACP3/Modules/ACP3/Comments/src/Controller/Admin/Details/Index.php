@@ -8,114 +8,29 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
-use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\System\Installer\Schema;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var Core\Model\Repository\ModuleAwareRepositoryInterface
+     * @var \ACP3\Modules\ACP3\Comments\ViewProviders\DataGridByModuleViewProvider
      */
-    protected $systemModuleRepository;
-    /**
-     * @var \ACP3\Core\DataGrid\DataGrid
-     */
-    private $dataGrid;
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsDataGridRepository
-     */
-    private $dataGridRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
+    private $dataGridByModuleViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        ResultsPerPage $resultsPerPage,
-        Comments\Model\Repository\CommentsDataGridRepository $dataGridRepository,
-        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository,
-        Core\DataGrid\DataGrid $dataGrid
+        Comments\ViewProviders\DataGridByModuleViewProvider $dataGridByModuleViewProvider
     ) {
         parent::__construct($context);
 
-        $this->systemModuleRepository = $systemModuleRepository;
-        $this->dataGrid = $dataGrid;
-        $this->dataGridRepository = $dataGridRepository;
-        $this->resultsPerPage = $resultsPerPage;
+        $this->dataGridByModuleViewProvider = $dataGridByModuleViewProvider;
     }
 
     /**
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      */
     public function execute(int $id)
     {
-        $input = (new Core\DataGrid\Input())
-            ->setUseAjax(true)
-            ->setRepository($this->dataGridRepository)
-            ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
-            ->setIdentifier('#comments-details-data-grid')
-            ->setResourcePathDelete('admin/comments/details/delete/id_' . $id)
-            ->setResourcePathEdit('admin/comments/details/edit')
-            ->setQueryOptions(new Core\DataGrid\QueryOption('module_id', $id));
-
-        if ($input->getResultsCount() > 0) {
-            $moduleName = $this->systemModuleRepository->getModuleNameById($id);
-
-            $this->breadcrumb->append(
-                $this->translator->t($moduleName, $moduleName),
-                $this->request->getQuery()
-            );
-
-            $this->addDataGridColumns($input);
-
-            $dataGrid = $this->dataGrid->render($input);
-            if ($dataGrid instanceof JsonResponse) {
-                return $dataGrid;
-            }
-
-            return \array_merge($dataGrid, ['module_id' => $id]);
-        }
-
-        throw new Core\Controller\Exception\ResultNotExistsException();
-    }
-
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     */
-    protected function addDataGridColumns(Core\DataGrid\Input $input)
-    {
-        $input
-            ->addColumn([
-                'label' => $this->translator->t('system', 'date'),
-                'type' => Core\DataGrid\ColumnRenderer\DateColumnRenderer::class,
-                'fields' => ['date'],
-                'default_sort' => true,
-            ], 50)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'name'),
-                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['name'],
-            ], 40)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'message'),
-                'type' => Core\DataGrid\ColumnRenderer\Nl2pColumnRenderer::class,
-                'fields' => ['message'],
-            ], 30)
-            ->addColumn([
-                'label' => $this->translator->t('comments', 'ip'),
-                'type' => Core\DataGrid\ColumnRenderer\TextColumnRenderer::class,
-                'fields' => ['ip'],
-            ], 20)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'id'),
-                'type' => Core\DataGrid\ColumnRenderer\IntegerColumnRenderer::class,
-                'fields' => ['id'],
-                'primary' => true,
-            ], 10);
+        return ($this->dataGridByModuleViewProvider)($id);
     }
 }

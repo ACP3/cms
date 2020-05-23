@@ -8,7 +8,8 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Widget\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Contact;
+use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Index extends Core\Controller\AbstractWidgetAction
@@ -16,14 +17,23 @@ class Index extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @return array
+     * @var \ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider
      */
-    public function execute()
+    private $contactDetailsViewProvider;
+
+    public function __construct(
+        WidgetContext $context,
+        ContactDetailsViewProvider $contactDetailsViewProvider
+    ) {
+        parent::__construct($context);
+
+        $this->contactDetailsViewProvider = $contactDetailsViewProvider;
+    }
+
+    public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return [
-            'sidebar_contact' => $this->config->getSettings(Contact\Installer\Schema::MODULE_NAME),
-        ];
+        return ($this->contactDetailsViewProvider)();
     }
 }

@@ -7,9 +7,9 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
       - '@menus.model.menus_model'
       - '@menus.validation.menu_form_validation'
+      - '@menus.view_providers.admin_menu_edit'
 
   menus.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Delete
@@ -21,29 +21,23 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.formToken'
       - '@menus.model.menus_model'
       - '@menus.validation.menu_form_validation'
+      - '@menus.view_providers.admin_menu_edit'
 
   menus.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.acl'
-      - '@menus.helpers.menuitemslist'
-      - '@menus.model.menurepository'
+      - '@menus.view_providers.data_grid'
 
   menus.controller.admin.items.create:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.modules'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@menus.model.menurepository'
       - '@menus.model.menu_items_model'
-      - '@menus.helpers.menuitemformfields'
       - '@menus.validation.menu_item_form_validation'
+      - '@menus.view_providers.admin_menu_item_edit'
 
   menus.controller.admin.items.delete:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Delete
@@ -55,12 +49,9 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.modules'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
       - '@menus.model.menu_items_model'
-      - '@menus.helpers.menuitemformfields'
       - '@menus.validation.menu_item_form_validation'
+      - '@menus.view_providers.admin_menu_item_edit'
 
   menus.controller.admin.items.order:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Order

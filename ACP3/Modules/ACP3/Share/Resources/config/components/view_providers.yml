@@ -1,0 +1,32 @@
+services:
+  share.view_providers.admin_settings:
+    class: ACP3\Modules\ACP3\Share\ViewProviders\AdminSettingsViewProvider
+    arguments:
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@core.config'
+      - '@share.helpers.social_services'
+      - '@core.i18n.translator'
+
+  share.view_providers.admin_share_edit:
+    class: ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider
+    arguments:
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@share.helpers.share_form_fields'
+
+  share.view_providers.data_grid:
+    class: ACP3\Modules\ACP3\Share\ViewProviders\DataGridViewProvider
+    arguments:
+      - '@core.data_grid.data_grid'
+      - '@share.model.data_grid_repository'
+      - '@core.helpers.results_per_page'
+      - '@core.i18n.translator'
+
+  share.view_providers.share_widget:
+    class: ACP3\Modules\ACP3\Share\ViewProviders\ShareWidgetViewProvider
+    arguments:
+      - '@share.model.share_repository'
+      - '@share.helpers.social_services'
+      - '@core.i18n.translator'

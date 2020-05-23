@@ -17,11 +17,8 @@ class Sitemap extends AbstractFrontendAction
     /**
      * @var SitemapGenerationModel
      */
-    protected $sitemapGenerationModel;
+    private $sitemapGenerationModel;
 
-    /**
-     * Sitemap constructor.
-     */
     public function __construct(
         FrontendContext $context,
         SitemapGenerationModel $sitemapGenerationModel
@@ -33,6 +30,8 @@ class Sitemap extends AbstractFrontendAction
 
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException
      */
     public function execute()
     {

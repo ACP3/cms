@@ -13,9 +13,8 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.helpers.secure'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
       - '@feeds.validation.admin_form_validation'
+      - '@feeds.view_providers.admin_settings'
 
   feeds.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index\Index

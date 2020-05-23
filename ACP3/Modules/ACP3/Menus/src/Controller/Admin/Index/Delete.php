@@ -32,11 +32,9 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $action
-     *
-     * @return mixed
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute($action = '')
+    public function execute(?string $action = null)
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

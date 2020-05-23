@@ -13,10 +13,6 @@ use ACP3\Modules\ACP3\Guestbook;
 class Create extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
      */
     private $formValidation;
@@ -24,26 +20,27 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var Guestbook\Model\GuestbookModel
      */
     private $guestbookModel;
+    /**
+     * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\GuestbookCreateViewProvider
+     */
+    private $guestbookCreateViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\FormToken $formTokenHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\Validation\FormValidation $formValidation
+        Guestbook\Validation\FormValidation $formValidation,
+        Guestbook\ViewProviders\GuestbookCreateViewProvider $guestbookCreateViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->formValidation = $formValidation;
         $this->guestbookModel = $guestbookModel;
+        $this->guestbookCreateViewProvider = $guestbookCreateViewProvider;
     }
 
     public function execute(): array
     {
-        return [
-            'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-        ];
+        return ($this->guestbookCreateViewProvider)();
     }
 
     /**
@@ -78,30 +75,5 @@ class Create extends Core\Controller\AbstractFrontendAction
                 );
             }
         );
-    }
-
-    private function fetchFormDefaults(): array
-    {
-        $defaults = [
-            'name' => '',
-            'name_disabled' => false,
-            'mail' => '',
-            'mail_disabled' => false,
-            'website' => '',
-            'website_disabled' => false,
-            'message' => '',
-        ];
-
-        if ($this->user->isAuthenticated() === true) {
-            $users = $this->user->getUserInfo();
-            $defaults['name'] = $users['nickname'];
-            $defaults['name_disabled'] = true;
-            $defaults['mail'] = $users['mail'];
-            $defaults['mail_disabled'] = true;
-            $defaults['website'] = $users['website'];
-            $defaults['website_disabled'] = !empty($users['website']);
-        }
-
-        return $defaults;
     }
 }

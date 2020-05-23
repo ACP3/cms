@@ -1,0 +1,71 @@
+services:
+  news.view_providers.admin_news_edit:
+    class: ACP3\Modules\ACP3\News\ViewProviders\AdminNewsEditViewProvider
+    arguments:
+      - '@categories.helpers'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@core.config'
+      - '@core.breadcrumb.title'
+      - '@core.i18n.translator'
+
+  news.view_providers.admin_settings:
+    class: ACP3\Modules\ACP3\News\ViewProviders\AdminSettingsViewProvider
+    arguments:
+      - '@core.helpers.date'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.http.request'
+      - '@core.config'
+
+  news.view_providers.data_grid:
+    class: ACP3\Modules\ACP3\News\ViewProviders\DataGridViewProvider
+    arguments:
+      - '@core.data_grid.data_grid'
+      - '@news.model.data_grid_repository'
+      - '@core.helpers.results_per_page'
+      - '@core.i18n.translator'
+
+  news.view_providers.latest_news_list_widget:
+    class: ACP3\Modules\ACP3\News\ViewProviders\LatestNewsListWidgetViewProvider
+    arguments:
+      - '@core.date'
+      - '@news.model.newsrepository'
+      - '@core.config'
+
+  news.view_providers.latest_news_widget:
+    class: ACP3\Modules\ACP3\News\ViewProviders\LatestNewsWidgetViewProvider
+    arguments:
+      - '@core.date'
+      - '@news.model.newsrepository'
+      - '@core.config'
+
+  news.view_providers.news_details:
+    class: ACP3\Modules\ACP3\News\ViewProviders\NewsDetailsViewProvider
+    arguments:
+      - '@news.cache'
+      - '@categories.model.categories_repository'
+      - '@core.http.request'
+      - '@core.config'
+      - '@core.breadcrumb'
+      - '@core.breadcrumb.title'
+      - '@core.i18n.translator'
+      - '@core.view'
+
+  news.view_providers.news_list:
+    class: ACP3\Modules\ACP3\News\ViewProviders\NewsListViewProvider
+    arguments:
+      - '@categories.helpers'
+      - '@categories.model.categories_repository'
+      - '@core.date'
+      - '@core.seo.meta_statements_service'
+      - '@news.model.newsrepository'
+      - '@core.pagination'
+      - '@core.helpers.results_per_page'
+      - '@core.router'
+      - '@core.config'
+      - '@core.helpers.string_formatter'
+      - '@core.breadcrumb'
+      - '@core.i18n.translator'
+      - '@core.view'

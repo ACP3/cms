@@ -14,31 +14,30 @@ use ACP3\Modules\ACP3\News;
 class Create extends AbstractFormAction
 {
     /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    protected $formTokenHelper;
-    /**
      * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
      */
-    protected $adminFormValidation;
+    private $adminFormValidation;
     /**
      * @var News\Model\NewsModel
      */
-    protected $newsModel;
+    private $newsModel;
+    /**
+     * @var \ACP3\Modules\ACP3\News\ViewProviders\AdminNewsEditViewProvider
+     */
+    private $adminNewsEditViewProvider;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\FormToken $formTokenHelper,
         News\Model\NewsModel $newsModel,
         News\Validation\AdminFormValidation $adminFormValidation,
-        Categories\Helpers $categoriesHelpers
+        Categories\Helpers $categoriesHelpers,
+        News\ViewProviders\AdminNewsEditViewProvider $adminNewsEditViewProvider
     ) {
-        parent::__construct($context, $formsHelper, $categoriesHelpers);
+        parent::__construct($context, $categoriesHelpers);
 
-        $this->formTokenHelper = $formTokenHelper;
         $this->newsModel = $newsModel;
         $this->adminFormValidation = $adminFormValidation;
+        $this->adminNewsEditViewProvider = $adminNewsEditViewProvider;
     }
 
     /**
@@ -47,7 +46,12 @@ class Create extends AbstractFormAction
     public function execute(): array
     {
         $defaults = [
+            'active' => 1,
+            'category_id' => null,
+            'readmore' => 0,
+            'id' => null,
             'title' => '',
+            'target' => null,
             'text' => '',
             'uri' => '',
             'link_title' => '',
@@ -55,20 +59,7 @@ class Create extends AbstractFormAction
             'end' => '',
         ];
 
-        return [
-            'active' => $this->formsHelper->yesNoCheckboxGenerator('active', 1),
-            'categories' => $this->categoriesHelpers->categoriesList(
-                News\Installer\Schema::MODULE_NAME,
-                null,
-                true
-            ),
-            'options' => $this->fetchOptions(0),
-            'target' => $this->formsHelper->linkTargetChoicesGenerator('target'),
-            'form' => \array_merge($defaults, $this->request->getPost()->all()),
-            'form_token' => $this->formTokenHelper->renderFormToken(),
-            'SEO_URI_PATTERN' => News\Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => '',
-        ];
+        return ($this->adminNewsEditViewProvider)($defaults);
     }
 
     /**

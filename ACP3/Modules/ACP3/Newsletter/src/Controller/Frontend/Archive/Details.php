@@ -18,49 +18,34 @@ class Details extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
      */
-    protected $newsletterRepository;
-
+    private $newsletterRepository;
     /**
-     * Details constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterDetailsViewProvider
      */
+    private $newsletterDetailsViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository
+        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
+        Newsletter\ViewProviders\NewsletterDetailsViewProvider $newsletterDetailsViewProvider
     ) {
         parent::__construct($context);
 
         $this->newsletterRepository = $newsletterRepository;
+        $this->newsletterDetailsViewProvider = $newsletterDetailsViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
         $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, 1);
 
         if (!empty($newsletter)) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $this->breadcrumb
-                ->append($this->translator->t('newsletter', 'index'), 'newsletter')
-                ->append($this->translator->t('newsletter', 'frontend_archive_index'), 'newsletter/archive')
-                ->append(
-                    $newsletter['title'],
-                    $this->request->getQuery()
-                );
-            $this->title->setPageTitle($newsletter['title']);
-
-            return [
-                'newsletter' => $newsletter,
-            ];
+            return ($this->newsletterDetailsViewProvider)($newsletter);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

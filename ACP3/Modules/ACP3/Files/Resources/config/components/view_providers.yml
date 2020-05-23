@@ -1,0 +1,64 @@
+services:
+  files.view_providers.admin_file_edit:
+    class: ACP3\Modules\ACP3\Files\ViewProviders\AdminFileEditViewProvider
+    arguments:
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@categories.helpers'
+      - '@core.http.request'
+      - '@core.breadcrumb.title'
+      - '@core.i18n.translator'
+
+  files.view_providers.admin_settings:
+    class: ACP3\Modules\ACP3\Files\ViewProviders\AdminSettingsViewProvider
+    arguments:
+      - '@core.helpers.date'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.config'
+      - '@core.i18n.translator'
+
+  files.view_providers.data_grid:
+    class: ACP3\Modules\ACP3\Files\ViewProviders\DataGridViewProvider
+    arguments:
+      - '@core.acl'
+      - '@core.data_grid.data_grid'
+      - '@files.model.data_grid_repository'
+      - '@core.helpers.results_per_page'
+      - '@core.config'
+      - '@core.i18n.translator'
+
+  files.view_providers.file_details:
+    class: ACP3\Modules\ACP3\Files\ViewProviders\FileDetailsViewProvider
+    arguments:
+      - '@core.breadcrumb'
+      - '@files.cache'
+      - '@categories.model.categories_repository'
+      - '@core.http.request'
+      - '@core.config'
+      - '@core.breadcrumb.title'
+      - '@core.i18n.translator'
+      - '@core.view'
+
+  files.view_providers.files_by_category_id:
+    class: ACP3\Modules\ACP3\Files\ViewProviders\FilesByCategoryIdViewProvider
+    arguments:
+      - '@core.breadcrumb'
+      - '@categories.model.categories_repository'
+      - '@core.date'
+      - '@files.model.filesrepository'
+      - '@core.config'
+      - '@core.i18n.translator'
+
+  files.view_providers.files_widget:
+    class: ACP3\Modules\ACP3\Files\ViewProviders\FilesWidgetViewProvider
+    arguments:
+      - '@categories.model.categories_repository'
+      - '@core.date'
+      - '@files.model.filesrepository'
+      - '@core.config'
+
+  files.view_providers.root_categories_list:
+    class: ACP3\Modules\ACP3\Files\ViewProviders\RootCategoriesListViewProvider
+    arguments:
+      - '@categories.model.categories_repository'

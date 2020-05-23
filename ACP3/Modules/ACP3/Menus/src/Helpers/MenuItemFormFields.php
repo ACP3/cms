@@ -15,59 +15,51 @@ class MenuItemFormFields
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
-    protected $formsHelper;
+    private $formsHelper;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
      */
-    protected $menusModel;
+    private $menuRepository;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList
      */
-    protected $menusHelper;
+    private $menusHelper;
 
-    /**
-     * @param \ACP3\Core\Helpers\Forms                       $formsHelper
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList $menusHelper
-     */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
         MenuItemsList $menusHelper,
-        MenuRepository $menusModel
+        MenuRepository $menuRepository
     ) {
         $this->formsHelper = $formsHelper;
         $this->menusHelper = $menusHelper;
-        $this->menusModel = $menusModel;
+        $this->menuRepository = $menuRepository;
     }
 
     /**
      * Gibt alle Menüleisten zur Benutzung in einem Dropdown-Menü aus.
      *
-     * @param int $selected
-     *
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function menusDropDown($selected = 0)
+    protected function menusDropDown(int $selected = 0): array
     {
-        $menus = $this->menusModel->getAllMenus();
-        $cMenus = \count($menus);
-        for ($i = 0; $i < $cMenus; ++$i) {
-            $menus[$i]['selected'] = $this->formsHelper->selectEntry('block_id', (int) $menus[$i]['id'], (int) $selected);
+        $menus = $this->menuRepository->getAllMenus();
+        foreach ($menus as $i => $menu) {
+            $menus[$i]['selected'] = $this->formsHelper->selectEntry('block_id', (int) $menu['id'], $selected);
         }
 
         return $menus;
     }
 
     /**
-     * @param int $blockId
-     * @param int $parentId
-     * @param int $leftId
-     * @param int $rightId
-     * @param int $displayMenuItem
-     *
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function createMenuItemFormFields($blockId = 0, $parentId = 0, $leftId = 0, $rightId = 0, $displayMenuItem = 1)
-    {
+    public function createMenuItemFormFields(
+        int $blockId = 0,
+        int $parentId = 0,
+        int $leftId = 0,
+        int $rightId = 0,
+        int $displayMenuItem = 1
+    ): array {
         return [
             'blocks' => $this->menusDropDown($blockId),
             'display' => $this->formsHelper->yesNoCheckboxGenerator('display', $displayMenuItem),

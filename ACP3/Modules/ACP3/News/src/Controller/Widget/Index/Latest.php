@@ -13,48 +13,24 @@ use ACP3\Modules\ACP3\News;
 class Latest extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var Core\Date
+     * @var \ACP3\Modules\ACP3\News\ViewProviders\LatestNewsWidgetViewProvider
      */
-    protected $date;
-    /**
-     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
-     */
-    protected $newsRepository;
+    private $latestNewsWidgetViewProvider;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\WidgetContext             $context
-     * @param \ACP3\Core\Date                                         $date
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository $newsRepository
-     */
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        News\Model\Repository\NewsRepository $newsRepository
+        News\ViewProviders\LatestNewsWidgetViewProvider $latestNewsWidgetViewProvider
     ) {
         parent::__construct($context);
 
-        $this->date = $date;
-        $this->newsRepository = $newsRepository;
+        $this->latestNewsWidgetViewProvider = $latestNewsWidgetViewProvider;
     }
 
     /**
-     * @param int $categoryId
-     *
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($categoryId = 0)
+    public function execute(int $categoryId = 0): array
     {
-        $settings = $this->config->getSettings(News\Installer\Schema::MODULE_NAME);
-
-        if (!empty($categoryId)) {
-            $news = $this->newsRepository->getLatestByCategoryId((int) $categoryId, $this->date->getCurrentDateTime());
-        } else {
-            $news = $this->newsRepository->getLatest($this->date->getCurrentDateTime());
-        }
-
-        return [
-            'sidebar_news_latest' => $news,
-            'dateformat' => $settings['dateformat'],
-        ];
+        return ($this->latestNewsWidgetViewProvider)($categoryId);
     }
 }

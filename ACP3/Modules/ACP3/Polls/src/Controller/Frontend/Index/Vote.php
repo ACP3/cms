@@ -15,36 +15,31 @@ class Vote extends Core\Controller\AbstractFrontendAction
     /**
      * @var Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
      */
-    protected $pollRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
-     */
-    protected $answerRepository;
+    private $pollRepository;
     /**
      * @var Polls\Model\VoteModel
      */
-    protected $pollsModel;
+    private $pollsModel;
     /**
      * @var Polls\Validation\VoteValidation
      */
-    protected $voteValidation;
-
+    private $voteValidation;
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository   $pollRepository
-     * @param \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository $answerRepository
+     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\PollVoteViewProvider
      */
+    private $pollVoteViewProvider;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
         Polls\Validation\VoteValidation $voteValidation,
         Polls\Model\VoteModel $pollsModel,
         Polls\Model\Repository\PollRepository $pollRepository,
-        Polls\Model\Repository\AnswerRepository $answerRepository
+        Polls\ViewProviders\PollVoteViewProvider $pollVoteViewProvider
     ) {
         parent::__construct($context);
 
@@ -52,39 +47,28 @@ class Vote extends Core\Controller\AbstractFrontendAction
         $this->voteValidation = $voteValidation;
         $this->pollsModel = $pollsModel;
         $this->pollRepository = $pollRepository;
-        $this->answerRepository = $answerRepository;
+        $this->pollVoteViewProvider = $pollVoteViewProvider;
     }
 
     /**
-     * @param int $id
-     *
-     * @return array
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id): array
     {
-        $answer = $this->request->getPost()->get('answer');
-        $time = $this->date->getCurrentDateTime();
-        if ($this->pollRepository->pollExists($id, $time, \is_array($answer)) === true) {
-            $poll = $this->pollRepository->getOneById($id);
-
-            return [
-                'question' => $poll['title'],
-                'multiple' => $poll['multiple'],
-                'answers' => $this->answerRepository->getAnswersByPollId($id),
-            ];
+        if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
+            return ($this->pollVoteViewProvider)($id);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
     }
 
     /**
-     * @param int $id
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost($id)
+    public function executePost(int $id)
     {
         return $this->actionHelper->handlePostAction(
             function () use ($id) {

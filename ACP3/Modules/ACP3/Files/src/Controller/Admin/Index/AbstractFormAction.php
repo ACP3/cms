@@ -17,7 +17,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers
      */
-    protected $categoriesHelpers;
+    private $categoriesHelpers;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,

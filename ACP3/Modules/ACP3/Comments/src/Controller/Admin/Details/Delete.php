@@ -39,14 +39,9 @@ class Delete extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param int    $id
-     * @param string $action
-     *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute($id, $action = '')
+    public function execute(int $id, ?string $action = null)
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,

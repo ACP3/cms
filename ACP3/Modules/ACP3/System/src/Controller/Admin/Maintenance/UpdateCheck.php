@@ -18,20 +18,16 @@ class UpdateCheck extends Core\Controller\AbstractFrontendAction
      */
     private $updateCheck;
 
-    /**
-     * UpdateCheck constructor.
-     */
-    public function __construct(Context\FrontendContext $context, System\Helper\UpdateCheck $updateCheck)
-    {
+    public function __construct(
+        Context\FrontendContext $context,
+        System\Helper\UpdateCheck $updateCheck
+    ) {
         parent::__construct($context);
 
         $this->updateCheck = $updateCheck;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function execute(): array
     {
         return [
             'update' => $this->updateCheck->checkForNewVersion(),

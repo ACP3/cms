@@ -10,6 +10,9 @@ namespace ACP3\Modules\ACP3\Filemanager\Controller\Admin\Index;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Environment\ApplicationMode;
+use RFM\Api\LocalApi;
+use RFM\Application;
+use RFM\Repository\Local\Storage;
 
 class RichFileManager extends AbstractFrontendAction
 {
@@ -30,14 +33,14 @@ class RichFileManager extends AbstractFrontendAction
      */
     public function execute(): void
     {
-        $app = new \RFM\Application();
+        $app = new Application();
 
-        $local = new \RFM\Repository\Local\Storage($this->getFileManagerConfig());
+        $local = new Storage($this->getFileManagerConfig());
         $local->setRoot($this->appPath->getWebRoot() . 'uploads/', true, true);
 
         $app->setStorage($local);
 
-        $app->api = new \RFM\Api\LocalApi();
+        $app->api = new LocalApi();
 
         $app->run();
     }

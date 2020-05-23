@@ -7,13 +7,10 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.modules'
-      - '@core.helpers.forms'
       - '@categories.model.categories_model'
-      - '@categories.model.categories_repository'
       - '@categories.validation.admin_form_validation'
       - '@categories.helpers.upload'
-      - '@core.helpers.formToken'
+      - '@categories.view_providers.admin_category_edit'
 
   categories.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Delete
@@ -26,21 +23,16 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.helpers.forms'
       - '@categories.model.categories_model'
-      - '@categories.model.categories_repository'
       - '@categories.validation.admin_form_validation'
       - '@categories.helpers.upload'
-      - '@core.helpers.formToken'
+      - '@categories.view_providers.admin_category_edit'
 
   categories.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.acl'
-      - '@core.helpers.results_per_page'
-      - '@categories.model.data_grid_repository'
-      - '@core.data_grid.data_grid'
+      - '@categories.view_providers.data_grid'
 
   categories.controller.admin.index.order:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Order
@@ -55,4 +47,4 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@categories.validation.admin_settings_form_validation'
-      - '@core.helpers.formToken'
+      - '@categories.view_providers.admin_category_settings'

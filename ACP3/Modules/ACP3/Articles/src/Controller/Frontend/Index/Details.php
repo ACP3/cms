@@ -18,73 +18,45 @@ class Details extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Core\Date
      */
-    protected $date;
-    /**
-     * @var \ACP3\Core\Helpers\PageBreaks
-     */
-    protected $pageBreaksHelper;
+    private $date;
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
-    protected $articleRepository;
+    private $articleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
+     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\ArticlePaginatedViewProvider
      */
-    protected $articlesCache;
+    private $articlePaginatedViewProvider;
 
-    /**
-     * Details constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Core\Date                                                $date
-     * @param \ACP3\Core\Helpers\PageBreaks                                  $pageBreaksHelper
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
-     * @param \ACP3\Modules\ACP3\Articles\Cache                              $articlesCache
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Articles\ViewProviders\ArticlePaginatedViewProvider $articlePaginatedViewProvider,
         Core\Date $date,
-        Core\Helpers\PageBreaks $pageBreaksHelper,
-        Articles\Model\Repository\ArticleRepository $articleRepository,
-        Articles\Cache $articlesCache
+        Articles\Model\Repository\ArticleRepository $articleRepository
     ) {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->pageBreaksHelper = $pageBreaksHelper;
         $this->articleRepository = $articleRepository;
-        $this->articlesCache = $articlesCache;
+        $this->articlePaginatedViewProvider = $articlePaginatedViewProvider;
     }
 
     /**
-     * @return array
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id)
+    public function execute(int $id): array
     {
         if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            $article = $this->articlesCache->getCache($id);
+            $viewData = ($this->articlePaginatedViewProvider)($id);
 
-            $this->breadcrumb->append($article['title'], $this->request->getUriWithoutPages());
-            $this->title->setPageTitle($article['title']);
-
-            if ($this->view->templateExists($article['layout'])) {
-                $this->setLayout($article['layout']);
+            if ($this->articlePaginatedViewProvider->getLayout()) {
+                $this->setLayout($this->articlePaginatedViewProvider->getLayout());
             }
 
-            return [
-                'page' => \array_merge(
-                    $article,
-                    $this->pageBreaksHelper->splitTextIntoPages(
-                        $this->view->fetchStringAsTemplate($article['text']),
-                        $this->request->getUriWithoutPages()
-                    )
-                ),
-            ];
+            return $viewData;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

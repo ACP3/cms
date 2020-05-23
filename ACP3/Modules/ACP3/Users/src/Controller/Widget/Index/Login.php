@@ -8,11 +8,24 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Users\Installer\Schema;
+use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Modules\ACP3\Users\ViewProviders\LoginViewProvider;
 
 class Login extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
+
+    /**
+     * @var \ACP3\Modules\ACP3\Users\ViewProviders\LoginViewProvider
+     */
+    private $loginViewProvider;
+
+    public function __construct(WidgetContext $context, LoginViewProvider $loginViewProvider)
+    {
+        parent::__construct($context);
+
+        $this->loginViewProvider = $loginViewProvider;
+    }
 
     /**
      * Displays the login mask, if the user is not already logged in.
@@ -22,14 +35,7 @@ class Login extends Core\Controller\AbstractWidgetAction
         $this->setCacheResponseCacheable();
 
         if ($this->user->isAuthenticated() === false) {
-            $prefix = $this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN ? 'acp/' : '';
-            $currentPage = \base64_encode($prefix . $this->request->getQuery());
-            $settings = $this->config->getSettings(Schema::MODULE_NAME);
-
-            return [
-                'enable_registration' => $settings['enable_registration'],
-                'redirect_uri' => $this->request->getPost()->get('redirect_uri', $currentPage),
-            ];
+            return ($this->loginViewProvider)();
         }
 
         $this->setContent(false);

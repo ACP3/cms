@@ -1,0 +1,39 @@
+services:
+  permissions.view_providers.admin_resource_edit:
+    class: ACP3\Modules\ACP3\Permissions\ViewProviders\AdminResourceEditViewProvider
+    arguments:
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.modules'
+      - '@permissions.model.privilegerepository'
+      - '@core.http.request'
+
+  permissions.view_providers.admin_role_edit:
+    class: ACP3\Modules\ACP3\Permissions\ViewProviders\AdminRoleEditViewProvider
+    arguments:
+      - '@core.acl'
+      - '@core.helpers.forms'
+      - '@core.helpers.formToken'
+      - '@core.modules'
+      - '@permissions.cache'
+      - '@permissions.model.privilegerepository'
+      - '@core.http.request'
+      - '@core.breadcrumb.title'
+      - '@core.i18n.translator'
+
+  permissions.view_providers.data_grid:
+    class: ACP3\Modules\ACP3\Permissions\ViewProviders\DataGridViewProvider
+    arguments:
+      - '@core.acl'
+      - '@core.data_grid.data_grid'
+      - '@permissions.model.roles_data_grid_repository'
+      - '@core.helpers.results_per_page'
+      - '@core.i18n.translator'
+
+  permissions.view_providers.resource_list_data_grid:
+    class: ACP3\Modules\ACP3\Permissions\ViewProviders\ResourceListDataGridViewProvider
+    arguments:
+      - '@core.acl'
+      - '@core.modules'
+      - '@permissions.model.resourcerepository'
+      - '@core.i18n.translator'
