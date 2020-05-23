@@ -38,8 +38,6 @@ class RedirectMessages
     /**
      * Gets the generated redirect message from setMessage().
      *
-     * @return array
-     *
      * @throws \Exception
      */
     public function getMessage(): array
@@ -50,13 +48,11 @@ class RedirectMessages
     /**
      * Sets a redirect messages and redirects to the given internal path.
      *
-     * @param int|bool    $success
-     * @param string      $text
-     * @param string|null $path
+     * @param int|bool $success
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function setMessage($success, $text, $path = null)
+    public function setMessage($success, string $text, ?string $path = null)
     {
         $this->sessionHandler->getFlashBag()
             ->set((bool) $success ? 'success' : 'error', $text);
