@@ -34,6 +34,8 @@ class RedirectMessage extends AbstractFunction
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public function process(array $params, \Smarty_Internal_Template $smarty)
     {

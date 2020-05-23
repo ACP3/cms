@@ -38,18 +38,13 @@ class RedirectMessages
     /**
      * Gets the generated redirect message from setMessage().
      *
-     * @return array|null
+     * @return array
      *
      * @throws \Exception
      */
-    public function getMessage()
+    public function getMessage(): array
     {
-        $param = $this->sessionHandler->get('redirect_message');
-        if (isset($param) && \is_array($param)) {
-            $this->sessionHandler->remove('redirect_message');
-        }
-
-        return $param;
+        return $this->sessionHandler->getFlashBag()->all();
     }
 
     /**
@@ -63,13 +58,8 @@ class RedirectMessages
      */
     public function setMessage($success, $text, $path = null)
     {
-        $this->sessionHandler->set(
-            'redirect_message',
-            [
-                'success' => \is_int($success) ? true : (bool) $success,
-                'text' => $text,
-            ]
-        );
+        $this->sessionHandler->getFlashBag()
+            ->set((bool) $success ? 'success' : 'error', $text);
 
         // If no path has been given, guess it automatically
         if ($path === null) {
