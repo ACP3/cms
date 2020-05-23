@@ -14,6 +14,7 @@ services:
   core.installer.model.schema_update_model:
     class: ACP3\Core\Installer\Model\SchemaUpdateModel
     arguments:
+      - '@core.modules.installer_logger'
       - '@core.installer.schema_registrar'
       - '@core.installer.migration_registrar'
       - '@core.modules'

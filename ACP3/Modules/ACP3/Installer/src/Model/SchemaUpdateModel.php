@@ -11,6 +11,7 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Installer\Exception\MissingInstallerException;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SchemaUpdateModel
@@ -27,13 +28,19 @@ class SchemaUpdateModel
      * @var \ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath
      */
     private $appPath;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     public function __construct(
         ApplicationPath $appPath,
+        LoggerInterface $logger,
         ContainerInterface $container
     ) {
         $this->container = $container;
         $this->appPath = $appPath;
+        $this->logger = $logger;
     }
 
     /**
@@ -64,6 +71,8 @@ class SchemaUpdateModel
                 $this->results[$moduleInfo['name']] = true;
             } catch (\Throwable $e) {
                 $this->results[$moduleInfo['name']] = false;
+
+                $this->logger->error($e);
             }
         }
 

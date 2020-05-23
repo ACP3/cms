@@ -13,6 +13,7 @@ use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\SchemaUpdater;
 use ACP3\Core\XML;
+use Psr\Log\LoggerInterface;
 
 class SchemaUpdateModel
 {
@@ -42,11 +43,13 @@ class SchemaUpdateModel
      * @var array
      */
     private $results = [];
-
     /**
-     * SchemaUpdateModel constructor.
+     * @var \Psr\Log\LoggerInterface
      */
+    private $logger;
+
     public function __construct(
+        LoggerInterface $logger,
         SchemaRegistrar $schemaRegistrar,
         MigrationRegistrar $migrationRegistrar,
         Modules $modules,
@@ -58,6 +61,7 @@ class SchemaUpdateModel
         $this->schemaRegistrar = $schemaRegistrar;
         $this->migrationRegistrar = $migrationRegistrar;
         $this->xml = $xml;
+        $this->logger = $logger;
     }
 
     /**
@@ -75,6 +79,8 @@ class SchemaUpdateModel
                 $this->results[$moduleName] = true;
             } catch (\Throwable $e) {
                 $this->results[$moduleName] = false;
+
+                $this->logger->error($e);
             }
         }
 
