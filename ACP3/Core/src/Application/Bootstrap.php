@@ -12,7 +12,6 @@ use ACP3\Core\Application\Exception\MaintenanceModeActiveException;
 use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
-use Patchwork\Utf8;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -46,10 +45,6 @@ class Bootstrap extends AbstractBootstrap
      */
     public function initializeClasses(SymfonyRequest $symfonyRequest): void
     {
-        Utf8\Bootup::initAll(); // Enables the portability layer and configures PHP for UTF-8
-        Utf8\Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
-        Utf8\Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
-
         $file = $this->appPath->getCacheDir() . 'container.php';
         $cache = new ConfigCache($file, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
