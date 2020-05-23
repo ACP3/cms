@@ -28,17 +28,14 @@ class Create extends AbstractFormAction
      * @var \ACP3\Core\Helpers\Upload
      */
     private $categoriesUploadHelper;
-
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                     $context
-     * @param \ACP3\Core\Helpers\Forms                                          $formsHelper
-     * @param \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository $categoryRepository
-     * @param \ACP3\Modules\ACP3\Categories\Validation\AdminFormValidation      $adminFormValidation
-     * @param \ACP3\Core\Helpers\Upload                                         $categoriesUploadHelper
-     * @param \ACP3\Core\Helpers\FormToken                                      $formTokenHelper
+     * @var \ACP3\Core\Modules
      */
+    private $modules;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Modules $modules,
         Core\Helpers\Forms $formsHelper,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Model\Repository\CategoryRepository $categoryRepository,
@@ -52,6 +49,7 @@ class Create extends AbstractFormAction
         $this->formTokenHelper = $formTokenHelper;
         $this->categoriesModel = $categoriesModel;
         $this->categoriesUploadHelper = $categoriesUploadHelper;
+        $this->modules = $modules;
     }
 
     /**

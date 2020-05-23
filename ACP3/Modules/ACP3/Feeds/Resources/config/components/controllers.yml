@@ -21,5 +21,6 @@ services:
     class: ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.acl'
       - '@feeds.view.renderer.feedgenerator'
       - '@feeds.utility.feed_availability_registrar'

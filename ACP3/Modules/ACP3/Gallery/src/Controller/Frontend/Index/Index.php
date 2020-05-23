@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -33,19 +34,15 @@ class Index extends AbstractAction
      * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
     private $thumbnailGenerator;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Core\Date                                               $date
-     * @param \ACP3\Core\Pagination                                         $pagination
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository $galleryRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator          $thumbnailGenerator
+     * @var \ACP3\Core\Helpers\ResultsPerPage
      */
+    private $resultsPerPage;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        ResultsPerPage $resultsPerPage,
         Core\Pagination $pagination,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
@@ -56,6 +53,7 @@ class Index extends AbstractAction
         $this->pagination = $pagination;
         $this->galleryRepository = $galleryRepository;
         $this->thumbnailGenerator = $thumbnailGenerator;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

@@ -35,6 +35,7 @@ class Create extends AbstractFormAction
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Modules $modules,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\Repository\MenuRepository $menuRepository,
@@ -42,7 +43,7 @@ class Create extends AbstractFormAction
         Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
         Menus\Validation\MenuItemFormValidation $menuItemFormValidation
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context, $modules, $formsHelper);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->menuRepository = $menuRepository;

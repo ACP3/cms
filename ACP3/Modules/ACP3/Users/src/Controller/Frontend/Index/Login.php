@@ -25,14 +25,14 @@ class Login extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Secure
      */
     private $secureHelper;
-
     /**
-     * Login constructor.
-     *
-     * @param \ACP3\Core\Helpers\Secure $secureHelper
+     * @var \ACP3\Core\Http\RedirectResponse
      */
+    private $redirectResponse;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\Forms $forms,
         Core\Helpers\Secure $secureHelper,
         Users\Model\AuthenticationModel $authenticationModel
@@ -42,6 +42,7 @@ class Login extends Core\Controller\AbstractFrontendAction
         $this->authenticationModel = $authenticationModel;
         $this->forms = $forms;
         $this->secureHelper = $secureHelper;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -50,7 +51,7 @@ class Login extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         if ($this->user->isAuthenticated() === true) {
-            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
+            return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
         }
 
         $rememberMe = [
@@ -75,12 +76,12 @@ class Login extends Core\Controller\AbstractFrontendAction
             );
 
             if ($this->request->getParameters()->has('redirect')) {
-                return $this->redirect()->temporary(
+                return $this->redirectResponse->temporary(
                     \base64_decode($this->request->getParameters()->get('redirect'))
                 );
             }
 
-            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
+            return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
         } catch (Users\Exception\LoginFailedException $e) {
             $phrase = $this->translator->t('users', 'nickname_or_password_wrong');
         } catch (Users\Exception\UserAccountLockedException $e) {

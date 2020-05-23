@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,9 +27,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsDataGridRepository
      */
     private $dataGridRepository;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        ResultsPerPage $resultsPerPage,
         Comments\Model\Repository\CommentsDataGridRepository $dataGridRepository,
         Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository,
         Core\DataGrid\DataGrid $dataGrid
@@ -38,6 +44,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->systemModuleRepository = $systemModuleRepository;
         $this->dataGrid = $dataGrid;
         $this->dataGridRepository = $dataGridRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

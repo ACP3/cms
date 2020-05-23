@@ -8,9 +8,27 @@
 namespace ACP3\Modules\ACP3\Acp\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
+    /**
+     * @var \ACP3\Core\ACL
+     */
+    private $acl;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+
+    public function __construct(Context\FrontendContext $context, Core\ACL $acl, Core\Modules $modules)
+    {
+        parent::__construct($context);
+
+        $this->acl = $acl;
+        $this->modules = $modules;
+    }
+
     public function execute(): array
     {
         return [

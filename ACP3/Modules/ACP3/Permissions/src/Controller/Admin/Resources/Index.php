@@ -16,20 +16,26 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
      */
     protected $resourceRepository;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                      $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository $resourceRepository
+     * @var \ACP3\Core\ACL
      */
+    private $acl;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
+        Core\Modules $modules,
         Permissions\Model\Repository\ResourceRepository $resourceRepository
     ) {
         parent::__construct($context);
 
         $this->resourceRepository = $resourceRepository;
+        $this->acl = $acl;
+        $this->modules = $modules;
     }
 
     /**
@@ -38,12 +44,11 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         $resources = $this->resourceRepository->getAllResources();
-        $cResources = \count($resources);
         $output = [];
-        for ($i = 0; $i < $cResources; ++$i) {
-            if ($this->modules->isActive($resources[$i]['module_name']) === true) {
-                $module = $this->translator->t($resources[$i]['module_name'], $resources[$i]['module_name']);
-                $output[$module][] = $resources[$i];
+        foreach ($resources as $resource) {
+            if ($this->modules->isActive($resource['module_name']) === true) {
+                $module = $this->translator->t($resource['module_name'], $resource['module_name']);
+                $output[$module][] = $resource;
             }
         }
         \ksort($output);

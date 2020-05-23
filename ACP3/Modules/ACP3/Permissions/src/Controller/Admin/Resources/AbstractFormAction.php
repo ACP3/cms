@@ -11,6 +11,7 @@ use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\Forms;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
 
 class AbstractFormAction extends AbstractFrontendAction
@@ -23,9 +24,14 @@ class AbstractFormAction extends AbstractFrontendAction
      * @var PrivilegeRepository
      */
     protected $privilegeRepository;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
     public function __construct(
         FrontendContext $context,
+        Modules $modules,
         Forms $formsHelper,
         PrivilegeRepository $privilegeRepository
     ) {
@@ -33,6 +39,7 @@ class AbstractFormAction extends AbstractFrontendAction
 
         $this->formsHelper = $formsHelper;
         $this->privilegeRepository = $privilegeRepository;
+        $this->modules = $modules;
     }
 
     /**

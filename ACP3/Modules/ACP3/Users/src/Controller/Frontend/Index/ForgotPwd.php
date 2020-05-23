@@ -37,21 +37,18 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Alerts
      */
     private $alertsHelper;
-
     /**
-     * ForgotPwd constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                           $context
-     * @param \ACP3\Core\Validation\Validator                                         $validator
-     * @param \ACP3\Core\Helpers\Alerts                                               $alertsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                            $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                               $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository                $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation
-     * @param \ACP3\Core\Helpers\SendEmail                                            $sendEmail
+     * @var \ACP3\Core\Validation\Validator
      */
+    private $validator;
+    /**
+     * @var \ACP3\Core\Http\RedirectResponse
+     */
+    private $redirectResponse;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Http\RedirectResponse $redirectResponse,
         Core\Validation\Validator $validator,
         Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\FormToken $formTokenHelper,
@@ -69,6 +66,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         $this->sendEmail = $sendEmail;
         $this->alertsHelper = $alertsHelper;
         $this->validator = $validator;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -77,7 +75,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         if ($this->user->isAuthenticated() === true) {
-            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
+            return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
         }
 
         return [

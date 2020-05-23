@@ -24,17 +24,14 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     protected $pictureRepository;
-
     /**
-     * Order constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                 $context
-     * @param \ACP3\Core\Helpers\Sort                                       $sortHelper
-     * @param \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository $pictureRepository
-     * @param \ACP3\Modules\ACP3\Gallery\Cache                              $galleryCache
+     * @var \ACP3\Core\Http\RedirectResponse
      */
+    private $redirectResponse;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\Sort $sortHelper,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache
@@ -44,6 +41,7 @@ class Order extends Core\Controller\AbstractFrontendAction
         $this->sortHelper = $sortHelper;
         $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -69,7 +67,7 @@ class Order extends Core\Controller\AbstractFrontendAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->redirect()->temporary('acp/gallery/pictures/index/id_' . $galleryId);
+            return $this->redirectResponse->temporary('acp/gallery/pictures/index/id_' . $galleryId);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

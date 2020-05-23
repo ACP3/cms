@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Modules\ACP3\Contact;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -21,14 +22,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\DataGrid\DataGrid
      */
     private $dataGrid;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\DataGrid\DataGrid $dataGrid
+     * @var \ACP3\Core\Helpers\ResultsPerPage
      */
+    private $resultsPerPage;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        ResultsPerPage $resultsPerPage,
         Contact\Model\Repository\DataGridRepository $dataGridRepository,
         Core\DataGrid\DataGrid $dataGrid
     ) {
@@ -36,6 +37,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->dataGridRepository = $dataGridRepository;
         $this->dataGrid = $dataGrid;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     public function execute()

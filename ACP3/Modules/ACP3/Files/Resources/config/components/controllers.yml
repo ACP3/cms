@@ -41,6 +41,8 @@ services:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.acl'
+      - '@core.helpers.results_per_page'
       - '@files.model.data_grid_repository'
       - '@core.data_grid.data_grid'
 
@@ -58,6 +60,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Sort
     arguments:
       - '@core.context.frontend'
+      - '@core.http.redirect_response'
       - '@files.model.filesrepository'
       - '@core.helpers.sort'
 
@@ -75,6 +78,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
+      - '@core.http.redirect_response'
       - '@core.helpers.string_formatter'
       - '@files.model.filesrepository'
       - '@files.cache'

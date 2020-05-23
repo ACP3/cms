@@ -23,13 +23,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var Feeds\Utility\FeedAvailabilityRegistrar
      */
     protected $availableFeedsRegistrar;
-
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext        $context
-     * @param \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator $feedGenerator
+     * @var \ACP3\Core\ACL
      */
+    private $acl;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
         Feeds\View\Renderer\FeedGenerator $feedGenerator,
         Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
     ) {
@@ -37,6 +38,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->feedGenerator = $feedGenerator;
         $this->availableFeedsRegistrar = $availableFeedsRegistrar;
+        $this->acl = $acl;
     }
 
     /**

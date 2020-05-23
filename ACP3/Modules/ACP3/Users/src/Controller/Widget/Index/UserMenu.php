@@ -15,6 +15,15 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     /**
+     * @var \ACP3\Core\ACL
+     */
+    private $acl;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+
+    /**
      * @var array
      */
     protected $systemActions = [
@@ -34,6 +43,17 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
             'phrase' => 'maintenance',
         ],
     ];
+
+    public function __construct(
+        Core\Controller\Context\WidgetContext $context,
+        Core\ACL $acl,
+        Core\Modules $modules)
+    {
+        parent::__construct($context);
+
+        $this->acl = $acl;
+        $this->modules = $modules;
+    }
 
     /**
      * Displays the user menu, if the user is logged in.

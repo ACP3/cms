@@ -25,16 +25,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var Comments\Model\CommentsModel
      */
     protected $commentsModel;
-
     /**
-     * Details constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext              $context
-     * @param \ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Core\Helpers\FormToken                               $formTokenHelper
+     * @var \ACP3\Core\Validation\Validator
      */
+    private $validator;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Validation\Validator $validator,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\FormToken $formTokenHelper
@@ -44,6 +42,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->commentsModel = $commentsModel;
+        $this->validator = $validator;
     }
 
     /**

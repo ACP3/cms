@@ -16,17 +16,26 @@ class Logout extends Core\Controller\AbstractFrontendAction
      * @var Users\Model\AuthenticationModel
      */
     protected $authenticationModel;
-
     /**
-     * Login constructor.
+     * @var \ACP3\Core\Router\RouterInterface
      */
+    private $router;
+    /**
+     * @var \ACP3\Core\Http\RedirectResponse
+     */
+    private $redirectResponse;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Http\RedirectResponse $redirectResponse,
+        Core\Router\RouterInterface $router,
         Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
 
         $this->authenticationModel = $authenticationModel;
+        $this->router = $router;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -35,7 +44,7 @@ class Logout extends Core\Controller\AbstractFrontendAction
     public function execute()
     {
         if (!$this->user->isAuthenticated()) {
-            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
+            return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
         }
 
         $this->authenticationModel->logout();

@@ -45,9 +45,14 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @var Core\Modules\AclInstaller
      */
     private $aclInstaller;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Modules $modules,
         Core\I18n\DictionaryCache $dictionaryCache,
         Core\Modules\ModuleInfoCacheInterface $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
@@ -67,6 +72,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $this->schemaRegistrar = $schemaRegistrar;
         $this->schemaInstaller = $schemaInstaller;
         $this->aclInstaller = $aclInstaller;
+        $this->modules = $modules;
     }
 
     /**

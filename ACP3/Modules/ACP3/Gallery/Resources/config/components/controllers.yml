@@ -34,6 +34,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@gallery.model.gallery_data_grid_repository'
       - '@core.data_grid.data_grid'
 
@@ -82,6 +83,8 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.acl'
+      - '@core.helpers.results_per_page'
       - '@gallery.model.gallery_pictures_data_grid_repository'
       - '@gallery.model.gallery_model'
       - '@gallery.helpers.thumbnail_generator'
@@ -91,6 +94,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order
     arguments:
       - '@core.context.frontend'
+      - '@core.http.redirect_response'
       - '@core.helpers.sort'
       - '@gallery.model.picturerepository'
       - '@gallery.cache'
@@ -100,6 +104,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
+      - '@core.router'
       - '@gallery.model.picturerepository'
       - '@gallery.helpers.thumbnail_generator'
       - '@core.seo.meta_statements_service'
@@ -116,6 +121,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
+      - '@core.helpers.results_per_page'
       - '@core.pagination'
       - '@gallery.model.galleryrepository'
       - '@gallery.helpers.thumbnail_generator'

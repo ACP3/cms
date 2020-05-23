@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Menus;
 
 class Edit extends AbstractFormAction
@@ -31,13 +32,14 @@ class Edit extends AbstractFormAction
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Modules $modules,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Menus\Model\MenuItemsModel $menuItemsModel,
         Menus\Helpers\MenuItemFormFields $menuItemFormFieldsHelper,
         Menus\Validation\MenuItemFormValidation $menuItemFormValidation
     ) {
-        parent::__construct($context, $formsHelper);
+        parent::__construct($context, $modules, $formsHelper);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;

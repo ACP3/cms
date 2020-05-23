@@ -29,6 +29,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.acl'
       - '@menus.helpers.menuitemslist'
       - '@menus.model.menurepository'
 
@@ -36,6 +37,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@menus.model.menurepository'
@@ -53,6 +55,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@menus.model.menu_items_model'
@@ -63,6 +66,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Order
     arguments:
       - '@core.context.frontend'
+      - '@core.http.redirect_response'
       - '@menus.nested_set.operation.sort'
       - '@menus.model.menuitemrepository'
       - '@menus.cache'

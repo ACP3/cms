@@ -14,6 +14,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.validator'
       - '@comments.model.comments_model'
       - '@comments.validation.admin_form_validation'
       - '@core.helpers.formToken'
@@ -22,6 +23,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@comments.model.comments_data_grid_repository'
       - '@system.model.modulerepository'
       - '@core.data_grid.data_grid'
@@ -36,6 +38,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@comments.model.comments_by_module_data_grid_repository'
       - '@core.data_grid.data_grid'
 
@@ -53,6 +56,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules'
       - '@comments.model.comments_model'
       - '@comments.validation.form_validation'
       - '@core.helpers.formToken'
@@ -61,5 +65,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
+      - '@core.modules'
       - '@core.pagination'
       - '@comments.model.commentrepository'

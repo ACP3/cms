@@ -32,16 +32,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Secure
      */
     private $secureHelper;
-
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext       $context
-     * @param \ACP3\Core\Helpers\Forms                            $formsHelper
-     * @param \ACP3\Core\Helpers\Secure                           $secureHelper
-     * @param \ACP3\Modules\ACP3\Search\Helpers                   $searchHelpers
-     * @param \ACP3\Modules\ACP3\Search\Validation\FormValidation $searchValidator
+     * @var \ACP3\Core\ACL
      */
+    private $acl;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\Secure $secureHelper,
         Search\Helpers $searchHelpers,
@@ -55,6 +53,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->searchValidator = $searchValidator;
         $this->availableModulesRegistrar = $availableModulesRegistrar;
         $this->secureHelper = $secureHelper;
+        $this->acl = $acl;
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
@@ -21,9 +22,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsByModuleDataGridRepository
      */
     private $dataGridRepository;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        ResultsPerPage $resultsPerPage,
         Comments\Model\Repository\CommentsByModuleDataGridRepository $dataGridRepository,
         Core\DataGrid\DataGrid $dataGrid
     ) {
@@ -31,6 +37,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->dataGrid = $dataGrid;
         $this->dataGridRepository = $dataGridRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

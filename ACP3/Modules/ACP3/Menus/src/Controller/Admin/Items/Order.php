@@ -24,16 +24,14 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @var Core\NestedSet\Operation\Sort
      */
     protected $sortOperation;
-
     /**
-     * Order constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
-     * @param \ACP3\Modules\ACP3\Menus\Cache                               $menusCache
+     * @var \ACP3\Core\Http\RedirectResponse
      */
+    private $redirectResponse;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Http\RedirectResponse $redirectResponse,
         Core\NestedSet\Operation\Sort $sortOperation,
         Menus\Model\Repository\MenuItemRepository $menuItemRepository,
         Menus\Cache $menusCache
@@ -43,6 +41,7 @@ class Order extends Core\Controller\AbstractFrontendAction
         $this->menuItemRepository = $menuItemRepository;
         $this->menusCache = $menusCache;
         $this->sortOperation = $sortOperation;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -62,7 +61,7 @@ class Order extends Core\Controller\AbstractFrontendAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->redirect()->temporary('acp/menus');
+            return $this->redirectResponse->temporary('acp/menus');
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

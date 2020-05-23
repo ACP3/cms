@@ -23,10 +23,6 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $eventDispatcher;
     /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     protected $user;
@@ -35,21 +31,9 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $translator;
     /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-    /**
      * @var \ACP3\Core\Http\RequestInterface
      */
     protected $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    protected $router;
-    /**
-     * @var \ACP3\Core\Validation\Validator
-     */
-    protected $validator;
     /**
      * @var \ACP3\Core\View
      */
@@ -66,32 +50,18 @@ abstract class AbstractWidgetAction implements ActionInterface
      * @var Response
      */
     protected $response;
-    /**
-     * @var Core\Helpers\ResultsPerPage
-     */
-    protected $resultsPerPage;
 
-    /**
-     * WidgetController constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\WidgetContext $context
-     */
     public function __construct(Core\Controller\Context\WidgetContext $context)
     {
         $this->container = $context->getContainer();
         $this->eventDispatcher = $context->getEventDispatcher();
-        $this->acl = $context->getACL();
         $this->user = $context->getUser();
         $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
-        $this->router = $context->getRouter();
-        $this->validator = $context->getValidator();
         $this->view = $context->getView();
-        $this->modules = $context->getModules();
         $this->config = $context->getConfig();
         $this->appPath = $context->getAppPath();
         $this->response = $context->getResponse();
-        $this->resultsPerPage = $context->getResultsPerPage();
     }
 
     /**

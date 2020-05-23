@@ -20,16 +20,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
      */
     protected $menuRepository;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext            $context
-     * @param \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList           $menusHelpers
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository $menuRepository
+     * @var \ACP3\Core\ACL
      */
+    private $acl;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
         Menus\Helpers\MenuItemsList $menusHelpers,
         Menus\Model\Repository\MenuRepository $menuRepository
     ) {
@@ -37,6 +35,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->menusHelpers = $menusHelpers;
         $this->menuRepository = $menuRepository;
+        $this->acl = $acl;
     }
 
     /**

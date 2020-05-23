@@ -39,6 +39,7 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@news.model.data_grid_repository'
       - '@core.data_grid.data_grid'
 
@@ -66,6 +67,8 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.date'
+      - '@core.helpers.results_per_page'
+      - '@core.router'
       - '@core.helpers.string_formatter'
       - '@core.pagination'
       - '@news.model.newsrepository'

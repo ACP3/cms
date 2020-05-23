@@ -18,6 +18,7 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
     arguments:
       - '@core.context.frontend'
+      - '@core.modules'
       - '@core.i18n.dictionary_cache'
       - '@core.modules.moduleInfoCache'
       - '@system.model.modulerepository'

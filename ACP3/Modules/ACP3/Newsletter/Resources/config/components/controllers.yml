@@ -19,6 +19,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@newsletter.model.account_data_grid_repository'
       - '@core.data_grid.data_grid'
 
@@ -52,6 +53,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@newsletter.model.newsletter_data_grid_repository'
       - '@core.data_grid.data_grid'
 
@@ -82,6 +84,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@core.pagination'
       - '@newsletter.model.newsletterrepository'
 

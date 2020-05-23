@@ -29,18 +29,10 @@ class Edit extends AbstractFormAction
      */
     protected $rulesModel;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                                $permissionsCache
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation        $roleFormValidation
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
+        Core\Modules $modules,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\RulesModel $rulesModel,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
@@ -49,7 +41,7 @@ class Edit extends AbstractFormAction
         Permissions\Cache $permissionsCache,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
-        parent::__construct($context, $formsHelper, $privilegeRepository, $permissionsCache);
+        parent::__construct($context, $acl, $modules, $formsHelper, $privilegeRepository, $permissionsCache);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->roleFormValidation = $roleFormValidation;

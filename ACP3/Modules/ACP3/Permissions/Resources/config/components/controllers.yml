@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.acl'
       - '@permissions.model.roles_model'
       - '@permissions.model.rules_model'
       - '@permissions.model.privilegerepository'
@@ -26,6 +27,8 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.acl'
+      - '@core.modules'
       - '@permissions.model.roles_model'
       - '@permissions.model.rules_model'
       - '@permissions.model.privilegerepository'
@@ -38,13 +41,16 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Index
     arguments:
     - '@core.context.frontend'
+    - '@core.acl'
     - '@core.data_grid.data_grid'
+    - '@core.helpers.results_per_page'
     - '@permissions.model.roles_data_grid_repository'
 
   permissions.controller.admin.index.order:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Order
     arguments:
       - '@core.context.frontend'
+      - '@core.http.redirect_response'
       - '@permissions.nested_set.operation.sort'
       - '@permissions.model.rolerepository'
       - '@permissions.cache'
@@ -53,6 +59,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.model.privilegerepository'
@@ -69,6 +76,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules'
       - '@core.helpers.forms'
       - '@core.helpers.formToken'
       - '@permissions.model.privilegerepository'
@@ -79,4 +87,6 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.acl'
+      - '@core.modules'
       - '@permissions.model.resourcerepository'

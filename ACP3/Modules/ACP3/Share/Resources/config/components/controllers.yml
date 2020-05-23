@@ -31,6 +31,7 @@ services:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@share.model.data_grid_repository'
       - '@core.data_grid.data_grid'
 

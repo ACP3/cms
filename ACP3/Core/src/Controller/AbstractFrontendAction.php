@@ -33,10 +33,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      */
     private $redirectMessages;
     /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
      * @var string
      */
     private $layout = 'layout.tpl';
@@ -48,12 +44,10 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     {
         parent::__construct($context);
 
-        $this->assets = $context->getAssets();
         $this->breadcrumb = $context->getBreadcrumb();
         $this->title = $context->getTitle();
         $this->actionHelper = $context->getActionHelper();
         $this->redirectMessages = $context->getRedirectMessagesHelper();
-        $this->redirectResponse = $context->getRedirectResponse();
     }
 
     /**
@@ -154,13 +148,5 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
     public function redirectMessages()
     {
         return $this->redirectMessages;
-    }
-
-    /**
-     * @return \ACP3\Core\Http\RedirectResponse
-     */
-    public function redirect()
-    {
-        return $this->redirectResponse;
     }
 }

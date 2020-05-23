@@ -24,16 +24,14 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @var Core\NestedSet\Operation\Sort
      */
     protected $sortOperation;
-
     /**
-     * Order constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository $roleRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                           $permissionsCache
+     * @var \ACP3\Core\Http\RedirectResponse
      */
+    private $redirectResponse;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Http\RedirectResponse $redirectResponse,
         Core\NestedSet\Operation\Sort $sortOperation,
         Permissions\Model\Repository\RoleRepository $roleRepository,
         Permissions\Cache $permissionsCache
@@ -43,6 +41,7 @@ class Order extends Core\Controller\AbstractFrontendAction
         $this->roleRepository = $roleRepository;
         $this->permissionsCache = $permissionsCache;
         $this->sortOperation = $sortOperation;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -60,7 +59,7 @@ class Order extends Core\Controller\AbstractFrontendAction
 
             $this->permissionsCache->getCacheDriver()->deleteAll();
 
-            return $this->redirect()->temporary('acp/permissions');
+            return $this->redirectResponse->temporary('acp/permissions');
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

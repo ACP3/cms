@@ -33,6 +33,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.results_per_page'
       - '@seo.model.data_grid_repository'
       - '@core.seo.meta_statements_service'
       - '@core.data_grid.data_grid'

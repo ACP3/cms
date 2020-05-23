@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RolesDataGridRepository;
 
@@ -22,15 +23,28 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RolesDataGridRepository
      */
     private $dataGridRepository;
+    /**
+     * @var \ACP3\Core\ACL
+     */
+    private $acl;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         FrontendContext $context,
+        Core\ACL $acl,
         Core\DataGrid\DataGrid $dataGrid,
+        ResultsPerPage $resultsPerPage,
         RolesDataGridRepository $dataGridRepository
     ) {
         parent::__construct($context);
+
         $this->dataGrid = $dataGrid;
         $this->dataGridRepository = $dataGridRepository;
+        $this->acl = $acl;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

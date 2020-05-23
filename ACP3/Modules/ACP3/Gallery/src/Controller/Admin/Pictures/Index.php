@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 use ACP3\Core;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\DataGrid\QueryOption;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -33,9 +34,19 @@ class Index extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesDataGridRepository
      */
     private $picturesDataGridRepository;
+    /**
+     * @var \ACP3\Core\ACL
+     */
+    private $acl;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
+        ResultsPerPage $resultsPerPage,
         Gallery\Model\Repository\GalleryPicturesDataGridRepository $picturesDataGridRepository,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
@@ -47,6 +58,8 @@ class Index extends AbstractFrontendAction
         $this->thumbnailGenerator = $thumbnailGenerator;
         $this->dataGrid = $dataGrid;
         $this->picturesDataGridRepository = $picturesDataGridRepository;
+        $this->acl = $acl;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

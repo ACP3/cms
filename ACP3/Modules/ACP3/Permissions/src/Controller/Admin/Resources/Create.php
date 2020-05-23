@@ -25,23 +25,16 @@ class Create extends AbstractFormAction
      */
     protected $resourcesModel;
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                        $formTokenHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param Permissions\Model\ResourcesModel                                    $resourcesModel
-     * @param \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation    $resourceFormValidation
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Modules $modules,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Model\ResourcesModel $resourcesModel,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
-        parent::__construct($context, $formsHelper, $privilegeRepository);
+        parent::__construct($context, $modules, $formsHelper, $privilegeRepository);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->resourceFormValidation = $resourceFormValidation;

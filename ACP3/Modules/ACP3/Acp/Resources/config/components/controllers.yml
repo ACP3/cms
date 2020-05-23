@@ -7,3 +7,5 @@ services:
     class: ACP3\Modules\ACP3\Acp\Controller\Admin\Index\Index
     arguments:
     - '@core.context.frontend'
+    - '@core.acl'
+    - '@core.modules'

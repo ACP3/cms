@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -25,9 +26,19 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
     private $commentRepository;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        ResultsPerPage $resultsPerPage,
+        Core\Modules $modules,
         Core\Pagination $pagination,
         Comments\Model\Repository\CommentRepository $commentRepository
     ) {
@@ -35,6 +46,8 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->pagination = $pagination;
         $this->commentRepository = $commentRepository;
+        $this->modules = $modules;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

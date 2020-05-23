@@ -30,17 +30,15 @@ class Download extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Files\Cache
      */
     protected $filesCache;
-
     /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext             $context
-     * @param \ACP3\Core\Date                                           $date
-     * @param \ACP3\Core\Helpers\StringFormatter                        $stringFormatter
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository $filesRepository
-     * @param \ACP3\Modules\ACP3\Files\Cache                            $filesCache
+     * @var \ACP3\Core\Http\RedirectResponse
      */
+    private $redirectResponse;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\StringFormatter $stringFormatter,
         Files\Model\Repository\FilesRepository $filesRepository,
         Files\Cache $filesCache
@@ -51,6 +49,7 @@ class Download extends Core\Controller\AbstractFrontendAction
         $this->stringFormatter = $stringFormatter;
         $this->filesRepository = $filesRepository;
         $this->filesCache = $filesCache;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -77,7 +76,7 @@ class Download extends Core\Controller\AbstractFrontendAction
 
                 return $response;
             } elseif (\preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
-                return $this->redirect()->toNewPage($file['file']);
+                return $this->redirectResponse->toNewPage($file['file']);
             }
         }
 

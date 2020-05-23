@@ -24,9 +24,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var Comments\Model\CommentsModel
      */
     private $commentsModel;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Modules $modules,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\FormValidation $formValidation,
         Core\Helpers\FormToken $formTokenHelper
@@ -36,6 +41,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->formValidation = $formValidation;
         $this->formTokenHelper = $formTokenHelper;
         $this->commentsModel = $commentsModel;
+        $this->modules = $modules;
     }
 
     public function execute(string $module, int $entryId, string $redirectUrl): array

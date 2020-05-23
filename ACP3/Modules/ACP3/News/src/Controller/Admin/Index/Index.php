@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\DataGrid\Input;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -23,16 +24,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\DataGrid\DataGrid
      */
     private $dataGrid;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext               $context
-     * @param \ACP3\Modules\ACP3\News\Model\Repository\DataGridRepository $dataGridRepository
-     * @param \ACP3\Core\DataGrid\DataGrid                                $dataGrid
+     * @var \ACP3\Core\Helpers\ResultsPerPage
      */
+    private $resultsPerPage;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        ResultsPerPage $resultsPerPage,
         News\Model\Repository\DataGridRepository $dataGridRepository,
         Core\DataGrid\DataGrid $dataGrid
     ) {
@@ -40,6 +39,7 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->dataGridRepository = $dataGridRepository;
         $this->dataGrid = $dataGrid;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

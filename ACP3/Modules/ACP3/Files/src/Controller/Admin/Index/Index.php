@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -22,16 +23,19 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\DataGrid\DataGrid
      */
     private $dataGrid;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                $context
-     * @param \ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository $dataGridRepository
-     * @param \ACP3\Core\DataGrid\DataGrid                                 $dataGrid
+     * @var \ACP3\Core\ACL
      */
+    private $acl;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
+        ResultsPerPage $resultsPerPage,
         Files\Model\Repository\DataGridRepository $dataGridRepository,
         Core\DataGrid\DataGrid $dataGrid
     ) {
@@ -39,6 +43,8 @@ class Index extends Core\Controller\AbstractFrontendAction
 
         $this->dataGridRepository = $dataGridRepository;
         $this->dataGrid = $dataGrid;
+        $this->acl = $acl;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**
@@ -111,7 +117,7 @@ class Index extends Core\Controller\AbstractFrontendAction
                 ],
             ], 10);
 
-        if ($this->acl->hasPermission('admin/files/index/sort') && $settings['order_by'] === 'custom') {
+        if ($settings['order_by'] === 'custom' && $this->acl->hasPermission('admin/files/index/sort')) {
             $input
                 ->addColumn([
                     'label' => $this->translator->t('system', 'order'),

@@ -29,18 +29,15 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
     protected $articleRepository;
-
     /**
-     * Index constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Core\Date                                                $date
-     * @param \ACP3\Core\Pagination                                          $pagination
-     * @param \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository $articleRepository
+     * @var \ACP3\Core\Helpers\ResultsPerPage
      */
+    private $resultsPerPage;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        Core\Helpers\ResultsPerPage $resultsPerPage,
         Core\Pagination $pagination,
         Articles\Model\Repository\ArticleRepository $articleRepository
     ) {
@@ -49,6 +46,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->date = $date;
         $this->pagination = $pagination;
         $this->articleRepository = $articleRepository;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

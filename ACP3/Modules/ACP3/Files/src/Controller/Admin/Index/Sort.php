@@ -22,18 +22,22 @@ class Sort extends AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Sort
      */
     private $sortHelper;
-
     /**
-     * Sort constructor.
-     *
-     * @param \ACP3\Core\Helpers\Sort $sortHelper
+     * @var \ACP3\Core\Http\RedirectResponse
      */
-    public function __construct(FrontendContext $context, FilesRepository $filesRepository, Core\Helpers\Sort $sortHelper)
+    private $redirectResponse;
+
+    public function __construct(
+        FrontendContext $context,
+        Core\Http\RedirectResponse $redirectResponse,
+        FilesRepository $filesRepository,
+        Core\Helpers\Sort $sortHelper)
     {
         parent::__construct($context);
 
         $this->filesRepository = $filesRepository;
         $this->sortHelper = $sortHelper;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -55,7 +59,7 @@ class Sort extends AbstractFrontendAction
 
             Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
 
-            return $this->redirect()->temporary('acp/files');
+            return $this->redirectResponse->temporary('acp/files');
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\Categories;
@@ -51,10 +52,20 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var array
      */
     private $newsSettings = [];
+    /**
+     * @var \ACP3\Core\Router\RouterInterface
+     */
+    private $router;
+    /**
+     * @var \ACP3\Core\Helpers\ResultsPerPage
+     */
+    private $resultsPerPage;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        ResultsPerPage $resultsPerPage,
+        Core\Router\RouterInterface $router,
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Pagination $pagination,
         News\Model\Repository\NewsRepository $newsRepository,
@@ -71,6 +82,8 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->categoriesHelpers = $categoriesHelpers;
         $this->categoryRepository = $categoryRepository;
         $this->metaStatements = $metaStatements;
+        $this->router = $router;
+        $this->resultsPerPage = $resultsPerPage;
     }
 
     /**

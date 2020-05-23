@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\Forms;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Menus;
 
@@ -19,14 +20,20 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelper;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
 
     public function __construct(
         FrontendContext $context,
+        Modules $modules,
         Forms $formsHelper)
     {
         parent::__construct($context);
 
         $this->formsHelper = $formsHelper;
+        $this->modules = $modules;
     }
 
     protected function fetchMenuItemModeForSave(array $formData): string

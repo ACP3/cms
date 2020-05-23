@@ -42,19 +42,9 @@ class Edit extends AbstractFormAction
      */
     private $userFormsHelpers;
 
-    /**
-     * Edit constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext           $context
-     * @param \ACP3\Core\Helpers\FormToken                            $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                               $secureHelper
-     * @param \ACP3\Core\Helpers\Forms                                $formsHelpers
-     * @param \ACP3\Modules\ACP3\Users\Model\AuthenticationModel      $authenticationModel
-     * @param \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation $adminFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers                  $permissionsHelpers
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
         Core\Helpers\Forms $formsHelpers,
@@ -64,7 +54,7 @@ class Edit extends AbstractFormAction
         Users\Validation\AdminFormValidation $adminFormValidation,
         Permissions\Helpers $permissionsHelpers
     ) {
-        parent::__construct($context, $formsHelpers);
+        parent::__construct($context, $acl, $formsHelpers);
 
         $this->formTokenHelper = $formTokenHelper;
         $this->secureHelper = $secureHelper;

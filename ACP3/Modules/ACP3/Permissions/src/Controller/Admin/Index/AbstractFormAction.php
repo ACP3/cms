@@ -25,19 +25,19 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
     protected $permissionsCache;
-
     /**
-     * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                       $context
-     * @param \ACP3\Core\Helpers\Forms                                            $formsHelper
-     * @param \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository $privilegeRepository
-     * @param \ACP3\Modules\ACP3\Permissions\Cache                                $permissionsCache
-     *
-     * @internal param Permissions\Model\Repository\RuleRepository $ruleRepository
+     * @var \ACP3\Core\ACL
      */
+    private $acl;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
+        Core\Modules $modules,
         Core\Helpers\Forms $formsHelper,
         Permissions\Model\Repository\PrivilegeRepository $privilegeRepository,
         Permissions\Cache $permissionsCache
@@ -47,6 +47,8 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         $this->formsHelper = $formsHelper;
         $this->privilegeRepository = $privilegeRepository;
         $this->permissionsCache = $permissionsCache;
+        $this->acl = $acl;
+        $this->modules = $modules;
     }
 
     protected function generatePrivilegeCheckboxes(int $roleId, int $moduleId, int $privilegeId, int $defaultValue): array

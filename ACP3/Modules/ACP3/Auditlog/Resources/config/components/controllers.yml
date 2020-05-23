@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index\Index
     arguments:
     - '@core.context.frontend'
+    - '@core.helpers.results_per_page'
     - '@core.data_grid.data_grid'
     - '@auditlog.models.repository.audit_log_data_grid_repository'
 
@@ -14,5 +15,6 @@ services:
     class: ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index\Table
     arguments:
     - '@core.context.frontend'
+    - '@core.helpers.results_per_page'
     - '@core.data_grid.data_grid'
     - '@auditlog.models.repository.audit_log_by_table_data_grid_repository'

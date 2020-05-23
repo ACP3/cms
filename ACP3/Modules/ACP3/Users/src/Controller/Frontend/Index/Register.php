@@ -46,23 +46,15 @@ class Register extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Alerts
      */
     private $alertsHelper;
-
     /**
-     * Register constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Core\Date                                                $date
-     * @param \ACP3\Core\Helpers\Alerts                                      $alertsHelper
-     * @param \ACP3\Core\Helpers\FormToken                                   $formTokenHelper
-     * @param \ACP3\Core\Helpers\Secure                                      $secureHelper
-     * @param \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository       $userRepository
-     * @param \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation $registrationFormValidation
-     * @param \ACP3\Modules\ACP3\Permissions\Helpers                         $permissionsHelpers
-     * @param \ACP3\Core\Helpers\SendEmail                                   $sendEmail
+     * @var \ACP3\Core\Http\RedirectResponse
      */
+    private $redirectResponse;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Date $date,
+        Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\FormToken $formTokenHelper,
         Core\Helpers\Secure $secureHelper,
@@ -81,6 +73,7 @@ class Register extends Core\Controller\AbstractFrontendAction
         $this->permissionsHelpers = $permissionsHelpers;
         $this->sendEmail = $sendEmail;
         $this->alertsHelper = $alertsHelper;
+        $this->redirectResponse = $redirectResponse;
     }
 
     /**
@@ -91,8 +84,10 @@ class Register extends Core\Controller\AbstractFrontendAction
         $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
 
         if ($this->user->isAuthenticated() === true) {
-            return $this->redirect()->toNewPage($this->appPath->getWebRoot());
-        } elseif ($settings['enable_registration'] == 0) {
+            return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
+        }
+
+        if ($settings['enable_registration'] == 0) {
             $this->setContent(
                 $this->alertsHelper->errorBox(
                 $this->translator->t('users', 'user_registration_disabled')

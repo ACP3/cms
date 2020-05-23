@@ -16,20 +16,20 @@ abstract class AbstractFormAction extends AbstractFrontendAction
      * @var \ACP3\Core\Helpers\Forms
      */
     protected $formsHelpers;
-
     /**
-     * AbstractFormAction constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Helpers\Forms                      $formsHelpers
+     * @var \ACP3\Core\ACL
      */
+    protected $acl;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\ACL $acl,
         Core\Helpers\Forms $formsHelpers
     ) {
         parent::__construct($context);
 
         $this->formsHelpers = $formsHelpers;
+        $this->acl = $acl;
     }
 
     /**
