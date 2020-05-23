@@ -11,13 +11,13 @@ use ACP3\Core\Authentication\Model\AuthenticationModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Users\Exception\LoginFailedException;
 use ACP3\Modules\ACP3\Users\Exception\UserAccountLockedException;
 use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AuthenticationModel implements AuthenticationModelInterface
 {
@@ -29,7 +29,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      */
     private $request;
     /**
-     * @var \ACP3\Core\Session\SessionHandlerInterface
+     * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     private $sessionHandler;
     /**
@@ -57,7 +57,7 @@ class AuthenticationModel implements AuthenticationModelInterface
         RequestInterface $request,
         Response $response,
         ApplicationPath $appPath,
-        SessionHandlerInterface $sessionHandler,
+        Session $sessionHandler,
         Secure $secureHelper,
         UserModel $userModel,
         UserRepository $userRepository
@@ -99,7 +99,7 @@ class AuthenticationModel implements AuthenticationModelInterface
         }
 
         $this->saveRememberMeToken($userId, '');
-        $this->sessionHandler->destroy(\session_id());
+        $this->sessionHandler->invalidate();
         $this->response->headers->setCookie(
             $this->setRememberMeCookie($userId, '', -1 * self::REMEMBER_ME_COOKIE_LIFETIME)
         );
@@ -171,7 +171,7 @@ class AuthenticationModel implements AuthenticationModelInterface
                     );
                 }
 
-                $this->sessionHandler->secureSession();
+                $this->sessionHandler->migrate(true);
 
                 $this->authenticate($user);
                 $this->setSessionValues();

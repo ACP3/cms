@@ -8,9 +8,10 @@
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Session\SessionHandlerInterface;
+use ACP3\Core\Session\SessionConstants;
 use ACP3\Core\Validation\Exceptions\InvalidFormTokenException;
 use ACP3\Core\Validation\Validator;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormTokenValidationRule extends AbstractValidationRule
 {
@@ -19,16 +20,13 @@ class FormTokenValidationRule extends AbstractValidationRule
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Session\SessionHandlerInterface
+     * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     protected $sessionHandler;
 
-    /**
-     * FormTokenValidationRule constructor.
-     */
     public function __construct(
         RequestInterface $request,
-        SessionHandlerInterface $sessionHandler
+        Session $sessionHandler
     ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
@@ -49,7 +47,7 @@ class FormTokenValidationRule extends AbstractValidationRule
      */
     public function isValid($data, $field = '', array $extra = [])
     {
-        $tokenName = SessionHandlerInterface::XSRF_TOKEN_NAME;
+        $tokenName = SessionConstants::XSRF_TOKEN_NAME;
         $sessionToken = $this->sessionHandler->get($tokenName, '');
 
         return $this->request->getPost()->get($tokenName, '') === $sessionToken;

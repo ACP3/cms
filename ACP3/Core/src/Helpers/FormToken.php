@@ -8,6 +8,7 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormToken
 {
@@ -16,19 +17,13 @@ class FormToken
      */
     protected $request;
     /**
-     * @var \ACP3\Core\Session\SessionHandlerInterface
+     * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     protected $sessionHandler;
 
-    /**
-     * FormToken constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface           $request
-     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     */
     public function __construct(
         Core\Http\RequestInterface $request,
-        Core\Session\SessionHandlerInterface $sessionHandler
+        Session $sessionHandler
     ) {
         $this->request = $request;
         $this->sessionHandler = $sessionHandler;
@@ -41,7 +36,7 @@ class FormToken
      */
     public function renderFormToken()
     {
-        $tokenName = Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME;
+        $tokenName = Core\Session\SessionConstants::XSRF_TOKEN_NAME;
         $sessionToken = $this->sessionHandler->get($tokenName);
 
         if (empty($sessionToken)) {
@@ -59,7 +54,7 @@ class FormToken
      */
     public function unsetFormToken($token = '')
     {
-        $tokenName = Core\Session\SessionHandlerInterface::XSRF_TOKEN_NAME;
+        $tokenName = Core\Session\SessionConstants::XSRF_TOKEN_NAME;
         if (empty($token) && $this->request->getPost()->has($tokenName)) {
             $token = $this->request->getPost()->get($tokenName, '');
         }

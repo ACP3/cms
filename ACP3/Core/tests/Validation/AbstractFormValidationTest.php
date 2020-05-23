@@ -9,17 +9,20 @@ namespace ACP3\Core\Validation;
 
 use ACP3\Core\Http\Request;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Session\SessionHandler;
-use ACP3\Core\Session\SessionHandlerInterface;
+use ACP3\Core\Session\SessionConstants;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class AbstractFormValidationTest.
  */
-abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
+abstract class AbstractFormValidationTest extends TestCase
 {
     const XSRF_FORM_TOKEN = 'foo-bar-baz';
     const XSRF_QUERY_STRING = 'module/controller/action/';
@@ -86,12 +89,12 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return SessionHandler&\PHPUnit\Framework\MockObject\MockObject
+     * @return Session&\PHPUnit\Framework\MockObject\MockObject
      */
     private function setUpSessionMock()
     {
-        /** @var SessionHandler&\PHPUnit\Framework\MockObject\MockObject $sessionMock */
-        $sessionMock = $this->createMock(SessionHandler::class);
+        /** @var Session&\PHPUnit\Framework\MockObject\MockObject $sessionMock */
+        $sessionMock = $this->createMock(Session::class);
 
         $this->setSessionMockExpectations($sessionMock);
 
@@ -128,13 +131,13 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    private function setRequestMockExpectations(\PHPUnit\Framework\MockObject\MockObject $requestMock)
+    private function setRequestMockExpectations(MockObject $requestMock)
     {
         $requestMock->expects($this->any())
             ->method('getPost')
             ->willReturn(
-                new \Symfony\Component\HttpFoundation\ParameterBag(
-                    [SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN]
+                new ParameterBag(
+                    [SessionConstants::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN]
                 )
             );
 
@@ -143,11 +146,11 @@ abstract class AbstractFormValidationTest extends \PHPUnit\Framework\TestCase
             ->willReturn(self::XSRF_QUERY_STRING);
     }
 
-    private function setSessionMockExpectations(\PHPUnit\Framework\MockObject\MockObject $sessionMock)
+    private function setSessionMockExpectations(MockObject $sessionMock)
     {
         $sessionMock->expects($this->any())
             ->method('get')
-            ->with(SessionHandlerInterface::XSRF_TOKEN_NAME)
+            ->with(SessionConstants::XSRF_TOKEN_NAME)
             ->willReturn(self::XSRF_FORM_TOKEN);
     }
 }

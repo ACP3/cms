@@ -33,8 +33,8 @@ services:
     arguments:
       - '@core.xml'
 
-  core.session:
-    class: ACP3\Modules\ACP3\Installer\Core\Session\SessionHandler
+  core.session.handler:
+    class: Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler
 
   system.model.settingsrepository:
     class: ACP3\Modules\ACP3\Installer\Repository\SettingsRepository

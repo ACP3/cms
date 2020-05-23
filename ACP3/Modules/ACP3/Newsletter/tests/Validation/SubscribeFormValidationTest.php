@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Validation;
 
-use ACP3\Core\Session\SessionHandlerInterface;
+use ACP3\Core\Session\SessionConstants;
 use ACP3\Core\Validation\AbstractFormValidationTest;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
@@ -47,21 +47,21 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
     {
         return [
             [
-                SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
+                SessionConstants::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'salutation' => '',
                 'first_name' => 'Foo',
                 'last_name' => 'bar',
             ],
             [
-                SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
+                SessionConstants::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'salutation' => '',
                 'first_name' => '',
                 'last_name' => '',
             ],
             [
-                SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
+                SessionConstants::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'salutation' => '',
                 'first_name' => '',
@@ -78,14 +78,14 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
     {
         return [
             [
-                SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
+                SessionConstants::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'testexample.com',
                 'salutation' => '',
                 'first_name' => 'Foo',
                 'last_name' => 'bar',
             ],
             [
-                SessionHandlerInterface::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
+                SessionConstants::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'salutation' => 3,
                 'first_name' => '',

@@ -10,9 +10,9 @@ namespace ACP3\Modules\ACP3\Users\Core\Authentication;
 use ACP3\Core\Authentication\AuthenticationInterface;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Session\SessionHandlerInterface;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
 use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class Native implements AuthenticationInterface
 {
@@ -21,7 +21,7 @@ class Native implements AuthenticationInterface
      */
     private $request;
     /**
-     * @var \ACP3\Core\Session\SessionHandlerInterface
+     * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     private $sessionHandler;
     /**
@@ -31,7 +31,7 @@ class Native implements AuthenticationInterface
 
     public function __construct(
         RequestInterface $request,
-        SessionHandlerInterface $sessionHandler,
+        Session $sessionHandler,
         UserRepository $userRepository
     ) {
         $this->request = $request;

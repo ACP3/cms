@@ -8,23 +8,18 @@
 namespace ACP3\Modules\ACP3\Captcha\Controller\Frontend\Index;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class Image extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Core\Session\SessionHandlerInterface
+     * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     protected $sessionHandler;
 
-    /**
-     * Image constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Core\Session\SessionHandlerInterface    $sessionHandler
-     */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Core\Session\SessionHandlerInterface $sessionHandler
+        Session $sessionHandler
     ) {
         parent::__construct($context);
 

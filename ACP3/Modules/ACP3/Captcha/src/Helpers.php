@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Captcha;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Users\Model\UserModel;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @deprecated Since 4.8.0, to be removed with version 5.0.0
@@ -34,7 +36,7 @@ class Helpers
      */
     protected $router;
     /**
-     * @var \ACP3\Core\Session\SessionHandlerInterface
+     * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     protected $sessionHandler;
     /**
@@ -42,20 +44,11 @@ class Helpers
      */
     protected $view;
 
-    /**
-     * Helpers constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface           $request
-     * @param \ACP3\Core\Router\RouterInterface          $router
-     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     * @param \ACP3\Core\View                            $view
-     * @param \ACP3\Core\Helpers\Secure                  $secureHelper
-     */
     public function __construct(
-        \ACP3\Modules\ACP3\Users\Model\UserModel $user,
+        UserModel $user,
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
-        Core\Session\SessionHandlerInterface $sessionHandler,
+        Session $sessionHandler,
         Core\View $view,
         Core\Helpers\Secure $secureHelper
     ) {

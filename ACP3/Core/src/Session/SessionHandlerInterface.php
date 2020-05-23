@@ -7,43 +7,11 @@
 
 namespace ACP3\Core\Session;
 
-interface SessionHandlerInterface extends \SessionHandlerInterface
+/**
+ * @deprecated since 4.49.0. To be removed with 5.0.0. Typehint against \Symfony\Component\HttpFoundation\Session\SessionInterface instead
+ */
+interface SessionHandlerInterface
 {
-    const SESSION_NAME = 'ACP3_SID';
-    const XSRF_TOKEN_NAME = 'security_token';
-
-    /**
-     * @param string     $key
-     * @param mixed|null $default
-     *
-     * @return mixed|null
-     */
-    public function get($key, $default = null);
-
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function has($key);
-
-    /**
-     * @param string $key
-     * @param mixed  $value
-     *
-     * @return $this
-     */
-    public function set($key, $value);
-
-    /**
-     * @param string $key
-     *
-     * @return $this
-     */
-    public function remove($key);
-
-    /**
-     * Secures the current session to prevent from session fixations.
-     */
-    public function secureSession();
+    public const SESSION_NAME = SessionConstants::SESSION_NAME;
+    public const XSRF_TOKEN_NAME = SessionConstants::XSRF_TOKEN_NAME;
 }

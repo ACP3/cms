@@ -8,6 +8,7 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class RedirectMessages
 {
@@ -20,21 +21,14 @@ class RedirectMessages
      */
     private $redirect;
     /**
-     * @var \ACP3\Core\Session\SessionHandlerInterface
+     * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     private $sessionHandler;
 
-    /**
-     * RedirectMessages constructor.
-     *
-     * @param \ACP3\Core\Http\RedirectResponse           $redirect
-     * @param \ACP3\Core\Http\RequestInterface           $request
-     * @param \ACP3\Core\Session\SessionHandlerInterface $sessionHandler
-     */
     public function __construct(
         Core\Http\RedirectResponse $redirect,
         Core\Http\RequestInterface $request,
-        Core\Session\SessionHandlerInterface $sessionHandler
+        Session $sessionHandler
     ) {
         $this->redirect = $redirect;
         $this->request = $request;

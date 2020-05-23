@@ -79,6 +79,16 @@ class Connection
     }
 
     /**
+     * @return \Doctrine\DBAL\Driver\Connection|null
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getWrappedConnection()
+    {
+        return $this->getConnection()->getWrappedConnection();
+    }
+
+    /**
      * @return string
      */
     public function getDatabase()

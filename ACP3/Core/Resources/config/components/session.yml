@@ -1,8 +1,17 @@
 services:
   core.session:
-    class: ACP3\Core\Session\SessionHandler
+    class: Symfony\Component\HttpFoundation\Session\Session
     arguments:
-    - '@core.db'
-    - '@core.environment.application_path'
-    - '@core.http.request'
-    - '@core.http.response'
+      - '@core.session.storage'
+
+  core.session.storage:
+    class: Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage
+    arguments:
+      - { name: 'ACP3_SID', cookie_httponly: true, cookie_secure: 'auto', cookie_samesite: 'lax' }
+      - '@core.session.handler'
+
+  core.session.handler:
+    class: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+    arguments:
+      - !service { class: PDO, factory: ['@core.db', 'getWrappedConnection'] }
+      - { db_table: '%db_table_prefix%sessions', db_id_col: 'session_id', db_data_col: 'session_data', db_lifetime_col: 'session_lifetime', db_time_col: 'session_starttime', lock_mode: 1 }
