@@ -11,12 +11,12 @@
             "version": "dev-full/stable",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ckeditor/ckeditor-releases.git",
+                "url": "https://github.com/ckeditor/ckeditor4-releases.git",
                 "reference": "67c47903d3cd146074ed508ef774ebad2cea34a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/67c47903d3cd146074ed508ef774ebad2cea34a8",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/67c47903d3cd146074ed508ef774ebad2cea34a8",
                 "reference": "67c47903d3cd146074ed508ef774ebad2cea34a8",
                 "shasum": ""
             },
@@ -30,13 +30,14 @@
             "authors": [
                 {
                     "name": "CKSource",
-                    "homepage": "http://cksource.com"
+                    "homepage": "https://cksource.com"
                 }
             ],
             "description": "JavaScript WYSIWYG web text editor.",
-            "homepage": "http://ckeditor.com",
+            "homepage": "https://ckeditor.com/ckeditor-4/",
             "keywords": [
                 "CKEditor",
+                "ckeditor4",
                 "editor",
                 "fckeditor",
                 "html",
@@ -255,6 +256,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -1473,7 +1475,7 @@
                     "name": "Julian Bogdani"
                 },
                 {
-                    "name": "Anis uddin Ahmad",
+                    "name": "Anis Uddin Ahmad",
                     "email": "anis.programmer@gmail.com"
                 },
                 {
@@ -2398,16 +2400,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.0.7",
+            "version": "v6.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59"
+                "reference": "c2796cb1cb99d7717290b48c4e6f32cb6c60b7b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/0c41a36d4508d470e376498c1c0c527aa36a2d59",
-                "reference": "0c41a36d4508d470e376498c1c0c527aa36a2d59",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/c2796cb1cb99d7717290b48c4e6f32cb6c60b7b3",
+                "reference": "c2796cb1cb99d7717290b48c4e6f32cb6c60b7b3",
                 "shasum": ""
             },
             "require": {
@@ -2416,13 +2418,9 @@
                 "php": ">=5.5.0"
             },
             "require-dev": {
-                "doctrine/annotations": "1.2.*",
+                "doctrine/annotations": "^1.2",
                 "friendsofphp/php-cs-fixer": "^2.2",
-                "phpdocumentor/phpdocumentor": "2.*",
-                "phpunit/phpunit": "^4.8 || ^5.7",
-                "zendframework/zend-eventmanager": "3.0.*",
-                "zendframework/zend-i18n": "2.7.3",
-                "zendframework/zend-serializer": "2.7.*"
+                "phpunit/phpunit": "^4.8 || ^5.7"
             },
             "suggest": {
                 "ext-mbstring": "Needed to send email in multibyte encoding charset",
@@ -2440,16 +2438,16 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.1"
+                "LGPL-2.1-only"
             ],
             "authors": [
                 {
-                    "name": "Jim Jagielski",
-                    "email": "jimjag@gmail.com"
-                },
-                {
                     "name": "Marcus Bointon",
                     "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
                 },
                 {
                     "name": "Andy Prevost",
@@ -2460,7 +2458,7 @@
                 }
             ],
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
-            "time": "2019-02-01T15:04:28+00:00"
+            "time": "2020-05-27T12:24:03+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -3777,7 +3775,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -4377,6 +4375,7 @@
                 "psr-6",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-cache",
             "time": "2018-05-01T21:58:00+00:00"
         },
         {
@@ -4430,6 +4429,7 @@
                 "code",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-code",
             "time": "2018-08-13T20:36:59+00:00"
         },
         {
@@ -4484,6 +4484,7 @@
                 "events",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-eventmanager",
             "time": "2018-04-25T15:33:34+00:00"
         },
         {
@@ -4552,6 +4553,7 @@
                 "servicemanager",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-servicemanager",
             "time": "2018-12-22T06:05:09+00:00"
         },
         {
@@ -4598,6 +4600,7 @@
                 "stdlib",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-stdlib",
             "time": "2018-08-28T21:34:05+00:00"
         }
     ],
@@ -5209,7 +5212,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🔍 Nette Finder: find files and directories with an intuitive API.",
+            "description": "? Nette Finder: find files and directories with an intuitive API.",
             "homepage": "https://nette.org",
             "keywords": [
                 "filesystem",
@@ -5269,7 +5272,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🍸 Nette NEON: encodes and decodes NEON file format.",
+            "description": "? Nette NEON: encodes and decodes NEON file format.",
             "homepage": "http://ne-on.org",
             "keywords": [
                 "export",
