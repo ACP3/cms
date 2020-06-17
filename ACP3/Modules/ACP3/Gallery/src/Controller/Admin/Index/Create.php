@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Gallery;
 
 class Create extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryEditViewProvider
      */
     private $adminGalleryEditViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Validation\GalleryFormValidation $galleryFormValidation,
         Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
@@ -36,6 +42,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->galleryModel = $galleryModel;
         $this->galleryFormValidation = $galleryFormValidation;
         $this->adminGalleryEditViewProvider = $adminGalleryEditViewProvider;
+        $this->user = $user;
     }
 
     public function execute(): array

@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Users;
 
 class Logout extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Logout extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Users\ViewProviders\LogoutViewProvider
      */
     private $logoutViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Core\Http\RedirectResponse $redirectResponse,
         Users\ViewProviders\LogoutViewProvider $logoutViewProvider,
         Users\Model\AuthenticationModel $authenticationModel
@@ -36,6 +42,7 @@ class Logout extends Core\Controller\AbstractFrontendAction
         $this->authenticationModel = $authenticationModel;
         $this->redirectResponse = $redirectResponse;
         $this->logoutViewProvider = $logoutViewProvider;
+        $this->user = $user;
     }
 
     /**

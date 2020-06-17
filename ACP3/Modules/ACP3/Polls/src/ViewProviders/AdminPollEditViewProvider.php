@@ -73,8 +73,6 @@ class AdminPollEditViewProvider
     }
 
     /**
-     * @return array|\string[][]
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     private function getAnswers(?int $pollId): array

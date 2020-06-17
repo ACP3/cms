@@ -22,6 +22,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@users.model.authentication_model'
       - '@users.view_providers.admin_user_edit'
       - '@users.model.users_model'
@@ -45,6 +46,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Edit
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@users.view_providers.account_edit'
       - '@users.model.users_model'
       - '@users.validation.account_form_validation'
@@ -53,11 +55,13 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Index
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
 
   users.controller.frontend.account.settings:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@users.view_providers.account_settings'
       - '@users.model.authentication_model'
       - '@users.model.users_model'
@@ -67,6 +71,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwd
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@core.http.redirect_response'
       - '@core.validator'
       - '@core.helpers.alerts'
@@ -87,6 +92,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@core.http.redirect_response'
       - '@core.helpers.secure'
       - '@users.view_providers.login'
@@ -96,6 +102,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Logout
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@core.http.redirect_response'
       - '@users.view_providers.logout'
       - '@users.model.authentication_model'
@@ -104,6 +111,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@core.http.redirect_response'
       - '@core.helpers.alerts'
       - '@users.view_providers.registration'
@@ -128,10 +136,12 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\Login
     arguments:
       - '@core.context.widget'
+      - '@users.model.user_model'
       - '@users.view_providers.login'
 
   users.controller.widget.index.user_menu:
     class: ACP3\Modules\ACP3\Users\Controller\Widget\Index\UserMenu
     arguments:
       - '@core.context.widget'
+      - '@users.model.user_model'
       - '@users.view_providers.user_menu'

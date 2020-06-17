@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 
@@ -25,9 +26,14 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\News\ViewProviders\AdminNewsEditViewProvider
      */
     private $adminNewsEditViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         News\Model\NewsModel $newsModel,
         News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers,
@@ -38,6 +44,7 @@ class Create extends AbstractFormAction
         $this->newsModel = $newsModel;
         $this->adminFormValidation = $adminFormValidation;
         $this->adminNewsEditViewProvider = $adminNewsEditViewProvider;
+        $this->user = $user;
     }
 
     /**

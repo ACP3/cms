@@ -19,14 +19,6 @@ abstract class AbstractWidgetAction implements ActionInterface
      */
     protected $container;
     /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    protected $user;
-    /**
      * @var \ACP3\Core\I18n\Translator
      */
     protected $translator;
@@ -54,8 +46,6 @@ abstract class AbstractWidgetAction implements ActionInterface
     public function __construct(Core\Controller\Context\WidgetContext $context)
     {
         $this->container = $context->getContainer();
-        $this->eventDispatcher = $context->getEventDispatcher();
-        $this->user = $context->getUser();
         $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
         $this->view = $context->getView();

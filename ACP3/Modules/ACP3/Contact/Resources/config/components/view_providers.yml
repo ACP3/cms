@@ -17,7 +17,9 @@ services:
   contact.view_providers.contact_details:
     class: ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider
     arguments:
+      - '@core.http.request'
       - '@core.config'
+      - '@core.breadcrumb'
       - '@core.i18n.translator'
 
   contact.view_provider.data_grid:

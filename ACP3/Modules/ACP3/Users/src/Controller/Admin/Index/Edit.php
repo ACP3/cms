@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
@@ -34,9 +35,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider
      */
     private $adminUserEditViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         AuthenticationModel $authenticationModel,
         Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider,
         Users\Model\UsersModel $usersModel,
@@ -50,6 +56,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->permissionsHelpers = $permissionsHelpers;
         $this->usersModel = $usersModel;
         $this->adminUserEditViewProvider = $adminUserEditViewProvider;
+        $this->user = $user;
     }
 
     /**
@@ -60,8 +67,6 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $user = $this->user->getUserInfo($id);
 
         if (!empty($user)) {
-            $this->title->setPageTitlePrefix($user['nickname']);
-
             return ($this->adminUserEditViewProvider)($user);
         }
 

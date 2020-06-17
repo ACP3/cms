@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Polls;
 
 class Create extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Polls\ViewProviders\AdminPollEditViewProvider
      */
     private $adminPollEditViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Polls\Model\PollsModel $pollsModel,
         Polls\Validation\AdminFormValidation $pollsValidator,
         Polls\ViewProviders\AdminPollEditViewProvider $adminPollEditViewProvider
@@ -36,6 +42,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->pollsModel = $pollsModel;
         $this->pollsValidator = $pollsValidator;
         $this->adminPollEditViewProvider = $adminPollEditViewProvider;
+        $this->user = $user;
     }
 
     /**

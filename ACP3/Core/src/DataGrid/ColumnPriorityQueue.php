@@ -19,8 +19,8 @@ class ColumnPriorityQueue extends \SplPriorityQueue
      *
      * @see http://php.net/manual/en/splpriorityqueue.compare.php#93999
      */
-    public function insert($value, $priority)
+    public function insert($value, $priority): bool
     {
-        parent::insert($value, [$priority, $this->serial--]);
+        return parent::insert($value, [$priority, $this->serial--]);
     }
 }

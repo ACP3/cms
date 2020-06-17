@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Users;
 
 class Edit extends AbstractAction
@@ -24,18 +25,24 @@ class Edit extends AbstractAction
      * @var \ACP3\Modules\ACP3\Users\ViewProviders\AccountEditViewProvider
      */
     private $accountEditViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Users\ViewProviders\AccountEditViewProvider $accountEditViewProvider,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AccountFormValidation $accountFormValidation
     ) {
-        parent::__construct($context);
+        parent::__construct($context, $user);
 
         $this->accountFormValidation = $accountFormValidation;
         $this->usersModel = $usersModel;
         $this->accountEditViewProvider = $accountEditViewProvider;
+        $this->user = $user;
     }
 
     /**

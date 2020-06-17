@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Newsletter;
 
 class Edit extends AbstractFormAction
@@ -24,9 +25,14 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\AdminNewsletterEditViewProvider
      */
     private $adminNewsletterEditViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers,
@@ -37,6 +43,7 @@ class Edit extends AbstractFormAction
         $this->newsletterModel = $newsletterModel;
         $this->adminFormValidation = $adminFormValidation;
         $this->adminNewsletterEditViewProvider = $adminNewsletterEditViewProvider;
+        $this->user = $user;
     }
 
     /**

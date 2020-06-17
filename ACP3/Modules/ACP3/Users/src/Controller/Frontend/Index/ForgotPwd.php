@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Modules\ACP3\Users;
 
@@ -49,9 +50,14 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Users\Helpers\SendPasswordChangeEmail
      */
     private $sendPasswordChangeEmail;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Core\Http\RedirectResponse $redirectResponse,
         Core\Validation\Validator $validator,
         Core\Helpers\Alerts $alertsHelper,
@@ -73,6 +79,7 @@ class ForgotPwd extends Core\Controller\AbstractFrontendAction
         $this->forgotPasswordViewProvider = $forgotPasswordViewProvider;
         $this->usersModel = $usersModel;
         $this->sendPasswordChangeEmail = $sendPasswordChangeEmail;
+        $this->user = $user;
     }
 
     /**

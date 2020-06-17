@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@files.model.files_model'
       - '@files.validation.admin_form_validation'
       - '@files.helpers.upload'
@@ -29,6 +30,7 @@ services:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@files.model.files_model'
       - '@files.validation.admin_form_validation'
       - '@files.helpers.upload'

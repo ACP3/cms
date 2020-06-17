@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Search\Helpers as SearchHelpers;
 class SearchWidgetViewProvider
 {
     /**
-     * @var \ACP3\Core\Modules
+     * @var \ACP3\Modules\ACP3\Search\Helpers
      */
     private $searchHelpers;
 

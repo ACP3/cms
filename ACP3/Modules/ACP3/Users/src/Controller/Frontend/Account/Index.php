@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
 class Index extends AbstractAction
 {
-    public function execute()
+    public function execute(): void
     {
     }
 }

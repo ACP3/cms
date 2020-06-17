@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\ViewProviders\UserMenuViewProvider;
 
@@ -19,14 +20,20 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
      * @var \ACP3\Modules\ACP3\Users\ViewProviders\UserMenuViewProvider
      */
     private $userMenuViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        UserMenuViewProvider $userMenuViewProvider)
-    {
+        UserModelInterface $user,
+        UserMenuViewProvider $userMenuViewProvider
+    ) {
         parent::__construct($context);
 
         $this->userMenuViewProvider = $userMenuViewProvider;
+        $this->user = $user;
     }
 
     /**

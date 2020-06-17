@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Comments;
 
 class Create extends Core\Controller\AbstractFrontendAction
@@ -28,10 +29,15 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\ViewProviders\CommentCreateViewProvider
      */
     private $commentCreateViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Modules $modules,
+        UserModelInterface $user,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\FormValidation $formValidation,
         Comments\ViewProviders\CommentCreateViewProvider $commentCreateViewProvider
@@ -42,6 +48,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->commentsModel = $commentsModel;
         $this->modules = $modules;
         $this->commentCreateViewProvider = $commentCreateViewProvider;
+        $this->user = $user;
     }
 
     public function execute(string $module, int $entryId, string $redirectUrl): array

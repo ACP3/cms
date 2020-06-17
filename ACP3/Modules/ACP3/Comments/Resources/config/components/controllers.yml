@@ -49,6 +49,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.modules'
+      - '@users.model.user_model'
       - '@comments.model.comments_model'
       - '@comments.validation.form_validation'
       - '@comments.view_providers.comment_create'

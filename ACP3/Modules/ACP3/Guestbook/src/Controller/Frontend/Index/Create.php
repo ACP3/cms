@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Guestbook;
 
 class Create extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\GuestbookCreateViewProvider
      */
     private $guestbookCreateViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Guestbook\Model\GuestbookModel $guestbookModel,
         Guestbook\Validation\FormValidation $formValidation,
         Guestbook\ViewProviders\GuestbookCreateViewProvider $guestbookCreateViewProvider
@@ -36,6 +42,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->formValidation = $formValidation;
         $this->guestbookModel = $guestbookModel;
         $this->guestbookCreateViewProvider = $guestbookCreateViewProvider;
+        $this->user = $user;
     }
 
     public function execute(): array

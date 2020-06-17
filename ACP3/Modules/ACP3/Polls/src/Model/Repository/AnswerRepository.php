@@ -22,8 +22,6 @@ class AnswerRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param $pollId
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getAnswersWithVotesByPollId(int $pollId): array

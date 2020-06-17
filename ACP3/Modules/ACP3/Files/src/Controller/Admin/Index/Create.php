@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -30,9 +31,14 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Files\ViewProviders\AdminFileEditViewProvider
      */
     private $adminFileEditViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\Upload $filesUploadHelper,
@@ -45,6 +51,7 @@ class Create extends AbstractFormAction
         $this->filesModel = $filesModel;
         $this->filesUploadHelper = $filesUploadHelper;
         $this->adminFileEditViewProvider = $adminFileEditViewProvider;
+        $this->user = $user;
     }
 
     /**

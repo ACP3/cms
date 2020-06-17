@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@news.model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
@@ -28,6 +29,7 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@news.model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'

@@ -25,19 +25,19 @@ class ControllerActionDispatcher
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \Psr\Container\ContainerInterface
      */
-    protected $container;
+    private $container;
     /**
      * @var ArgumentResolverInterface
      */
-    protected $argumentResolver;
+    private $argumentResolver;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -88,10 +88,7 @@ class ControllerActionDispatcher
         throw new ControllerActionNotFoundException('Service-Id ' . $serviceId . ' was not found!');
     }
 
-    /**
-     * @return string
-     */
-    protected function buildControllerServiceId()
+    private function buildControllerServiceId(): string
     {
         return $this->request->getModule()
             . '.controller.'
@@ -100,9 +97,9 @@ class ControllerActionDispatcher
             . '.' . $this->request->getAction();
     }
 
-    protected function modifyRequest(string $serviceId, array $arguments)
+    private function modifyRequest(string $serviceId, array $arguments): void
     {
-        list($module, , , $controller, $action) = \explode('.', $serviceId);
+        [$module, , , $controller, $action] = \explode('.', $serviceId);
 
         $params = '';
         foreach ($arguments as $key => $value) {
@@ -135,12 +132,10 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @return array
-     *
      * @throws \ReflectionException
      * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
      */
-    private function getCallable(ActionInterface $controller)
+    private function getCallable(ActionInterface $controller): array
     {
         if ($this->isValidPostRequest($controller)) {
             $reflection = new \ReflectionMethod($controller, self::ACTION_METHOD_POST);
@@ -157,8 +152,8 @@ class ControllerActionDispatcher
 
     private function isValidPostRequest(ActionInterface $controller): bool
     {
-        if ($this->request->getSymfonyRequest()->isMethod('POST')
-            && \method_exists($controller, self::ACTION_METHOD_POST)) {
+        if (\method_exists($controller, self::ACTION_METHOD_POST)
+            && $this->request->getSymfonyRequest()->isMethod('POST')) {
             return $this->request->getPost()->has('submit')
                 || $this->request->getPost()->has('continue')
                 || \method_exists($controller, self::ACTION_METHOD_DEFAULT) === false;

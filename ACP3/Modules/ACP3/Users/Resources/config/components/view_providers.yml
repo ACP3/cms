@@ -31,6 +31,7 @@ services:
       - '@core.helpers.forms'
       - '@users.helpers.forms'
       - '@core.http.request'
+      - '@core.breadcrumb.title'
 
   users.view_providers.data_grid:
     class: ACP3\Modules\ACP3\Users\ViewProviders\DataGridViewProvider

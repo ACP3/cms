@@ -8,6 +8,7 @@
 namespace ACP3\Core\Controller\Context;
 
 use ACP3\Core;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FrontendContext extends Core\Controller\Context\WidgetContext
 {
@@ -16,10 +17,6 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
      */
     private $breadcrumb;
     /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
@@ -27,18 +24,20 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
      * @var \ACP3\Core\Helpers\RedirectMessages
      */
     private $redirectMessagesHelper;
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Breadcrumb\Steps $breadcrumb,
-        Core\Breadcrumb\Title $title,
+        EventDispatcherInterface $eventDispatcher,
         Core\Modules\Helper\Action $actionHelper,
         Core\Helpers\RedirectMessages $redirectMessagesHelper
     ) {
         parent::__construct(
             $context->getContainer(),
-            $context->getEventDispatcher(),
-            $context->getUser(),
             $context->getTranslator(),
             $context->getRequest(),
             $context->getView(),
@@ -48,9 +47,9 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
         );
 
         $this->breadcrumb = $breadcrumb;
-        $this->title = $title;
         $this->actionHelper = $actionHelper;
         $this->redirectMessagesHelper = $redirectMessagesHelper;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -61,12 +60,9 @@ class FrontendContext extends Core\Controller\Context\WidgetContext
         return $this->breadcrumb;
     }
 
-    /**
-     * @return \ACP3\Core\Breadcrumb\Title
-     */
-    public function getTitle()
+    public function getEventDispatcher(): EventDispatcherInterface
     {
-        return $this->title;
+        return $this->eventDispatcher;
     }
 
     /**

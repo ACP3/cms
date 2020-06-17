@@ -13,13 +13,13 @@ use ACP3\Core\Controller\Event\CustomTemplateVariableEvent;
 abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Core\Assets
-     */
-    protected $assets;
-    /**
      * @var \ACP3\Core\Breadcrumb\Steps
      */
     protected $breadcrumb;
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected $eventDispatcher;
     /**
      * @var \ACP3\Core\Breadcrumb\Title
      */
@@ -45,7 +45,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
         parent::__construct($context);
 
         $this->breadcrumb = $context->getBreadcrumb();
-        $this->title = $context->getTitle();
+        $this->eventDispatcher = $context->getEventDispatcher();
         $this->actionHelper = $context->getActionHelper();
         $this->redirectMessages = $context->getRedirectMessagesHelper();
     }

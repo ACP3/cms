@@ -35,6 +35,7 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.form_validation'
       - '@guestbook.view_providers.guestbook_create'

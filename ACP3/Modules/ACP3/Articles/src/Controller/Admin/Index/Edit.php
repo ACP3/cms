@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Articles;
 
 class Edit extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider
      */
     private $adminArticleEditViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Articles\ViewProviders\AdminArticleEditViewProvider $adminArticleEditViewProvider,
         Articles\Model\ArticlesModel $articlesModel,
         Articles\Validation\AdminFormValidation $adminFormValidation
@@ -36,6 +42,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->articlesModel = $articlesModel;
         $this->adminArticleEditViewProvider = $adminArticleEditViewProvider;
+        $this->user = $user;
     }
 
     /**

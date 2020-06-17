@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\ViewProviders;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
@@ -35,23 +36,31 @@ class AdminUserEditViewProvider
      * @var \ACP3\Core\Helpers\Forms
      */
     private $formsHelpers;
+    /**
+     * @var \ACP3\Core\Breadcrumb\Title
+     */
+    private $title;
 
     public function __construct(
         ACL $acl,
         FormToken $formTokenHelper,
         Forms $formsHelper,
         UserFormsHelper $userFormsHelpers,
-        RequestInterface $request
+        RequestInterface $request,
+        Title $title
     ) {
         $this->acl = $acl;
         $this->formTokenHelper = $formTokenHelper;
         $this->userFormsHelpers = $userFormsHelpers;
         $this->request = $request;
         $this->formsHelpers = $formsHelper;
+        $this->title = $title;
     }
 
     public function __invoke(array $userInfo): array
     {
+        $this->title->setPageTitlePrefix($userInfo['nickname']);
+
         return \array_merge(
             $this->userFormsHelpers->fetchUserSettingsFormFields(
                 $userInfo['address_display'] ?? 0,

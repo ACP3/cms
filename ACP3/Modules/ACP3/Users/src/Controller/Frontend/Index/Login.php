@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -29,9 +30,14 @@ class Login extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Users\ViewProviders\LoginViewProvider
      */
     private $loginViewProvider;
+    /**
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
+     */
+    private $user;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        UserModelInterface $user,
         Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\Secure $secureHelper,
         Users\ViewProviders\LoginViewProvider $loginViewProvider,
@@ -43,6 +49,7 @@ class Login extends Core\Controller\AbstractFrontendAction
         $this->secureHelper = $secureHelper;
         $this->redirectResponse = $redirectResponse;
         $this->loginViewProvider = $loginViewProvider;
+        $this->user = $user;
     }
 
     /**

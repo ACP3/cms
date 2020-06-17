@@ -7,14 +7,12 @@
 
 namespace ACP3\Core\Controller\Context;
 
-use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class WidgetContext
@@ -22,35 +20,27 @@ class WidgetContext
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    protected $container;
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    protected $user;
+    private $container;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\View
      */
-    protected $view;
+    private $view;
     /**
      * @var SettingsInterface
      */
-    protected $config;
+    private $config;
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
     /**
      * @var \Symfony\Component\HttpFoundation\Response
      */
@@ -58,8 +48,6 @@ class WidgetContext
 
     public function __construct(
         ContainerInterface $container,
-        EventDispatcherInterface $eventDispatcher,
-        UserModelInterface $user,
         Translator $translator,
         RequestInterface $request,
         View $view,
@@ -68,8 +56,6 @@ class WidgetContext
         Response $response
     ) {
         $this->container = $container;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->user = $user;
         $this->translator = $translator;
         $this->request = $request;
         $this->view = $view;
@@ -84,22 +70,6 @@ class WidgetContext
     public function getContainer()
     {
         return $this->container;
-    }
-
-    /**
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    public function getEventDispatcher()
-    {
-        return $this->eventDispatcher;
-    }
-
-    /**
-     * @return \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 
     /**

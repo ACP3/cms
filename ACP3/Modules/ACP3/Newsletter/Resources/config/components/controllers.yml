@@ -25,6 +25,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@newsletter.model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
@@ -40,6 +41,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@newsletter.model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'

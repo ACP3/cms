@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@gallery.model.gallery_model'
       - '@gallery.validation.gallery_form_validation'
       - '@gallery.view_providers.admin_gallery_edit'
@@ -24,6 +25,7 @@ services:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@gallery.model.gallery_model'
       - '@gallery.validation.gallery_form_validation'
       - '@gallery.view_providers.admin_gallery_edit'

@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@polls.model.polls_model'
       - '@polls.validation.admin_form_validation'
       - '@polls.view_providers.admin_poll_edit'
@@ -21,6 +22,7 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@polls.model.polls_model'
       - '@polls.validation.admin_form_validation'
       - '@polls.view_providers.admin_poll_edit'

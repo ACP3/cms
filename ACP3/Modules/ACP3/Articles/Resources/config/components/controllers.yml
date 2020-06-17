@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@articles.view_providers.admin_article_edit'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'
@@ -27,6 +28,7 @@ services:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
       - '@articles.view_providers.admin_article_edit'
       - '@articles.model'
       - '@articles.validation.admin_form_validation'

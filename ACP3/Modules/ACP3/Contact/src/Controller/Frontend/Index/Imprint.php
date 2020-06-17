@@ -23,8 +23,8 @@ class Imprint extends Core\Controller\AbstractFrontendAction
 
     public function __construct(
         FrontendContext $context,
-        ContactDetailsViewProvider $contactDetailsViewProvider)
-    {
+        ContactDetailsViewProvider $contactDetailsViewProvider
+    ) {
         parent::__construct($context);
 
         $this->contactDetailsViewProvider = $contactDetailsViewProvider;
@@ -33,11 +33,6 @@ class Imprint extends Core\Controller\AbstractFrontendAction
     public function execute(): array
     {
         $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
-
-        $this->breadcrumb->append(
-            $this->translator->t('contact', 'frontend_index_imprint'),
-            $this->request->getQuery()
-        );
 
         return ($this->contactDetailsViewProvider)();
     }
