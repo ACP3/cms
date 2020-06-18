@@ -3,7 +3,7 @@ services:
     class: ACP3\Core\Date
     arguments:
       - '@core.date.date_translator'
-    configurator: 'core.date.date_configurator:configure'
+    configurator: ['@core.date.date_configurator', 'configure']
 
   core.date.date_configurator:
     class: ACP3\Core\Date\DateConfigurator

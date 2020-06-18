@@ -9,6 +9,6 @@ services:
 
   core.mailer.logger:
     class: Psr\Log\LoggerInterface
-    factory: 'core.logger.logger_factory:create'
+    factory: ['@core.logger.logger_factory', 'create']
     arguments:
       - 'mailer'

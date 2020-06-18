@@ -4,8 +4,7 @@ parameters:
     - ./ACP3
     - ./installation
     - ./tests
-  bootstrap: ./tests/bootstrap.php
+  bootstrapFiles:
+    - ./tests/bootstrap.php
   excludes_analyse:
     - %rootDir%/ACP3/Modules/*/*/Resources/*
-  ignoreErrors:
-    - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required.#'

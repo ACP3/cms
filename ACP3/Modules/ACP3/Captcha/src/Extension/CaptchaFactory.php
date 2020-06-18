@@ -22,9 +22,6 @@ class CaptchaFactory
      */
     private $captchaRegistrar;
 
-    /**
-     * CaptchaFactory constructor.
-     */
     public function __construct(SettingsInterface $settings, CaptchaRegistrar $captchaRegistrar)
     {
         $this->settings = $settings;

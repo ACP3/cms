@@ -19,8 +19,14 @@
     "acp3/core": "^4.47.5",
     "acp3/module-permissions": "^4.47.5",
     "acp3/module-system": "^4.47.5",
-    "servocoder/richfilemanager-php": "^1.2"
+    "servocoder/richfilemanager-php": "dev-master"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/tinogo/RichFilemanager-PHP"
+    }
+  ],
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI."
   },

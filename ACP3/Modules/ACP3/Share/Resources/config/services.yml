@@ -12,4 +12,4 @@ services:
 
   shariff.backend:
     class: Heise\Shariff\Backend
-    factory: 'shariff.backend_factory:create'
+    factory: ['@shariff.backend_factory', 'create']

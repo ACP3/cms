@@ -13,7 +13,7 @@ services:
 
   smarty:
     class: Smarty
-    configurator: 'core.view.renderer.smarty.smarty_configurator:configure'
+    configurator: ['@core.view.renderer.smarty.smarty_configurator', 'configure']
 
   core.view.renderer.smarty:
     class: ACP3\Core\View\Renderer\Smarty

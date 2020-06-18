@@ -35,26 +35,26 @@
     "phpmailer/phpmailer": "^6.1.1",
     "php-http/guzzle6-adapter": "^2.0",
     "smarty/smarty": "^3.1",
-    "symfony/config": "^4.4.0",
-    "symfony/console": "^4.4.0",
-    "symfony/error-handler": "^4.4.0",
-    "symfony/dependency-injection": "^4.4.0",
-    "symfony/event-dispatcher": "^4.4.0",
-    "symfony/http-foundation": "^4.4.0",
-    "symfony/http-kernel": "^4.4.0",
-    "symfony/proxy-manager-bridge": "^4.4.0",
-    "symfony/yaml": "^4.4.0",
+    "symfony/config": "^5.1.0",
+    "symfony/console": "^5.1.0",
+    "symfony/error-handler": "^5.1.0",
+    "symfony/dependency-injection": "^5.1.0",
+    "symfony/event-dispatcher": "^5.1.0",
+    "symfony/http-foundation": "^5.1.0",
+    "symfony/http-kernel": "^5.1.0",
+    "symfony/proxy-manager-bridge": "^5.1.0",
+    "symfony/yaml": "^5.1.0",
     "thepixeldeveloper/sitemap": "^5.0",
     "tinymce/tinymce": "^4.8",
     "toflar/psr6-symfony-http-cache-store": "^2.0",
     "marcj/topsort": "^1.1",
     "heise/shariff": "^9.0",
-    "servocoder/richfilemanager-php": "^1.2"
+    "servocoder/richfilemanager-php": "dev-master"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.16.0",
     "phpunit/phpunit": "^8.5",
-    "phpstan/phpstan": "0.12.25",
+    "phpstan/phpstan": "^0.12.25",
     "phpstan/phpstan-phpunit": "^0.12.0",
     "phpstan/extension-installer": "^1.0",
     "dms/phpunit-arraysubset-asserts": "^0.1.1"
@@ -263,6 +263,12 @@
     "acp3/theme-default": "self.version",
     "acp3/theme-installer": "self.version"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/tinogo/RichFilemanager-PHP"
+    }
+  ],
   "scripts": {
     "test": "./vendor/bin/phpunit -c ./tests/phpunit.dist.xml",
     "test-windows": ".\\vendor\\bin\\phpunit.bat -c .\\tests\\phpunit.dist.xml",
