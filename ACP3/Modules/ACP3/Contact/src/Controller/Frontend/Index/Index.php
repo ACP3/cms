@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Contact;
 
 class Index extends Core\Controller\AbstractFrontendAction
@@ -36,9 +38,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Contact\ViewProviders\ContactFormViewProvider
      */
     private $contactFormViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        FrontendContext $context,
+        Action $actionHelper,
         Core\Router\RouterInterface $router,
         Core\Helpers\Alerts $alertsHelper,
         Contact\Validation\FormValidation $formValidation,
@@ -54,6 +61,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->alertsHelper = $alertsHelper;
         $this->router = $router;
         $this->contactFormViewProvider = $contactFormViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

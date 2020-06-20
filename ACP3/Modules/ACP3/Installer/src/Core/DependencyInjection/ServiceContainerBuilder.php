@@ -16,7 +16,6 @@ use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterLegacySmartyPlugi
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
@@ -89,15 +88,15 @@ final class ServiceContainerBuilder extends ContainerBuilder
         $this->includeCoreServices($loader);
 
         foreach (ComponentRegistry::allTopSorted() as $module) {
-            $loader->load($module->getPath() . '/Resources/config/services.yml');
+            $loader->import($module->getPath() . '/Resources/config/services.yml');
         }
 
         if ($this->isInstallingOrUpdating === false) {
-            $loader->load(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_overrides.yml');
+            $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_overrides.yml');
         }
 
         if ($this->applicationMode === ApplicationMode::UPDATER) {
-            $loader->load(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_updater.yml');
+            $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_updater.yml');
         }
 
         $this->compile();
@@ -106,7 +105,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @throws \Exception
      */
-    private function includeCoreServices(LoaderInterface $loader): void
+    private function includeCoreServices(YamlFileLoader $loader): void
     {
         if ($this->isInstallingOrUpdating === false) {
             $this->setParameter('db_host', '');
@@ -120,7 +119,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
             return;
         }
 
-        $loader->load($this->applicationPath->getAppDir() . 'config.yml');
+        $loader->import($this->applicationPath->getAppDir() . 'config.yml');
     }
 
     /**

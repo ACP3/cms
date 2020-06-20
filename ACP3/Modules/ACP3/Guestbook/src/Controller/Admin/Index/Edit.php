@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Guestbook;
 
 class Edit extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminGuestbookEditViewProvider
      */
     private $adminGuestbookEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
         Guestbook\Validation\AdminFormValidation $adminFormValidation,
         Guestbook\ViewProviders\AdminGuestbookEditViewProvider $adminGuestbookEditViewProvider
@@ -36,6 +42,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->guestbookModel = $guestbookModel;
         $this->adminGuestbookEditViewProvider = $adminGuestbookEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

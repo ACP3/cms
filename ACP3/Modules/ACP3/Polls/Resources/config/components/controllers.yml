@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@polls.model.polls_model'
       - '@polls.validation.admin_form_validation'
@@ -16,12 +17,14 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@polls.model.polls_model'
 
   polls.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@polls.model.polls_model'
       - '@polls.validation.admin_form_validation'
@@ -51,6 +54,7 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Vote
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.date'
       - '@polls.validation.vote_validation'
       - '@polls.model.vote_model'

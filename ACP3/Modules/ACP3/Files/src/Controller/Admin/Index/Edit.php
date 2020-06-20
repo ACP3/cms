@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Files\Helpers;
@@ -36,9 +37,14 @@ class Edit extends AbstractFormAction
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         UserModelInterface $user,
         Files\Model\FilesModel $filesModel,
         Files\Validation\AdminFormValidation $adminFormValidation,
@@ -53,6 +59,7 @@ class Edit extends AbstractFormAction
         $this->filesUploadHelper = $filesUploadHelper;
         $this->adminFileEditViewProvider = $adminFileEditViewProvider;
         $this->user = $user;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

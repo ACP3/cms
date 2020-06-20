@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Newsletter;
 
 class Unsubscribe extends Core\Controller\AbstractFrontendAction
@@ -28,9 +29,14 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterUnsubscribeViewProvider
      */
     private $newsletterUnsubscribeViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Core\Helpers\Alerts $alertsHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation,
@@ -42,6 +48,7 @@ class Unsubscribe extends Core\Controller\AbstractFrontendAction
         $this->unsubscribeFormValidation = $unsubscribeFormValidation;
         $this->alertsHelper = $alertsHelper;
         $this->newsletterUnsubscribeViewProvider = $newsletterUnsubscribeViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

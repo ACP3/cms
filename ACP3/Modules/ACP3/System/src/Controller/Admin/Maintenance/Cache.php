@@ -8,10 +8,26 @@
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\System;
 
 class Cache extends Core\Controller\AbstractFrontendAction
 {
+    /**
+     * @var \ACP3\Core\Helpers\RedirectMessages
+     */
+    private $redirectMessages;
+
+    public function __construct(
+        FrontendContext $context,
+        RedirectMessages $redirectMessages
+    ) {
+        parent::__construct($context);
+
+        $this->redirectMessages = $redirectMessages;
+    }
+
     /**
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -78,6 +94,6 @@ class Cache extends Core\Controller\AbstractFrontendAction
                 $text = $this->translator->t('system', 'cache_type_not_found');
         }
 
-        return $this->redirectMessages()->setMessage($result, $text, 'acp/system/maintenance/cache');
+        return $this->redirectMessages->setMessage($result, $text, 'acp/system/maintenance/cache');
     }
 }

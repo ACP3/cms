@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Users;
 
 class Settings extends Core\Controller\AbstractFrontendAction
@@ -20,9 +21,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminSettingsViewProvider
      */
     private $adminSettingsViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Users\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider,
         Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
@@ -30,6 +36,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->adminSettingsViewProvider = $adminSettingsViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

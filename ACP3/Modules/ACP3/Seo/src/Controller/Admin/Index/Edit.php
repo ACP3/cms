@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Seo;
 
 class Edit extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider
      */
     private $adminSeoEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Seo\Model\SeoModel $seoModel,
         Seo\Validation\AdminFormValidation $adminFormValidation,
         Seo\ViewProviders\AdminSeoEditViewProvider $adminSeoEditViewProvider
@@ -36,6 +42,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->seoModel = $seoModel;
         $this->adminSeoEditViewProvider = $adminSeoEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

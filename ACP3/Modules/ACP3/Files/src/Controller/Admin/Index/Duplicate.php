@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Files\Model\FilesModel;
 
 class Duplicate extends AbstractFrontendAction
@@ -17,31 +18,32 @@ class Duplicate extends AbstractFrontendAction
      * @var FilesModel
      */
     private $filesModel;
-
     /**
-     * Duplicate constructor.
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         FrontendContext $context,
+        Action $actionHelper,
         FilesModel $filesModel
     ) {
         parent::__construct($context);
 
         $this->filesModel = $filesModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @param int $id
+     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id)
+    public function execute(int $id)
     {
-        $result = $this->filesModel->duplicate($id);
-
-        return $this->redirectMessages()->setMessage(
-            $result,
-            $this->translator->t('system', $result !== false ? 'duplicate_success' : 'duplicate_error')
-        );
+        return $this->actionHelper->handleDuplicateAction(function () use ($id) {
+            return $this->filesModel->duplicate($id);
+        });
     }
 }

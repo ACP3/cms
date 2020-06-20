@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Newsletter;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -16,14 +17,20 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var Newsletter\Model\NewsletterModel
      */
     private $newsletterModel;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Newsletter\Model\NewsletterModel $newsletterModel
     ) {
         parent::__construct($context);
 
         $this->newsletterModel = $newsletterModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

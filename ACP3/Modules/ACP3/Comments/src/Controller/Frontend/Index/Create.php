@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Comments;
 
 class Create extends Core\Controller\AbstractFrontendAction
@@ -33,9 +34,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Core\Modules $modules,
         UserModelInterface $user,
         Comments\Model\CommentsModel $commentsModel,
@@ -49,6 +55,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->modules = $modules;
         $this->commentCreateViewProvider = $commentCreateViewProvider;
         $this->user = $user;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(string $module, int $entryId, string $redirectUrl): array
@@ -81,7 +88,7 @@ class Create extends Core\Controller\AbstractFrontendAction
 
                 $bool = $this->commentsModel->save($formData);
 
-                return $this->redirectMessages()->setMessage(
+                return $this->actionHelper->setRedirectMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
                     \base64_decode(\urldecode($redirectUrl))

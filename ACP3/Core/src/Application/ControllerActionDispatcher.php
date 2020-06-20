@@ -11,6 +11,7 @@ use ACP3\Core\Application\Event\ControllerActionAfterDispatchEvent;
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\Exception\ControllerActionNotFoundException;
+use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Http\RequestInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 
 class ControllerActionDispatcher
 {
+    private const ACTION_METHOD_INVOKABLE = '__invoke';
     private const ACTION_METHOD_DEFAULT = 'execute';
     private const ACTION_METHOD_POST = 'executePost';
 
@@ -66,9 +68,18 @@ class ControllerActionDispatcher
             $this->modifyRequest($serviceId, $arguments);
         }
 
+        if ($this->container->has($serviceId . '_post') && $this->request->getSymfonyRequest()->isMethod('POST')) {
+            $serviceId .= '_post';
+        }
+
         if ($this->container->has($serviceId)) {
+            $normalizedServiceId = $serviceId;
+
+            if (\substr($serviceId, -5) === '_post') {
+                $normalizedServiceId = \substr($serviceId, 0, -5);
+            }
             $this->eventDispatcher->dispatch(
-                new ControllerActionBeforeDispatchEvent($serviceId),
+                new ControllerActionBeforeDispatchEvent($normalizedServiceId),
                 ControllerActionBeforeDispatchEvent::NAME
             );
 
@@ -78,7 +89,7 @@ class ControllerActionDispatcher
             $response = $controller->display($this->executeControllerAction($controller, $arguments));
 
             $this->eventDispatcher->dispatch(
-                new ControllerActionAfterDispatchEvent($serviceId, $response),
+                new ControllerActionAfterDispatchEvent($normalizedServiceId, $response),
                 ControllerActionAfterDispatchEvent::NAME
             );
 
@@ -137,13 +148,19 @@ class ControllerActionDispatcher
      */
     private function getCallable(ActionInterface $controller): array
     {
+        if ($controller instanceof InvokableActionInterface && \method_exists($controller, self::ACTION_METHOD_INVOKABLE) === true) {
+            return [$controller, self::ACTION_METHOD_INVOKABLE];
+        }
+
         if ($this->isValidPostRequest($controller)) {
             $reflection = new \ReflectionMethod($controller, self::ACTION_METHOD_POST);
 
             if ($reflection->isPublic()) {
                 return [$controller, self::ACTION_METHOD_POST];
             }
-        } elseif (\method_exists($controller, self::ACTION_METHOD_DEFAULT) === true) {
+        }
+
+        if (\method_exists($controller, self::ACTION_METHOD_DEFAULT) === true) {
             return [$controller, self::ACTION_METHOD_DEFAULT];
         }
 

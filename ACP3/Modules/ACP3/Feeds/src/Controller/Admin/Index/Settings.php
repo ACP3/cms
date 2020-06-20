@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Feeds\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Feeds;
 
 class Settings extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Feeds\ViewProviders\AdminSettingsViewProvider
      */
     private $adminSettingsViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Core\Helpers\Secure $secureHelper,
         Feeds\Validation\AdminFormValidation $adminFormValidation,
         Feeds\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
@@ -36,6 +42,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->secureHelper = $secureHelper;
         $this->adminSettingsViewProvider = $adminSettingsViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

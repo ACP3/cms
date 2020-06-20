@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Newsletter;
 
 class Create extends AbstractFormAction
@@ -29,9 +30,14 @@ class Create extends AbstractFormAction
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         UserModelInterface $user,
         Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\Validation\AdminFormValidation $adminFormValidation,
@@ -44,6 +50,7 @@ class Create extends AbstractFormAction
         $this->adminFormValidation = $adminFormValidation;
         $this->adminNewsletterEditViewProvider = $adminNewsletterEditViewProvider;
         $this->user = $user;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array
@@ -84,7 +91,7 @@ class Create extends AbstractFormAction
                 $settings['mail']
             );
 
-            return $this->redirectMessages()->setMessage($result, $text);
+            return $this->actionHelper->setRedirectMessage($result, $text);
         });
     }
 }

@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@share.model.share_model'
       - '@share.validation.admin_form_validation'
       - '@share.view_providers.admin_share_edit'
@@ -15,12 +16,14 @@ services:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@share.model.share_model'
 
   share.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@share.model.share_model'
       - '@share.validation.admin_form_validation'
       - '@share.view_providers.admin_share_edit'
@@ -35,6 +38,7 @@ services:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@share.validation.admin_settings_form_validation'
       - '@share.view_providers.admin_settings'

@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Comments;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -15,21 +16,21 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
-    protected $commentRepository;
-
+    private $commentRepository;
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Comments\Model\Repository\CommentRepository $commentRepository
     ) {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Categories;
 
 class Create extends Core\Controller\AbstractFrontendAction
@@ -28,9 +29,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategoryEditViewProvider
      */
     private $adminCategoryEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\Upload $categoriesUploadHelper,
@@ -42,6 +48,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->categoriesModel = $categoriesModel;
         $this->categoriesUploadHelper = $categoriesUploadHelper;
         $this->adminCategoryEditViewProvider = $adminCategoryEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
 use ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation;
 use ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider;
@@ -23,9 +24,14 @@ class Settings extends AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider
      */
     private $adminSettingsViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         FrontendContext $context,
+        Action $actionHelper,
         AdminSettingsViewProvider $adminSettingsViewProvider,
         AdminSettingsFormValidation $formValidation
     ) {
@@ -33,6 +39,7 @@ class Settings extends AbstractFrontendAction
 
         $this->formValidation = $formValidation;
         $this->adminSettingsViewProvider = $adminSettingsViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

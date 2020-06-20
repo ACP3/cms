@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@seo.model.seo_model'
       - '@seo.validation.admin_form_validation'
       - '@seo.view_providers.admin_seo_edit'
@@ -15,6 +16,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@seo.cache'
       - '@seo.model.seo_model'
 
@@ -22,6 +24,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@seo.model.seo_model'
       - '@seo.validation.admin_form_validation'
       - '@seo.view_providers.admin_seo_edit'
@@ -36,6 +39,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@seo.validation.admin_settings_form_validation'
       - '@seo.view_providers.admin_settings'
@@ -44,6 +48,7 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Sitemap
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.redirect'
       - '@seo.model.sitemap_generation_model'
 
   seo.controller.admin.index.suggest:

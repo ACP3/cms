@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Menus;
 
 class Edit extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuEditViewProvider
      */
     private $adminMenuEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Menus\Model\MenusModel $menusModel,
         Menus\Validation\MenuFormValidation $menuFormValidation,
         Menus\ViewProviders\AdminMenuEditViewProvider $adminMenuEditViewProvider
@@ -36,6 +42,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->menusModel = $menusModel;
         $this->menuFormValidation = $menuFormValidation;
         $this->adminMenuEditViewProvider = $adminMenuEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

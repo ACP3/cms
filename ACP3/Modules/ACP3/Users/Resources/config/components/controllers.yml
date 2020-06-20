@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.view_providers.admin_user_edit'
       - '@users.model.users_model'
       - '@users.validation.admin_form_validation'
@@ -16,12 +17,14 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.users_model'
 
   users.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@users.model.authentication_model'
       - '@users.view_providers.admin_user_edit'
@@ -39,6 +42,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.view_providers.admin_settings'
       - '@users.validation.admin_settings_form_validation'
 
@@ -46,6 +50,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@users.view_providers.account_edit'
       - '@users.model.users_model'
@@ -61,6 +66,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@users.view_providers.account_settings'
       - '@users.model.authentication_model'
@@ -71,6 +77,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwd
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@core.http.redirect_response'
       - '@core.validator'
@@ -92,6 +99,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@core.http.redirect_response'
       - '@core.helpers.secure'
@@ -111,6 +119,7 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@core.http.redirect_response'
       - '@core.helpers.alerts'

@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Guestbook;
 
 class Create extends Core\Controller\AbstractFrontendAction
@@ -29,9 +30,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         UserModelInterface $user,
         Guestbook\Model\GuestbookModel $guestbookModel,
         Guestbook\Validation\FormValidation $formValidation,
@@ -43,6 +49,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->guestbookModel = $guestbookModel;
         $this->guestbookCreateViewProvider = $guestbookCreateViewProvider;
         $this->user = $user;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array
@@ -76,7 +83,7 @@ class Create extends Core\Controller\AbstractFrontendAction
 
                 $lastId = $this->guestbookModel->save($formData);
 
-                return $this->redirectMessages()->setMessage(
+                return $this->actionHelper->setRedirectMessage(
                     $lastId,
                     $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error')
                 );

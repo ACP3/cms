@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 
@@ -53,9 +54,14 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\System\ViewProviders\AdminModulesViewProvider
      */
     private $adminModulesViewProvider;
+    /**
+     * @var \ACP3\Core\Helpers\RedirectMessages
+     */
+    private $redirectMessages;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        RedirectMessages $redirectMessages,
         Core\Modules $modules,
         Core\I18n\DictionaryCache $dictionaryCache,
         Core\Modules\ModuleInfoCacheInterface $moduleInfoCache,
@@ -79,6 +85,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $this->aclInstaller = $aclInstaller;
         $this->modules = $modules;
         $this->adminModulesViewProvider = $adminModulesViewProvider;
+        $this->redirectMessages = $redirectMessages;
     }
 
     /**
@@ -138,7 +145,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
             $text = $e->getMessage();
         }
 
-        return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
+        return $this->redirectMessages->setMessage($result, $text, $this->request->getFullPath());
     }
 
     /**
@@ -236,7 +243,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
             $text = $e->getMessage();
         }
 
-        return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
+        return $this->redirectMessages->setMessage($result, $text, $this->request->getFullPath());
     }
 
     /**
@@ -273,7 +280,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
             $text = $e->getMessage();
         }
 
-        return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
+        return $this->redirectMessages->setMessage($result, $text, $this->request->getFullPath());
     }
 
     /**
@@ -309,7 +316,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
             $text = $e->getMessage();
         }
 
-        return $this->redirectMessages()->setMessage($result, $text, $this->request->getFullPath());
+        return $this->redirectMessages->setMessage($result, $text, $this->request->getFullPath());
     }
 
     /**

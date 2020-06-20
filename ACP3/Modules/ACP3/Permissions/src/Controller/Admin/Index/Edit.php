@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions;
 
 class Edit extends Core\Controller\AbstractFrontendAction
@@ -28,9 +29,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\AdminRoleEditViewProvider
      */
     private $adminRoleEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\RulesModel $rulesModel,
         Permissions\Validation\RoleFormValidation $roleFormValidation,
@@ -42,6 +48,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->rolesModel = $rolesModel;
         $this->rulesModel = $rulesModel;
         $this->adminRoleEditViewProvider = $adminRoleEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

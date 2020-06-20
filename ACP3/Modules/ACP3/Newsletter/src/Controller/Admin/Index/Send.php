@@ -24,9 +24,14 @@ class Send extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
      */
     private $accountRepository;
+    /**
+     * @var \ACP3\Core\Helpers\RedirectMessages
+     */
+    private $redirectMessages;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\RedirectMessages $redirectMessages,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
         Newsletter\Model\Repository\AccountRepository $accountRepository,
         Newsletter\Helper\SendNewsletter $newsletterHelpers
@@ -36,6 +41,7 @@ class Send extends Core\Controller\AbstractFrontendAction
         $this->newsletterRepository = $newsletterRepository;
         $this->accountRepository = $accountRepository;
         $this->newsletterHelpers = $newsletterHelpers;
+        $this->redirectMessages = $redirectMessages;
     }
 
     /**
@@ -59,7 +65,7 @@ class Send extends Core\Controller\AbstractFrontendAction
                 $newsletterUpdateResult = $this->newsletterRepository->update(['status' => '1'], $id);
             }
 
-            return $this->redirectMessages()->setMessage(
+            return $this->redirectMessages->setMessage(
                 $sendNewsletterResult === true && $newsletterUpdateResult !== false,
                 $this->translator->t(
                     'newsletter',

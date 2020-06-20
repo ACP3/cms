@@ -27,8 +27,6 @@ interface ActionInterface
 
     /**
      * @param Response|string|array $actionResult
-     *
-     * @return Response
      */
-    public function display($actionResult);
+    public function display($actionResult): Response;
 }

@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Users;
 
 class Settings extends AbstractAction
@@ -33,9 +34,14 @@ class Settings extends AbstractAction
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         UserModelInterface $user,
         Users\ViewProviders\AccountSettingsViewProvider $accountSettingsViewProvider,
         Users\Model\AuthenticationModel $authenticationModel,
@@ -49,6 +55,7 @@ class Settings extends AbstractAction
         $this->authenticationModel = $authenticationModel;
         $this->accountSettingsViewProvider = $accountSettingsViewProvider;
         $this->user = $user;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
@@ -86,7 +93,7 @@ class Settings extends AbstractAction
                 );
                 $this->response->headers->setCookie($cookie);
 
-                return $this->redirectMessages()->setMessage(
+                return $this->actionHelper->setRedirectMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'settings_success' : 'settings_error')
                 );

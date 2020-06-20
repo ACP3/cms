@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Designs
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.redirect'
       - '@core.xml'
 
   system.controller.admin.extensions.index:
@@ -18,6 +19,7 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.redirect'
       - '@core.modules'
       - '@core.i18n.dictionary_cache'
       - '@core.modules.moduleInfoCache'
@@ -33,6 +35,7 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@system.validation.admin_settings_form_validation'
       - '@system.view_providers.admin_settings'
@@ -46,6 +49,7 @@ services:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache
     arguments:
     - '@core.context.frontend'
+    - '@core.helpers.redirect'
 
   system.controller.admin.maintenance.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index

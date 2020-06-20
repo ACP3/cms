@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Menus;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -15,20 +16,21 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var Menus\Model\MenusModel
      */
-    protected $menusModel;
-
+    private $menusModel;
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Menus\Model\MenusModel $menusModel
     ) {
         parent::__construct($context);
 
         $this->menusModel = $menusModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

@@ -12,6 +12,7 @@ services:
     class: ACP3\Modules\ACP3\Captcha\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@captcha.view_provider.admin_settings'
       - '@cpatcha.validation.admin_settings_form_validation'
 

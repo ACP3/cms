@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Users;
 
 class Edit extends AbstractAction
@@ -29,9 +30,14 @@ class Edit extends AbstractAction
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         UserModelInterface $user,
         Users\ViewProviders\AccountEditViewProvider $accountEditViewProvider,
         Users\Model\UsersModel $usersModel,
@@ -43,6 +49,7 @@ class Edit extends AbstractAction
         $this->usersModel = $usersModel;
         $this->accountEditViewProvider = $accountEditViewProvider;
         $this->user = $user;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
@@ -71,7 +78,7 @@ class Edit extends AbstractAction
 
                 $bool = $this->usersModel->save($formData, $this->user->getUserId());
 
-                return $this->redirectMessages()->setMessage(
+                return $this->actionHelper->setRedirectMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'edit_success' : 'edit_error')
                 );

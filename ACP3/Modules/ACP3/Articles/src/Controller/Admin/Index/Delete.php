@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Articles;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -16,17 +17,23 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var Articles\Model\ArticlesModel
      */
     protected $articlesModel;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     /**
      * @param \ACP3\Core\Controller\Context\FrontendContext $context
      */
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Articles\Model\ArticlesModel $articlesModel
     ) {
         parent::__construct($context);
 
         $this->articlesModel = $articlesModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@menus.model.menus_model'
       - '@menus.validation.menu_form_validation'
       - '@menus.view_providers.admin_menu_edit'
@@ -15,12 +16,14 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@menus.model.menus_model'
 
   menus.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@menus.model.menus_model'
       - '@menus.validation.menu_form_validation'
       - '@menus.view_providers.admin_menu_edit'
@@ -35,6 +38,7 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@menus.model.menu_items_model'
       - '@menus.validation.menu_item_form_validation'
       - '@menus.view_providers.admin_menu_item_edit'
@@ -43,12 +47,14 @@ services:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@menus.model.menu_items_model'
 
   menus.controller.admin.items.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@menus.model.menu_items_model'
       - '@menus.validation.menu_item_form_validation'
       - '@menus.view_providers.admin_menu_item_edit'

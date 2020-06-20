@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@permissions.model.roles_model'
       - '@permissions.model.rules_model'
       - '@permissions.validation.role_form_validation'
@@ -16,6 +17,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@permissions.model.roles_model'
       - '@permissions.cache'
 
@@ -23,6 +25,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@permissions.model.roles_model'
       - '@permissions.model.rules_model'
       - '@permissions.validation.role_form_validation'
@@ -47,6 +50,7 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.modules'
       - '@permissions.model.resources_model'
       - '@permissions.validation.resource_form_validation'
@@ -56,12 +60,14 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@permissions.model.resources_model'
 
   permissions.controller.admin.resources.edit:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.modules'
       - '@permissions.model.resources_model'
       - '@permissions.validation.resource_form_validation'

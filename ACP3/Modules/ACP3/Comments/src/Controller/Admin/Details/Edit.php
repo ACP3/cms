@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Comments;
 
 class Edit extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentEditViewProvider
      */
     private $adminCommentEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Validation\AdminFormValidation $adminFormValidation,
         Comments\ViewProviders\AdminCommentEditViewProvider $adminCommentEditViewProvider
@@ -36,6 +42,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->commentsModel = $commentsModel;
         $this->adminCommentEditViewProvider = $adminCommentEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

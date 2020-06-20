@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
@@ -39,9 +40,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         UserModelInterface $user,
         AuthenticationModel $authenticationModel,
         Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider,
@@ -57,6 +63,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->usersModel = $usersModel;
         $this->adminUserEditViewProvider = $adminUserEditViewProvider;
         $this->user = $user;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

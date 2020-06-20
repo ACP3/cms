@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -15,20 +16,19 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Cache
      */
-    protected $permissionsCache;
+    private $permissionsCache;
     /**
      * @var Permissions\Model\RolesModel
      */
-    protected $rolesModel;
-
+    private $rolesModel;
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Permissions\Cache          $permissionsCache
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Cache $permissionsCache
     ) {
@@ -36,6 +36,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
         $this->permissionsCache = $permissionsCache;
         $this->rolesModel = $rolesModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
@@ -66,7 +67,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                     $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
                 }
 
-                return $this->redirectMessages()->setMessage($result, $text);
+                return $this->actionHelper->setRedirectMessage($result, $text);
             }
         );
     }

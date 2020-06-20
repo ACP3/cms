@@ -7,12 +7,14 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@guestbook.model.guestbook_model'
 
   guestbook.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.admin_form_validation'
       - '@guestbook.view_providers.admin_guestbook_edit'
@@ -27,6 +29,7 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@guestbook.validation.admin_settings_form_validation'
       - '@guestbook.view_providers.admin_settings'
@@ -35,6 +38,7 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.form_validation'

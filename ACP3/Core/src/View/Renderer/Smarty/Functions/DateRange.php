@@ -34,9 +34,11 @@ class DateRange extends AbstractFunction
     {
         $format = $params['format'] ?? 'long';
 
-        if (isset($params['start']) && isset($params['end'])) {
+        if (isset($params['start'], $params['end'])) {
             return $this->dateRangeFormatter->formatTimeRange($params['start'], $params['end'], $format);
-        } elseif (isset($params['start'])) {
+        }
+
+        if (isset($params['start'])) {
             return $this->dateRangeFormatter->formatTimeRange($params['start'], '', $format);
         }
 

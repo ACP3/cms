@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel;
 
@@ -18,14 +19,20 @@ class Sitemap extends AbstractFrontendAction
      * @var SitemapGenerationModel
      */
     private $sitemapGenerationModel;
+    /**
+     * @var \ACP3\Core\Helpers\RedirectMessages
+     */
+    private $redirectMessages;
 
     public function __construct(
         FrontendContext $context,
+        RedirectMessages $redirectMessages,
         SitemapGenerationModel $sitemapGenerationModel
     ) {
         parent::__construct($context);
 
         $this->sitemapGenerationModel = $sitemapGenerationModel;
+        $this->redirectMessages = $redirectMessages;
     }
 
     /**
@@ -42,6 +49,6 @@ class Sitemap extends AbstractFrontendAction
             $phrase = $result === true ? 'sitemap_success' : 'sitemap_error';
         }
 
-        return $this->redirectMessages()->setMessage($result, $this->translator->t('seo', $phrase));
+        return $this->redirectMessages->setMessage($result, $this->translator->t('seo', $phrase));
     }
 }

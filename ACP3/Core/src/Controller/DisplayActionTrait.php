@@ -24,10 +24,8 @@ trait DisplayActionTrait
      * Outputs the requested module controller action.
      *
      * @param Response|string|array $actionResult
-     *
-     * @return Response
      */
-    public function display($actionResult)
+    public function display($actionResult): Response
     {
         if ($actionResult instanceof Response) {
             foreach ($this->getResponse()->headers->getCookies() as $cookie) {
@@ -79,10 +77,8 @@ trait DisplayActionTrait
 
     /**
      * Gibt den Content-Type der anzuzeigenden Seiten zurück.
-     *
-     * @return string
      */
-    public function getContentType()
+    public function getContentType(): string
     {
         return $this->getResponse()->headers->get('Content-type');
     }
@@ -90,33 +86,11 @@ trait DisplayActionTrait
     /**
      * Weist der aktuell auszugebenden Seite den Content-Type zu.
      *
-     * @param string $data
-     *
      * @return $this
      */
-    public function setContentType($data)
+    public function setContentType(string $data): self
     {
         $this->getResponse()->headers->set('Content-type', $data);
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCharset()
-    {
-        return $this->getResponse()->getCharset();
-    }
-
-    /**
-     * @param string $charset
-     *
-     * @return $this
-     */
-    public function setCharset($charset)
-    {
-        $this->getResponse()->setCharset($charset);
 
         return $this;
     }
@@ -138,7 +112,7 @@ trait DisplayActionTrait
      *
      * @return $this
      */
-    public function setContent($data)
+    public function setContent($data): self
     {
         $this->content = $data;
 
@@ -147,10 +121,8 @@ trait DisplayActionTrait
 
     /**
      * Gibt das aktuell zugewiesene Template zurück.
-     *
-     * @return string
      */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->template;
     }
@@ -158,11 +130,9 @@ trait DisplayActionTrait
     /**
      * Setzt das Template der Seite.
      *
-     * @param string $template
-     *
      * @return $this
      */
-    public function setTemplate($template)
+    public function setTemplate(string $template): self
     {
         $this->template = $template;
 

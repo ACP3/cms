@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Helpers\Secure;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Guestbook;
 
 class Settings extends Core\Controller\AbstractFrontendAction
@@ -25,9 +26,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminSettingsViewProvider
      */
     private $adminSettingsViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Secure $secureHelper,
         Guestbook\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Guestbook\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
@@ -37,6 +43,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
         $this->adminSettingsViewProvider = $adminSettingsViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

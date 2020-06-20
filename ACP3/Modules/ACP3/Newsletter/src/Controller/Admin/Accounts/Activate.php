@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Newsletter;
 
 class Activate extends Core\Controller\AbstractFrontendAction
@@ -16,14 +17,20 @@ class Activate extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
      */
     private $accountStatusHelper;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper
     ) {
         parent::__construct($context);
 
         $this->accountStatusHelper = $accountStatusHelper;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
@@ -36,7 +43,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
             $id
         );
 
-        return $this->redirectMessages()->setMessage(
+        return $this->actionHelper->setRedirectMessage(
             $bool,
             $this->translator->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error')
         );

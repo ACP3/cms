@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Files;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -16,19 +17,20 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var Files\Model\FilesModel
      */
     private $filesModel;
-
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Files\Model\FilesModel $filesModel
     ) {
         parent::__construct($context);
 
         $this->filesModel = $filesModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

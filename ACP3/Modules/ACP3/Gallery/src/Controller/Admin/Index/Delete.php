@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Gallery;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -28,9 +29,14 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var Gallery\Model\GalleryModel
      */
     private $galleryModel;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryModel $galleryModel,
@@ -42,6 +48,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
         $this->galleryHelpers = $galleryHelpers;
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

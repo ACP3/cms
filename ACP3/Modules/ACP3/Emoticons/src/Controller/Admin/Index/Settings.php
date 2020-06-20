@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation;
 use ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminSettingsViewProvider;
@@ -23,9 +24,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminSettingsViewProvider
      */
     private $adminSettingsViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         FrontendContext $context,
+        Action $actionHelper,
         AdminSettingsFormValidation $adminSettingsFormValidation,
         AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
@@ -33,6 +39,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
 
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->adminSettingsViewProvider = $adminSettingsViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

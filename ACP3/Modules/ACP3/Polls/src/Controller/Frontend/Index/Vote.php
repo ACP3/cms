@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Polls;
 
 class Vote extends Core\Controller\AbstractFrontendAction
@@ -32,9 +33,14 @@ class Vote extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Polls\ViewProviders\PollVoteViewProvider
      */
     private $pollVoteViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Core\Date $date,
         Polls\Validation\VoteValidation $voteValidation,
         Polls\Model\VoteModel $pollsModel,
@@ -48,6 +54,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
         $this->pollsModel = $pollsModel;
         $this->pollRepository = $pollRepository;
         $this->pollVoteViewProvider = $pollVoteViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
@@ -85,7 +92,7 @@ class Vote extends Core\Controller\AbstractFrontendAction
 
                 $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
 
-                return $this->redirectMessages()->setMessage($result, $text, 'polls/index/result/id_' . $id);
+                return $this->actionHelper->setRedirectMessage($result, $text, 'polls/index/result/id_' . $id);
             },
             'polls/index/vote/id_' . $id
         );

@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Share\Model\ShareModel;
 use ACP3\Modules\ACP3\Share\Validation\AdminFormValidation;
 use ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider;
@@ -26,9 +27,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider
      */
     private $adminShareEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         ShareModel $shareModel,
         AdminFormValidation $adminFormValidation,
         AdminShareEditViewProvider $adminShareEditViewProvider
@@ -38,6 +44,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->shareModel = $shareModel;
         $this->adminShareEditViewProvider = $adminShareEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

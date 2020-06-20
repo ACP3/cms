@@ -68,14 +68,14 @@ final class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
-        $loader->load($this->applicationPath->getAppDir() . 'config.yml');
-        $loader->load(ComponentRegistry::getPathByName('core') . '/Resources/config/console.yml');
+        $loader->import($this->applicationPath->getAppDir() . 'config.yml');
+        $loader->import(ComponentRegistry::getPathByName('core') . '/Resources/config/console.yml');
 
         foreach (ComponentRegistry::allTopSorted() as $module) {
             $path = $module->getPath() . '/Resources/config/services.yml';
 
             if (\is_file($path)) {
-                $loader->load($path);
+                $loader->import($path);
             }
         }
 

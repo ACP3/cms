@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Emoticons;
 
 class Edit extends Core\Controller\AbstractFrontendAction
@@ -28,9 +30,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminEmoticonEditViewProvider
      */
     private $adminEmoticonEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        FrontendContext $context,
+        Action $actionHelper,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
         Emoticons\Validation\AdminFormValidation $adminFormValidation,
         Core\Helpers\Upload $emoticonsUploadHelper,
@@ -42,6 +49,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->emoticonsModel = $emoticonsModel;
         $this->emoticonsUploadHelper = $emoticonsUploadHelper;
         $this->adminEmoticonEditViewProvider = $adminEmoticonEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

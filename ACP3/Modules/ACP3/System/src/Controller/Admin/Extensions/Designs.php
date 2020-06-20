@@ -19,14 +19,20 @@ class Designs extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\XML
      */
     private $xml;
+    /**
+     * @var \ACP3\Core\Helpers\RedirectMessages
+     */
+    private $redirectMessages;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Core\Helpers\RedirectMessages $redirectMessages,
         Core\XML $xml
     ) {
         parent::__construct($context);
 
         $this->xml = $xml;
+        $this->redirectMessages = $redirectMessages;
     }
 
     /**
@@ -66,7 +72,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
 
         $text = $this->translator->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
 
-        return $this->redirectMessages()->setMessage($bool, $text, $this->request->getFullPath());
+        return $this->redirectMessages->setMessage($bool, $text, $this->request->getFullPath());
     }
 
     /**

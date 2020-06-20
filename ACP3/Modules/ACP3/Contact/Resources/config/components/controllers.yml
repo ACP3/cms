@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@contact.model.contacts_model'
 
   contact.controller.admin.index.index:
@@ -19,6 +20,7 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@contact.validation.admin_settings_form_validation'
       - '@contact.view_providers.admin_settings'
@@ -33,6 +35,7 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.router'
       - '@core.helpers.alerts'
       - '@contact.validation.form_validation'

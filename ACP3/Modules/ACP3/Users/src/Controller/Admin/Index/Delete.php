@@ -8,31 +8,29 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Users;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
-     */
-    protected $userRepository;
-    /**
      * @var \ACP3\Modules\ACP3\Users\Model\UsersModel
      */
     private $usersModel;
-
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Users\Model\UsersModel $usersModel
     ) {
         parent::__construct($context);
 
         $this->usersModel = $usersModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
@@ -51,7 +49,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                     $text = $this->translator->t('users', 'admin_user_undeletable');
                 }
 
-                return $this->redirectMessages()->setMessage(
+                return $this->actionHelper->setRedirectMessage(
                     $result,
                     $text
                 );

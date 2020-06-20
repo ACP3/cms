@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Share;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -16,14 +17,20 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var Share\Model\ShareModel
      */
     private $shareModel;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Share\Model\ShareModel $shareModel
     ) {
         parent::__construct($context);
 
         $this->shareModel = $shareModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

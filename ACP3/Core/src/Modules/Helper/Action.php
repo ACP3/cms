@@ -177,6 +177,23 @@ class Action
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      */
+    public function handleDuplicateAction(callable $callback, $path = null)
+    {
+        return $this->handlePostAction(function () use ($callback, $path) {
+            $result = $callback();
+
+            return $this->prepareRedirectMessageAfterPost($result, 'duplicate', $path);
+        }, $path);
+    }
+
+    /**
+     * @param string|null $path
+     *
+     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function handleSettingsPostAction(callable $callback, $path = null)
     {
         return $this->handlePostAction(function () use ($callback, $path) {

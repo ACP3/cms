@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
@@ -42,9 +43,14 @@ class Register extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         UserModelInterface $user,
         Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\Alerts $alertsHelper,
@@ -62,6 +68,7 @@ class Register extends Core\Controller\AbstractFrontendAction
         $this->registrationViewProvider = $registrationViewProvider;
         $this->usersModel = $usersModel;
         $this->user = $user;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

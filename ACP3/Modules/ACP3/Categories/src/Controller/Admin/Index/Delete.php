@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Categories;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -15,20 +16,19 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Categories\Cache
      */
-    protected $categoriesCache;
+    private $categoriesCache;
     /**
      * @var Categories\Model\CategoriesModel
      */
-    protected $categoriesModel;
-
+    private $categoriesModel;
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param \ACP3\Modules\ACP3\Categories\Cache           $categoriesCache
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Categories\Model\CategoriesModel $categoriesModel,
         Categories\Cache $categoriesCache
     ) {
@@ -36,6 +36,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
         $this->categoriesCache = $categoriesCache;
         $this->categoriesModel = $categoriesModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Search\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.acl'
       - '@core.helpers.secure'
       - '@search.helpers'

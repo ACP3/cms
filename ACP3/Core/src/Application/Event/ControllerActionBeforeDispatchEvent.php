@@ -22,9 +22,6 @@ class ControllerActionBeforeDispatchEvent extends Event
      */
     private $serviceIdParts = [];
 
-    /**
-     * FrontControllerDispatchEvent constructor.
-     */
     public function __construct(string $controllerServiceId)
     {
         $this->controllerServiceId = $controllerServiceId;
@@ -32,68 +29,49 @@ class ControllerActionBeforeDispatchEvent extends Event
         $this->splitServiceIdIntoParts();
     }
 
-    protected function splitServiceIdIntoParts()
+    private function splitServiceIdIntoParts(): void
     {
         $this->serviceIdParts = \explode('.', $this->controllerServiceId);
     }
 
-    /**
-     * @return string
-     */
-    public function getControllerServiceId()
+    public function getControllerServiceId(): string
     {
         return $this->controllerServiceId;
     }
 
     /**
-     * @return string
-     *
      * @deprecated since 4.28.0, to be removed with version 5.0.0. Use ::getArea instead
      */
-    public function getControllerArea()
+    public function getControllerArea(): string
     {
-        return isset($this->serviceIdParts[2]) ? $this->serviceIdParts[2] : '';
+        return $this->serviceIdParts[2] ?? '';
+    }
+
+    public function getArea(): string
+    {
+        return $this->serviceIdParts[2] ?? '';
     }
 
     /**
-     * @return string
-     */
-    public function getArea()
-    {
-        return isset($this->serviceIdParts[2]) ? $this->serviceIdParts[2] : '';
-    }
-
-    /**
-     * @return string
-     *
      * @deprecated since 4.28.0, to be removed with version 5.0.0. Use ::getModule instead
      */
-    public function getControllerModule()
+    public function getControllerModule(): string
     {
-        return isset($this->serviceIdParts[0]) ? $this->serviceIdParts[0] : '';
+        return $this->serviceIdParts[0] ?? '';
     }
 
-    /**
-     * @return string
-     */
-    public function getModule()
+    public function getModule(): string
     {
-        return isset($this->serviceIdParts[0]) ? $this->serviceIdParts[0] : '';
+        return $this->serviceIdParts[0] ?? '';
     }
 
-    /**
-     * @return string
-     */
-    public function getController()
+    public function getController(): string
     {
-        return isset($this->serviceIdParts[3]) ? $this->serviceIdParts[3] : '';
+        return $this->serviceIdParts[3] ?? '';
     }
 
-    /**
-     * @return string
-     */
-    public function getControllerAction()
+    public function getControllerAction(): string
     {
-        return isset($this->serviceIdParts[4]) ? $this->serviceIdParts[4] : '';
+        return $this->serviceIdParts[4] ?? '';
     }
 }

@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Comments;
 
 class Settings extends Core\Controller\AbstractFrontendAction
@@ -24,9 +25,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentsSettingsViewProvider
      */
     private $adminCommentsSettingsViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Core\Helpers\Secure $secureHelper,
         Comments\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Comments\ViewProviders\AdminCommentsSettingsViewProvider $adminCommentsSettingsViewProvider
@@ -36,6 +42,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->secureHelper = $secureHelper;
         $this->adminCommentsSettingsViewProvider = $adminCommentsSettingsViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

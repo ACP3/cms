@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Search;
 
 class Index extends Core\Controller\AbstractFrontendAction
@@ -40,9 +41,14 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Search\ViewProviders\SearchResultsViewProvider
      */
     private $searchResultsViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Core\ACL $acl,
         Core\Helpers\Secure $secureHelper,
         Search\Helpers $searchHelpers,
@@ -60,6 +66,7 @@ class Index extends Core\Controller\AbstractFrontendAction
         $this->acl = $acl;
         $this->searchViewProvider = $searchViewProvider;
         $this->searchResultsViewProvider = $searchResultsViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

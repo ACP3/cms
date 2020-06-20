@@ -13,59 +13,19 @@ use ACP3\Core\Controller\Event\CustomTemplateVariableEvent;
 abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    protected $breadcrumb;
-    /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    protected $eventDispatcher;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    protected $title;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    protected $actionHelper;
-    /**
-     * @var Core\Helpers\RedirectMessages
-     */
-    private $redirectMessages;
+    private $eventDispatcher;
     /**
      * @var string
      */
     private $layout = 'layout.tpl';
 
-    /**
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     */
     public function __construct(Context\FrontendContext $context)
     {
         parent::__construct($context);
 
-        $this->breadcrumb = $context->getBreadcrumb();
         $this->eventDispatcher = $context->getEventDispatcher();
-        $this->actionHelper = $context->getActionHelper();
-        $this->redirectMessages = $context->getRedirectMessagesHelper();
-    }
-
-    /**
-     * Helper function for initializing models, etc.
-     *
-     * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
-     */
-    public function preDispatch()
-    {
-        parent::preDispatch();
-
-        $this->view->assign([
-            'REQUEST_URI' => $this->request->getServer()->get('REQUEST_URI'),
-            'UA_IS_MOBILE' => $this->request->getUserAgent()->isMobileBrowser(),
-            'IN_ADM' => $this->request->getArea() === AreaEnum::AREA_ADMIN,
-            'IS_HOMEPAGE' => $this->request->isHomepage(),
-            'IS_AJAX' => $this->request->isXmlHttpRequest(),
-        ]);
     }
 
     /**
@@ -73,7 +33,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {
-        $this->view->assign('BREADCRUMB', $this->breadcrumb->getBreadcrumb());
         $this->view->assign('LAYOUT', $this->fetchLayoutViaInheritance());
 
         $this->eventDispatcher->dispatch(
@@ -140,13 +99,5 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
         $this->layout = $layout;
 
         return $this;
-    }
-
-    /**
-     * @return Core\Helpers\RedirectMessages
-     */
-    public function redirectMessages()
-    {
-        return $this->redirectMessages;
     }
 }

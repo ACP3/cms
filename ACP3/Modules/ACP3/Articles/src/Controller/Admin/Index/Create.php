@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Articles;
 
 class Create extends Core\Controller\AbstractFrontendAction
@@ -29,9 +30,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         UserModelInterface $user,
         Articles\ViewProviders\AdminArticleEditViewProvider $adminArticleEditViewProvider,
         Articles\Model\ArticlesModel $articlesModel,
@@ -43,6 +49,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->adminFormValidation = $adminFormValidation;
         $this->adminArticleEditViewProvider = $adminArticleEditViewProvider;
         $this->user = $user;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

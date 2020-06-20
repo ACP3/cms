@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Gallery;
 
 class Settings extends Core\Controller\AbstractFrontendAction
@@ -28,9 +29,14 @@ class Settings extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminSettingsViewProvider
      */
     private $adminSettingsViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Core\Cache $galleryCoreCache,
         Core\Helpers\Secure $secureHelper,
         Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
@@ -42,6 +48,7 @@ class Settings extends Core\Controller\AbstractFrontendAction
         $this->galleryCoreCache = $galleryCoreCache;
         $this->secureHelper = $secureHelper;
         $this->adminSettingsViewProvider = $adminSettingsViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

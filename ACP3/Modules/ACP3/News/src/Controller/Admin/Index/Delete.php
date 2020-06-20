@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\News;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -15,20 +16,21 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var News\Model\NewsModel
      */
-    protected $newsModel;
-
+    private $newsModel;
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         News\Model\NewsModel $newsModel
     ) {
         parent::__construct($context);
 
         $this->newsModel = $newsModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

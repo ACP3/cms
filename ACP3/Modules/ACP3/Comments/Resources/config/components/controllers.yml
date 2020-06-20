@@ -7,6 +7,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@comments.model.comments_model'
       - '@comments.model.commentrepository'
 
@@ -14,6 +15,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@comments.model.comments_model'
       - '@comments.validation.admin_form_validation'
       - '@comments.view_providers.admin_comment_edit'
@@ -28,6 +30,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@comments.model.commentrepository'
 
   comments.controller.admin.index.index:
@@ -40,6 +43,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@comments.validation.admin_settings_form_validation'
       - '@comments.view_providers.admin_comments_settings'
@@ -48,6 +52,7 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.modules'
       - '@users.model.user_model'
       - '@comments.model.comments_model'

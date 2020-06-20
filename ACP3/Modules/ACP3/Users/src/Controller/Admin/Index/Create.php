@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
@@ -29,9 +30,14 @@ class Create extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider
      */
     private $adminUserEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AdminFormValidation $adminFormValidation,
@@ -43,6 +49,7 @@ class Create extends Core\Controller\AbstractFrontendAction
         $this->permissionsHelpers = $permissionsHelpers;
         $this->usersModel = $usersModel;
         $this->adminUserEditViewProvider = $adminUserEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     public function execute(): array

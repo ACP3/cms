@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Polls\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Polls;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -15,20 +16,21 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var Polls\Model\PollsModel
      */
-    protected $pollsModel;
-
+    private $pollsModel;
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Polls\Model\PollsModel $pollsModel
     ) {
         parent::__construct($context);
 
         $this->pollsModel = $pollsModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

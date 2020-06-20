@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Emoticons;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -15,20 +17,21 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var Emoticons\Model\EmoticonsModel
      */
-    protected $emoticonsModel;
-
+    private $emoticonsModel;
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        FrontendContext $context,
+        Action $actionHelper,
         Emoticons\Model\EmoticonsModel $emoticonsModel
     ) {
         parent::__construct($context);
 
         $this->emoticonsModel = $emoticonsModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

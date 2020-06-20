@@ -19,7 +19,4 @@ services:
     class: ACP3\Core\Controller\Context\FrontendContext
     arguments:
     - '@core.context.widget'
-    - '@core.breadcrumb'
     - '@core.event_dispatcher'
-    - '@core.modules.helper.action'
-    - '@core.helpers.redirect'

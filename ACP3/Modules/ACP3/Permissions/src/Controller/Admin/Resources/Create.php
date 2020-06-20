@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions;
 
 class Create extends AbstractFormAction
@@ -24,9 +25,14 @@ class Create extends AbstractFormAction
      * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\AdminResourceEditViewProvider
      */
     private $adminResourceEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Core\Modules $modules,
         Permissions\Model\ResourcesModel $resourcesModel,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation,
@@ -37,6 +43,7 @@ class Create extends AbstractFormAction
         $this->resourceFormValidation = $resourceFormValidation;
         $this->resourcesModel = $resourcesModel;
         $this->adminResourceEditViewProvider = $adminResourceEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

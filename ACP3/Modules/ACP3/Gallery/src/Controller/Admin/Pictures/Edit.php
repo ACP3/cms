@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -33,9 +34,14 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureEditViewProvider
      */
     private $adminGalleryPictureEditViewProvider;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\PictureModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation,
@@ -49,6 +55,7 @@ class Edit extends Core\Controller\AbstractFrontendAction
         $this->pictureModel = $pictureModel;
         $this->galleryUploadHelper = $galleryUploadHelper;
         $this->adminGalleryPictureEditViewProvider = $adminGalleryPictureEditViewProvider;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

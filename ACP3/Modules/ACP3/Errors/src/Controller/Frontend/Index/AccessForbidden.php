@@ -8,11 +8,27 @@
 namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Breadcrumb\Steps;
+use ACP3\Core\Controller\Context\FrontendContext;
 use Symfony\Component\HttpFoundation\Response;
 
 class AccessForbidden extends Core\Controller\AbstractFrontendAction
 {
-    public function execute()
+    /**
+     * @var \ACP3\Core\Breadcrumb\Steps
+     */
+    private $breadcrumb;
+
+    public function __construct(
+        FrontendContext $context,
+        Steps $breadcrumb
+    ) {
+        parent::__construct($context);
+
+        $this->breadcrumb = $breadcrumb;
+    }
+
+    public function execute(): void
     {
         $this->breadcrumb->append(
             $this->translator->t('errors', 'frontend_index_access_forbidden'),

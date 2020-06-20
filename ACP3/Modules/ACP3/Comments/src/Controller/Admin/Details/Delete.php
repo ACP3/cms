@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Comments;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -15,20 +16,19 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
      */
-    protected $commentRepository;
+    private $commentRepository;
     /**
      * @var Comments\Model\CommentsModel
      */
-    protected $commentsModel;
-
+    private $commentsModel;
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext                  $context
-     * @param \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository $commentRepository
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Comments\Model\CommentsModel $commentsModel,
         Comments\Model\Repository\CommentRepository $commentRepository
     ) {
@@ -36,6 +36,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
         $this->commentRepository = $commentRepository;
         $this->commentsModel = $commentsModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
@@ -55,7 +56,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                     $redirectUrl = 'acp/comments/details/index/id_' . $id;
                 }
 
-                return $this->redirectMessages()->setMessage(
+                return $this->actionHelper->setRedirectMessage(
                     $result,
                     $this->translator->t('system', $result !== false ? 'delete_success' : 'delete_error'),
                     $redirectUrl

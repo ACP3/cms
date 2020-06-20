@@ -7,12 +7,14 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts\Activate
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@newsletter.helper.accountstatus'
 
   newsletter.controller.admin.accounts.delete:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@newsletter.helper.accountstatus'
 
   newsletter.controller.admin.accounts.index:
@@ -25,6 +27,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@newsletter.model'
       - '@newsletter.validation.admin_form_validation'
@@ -35,12 +38,14 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Delete
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@newsletter.model'
 
   newsletter.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@newsletter.model'
       - '@newsletter.validation.admin_form_validation'
@@ -65,6 +70,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@newsletter.validation.admin_settings_form_validation'
       - '@newsletter.view_providers.admin_settings'
@@ -94,6 +100,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.helpers.alerts'
       - '@newsletter.helper.subscribe'
       - '@newsletter.validation.subscribe_form_validation'
@@ -103,6 +110,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Unsubscribe
     arguments:
       - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.helpers.alerts'
       - '@newsletter.helper.accountstatus'
       - '@newsletter.validation.unsubscribe_form_validation'

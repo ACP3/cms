@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -15,21 +16,21 @@ class Delete extends Core\Controller\AbstractFrontendAction
     /**
      * @var Permissions\Model\ResourcesModel
      */
-    protected $resourcesModel;
-
+    private $resourcesModel;
     /**
-     * Delete constructor.
-     *
-     * @param \ACP3\Core\Controller\Context\FrontendContext $context
-     * @param Permissions\Model\ResourcesModel              $resourcesModel
+     * @var \ACP3\Core\Modules\Helper\Action
      */
+    private $actionHelper;
+
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Permissions\Model\ResourcesModel $resourcesModel
     ) {
         parent::__construct($context);
 
         $this->resourcesModel = $resourcesModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**

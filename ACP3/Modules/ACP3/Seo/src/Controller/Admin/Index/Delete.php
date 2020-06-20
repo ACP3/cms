@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Seo;
 
 class Delete extends Core\Controller\AbstractFrontendAction
@@ -20,9 +21,14 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var Seo\Model\SeoModel
      */
     private $seoModel;
+    /**
+     * @var \ACP3\Core\Modules\Helper\Action
+     */
+    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
+        Action $actionHelper,
         Seo\Cache $seoCache,
         Seo\Model\SeoModel $seoModel
     ) {
@@ -30,6 +36,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
         $this->seoCache = $seoCache;
         $this->seoModel = $seoModel;
+        $this->actionHelper = $actionHelper;
     }
 
     /**
