@@ -43,7 +43,6 @@ trait CacheResponseTrait
             $this->getResponse()
                 ->setPublic()
                 ->setVary($varyHeaderName)
-                ->setMaxAge($lifetime)
                 ->setSharedMaxAge($lifetime)
                 ->headers->add([
                     $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
