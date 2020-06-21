@@ -7,11 +7,16 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@emoticons.view_providers.admin_emoticon_edit'
+
+  emoticons.controller.admin.index.create_post:
+    class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\CreatePost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@emoticons.model'
       - '@emoticons.validation.admin_form_validation'
       - '@emoticons.helpers.upload'
-      - '@emoticons.view_providers.admin_emoticon_edit'
 
   emoticons.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Delete
@@ -24,11 +29,17 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@emoticons.model'
+      - '@emoticons.view_providers.admin_emoticon_edit'
+
+  emoticons.controller.admin.index.edit_post:
+    class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@emoticons.model'
       - '@emoticons.validation.admin_form_validation'
       - '@emoticons.helpers.upload'
-      - '@emoticons.view_providers.admin_emoticon_edit'
 
   emoticons.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Index
@@ -40,6 +51,11 @@ services:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@emoticons.view_providers.admin_settings'
+
+  emoticons.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@emoticons.validation.admin_settings_form_validation'
-      - '@emoticons.view_providers.admin_settings'

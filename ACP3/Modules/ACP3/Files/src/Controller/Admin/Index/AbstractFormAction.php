@@ -12,7 +12,7 @@ use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 
-abstract class AbstractFormAction extends AbstractFrontendAction
+abstract class AbstractFormAction extends AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers
@@ -36,16 +36,5 @@ abstract class AbstractFormAction extends AbstractFrontendAction
         return !empty($formData['cat_create'])
             ? $this->categoriesHelpers->categoriesCreate($formData['cat_create'], Files\Installer\Schema::MODULE_NAME)
             : $formData['cat'];
-    }
-
-    protected function getUnits(): array
-    {
-        return [
-            'Byte' => 'Byte',
-            'KiB' => 'KiB',
-            'MiB' => 'MiB',
-            'GiB' => 'GiB',
-            'TiB' => 'TiB',
-        ];
     }
 }

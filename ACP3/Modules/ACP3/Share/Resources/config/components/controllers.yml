@@ -7,10 +7,15 @@ services:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@share.view_providers.admin_share_edit'
+
+  share.controller.admin.index.create_post:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\CreatePost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@share.model.share_model'
       - '@share.validation.admin_form_validation'
-      - '@share.view_providers.admin_share_edit'
 
   share.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Delete
@@ -23,10 +28,16 @@ services:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@share.model.share_model'
+      - '@share.view_providers.admin_share_edit'
+
+  share.controller.admin.index.edit_post:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@share.model.share_model'
       - '@share.validation.admin_form_validation'
-      - '@share.view_providers.admin_share_edit'
 
   share.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Index
@@ -38,10 +49,15 @@ services:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@share.view_providers.admin_settings'
+
+  share.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@share.validation.admin_settings_form_validation'
-      - '@share.view_providers.admin_settings'
 
   share.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Share\Controller\Frontend\Index\Index
@@ -49,8 +65,8 @@ services:
       - '@core.context.frontend'
       - '@shariff.backend'
 
-  share.controller.frontend.index.rate:
-    class: ACP3\Modules\ACP3\Share\Controller\Frontend\Index\Rate
+  share.controller.frontend.index.rate_post:
+    class: ACP3\Modules\ACP3\Share\Controller\Frontend\Index\RatePost
     arguments:
       - '@core.context.frontend'
       - '@share.model.share_repository'

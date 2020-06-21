@@ -7,11 +7,16 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@categories.view_providers.admin_category_edit'
+
+  categories.controller.admin.index.create_post:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\CreatePost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@categories.model.categories_model'
       - '@categories.validation.admin_form_validation'
       - '@categories.helpers.upload'
-      - '@categories.view_providers.admin_category_edit'
 
   categories.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Delete
@@ -25,11 +30,17 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@categories.model.categories_model'
+      - '@categories.view_providers.admin_category_edit'
+
+  categories.controller.admin.index.edit_post:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@categories.model.categories_model'
       - '@categories.validation.admin_form_validation'
       - '@categories.helpers.upload'
-      - '@categories.view_providers.admin_category_edit'
 
   categories.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Index
@@ -49,6 +60,11 @@ services:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@categories.view_providers.admin_category_settings'
+
+  categories.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@categories.validation.admin_settings_form_validation'
-      - '@categories.view_providers.admin_category_settings'

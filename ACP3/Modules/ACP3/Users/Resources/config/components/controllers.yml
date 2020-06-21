@@ -7,8 +7,13 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
-      - '@core.modules.helper.action'
       - '@users.view_providers.admin_user_edit'
+
+  users.controller.admin.index.create_post:
+    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\CreatePost
+    arguments:
+      - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.model.users_model'
       - '@users.validation.admin_form_validation'
       - '@permissions.helpers'
@@ -24,10 +29,16 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@users.model.user_model'
+      - '@users.view_providers.admin_user_edit'
+
+  users.controller.admin.index.edit_post:
+    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@users.model.authentication_model'
-      - '@users.view_providers.admin_user_edit'
       - '@users.model.users_model'
       - '@users.validation.admin_form_validation'
       - '@permissions.helpers'
@@ -42,17 +53,28 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.modules.helper.action'
       - '@users.view_providers.admin_settings'
+
+  users.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Users\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@users.validation.admin_settings_form_validation'
 
   users.controller.frontend.account.edit:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Edit
     arguments:
       - '@core.context.frontend'
-      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@users.view_providers.account_edit'
+
+  users.controller.frontend.account.edit_post:
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\EditPost
+    arguments:
+      - '@core.context.frontend'
+      - '@core.modules.helper.action'
+      - '@users.model.user_model'
       - '@users.model.users_model'
       - '@users.validation.account_form_validation'
 
@@ -66,9 +88,15 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\Settings
     arguments:
       - '@core.context.frontend'
-      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@users.view_providers.account_settings'
+
+  users.controller.frontend.account.settings_post:
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Account\SettingsPost
+    arguments:
+      - '@core.context.frontend'
+      - '@core.modules.helper.action'
+      - '@users.model.user_model'
       - '@users.model.authentication_model'
       - '@users.model.users_model'
       - '@users.validation.account_settings_form_validation'
@@ -77,13 +105,18 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwd
     arguments:
       - '@core.context.frontend'
-      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@core.http.redirect_response'
+      - '@users.view_providers.forgot_password'
+
+  users.controller.frontend.index.forgot_pwd_post:
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\ForgotPwdPost
+    arguments:
+      - '@core.context.frontend'
+      - '@core.modules.helper.action'
       - '@core.validator'
       - '@core.helpers.alerts'
       - '@core.helpers.secure'
-      - '@users.view_providers.forgot_password'
       - '@users.model.users_model'
       - '@users.model.userrepository'
       - '@users.validation.account_forgot_password_form_validation'
@@ -99,11 +132,17 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Login
     arguments:
       - '@core.context.frontend'
-      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@core.http.redirect_response'
-      - '@core.helpers.secure'
       - '@users.view_providers.login'
+
+  users.controller.frontend.index.login_post:
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\LoginPost
+    arguments:
+      - '@core.context.frontend'
+      - '@core.modules.helper.action'
+      - '@core.http.redirect_response'
+      - '@core.helpers.secure'
       - '@users.model.authentication_model'
 
   users.controller.frontend.index.logout:
@@ -119,11 +158,17 @@ services:
     class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\Register
     arguments:
       - '@core.context.frontend'
-      - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@core.http.redirect_response'
       - '@core.helpers.alerts'
       - '@users.view_providers.registration'
+
+  users.controller.frontend.index.register_post:
+    class: ACP3\Modules\ACP3\Users\Controller\Frontend\Index\RegisterPost
+    arguments:
+      - '@core.context.frontend'
+      - '@core.modules.helper.action'
+      - '@core.helpers.alerts'
       - '@users.model.users_model'
       - '@users.validation.registration_form_validation'
       - '@permissions.helpers'

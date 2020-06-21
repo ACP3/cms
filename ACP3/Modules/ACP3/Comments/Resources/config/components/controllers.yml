@@ -15,10 +15,16 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit
     arguments:
       - '@core.context.frontend'
+      - '@comments.model.comments_model'
+      - '@comments.view_providers.admin_comment_edit'
+
+  comments.controller.admin.details.edit_post:
+    class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@comments.model.comments_model'
       - '@comments.validation.admin_form_validation'
-      - '@comments.view_providers.admin_comment_edit'
 
   comments.controller.admin.details.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Index
@@ -43,13 +49,24 @@ services:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@comments.view_providers.admin_comments_settings'
+
+  comments.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@comments.validation.admin_settings_form_validation'
-      - '@comments.view_providers.admin_comments_settings'
 
   comments.controller.frontend.index.create:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create
+    arguments:
+      - '@core.context.frontend'
+      - '@comments.view_providers.comment_create'
+
+  comments.controller.frontend.index.create_post:
+    class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\CreatePost
     arguments:
       - '@core.context.frontend'
       - '@core.modules.helper.action'
@@ -57,7 +74,6 @@ services:
       - '@users.model.user_model'
       - '@comments.model.comments_model'
       - '@comments.validation.form_validation'
-      - '@comments.view_providers.comment_create'
 
   comments.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Index

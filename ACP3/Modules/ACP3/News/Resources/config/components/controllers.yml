@@ -7,12 +7,17 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@news.view_providers.admin_news_edit'
+
+  news.controller.admin.index.create_post:
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\CreatePost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@news.model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
-      - '@news.view_providers.admin_news_edit'
 
   news.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
@@ -32,12 +37,18 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@news.model'
+      - '@news.view_providers.admin_news_edit'
+
+  news.controller.admin.index.edit_post:
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@news.model'
       - '@news.validation.admin_form_validation'
       - '@categories.helpers'
-      - '@news.view_providers.admin_news_edit'
 
   news.controller.admin.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index
@@ -52,10 +63,15 @@ services:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@news.view_providers.admin_settings'
+
+  news.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\News\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@news.validation.admin_settings_form_validation'
-      - '@news.view_providers.admin_settings'
 
   news.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details

@@ -8,44 +8,25 @@
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Seo;
 
-class Create extends Core\Controller\AbstractFrontendAction
+class Create extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var Seo\Model\SeoModel
-     */
-    private $seoModel;
     /**
      * @var \ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider
      */
     private $adminSeoEditViewProvider;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
-        Seo\Model\SeoModel $seoModel,
-        Seo\Validation\AdminFormValidation $adminFormValidation,
         Seo\ViewProviders\AdminSeoEditViewProvider $adminSeoEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->adminFormValidation = $adminFormValidation;
-        $this->seoModel = $seoModel;
         $this->adminSeoEditViewProvider = $adminSeoEditViewProvider;
-        $this->actionHelper = $actionHelper;
     }
 
-    public function execute(): array
+    public function __invoke(): array
     {
         $defaults = [
             'alias' => '',
@@ -53,22 +34,5 @@ class Create extends Core\Controller\AbstractFrontendAction
         ];
 
         return ($this->adminSeoEditViewProvider)($defaults);
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost()
-    {
-        return $this->actionHelper->handleSaveAction(function () {
-            $formData = $this->request->getPost()->all();
-
-            $this->adminFormValidation->validate($formData);
-
-            return $this->seoModel->save($formData);
-        });
     }
 }

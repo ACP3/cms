@@ -31,13 +31,19 @@ services:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\Install
     arguments:
       - '@core.context.install'
-      - '@core.logger.system_logger'
-      - '@core.helpers.alerts'
       - '@installer.helpers.navigation'
       - '@core.date'
       - '@core.xml'
       - '@core.helpers.date'
       - '@core.helpers.forms'
+
+  installer.controller.installer.index.install_post:
+    class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\InstallPost
+    arguments:
+      - '@core.context.install'
+      - '@core.logger.system_logger'
+      - '@core.helpers.alerts'
+      - '@installer.helpers.navigation'
       - '@installer.model.install_model'
       - '@installer.validator'
 

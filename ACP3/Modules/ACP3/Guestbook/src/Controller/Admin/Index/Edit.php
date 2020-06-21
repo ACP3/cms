@@ -8,15 +8,10 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Guestbook;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
     /**
      * @var Guestbook\Model\GuestbookModel
      */
@@ -25,30 +20,22 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminGuestbookEditViewProvider
      */
     private $adminGuestbookEditViewProvider;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
         Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\Validation\AdminFormValidation $adminFormValidation,
         Guestbook\ViewProviders\AdminGuestbookEditViewProvider $adminGuestbookEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->adminFormValidation = $adminFormValidation;
         $this->guestbookModel = $guestbookModel;
         $this->adminGuestbookEditViewProvider = $adminGuestbookEditViewProvider;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function __invoke(int $id): array
     {
         $guestbookEntry = $this->guestbookModel->getOneById($id);
         if (empty($guestbookEntry) === false) {
@@ -56,28 +43,5 @@ class Edit extends Core\Controller\AbstractFrontendAction
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost(int $id)
-    {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-
-            $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
-
-            $this->adminFormValidation
-                ->setSettings($settings)
-                ->validate($formData);
-
-            $formData['active'] = $settings['notify'] == 2 ? $formData['active'] : 1;
-
-            return $this->guestbookModel->save($formData, $id);
-        });
     }
 }

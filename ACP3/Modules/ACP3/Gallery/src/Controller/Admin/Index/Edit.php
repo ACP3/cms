@@ -8,16 +8,10 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Authentication\Model\UserModelInterface;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Gallery;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
-     */
-    private $galleryFormValidation;
     /**
      * @var Gallery\Model\GalleryModel
      */
@@ -26,37 +20,23 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryEditViewProvider
      */
     private $adminGalleryEditViewProvider;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
-        UserModelInterface $user,
         Gallery\Model\GalleryModel $galleryModel,
-        Gallery\Validation\GalleryFormValidation $galleryFormValidation,
         Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
     ) {
         parent::__construct($context);
 
         $this->galleryModel = $galleryModel;
-        $this->galleryFormValidation = $galleryFormValidation;
         $this->adminGalleryEditViewProvider = $adminGalleryEditViewProvider;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function __invoke(int $id): array
     {
         $gallery = $this->galleryModel->getOneById($id);
 
@@ -65,26 +45,5 @@ class Edit extends Core\Controller\AbstractFrontendAction
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost(int $id)
-    {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-
-            $this->galleryFormValidation
-                ->setUriAlias(\sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
-                ->validate($formData);
-
-            $formData['user_id'] = $this->user->getUserId();
-
-            return $this->galleryModel->save($formData, $id);
-        });
     }
 }

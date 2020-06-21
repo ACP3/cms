@@ -7,11 +7,16 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@polls.view_providers.admin_poll_edit'
+
+  polls.controller.admin.index.create_post:
+    class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\CreatePost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@polls.model.polls_model'
       - '@polls.validation.admin_form_validation'
-      - '@polls.view_providers.admin_poll_edit'
 
   polls.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Delete
@@ -24,11 +29,17 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@polls.model.polls_model'
+      - '@polls.view_providers.admin_poll_edit'
+
+  polls.controller.admin.index.edit_post:
+    class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@polls.model.polls_model'
       - '@polls.validation.admin_form_validation'
-      - '@polls.view_providers.admin_poll_edit'
 
   polls.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Index
@@ -54,12 +65,18 @@ services:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Vote
     arguments:
       - '@core.context.frontend'
+      - '@core.date'
+      - '@polls.model.pollrepository'
+      - '@polls.view_providers.poll_vote'
+
+  polls.controller.frontend.index.vote_post:
+    class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\VotePost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.date'
       - '@polls.validation.vote_validation'
       - '@polls.model.vote_model'
-      - '@polls.model.pollrepository'
-      - '@polls.view_providers.poll_vote'
 
   polls.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Widget\Index\Index

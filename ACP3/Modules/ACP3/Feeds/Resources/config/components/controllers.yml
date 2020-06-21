@@ -12,10 +12,15 @@ services:
     class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@feeds.view_providers.admin_settings'
+
+  feeds.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Feeds\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@feeds.validation.admin_form_validation'
-      - '@feeds.view_providers.admin_settings'
 
   feeds.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Feeds\Controller\Frontend\Index\Index

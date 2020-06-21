@@ -7,10 +7,15 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@seo.view_providers.admin_seo_edit'
+
+  seo.controller.admin.index.create_post:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\CreatePost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@seo.model.seo_model'
       - '@seo.validation.admin_form_validation'
-      - '@seo.view_providers.admin_seo_edit'
 
   seo.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Delete
@@ -24,10 +29,16 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@seo.model.seo_model'
+      - '@seo.view_providers.admin_seo_edit'
+
+  seo.controller.admin.index.edit_post:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@seo.model.seo_model'
       - '@seo.validation.admin_form_validation'
-      - '@seo.view_providers.admin_seo_edit'
 
   seo.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Index
@@ -39,10 +50,15 @@ services:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@seo.view_providers.admin_settings'
+
+  seo.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@seo.validation.admin_settings_form_validation'
-      - '@seo.view_providers.admin_settings'
 
   seo.controller.admin.index.sitemap:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Sitemap

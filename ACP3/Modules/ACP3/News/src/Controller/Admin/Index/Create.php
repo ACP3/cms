@@ -8,56 +8,28 @@
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Authentication\Model\UserModelInterface;
-use ACP3\Core\Modules\Helper\Action;
-use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 
-class Create extends AbstractFormAction
+class Create extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var News\Model\NewsModel
-     */
-    private $newsModel;
     /**
      * @var \ACP3\Modules\ACP3\News\ViewProviders\AdminNewsEditViewProvider
      */
     private $adminNewsEditViewProvider;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
-        UserModelInterface $user,
-        News\Model\NewsModel $newsModel,
-        News\Validation\AdminFormValidation $adminFormValidation,
-        Categories\Helpers $categoriesHelpers,
         News\ViewProviders\AdminNewsEditViewProvider $adminNewsEditViewProvider
     ) {
-        parent::__construct($context, $categoriesHelpers);
+        parent::__construct($context);
 
-        $this->newsModel = $newsModel;
-        $this->adminFormValidation = $adminFormValidation;
         $this->adminNewsEditViewProvider = $adminNewsEditViewProvider;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(): array
+    public function __invoke(): array
     {
         $defaults = [
             'active' => 1,
@@ -74,25 +46,5 @@ class Create extends AbstractFormAction
         ];
 
         return ($this->adminNewsEditViewProvider)($defaults);
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost()
-    {
-        return $this->actionHelper->handleSaveAction(function () {
-            $formData = $this->request->getPost()->all();
-
-            $this->adminFormValidation->validate($formData);
-
-            $formData['cat'] = $this->fetchCategoryIdForSave($formData);
-            $formData['user_id'] = $this->user->getUserId();
-
-            return $this->newsModel->save($formData);
-        });
     }
 }

@@ -8,10 +8,9 @@
 namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Polls;
 
-class Vote extends Core\Controller\AbstractFrontendAction
+class Vote extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var Core\Date
@@ -22,79 +21,32 @@ class Vote extends Core\Controller\AbstractFrontendAction
      */
     private $pollRepository;
     /**
-     * @var Polls\Model\VoteModel
-     */
-    private $pollsModel;
-    /**
-     * @var Polls\Validation\VoteValidation
-     */
-    private $voteValidation;
-    /**
      * @var \ACP3\Modules\ACP3\Polls\ViewProviders\PollVoteViewProvider
      */
     private $pollVoteViewProvider;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
         Core\Date $date,
-        Polls\Validation\VoteValidation $voteValidation,
-        Polls\Model\VoteModel $pollsModel,
         Polls\Model\Repository\PollRepository $pollRepository,
         Polls\ViewProviders\PollVoteViewProvider $pollVoteViewProvider
     ) {
         parent::__construct($context);
 
         $this->date = $date;
-        $this->voteValidation = $voteValidation;
-        $this->pollsModel = $pollsModel;
         $this->pollRepository = $pollRepository;
         $this->pollVoteViewProvider = $pollVoteViewProvider;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function __invoke(int $id): array
     {
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
             return ($this->pollVoteViewProvider)($id);
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost(int $id)
-    {
-        return $this->actionHelper->handlePostAction(
-            function () use ($id) {
-                $formData = $this->request->getPost()->all();
-                $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
-                $time = $this->date->getCurrentDateTime();
-
-                $this->voteValidation
-                    ->setPollId($id)
-                    ->setIpAddress($ipAddress)
-                    ->validate($formData);
-
-                $result = $this->pollsModel->vote($formData, $id, $ipAddress, $time);
-
-                $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
-
-                return $this->actionHelper->setRedirectMessage($result, $text, 'polls/index/result/id_' . $id);
-            },
-            'polls/index/vote/id_' . $id
-        );
     }
 }

@@ -27,12 +27,17 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Create
     arguments:
       - '@core.context.frontend'
+      - '@newsletter.view_providers.admin_newsletter_edit'
+
+  newsletter.controller.admin.index.create_post:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\CreatePost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@newsletter.model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
-      - '@newsletter.view_providers.admin_newsletter_edit'
 
   newsletter.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Delete
@@ -45,12 +50,18 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@newsletter.model'
+      - '@newsletter.view_providers.admin_newsletter_edit'
+
+  newsletter.controller.admin.index.edit_post:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@newsletter.model'
       - '@newsletter.validation.admin_form_validation'
       - '@newsletter.helper.sendnewsletter'
-      - '@newsletter.view_providers.admin_newsletter_edit'
 
   newsletter.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Index
@@ -62,6 +73,7 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Send
     arguments:
       - '@core.context.frontend'
+      - '@core.helpers.redirect'
       - '@newsletter.model.newsletterrepository'
       - '@newsletter.model.accountrepository'
       - '@newsletter.helper.sendnewsletter'
@@ -70,10 +82,15 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@newsletter.view_providers.admin_settings'
+
+  newsletter.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@newsletter.validation.admin_settings_form_validation'
-      - '@newsletter.view_providers.admin_settings'
 
   newsletter.controller.frontend.archive.details:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive\Details
@@ -100,21 +117,22 @@ services:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.helpers.alerts'
-      - '@newsletter.helper.subscribe'
-      - '@newsletter.validation.subscribe_form_validation'
       - '@newsletter.view_providers.newsletter_subscribe'
 
   newsletter.controller.frontend.index.unsubscribe:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Unsubscribe
     arguments:
       - '@core.context.frontend'
+      - '@newsletter.view_providers.newsletter_unsubscribe'
+
+  newsletter.controller.frontend.index.unsubscribe_post:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\UnsubscribePost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.helpers.alerts'
       - '@newsletter.helper.accountstatus'
       - '@newsletter.validation.unsubscribe_form_validation'
-      - '@newsletter.view_providers.newsletter_unsubscribe'
 
   newsletter.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Widget\Index\Index

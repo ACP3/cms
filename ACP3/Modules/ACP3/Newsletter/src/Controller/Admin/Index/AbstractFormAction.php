@@ -9,9 +9,10 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter;
 
-class AbstractFormAction extends AbstractFrontendAction
+class AbstractFormAction extends AbstractFrontendAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter

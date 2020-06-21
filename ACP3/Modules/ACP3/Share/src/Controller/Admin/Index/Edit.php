@@ -8,17 +8,11 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Share\Model\ShareModel;
-use ACP3\Modules\ACP3\Share\Validation\AdminFormValidation;
 use ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Share\Model\ShareModel
      */
@@ -27,31 +21,23 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider
      */
     private $adminShareEditViewProvider;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
         ShareModel $shareModel,
-        AdminFormValidation $adminFormValidation,
         AdminShareEditViewProvider $adminShareEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->adminFormValidation = $adminFormValidation;
         $this->shareModel = $shareModel;
         $this->adminShareEditViewProvider = $adminShareEditViewProvider;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function __invoke(int $id): array
     {
         $sharingInfo = $this->shareModel->getOneById($id);
 
@@ -60,26 +46,5 @@ class Edit extends Core\Controller\AbstractFrontendAction
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost(int $id)
-    {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-
-            $shareInfo = $this->shareModel->getOneById($id);
-
-            $this->adminFormValidation
-                ->setUriAlias($shareInfo['uri'])
-                ->validate($formData);
-
-            return $this->shareModel->save($formData, $id);
-        });
     }
 }

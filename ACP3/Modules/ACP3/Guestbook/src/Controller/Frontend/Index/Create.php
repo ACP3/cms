@@ -8,86 +8,26 @@
 namespace ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Core\Authentication\Model\UserModelInterface;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Guestbook;
 
-class Create extends Core\Controller\AbstractFrontendAction
+class Create extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
-     */
-    private $formValidation;
-    /**
-     * @var Guestbook\Model\GuestbookModel
-     */
-    private $guestbookModel;
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\GuestbookCreateViewProvider
      */
     private $guestbookCreateViewProvider;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
-        UserModelInterface $user,
-        Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\Validation\FormValidation $formValidation,
         Guestbook\ViewProviders\GuestbookCreateViewProvider $guestbookCreateViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formValidation = $formValidation;
-        $this->guestbookModel = $guestbookModel;
         $this->guestbookCreateViewProvider = $guestbookCreateViewProvider;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
-    public function execute(): array
+    public function __invoke(): array
     {
         return ($this->guestbookCreateViewProvider)();
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost()
-    {
-        return $this->actionHelper->handlePostAction(
-            function () {
-                $guestbookSettings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
-
-                $formData = $this->request->getPost()->all();
-                $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
-
-                $this->formValidation
-                    ->setIpAddress($ipAddress)
-                    ->validate($formData);
-
-                $formData['date'] = 'now';
-                $formData['ip'] = $ipAddress;
-                $formData['user_id'] = $this->user->isAuthenticated() ? $this->user->getUserId() : null;
-                $formData['active'] = $guestbookSettings['notify'] == 2 ? 0 : 1;
-
-                $lastId = $this->guestbookModel->save($formData);
-
-                return $this->actionHelper->setRedirectMessage(
-                    $lastId,
-                    $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error')
-                );
-            }
-        );
     }
 }

@@ -11,8 +11,9 @@ use ACP3\Core\Authentication\Exception\UnauthorizedAccessException;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context;
+use ACP3\Core\Controller\InvokableActionInterface;
 
-abstract class AbstractAction extends AbstractFrontendAction
+abstract class AbstractAction extends AbstractFrontendAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Core\Authentication\Model\UserModelInterface

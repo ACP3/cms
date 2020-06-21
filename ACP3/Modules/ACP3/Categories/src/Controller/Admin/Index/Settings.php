@@ -8,61 +8,26 @@
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Categories;
 
-class Settings extends Core\Controller\AbstractFrontendAction
+class Settings extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Validation\AdminSettingsFormValidation
-     */
-    private $adminSettingsFormValidation;
     /**
      * @var \ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategorySettingsViewProvider
      */
     private $adminCategorySettingsViewProvider;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
-        Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation,
         Categories\ViewProviders\AdminCategorySettingsViewProvider $adminCategorySettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
         $this->adminCategorySettingsViewProvider = $adminCategorySettingsViewProvider;
-        $this->actionHelper = $actionHelper;
     }
 
-    public function execute(): array
+    public function __invoke(): array
     {
         return ($this->adminCategorySettingsViewProvider)();
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost()
-    {
-        return $this->actionHelper->handleSettingsPostAction(function () {
-            $formData = $this->request->getPost()->all();
-            $this->adminSettingsFormValidation->validate($formData);
-
-            $data = [
-                'width' => (int) $formData['width'],
-                'height' => (int) $formData['height'],
-                'filesize' => (int) $formData['filesize'],
-            ];
-
-            return $this->config->saveSettings($data, Categories\Installer\Schema::MODULE_NAME);
-        });
     }
 }

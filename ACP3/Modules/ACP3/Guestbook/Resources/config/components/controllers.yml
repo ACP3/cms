@@ -14,10 +14,16 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Edit
     arguments:
       - '@core.context.frontend'
+      - '@guestbook.model.guestbook_model'
+      - '@guestbook.view_providers.admin_guestbook_edit'
+
+  guestbook.controller.admin.index.edit_post:
+    class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\EditPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.admin_form_validation'
-      - '@guestbook.view_providers.admin_guestbook_edit'
 
   guestbook.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Index
@@ -29,20 +35,30 @@ services:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@guestbook.view_providers.admin_settings'
+
+  guestbook.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Guestbook\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@guestbook.validation.admin_settings_form_validation'
-      - '@guestbook.view_providers.admin_settings'
 
   guestbook.controller.frontend.index.create:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Create
+    arguments:
+      - '@core.context.frontend'
+      - '@guestbook.view_providers.guestbook_create'
+
+  guestbook.controller.frontend.index.create_post:
+    class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\CreatePost
     arguments:
       - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@users.model.user_model'
       - '@guestbook.model.guestbook_model'
       - '@guestbook.validation.form_validation'
-      - '@guestbook.view_providers.guestbook_create'
 
   guestbook.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Guestbook\Controller\Frontend\Index\Index

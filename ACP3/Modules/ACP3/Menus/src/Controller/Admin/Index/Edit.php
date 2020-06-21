@@ -8,15 +8,10 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Menus;
 
-class Edit extends Core\Controller\AbstractFrontendAction
+class Edit extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
-     */
-    private $menuFormValidation;
     /**
      * @var Menus\Model\MenusModel
      */
@@ -25,30 +20,22 @@ class Edit extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuEditViewProvider
      */
     private $adminMenuEditViewProvider;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
         Menus\Model\MenusModel $menusModel,
-        Menus\Validation\MenuFormValidation $menuFormValidation,
         Menus\ViewProviders\AdminMenuEditViewProvider $adminMenuEditViewProvider
     ) {
         parent::__construct($context);
 
         $this->menusModel = $menusModel;
-        $this->menuFormValidation = $menuFormValidation;
         $this->adminMenuEditViewProvider = $adminMenuEditViewProvider;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function __invoke(int $id): array
     {
         $menu = $this->menusModel->getOneById($id);
 
@@ -57,24 +44,5 @@ class Edit extends Core\Controller\AbstractFrontendAction
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost(int $id)
-    {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-
-            $this->menuFormValidation
-                ->setMenuId($id)
-                ->validate($formData);
-
-            return $this->menusModel->save($formData, $id);
-        });
     }
 }

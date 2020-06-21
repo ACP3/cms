@@ -20,10 +20,15 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Settings
     arguments:
       - '@core.context.frontend'
+      - '@contact.view_providers.admin_settings'
+
+  contact.controller.admin.index.settings_post:
+    class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\SettingsPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.helpers.secure'
       - '@contact.validation.admin_settings_form_validation'
-      - '@contact.view_providers.admin_settings'
 
   contact.controller.frontend.index.imprint:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Imprint
@@ -35,13 +40,18 @@ services:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
     arguments:
       - '@core.context.frontend'
+      - '@contact.view_providers.contact_form'
+
+  contact.controller.frontend.index.index_post:
+    class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\IndexPost
+    arguments:
+      - '@core.context.frontend'
       - '@core.modules.helper.action'
       - '@core.router'
       - '@core.helpers.alerts'
       - '@contact.validation.form_validation'
       - '@contact.model.contacts_model'
       - '@contact.model.contact_form_model'
-      - '@contact.view_providers.contact_form'
 
   contact.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Widget\Index\Index

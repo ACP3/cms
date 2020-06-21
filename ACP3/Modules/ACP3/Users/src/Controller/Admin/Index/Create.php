@@ -8,51 +8,25 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
-use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
-class Create extends Core\Controller\AbstractFrontendAction
+class Create extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Helpers
-     */
-    private $permissionsHelpers;
-    /**
-     * @var Users\Model\UsersModel
-     */
-    private $usersModel;
     /**
      * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider
      */
     private $adminUserEditViewProvider;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
-        Action $actionHelper,
-        Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider,
-        Users\Model\UsersModel $usersModel,
-        Users\Validation\AdminFormValidation $adminFormValidation,
-        Permissions\Helpers $permissionsHelpers
+        Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider
     ) {
         parent::__construct($context);
 
-        $this->adminFormValidation = $adminFormValidation;
-        $this->permissionsHelpers = $permissionsHelpers;
-        $this->usersModel = $usersModel;
         $this->adminUserEditViewProvider = $adminUserEditViewProvider;
-        $this->actionHelper = $actionHelper;
     }
 
-    public function execute(): array
+    public function __invoke(): array
     {
         $defaults = [
             'nickname' => '',
@@ -64,26 +38,5 @@ class Create extends Core\Controller\AbstractFrontendAction
         ];
 
         return ($this->adminUserEditViewProvider)($defaults);
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost()
-    {
-        return $this->actionHelper->handleSaveAction(function () {
-            $formData = $this->request->getPost()->all();
-
-            $this->adminFormValidation->validate($formData);
-
-            $lastId = $this->usersModel->save($formData);
-
-            $this->permissionsHelpers->updateUserRoles($formData['roles'], $lastId);
-
-            return $lastId;
-        });
     }
 }

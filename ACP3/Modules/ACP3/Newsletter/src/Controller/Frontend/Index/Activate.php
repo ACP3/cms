@@ -38,6 +38,10 @@ class Activate extends Core\Controller\AbstractFrontendAction
         $this->alertsHelper = $alertsHelper;
     }
 
+    /**
+     * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
+     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
+     */
     public function execute(string $hash): void
     {
         try {

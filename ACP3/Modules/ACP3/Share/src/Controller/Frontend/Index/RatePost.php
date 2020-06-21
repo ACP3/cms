@@ -9,11 +9,12 @@ namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 use ACP3\Modules\ACP3\Share\Model\ShareRatingModel;
 
-class Rate extends AbstractFrontendAction
+class RatePost extends AbstractFrontendAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
@@ -48,7 +49,7 @@ class Rate extends AbstractFrontendAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function executePost(int $id): array
+    public function __invoke(int $id): array
     {
         $stars = (int) $this->request->getPost()->get('stars', 0);
         $ipAddress = $this->request->getSymfonyRequest()->getClientIp();

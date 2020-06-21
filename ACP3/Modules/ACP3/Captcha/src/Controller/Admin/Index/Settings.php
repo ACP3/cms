@@ -9,58 +9,27 @@ namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
 use ACP3\Core\Controller\Context\FrontendContext;
-use ACP3\Core\Modules\Helper\Action;
-use ACP3\Modules\ACP3\Captcha\Installer\Schema;
-use ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation;
+use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider;
 
-class Settings extends AbstractFrontendAction
+class Settings extends AbstractFrontendAction implements InvokableActionInterface
 {
-    /**
-     * @var AdminSettingsFormValidation
-     */
-    private $formValidation;
     /**
      * @var \ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider
      */
     private $adminSettingsViewProvider;
-    /**
-     * @var \ACP3\Core\Modules\Helper\Action
-     */
-    private $actionHelper;
 
     public function __construct(
         FrontendContext $context,
-        Action $actionHelper,
-        AdminSettingsViewProvider $adminSettingsViewProvider,
-        AdminSettingsFormValidation $formValidation
+        AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
 
-        $this->formValidation = $formValidation;
         $this->adminSettingsViewProvider = $adminSettingsViewProvider;
-        $this->actionHelper = $actionHelper;
     }
 
-    public function execute(): array
+    public function __invoke(): array
     {
         return ($this->adminSettingsViewProvider)();
-    }
-
-    /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    public function executePost()
-    {
-        return $this->actionHelper->handleSettingsPostAction(function () {
-            $formData = $this->request->getPost()->all();
-
-            $this->formValidation->validate($formData);
-
-            return $this->config->saveSettings($formData, Schema::MODULE_NAME);
-        });
     }
 }
