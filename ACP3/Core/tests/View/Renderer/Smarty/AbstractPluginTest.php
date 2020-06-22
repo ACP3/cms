@@ -7,20 +7,12 @@
 
 namespace ACP3\Core\View\Renderer\Smarty;
 
-abstract class AbstractPluginTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+abstract class AbstractPluginTest extends TestCase
 {
     /**
      * @var PluginInterface
      */
     protected $plugin;
-
-    public function testExtensionName()
-    {
-        $this->assertEquals($this->getExpectedExtensionName(), $this->plugin->getExtensionName());
-    }
-
-    /**
-     * @return string
-     */
-    abstract protected function getExpectedExtensionName();
 }

@@ -34,12 +34,4 @@ class PrefixUriTest extends AbstractPluginTest
         $expected = 'http://www.example.com';
         $this->assertEquals($expected, $this->plugin->__invoke($value));
     }
-
-    /**
-     * @return string
-     */
-    protected function getExpectedExtensionName()
-    {
-        return 'prefix_uri';
-    }
 }

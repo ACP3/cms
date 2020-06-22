@@ -24,16 +24,8 @@ class SiteSubtitle extends AbstractFunction
     /**
      * @return string
      */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         return $this->title->getSiteSubtitle();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'site_subtitle';
     }
 }

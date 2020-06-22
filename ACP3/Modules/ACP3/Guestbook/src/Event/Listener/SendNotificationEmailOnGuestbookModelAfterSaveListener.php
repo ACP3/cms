@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Guestbook\Event\Listener;
 
 use ACP3\Core\Helpers\SendEmail;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Mailer\MailerMessage;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
@@ -61,12 +62,12 @@ class SendNotificationEmailOnGuestbookModelAfterSaveListener
             $this->router->route('', true),
             $fullPath
         );
-        $this->sendEmail->execute(
-            '',
-            $guestbookSettings['notify_email'],
-            $guestbookSettings['notify_email'],
-            $this->translator->t('guestbook', 'notification_email_subject'),
-            $body
-        );
+
+        $message = (new MailerMessage())
+            ->setRecipients($guestbookSettings['notify_email'])
+            ->setFrom($guestbookSettings['notify_email'])
+            ->setSubject($this->translator->t('guestbook', 'notification_email_subject'))
+            ->setBody($body);
+        $this->sendEmail->execute($message);
     }
 }

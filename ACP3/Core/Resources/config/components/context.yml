@@ -10,11 +10,6 @@ services:
     - '@core.environment.application_path'
     - '@core.http.response'
 
-  core.context.admin:
-    class: ACP3\Core\Controller\Context\AdminContext
-    parent: core.context.frontend
-    deprecated: 'The "%service_id%" service is deprecated. Use "core.context.frontend" instead'
-
   core.context.frontend:
     class: ACP3\Core\Controller\Context\FrontendContext
     arguments:

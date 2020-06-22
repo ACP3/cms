@@ -2,8 +2,6 @@ services:
   core.modules:
     class: ACP3\Core\Modules
     arguments:
-      - '@core.environment.application_path'
-      - '@core.controller.helper.controller_action_exists'
       - '@core.modules.moduleInfoCache'
     public: true
 

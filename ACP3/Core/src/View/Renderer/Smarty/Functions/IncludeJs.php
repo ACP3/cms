@@ -26,18 +26,10 @@ class IncludeJs extends AbstractFunction
 
     /**
      * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'include_js';
-    }
-
-    /**
-     * {@inheritdoc}
      *
      * @throws \InvalidArgumentException
      */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         $dependencies = $params['depends'] ?? [];
 

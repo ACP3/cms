@@ -40,7 +40,7 @@ class Image extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         if (isset($params['file']) === true && (bool) \preg_match('=\./=', $params['file']) === false) {
             $file = $params['file'];
@@ -57,13 +57,5 @@ class Image extends AbstractFunction
         }
 
         throw new \InvalidArgumentException(\sprintf('Not all necessary arguments for the function %s were passed!', __FUNCTION__));
-    }
-
-    /**
-     * @return string
-     */
-    public function getExtensionName()
-    {
-        return 'image';
     }
 }

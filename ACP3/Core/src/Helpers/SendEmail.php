@@ -8,13 +8,14 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
+use ACP3\Core\Mailer\MailerMessage;
 
 class SendEmail
 {
     /**
      * @var \ACP3\Core\Mailer
      */
-    protected $mailer;
+    private $mailer;
 
     /**
      * @param \ACP3\Core\Mailer $mailer
@@ -26,41 +27,10 @@ class SendEmail
 
     /**
      * Generates and sends an E-mail.
-     *
-     * @param string|Core\Mailer\MailerMessage $recipientName
-     *
-     * @return bool
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0. Use the 'core.mailer' service directly instead
      */
     public function execute(
-        $recipientName,
-        string $recipientEmail = '',
-        string $from = '',
-        string $subject = '',
-        string $body = '',
-        string $mailSignature = ''
-    ) {
-        if ($recipientName instanceof Core\Mailer\MailerMessage) {
-            $message = $recipientName;
-        } else {
-            if (!empty($recipientName)) {
-                $to = [
-                    'name' => $recipientName,
-                    'email' => $recipientEmail,
-                ];
-            } else {
-                $to = $recipientEmail;
-            }
-
-            $message = (new Core\Mailer\MailerMessage())
-                ->setSubject($subject)
-                ->setBody($body)
-                ->setMailSignature($mailSignature)
-                ->setFrom($from)
-                ->setRecipients($to);
-        }
-
+        MailerMessage $message
+    ): bool {
         return $this->mailer
             ->reset()
             ->send($message);

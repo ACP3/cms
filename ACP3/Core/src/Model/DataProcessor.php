@@ -14,30 +14,14 @@ class DataProcessor
     /**
      * @var ColumnTypeStrategyFactory
      */
-    protected $factory;
+    private $factory;
 
-    /**
-     * DataProcessor constructor.
-     */
     public function __construct(ColumnTypeStrategyFactory $factory)
     {
         $this->factory = $factory;
     }
 
-    /**
-     * @return array
-     *
-     * @deprecated since version 4.33.7, to be removed with version 5.0.0. Use ::escape() instead
-     */
-    public function processColumnData(array $columnData, array $columnConstraints)
-    {
-        return $this->escape($columnData, $columnConstraints);
-    }
-
-    /**
-     * @return array
-     */
-    public function escape(array $columnData, array $columnConstraints)
+    public function escape(array $columnData, array $columnConstraints): array
     {
         $data = [];
         foreach ($columnData as $column => $value) {
@@ -53,10 +37,7 @@ class DataProcessor
         return $data;
     }
 
-    /**
-     * @return array
-     */
-    public function unescape(array $columnData, array $columnConstraints)
+    public function unescape(array $columnData, array $columnConstraints): array
     {
         $data = [];
         foreach ($columnData as $column => $value) {
@@ -74,14 +55,12 @@ class DataProcessor
 
     private function findMissingColumns(array $columnData, array $columnConstraints): array
     {
-        $missingColumns = \array_diff(
+        return \array_diff(
             \array_keys($columnConstraints),
             \array_intersect(
                 \array_keys($columnData),
                 \array_keys($columnConstraints)
             )
         );
-
-        return $missingColumns;
     }
 }

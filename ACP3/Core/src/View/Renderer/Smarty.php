@@ -35,16 +35,6 @@ class Smarty implements RendererInterface
     }
 
     /**
-     * @param \ACP3\Core\View\Renderer\Smarty\PluginInterface $plugin
-     *
-     * @deprecated since version 4.33.0, to be removed with version 5.0.0. Use other ::register*() methods instead
-     */
-    public function registerSmartyPlugin(Smarty\PluginInterface $plugin)
-    {
-        $plugin->register($this->smarty);
-    }
-
-    /**
      * @throws \SmartyException
      */
     public function registerBlock(string $blockName, string $serviceId): void

@@ -12,20 +12,10 @@ class Javascripts extends AbstractBlock
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
+    public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat)
     {
-        return 'javascripts';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function process($params, $content, \Smarty_Internal_Template $smarty, &$repeat)
-    {
-        if (!$repeat) {
-            if (isset($content)) {
-                return '@@@SMARTY:JAVASCRIPTS:BEGIN@@@' . \trim($content) . '@@@SMARTY:JAVASCRIPTS:END@@@';
-            }
+        if (!$repeat && isset($content)) {
+            return '@@@SMARTY:JAVASCRIPTS:BEGIN@@@' . \trim($content) . '@@@SMARTY:JAVASCRIPTS:END@@@';
         }
 
         return '';

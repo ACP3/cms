@@ -22,16 +22,8 @@ class ContentDecorator extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function process($value)
+    public function __invoke($value): string
     {
         return $this->contentDecorator->decorate($value);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'decorate';
     }
 }

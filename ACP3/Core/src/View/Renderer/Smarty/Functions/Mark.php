@@ -29,15 +29,7 @@ class Mark extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'mark';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         $markAllId = !empty($params['mark_all_id']) ? $params['mark_all_id'] : 'mark-all';
 

@@ -21,15 +21,10 @@ class Breadcrumb extends AbstractFunction
         $this->breadcrumb = $breadcrumb;
     }
 
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         $smarty->smarty->assign('breadcrumb', $this->breadcrumb->getBreadcrumb());
 
         return $smarty->smarty->fetch('asset:System/Partials/breadcrumb.tpl');
-    }
-
-    public function getExtensionName()
-    {
-        return 'breadcrumb';
     }
 }

@@ -12,20 +12,10 @@ class Stylesheets extends AbstractBlock
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
+    public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat)
     {
-        return 'stylesheets';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function process($params, $content, \Smarty_Internal_Template $smarty, &$repeat)
-    {
-        if (!$repeat) {
-            if (isset($content)) {
-                return '@@@SMARTY:STYLESHEETS:BEGIN@@@' . \trim($content) . '@@@SMARTY:STYLESHEETS:END@@@';
-            }
+        if (!$repeat && isset($content)) {
+            return '@@@SMARTY:STYLESHEETS:BEGIN@@@' . \trim($content) . '@@@SMARTY:STYLESHEETS:END@@@';
         }
 
         return '';

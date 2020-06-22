@@ -24,15 +24,7 @@ class RewriteUri extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'rewrite_uri';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function process($value)
+    public function __invoke($value): string
     {
         return $this->rewriteInternalUri->rewriteInternalUri($value);
     }

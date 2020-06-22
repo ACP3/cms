@@ -8,16 +8,6 @@ services:
       - '@seo.core.router.aliases'
       - '@core.helpers.forms'
 
-  seo.helper.meta_statements:
-    class: ACP3\Modules\ACP3\Seo\Helper\MetaStatements
-    arguments:
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.modules'
-      - '@seo.cache'
-      - '@core.config'
-    deprecated: 'The "%service_id%" service is deprecated since 4.48.0 and will be removed in 5.0.0. Use service "core.seo.meta_statements_service" instead!'
-
   seo.helper.uri_alias_manager:
     class: ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
     arguments:

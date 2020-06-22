@@ -29,15 +29,7 @@ class Uri extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function getExtensionName()
-    {
-        return 'uri';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         return $this->router->route(
             !empty($params['args']) ? $params['args'] : '',

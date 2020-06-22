@@ -12,51 +12,36 @@ class ApplicationPath
     /**
      * @var string
      */
-    protected $phpSelf;
+    private $phpSelf;
     /**
      * @var string
      */
-    protected $webRoot;
+    private $webRoot;
     /**
      * @var string
      */
-    protected $appDir;
+    private $appDir;
     /**
      * @var string
      */
-    protected $classesDir;
+    private $classesDir;
     /**
      * @var string
      */
-    protected $modulesDir;
+    private $modulesDir;
     /**
      * @var string
      */
-    protected $uploadsDir;
+    private $uploadsDir;
     /**
      * @var string
      */
-    protected $cacheDir;
+    private $cacheDir;
     /**
      * @var string
      */
-    protected $designRootPathInternal;
-    /**
-     * @var string
-     */
-    protected $designPathInternal;
-    /**
-     * @var string
-     */
-    protected $designPathWeb;
-    /**
-     * @var string
-     */
-    protected $designPathAbsolute;
+    private $designRootPathInternal;
 
-    /**
-     * ApplicationPath constructor.
-     */
     public function __construct(string $applicationMode)
     {
         $this->phpSelf = \htmlentities($_SERVER['SCRIPT_NAME']);
@@ -77,6 +62,13 @@ class ApplicationPath
     public function getWebRoot(): string
     {
         return $this->webRoot;
+    }
+
+    protected function setWebRoot(string $webRoot): self
+    {
+        $this->webRoot = $webRoot;
+
+        return $this;
     }
 
     public function getAppDir(): string
@@ -117,76 +109,6 @@ class ApplicationPath
     public function setDesignRootPathInternal($designRootPathInternal)
     {
         $this->designRootPathInternal = $designRootPathInternal;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated since 4.28.0, to be removed with version 5.0.0. Use Theme::getDesignPathInternal instead
-     */
-    public function getDesignPathInternal(): string
-    {
-        return $this->designPathInternal;
-    }
-
-    /**
-     * @param string $designPathInternal
-     *
-     * @return ApplicationPath
-     *
-     * @deprecated since 4.28.0, to be removed with version 5.0.0.
-     */
-    public function setDesignPathInternal($designPathInternal)
-    {
-        $this->designPathInternal = $this->designRootPathInternal . $designPathInternal;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated since 4.28.0, to be removed with version 5.0.0. Use Theme::getDesignPathWeb instead
-     */
-    public function getDesignPathWeb(): string
-    {
-        return $this->designPathWeb;
-    }
-
-    /**
-     * @param string $designPathWeb
-     *
-     * @return ApplicationPath
-     *
-     * @deprecated since 4.28.0, to be removed with version 5.0.0.
-     */
-    public function setDesignPathWeb($designPathWeb)
-    {
-        $this->designPathWeb = $designPathWeb;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated Will be removed with version 5.0.0
-     */
-    public function getDesignPathAbsolute(): string
-    {
-        return $this->designPathAbsolute;
-    }
-
-    /**
-     * @param string $designPathAbsolute
-     *
-     * @return ApplicationPath
-     *
-     * @deprecated Will be removed with version 5.0.0
-     */
-    public function setDesignPathAbsolute($designPathAbsolute)
-    {
-        if (!\preg_match('=^(http(s?))://=', $designPathAbsolute)) {
-            throw new \InvalidArgumentException('The given absolute design path (' . $designPathAbsolute . ') doesn\'t start with a valid protocol.');
-        }
-
-        $this->designPathAbsolute = $designPathAbsolute;
 
         return $this;
     }

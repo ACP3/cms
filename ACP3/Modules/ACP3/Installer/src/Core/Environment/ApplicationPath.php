@@ -14,15 +14,14 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
      */
     private $installerWebRoot;
 
-    /**
-     * ApplicationPath constructor.
-     */
     public function __construct(string $applicationMode)
     {
         parent::__construct($applicationMode);
 
-        $this->installerWebRoot = $this->webRoot;
-        $this->webRoot = \substr($this->webRoot !== '/' ? $this->webRoot . '/' : '/', 0, -14);
+        $this->installerWebRoot = $this->getWebRoot();
+        $this->setWebRoot(
+            \substr($this->getWebRoot() !== '/' ? $this->getWebRoot() . '/' : '/', 0, -14)
+        );
     }
 
     public function getInstallerWebRoot(): string

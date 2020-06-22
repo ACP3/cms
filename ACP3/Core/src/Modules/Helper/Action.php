@@ -206,36 +206,6 @@ class Action
     /**
      * @param string|null $path
      *
-     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     *
-     * @deprecated since 4.4.4, to be removed with version 5.0.0
-     */
-    public function handleCreatePostAction(callable $callback, $path = null)
-    {
-        return $this->handleSaveAction($callback, $path);
-    }
-
-    /**
-     * @param string|null $path
-     *
-     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
-     *
-     * @deprecated since 4.4.4, to be removed with version 5.0.0
-     */
-    public function handleEditPostAction(callable $callback, $path = null)
-    {
-        return $this->handleSaveAction($callback, $path);
-    }
-
-    /**
-     * @param string|null $path
-     *
      * @return array|string|JsonResponse|RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException

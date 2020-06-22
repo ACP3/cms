@@ -35,57 +35,10 @@ class Mailer
      */
     protected $stringFormatter;
     /**
-     * @var string
-     */
-    private $subject = '';
-    /**
-     * @var string
-     */
-    private $body = '';
-    /**
-     * @var string
-     */
-    private $htmlBody = '';
-    /**
-     * @var string
-     */
-    private $urlWeb = '';
-    /**
-     * @var string
-     */
-    private $mailSignature = '';
-    /**
-     * @var string|array
-     */
-    private $from;
-    /**
-     * @var string|array
-     */
-    private $recipients;
-    /**
-     * @var bool
-     */
-    private $bcc = false;
-    /**
-     * @var array
-     */
-    private $attachments = [];
-    /**
-     * @var string
-     */
-    private $template = '';
-    /**
-     * @var MailerMessage|null
-     */
-    private $mailerMessage;
-    /**
      * @var PHPMailer
      */
     private $phpMailer;
 
-    /**
-     * Mailer constructor.
-     */
     public function __construct(
         LoggerInterface $logger,
         View $view,
@@ -99,168 +52,10 @@ class Mailer
     }
 
     /**
-     * @param string|array $from
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setFrom($from): self
-    {
-        $this->from = $from;
-
-        return $this;
-    }
-
-    /**
-     * @param string $mailSignature
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setMailSignature($mailSignature): self
-    {
-        $this->mailSignature = $mailSignature;
-
-        return $this;
-    }
-
-    /**
-     * @param string $htmlText
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setHtmlBody($htmlText): self
-    {
-        $this->htmlBody = $htmlText;
-
-        return $this;
-    }
-
-    /**
-     * @param string $urlWeb
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setUrlWeb($urlWeb): self
-    {
-        $this->urlWeb = $urlWeb;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $bcc
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setBcc($bcc): self
-    {
-        $this->bcc = (bool) $bcc;
-
-        return $this;
-    }
-
-    /**
-     * @param string $subject
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setSubject($subject): self
-    {
-        $this->subject = $subject;
-
-        return $this;
-    }
-
-    /**
-     * @param string $body
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setBody($body): self
-    {
-        $this->body = $body;
-
-        return $this;
-    }
-
-    /**
-     * @param array|string $recipients
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setRecipients($recipients): self
-    {
-        $this->recipients = $recipients;
-
-        return $this;
-    }
-
-    /**
-     * @param string|array $attachments
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setAttachments($attachments): self
-    {
-        if (\is_array($attachments)) {
-            $this->attachments = $attachments;
-        } else {
-            $this->attachments[] = $attachments;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $template
-     *
-     * @return $this
-     *
-     * @deprecated since version 4.8.0, to be removed with version 5.0.0
-     */
-    public function setTemplate($template): self
-    {
-        $this->template = $template;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     *
-     * @deprecated since version 4.30.0, to be removed with version 5.0.0
-     */
-    public function setData(MailerMessage $data): self
-    {
-        $this->mailerMessage = $data;
-
-        return $this;
-    }
-
-    /**
      * Sends the email.
      */
-    public function send(?MailerMessage $message = null): bool
+    public function send(MailerMessage $message): bool
     {
-        $message = $this->createMailerMessage($message);
-
         try {
             $this->configure();
 
@@ -288,28 +83,6 @@ class Mailer
         }
 
         return false;
-    }
-
-    private function createMailerMessage(?MailerMessage $message): MailerMessage
-    {
-        if ($message === null) {
-            if ($this->mailerMessage instanceof MailerMessage) {
-                $message = $this->mailerMessage;
-            } else {
-                $message = (new MailerMessage())
-                    ->setAttachments($this->attachments)
-                    ->setSubject($this->subject)
-                    ->setBody($this->body)
-                    ->setHtmlBody($this->htmlBody)
-                    ->setMailSignature($this->mailSignature)
-                    ->setRecipients($this->recipients)
-                    ->setTemplate($this->template)
-                    ->setUrlWeb($this->urlWeb)
-                    ->setFrom($this->from);
-            }
-        }
-
-        return $message;
     }
 
     protected function generateSubject(MailerMessage $message): string
@@ -354,6 +127,8 @@ class Mailer
      * Generates the E-mail body.
      *
      * @return $this
+     *
+     * @throws \PHPMailer\PHPMailer\Exception
      */
     private function generateBody(MailerMessage $message): self
     {
@@ -519,17 +294,6 @@ class Mailer
      */
     public function reset(): self
     {
-        $this->subject = '';
-        $this->body = '';
-        $this->htmlBody = '';
-        $this->urlWeb = '';
-        $this->mailSignature = '';
-        $this->from = '';
-        $this->recipients = null;
-        $this->bcc = false;
-        $this->attachments = [];
-        $this->template = '';
-
         if ($this->phpMailer) {
             $this->phpMailer->clearAllRecipients();
             $this->phpMailer->clearAttachments();

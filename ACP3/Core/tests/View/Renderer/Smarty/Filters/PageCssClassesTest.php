@@ -47,14 +47,6 @@ class PageCssClassesTest extends AbstractPluginTest
         $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
     }
 
-    /**
-     * @return string
-     */
-    protected function getExpectedExtensionName()
-    {
-        return 'output';
-    }
-
     public function testProcessInFrontend()
     {
         $this->setUpPageCssClassesMockExpectations();

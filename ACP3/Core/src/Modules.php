@@ -7,25 +7,15 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\Controller\Helper\ControllerActionExists;
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules\ModuleInfoCacheInterface;
 use MJS\TopSort\Implementations\StringSort;
 
 class Modules
 {
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
-     * @var \ACP3\Core\Controller\Helper\ControllerActionExists
-     */
-    protected $controllerActionExists;
-    /**
      * @var \ACP3\Core\Modules\ModuleInfoCacheInterface
      */
-    protected $moduleInfoCache;
+    private $moduleInfoCache;
     /**
      * @var array
      */
@@ -36,23 +26,9 @@ class Modules
     private $allModulesTopSorted = [];
 
     public function __construct(
-        ApplicationPath $appPath,
-        ControllerActionExists $controllerActionExists,
         ModuleInfoCacheInterface $moduleInfoCache
     ) {
-        $this->appPath = $appPath;
-        $this->controllerActionExists = $controllerActionExists;
         $this->moduleInfoCache = $moduleInfoCache;
-    }
-
-    /**
-     * Returns, whether the given module controller action exists.
-     *
-     * @deprecated since version 4.28, will be removed with version 5.0.0. Use ControllerActionExists helper directly
-     */
-    public function controllerActionExists(string $path): bool
-    {
-        return $this->controllerActionExists->controllerActionExists($path);
     }
 
     /**

@@ -12,16 +12,8 @@ class SiteAndPageTitle extends SiteTitle
     /**
      * {@inheritdoc}
      */
-    public function process(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
         return $this->title->getSiteAndPageTitle();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'site_and_page_title';
     }
 }

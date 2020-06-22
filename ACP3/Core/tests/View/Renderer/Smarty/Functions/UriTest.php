@@ -38,14 +38,6 @@ class UriTest extends AbstractPluginTest
         $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
     }
 
-    /**
-     * @return string
-     */
-    protected function getExpectedExtensionName()
-    {
-        return 'uri';
-    }
-
     public function testUriWithRouteOnly()
     {
         $params = [
