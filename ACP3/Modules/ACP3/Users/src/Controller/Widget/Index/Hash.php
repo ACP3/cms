@@ -31,8 +31,7 @@ class Hash extends AbstractWidgetAction
     {
         $accept = AcceptHeader::fromString($this->request->getSymfonyRequest()->headers->get('Accept'));
         if ($accept->has('application/vnd.fos.user-context-hash')) {
-            $this->response->setVary('Cookie');
-            $this->response->setPublic();
+            $this->response->setVary('Cookie, Authorization');
             $this->response->setMaxAge(3600);
             $this->response->headers->add([
                 'Content-type' => 'application/vnd.fos.user-context-hash',

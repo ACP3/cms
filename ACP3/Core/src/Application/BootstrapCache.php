@@ -11,6 +11,7 @@ use ACP3\Core\Application\BootstrapCache\Event\Listener\StaticAssetsListener;
 use ACP3\Core\Application\BootstrapCache\Event\Listener\UserContextListener;
 use ACP3\Core\Session\SessionConstants;
 use FOS\HttpCache\SymfonyCache\CacheInvalidation;
+use FOS\HttpCache\SymfonyCache\CustomTtlListener;
 use FOS\HttpCache\SymfonyCache\DebugListener;
 use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
 use FOS\HttpCache\SymfonyCache\PurgeListener;
@@ -36,12 +37,13 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
     ) {
         parent::__construct($kernel, $store, $surrogate, $options);
 
+        $this->addSubscriber(new CustomTtlListener());
+        $this->addSubscriber(new PurgeListener());
+        $this->addSubscriber(new RefreshListener());
         $this->addSubscriber(new UserContextListener([
             'user_hash_uri' => '/widget/users/index/hash/',
             'session_name_prefix' => SessionConstants::SESSION_NAME,
         ]));
-        $this->addSubscriber(new PurgeListener());
-        $this->addSubscriber(new RefreshListener());
         $this->addSubscriber(new StaticAssetsListener());
         if (isset($options['debug']) && $options['debug']) {
             $this->addSubscriber(new DebugListener());

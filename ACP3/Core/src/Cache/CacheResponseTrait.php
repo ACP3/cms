@@ -41,11 +41,11 @@ trait CacheResponseTrait
             $varyHeaderName = 'X-User-Context-Hash';
 
             $this->getResponse()
-                ->setPublic()
                 ->setVary($varyHeaderName)
-                ->setSharedMaxAge($lifetime)
+                ->setSharedMaxAge(1)
                 ->headers->add([
                     $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
+                    'X-Reverse-Proxy-TTL' => $lifetime,
                 ]);
         }
     }
