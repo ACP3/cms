@@ -14,8 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class StaticAssetsListener implements EventSubscriberInterface
 {
-    const JAVASCRIPTS_REGEX_PATTERN = MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN;
-    const PLACEHOLDER = '</body>';
+    private const JAVASCRIPTS_REGEX_PATTERN = MoveToBottom::ELEMENT_CATCHER_REGEX_PATTERN;
+    private const PLACEHOLDER = '</body>';
 
     /**
      * {@inheritdoc}
@@ -30,6 +30,11 @@ class StaticAssetsListener implements EventSubscriberInterface
     public function postHandle(CacheEvent $event)
     {
         $response = $event->getResponse();
+
+        if (!$response) {
+            return;
+        }
+
         $content = $response->getContent();
         if (\strpos($content, static::PLACEHOLDER) !== false) {
             $content = \str_replace(
