@@ -16,7 +16,11 @@ class Migration implements Modules\Installer\MigrationInterface
      */
     public function schemaUpdates()
     {
-        return [];
+        return [
+            2 => [
+                'ALTER TABLE `{pre}gallery` MODIFY `comments` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0',
+            ],
+        ];
     }
 
     /**

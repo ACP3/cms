@@ -35,7 +35,7 @@
                 {foreach $pages_list as $block => $values}
                     <tr>
                         <td class="sub-table-header{if $can_edit || $can_delete} has-buttons{/if}" colspan="{$colspan}">
-                            {$values.title} <span>({lang t="menus|index_name2"} {$block})</span>
+                            {$values.title} <span class="small">({lang t="menus|index_name2"} {$block})</span>
                             {if $can_delete || $can_edit}
                                 <div class="btn-group pull-right">
                                     {if $can_edit}
