@@ -15,9 +15,9 @@
   },
   "require": {
     "acp3/composer-installer": "^1.0",
-    "acp3/core": "^4.47.0",
-    "acp3/module-installer": "^4.47.0",
-    "acp3/theme-installer": "^4.47.0"
+    "acp3/core": "^5.0.0",
+    "acp3/module-installer": "^5.0.0",
+    "acp3/theme-installer": "^5.0.0"
   },
   "extra": {
     "installer-name": "installation"

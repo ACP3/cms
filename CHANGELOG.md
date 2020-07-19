@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.0.0] - 2020-07-19
 ### Breaking
 - removed all deprecated code
 
@@ -1080,7 +1080,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v4.48.2...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.0.0...4.x
+[5.0.0]: https://gitlab.com/ACP3/cms/compare/v4.48.2...v5.0.0
 [4.48.2]: https://gitlab.com/ACP3/cms/compare/v4.48.1...v4.48.2
 [4.48.1]: https://gitlab.com/ACP3/cms/compare/v4.48.0...v4.48.1
 [4.48.0]: https://gitlab.com/ACP3/cms/compare/v4.47.6...v4.48.0
