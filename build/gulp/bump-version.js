@@ -13,6 +13,8 @@ module.exports = (gulp, plugins) => {
 
     const modules = {
         'ACP3/Core': 'acp3/core',
+        'designs/acp3': 'acp3/theme-default',
+        'designs/acp3-installer': 'acp3/theme-installer',
         'installation': 'acp3/setup',
         'tests': 'acp3/test',
         'ACP3/Modules/ACP3/Acp': 'acp3/module-acp',
