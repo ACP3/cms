@@ -71,15 +71,14 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
         if ($cMenuItems > 0) {
             $menus = $this->menuRepository->getAllMenus();
-            $cMenus = \count($menus);
 
-            for ($i = 0; $i < $cMenus; ++$i) {
-                $this->saveVisibleMenuItemsCache($menus[$i]['index_name']);
+            foreach ($menus as $menu) {
+                $this->saveVisibleMenuItemsCache($menu['index_name']);
             }
 
-            for ($i = 0; $i < $cMenuItems; ++$i) {
-                for ($j = 0; $j < $cMenus; ++$j) {
-                    if ($menuItems[$i]['block_id'] == $menus[$j]['id']) {
+            foreach ($menuItems as $i => $menuItem) {
+                foreach ($menus as $j => $menu) {
+                    if ($menuItem['block_id'] === $menu['id']) {
                         $menuItems[$i]['block_title'] = $menus[$j]['title'];
                         $menuItems[$i]['block_name'] = $menus[$j]['index_name'];
                     }
@@ -91,11 +90,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
                 $this->translator->t('menus', 'module'),
                 $this->translator->t('menus', 'dynamic_page'),
                 $this->translator->t('menus', 'hyperlink'),
-                $this->translator->t('menus', 'article'),
+                $this->translator->t('articles', 'article'),
             ];
 
-            for ($i = 0; $i < $cMenuItems; ++$i) {
-                $menuItems[$i]['mode_formatted'] = \str_replace($modeSearch, $modeReplace, $menuItems[$i]['mode']);
+            foreach ($menuItems as $i => $menu) {
+                $menuItems[$i]['mode_formatted'] = \str_replace($modeSearch, $modeReplace, $menu['mode']);
                 $menuItems[$i]['first'] = $this->isFirstItemInSet($i, $menuItems);
                 $menuItems[$i]['last'] = $this->isLastItemInSet($i, $menuItems);
             }

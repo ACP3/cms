@@ -34,7 +34,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 1;
+        return 2;
     }
 
     /**
@@ -43,7 +43,7 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
-            'ALTER TABLE `{pre}files` ADD COLUMN `comments` TINYINT(1) UNSIGNED NOT NULL;',
+            'ALTER TABLE `{pre}files` ADD COLUMN `comments` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0;',
         ];
     }
 
