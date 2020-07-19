@@ -5,12 +5,12 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+namespace ACP3\Core\DataGrid\ColumnRenderer;
 
 abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRenderer
+     * @var \ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer
      */
     protected $columnRenderer;
     /**
@@ -168,6 +168,6 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
             ->setPrimaryKey($this->primaryKey)
             ->fetchDataAndRenderColumn($this->columnData, $this->dbData);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

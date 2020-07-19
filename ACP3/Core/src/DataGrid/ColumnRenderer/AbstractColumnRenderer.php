@@ -207,11 +207,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
      */
     protected function getDefaultValue(array $column)
     {
-        if (isset($column['custom']['default_value'])) {
-            return $column['custom']['default_value'];
-        }
-
-        return '';
+        return $column['custom']['default_value'] ?? '';
     }
 
     /**

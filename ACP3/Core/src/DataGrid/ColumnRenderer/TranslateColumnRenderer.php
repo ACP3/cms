@@ -29,7 +29,8 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
      */
     protected function getValue(array $column, array $dbResultRow)
     {
-        $value = parent::getValue($column, $dbResultRow);
+        $field = $this->getFirstDbField($column);
+        $value = $this->getDbValueIfExists($dbResultRow, $field);
         $fields = $this->getDbFields($column);
 
         if (\count($fields) === 2) {
@@ -38,6 +39,8 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
             $domain = $column['custom']['domain'] ?? $value;
 
             $value = $this->translator->t($domain, $value);
+        } elseif ($this->getDefaultValue($column)) {
+            $value = $this->getDefaultValue($column);
         }
 
         return $value;

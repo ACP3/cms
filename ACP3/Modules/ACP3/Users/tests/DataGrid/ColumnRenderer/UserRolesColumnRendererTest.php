@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Helpers\DataGrid\ColumnRenderer\AbstractColumnRendererTest;
+use ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRendererTest;
 
 class UserRolesColumnRendererTest extends AbstractColumnRendererTest
 {

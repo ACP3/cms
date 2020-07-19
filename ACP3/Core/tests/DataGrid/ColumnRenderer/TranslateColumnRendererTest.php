@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Helpers\DataGrid\ColumnRenderer;
+namespace ACP3\Core\DataGrid\ColumnRenderer;
 
 use ACP3\Core\I18n\Translator;
 
@@ -28,7 +28,7 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
      */
     private function setUpLangMockExpectation($langKey, $langValue)
     {
-        $this->langMock->expects($this->once())
+        $this->langMock->expects(self::once())
             ->method('t')
             ->with($langKey, $langKey)
             ->willReturn($langValue);
@@ -47,5 +47,10 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
 
         $expected = '<td>{NEWS_NEWS}</td>';
         $this->compareResults($expected);
+    }
+
+    public function testDefaultValueIfNull()
+    {
+        parent::testDefaultValueIfNull();
     }
 }
