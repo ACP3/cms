@@ -29,13 +29,15 @@ services:
       - "80:80"
     volumes:
       - ./build/docker/apache/vhost.conf:/usr/local/apache2/conf/sites-enabled/vhost.conf:ro
-      - php:/var/www/html/
+      - ./:/var/www/html/:ro
     container_name: acp3-apache
 
   mysql:
     image: mysql:${MYSQL_VERSION:-latest}
     networks:
       - acp3-cms
+    ports:
+      - "3306:3306"
     volumes:
       - acp3-data-mysql:/var/lib/mysql/
       - ./build/docker/mysql/dump:/docker-entrypoint-initdb.d
@@ -47,7 +49,6 @@ services:
 
 volumes:
   acp3-data-mysql:
-  php:
 
 networks:
   acp3-cms:
