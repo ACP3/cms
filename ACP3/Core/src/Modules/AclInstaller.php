@@ -18,8 +18,8 @@ use ACP3\Core\Modules\Installer\SchemaInterface;
 
 class AclInstaller implements InstallerInterface
 {
-    const INSTALL_RESOURCES_AND_RULES = 1;
-    const INSTALL_RESOURCES = 2;
+    public const INSTALL_RESOURCES_AND_RULES = 1;
+    public const INSTALL_RESOURCES = 2;
 
     /**
      * @var \ACP3\Core\Cache
@@ -46,11 +46,6 @@ class AclInstaller implements InstallerInterface
      */
     private $ruleRepository;
 
-    /**
-     * AclInstaller constructor.
-     *
-     * @param \ACP3\Core\Modules\SchemaHelper $schemaHelper
-     */
     public function __construct(
         Cache $aclCache,
         SchemaHelper $schemaHelper,
@@ -94,13 +89,15 @@ class AclInstaller implements InstallerInterface
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function insertAclResources(SchemaInterface $schema)
+    private function insertAclResources(SchemaInterface $schema): void
     {
+        $moduleId = $this->schemaHelper->getModuleId($schema->getModuleName());
+
         foreach ($schema->specialResources() as $area => $controllers) {
             foreach ($controllers as $controller => $actions) {
                 foreach ($actions as $action => $privilegeId) {
                     $insertValues = [
-                        'module_id' => $this->schemaHelper->getModuleId($schema->getModuleName()),
+                        'module_id' => $moduleId,
                         'area' => !empty($area) ? \strtolower($area) : AreaEnum::AREA_FRONTEND,
                         'controller' => \strtolower($controller),
                         'page' => $this->convertCamelCaseToUnderscore($action),
@@ -113,12 +110,7 @@ class AclInstaller implements InstallerInterface
         }
     }
 
-    /**
-     * @param string $action
-     *
-     * @return string
-     */
-    private function convertCamelCaseToUnderscore($action)
+    private function convertCamelCaseToUnderscore(string $action): string
     {
         return \strtolower(\preg_replace('/\B([A-Z])/', '_$1', $action));
     }
@@ -126,11 +118,9 @@ class AclInstaller implements InstallerInterface
     /**
      * Insert new acl user rules.
      *
-     * @param string $moduleName
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function insertAclRules($moduleName)
+    private function insertAclRules(string $moduleName): void
     {
         $roles = $this->roleRepository->getAllRoles();
         $privileges = $this->privilegeRepository->getAllPrivilegeIds();
@@ -149,13 +139,7 @@ class AclInstaller implements InstallerInterface
         }
     }
 
-    /**
-     * @param array $role
-     * @param array $privilege
-     *
-     * @return int
-     */
-    private function getDefaultAclRulePermission($role, $privilege)
+    private function getDefaultAclRulePermission(array $role, array $privilege): int
     {
         $permission = PermissionEnum::DENY_ACCESS;
         if ($role['id'] == 1 &&
@@ -178,10 +162,8 @@ class AclInstaller implements InstallerInterface
 
     /**
      * Löscht die zu einem Modul zugehörigen Ressourcen.
-     *
-     * @return bool
      */
-    public function uninstall(SchemaInterface $schema)
+    public function uninstall(SchemaInterface $schema): bool
     {
         $this->aclCache->getDriver()->deleteAll();
 

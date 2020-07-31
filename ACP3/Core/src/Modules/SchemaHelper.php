@@ -79,10 +79,15 @@ class SchemaHelper
             return;
         }
 
-        $search = ['{pre}', '{engine}', '{charset}'];
-        $replace = [$this->db->getPrefix(), 'ENGINE=InnoDB', 'CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`'];
-
         $this->db->getConnection()->beginTransaction();
+
+        $search = ['{pre}', '{engine}', '{charset}', '{moduleId}'];
+        $replace = [
+            $this->db->getPrefix(),
+            'ENGINE=InnoDB',
+            'CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`',
+            $this->getModuleId($moduleName),
+        ];
 
         try {
             foreach ($queries as $query) {
@@ -91,9 +96,6 @@ class SchemaHelper
                         throw new Core\Modules\Exception\ModuleMigrationException(\sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
                     }
                 } elseif (!empty($query)) {
-                    if (\strpos($query, '{moduleId}') !== false) {
-                        $query = \str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
-                    }
                     $this->db->getConnection()->query(\str_ireplace($search, $replace, $query));
                 }
             }
@@ -121,6 +123,6 @@ class SchemaHelper
         return $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->systemModuleRepository->getTableName()} WHERE `name` = ?",
             [$moduleName]
-        ) == 1;
+        ) === 1;
     }
 }
