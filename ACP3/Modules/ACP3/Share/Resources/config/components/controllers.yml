@@ -65,8 +65,8 @@ services:
       - '@core.context.frontend'
       - '@shariff.backend'
 
-  share.controller.frontend.index.rate_post:
-    class: ACP3\Modules\ACP3\Share\Controller\Frontend\Index\RatePost
+  share.controller.frontend.index.rate:
+    class: ACP3\Modules\ACP3\Share\Controller\Frontend\Index\Rate
     arguments:
       - '@core.context.frontend'
       - '@share.model.share_repository'

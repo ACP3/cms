@@ -68,7 +68,7 @@ class ControllerActionDispatcher
             $this->modifyRequest($serviceId, $arguments);
         }
 
-        if ($this->container->has($serviceId . '_post') && $this->request->getSymfonyRequest()->isMethod('POST')) {
+        if ($this->shouldUsePostAction($serviceId)) {
             $serviceId .= '_post';
         }
 
@@ -119,6 +119,13 @@ class ControllerActionDispatcher
 
         $this->request->setPathInfo($module . '/' . $controller . '/' . $action . $params);
         $this->request->processQuery();
+    }
+
+    private function shouldUsePostAction(?string $serviceId): bool
+    {
+        return $this->container->has($serviceId . '_post')
+            && $this->request->getSymfonyRequest()->isMethod('POST')
+            && ($this->request->getPost()->has('submit') || $this->request->getPost()->has('continue'));
     }
 
     /**

@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 use ACP3\Modules\ACP3\Share\Model\ShareRatingModel;
 
-class RatePost extends AbstractFrontendAction implements InvokableActionInterface
+class Rate extends AbstractFrontendAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
