@@ -15,6 +15,8 @@ interface ModuleAwareRepositoryInterface extends RepositoryInterface
 
     public function moduleExists(string $moduleName): bool;
 
+    public function coreTablesExist(): bool;
+
     public function getInfoByModuleName(string $moduleName): array;
 
     public function getModuleNameById(int $moduleId): string;

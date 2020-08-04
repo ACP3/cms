@@ -7,10 +7,35 @@
 
 namespace ACP3\Core\Modules;
 
+use ACP3\Core\Database\Connection;
+use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
+use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
+use Psr\Log\LoggerInterface;
 
 class SchemaInstaller extends SchemaHelper implements InstallerInterface
 {
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+    /**
+     * @var \ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface
+     */
+    private $systemSettingsRepository;
+
+    public function __construct(
+        LoggerInterface $logger,
+        Connection $db,
+        ModuleAwareRepositoryInterface $systemModuleRepository,
+        SettingsAwareRepositoryInterface $systemSettingsRepository
+    ) {
+        parent::__construct($db, $systemModuleRepository);
+
+        $this->logger = $logger;
+        $this->systemSettingsRepository = $systemSettingsRepository;
+    }
+
     /**
      * Installs a module.
      *
@@ -22,11 +47,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             return true;
         }
 
-        try {
-            $this->executeSqlQueries($schema->createTables(), $schema->getModuleName());
-        } catch (\Throwable $e) {
-            return false;
-        }
+        $this->executeSqlQueries($schema->createTables(), $schema->getModuleName());
 
         return $this->addToModulesTable($schema->getModuleName(), $schema->getSchemaVersion())
             && $this->installSettings($schema->getModuleName(), $schema->settings());
@@ -37,9 +58,9 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function moduleNeedsInstallation(SchemaInterface $schema): bool
     {
-        $modulesTableExists = $this->db->fetchColumn("SHOW TABLES LIKE '{$this->systemModuleRepository->getTableName()}'");
+        $modulesTableExists = $this->getDb()->fetchColumn("SHOW TABLES LIKE '{$this->getSystemModuleRepository()->getTableName()}'");
 
-        return !$modulesTableExists || !$this->systemModuleRepository->moduleExists($schema->getModuleName());
+        return !$modulesTableExists || !$this->getSystemModuleRepository()->moduleExists($schema->getModuleName());
     }
 
     /**
@@ -53,7 +74,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             'active' => 1,
         ];
 
-        return $this->systemModuleRepository->insert($insertValues) !== false;
+        return $this->getSystemModuleRepository()->insert($insertValues) !== false;
     }
 
     /**
@@ -65,7 +86,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     protected function installSettings(string $moduleName, array $settings): bool
     {
         if (\count($settings) > 0) {
-            $this->db->getConnection()->beginTransaction();
+            $this->getDb()->getConnection()->beginTransaction();
 
             try {
                 $moduleId = $this->getModuleId($moduleName);
@@ -77,9 +98,9 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
                     ];
                     $this->systemSettingsRepository->insert($insertValues);
                 }
-                $this->db->getConnection()->commit();
+                $this->getDb()->getConnection()->commit();
             } catch (\Exception $e) {
-                $this->db->getConnection()->rollBack();
+                $this->getDb()->getConnection()->rollBack();
 
                 $this->logger->warning($e);
 
@@ -109,6 +130,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function removeFromModulesTable(string $moduleName): bool
     {
-        return $this->systemModuleRepository->delete($this->getModuleId($moduleName)) !== false;
+        return $this->getSystemModuleRepository()->delete($this->getModuleId($moduleName)) !== false;
     }
 }

@@ -89,9 +89,6 @@ class Modules extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $action
-     * @param string $dir
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\DBALException

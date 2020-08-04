@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\System\Model\Repository;
 
 use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
+use Doctrine\DBAL\Connection;
 
 class ModulesRepository extends AbstractRepository implements ModuleAwareRepositoryInterface
 {
@@ -36,6 +37,24 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
             'SELECT `version` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
             [$moduleName]
         );
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function coreTablesExist(): bool
+    {
+        return $this->db->fetchColumn(
+            'SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = :dbName AND table_name IN (:requiredTables)',
+                [
+                    'dbName' => $this->db->getDatabase(),
+                    'requiredTables' => [$this->getTableName(), $this->getTableName(SettingsRepository::TABLE_NAME)],
+                ],
+                0,
+                [
+                    'requiredTables' => Connection::PARAM_STR_ARRAY,
+                ]
+        ) === 2;
     }
 
     /**

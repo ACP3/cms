@@ -9,7 +9,6 @@ namespace ACP3\Core\Database;
 
 use ACP3\Core\Cache\CacheDriverFactory;
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Environment\ApplicationPath;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Psr\Log\LoggerInterface;
@@ -19,45 +18,36 @@ class Connection
     /**
      * @var LoggerInterface
      */
-    protected $logger;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
+    private $logger;
     /**
      * @var \ACP3\Core\Cache\CacheDriverFactory
      */
-    protected $cacheDriverFactory;
+    private $cacheDriverFactory;
     /**
      * @var \Doctrine\DBAL\Connection
      */
-    protected $connection;
+    private $connection;
     /**
      * @var string
      */
-    protected $appMode = '';
+    private $appMode;
     /**
      * @var array
      */
-    protected $connectionParams = [];
+    private $connectionParams;
     /**
      * @var string
      */
-    protected $prefix = '';
+    private $prefix;
 
-    /**
-     * Connection constructor.
-     */
     public function __construct(
         LoggerInterface $logger,
-        ApplicationPath $appPath,
         CacheDriverFactory $cacheDriverFactory,
         string $appMode,
         array $connectionParams,
         string $tablePrefix
     ) {
         $this->logger = $logger;
-        $this->appPath = $appPath;
         $this->cacheDriverFactory = $cacheDriverFactory;
         $this->appMode = $appMode;
         $this->connectionParams = $connectionParams;
@@ -65,11 +55,9 @@ class Connection
     }
 
     /**
-     * @return DBAL\Connection
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getConnection()
+    public function getConnection(): DBAL\Connection
     {
         if ($this->connection === null) {
             $this->connection = $this->connect();
@@ -83,38 +71,27 @@ class Connection
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getWrappedConnection()
+    public function getWrappedConnection(): ?DBAL\Driver\Connection
     {
         return $this->getConnection()->getWrappedConnection();
     }
 
-    /**
-     * @return string
-     */
-    public function getDatabase()
+    public function getDatabase(): string
     {
         return $this->connectionParams['dbname'];
     }
 
-    /**
-     * @return string
-     */
-    public function getPrefix()
+    public function getPrefix(): string
     {
         return $this->prefix;
     }
 
-    /**
-     * @return string
-     */
-    public function getPrefixedTableName(string $tableName)
+    public function getPrefixedTableName(string $tableName): string
     {
         return $this->prefix . $tableName;
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchAll(
@@ -124,7 +101,7 @@ class Connection
         bool $cache = false,
         int $lifetime = 0,
         ?string $cacheKey = null
-    ) {
+    ): array {
         $stmt = $this->executeQuery($statement, $params, $types, $cache, $lifetime, $cacheKey);
         $data = $stmt->fetchAll();
         $stmt->closeCursor();
@@ -143,11 +120,9 @@ class Connection
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function fetchAssoc(string $statement, array $params = [], array $types = [])
+    public function fetchAssoc(string $statement, array $params = [], array $types = []): array
     {
         $result = $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_ASSOC);
 
@@ -211,7 +186,7 @@ class Connection
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function connect()
+    protected function connect(): DBAL\Connection
     {
         $config = new DBAL\Configuration();
         if ($this->appMode === ApplicationMode::DEVELOPMENT) {

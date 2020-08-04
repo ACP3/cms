@@ -21,7 +21,7 @@ class SchemaUpdater extends SchemaHelper
      */
     public function updateSchema(SchemaInterface $schema, MigrationInterface $migration): void
     {
-        $module = $this->systemModuleRepository->getModuleSchemaVersion($schema->getModuleName());
+        $module = $this->getSystemModuleRepository()->getModuleSchemaVersion($schema->getModuleName());
         $installedSchemaVersion = !empty($module) ? $module : 0;
 
         // Falls eine Methode zum Umbenennen des Moduls existiert,
@@ -82,7 +82,7 @@ class SchemaUpdater extends SchemaHelper
      */
     public function updateSchemaVersion(string $moduleName, int $schemaVersion): bool
     {
-        return $this->systemModuleRepository->update(['version' => $schemaVersion], ['name' => $moduleName]) !== false;
+        return $this->getSystemModuleRepository()->update(['version' => $schemaVersion], ['name' => $moduleName]) !== false;
     }
 
     /**

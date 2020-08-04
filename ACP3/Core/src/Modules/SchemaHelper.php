@@ -8,7 +8,6 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -19,33 +18,18 @@ class SchemaHelper
     /**
      * @var \ACP3\Core\Database\Connection
      */
-    protected $db;
+    private $db;
     /**
      * @var Core\Model\Repository\ModuleAwareRepositoryInterface
      */
-    protected $systemModuleRepository;
-    /**
-     * @var Core\Model\Repository\SettingsAwareRepositoryInterface
-     */
-    protected $systemSettingsRepository;
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    private $systemModuleRepository;
 
-    /**
-     * SchemaHelper constructor.
-     */
     public function __construct(
-        LoggerInterface $logger,
         Core\Database\Connection $db,
-        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository,
-        Core\Model\Repository\SettingsAwareRepositoryInterface $systemSettingsRepository
+        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
     ) {
         $this->db = $db;
         $this->systemModuleRepository = $systemModuleRepository;
-        $this->systemSettingsRepository = $systemSettingsRepository;
-        $this->logger = $logger;
     }
 
     public function getContainer(): ContainerInterface
@@ -82,6 +66,11 @@ class SchemaHelper
         $search = ['{pre}', '{engine}', '{charset}'];
         $replace = [$this->db->getPrefix(), 'ENGINE=InnoDB', 'CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`'];
 
+        if ($this->systemModuleRepository->coreTablesExist()) {
+            $search[] = '{moduleId}';
+            $replace[] = $this->getModuleId($moduleName);
+        }
+
         $this->db->getConnection()->beginTransaction();
 
         try {
@@ -91,9 +80,6 @@ class SchemaHelper
                         throw new Core\Modules\Exception\ModuleMigrationException(\sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
                     }
                 } elseif (!empty($query)) {
-                    if (\strpos($query, '{moduleId}') !== false) {
-                        $query = \str_replace('{moduleId}', $this->getModuleId($moduleName), $query);
-                    }
                     $this->db->getConnection()->query(\str_ireplace($search, $replace, $query));
                 }
             }
@@ -113,14 +99,8 @@ class SchemaHelper
         return $this->systemModuleRepository->getModuleId($moduleName) ?: 0;
     }
 
-    /**
-     * @throws \Doctrine\DBAL\DBALException
-     */
     public function moduleIsInstalled(string $moduleName): bool
     {
-        return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->systemModuleRepository->getTableName()} WHERE `name` = ?",
-            [$moduleName]
-        ) === 1;
+        return $this->systemModuleRepository->moduleExists($moduleName);
     }
 }
