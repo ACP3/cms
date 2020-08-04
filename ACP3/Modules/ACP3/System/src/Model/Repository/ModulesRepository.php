@@ -44,7 +44,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
      */
     public function coreTablesExist(): bool
     {
-        return $this->db->fetchColumn(
+        return ((int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = :dbName AND table_name IN (:requiredTables)',
                 [
                     'dbName' => $this->db->getDatabase(),
@@ -54,7 +54,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
                 [
                     'requiredTables' => Connection::PARAM_STR_ARRAY,
                 ]
-        ) === 2;
+        )) === 2;
     }
 
     /**

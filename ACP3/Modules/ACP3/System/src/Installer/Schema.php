@@ -53,7 +53,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 73;
+        return 74;
     }
 
     /**
@@ -104,7 +104,7 @@ class Schema implements Modules\Installer\SchemaInterface
     {
         return [
             'cache_lifetime' => 3600,
-            'cache_images' => true,
+            'cache_images' => 1,
             'cache_vary_user' => 0,
             'cookie_consent_is_enabled' => 0,
             'cookie_consent_text' => '',
@@ -116,18 +116,18 @@ class Schema implements Modules\Installer\SchemaInterface
             'flood' => '20',
             'homepage' => 'news/index/index/',
             'lang' => 'en_US',
-            'mailer_smtp_auth' => false,
+            'mailer_smtp_auth' => 0,
             'mailer_smtp_host' => '',
             'mailer_smtp_password' => '',
             'mailer_smtp_port' => 25,
             'mailer_smtp_security' => 'none',
             'mailer_smtp_user' => '',
             'mailer_type' => 'mail',
-            'maintenance_mode' => false,
+            'maintenance_mode' => 0,
             'maintenance_message' => '',
-            'mod_rewrite' => false,
-            'page_cache_is_enabled' => false,
-            'page_cache_is_valid' => true,
+            'mod_rewrite' => 0,
+            'page_cache_is_enabled' => 0,
+            'page_cache_is_valid' => 1,
             'page_cache_purge_mode' => 1,
             'security_secret' => \uniqid(\mt_rand(), true),
             'site_title' => '',

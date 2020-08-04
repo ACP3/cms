@@ -255,6 +255,14 @@ class Migration extends Modules\Installer\AbstractMigration
                 'ALTER TABLE `{pre}sessions` ADD COLUMN `session_data` MEDIUMBLOB NOT NULL;',
                 'ALTER TABLE `{pre}sessions` MODIFY COLUMN `session_id` VARCHAR(128) {charset} NOT NULL;',
             ],
+            74 => [
+                'UPDATE `{pre}settings` SET `value` = 1 WHERE `module_id` = {moduleId} AND `name` = \'cache_images\' AND `value` = \'\';',
+                'UPDATE `{pre}settings` SET `value` = 0 WHERE `module_id` = {moduleId} AND `name` = \'mailer_smtp_auth\' AND `value` = \'\';',
+                'UPDATE `{pre}settings` SET `value` = 0 WHERE `module_id` = {moduleId} AND `name` = \'maintenance_mode\' AND `value` = \'\';',
+                'UPDATE `{pre}settings` SET `value` = 0 WHERE `module_id` = {moduleId} AND `name` = \'mod_rewrite\' AND `value` = \'\';',
+                'UPDATE `{pre}settings` SET `value` = 0 WHERE `module_id` = {moduleId} AND `name` = \'page_cache_is_enabled\' AND `value` = \'\';',
+                'UPDATE `{pre}settings` SET `value` = 1 WHERE `module_id` = {moduleId} AND `name` = \'page_cache_is_valid\' AND `value` = \'\';',
+            ],
         ];
     }
 
