@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.0.1] - 2020-08-05
 ### Changed
 - optimized the module installation (fixed some n+1 SQL queries)
 - restricted the POST-only controllers actions to "normal" forms
@@ -1088,7 +1088,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.0.0...4.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.0.1...4.x
+[5.0.1]: https://gitlab.com/ACP3/cms/compare/v5.0.0...v5.0.1
 [5.0.0]: https://gitlab.com/ACP3/cms/compare/v4.48.2...v5.0.0
 [4.48.2]: https://gitlab.com/ACP3/cms/compare/v4.48.1...v4.48.2
 [4.48.1]: https://gitlab.com/ACP3/cms/compare/v4.48.0...v4.48.1
