@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- optimized the module installation (fixed some n+1 SQL queries)
+- restricted the POST-only controllers actions to "normal" forms
+
+### Fixed
+- fixed erroneous entries within the settings tables after a fresh installation
+
 ## [5.0.0] - 2020-07-19
 ### Breaking
 - removed all deprecated code
