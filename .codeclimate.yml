@@ -1,6 +1,6 @@
 version: 2
 
-exclude_pattern:
+exclude_patterns:
   - "**/node_modules/"
   - "**/tests/"
   - "**/vendor/"
