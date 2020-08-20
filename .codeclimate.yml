@@ -1,0 +1,10 @@
+version: 2
+
+exclude_pattern:
+  - "**/node_modules/"
+  - "**/tests/"
+  - "**/vendor/"
+  - "**/*.min.js"
+  - "ACP3/Modules/ACP3/Filemanager/Resources/Assets/js/rich-filemanager/"
+  - "ACP3/Modules/ACP3/System/Resources/Assets/js/*.js"
+  - "ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/"
