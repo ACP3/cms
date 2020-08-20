@@ -54,10 +54,15 @@ test:php72-unit:
   cache:
     policy: pull
   script:
-    - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never
+    - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never --log-junit junit-report.xml
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   needs:
     - build:composer
+  artifacts:
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
 
 test:php73-unit:
   extends: test:php72-unit
