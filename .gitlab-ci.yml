@@ -1,3 +1,6 @@
+include:
+  - template: Code-Quality.gitlab-ci.yml
+
 variables:
   COMPOSER_HOME: .composerhome
   COMPOSER_ALLOW_SUPERUSER: 1
