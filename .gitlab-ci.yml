@@ -6,6 +6,7 @@ variables:
   COMPOSER_HOME: .composerhome
   COMPOSER_ALLOW_SUPERUSER: 1
   npm_config_cache: .npmhome
+  SAST_EXCLUDED_PATHS: 'tests,node_modules,vendor'
 
 stages:
   - build
