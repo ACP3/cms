@@ -1,5 +1,6 @@
 include:
   - template: Code-Quality.gitlab-ci.yml
+  - template: SAST.gitlab-ci.yml
 
 variables:
   COMPOSER_HOME: .composerhome
