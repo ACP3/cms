@@ -43,12 +43,12 @@
                                target="_blank"
                                rel="noopener nofollow"
                                title="{lang t="guestbook|visit_website"}">
-                                <i class="glyphicon glyphicon-link"></i>
+                                <i class="fas fa-link"></i>
                             </a>
                             <br>
                         {/if}
                         {if $row.mail != ''}
-                            {mailto address=$row.mail encode="javascript" text='<i class="glyphicon glyphicon-envelope"></i>'}
+                            {mailto address=$row.mail encode="javascript" text='<i class="fa fa-envelope"></i>'}
                         {/if}
                     </div>
                     {$row.message|decorate}

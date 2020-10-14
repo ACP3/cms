@@ -73,7 +73,7 @@
                    class="btn btn-warning"
                    data-ajax-form="true"
                    data-ajax-form-loading-text="{lang t="installer|loading_please_wait"}">
-                    <i class="glyphicon glyphicon-refresh"></i>
+                    <i class="fas fa-sync-alt"></i>
                     {lang t="installer|check_again"}
                 </a>
                 {javascripts}

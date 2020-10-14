@@ -53,7 +53,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
             $this->optionRenderer->addOption(
                 $this->getEditRoute($dbResultRow, $resourcePathEdit),
                 $this->translator->t('system', 'edit'),
-                'glyphicon-edit',
+                'fa-edit',
                 'btn-default'
             );
         }
@@ -69,7 +69,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
             $this->optionRenderer->addOption(
                 $resourcePathDelete . 'entries_' . $dbResultRow[$this->getPrimaryKey()],
                 $this->translator->t('system', 'delete'),
-                'glyphicon-remove',
+                'fa-trash',
                 'btn-danger'
             );
         }

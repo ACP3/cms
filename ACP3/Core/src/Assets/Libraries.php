@@ -60,7 +60,7 @@ class Libraries
             'js' => 'jquery.fancybox.min.js',
         ],
         'font-awesome' => [
-            'enabled' => false,
+            'enabled' => true,
             'css' => [
                 'all.css',
             ],

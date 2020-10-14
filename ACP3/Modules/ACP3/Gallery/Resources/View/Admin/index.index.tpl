@@ -3,10 +3,10 @@
 {$DELETE_ROUTE={uri args="acp/gallery/index/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/gallery/index/create" class="glyphicon glyphicon-plus text-success"}
-    {check_access mode="link" path="acp/gallery/index/settings" class="glyphicon glyphicon-cog"}
+    {check_access mode="link" path="acp/gallery/index/create" class="fas fa-plus text-success"}
+    {check_access mode="link" path="acp/gallery/index/settings" class="fas fa-cog"}
     {if $grid.show_mass_delete}
-        {check_access mode="button" path="acp/gallery/index/delete" class="glyphicon glyphicon-remove text-danger" lang="system|delete_marked"}
+        {check_access mode="button" path="acp/gallery/index/delete" class="fa fa-trash text-danger" lang="system|delete_marked"}
     {/if}
 {/block}
 {block ADMIN_GRID_CONTENT}

@@ -29,10 +29,10 @@
                                 <td>{$row.author}</td>
                                 <td class="text-center">
                                     {if $row.protected === true}
-                                        <i class="glyphicon glyphicon-remove-circle text-danger"
+                                        <i class="fas fa-times-circle text-danger"
                                            title="{lang t="system|protected_module_description"}"></i>
                                     {elseif $row.installable === false}
-                                        <i class="glyphicon glyphicon-info-sign text-info"
+                                        <i class="fas fa-info-circle text-info"
                                            title="{lang t="system|not_installable_module_description"}"></i>
                                     {else}
                                         {if $row.active === true}
@@ -41,7 +41,7 @@
                                                title="{lang t="system|disable_module"}"
                                                data-ajax-form="true"
                                                data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                                <i class="glyphicon glyphicon-remove"></i>
+                                                <i class="fa fa-trash"></i>
                                                 {lang t="system|disable"}
                                             </a>
                                         {else}
@@ -50,7 +50,7 @@
                                                title="{lang t="system|enable_module"}"
                                                data-ajax-form="true"
                                                data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                                <i class="glyphicon glyphicon-ok"></i>
+                                                <i class="fas fa-check"></i>
                                                 {lang t="system|enable"}
                                             </a>
                                         {/if}
@@ -59,7 +59,7 @@
                                            title="{lang t="system|uninstall_module"}"
                                            data-ajax-form="true"
                                            data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            <i class="glyphicon glyphicon-off"></i>
+                                            <i class="fas fa-power-off"></i>
                                             {lang t="system|uninstall"}
                                         </a>
                                     {/if}
@@ -97,7 +97,7 @@
                                            data-ajax-form="true"
                                            data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"
                                            data-hash-change="#tab-2">
-                                            <i class="glyphicon glyphicon-off"></i>
+                                            <i class="fas fa-power-off"></i>
                                             {lang t="system|install"}
                                         </a>
                                     </td>

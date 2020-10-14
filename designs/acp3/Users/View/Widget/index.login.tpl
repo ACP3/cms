@@ -20,7 +20,7 @@
                     <input class="form-control input-sm" type="password" name="pwd" id="nav-pwd" placeholder="{lang t="users|pwd"}" required>
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary btn-sm" title="{lang t="users|log_in"}">
-                    <i class="glyphicon glyphicon-log-in"></i>
+                    <i class="fas fa-sign-in-alt"></i>
                 </button>
             </form>
         </div>

@@ -124,7 +124,7 @@
 
             $element
                 .closest('div:not(.input-group):not(.btn-group)')
-                .append(`<small class="help-block validation-failed"><i class="glyphicon glyphicon-exclamation-sign"></i> ${errorMessage}</small>`
+                .append(`<small class="help-block validation-failed"><i class="fas fa-exclamation-circle"></i> ${errorMessage}</small>`
                 );
         }
 
@@ -230,7 +230,7 @@
             if ($loadingLayer.length === 0) {
                 const $body = $('body'),
                     loadingText = this.settings.loadingText || '',
-                    html = `<div id="loading-layer" class="loading-layer"><h1><span class="glyphicon glyphicon-cog"></span> ${loadingText}</h1></div>`;
+                    html = `<div id="loading-layer" class="loading-layer"><h1><span class="fas fa-spinner fa-spin"></span> ${loadingText}</h1></div>`;
 
                 $(html).appendTo($body);
             }

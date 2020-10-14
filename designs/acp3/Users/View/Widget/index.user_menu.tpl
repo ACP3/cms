@@ -17,7 +17,7 @@
                     {if !empty($user_sidebar.modules)}
                         <li class="dropdown">
                             <a href="{uri args="acp/acp"}" id="menu-admin-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-administration">
-                                <i class="glyphicon glyphicon-file"></i>
+                                <i class="fas fa-file"></i>
                                 {lang t="users|administration"}
                                 <b class="caret"></b>
                             </a>
@@ -33,7 +33,7 @@
                     {if !empty($user_sidebar.system)}
                         <li class="dropdown">
                             <a href="{uri args="acp/system"}" id="menu-system-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-system">
-                                <i class="glyphicon glyphicon-cog"></i>
+                                <i class="fas fa-cog"></i>
                                 {lang t="system|system"}
                                 <b class="caret"></b>
                             </a>
@@ -49,13 +49,13 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="{uri args="users/account"}">
-                        <i class="glyphicon glyphicon-home"></i>
+                        <i class="fas fa-home"></i>
                         {lang t="users|home"}
                     </a>
                 </li>
                 <li>
                     <a href="{uri args="users/index/logout"}">
-                        <i class="glyphicon glyphicon-off"></i>
+                        <i class="fas fa-power-off"></i>
                         {lang t="users|logout"}
                     </a>
                 </li>

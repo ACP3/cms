@@ -13,11 +13,11 @@
       padding-right: 0;
     }
 
-    .glyphicon {
+    .fa, .fas, .fab {
       font-size: 32px;
     }
 
-    .glyphicon-plus {
+    .fa-plus {
       &:before {
         position: relative;
         top: -2px;

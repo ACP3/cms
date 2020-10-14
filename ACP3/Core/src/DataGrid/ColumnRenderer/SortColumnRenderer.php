@@ -75,7 +75,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
     {
         $html = <<<HTML
 <a href="%s" title="%s" data-ajax-form="true" data-ajax-form-loading-text="%s">
-    <i class="glyphicon glyphicon-arrow-%s" aria-hidden="true"></i>
+    <i class="fas fa-arrow-%s" aria-hidden="true"></i>
 </a>
 HTML;
 
@@ -94,7 +94,7 @@ HTML;
     protected function fetchSortForbiddenHtml()
     {
         $html = <<<HTML
-<i class="glyphicon glyphicon-remove-circle text-danger text-danger" aria-hidden="true" title="%s"></i>
+<i class="fas fa-times-circle text-danger text-danger" aria-hidden="true" title="%s"></i>
 HTML;
 
         return \sprintf($html, $this->translator->t('system', 'move_impossible'));

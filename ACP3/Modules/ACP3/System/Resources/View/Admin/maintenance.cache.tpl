@@ -16,7 +16,7 @@
                        class="btn btn-block btn-warning"
                        data-ajax-form="true"
                        data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                        <i class="glyphicon glyphicon-refresh"></i>
+                        <i class="fas fa-sync-alt"></i>
                         {lang t="system|refresh"}
                     </a>
                 </div>

@@ -21,7 +21,7 @@
                        data-date-picktime="{$datepicker.with_time}"
                        required>
                 <span class="input-group-addon">
-                <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
+                <i class="fas fa-calendar" aria-hidden="true"></i>
             </span>
             </div>
         </div>
@@ -38,7 +38,7 @@
                        data-date-picktime="{$datepicker.with_time}"
                        required>
                 <span class="input-group-addon">
-                <i class="glyphicon glyphicon-calendar" aria-hidden="true"></i>
+                <i class="fas fa-calendar" aria-hidden="true"></i>
             </span>
             </div>
         </div>
