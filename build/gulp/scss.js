@@ -15,11 +15,10 @@ module.exports = (gulp, plugins) => {
         return gulp
             .src(
                 componentPaths.scss.process.concat([
-                        './designs/*/*/Assets/scss/*.scss',
-                        './designs/*/Assets/scss/*.scss',
-                    ],
-                ),
-                {base: './'}
+                    './designs/*/*/Assets/scss/*.scss',
+                    './designs/*/Assets/scss/*.scss',
+                ]),
+                {base: './', allowEmpty: true}
             )
             .pipe(plugins.plumber())
             .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
