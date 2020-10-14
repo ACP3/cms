@@ -22,7 +22,7 @@ module.exports = (gulp) => {
                         nodeBasePath + '/moment/min/moment.min.js',
                         nodeBasePath + '/datatables.net/js/jquery.dataTables.js',
                         nodeBasePath + '/datatables.net-bs/js/dataTables.bootstrap.js',
-                        nodeBasePath + '/bootstrap/dist/js/bootstrap.min.js',
+                        nodeBasePath + '/bootstrap-sass/assets/javascripts/bootstrap.min.js',
                         nodeBasePath + '/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
                         nodeBasePath + '/html5shiv/dist/html5shiv.min.js',
                         nodeBasePath + '/js-cookie/src/js.cookie.js'

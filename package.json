@@ -46,7 +46,7 @@
     "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "bootbox": "^5.5.1",
-    "bootstrap": "^3.4.1",
+    "bootstrap-sass": "^3.4.1",
     "ckeditor-codemirror-plugin": "^1.17.3",
     "core-js": "^3.6.5",
     "datatables.net": "^1.10.22",
