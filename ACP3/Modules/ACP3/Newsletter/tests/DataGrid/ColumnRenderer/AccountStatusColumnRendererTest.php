@@ -47,7 +47,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
         $this->primaryKey = 'id';
 
-        $expected = '<td data-sort="1"><i class="fas fa-ok text-success"></i></td>';
+        $expected = '<td data-sort="1"><i class="fas fa-check text-success"></i></td>';
         $this->compareResults($expected);
     }
 
