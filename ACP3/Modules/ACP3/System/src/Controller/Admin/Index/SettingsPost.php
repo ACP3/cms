@@ -54,8 +54,6 @@ class SettingsPost extends Core\Controller\AbstractFrontendAction implements Cor
                 $this->systemValidator->validate($formData);
 
                 $data = [
-                    'cookie_consent_is_enabled' => (int) $formData['cookie_consent_is_enabled'],
-                    'cookie_consent_text' => $this->secure->strEncode($formData['cookie_consent_text'], true),
                     'cache_images' => (int) $formData['cache_images'],
                     'cache_lifetime' => (int) $formData['cache_lifetime'],
                     'date_format_long' => $this->secure->strEncode($formData['date_format_long']),

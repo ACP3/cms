@@ -101,10 +101,6 @@ class AdminSettingsViewProvider
                 'site_subtitle_homepage_mode',
                 $systemSettings['site_subtitle_homepage_mode']
             ),
-            'cookie_consent' => $this->formsHelper->yesNoCheckboxGenerator(
-                'cookie_consent_is_enabled',
-                $systemSettings['cookie_consent_is_enabled']
-            ),
             'entries' => $this->formsHelper->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $this->fetchWysiwygEditors($systemSettings['wysiwyg']),
             'languages' => $this->translator->getLanguagePacks($systemSettings['lang']),

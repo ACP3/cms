@@ -29,14 +29,6 @@ services:
     tags:
       - { name: core.eventListener, event: layout.content_before }
 
-  system.event.listener.render_cookie_consent_listener:
-    class: ACP3\Modules\ACP3\System\Event\Listener\RenderCookieConsentListener
-    arguments:
-      - '@core.config'
-      - '@core.view'
-    tags:
-      - { name: core.eventListener, event: layout.content_before }
-
   system.event.listener.render_update_check_alert_on_layout_content_before_listener:
     class: ACP3\Modules\ACP3\System\Event\Listener\RenderUpdateCheckAlertOnLayoutContentBeforeListener
     arguments:

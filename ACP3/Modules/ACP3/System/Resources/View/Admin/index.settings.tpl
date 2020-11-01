@@ -9,7 +9,6 @@
             <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|general"}</a></li>
             <li><a href="#tab-site-title" data-toggle="tab">{lang t="system|site_title"}</a></li>
             <li><a href="#tab-2" data-toggle="tab">{lang t="system|localization"}</a></li>
-            <li><a href="#tab-cookie-consent" data-toggle="tab">{lang t="system|cookie_consent"}</a></li>
             <li><a href="#tab-3" data-toggle="tab">{lang t="system|maintenance"}</a></li>
             <li><a href="#tab-5" data-toggle="tab">{lang t="system|performance"}</a></li>
             <li><a href="#tab-6" data-toggle="tab">{lang t="system|email"}</a></li>
@@ -58,12 +57,6 @@
                             {/foreach}
                         </select>
                     </div>
-                </div>
-            </div>
-            <div id="tab-cookie-consent" class="tab-pane fade">
-                {include file="asset:System/Partials/form_group.button_group.tpl" options=$cookie_consent required=true label={lang t="system|enable_cookie_consent"}}
-                <div id="cookie-consent-container">
-                    {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="cookie_consent_text" value=$form.cookie_consent_text toolbar="simple" label={lang t="system|cookie_consent_text"}}
                 </div>
             </div>
             <div id="tab-3" class="tab-pane fade">

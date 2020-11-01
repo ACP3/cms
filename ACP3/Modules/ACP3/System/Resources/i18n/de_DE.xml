@@ -8,7 +8,6 @@
         <item key="acp3_up_to_date">Sie verwenden bereits die aktuelle Version des ACP3.</item>
         <item key="action">Aktion</item>
         <item key="activate_module"><![CDATA[Das Modul &quot;%s&quot; ist deaktiviert, wodurch bestimmte Funktionen eingeschränkt sein könnten.<br />Bitte aktivieren Sie dieses Modul, um diesen Fehler zu beheben.]]></item>
-        <item key="accept">Akzeptieren</item>
         <item key="additional_javascript_files">Zusätzlich zu ladende JavaScript Dateien</item>
         <item key="additional_javascript_files_description">Die Dateien müssen sich im &quot;js&quot;-Ordner des Designs befinden. Die einzelnen Dateien bitte jeweils mit einem Komma separieren.</item>
         <item key="additional_stylesheets">Zusätzlich zu ladende Stylesheet Dateien</item>
@@ -49,8 +48,6 @@
         <item key="confirm_delete">Sollen die ausgewählten Einträge wirklich gelöscht werden?</item>
         <item key="confirm_delete_multiple">Sollen die {items} ausgewählten Einträge wirklich gelöscht werden?</item>
         <item key="confirm_delete_single">Soll der ausgewählte Eintrag wirklich gelöscht werden?</item>
-        <item key="cookie_consent">Cookie-Richtlinie</item>
-        <item key="cookie_consent_text">Cookie-Richtlinien-Hinweistext</item>
         <item key="could_not_complete_request">Die Anfrage konnte durch einen Fehler nicht bearbeitet werden.</item>
         <item key="create_error">Beim Erstellen des Eintrages ist ein Fehler aufgetreten.</item>
         <item key="create_success">Der Eintrag wurde erfolgreich erstellt.</item>
@@ -109,7 +106,6 @@
         <item key="email">E-Mail</item>
         <item key="email_address">E-Mail-Adresse</item>
         <item key="enable">Aktivieren</item>
-        <item key="enable_cookie_consent">Cookie-Richtlinie anzeigen</item>
         <item key="enable_following_modules_first">Um das Modul installieren zu können, müssen Sie zunächst folgende
             Module aktivieren: %modules%
         </item>
@@ -269,7 +265,6 @@
         <item key="select_date">Bitte vervollständigen Sie die Angaben zum Veröffentlichungsdatum bzw. dem Enddatum dieses Eintrages.</item>
         <item key="select_date_format">Bitte wählen Sie aus, ob das lange oder das kurze Datumsformat verwendet werden soll.</item>
         <item key="select_editor">Bitte wählen Sie aus, mit welchem Editor Sie Ihre Einträge erstellen wollen.</item>
-        <item key="select_enable_cookie_consent">Bitte wählen Sie aus, ob der Cookie-Richtlinien-Hinweis angezeigt werden soll oder nicht.</item>
         <item key="select_enable_page_cache">Bitte wählen Sie aus, ob Seiten-Cache verwendet werden soll oder nicht.</item>
         <item key="select_language">Bitte wählen Sie aus, in welcher Sprache Sie die Website angezeigt bekommen möchten.</item>
         <item key="select_mailer_type">Bitte wählen Sie den zu verwendenten Mailertyp aus.</item>

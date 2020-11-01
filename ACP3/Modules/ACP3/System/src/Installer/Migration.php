@@ -263,6 +263,10 @@ class Migration extends Modules\Installer\AbstractMigration
                 'UPDATE `{pre}settings` SET `value` = 0 WHERE `module_id` = {moduleId} AND `name` = \'page_cache_is_enabled\' AND `value` = \'\';',
                 'UPDATE `{pre}settings` SET `value` = 1 WHERE `module_id` = {moduleId} AND `name` = \'page_cache_is_valid\' AND `value` = \'\';',
             ],
+            75 => [
+                'DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND `name` = \'cookie_consent_is_enabled\';',
+                'DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND `name` = \'cookie_consent_text\';',
+            ],
         ];
     }
 

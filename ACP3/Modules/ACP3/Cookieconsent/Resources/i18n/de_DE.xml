@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <keys>
+        <item key="accept">Akzeptieren</item>
+        <item key="admin_index_settings">Einstellungen</item>
+        <item key="cookie_consent">Cookie-Richtlinie</item>
+        <item key="cookie_consent_text">Cookie-Richtlinien-Hinweistext</item>
+        <item key="cookieconsent">Cookie Richtlinie</item>
+        <item key="enable_cookie_consent">Cookie-Richtlinie anzeigen</item>
+        <item key="mod_description">Dieses Modul ist für die Anzeige des Cookie-Richtlinien-Hinweises zuständig.</item>
+        <item key="select_enable_cookie_consent">Bitte wählen Sie aus, ob der Cookie-Richtlinien-Hinweis angezeigt werden soll oder nicht.</item>
+    </keys>
+</language>

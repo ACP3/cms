@@ -3,10 +3,6 @@ jQuery(document).ready(($) => {
         $('#site-subtitle-homepage-home-container').toggle(Number(this.value) !== 3);
     }).filter(':checked').triggerHandler('click');
 
-    $(':radio[name="cookie_consent_is_enabled"]').on('click change', function () {
-        $('#cookie-consent-container').toggle(Number(this.value) === 1);
-    }).filter(':checked').triggerHandler('click');
-
     $(':radio[name="maintenance_mode"]').on('click change', function () {
         $('#maintenance-message-container').toggle(Number(this.value) === 1);
     }).filter(':checked').triggerHandler('click');

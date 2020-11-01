@@ -1,0 +1,10 @@
+services:
+  cookieconsent.installer.schema:
+    class: ACP3\Modules\ACP3\Cookieconsent\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
+
+  cookieconsent.installer.migration:
+    class: ACP3\Modules\ACP3\Cookieconsent\Installer\Migration
+    tags:
+      - { name: core.installer.migration }
