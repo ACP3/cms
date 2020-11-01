@@ -6,3 +6,4 @@ services:
       - '@core.helpers.formToken'
       - '@core.http.request'
       - '@core.config'
+      - '@core.i18n.translator'

@@ -2,12 +2,19 @@
 <language>
     <keys>
         <item key="accept">Akzeptieren</item>
+        <item key="accept_all">Alle akzeptieren</item>
+        <item key="accept_technically_necessary">Nur notwendige akzeptieren</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="cookie_consent">Cookie-Richtlinie</item>
         <item key="cookie_consent_text">Cookie-Richtlinien-Hinweistext</item>
+        <item key="cookie_consent_type">Cookie-Richtlinien-Typ</item>
         <item key="cookieconsent">Cookie Richtlinie</item>
         <item key="enable_cookie_consent">Cookie-Richtlinie anzeigen</item>
         <item key="mod_description">Dieses Modul ist für die Anzeige des Cookie-Richtlinien-Hinweises zuständig.</item>
+        <item key="select_cookie_consent_type">Bitte wählen Sie aus den Typ der Cookie-Richtline aus.</item>
         <item key="select_enable_cookie_consent">Bitte wählen Sie aus, ob der Cookie-Richtlinien-Hinweis angezeigt werden soll oder nicht.</item>
+        <item key="type_opt_in">Opt-In</item>
+        <item key="type_opt_out">Opt-Out</item>
+        <item key="type_informational">Informationell</item>
     </keys>
 </language>

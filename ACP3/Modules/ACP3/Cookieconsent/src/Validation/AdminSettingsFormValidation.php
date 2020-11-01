@@ -7,8 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Cookieconsent\Validation;
 
-use ACP3\Core;
 use ACP3\Core\Validation\AbstractFormValidation;
+use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
+use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
@@ -18,17 +19,28 @@ class AdminSettingsFormValidation extends AbstractFormValidation
      */
     public function validate(array $formData)
     {
-        $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);
+        $this->validator->addConstraint(FormTokenValidationRule::class);
 
         $this->validator
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'enabled',
                     'message' => $this->translator->t('cookieconsent', 'select_enable_cookie_consent'),
                     'extra' => [
                         'haystack' => [0, 1],
+                    ],
+                ]
+            )
+            ->addConstraint(
+                InArrayValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'type',
+                    'message' => $this->translator->t('cookieconsent', 'select_cookie_consent_type'),
+                    'extra' => [
+                        'haystack' => ['opt-out', 'opt-in', 'informational'],
                     ],
                 ]
             );

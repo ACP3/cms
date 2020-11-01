@@ -43,7 +43,10 @@ class RenderCookieConsentListener
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         if ((int) $settings['enabled'] === 1 && !empty($settings['text'])) {
-            $this->view->assign('cookie_consent_text', $settings['text']);
+            $this->view->assign([
+                'cookie_consent_text' => $settings['text'],
+                'cookie_consent_type' => $settings['type'],
+            ]);
             $this->view->displayTemplate('Cookieconsent/Partials/cookie_consent.tpl');
         }
     }

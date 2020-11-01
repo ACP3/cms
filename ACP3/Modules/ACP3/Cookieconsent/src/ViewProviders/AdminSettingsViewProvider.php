@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Cookieconsent\ViewProviders;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Cookieconsent\Installer\Schema;
 
@@ -31,29 +32,44 @@ class AdminSettingsViewProvider
      * @var \ACP3\Core\Settings\SettingsInterface
      */
     private $settings;
+    /**
+     * @var \ACP3\Core\I18n\Translator
+     */
+    private $translator;
 
     public function __construct(
         Forms $formsHelper,
         FormToken $formTokenHelper,
         RequestInterface $request,
-        SettingsInterface $settings
+        SettingsInterface $settings,
+        Translator $translator
     ) {
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->request = $request;
         $this->settings = $settings;
+        $this->translator = $translator;
     }
 
     public function __invoke(): array
     {
-        $systemSettings = $this->settings->getSettings(Schema::MODULE_NAME);
+        $cookieConsentSettings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         return [
             'enable' => $this->formsHelper->yesNoCheckboxGenerator(
                 'enabled',
-                $systemSettings['enabled']
+                $cookieConsentSettings['enabled']
             ),
-            'form' => \array_merge($systemSettings, $this->request->getPost()->all()),
+            'type' => $this->formsHelper->choicesGenerator(
+                'type',
+                [
+                    'opt-in' => $this->translator->t('cookieconsent', 'type_opt_in'),
+                    'opt-out' => $this->translator->t('cookieconsent', 'type_opt_out'),
+                    'informational' => $this->translator->t('cookieconsent', 'type_informational'),
+                ],
+                $cookieConsentSettings['type']
+            ),
+            'form' => \array_merge($cookieConsentSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

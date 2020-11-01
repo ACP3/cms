@@ -2,12 +2,19 @@
 <language>
     <keys>
         <item key="accept">Accept</item>
+        <item key="accept_all">Accept all</item>
+        <item key="accept_technically_necessary">Nur notwendige akzeptieren</item>
         <item key="admin_index_settings">Settings</item>
         <item key="cookie_consent">Cookie consent</item>
         <item key="cookie_consent_text">Cookie consent text</item>
+        <item key="cookie_consent_type">Cookie-Richtlinien-Typ</item>
         <item key="cookieconsent">Cookie consent</item>
         <item key="enable_cookie_consent">Enable cookie consent</item>
         <item key="mod_description">This module is responsible for the cookie consent.</item>
+        <item key="select_cookie_consent_type">Please select the cookie consent type.</item>
         <item key="select_enable_cookie_consent">Please select whether you want to display the cookie consent or not.</item>
+        <item key="type_opt_in">Opt-In</item>
+        <item key="type_opt_out">Opt-Out</item>
+        <item key="type_informational">informational</item>
     </keys>
 </language>

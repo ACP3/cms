@@ -18,7 +18,11 @@ class Migration implements MigrationInterface
      */
     public function schemaUpdates()
     {
-        return [];
+        return [
+            2 => [
+                'INSERT INTO `{pre}settings` (`module_id`, `name`, `value`) VALUES ({moduleId}, \'type\', \'opt-in\');',
+            ],
+        ];
     }
 
     /**

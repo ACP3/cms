@@ -60,6 +60,7 @@ class SettingsPost extends AbstractFrontendAction implements InvokableActionInte
                 $data = [
                     'enabled' => (int) $formData['enabled'],
                     'text' => $this->secure->strEncode($formData['text'], true),
+                    'type' => $formData['type'],
                 ];
 
                 return $this->config->saveSettings($data, Schema::MODULE_NAME);
