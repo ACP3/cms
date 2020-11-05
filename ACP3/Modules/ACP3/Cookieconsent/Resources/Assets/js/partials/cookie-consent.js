@@ -101,8 +101,4 @@ jQuery(document).ready(($) => {
 
         $cookieConsent.fadeOut();
     });
-
-    document.addEventListener('acp3.cookieConsent', (e) => {
-        console.log(e);
-    });
 });

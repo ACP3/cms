@@ -11,6 +11,10 @@
     "bootbox": false,
     "Cookies": false
   },
+  "parser": "@babel/eslint-parser",
+  "plugins": [
+    "@babel"
+  ],
   "rules": {
     "indent": [
       "error",
