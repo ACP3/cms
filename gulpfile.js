@@ -20,5 +20,5 @@
     gulp.task('babel', getTask('babel'));
     gulp.task('watch', gulp.series(gulp.parallel('less', 'scss', 'babel'), getTask('watch')));
 
-    gulp.task('default', gulp.series('watch'));
+    gulp.task('default', gulp.parallel('less', 'scss', 'babel'));
 })();
