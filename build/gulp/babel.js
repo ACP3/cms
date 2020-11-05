@@ -19,7 +19,7 @@ module.exports = (gulp, plugins) => {
                         '!./designs/**/Assets/js/**/*.min.js',
                     ]
                 ),
-                {base: './'}
+                {base: './', since: gulp.lastRun('babel')}
             )
             .pipe(plugins.plumber())
             .pipe(babel())
