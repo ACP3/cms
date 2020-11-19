@@ -6,7 +6,9 @@ variables:
   COMPOSER_HOME: .composerhome
   COMPOSER_ALLOW_SUPERUSER: 1
   npm_config_cache: .npmhome
-  SAST_EXCLUDED_PATHS: 'tests,node_modules,vendor'
+  SAST_EXCLUDED_PATHS: 'tests,node_modules,vendor,./**/*.min.js'
+  SAST_GOSEC_LEVEL: 2
+  SAST_DISABLE_BABEL: 'true'
 
 stages:
   - build
