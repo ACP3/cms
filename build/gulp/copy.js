@@ -10,7 +10,8 @@ module.exports = (gulp) => {
         const nodeBasePath = './node_modules',
             systemBasePath = './ACP3/Modules/ACP3/System/Resources/Assets',
             ckeditorBasePath = './ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets',
-            filemanagerBashPath = './ACP3/Modules/ACP3/Filemanager/Resources/Assets',
+            fileManagerBasePath = './ACP3/Modules/ACP3/Filemanager/Resources/Assets',
+            consentManagerBasePath = './ACP3/Modules/ACP3/Cookieconsent/Resources/Assets',
             shareBasePath = './ACP3/Modules/ACP3/Share/Resources/Assets',
             paths = [
                 {
@@ -66,27 +67,35 @@ module.exports = (gulp) => {
                 },
                 {
                     src: nodeBasePath + '/rich-filemanager/index.html',
-                    dest: filemanagerBashPath + '/rich-filemanager',
+                    dest: fileManagerBasePath + '/rich-filemanager',
                 },
                 {
                     src: nodeBasePath + '/rich-filemanager/images/**',
-                    dest: filemanagerBashPath + '/rich-filemanager/images',
+                    dest: fileManagerBasePath + '/rich-filemanager/images',
                 },
                 {
                     src: nodeBasePath + '/rich-filemanager/languages/**',
-                    dest: filemanagerBashPath + '/rich-filemanager/languages',
+                    dest: fileManagerBasePath + '/rich-filemanager/languages',
                 },
                 {
                     src: nodeBasePath + '/rich-filemanager/libs/**',
-                    dest: filemanagerBashPath + '/rich-filemanager/libs',
+                    dest: fileManagerBasePath + '/rich-filemanager/libs',
                 },
                 {
                     src: nodeBasePath + '/rich-filemanager/src/**',
-                    dest: filemanagerBashPath + '/rich-filemanager/src',
+                    dest: fileManagerBasePath + '/rich-filemanager/src',
                 },
                 {
                     src: nodeBasePath + '/rich-filemanager/themes/**',
-                    dest: filemanagerBashPath + '/rich-filemanager/themes',
+                    dest: fileManagerBasePath + '/rich-filemanager/themes',
+                },
+                {
+                    src: nodeBasePath + '/klaro/dist/klaro.css',
+                    dest: consentManagerBasePath + '/css',
+                },
+                {
+                    src: nodeBasePath + '/klaro/dist/klaro-no-css.js',
+                    dest: consentManagerBasePath + '/js',
                 },
             ];
 

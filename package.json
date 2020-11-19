@@ -28,6 +28,7 @@
     "@babel/preset-env": "^7.12.1",
     "autoprefixer": "^10.0.1",
     "babel-preset-minify": "^0.5.1",
+    "bootstrap": "^3.4.1",
     "eslint": "^7.12.1",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
@@ -59,6 +60,7 @@
     "html5shiv": "^3.7.3",
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",
+    "klaro": "^0.7.8",
     "moment": "^2.29.1",
     "rich-filemanager": "git+https://github.com/tinogo/RichFilemanager.git#rework-dependencies",
     "shariff": "^3.2.1"
