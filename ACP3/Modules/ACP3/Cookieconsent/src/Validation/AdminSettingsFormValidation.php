@@ -32,17 +32,6 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                         'haystack' => [0, 1],
                     ],
                 ]
-            )
-            ->addConstraint(
-                InArrayValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'type',
-                    'message' => $this->translator->t('cookieconsent', 'select_cookie_consent_type'),
-                    'extra' => [
-                        'haystack' => ['opt-out', 'opt-in', 'informational'],
-                    ],
-                ]
             );
 
         $this->validator->validate();

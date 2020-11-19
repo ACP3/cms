@@ -42,7 +42,7 @@ class Schema implements SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 2;
+        return 1;
     }
 
     /**
@@ -68,8 +68,6 @@ class Schema implements SchemaInterface
     {
         return [
             'enabled' => 0,
-            'text' => '',
-            'type' => 'opt-in',
         ];
     }
 }
