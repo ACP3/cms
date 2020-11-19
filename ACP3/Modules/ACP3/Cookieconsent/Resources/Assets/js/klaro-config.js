@@ -54,7 +54,7 @@
         // If "mustConsent" is set to true, Klaro will directly display the consent
         // manager modal and not allow the user to close it before having actively
         // consented or declines the use of third-party services.
-        mustConsent: false,
+        mustConsent: true,
 
         // Show "accept all" to accept all services instead of "ok" that only accepts
         // required and "default: true" services
@@ -97,9 +97,30 @@
             zz: {
                 privacyPolicyUrl: '/#privacy',
             },
+            de: {
+                purposes: {
+                    security: 'Sicherheit',
+                },
+                acp3: {
+                    description: 'Das verwendete Content Management Systems.',
+                }
+            },
+            en: {
+                acp3: {
+                    description: 'The used Content Management System.',
+                }
+            }
         },
 
         // This is a list of third-party services that Klaro will manage for you.
-        services: [],
+        services: [
+            {
+                default: true,
+                name: 'acp3',
+                purposes: ['security'],
+                required: true,
+                title: 'ACP3',
+            }
+        ],
     };
 })(window);
