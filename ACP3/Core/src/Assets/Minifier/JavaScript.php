@@ -45,11 +45,20 @@ class JavaScript extends AbstractMinifier
     protected function fetchLibraries(): void
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library['enabled'] === true && isset($library[$this->getAssetGroup()]) === true) {
+            if ($library['enabled'] !== true || isset($library[$this->getAssetGroup()]) === false) {
+                continue;
+            }
+
+            $javascripts = $library[$this->getAssetGroup()];
+            if (!\is_array($javascripts)) {
+                $javascripts = [$javascripts];
+            }
+
+            foreach ($javascripts as $javascript) {
                 $this->javascript[] = $this->fileResolver->getStaticAssetPath(
                     !empty($library['module']) ? $library['module'] : static::SYSTEM_MODULE_NAME,
                     static::ASSETS_PATH_JS,
-                    $library[$this->getAssetGroup()]
+                    $javascript
                 );
             }
         }
