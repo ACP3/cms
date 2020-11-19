@@ -32,6 +32,8 @@ splits:
     target: "git@gitlab.com:ACP3/module-contact.git"
   - prefix: "ACP3/Modules/ACP3/Contactseo"
     target: "git@gitlab.com:ACP3/module-contact-seo.git"
+  - prefix: "ACP3/Modules/ACP3/Cookieconsent"
+    target: "git@gitlab.com:ACP3/module-cookie-consent.git"
   - prefix: "ACP3/Modules/ACP3/Emoticons"
     target: "git@gitlab.com:ACP3/module-emoticons.git"
   - prefix: "ACP3/Modules/ACP3/Errors"
