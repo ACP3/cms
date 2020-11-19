@@ -19,20 +19,15 @@ class AddLibraryEvent extends Event
      */
     private $libraries;
 
-    /**
-     * AddLibraryEvent constructor.
-     */
     public function __construct(Libraries $libraries)
     {
         $this->libraries = $libraries;
     }
 
     /**
-     * @param string $identifier
-     *
      * @return $this
      */
-    public function addLibrary($identifier, array $library)
+    public function addLibrary(string $identifier, array $library): self
     {
         $this->libraries->addLibrary($identifier, $library);
 

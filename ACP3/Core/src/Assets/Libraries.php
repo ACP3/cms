@@ -89,9 +89,6 @@ class Libraries
      */
     private $request;
 
-    /**
-     * Libraries constructor.
-     */
     public function __construct(
         RequestInterface $request,
         EventDispatcherInterface $eventDispatcher)
