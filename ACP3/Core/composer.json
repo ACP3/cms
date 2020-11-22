@@ -50,6 +50,8 @@
     ]
   },
   "autoload-dev": {
-    "ACP3\\Core\\": "test"
+    "psr-4": {
+      "ACP3\\Core\\": "tests"
+    }
   }
 }
