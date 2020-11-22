@@ -153,6 +153,8 @@ class Libraries
 
                 // Enable the javascript library
                 $this->libraries[$library]['enabled'] = true;
+            } else {
+                throw new \InvalidArgumentException(\sprintf('Could not find library %s', $library));
             }
         }
 
