@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.1.0]
+## [5.1.1] - 2020-11-22
+### Fixed
+- version bump only
+
+## [5.1.0] - 2020-11-22
 ### Changed
 - Extracted the cookie consent into its own module and reworked it
 - Replace the glyphicons with the font-awesome icons
@@ -1093,7 +1097,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - It should be possible again to save ACL roles
 - Silenced a possible PHP warning when trying to login with incorrect credentials
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.1.0...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.1.1...5.x
+[5.1.1]: https://gitlab.com/ACP3/cms/compare/v5.1.1...5.1.0
 [5.1.0]: https://gitlab.com/ACP3/cms/compare/v5.1.0...v5.0.1
 [5.0.1]: https://gitlab.com/ACP3/cms/compare/v5.0.0...v5.0.1
 [5.0.0]: https://gitlab.com/ACP3/cms/compare/v4.48.2...v5.0.0
