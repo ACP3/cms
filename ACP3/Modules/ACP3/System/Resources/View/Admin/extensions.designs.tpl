@@ -8,8 +8,8 @@
             <th>{lang t="system|name"}</th>
             <th>{lang t="system|description"}</th>
             <th>{lang t="system|author"}</th>
-            <th>{lang t="system|version"}</th>
-            <th>{lang t="system|options"}</th>
+            <th class="text-right">{lang t="system|version"}</th>
+            <th class="text-center">{lang t="system|options"}</th>
         </tr>
         </thead>
         <tbody>
@@ -18,13 +18,13 @@
                 <td>{$row.name}</td>
                 <td>{$row.description}</td>
                 <td>{$row.author}</td>
-                <td>{$row.version}</td>
-                <td>
+                <td class="text-right">{$row.version}</td>
+                <td class="text-center">
                     {if $row.selected == 1}
-                        <i class="fas fa-check text-success"></i>
+                        <i class="fas fa-toggle-on text-success"></i>
                     {else}
                         <a href="{uri args="acp/system/extensions/designs/dir_`$row.dir`"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                            <i class="fa fa-trash text-danger"></i>
+                            <i class="fa fa-toggle-off text-danger"></i>
                         </a>
                     {/if}
                 </td>
