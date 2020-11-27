@@ -41,7 +41,7 @@
                                                title="{lang t="system|disable_module"}"
                                                data-ajax-form="true"
                                                data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                                <i class="fa fa-trash"></i>
+                                                <i class="fa fa-times"></i>
                                                 {lang t="system|disable"}
                                             </a>
                                         {else}
