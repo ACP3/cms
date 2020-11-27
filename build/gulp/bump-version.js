@@ -29,6 +29,7 @@ module.exports = (gulp, plugins) => {
         'ACP3/Modules/ACP3/Comments': 'acp3/module-comments',
         'ACP3/Modules/ACP3/Contact': 'acp3/module-contact',
         'ACP3/Modules/ACP3/Contactseo': 'acp3/module-contact-seo',
+        'ACP3/Modules/ACP3/Cookieconsent': 'acp3/module-cookie-consent',
         'ACP3/Modules/ACP3/Emoticons': 'acp3/module-emoticons',
         'ACP3/Modules/ACP3/Errors': 'acp3/module-errors',
         'ACP3/Modules/ACP3/Feeds': 'acp3/module-feeds',
