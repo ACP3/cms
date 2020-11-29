@@ -84,8 +84,8 @@ class Smarty implements RendererInterface
         $this->smarty->registerPlugin(
             PluginTypeEnum::MODIFIER,
             $pluginName,
-            function ($value) use ($serviceId) {
-                return $this->container->get($serviceId)($value);
+            function (...$value) use ($serviceId) {
+                return $this->container->get($serviceId)(...$value);
             }
         );
     }

@@ -7,8 +7,9 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
-use ACP3\Core\View\Renderer\Smarty\PluginInterface;
-
-abstract class AbstractModifier implements ModifierInterface, PluginInterface
+/**
+ * @method __invoke(...$values): mixed
+ */
+interface ModifierInterface
 {
 }
