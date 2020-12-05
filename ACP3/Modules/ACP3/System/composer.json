@@ -16,7 +16,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "composer/semver": "^1.4",
+    "composer/semver": "^3.2",
     "acp3/core": "^5.0.1",
     "acp3/module-permissions": "^5.0.0"
   },

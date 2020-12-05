@@ -39,7 +39,7 @@
     "symfony/http-kernel": "^5.1.0",
     "symfony/proxy-manager-bridge": "^5.1.0",
     "symfony/yaml": "^5.1.0",
-    "toflar/psr6-symfony-http-cache-store": "^2.0"
+    "toflar/psr6-symfony-http-cache-store": "^3.0"
   },
   "autoload": {
     "psr-4": {
