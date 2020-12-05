@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.3.0] - 2020-12-05
 ### Changed
 - Updated the composer dependencies
 - Updated the NPM dependencies
@@ -45,7 +45,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - removed all deprecated code
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.2.0...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.3.0...5.x
+[5.3.0]: https://gitlab.com/ACP3/cms/compare/v5.2.0...v5.3.0
 [5.2.0]: https://gitlab.com/ACP3/cms/compare/v5.1.2...v5.2.0
 [5.1.2]: https://gitlab.com/ACP3/cms/compare/v5.1.2...5.1.1
 [5.1.1]: https://gitlab.com/ACP3/cms/compare/v5.1.1...5.1.0
