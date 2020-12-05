@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- Updated the composer dependencies
+- Updated the NPM dependencies
+- Updated the PHPUnit tests according to changes introduced in PHPUnit 8.x
+- Replaced jQuery(document).ready() calls self-calling closures
+
+### Fixed
+- Fixed the filemanager
+- fixed the missing fontawesome icons within the installer/update wizard
+
 ## [5.2.0] - 2020-11-29
 ### Changed
 - rework the AbstractModifier so that it allows more than one parameter
