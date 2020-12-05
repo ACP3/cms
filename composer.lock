@@ -5927,20 +5927,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinogo/RichFilemanager-PHP.git",
-                "reference": "63d00742b957eb729b32a2ffff9c1ffaede6ae66"
+                "reference": "2746bbc7449e1dad5da7fc43e4fce29501d977f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinogo/RichFilemanager-PHP/zipball/63d00742b957eb729b32a2ffff9c1ffaede6ae66",
-                "reference": "63d00742b957eb729b32a2ffff9c1ffaede6ae66",
+                "url": "https://api.github.com/repos/tinogo/RichFilemanager-PHP/zipball/2746bbc7449e1dad5da7fc43e4fce29501d977f3",
+                "reference": "2746bbc7449e1dad5da7fc43e4fce29501d977f3",
                 "shasum": ""
             },
             "require": {
                 "illuminate/config": "5.4.*|5.5.*|5.6.*|5.7.*|5.8.*",
                 "illuminate/container": "5.4.*|5.5.*|5.6.*|5.7.*|5.8.*",
                 "php": ">=7.2.5",
-                "symfony/event-dispatcher": "^4.4|^5.0",
-                "symfony/http-foundation": "^4.4|^5.0"
+                "symfony/event-dispatcher": "^5.1",
+                "symfony/http-foundation": "^5.1"
             },
             "type": "project",
             "autoload": {
@@ -5973,7 +5973,7 @@
             "support": {
                 "source": "https://github.com/tinogo/RichFilemanager-PHP/tree/master"
             },
-            "time": "2020-06-18T20:25:00+00:00"
+            "time": "2020-12-05T17:17:38+00:00"
         },
         {
             "name": "smarty/smarty",
