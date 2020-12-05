@@ -58,7 +58,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'news/index/index/';
         $expected = '/index.php/' . $path;
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     protected function setUpRequestMockExpectations()
@@ -73,10 +73,10 @@ class RouterTest extends \PHPUnit\Framework\TestCase
 
     protected function setAppPathMockExpectations(int $callCountWebRoot, int $callCountPhpSelf)
     {
-        $this->appPathMock->expects($this->exactly($callCountWebRoot))
+        $this->appPathMock->expects(self::exactly($callCountWebRoot))
             ->method('getWebRoot')
             ->willReturn('/');
-        $this->appPathMock->expects($this->exactly($callCountPhpSelf))
+        $this->appPathMock->expects(self::exactly($callCountPhpSelf))
             ->method('getPhpSelf')
             ->willReturn('/index.php');
     }
@@ -98,7 +98,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'news/index/index/';
         $expected = '/' . $path;
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     public function testRouteAddTrailingSlash()
@@ -110,7 +110,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'news/index/index';
         $expected = '/index.php/' . $path . '/';
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     public function testRouteWithAdminUrl()
@@ -122,7 +122,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'acp/news/index/index/';
         $expected = '/index.php/' . $path;
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     public function testRouteWithAclResourcePath()
@@ -134,7 +134,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'admin/news/index/index/';
         $expected = '/index.php/acp/news/index/index/';
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     public function testRouteWithAdminUrlModRewriteEnabled()
@@ -146,7 +146,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'acp/news/index/index/';
         $expected = '/index.php/' . $path;
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     public function testAbsoluteRoute()
@@ -158,7 +158,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'news/index/index/';
         $expected = 'http://example.com/index.php/' . $path;
 
-        $this->assertEquals($expected, $this->router->route($path, true));
+        self::assertEquals($expected, $this->router->route($path, true));
     }
 
     public function testSecureRoute()
@@ -170,7 +170,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'news/index/index/';
         $expected = 'https://example.com/index.php/' . $path;
 
-        $this->assertEquals($expected, $this->router->route($path, false, true));
+        self::assertEquals($expected, $this->router->route($path, false, true));
     }
 
     public function testRouteAppendControllerAndControllerAction()
@@ -182,7 +182,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'news';
         $expected = '/index.php/news/index/index/';
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     public function testRouteCompleteDefaultAdminPanelUrl()
@@ -194,7 +194,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $path = 'acp';
         $expected = '/index.php/acp/acp/index/index/';
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     /**
@@ -206,7 +206,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         $this->setAppPathMockExpectations(1, 0);
         $this->setUpConfigMockExpectations();
 
-        $this->assertEquals($expected, $this->router->route($path, $absolute, $isSecure));
+        self::assertEquals($expected, $this->router->route($path, $absolute, $isSecure));
     }
 
     public function homepageRouteDataProvider(): array

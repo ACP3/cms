@@ -50,44 +50,44 @@ class PageCssClassesTest extends \PHPUnit\Framework\TestCase
 
     public function testGetModule()
     {
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects(self::once())
             ->method('getModule')
             ->willReturn('foo');
 
-        $this->assertEquals('foo', $this->pageCssClasses->getModule());
+        self::assertEquals('foo', $this->pageCssClasses->getModule());
     }
 
     public function testGetControllerAction()
     {
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects(self::once())
             ->method('getModule')
             ->willReturn('foo');
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects(self::once())
             ->method('getController')
             ->willReturn('bar');
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects(self::once())
             ->method('getAction')
             ->willReturn('baz');
 
-        $this->assertEquals('foo-bar-baz', $this->pageCssClasses->getControllerAction());
+        self::assertEquals('foo-bar-baz', $this->pageCssClasses->getControllerAction());
     }
 
     public function testGetDetails()
     {
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects(self::once())
             ->method('getModule')
             ->willReturn('foo');
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects(self::once())
             ->method('getController')
             ->willReturn('bar');
-        $this->titleMock->expects($this->once())
+        $this->titleMock->expects(self::once())
             ->method('getPageTitle')
             ->willReturn('speciäl-chörs_0tßst');
-        $this->stringFormatterMock->expects($this->once())
+        $this->stringFormatterMock->expects(self::once())
             ->method('makeStringUrlSafe')
             ->with('speciäl-chörs_0tßst')
             ->willReturn('speciael-choers-0tssst');
 
-        $this->assertEquals('foo-bar-speciael-choers-0tssst', $this->pageCssClasses->getDetails());
+        self::assertEquals('foo-bar-speciael-choers-0tssst', $this->pageCssClasses->getDetails());
     }
 }

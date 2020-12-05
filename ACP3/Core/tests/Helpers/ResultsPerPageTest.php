@@ -35,24 +35,24 @@ class ResultsPerPageTest extends \PHPUnit\Framework\TestCase
     public function testGetResultsPerPageWithoutFallback()
     {
         $this->settingsMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getSettings')
             ->with('news')
             ->willReturn(['entries' => 10]);
 
         $expected = 10;
-        $this->assertEquals($expected, $this->resultsPerPage->getResultsPerPage('news'));
+        self::assertEquals($expected, $this->resultsPerPage->getResultsPerPage('news'));
     }
 
     public function testGetResultsPerPageWithFallback()
     {
         $this->settingsMock
-            ->expects($this->exactly(2))
+            ->expects(self::exactly(2))
             ->method('getSettings')
             ->withConsecutive(['news'], ['system'])
             ->willReturnOnConsecutiveCalls([], ['entries' => 20]);
 
         $expected = 20;
-        $this->assertEquals($expected, $this->resultsPerPage->getResultsPerPage('news'));
+        self::assertEquals($expected, $this->resultsPerPage->getResultsPerPage('news'));
     }
 }

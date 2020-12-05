@@ -44,7 +44,7 @@ class RouterTest extends \ACP3\Core\RouterTest
 
         $expected = '/index.php/news/index/index/';
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     public function testRouteWithExistingUriAlias()
@@ -57,7 +57,7 @@ class RouterTest extends \ACP3\Core\RouterTest
         $path = 'news/index/index/';
         $expected = '/index.php/lorem-ipsum-dolor/';
 
-        $this->assertEquals($expected, $this->router->route($path));
+        self::assertEquals($expected, $this->router->route($path));
     }
 
     /**
@@ -66,7 +66,7 @@ class RouterTest extends \ACP3\Core\RouterTest
      */
     private function setUpAliasesMockExpectations($callCount, $returnValue)
     {
-        $this->aliasesMock->expects($this->exactly($callCount))
+        $this->aliasesMock->expects(self::exactly($callCount))
             ->method('getUriAlias')
             ->willReturn($returnValue);
     }

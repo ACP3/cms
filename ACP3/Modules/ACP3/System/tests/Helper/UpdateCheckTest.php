@@ -50,11 +50,11 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
 
     public function testDoNotRequestUpdateURI()
     {
-        $this->dateMock->expects($this->once())
+        $this->dateMock->expects(self::once())
             ->method('timestamp')
             ->willReturn((new \DateTime())->modify('-1 hour')->format('U'));
 
-        $this->settingsMock->expects($this->once())
+        $this->settingsMock->expects(self::once())
             ->method('getSettings')
             ->willReturn([
                 'update_last_check' => (new \DateTime())->modify('-1 hour')->format('U'),
@@ -72,16 +72,16 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
             'url' => 'https://foo.bar/',
         ];
 
-        $this->assertEquals($update, $this->updateCheck->checkForNewVersion());
+        self::assertEquals($update, $this->updateCheck->checkForNewVersion());
     }
 
     public function testDoRequestUpdateURI()
     {
-        $this->dateMock->expects($this->exactly(2))
+        $this->dateMock->expects(self::exactly(2))
             ->method('timestamp')
             ->willReturn((new \DateTime())->format('U'));
 
-        $this->settingsMock->expects($this->once())
+        $this->settingsMock->expects(self::once())
             ->method('getSettings')
             ->willReturn([
                 'update_last_check' => (new \DateTime())->modify('-2 days')->format('U'),
@@ -89,11 +89,11 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
                 'update_new_version_url' => 'https://foo.bar/',
             ]);
 
-        $this->settingsMock->expects($this->once())
+        $this->settingsMock->expects(self::once())
             ->method('saveSettings')
             ->willReturn(true);
 
-        $this->updateFileParserMock->expects($this->once())
+        $this->updateFileParserMock->expects(self::once())
             ->method('parseUpdateFile')
             ->willReturn([
                 'latest_version' => BootstrapInterface::VERSION,
@@ -107,6 +107,6 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
             'url' => 'https://foobar.baz/',
         ];
 
-        $this->assertEquals($update, $this->updateCheck->checkForNewVersion());
+        self::assertEquals($update, $this->updateCheck->checkForNewVersion());
     }
 }

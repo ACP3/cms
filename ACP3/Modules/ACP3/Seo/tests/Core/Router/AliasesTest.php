@@ -30,7 +30,7 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
         $this->seoCacheMock = $this->createMock(Cache::class);
         $this->modulesMock = $this->createMock(Modules::class);
 
-        $this->modulesMock->expects($this->once())
+        $this->modulesMock->expects(self::once())
             ->method('isActive')
             ->willReturn(true);
 
@@ -44,7 +44,7 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
     {
         $this->setUpSeoCacheExpectations($expectedAliasCache);
 
-        $this->assertEquals($uriAlias, $this->aliases->getUriAlias($path, $emptyOnNoResult));
+        self::assertEquals($uriAlias, $this->aliases->getUriAlias($path, $emptyOnNoResult));
     }
 
     public function uriAliasDataProvider(): array
@@ -88,7 +88,7 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
     private function setUpSeoCacheExpectations(array $expectedReturn)
     {
         $this->seoCacheMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getCache')
             ->willReturn($expectedReturn);
     }
@@ -98,7 +98,7 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
         $this->setUpSeoCacheExpectations([]);
 
         $path = 'foo/bar/baz';
-        $this->assertFalse($this->aliases->uriAliasExists($path));
+        self::assertFalse($this->aliases->uriAliasExists($path));
     }
 
     public function testUriAliasExistsAliasExists()
@@ -110,6 +110,6 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
         ]);
 
         $path = 'foo/bar/baz';
-        $this->assertTrue($this->aliases->uriAliasExists($path));
+        self::assertTrue($this->aliases->uriAliasExists($path));
     }
 }

@@ -38,7 +38,7 @@ class DateTimeColumnTypeTest extends AbstractColumnTypeTest
 
     private function setUpDateMockExpectations()
     {
-        $this->dateMock->expects($this->exactly(2))
+        $this->dateMock->expects(self::exactly(2))
             ->method('toSQL')
             ->withConsecutive([''], ['2016-10-20'])
             ->willReturnOnConsecutiveCalls('2016-10-22 13:37:00', '2016-10-20 00:00:00');

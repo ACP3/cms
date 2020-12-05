@@ -41,7 +41,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
     {
         $emailValidationRuleMock = $this->createMock(EmailValidationRule::class);
 
-        $emailValidationRuleMock->expects($this->once())
+        $emailValidationRuleMock->expects(self::once())
             ->method('validate')
             ->with($this->validator, 'test@example.com', 'mail', []);
 
@@ -80,7 +80,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             ];
             $errors = \unserialize($e->getMessage());
 
-            $this->assertEquals($expected, $errors);
+            self::assertEquals($expected, $errors);
         }
     }
 
@@ -103,7 +103,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             ];
             $errors = \unserialize($e->getMessage());
 
-            $this->assertEquals($expected, $errors);
+            self::assertEquals($expected, $errors);
         }
     }
 
@@ -134,7 +134,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         $this->container->set(EmailValidationRule::class, new EmailValidationRule());
 
         $actual = $this->validator->is(EmailValidationRule::class, $value);
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function testIsInvalidValidationRule()

@@ -57,7 +57,7 @@ HTML;
      */
     public function testMakeStringUrlSafe($value, $expected)
     {
-        $this->assertEquals($expected, $this->stringFormatter->makeStringUrlSafe($value));
+        self::assertEquals($expected, $this->stringFormatter->makeStringUrlSafe($value));
     }
 
     public function nl2pDataProvider()
@@ -100,7 +100,7 @@ HTML;
      */
     public function testNl2p($value, $useLineBreaks, $expected)
     {
-        $this->assertEquals($expected, $this->stringFormatter->nl2p($value, $useLineBreaks));
+        self::assertEquals($expected, $this->stringFormatter->nl2p($value, $useLineBreaks));
     }
 
     public function shortenEntryDataProvider()
@@ -146,7 +146,7 @@ This is just a test news, you ca...',
      */
     public function testShortenEntry($value, $offset, $append, $expected)
     {
-        $this->assertEquals($expected, $this->stringFormatter->shortenEntry($value, 100, $offset, $append));
+        self::assertEquals($expected, $this->stringFormatter->shortenEntry($value, 100, $offset, $append));
     }
 
     public function testShortenEntryInvalidArgumentException()

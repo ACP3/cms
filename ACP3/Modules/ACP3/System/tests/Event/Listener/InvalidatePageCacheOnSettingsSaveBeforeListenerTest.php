@@ -73,14 +73,14 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
 
     private function setUpCanUsePageCacheMockExpectations($cacheEnabled = true)
     {
-        $this->canUsePageCacheMock->expects($this->once())
+        $this->canUsePageCacheMock->expects(self::once())
             ->method('canUsePageCache')
             ->willReturn($cacheEnabled);
     }
 
     private function setUpSettingsMockExpectations($methodCalls = 0, $purgeMode = 1)
     {
-        $this->settingsMock->expects($this->exactly($methodCalls))
+        $this->settingsMock->expects(self::exactly($methodCalls))
             ->method('getSettings')
             ->with('system')
             ->willReturn(['page_cache_purge_mode' => $purgeMode]);
@@ -99,12 +99,12 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
         $this->setUpCanUsePageCacheMockExpectations(true);
         $this->setUpSettingsMockExpectations(1, 2);
 
-        $this->modulesMock->expects($this->once())
+        $this->modulesMock->expects(self::once())
             ->method('getModuleId')
             ->with('system')
             ->willReturn(1);
 
-        $this->settingsRepositoryMock->expects($this->once())
+        $this->settingsRepositoryMock->expects(self::once())
             ->method('update')
             ->with(['value' => false], ['module_id' => 1, 'name' => 'page_cache_is_valid']);
 

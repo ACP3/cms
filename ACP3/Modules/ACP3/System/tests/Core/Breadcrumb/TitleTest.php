@@ -70,7 +70,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         $this->setUpConfigMockExpectations('SEO Title', '', 1, 0);
         $this->titleConfigurator->configure($this->title);
 
-        $this->assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
+        self::assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
     }
 
     private function setUpConfigMockExpectations(
@@ -97,7 +97,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 0);
         $this->titleConfigurator->configure($this->title);
 
-        $this->assertEquals('Foo | SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
+        self::assertEquals('Foo | SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
     }
 
     public function testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator()
@@ -118,7 +118,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 1);
         $this->titleConfigurator->configure($this->title);
 
-        $this->assertEquals('SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
+        self::assertEquals('SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
     }
 
     public function testGetSiteAndPageTitleForNotHomepage()
@@ -132,7 +132,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 2, 1);
         $this->titleConfigurator->configure($this->title);
 
-        $this->assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
+        self::assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
     }
 
     public function testGetSiteAndPageTitleWithCustomPageTitle()

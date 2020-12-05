@@ -49,7 +49,7 @@ abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
      */
     public function testValidationRule($data, $field, $extra, $expected)
     {
-        $this->assertEquals($expected, $this->validationRule->isValid($data, $field, $extra));
+        self::assertEquals($expected, $this->validationRule->isValid($data, $field, $extra));
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
             $this->validator->expects($this->never())
                 ->method('addError');
         } else {
-            $this->validator->expects($this->once())
+            $this->validator->expects(self::once())
                 ->method('addError')
                 ->with('Invalid value.', $field);
         }

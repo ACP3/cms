@@ -37,7 +37,7 @@ class TextColumnTypeTest extends AbstractColumnTypeTest
 
     protected function setUpSecureMockExpectations()
     {
-        $this->secureMock->expects($this->once())
+        $this->secureMock->expects(self::once())
             ->method('strEncode')
             ->with('foo')
             ->willReturn('foo');

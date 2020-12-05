@@ -53,7 +53,7 @@ class SecureTest extends \PHPUnit\Framework\TestCase
      */
     public function testStrEncodeStripScriptSingleLine($value, $expected)
     {
-        $this->assertEquals($expected, $this->secureHelper->strEncode($value, true));
+        self::assertEquals($expected, $this->secureHelper->strEncode($value, true));
     }
 
     public function testSaltUniqueCharacters()
@@ -62,7 +62,7 @@ class SecureTest extends \PHPUnit\Framework\TestCase
         $salt = $this->secureHelper->salt($length);
         $saltArray = \str_split($salt);
 
-        $this->assertEquals($length, \strlen($salt));
-        $this->assertCount($length, \array_unique($saltArray));
+        self::assertEquals($length, \strlen($salt));
+        self::assertCount($length, \array_unique($saltArray));
     }
 }

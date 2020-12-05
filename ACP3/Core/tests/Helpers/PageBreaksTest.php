@@ -106,7 +106,7 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
             'previous' => $prevPageUrl,
         ];
 
-        $this->assertEquals($expected, $this->pageBreaks->splitTextIntoPages($sourceText, $baseUrlPath));
+        self::assertEquals($expected, $this->pageBreaks->splitTextIntoPages($sourceText, $baseUrlPath));
     }
 
     /**
@@ -127,7 +127,7 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
             ->willReturn('/' . $baseUrlPath);
 
         $this->tocMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('generateTOC')
             ->willReturn('');
     }

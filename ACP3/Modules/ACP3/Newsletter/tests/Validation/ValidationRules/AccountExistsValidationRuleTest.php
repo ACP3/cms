@@ -60,7 +60,7 @@ class AccountExistsValidationRuleTest extends AbstractValidationRuleTest
     private function setExpectations($expected)
     {
         $this->accountRepositoryMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('accountExists')
             ->willReturn($expected);
     }

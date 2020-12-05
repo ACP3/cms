@@ -53,12 +53,12 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
     public function testWithDisabledStatus()
     {
-        $this->langMock->expects($this->once())
+        $this->langMock->expects(self::once())
             ->method('t')
             ->with('newsletter', 'activate_account')
             ->willReturn('{NEWSLETTER_ACTIVATE_ACCOUNT}');
 
-        $this->routerMock->expects($this->once())
+        $this->routerMock->expects(self::once())
             ->method('route')
             ->with('acp/newsletter/accounts/activate/id_123')
             ->willReturn('/index.php/acp/newsletter/accounts/activate/id_123/');

@@ -31,7 +31,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         $this->setUpMockObjects();
 
         $theme = $this->createMock(ThemePathInterface::class);
-        $theme->expects($this->once())
+        $theme->expects(self::once())
             ->method('getDesignPathInternal')
             ->willReturn(ACP3_ROOT_DIR . '/tests/designs/acp3/');
         $libraries = new Assets\Libraries($this->requestMock, $this->eventDispatcherMock);
@@ -48,7 +48,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
     public function testDefaultLibrariesEnabled()
     {
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('polyfill,jquery,bootstrap,ajax-form,font-awesome', $libraries);
+        self::assertEquals('polyfill,jquery,bootstrap,ajax-form,font-awesome', $libraries);
     }
 
     public function testEnableDatepicker()
@@ -56,20 +56,20 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         $this->assets->enableLibraries(['datetimepicker']);
 
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        $this->assertEquals('polyfill,jquery,bootstrap,ajax-form,moment,datetimepicker,font-awesome', $libraries);
+        self::assertEquals('polyfill,jquery,bootstrap,ajax-form,moment,datetimepicker,font-awesome', $libraries);
     }
 
     public function testFetchAdditionalThemeCssFiles()
     {
         $files = $this->assets->fetchAdditionalThemeCssFiles();
 
-        $this->assertEquals(['additional-style.css'], $files);
+        self::assertEquals(['additional-style.css'], $files);
     }
 
     public function testFetchAdditionalThemeJsFiles()
     {
         $files = $this->assets->fetchAdditionalThemeJsFiles();
 
-        $this->assertEquals(['additional-script.js'], $files);
+        self::assertEquals(['additional-script.js'], $files);
     }
 }

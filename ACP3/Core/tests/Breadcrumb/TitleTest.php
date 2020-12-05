@@ -44,7 +44,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
     {
         $this->setUpStepsExpectations(1);
 
-        $this->assertEquals('Foo', $this->title->getSiteAndPageTitle());
+        self::assertEquals('Foo', $this->title->getSiteAndPageTitle());
     }
 
     protected function setUpStepsExpectations(int $callCount)
@@ -56,7 +56,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
             ],
         ];
 
-        $this->stepsMock->expects($this->exactly($callCount))
+        $this->stepsMock->expects(self::exactly($callCount))
             ->method('getBreadcrumb')
             ->willReturn($steps);
     }
@@ -67,7 +67,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
 
         $this->title->setSiteTitle('Lorem Ipsum');
 
-        $this->assertEquals('Foo | Lorem Ipsum', $this->title->getSiteAndPageTitle());
+        self::assertEquals('Foo | Lorem Ipsum', $this->title->getSiteAndPageTitle());
     }
 
     public function testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator()
@@ -81,7 +81,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
             ->setPageTitleSeparator('::');
 
         $expected = 'ACP :: Foo :: Page 1 | Lorem Ipsum';
-        $this->assertEquals($expected, $this->title->getSiteAndPageTitle());
+        self::assertEquals($expected, $this->title->getSiteAndPageTitle());
     }
 
     public function testGetSiteAndPageTitleWithCustomPageTitle()
@@ -93,7 +93,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
             ->setPageTitle('FooBar');
 
         $expected = 'FooBar | Lorem Ipsum';
-        $this->assertEquals($expected, $this->title->getSiteAndPageTitle());
+        self::assertEquals($expected, $this->title->getSiteAndPageTitle());
     }
 
     public function testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle()
@@ -106,6 +106,6 @@ class TitleTest extends \PHPUnit\Framework\TestCase
             ->setPageTitle('FooBar');
 
         $expected = 'Baz | Lorem Ipsum';
-        $this->assertEquals($expected, $this->title->getSiteAndPageTitle());
+        self::assertEquals($expected, $this->title->getSiteAndPageTitle());
     }
 }

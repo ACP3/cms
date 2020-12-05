@@ -38,7 +38,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
 
         $this->setTranslatorExpectation($expected, 7);
 
-        $this->assertEquals($expected, $this->dateTranslator->localize('D'));
+        self::assertEquals($expected, $this->dateTranslator->localize('D'));
     }
 
     public function testFullDaysLocalization()
@@ -55,7 +55,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
 
         $this->setTranslatorExpectation($expected, 7);
 
-        $this->assertEquals($expected, $this->dateTranslator->localize('l'));
+        self::assertEquals($expected, $this->dateTranslator->localize('l'));
     }
 
     public function testAbbreviatedMonthLocalization()
@@ -77,7 +77,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
 
         $this->setTranslatorExpectation($expected, 12);
 
-        $this->assertEquals($expected, $this->dateTranslator->localize('M'));
+        self::assertEquals($expected, $this->dateTranslator->localize('M'));
     }
 
     public function testFullMonthsLocalization()
@@ -99,7 +99,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
 
         $this->setTranslatorExpectation($expected, 12);
 
-        $this->assertEquals($expected, $this->dateTranslator->localize('F'));
+        self::assertEquals($expected, $this->dateTranslator->localize('F'));
     }
 
     /**
@@ -113,7 +113,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
         }
 
         $invocationMocker = $this->translatorMock
-            ->expects($this->exactly($methodCallCount))
+            ->expects(self::exactly($methodCallCount))
             ->method('t');
 
         \call_user_func_array([$invocationMocker, 'willReturnOnConsecutiveCalls'], $translations);

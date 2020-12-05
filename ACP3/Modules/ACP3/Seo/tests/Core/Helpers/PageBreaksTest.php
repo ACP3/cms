@@ -71,11 +71,11 @@ class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
      */
     private function setUpMetaStatementsMockExpectations($nextPageUrl, $prevPageUrl)
     {
-        $this->metaStatements->expects($this->once())
+        $this->metaStatements->expects(self::once())
             ->method('setNextPage')
             ->with($nextPageUrl)
             ->willReturnSelf();
-        $this->metaStatements->expects($this->once())
+        $this->metaStatements->expects(self::once())
             ->method('setPreviousPage')
             ->with($prevPageUrl)
             ->willReturnSelf();

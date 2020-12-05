@@ -46,8 +46,8 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
         $actionResult->setContent('foo-bar-baz');
 
         $actual = $this->displayAction->display($actionResult);
-        $this->assertInstanceOf(Response::class, $actual);
-        $this->assertSame($actionResult, $actual);
+        self::assertInstanceOf(Response::class, $actual);
+        self::assertSame($actionResult, $actual);
     }
 
     public function testDisplayWithStringActionResult()
@@ -57,8 +57,8 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
         $this->setUpResponseMockExpectations($actionResult);
 
         $actual = $this->displayAction->display($actionResult);
-        $this->assertInstanceOf(Response::class, $actual);
-        $this->assertEquals($actionResult, $actual->getContent());
+        self::assertInstanceOf(Response::class, $actual);
+        self::assertEquals($actionResult, $actual->getContent());
     }
 
     /**
@@ -66,7 +66,7 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
      */
     private function setUpResponseMockExpectations($actionResult)
     {
-        $this->responseMock->expects($this->once())
+        $this->responseMock->expects(self::once())
             ->method('setContent')
             ->with($actionResult)
             ->willReturnSelf();
@@ -83,8 +83,8 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
         $actionResult = null;
 
         $actual = $this->displayAction->display($actionResult);
-        $this->assertInstanceOf(Response::class, $actual);
-        $this->assertEquals($templateOutput, $actual->getContent());
+        self::assertInstanceOf(Response::class, $actual);
+        self::assertEquals($templateOutput, $actual->getContent());
     }
 
     /**
@@ -92,12 +92,12 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
      */
     private function setUpViewMockExpectations($templateOutput, array $tplVars = [])
     {
-        $this->viewMock->expects($this->once())
+        $this->viewMock->expects(self::once())
             ->method('fetchTemplate')
             ->with('Foo/Frontend/index.index.tpl')
             ->willReturn($templateOutput);
         if (!empty($tplVars)) {
-            $this->viewMock->expects($this->once())
+            $this->viewMock->expects(self::once())
                 ->method('assign')
                 ->with($tplVars)
                 ->willReturn($this->returnSelf());
@@ -115,7 +115,7 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
         $this->setUpViewMockExpectations($templateOutput, $actionResult);
 
         $actual = $this->displayAction->display($actionResult);
-        $this->assertInstanceOf(Response::class, $actual);
-        $this->assertEquals($templateOutput, $actual->getContent());
+        self::assertInstanceOf(Response::class, $actual);
+        self::assertEquals($templateOutput, $actual->getContent());
     }
 }

@@ -81,7 +81,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     /**
@@ -131,7 +131,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
      */
     private function setUpContainerMockExpectations($serviceId, $serviceExists)
     {
-        $this->containerMock->expects($this->once())
+        $this->containerMock->expects(self::once())
             ->method('has')
             ->with($serviceId)
             ->willReturn($serviceExists);
@@ -181,7 +181,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbForAdminWithExistingSteps()
@@ -208,7 +208,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbForFrontendControllerIndex()
@@ -229,7 +229,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbForFrontendController()
@@ -258,7 +258,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbForFrontendWithExistingSteps()
@@ -281,7 +281,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testAddMultipleSameSteps()
@@ -306,7 +306,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testReplaceAncestor()
@@ -341,6 +341,6 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 }

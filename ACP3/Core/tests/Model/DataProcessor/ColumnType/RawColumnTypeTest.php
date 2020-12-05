@@ -16,11 +16,11 @@ class RawColumnTypeTest extends AbstractColumnTypeTest
 
     public function testDoEscape()
     {
-        $this->assertSame('foo', $this->columnType->doEscape('foo'));
-        $this->assertSame(9, $this->columnType->doEscape(9));
-        $this->assertSame('foo<html></html>', $this->columnType->doEscape('foo<html></html>'));
-        $this->assertNull($this->columnType->doEscape(null));
-        $this->assertTrue($this->columnType->doEscape(true));
-        $this->assertFalse($this->columnType->doEscape(false));
+        self::assertSame('foo', $this->columnType->doEscape('foo'));
+        self::assertSame(9, $this->columnType->doEscape(9));
+        self::assertSame('foo<html></html>', $this->columnType->doEscape('foo<html></html>'));
+        self::assertNull($this->columnType->doEscape(null));
+        self::assertTrue($this->columnType->doEscape(true));
+        self::assertFalse($this->columnType->doEscape(false));
     }
 }

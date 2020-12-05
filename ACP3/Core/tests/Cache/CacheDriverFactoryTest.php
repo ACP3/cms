@@ -49,7 +49,7 @@ class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
 
         $this->initializeCacheDriverFactory('Array', 'test');
 
-        $this->assertInstanceOf(CacheProvider::class, $this->cacheDriverFactory->create('test'));
+        self::assertInstanceOf(CacheProvider::class, $this->cacheDriverFactory->create('test'));
     }
 
     private function setUpAppPathMockExpectations()
@@ -76,7 +76,7 @@ class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
 
         $this->initializeCacheDriverFactory('PhpFile', ApplicationMode::DEVELOPMENT);
 
-        $this->assertInstanceOf(ArrayCache::class, $this->cacheDriverFactory->create('test'));
+        self::assertInstanceOf(ArrayCache::class, $this->cacheDriverFactory->create('test'));
     }
 
     public function testCreateWithPhpFileCacheDriver()
@@ -85,6 +85,6 @@ class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
 
         $this->initializeCacheDriverFactory('PhpFile', 'test');
 
-        $this->assertInstanceOf(PhpFileCache::class, $this->cacheDriverFactory->create('test'));
+        self::assertInstanceOf(PhpFileCache::class, $this->cacheDriverFactory->create('test'));
     }
 }

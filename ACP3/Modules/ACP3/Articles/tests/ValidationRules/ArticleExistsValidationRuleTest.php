@@ -61,7 +61,7 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
     private function setExpectations($expected)
     {
         $this->articlesRepositoryMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('resultExists')
             ->willReturn($expected);
     }

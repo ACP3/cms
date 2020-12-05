@@ -39,7 +39,7 @@ class CacheTest extends \PHPUnit\Framework\TestCase
     public function testGetDriverInstanceOf()
     {
         $this->setUpCacheDriverFactoryMockExpectations('test');
-        $this->assertInstanceOf(CacheProvider::class, $this->cache->getDriver());
+        self::assertInstanceOf(CacheProvider::class, $this->cache->getDriver());
     }
 
     /**
@@ -47,7 +47,7 @@ class CacheTest extends \PHPUnit\Framework\TestCase
      */
     private function setUpCacheDriverFactoryMockExpectations($namespace)
     {
-        $this->cacheDriverFactoryMock->expects($this->once())
+        $this->cacheDriverFactoryMock->expects(self::once())
             ->method('create')
             ->with($namespace)
             ->willReturn(new ArrayCache());

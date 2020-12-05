@@ -60,7 +60,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
     public function testGetUserRoleIdsForGuest()
     {
         $expected = [0 => 1];
-        $this->assertEquals($expected, $this->acl->getUserRoleIds(0));
+        self::assertEquals($expected, $this->acl->getUserRoleIds(0));
     }
 
     public function testGetUserRoleIdsForUser()
@@ -72,7 +72,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
         $userId = 1;
 
         $this->setUpUserRoleExpectations($userId);
-        $this->assertEquals($expected, $this->acl->getUserRoleIds($userId));
+        self::assertEquals($expected, $this->acl->getUserRoleIds($userId));
     }
 
     private function setUpUserRoleExpectations(int $userId)
@@ -88,7 +88,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
             ],
         ];
 
-        $this->userRoleRepositoryMock->expects($this->once())
+        $this->userRoleRepositoryMock->expects(self::once())
             ->method('getRolesByUserId')
             ->with($userId)
             ->willReturn($returnValue);
@@ -103,12 +103,12 @@ class ACLTest extends \PHPUnit\Framework\TestCase
         $userId = 1;
 
         $this->setUpUserRoleExpectations($userId);
-        $this->assertEquals($expected, $this->acl->getUserRoleNames($userId));
+        self::assertEquals($expected, $this->acl->getUserRoleNames($userId));
     }
 
     public function testHasPermissionWithEmptyResource()
     {
-        $this->assertFalse($this->acl->hasPermission(''));
+        self::assertFalse($this->acl->hasPermission(''));
     }
 
     public function testHasPermissionWithInvalidResource()
@@ -118,7 +118,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
         $this->setUpControllerActionExistsMockExpectations($resource, false);
         $this->setUpModulesMockExpectations('news', false, 0);
 
-        $this->assertFalse($this->acl->hasPermission($resource));
+        self::assertFalse($this->acl->hasPermission($resource));
     }
 
     public function testHasPermissionWithInActiveModule()
@@ -128,7 +128,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
         $this->setUpControllerActionExistsMockExpectations($resource, true);
         $this->setUpModulesMockExpectations('news', false);
 
-        $this->assertFalse($this->acl->hasPermission($resource));
+        self::assertFalse($this->acl->hasPermission($resource));
     }
 
     /**
@@ -139,7 +139,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
         $resource,
         $returnValueActionExists
     ) {
-        $this->controllerActionExistsMock->expects($this->once())
+        $this->controllerActionExistsMock->expects(self::once())
             ->method('controllerActionExists')
             ->with($resource)
             ->willReturn($returnValueActionExists);
@@ -150,7 +150,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
         bool $returnValueIsActive,
         int $callCountIsActive = 1
     ) {
-        $this->modulesMock->expects($this->exactly($callCountIsActive))
+        $this->modulesMock->expects(self::exactly($callCountIsActive))
             ->method('isActive')
             ->with($moduleName)
             ->willReturn($returnValueIsActive);
@@ -173,7 +173,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
             true
         );
 
-        $this->assertTrue($this->acl->hasPermission($resource));
+        self::assertTrue($this->acl->hasPermission($resource));
     }
 
     /**
@@ -182,7 +182,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
      */
     private function setUpUserMockExpectations($userId, $callCount = 1)
     {
-        $this->userMock->expects($this->exactly($callCount))
+        $this->userMock->expects(self::exactly($callCount))
             ->method('getUserId')
             ->willReturn($userId);
     }
@@ -198,7 +198,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
         array $returnValueRulesCache,
         $hasAccess
     ) {
-        $this->permissionsCacheMock->expects($this->exactly($callCountResourceCache))
+        $this->permissionsCacheMock->expects(self::exactly($callCountResourceCache))
             ->method('getResourcesCache')
             ->willReturn([
                 'frontend' => [
@@ -209,7 +209,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
                 ],
             ]);
 
-        $this->permissionsCacheMock->expects($this->exactly($callCountRulesCache))
+        $this->permissionsCacheMock->expects(self::exactly($callCountRulesCache))
             ->method('getRulesCache')
             ->with($returnValueRulesCache)
             ->willReturn([
@@ -241,7 +241,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
             true
         );
 
-        $this->assertTrue($this->acl->hasPermission($resource));
+        self::assertTrue($this->acl->hasPermission($resource));
     }
 
     public function testHasPermissionWithUnregisteredResource()
@@ -261,7 +261,7 @@ class ACLTest extends \PHPUnit\Framework\TestCase
             true
         );
 
-        $this->assertFalse($this->acl->hasPermission($resource));
+        self::assertFalse($this->acl->hasPermission($resource));
     }
 
     public function testHasPermissionAlwaysForSuperUser()
@@ -283,11 +283,11 @@ class ACLTest extends \PHPUnit\Framework\TestCase
             false
         );
 
-        $this->userMock->expects($this->once())
+        $this->userMock->expects(self::once())
             ->method('isSuperUser')
             ->willReturn(true);
 
-        $this->assertTrue($this->acl->hasPermission($resource));
+        self::assertTrue($this->acl->hasPermission($resource));
     }
 
     public function testUserHasRole()
@@ -297,6 +297,6 @@ class ACLTest extends \PHPUnit\Framework\TestCase
         $this->setUpUserMockExpectations($userId);
         $this->setUpUserRoleExpectations($userId);
 
-        $this->assertTrue($this->acl->userHasRole(2));
+        self::assertTrue($this->acl->userHasRole(2));
     }
 }

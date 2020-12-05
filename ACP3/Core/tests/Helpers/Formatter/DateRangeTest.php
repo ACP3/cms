@@ -54,7 +54,7 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
      */
     private function setUpLangMockExpectation($langKey, $langValue, array $params = [])
     {
-        $this->langMock->expects($this->once())
+        $this->langMock->expects(self::once())
             ->method('t')
             ->with('system', $langKey, $params)
             ->willReturn($langValue);
@@ -65,7 +65,7 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
         $dateString = '2012-12-20 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="2012-12-20 13:12">2012-12-20 13:12</time>';
 
-        $this->assertEquals($expected, $this->dateRange->formatTimeRange($dateString));
+        self::assertEquals($expected, $this->dateRange->formatTimeRange($dateString));
     }
 
     public function testSingleDateWithShortFormat()
@@ -73,7 +73,7 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
         $dateString = '2012-12-20 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="2012-12-20">2012-12-20</time>';
 
-        $this->assertEquals($expected, $this->dateRange->formatTimeRange($dateString, '', 'short'));
+        self::assertEquals($expected, $this->dateRange->formatTimeRange($dateString, '', 'short'));
     }
 
     public function testDateRangeWithLongFormat()
@@ -82,7 +82,7 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
         $dateEnd = '2012-12-25 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00">2012-12-20 13:12</time>&ndash;<time datetime="2012-12-25T13:12:12+01:00">2012-12-25 13:12</time>';
 
-        $this->assertEquals($expected, $this->dateRange->formatTimeRange($dateStart, $dateEnd));
+        self::assertEquals($expected, $this->dateRange->formatTimeRange($dateStart, $dateEnd));
     }
 
     public function testInvalidDateRangeWithLongFormat()
@@ -96,7 +96,7 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
         $dateEnd = '2012-12-19 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="Published since 2012-12-20 13:12">2012-12-20 13:12</time>';
 
-        $this->assertEquals($expected, $this->dateRange->formatTimeRange($dateStart, $dateEnd));
+        self::assertEquals($expected, $this->dateRange->formatTimeRange($dateStart, $dateEnd));
     }
 
     public function testInvalidDateRangeWithShortFormat()
@@ -110,6 +110,6 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
         $dateEnd = '2012-12-19 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="Published since 2012-12-20">2012-12-20</time>';
 
-        $this->assertEquals($expected, $this->dateRange->formatTimeRange($dateStart, $dateEnd, 'short'));
+        self::assertEquals($expected, $this->dateRange->formatTimeRange($dateStart, $dateEnd, 'short'));
     }
 }

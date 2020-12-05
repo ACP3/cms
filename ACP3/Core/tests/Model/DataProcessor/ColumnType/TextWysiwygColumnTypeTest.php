@@ -16,7 +16,7 @@ class TextWysiwygColumnTypeTest extends TextColumnTypeTest
 
     protected function setUpSecureMockExpectations()
     {
-        $this->secureMock->expects($this->once())
+        $this->secureMock->expects(self::once())
             ->method('strEncode')
             ->with('foo', true)
             ->willReturn('foo');

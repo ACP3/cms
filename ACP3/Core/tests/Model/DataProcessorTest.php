@@ -45,7 +45,7 @@ class DataProcessorTest extends \PHPUnit\Framework\TestCase
             'foo' => 'Lorem',
             'bar' => 'Ipsum',
         ];
-        $this->assertEquals($expected, $this->dataProcessor->escape($columnData, $columnConstraints));
+        self::assertEquals($expected, $this->dataProcessor->escape($columnData, $columnConstraints));
     }
 
     private function setUpColumnTypeStrategyFactoryExpectations()
@@ -53,13 +53,13 @@ class DataProcessorTest extends \PHPUnit\Framework\TestCase
         $columnTypeMock = $this->getRawColumnTypeInstance($this);
 
         $columnTypeMock
-            ->expects($this->exactly(2))
+            ->expects(self::exactly(2))
             ->method('doEscape')
             ->with($this->logicalOr('Lorem', 'Ipsum'))
             ->willReturnOnConsecutiveCalls('Lorem', 'Ipsum');
 
         $this->columnTypeStrategyFactoryMock
-            ->expects($this->exactly(2))
+            ->expects(self::exactly(2))
             ->method('getStrategy')
             ->with(DataProcessor\ColumnTypes::COLUMN_TYPE_RAW)
             ->willReturn($columnTypeMock);

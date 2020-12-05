@@ -47,11 +47,11 @@ class RedirectResponseTest extends \PHPUnit\Framework\TestCase
 
         $response = $this->redirectResponse->toNewPage('http://www.google.de');
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             \Symfony\Component\HttpFoundation\RedirectResponse::class,
             $response
         );
-        $this->assertEquals('http://www.google.de', $response->getTargetUrl());
+        self::assertEquals('http://www.google.de', $response->getTargetUrl());
     }
 
     /**
@@ -59,7 +59,7 @@ class RedirectResponseTest extends \PHPUnit\Framework\TestCase
      */
     private function setUpRequestMockExpectations($isAjax)
     {
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects(self::once())
             ->method('isXmlHttpRequest')
             ->willReturn($isAjax);
     }
@@ -70,12 +70,12 @@ class RedirectResponseTest extends \PHPUnit\Framework\TestCase
 
         $response = $this->redirectResponse->toNewPage('http://www.google.de');
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             JsonResponse::class,
             $response
         );
 
-        $this->assertEquals($this->buildJsonResponseContent('http:\/\/www.google.de'), $response->getContent());
+        self::assertEquals($this->buildJsonResponseContent('http:\/\/www.google.de'), $response->getContent());
     }
 
     /**
@@ -97,16 +97,16 @@ JSON;
 
         $response = $this->redirectResponse->temporary('foo/bar/baz');
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             \Symfony\Component\HttpFoundation\RedirectResponse::class,
             $response
         );
-        $this->assertEquals('http://www.example.com/foo/bar/baz/', $response->getTargetUrl());
+        self::assertEquals('http://www.example.com/foo/bar/baz/', $response->getTargetUrl());
     }
 
     private function setUpRouterMockExpectations($path)
     {
-        $this->routerMock->expects($this->once())
+        $this->routerMock->expects(self::once())
             ->method('route')
             ->with($path, true)
             ->willReturn('http://www.example.com/' . $path . '/');
@@ -119,11 +119,11 @@ JSON;
 
         $response = $this->redirectResponse->temporary('foo/bar/baz');
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             JsonResponse::class,
             $response
         );
-        $this->assertEquals(
+        self::assertEquals(
             $this->buildJsonResponseContent('http:\/\/www.example.com\/foo\/bar\/baz\/'),
             $response->getContent()
         );
@@ -136,11 +136,11 @@ JSON;
 
         $response = $this->redirectResponse->permanent('foo/bar/baz');
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             \Symfony\Component\HttpFoundation\RedirectResponse::class,
             $response
         );
-        $this->assertEquals('http://www.example.com/foo/bar/baz/', $response->getTargetUrl());
+        self::assertEquals('http://www.example.com/foo/bar/baz/', $response->getTargetUrl());
     }
 
     public function testAjaxPermanentRedirect()
@@ -150,11 +150,11 @@ JSON;
 
         $response = $this->redirectResponse->permanent('foo/bar/baz');
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             JsonResponse::class,
             $response
         );
-        $this->assertEquals(
+        self::assertEquals(
             $this->buildJsonResponseContent('http:\/\/www.example.com\/foo\/bar\/baz\/'),
             $response->getContent()
         );

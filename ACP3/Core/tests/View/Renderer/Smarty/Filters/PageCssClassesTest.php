@@ -63,7 +63,7 @@ class PageCssClassesTest extends AbstractPluginTest
 </html>
 HTML;
 
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             $this->plugin->__invoke($this->getTemplateContent(), $this->smartyInternalTemplateMock)
         );
@@ -75,15 +75,15 @@ HTML;
     private function setUpPageCssClassesMockExpectations($getDetailsCalls = 1)
     {
         $this->pageCssClassesMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getModule')
             ->willReturn('foo');
         $this->pageCssClassesMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getControllerAction')
             ->willReturn('foo-bar-baz');
         $this->pageCssClassesMock
-            ->expects($this->exactly($getDetailsCalls))
+            ->expects(self::exactly($getDetailsCalls))
             ->method('getDetails')
             ->willReturn('foo-bar-pagetitle');
     }
@@ -94,10 +94,10 @@ HTML;
      */
     private function setUpRequestMockExpectations($isHomepage = false, $area = AreaEnum::AREA_FRONTEND)
     {
-        $this->requestMock->expects($area === AreaEnum::AREA_FRONTEND ? $this->once() : $this->never())
+        $this->requestMock->expects($area === AreaEnum::AREA_FRONTEND ? self::once() : $this->never())
             ->method('isHomepage')
             ->willReturn($isHomepage);
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects(self::once())
             ->method('getArea')
             ->willReturn($area);
     }
@@ -135,7 +135,7 @@ HTML;
 </html>
 HTML;
 
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             $this->plugin->__invoke($this->getTemplateContent(), $this->smartyInternalTemplateMock)
         );
@@ -157,7 +157,7 @@ HTML;
 </html>
 HTML;
 
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             $this->plugin->__invoke($this->getTemplateContent(), $this->smartyInternalTemplateMock)
         );
@@ -169,7 +169,7 @@ HTML;
 <p>Baz</p>
 HTML;
 
-        $this->assertEquals(
+        self::assertEquals(
             $templateContent,
             $this->plugin->__invoke($templateContent, $this->smartyInternalTemplateMock)
         );

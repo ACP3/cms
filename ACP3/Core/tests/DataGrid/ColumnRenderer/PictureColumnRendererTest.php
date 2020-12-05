@@ -40,7 +40,7 @@ class PictureColumnRendererTest extends AbstractColumnRendererTest
             'picture' => 1,
         ];
 
-        $this->routerMock->expects($this->once())
+        $this->routerMock->expects(self::once())
             ->method('route')
             ->with('gallery/index/pic/id_1')
             ->willReturn('/gallery/index/pic/id_1/');

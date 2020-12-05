@@ -16,8 +16,8 @@ class DoubleColumnTypeTest extends AbstractColumnTypeTest
 
     public function testDoEscape()
     {
-        $this->assertIsFloat($this->columnType->doEscape('foo'));
-        $this->assertIsFloat($this->columnType->doEscape('0.00'));
-        $this->assertIsFloat($this->columnType->doEscape('0'));
+        self::assertIsFloat($this->columnType->doEscape('foo'));
+        self::assertIsFloat($this->columnType->doEscape('0.00'));
+        self::assertIsFloat($this->columnType->doEscape('0'));
     }
 }

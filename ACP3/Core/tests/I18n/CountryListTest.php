@@ -27,37 +27,37 @@ class CountryListTest extends \PHPUnit\Framework\TestCase
 
     public function testValidLocale()
     {
-        $this->translatorMock->expects($this->exactly(3))
+        $this->translatorMock->expects(self::exactly(3))
             ->method('getLocale')
             ->willReturn('en_US');
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertIsArray($actual);
-        $this->assertNotEmpty($actual);
+        self::assertIsArray($actual);
+        self::assertNotEmpty($actual);
     }
 
     public function testInvalidLocaleByPath()
     {
-        $this->translatorMock->expects($this->exactly(3))
+        $this->translatorMock->expects(self::exactly(3))
             ->method('getLocale')
             ->willReturn('xx_ZZ');
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertIsArray($actual);
-        $this->assertEmpty($actual);
+        self::assertIsArray($actual);
+        self::assertEmpty($actual);
     }
 
     public function testInvalidLocaleByCharacters()
     {
-        $this->translatorMock->expects($this->exactly(3))
+        $this->translatorMock->expects(self::exactly(3))
             ->method('getLocale')
             ->willReturn('2390');
 
         $actual = $this->countryList->worldCountries();
 
-        $this->assertIsArray($actual);
-        $this->assertEmpty($actual);
+        self::assertIsArray($actual);
+        self::assertEmpty($actual);
     }
 }

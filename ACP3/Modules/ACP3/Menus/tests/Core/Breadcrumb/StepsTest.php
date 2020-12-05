@@ -40,7 +40,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
 
     protected function setUpMenuItemRepositoryExpectations(array $dbSteps = [])
     {
-        $this->menuItemRepositoryMock->expects($this->once())
+        $this->menuItemRepositoryMock->expects(self::once())
             ->method('getMenuItemsByUri')
             ->withAnyParameters()
             ->willReturn($dbSteps);
@@ -72,7 +72,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbWithMultipleDbSteps()
@@ -111,7 +111,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbWithMultipleDbStepsAndDefaultSteps()
@@ -154,7 +154,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbWithMultipleDbStepsAndCustomSteps()
@@ -196,7 +196,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbLastDbStepTitleShouldTakePrecedence()
@@ -228,7 +228,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbLastDbStepTitleShouldTakePrecedenceWithEmptyUri()
@@ -260,7 +260,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
                 'last' => true,
             ],
         ];
-        $this->assertEquals($expected, $this->steps->getBreadcrumb());
+        self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
     public function testGetBreadcrumbForFrontendControllerIndex()

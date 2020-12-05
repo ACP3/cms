@@ -54,7 +54,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     {
         $this->setUpRequestExpectations($formFieldName, $postValue);
 
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             $this->formsHelper->selectEntry($formFieldName, $defaultValue, $currentValue, $htmlAttribute)
         );
@@ -91,7 +91,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     {
         $this->setUpRequestExpectations('entries', $postValue);
 
-        $this->assertEquals($expected, $this->formsHelper->recordsPerPage($currentValue, $steps, $maxValue));
+        self::assertEquals($expected, $this->formsHelper->recordsPerPage($currentValue, $steps, $maxValue));
     }
 
     /**
@@ -120,7 +120,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
             'baz' => 'Dolor',
         ];
 
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             $this->formsHelper->choicesGenerator('form_field', $values, $currentValue, $htmlAttribute)
         );
@@ -151,7 +151,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
             'baz' => 'Dolor',
         ];
 
-        $this->assertEquals(
+        self::assertEquals(
             $expected,
             $this->formsHelper->checkboxGenerator('form_field', $values, $currentValue)
         );

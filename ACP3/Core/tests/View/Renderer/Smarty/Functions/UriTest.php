@@ -44,12 +44,12 @@ class UriTest extends AbstractPluginTest
             'args' => 'foo/bar/baz',
         ];
 
-        $this->routerMock->expects($this->once())
+        $this->routerMock->expects(self::once())
             ->method('route')
             ->with('foo/bar/baz', false, null)
             ->willReturn('/foo/bar/baz/');
 
-        $this->assertEquals('/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
+        self::assertEquals('/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
     }
 
     public function testUriWithForceHttp()
@@ -59,12 +59,12 @@ class UriTest extends AbstractPluginTest
             'secure' => false,
         ];
 
-        $this->routerMock->expects($this->once())
+        $this->routerMock->expects(self::once())
             ->method('route')
             ->with('foo/bar/baz', false, false)
             ->willReturn('http://example.com/foo/bar/baz/');
 
-        $this->assertEquals('http://example.com/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
+        self::assertEquals('http://example.com/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
     }
 
     public function testUriWithForceHttps()
@@ -74,11 +74,11 @@ class UriTest extends AbstractPluginTest
             'secure' => true,
         ];
 
-        $this->routerMock->expects($this->once())
+        $this->routerMock->expects(self::once())
             ->method('route')
             ->with('foo/bar/baz', false, true)
             ->willReturn('https://example.com/foo/bar/baz/');
 
-        $this->assertEquals('https://example.com/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
+        self::assertEquals('https://example.com/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
     }
 }

@@ -59,14 +59,14 @@ class InvalidatePageCacheOnModelAfterSaveListenerTest extends \PHPUnit\Framework
 
     private function setUpCanUsePageCacheMockExpectations($cacheEnabled = true)
     {
-        $this->canUsePageCacheMock->expects($this->once())
+        $this->canUsePageCacheMock->expects(self::once())
             ->method('canUsePageCache')
             ->willReturn($cacheEnabled);
     }
 
     private function setUpSettingsMockExpectations($methodCalls = 0, $purgeMode = 1)
     {
-        $this->settingsMock->expects($this->exactly($methodCalls))
+        $this->settingsMock->expects(self::exactly($methodCalls))
             ->method('getSettings')
             ->with('system')
             ->willReturn(['page_cache_purge_mode' => $purgeMode]);
@@ -85,7 +85,7 @@ class InvalidatePageCacheOnModelAfterSaveListenerTest extends \PHPUnit\Framework
         $this->setUpCanUsePageCacheMockExpectations(true);
         $this->setUpSettingsMockExpectations(1, 2);
 
-        $this->settingsMock->expects($this->once())
+        $this->settingsMock->expects(self::once())
             ->method('saveSettings')
             ->with(['page_cache_is_valid' => false], 'system');
 

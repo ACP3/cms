@@ -29,7 +29,7 @@ class ColumnTypeStrategyFactoryTest extends \PHPUnit\Framework\TestCase
         $columnTypeMock = $this->getRawColumnTypeInstance($this);
         $this->columnTypeStrategyFactory->registerColumnType($columnTypeMock, 'raw');
 
-        $this->assertInstanceOf(ColumnTypeStrategyInterface::class, $this->columnTypeStrategyFactory->getStrategy(ColumnTypes::COLUMN_TYPE_RAW));
+        self::assertInstanceOf(ColumnTypeStrategyInterface::class, $this->columnTypeStrategyFactory->getStrategy(ColumnTypes::COLUMN_TYPE_RAW));
     }
 
     public function testGetStrategyWithInvalidColumnType()

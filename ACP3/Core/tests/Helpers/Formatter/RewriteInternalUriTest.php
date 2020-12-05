@@ -12,32 +12,33 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request;
 use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 use ACP3\Modules\ACP3\Seo\Core\Router\Router;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\ServerBag;
 
-class RewriteInternalUriTest extends \PHPUnit\Framework\TestCase
+class RewriteInternalUriTest extends TestCase
 {
     /**
      * @var \ACP3\Core\Helpers\Formatter\RewriteInternalUri
      */
     private $rewriteInternalUri;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & ApplicationPath
      */
     private $appPathMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & ControllerActionExists
      */
     private $controllerActionExistsMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Http\RequestInterface
      */
     private $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Router\RouterInterface
      */
     private $routerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & InternalUriValidationRule
      */
     private $internalUriValidationRule;
 
@@ -54,7 +55,7 @@ class RewriteInternalUriTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    private function initializeMockObjects()
+    private function initializeMockObjects(): void
     {
         $this->appPathMock = $this->createMock(ApplicationPath::class);
         $this->controllerActionExistsMock = $this->createMock(ControllerActionExists::class);
@@ -63,7 +64,7 @@ class RewriteInternalUriTest extends \PHPUnit\Framework\TestCase
         $this->internalUriValidationRule = $this->createMock(InternalUriValidationRule::class);
     }
 
-    public function testRewriteInternalUriWithNotMatchingUrl()
+    public function testRewriteInternalUriWithNotMatchingUrl(): void
     {
         $this->setUpAppPathExpectations();
         $this->setUpRequestMockExpectations();
@@ -76,10 +77,10 @@ class RewriteInternalUriTest extends \PHPUnit\Framework\TestCase
 <p><a href="http://google.com">www.google.com</a></p>
 HTML;
 
-        $this->assertEquals($content, $this->rewriteInternalUri->rewriteInternalUri($content));
+        self::assertEquals($content, $this->rewriteInternalUri->rewriteInternalUri($content));
     }
 
-    public function testRewriteInternalUriWithMatchingExternalUri()
+    public function testRewriteInternalUriWithMatchingExternalUri(): void
     {
         $this->setUpAppPathExpectations();
         $this->setUpRequestMockExpectations();
@@ -92,10 +93,10 @@ HTML;
 <p><a href="http://example.com/foo/bar/baz/">www.example.com</a></p>
 HTML;
 
-        $this->assertEquals($content, $this->rewriteInternalUri->rewriteInternalUri($content));
+        self::assertEquals($content, $this->rewriteInternalUri->rewriteInternalUri($content));
     }
 
-    public function testRewriteInternalUriWithMatchingUriAndExistingAlias()
+    public function testRewriteInternalUriWithMatchingUriAndExistingAlias(): void
     {
         $this->setUpAppPathExpectations();
         $this->setUpRequestMockExpectations();
@@ -113,68 +114,50 @@ HTML;
 <p><a href="/foo-bar/">www.example.com</a></p>
 HTML;
 
-        $this->assertEquals($expected, $this->rewriteInternalUri->rewriteInternalUri($content));
+        self::assertEquals($expected, $this->rewriteInternalUri->rewriteInternalUri($content));
     }
 
-    private function setUpAppPathExpectations()
+    private function setUpAppPathExpectations(): void
     {
-        $this->appPathMock->expects($this->once())
+        $this->appPathMock->expects(self::once())
             ->method('getWebRoot')
             ->willReturn('/');
     }
 
-    /**
-     * @param string $httpHost
-     */
-    private function setUpRequestMockExpectations($httpHost = 'example.com')
+    private function setUpRequestMockExpectations(string $httpHost = 'example.com'): void
     {
-        $this->requestMock->expects($this->once())
+        $this->requestMock->expects(self::once())
             ->method('getServer')
             ->willReturn(new ServerBag([
                 'HTTP_HOST' => $httpHost,
             ]));
     }
 
-    /**
-     * @param int    $callCount
-     * @param string $uri
-     * @param bool   $isValid
-     */
-    private function setUpValidationRuleMockExpectations($callCount, $uri, $isValid)
+    private function setUpValidationRuleMockExpectations(int $callCount, string $uri, bool $isValid): void
     {
-        $this->internalUriValidationRule->expects($this->exactly($callCount))
+        $this->internalUriValidationRule->expects(self::exactly($callCount))
             ->method('isValid')
             ->with($uri)
             ->willReturn($isValid);
     }
 
-    /**
-     * @param int    $callCount
-     * @param string $path
-     * @param bool   $isControllerAction
-     */
-    private function setUpControllerActionExistsMockExpectations($callCount, $path, $isControllerAction)
+    private function setUpControllerActionExistsMockExpectations(int $callCount, string $path, bool $isControllerAction): void
     {
-        $this->controllerActionExistsMock->expects($this->exactly($callCount))
+        $this->controllerActionExistsMock->expects(self::exactly($callCount))
             ->method('controllerActionExists')
             ->with($path)
             ->willReturn($isControllerAction);
     }
 
-    /**
-     * @param int    $callCount
-     * @param string $route
-     * @param string $alias
-     */
-    private function setUpRouterMockExpectations($callCount, $route, $alias)
+    private function setUpRouterMockExpectations(int $callCount, string $route, string $alias): void
     {
-        $this->routerMock->expects($this->exactly($callCount))
+        $this->routerMock->expects(self::exactly($callCount))
             ->method('route')
             ->with($route)
             ->willReturn($alias);
     }
 
-    public function testRewriteInternalUriWithMatchingInlineUri()
+    public function testRewriteInternalUriWithMatchingInlineUri(): void
     {
         $this->setUpAppPathExpectations();
         $this->setUpRequestMockExpectations();
@@ -186,10 +169,10 @@ HTML;
 http://example.com/foo/bar/baz/
 HTML;
 
-        $this->assertEquals($content, $this->rewriteInternalUri->rewriteInternalUri($content));
+        self::assertEquals($content, $this->rewriteInternalUri->rewriteInternalUri($content));
     }
 
-    public function testRewriteInternalUriWithMatchingInlineUriAndExistingAlias()
+    public function testRewriteInternalUriWithMatchingInlineUriAndExistingAlias(): void
     {
         $this->setUpAppPathExpectations();
         $this->setUpRequestMockExpectations();
@@ -205,6 +188,6 @@ HTML;
 /foo-bar/
 HTML;
 
-        $this->assertEquals($expected, $this->rewriteInternalUri->rewriteInternalUri($content));
+        self::assertEquals($expected, $this->rewriteInternalUri->rewriteInternalUri($content));
     }
 }

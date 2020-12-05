@@ -80,19 +80,19 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
     public function testRenderWithDefaults()
     {
         $this->aclMock
-            ->expects($this->exactly(2))
+            ->expects(self::exactly(2))
             ->method('hasPermission')
             ->willReturn(false);
 
         $expected = $this->getDefaultExpected();
 
-        $this->assertEquals($expected, $this->dataGrid->render($this->inputOptions));
+        self::assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }
 
     public function testRenderWithOneTextColumn()
     {
         $this->aclMock
-            ->expects($this->exactly(2))
+            ->expects(self::exactly(2))
             ->method('hasPermission')
             ->willReturn(false);
 
@@ -111,7 +111,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         $expected = $this->getDefaultExpected();
         $expected['grid']['header'] = '<th>Foo</th>';
 
-        $this->assertEquals($expected, $this->dataGrid->render($this->inputOptions));
+        self::assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }
 
     public function testRenderWithOneTextColumnAndData()
@@ -125,7 +125,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             ],
         ];
         $this->aclMock
-            ->expects($this->exactly(2))
+            ->expects(self::exactly(2))
             ->method('hasPermission')
             ->willReturn(false);
 
@@ -147,6 +147,6 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         $expected['grid']['results'] = "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n";
         $expected['grid']['num_results'] = 2;
 
-        $this->assertEquals($expected, $this->dataGrid->render($this->inputOptions));
+        self::assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }
 }

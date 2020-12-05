@@ -58,12 +58,12 @@ class FileResolverTest extends TestCase
 
         $expected = ACP3_ROOT_DIR . '/ACP3/Modules/ACP3/System/Resources/View/Partials/breadcrumb.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/breadcrumb.tpl');
-        $this->assertSamePath($expected, $actual);
+        self::assertSamePath($expected, $actual);
     }
 
     private function assertSamePath(string $expected, string $actual): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             \str_replace('\\', '/', $expected),
             \str_replace('\\', '/', $actual)
         );
@@ -75,7 +75,7 @@ class FileResolverTest extends TestCase
 
         $expected = $this->appPath->getDesignRootPathInternal() . 'acp3/System/View/Partials/mark.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/mark.tpl');
-        $this->assertSamePath($expected, $actual);
+        self::assertSamePath($expected, $actual);
     }
 
     public function testResolveTemplatePathWithMultipleInheritance(): void
@@ -89,7 +89,7 @@ class FileResolverTest extends TestCase
 
         $expected = ACP3_ROOT_DIR . '/tests/designs/acp3/layout.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('layout.tpl');
-        $this->assertSamePath($expected, $actual);
+        self::assertSamePath($expected, $actual);
     }
 
     private function setUpThemeMockExpectations(string $themeName, array $dependencies): void
@@ -114,6 +114,6 @@ class FileResolverTest extends TestCase
 
         $expected = ACP3_ROOT_DIR . '/tests/designs/acp3-inherit/System/View/Partials/Foo/bar/baz.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/Foo/bar/baz.tpl');
-        $this->assertSamePath($expected, $actual);
+        self::assertSamePath($expected, $actual);
     }
 }

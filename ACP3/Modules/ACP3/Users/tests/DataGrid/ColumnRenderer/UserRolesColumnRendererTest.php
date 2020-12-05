@@ -25,7 +25,7 @@ class UserRolesColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->aclMock->expects($this->once())
+        $this->aclMock->expects(self::once())
             ->method('getUserRoleNames')
             ->with(1)
             ->willReturn(['Administrator']);
