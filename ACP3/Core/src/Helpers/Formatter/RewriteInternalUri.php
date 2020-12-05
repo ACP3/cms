@@ -14,32 +14,24 @@ class RewriteInternalUri
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
     /**
      * @var \ACP3\Core\Controller\Helper\ControllerActionExists
      */
-    protected $controllerActionExists;
+    private $controllerActionExists;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var Core\Validation\ValidationRules\InternalUriValidationRule
      */
     private $internalUriValidationRule;
 
-    /**
-     * RewriteInternalUri constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath              $appPath
-     * @param \ACP3\Core\Controller\Helper\ControllerActionExists $controllerActionExists
-     * @param \ACP3\Core\Http\RequestInterface                    $request
-     * @param \ACP3\Core\Router\RouterInterface                   $router
-     */
     public function __construct(
         Core\Environment\ApplicationPath $appPath,
         Core\Controller\Helper\ControllerActionExists $controllerActionExists,
@@ -54,12 +46,7 @@ class RewriteInternalUri
         $this->internalUriValidationRule = $internalUriValidationRule;
     }
 
-    /**
-     * @param string $text
-     *
-     * @return string
-     */
-    public function rewriteInternalUri($text)
+    public function rewriteInternalUri(string $text): string
     {
         $rootDir = \str_replace('/', '\/', $this->appPath->getWebRoot());
         $host = $this->request->getServer()->get('HTTP_HOST');
@@ -72,10 +59,7 @@ class RewriteInternalUri
         );
     }
 
-    /**
-     * @return string
-     */
-    private function rewriteInternalUriCallback(array $matches)
+    private function rewriteInternalUriCallback(array $matches): string
     {
         if ($this->internalUriValidationRule->isValid($matches[8]) === true) {
             $resourceParts = \explode('/', $matches[8]);
@@ -92,10 +76,7 @@ class RewriteInternalUri
         return $matches[0];
     }
 
-    /**
-     * @return string
-     */
-    private function getResourcePath(array $resourceParts)
+    private function getResourcePath(array $resourceParts): string
     {
         $path = 'frontend/' . $resourceParts[0];
         if (!empty($resourceParts[1])) {
