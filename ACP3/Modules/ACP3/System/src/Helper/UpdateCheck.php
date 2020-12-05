@@ -16,8 +16,8 @@ use Composer\Semver\Comparator;
 
 class UpdateCheck
 {
-    const UPDATE_CHECK_FILE = 'https://acp3.gitlab.io/update-check/update.txt';
-    const UPDATE_CHECK_DATE_OFFSET = 86400;
+    private const UPDATE_CHECK_FILE = 'https://acp3.gitlab.io/update-check/update.txt';
+    private const UPDATE_CHECK_DATE_OFFSET = 86400;
 
     /**
      * @var SettingsInterface
@@ -32,9 +32,6 @@ class UpdateCheck
      */
     private $updateFileParser;
 
-    /**
-     * UpdateCheck constructor.
-     */
     public function __construct(Date $date, SettingsInterface $settings, UpdateFileParser $updateFileParser)
     {
         $this->settings = $settings;
@@ -42,10 +39,7 @@ class UpdateCheck
         $this->updateFileParser = $updateFileParser;
     }
 
-    /**
-     * @return array
-     */
-    public function checkForNewVersion()
+    public function checkForNewVersion(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
@@ -68,10 +62,7 @@ class UpdateCheck
         return $this->date->timestamp() - $lastUpdateTimestamp >= static::UPDATE_CHECK_DATE_OFFSET;
     }
 
-    /**
-     * @return array
-     */
-    private function doUpdateCheck()
+    private function doUpdateCheck(): array
     {
         try {
             $data = $this->updateFileParser->parseUpdateFile(static::UPDATE_CHECK_FILE);
@@ -91,12 +82,7 @@ class UpdateCheck
         return $update;
     }
 
-    /**
-     * @param string $latestVersion
-     *
-     * @return bool
-     */
-    private function isLatestVersion($latestVersion)
+    private function isLatestVersion(string $latestVersion): bool
     {
         return Comparator::greaterThanOrEqualTo(
             BootstrapInterface::VERSION,
@@ -104,10 +90,7 @@ class UpdateCheck
         );
     }
 
-    /**
-     * @return bool
-     */
-    private function saveUpdateSettings(array $update)
+    private function saveUpdateSettings(array $update): bool
     {
         $data = [
             'update_last_check' => $this->date->timestamp(),
