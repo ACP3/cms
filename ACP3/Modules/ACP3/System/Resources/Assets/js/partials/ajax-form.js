@@ -411,10 +411,10 @@
     };
 })(jQuery, window, document);
 
-jQuery(document).ready(($) => {
+(($) => {
     $('[data-ajax-form="true"]').formSubmit();
 
     $(document).on('draw.dt', (e) => {
         $(e.target).find('[data-ajax-form="true"]').formSubmit();
     });
-});
+})(jQuery);

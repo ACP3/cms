@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-jQuery(document).ready(($) => {
+(($) => {
     const $doc = $(document),
         $languages = $('#languages');
 
@@ -23,4 +23,4 @@ jQuery(document).ready(($) => {
             $languages.submit();
         }
     });
-});
+})(jQuery);

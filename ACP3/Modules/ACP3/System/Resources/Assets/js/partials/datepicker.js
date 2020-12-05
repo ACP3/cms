@@ -1,4 +1,4 @@
-jQuery(document).ready(($) => {
+(($) => {
     const $datepickerRange = $('[data-datepicker-range]'),
         $datepicker = $('[data-datepicker]'),
         datepickerIcons = {
@@ -37,4 +37,4 @@ jQuery(document).ready(($) => {
             $(this).datetimepicker({icons: datepickerIcons});
         });
     }
-});
+})(jQuery);

@@ -1,4 +1,4 @@
-jQuery(document).ready(($) => {
+(($) => {
     const $parentId = $('#parent-id'),
         $blockId = $('#block-id'),
         defaultBlockIndex = $blockId.find('option:selected').index() || 0;
@@ -23,4 +23,4 @@ jQuery(document).ready(($) => {
             }
         });
     }).triggerHandler('change');
-});
+})(jQuery);

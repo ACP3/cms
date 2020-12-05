@@ -21,7 +21,7 @@ const initializeCKEditorInstances = () => {
     });
 };
 
-jQuery(document).ready(($) => {
+(($) => {
     $(document).on('acp3.ajaxFrom.submit.before', () => {
         if (typeof CKEDITOR === 'undefined') {
             return;
@@ -41,4 +41,4 @@ jQuery(document).ready(($) => {
     });
 
     initializeCKEditorInstances();
-});
+})(jQuery);

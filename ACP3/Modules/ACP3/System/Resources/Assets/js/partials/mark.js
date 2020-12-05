@@ -114,7 +114,7 @@ jQuery.fn.deleteMarkedResults = function (options) {
     return $this;
 };
 
-jQuery(document).ready(($) => {
+(($) => {
     const $markAll = $('[data-mark-all-id]');
 
     $markAll.each((index, element) => {
@@ -130,4 +130,4 @@ jQuery(document).ready(($) => {
     $('form #adm-list .fa-trash')
         .closest('.btn')
         .deleteMarkedResults($markAll.data('delete-options'));
-});
+})(jQuery);

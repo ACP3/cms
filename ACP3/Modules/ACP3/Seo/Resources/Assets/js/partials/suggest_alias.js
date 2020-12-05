@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-(function ($) {
+(($) => {
     'use strict';
 
     const pluginName = 'suggestAlias',
@@ -79,10 +79,10 @@
     };
 })(jQuery);
 
-jQuery(document).ready(($) => {
+(($) => {
     $('#seo-alias-suggestion').suggestAlias({
         prefix: $('[data-seo-slug-prefix]').data('seo-slug-prefix'),
         slugBaseElement: $('[data-seo-slug-base="true"]'),
         aliasElement: $('#alias')
     });
-});
+})(jQuery);

@@ -1,4 +1,4 @@
-jQuery(document).ready(($) => {
+(($) => {
     const $module = $('#module-container'),
         $link = $('#link-container'),
         $hints = $link.find('.help-block'),
@@ -66,4 +66,4 @@ jQuery(document).ready(($) => {
             $('#link-articles').val(match[1]);
         }
     });
-});
+})(jQuery);

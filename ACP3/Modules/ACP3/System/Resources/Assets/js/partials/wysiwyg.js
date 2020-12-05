@@ -1,6 +1,6 @@
 /* global wysiwygCallback */
 
-jQuery(document).ready(($) => {
+(($) => {
     $('#page-break-form').find('.modal-footer button.btn-primary').click(function (e) {
         e.preventDefault();
 
@@ -16,4 +16,4 @@ jQuery(document).ready(($) => {
         wysiwygCallback(text);
         $('#page-break-form').modal('hide');
     });
-});
+})(jQuery);

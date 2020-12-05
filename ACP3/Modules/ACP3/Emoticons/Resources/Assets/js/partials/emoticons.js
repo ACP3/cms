@@ -72,6 +72,6 @@ jQuery.fn.insertEmoticon = function (textareaId) {
     });
 };
 
-jQuery(document).ready(($) => {
+(($) => {
     $('.icons a').insertEmoticon($('.icons').data('emoticons-input'));
-});
+})(jQuery);

@@ -28,7 +28,7 @@ const initializeTinyMCEInstances = () => {
     });
 };
 
-jQuery(document).ready(($) => {
+(($) => {
     $(document).on('acp3.ajaxFrom.submit.before', () => {
         if (typeof tinymce !== 'undefined') {
             tinymce.triggerSave();
@@ -40,4 +40,4 @@ jQuery(document).ready(($) => {
     });
 
     initializeTinyMCEInstances();
-});
+})(jQuery);

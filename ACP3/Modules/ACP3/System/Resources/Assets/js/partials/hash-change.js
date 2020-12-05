@@ -1,4 +1,4 @@
-jQuery(document).ready(($) => {
+(($) => {
     const $window = $(window);
 
     $window.on('hashchange', function () {
@@ -16,4 +16,4 @@ jQuery(document).ready(($) => {
     if (location.hash) {
         $window.trigger('hashchange');
     }
-});
+})(jQuery);

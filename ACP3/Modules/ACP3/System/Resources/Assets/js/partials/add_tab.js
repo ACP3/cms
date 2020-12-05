@@ -3,7 +3,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-jQuery(document).ready(($) => {
+(($) => {
     $('[data-add-tab-identifier]').each(function () {
         const tabIdentifier = $(this).data('add-tab-identifier'),
             $element = $(tabIdentifier),
@@ -14,4 +14,4 @@ jQuery(document).ready(($) => {
 
         $tabs.append(newTabItem);
     });
-});
+})(jQuery);

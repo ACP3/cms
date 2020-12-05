@@ -1,4 +1,4 @@
-jQuery(document).ready(($) => {
+(($) => {
     $(':radio[name="site_subtitle_mode"]').on('click change', function () {
         $('#site-subtitle-homepage-home-container').toggle(Number(this.value) !== 3);
     }).filter(':checked').triggerHandler('click');
@@ -19,4 +19,4 @@ jQuery(document).ready(($) => {
             $('#mailer-smtp-1, #mailer-smtp-2').hide();
         }
     }).trigger('change');
-});
+})(jQuery);

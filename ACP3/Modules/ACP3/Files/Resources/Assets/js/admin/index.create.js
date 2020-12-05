@@ -1,4 +1,4 @@
-jQuery(document).ready(($) => {
+(($) => {
     $('input[name="active"]').on('click change', function () {
         $('#publication-period-wrapper').toggle(this.value === '1');
     }).filter(':checked').click();
@@ -9,4 +9,4 @@ jQuery(document).ready(($) => {
             $('#file-internal-toggle').toggle(!$(this).is(':checked'));
         })
         .triggerHandler('click');
-});
+})(jQuery);

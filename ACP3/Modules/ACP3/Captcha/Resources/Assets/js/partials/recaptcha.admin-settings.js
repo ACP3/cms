@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-jQuery(document).ready(($) => {
+(($) => {
     const $recaptchaWrapper = $('#recaptcha-wrapper'),
         serviceIds = [
             'captcha.extension.recaptcha_captcha_extension'
@@ -12,4 +12,4 @@ jQuery(document).ready(($) => {
     $(':input[name="captcha"]').on('change', function () {
         $recaptchaWrapper.toggle(serviceIds.indexOf(this.value) !== -1);
     }).triggerHandler('change');
-});
+})(jQuery);
