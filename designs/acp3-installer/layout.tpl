@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{$TITLE} | {$PAGE_TITLE}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {include_stylesheet module="system" file="all"}
     {include_stylesheet module="system" file="bootstrap"}
     {include_stylesheet file="style"}
     {include_stylesheet module="system" file="style"}
