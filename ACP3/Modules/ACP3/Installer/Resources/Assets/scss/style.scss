@@ -1,7 +1,9 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
 .licence {
   width: 80%;
   height: 400px;
-  margin: 0 auto 20px;
-  padding: 10px;
+  margin: 0 auto $line-height-computed;
+  padding: ($line-height-computed / 2);
   overflow: auto;
 }

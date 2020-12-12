@@ -1,7 +1,11 @@
-@media (min-width: 768px) {
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$guestbook-item-width: 65% !default;
+
+@media (min-width: $screen-sm-min) {
   .dataset-box {
     &.dataset-box__guestbook {
-      width: 65%;
+      width: $guestbook-item-width;
     }
   }
 }

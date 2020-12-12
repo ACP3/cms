@@ -1,5 +1,13 @@
-$navbar-complete-bg: #449d44;
-$breakpoint-tablet-min: 768px;
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$navbar-height: 50px;
+$navbar-logo-height: 40px;
+$navbar-spacing-y: ($navbar-height - $navbar-logo-height) / 2;
+$navbar-complete-bg-color: #449d44;
+$navbar-complete-text-color: #fff;
+$navbar-arrow-height: ($navbar-height / 2);
+$navbar-arrow-width: 10px;
+$breakpoint-tablet-min: $screen-sm-min;
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -8,7 +16,7 @@ body {
 ul,
 ol {
   &.unstyled {
-    padding-left: 20px;
+    padding-left: $line-height-computed;
   }
 }
 
@@ -18,20 +26,19 @@ p {
 
 /* Layout */
 #logo {
-  margin: 10px 0;
+  margin: ($line-height-computed / 2) 0;
 }
 
 #main-navigation {
   overflow: hidden;
 
   .navbar-brand {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: $navbar-spacing-y;
+    padding-bottom: $navbar-spacing-y;
   }
 
   .navbar-nav {
     > li {
-
       > a {
         cursor: default;
       }
@@ -41,13 +48,13 @@ p {
           position: relative;
 
           &:after {
-            border-bottom: 25px solid transparent;
-            border-top: 25px solid transparent;
-            border-left: 10px solid $navbar-complete-bg;
+            border-bottom: $navbar-arrow-height solid transparent;
+            border-top: $navbar-arrow-height solid transparent;
+            border-left: $navbar-arrow-width solid $navbar-complete-bg-color;
             content: "";
             height: 0;
             position: absolute;
-            right: -10px;
+            right: -$navbar-arrow-width;
             top: 0;
             width: 0;
             z-index: 1;
@@ -57,31 +64,31 @@ p {
         > a,
         > a:focus,
         > a:hover {
-          background-color: $navbar-complete-bg;
-          color: #fff;
+          background-color: $navbar-complete-bg-color;
+          color: $navbar-complete-text-color;
         }
       }
 
       @media (min-width: $breakpoint-tablet-min) {
         &.complete ~ .active {
           a {
-            padding-left: 25px;
+            padding-left: $navbar-arrow-width + 15px;
           }
         }
       }
     }
 
     @media (min-width: $breakpoint-tablet-min) {
-      margin-left: -15px;
+      margin-left: ($grid-gutter-width / -2);
     }
   }
 
   img {
-    height: 40px;
+    height: $navbar-logo-height;
   }
 }
 
 #footer {
-  margin-bottom: 10px;
+  margin-bottom: ($line-height-computed / 2);
   line-height: 30px;
 }

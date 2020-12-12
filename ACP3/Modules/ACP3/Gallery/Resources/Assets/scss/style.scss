@@ -1,9 +1,13 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$gallery-picture-description-width: 60% !default;
+
 .picture {
-  margin: 10px 0;
+  margin: ($line-height-computed / 2) 0;
   text-align: center;
 
   .description {
-    width: 60%;
-    margin: 10px auto;
+    width: $gallery-picture-description-width;
+    margin: ($line-height-computed / 2) auto;
   }
 }

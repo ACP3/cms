@@ -4,15 +4,21 @@
 @import "modules/datagrid";
 @import "modules/bootstrap-overrides";
 
+$system-sub-table-header-bg-color: #f6f6f6 !default;
+$system-sub-table-header-line-height: 26px !default;
+$system-sub-table-header-with-buttons-line-height: 30px !default;
+$system-list-group-item-link-text-color: #555 !default;
+$system-list-group-item-link-hover-bg-color: #F5F5F5 !default;
+
 /* Datensätze */
 .table {
   .sub-table-header {
-    background: #f6f6f6;
-    line-height: 26px;
+    background: $system-sub-table-header-bg-color;
+    line-height: $system-sub-table-header-line-height;
     font-weight: bold;
 
     .has-buttons {
-      line-height: 30px;
+      line-height: $system-sub-table-header-with-buttons-line-height;
     }
 
     span,
@@ -44,12 +50,12 @@
 
   a {
     padding: 10px 15px;
-    color: #555;
+    color: $system-list-group-item-link-text-color;
     text-decoration: none;
     display: block;
 
     &:hover {
-      background-color: #F5F5F5;
+      background-color: $system-list-group-item-link-hover-bg-color;
     }
   }
 }

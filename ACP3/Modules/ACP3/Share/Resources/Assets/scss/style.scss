@@ -3,8 +3,20 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-$rating-star-color-default: #777;
-$rating-star-color-active: #e3cf7a;
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$rating-star-color-default: #777 !default;
+$rating-star-color-active: #e3cf7a !default;
+
+$rating-star-empty-font-family: 'Glyphicons Halflings', sans-serif !default;
+$rating-star-empty-font-weight: normal !default;
+$rating-star-empty-glyph: "\e007" !default;
+
+$rating-star-filled-font-family: $rating-star-empty-font-family !default;
+$rating-star-filled-font-weight: $rating-star-empty-font-weight !default;
+$rating-star-filled-glyph: "\e006" !default;
+
+$rating-star-font-size: 24px !default;
 
 .rating {
   direction: rtl;
@@ -30,8 +42,11 @@ $rating-star-color-active: #e3cf7a;
   white-space: nowrap;
 
   .rating__star {
+    font-family: $rating-star-filled-font-family;
+    font-weight: $rating-star-filled-font-weight;
+
     &::before {
-      content: "\e006";
+      content: $rating-star-filled-glyph;
       color: $rating-star-color-active;
     }
   }
@@ -39,16 +54,16 @@ $rating-star-color-active: #e3cf7a;
 
 .rating__star {
   cursor: pointer;
-  font-family: 'Glyphicons Halflings', sans-serif;
-  font-size: 24px;
+  font-family: $rating-star-empty-font-family;
+  font-size: $rating-star-font-size;
   font-style: normal;
-  font-weight: normal;
+  font-weight: $rating-star-empty-font-weight;
   margin-bottom: 0;
 
   &::before {
     color: $rating-star-color-default;
-    content: "\e007";
-    padding-right: 5px;
+    content: $rating-star-empty-glyph;
+    padding-right: ($line-height-computed / 4);
   }
 
   &.rating__star_active,
@@ -65,5 +80,5 @@ $rating-star-color-active: #e3cf7a;
 }
 
 .rating__already-rated {
-  margin-bottom: 5px;
+  margin-bottom: ($line-height-computed / 4);
 }
