@@ -1,0 +1,10 @@
+/*
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$navbar-height: 50px;
+$navbar-logo-height: 40px;
+$navbar-spacing-y: ($navbar-height - $navbar-logo-height) / 2;

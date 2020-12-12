@@ -1,8 +1,5 @@
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../../../acp3/Assets/scss/components/variables";
 
-$navbar-height: 50px;
-$navbar-logo-height: 40px;
-$navbar-spacing-y: ($navbar-height - $navbar-logo-height) / 2;
 $navbar-complete-bg-color: #449d44;
 $navbar-complete-text-color: #fff;
 $navbar-arrow-height: ($navbar-height / 2);

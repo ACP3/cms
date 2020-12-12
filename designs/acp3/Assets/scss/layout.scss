@@ -1,8 +1,4 @@
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
-
-$navbar-height: 50px;
-$navbar-logo-height: 40px;
-$navbar-spacing-y: ($navbar-height - $navbar-logo-height) / 2;
+@import "components/variables";
 
 ul {
   padding-left: $line-height-computed;
