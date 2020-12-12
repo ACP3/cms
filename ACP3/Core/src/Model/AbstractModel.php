@@ -93,13 +93,14 @@ abstract class AbstractModel
         }
 
         $result = $this->getOneById($entryId);
+        $filteredResult = $this->dataProcessor->escape($result, $this->getAllowedColumns());
 
         if ($this instanceof UpdatedAtAwareModelInterface) {
             unset($result['updated_at']);
         }
 
-        foreach ($result as $column => $value) {
-            if (isset($filteredData[$column]) && $filteredData[$column] != $value) {
+        foreach ($filteredResult as $column => $value) {
+            if (\array_key_exists($column, $filteredData) && $filteredData[$column] !== $value) {
                 return true;
             }
         }
