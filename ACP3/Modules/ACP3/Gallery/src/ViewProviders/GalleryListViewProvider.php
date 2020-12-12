@@ -91,6 +91,10 @@ class GalleryListViewProvider
         );
 
         foreach ($galleries as &$gallery) {
+            if ($gallery['file'] === null) {
+                continue;
+            }
+
             $gallery['file'] = $this->thumbnailGenerator->generateThumbnail($gallery['file'], 'thumb')->getFileWeb();
         }
 
