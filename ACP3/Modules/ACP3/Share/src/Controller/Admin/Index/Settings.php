@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Share;
 
-class Settings extends Core\Controller\AbstractFrontendAction
+class Settings extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Share\ViewProviders\AdminSettingsViewProvider
