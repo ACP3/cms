@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.3.2] - 2020-12-12
+### Fixed
+- Fixed a bug within the `AbstractModel`'s change detection
+
 ## [5.3.1] - 2020-12-12
 ### Fixed
 - Fixed the gallery list when there galleries without pictures
@@ -49,7 +53,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - removed all deprecated code
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.3.1...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.3.2...5.x
+[5.3.2]: https://gitlab.com/ACP3/cms/compare/v5.3.1...v5.3.2
 [5.3.1]: https://gitlab.com/ACP3/cms/compare/v5.3.0...v5.3.1
 [5.3.0]: https://gitlab.com/ACP3/cms/compare/v5.2.0...v5.3.0
 [5.2.0]: https://gitlab.com/ACP3/cms/compare/v5.1.2...v5.2.0
