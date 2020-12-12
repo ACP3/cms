@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Extended the SCSS files of the various modules with SCSS variables to make it easier to customize the ACP3 default appearance
+
+### Fixed
+- Fixed the 404 error when trying to enter the social sharing module's settings page
+- Fixed the visuals of the rating stars of the social sharing module when ACP3's default theme is active
+
 ## [5.3.2] - 2020-12-12
 ### Fixed
 - Fixed a bug within the `AbstractModel`'s change detection
