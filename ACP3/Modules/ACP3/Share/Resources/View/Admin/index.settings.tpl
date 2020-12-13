@@ -8,6 +8,6 @@
     </div>
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/share"}}
     {javascripts}
-    {include_js module="share" file="admin/index.settings"}
+        {include_js module="share" file="admin/index.settings"}
     {/javascripts}
 {/block}

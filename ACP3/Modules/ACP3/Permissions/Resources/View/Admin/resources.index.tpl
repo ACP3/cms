@@ -69,7 +69,7 @@
             {include file="asset:System/Partials/mark.tpl"}
         {/if}
         {javascripts}
-        {include_js module="permissions" file="admin/resources.index"}
+            {include_js module="permissions" file="admin/resources.index"}
         {/javascripts}
     {else}
         {include file="asset:System/Partials/no_results.tpl"}

@@ -4,7 +4,7 @@
         {include file="asset:Share/Partials/rating.tpl" rating=$sharing.rating}
     </div>
     {javascripts}
-    {include_js module="share" file="partials/rating"}
+        {include_js module="share" file="partials/rating"}
     {/javascripts}
 {/if}
 {if !empty($sharing.services)}
