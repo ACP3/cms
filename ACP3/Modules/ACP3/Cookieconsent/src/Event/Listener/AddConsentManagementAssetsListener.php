@@ -21,7 +21,8 @@ class AddConsentManagementAssetsListener
             [],
             ['klaro.css'],
             ['klaro-config.js', 'klaro-no-css.js'],
-            'cookieconsent'
+            'cookieconsent',
+            true
         ));
     }
 }

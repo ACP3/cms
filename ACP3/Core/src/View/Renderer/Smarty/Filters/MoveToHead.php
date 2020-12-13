@@ -7,7 +7,8 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
-use ACP3\Core\Assets\Minifier\MinifierInterface;
+use ACP3\Core\Assets\Minifier\CSS;
+use ACP3\Core\Assets\Minifier\DeferableCSS;
 
 class MoveToHead extends AbstractMoveElementFilter
 {
@@ -17,11 +18,16 @@ class MoveToHead extends AbstractMoveElementFilter
     /**
      * @var \ACP3\Core\Assets\Minifier\MinifierInterface
      */
-    protected $minifier;
+    private $cssMinifier;
+    /**
+     * @var \ACP3\Core\Assets\Minifier\DeferableCSS
+     */
+    private $deferableCssMinifier;
 
-    public function __construct(MinifierInterface $minifier)
+    public function __construct(CSS $cssMinifier, DeferableCSS $deferableCssMinifier)
     {
-        $this->minifier = $minifier;
+        $this->cssMinifier = $cssMinifier;
+        $this->deferableCssMinifier = $deferableCssMinifier;
     }
 
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
@@ -39,6 +45,10 @@ class MoveToHead extends AbstractMoveElementFilter
 
     protected function addElementFromMinifier(): string
     {
-        return '<link rel="stylesheet" type="text/css" href="' . $this->minifier->getURI() . '">' . "\n";
+        $deferableCssUri = $this->deferableCssMinifier->getURI();
+
+        return '<link rel="stylesheet" type="text/css" href="' . $this->cssMinifier->getURI() . '">' . "\n"
+            . '<link rel="stylesheet" href="' . $deferableCssUri . '" media="print" onload="this.media=\'all\'; this.onload=null;">' . "\n"
+            . '<noscript><link rel="stylesheet" href="' . $deferableCssUri . '"></noscript>' . "\n";
     }
 }

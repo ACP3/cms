@@ -36,65 +36,124 @@ class Libraries
         $this->request = $request;
 
         $this
-            ->addLibrary('polyfill', [
-                'enabled' => true,
-                'enabled_for_ajax' => false,
-                'dependencies' => [],
-                'js' => ['polyfill.min.js'],
-            ])
-            ->addLibrary('jquery', [
-                'enabled' => true,
-                'enabled_for_ajax' => false,
-                'js' => ['jquery.min.js'],
-            ])
-            ->addLibrary('font-awesome', [
-                'enabled' => true,
-                'css' => ['all.css'],
-            ])
-            ->addLibrary('js-cookie', [
-                'enabled' => false,
-                'enabled_for_ajax' => false,
-                'js' => ['js.cookie.js'],
-            ])
-            ->addLibrary('moment', [
-                'enabled' => false,
-                'js' => ['moment.min.js'],
-            ])
-            ->addLibrary('bootstrap', [
-                'enabled' => false,
-                'dependencies' => ['jquery'],
-                'css' => ['bootstrap.min.css'],
-                'js' => ['bootstrap.min.js'],
-            ])
-            ->addLibrary('ajax-form', [
-                'enabled' => true,
-                'enabled_for_ajax' => false,
-                'dependencies' => ['bootstrap', 'jquery'],
-                'js' => ['partials/ajax-form.js'],
-            ])
-            ->addLibrary('bootbox', [
-                'enabled' => false,
-                'dependencies' => ['bootstrap'],
-                'js' => ['bootbox.all.min.js'],
-            ])
-            ->addLibrary('datatables', [
-                'enabled' => false,
-                'dependencies' => ['bootstrap'],
-                'css' => ['dataTables.bootstrap.css'],
-                'js' => ['jquery.dataTables.js'],
-            ])
-            ->addLibrary('datetimepicker', [
-                'enabled' => false,
-                'dependencies' => ['jquery', 'moment'],
-                'css' => ['bootstrap-datetimepicker.css'],
-                'js' => ['bootstrap-datetimepicker.min.js'],
-            ])
-            ->addLibrary('fancybox', [
-                'enabled' => false,
-                'dependencies' => ['jquery'],
-                'css' => ['jquery.fancybox.css'],
-                'js' => ['jquery.fancybox.min.js'],
-            ]);
+            ->addLibrary(
+                new LibraryDto(
+                    'polyfill',
+                    true,
+                    false,
+                    [],
+                    [],
+                    ['polyfill.min.js']
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'jquery',
+                    true,
+                    false,
+                    [],
+                    [],
+                    ['jquery.min.js']
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'font-awesome',
+                    true,
+                    false,
+                    [],
+                    ['all.css'],
+                    [],
+                    null,
+                    true
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'js-cookie',
+                    false,
+                    false,
+                    [],
+                    [],
+                    ['js.cookie.js']
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'moment',
+                    false,
+                    false,
+                    [],
+                    [],
+                    ['moment.min.js']
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'bootstrap',
+                    false,
+                    false,
+                    ['jquery'],
+                    ['bootstrap.min.css'],
+                    ['bootstrap.min.js']
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'ajax-form',
+                    true,
+                    false,
+                    ['bootstrap', 'jquery'],
+                    [],
+                    ['partials/ajax-form.js']
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'bootbox',
+                    false,
+                    false,
+                    ['bootstrap'],
+                    [],
+                    ['bootbox.all.min.js']
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'datatables',
+                    false,
+                    false,
+                    ['bootstrap'],
+                    ['dataTables.bootstrap.css'],
+                    ['jquery.dataTables.js'],
+                    null,
+                    true
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'datetimepicker',
+                    false,
+                    false,
+                    ['jquery', 'moment'],
+                    ['bootstrap-datetimepicker.css'],
+                    ['bootstrap-datetimepicker.min.js'],
+                    null,
+                    true
+                )
+            )
+            ->addLibrary(
+                new LibraryDto(
+                    'fancybox',
+                    false,
+                    false,
+                    ['jquery'],
+                    ['jquery.fancybox.css'],
+                    ['jquery.fancybox.min.js'],
+                    null,
+                    true
+                )
+    );
     }
 
     public function dispatchAddLibraryEvent(): void

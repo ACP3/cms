@@ -19,6 +19,11 @@ class JavaScript extends AbstractMinifier
         return 'js';
     }
 
+    protected function getFileExtension(): string
+    {
+        return 'js';
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -27,7 +32,7 @@ class JavaScript extends AbstractMinifier
      */
     protected function processLibraries(string $layout): array
     {
-        $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
+        $cacheId = $this->buildCacheId($layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
             $this->fetchLibraries();

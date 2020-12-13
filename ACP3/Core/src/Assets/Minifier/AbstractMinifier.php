@@ -79,25 +79,27 @@ abstract class AbstractMinifier implements MinifierInterface
 
     abstract protected function getAssetGroup(): string;
 
+    abstract protected function getFileExtension(): string;
+
     /**
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function buildCacheId(string $type, string $layout): string
+    protected function buildCacheId(string $layout): string
     {
-        return 'assets_' . $this->generateFilenameHash($type, $layout);
+        return 'assets_' . $this->generateFilenameHash($layout);
     }
 
     /**
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function generateFilenameHash(string $group, string $layout): string
+    protected function generateFilenameHash(string $layout): string
     {
         $filename = $this->config->getSettings(Schema::MODULE_NAME)['design'];
         $filename .= '_' . $layout;
         $filename .= '_' . $this->assets->getEnabledLibrariesAsString();
-        $filename .= '_' . $group;
+        $filename .= '_' . $this->getAssetGroup();
 
         return \md5($filename);
     }
@@ -113,14 +115,14 @@ abstract class AbstractMinifier implements MinifierInterface
     public function getURI(string $layout = 'layout'): string
     {
         $debug = $this->environment === ApplicationMode::DEVELOPMENT;
-        $filenameHash = $this->generateFilenameHash($this->getAssetGroup(), $layout);
+        $filenameHash = $this->generateFilenameHash($layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
             $lastGenerated = \time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
-        $path = $this->buildAssetPath($debug, $this->getAssetGroup(), $filenameHash, $lastGenerated);
+        $path = $this->buildAssetPath($debug, $filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
         if ($debug === true || \is_file($this->appPath->getUploadsDir() . $path) === false) {
@@ -159,13 +161,13 @@ abstract class AbstractMinifier implements MinifierInterface
         \file_put_contents($path, $content, LOCK_EX);
     }
 
-    protected function buildAssetPath(bool $debug, string $group, string $filenameHash, int $lastGenerated): string
+    protected function buildAssetPath(bool $debug, string $filenameHash, int $lastGenerated): string
     {
         if ($debug === true) {
-            return 'assets/' . $filenameHash . '.' . $group;
+            return 'assets/' . $filenameHash . '.' . $this->getFileExtension();
         }
 
-        return 'assets/' . $filenameHash . '-' . $lastGenerated . '.' . $group;
+        return 'assets/' . $filenameHash . '-' . $lastGenerated . '.' . $this->getFileExtension();
     }
 
     private function createAssetsDirectory(): void

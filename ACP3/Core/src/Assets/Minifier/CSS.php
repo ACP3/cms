@@ -19,6 +19,11 @@ class CSS extends AbstractMinifier
         return 'css';
     }
 
+    protected function getFileExtension(): string
+    {
+        return 'css';
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -27,7 +32,7 @@ class CSS extends AbstractMinifier
      */
     protected function processLibraries(string $layout): array
     {
-        $cacheId = $this->buildCacheId($this->getAssetGroup(), $layout);
+        $cacheId = $this->buildCacheId($layout);
 
         if ($this->systemCache->contains($cacheId) === false) {
             $this->fetchLibraries();
@@ -46,10 +51,10 @@ class CSS extends AbstractMinifier
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function fetchLibraries(): void
+    private function fetchLibraries(): void
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library->isEnabled() === false || !$library->getCss()) {
+            if ($library->isEnabled() === false || !$library->getCss() || $library->isDeferableCss()) {
                 continue;
             }
 
@@ -66,7 +71,7 @@ class CSS extends AbstractMinifier
     /**
      * Fetches the theme stylesheets.
      */
-    protected function fetchThemeStylesheets(string $layout): void
+    private function fetchThemeStylesheets(string $layout): void
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
             $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
@@ -92,7 +97,7 @@ class CSS extends AbstractMinifier
     /**
      * Fetches the stylesheets of all currently enabled modules.
      */
-    protected function fetchModuleStylesheets(): void
+    private function fetchModuleStylesheets(): void
     {
         foreach ($this->modules->getActiveModules() as $module) {
             $stylesheet = $this->fileResolver->getStaticAssetPath(

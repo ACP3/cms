@@ -37,6 +37,10 @@ final class LibraryDto
      * @var string|null
      */
     private $moduleName;
+    /**
+     * @var bool
+     */
+    private $deferableCss;
 
     public function __construct(
         string $libraryIdentifier,
@@ -45,7 +49,8 @@ final class LibraryDto
         array $dependencies = [],
         array $css = [],
         array $js = [],
-        ?string $moduleName = null
+        ?string $moduleName = null,
+        bool $deferableCss = false
     ) {
         $this->libraryIdentifier = $libraryIdentifier;
         $this->enabled = $enabled;
@@ -54,6 +59,7 @@ final class LibraryDto
         $this->css = $css;
         $this->js = $js;
         $this->moduleName = $moduleName;
+        $this->deferableCss = $deferableCss;
     }
 
     public function getLibraryIdentifier(): string
@@ -97,5 +103,10 @@ final class LibraryDto
     public function getModuleName(): ?string
     {
         return $this->moduleName;
+    }
+
+    public function isDeferableCss(): bool
+    {
+        return $this->deferableCss;
     }
 }

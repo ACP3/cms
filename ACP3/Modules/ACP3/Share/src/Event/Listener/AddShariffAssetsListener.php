@@ -21,7 +21,8 @@ class AddShariffAssetsListener
             ['font-awesome'],
             ['shariff.min.css'],
             ['shariff.min.js'],
-            'share'
+            'share',
+            true
         ));
     }
 }
