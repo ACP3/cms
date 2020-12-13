@@ -104,8 +104,10 @@ class Libraries
                     true,
                     false,
                     ['bootstrap', 'jquery'],
-                    [],
-                    ['partials/ajax-form.js']
+                    ['loading-layer.min.css'],
+                    ['partials/ajax-form.js'],
+                    null,
+                    true
                 )
             )
             ->addLibrary(

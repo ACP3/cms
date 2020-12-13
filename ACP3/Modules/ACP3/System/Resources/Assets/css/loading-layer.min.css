@@ -1,0 +1,4 @@
+/*!
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */@-webkit-keyframes rotate{from{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(350deg);transform:rotate(350deg)}}@keyframes rotate{from{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(350deg);transform:rotate(350deg)}}.loading-layer{-ms-flex-align:center;align-items:center;background:rgba(255,255,255,0.5);display:-ms-flexbox;display:flex;-ms-flex-pack:center;justify-content:center;left:0;height:100%;opacity:0;overflow:hidden;position:fixed;top:0;transition:opacity 0.5s, visibility 0.5s;visibility:hidden;width:100%;z-index:999999}.loading-layer.loading-layer__active{opacity:1;visibility:visible}.loading-layer h1{width:100%;margin:0;font-size:26px;text-align:center}.loading-layer .fas{display:block;margin-bottom:10px}

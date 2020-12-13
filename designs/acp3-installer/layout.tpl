@@ -8,6 +8,7 @@
     {include_stylesheet module="system" file="bootstrap"}
     {include_stylesheet file="style"}
     {include_stylesheet module="system" file="style"}
+    {include_stylesheet module="system" file="loading-layer"}
     <!-- STYLESHEETS -->
     <!--[if lt IE 9]>
         {include_js module="system" file="html5shiv"}

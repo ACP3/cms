@@ -18,7 +18,7 @@ const modulePathsScssWatch = componentPaths.map((componentPath) => {
     return componentPath + '/Resources/Assets/scss/**/*.scss';
 });
 const modulePathsScssProcess = componentPaths.map((componentPath) => {
-    return componentPath + '/Resources/Assets/scss/style.scss';
+    return componentPath + '/Resources/Assets/scss/*.scss';
 });
 const modulePathsJs = componentPaths.map((componentPath) => {
     return componentPath + '/Resources/Assets/js/{admin,frontend,partials,widget}/*.js';
