@@ -7,19 +7,21 @@
 
 namespace ACP3\Modules\ACP3\Cookieconsent\Event\Listener;
 
+use ACP3\Core\Assets\Dto\LibraryDto;
 use ACP3\Core\Assets\Event\AddLibraryEvent;
 
 class AddConsentManagementAssetsListener
 {
     public function __invoke(AddLibraryEvent $event): void
     {
-        $event->addLibrary('consentManager', [
-            'enabled' => false,
-            'enabled_for_ajax' => false,
-            'dependencies' => [],
-            'module' => 'cookieconsent',
-            'css' => 'klaro.css',
-            'js' => ['klaro-config.js', 'klaro-no-css.js'],
-        ]);
+        $event->addLibrary(new LibraryDto(
+            'consentManager',
+            false,
+            false,
+            [],
+            ['klaro.css'],
+            ['klaro-config.js', 'klaro-no-css.js'],
+            'cookieconsent'
+        ));
     }
 }

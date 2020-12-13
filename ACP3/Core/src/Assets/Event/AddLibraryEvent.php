@@ -25,11 +25,13 @@ class AddLibraryEvent extends Event
     }
 
     /**
+     * @param string|\ACP3\Core\Assets\Dto\LibraryDto $library
+     *
      * @return $this
      */
-    public function addLibrary(string $identifier, array $library): self
+    public function addLibrary($library, ?array $options = null): self
     {
-        $this->libraries->addLibrary($identifier, $library);
+        $this->libraries->addLibrary($library, $options);
 
         return $this;
     }

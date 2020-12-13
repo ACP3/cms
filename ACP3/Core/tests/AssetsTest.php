@@ -18,11 +18,11 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
      */
     private $assets;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & EventDispatcherInterface
      */
     private $eventDispatcherMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & RequestInterface
      */
     private $requestMock;
 
@@ -48,7 +48,14 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
     public function testDefaultLibrariesEnabled()
     {
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        self::assertEquals('polyfill,jquery,bootstrap,ajax-form,font-awesome', $libraries);
+
+        $expected = \explode(',', 'polyfill,jquery,bootstrap,ajax-form,font-awesome');
+        $actual = \explode(',', $libraries);
+
+        \sort($expected);
+        \sort($actual);
+
+        self::assertEquals($expected, $actual);
     }
 
     public function testEnableDatepicker()
@@ -56,7 +63,14 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         $this->assets->enableLibraries(['datetimepicker']);
 
         $libraries = $this->assets->getEnabledLibrariesAsString();
-        self::assertEquals('polyfill,jquery,bootstrap,ajax-form,moment,datetimepicker,font-awesome', $libraries);
+
+        $expected = \explode(',', 'polyfill,jquery,bootstrap,ajax-form,moment,datetimepicker,font-awesome');
+        $actual = \explode(',', $libraries);
+
+        \sort($expected);
+        \sort($actual);
+
+        self::assertEquals($expected, $actual);
     }
 
     public function testFetchAdditionalThemeCssFiles()

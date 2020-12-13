@@ -41,22 +41,20 @@ class JavaScript extends AbstractMinifier
 
     /**
      * Fetches the javascript files of all enabled frontend frameworks/libraries.
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function fetchLibraries(): void
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library['enabled'] !== true || isset($library[$this->getAssetGroup()]) === false) {
+            if ($library->isEnabled() === false || !$library->getJs()) {
                 continue;
             }
 
-            $javascripts = $library[$this->getAssetGroup()];
-            if (!\is_array($javascripts)) {
-                $javascripts = [$javascripts];
-            }
-
-            foreach ($javascripts as $javascript) {
+            foreach ($library->getJs() as $javascript) {
                 $this->javascript[] = $this->fileResolver->getStaticAssetPath(
-                    !empty($library['module']) ? $library['module'] : static::SYSTEM_MODULE_NAME,
+                    $library->getModuleName() ?: static::SYSTEM_MODULE_NAME,
                     static::ASSETS_PATH_JS,
                     $javascript
                 );

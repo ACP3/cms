@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Assets;
 
+use ACP3\Core\Assets\Dto\LibraryDto;
 use ACP3\Core\Assets\Event\AddLibraryEvent;
 use ACP3\Core\Http\RequestInterface;
 use MJS\TopSort\Implementations\StringSort;
@@ -15,75 +16,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Libraries
 {
     /**
-     * @var array
+     * @var Array<string, LibraryDto>
      */
-    protected $libraries = [
-        'polyfill' => [
-            'enabled' => true,
-            'enabled_for_ajax' => false,
-            'dependencies' => [],
-            'js' => 'polyfill.min.js',
-        ],
-        'ajax-form' => [
-            'enabled' => true,
-            'enabled_for_ajax' => false,
-            'dependencies' => ['bootstrap', 'jquery'],
-            'js' => 'partials/ajax-form.js',
-        ],
-        'bootbox' => [
-            'enabled' => false,
-            'dependencies' => ['bootstrap'],
-            'js' => 'bootbox.all.min.js',
-        ],
-        'bootstrap' => [
-            'enabled' => false,
-            'dependencies' => ['jquery'],
-            'css' => 'bootstrap.min.css',
-            'js' => 'bootstrap.min.js',
-        ],
-        'datatables' => [
-            'enabled' => false,
-            'dependencies' => ['bootstrap'],
-            'css' => 'dataTables.bootstrap.css',
-            'js' => 'jquery.dataTables.js',
-        ],
-        'datetimepicker' => [
-            'enabled' => false,
-            'dependencies' => ['jquery', 'moment'],
-            'css' => 'bootstrap-datetimepicker.css',
-            'js' => 'bootstrap-datetimepicker.min.js',
-        ],
-        'fancybox' => [
-            'enabled' => false,
-            'dependencies' => ['jquery'],
-            'css' => 'jquery.fancybox.css',
-            'js' => 'jquery.fancybox.min.js',
-        ],
-        'font-awesome' => [
-            'enabled' => true,
-            'css' => [
-                'all.css',
-            ],
-        ],
-        'jquery' => [
-            'enabled' => true,
-            'enabled_for_ajax' => false,
-            'js' => 'jquery.min.js',
-        ],
-        'js-cookie' => [
-            'enabled' => false,
-            'enabled_for_ajax' => false,
-            'js' => 'js.cookie.js',
-        ],
-        'moment' => [
-            'enabled' => false,
-            'js' => 'moment.min.js',
-        ],
-    ];
+    private $libraries = [];
     /**
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -95,6 +34,67 @@ class Libraries
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->request = $request;
+
+        $this
+            ->addLibrary('polyfill', [
+                'enabled' => true,
+                'enabled_for_ajax' => false,
+                'dependencies' => [],
+                'js' => ['polyfill.min.js'],
+            ])
+            ->addLibrary('jquery', [
+                'enabled' => true,
+                'enabled_for_ajax' => false,
+                'js' => ['jquery.min.js'],
+            ])
+            ->addLibrary('font-awesome', [
+                'enabled' => true,
+                'css' => ['all.css'],
+            ])
+            ->addLibrary('js-cookie', [
+                'enabled' => false,
+                'enabled_for_ajax' => false,
+                'js' => ['js.cookie.js'],
+            ])
+            ->addLibrary('moment', [
+                'enabled' => false,
+                'js' => ['moment.min.js'],
+            ])
+            ->addLibrary('bootstrap', [
+                'enabled' => false,
+                'dependencies' => ['jquery'],
+                'css' => ['bootstrap.min.css'],
+                'js' => ['bootstrap.min.js'],
+            ])
+            ->addLibrary('ajax-form', [
+                'enabled' => true,
+                'enabled_for_ajax' => false,
+                'dependencies' => ['bootstrap', 'jquery'],
+                'js' => ['partials/ajax-form.js'],
+            ])
+            ->addLibrary('bootbox', [
+                'enabled' => false,
+                'dependencies' => ['bootstrap'],
+                'js' => ['bootbox.all.min.js'],
+            ])
+            ->addLibrary('datatables', [
+                'enabled' => false,
+                'dependencies' => ['bootstrap'],
+                'css' => ['dataTables.bootstrap.css'],
+                'js' => ['jquery.dataTables.js'],
+            ])
+            ->addLibrary('datetimepicker', [
+                'enabled' => false,
+                'dependencies' => ['jquery', 'moment'],
+                'css' => ['bootstrap-datetimepicker.css'],
+                'js' => ['bootstrap-datetimepicker.min.js'],
+            ])
+            ->addLibrary('fancybox', [
+                'enabled' => false,
+                'dependencies' => ['jquery'],
+                'css' => ['jquery.fancybox.css'],
+                'js' => ['jquery.fancybox.min.js'],
+            ]);
     }
 
     public function dispatchAddLibraryEvent(): void
@@ -103,35 +103,55 @@ class Libraries
     }
 
     /**
+     * @return Array<string, LibraryDto>
+     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getLibraries(): array
     {
         $topSort = new StringSort();
-        foreach ($this->libraries as $library => $options) {
-            $topSort->add($library, $options['dependencies'] ?? []);
+        foreach ($this->libraries as $libraryName => $options) {
+            $topSort->add($libraryName, $options->getDependencies());
         }
 
         $librariesTopSorted = [];
-        foreach ($topSort->sort() as $library) {
-            $librariesTopSorted[$library] = $this->libraries[$library];
+        foreach ($topSort->sort() as $libraryName) {
+            $librariesTopSorted[$libraryName] = $this->libraries[$libraryName];
         }
 
         return $librariesTopSorted;
     }
 
     /**
+     * @param string|\ACP3\Core\Assets\Dto\LibraryDto $library
+     *
      * @return $this
      */
-    public function addLibrary(string $identifier, array $options): self
+    public function addLibrary($library, ?array $options = null): self
     {
-        if (!isset($this->libraries[$identifier])) {
-            $this->libraries[$identifier] = $options;
+        if (\is_string($library)) {
+            if ($options === null || empty($options)) {
+                throw new \InvalidArgumentException(\sprintf('You need to pass a valid options array for this asset library %s', $library));
+            }
+
+            $library = new LibraryDto(
+                $library,
+                $options['enabled'] ?? false,
+                $options['enabled_for_ajax'] ?? false,
+                $options['dependencies'] ?? [],
+                \array_key_exists('css', $options) && \is_string($options['css']) ? [$options['css']] : $options['css'] ?? [],
+                \array_key_exists('js', $options) && \is_string($options['js']) ? [$options['js']] : $options['js'] ?? [],
+                $options['module'] ?? null
+            );
         }
 
-        if (isset($options['enabled']) && $options['enabled'] === true) {
-            $this->enableLibraries($options['dependencies'] ?? []);
+        if (!isset($this->libraries[$library->getLibraryIdentifier()])) {
+            $this->libraries[$library->getLibraryIdentifier()] = $library;
+        }
+
+        if ($library->isEnabled()) {
+            $this->enableLibraries($library->getDependencies());
         }
 
         return $this;
@@ -147,12 +167,12 @@ class Libraries
         foreach ($libraries as $library) {
             if (\array_key_exists($library, $this->libraries) === true) {
                 // Resolve javascript library dependencies recursively
-                if (!empty($this->libraries[$library]['dependencies'])) {
-                    $this->enableLibraries($this->libraries[$library]['dependencies']);
+                if (!empty($this->libraries[$library]->getDependencies())) {
+                    $this->enableLibraries($this->libraries[$library]->getDependencies());
                 }
 
                 // Enable the javascript library
-                $this->libraries[$library]['enabled'] = true;
+                $this->libraries[$library] = $this->libraries[$library]->enable();
             } else {
                 throw new \InvalidArgumentException(\sprintf('Could not find library %s', $library));
             }
@@ -162,30 +182,31 @@ class Libraries
     }
 
     /**
+     * @return string[]
+     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getEnabledLibraries(): array
     {
         $enabledLibraries = [];
-        foreach ($this->getLibraries() as $library => $options) {
+        foreach ($this->getLibraries() as $libraryName => $options) {
             if ($this->includeInXmlHttpRequest($options)) {
                 continue;
             }
-            if ($options['enabled'] === false) {
+            if ($options->isEnabled() === false) {
                 continue;
             }
 
-            $enabledLibraries[] = $library;
+            $enabledLibraries[] = $libraryName;
         }
 
         return $enabledLibraries;
     }
 
-    private function includeInXmlHttpRequest(array $values): bool
+    private function includeInXmlHttpRequest(LibraryDto $library): bool
     {
         return $this->request->isXmlHttpRequest()
-            && isset($values['enabled_for_ajax'])
-            && $values['enabled_for_ajax'] === false;
+            && $library->isEnabledForAjax() === false;
     }
 }

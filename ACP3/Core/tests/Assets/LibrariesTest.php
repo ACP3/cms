@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Assets;
 
+use ACP3\Core\Assets\Dto\LibraryDto;
 use ACP3\Core\Http\RequestInterface;
 use DMS\PHPUnitExtensions\ArraySubset\Assert;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -36,15 +37,17 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
     public function testAddLibrary()
     {
-        $data = [
-            'enabled' => false,
-            'dependencies' => ['jquery'],
-            'css' => 'foo.css',
-            'js' => 'bar.js',
-        ];
-        $this->libraries->addLibrary('foobar', $data);
+        $library = new LibraryDto(
+            'foobar',
+            false,
+            false,
+            ['jquery'],
+            ['foo.css'],
+            ['bar.js']
+        );
+        $this->libraries->addLibrary($library);
 
-        Assert::assertArraySubset(['foobar' => $data], $this->libraries->getLibraries());
+        Assert::assertArraySubset(['foobar' => $library], $this->libraries->getLibraries());
     }
 
     public function testEnableLibraries()
@@ -53,6 +56,12 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
         $this->libraries->enableLibraries(['foobar']);
 
-        self::assertEquals(['polyfill', 'jquery', 'ajax-form', 'font-awesome', 'foobar'], $this->libraries->getEnabledLibraries());
+        $expected = ['polyfill', 'jquery', 'bootstrap', 'ajax-form', 'font-awesome', 'foobar'];
+        $actual = $this->libraries->getEnabledLibraries();
+
+        \sort($expected);
+        \sort($actual);
+
+        self::assertEquals($expected, $actual);
     }
 }

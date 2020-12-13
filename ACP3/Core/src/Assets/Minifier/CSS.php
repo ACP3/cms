@@ -42,22 +42,20 @@ class CSS extends AbstractMinifier
 
     /**
      * Fetch all stylesheets of the enabled frontend frameworks/libraries.
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function fetchLibraries(): void
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library['enabled'] === false || isset($library[$this->getAssetGroup()]) === false) {
+            if ($library->isEnabled() === false || !$library->getCss()) {
                 continue;
             }
 
-            $stylesheets = $library[$this->getAssetGroup()];
-            if (!\is_array($stylesheets)) {
-                $stylesheets = [$stylesheets];
-            }
-
-            foreach ($stylesheets as $stylesheet) {
+            foreach ($library->getCss() as $stylesheet) {
                 $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                    !empty($library['module']) ? $library['module'] : static::SYSTEM_MODULE_NAME,
+                    $library->getModuleName() ?: static::SYSTEM_MODULE_NAME,
                     static::ASSETS_PATH_CSS,
                     $stylesheet
                 );

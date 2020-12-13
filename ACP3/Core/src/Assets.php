@@ -15,23 +15,23 @@ class Assets
     /**
      * @var array
      */
-    protected $additionalThemeCssFiles = [];
+    private $additionalThemeCssFiles = [];
     /**
      * @var array
      */
-    protected $additionalThemeJsFiles = [];
+    private $additionalThemeJsFiles = [];
     /**
      * @var string
      */
-    protected $enabledLibraries = '';
+    private $enabledLibraries = '';
     /**
      * @var \SimpleXMLElement
      */
-    protected $designXml;
+    private $designXml;
     /**
      * @var Libraries
      */
-    protected $libraries;
+    private $libraries;
 
     /**
      * Checks, whether the current design uses Bootstrap or not.
@@ -48,10 +48,7 @@ class Assets
         $this->libraries->dispatchAddLibraryEvent();
     }
 
-    /**
-     * @return array
-     */
-    public function fetchAdditionalThemeCssFiles()
+    public function fetchAdditionalThemeCssFiles(): array
     {
         if (isset($this->designXml->css) && empty($this->additionalThemeCssFiles)) {
             foreach ($this->designXml->css->item as $file) {
@@ -63,21 +60,16 @@ class Assets
     }
 
     /**
-     * @param string $file
-     *
      * @return $this
      */
-    public function addCssFile($file)
+    public function addCssFile(string $file): self
     {
         $this->additionalThemeCssFiles[] = $file;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function fetchAdditionalThemeJsFiles()
+    public function fetchAdditionalThemeJsFiles(): array
     {
         if (isset($this->designXml->js) && empty($this->additionalThemeJsFiles)) {
             foreach ($this->designXml->js->item as $file) {
@@ -89,11 +81,9 @@ class Assets
     }
 
     /**
-     * @param string $file
-     *
      * @return $this
      */
-    public function addJsFile($file)
+    public function addJsFile(string $file): self
     {
         $this->additionalThemeJsFiles[] = $file;
 
@@ -105,7 +95,7 @@ class Assets
      *
      * @return $this
      */
-    public function enableLibraries(array $libraries)
+    public function enableLibraries(array $libraries): self
     {
         $this->libraries->enableLibraries($libraries);
 
@@ -113,20 +103,21 @@ class Assets
     }
 
     /**
-     * @return array
+     * @return Array<string, \ACP3\Core\Assets\Dto\LibraryDto>
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function getLibraries()
+    public function getLibraries(): array
     {
         return $this->libraries->getLibraries();
     }
 
     /**
-     * @return string
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function getEnabledLibrariesAsString()
+    public function getEnabledLibrariesAsString(): string
     {
         if (empty($this->enabledLibraries)) {
             $this->enabledLibraries = \implode(',', $this->libraries->getEnabledLibraries());

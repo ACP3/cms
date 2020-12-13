@@ -153,9 +153,7 @@ abstract class AbstractMinifier implements MinifierInterface
         $minify = new \Minify(new \Minify_Cache_Null(), $this->logger);
         $content = $minify->combine($files, $options);
 
-        if (!\is_dir($this->appPath->getUploadsDir() . 'assets')) {
-            @\mkdir($this->appPath->getUploadsDir() . 'assets', 0755);
-        }
+        $this->createAssetsDirectory();
 
         // Write the contents of the file to the uploads folder
         \file_put_contents($path, $content, LOCK_EX);
@@ -168,5 +166,13 @@ abstract class AbstractMinifier implements MinifierInterface
         }
 
         return 'assets/' . $filenameHash . '-' . $lastGenerated . '.' . $group;
+    }
+
+    private function createAssetsDirectory(): void
+    {
+        $concurrentDirectory = $this->appPath->getUploadsDir() . 'assets';
+        if (!\is_dir($concurrentDirectory) && !\mkdir($concurrentDirectory, 0755) && !\is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(\sprintf('Directory "%s" was not created', $concurrentDirectory));
+        }
     }
 }
