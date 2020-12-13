@@ -6,10 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- Made it possible to load some CSS files asynchronously
 - Continued to add SCSS variables to various modules
 
 ### Changed
 - `defer` loading the main javascript assets
+- The `ajax-form` library isn't enabled by default anymore
+- Refactored the poll creation form to use the ajax-form layout
 
 ### Fixed
 - Fixed that the social sharing module javascript assets where not being placed at the end of the `<body>`-tag
