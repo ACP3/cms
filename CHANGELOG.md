@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Continued to add SCSS variables to various modules
+
+### Changed
+- `defer` loading the main javascript assets
+
+### Fixed
+- Fixed that the social sharing module javascript assets where not being placed at the end of the `<body>`-tag
+
 ## [5.4.0] - 2020-12-12
 ### Added
 - Extended the SCSS files of the various modules with SCSS variables to make it easier to customize the ACP3 default appearance
