@@ -39,7 +39,7 @@ class PageCssClasses extends AbstractFilter
     /**
      * {@inheritdoc}
      */
-    public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty)
+    public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
         if (\strpos($tplOutput, '<body') !== false) {
             if ($this->cssClassCache === '') {

@@ -14,18 +14,12 @@ class MoveToHead extends AbstractMoveElementFilter
     public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';
     protected const PLACEHOLDER = '<!-- STYLESHEETS -->';
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function addElementFromMinifier()
+    protected function addElementFromMinifier(): string
     {
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty)
+    public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
         if (\strpos($tplOutput, static::PLACEHOLDER) !== false) {
             $tplOutput = \str_replace(

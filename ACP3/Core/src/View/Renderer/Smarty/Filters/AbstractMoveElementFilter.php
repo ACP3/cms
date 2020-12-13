@@ -12,22 +12,12 @@ abstract class AbstractMoveElementFilter extends AbstractFilter
     public const ELEMENT_CATCHER_REGEX_PATTERN = '';
     protected const PLACEHOLDER = '';
 
-    /**
-     * @param string $tplOutput
-     *
-     * @return string
-     */
-    protected function getCleanedUpTemplateOutput($tplOutput)
+    protected function getCleanedUpTemplateOutput(string $tplOutput): string
     {
         return \preg_replace(static::ELEMENT_CATCHER_REGEX_PATTERN, '', $tplOutput);
     }
 
-    /**
-     * @param string $tplOutput
-     *
-     * @return string
-     */
-    protected function addElementsFromTemplates($tplOutput)
+    protected function addElementsFromTemplates(string $tplOutput): string
     {
         $matches = [];
         \preg_match_all(static::ELEMENT_CATCHER_REGEX_PATTERN, $tplOutput, $matches);

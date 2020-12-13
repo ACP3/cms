@@ -24,10 +24,7 @@ class MoveToHead extends AbstractMoveElementFilter
         $this->minifier = $minifier;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty)
+    public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
         if (\strpos($tplOutput, static::PLACEHOLDER) !== false) {
             $tplOutput = \str_replace(
@@ -40,10 +37,7 @@ class MoveToHead extends AbstractMoveElementFilter
         return $tplOutput;
     }
 
-    /**
-     * @return string
-     */
-    protected function addElementFromMinifier()
+    protected function addElementFromMinifier(): string
     {
         return '<link rel="stylesheet" type="text/css" href="' . $this->minifier->getURI() . '">' . "\n";
     }

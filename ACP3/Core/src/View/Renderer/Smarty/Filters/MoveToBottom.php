@@ -35,10 +35,7 @@ class MoveToBottom extends AbstractMoveElementFilter
         $this->request = $request;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty)
+    public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
         if (\strpos($tplOutput, static::PLACEHOLDER) !== false) {
             return \str_replace(
