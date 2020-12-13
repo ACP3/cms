@@ -10,12 +10,12 @@ ul {
 
 #main-navigation {
   .navbar-brand {
-    padding-top: $navbar-spacing-y;
-    padding-bottom: $navbar-spacing-y;
+    padding-top: $layout-navbar-spacing-y;
+    padding-bottom: $layout-navbar-spacing-y;
   }
 
   img {
-    height: $navbar-logo-height;
+    height: $layout-navbar-logo-height;
   }
 }
 

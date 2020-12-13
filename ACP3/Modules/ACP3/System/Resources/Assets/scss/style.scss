@@ -1,32 +1,13 @@
-@import "modules/ajax-loading-layer";
-@import "modules/content-elements";
 @import "modules/admin";
-@import "modules/datagrid";
+@import "modules/ajax-loading-layer";
 @import "modules/bootstrap-overrides";
-
-$system-sub-table-header-bg-color: #f6f6f6 !default;
-$system-sub-table-header-line-height: 26px !default;
-$system-sub-table-header-with-buttons-line-height: 30px !default;
-$system-list-group-item-link-text-color: #555 !default;
-$system-list-group-item-link-hover-bg-color: #F5F5F5 !default;
-
-/* Datensätze */
-.table {
-  .sub-table-header {
-    background: $system-sub-table-header-bg-color;
-    line-height: $system-sub-table-header-line-height;
-    font-weight: bold;
-
-    .has-buttons {
-      line-height: $system-sub-table-header-with-buttons-line-height;
-    }
-
-    span,
-    div {
-      font-weight: normal;
-    }
-  }
-}
+@import "modules/cache-management";
+@import "modules/content-elements";
+@import "modules/datagrid";
+@import "modules/forms";
+@import "modules/page-break-link";
+@import "modules/sub-table-header";
+@import "modules/table-of-contents";
 
 /* Position Bootstrap modal dialogs statically */
 .modal {
@@ -43,44 +24,11 @@ $system-list-group-item-link-hover-bg-color: #F5F5F5 !default;
   }
 }
 
-.list-group-item {
-  &.dropdown {
-    padding: 0;
-  }
-
-  a {
-    padding: 10px 15px;
-    color: $system-list-group-item-link-text-color;
-    text-decoration: none;
-    display: block;
-
-    &:hover {
-      background-color: $system-list-group-item-link-hover-bg-color;
-    }
-  }
-}
-
 .panel-body {
   p {
     &:last-child {
       margin-bottom: 0;
       padding-bottom: 0;
     }
-  }
-}
-
-/* Inline validation errors */
-.validation-failed {
-  margin: 15px 0 0;
-}
-
-/* Cache management */
-.cache-type {
-  line-height: 34px;
-}
-
-.alert {
-  &.alert-sm {
-    padding: 8px;
   }
 }

@@ -30,8 +30,8 @@ p {
   overflow: hidden;
 
   .navbar-brand {
-    padding-top: $navbar-spacing-y;
-    padding-bottom: $navbar-spacing-y;
+    padding-top: $layout-navbar-spacing-y;
+    padding-bottom: $layout-navbar-spacing-y;
   }
 
   .navbar-nav {
@@ -69,7 +69,7 @@ p {
       @media (min-width: $breakpoint-tablet-min) {
         &.complete ~ .active {
           a {
-            padding-left: $navbar-arrow-width + 15px;
+            padding-left: $navbar-arrow-width + floor($grid-gutter-width / 2);
           }
         }
       }
@@ -81,7 +81,7 @@ p {
   }
 
   img {
-    height: $navbar-logo-height;
+    height: $layout-navbar-logo-height;
   }
 }
 

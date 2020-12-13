@@ -5,6 +5,10 @@
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
-$layout-navbar-height: $navbar-height;
-$layout-navbar-logo-height: 40px;
-$layout-navbar-spacing-y: ($layout-navbar-height - $layout-navbar-logo-height) / 2;
+$system-toc-margin: ($line-height-computed / 4) ($line-height-computed / 2) ($line-height-computed / 2) 0 !default;
+
+#toc {
+  width: 20%;
+  margin: $system-toc-margin;
+  float: left;
+}

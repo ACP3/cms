@@ -1,0 +1,27 @@
+/*
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
+
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$system-sub-table-header-bg-color: $table-bg-accent !default;
+$system-sub-table-header-line-height: 26px !default;
+$system-sub-table-header-with-buttons-line-height: 30px !default;
+
+.table {
+  .sub-table-header {
+    background: $system-sub-table-header-bg-color;
+    line-height: $system-sub-table-header-line-height;
+    font-weight: bold;
+
+    .has-buttons {
+      line-height: $system-sub-table-header-with-buttons-line-height;
+    }
+
+    span,
+    div {
+      font-weight: normal;
+    }
+  }
+}

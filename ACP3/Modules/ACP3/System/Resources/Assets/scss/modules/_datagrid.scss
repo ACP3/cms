@@ -1,10 +1,15 @@
+$system-datagrid-mass-action-column-width: 5% !default;
+$system-datagrid-data-range-column-width: 22% !default;
+$system-datagrid-cta-column-width: 7% !default;
+$system-datagrid-cta-button-spacing: 3px !default;
+
 .datagrid {
   .datagrid-column__mass-action {
-    width: 5%;
+    width: $system-datagrid-mass-action-column-width;
   }
 
   .datagrid-column__date-range {
-    width: 22%;
+    width: $system-datagrid-data-range-column-width;
   }
 
   th.datagrid-column__actions {
@@ -20,7 +25,7 @@
   }
 
   .datagrid-column__actions {
-    width: 7%;
+    width: $system-datagrid-cta-column-width;
   }
 
   .datagrid-column__action-buttons {
@@ -29,7 +34,7 @@
     visibility: hidden;
 
     .btn {
-      margin-left: 3px;
+      margin-left: $system-datagrid-cta-button-spacing;
 
       &:first-child {
         margin-left: 0;

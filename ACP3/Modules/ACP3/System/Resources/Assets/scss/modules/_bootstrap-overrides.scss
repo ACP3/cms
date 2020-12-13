@@ -1,41 +1,23 @@
-.tab-content {
-  > .tab-pane {
-    padding-top: 15px;
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$system-list-group-item-padding: ($line-height-computed / 2) 15px !default;
+$system-list-group-item-link-text-color: #555 !default;
+$system-list-group-item-link-hover-bg-color: #F5F5F5 !default;
+
+.list-group-item {
+  &.dropdown {
+    padding: 0;
   }
-}
 
-.control-label {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  a {
+    padding: $system-list-group-item-padding;
+    color: $system-list-group-item-link-text-color;
+    text-decoration: none;
+    display: block;
 
-  &.required {
-    &:after {
-      content: ' *';
+    &:hover {
+      background-color: $system-list-group-item-link-hover-bg-color;
     }
-  }
-}
-
-.form-horizontal {
-  .control-label {
-    &.required {
-      position: relative;
-
-      &:after {
-        position: absolute;
-        right: 5px;
-
-        @media (min-width: 768px) {
-          top: 7px;
-        }
-      }
-    }
-  }
-}
-
-input,
-textarea {
-  &[placeholder] {
-    font-style: italic;
   }
 }
 
@@ -45,5 +27,5 @@ textarea {
 
 /* Pagination */
 .pagination {
-  margin: 0 0 10px;
+  margin: 0 0 ($line-height-computed / 2);
 }

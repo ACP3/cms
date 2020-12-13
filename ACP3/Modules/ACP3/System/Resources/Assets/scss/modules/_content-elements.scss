@@ -1,5 +1,11 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$system-dataset-box-margin-bottom: ($line-height-computed / 2) !default;
+$system-dataset-box-download-icon-text-color: $text-color !default;
+$system-dataset-box-padding-x: floor(($grid-gutter-width / 2)) !default;
+
 .dataset-box {
-  margin: 0 auto 10px;
+  margin: 0 auto $system-dataset-box-margin-bottom;
 
   .navbar-brand {
     height: auto;
@@ -10,23 +16,23 @@
     float: left;
 
     .navbar-text {
-      margin-right: 15px;
-      margin-left: 15px;
+      margin-right: $system-dataset-box-padding-x;
+      margin-left: $system-dataset-box-padding-x;
       float: left;
     }
   }
 
   small.navbar-text,
   .small.navbar-text {
-    line-height: 20px;
+    line-height: $line-height-computed;
 
-    @media (max-width: 767px) {
-      margin-right: 15px;
+    @media (max-width: $screen-xs-max) {
+      margin-right: floor(($grid-gutter-width / 2));
     }
   }
 
   .content {
-    margin: -8px 15px 10px;
+    margin: -8px $system-dataset-box-padding-x $system-dataset-box-margin-bottom;
   }
 
   .hyperlink {
@@ -41,18 +47,7 @@
     }
 
     .fa-download {
-      color: #333;
+      color: $system-dataset-box-download-icon-text-color;
     }
   }
-}
-
-/* Table of contents */
-#toc {
-  width: 20%;
-  margin: 5px 10px 10px 0;
-  float: left;
-}
-
-#page-break-link {
-  margin: 5px 0;
 }

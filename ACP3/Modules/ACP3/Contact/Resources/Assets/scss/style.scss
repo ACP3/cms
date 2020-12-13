@@ -1,10 +1,12 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
 $contact-powered-by-border-color: $navbar-default-border !default;
+$contact-powered-by-margin: ($line-height-computed / 4) 0 !default;
+$contact-powered-by-padding: ($line-height-computed / 4) 0 0 !default;
 
 .powered-by {
-  margin: ($line-height-computed / 4) 0;
-  padding: ($line-height-computed / 4) 0 0;
+  margin: $contact-powered-by-margin;
+  padding: $contact-powered-by-padding;
   border-top: 1px solid $contact-powered-by-border-color;
   clear: both;
 }

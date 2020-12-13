@@ -1,3 +1,8 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$system-loading-layer-bg-color: rgba(255, 255, 255, 0.5) !default;
+$system-loading-layer-font-size: 26px !default;
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -9,7 +14,7 @@
 
 .loading-layer {
   align-items: center;
-  background: rgba(255, 255, 255, 0.5);
+  background: $system-loading-layer-bg-color;
   display: flex;
   justify-content: center;
   left: 0;
@@ -31,12 +36,12 @@
   h1 {
     width: 100%;
     margin: 0;
-    font-size: 26px;
+    font-size: $system-loading-layer-font-size;
     text-align: center;
   }
 
   .fas {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: ($line-height-computed / 2);
   }
 }

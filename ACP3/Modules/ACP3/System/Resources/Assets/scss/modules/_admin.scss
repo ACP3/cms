@@ -1,26 +1,32 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$system-admin-list-navbar-text-link-text-color: $text-color !default;
+$system-admin-list-item-spacing: 8px !default;
+$system-admin-list-icon-font-size: 32px !default;
+
 /* ACP */
 #adm-list {
   .navbar-text {
     margin: 0;
 
     a {
-      color: #333;
+      color: $system-admin-list-navbar-text-link-text-color;
     }
 
     .btn-link {
-      margin-left: 8px;
+      margin-left: $system-admin-list-item-spacing;
       padding-left: 0;
       padding-right: 0;
     }
 
     .fa, .fas, .fab {
-      font-size: 32px;
+      font-size: $system-admin-list-icon-font-size;
     }
   }
 
   a,
   input {
-    margin: 8px 0 0 8px;
+    margin: $system-admin-list-item-spacing 0 0 $system-admin-list-item-spacing;
     float: right;
   }
 }
