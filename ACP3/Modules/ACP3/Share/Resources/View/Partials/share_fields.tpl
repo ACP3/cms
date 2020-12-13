@@ -11,4 +11,6 @@
 {if !empty($share.uri_pattern)}
     <input type="hidden" name="share_uri_pattern" value="{$share.uri_pattern}">
 {/if}
-{include_js module="share" file="partials/share_fields"}
+{javascripts}
+    {include_js module="share" file="partials/share_fields"}
+{/javascripts}

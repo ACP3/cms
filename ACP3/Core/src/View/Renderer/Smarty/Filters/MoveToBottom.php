@@ -51,15 +51,12 @@ class MoveToBottom extends AbstractMoveElementFilter
         return $tplOutput;
     }
 
-    /**
-     * @return string
-     */
-    protected function addElementFromMinifier()
+    protected function addElementFromMinifier(): string
     {
         if ($this->request->isXmlHttpRequest() === true) {
             return '';
         }
 
-        return "<script src=\"{$this->minifier->getURI()}\"></script>\n";
+        return "<script defer src=\"{$this->minifier->getURI()}\"></script>\n";
     }
 }
