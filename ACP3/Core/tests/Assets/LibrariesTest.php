@@ -56,7 +56,7 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
         $this->libraries->enableLibraries(['foobar']);
 
-        $expected = ['polyfill', 'jquery', 'bootstrap', 'ajax-form', 'font-awesome', 'foobar'];
+        $expected = ['polyfill', 'jquery', 'font-awesome', 'foobar'];
         $actual = $this->libraries->getEnabledLibraries();
 
         \sort($expected);

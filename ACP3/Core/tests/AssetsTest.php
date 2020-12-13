@@ -49,7 +49,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
     {
         $libraries = $this->assets->getEnabledLibrariesAsString();
 
-        $expected = \explode(',', 'polyfill,jquery,bootstrap,ajax-form,font-awesome');
+        $expected = \explode(',', 'polyfill,jquery,bootstrap,font-awesome');
         $actual = \explode(',', $libraries);
 
         \sort($expected);
