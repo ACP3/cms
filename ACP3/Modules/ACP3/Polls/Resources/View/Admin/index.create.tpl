@@ -1,7 +1,5 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{$form_id="polls-create-form"}
-
 {block CONTENT_AJAX_FORM}
     <div class="tabbable">
         <ul class="nav nav-tabs">
