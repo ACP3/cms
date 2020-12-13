@@ -58,21 +58,6 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testEnableDatepicker()
-    {
-        $this->assets->enableLibraries(['datetimepicker']);
-
-        $libraries = $this->assets->getEnabledLibrariesAsString();
-
-        $expected = \explode(',', 'polyfill,jquery,bootstrap,ajax-form,moment,datetimepicker,font-awesome');
-        $actual = \explode(',', $libraries);
-
-        \sort($expected);
-        \sort($actual);
-
-        self::assertEquals($expected, $actual);
-    }
-
     public function testFetchAdditionalThemeCssFiles()
     {
         $files = $this->assets->fetchAdditionalThemeCssFiles();

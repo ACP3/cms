@@ -7,25 +7,18 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core;
+use ACP3\Core\Assets\Libraries;
 
 class JsLibraries extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Assets
+     * @var \ACP3\Core\Assets\Libraries
      */
-    protected $assets;
-    /**
-     * @var array
-     */
-    protected $alreadyIncluded = [];
+    private $libraries;
 
-    /**
-     * @param \ACP3\Core\Assets $assets
-     */
-    public function __construct(Core\Assets $assets)
+    public function __construct(Libraries $libraries)
     {
-        $this->assets = $assets;
+        $this->libraries = $libraries;
     }
 
     /**
@@ -33,6 +26,6 @@ class JsLibraries extends AbstractFunction
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
-        $this->assets->enableLibraries(\explode(',', $params['enable']));
+        $this->libraries->enableLibraries(\explode(',', $params['enable']));
     }
 }

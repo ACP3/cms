@@ -32,4 +32,5 @@
         {/foreach}
         </tbody>
     </table>
+    {js_libraries enable="ajax-form"}
 {/block}

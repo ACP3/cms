@@ -23,4 +23,5 @@
             </div>
         </div>
     {/foreach}
+    {js_libraries enable="ajax-form"}
 {/block}

@@ -8,15 +8,14 @@
 namespace ACP3\Core\Assets;
 
 use ACP3\Core\Application\BootstrapInterface;
-use ACP3\Core\Assets;
 use ACP3\Core\Environment\ApplicationPath;
 
 abstract class AbstractIncludeAsset
 {
     /**
-     * @var \ACP3\Core\Assets
+     * @var \ACP3\Core\Assets\Libraries
      */
-    private $assets;
+    private $libraries;
     /**
      * @var \ACP3\Core\Assets\FileResolver
      */
@@ -31,11 +30,11 @@ abstract class AbstractIncludeAsset
     private $alreadyIncluded = [];
 
     public function __construct(
-        Assets $assets,
+        Libraries $libraries,
         FileResolver $fileResolver,
         ApplicationPath $appPath
     ) {
-        $this->assets = $assets;
+        $this->libraries = $libraries;
         $this->fileResolver = $fileResolver;
         $this->appPath = $appPath;
     }
@@ -46,7 +45,7 @@ abstract class AbstractIncludeAsset
     public function add(string $moduleName, string $filePath, array $dependencies = []): string
     {
         if (!empty($dependencies)) {
-            $this->assets->enableLibraries($dependencies);
+            $this->libraries->enableLibraries($dependencies);
         }
 
         if (!$this->hasValidParams($moduleName, $filePath)) {

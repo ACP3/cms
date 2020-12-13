@@ -12,4 +12,5 @@
         {redirect_message}
         {block ADMIN_GRID_CONTENT}{/block}
     {/if}
+    {js_libraries enable="ajax-form"}
 {/block}

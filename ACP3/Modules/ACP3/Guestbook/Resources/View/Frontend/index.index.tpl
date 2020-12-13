@@ -12,7 +12,7 @@
             <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}" data-toggle="modal" data-target="#modal-create">{lang t="guestbook|create"}</a>
         </p>
         {javascripts}
-            {include_js module="guestbook" file="frontend/index.index"}
+            {include_js module="guestbook" file="frontend/index.index" depends=["ajax-form"]}
         {/javascripts}
     {else}
         <p class="text-center">

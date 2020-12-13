@@ -113,6 +113,7 @@
         </div>
     </div>
     {javascripts}
+        {js_libraries enable="ajax-form"}
         {include_js module="system" file="partials/hash-change"}
     {/javascripts}
 {/block}

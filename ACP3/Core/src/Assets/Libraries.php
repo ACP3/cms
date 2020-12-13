@@ -101,7 +101,7 @@ class Libraries
             ->addLibrary(
                 new LibraryDto(
                     'ajax-form',
-                    true,
+                    false,
                     false,
                     ['bootstrap', 'jquery'],
                     ['loading-layer.min.css'],

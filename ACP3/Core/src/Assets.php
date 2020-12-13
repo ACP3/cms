@@ -42,7 +42,7 @@ class Assets
         $this->libraries = $libraries;
 
         if (isset($this->designXml->use_bootstrap) && (string) $this->designXml->use_bootstrap === 'true') {
-            $this->enableLibraries(['bootstrap']);
+            $this->libraries->enableLibraries(['bootstrap']);
         }
 
         $this->libraries->dispatchAddLibraryEvent();
@@ -86,18 +86,6 @@ class Assets
     public function addJsFile(string $file): self
     {
         $this->additionalThemeJsFiles[] = $file;
-
-        return $this;
-    }
-
-    /**
-     * Activates frontend libraries.
-     *
-     * @return $this
-     */
-    public function enableLibraries(array $libraries): self
-    {
-        $this->libraries->enableLibraries($libraries);
 
         return $this;
     }

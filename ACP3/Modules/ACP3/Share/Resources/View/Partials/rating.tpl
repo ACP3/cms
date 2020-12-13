@@ -21,6 +21,7 @@
         {/for}
     </div>
 </form>
+{js_libraries enable="ajax-form"}
 {if isset($rating.already_rated) && $rating.already_rated}
     <div class="small rating__already-rated">
         <em>{lang t="share|already_rated"}</em>

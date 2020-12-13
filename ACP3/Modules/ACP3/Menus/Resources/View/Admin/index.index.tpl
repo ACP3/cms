@@ -108,6 +108,7 @@
                 {include file="asset:System/Partials/mark.tpl"}
             {/if}
         {/if}
+        {js_libraries enable="ajax-form"}
     {else}
         {include file="asset:System/Partials/no_results.tpl"}
     {/if}

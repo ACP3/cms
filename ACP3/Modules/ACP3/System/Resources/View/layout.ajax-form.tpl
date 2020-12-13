@@ -18,4 +18,5 @@
             {block CONTENT_AJAX_FORM}{/block}
         </form>
     {/if}
+    {js_libraries enable="ajax-form"}
 {/block}
