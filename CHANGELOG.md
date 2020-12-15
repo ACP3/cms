@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.5.1] - 2020-12-15
 ### Fixed
 - Fixed the error `Uncaught ReferenceError: jQuery is not defined` when the reCaptcha is active
 
@@ -78,7 +78,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - removed all deprecated code
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.5.0...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.5.1...5.x
+[5.5.1]: https://gitlab.com/ACP3/cms/compare/v5.5.0...v5.5.1
 [5.5.0]: https://gitlab.com/ACP3/cms/compare/v5.4.0...v5.5.0
 [5.4.0]: https://gitlab.com/ACP3/cms/compare/v5.3.2...v5.4.0
 [5.3.2]: https://gitlab.com/ACP3/cms/compare/v5.3.1...v5.3.2
