@@ -17,7 +17,7 @@ const onloadCallback = () => {
     });
 };
 
-jQuery(document).on('acp3.captcha.recaptcha', () => {
+jQuery(document).on('acp3.ajaxFrom.complete', () => {
     onloadCallback();
 });
 
