@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- Fixed the error `Uncaught ReferenceError: jQuery is not defined` when the reCaptcha is active
+
 ## [5.5.0] - 2020-12-13
 ### Added
 - Made it possible to load some CSS files asynchronously
