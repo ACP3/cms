@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.6.0]
+### Changed
+- renamed the `LibraryDto` to `LibraryEntity`. This also removes the possibility to enable a frontend library by default --> you have to call "enableLibraries" explicitly
+
 ## [5.5.1] - 2020-12-15
 ### Fixed
 - Fixed the error `Uncaught ReferenceError: jQuery is not defined` when the reCaptcha is active
