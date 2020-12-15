@@ -91,7 +91,7 @@ class Assets
     }
 
     /**
-     * @return Array<string, \ACP3\Core\Assets\Dto\LibraryDto>
+     * @return Array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException

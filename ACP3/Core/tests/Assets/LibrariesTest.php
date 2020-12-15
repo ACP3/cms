@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Assets;
 
-use ACP3\Core\Assets\Dto\LibraryDto;
+use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Http\RequestInterface;
 use DMS\PHPUnitExtensions\ArraySubset\Assert;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -37,9 +37,8 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
     public function testAddLibrary()
     {
-        $library = new LibraryDto(
+        $library = new LibraryEntity(
             'foobar',
-            false,
             false,
             ['jquery'],
             ['foo.css'],

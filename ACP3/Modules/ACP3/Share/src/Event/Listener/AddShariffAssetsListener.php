@@ -7,16 +7,15 @@
 
 namespace ACP3\Modules\ACP3\Share\Event\Listener;
 
-use ACP3\Core\Assets\Dto\LibraryDto;
+use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Assets\Event\AddLibraryEvent;
 
 class AddShariffAssetsListener
 {
     public function __invoke(AddLibraryEvent $event): void
     {
-        $event->addLibrary(new LibraryDto(
+        $event->addLibrary(new LibraryEntity(
             'shariff',
-            false,
             false,
             ['font-awesome'],
             ['shariff.min.css'],

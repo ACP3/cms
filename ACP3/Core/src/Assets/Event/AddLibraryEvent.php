@@ -25,7 +25,7 @@ class AddLibraryEvent extends Event
     }
 
     /**
-     * @param string|\ACP3\Core\Assets\Dto\LibraryDto $library
+     * @param string|\ACP3\Core\Assets\Entity\LibraryEntity $library
      *
      * @return $this
      */

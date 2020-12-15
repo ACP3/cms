@@ -5,9 +5,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Assets\Dto;
+namespace ACP3\Core\Assets\Entity;
 
-final class LibraryDto
+final class LibraryEntity
 {
     /**
      * @var string
@@ -16,7 +16,7 @@ final class LibraryDto
     /**
      * @var bool
      */
-    private $enabled;
+    private $enabled = false;
     /**
      * @var bool
      */
@@ -44,7 +44,6 @@ final class LibraryDto
 
     public function __construct(
         string $libraryIdentifier,
-        bool $enabled = false,
         bool $enabledForAjax = true,
         array $dependencies = [],
         array $css = [],
@@ -53,7 +52,6 @@ final class LibraryDto
         bool $deferableCss = false
     ) {
         $this->libraryIdentifier = $libraryIdentifier;
-        $this->enabled = $enabled;
         $this->enabledForAjax = $enabledForAjax;
         $this->dependencies = $dependencies;
         $this->css = $css;
@@ -72,7 +70,7 @@ final class LibraryDto
         return $this->enabled;
     }
 
-    public function enable(): LibraryDto
+    public function enable(): LibraryEntity
     {
         $libraryDto = clone $this;
         $libraryDto->enabled = true;

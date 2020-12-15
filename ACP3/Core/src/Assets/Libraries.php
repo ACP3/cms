@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Assets;
 
-use ACP3\Core\Assets\Dto\LibraryDto;
+use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Assets\Event\AddLibraryEvent;
 use ACP3\Core\Http\RequestInterface;
 use MJS\TopSort\Implementations\StringSort;
@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Libraries
 {
     /**
-     * @var Array<string, LibraryDto>
+     * @var Array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
      */
     private $libraries = [];
     /**
@@ -37,9 +37,8 @@ class Libraries
 
         $this
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'polyfill',
-                    true,
                     false,
                     [],
                     [],
@@ -47,9 +46,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'jquery',
-                    true,
                     false,
                     [],
                     [],
@@ -57,9 +55,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'font-awesome',
-                    true,
                     false,
                     [],
                     ['all.css'],
@@ -69,9 +66,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'js-cookie',
-                    false,
                     false,
                     [],
                     [],
@@ -79,9 +75,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'moment',
-                    false,
                     false,
                     [],
                     [],
@@ -89,9 +84,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'bootstrap',
-                    false,
                     false,
                     ['jquery'],
                     ['bootstrap.min.css'],
@@ -99,9 +93,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'ajax-form',
-                    false,
                     false,
                     ['bootstrap', 'jquery'],
                     ['loading-layer.min.css'],
@@ -111,9 +104,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'bootbox',
-                    false,
                     false,
                     ['bootstrap'],
                     [],
@@ -121,9 +113,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'datatables',
-                    false,
                     false,
                     ['bootstrap'],
                     ['dataTables.bootstrap.css'],
@@ -133,9 +124,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'datetimepicker',
-                    false,
                     false,
                     ['jquery', 'moment'],
                     ['bootstrap-datetimepicker.css'],
@@ -145,9 +135,8 @@ class Libraries
                 )
             )
             ->addLibrary(
-                new LibraryDto(
+                new LibraryEntity(
                     'fancybox',
-                    false,
                     false,
                     ['jquery'],
                     ['jquery.fancybox.css'],
@@ -155,7 +144,9 @@ class Libraries
                     null,
                     true
                 )
-    );
+            );
+
+        $this->enableLibraries(['polyfill', 'jquery', 'font-awesome']);
     }
 
     public function dispatchAddLibraryEvent(): void
@@ -164,7 +155,7 @@ class Libraries
     }
 
     /**
-     * @return Array<string, LibraryDto>
+     * @return Array<string, LibraryEntity>
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
@@ -185,7 +176,7 @@ class Libraries
     }
 
     /**
-     * @param string|\ACP3\Core\Assets\Dto\LibraryDto $library
+     * @param string|\ACP3\Core\Assets\Entity\LibraryEntity $library
      *
      * @return $this
      */
@@ -196,9 +187,8 @@ class Libraries
                 throw new \InvalidArgumentException(\sprintf('You need to pass a valid options array for this asset library %s', $library));
             }
 
-            $library = new LibraryDto(
+            $library = new LibraryEntity(
                 $library,
-                $options['enabled'] ?? false,
                 $options['enabled_for_ajax'] ?? false,
                 $options['dependencies'] ?? [],
                 \array_key_exists('css', $options) && \is_string($options['css']) ? [$options['css']] : $options['css'] ?? [],
@@ -209,10 +199,6 @@ class Libraries
 
         if (!isset($this->libraries[$library->getLibraryIdentifier()])) {
             $this->libraries[$library->getLibraryIdentifier()] = $library;
-        }
-
-        if ($library->isEnabled()) {
-            $this->enableLibraries($library->getDependencies());
         }
 
         return $this;
@@ -265,7 +251,7 @@ class Libraries
         return $enabledLibraries;
     }
 
-    private function includeInXmlHttpRequest(LibraryDto $library): bool
+    private function includeInXmlHttpRequest(LibraryEntity $library): bool
     {
         return $this->request->isXmlHttpRequest()
             && $library->isEnabledForAjax() === false;
