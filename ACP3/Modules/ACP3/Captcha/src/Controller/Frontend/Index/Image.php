@@ -32,22 +32,23 @@ class Image extends Core\Controller\AbstractWidgetAction
      */
     public function execute(string $path): Response
     {
-        $this->response->headers->set('Content-type', 'image/gif');
-        $this->response->headers->addCacheControlDirective('no-cache', true);
-        $this->response->headers->addCacheControlDirective('must-revalidate', true);
-        $this->response->headers->add(['Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT']);
+        $response = new Response();
+        $response->headers->set('Content-type', 'image/gif');
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->add(['Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT']);
 
         if ($this->sessionHandler->has('captcha_' . $path)) {
-            $this->generateCaptcha($this->sessionHandler->get('captcha_' . $path));
+            $response->setContent($this->generateCaptcha($this->sessionHandler->get('captcha_' . $path)));
         }
 
-        return $this->response;
+        return $response;
     }
 
     /**
      * @throws \Exception
      */
-    protected function generateCaptcha(string $captchaText): void
+    protected function generateCaptcha(string $captchaText): string
     {
         $captchaLength = \strlen($captchaText);
         $width = $captchaLength * 25;
@@ -72,6 +73,6 @@ class Image extends Core\Controller\AbstractWidgetAction
         \imagegif($image);
         \imagedestroy($image);
 
-        $this->response->setContent(\ob_get_clean());
+        return \ob_get_clean();
     }
 }
