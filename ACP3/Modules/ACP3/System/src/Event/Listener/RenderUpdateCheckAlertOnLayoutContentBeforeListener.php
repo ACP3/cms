@@ -32,9 +32,6 @@ class RenderUpdateCheckAlertOnLayoutContentBeforeListener
      */
     private $acl;
 
-    /**
-     * RenderUpdateCheckAlertOnLayoutContentBeforeListener constructor.
-     */
     public function __construct(
         ACL $acl,
         RequestInterface $request,
@@ -49,23 +46,21 @@ class RenderUpdateCheckAlertOnLayoutContentBeforeListener
 
     public function __invoke()
     {
+        if (!$this->canRunUpdateCheck()) {
+            return;
+        }
+
         $update = $this->updateCheck->checkForNewVersion();
 
-        if ($update && $this->canRenderUpdateAlert($update['is_latest'])) {
+        if ($update && !$update['is_latest']) {
             $this->view->assign('update', $update);
             $this->view->displayTemplate('System/Partials/alert_update_check.tpl');
         }
     }
 
-    /**
-     * @param bool $isLatestVersion
-     *
-     * @return bool
-     */
-    private function canRenderUpdateAlert($isLatestVersion)
+    private function canRunUpdateCheck(): bool
     {
-        return $isLatestVersion === false
-            && $this->request->getArea() === AreaEnum::AREA_ADMIN
+        return $this->request->getArea() === AreaEnum::AREA_ADMIN
             && $this->request->getFullPath() !== 'acp/system/maintenance/update_check/'
             && $this->acl->hasPermission('admin/system/maintenance/update_check');
     }
