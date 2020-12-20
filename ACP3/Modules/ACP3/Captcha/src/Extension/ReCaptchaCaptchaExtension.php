@@ -39,6 +39,10 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
      * @var RequestInterface
      */
     private $request;
+    /**
+     * @var bool
+     */
+    private $includeJsAssets = true;
 
     public function __construct(
         Translator $translator,
@@ -79,7 +83,12 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
                 'input_only' => $inputOnly,
                 'length' => $captchaLength,
                 'sitekey' => $settings['recaptcha_sitekey'],
+                'includeJsAssets' => $this->includeJsAssets,
             ]);
+
+            if ($this->includeJsAssets) {
+                $this->includeJsAssets = false;
+            }
 
             return $this->view->fetchTemplate(static::TEMPLATE);
         }

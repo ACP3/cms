@@ -27,12 +27,3 @@ services:
       - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: captcha.validation.validate_captcha }
-
-  captcha.event.render_recaptcha_on_layout_content_before_listener:
-    class: ACP3\Modules\ACP3\Captcha\Event\Listener\RenderRecaptchaOnLayoutContentBeforeListener
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.config'
-      - '@core.view'
-    tags:
-      - { name: core.eventListener, event: layout.content_before }
