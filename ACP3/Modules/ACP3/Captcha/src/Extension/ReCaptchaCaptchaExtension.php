@@ -17,7 +17,8 @@ use ReCaptcha\ReCaptcha;
 
 class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 {
-    const TEMPLATE = 'Captcha/Partials/captcha_recaptcha.tpl';
+    private const TEMPLATE = 'Captcha/Partials/captcha_recaptcha.tpl';
+
     /**
      * @var Translator
      */
@@ -39,9 +40,6 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
      */
     private $request;
 
-    /**
-     * ReCaptchaCaptchaExtension constructor.
-     */
     public function __construct(
         Translator $translator,
         RequestInterface $request,
@@ -59,7 +57,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function getCaptchaName()
+    public function getCaptchaName(): string
     {
         return $this->translator->t('captcha', 'recaptcha');
     }
@@ -68,11 +66,11 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
      * {@inheritdoc}
      */
     public function getCaptcha(
-        $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
-        $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        $inputOnly = false,
-        $path = ''
-    ) {
+        int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
+        string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
+        bool $inputOnly = false,
+        string $path = ''
+    ): string {
         if (!$this->user->isAuthenticated()) {
             $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
@@ -92,7 +90,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function isCaptchaValid($formData, $formFieldName, array $extra = [])
+    public function isCaptchaValid($formData, string $formFieldName, array $extra = []): bool
     {
         if (empty($formData['g-recaptcha-response'])) {
             return false;

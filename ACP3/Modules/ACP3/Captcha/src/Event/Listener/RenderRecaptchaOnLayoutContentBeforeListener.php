@@ -11,7 +11,6 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class RenderRecaptchaOnLayoutContentBeforeListener
 {
@@ -24,26 +23,17 @@ class RenderRecaptchaOnLayoutContentBeforeListener
      */
     private $view;
     /**
-     * @var UserModel
-     */
-    private $userModel;
-    /**
      * @var Translator
      */
     private $translator;
 
-    /**
-     * RenderRecaptchaOnLayoutContentBeforeListener constructor.
-     */
     public function __construct(
         Translator $translator,
         SettingsInterface $settings,
-        View $view,
-        UserModel $userModel
+        View $view
     ) {
         $this->settings = $settings;
         $this->view = $view;
-        $this->userModel = $userModel;
         $this->translator = $translator;
     }
 

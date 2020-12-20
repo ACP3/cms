@@ -9,38 +9,25 @@ namespace ACP3\Modules\ACP3\Captcha\Extension;
 
 interface CaptchaExtensionInterface
 {
-    const CAPTCHA_DEFAULT_LENGTH = 5;
-    const CAPTCHA_DEFAULT_INPUT_ID = 'captcha';
+    public const CAPTCHA_DEFAULT_LENGTH = 5;
+    public const CAPTCHA_DEFAULT_INPUT_ID = 'captcha';
 
-    /**
-     * @return string
-     */
-    public function getCaptchaName();
+    public function getCaptchaName(): string;
 
     /**
      * Creates and returns the view of the captcha.
-     *
-     * @param int    $captchaLength
-     * @param string $formFieldId
-     * @param bool   $inputOnly
-     * @param string $path
-     *
-     * @return string
      */
     public function getCaptcha(
-        $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
-        $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        $inputOnly = false,
-        $path = ''
-    );
+        int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
+        string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
+        bool $inputOnly = false,
+        string $path = ''
+    ): string;
 
     /**
      * Checks, whether the typed in captcha is valid.
      *
-     * @param mixed  $formData
-     * @param string $formFieldName
-     *
-     * @return bool
+     * @param mixed $formData
      */
-    public function isCaptchaValid($formData, $formFieldName, array $extra = []);
+    public function isCaptchaValid($formData, string $formFieldName, array $extra = []): bool;
 }

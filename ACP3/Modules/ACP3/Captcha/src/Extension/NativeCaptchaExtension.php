@@ -67,10 +67,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         $this->acl = $acl;
     }
 
-    /**
-     * @return string
-     */
-    public function getCaptchaName()
+    public function getCaptchaName(): string
     {
         return $this->translator->t('captcha', 'native');
     }
@@ -79,11 +76,11 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
      * {@inheritdoc}
      */
     public function getCaptcha(
-        $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
-        $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        $inputOnly = false,
-        $path = ''
-    ) {
+        int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
+        string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
+        bool $inputOnly = false,
+        string $path = ''
+    ): string {
         if (!$this->user->isAuthenticated() && $this->hasCaptchaAccess()) {
             $path = \sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
 
@@ -114,7 +111,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function isCaptchaValid($formData, $formFieldName, array $extra = [])
+    public function isCaptchaValid($formData, string $formFieldName, array $extra = []): bool
     {
         if (!$this->hasCaptchaAccess()) {
             return true;

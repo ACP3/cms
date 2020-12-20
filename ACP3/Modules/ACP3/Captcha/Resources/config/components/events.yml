@@ -34,6 +34,5 @@ services:
       - '@core.i18n.translator'
       - '@core.config'
       - '@core.view'
-      - '@users.model.user_model'
     tags:
       - { name: core.eventListener, event: layout.content_before }
