@@ -20,32 +20,29 @@ class FeedGenerator
     /**
      * @var SettingsInterface
      */
-    protected $config;
+    private $config;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \FeedWriter\Feed
      */
-    protected $renderer;
+    private $renderer;
 
     /**
      * @var array
      */
-    protected $settings = [];
+    private $settings = [];
     /**
      * @var string
      */
-    protected $title;
+    private $title;
     /**
      * @var string
      */
-    protected $description;
+    private $description;
 
-    /**
-     * FeedGenerator constructor.
-     */
     public function __construct(
         SettingsInterface $config,
         RouterInterface $router
@@ -55,11 +52,9 @@ class FeedGenerator
     }
 
     /**
-     * @param string $title
-     *
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -67,18 +62,16 @@ class FeedGenerator
     }
 
     /**
-     * @param string $description
-     *
      * @return $this
      */
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         if ($this->renderer) {
             return;
@@ -105,14 +98,14 @@ class FeedGenerator
     /**
      * Generates the channel element for a feed.
      */
-    protected function generateChannel()
+    protected function generateChannel(): void
     {
         $link = $this->router->route('', true);
         $this->renderer->setTitle($this->title);
         $this->renderer->setLink($link);
 
         if ($this->renderer instanceof ATOM) {
-            $this->renderer->setChannelElement('updated', \date(DATE_ATOM, \time()));
+            $this->renderer->setChannelElement('updated', \date(DATE_ATOM));
             $this->renderer->setChannelElement('author', ['name' => $this->title]);
         } else {
             $this->renderer->setDescription($this->description);
@@ -123,7 +116,7 @@ class FeedGenerator
         }
     }
 
-    public function assign(array $items)
+    public function assign(array $items): void
     {
         $this->configure();
 
@@ -132,9 +125,9 @@ class FeedGenerator
             foreach ($items as $row) {
                 $this->assign($row);
             }
-        } else { // Single item
-            /** @var \FeedWriter\Item $item */
+        } elseif ($items) { // Single item
             $item = $this->renderer->createNewItem();
+
             $item->setTitle($items['title']);
             $item->setDate($items['date']);
             $item->setDescription($items['description']);
@@ -146,10 +139,7 @@ class FeedGenerator
         }
     }
 
-    /**
-     * @return string
-     */
-    public function generateFeed()
+    public function generateFeed(): string
     {
         $this->configure();
 

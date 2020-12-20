@@ -48,10 +48,6 @@ class Index extends Core\Controller\AbstractFrontendAction
     public function execute(string $feed): Response
     {
         if ($this->acl->hasPermission('frontend/' . $feed) === true) {
-            $this->setCacheResponseCacheable(
-                $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']
-            );
-
             try {
                 $feedItems = $this->availableFeedsRegistrar
                     ->getFeedItemsByModuleName($feed)
@@ -62,9 +58,16 @@ class Index extends Core\Controller\AbstractFrontendAction
                     ->setDescription($this->translator->t($feed, $feed))
                     ->assign($feedItems);
 
-                $this->setContentType('text/xml');
+                $response = new Response($this->feedGenerator->generateFeed(), Response::HTTP_OK, [
+                    'Content-type' => 'text/xml',
+                ]);
 
-                return $this->response->setContent($this->feedGenerator->generateFeed());
+                $this->setCacheResponseCacheable(
+                    $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime'],
+                    $response
+                );
+
+                return $response;
             } catch (\InvalidArgumentException $e) {
             }
         }

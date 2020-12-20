@@ -35,12 +35,12 @@ trait CacheResponseTrait
     /**
      * @param int $lifetime Cache TTL in seconds
      */
-    public function setCacheResponseCacheable(int $lifetime = 60): void
+    public function setCacheResponseCacheable(int $lifetime = 60, ?Response $response = null): void
     {
         if ($this->canUsePageCache()) {
             $varyHeaderName = 'X-User-Context-Hash';
 
-            $this->getResponse()
+            ($response ?? $this->getResponse())
                 ->setVary($varyHeaderName)
                 ->setSharedMaxAge(1)
                 ->headers->add([
