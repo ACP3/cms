@@ -116,7 +116,9 @@ class AdminRoleEditViewProvider
     private function fetchModulePermissions(int $roleId, int $defaultValue = 0): array
     {
         $rules = $this->permissionsCache->getRulesCache([$roleId]);
-        $modules = $this->modules->getActiveModules();
+        $modules = \array_filter($this->modules->getActiveModules(), function ($module) {
+            return $this->modules->isInstallable($module['name']);
+        });
         $privileges = $this->privilegeRepository->getAllPrivileges();
 
         foreach ($modules as $name => $moduleInfo) {

@@ -26,9 +26,6 @@ class RulesModel extends AbstractModel
      */
     protected $cache;
 
-    /**
-     * RulesModel constructor.
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
@@ -41,11 +38,9 @@ class RulesModel extends AbstractModel
     }
 
     /**
-     * @param int $roleId
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function updateRules(array $privileges, $roleId)
+    public function updateRules(array $privileges, int $roleId): void
     {
         $rules = $this->getRepository()->getAllRulesByRoleIds([$roleId]);
 
@@ -68,8 +63,8 @@ class RulesModel extends AbstractModel
     private function findRuleId(array $rules, int $moduleId, int $privilegeId): ?int
     {
         foreach ($rules as $rule) {
-            if ($rule['module_id'] == $moduleId && $rule['privilege_id'] == $privilegeId) {
-                return $rule['id'];
+            if ((int) $rule['module_id'] === $moduleId && (int) $rule['privilege_id'] === $privilegeId) {
+                return (int) $rule['id'];
             }
         }
 
