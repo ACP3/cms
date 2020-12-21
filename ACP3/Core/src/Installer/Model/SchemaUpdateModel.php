@@ -73,6 +73,10 @@ class SchemaUpdateModel
         foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
             $moduleName = \strtolower($moduleInfo['name']);
 
+            if (!$this->modules->isInstallable($moduleName)) {
+                continue;
+            }
+
             try {
                 $this->updateModule($moduleName);
 

@@ -65,6 +65,10 @@ class SchemaUpdateModel
         /** @var \ACP3\Core\Modules $modules */
         $modules = $this->container->get('core.modules');
         foreach ($modules->getAllModulesTopSorted() as $moduleInfo) {
+            if (!$modules->isInstallable($moduleInfo['name'])) {
+                continue;
+            }
+
             try {
                 $this->updateModule($moduleInfo['name']);
 
