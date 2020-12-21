@@ -7,26 +7,24 @@
 
 namespace ACP3\Core\NestedSet\Operation;
 
+use Doctrine\DBAL\Connection;
+
 class Sort extends AbstractOperation
 {
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $resultId, string $mode)
+    public function execute(int $resultId, string $mode): bool
     {
         if ($this->nestedSetRepository->nodeExists($resultId) === true) {
             $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
 
             if ($mode === 'up' &&
-                $this->nestedSetRepository->nextNodeExists(
-                    $nodes[0]['left_id'] - 1,
-                    $this->getBlockId($nodes[0])
-                ) === true
-            ) {
+                $this->nestedSetRepository->nextNodeExists($nodes[0]['left_id'] - 1, $this->getBlockId($nodes[0])) === true) {
                 return $this->sortUp($nodes);
-            } elseif ($mode === 'down' &&
+            }
+
+            if ($mode === 'down' &&
                 $this->nestedSetRepository->previousNodeExists(
                     $nodes[0]['right_id'] + 1,
                     $this->getBlockId($nodes[0])
@@ -40,78 +38,64 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function sortUp(array $nodes)
+    protected function sortUp(array $nodes): bool
     {
         $prevNodes = $this->nestedSetRepository->fetchPrevNodeWithSiblings($nodes[0]['left_id'] - 1);
 
-        list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nodes[0], $prevNodes[0]);
+        [$diffLeft, $diffRight] = $this->calcDiffBetweenNodes($nodes[0], $prevNodes[0]);
 
         return $this->updateNodesDown($diffRight, $prevNodes) && $this->moveNodesUp($diffLeft, $nodes);
     }
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function sortDown(array $nodes)
+    protected function sortDown(array $nodes): bool
     {
         $nextNodes = $this->nestedSetRepository->fetchNextNodeWithSiblings($nodes[0]['right_id'] + 1);
 
-        list($diffLeft, $diffRight) = $this->calcDiffBetweenNodes($nextNodes[0], $nodes[0]);
+        [$diffLeft, $diffRight] = $this->calcDiffBetweenNodes($nextNodes[0], $nodes[0]);
 
         return $this->moveNodesUp($diffLeft, $nextNodes) && $this->updateNodesDown($diffRight, $nodes);
     }
 
     /**
-     * @return array
+     * @return int[]
      */
-    protected function fetchAffectedNodesForReorder(array $nodes)
+    protected function fetchAffectedNodesForReorder(array $nodes): array
     {
-        $rtn = [];
-        foreach ($nodes as $node) {
-            $rtn[] = $node['id'];
-        }
-
-        return $rtn;
+        return \array_map(static function ($node) {
+            return (int) $node['id'];
+        }, $nodes);
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function updateNodesDown(int $diff, array $nodes)
+    protected function updateNodesDown(int $diff, array $nodes): bool
     {
         return $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)",
             [$diff, $diff, $this->fetchAffectedNodesForReorder($nodes)],
-            [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
-        );
+            [\PDO::PARAM_INT, \PDO::PARAM_INT, Connection::PARAM_INT_ARRAY]
+        ) !== false;
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function moveNodesUp(int $diff, array $nodes)
+    protected function moveNodesUp(int $diff, array $nodes): bool
     {
         return $this->db->getConnection()->executeUpdate(
             "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)",
             [$diff, $diff, $this->fetchAffectedNodesForReorder($nodes)],
-            [\PDO::PARAM_INT, \PDO::PARAM_INT, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY]
-        );
+            [\PDO::PARAM_INT, \PDO::PARAM_INT, Connection::PARAM_INT_ARRAY]
+        ) !== false;
     }
 
-    /**
-     * @return array
-     */
-    protected function calcDiffBetweenNodes(array $node, array $elem)
+    protected function calcDiffBetweenNodes(array $node, array $elem): array
     {
         return [
             $node['left_id'] - $elem['left_id'],
@@ -119,10 +103,7 @@ class Sort extends AbstractOperation
         ];
     }
 
-    /**
-     * @return string
-     */
-    protected function getBlockId(array $node)
+    protected function getBlockId(array $node): int
     {
         return $this->isBlockAware() === true ? $node[$this->nestedSetRepository::BLOCK_COLUMN_NAME] : 0;
     }

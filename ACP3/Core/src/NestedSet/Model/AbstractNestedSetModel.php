@@ -33,9 +33,6 @@ abstract class AbstractNestedSetModel extends AbstractModel
      */
     protected $deleteOperation;
 
-    /**
-     * AbstractNestedSetModel constructor.
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,

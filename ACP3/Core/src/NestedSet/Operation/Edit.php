@@ -12,21 +12,15 @@ class Edit extends AbstractOperation
     /**
      * Methode zum Bearbeiten eines Knotens.
      *
-     * @param int $resultId
-     * @param int $parentId
-     * @param int $blockId
-     *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($resultId, $parentId, $blockId, array $updateValues)
+    public function execute(int $resultId, int $parentId, int $blockId, array $updateValues): bool
     {
         $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
 
         // Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
         if ($this->nodeIsRootItemAndNoChangeNeed($parentId, $blockId, $nodes[0])) {
-            $bool = $this->db->getConnection()->update(
+            $result = $this->db->getConnection()->update(
                 $this->nestedSetRepository->getTableName(),
                 $updateValues,
                 ['id' => $resultId]
@@ -38,8 +32,8 @@ class Edit extends AbstractOperation
             );
 
             // Überprüfung, falls Seite kein Root-Element ist und auch keine Veränderung vorgenommen werden soll...
-            if (!empty($currentParent) && $currentParent == $parentId) {
-                $bool = $this->db->getConnection()->update(
+            if (!empty($currentParent) && $currentParent === $parentId) {
+                $result = $this->db->getConnection()->update(
                     $this->nestedSetRepository->getTableName(),
                     $updateValues,
                     ['id' => $resultId]
@@ -49,12 +43,12 @@ class Edit extends AbstractOperation
                 $newParent = $this->nestedSetRepository->fetchNodeById($parentId);
 
                 if (empty($newParent)) {
-                    list($rootId, $diff) = $this->nodeBecomesRootNode($resultId, $blockId, $nodes);
+                    [$rootId, $diff] = $this->nodeBecomesRootNode($resultId, $blockId, $nodes);
                 } else {
-                    list($diff, $rootId) = $this->moveNodeToNewParent($newParent, $nodes);
+                    [$diff, $rootId] = $this->moveNodeToNewParent($newParent, $nodes);
                 }
 
-                $bool = $this->adjustNodeSiblings($blockId, $nodes, $diff, $rootId);
+                $result = $this->adjustNodeSiblings($blockId, $nodes, $diff, $rootId);
 
                 $this->db->getConnection()->update(
                     $this->nestedSetRepository->getTableName(),
@@ -64,31 +58,27 @@ class Edit extends AbstractOperation
             }
         }
 
-        return $bool;
+        return $result !== false;
     }
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeIsRootItemAndNoChangeNeed(int $parentId, int $blockId, array $items)
+    protected function nodeIsRootItemAndNoChangeNeed(int $parentId, int $blockId, array $items): bool
     {
         return empty($parentId) &&
-            ($this->isBlockAware() === false || ($this->isBlockAware() === true && $blockId == $items[$this->nestedSetRepository::BLOCK_COLUMN_NAME])) &&
+            ($this->isBlockAware() === false || ($this->isBlockAware() === true && $blockId === (int) $items[$this->nestedSetRepository::BLOCK_COLUMN_NAME])) &&
             $this->nestedSetRepository->nodeIsRootItem($items['left_id'], $items['right_id']) === true;
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeBecomesRootNode(int $id, int $blockId, array $nodes)
+    protected function nodeBecomesRootNode(int $id, int $blockId, array $nodes): array
     {
         $itemDiff = $this->calcDiffBetweenNodes($nodes[0]['left_id'], $nodes[0]['right_id']);
         if ($this->isBlockAware() === true) {
-            if ($nodes[0][$this->nestedSetRepository::BLOCK_COLUMN_NAME] != $blockId) {
+            if ((int) $nodes[0][$this->nestedSetRepository::BLOCK_COLUMN_NAME] !== $blockId) {
                 $diff = $this->nodeBecomesRootNodeInNewBlock($blockId, $nodes, $itemDiff);
             } else {
                 $diff = $this->nodeBecomesRootNodeInSameBlock($nodes, $itemDiff);
@@ -105,20 +95,15 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @param int $blockId
-     * @param int $itemDiff
-     *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeBecomesRootNodeInNewBlock($blockId, array $nodes, $itemDiff)
+    protected function nodeBecomesRootNodeInNewBlock(int $blockId, array $nodes, int $itemDiff): int
     {
         $newBlockLeftId = $this->nestedSetRepository->fetchMinimumLeftIdByBlockId($blockId);
 
         // Falls die Knoten in einen leeren Block verschoben werden sollen,
         // die right_id des letzten Elementes verwenden
-        if (empty($newBlockLeftId) || \is_null($newBlockLeftId) === true) {
+        if (empty($newBlockLeftId)) {
             $newBlockLeftId = $this->nestedSetRepository->fetchMaximumRightId();
             ++$newBlockLeftId;
         }
@@ -135,13 +120,9 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @param int $itemDiff
-     *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeBecomesRootNodeInSameBlock(array $nodes, $itemDiff)
+    protected function nodeBecomesRootNodeInSameBlock(array $nodes, int $itemDiff): int
     {
         $maxId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($nodes[0][$this->nestedSetRepository::BLOCK_COLUMN_NAME]);
 
@@ -156,17 +137,11 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @param int $blockId
-     * @param int $diff
-     * @param int $rootId
-     *
-     * @return int|bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    private function adjustNodeSiblings($blockId, array $nodes, $diff, $rootId)
+    private function adjustNodeSiblings(int $blockId, array $nodes, int $diff, int $rootId): bool
     {
-        $bool = false;
+        $result = false;
 
         foreach ($nodes as $node) {
             $node['left_id'] += $diff;
@@ -177,7 +152,7 @@ class Edit extends AbstractOperation
                 $node['right_id']
             );
             if ($this->isBlockAware() === true) {
-                $bool = $this->db->getConnection()->executeUpdate(
+                $result = $this->db->getConnection()->executeUpdate(
                     "UPDATE {$this->nestedSetRepository->getTableName()} SET " . $this->nestedSetRepository::BLOCK_COLUMN_NAME . ' = ?, root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?',
                     [
                         $blockId,
@@ -189,7 +164,7 @@ class Edit extends AbstractOperation
                     ]
                 );
             } else {
-                $bool = $this->db->getConnection()->executeUpdate(
+                $result = $this->db->getConnection()->executeUpdate(
                     "UPDATE {$this->nestedSetRepository->getTableName()} SET root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?",
                     [
                         $rootId,
@@ -200,31 +175,23 @@ class Edit extends AbstractOperation
                     ]
                 );
             }
-            if ($bool === false) {
+            if ($result === false) {
                 break;
             }
         }
 
-        return $bool;
+        return $result;
     }
 
-    /**
-     * @param int $leftId
-     * @param int $rightId
-     *
-     * @return int
-     */
-    protected function calcDiffBetweenNodes($leftId, $rightId)
+    protected function calcDiffBetweenNodes(int $leftId, int $rightId): int
     {
         return $rightId - $leftId + 1;
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function moveNodeToNewParent(array $newParent, array $nodes)
+    protected function moveNodeToNewParent(array $newParent, array $nodes): array
     {
         $itemDiff = $this->calcDiffBetweenNodes($nodes[0]['left_id'], $nodes[0]['right_id']);
 

@@ -12,7 +12,7 @@ class Repair extends AbstractOperation
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute()
+    public function execute(): void
     {
         $leftId = 1;
         foreach ($this->getResults() as $result) {

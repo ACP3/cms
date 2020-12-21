@@ -12,11 +12,9 @@ use Doctrine\DBAL\Connection;
 class Delete extends AbstractOperation
 {
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $resultId)
+    public function execute(int $resultId): bool
     {
         $nodes = $this->nestedSetRepository->fetchNodeWithSiblings((int) $resultId);
         if (!empty($nodes)) {
@@ -38,7 +36,7 @@ class Delete extends AbstractOperation
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function moveSiblingsOneLevelUp(array $nodes)
+    protected function moveSiblingsOneLevelUp(array $nodes): void
     {
         \array_shift($nodes);
 
@@ -64,15 +62,12 @@ class Delete extends AbstractOperation
     }
 
     /**
-     * @return array
+     * @return int[]
      */
-    private function getNodeIds(array $nodes)
+    private function getNodeIds(array $nodes): array
     {
-        $nodeIds = [];
-        foreach ($nodes as $node) {
-            $nodeIds[] = $node['id'];
-        }
-
-        return $nodeIds;
+        return \array_map(static function ($node) {
+            return (int) $node['id'];
+        }, $nodes);
     }
 }

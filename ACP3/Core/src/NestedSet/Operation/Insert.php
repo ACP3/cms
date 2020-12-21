@@ -10,16 +10,14 @@ namespace ACP3\Core\NestedSet\Operation;
 class Insert extends AbstractOperation
 {
     /**
-     * @param int $parentId
-     *
-     * @return int|bool
+     * @return int|false
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(array $insertValues, $parentId = 0)
+    public function execute(array $insertValues, int $parentId = 0)
     {
         // No parent item has been assigned
-        if ($this->nestedSetRepository->nodeExists((int) $parentId) === false) {
+        if ($this->nestedSetRepository->nodeExists($parentId) === false) {
             // Select the last result set
             $maxRightId = $this->fetchMaximumRightId($insertValues[$this->nestedSetRepository::BLOCK_COLUMN_NAME]);
 
@@ -37,7 +35,7 @@ class Insert extends AbstractOperation
                 ['id' => $lastInsertId]
             );
         } else { // a parent item for the node has been assigned
-            $parent = $this->nestedSetRepository->fetchNodeById((int) $parentId);
+            $parent = $this->nestedSetRepository->fetchNodeById($parentId);
 
             $this->adjustFollowingNodesAfterInsert(2, $parent['right_id']);
             $this->adjustParentNodesAfterInsert(2, $parent['left_id'], $parent['right_id']);
@@ -55,11 +53,9 @@ class Insert extends AbstractOperation
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function fetchMaximumRightId(int $blockId)
+    protected function fetchMaximumRightId(int $blockId): int
     {
         if ($this->isBlockAware() === true) {
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($blockId);
@@ -68,6 +64,6 @@ class Insert extends AbstractOperation
             $maxRightId = $this->nestedSetRepository->fetchMaximumRightId();
         }
 
-        return (int) $maxRightId;
+        return $maxRightId;
     }
 }
