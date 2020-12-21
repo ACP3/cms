@@ -15,7 +15,6 @@ use FOS\HttpCache\SymfonyCache\CustomTtlListener;
 use FOS\HttpCache\SymfonyCache\DebugListener;
 use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
 use FOS\HttpCache\SymfonyCache\PurgeListener;
-use FOS\HttpCache\SymfonyCache\RefreshListener;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpCache\HttpCache;
 use Symfony\Component\HttpKernel\HttpCache\StoreInterface;
@@ -39,7 +38,6 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
 
         $this->addSubscriber(new CustomTtlListener());
         $this->addSubscriber(new PurgeListener());
-        $this->addSubscriber(new RefreshListener());
         $this->addSubscriber(new UserContextListener([
             'user_hash_uri' => '/widget/users/index/hash/',
             'session_name_prefix' => SessionConstants::SESSION_NAME,
