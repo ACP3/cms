@@ -12,55 +12,45 @@ class MenuConfiguration
     /**
      * @var bool
      */
-    protected $useBootstrap = true;
+    private $useBootstrap;
     /**
      * @var string
      */
-    protected $selector = '';
+    private $selector;
     /**
      * @var string
      */
-    protected $dropdownItemSelector = '';
+    private $dropdownItemSelector;
     /**
      * @var string
      */
-    protected $tag = 'ul';
+    private $tag;
     /**
      * @var string
      */
-    protected $itemTag = 'li';
+    private $itemTag;
     /**
      * @var string
      */
-    protected $dropdownWrapperTag = 'li';
+    private $dropdownWrapperTag;
     /**
      * @var string
      */
-    protected $linkSelector = '';
+    private $linkSelector;
     /**
      * @var string
      */
-    protected $inlineStyle = '';
+    private $inlineStyle;
 
-    /**
-     * @param bool   $useBootstrap
-     * @param string $class
-     * @param string $dropdownItemSelector
-     * @param string $tag
-     * @param string $itemTag
-     * @param string $dropdownWrapperTag
-     * @param string $linkSelectors
-     * @param string $inlineStyle
-     */
     public function __construct(
-        $useBootstrap = true,
-        $class = '',
-        $dropdownItemSelector = '',
-        $tag = 'ul',
-        $itemTag = 'li',
-        $dropdownWrapperTag = 'li',
-        $linkSelectors = '',
-        $inlineStyle = ''
+        bool $useBootstrap = true,
+        string $class = '',
+        string $dropdownItemSelector = '',
+        string $tag = 'ul',
+        string $itemTag = 'li',
+        string $dropdownWrapperTag = 'li',
+        string $linkSelectors = '',
+        string $inlineStyle = ''
     ) {
         $this->useBootstrap = $useBootstrap;
         $this->selector = $class;
@@ -72,74 +62,47 @@ class MenuConfiguration
         $this->inlineStyle = $inlineStyle;
     }
 
-    /**
-     * @return bool
-     */
-    public function isUseBootstrap()
+    public function isUseBootstrap(): bool
     {
         return $this->useBootstrap;
     }
 
-    /**
-     * @return string
-     */
-    public function getSelector()
+    public function getSelector(): string
     {
         return $this->selector;
     }
 
-    /**
-     * @return string
-     */
-    public function getDropdownItemSelector()
+    public function getDropdownItemSelector(): string
     {
         return $this->dropdownItemSelector;
     }
 
-    /**
-     * @return string
-     */
-    public function getTag()
+    public function getTag(): string
     {
         return $this->tag;
     }
 
-    /**
-     * @return string
-     */
-    public function getItemTag()
+    public function getItemTag(): string
     {
         return $this->itemTag;
     }
 
-    /**
-     * @return string
-     */
-    public function getDropdownWrapperTag()
+    public function getDropdownWrapperTag(): string
     {
         return $this->dropdownWrapperTag;
     }
 
-    /**
-     * @return string
-     */
-    public function getLinkSelector()
+    public function getLinkSelector(): string
     {
         return $this->linkSelector;
     }
 
-    /**
-     * @return string
-     */
-    public function getInlineStyle()
+    public function getInlineStyle(): string
     {
         return $this->inlineStyle;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return \implode(':', \get_object_vars($this));
     }

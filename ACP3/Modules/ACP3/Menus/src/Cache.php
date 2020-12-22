@@ -85,12 +85,11 @@ class Cache extends Core\Modules\AbstractCacheStorage
                 }
             }
 
-            $modeSearch = ['1', '2', '3', '4'];
+            $modeSearch = ['1', '2', '3'];
             $modeReplace = [
                 $this->translator->t('menus', 'module'),
                 $this->translator->t('menus', 'dynamic_page'),
                 $this->translator->t('menus', 'hyperlink'),
-                $this->translator->t('articles', 'article'),
             ];
 
             foreach ($menuItems as $i => $menu) {

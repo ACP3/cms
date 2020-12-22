@@ -64,6 +64,6 @@
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/menus"}}
     {javascripts}
         {include_js module="menus" file="admin/items.create"}
-        {include_js module="menus" file="manage-menu-item"}
+        {include_js module="menus" file="partials/manage-menu-item"}
     {/javascripts}
 {/block}

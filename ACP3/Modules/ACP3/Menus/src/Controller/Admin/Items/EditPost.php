@@ -53,7 +53,6 @@ class EditPost extends AbstractFormAction
 
                 $this->menuItemFormValidation->validate($formData);
 
-                $formData['mode'] = $this->fetchMenuItemModeForSave($formData);
                 $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
 
                 return $this->menuItemsModel->save($formData, $id);

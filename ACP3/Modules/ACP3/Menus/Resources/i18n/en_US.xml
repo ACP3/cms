@@ -9,7 +9,7 @@
         <item key="admin_items_edit">Edit menu item</item>
         <item key="admin_items_index">Menu items</item>
         <item key="chronology">Chronology</item>
-        <item key="create_menu_item">Create menu item for this article</item>
+        <item key="create_menu_item">Create menu item</item>
         <item key="display_item">Display menu item</item>
         <item key="dynamic_page">Dynamic page</item>
         <item key="dynamic_page_hints">Please use the format &quot;module/file/optional_parameters/&quot;, e.g.

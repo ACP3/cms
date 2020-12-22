@@ -41,7 +41,7 @@ class ManageMenuItemOnModelSaveAfterListener
             $formData = $event->getRawData();
 
             $data = [
-                'mode' => 4,
+                'mode' => 2,
                 'block_id' => $formData['block_id'],
                 'parent_id' => (int) $formData['parent_id'],
                 'display' => $formData['display'],

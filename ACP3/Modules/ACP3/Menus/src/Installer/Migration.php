@@ -67,6 +67,9 @@ class Migration implements Modules\Installer\MigrationInterface
                 'ALTER TABLE `{pre}menu_items` MODIFY COLUMN `uri` VARCHAR(120) {charset} NOT NULL;',
                 'ALTER TABLE `{pre}menu_items` CONVERT TO {charset};',
             ],
+            39 => [
+                'UPDATE `{pre}menu_items` SET mode = 2 WHERE mode = 4;',
+            ],
         ];
     }
 }

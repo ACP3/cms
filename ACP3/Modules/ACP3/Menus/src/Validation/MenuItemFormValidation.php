@@ -28,7 +28,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'mode',
                     'message' => $this->translator->t('menus', 'select_page_type'),
                     'extra' => [
-                        'haystack' => [1, 2, 3, 4],
+                        'haystack' => [1, 2, 3],
                     ],
                 ]
             )
