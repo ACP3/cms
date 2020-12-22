@@ -13,7 +13,7 @@
                             {if isset($confirm.backward)}
                                 <a href="{$confirm.forward}" class="btn btn-primary">{lang t="system|yes"}</a>
                                 <a href="{$confirm.backward}" class="btn btn-default">{lang t="system|no"}</a>
-                            {elseif $confirm.overlay == 1}
+                            {elseif $confirm.overlay === true}
                                 <a href="javascript:window.parent.$.fancybox.close();window.parent.location.reload();" class="btn btn-primary">{lang t="system|close_window"}</a>
                             {elseif is_array($confirm.forward)}
                                 <a href="{$confirm.forward.url}" class="btn btn-primary">{$confirm.forward.lang}</a>

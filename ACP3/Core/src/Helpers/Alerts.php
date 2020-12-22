@@ -14,16 +14,12 @@ class Alerts
     /**
      * @var \ACP3\Core\View
      */
-    protected $view;
+    private $view;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
 
-    /**
-     * @param \ACP3\Core\Http\RequestInterface $request
-     * @param \ACP3\Core\View                  $view
-     */
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\View $view
@@ -35,14 +31,9 @@ class Alerts
     /**
      * Displays a confirmation box.
      *
-     * @param string       $text
      * @param string|array $forward
-     * @param string       $backward
-     * @param int          $overlay
-     *
-     * @return string
      */
-    public function confirmBox($text, $forward = '', $backward = '', $overlay = 0)
+    public function confirmBox(string $text, $forward = '', string $backward = '', bool $overlay = false): string
     {
         if (!empty($text)) {
             $confirm = [
@@ -64,14 +55,8 @@ class Alerts
 
     /**
      * Displays a confirmation box, where the forward button triggers a form submit using POST.
-     *
-     * @param string $text
-     * @param string $forward
-     * @param string $backward
-     *
-     * @return array
      */
-    public function confirmBoxPost($text, array $data, $forward, $backward = '')
+    public function confirmBoxPost(string $text, array $data, string $forward, string $backward = ''): array
     {
         if (!empty($text) && !empty($data)) {
             $confirm = [
@@ -95,10 +80,8 @@ class Alerts
      * Returns the pretty printed form errors.
      *
      * @param string|array $errors
-     *
-     * @return string
      */
-    public function errorBox($errors)
+    public function errorBox($errors): string
     {
         $this->view->assign('CONTENT_ONLY', $this->request->isXmlHttpRequest() === true);
 
@@ -107,10 +90,8 @@ class Alerts
 
     /**
      * @param string|array $errors
-     *
-     * @return string
      */
-    public function errorBoxContent($errors)
+    public function errorBoxContent($errors): string
     {
         $this->setErrorBoxData($errors);
 
@@ -120,7 +101,7 @@ class Alerts
     /**
      * @param string|array $errors
      */
-    protected function setErrorBoxData($errors)
+    protected function setErrorBoxData($errors): void
     {
         $hasNonIntegerKeys = false;
 
@@ -145,12 +126,10 @@ class Alerts
 
     /**
      * @param string|array $errors
-     *
-     * @return array
      */
-    protected function prepareErrorBoxData($errors)
+    protected function prepareErrorBoxData($errors): array
     {
-        if (\is_string($errors) && ($data = @\unserialize($errors)) !== false) {
+        if (\is_string($errors) && ($data = @\unserialize($errors, ['allowed_classes' => true])) !== false) {
             $errors = $data;
         }
 
