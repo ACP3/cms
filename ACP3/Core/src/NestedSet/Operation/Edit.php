@@ -20,11 +20,7 @@ class Edit extends AbstractOperation
 
         // Überprüfen, ob Seite ein Root-Element ist und ob dies auch so bleiben soll
         if ($this->nodeIsRootItemAndNoChangeNeed($parentId, $blockId, $nodes[0])) {
-            $result = $this->db->getConnection()->update(
-                $this->nestedSetRepository->getTableName(),
-                $updateValues,
-                ['id' => $resultId]
-            );
+            $result = $this->nestedSetRepository->update($updateValues, $resultId);
         } else {
             $currentParent = $this->nestedSetRepository->fetchParentNode(
                 $nodes[0]['left_id'],
@@ -33,11 +29,7 @@ class Edit extends AbstractOperation
 
             // Überprüfung, falls Seite kein Root-Element ist und auch keine Veränderung vorgenommen werden soll...
             if (!empty($currentParent) && $currentParent === $parentId) {
-                $result = $this->db->getConnection()->update(
-                    $this->nestedSetRepository->getTableName(),
-                    $updateValues,
-                    ['id' => $resultId]
-                );
+                $result = $this->nestedSetRepository->update($updateValues, $resultId);
             } else { // ...ansonsten den Baum bearbeiten...
                 // Neues Elternelement
                 $newParent = $this->nestedSetRepository->fetchNodeById($parentId);
@@ -50,11 +42,7 @@ class Edit extends AbstractOperation
 
                 $result = $this->adjustNodeSiblings($blockId, $nodes, $diff, $rootId);
 
-                $this->db->getConnection()->update(
-                    $this->nestedSetRepository->getTableName(),
-                    $updateValues,
-                    ['id' => $resultId]
-                );
+                $this->nestedSetRepository->update($updateValues, $resultId);
             }
         }
 
@@ -81,7 +69,7 @@ class Edit extends AbstractOperation
             if ((int) $nodes[0][$this->nestedSetRepository::BLOCK_COLUMN_NAME] !== $blockId) {
                 $diff = $this->nodeBecomesRootNodeInNewBlock($blockId, $nodes, $itemDiff);
             } else {
-                $diff = $this->nodeBecomesRootNodeInSameBlock($nodes, $itemDiff);
+                $diff = $this->nodeBecomesRootNodeInSameBlock($nodes[0], $itemDiff);
             }
         } else {
             $maxId = $this->nestedSetRepository->fetchMaximumRightId();
@@ -122,18 +110,15 @@ class Edit extends AbstractOperation
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function nodeBecomesRootNodeInSameBlock(array $nodes, int $itemDiff): int
+    protected function nodeBecomesRootNodeInSameBlock(array $node, int $itemDiff): int
     {
-        $maxId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($nodes[0][$this->nestedSetRepository::BLOCK_COLUMN_NAME]);
+        $maxId = $this->nestedSetRepository->fetchMaximumRightIdByBlockId($node[$this->nestedSetRepository::BLOCK_COLUMN_NAME]);
 
-        $this->adjustParentNodesAfterSeparation($itemDiff, $nodes[0]['left_id'], $nodes[0]['right_id']);
+        $this->adjustParentNodesAfterSeparation($itemDiff, $node['left_id'], $node['right_id']);
 
-        $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ? AND " . $this->nestedSetRepository::BLOCK_COLUMN_NAME . ' = ?',
-            [$itemDiff, $itemDiff, $nodes[0]['right_id'], $nodes[0][$this->nestedSetRepository::BLOCK_COLUMN_NAME]]
-        );
+        $this->nestedSetRepository->moveSubsequentNodesOfBlock($itemDiff, $node['right_id'], $node[$this->nestedSetRepository::BLOCK_COLUMN_NAME]);
 
-        return $maxId - $nodes[0]['right_id'];
+        return $maxId - $node['right_id'];
     }
 
     /**
@@ -152,29 +137,22 @@ class Edit extends AbstractOperation
                 $node['right_id']
             );
             if ($this->isBlockAware() === true) {
-                $result = $this->db->getConnection()->executeUpdate(
-                    "UPDATE {$this->nestedSetRepository->getTableName()} SET " . $this->nestedSetRepository::BLOCK_COLUMN_NAME . ' = ?, root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?',
-                    [
-                        $blockId,
-                        $rootId,
-                        $parentId,
-                        $node['left_id'],
-                        $node['right_id'],
-                        $node['id'],
-                    ]
-                );
+                $result = $this->nestedSetRepository->update([
+                    $this->nestedSetRepository::BLOCK_COLUMN_NAME => $blockId,
+                    'root_id' => $rootId,
+                    'parent_id' => $parentId,
+                    'left_id' => $node['left_id'],
+                    'right_id' => $node['right_id'],
+                ], $node['id']);
             } else {
-                $result = $this->db->getConnection()->executeUpdate(
-                    "UPDATE {$this->nestedSetRepository->getTableName()} SET root_id = ?, parent_id = ?, left_id = ?, right_id = ? WHERE id = ?",
-                    [
-                        $rootId,
-                        $parentId,
-                        $node['left_id'],
-                        $node['right_id'],
-                        $node['id'],
-                    ]
-                );
+                $result = $this->nestedSetRepository->update([
+                    'root_id' => $rootId,
+                    'parent_id' => $parentId,
+                    'left_id' => $node['left_id'],
+                    'right_id' => $node['right_id'],
+                ], $node['id']);
             }
+
             if ($result === false) {
                 break;
             }

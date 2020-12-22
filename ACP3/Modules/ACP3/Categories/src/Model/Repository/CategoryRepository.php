@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
 class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetRepository implements BlockAwareNestedSetRepositoryInterface
 {
     const TABLE_NAME = 'categories';
-    const BLOCK_COLUMN_NAME = 'module_id';
+    public const BLOCK_COLUMN_NAME = 'module_id';
 
     /**
      * @return bool

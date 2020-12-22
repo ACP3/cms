@@ -27,13 +27,9 @@ class Insert extends AbstractOperation
 
             $this->adjustFollowingNodesAfterInsert(2, $insertValues['left_id']);
 
-            $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
-            $lastInsertId = (int) $this->db->getConnection()->lastInsertId();
-            $this->db->getConnection()->update(
-                $this->nestedSetRepository->getTableName(),
-                ['root_id' => $lastInsertId],
-                ['id' => $lastInsertId]
-            );
+            $lastInsertId = $this->nestedSetRepository->insert($insertValues);
+
+            $this->nestedSetRepository->update(['root_id' => $lastInsertId], $lastInsertId);
         } else { // a parent item for the node has been assigned
             $parent = $this->nestedSetRepository->fetchNodeById($parentId);
 
@@ -44,9 +40,7 @@ class Insert extends AbstractOperation
             $insertValues['left_id'] = $parent['right_id'];
             $insertValues['right_id'] = $parent['right_id'] + 1;
 
-            $this->db->getConnection()->insert($this->nestedSetRepository->getTableName(), $insertValues);
-
-            $lastInsertId = (int) $this->db->getConnection()->lastInsertId();
+            $lastInsertId = $this->nestedSetRepository->insert($insertValues);
         }
 
         return $lastInsertId;

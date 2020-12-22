@@ -7,8 +7,6 @@
 
 namespace ACP3\Core\NestedSet\Operation;
 
-use Doctrine\DBAL\Connection;
-
 class Sort extends AbstractOperation
 {
     /**
@@ -76,11 +74,7 @@ class Sort extends AbstractOperation
      */
     protected function updateNodesDown(int $diff, array $nodes): bool
     {
-        return $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE id IN(?)",
-            [$diff, $diff, $this->fetchAffectedNodesForReorder($nodes)],
-            [\PDO::PARAM_INT, \PDO::PARAM_INT, Connection::PARAM_INT_ARRAY]
-        ) !== false;
+        return $this->nestedSetRepository->moveNodesWithinTree($diff, $diff, $this->fetchAffectedNodesForReorder($nodes));
     }
 
     /**
@@ -88,11 +82,7 @@ class Sort extends AbstractOperation
      */
     protected function moveNodesUp(int $diff, array $nodes): bool
     {
-        return $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE id IN(?)",
-            [$diff, $diff, $this->fetchAffectedNodesForReorder($nodes)],
-            [\PDO::PARAM_INT, \PDO::PARAM_INT, Connection::PARAM_INT_ARRAY]
-        ) !== false;
+        return $this->nestedSetRepository->moveNodesWithinTree($diff * -1, $diff * -1, $this->fetchAffectedNodesForReorder($nodes));
     }
 
     protected function calcDiffBetweenNodes(array $node, array $elem): array

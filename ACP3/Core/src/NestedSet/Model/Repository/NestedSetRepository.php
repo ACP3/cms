@@ -8,10 +8,11 @@
 namespace ACP3\Core\NestedSet\Model\Repository;
 
 use ACP3\Core\Model\Repository\AbstractRepository;
+use Doctrine\DBAL\Connection;
 
 abstract class NestedSetRepository extends AbstractRepository
 {
-    const BLOCK_COLUMN_NAME = 'block_id';
+    public const BLOCK_COLUMN_NAME = 'block_id';
 
     /**
      * Fetch the given node with all its parent nodes.
@@ -175,5 +176,87 @@ abstract class NestedSetRepository extends AbstractRepository
     public function fetchAll(): array
     {
         return $this->db->fetchAll("SELECT * FROM {$this->getTableName()}");
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function updateRootIdAndParentIdOfNode(int $rootId, int $parentId, int $nodeId): void
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->getTableName()} SET root_id = ?, parent_id = ? WHERE id = ?",
+            [
+                $rootId,
+                $parentId,
+                $nodeId,
+            ]
+        );
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function moveNodesWithinTree(int $offsetLeftId, int $offsetRightId, array $nodeIds): bool
+    {
+        return $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->getTableName()} SET left_id = left_id + :offsetLeftId, right_id = right_id + :offsetRightId WHERE id IN(:nodeIds)",
+            ['offsetLeftId' => $offsetLeftId, 'offsetRightId' => $offsetRightId, 'nodeIds' => $nodeIds],
+            ['nodeIds' => Connection::PARAM_INT_ARRAY]
+        ) !== false;
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function moveSubsequentNodesOfBlock(int $offset, int $leftIdConstraint, int $blockId): void
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ? AND " . static::BLOCK_COLUMN_NAME . ' = ?',
+            [$offset, $offset, $leftIdConstraint, $blockId]
+        );
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function adjustParentNodesAfterSeparation(int $diff, int $leftId, int $rightId): void
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->getTableName()} SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?",
+            [$diff, $leftId, $rightId]
+        );
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function adjustParentNodesAfterInsert(int $diff, int $leftId, int $rightId): void
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->getTableName()} SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?",
+            [$diff, $leftId, $rightId]
+        );
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function adjustFollowingNodesAfterSeparation(int $diff, int $leftId): void
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?",
+            [$diff, $diff, $leftId]
+        );
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function adjustFollowingNodesAfterInsert(int $diff, int $leftId): void
+    {
+        $this->db->getConnection()->executeUpdate(
+            "UPDATE {$this->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?",
+            [$diff, $diff, $leftId]
+        );
     }
 }

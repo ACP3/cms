@@ -7,8 +7,6 @@
 
 namespace ACP3\Core\NestedSet\Operation;
 
-use Doctrine\DBAL\Connection;
-
 class Delete extends AbstractOperation
 {
     /**
@@ -16,12 +14,9 @@ class Delete extends AbstractOperation
      */
     public function execute(int $resultId): bool
     {
-        $nodes = $this->nestedSetRepository->fetchNodeWithSiblings((int) $resultId);
+        $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
         if (!empty($nodes)) {
-            $this->db->getConnection()->delete(
-                $this->nestedSetRepository->getTableName(),
-                ['id' => (int) $resultId]
-            );
+            $this->nestedSetRepository->delete($resultId);
 
             $this->moveSiblingsOneLevelUp($nodes);
             $this->adjustParentNodesAfterSeparation(2, $nodes[0]['left_id'], $nodes[0]['right_id']);
@@ -44,21 +39,10 @@ class Delete extends AbstractOperation
         foreach ($nodes as $node) {
             $parentId = $this->nestedSetRepository->fetchParentNode($node['left_id'], $node['right_id']);
 
-            $this->db->getConnection()->executeUpdate(
-                "UPDATE {$this->nestedSetRepository->getTableName()} SET root_id = ?, parent_id = ? WHERE id = ?",
-                [
-                    $nodes[0]['id'],
-                    $parentId,
-                    $node['id'],
-                ]
-            );
+            $this->nestedSetRepository->updateRootIdAndParentIdOfNode($nodes[0]['id'], $parentId, $node['id']);
         }
 
-        $this->db->getConnection()->executeUpdate(
-            "UPDATE {$this->nestedSetRepository->getTableName()} SET left_id = left_id - 1, right_id = right_id - 1 WHERE id IN(?)",
-            [$this->getNodeIds($nodes)],
-            [Connection::PARAM_INT_ARRAY]
-        );
+        $this->nestedSetRepository->moveNodesWithinTree(-1, -1, $this->getNodeIds($nodes));
     }
 
     /**
