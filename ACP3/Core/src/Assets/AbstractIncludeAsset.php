@@ -80,8 +80,13 @@ abstract class AbstractIncludeAsset
             $this->getResourceDirectory(),
             $filePath . '.' . $this->getFileExtension()
         );
+        $path = \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR));
 
-        return $this->appPath->getWebRoot() . \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR));
+        if (!$path) {
+            throw new \RuntimeException(\sprintf('Could not find the request file %s of module %s', $filePath, $moduleName));
+        }
+
+        return $this->appPath->getWebRoot() . $path;
     }
 
     abstract protected function getResourceDirectory(): string;
