@@ -96,4 +96,9 @@ class View
 
         return $this;
     }
+
+    public function setLayout(string $layout): void
+    {
+        $this->assign('LAYOUT', $layout);
+    }
 }

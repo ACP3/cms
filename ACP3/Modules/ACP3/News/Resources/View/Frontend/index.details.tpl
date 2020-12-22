@@ -20,7 +20,6 @@
                     </footer>
                 {/if}
             </div>
-            {event name="news.layout.details_after" news=$news}
             {event name="share.layout.add_social_sharing"}
         </section>
         {event name="news.layout.details_after" news=$news}

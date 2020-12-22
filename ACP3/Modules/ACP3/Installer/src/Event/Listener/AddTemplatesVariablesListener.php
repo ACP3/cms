@@ -68,6 +68,7 @@ class AddTemplatesVariablesListener
             'IS_AJAX' => $this->request->isXmlHttpRequest(),
             'LANG_DIRECTION' => $this->translator->getDirection(),
             'LANG' => $this->translator->getShortIsoCode(),
+            'LAYOUT' => $this->request->isXmlHttpRequest() ? 'layout.ajax.tpl' : 'layout.tpl',
         ]);
     }
 

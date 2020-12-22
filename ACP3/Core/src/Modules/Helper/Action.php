@@ -99,11 +99,8 @@ class Action
     public function renderErrorBoxOnFailedFormValidation(\Exception $exception)
     {
         $errors = $this->alerts->errorBox($exception->getMessage());
-        if ($this->request->isXmlHttpRequest()) {
-            return new Response($errors, Response::HTTP_BAD_REQUEST);
-        }
 
-        return ['error_msg' => $errors];
+        return new Response($errors, Response::HTTP_BAD_REQUEST);
     }
 
     /**

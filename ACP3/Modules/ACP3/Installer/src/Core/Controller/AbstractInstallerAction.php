@@ -48,10 +48,6 @@ abstract class AbstractInstallerAction implements ActionInterface
      * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirectResponse;
-    /**
-     * @var string
-     */
-    private $layout = 'layout.tpl';
 
     public function __construct(InstallerContext $context)
     {
@@ -97,14 +93,6 @@ abstract class AbstractInstallerAction implements ActionInterface
     }
 
     /**
-     * @return bool
-     */
-    protected function getNoOutput()
-    {
-        return false;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function get($serviceId)
@@ -138,26 +126,5 @@ abstract class AbstractInstallerAction implements ActionInterface
                 . '_' . $this->request->getAction()
             )
         );
-        $this->view->assign('LAYOUT', $this->request->isXmlHttpRequest() ? 'layout.ajax.tpl' : $this->getLayout());
-    }
-
-    /**
-     * @return string
-     */
-    public function getLayout()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * @param string $layout
-     *
-     * @return $this
-     */
-    public function setLayout($layout)
-    {
-        $this->layout = $layout;
-
-        return $this;
     }
 }

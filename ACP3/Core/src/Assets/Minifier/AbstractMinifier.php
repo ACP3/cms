@@ -136,7 +136,7 @@ abstract class AbstractMinifier implements MinifierInterface
 
             $this->saveMinifiedAsset($files, $this->appPath->getUploadsDir() . $path);
 
-            // Save the time of the generation if the requested file
+            // Save the time of the generation of the requested file
             $this->systemCache->save($cacheId, $lastGenerated);
         }
 

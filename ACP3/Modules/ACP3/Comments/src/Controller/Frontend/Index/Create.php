@@ -26,8 +26,12 @@ class Create extends Core\Controller\AbstractFrontendAction implements Core\Cont
         $this->commentCreateViewProvider = $commentCreateViewProvider;
     }
 
-    public function __invoke(string $module, int $entryId, string $redirectUrl): array
+    public function __invoke(string $module, int $entryId, string $redirectUrl, bool $embed = false): array
     {
+        if ($embed === true) {
+            $this->view->setLayout('System/layout.content_only.tpl');
+        }
+
         return ($this->commentCreateViewProvider)($module, $entryId, $redirectUrl);
     }
 }

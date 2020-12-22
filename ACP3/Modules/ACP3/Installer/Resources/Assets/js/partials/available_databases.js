@@ -3,10 +3,10 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 (($) => {
-    const ajaxUrl = $('#config-form').data('available-databases-url'),
-        $dbName = $('#db-name'),
+    const $dbName = $('#db-name'),
         $formFields = $('#db-host, #db-user, #db-password'),
-        $formGroup = $formFields.closest('.form-group');
+        $formGroup = $formFields.closest('.form-group'),
+        ajaxUrl = $dbName.data('available-databases-url');
 
     $formFields.on('change', () => {
         $dbName

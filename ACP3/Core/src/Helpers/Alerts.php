@@ -83,8 +83,6 @@ class Alerts
      */
     public function errorBox($errors): string
     {
-        $this->view->assign('CONTENT_ONLY', $this->request->isXmlHttpRequest() === true);
-
         return $this->view->fetchTemplate($this->errorBoxContent($errors));
     }
 
@@ -122,6 +120,10 @@ class Alerts
                 'errors' => $errors,
             ]
         );
+
+        if ($this->request->isXmlHttpRequest() === true) {
+            $this->view->setLayout('System/layout.content_only.tpl');
+        }
     }
 
     /**

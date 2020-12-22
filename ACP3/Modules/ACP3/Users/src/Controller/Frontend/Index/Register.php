@@ -45,9 +45,6 @@ class Register extends Core\Controller\AbstractFrontendAction implements Core\Co
         $this->user = $user;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
     public function __invoke()
     {
         if ($this->user->isAuthenticated() === true) {
@@ -57,11 +54,11 @@ class Register extends Core\Controller\AbstractFrontendAction implements Core\Co
         $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
 
         if ($settings['enable_registration'] == 0) {
-            $this->setContent(
-                $this->alertsHelper->errorBox(
-                    $this->translator->t('users', 'user_registration_disabled')
-                )
-            );
+            $this->setTemplate($this->alertsHelper->errorBoxContent(
+                $this->translator->t('users', 'user_registration_disabled')
+            ));
+
+            return null;
         }
 
         return ($this->registrationViewProvider)();

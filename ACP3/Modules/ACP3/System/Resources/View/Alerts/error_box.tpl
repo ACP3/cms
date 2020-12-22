@@ -1,4 +1,4 @@
-{extends file="asset:System/layout.error_box.tpl"}
+{extends file="asset:$LAYOUT"}
 
 {block CONTENT}
     <div id="error-box" class="alert alert-warning alert-block">

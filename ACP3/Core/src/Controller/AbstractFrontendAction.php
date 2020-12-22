@@ -16,10 +16,6 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
     private $eventDispatcher;
-    /**
-     * @var string
-     */
-    private $layout = 'layout.tpl';
 
     public function __construct(Context\FrontendContext $context)
     {
@@ -33,62 +29,10 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {
-        $this->view->assign('LAYOUT', $this->fetchLayoutViaInheritance());
-
         $this->eventDispatcher->dispatch(
             new CustomTemplateVariableEvent($this->view),
             CustomTemplateVariableEvent::NAME
         );
-    }
-
-    protected function fetchLayoutViaInheritance(): string
-    {
-        if ($this->request->isXmlHttpRequest()) {
-            $paths = $this->fetchLayoutPaths('layout.ajax', 'System/layout.ajax.tpl');
-        } else {
-            $paths = $this->fetchLayoutPaths('layout', 'layout.tpl');
-        }
-
-        $this->iterateOverLayoutPaths($paths);
-
-        return $this->getLayout();
-    }
-
-    private function fetchLayoutPaths(string $layoutFileName, string $defaultLayoutName): array
-    {
-        return [
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl',
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.tpl',
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.tpl',
-            $this->request->getModule() . '/' . $layoutFileName . '.tpl',
-            $defaultLayoutName,
-        ];
-    }
-
-    /**
-     * @param string[] $paths
-     */
-    private function iterateOverLayoutPaths(array $paths): void
-    {
-        if ($this->getLayout() !== 'layout.tpl') {
-            return;
-        }
-
-        foreach ($paths as $path) {
-            if ($this->view->templateExists($path)) {
-                $this->setLayout($path);
-
-                break;
-            }
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getLayout()
-    {
-        return $this->layout;
     }
 
     /**
@@ -96,7 +40,7 @@ abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetActi
      */
     public function setLayout(string $layout)
     {
-        $this->layout = $layout;
+        $this->view->setLayout($layout);
 
         return $this;
     }
