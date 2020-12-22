@@ -7,11 +7,11 @@
 
 namespace ACP3\Core\Assets\Minifier;
 
-class DeferableCSS extends CSS
+class DeferrableCSS extends CSS
 {
     protected function getAssetGroup(): string
     {
-        return 'css_deferable';
+        return 'css_deferrable';
     }
 
     /**
@@ -42,7 +42,7 @@ class DeferableCSS extends CSS
     private function fetchLibraries(): void
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library->isEnabled() === false || !$library->getCss() || !$library->isDeferableCss()) {
+            if ($library->isEnabled() === false || !$library->getCss() || !$library->isDeferrableCss()) {
                 continue;
             }
 

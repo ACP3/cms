@@ -32,8 +32,8 @@ services:
     class: ACP3\Core\Assets\Minifier\CSS
     parent: core.assets.abstract_minifier
 
-  core.assets.minifier.deferable_css:
-    class: ACP3\Core\Assets\Minifier\DeferableCSS
+  core.assets.minifier.deferrable_css:
+    class: ACP3\Core\Assets\Minifier\DeferrableCSS
     parent: core.assets.abstract_minifier
 
   core.assets.minifier.javascript:

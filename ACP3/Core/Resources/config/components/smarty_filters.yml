@@ -11,7 +11,7 @@ services:
     class: ACP3\Core\View\Renderer\Smarty\Filters\MoveToHead
     arguments:
       - '@core.assets.minifier.css'
-      - '@core.assets.minifier.deferable_css'
+      - '@core.assets.minifier.deferrable_css'
     tags:
     - { name: smarty.plugin.filter, filterType: output }
 

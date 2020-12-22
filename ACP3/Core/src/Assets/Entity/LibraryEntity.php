@@ -40,7 +40,7 @@ final class LibraryEntity
     /**
      * @var bool
      */
-    private $deferableCss;
+    private $deferrableCss;
 
     public function __construct(
         string $libraryIdentifier,
@@ -49,7 +49,7 @@ final class LibraryEntity
         array $css = [],
         array $js = [],
         ?string $moduleName = null,
-        bool $deferableCss = false
+        bool $deferrableCss = false
     ) {
         $this->libraryIdentifier = $libraryIdentifier;
         $this->enabledForAjax = $enabledForAjax;
@@ -57,7 +57,7 @@ final class LibraryEntity
         $this->css = $css;
         $this->js = $js;
         $this->moduleName = $moduleName;
-        $this->deferableCss = $deferableCss;
+        $this->deferrableCss = $deferrableCss;
     }
 
     public function getLibraryIdentifier(): string
@@ -103,8 +103,8 @@ final class LibraryEntity
         return $this->moduleName;
     }
 
-    public function isDeferableCss(): bool
+    public function isDeferrableCss(): bool
     {
-        return $this->deferableCss;
+        return $this->deferrableCss;
     }
 }

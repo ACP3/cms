@@ -54,7 +54,7 @@ class CSS extends AbstractMinifier
     private function fetchLibraries(): void
     {
         foreach ($this->assets->getLibraries() as $library) {
-            if ($library->isEnabled() === false || !$library->getCss() || $library->isDeferableCss()) {
+            if ($library->isEnabled() === false || !$library->getCss() || $library->isDeferrableCss()) {
                 continue;
             }
 
