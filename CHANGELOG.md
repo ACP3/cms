@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- added the `acp3/module-menus` as a hard dependency to the `acp3/theme-default`
+
+### Changed
+- slightly reworked and improved the layout system to fix some long-standing bugs
+- updated the NPM dependencies (especially the jQuery DataTables), to fix a possible security issue
+- dropped the RefreshListener from the HttpCache to fix errors with the Firefox browser
+- exclude non installable modules from the DB migrations
+- throw an error if a requested assets can't be resolved
+- removed all the leftover mentions of the articles module from the menus module
+- moved all DB queries from the various nested set operations into its repository class
+
+### Fixed
+- Fixed saving ACL rules
+- Fixed the RSS/Atom feeds when there are no items to display
+- Fixed an incorrectly reported status when saving entities which are using the infrastructure of the `AbstractNestedSetModel`
+
 ## [5.6.0] - 2020-12-15
 ### Changed
 - renamed the `LibraryDto` to `LibraryEntity`. This also removes the possibility to enable a frontend library by default --> you have to call "enableLibraries" explicitly
