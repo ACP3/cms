@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.7.0] - 2020-12-22
 ### Added
 - added the `acp3/module-menus` as a hard dependency to the `acp3/theme-default`
 
@@ -100,7 +100,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - removed all deprecated code
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.6.0...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.7.0...5.x
+[5.7.0]: https://gitlab.com/ACP3/cms/compare/v5.6.0...v5.7.0
 [5.6.0]: https://gitlab.com/ACP3/cms/compare/v5.5.1...v5.6.0
 [5.5.1]: https://gitlab.com/ACP3/cms/compare/v5.5.0...v5.5.1
 [5.5.0]: https://gitlab.com/ACP3/cms/compare/v5.4.0...v5.5.0
