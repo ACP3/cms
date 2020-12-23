@@ -74,15 +74,15 @@ class RegisterPost extends Core\Controller\AbstractFrontendAction implements Cor
 
                 $lastId = $this->usersModel->save($insertValues);
 
-                $bool2 = $this->permissionsHelpers->updateUserRoles([2], $lastId);
+                $result = $this->permissionsHelpers->updateUserRoles([2], $lastId);
 
-                $this->setTemplate($this->alertsHelper->confirmBox(
+                return $this->alertsHelper->confirmBox(
                     $this->translator->t(
                         'users',
-                        $lastId !== false && $bool2 !== false ? 'register_success' : 'register_error'
+                        $lastId !== false && $result !== false ? 'register_success' : 'register_error'
                     ),
                     $this->appPath->getWebRoot()
-                ));
+                );
             },
             $this->request->getFullPath()
         );

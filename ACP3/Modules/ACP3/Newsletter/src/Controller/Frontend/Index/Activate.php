@@ -42,7 +42,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
-    public function execute(string $hash): void
+    public function execute(string $hash): string
     {
         try {
             $this->activateAccountFormValidation->validate(['hash' => $hash]);
@@ -52,12 +52,12 @@ class Activate extends Core\Controller\AbstractFrontendAction
                 ['hash' => $hash]
             );
 
-            $this->setTemplate($this->alertsHelper->confirmBox($this->translator->t(
+            return $this->alertsHelper->confirmBox($this->translator->t(
                 'newsletter',
                 $bool !== false ? 'activate_success' : 'activate_error'
-            ), $this->appPath->getWebRoot()));
+            ), $this->appPath->getWebRoot());
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
-            $this->setContent($this->alertsHelper->errorBox($e->getMessage()));
+            return $this->alertsHelper->errorBox($e->getMessage());
         }
     }
 }

@@ -87,6 +87,7 @@ class ForgotPwdPost extends Core\Controller\AbstractFrontendAction implements Co
                 $newPassword = $this->secureHelper->salt(Users\Model\UserModel::SALT_LENGTH);
                 $user = $this->fetchUserByFormFieldValue($formData['nick_mail']);
                 $isMailSent = ($this->sendPasswordChangeEmail)($user, $newPassword);
+                $result = false;
 
                 // Das Passwort des Benutzers nur abändern, wenn die E-Mail erfolgreich versendet werden konnte
                 if ($isMailSent === true) {
@@ -94,16 +95,16 @@ class ForgotPwdPost extends Core\Controller\AbstractFrontendAction implements Co
                         'pwd' => $newPassword,
                         'login_errors' => 0,
                     ];
-                    $bool = $this->usersModel->save($updateValues, $user['id']);
+                    $result = $this->usersModel->save($updateValues, $user['id']);
                 }
 
-                $this->setTemplate($this->alertsHelper->confirmBox(
+                return $this->alertsHelper->confirmBox(
                     $this->translator->t(
                         'users',
-                        $isMailSent === true && isset($bool) && $bool !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'
+                        $isMailSent === true && $result !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'
                     ),
                     $this->appPath->getWebRoot()
-                ));
+                );
             },
             $this->request->getFullPath()
         );

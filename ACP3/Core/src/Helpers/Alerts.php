@@ -29,7 +29,8 @@ class Alerts
     }
 
     /**
-     * Displays a confirmation box.
+     * Allows to display a confirmation box.
+     * The method's return value is the rendered confirmation box.
      *
      * @param string|array $forward
      */
@@ -47,16 +48,17 @@ class Alerts
 
             $this->view->assign('confirm', $confirm);
 
-            return 'System/Alerts/confirm_box.tpl';
+            return $this->view->fetchTemplate('System/Alerts/confirm_box.tpl');
         }
 
-        return '';
+        throw new \InvalidArgumentException('To display the confirmation box, you must supply a text you want to display!');
     }
 
     /**
-     * Displays a confirmation box, where the forward button triggers a form submit using POST.
+     * Allows to display a confirmation box, where the forward button triggers a form submit using POST.
+     * The method's return value is the rendered confirmation box.
      */
-    public function confirmBoxPost(string $text, array $data, string $forward, string $backward = ''): array
+    public function confirmBoxPost(string $text, array $data, string $forward, string $backward = ''): string
     {
         if (!empty($text) && !empty($data)) {
             $confirm = [
@@ -68,12 +70,12 @@ class Alerts
                 $confirm['backward'] = $backward;
             }
 
-            return [
-                'confirm' => $confirm,
-            ];
+            $this->view->assign('confirm', $confirm);
+
+            return $this->view->fetchTemplate('System/Alerts/confirm_box_post.tpl');
         }
 
-        return [];
+        throw new \InvalidArgumentException('To display the confirmation box, you must supply a text you want to display and the data to be POSTed!');
     }
 
     /**

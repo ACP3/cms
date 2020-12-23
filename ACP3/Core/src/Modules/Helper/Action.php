@@ -104,7 +104,6 @@ class Action
     }
 
     /**
-     * @param string|null $action
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
@@ -113,7 +112,7 @@ class Action
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleDeleteAction(
-        $action,
+        ?string $action,
         callable $callback,
         $moduleConfirmUrl = null,
         $moduleIndexUrl = null
@@ -131,7 +130,6 @@ class Action
     }
 
     /**
-     * @param string|null $action
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
@@ -140,7 +138,7 @@ class Action
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(
-        $action,
+        ?string $action,
         callable $callback,
         $moduleConfirmUrl = null,
         $moduleIndexUrl = null
@@ -151,7 +149,7 @@ class Action
         );
         $result = $this->deleteItem($action, $moduleConfirmUrl, $moduleIndexUrl);
 
-        if ($result instanceof RedirectResponse) {
+        if ($result instanceof Response) {
             return $result;
         }
 
@@ -245,10 +243,7 @@ class Action
         );
     }
 
-    /**
-     * @return array
-     */
-    private function generateDefaultConfirmationBoxUris(?string $moduleConfirmUrl, ?string $moduleIndexUrl)
+    private function generateDefaultConfirmationBoxUris(?string $moduleConfirmUrl, ?string $moduleIndexUrl): array
     {
         if ($moduleConfirmUrl === null) {
             $moduleConfirmUrl = $this->request->getFullPath();
@@ -264,7 +259,7 @@ class Action
     /**
      * helper function for deleting a result set.
      *
-     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|Response|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     private function deleteItem(?string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null)
     {
@@ -284,11 +279,13 @@ class Action
                 'entries' => $entries,
             ];
 
-            return $this->alerts->confirmBoxPost(
-                $this->prepareConfirmationBoxText($entries),
-                $data,
-                $this->router->route($moduleConfirmUrl),
-                $this->router->route($moduleIndexUrl)
+            return new Response(
+                $this->alerts->confirmBoxPost(
+                    $this->prepareConfirmationBoxText($entries),
+                    $data,
+                    $this->router->route($moduleConfirmUrl),
+                    $this->router->route($moduleIndexUrl)
+                )
             );
         }
 

@@ -30,19 +30,17 @@ class Helpers
     }
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function updateUserRoles(array $roles, int $userId)
+    public function updateUserRoles(array $roles, int $userId): bool
     {
-        $bool = $this->userRoleRepository->delete($userId, 'user_id');
+        $result = $this->userRoleRepository->delete($userId, 'user_id');
 
-        $bool2 = false;
+        $result2 = false;
         foreach ($roles as $role) {
-            $bool2 = $this->userRoleRepository->insert(['user_id' => $userId, 'role_id' => $role]);
+            $result2 = $this->userRoleRepository->insert(['user_id' => $userId, 'role_id' => $role]);
         }
 
-        return $bool !== false && $bool2 !== false;
+        return $result !== false && $result2 !== false;
     }
 }

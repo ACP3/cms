@@ -73,13 +73,13 @@ class IndexPost extends Core\Controller\AbstractFrontendAction implements Core\C
 
                 $this->contactsModel->save($formData);
 
-                $bool = $this->contactFormModel->sendContactFormEmail($formData);
+                $result = $this->contactFormModel->sendContactFormEmail($formData);
                 $this->contactFormModel->sendContactFormEmailCopy($formData);
 
-                $this->setTemplate($this->alertsHelper->confirmBox(
-                    $this->translator->t('contact', $bool === true ? 'send_mail_success' : 'send_mail_error'),
+                return $this->alertsHelper->confirmBox(
+                    $this->translator->t('contact', $result === true ? 'send_mail_success' : 'send_mail_error'),
                     $this->router->route('contact')
-                ));
+                );
             }
         );
     }
