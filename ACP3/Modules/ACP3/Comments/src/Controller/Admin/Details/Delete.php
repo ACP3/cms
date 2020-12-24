@@ -41,6 +41,8 @@ class Delete extends Core\Controller\AbstractFrontendAction
 
     /**
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(int $id, ?string $action = null)
     {
@@ -50,7 +52,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                 $result = $this->commentsModel->delete($items);
 
                 // If there are no comments for the given module, redirect to the general comments admin panel page
-                if ($this->commentRepository->countAll($id) == 0) {
+                if ($this->commentRepository->countAll($id) === 0) {
                     $redirectUrl = 'acp/comments';
                 } else {
                     $redirectUrl = 'acp/comments/details/index/id_' . $id;

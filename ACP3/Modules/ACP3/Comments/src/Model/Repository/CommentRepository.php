@@ -39,11 +39,9 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll(int $moduleId = 0)
+    public function countAll(int $moduleId = 0): int
     {
         if ($moduleId === 0) {
             return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName());
