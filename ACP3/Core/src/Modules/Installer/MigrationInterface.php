@@ -12,14 +12,14 @@ interface MigrationInterface
     /**
      * Returns an array with changes to the table structure and data of a module.
      *
-     * @return array
+     * @return Array<int, string|callable|string[]|callable[]>
      */
     public function schemaUpdates();
 
     /**
      * Returns an array with the SQL changes needed to convert a module, so that a functions with its new name.
      *
-     * @return array
+     * @return Array<int, string|callable|string[]|callable[]>
      */
     public function renameModule();
 }

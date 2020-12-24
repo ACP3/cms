@@ -7,13 +7,29 @@
 
 namespace ACP3\Core\Modules;
 
+use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Modules\Installer\MigrationInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 
-class SchemaUpdater extends SchemaHelper
+class SchemaUpdater
 {
     /**
-     * Führt die in der Methode schemaUpdates() enthaltenen Tabellenänderungen aus.
+     * @var \ACP3\Core\Modules\SchemaHelper
+     */
+    private $schemaHelper;
+    /**
+     * @var \ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface
+     */
+    private $moduleAwareRepository;
+
+    public function __construct(SchemaHelper $schemaHelper, ModuleAwareRepositoryInterface $moduleAwareRepository)
+    {
+        $this->schemaHelper = $schemaHelper;
+        $this->moduleAwareRepository = $moduleAwareRepository;
+    }
+
+    /**
+     * Execute the schema updates which can be found within the methods `renameModule` and `schemaUpdates`.
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
@@ -21,58 +37,56 @@ class SchemaUpdater extends SchemaHelper
      */
     public function updateSchema(SchemaInterface $schema, MigrationInterface $migration): void
     {
-        $module = $this->getSystemModuleRepository()->getModuleSchemaVersion($schema->getModuleName());
-        $installedSchemaVersion = !empty($module) ? $module : 0;
+        $installedSchemaVersion = $this->moduleAwareRepository->getModuleSchemaVersion($schema->getModuleName());
+        $normalizedSchemaMigrations = $this->mergeSchemaMigrations($migration->renameModule(), $migration->schemaUpdates());
 
-        // Falls eine Methode zum Umbenennen des Moduls existiert,
-        // diese mit der aktuell installierten Schemaverion aufrufen
-        $moduleNames = $migration->renameModule();
-        if (\count($moduleNames) > 0) {
-            $this->iterateOverSchemaUpdates(
-                $schema->getModuleName(),
-                $schema->getSchemaVersion(),
-                $moduleNames,
-                $installedSchemaVersion
-            );
-        }
-
-        $queries = $migration->schemaUpdates();
-        if (\is_array($queries) && \count($queries) > 0) {
-            // Nur für den Fall der Fälle... ;)
-            \ksort($queries);
-
-            $this->iterateOverSchemaUpdates(
-                $schema->getModuleName(),
-                $schema->getSchemaVersion(),
-                $queries,
-                $installedSchemaVersion
-            );
-        }
+        $this->iterateOverSchemaUpdates(
+            $schema->getModuleName(),
+            $normalizedSchemaMigrations,
+            $installedSchemaVersion
+        );
     }
 
     /**
-     * @param string $moduleName
-     * @param int    $schemaVersion
-     * @param int    $installedSchemaVersion
+     * @param Array<int, string|callable|string[]|callable[]> $moduleRenameMigrations
+     * @param Array<int, string|callable|string[]|callable[]> $schemaMigrations
+     *
+     * @return Array<int, string[]|callable[]>
+     */
+    private function mergeSchemaMigrations(array $moduleRenameMigrations, array $schemaMigrations): array
+    {
+        $normalizedModuleRenameMigrations = $this->prepareMigrationsForRecursiveMerge($moduleRenameMigrations);
+        $normalizedSchemaMigrations = $this->prepareMigrationsForRecursiveMerge($schemaMigrations);
+
+        $mergedMigrations = \array_merge_recursive($normalizedModuleRenameMigrations, $normalizedSchemaMigrations);
+
+        return $this->normalizeMigrationsAfterRecursiveMerge($mergedMigrations);
+    }
+
+    /**
+     * @param Array<int, string[]|callable[]> $schemaUpdates
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
      */
-    protected function iterateOverSchemaUpdates(
-        $moduleName,
-        $schemaVersion,
+    private function iterateOverSchemaUpdates(
+        string $moduleName,
         array $schemaUpdates,
-        $installedSchemaVersion
+        int $installedSchemaVersion
     ): void {
-        foreach ($schemaUpdates as $schemaUpdateVersion => $queries) {
+        \ksort($schemaUpdates);
+
+        $latestSchemaVersion = array_key_last($schemaUpdates);
+
+        foreach ($schemaUpdates as $newSchemaVersion => $queries) {
             // Do schema updates only, if the current schema version is older then the new one
-            if ($installedSchemaVersion < $schemaUpdateVersion
-                && $schemaUpdateVersion <= $schemaVersion
+            if ($installedSchemaVersion < $newSchemaVersion
+                && $newSchemaVersion <= $latestSchemaVersion
                 && !empty($queries)
             ) {
-                $this->executeSqlQueries($this->forceSqlQueriesToArray($queries), $moduleName);
-                $this->updateSchemaVersion($moduleName, $schemaUpdateVersion);
+                $this->schemaHelper->executeSqlQueries($queries, $moduleName);
+                $this->updateSchemaVersion($moduleName, $newSchemaVersion);
             }
         }
     }
@@ -80,16 +94,45 @@ class SchemaUpdater extends SchemaHelper
     /**
      * Setzt die DB-Schema-Version auf die neue Versionsnummer.
      */
-    public function updateSchemaVersion(string $moduleName, int $schemaVersion): bool
+    private function updateSchemaVersion(string $moduleName, int $schemaVersion): bool
     {
-        return $this->getSystemModuleRepository()->update(['version' => $schemaVersion], ['name' => $moduleName]) !== false;
+        return $this->moduleAwareRepository->update(['version' => $schemaVersion], ['name' => $moduleName]) !== false;
     }
 
     /**
-     * @param string|array|callable $queries
+     * @param Array<int, string|callable|string[]|callable[]> $migrations
+     *
+     * @return Array<int, string[]|callable[]>
      */
-    protected function forceSqlQueriesToArray($queries): array
+    private function prepareMigrationsForRecursiveMerge(array $migrations): array
     {
-        return (\is_array($queries) === false) ? (array) $queries : $queries;
+        $migrationsNew = [];
+        foreach ($migrations as $schemaVersion => $queries) {
+            // We need to change the index to be non-numeric,
+            // as array_merge/array_merge_recursive doesn't preserve numeric key
+            $migrationsNew['index_' . $schemaVersion] = \is_array($queries) ? $queries : [$queries];
+        }
+
+        return $migrationsNew;
+    }
+
+    /**
+     * @param Array<string, string[]|callable[]> $migrations
+     *
+     * @return Array<int, string[]|callable[]>
+     */
+    private function normalizeMigrationsAfterRecursiveMerge(array $migrations): array
+    {
+        $migrationsNormalized = [];
+
+        foreach ($migrations as $schemaVersion => $queries) {
+            if (!\is_array($queries) || \strpos($schemaVersion, 'index_') !== 0) {
+                throw new \InvalidArgumentException('Please call method "prepareMigrationsForRecursiveMerge" before calling ' . __METHOD__ . '!');
+            }
+
+            $migrationsNormalized[(int) \substr($schemaVersion, 6)] = $queries;
+        }
+
+        return $migrationsNormalized;
     }
 }

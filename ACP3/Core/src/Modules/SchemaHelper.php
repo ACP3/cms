@@ -75,7 +75,7 @@ class SchemaHelper
 
         try {
             foreach ($queries as $query) {
-                if (\is_object($query) && ($query instanceof \Closure)) {
+                if (\is_callable($query)) {
                     if ($query() === false) {
                         throw new Core\Modules\Exception\ModuleMigrationException(\sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
                     }

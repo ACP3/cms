@@ -62,4 +62,6 @@ services:
   core.modules.schemaUpdater:
     class: ACP3\Core\Modules\SchemaUpdater
     public: true
-    parent: core.modules.schemaHelper
+    arguments:
+      - '@core.modules.schemaHelper'
+      - '@system.model.modulerepository'
