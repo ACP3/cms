@@ -28,6 +28,11 @@ abstract class AbstractBootstrap implements BootstrapInterface
     protected $appPath;
 
     /**
+     * @var bool
+     */
+    private $booted = false;
+
+    /**
      * @throws \Exception
      */
     public function __construct(string $appMode)
@@ -48,14 +53,27 @@ abstract class AbstractBootstrap implements BootstrapInterface
      */
     public function handle(SymfonyRequest $request, $type = self::MASTER_REQUEST, $catch = true)
     {
-        $this->setErrorHandler();
-        $this->initializeClasses($request);
+        $this->boot($request);
 
         /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
         $requestStack = $this->container->get('request_stack');
         $requestStack->push($request);
 
         return $this->outputPage();
+    }
+
+    private function boot(SymfonyRequest $request): void
+    {
+        if (true === $this->booted) {
+            return;
+        }
+
+        if (null === $this->container) {
+            $this->setErrorHandler();
+            $this->initializeClasses($request);
+        }
+
+        $this->booted = true;
     }
 
     /**

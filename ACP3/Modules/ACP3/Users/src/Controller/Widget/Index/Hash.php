@@ -29,18 +29,19 @@ class Hash extends AbstractWidgetAction
 
     public function execute(): Response
     {
+        $response = new Response();
         $accept = AcceptHeader::fromString($this->request->getSymfonyRequest()->headers->get('Accept'));
         if ($accept->has('application/vnd.fos.user-context-hash')) {
-            $this->response->setVary('Cookie, Authorization');
-            $this->response->setMaxAge(3600);
-            $this->response->headers->add([
+            $response->setVary('Cookie, Authorization');
+            $response->setMaxAge(3600);
+            $response->headers->add([
                 'Content-type' => 'application/vnd.fos.user-context-hash',
                 'X-User-Context-Hash' => $this->hashGenerator->generateHash(),
             ]);
         } else {
-            $this->response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
+            $response->setStatusCode(Response::HTTP_NOT_ACCEPTABLE);
         }
 
-        return $this->response;
+        return $response;
     }
 }
