@@ -70,7 +70,7 @@ module.exports = (gulp, plugins) => {
         for (const diffFile of diffSummary.files) {
             for (const [ componentPath, composerPackageName ] of componentMap) {
                 if (diffFile.file.indexOf(componentPath) === 0 && !changedComponents.has(composerPackageName)) {
-                    changedComponents.push(composerPackageName);
+                    changedComponents.add(composerPackageName);
                 }
             }
         }
