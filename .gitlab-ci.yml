@@ -15,33 +15,7 @@ stages:
   - test
   - release
 
-.php-base:
-  image: registry.gitlab.com/acp3/php-docker:7.2
-  only:
-    changes:
-      - '**/*.php'
-      - composer.json
-      - composer.lock
-      - tests/phpunit.dist.xml
-      - phpstan.neon.dist
-      - .php_cs.dist
-      - .gitlab-ci.yml
-
-.node-base:
-  image: node:lts-alpine
-  only:
-    changes:
-      - 'ACP3/**/*.js'
-      - 'design/**/*.js'
-      - 'installation/**/*.js'
-      - package.json
-      - package-lock.json
-      - .eslintignore
-      - .eslintrc.json
-      - .gitlab-ci.yml
-
 build:composer:
-  extends: .php-base
   image: composer:1
   stage: build
   cache:
@@ -54,9 +28,18 @@ build:composer:
   artifacts:
     paths:
       - vendor
+  only:
+    changes:
+      - '**/*.php'
+      - composer.json
+      - composer.lock
+      - tests/phpunit.dist.xml
+      - phpstan.neon.dist
+      - .php_cs.dist
+      - .gitlab-ci.yml
 
 build:npm:
-  extends: .node-base
+  image: node:lts-alpine
   stage: build
   cache:
     key: $CI_JOB_NAME-$CI_COMMIT_REF_NAME
@@ -69,9 +52,19 @@ build:npm:
   artifacts:
     paths:
       - node_modules
+  only:
+    changes:
+      - 'ACP3/**/*.js'
+      - 'design/**/*.js'
+      - 'installation/**/*.js'
+      - package.json
+      - package-lock.json
+      - .eslintignore
+      - .eslintrc.json
+      - .gitlab-ci.yml
 
 test:php72-unit:
-  extends: .php-base
+  image: registry.gitlab.com/acp3/php-docker:7.2
   stage: test
   cache:
     key: $CI_JOB_NAME-$CI_COMMIT_REF_NAME
@@ -87,6 +80,13 @@ test:php72-unit:
       - junit-report.xml
     reports:
       junit: junit-report.xml
+  only:
+    changes:
+      - '**/*.php'
+      - composer.json
+      - composer.lock
+      - tests/phpunit.dist.xml
+      - .gitlab-ci.yml
 
 test:php73-unit:
   extends: test:php72-unit
@@ -99,7 +99,7 @@ test:php74-unit:
   coverage: ~
 
 test:php-cs-fixer:
-  extends: .php-base
+  image: registry.gitlab.com/acp3/php-docker:7.2
   stage: test
   cache:
     key: $CI_JOB_NAME-$CI_COMMIT_REF_NAME
@@ -109,9 +109,16 @@ test:php-cs-fixer:
     - composer run-script lint
   needs:
     - build:composer
+  only:
+    changes:
+      - '**/*.php'
+      - composer.json
+      - composer.lock
+      - .php_cs.dist
+      - .gitlab-ci.yml
 
 test:phpstan:
-  extends: .php-base
+  image: registry.gitlab.com/acp3/php-docker:7.2
   stage: test
   cache:
     key: $CI_JOB_NAME-$CI_COMMIT_REF_NAME
@@ -121,9 +128,16 @@ test:phpstan:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse --no-progress
   needs:
     - build:composer
+  only:
+    changes:
+      - '**/*.php'
+      - composer.json
+      - composer.lock
+      - phpstan.neon.dist
+      - .gitlab-ci.yml
 
 test:eslint:
-  extends: .node-base
+  image: node:lts-alpine
   stage: test
   script:
     - npm run-script eslint
@@ -136,6 +150,9 @@ test:eslint:
       - 'installation/**/*.js'
       - package.json
       - package-lock.json
+      - .eslintignore
+      - .eslintrc.json
+      - .gitlab-ci.yml
 
 release:subtree-split:
   image: jderusse/gitsplit
@@ -162,7 +179,7 @@ release:subtree-split:
   needs: []
 
 release:generate-artifact:
-  extends: .php-base
+  image: registry.gitlab.com/acp3/php-docker:7.2
   stage: release
   script:
     - composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs
