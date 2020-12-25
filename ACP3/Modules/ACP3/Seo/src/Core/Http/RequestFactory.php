@@ -11,29 +11,26 @@ use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestFactory extends \ACP3\Core\Http\RequestFactory
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
-    protected $seoRepository;
+    private $seoRepository;
     /**
      * @var Modules
      */
     private $modules;
 
-    /**
-     * RequestFactory constructor.
-     */
     public function __construct(
         SettingsInterface $config,
         Modules $modules,
-        SymfonyRequest $symfonyRequest,
+        RequestStack $requestStack,
         SeoRepository $seoRepository
     ) {
-        parent::__construct($config, $symfonyRequest);
+        parent::__construct($config, $requestStack);
 
         $this->seoRepository = $seoRepository;
         $this->modules = $modules;
@@ -45,9 +42,9 @@ class RequestFactory extends \ACP3\Core\Http\RequestFactory
     protected function getRequest()
     {
         if ($this->modules->isActive(Schema::MODULE_NAME)) {
-            return new Request($this->symfonyRequest, $this->seoRepository);
+            return new Request($this->requestStack, $this->seoRepository);
         }
 
-        return new \ACP3\Core\Http\Request($this->symfonyRequest);
+        return parent::getRequest();
     }
 }

@@ -9,7 +9,7 @@ namespace ACP3\Core\Http;
 
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestFactory
 {
@@ -18,17 +18,14 @@ class RequestFactory
      */
     protected $config;
     /**
-     * @var Request
+     * @var \Symfony\Component\HttpFoundation\RequestStack
      */
-    protected $symfonyRequest;
+    protected $requestStack;
 
-    /**
-     * RequestFactory constructor.
-     */
-    public function __construct(SettingsInterface $config, SymfonyRequest $symfonyRequest)
+    public function __construct(SettingsInterface $config, RequestStack $requestStack)
     {
         $this->config = $config;
-        $this->symfonyRequest = $symfonyRequest;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -49,6 +46,6 @@ class RequestFactory
      */
     protected function getRequest()
     {
-        return new Request($this->symfonyRequest);
+        return new Request($this->requestStack);
     }
 }

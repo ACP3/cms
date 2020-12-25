@@ -51,6 +51,10 @@ abstract class AbstractBootstrap implements BootstrapInterface
         $this->setErrorHandler();
         $this->initializeClasses($request);
 
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = $this->container->get('request_stack');
+        $requestStack->push($request);
+
         return $this->outputPage();
     }
 

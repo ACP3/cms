@@ -25,14 +25,6 @@ class Request extends AbstractRequest
     protected $pathInfo = '';
 
     /**
-     * Request constructor.
-     */
-    public function __construct(\Symfony\Component\HttpFoundation\Request $symfonyRequest)
-    {
-        parent::__construct($symfonyRequest);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getQuery()
@@ -53,7 +45,7 @@ class Request extends AbstractRequest
      */
     public function getArea()
     {
-        return $this->symfonyRequest->attributes->get('_area');
+        return $this->getSymfonyRequest()->attributes->get('_area');
     }
 
     /**
@@ -61,7 +53,7 @@ class Request extends AbstractRequest
      */
     public function getModule()
     {
-        return $this->symfonyRequest->attributes->get('_module');
+        return $this->getSymfonyRequest()->attributes->get('_module');
     }
 
     /**
@@ -69,7 +61,7 @@ class Request extends AbstractRequest
      */
     public function getController()
     {
-        return $this->symfonyRequest->attributes->get('_controller');
+        return $this->getSymfonyRequest()->attributes->get('_controller');
     }
 
     /**
@@ -77,7 +69,7 @@ class Request extends AbstractRequest
      */
     public function getAction()
     {
-        return $this->symfonyRequest->attributes->get('_controllerAction');
+        return $this->getSymfonyRequest()->attributes->get('_controllerAction');
     }
 
     /**
@@ -124,11 +116,11 @@ class Request extends AbstractRequest
 
         // It's an request for the admin panel page
         if (\strpos($this->query, self::ADMIN_PANEL_PATTERN) === 0) {
-            $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_ADMIN);
+            $this->getSymfonyRequest()->attributes->set('_area', AreaEnum::AREA_ADMIN);
             // strip "acp/"
             $this->query = \substr($this->query, \strlen(self::ADMIN_PANEL_PATTERN));
         } elseif (\strpos($this->query, self::WIDGET_PATTERN) === 0) {
-            $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_WIDGET);
+            $this->getSymfonyRequest()->attributes->set('_area', AreaEnum::AREA_WIDGET);
 
             // strip "widget/"
             $this->query = \substr($this->query, \strlen(self::WIDGET_PATTERN));
@@ -137,7 +129,7 @@ class Request extends AbstractRequest
                 $this->query = \substr($this->query, \strlen(self::FRONTEND_PATTERN));
             }
 
-            $this->symfonyRequest->attributes->set('_area', AreaEnum::AREA_FRONTEND);
+            $this->getSymfonyRequest()->attributes->set('_area', AreaEnum::AREA_FRONTEND);
 
             // Set the user defined homepage of the website
             if ($this->query === '/' && $this->homepage !== '') {
@@ -156,19 +148,19 @@ class Request extends AbstractRequest
         $query = \preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 
         if (isset($query[0])) {
-            $this->symfonyRequest->attributes->set('_module', $query[0]);
+            $this->getSymfonyRequest()->attributes->set('_module', $query[0]);
         } else {
-            $this->symfonyRequest->attributes->set(
+            $this->getSymfonyRequest()->attributes->set(
                 '_module',
                 ($this->getArea() === AreaEnum::AREA_ADMIN) ? 'acp' : 'news'
             );
         }
 
-        $this->symfonyRequest->attributes->set(
+        $this->getSymfonyRequest()->attributes->set(
             '_controller',
             $query[1] ?? 'index'
         );
-        $this->symfonyRequest->attributes->set(
+        $this->getSymfonyRequest()->attributes->set(
             '_controllerAction',
             $query[2] ?? 'index'
         );
@@ -190,7 +182,7 @@ class Request extends AbstractRequest
      */
     public function getParameters()
     {
-        return $this->symfonyRequest->attributes;
+        return $this->getSymfonyRequest()->attributes;
     }
 
     /**
@@ -209,7 +201,7 @@ class Request extends AbstractRequest
         if ($pathInfo !== null) {
             $this->pathInfo = $pathInfo;
         } else {
-            $this->pathInfo = \substr($this->symfonyRequest->getPathInfo(), 1);
+            $this->pathInfo = \substr($this->getSymfonyRequest()->getPathInfo(), 1);
         }
 
         $this->pathInfo .= !\preg_match('/\/$/', $this->pathInfo) ? '/' : '';
@@ -222,23 +214,23 @@ class Request extends AbstractRequest
 
             for ($i = 3; $i < $cQuery; ++$i) {
                 if (\preg_match('/^(page_(\d+))$/', $query[$i])) { // Current page
-                    $this->symfonyRequest->attributes->add(['page' => (int) \substr($query[$i], 5)]);
+                    $this->getSymfonyRequest()->attributes->add(['page' => (int) \substr($query[$i], 5)]);
                 } elseif (\preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
-                    $this->symfonyRequest->attributes->add(['id' => (int) \substr($query[$i], 3)]);
+                    $this->getSymfonyRequest()->attributes->add(['id' => (int) \substr($query[$i], 3)]);
                 } elseif (\preg_match('/^(([a-zA-Z0-9\-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
                     $param = \explode('_', $query[$i], 2);
-                    $this->symfonyRequest->attributes->add([$param[0] => $param[1]]);
+                    $this->getSymfonyRequest()->attributes->add([$param[0] => $param[1]]);
                 }
             }
         }
 
-        $this->symfonyRequest->attributes->set(
+        $this->getSymfonyRequest()->attributes->set(
             'cat',
-            (int) $this->getPost()->get('cat', $this->symfonyRequest->attributes->get('cat'))
+            (int) $this->getPost()->get('cat', $this->getSymfonyRequest()->attributes->get('cat'))
         );
-        $this->symfonyRequest->attributes->set(
+        $this->getSymfonyRequest()->attributes->set(
             'action',
-            $this->getPost()->get('action', $this->symfonyRequest->attributes->get('action'))
+            $this->getPost()->get('action', $this->getSymfonyRequest()->attributes->get('action'))
         );
     }
 

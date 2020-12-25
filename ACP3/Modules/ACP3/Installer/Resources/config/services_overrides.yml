@@ -25,7 +25,7 @@ services:
   core.request_factory:
     class: ACP3\Modules\ACP3\Installer\Core\Http\RequestFactory
     arguments:
-      - '@core.http.symfony_request'
+      - '@request_stack'
       - '@core.config'
 
   core.modules.moduleInfoCache:

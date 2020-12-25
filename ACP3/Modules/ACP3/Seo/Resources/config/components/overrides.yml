@@ -22,7 +22,7 @@ services:
     arguments:
       - '@core.config'
       - '@core.modules'
-      - '@core.http.symfony_request'
+      - '@request_stack'
       - '@seo.model.seorepository'
 
   core.router:

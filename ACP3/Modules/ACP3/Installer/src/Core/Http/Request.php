@@ -18,6 +18,6 @@ class Request extends Core\Http\Request
     {
         parent::processQuery();
 
-        $this->symfonyRequest->attributes->set('_area', Core\Controller\AreaEnum::AREA_INSTALL);
+        $this->getSymfonyRequest()->attributes->set('_area', Core\Controller\AreaEnum::AREA_INSTALL);
     }
 }

@@ -75,6 +75,10 @@ class Bootstrap extends Core\Application\AbstractBootstrap
             $eventDispatcher->dispatch(new OutputPageExceptionEvent($e), 'core.output_page_exception');
 
             $response = $controllerActionDispatcher->dispatch('installer.controller.installer.error.server_error');
+        } finally {
+            /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+            $requestStack = $this->container->get('request_stack');
+            $requestStack->pop();
         }
 
         return $response;

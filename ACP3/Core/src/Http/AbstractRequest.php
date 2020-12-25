@@ -9,13 +9,14 @@ namespace ACP3\Core\Http;
 
 use ACP3\Core\Http\Request\UserAgent;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 abstract class AbstractRequest implements RequestInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var \Symfony\Component\HttpFoundation\RequestStack
      */
-    protected $symfonyRequest;
+    private $requestStack;
 
     /**
      * @var string
@@ -29,19 +30,16 @@ abstract class AbstractRequest implements RequestInterface
     /**
      * AbstractRequest constructor.
      */
-    public function __construct(SymfonyRequest $symfonyRequest)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->symfonyRequest = $symfonyRequest;
+        $this->requestStack = $requestStack;
 
         $this->fillParameterBags();
     }
 
-    /**
-     * @return SymfonyRequest
-     */
-    public function getSymfonyRequest()
+    public function getSymfonyRequest(): SymfonyRequest
     {
-        return $this->symfonyRequest;
+        return $this->requestStack->getCurrentRequest();
     }
 
     /**
@@ -49,7 +47,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function getScheme()
     {
-        return $this->symfonyRequest->getScheme();
+        return $this->getSymfonyRequest()->getScheme();
     }
 
     /**
@@ -57,7 +55,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function getHost()
     {
-        return $this->symfonyRequest->getHost();
+        return $this->getSymfonyRequest()->getHost();
     }
 
     /**
@@ -65,7 +63,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function getHttpHost()
     {
-        return $this->symfonyRequest->getHttpHost();
+        return $this->getSymfonyRequest()->getHttpHost();
     }
 
     /**
@@ -73,7 +71,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function isXmlHttpRequest()
     {
-        return $this->symfonyRequest->isXmlHttpRequest();
+        return $this->getSymfonyRequest()->isXmlHttpRequest();
     }
 
     /**
@@ -81,7 +79,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function getCookies()
     {
-        return $this->symfonyRequest->cookies;
+        return $this->getSymfonyRequest()->cookies;
     }
 
     /**
@@ -89,7 +87,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function getFiles()
     {
-        return $this->symfonyRequest->files;
+        return $this->getSymfonyRequest()->files;
     }
 
     /**
@@ -97,7 +95,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function getPost()
     {
-        return $this->symfonyRequest->request;
+        return $this->getSymfonyRequest()->request;
     }
 
     /**
@@ -105,7 +103,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     public function getServer()
     {
-        return $this->symfonyRequest->server;
+        return $this->getSymfonyRequest()->server;
     }
 
     /**
@@ -128,6 +126,6 @@ abstract class AbstractRequest implements RequestInterface
 
     protected function fillParameterBags()
     {
-        $this->userAgent = new UserAgent($this->symfonyRequest->server);
+        $this->userAgent = new UserAgent($this->getSymfonyRequest()->server);
     }
 }

@@ -19,7 +19,11 @@ services:
     class: ACP3\Core\Http\RequestFactory
     arguments:
       - '@core.config'
-      - '@core.http.symfony_request'
+      - '@request_stack'
 
   core.http.response:
     class: Symfony\Component\HttpFoundation\Response
+
+  request_stack:
+    class: Symfony\Component\HttpFoundation\RequestStack
+    public: true

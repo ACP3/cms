@@ -92,6 +92,10 @@ class Bootstrap extends AbstractBootstrap
             $eventDispatcher->dispatch(new OutputPageExceptionEvent($e), OutputPageExceptionEvent::NAME);
 
             throw $e;
+        } finally {
+            /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+            $requestStack = $this->container->get('request_stack');
+            $requestStack->pop();
         }
 
         return $response;

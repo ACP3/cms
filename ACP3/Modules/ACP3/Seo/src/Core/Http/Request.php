@@ -9,22 +9,20 @@ namespace ACP3\Modules\ACP3\Seo\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Request extends \ACP3\Core\Http\Request
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
-    protected $seoRepository;
+    private $seoRepository;
 
-    /**
-     * Request constructor.
-     */
     public function __construct(
-        \Symfony\Component\HttpFoundation\Request $symfonyRequest,
+        RequestStack $requestStack,
         SeoRepository $seoRepository
     ) {
-        parent::__construct($symfonyRequest);
+        parent::__construct($requestStack);
 
         $this->seoRepository = $seoRepository;
     }
@@ -43,7 +41,7 @@ class Request extends \ACP3\Core\Http\Request
      */
     protected function checkForUriAlias()
     {
-        list($params, $probableQuery) = $this->checkUriAliasForAdditionalParameters();
+        [$params, $probableQuery] = $this->checkUriAliasForAdditionalParameters();
 
         // Nachschauen, ob ein URI-Alias für die aktuelle Seite festgelegt wurde
         $alias = $this->seoRepository->getUriByAlias(\substr($probableQuery, 0, -1));
