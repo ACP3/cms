@@ -27,3 +27,8 @@ services:
   request_stack:
     class: Symfony\Component\HttpFoundation\RequestStack
     public: true
+
+  core.http.reset_request_listener:
+    class: ACP3\Core\Http\EventListener\ResetRequestListener
+    tags:
+      - { name: core.eventSubscriber }

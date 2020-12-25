@@ -35,8 +35,6 @@ class RequestFactory
     {
         $request = $this->getRequest();
         $request->setHomepage($this->config->getSettings(Schema::MODULE_NAME)['homepage']);
-        $request->setPathInfo();
-        $request->processQuery();
 
         return $request;
     }

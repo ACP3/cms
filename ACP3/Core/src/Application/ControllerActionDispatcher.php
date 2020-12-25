@@ -9,6 +9,7 @@ namespace ACP3\Core\Application;
 
 use ACP3\Core\Application\Event\ControllerActionAfterDispatchEvent;
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
+use ACP3\Core\Application\Event\ControllerActionRequestEvent;
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\Exception\ControllerActionNotFoundException;
 use ACP3\Core\Controller\InvokableActionInterface;
@@ -62,6 +63,11 @@ class ControllerActionDispatcher
      */
     public function dispatch(?string $serviceId = null, array $arguments = [])
     {
+        $this->eventDispatcher->dispatch(
+            new ControllerActionRequestEvent($this->request),
+            ControllerActionRequestEvent::NAME
+        );
+
         if (empty($serviceId)) {
             $serviceId = $this->buildControllerServiceId();
         } else {
