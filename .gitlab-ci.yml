@@ -17,25 +17,49 @@ stages:
 
 .php-base:
   image: registry.gitlab.com/acp3/php-docker:7.2
-  cache:
-    key: composer-$CI_COMMIT_REF_NAME
-    paths:
-      - ${COMPOSER_HOME}
-      - vendor
-      - .php_cs.cache
+  only:
+    changes:
+      - '**/*.php'
+      - composer.json
+      - composer.lock
+      - tests/phpunit.dist.xml
+      - phpstan.neon.dist
+      - .php_cs.dist
+      - .gitlab-ci.yml
+
+.node-base:
+  image: node:lts-alpine
+  only:
+    changes:
+      - 'ACP3/**/*.js'
+      - 'design/**/*.js'
+      - 'installation/**/*.js'
+      - package.json
+      - package-lock.json
+      - .eslintignore
+      - .eslintrc.json
+      - .gitlab-ci.yml
 
 build:composer:
   extends: .php-base
   image: composer:1
   stage: build
+  cache:
+    key: $CI_JOB_NAME-$CI_COMMIT_REF_NAME
+    paths:
+      - ${COMPOSER_HOME}
+      - vendor
   script:
     - composer install -n --prefer-dist
+  artifacts:
+    paths:
+      - vendor
 
 build:npm:
-  image: node:lts-alpine
+  extends: .node-base
   stage: build
   cache:
-    key: node-$CI_COMMIT_REF_NAME
+    key: $CI_JOB_NAME-$CI_COMMIT_REF_NAME
     paths:
       - ${npm_config_cache}
   before_script:
@@ -46,18 +70,8 @@ build:npm:
     paths:
       - node_modules
 
-.test:php-base:
-  extends: .php-base
-  only:
-    changes:
-      - '**/*.php'
-      - composer.json
-      - composer.lock
-      - tests/phpunit.dist.xml
-      - .gitlab-ci.yml
-
 test:php72-unit:
-  extends: .test:php-base
+  extends: .php-base
   stage: test
   cache:
     policy: pull
@@ -82,16 +96,20 @@ test:php74-unit:
   image: registry.gitlab.com/acp3/php-docker:7.4
   coverage: ~
 
-test:phpcs:
-  extends: .test:php-base
+test:php-cs-fixer:
+  extends: .php-base
   stage: test
+  cache:
+    key: $CI_JOB_NAME-$CI_COMMIT_REF_NAME
+    paths:
+      - .php_cs.cache
   script:
     - composer run-script lint
   needs:
     - build:composer
 
 test:phpstan:
-  extends: .test:php-base
+  extends: .php-base
   stage: test
   cache:
     policy: pull
@@ -101,13 +119,11 @@ test:phpstan:
     - build:composer
 
 test:eslint:
-  image: node:lts-alpine
+  extends: .node-base
   stage: test
   script:
     - npm run-script eslint
   needs:
-    - build:npm
-  dependencies:
     - build:npm
   only:
     changes:
