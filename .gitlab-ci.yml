@@ -74,7 +74,9 @@ test:php72-unit:
   extends: .php-base
   stage: test
   cache:
-    policy: pull
+    key: $CI_JOB_NAME-$CI_COMMIT_REF_NAME
+    paths:
+      - tests/.phpunit.result.cache
   script:
     - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never --log-junit junit-report.xml
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
@@ -112,7 +114,9 @@ test:phpstan:
   extends: .php-base
   stage: test
   cache:
-    policy: pull
+    key: $CI_JOB_NAME-$CI_COMMIT_REF_NAME
+    paths:
+      - .phpstan-cache
   script:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse --no-progress
   needs:
