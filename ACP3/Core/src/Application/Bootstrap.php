@@ -14,7 +14,6 @@ use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -30,29 +29,28 @@ class Bootstrap extends AbstractBootstrap
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function initializeClasses(SymfonyRequest $symfonyRequest): void
+    public function initializeClasses(): void
     {
         $file = $this->appPath->getCacheDir() . 'container.php';
         $cache = new ConfigCache($file, ($this->appMode === ApplicationMode::DEVELOPMENT));
 
-        $this->dumpContainer($symfonyRequest, $cache);
+        $this->dumpContainer($cache);
 
         require_once $cache->getPath();
 
         $this->container = new $this->containerName();
         $this->container->set('core.environment.application_path', $this->appPath);
-        $this->container->set('core.http.symfony_request', $symfonyRequest);
     }
 
     /**
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function dumpContainer(SymfonyRequest $symfonyRequest, ConfigCache $cache)
+    private function dumpContainer(ConfigCache $cache): void
     {
         if (!$cache->isFresh()) {
             $containerBuilder = ServiceContainerBuilder::create(
-                $this->appPath, $symfonyRequest
+                $this->appPath
             );
 
             $dumper = new PhpDumper($containerBuilder);

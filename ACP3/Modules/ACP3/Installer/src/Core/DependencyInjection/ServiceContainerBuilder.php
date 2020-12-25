@@ -18,7 +18,6 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
-use Symfony\Component\HttpFoundation\Request;
 
 final class ServiceContainerBuilder extends ContainerBuilder
 {
@@ -26,10 +25,6 @@ final class ServiceContainerBuilder extends ContainerBuilder
      * @var ApplicationPath
      */
     private $applicationPath;
-    /**
-     * @var Request
-     */
-    private $symfonyRequest;
     /**
      * @var string
      */
@@ -40,20 +35,16 @@ final class ServiceContainerBuilder extends ContainerBuilder
     private $isInstallingOrUpdating;
 
     /**
-     * ServiceContainerBuilder constructor.
-     *
      * @throws \Exception
      */
     public function __construct(
         ApplicationPath $applicationPath,
-        Request $symfonyRequest,
         string $applicationMode,
         bool $isInstallingOrUpdating = false
     ) {
         parent::__construct();
 
         $this->applicationPath = $applicationPath;
-        $this->symfonyRequest = $symfonyRequest;
         $this->applicationMode = $applicationMode;
         $this->isInstallingOrUpdating = $isInstallingOrUpdating;
 
@@ -66,7 +57,6 @@ final class ServiceContainerBuilder extends ContainerBuilder
     private function setUpContainer(): void
     {
         $this->set('core.environment.application_path', $this->applicationPath);
-        $this->set('core.http.symfony_request', $this->symfonyRequest);
 
         $this
             ->addCompilerPass(
@@ -121,16 +111,13 @@ final class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @return \ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder
-     *
      * @throws \Exception
      */
     public static function create(
         ApplicationPath $applicationPath,
-        Request $symfonyRequest,
         string $applicationMode,
         bool $isInstallingOrUpdating = false
     ): ServiceContainerBuilder {
-        return new static($applicationPath, $symfonyRequest, $applicationMode, $isInstallingOrUpdating);
+        return new ServiceContainerBuilder($applicationPath, $applicationMode, $isInstallingOrUpdating);
     }
 }

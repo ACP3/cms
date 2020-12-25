@@ -70,7 +70,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
 
         if (null === $this->container) {
             $this->setErrorHandler();
-            $this->initializeClasses($request);
+            $this->initializeClasses();
         }
 
         $this->booted = true;

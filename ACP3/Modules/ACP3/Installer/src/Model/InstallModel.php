@@ -86,7 +86,6 @@ class InstallModel
     {
         $this->container = ServiceContainerBuilder::create(
             $this->appPath,
-            $request->getSymfonyRequest(),
             $this->container->getParameter('core.environment'),
             true
         );

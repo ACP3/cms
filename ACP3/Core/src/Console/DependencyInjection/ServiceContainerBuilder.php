@@ -16,7 +16,6 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
-use Symfony\Component\HttpFoundation\Request;
 
 final class ServiceContainerBuilder extends ContainerBuilder
 {
@@ -49,9 +48,8 @@ final class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @throws \Exception
      */
-    private function setUpContainer()
+    private function setUpContainer(): void
     {
-        $this->set('core.http.symfony_request', Request::create(''));
         $this->set('core.logger.system_logger', $this->logger);
         $this->set('core.environment.application_path', $this->applicationPath);
 
@@ -83,13 +81,11 @@ final class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @return \ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder
-     *
      * @throws \Exception
      */
     public static function create(
         LoggerInterface $logger, ApplicationPath $applicationPath
-    ) {
-        return new static($logger, $applicationPath);
+    ): ServiceContainerBuilder {
+        return new ServiceContainerBuilder($logger, $applicationPath);
     }
 }

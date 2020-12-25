@@ -25,7 +25,6 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 final class ServiceContainerBuilder extends ContainerBuilder
 {
@@ -33,25 +32,16 @@ final class ServiceContainerBuilder extends ContainerBuilder
      * @var ApplicationPath
      */
     private $applicationPath;
-    /**
-     * @var SymfonyRequest
-     */
-    private $symfonyRequest;
 
     /**
-     * ServiceContainerBuilder constructor.
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function __construct(
-        ApplicationPath $applicationPath,
-        SymfonyRequest $symfonyRequest
-    ) {
+    public function __construct(ApplicationPath $applicationPath)
+    {
         parent::__construct();
 
         $this->applicationPath = $applicationPath;
-        $this->symfonyRequest = $symfonyRequest;
 
         $this->setUpContainer();
     }
@@ -65,7 +55,6 @@ final class ServiceContainerBuilder extends ContainerBuilder
     {
         $this->setProxyInstantiator(new RuntimeInstantiator());
 
-        $this->set('core.http.symfony_request', $this->symfonyRequest);
         $this->set('core.environment.application_path', $this->applicationPath);
 
         $this
@@ -111,15 +100,12 @@ final class ServiceContainerBuilder extends ContainerBuilder
     }
 
     /**
-     * @return \ACP3\Core\DependencyInjection\ServiceContainerBuilder
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public static function create(
-        ApplicationPath $applicationPath, SymfonyRequest $symfonyRequest
-    ): ServiceContainerBuilder {
-        return new static($applicationPath, $symfonyRequest);
+    public static function create(ApplicationPath $applicationPath): ServiceContainerBuilder
+    {
+        return new ServiceContainerBuilder($applicationPath);
     }
 
     private function registerCompilerPass(ComponentDataDto $moduleCoreData): void

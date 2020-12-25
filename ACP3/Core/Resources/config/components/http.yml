@@ -11,10 +11,6 @@ services:
     public: true
     factory: ['@core.http.request_factory', create]
 
-  core.http.symfony_request:
-    synthetic: true
-    public: true
-
   core.http.request_factory:
     class: ACP3\Core\Http\RequestFactory
     arguments:

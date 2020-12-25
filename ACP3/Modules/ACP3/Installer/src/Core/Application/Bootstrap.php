@@ -12,7 +12,6 @@ use ACP3\Core\Application\Event\OutputPageExceptionEvent;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class Bootstrap extends Core\Application\AbstractBootstrap
@@ -47,9 +46,9 @@ class Bootstrap extends Core\Application\AbstractBootstrap
      *
      * @throws \Exception
      */
-    public function initializeClasses(SymfonyRequest $symfonyRequest): void
+    public function initializeClasses(): void
     {
-        $this->container = ServiceContainerBuilder::create($this->appPath, $symfonyRequest, $this->appMode);
+        $this->container = ServiceContainerBuilder::create($this->appPath, $this->appMode);
     }
 
     /**
