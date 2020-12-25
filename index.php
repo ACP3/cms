@@ -41,6 +41,7 @@ HTML;
 
 $cacheStore = new Psr6Store([
     'cache_directory' => __DIR__ . '/cache/' . $appMode . '/http',
+    'generate_content_digests' => false,
 ]);
 
 $appCache = new BootstrapCache(
