@@ -25,17 +25,6 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     /**
      * {@inheritdoc}
      */
-    public function handle(SymfonyRequest $symfonyRequest, $type = self::MASTER_REQUEST, $catch = true)
-    {
-        $this->setErrorHandler();
-        $this->initializeClasses($symfonyRequest);
-
-        return $this->outputPage();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function isInstalled(): bool
     {
         // Standardzeitzone festlegen

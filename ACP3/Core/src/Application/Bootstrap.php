@@ -27,19 +27,6 @@ class Bootstrap extends AbstractBootstrap
     /**
      * {@inheritdoc}
      *
-     * @throws \Throwable
-     */
-    public function handle(SymfonyRequest $request, $type = self::MASTER_REQUEST, $catch = true)
-    {
-        $this->setErrorHandler();
-        $this->initializeClasses($request);
-
-        return $this->outputPage();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */

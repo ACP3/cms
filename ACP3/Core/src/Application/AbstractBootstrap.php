@@ -10,6 +10,7 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\ErrorHandler\ErrorHandler;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 abstract class AbstractBootstrap implements BootstrapInterface
 {
@@ -38,6 +39,19 @@ abstract class AbstractBootstrap implements BootstrapInterface
     protected function initializeApplicationPath()
     {
         $this->appPath = new ApplicationPath($this->appMode);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Throwable
+     */
+    public function handle(SymfonyRequest $request, $type = self::MASTER_REQUEST, $catch = true)
+    {
+        $this->setErrorHandler();
+        $this->initializeClasses($request);
+
+        return $this->outputPage();
     }
 
     /**
