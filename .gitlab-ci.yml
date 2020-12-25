@@ -159,12 +159,11 @@ release:subtree-split:
     - git fetch --prune --unshallow || git fetch --prune
     - gitsplit --ref "${CI_COMMIT_REF_NAME}"
   dependencies: []
+  needs: []
 
 release:generate-artifact:
   extends: .php-base
   stage: release
-  cache:
-    policy: pull
   script:
     - composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs
   artifacts:
@@ -191,4 +190,5 @@ release:generate-artifact:
       - README.md
   only:
     - tags
-  dependencies: []
+  dependencies:
+    - build:composer
