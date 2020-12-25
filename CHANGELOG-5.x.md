@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.8.0] - 2020-12-26
 ### Changed
 - reworked the `ACP3\Core\Helpers\Alerts::confirmBox` and `ACP3\Core\Helpers\Alerts::confirmBoxPost` so that they return the already rendered template
   - This allowed us to remove all the `*.delete.tpl`-templates
@@ -111,7 +111,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - removed all deprecated code
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.7.0...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.8.0...5.x
+[5.8.0]: https://gitlab.com/ACP3/cms/compare/v5.7.0...v5.8.0
 [5.7.0]: https://gitlab.com/ACP3/cms/compare/v5.6.0...v5.7.0
 [5.6.0]: https://gitlab.com/ACP3/cms/compare/v5.5.1...v5.6.0
 [5.5.1]: https://gitlab.com/ACP3/cms/compare/v5.5.0...v5.5.1
