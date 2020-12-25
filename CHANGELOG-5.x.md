@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- reworked the `ACP3\Core\Helpers\Alerts::confirmBox` and `ACP3\Core\Helpers\Alerts::confirmBoxPost` so that they return the already rendered template
+  - This allowed us to remove all the `*.delete.tpl`-templates
+- reworked the SchemaUpdater to be a little faster
+- optimized the bootstrapping process to that a sub request doesn't trigger a complete rebuild of the DI container anymore
+- optimized the inclusion of the reCaptcha assets, so that they are only loaded when really needed
+
+### Fixed
+- The update check event listener was called way to often. This has been fixed now
+
 ## [5.7.0] - 2020-12-22
 ### Added
 - added the `acp3/module-menus` as a hard dependency to the `acp3/theme-default`
