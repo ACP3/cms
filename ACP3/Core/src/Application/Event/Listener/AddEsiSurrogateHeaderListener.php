@@ -9,44 +9,41 @@ namespace ACP3\Core\Application\Event\Listener;
 
 use ACP3\Core\Application\Event\ControllerActionAfterDispatchEvent;
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class AddEsiSurrogateHeaderListener
+class AddEsiSurrogateHeaderListener implements EventSubscriberInterface
 {
-    /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * AddEsiSurrogateHeaderListener constructor.
-     */
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     public function __invoke(ControllerActionAfterDispatchEvent $event)
     {
         $response = $event->getResponse();
 
-        if ($this->isExcludedFromEsi($response)) {
+        if ($this->isExcludedFromEsi($event->getRequest(), $response)) {
             return;
         }
 
         $response->headers->set('Surrogate-Control', 'content="ESI/1.0"');
+
+        $event->setResponse($response);
+    }
+
+    private function isExcludedFromEsi(RequestInterface $request, Response $response): bool
+    {
+        return $request->getArea() === AreaEnum::AREA_WIDGET
+            || $response instanceof BinaryFileResponse
+            || $response instanceof StreamedResponse;
     }
 
     /**
-     * @return bool
+     * {@inheritDoc}
      */
-    private function isExcludedFromEsi(Response $response)
+    public static function getSubscribedEvents()
     {
-        return $this->request->getArea() === AreaEnum::AREA_WIDGET
-        || $response instanceof BinaryFileResponse
-        || $response instanceof StreamedResponse;
+        return [
+            ControllerActionAfterDispatchEvent::NAME => '__invoke',
+        ];
     }
 }

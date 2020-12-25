@@ -1,10 +1,8 @@
 services:
   core.application.event.add_esi_surrogate_header_listener:
     class: ACP3\Core\Application\Event\Listener\AddEsiSurrogateHeaderListener
-    arguments:
-    - '@core.http.request'
     tags:
-    - { name: core.eventListener, event: core.application.controller_action_dispatcher.after_dispatch }
+    - { name: core.eventSubscriber }
 
   core.application.event.add_template_variables_listener:
     class: ACP3\Core\Application\Event\Listener\AddTemplateVariablesListener

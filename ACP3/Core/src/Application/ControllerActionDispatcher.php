@@ -94,12 +94,13 @@ class ControllerActionDispatcher
             $controller->preDispatch();
             $response = $controller->display($this->executeControllerAction($controller, $arguments));
 
+            $afterDispatchEvent = new ControllerActionAfterDispatchEvent($normalizedServiceId, $this->request, $response);
             $this->eventDispatcher->dispatch(
-                new ControllerActionAfterDispatchEvent($normalizedServiceId, $response),
+                $afterDispatchEvent,
                 ControllerActionAfterDispatchEvent::NAME
             );
 
-            return $response;
+            return $afterDispatchEvent->getResponse();
         }
 
         throw new ControllerActionNotFoundException('Service-Id ' . $serviceId . ' was not found!');

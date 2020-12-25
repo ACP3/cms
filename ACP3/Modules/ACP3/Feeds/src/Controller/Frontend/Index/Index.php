@@ -58,16 +58,13 @@ class Index extends Core\Controller\AbstractFrontendAction
                     ->setDescription($this->translator->t($feed, $feed))
                     ->assign($feedItems);
 
-                $response = new Response($this->feedGenerator->generateFeed(), Response::HTTP_OK, [
-                    'Content-type' => 'text/xml',
-                ]);
-
                 $this->setCacheResponseCacheable(
-                    $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime'],
-                    $response
+                    $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']
                 );
 
-                return $response;
+                return new Response($this->feedGenerator->generateFeed(), Response::HTTP_OK, [
+                    'Content-type' => 'text/xml',
+                ]);
             } catch (\InvalidArgumentException $e) {
             }
         }

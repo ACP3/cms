@@ -11,16 +11,10 @@ use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
-use Symfony\Component\HttpFoundation\Response;
 
 trait CacheResponseTrait
 {
     abstract protected function getRequest(): RequestInterface;
-
-    /**
-     * @return Response
-     */
-    abstract protected function getResponse();
 
     /**
      * @return string
@@ -35,19 +29,13 @@ trait CacheResponseTrait
     /**
      * @param int $lifetime Cache TTL in seconds
      */
-    public function setCacheResponseCacheable(int $lifetime = 60, ?Response $response = null): void
+    public function setCacheResponseCacheable(int $lifetime = 60): void
     {
-        if ($this->canUsePageCache()) {
-            $varyHeaderName = 'X-User-Context-Hash';
-
-            ($response ?? $this->getResponse())
-                ->setVary($varyHeaderName)
-                ->setSharedMaxAge(1)
-                ->headers->add([
-                    $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
-                    'X-Reverse-Proxy-TTL' => $lifetime,
-                ]);
+        if (!$this->canUsePageCache()) {
+            return;
         }
+
+        $this->getRequest()->getSymfonyRequest()->attributes->set('_acp3_http_cache_ttl', $lifetime);
     }
 
     protected function canUsePageCache(): bool
