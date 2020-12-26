@@ -21,11 +21,11 @@ services:
     class: ACP3\Core\Application\Event\Listener\CheckMaintenanceModeListener
     arguments:
     - '@core.environment.application_path'
-    - '@core.http.request'
     - '@core.config'
+    - '@core.breadcrumb.title'
     - '@core.view'
     tags:
-    - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
+    - { name: core.eventSubscriber }
 
   core.application.event.check_permission_listener:
     class: ACP3\Core\Application\Event\Listener\CheckPermissionListener

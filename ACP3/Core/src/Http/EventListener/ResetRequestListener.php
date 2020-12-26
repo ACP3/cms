@@ -25,7 +25,7 @@ class ResetRequestListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ControllerActionRequestEvent::NAME => '__invoke',
+            ControllerActionRequestEvent::NAME => ['__invoke', 255],
         ];
     }
 }

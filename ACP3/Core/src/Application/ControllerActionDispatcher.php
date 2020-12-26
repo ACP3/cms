@@ -63,10 +63,15 @@ class ControllerActionDispatcher
      */
     public function dispatch(?string $serviceId = null, array $arguments = [])
     {
+        $controllerActionRequestEvent = new ControllerActionRequestEvent($this->request);
         $this->eventDispatcher->dispatch(
-            new ControllerActionRequestEvent($this->request),
+            $controllerActionRequestEvent,
             ControllerActionRequestEvent::NAME
         );
+
+        if ($controllerActionRequestEvent->hasResponse()) {
+            return $controllerActionRequestEvent->getResponse();
+        }
 
         if (empty($serviceId)) {
             $serviceId = $this->buildControllerServiceId();
