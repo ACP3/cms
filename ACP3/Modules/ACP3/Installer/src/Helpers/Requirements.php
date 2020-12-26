@@ -8,10 +8,12 @@
 namespace ACP3\Modules\ACP3\Installer\Helpers;
 
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Modules;
+use Composer\Semver\Comparator;
+use Composer\Semver\VersionParser;
 
 class Requirements
 {
-    private const REQUIRED_PHP_VERSION = '7.2.5';
     private const COLOR_ERROR = 'f00';
     private const COLOR_SUCCESS = '090';
     private const CLASS_ERROR = 'danger';
@@ -22,22 +24,37 @@ class Requirements
      * @var \ACP3\Core\I18n\Translator
      */
     private $translator;
+    /**
+     * @var \ACP3\Core\Modules
+     */
+    private $modules;
+    /**
+     * @var \Composer\Semver\VersionParser
+     */
+    private $versionParser;
 
-    public function __construct(Translator $translator)
+    public function __construct(Modules $modules, Translator $translator, VersionParser $versionParser)
     {
         $this->translator = $translator;
+        $this->modules = $modules;
+        $this->versionParser = $versionParser;
     }
 
     /**
      * Checks, whether the mandatory system requirements of the ACP3 are fulfilled.
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function checkMandatoryRequirements(): array
     {
+        $minimumPHPVersion = $this->getRequiredPHPVersion();
+
         $requirements = [];
         $requirements[0]['name'] = $this->translator->t('installer', 'php_version');
-        $requirements[0]['color'] = \version_compare(PHP_VERSION, self::REQUIRED_PHP_VERSION, '>=') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
+        $requirements[0]['color'] = Comparator::greaterThanOrEqualTo(PHP_VERSION, $minimumPHPVersion) ? self::COLOR_SUCCESS : self::COLOR_ERROR;
         $requirements[0]['found'] = PHP_VERSION;
-        $requirements[0]['required'] = self::REQUIRED_PHP_VERSION;
+        $requirements[0]['required'] = $minimumPHPVersion;
         $requirements[1]['name'] = $this->translator->t('installer', 'pdo_extension');
         $requirements[1]['color'] = \extension_loaded('pdo') && \extension_loaded('pdo_mysql') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
         $requirements[1]['found'] = $this->translator->t(
@@ -126,5 +143,45 @@ class Requirements
     private function fetchRequiredFilesAndDirectories(): array
     {
         return ['/ACP3/config.yml', '/cache/', '/uploads/', '/uploads/assets/'];
+    }
+
+    /**
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
+    private function getRequiredPHPVersion(): ?string
+    {
+        $modules = $this->modules->getAllModulesTopSorted();
+
+        $minimumPHPVersion = null;
+
+        foreach ($modules as $module) {
+            $composerJsonPath = $module['dir'] . '/composer.json';
+
+            if (!\is_file($composerJsonPath)) {
+                continue;
+            }
+
+            $composerJsoData = \json_decode(\file_get_contents($composerJsonPath), true);
+
+            if (!isset($composerJsoData['require']) || !\array_key_exists('php', $composerJsoData['require'])) {
+                continue;
+            }
+
+            $constraint = $this->versionParser->parseConstraints($composerJsoData['require']['php']);
+            $normalizedVersion = $constraint->getLowerBound()->getVersion();
+
+            if ($minimumPHPVersion === null) {
+                $minimumPHPVersion = $normalizedVersion;
+
+                continue;
+            }
+
+            if (Comparator::greaterThanOrEqualTo($normalizedVersion, $minimumPHPVersion)) {
+                $minimumPHPVersion = $normalizedVersion;
+            }
+        }
+
+        return $minimumPHPVersion;
     }
 }
