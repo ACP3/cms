@@ -90,6 +90,7 @@ services:
     arguments:
       - '@core.acl'
       - '@core.router'
+      - '@fragment.handler'
       - '%core.environment%'
     tags:
       - { name: smarty.plugin.function, pluginName: load_module }

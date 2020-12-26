@@ -8,42 +8,45 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Application\BootstrapCache\Esi;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Router\RouterInterface;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 class LoadModule extends AbstractFunction
 {
     /**
      * @var \ACP3\Core\ACL
      */
-    protected $acl;
+    private $acl;
     /**
      * @var RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var string
      */
-    protected $applicationMode;
-
+    private $applicationMode;
     /**
-     * LoadModule constructor.
+     * @var \Symfony\Component\HttpKernel\Fragment\FragmentHandler
      */
+    private $fragmentHandler;
+
     public function __construct(
         ACL $acl,
         RouterInterface $router,
+        FragmentHandler $fragmentHandler,
         string $applicationMode
     ) {
         $this->acl = $acl;
         $this->router = $router;
         $this->applicationMode = $applicationMode;
+        $this->fragmentHandler = $fragmentHandler;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         $pathArray = $this->convertPathToArray($params['module']);
         $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
@@ -56,10 +59,7 @@ class LoadModule extends AbstractFunction
         return $response;
     }
 
-    /**
-     * @return array
-     */
-    protected function convertPathToArray(string $resource)
+    protected function convertPathToArray(string $resource): array
     {
         $pathArray = \explode('/', \strtolower($resource));
 
@@ -73,10 +73,7 @@ class LoadModule extends AbstractFunction
         return $pathArray;
     }
 
-    /**
-     * @return array
-     */
-    protected function parseControllerActionArguments(array $arguments)
+    private function parseControllerActionArguments(array $arguments): array
     {
         if (isset($arguments['args']) && \is_array($arguments['args'])) {
             return $this->urlEncodeArguments($arguments['args']);
@@ -87,33 +84,29 @@ class LoadModule extends AbstractFunction
         return $this->urlEncodeArguments($arguments);
     }
 
-    /**
-     * @return array
-     */
-    protected function urlEncodeArguments(array $arguments)
+    private function urlEncodeArguments(array $arguments): array
     {
         return \array_map(
-            function ($item) {
+            static function ($item) {
                 return \urlencode($item);
             },
             $arguments
         );
     }
 
-    /**
-     * @return string
-     */
-    protected function esiInclude(string $path, array $arguments)
+    private function esiInclude(string $path, array $arguments): string
     {
         $routeArguments = '';
         foreach ($arguments as $key => $value) {
             $routeArguments .= '/' . $key . '_' . $value;
         }
 
-        return (new Esi())->renderIncludeTag(
+        return $this->fragmentHandler->render(
             $this->router->route($path . $routeArguments, true),
-            '',
-            $this->applicationMode === ApplicationMode::PRODUCTION
+            'esi',
+            [
+                'ignore_errors' => $this->applicationMode === ApplicationMode::PRODUCTION,
+            ]
         );
     }
 }

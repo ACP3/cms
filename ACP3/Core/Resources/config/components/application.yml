@@ -1,3 +1,6 @@
+parameters:
+  fragment_path: '/_fragment'
+
 services:
   core.application.controller_action_dispatcher:
     class: ACP3\Core\Application\ControllerActionDispatcher
@@ -10,3 +13,83 @@ services:
 
   core.application.argument_resolver:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
+
+  kernel:
+    synthetic: true
+    public: true
+
+  esi:
+    class: Symfony\Component\HttpKernel\HttpCache\Esi
+
+  esi_listener:
+    class: Symfony\Component\HttpKernel\EventListener\SurrogateListener
+    arguments:
+      - '@esi'
+    tags:
+      - { name: core.eventSubscriber }
+
+  fragment_listener:
+    class: Symfony\Component\HttpKernel\EventListener\FragmentListener
+    arguments:
+      - '@uri_signer'
+      - '%fragment_path%'
+    tags:
+      - { name: core.eventSubscriber }
+
+  streamed_response_listener:
+    class: Symfony\Component\HttpKernel\EventListener\StreamedResponseListener
+    tags:
+      - { name: core.eventSubscriber }
+
+  fragment.handler:
+    class: Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler
+    arguments:
+      - '@service_container'
+      - '@request_stack'
+
+  fragment.renderer.inline:
+    class: Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer
+    arguments:
+      - '@kernel'
+      - '@core.event_dispatcher'
+    calls:
+      - setFragmentPath: ['/_fragment']
+    tags:
+      - { name: kernel.fragment_renderer, alias: 'inline' }
+
+  fragment.renderer.esi:
+    class: Symfony\Component\HttpKernel\Fragment\EsiFragmentRenderer
+    arguments:
+      - '@esi'
+      - '@fragment.renderer.inline'
+    calls:
+      - setFragmentPath: ['%fragment_path%']
+    tags:
+      - { name: kernel.fragment_renderer, alias: 'esi' }
+
+  uri_signer:
+    class: Symfony\Component\HttpKernel\UriSigner
+    arguments:
+      - ''
+
+  http_cache_store_factory:
+    class: ACP3\Core\Application\BootstrapCache\Psr6StoreFactory
+    arguments:
+      - '@core.environment.application_path'
+
+  http_cache_store:
+    class: Toflar\Psr6HttpCacheStore\Psr6Store
+    factory: '@http_cache_store_factory'
+
+  http_cache_factory:
+    class: ACP3\Core\Application\HttpCacheFactory
+    arguments:
+      - '@kernel'
+      - '@http_cache_store'
+      - '@esi'
+      - '%core.environment%'
+
+  http_cache:
+    class: ACP3\Core\Application\BootstrapCache
+    public: true
+    factory: '@http_cache_factory'

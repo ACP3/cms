@@ -49,6 +49,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     public function initializeClasses(): void
     {
         $this->container = ServiceContainerBuilder::create($this->appPath, $this->appMode);
+        $this->container->set('kernel', $this);
     }
 
     /**

@@ -53,7 +53,13 @@ abstract class AbstractBootstrap implements BootstrapInterface
      */
     public function handle(SymfonyRequest $request, $type = self::MASTER_REQUEST, $catch = true)
     {
-        $this->boot($request);
+        if (!$this->booted) {
+            $this->boot();
+
+            if ($this->container->has('http_cache')) {
+                return $this->container->get('http_cache')->handle($request, $type, $catch);
+            }
+        }
 
         /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
         $requestStack = $this->container->get('request_stack');
@@ -62,18 +68,23 @@ abstract class AbstractBootstrap implements BootstrapInterface
         return $this->outputPage();
     }
 
-    private function boot(SymfonyRequest $request): void
+    private function boot(): void
     {
         if (true === $this->booted) {
             return;
         }
 
         if (null === $this->container) {
-            $this->setErrorHandler();
-            $this->initializeClasses();
+            $this->preBoot();
         }
 
         $this->booted = true;
+    }
+
+    private function preBoot(): void
+    {
+        $this->setErrorHandler();
+        $this->initializeClasses();
     }
 
     /**

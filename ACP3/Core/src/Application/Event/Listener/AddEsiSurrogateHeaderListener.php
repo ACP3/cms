@@ -8,33 +8,28 @@
 namespace ACP3\Core\Application\Event\Listener;
 
 use ACP3\Core\Application\Event\ControllerActionAfterDispatchEvent;
-use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 
 class AddEsiSurrogateHeaderListener implements EventSubscriberInterface
 {
+    /**
+     * @var \Symfony\Component\HttpKernel\HttpCache\SurrogateInterface
+     */
+    private $surrogate;
+
+    public function __construct(SurrogateInterface $surrogate)
+    {
+        $this->surrogate = $surrogate;
+    }
+
     public function __invoke(ControllerActionAfterDispatchEvent $event)
     {
         $response = $event->getResponse();
 
-        if ($this->isExcludedFromEsi($event->getRequest(), $response)) {
-            return;
-        }
-
-        $response->headers->set('Surrogate-Control', 'content="ESI/1.0"');
+        $this->surrogate->addSurrogateControl($response);
 
         $event->setResponse($response);
-    }
-
-    private function isExcludedFromEsi(RequestInterface $request, Response $response): bool
-    {
-        return $request->getArea() === AreaEnum::AREA_WIDGET
-            || $response instanceof BinaryFileResponse
-            || $response instanceof StreamedResponse;
     }
 
     /**

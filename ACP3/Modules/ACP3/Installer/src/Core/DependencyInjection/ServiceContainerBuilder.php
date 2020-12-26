@@ -18,6 +18,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+use Symfony\Component\HttpKernel\DependencyInjection\FragmentRendererPass;
 
 final class ServiceContainerBuilder extends ContainerBuilder
 {
@@ -69,7 +70,8 @@ final class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterSmartyPluginsPass())
             ->addCompilerPass(new RegisterControllerActionsPass())
             ->addCompilerPass(new RegisterValidationRulesPass())
-            ->addCompilerPass(new RegisterInstallersCompilerPass());
+            ->addCompilerPass(new RegisterInstallersCompilerPass())
+            ->addCompilerPass(new FragmentRendererPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
 
@@ -86,6 +88,8 @@ final class ServiceContainerBuilder extends ContainerBuilder
         if ($this->applicationMode === ApplicationMode::UPDATER) {
             $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_updater.yml');
         }
+
+        $this->removeDefinition('http_cache');
 
         $this->compile();
     }

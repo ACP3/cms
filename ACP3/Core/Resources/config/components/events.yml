@@ -1,8 +1,10 @@
 services:
   core.application.event.add_esi_surrogate_header_listener:
     class: ACP3\Core\Application\Event\Listener\AddEsiSurrogateHeaderListener
+    arguments:
+      - '@esi'
     tags:
-    - { name: core.eventSubscriber }
+      - { name: core.eventSubscriber }
 
   core.application.event.add_template_variables_listener:
     class: ACP3\Core\Application\Event\Listener\AddTemplateVariablesListener

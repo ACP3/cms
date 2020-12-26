@@ -40,6 +40,7 @@ class Bootstrap extends AbstractBootstrap
 
         $this->container = new $this->containerName();
         $this->container->set('core.environment.application_path', $this->appPath);
+        $this->container->set('kernel', $this);
     }
 
     /**
