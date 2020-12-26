@@ -28,13 +28,16 @@ class AccessForbidden extends Core\Controller\AbstractFrontendAction
         $this->breadcrumb = $breadcrumb;
     }
 
-    public function execute(): void
+    public function execute(): Response
     {
         $this->breadcrumb->append(
             $this->translator->t('errors', 'frontend_index_access_forbidden'),
             $this->request->getQuery()
         );
 
-        $this->response->setStatusCode(Response::HTTP_FORBIDDEN);
+        return new Response(
+            $this->view->fetchTemplate('Errors/Frontend/index.access_forbidden.tpl'),
+            Response::HTTP_FORBIDDEN
+        );
     }
 }

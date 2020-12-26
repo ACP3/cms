@@ -22,3 +22,10 @@ services:
 
   core.modules.helper.controllerActionExists:
     alias: core.controller.helper.controller_action_exists
+
+  core.controller.forward_controller_action_exception_error_listener:
+    class: ACP3\Core\Controller\EventListener\ForwardControllerActionExceptionErrorListener
+    arguments:
+      - '@core.application.controller_action_dispatcher'
+    tags:
+      - { name: core.eventSubscriber }

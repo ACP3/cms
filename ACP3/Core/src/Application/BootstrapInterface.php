@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Application;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -30,5 +31,5 @@ interface BootstrapInterface extends HttpKernelInterface
     /**
      * Handle the request and output the page.
      */
-    public function outputPage(): Response;
+    public function outputPage(Request $request, bool $catch): Response;
 }

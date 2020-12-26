@@ -14,8 +14,9 @@ use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\View;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class AddTemplateVariablesListener
+class AddTemplateVariablesListener implements EventSubscriberInterface
 {
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
@@ -110,5 +111,15 @@ class AddTemplateVariablesListener
                 break;
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            ControllerActionBeforeDispatchEvent::NAME => '__invoke',
+        ];
     }
 }

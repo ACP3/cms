@@ -9,8 +9,9 @@ namespace ACP3\Core\Application\Event\Listener;
 
 use ACP3\Core\Application\Event\OutputPageExceptionEvent;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class OnOutputPageExceptionListener
+class OnOutputPageExceptionListener implements EventSubscriberInterface
 {
     /**
      * @var \Psr\Log\LoggerInterface
@@ -25,5 +26,15 @@ class OnOutputPageExceptionListener
     public function __invoke(OutputPageExceptionEvent $event): void
     {
         $this->logger->error($event->getThrowable());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            OutputPageExceptionEvent::NAME => ['__invoke'],
+        ];
     }
 }

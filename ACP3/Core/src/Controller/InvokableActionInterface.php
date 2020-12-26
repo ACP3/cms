@@ -10,7 +10,7 @@ namespace ACP3\Core\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method array|Response|void|null __invoke(...$params = null)
+ * @method array|string|Response|void|null __invoke(...$params = null)
  */
 interface InvokableActionInterface extends ActionInterface
 {

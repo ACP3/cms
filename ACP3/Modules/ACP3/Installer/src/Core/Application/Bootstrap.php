@@ -8,11 +8,9 @@
 namespace ACP3\Modules\ACP3\Installer\Core\Application;
 
 use ACP3\Core;
-use ACP3\Core\Application\Event\OutputPageExceptionEvent;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
-use Symfony\Component\HttpFoundation\Response;
 
 class Bootstrap extends Core\Application\AbstractBootstrap
 {
@@ -50,37 +48,5 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     {
         $this->container = ServiceContainerBuilder::create($this->appPath, $this->appMode);
         $this->container->set('kernel', $this);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
-     * @throws \ReflectionException
-     */
-    public function outputPage(): Response
-    {
-        /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
-        $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
-
-        try {
-            $response = $controllerActionDispatcher->dispatch();
-        } catch (Core\Controller\Exception\ControllerActionNotFoundException $e) {
-            $response = $controllerActionDispatcher->dispatch('installer.controller.installer.error.not_found');
-        } catch (\Throwable $e) {
-            /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
-            $eventDispatcher = $this->container->get('core.event_dispatcher');
-
-            $eventDispatcher->dispatch(new OutputPageExceptionEvent($e), 'core.output_page_exception');
-
-            $response = $controllerActionDispatcher->dispatch('installer.controller.installer.error.server_error');
-        } finally {
-            /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
-            $requestStack = $this->container->get('request_stack');
-            $requestStack->pop();
-        }
-
-        return $response;
     }
 }

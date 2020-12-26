@@ -8,6 +8,7 @@
 namespace ACP3\Core\Authentication\Exception;
 
 use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class UnauthorizedAccessException extends \RuntimeException implements ForwardControllerActionAwareExceptionInterface
 {
@@ -19,10 +20,9 @@ class UnauthorizedAccessException extends \RuntimeException implements ForwardCo
     public function __construct(
         array $routeArguments = [],
         string $message = '',
-        int $code = 0,
         \Throwable $previous = null)
     {
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, Response::HTTP_UNAUTHORIZED, $previous);
 
         $this->routeArguments = $routeArguments;
     }

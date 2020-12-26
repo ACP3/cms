@@ -7,10 +7,13 @@
 
 namespace ACP3\Core\Application;
 
+use ACP3\Core\Application\Event\OutputPageExceptionEvent;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\ErrorHandler\ErrorHandler;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractBootstrap implements BootstrapInterface
 {
@@ -61,11 +64,7 @@ abstract class AbstractBootstrap implements BootstrapInterface
             }
         }
 
-        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
-        $requestStack = $this->container->get('request_stack');
-        $requestStack->push($request);
-
-        return $this->outputPage();
+        return $this->outputPage($request, $catch);
     }
 
     private function boot(): void
@@ -101,6 +100,49 @@ abstract class AbstractBootstrap implements BootstrapInterface
         }
 
         ErrorHandler::register($errorHandler);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Throwable
+     */
+    public function outputPage(Request $request, bool $catch): Response
+    {
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = $this->container->get('request_stack');
+
+        $requestStack->push($request);
+
+        /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
+        $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
+
+        try {
+            return $controllerActionDispatcher->dispatch();
+        } catch (\Throwable $e) {
+            if ($catch && $response = $this->handleException($e)) {
+                return $response;
+            }
+
+            throw $e;
+        } finally {
+            $requestStack->pop();
+        }
+    }
+
+    private function handleException(\Throwable $exception): ?Response
+    {
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+        $eventDispatcher = $this->container->get('core.event_dispatcher');
+
+        $outputPageExceptionEvent = new OutputPageExceptionEvent($exception);
+        $eventDispatcher->dispatch($outputPageExceptionEvent, OutputPageExceptionEvent::NAME);
+
+        if ($outputPageExceptionEvent->hasResponse()) {
+            return $outputPageExceptionEvent->getResponse();
+        }
+
+        return null;
     }
 
     /**

@@ -7,14 +7,16 @@
 
 namespace ACP3\Modules\ACP3\Installer\Event\Listener;
 
+use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\ExtractFromPathTrait;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class AddTemplatesVariablesListener
+class AddTemplateVariablesListener implements EventSubscriberInterface
 {
     use ExtractFromPathTrait;
 
@@ -69,6 +71,13 @@ class AddTemplatesVariablesListener
             'LANG_DIRECTION' => $this->translator->getDirection(),
             'LANG' => $this->translator->getShortIsoCode(),
             'LAYOUT' => $this->request->isXmlHttpRequest() ? 'layout.ajax.tpl' : 'layout.tpl',
+            'PAGE_TITLE' => $this->translator->t('installer', 'acp3_installation'),
+            'TITLE' => $this->translator->t(
+                $this->request->getModule(),
+                $this->request->getArea()
+                . '_' . $this->request->getController()
+                . '_' . $this->request->getAction()
+            ),
         ]);
     }
 
@@ -99,5 +108,15 @@ class AddTemplatesVariablesListener
     private function languagesDropdown(string $selectedLanguage): array
     {
         return $this->translator->getLanguagePacks($selectedLanguage);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            ControllerActionBeforeDispatchEvent::NAME => '__invoke',
+        ];
     }
 }

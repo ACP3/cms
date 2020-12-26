@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Application\Event;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class OutputPageExceptionEvent extends Event
@@ -18,6 +19,11 @@ class OutputPageExceptionEvent extends Event
      */
     private $throwable;
 
+    /**
+     * @var \Symfony\Component\HttpFoundation\Response
+     */
+    private $response;
+
     public function __construct(\Throwable $throwable)
     {
         $this->throwable = $throwable;
@@ -26,5 +32,20 @@ class OutputPageExceptionEvent extends Event
     public function getThrowable(): \Throwable
     {
         return $this->throwable;
+    }
+
+    public function getResponse(): Response
+    {
+        return $this->response;
+    }
+
+    public function hasResponse(): bool
+    {
+        return $this->response !== null;
+    }
+
+    public function setResponse(Response $response): void
+    {
+        $this->response = $response;
     }
 }

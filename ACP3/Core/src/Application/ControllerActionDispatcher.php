@@ -24,6 +24,7 @@ class ControllerActionDispatcher
     private const ACTION_METHOD_INVOKABLE = '__invoke';
     private const ACTION_METHOD_DEFAULT = 'execute';
     private const ACTION_METHOD_POST = 'executePost';
+    private const POST_SERVICE_ID_SUFFIX = '_post';
 
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
@@ -55,13 +56,11 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @return Response|string
-     *
      * @throws ControllerActionNotFoundException
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ReflectionException
      */
-    public function dispatch(?string $serviceId = null, array $arguments = [])
+    public function dispatch(?string $serviceId = null, array $arguments = []): Response
     {
         $controllerActionRequestEvent = new ControllerActionRequestEvent($this->request);
         $this->eventDispatcher->dispatch(
@@ -80,14 +79,16 @@ class ControllerActionDispatcher
         }
 
         if ($this->shouldUsePostAction($serviceId)) {
-            $serviceId .= '_post';
+            $serviceId .= self::POST_SERVICE_ID_SUFFIX;
         }
 
         if ($this->container->has($serviceId)) {
             $normalizedServiceId = $serviceId;
 
-            if (\substr($serviceId, -5) === '_post') {
-                $normalizedServiceId = \substr($serviceId, 0, -5);
+            $suffixLengthOffset = \strlen(self::POST_SERVICE_ID_SUFFIX) * -1;
+
+            if (\substr($serviceId, $suffixLengthOffset) === self::POST_SERVICE_ID_SUFFIX) {
+                $normalizedServiceId = \substr($serviceId, 0, $suffixLengthOffset);
             }
             $this->eventDispatcher->dispatch(
                 new ControllerActionBeforeDispatchEvent($normalizedServiceId),
@@ -135,7 +136,7 @@ class ControllerActionDispatcher
 
     private function shouldUsePostAction(?string $serviceId): bool
     {
-        return $this->container->has($serviceId . '_post')
+        return $this->container->has($serviceId . self::ACTION_METHOD_POST)
             && $this->request->getSymfonyRequest()->isMethod('POST')
             && ($this->request->getPost()->has('submit') || $this->request->getPost()->has('continue'));
     }
@@ -154,7 +155,7 @@ class ControllerActionDispatcher
             try {
                 $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
             } catch (\RuntimeException $e) {
-                throw new ControllerActionNotFoundException($e->getMessage(), 0, $e);
+                throw new ControllerActionNotFoundException($e->getMessage(), $e);
             }
         }
 

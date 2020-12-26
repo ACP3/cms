@@ -116,15 +116,5 @@ abstract class AbstractInstallerAction implements ActionInterface
      */
     protected function addCustomTemplateVarsBeforeOutput()
     {
-        $this->view->assign('PAGE_TITLE', $this->translator->t('installer', 'acp3_installation'));
-        $this->view->assign(
-            'TITLE',
-            $this->translator->t(
-                $this->request->getModule(),
-                $this->request->getArea()
-                . '_' . $this->request->getController()
-                . '_' . $this->request->getAction()
-            )
-        );
     }
 }

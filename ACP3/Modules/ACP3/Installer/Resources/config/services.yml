@@ -5,24 +5,13 @@ parameters:
   core.environment: !php/const ACP3\Core\Environment\ApplicationMode::INSTALLER
 
 services:
-  installer.event.listener.add_template_variables_listener:
-    class: ACP3\Modules\ACP3\Installer\Event\Listener\AddTemplatesVariablesListener
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.environment.theme'
-      - '@core.i18n.translator'
-      - '@core.view'
-      - '@core.http.request'
-    tags:
-      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
-
   installer.event.listener.on_language_change_listener:
     class: ACP3\Modules\ACP3\Installer\Event\Listener\OnLanguageChangeListener
     arguments:
-      - '@core.http.request'
+      - '@core.environment.application_path'
       - '@core.http.redirect_response'
     tags:
-      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
+      - { name: core.eventSubscriber }
 
   core.context.install:
     class: ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext

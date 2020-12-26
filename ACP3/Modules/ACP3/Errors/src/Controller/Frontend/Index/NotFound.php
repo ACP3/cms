@@ -28,13 +28,16 @@ class NotFound extends Core\Controller\AbstractFrontendAction
         $this->breadcrumb = $breadcrumb;
     }
 
-    public function execute(): void
+    public function execute(): Response
     {
         $this->breadcrumb->append(
             $this->translator->t('errors', 'frontend_index_not_found'),
             $this->request->getQuery()
         );
 
-        $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
+        return new Response(
+            $this->view->fetchTemplate('Errors/Frontend/index.not_found.tpl'),
+            Response::HTTP_NOT_FOUND
+        );
     }
 }

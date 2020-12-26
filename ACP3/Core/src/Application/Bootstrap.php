@@ -7,13 +7,10 @@
 
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Application\Event\OutputPageExceptionEvent;
-use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
 use ACP3\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Bootstraps the application.
@@ -62,39 +59,6 @@ class Bootstrap extends AbstractBootstrap
                 $containerBuilder->getResources()
             );
         }
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \Throwable
-     */
-    public function outputPage(): Response
-    {
-        /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
-        $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
-
-        try {
-            /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
-            $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
-
-            $response = $controllerActionDispatcher->dispatch();
-        } catch (ForwardControllerActionAwareExceptionInterface $e) {
-            $response = $controllerActionDispatcher->dispatch($e->getServiceId(), $e->routeParams());
-        } catch (\Throwable $e) {
-            /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
-            $eventDispatcher = $this->container->get('core.event_dispatcher');
-
-            $eventDispatcher->dispatch(new OutputPageExceptionEvent($e), OutputPageExceptionEvent::NAME);
-
-            throw $e;
-        } finally {
-            /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
-            $requestStack = $this->container->get('request_stack');
-            $requestStack->pop();
-        }
-
-        return $response;
     }
 
     /**

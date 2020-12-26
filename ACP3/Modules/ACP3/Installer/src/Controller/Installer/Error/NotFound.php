@@ -12,8 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NotFound extends AbstractInstallerAction
 {
-    public function execute(): void
+    public function execute(): Response
     {
-        $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
+        return new Response(
+            $this->view->fetchTemplate('Installer/Installer/error.not_found.tpl'),
+            Response::HTTP_NOT_FOUND
+        );
     }
 }

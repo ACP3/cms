@@ -34,9 +34,6 @@ class ControllerActionRequestEvent extends Event
         return $this->request;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function getResponse(): Response
     {
         return $this->response;
@@ -47,9 +44,6 @@ class ControllerActionRequestEvent extends Event
         return $this->response !== null;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     */
     public function setResponse(Response $response): void
     {
         $this->response = $response;

@@ -15,7 +15,7 @@ services:
     - '@core.view'
     - '@core.i18n.translator'
     tags:
-    - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
+    - { name: core.eventSubscriber }
 
   core.application.event.check_maintenance_mode_listener:
     class: ACP3\Core\Application\Event\Listener\CheckMaintenanceModeListener
@@ -32,11 +32,11 @@ services:
     arguments:
     - '@core.acl'
     tags:
-    - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
+    - { name: core.eventSubscriber }
 
   core.application.event.on_output_page_listener:
     class: ACP3\Core\Application\Event\Listener\OnOutputPageExceptionListener
     arguments:
       - '@core.logger.system_logger'
     tags:
-      - { name: core.eventListener, event: core.output_page_exception }
+      - { name: core.eventSubscriber }

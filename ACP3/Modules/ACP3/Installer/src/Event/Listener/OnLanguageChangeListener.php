@@ -7,40 +7,61 @@
 
 namespace ACP3\Modules\ACP3\Installer\Event\Listener;
 
+use ACP3\Core\Application\Event\ControllerActionRequestEvent;
 use ACP3\Core\Http\RedirectResponse;
-use ACP3\Core\Http\RequestInterface;
+use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 
-class OnLanguageChangeListener
+class OnLanguageChangeListener implements EventSubscriberInterface
 {
-    /**
-     * @var RequestInterface
-     */
-    private $request;
     /**
      * @var RedirectResponse
      */
     private $redirect;
-
     /**
-     * OnFrontControllerBeforeDispatchListener constructor.
+     * @var \ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath
      */
+    private $applicationPath;
+
     public function __construct(
-        RequestInterface $request,
+        ApplicationPath $applicationPath,
         RedirectResponse $redirect
     ) {
-        $this->request = $request;
         $this->redirect = $redirect;
+        $this->applicationPath = $applicationPath;
     }
 
     /**
      * If the language has been changed, set a cookie with the new default language and force a page reload.
      */
-    public function __invoke()
+    public function __invoke(ControllerActionRequestEvent $event): void
     {
-        if ($this->request->getPost()->has('lang')) {
-            \setcookie('ACP3_INSTALLER_LANG', $this->request->getPost()->get('lang', ''), \time() + 3600, '/');
-            $this->redirect->temporary($this->request->getFullPath())->send();
-            exit;
+        $request = $event->getRequest();
+
+        if ($request->getPost()->has('lang')) {
+            $response = $this->redirect->toNewPage($this->applicationPath->getPhpSelf() . '/' . $request->getFullPath());
+
+            $response->headers->setCookie(
+                new Cookie(
+                    'ACP3_INSTALLER_LANG',
+                    $request->getPost()->get('lang', ''),
+                    \time() + 3600,
+                    '/'
+                )
+            );
+
+            $event->setResponse($response);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            ControllerActionRequestEvent::NAME => '__invoke',
+        ];
     }
 }

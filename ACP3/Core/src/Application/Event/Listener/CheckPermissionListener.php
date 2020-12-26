@@ -11,8 +11,9 @@ use ACP3\Core\ACL;
 use ACP3\Core\ACL\Exception\AccessForbiddenException;
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Controller\AreaEnum;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class CheckPermissionListener
+class CheckPermissionListener implements EventSubscriberInterface
 {
     /**
      * @var \ACP3\Core\ACL
@@ -38,5 +39,15 @@ class CheckPermissionListener
         if ($this->acl->hasPermission($path) === false) {
             throw new AccessForbiddenException(\sprintf('Access forbidden for controller action "%s"', $path));
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            ControllerActionBeforeDispatchEvent::NAME => '__invoke',
+        ];
     }
 }

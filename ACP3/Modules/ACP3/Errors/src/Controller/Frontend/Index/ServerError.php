@@ -28,13 +28,16 @@ class ServerError extends Core\Controller\AbstractFrontendAction
         $this->breadcrumb = $breadcrumb;
     }
 
-    public function execute(): void
+    public function execute(): Response
     {
         $this->breadcrumb->append(
             $this->translator->t('errors', 'frontend_index_server_error'),
             $this->request->getQuery()
         );
 
-        $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new Response(
+            $this->view->fetchTemplate('Errors/Frontend/index.server_error.tpl'),
+            Response::HTTP_INTERNAL_SERVER_ERROR
+        );
     }
 }

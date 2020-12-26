@@ -47,7 +47,7 @@ class Image extends Core\Controller\AbstractFrontendAction
         try {
             return new RedirectResponse($this->thumbnailGenerator->generateThumbnail($picture, $action)->getFileWeb());
         } catch (Core\Picture\Exception\PictureGenerateException $e) {
-            throw new Core\Controller\Exception\ResultNotExistsException('', 0, $e);
+            throw new Core\Controller\Exception\ResultNotExistsException('', $e);
         }
     }
 }

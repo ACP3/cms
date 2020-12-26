@@ -12,8 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ServerError extends AbstractInstallerAction
 {
-    public function execute(): void
+    public function execute(): Response
     {
-        $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new Response(
+            $this->view->fetchTemplate('Installer/Installer/error.not_found.tpl'),
+            Response::HTTP_INTERNAL_SERVER_ERROR
+        );
     }
 }

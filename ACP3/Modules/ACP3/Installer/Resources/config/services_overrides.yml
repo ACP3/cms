@@ -2,6 +2,17 @@ parameters:
   cache_driver: 'Array'
 
 services:
+  core.application.event.add_template_variables_listener:
+    class: ACP3\Modules\ACP3\Installer\Event\Listener\AddTemplateVariablesListener
+    arguments:
+      - '@core.environment.application_path'
+      - '@core.environment.theme'
+      - '@core.i18n.translator'
+      - '@core.view'
+      - '@core.http.request'
+    tags:
+      - { name: core.eventSubscriber }
+
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb\Steps
     arguments:
@@ -16,6 +27,15 @@ services:
     arguments:
       - '@core.breadcrumb'
       - '@core.event_dispatcher'
+
+  core.controller.decorating_forward_controller_action_exception_error_listener:
+    class: ACP3\Modules\ACP3\Installer\Core\Controller\EventListener\DecoratingForwardControllerActionExceptionErrorListener
+    decorates: 'core.controller.forward_controller_action_exception_error_listener'
+    arguments:
+      - '@core.application.controller_action_dispatcher'
+      - '@core.controller.decorating_forward_controller_action_exception_error_listener.inner'
+    tags:
+      - { name: core.eventSubscriber }
 
   core.http.request:
     class: ACP3\Modules\ACP3\Installer\Core\Http\Request
@@ -57,6 +77,15 @@ services:
     class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead
     tags:
       - { name: smarty.plugin.filter, filterType: output }
+
+  errors.event_listener.handle_generic_errors_exception_listener:
+    class: ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener
+    arguments:
+      - '@core.application.controller_action_dispatcher'
+      - '%core.environment%'
+      - 'installer.controller.installer.error.server_error'
+    tags:
+      - { name: core.eventSubscriber }
 
   users.model.user_model:
     class: ACP3\Modules\ACP3\Users\Model\UserModel
