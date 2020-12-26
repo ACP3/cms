@@ -53,7 +53,7 @@ services:
       - '@kernel'
       - '@core.event_dispatcher'
     calls:
-      - setFragmentPath: ['/_fragment']
+      - setFragmentPath: ['%fragment_path%']
     tags:
       - { name: kernel.fragment_renderer, alias: 'inline' }
 
