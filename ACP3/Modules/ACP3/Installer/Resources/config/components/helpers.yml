@@ -5,7 +5,6 @@ services:
   installer.helpers.requirements:
     class: ACP3\Modules\ACP3\Installer\Helpers\Requirements
     arguments:
-      - '@core.environment.application_path'
       - '@core.i18n.translator'
 
   installer.helpers.module_installer:

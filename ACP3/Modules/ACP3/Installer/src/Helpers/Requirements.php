@@ -7,7 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Installer\Helpers;
 
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\I18n\Translator;
 
 class Requirements
@@ -20,31 +19,19 @@ class Requirements
     private const CLASS_WARNING = 'warning';
 
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
 
-    /**
-     * Requirements constructor.
-     */
-    public function __construct(
-        ApplicationPath $appPath,
-        Translator $translator
-    ) {
-        $this->appPath = $appPath;
+    public function __construct(Translator $translator)
+    {
         $this->translator = $translator;
     }
 
     /**
      * Checks, whether the mandatory system requirements of the ACP3 are fulfilled.
-     *
-     * @return array
      */
-    public function checkMandatoryRequirements()
+    public function checkMandatoryRequirements(): array
     {
         $requirements = [];
         $requirements[0]['name'] = $this->translator->t('installer', 'php_version');
@@ -81,10 +68,8 @@ class Requirements
 
     /**
      * Checks, whether all mandatory files and folders exist and have the correct permissions set.
-     *
-     * @return array
      */
-    public function checkFolderAndFilePermissions()
+    public function checkFolderAndFilePermissions(): array
     {
         $defaults = $this->fetchRequiredFilesAndDirectories();
         $requiredFilesAndDirs = [];
@@ -103,10 +88,7 @@ class Requirements
         return [$requiredFilesAndDirs, $checkAgain];
     }
 
-    /**
-     * @return array
-     */
-    public function checkOptionalRequirements()
+    public function checkOptionalRequirements(): array
     {
         return [
             [
@@ -117,12 +99,7 @@ class Requirements
         ];
     }
 
-    /**
-     * @param string $fileOrDirectory
-     *
-     * @return array
-     */
-    private function requiredFileOrFolderHasPermission($fileOrDirectory)
+    private function requiredFileOrFolderHasPermission(string $fileOrDirectory): array
     {
         $result = [];
         $result['path'] = $fileOrDirectory;
