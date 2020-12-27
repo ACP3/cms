@@ -20,7 +20,6 @@
     "acp3/module-system": "^5.8.0",
     "acp3/module-users": "^5.8.0",
     "acp3/theme-installer": "^5.5.0",
-    "composer/composer": "^1 || ^2",
     "composer/semver": "^3.2"
   },
   "autoload": {
