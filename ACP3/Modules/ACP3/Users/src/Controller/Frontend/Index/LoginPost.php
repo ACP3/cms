@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Users;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
@@ -47,7 +47,7 @@ class LoginPost extends Core\Controller\AbstractFrontendAction implements Core\C
     }
 
     /**
-     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\DBALException
      */

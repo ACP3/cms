@@ -93,10 +93,7 @@ class Action
         }
     }
 
-    /**
-     * @return array|Response
-     */
-    public function renderErrorBoxOnFailedFormValidation(\Exception $exception)
+    public function renderErrorBoxOnFailedFormValidation(\Exception $exception): Response
     {
         $errors = $this->alerts->errorBox($exception->getMessage());
 
