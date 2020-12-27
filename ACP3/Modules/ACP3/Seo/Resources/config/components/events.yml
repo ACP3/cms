@@ -43,8 +43,9 @@ services:
       - '@core.config'
       - '@seo.utility.sitemap_availability_registrar'
       - '@seo.model.sitemap_generation_model'
+      - '@request_stack'
     tags:
-      - { name: core.eventListener, event: core.model.after_save, priority: -255 }
+      - { name: core.eventSubscriber }
 
   seo.event.insert_uri_alias_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\InsertUriAliasOnModelAfterSaveListener
