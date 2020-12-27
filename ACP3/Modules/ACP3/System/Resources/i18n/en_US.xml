@@ -29,9 +29,6 @@
         <item key="cache_type_general">General Modules-Cache (Modules, Database queries, paths to static ressources)</item>
         <item key="cache_type_general_delete_error">While emptying the Modules-Cache an error has occurred.</item>
         <item key="cache_type_general_delete_success">The Modules-Cache has been successfully emptied.</item>
-        <item key="cache_type_images">Cached images</item>
-        <item key="cache_type_images_delete_error">While emptying the Image-Cache an error has occurred.</item>
-        <item key="cache_type_images_delete_success">The Image-Cache has been successfully emptied.</item>
         <item key="cache_type_minify">Cached Stylesheets and JavaScript files</item>
         <item key="cache_type_minify_delete_error">While emptying the Stylesheets and JavaScript files cache an error has occurred.</item>
         <item key="cache_type_minify_delete_success">The Stylesheets and JavaScript files cache has been successfully emptied.</item>

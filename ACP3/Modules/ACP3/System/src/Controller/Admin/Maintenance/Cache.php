@@ -40,7 +40,6 @@ class Cache extends Core\Controller\AbstractFrontendAction
         return [
             'cache_types' => [
                 'general',
-                'images',
                 'minify',
                 'page',
                 'templates',
@@ -58,7 +57,6 @@ class Cache extends Core\Controller\AbstractFrontendAction
                 $this->appPath->getCacheDir() . 'http',
                 $this->appPath->getCacheDir() . 'sql',
             ],
-            'images' => $this->appPath->getCacheDir() . 'images',
             'minify' => $this->appPath->getUploadsDir() . 'assets',
             'page' => $this->appPath->getCacheDir() . 'http',
             'templates' => [
@@ -69,7 +67,6 @@ class Cache extends Core\Controller\AbstractFrontendAction
         $result = false;
         switch ($action) {
             case 'general':
-            case 'images':
             case 'minify':
             case 'page':
             case 'templates':
