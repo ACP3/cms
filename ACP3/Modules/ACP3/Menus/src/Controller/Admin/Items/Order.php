@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
+use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Order extends Core\Controller\AbstractFrontendAction
 {
@@ -28,13 +29,18 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirectResponse;
+    /**
+     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     */
+    private $httpCacheStore;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Http\RedirectResponse $redirectResponse,
         Core\NestedSet\Operation\Sort $sortOperation,
         Menus\Model\Repository\MenuItemRepository $menuItemRepository,
-        Menus\Cache $menusCache
+        Menus\Cache $menusCache,
+        Psr6Store $httpCacheStore
     ) {
         parent::__construct($context);
 
@@ -42,24 +48,22 @@ class Order extends Core\Controller\AbstractFrontendAction
         $this->menusCache = $menusCache;
         $this->sortOperation = $sortOperation;
         $this->redirectResponse = $redirectResponse;
+        $this->httpCacheStore = $httpCacheStore;
     }
 
     /**
-     * @param int    $id
-     * @param string $action
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute($id, $action)
+    public function execute(int $id, string $action)
     {
         if ($this->menuItemRepository->menuItemExists($id) === true) {
             $this->sortOperation->execute($id, $action);
 
             $this->menusCache->saveMenusCache();
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+            $this->httpCacheStore->clear();
 
             return $this->redirectResponse->temporary('acp/menus');
         }

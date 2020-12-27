@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Order extends Core\Controller\AbstractFrontendAction
 {
@@ -24,18 +25,24 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirectResponse;
+    /**
+     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     */
+    private $httpCacheStore;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Http\RedirectResponse $redirectResponse,
         Core\NestedSet\Operation\Sort $sortOperation,
-        CategoryRepository $categoriesRepository
+        CategoryRepository $categoriesRepository,
+        Psr6Store $httpCacheStore
     ) {
         parent::__construct($context);
 
         $this->categoriesRepository = $categoriesRepository;
         $this->sortOperation = $sortOperation;
         $this->redirectResponse = $redirectResponse;
+        $this->httpCacheStore = $httpCacheStore;
     }
 
     /**
@@ -49,7 +56,7 @@ class Order extends Core\Controller\AbstractFrontendAction
         if ($this->categoriesRepository->resultExists($id) === true) {
             $this->sortOperation->execute($id, $action);
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+            $this->httpCacheStore->clear();
 
             return $this->redirectResponse->temporary('acp/categories');
         }

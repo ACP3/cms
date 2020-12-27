@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Comments;
+use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {
@@ -21,16 +22,22 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
+    /**
+     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     */
+    private $httpCacheStore;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Action $actionHelper,
-        Comments\Model\Repository\CommentRepository $commentRepository
+        Comments\Model\Repository\CommentRepository $commentRepository,
+        Psr6Store $httpCacheStore
     ) {
         parent::__construct($context);
 
         $this->commentRepository = $commentRepository;
         $this->actionHelper = $actionHelper;
+        $this->httpCacheStore = $httpCacheStore;
     }
 
     /**
@@ -46,7 +53,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                     $bool = $this->commentRepository->delete($item, 'module_id');
                 }
 
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+                $this->httpCacheStore->clear();
 
                 return $bool;
             }

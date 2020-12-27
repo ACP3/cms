@@ -89,6 +89,7 @@ services:
       - '@gallery.helpers'
       - '@gallery.model.picturerepository'
       - '@gallery.cache'
+      - '@http_cache_store'
 
   gallery.controller.admin.pictures.edit:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
@@ -122,6 +123,7 @@ services:
       - '@core.helpers.sort'
       - '@gallery.model.picturerepository'
       - '@gallery.cache'
+      - '@http_cache_store'
 
   gallery.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details

@@ -7,20 +7,15 @@
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
-use ACP3\Core\Cache\Purge;
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class InvalidatePageCacheOnSettingsSaveBeforeListener
 {
-    /**
-     * @var ApplicationPath
-     */
-    private $applicationPath;
     /**
      * @var SettingsInterface
      */
@@ -37,19 +32,23 @@ class InvalidatePageCacheOnSettingsSaveBeforeListener
      * @var CanUsePageCache
      */
     private $canUsePageCache;
+    /**
+     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     */
+    private $httpCacheStore;
 
     public function __construct(
-        ApplicationPath $applicationPath,
         SettingsInterface $settings,
         Modules $modules,
         SettingsAwareRepositoryInterface $settingsRepository,
-        CanUsePageCache $canUsePageCache
+        CanUsePageCache $canUsePageCache,
+        Psr6Store $httpCacheStore
     ) {
-        $this->applicationPath = $applicationPath;
         $this->settings = $settings;
         $this->modules = $modules;
         $this->settingsRepository = $settingsRepository;
         $this->canUsePageCache = $canUsePageCache;
+        $this->httpCacheStore = $httpCacheStore;
     }
 
     public function __invoke()
@@ -59,7 +58,7 @@ class InvalidatePageCacheOnSettingsSaveBeforeListener
         }
 
         if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_purge_mode'] == 1) {
-            Purge::doPurge($this->applicationPath->getCacheDir() . 'http');
+            $this->httpCacheStore->clear();
         } else {
             $systemModuleId = $this->modules->getModuleId(Schema::MODULE_NAME);
             $this->settingsRepository->update(

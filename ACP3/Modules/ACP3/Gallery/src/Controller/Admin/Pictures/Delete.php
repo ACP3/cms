@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Gallery;
+use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {
@@ -29,13 +30,18 @@ class Delete extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
+    /**
+     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     */
+    private $httpCacheStore;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Action $actionHelper,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
-        Gallery\Cache $galleryCache
+        Gallery\Cache $galleryCache,
+        Psr6Store $httpCacheStore
     ) {
         parent::__construct($context);
 
@@ -43,6 +49,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
         $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
         $this->actionHelper = $actionHelper;
+        $this->httpCacheStore = $httpCacheStore;
     }
 
     /**
@@ -66,7 +73,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                     }
                 }
 
-                Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+                $this->httpCacheStore->clear();
 
                 return $bool;
             },

@@ -55,6 +55,7 @@ services:
       - '@core.http.redirect_response'
       - '@categories.nested_set.operation.sort'
       - '@categories.model.categories_repository'
+      - '@http_cache_store'
 
   categories.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Settings

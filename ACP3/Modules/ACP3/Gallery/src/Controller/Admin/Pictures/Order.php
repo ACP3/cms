@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
+use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Order extends Core\Controller\AbstractFrontendAction
 {
@@ -28,13 +29,18 @@ class Order extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirectResponse;
+    /**
+     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     */
+    private $httpCacheStore;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\Sort $sortHelper,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
-        Gallery\Cache $galleryCache
+        Gallery\Cache $galleryCache,
+        Psr6Store $httpCacheStore
     ) {
         parent::__construct($context);
 
@@ -42,12 +48,15 @@ class Order extends Core\Controller\AbstractFrontendAction
         $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
         $this->redirectResponse = $redirectResponse;
+        $this->httpCacheStore = $httpCacheStore;
     }
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(int $id, string $action)
     {
@@ -62,7 +71,7 @@ class Order extends Core\Controller\AbstractFrontendAction
 
             $this->galleryCache->saveCache($galleryId);
 
-            Core\Cache\Purge::doPurge($this->appPath->getCacheDir() . 'http');
+            $this->httpCacheStore->clear();
 
             return $this->redirectResponse->temporary('acp/gallery/pictures/index/id_' . $galleryId);
         }

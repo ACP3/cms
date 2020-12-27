@@ -63,7 +63,6 @@ class Cache extends Core\Controller\AbstractFrontendAction
             'page' => $this->appPath->getCacheDir() . 'http',
             'templates' => [
                 $this->appPath->getCacheDir() . 'tpl_compiled',
-                $this->appPath->getCacheDir() . 'tpl_cached',
             ],
         ];
 

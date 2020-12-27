@@ -36,8 +36,6 @@ class Designs extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @param string $dir
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function execute(?string $dir = null)
@@ -66,7 +64,6 @@ class Designs extends Core\Controller\AbstractFrontendAction
             Core\Cache\Purge::doPurge([
                 $this->appPath->getCacheDir() . 'sql',
                 $this->appPath->getCacheDir() . 'tpl_compiled',
-                $this->appPath->getCacheDir() . 'http',
             ]);
         }
 

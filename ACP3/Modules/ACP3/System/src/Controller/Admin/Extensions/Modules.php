@@ -11,6 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
+use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Modules extends Core\Controller\AbstractFrontendAction
 {
@@ -58,6 +59,10 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\RedirectMessages
      */
     private $redirectMessages;
+    /**
+     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     */
+    private $httpCacheStore;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -71,7 +76,8 @@ class Modules extends Core\Controller\AbstractFrontendAction
         Core\Installer\SchemaRegistrar $schemaRegistrar,
         Core\Modules\SchemaInstaller $schemaInstaller,
         Core\Modules\AclInstaller $aclInstaller,
-        System\ViewProviders\AdminModulesViewProvider $adminModulesViewProvider
+        System\ViewProviders\AdminModulesViewProvider $adminModulesViewProvider,
+        Psr6Store $httpCacheStore
     ) {
         parent::__construct($context);
 
@@ -86,6 +92,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $this->modules = $modules;
         $this->adminModulesViewProvider = $adminModulesViewProvider;
         $this->redirectMessages = $redirectMessages;
+        $this->httpCacheStore = $httpCacheStore;
     }
 
     /**
@@ -189,13 +196,13 @@ class Modules extends Core\Controller\AbstractFrontendAction
     private function purgeCaches(): void
     {
         Core\Cache\Purge::doPurge([
-            $this->appPath->getCacheDir() . 'http',
             $this->appPath->getCacheDir() . 'sql',
             $this->appPath->getCacheDir() . 'tpl_compiled',
-            $this->appPath->getCacheDir() . 'tpl_cached',
             $this->appPath->getCacheDir() . 'container.php',
             $this->appPath->getCacheDir() . 'container.php.meta',
         ]);
+
+        $this->httpCacheStore->clear();
     }
 
     /**

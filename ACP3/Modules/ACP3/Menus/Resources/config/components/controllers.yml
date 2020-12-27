@@ -89,3 +89,4 @@ services:
       - '@menus.nested_set.operation.sort'
       - '@menus.model.menuitemrepository'
       - '@menus.cache'
+      - '@http_cache_store'
