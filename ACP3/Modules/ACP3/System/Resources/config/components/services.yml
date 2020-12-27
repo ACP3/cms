@@ -1,0 +1,7 @@
+services:
+  system.services.cache_clear_service:
+    class: ACP3\Modules\ACP3\System\Services\CacheClearService
+    arguments:
+      - '@core.environment.application_path'
+      - '@http_cache_store'
+      - '@core.config'

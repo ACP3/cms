@@ -11,6 +11,8 @@ use ACP3\Core;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\System;
+use ACP3\Modules\ACP3\System\Exception\CacheClearException;
+use ACP3\Modules\ACP3\System\Exception\InvalidCacheTypeException;
 
 class Cache extends Core\Controller\AbstractFrontendAction
 {
@@ -18,14 +20,20 @@ class Cache extends Core\Controller\AbstractFrontendAction
      * @var \ACP3\Core\Helpers\RedirectMessages
      */
     private $redirectMessages;
+    /**
+     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
+     */
+    private $cacheClearService;
 
     public function __construct(
         FrontendContext $context,
-        RedirectMessages $redirectMessages
+        RedirectMessages $redirectMessages,
+        System\Services\CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
 
         $this->redirectMessages = $redirectMessages;
+        $this->cacheClearService = $cacheClearService;
     }
 
     /**
@@ -38,12 +46,7 @@ class Cache extends Core\Controller\AbstractFrontendAction
         }
 
         return [
-            'cache_types' => [
-                'general',
-                'minify',
-                'page',
-                'templates',
-            ],
+            'cache_types' => $this->cacheClearService->getCacheTypeKeys(),
         ];
     }
 
@@ -52,42 +55,17 @@ class Cache extends Core\Controller\AbstractFrontendAction
      */
     private function executePurge(string $action)
     {
-        $cacheTypes = [
-            'general' => [
-                $this->appPath->getCacheDir() . 'http',
-                $this->appPath->getCacheDir() . 'sql',
-            ],
-            'minify' => $this->appPath->getUploadsDir() . 'assets',
-            'page' => $this->appPath->getCacheDir() . 'http',
-            'templates' => [
-                $this->appPath->getCacheDir() . 'tpl_compiled',
-            ],
-        ];
-
         $result = false;
-        switch ($action) {
-            case 'general':
-            case 'minify':
-            case 'page':
-            case 'templates':
-                $result = Core\Cache\Purge::doPurge($cacheTypes[$action]);
-                $text = $this->translator->t(
-                    'system',
-                    $result === true
-                        ? 'cache_type_' . $action . '_delete_success'
-                        : 'cache_type_' . $action . '_delete_error'
-                );
 
-                if ($action === 'page') {
-                    $this->config->saveSettings(
-                        ['page_cache_is_valid' => true],
-                        System\Installer\Schema::MODULE_NAME
-                    );
-                }
+        try {
+            $this->cacheClearService->clearCacheByType($action);
 
-                break;
-            default:
-                $text = $this->translator->t('system', 'cache_type_not_found');
+            $result = true;
+            $text = $this->translator->t('system', 'cache_type_' . $action . '_delete_success');
+        } catch (InvalidCacheTypeException $exception) {
+            $text = $this->translator->t('system', 'cache_type_not_found');
+        } catch (CacheClearException $exception) {
+            $text = $this->translator->t('system', 'cache_type_' . $action . '_delete_error');
         }
 
         return $this->redirectMessages->setMessage($result, $text, 'acp/system/maintenance/cache');

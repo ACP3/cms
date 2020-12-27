@@ -56,6 +56,7 @@ services:
     arguments:
     - '@core.context.frontend'
     - '@core.helpers.redirect'
+    - '@system.services.cache_clear_service'
 
   system.controller.admin.maintenance.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index
