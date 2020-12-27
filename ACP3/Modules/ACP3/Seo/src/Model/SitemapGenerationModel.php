@@ -7,7 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Seo\Model;
 
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
@@ -18,13 +17,9 @@ use Thepixeldeveloper\Sitemap\Urlset;
 class SitemapGenerationModel
 {
     /**
-     * @var ApplicationPath
-     */
-    private $applicationPath;
-    /**
      * @var SitemapAvailabilityRegistrar
      */
-    protected $sitemapRegistrar;
+    private $sitemapRegistrar;
     /**
      * @var SettingsInterface
      */
@@ -46,27 +41,20 @@ class SitemapGenerationModel
      */
     private $xmlSitemapDriver;
 
-    /**
-     * SitemapGenerationModel constructor.
-     */
     public function __construct(
-        ApplicationPath $applicationPath,
         SettingsInterface $settings,
         SitemapAvailabilityRegistrar $sitemapRegistrar,
         DriverInterface $xmlSitemapDriver
     ) {
-        $this->applicationPath = $applicationPath;
         $this->sitemapRegistrar = $sitemapRegistrar;
         $this->settings = $settings;
         $this->xmlSitemapDriver = $xmlSitemapDriver;
     }
 
     /**
-     * @return bool
-     *
      * @throws \ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException
      */
-    public function save()
+    public function save(): bool
     {
         $separateSitemaps = $this->settings->getSettings(Schema::MODULE_NAME)['sitemap_separate'];
 
@@ -84,7 +72,7 @@ class SitemapGenerationModel
     /**
      * @throws SitemapGenerationException
      */
-    protected function checkSitemapFilePermissions(string $filename)
+    private function checkSitemapFilePermissions(string $filename): void
     {
         $filePath = $this->getSitemapFilePath($filename);
 
@@ -93,22 +81,16 @@ class SitemapGenerationModel
         }
 
         if (!\is_file($filePath) || !\is_writable($filePath)) {
-            throw new SitemapGenerationException('The requested file "' . $filePath . '" either not exists or is not writable.' . 'Aborting sitemap generation.');
+            throw new SitemapGenerationException('The requested file "' . $filePath . '" either not exists or is not writable. Aborting sitemap generation.');
         }
     }
 
-    /**
-     * @return string
-     */
-    protected function getSitemapFilePath(string $filename)
+    private function getSitemapFilePath(string $filename): string
     {
         return ACP3_ROOT_DIR . '/' . $filename;
     }
 
-    /**
-     * @return Urlset
-     */
-    protected function collectSitemapItems(?bool $isSecure)
+    private function collectSitemapItems(?bool $isSecure): Urlset
     {
         $urlSet = new Urlset();
         foreach ($this->sitemapRegistrar->getAvailableModules() as $module) {
@@ -120,10 +102,7 @@ class SitemapGenerationModel
         return $urlSet;
     }
 
-    /**
-     * @return bool
-     */
-    protected function saveSitemap(Urlset $urlSet, string $filename)
+    private function saveSitemap(Urlset $urlSet, string $filename): bool
     {
         $urlSet->accept($this->xmlSitemapDriver);
 

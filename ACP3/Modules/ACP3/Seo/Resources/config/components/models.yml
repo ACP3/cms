@@ -19,7 +19,6 @@ services:
   seo.model.sitemap_generation_model:
     class: ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel
     arguments:
-      - '@core.environment.application_path'
       - '@core.config'
       - '@seo.utility.sitemap_availability_registrar'
       - '@xml_writer_driver'
