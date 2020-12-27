@@ -36,7 +36,6 @@
         </item>
         <item key="forward">Weiter</item>
         <item key="found">Gefunden</item>
-        <item key="gd_library">GD-Grafikbibliothek</item>
         <item key="go_to_website">Zur Website</item>
         <item key="general">Allgemeines</item>
         <item key="installer_error_not_found">Seite nicht gefunden</item>
@@ -70,7 +69,6 @@
         <item key="on">an</item>
         <item key="optional">(optional)</item>
         <item key="overview">Übersicht</item>
-        <item key="pdo_extension">PDO-Erweiterung</item>
         <item key="php_date_function">
             <![CDATA[siehe <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a>-Funktion von PHP.]]></item>
         <item key="php_settings">PHP Einstellungen</item>

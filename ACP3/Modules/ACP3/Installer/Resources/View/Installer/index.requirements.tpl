@@ -9,27 +9,27 @@
                     {lang t="installer|step_3_paragraph_1"}
                 </p>
 
-                <table class="table table-condensed">
+                <table class="table table-condensed table-hover">
                     <thead>
                     <tr>
                         <th style="width:33%"></th>
-                        <th>{lang t="installer|required"}</th>
                         <th>{lang t="installer|found"}</th>
+                        <th>{lang t="installer|required"}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {foreach $requirements as $row}
                         <tr>
                             <td><strong>{$row.name}</strong></td>
-                            <td>{$row.required}</td>
                             <td class="{if $row.satisfied}bg-success{else}bg-danger{/if}">
                                 {$row.found}{if !$row.satisfied} - {lang t="installer|installation_impossible"}{/if}
                             </td>
+                            <td>{$row.required}</td>
                         </tr>
                     {/foreach}
                     </tbody>
                 </table>
-                <table class="table table-condensed">
+                <table class="table table-condensed table-hover">
                     <thead>
                     <tr>
                         <th style="width:33%"></th>

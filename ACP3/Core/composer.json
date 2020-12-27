@@ -15,6 +15,8 @@
   },
   "require": {
     "php": "^7.2.5",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
     "doctrine/dbal": "^2.5",
     "doctrine/cache": "^1.6",
     "fisharebest/localization": "^1.10",
@@ -41,6 +43,9 @@
     "symfony/proxy-manager-bridge": "^5.1.0",
     "symfony/yaml": "^5.1.0",
     "toflar/psr6-symfony-http-cache-store": "^3.0"
+  },
+  "suggest": {
+    "ext-gd": "Allows image manipulations (resizing)"
   },
   "autoload": {
     "psr-4": {

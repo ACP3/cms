@@ -16,6 +16,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
+    "ext-gd": "*",
     "acp3/core": "^5.8.0",
     "acp3/module-permissions": "^5.8.0",
     "acp3/module-system": "^5.8.0",

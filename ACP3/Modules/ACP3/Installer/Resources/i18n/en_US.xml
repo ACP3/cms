@@ -34,7 +34,6 @@
         <item key="forward">Forward</item>
         <item key="form_change_warning">ATTENTION: By changing the language you will lose all form changes!</item>
         <item key="found">Found</item>
-        <item key="gd_library">GD library</item>
         <item key="go_to_website">Go to the website</item>
         <item key="general">General</item>
         <item key="installer_error_not_found">Page not found</item>
@@ -68,7 +67,6 @@
         <item key="on">on</item>
         <item key="optional">(optional)</item>
         <item key="overview">Overview</item>
-        <item key="pdo_extension">PDO Extension</item>
         <item key="php_date_function">
             <![CDATA[see <a href="http://www.php.net/manual/function.date.php" target="_blank">date</a> function of PHP.]]></item>
         <item key="php_settings">PHP settings</item>

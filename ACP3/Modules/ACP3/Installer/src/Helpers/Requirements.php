@@ -42,27 +42,33 @@ class Requirements
      */
     public function checkMandatoryRequirements(): array
     {
-        $minimumPHPVersion = $this->getRequiredPHPVersion();
+        $modules = $this->modules->getAllModulesTopSorted();
 
-        $requirements = [];
-        $requirements[0]['name'] = $this->translator->t('installer', 'php_version');
-        $requirements[0]['satisfied'] = Comparator::greaterThanOrEqualTo(PHP_VERSION, $minimumPHPVersion);
-        $requirements[0]['found'] = PHP_VERSION;
-        $requirements[0]['required'] = $minimumPHPVersion;
-        $requirements[1]['name'] = $this->translator->t('installer', 'pdo_extension');
-        $requirements[1]['satisfied'] = \extension_loaded('pdo') && \extension_loaded('pdo_mysql');
-        $requirements[1]['found'] = $this->translator->t(
-            'installer',
-            $requirements[1]['satisfied'] ? 'on' : 'off'
-        );
-        $requirements[1]['required'] = $this->translator->t('installer', 'on');
-        $requirements[2]['name'] = $this->translator->t('installer', 'gd_library');
-        $requirements[2]['satisfied'] = \extension_loaded('gd');
-        $requirements[2]['found'] = $this->translator->t(
-            'installer',
-            $requirements[2]['satisfied'] ? 'on' : 'off'
-        );
-        $requirements[2]['required'] = $this->translator->t('installer', 'on');
+        $minimumPHPVersion = $this->getRequiredPHPVersion($modules);
+        $requiredPHPExtensions = $this->getRequiredPHPExtensions($modules);
+
+        $requirements = [
+            [
+                'name' => $this->translator->t('installer', 'php_version'),
+                'satisfied' => Comparator::greaterThanOrEqualTo(PHP_VERSION, $minimumPHPVersion),
+                'found' => PHP_VERSION,
+                'required' => $minimumPHPVersion,
+            ],
+        ];
+
+        foreach ($requiredPHPExtensions as $requiredPHPExtension) {
+            $extensionLoaded = \extension_loaded(\substr($requiredPHPExtension, 4));
+
+            $requirements[] = [
+                'name' => $requiredPHPExtension,
+                'satisfied' => $extensionLoaded,
+                'found' => $this->translator->t(
+                    'installer',
+                    $extensionLoaded ? 'on' : 'off'
+                ),
+                'required' => $this->translator->t('installer', 'on'),
+            ];
+        }
 
         $stopInstall = false;
         foreach ($requirements as $requirement) {
@@ -132,14 +138,8 @@ class Requirements
         return ['/ACP3/config.yml', '/cache/', '/uploads/', '/uploads/assets/'];
     }
 
-    /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
-    private function getRequiredPHPVersion(): ?string
+    private function getRequiredPHPVersion(array $modules): ?string
     {
-        $modules = $this->modules->getAllModulesTopSorted();
-
         $minimumPHPVersion = null;
 
         foreach ($modules as $module) {
@@ -170,5 +170,34 @@ class Requirements
         }
 
         return $minimumPHPVersion;
+    }
+
+    private function getRequiredPHPExtensions(array $modules): array
+    {
+        $extensions = [];
+
+        foreach ($modules as $module) {
+            $composerJsonPath = $module['dir'] . '/composer.json';
+
+            if (!\is_file($composerJsonPath)) {
+                continue;
+            }
+
+            $composerJsoData = \json_decode(\file_get_contents($composerJsonPath), true);
+
+            if (!isset($composerJsoData['require'])) {
+                continue;
+            }
+
+            $componentExtensions = \array_filter(\array_keys($composerJsoData['require']), static function ($packages) {
+                return \strpos($packages, 'ext-') === 0;
+            });
+
+            $extensions = \array_merge($extensions, $componentExtensions);
+        }
+
+        \sort($extensions);
+
+        return $extensions;
     }
 }
