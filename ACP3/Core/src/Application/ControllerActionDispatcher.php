@@ -136,7 +136,7 @@ class ControllerActionDispatcher
 
     private function shouldUsePostAction(?string $serviceId): bool
     {
-        return $this->container->has($serviceId . self::ACTION_METHOD_POST)
+        return $this->container->has($serviceId . self::POST_SERVICE_ID_SUFFIX)
             && $this->request->getSymfonyRequest()->isMethod('POST')
             && ($this->request->getPost()->has('submit') || $this->request->getPost()->has('continue'));
     }
