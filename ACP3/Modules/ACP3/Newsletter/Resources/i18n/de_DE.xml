@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
-        <item key="account_activation_credentials_wrong">Die übermittelten Daten konnten keinem Newsletter-Konto zugeordnert werden.</item>
+        <item key="account_activation_credentials_wrong">Die übermittelten Daten konnten keinem Newsletter-Konto zugeordnet werden.</item>
         <item key="account_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Newsletter-Konto.</item>
         <item key="account_not_exists">Für die angegebene E-Mail-Adresse konnte kein Newsletter-Konto gefunden werden.</item>
         <item key="action">Aktion</item>
@@ -52,7 +52,7 @@
         <item key="subscribe_error">Es ist ein Fehler beim Erstellen des Newsletterkontos aufgetreten.</item>
         <item key="subscribe_mail_body">Sie haben sich erfolgreich im Newsletter auf der Website {host} eingetragen. Um die Registrierung abzuschließen, klicken Sie bitte auf den unten stehenden Link. Falls Sie diese E-Mail fälschlicherweise zugestellt bekommen haben sollten, so ignorieren/löschen Sie sie bitte einfach.</item>
         <item key="subscribe_mail_subject">Willkommen beim Newsletter von %title%!</item>
-        <item key="subscribe_newsletter">Newsletter bestellen</item>
+        <item key="subscribe_newsletter">Newsletter abonnieren</item>
         <item key="subscribe_success">Das Newsletterkonto wurde erfolgreich erstellt.</item>
         <item key="subscribe_unsubscribe_the_newsletter">In Newsletter eintragen/austragen</item>
         <item key="test_newsletter">Test-Newsletter versenden</item>
