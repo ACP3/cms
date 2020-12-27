@@ -1,8 +1,10 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
-$system-list-group-item-padding: ($line-height-computed / 2) 15px !default;
+$system-list-group-item-padding: ($line-height-computed / 2) ($grid-gutter-width / 2) !default;
 $system-list-group-item-link-text-color: #555 !default;
 $system-list-group-item-link-hover-bg-color: #F5F5F5 !default;
+
+$bs-pagination-margin: 0 0 ($line-height-computed / 2) !default;
 
 .list-group-item {
   &.dropdown {
@@ -27,5 +29,5 @@ $system-list-group-item-link-hover-bg-color: #F5F5F5 !default;
 
 /* Pagination */
 .pagination {
-  margin: 0 0 ($line-height-computed / 2);
+  margin: $bs-pagination-margin;
 }
