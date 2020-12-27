@@ -30,6 +30,6 @@ HTML;
     exit;
 }
 
-$kernel
-    ->handle($request)
-    ->send();
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);

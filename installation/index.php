@@ -21,6 +21,6 @@ Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
 $request = Request::createFromGlobals();
 $kernel = new Bootstrap(ApplicationMode::INSTALLER);
 
-$kernel
-    ->handle($request)
-    ->send();
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);

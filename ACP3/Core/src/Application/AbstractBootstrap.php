@@ -14,8 +14,11 @@ use Symfony\Component\ErrorHandler\ErrorHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\TerminateEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\TerminableInterface;
 
-abstract class AbstractBootstrap implements BootstrapInterface
+abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterface
 {
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -153,5 +156,17 @@ abstract class AbstractBootstrap implements BootstrapInterface
         $path = $this->appPath->getAppDir() . 'config.yml';
 
         return \is_file($path) === true && \filesize($path) !== 0;
+    }
+
+    public function terminate(SymfonyRequest $request, Response $response)
+    {
+        if (!$this->booted) {
+            return;
+        }
+
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+        $eventDispatcher = $this->container->get('core.event_dispatcher');
+
+        $eventDispatcher->dispatch(new TerminateEvent($this, $request, $response), KernelEvents::TERMINATE);
     }
 }
