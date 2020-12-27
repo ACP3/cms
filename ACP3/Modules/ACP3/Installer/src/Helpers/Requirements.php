@@ -14,12 +14,6 @@ use Composer\Semver\VersionParser;
 
 class Requirements
 {
-    private const COLOR_ERROR = 'f00';
-    private const COLOR_SUCCESS = '090';
-    private const CLASS_ERROR = 'danger';
-    private const CLASS_SUCCESS = 'success';
-    private const CLASS_WARNING = 'warning';
-
     /**
      * @var \ACP3\Core\I18n\Translator
      */
@@ -52,27 +46,27 @@ class Requirements
 
         $requirements = [];
         $requirements[0]['name'] = $this->translator->t('installer', 'php_version');
-        $requirements[0]['color'] = Comparator::greaterThanOrEqualTo(PHP_VERSION, $minimumPHPVersion) ? self::COLOR_SUCCESS : self::COLOR_ERROR;
+        $requirements[0]['satisfied'] = Comparator::greaterThanOrEqualTo(PHP_VERSION, $minimumPHPVersion);
         $requirements[0]['found'] = PHP_VERSION;
         $requirements[0]['required'] = $minimumPHPVersion;
         $requirements[1]['name'] = $this->translator->t('installer', 'pdo_extension');
-        $requirements[1]['color'] = \extension_loaded('pdo') && \extension_loaded('pdo_mysql') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
+        $requirements[1]['satisfied'] = \extension_loaded('pdo') && \extension_loaded('pdo_mysql');
         $requirements[1]['found'] = $this->translator->t(
             'installer',
-            $requirements[1]['color'] === self::COLOR_SUCCESS ? 'on' : 'off'
+            $requirements[1]['satisfied'] ? 'on' : 'off'
         );
         $requirements[1]['required'] = $this->translator->t('installer', 'on');
         $requirements[2]['name'] = $this->translator->t('installer', 'gd_library');
-        $requirements[2]['color'] = \extension_loaded('gd') ? self::COLOR_SUCCESS : self::COLOR_ERROR;
+        $requirements[2]['satisfied'] = \extension_loaded('gd');
         $requirements[2]['found'] = $this->translator->t(
             'installer',
-            $requirements[2]['color'] === self::COLOR_SUCCESS ? 'on' : 'off'
+            $requirements[2]['satisfied'] ? 'on' : 'off'
         );
         $requirements[2]['required'] = $this->translator->t('installer', 'on');
 
         $stopInstall = false;
         foreach ($requirements as $requirement) {
-            if ($requirement['color'] !== self::COLOR_SUCCESS) {
+            if (!$requirement['satisfied']) {
                 $stopInstall = true;
             }
         }
@@ -96,7 +90,7 @@ class Requirements
         foreach ($defaults as $fileOrDirectory) {
             $requiredFilesAndDirs[$i] = $this->requiredFileOrFolderHasPermission($fileOrDirectory);
 
-            if ($requiredFilesAndDirs[$i]['class_1'] === self::CLASS_ERROR || $requiredFilesAndDirs[$i]['class_2'] === self::CLASS_ERROR) {
+            if (!$requiredFilesAndDirs[$i]['exists'] || !$requiredFilesAndDirs[$i]['writable']) {
                 $checkAgain = true;
             }
             ++$i;
@@ -110,7 +104,7 @@ class Requirements
         return [
             [
                 'setting' => $this->translator->t('installer', 'maximum_uploadsize'),
-                'class' => \ini_get('post_max_size') > 0 ? self::CLASS_SUCCESS : self::CLASS_WARNING,
+                'satisfied' => \ini_get('post_max_size') > 0,
                 'value' => \ini_get('post_max_size'),
             ],
         ];
@@ -122,20 +116,13 @@ class Requirements
         $result['path'] = $fileOrDirectory;
         // Überprüfen, ob es eine Datei oder ein Ordner ist
         if (\is_file(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true) {
-            $result['class_1'] = self::CLASS_SUCCESS;
-            $result['exists'] = $this->translator->t('installer', 'found');
+            $result['exists'] = true;
         } elseif (\is_dir(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true) {
-            $result['class_1'] = self::CLASS_SUCCESS;
-            $result['exists'] = $this->translator->t('installer', 'found');
+            $result['exists'] = true;
         } else {
-            $result['class_1'] = self::CLASS_ERROR;
-            $result['exists'] = $this->translator->t('installer', 'not_found');
+            $result['exists'] = false;
         }
-        $result['class_2'] = \is_writable(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true ? self::CLASS_SUCCESS : self::CLASS_ERROR;
-        $result['writable'] = $result['class_2'] === self::CLASS_SUCCESS ? $this->translator->t(
-            'installer',
-            'writable'
-        ) : $this->translator->t('installer', 'not_writable');
+        $result['writable'] = \is_writable(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true;
 
         return $result;
     }

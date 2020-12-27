@@ -9,41 +9,49 @@
                     {lang t="installer|step_3_paragraph_1"}
                 </p>
 
-                <div class="row">
-                    <div class="col-sm-6">
-                        <table class="table table-condensed">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th style="width:33%">{lang t="installer|required"}</th>
-                                <th style="width:33%">{lang t="installer|found"}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {foreach $requirements as $row}
-                                <tr>
-                                    <td>{$row.name}</td>
-                                    <td>{$row.required}</td>
-                                    <td>
-                                        <span style="color:#{$row.color}">{$row.found}{if $row.color == 'f00'} - {lang t="installer|installation_impossible"}{/if}</span>
-                                    </td>
-                                </tr>
-                            {/foreach}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-sm-6">
-                        <ul class="unstyled">
-                            {foreach $files_dirs as $row}
-                                <li>
-                                    <strong>{$row.path}</strong>
-                                    <span class="label label-{$row.class_1}">{$row.exists}</span>
-                                    <span class="label label-{$row.class_2}">{$row.writable}</span>
-                                </li>
-                            {/foreach}
-                        </ul>
-                    </div>
-                </div>
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th style="width:33%"></th>
+                        <th>{lang t="installer|required"}</th>
+                        <th>{lang t="installer|found"}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $requirements as $row}
+                        <tr>
+                            <td><strong>{$row.name}</strong></td>
+                            <td>{$row.required}</td>
+                            <td class="{if $row.satisfied}bg-success{else}bg-danger{/if}">
+                                {$row.found}{if !$row.satisfied} - {lang t="installer|installation_impossible"}{/if}
+                            </td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th style="width:33%"></th>
+                        <th>{lang t="installer|found"}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $files_dirs as $row}
+                        <tr>
+                            <td><strong>{$row.path}</strong></td>
+                            <td>
+                                <span class="label {if $row.exists}label-success{else}label-danger{/if}">
+                                    {lang t="installer|{if $row.exists}found{else}not_found{/if}"}
+                                </span>
+                                <span class="label {if $row.writable}label-success{else}label-danger{/if}">
+                                    {lang t="installer|{if $row.exists}writable{else}not_writable{/if}"}
+                                </span>
+                            </td>
+                        </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
             </fieldset>
         </div>
         <div class="col-sm-5">
@@ -55,7 +63,7 @@
                 <ul class="unstyled">
                     {foreach $php_settings as $row}
                         <li>
-                            <strong>{$row.setting}</strong> <span class="label label-{$row.class}">{$row.value}</span>
+                            <strong>{$row.setting}</strong> <span class="label {if $row.satisfied}label-success{else}label-danger{/if}">{$row.value}</span>
                         </li>
                     {/foreach}
                 </ul>
