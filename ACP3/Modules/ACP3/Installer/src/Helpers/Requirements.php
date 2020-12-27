@@ -92,14 +92,14 @@ class Requirements
         $requiredFilesAndDirs = [];
         $checkAgain = false;
 
-        $i = 0;
-        foreach ($defaults as $fileOrDirectory) {
-            $requiredFilesAndDirs[$i] = $this->requiredFileOrFolderHasPermission($fileOrDirectory);
+        foreach ($defaults as $fileOrDirectory => $type) {
+            $requiredFileOrDir = $this->requiredFileOrFolderHasPermission($fileOrDirectory, $type);
 
-            if (!$requiredFilesAndDirs[$i]['exists'] || !$requiredFilesAndDirs[$i]['writable']) {
+            if (!$requiredFileOrDir['exists'] || !$requiredFileOrDir['writable']) {
                 $checkAgain = true;
             }
-            ++$i;
+
+            $requiredFilesAndDirs[] = $requiredFileOrDir;
         }
 
         return [$requiredFilesAndDirs, $checkAgain];
@@ -116,26 +116,36 @@ class Requirements
         ];
     }
 
-    private function requiredFileOrFolderHasPermission(string $fileOrDirectory): array
+    private function requiredFileOrFolderHasPermission(string $fileOrDirectory, string $type): array
     {
+        $path = ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory;
+
         $result = [];
         $result['path'] = $fileOrDirectory;
-        // Überprüfen, ob es eine Datei oder ein Ordner ist
-        if (\is_file(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true) {
-            $result['exists'] = true;
-        } elseif (\is_dir(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true) {
-            $result['exists'] = true;
-        } else {
-            $result['exists'] = false;
+        $result['writable'] = \is_writable($path) === true;
+
+        switch ($type) {
+            case 'file':
+                $result['exists'] = \is_file($path) === true;
+                break;
+            case 'directory':
+                $result['exists'] = \is_dir($path) === true;
+                break;
+            default:
+                $result['exists'] = false;
         }
-        $result['writable'] = \is_writable(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory) === true;
 
         return $result;
     }
 
     private function fetchRequiredFilesAndDirectories(): array
     {
-        return ['/ACP3/config.yml', '/cache/', '/uploads/', '/uploads/assets/'];
+        return [
+            '/ACP3/config.yml' => 'file',
+            '/cache/' => 'directory',
+            '/uploads/' => 'directory',
+            '/uploads/assets/' => 'directory',
+        ];
     }
 
     private function getRequiredPHPVersion(array $modules): ?string
