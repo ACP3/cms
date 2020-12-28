@@ -90,6 +90,8 @@ class Alerts
 
     /**
      * @param string|array $errors
+     *
+     * @deprecated To be removed with ACP3 version 6.0.0. Use the method errorBox() instead.
      */
     public function errorBoxContent($errors): string
     {
