@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class GenerateSitemapOnModelAfterSaveListener implements EventSubscriberInterface
+class GenerateSitemapListener implements EventSubscriberInterface
 {
     /**
      * @var LoggerInterface

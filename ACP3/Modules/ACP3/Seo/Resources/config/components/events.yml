@@ -28,8 +28,8 @@ services:
     tags:
       - { name: core.eventListener, event: core.layout.form_extension }
 
-  seo.event.generate_sitemap_on_model_after_save_listener:
-    class: ACP3\Modules\ACP3\Seo\Event\Listener\GenerateSitemapOnModelAfterSaveListener
+  seo.event.generate_sitemap_listener:
+    class: ACP3\Modules\ACP3\Seo\Event\Listener\GenerateSitemapListener
     arguments:
       - '@seo.sitemap_logger'
       - '@core.modules'
