@@ -53,9 +53,7 @@ trait SortingAwareTrait
         $this->dispatchBeforeSaveEvent($this->getRepository(), $this->createModelSaveEvent(
             $id,
             false,
-            true,
-            [],
-            []
+            true
         ));
 
         if ($action === 'up') {
@@ -79,9 +77,7 @@ trait SortingAwareTrait
         $this->dispatchAfterSaveEvent($this->getRepository(), $this->createModelSaveEvent(
             $id,
             false,
-            true,
-            [],
-            []
+            true
         ));
     }
 

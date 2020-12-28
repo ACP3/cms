@@ -10,13 +10,14 @@ namespace ACP3\Modules\ACP3\Gallery\Model;
 use ACP3\Core\Helpers\Sort;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\Model\SortingAwareTrait;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class PictureModel extends AbstractModel
+class PictureModel extends AbstractModel implements SortingAwareInterface
 {
     use SortingAwareTrait;
 
