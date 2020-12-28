@@ -13,6 +13,10 @@ RUN apt-get update -yqq && \
     docker-php-ext-install -j$(nproc) zip \
                                       intl \
                                       pdo_mysql && \
+    pecl install xdebug && \
+    docker-php-ext-enable xdebug && \
+    echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+    echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-install -j$(nproc) gd && \
     apt-get autoremove -y && \
@@ -21,5 +25,4 @@ RUN apt-get update -yqq && \
 RUN usermod -u 1000 www-data
 
 RUN curl --silent --show-error https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    composer global require hirak/prestissimo
+    mv composer.phar /usr/local/bin/composer
