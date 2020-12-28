@@ -33,3 +33,4 @@ services:
       - '@core.model.data_processor'
       - '@core.config'
       - '@gallery.model.picturerepository'
+      - '@core.helpers.sort'

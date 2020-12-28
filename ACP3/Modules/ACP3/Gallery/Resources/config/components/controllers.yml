@@ -120,10 +120,8 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.http.redirect_response'
-      - '@core.helpers.sort'
       - '@gallery.model.picturerepository'
-      - '@gallery.cache'
-      - '@http_cache_store'
+      - '@gallery.model.picture_model'
 
   gallery.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details

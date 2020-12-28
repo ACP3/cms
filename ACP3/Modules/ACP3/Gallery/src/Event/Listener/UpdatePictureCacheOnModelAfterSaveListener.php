@@ -9,23 +9,44 @@ namespace ACP3\Modules\ACP3\Gallery\Event\Listener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Gallery\Cache;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class UpdatePictureCacheOnModelAfterSaveListener
+class UpdatePictureCacheOnModelAfterSaveListener implements EventSubscriberInterface
 {
     /**
      * @var Cache
      */
     private $cache;
+    /**
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     */
+    private $pictureRepository;
 
-    public function __construct(Cache $cache)
+    public function __construct(Cache $cache, PictureRepository $pictureRepository)
     {
         $this->cache = $cache;
+        $this->pictureRepository = $pictureRepository;
     }
 
-    public function __invoke(ModelSaveEvent $event)
+    /**
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function __invoke(ModelSaveEvent $event): void
     {
-        $data = $event->getData();
+        $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($event->getEntryId());
 
-        $this->cache->saveCache($data['gallery_id']);
+        $this->cache->saveCache($galleryId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            'gallery.model.gallery_pictures.after_save' => '__invoke',
+        ];
     }
 }
