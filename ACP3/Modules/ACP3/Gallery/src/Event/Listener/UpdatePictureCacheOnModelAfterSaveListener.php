@@ -19,7 +19,7 @@ class UpdatePictureCacheOnModelAfterSaveListener implements EventSubscriberInter
      */
     private $cache;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     private $pictureRepository;
 
