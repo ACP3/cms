@@ -7,16 +7,21 @@
 
 namespace ACP3\Modules\ACP3\Files\Model;
 
+use ACP3\Core\Helpers\Sort;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\DuplicationAwareTrait;
+use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\Model\SortingAwareTrait;
 use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     use DuplicationAwareTrait;
+    use SortingAwareTrait;
 
     const EVENT_PREFIX = Schema::MODULE_NAME;
 
@@ -24,6 +29,21 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface
      * @var FilesRepository
      */
     protected $repository;
+    /**
+     * @var \ACP3\Core\Helpers\Sort
+     */
+    private $sort;
+
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        DataProcessor $dataProcessor,
+        AbstractRepository $repository,
+        Sort $sort)
+    {
+        parent::__construct($eventDispatcher, $dataProcessor, $repository);
+
+        $this->sort = $sort;
+    }
 
     /**
      * {@inheritdoc}
@@ -76,5 +96,26 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface
             'start' => 'now',
             'end' => 'now',
         ];
+    }
+
+    protected function getSortHelper(): Sort
+    {
+        return $this->sort;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getPrimaryKeyField(): string
+    {
+        return 'id';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSortingField(): string
+    {
+        return 'sort';
     }
 }

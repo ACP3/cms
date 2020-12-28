@@ -16,3 +16,4 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@files.model.filesrepository'
+      - '@core.helpers.sort'
