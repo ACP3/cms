@@ -7,8 +7,6 @@
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
-use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 use Toflar\Psr6HttpCacheStore\Psr6Store;
