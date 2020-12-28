@@ -7,22 +7,15 @@ services:
     tags:
       - { name: core.eventListener, event: core.breadcrumb.title.get_site_and_page_title_before, priority: -255 }
 
-  seo.event.on_controller_action_before_dispatch_listener:
-    class: ACP3\Modules\ACP3\Seo\Event\Listener\OnControllerActionBeforeDispatchListener
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.http.request'
-      - '@core.router'
-      - '@seo.core.router.aliases'
-      - '@core.seo.meta_statements_service'
-    tags:
-      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch }
-
   seo.event.on_layout_meta_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnLayoutMetaListener
     arguments:
       - '@core.view'
       - '@core.seo.meta_statements_service'
+      - '@core.environment.application_path'
+      - '@core.http.request'
+      - '@core.router'
+      - '@seo.core.router.aliases'
     tags:
       - { name: core.eventListener, event: core.layout.meta }
 
