@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- [Core] Extended the ``ControllerActionRequestEvent`` with the ability to set a response
+- [Core] Implemented the ``TerminableInterface`` to allow running some longer processes without affecting the client's response times
+- [Core] Added the new interface ``SortingAwareInterface`` and trait `SortingAwareTrait` to extend the service models with the capability to change the order of DB results
+- [Core] The ``AbstractNestedSetModel`` classes implement the `SortingAwareInterface` by default now
+- [System] Allow to override the text-color of the "mandatory form-field star" using a SCSS variable
+- [System] Allow to override the margins of the pagination using a SCSS variable
+
+### Changed
+- [Core] Increase the minimum supported PHP version to 7.2.5
+- [Core] Reworked the bootstrapping process, which allowed us to greatly simplify the front controllers
+- [Installer] Reworked the installer's requirements check, so that it automatically fetches the minimum required PHP version and to be installed PHP extensions from the ``composer.json`` files
+- [SEO] Move the regeneration of the XML-sitemaps to be handled by the ``TerminateEvent``
+- [SEO] Combined 2 event listeners into a single one (which doesn't gets called that often) so slightly improve the performance
+- [System] Reworked the cache clear controller action page
+- [System] Removed the ``<!-- JAVASCRIPT -->`` placeholder from the content-only layout file
+
+### Deprecations
+- [Core] Deprecated the method ``ACP3\Core\Helpers\Alerts::errorBoxContent()``. Use ``ACP3\Core\Helpers\Alerts::errorBox()`` instead.
+
+### Fixed
+- [Installer] Fixed the wrongly reported minimum PHP version of PHP 7.1.0 (now it is 7.2.5)
+- [System] Fixed possibly wrong colors of the ``list-group-item`` overrides
+
 ## [5.8.0] - 2020-12-26
 ### Changed
 - reworked the `ACP3\Core\Helpers\Alerts::confirmBox` and `ACP3\Core\Helpers\Alerts::confirmBoxPost` so that they return the already rendered template
