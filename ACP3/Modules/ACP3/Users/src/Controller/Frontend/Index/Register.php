@@ -54,11 +54,9 @@ class Register extends Core\Controller\AbstractFrontendAction implements Core\Co
         $settings = $this->config->getSettings(Users\Installer\Schema::MODULE_NAME);
 
         if ($settings['enable_registration'] == 0) {
-            $this->setTemplate($this->alertsHelper->errorBoxContent(
+            return $this->alertsHelper->errorBox(
                 $this->translator->t('users', 'user_registration_disabled')
-            ));
-
-            return null;
+            );
         }
 
         return ($this->registrationViewProvider)();
