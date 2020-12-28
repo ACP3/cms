@@ -8,8 +8,8 @@
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\CategoriesModel;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
-use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Order extends Core\Controller\AbstractFrontendAction
 {
@@ -18,45 +18,40 @@ class Order extends Core\Controller\AbstractFrontendAction
      */
     private $categoriesRepository;
     /**
-     * @var Core\NestedSet\Operation\Sort
-     */
-    private $sortOperation;
-    /**
      * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirectResponse;
     /**
-     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     * @var \ACP3\Modules\ACP3\Categories\Model\CategoriesModel
      */
-    private $httpCacheStore;
+    private $categoriesModel;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Http\RedirectResponse $redirectResponse,
-        Core\NestedSet\Operation\Sort $sortOperation,
         CategoryRepository $categoriesRepository,
-        Psr6Store $httpCacheStore
+        CategoriesModel $categoriesModel
     ) {
         parent::__construct($context);
 
         $this->categoriesRepository = $categoriesRepository;
-        $this->sortOperation = $sortOperation;
         $this->redirectResponse = $redirectResponse;
-        $this->httpCacheStore = $httpCacheStore;
+        $this->categoriesModel = $categoriesModel;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(int $id, string $action)
     {
-        if ($this->categoriesRepository->resultExists($id) === true) {
-            $this->sortOperation->execute($id, $action);
-
-            $this->httpCacheStore->clear();
+        if (($action === 'up' || $action === 'down') && $this->categoriesRepository->resultExists($id) === true) {
+            if ($action === 'up') {
+                $this->categoriesModel->moveUp($id);
+            } else {
+                $this->categoriesModel->moveDown($id);
+            }
 
             return $this->redirectResponse->temporary('acp/categories');
         }

@@ -45,6 +45,7 @@ services:
       - '@permissions.nested_set.operation.insert'
       - '@permissions.nested_set.operation.edit'
       - '@permissions.nested_set.operation.delete'
+      - '@permissions.nested_set.operation.sort'
 
   permissions.model.rules_model:
     class: ACP3\Modules\ACP3\Permissions\Model\RulesModel

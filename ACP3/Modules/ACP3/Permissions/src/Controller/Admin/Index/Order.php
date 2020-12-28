@@ -17,31 +17,25 @@ class Order extends Core\Controller\AbstractFrontendAction
      */
     private $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
-     */
-    private $permissionsCache;
-    /**
-     * @var Core\NestedSet\Operation\Sort
-     */
-    private $sortOperation;
-    /**
      * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirectResponse;
+    /**
+     * @var \ACP3\Modules\ACP3\Permissions\Model\RolesModel
+     */
+    private $rolesModel;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Core\Http\RedirectResponse $redirectResponse,
-        Core\NestedSet\Operation\Sort $sortOperation,
         Permissions\Model\Repository\RoleRepository $roleRepository,
-        Permissions\Cache $permissionsCache
+        Permissions\Model\RolesModel $rolesModel
     ) {
         parent::__construct($context);
 
         $this->roleRepository = $roleRepository;
-        $this->permissionsCache = $permissionsCache;
-        $this->sortOperation = $sortOperation;
         $this->redirectResponse = $redirectResponse;
+        $this->rolesModel = $rolesModel;
     }
 
     /**
@@ -51,10 +45,12 @@ class Order extends Core\Controller\AbstractFrontendAction
      */
     public function execute(int $id, string $action)
     {
-        if ($this->roleRepository->roleExists($id) === true) {
-            $this->sortOperation->execute($id, $action);
-
-            $this->permissionsCache->getCacheDriver()->deleteAll();
+        if (($action === 'up' || $action === 'down') && $this->roleRepository->roleExists($id) === true) {
+            if ($action === 'up') {
+                $this->rolesModel->moveUp($id);
+            } else {
+                $this->rolesModel->moveDown($id);
+            }
 
             return $this->redirectResponse->temporary('acp/permissions');
         }

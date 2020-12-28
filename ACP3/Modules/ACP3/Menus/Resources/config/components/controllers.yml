@@ -86,7 +86,5 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.http.redirect_response'
-      - '@menus.nested_set.operation.sort'
       - '@menus.model.menuitemrepository'
-      - '@menus.cache'
-      - '@http_cache_store'
+      - '@menus.model.menu_items_model'

@@ -53,9 +53,8 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.http.redirect_response'
-      - '@permissions.nested_set.operation.sort'
       - '@permissions.model.rolerepository'
-      - '@permissions.cache'
+      - '@permissions.model.roles_model'
 
   permissions.controller.admin.resources.create:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Create

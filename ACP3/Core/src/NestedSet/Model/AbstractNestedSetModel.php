@@ -10,28 +10,34 @@ namespace ACP3\Core\NestedSet\Model;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\NestedSet\Operation\Delete;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
+use ACP3\Core\NestedSet\Operation\Sort;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @property \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository $repository
  */
-abstract class AbstractNestedSetModel extends AbstractModel
+abstract class AbstractNestedSetModel extends AbstractModel implements SortingAwareInterface
 {
     /**
-     * @var Insert
+     * @var \ACP3\Core\NestedSet\Operation\Insert
      */
     protected $insertOperation;
     /**
-     * @var Edit
+     * @var \ACP3\Core\NestedSet\Operation\Edit
      */
     protected $editOperation;
     /**
-     * @var Delete
+     * @var \ACP3\Core\NestedSet\Operation\Delete
      */
     protected $deleteOperation;
+    /**
+     * @var \ACP3\Core\NestedSet\Operation\Sort
+     */
+    private $sortOperation;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -39,13 +45,15 @@ abstract class AbstractNestedSetModel extends AbstractModel
         AbstractRepository $repository,
         Insert $insertOperation,
         Edit $editOperation,
-        Delete $deleteOperation
+        Delete $deleteOperation,
+        Sort $sortOperation
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
 
         $this->insertOperation = $insertOperation;
         $this->editOperation = $editOperation;
         $this->deleteOperation = $deleteOperation;
+        $this->sortOperation = $sortOperation;
     }
 
     /**
@@ -119,5 +127,45 @@ abstract class AbstractNestedSetModel extends AbstractModel
         );
 
         return $affectedRows;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function moveUp(int $id): void
+    {
+        $this->move($id, 'up');
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function moveDown(int $id): void
+    {
+        $this->move($id, 'down');
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function move(int $id, string $direction): void
+    {
+        $this->dispatchBeforeSaveEvent($this->getRepository(), $this->createModelSaveEvent(
+            $id,
+            false,
+            true
+        ));
+
+        $this->sortOperation->execute($id, $direction);
+
+        $this->dispatchAfterSaveEvent($this->getRepository(), $this->createModelSaveEvent(
+            $id,
+            false,
+            true
+        ));
     }
 }

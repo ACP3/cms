@@ -25,3 +25,4 @@ services:
       - '@menus.nested_set.operation.insert'
       - '@menus.nested_set.operation.edit'
       - '@menus.nested_set.operation.delete'
+      - '@menus.nested_set.operation.sort'
