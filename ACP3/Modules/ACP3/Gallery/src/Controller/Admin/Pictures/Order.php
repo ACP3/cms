@@ -52,7 +52,7 @@ class Order extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\ConnectionException
