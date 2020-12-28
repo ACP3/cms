@@ -1,2 +1,1 @@
 {block CONTENT}{/block}
-<!-- JAVASCRIPTS -->
