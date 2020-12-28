@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.9.0] - 2020-12-28
 ### Added
 - [Core] Extended the ``ControllerActionRequestEvent`` with the ability to set a response
 - [Core] Implemented the ``TerminableInterface`` to allow running some longer processes without affecting the client's response times
@@ -136,7 +136,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - removed all deprecated code
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.8.0...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.9.0...5.x
+[5.9.0]: https://gitlab.com/ACP3/cms/compare/v5.8.0...v5.9.0
 [5.8.0]: https://gitlab.com/ACP3/cms/compare/v5.7.0...v5.8.0
 [5.7.0]: https://gitlab.com/ACP3/cms/compare/v5.6.0...v5.7.0
 [5.6.0]: https://gitlab.com/ACP3/cms/compare/v5.5.1...v5.6.0
