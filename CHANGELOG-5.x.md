@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.9.2] - 2020-12-29
 ### Fixed
 - Fixed installing the Composer dependencies via the CI pipeline
 
@@ -144,7 +144,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - removed all deprecated code
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.9.1...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.9.2...5.x
+[5.9.2]: https://gitlab.com/ACP3/cms/compare/v5.9.1...v5.9.2
 [5.9.1]: https://gitlab.com/ACP3/cms/compare/v5.9.0...v5.9.1
 [5.9.0]: https://gitlab.com/ACP3/cms/compare/v5.8.0...v5.9.0
 [5.8.0]: https://gitlab.com/ACP3/cms/compare/v5.7.0...v5.8.0
