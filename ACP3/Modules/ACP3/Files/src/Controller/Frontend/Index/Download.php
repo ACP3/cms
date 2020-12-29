@@ -69,6 +69,7 @@ class Download extends Core\Controller\AbstractFrontendAction
                 $filename = $this->stringFormatter->makeStringUrlSafe($file['title']) . $ext;
 
                 $response = new BinaryFileResponse($path . $file['file']);
+                $response->setMaxAge(0);
                 $response->setContentDisposition(
                     ResponseHeaderBag::DISPOSITION_ATTACHMENT,
                     $filename

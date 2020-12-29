@@ -26,6 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\HttpKernel\DependencyInjection\FragmentRendererPass;
+use Symfony\Component\Mime\DependencyInjection\AddMimeTypeGuesserPass;
 
 final class ServiceContainerBuilder extends ContainerBuilder
 {
@@ -75,6 +76,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterInstallersCompilerPass())
             ->addCompilerPass(new RegisterContentDecoratorPass())
             ->addCompilerPass(new RegisterColumnTypesCompilerPass())
+            ->addCompilerPass(new AddMimeTypeGuesserPass())
             ->addCompilerPass(new FragmentRendererPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
