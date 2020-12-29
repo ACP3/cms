@@ -24,7 +24,7 @@ build:composer:
       - ${COMPOSER_HOME}
       - vendor
   script:
-    - composer install -n --prefer-dist
+    - composer install -n --prefer-dist --ignore-platform-reqs
   artifacts:
     paths:
       - vendor
