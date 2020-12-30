@@ -84,6 +84,7 @@ services:
   http_cache_factory:
     class: ACP3\Core\Application\HttpCacheFactory
     arguments:
+      - '@core.event_dispatcher'
       - '@kernel'
       - '@http_cache_store'
       - '@esi'

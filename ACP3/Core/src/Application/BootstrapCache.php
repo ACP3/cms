@@ -15,6 +15,7 @@ use FOS\HttpCache\SymfonyCache\CustomTtlListener;
 use FOS\HttpCache\SymfonyCache\DebugListener;
 use FOS\HttpCache\SymfonyCache\EventDispatchingHttpCache;
 use FOS\HttpCache\SymfonyCache\PurgeListener;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpCache\HttpCache;
 use Symfony\Component\HttpKernel\HttpCache\StoreInterface;
@@ -29,12 +30,15 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
      * {@inheritdoc}
      */
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
         HttpKernelInterface $kernel,
         StoreInterface $store,
         SurrogateInterface $surrogate = null,
         array $options = []
     ) {
         parent::__construct($kernel, $store, $surrogate, $options);
+
+        $this->eventDispatcher = $eventDispatcher;
 
         $this->addSubscriber(new CustomTtlListener());
         $this->addSubscriber(new PurgeListener());

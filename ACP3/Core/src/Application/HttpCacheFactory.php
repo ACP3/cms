@@ -8,6 +8,7 @@
 namespace ACP3\Core\Application;
 
 use ACP3\Core\Environment\ApplicationMode;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\HttpCache\StoreInterface;
 use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -30,8 +31,13 @@ class HttpCacheFactory
      * @var string
      */
     private $applicationMode;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
         HttpKernelInterface $httpKernel,
         StoreInterface $store,
         SurrogateInterface $surrogate,
@@ -41,11 +47,13 @@ class HttpCacheFactory
         $this->store = $store;
         $this->surrogate = $surrogate;
         $this->applicationMode = $applicationMode;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(): BootstrapCache
     {
         return new BootstrapCache(
+            $this->eventDispatcher,
             $this->httpKernel,
             $this->store,
             $this->surrogate,
