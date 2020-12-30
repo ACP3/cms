@@ -4,7 +4,7 @@ FROM php:${PHP_VERSION:+${PHP_VERSION}-}fpm
 RUN apt-get update -yqq && \
     apt-get install git \
                     zlib1g-dev \
-                    unzip \
+                    libzip-dev \
                     libpng-dev \
                     libfreetype6-dev \
                     libjpeg62-turbo-dev \
