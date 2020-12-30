@@ -73,3 +73,8 @@ services:
       - '@core.helpers.string_formatter'
       - '@core.breadcrumb.title'
       - '@core.http.request'
+
+  core.assets.event_listener.static_assets_listener:
+    class: ACP3\Core\Assets\EventListener\StaticAssetsListener
+    tags:
+      - { name: core.eventSubscriber }

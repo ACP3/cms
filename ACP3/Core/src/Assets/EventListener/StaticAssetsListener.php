@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Application\BootstrapCache\Event\Listener;
+namespace ACP3\Core\Assets\EventListener;
 
 use ACP3\Core\View\Renderer\Smarty\Filters\MoveToBottom;
 use FOS\HttpCache\SymfonyCache\CacheEvent;

@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Application\BootstrapCache\Event\Listener\StaticAssetsListener;
 use ACP3\Core\Application\BootstrapCache\Event\Listener\UserContextListener;
 use ACP3\Core\Session\SessionConstants;
 use FOS\HttpCache\SymfonyCache\CacheInvalidation;
@@ -46,7 +45,6 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
             'user_hash_uri' => '/widget/users/index/hash/',
             'session_name_prefix' => SessionConstants::SESSION_NAME,
         ]));
-        $this->addSubscriber(new StaticAssetsListener());
         if (isset($options['debug']) && $options['debug']) {
             $this->addSubscriber(new DebugListener());
         }
