@@ -1,43 +1,39 @@
 version: "3.7"
 
 services:
-  php:
+  app:
     build:
       context: './build/docker/php/'
       args:
-        PHP_VERSION: ${PHP_VERSION}
+        PHP_VERSION: 7.2
     depends_on:
-     - mysql
+     - db
     networks:
       - acp3-cms
     volumes:
       - .:/var/www/html/
-    container_name: acp3-php
-    environment:
-      - ACP3_APPLICATION_MODE=dev
+    container_name: acp3-app
+    restart: always
 
-  apache:
+  web:
     build:
       context: './build/docker/apache/'
       args:
-        APACHE_VERSION: ${APACHE_VERSION}
+        APACHE_VERSION: 2.4
     depends_on:
-      - php
+      - app
     networks:
       - acp3-cms
-    ports:
-      - "80:80"
     volumes:
       - ./build/docker/apache/vhost.conf:/usr/local/apache2/conf/sites-enabled/vhost.conf:ro
       - ./:/var/www/html/:ro
-    container_name: acp3-apache
+    container_name: acp3-web
+    restart: always
 
-  mysql:
-    image: mysql:${MYSQL_VERSION:-latest}
+  db:
+    image: mysql:5.7
     networks:
       - acp3-cms
-    ports:
-      - "3306:3306"
     volumes:
       - acp3-data-mysql:/var/lib/mysql/
       - ./build/docker/mysql/dump:/docker-entrypoint-initdb.d
@@ -45,7 +41,8 @@ services:
       - MYSQL_DATABASE=acp3
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-    container_name: acp3-mysql
+    container_name: acp3-db
+    restart: always
 
 volumes:
   acp3-data-mysql:

@@ -4,6 +4,7 @@
 /.php_cs.cache
 /.phpstan-cache
 /.component-paths.json
+/docker-compose.override.yml
 /ACP3/config.yml
 /build/docker/mysql/dump/
 /build/logs/
