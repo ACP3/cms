@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Application\BootstrapCache\Event\Listener;
+namespace ACP3\Modules\ACP3\Users\Event\Listener;
 
 use ACP3\Core\Authentication\Model\AuthenticationModelInterface;
 use Symfony\Component\HttpFoundation\Request;

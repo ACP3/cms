@@ -7,8 +7,6 @@
 
 namespace ACP3\Core\Application;
 
-use ACP3\Core\Application\BootstrapCache\Event\Listener\UserContextListener;
-use ACP3\Core\Session\SessionConstants;
 use FOS\HttpCache\SymfonyCache\CacheInvalidation;
 use FOS\HttpCache\SymfonyCache\CustomTtlListener;
 use FOS\HttpCache\SymfonyCache\DebugListener;
@@ -41,10 +39,6 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
 
         $this->addSubscriber(new CustomTtlListener());
         $this->addSubscriber(new PurgeListener());
-        $this->addSubscriber(new UserContextListener([
-            'user_hash_uri' => '/widget/users/index/hash/',
-            'session_name_prefix' => SessionConstants::SESSION_NAME,
-        ]));
         if (isset($options['debug']) && $options['debug']) {
             $this->addSubscriber(new DebugListener());
         }

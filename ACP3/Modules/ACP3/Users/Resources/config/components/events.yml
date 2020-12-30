@@ -32,3 +32,11 @@ services:
       - '@core.helpers.secure'
     tags:
       - { name: core.eventListener, event: users.model.users.prepare_data }
+
+  users.events.user_context_listener:
+    class: ACP3\Modules\ACP3\Users\Event\Listener\UserContextListener
+    arguments:
+      - user_hash_uri: '/widget/users/index/hash/'
+        session_name_prefix: !php/const ACP3\Core\Session\SessionConstants::SESSION_NAME
+    tags:
+      - { name: core.eventSubscriber }
