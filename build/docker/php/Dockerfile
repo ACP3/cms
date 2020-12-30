@@ -24,5 +24,7 @@ RUN apt-get update -yqq && \
 
 RUN usermod -u 1000 www-data
 
-RUN curl --silent --show-error https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+ && php composer-setup.php --quiet --1 \
+ && mv composer.phar /usr/local/bin/composer \
+ && rm composer-setup.php
