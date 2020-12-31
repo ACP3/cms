@@ -16,19 +16,16 @@ class MoveToBottom extends AbstractMoveElementFilter
     protected const PLACEHOLDER = '<!-- JAVASCRIPTS -->';
 
     /**
-     * @var \ACP3\Core\Assets\Minifier\AbstractMinifier
+     * @var \ACP3\Core\Assets\Minifier\JavaScript
      */
-    protected $minifier;
+    private $minifier;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
 
-    /**
-     * @param \ACP3\Core\Assets\Minifier\MinifierInterface $minifier
-     */
     public function __construct(
-        Assets\Minifier\MinifierInterface $minifier,
+        Assets\Minifier\JavaScript $minifier,
         RequestInterface $request
     ) {
         $this->minifier = $minifier;
