@@ -38,3 +38,10 @@ services:
       - '@system.helpers.update_check'
     tags:
       - { name: core.eventListener, event: layout.content_before }
+
+  system.event_listener.enable_libraries_listener:
+    class: ACP3\Modules\ACP3\System\Event\Listener\EnableLibrariesListener
+    arguments:
+      - '@core.assets.libraries'
+    tags:
+      - { name: core.eventSubscriber }

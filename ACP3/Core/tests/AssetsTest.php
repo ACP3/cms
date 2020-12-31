@@ -7,6 +7,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -35,6 +36,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
             ->method('getDesignPathInternal')
             ->willReturn(ACP3_ROOT_DIR . '/tests/designs/acp3/');
         $libraries = new Assets\Libraries($this->requestMock, $this->eventDispatcherMock);
+        $libraries->addLibrary(new LibraryEntity('bootstrap'));
 
         $this->assets = new Assets($theme, $libraries);
     }
@@ -49,7 +51,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
     {
         $libraries = $this->assets->getEnabledLibrariesAsString();
 
-        $expected = \explode(',', 'polyfill,jquery,bootstrap,font-awesome');
+        $expected = \explode(',', 'bootstrap');
         $actual = \explode(',', $libraries);
 
         \sort($expected);
