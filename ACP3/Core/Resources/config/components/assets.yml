@@ -76,5 +76,10 @@ services:
 
   core.assets.event_listener.static_assets_listener:
     class: ACP3\Core\Assets\EventListener\StaticAssetsListener
+    arguments:
+      - '@core.assets.minifier.css'
+      - '@core.assets.minifier.deferrable_css'
+      - '@core.assets.minifier.javascript'
+      - '@request_stack'
     tags:
       - { name: core.eventSubscriber }
