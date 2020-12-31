@@ -67,8 +67,6 @@ services:
       - ['bootstrap', 'jquery']
       - ['loading-layer.min.css']
       - ['partials/ajax-form.js']
-      - null
-      - true
 
   system.assets.bootbox:
     class: ACP3\Core\Assets\Entity\LibraryEntity
