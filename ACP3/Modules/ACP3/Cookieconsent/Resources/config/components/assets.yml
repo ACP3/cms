@@ -1,0 +1,13 @@
+services:
+  cookieconsent.assets.klaro:
+    class: ACP3\Core\Assets\Entity\LibraryEntity
+    arguments:
+      - 'consentManager'
+      - false
+      - []
+      - ['klaro.css']
+      - ['klaro-config.js', 'klaro-no-css.js']
+      - 'cookieconsent'
+      - true
+    tags:
+      - { name: 'acp3.assets.library' }

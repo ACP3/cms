@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\DependencyInjection;
 
+use ACP3\Core\Assets\DependencyInjection\RegisterAssetLibraryPass;
 use ACP3\Core\Authentication\DependencyInjection\RegisterAuthenticationsCompilerPass;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
@@ -68,6 +69,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
                 )
             )
             ->addCompilerPass(new RegisterAuthenticationsCompilerPass())
+            ->addCompilerPass(new RegisterAssetLibraryPass())
             ->addCompilerPass(new RegisterSmartyPluginsPass())
             ->addCompilerPass(new RegisterColumnRendererPass())
             ->addCompilerPass(new RegisterValidationRulesPass())
