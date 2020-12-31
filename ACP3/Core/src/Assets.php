@@ -41,11 +41,11 @@ class Assets
         $this->designXml = \simplexml_load_string(\file_get_contents($theme->getDesignPathInternal() . 'info.xml'));
         $this->libraries = $libraries;
 
+        $this->libraries->dispatchAddLibraryEvent();
+
         if (isset($this->designXml->use_bootstrap) && (string) $this->designXml->use_bootstrap === 'true') {
             $this->libraries->enableLibraries(['bootstrap']);
         }
-
-        $this->libraries->dispatchAddLibraryEvent();
     }
 
     public function fetchAdditionalThemeCssFiles(): array
