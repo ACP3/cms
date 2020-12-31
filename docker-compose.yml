@@ -13,7 +13,7 @@ services:
     volumes:
       - .:/var/www/html/
     container_name: acp3-app
-    restart: always
+    restart: on-failure
 
   web:
     build:
@@ -28,7 +28,7 @@ services:
       - ./build/docker/apache/vhost.conf:/usr/local/apache2/conf/sites-enabled/vhost.conf:ro
       - ./:/var/www/html/:ro
     container_name: acp3-web
-    restart: always
+    restart: on-failure
 
   db:
     image: mysql:5.7
@@ -42,7 +42,7 @@ services:
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     container_name: acp3-db
-    restart: always
+    restart: on-failure
 
 volumes:
   acp3-data-mysql:
