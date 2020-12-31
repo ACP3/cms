@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- [Core] made it possible to register frontend libraries via the new DI container tag ``acp3.assets.library``
+
+### Changed
+- [Core] Moved adding the frontend assets from the ``MoveToo*``-output filters into the `StaticAssetsListener`
+- [Core] Moved the ``UserContextListener`` into the users module
+- [Core] Integrate the HttpCache's EventDispatcher into the one from DI container
+- [System] The stylesheet of the ``ajax-form`` library is not deferrable anymore to fix a minor layout flash
+
+### Deprecations
+- [Core] Deprecated the ``ACP3\Core\View\Renderer\Smarty\Filters\AbstractMoveElementFilter``, of the `MoveTo*`-output filters within the core module are obsolete now
+
+### Fixed
+- [Newsletter] Fixed subscribing the newsletter
+
 ## [5.9.2] - 2020-12-29
 ### Fixed
 - Fixed installing the Composer dependencies via the CI pipeline
