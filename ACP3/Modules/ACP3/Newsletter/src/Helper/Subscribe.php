@@ -201,7 +201,6 @@ class Subscribe
     protected function insertNewAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
     {
         $insertValues = [
-            'id' => '',
             'mail' => $emailAddress,
             'salutation' => $salutation,
             'first_name' => $firstName,

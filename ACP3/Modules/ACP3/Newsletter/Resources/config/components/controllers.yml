@@ -119,6 +119,15 @@ services:
       - '@core.context.frontend'
       - '@newsletter.view_providers.newsletter_subscribe'
 
+  newsletter.controller.frontend.index.index_post:
+    class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\IndexPost
+    arguments:
+      - '@core.context.frontend'
+      - '@core.modules.helper.action'
+      - '@core.helpers.alerts'
+      - '@newsletter.helper.subscribe'
+      - '@newsletter.validation.subscribe_form_validation'
+
   newsletter.controller.frontend.index.unsubscribe:
     class: ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index\Unsubscribe
     arguments:
