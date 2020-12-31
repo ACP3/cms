@@ -1,7 +1,7 @@
 services:
   _defaults:
     tags:
-    - { name: acp3.controller.action }
+      - { name: acp3.controller.action }
 
   gallery.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
@@ -161,5 +161,5 @@ services:
   gallery.controller.widget.index.pictures:
     class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Pictures
     arguments:
-    - '@core.context.widget'
-    - '@gallery.view_providers.gallery_picture_list_widget'
+      - '@core.context.widget'
+      - '@gallery.view_providers.gallery_picture_list_widget'

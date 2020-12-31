@@ -2,8 +2,8 @@ services:
   core.acl:
     class: ACP3\Core\ACL
     arguments:
-    - '@users.model.user_model'
-    - '@core.modules'
-    - '@core.controller.helper.controller_action_exists'
-    - '@permissions.model.userrolerepository'
-    - '@permissions.cache'
+      - '@users.model.user_model'
+      - '@core.modules'
+      - '@core.controller.helper.controller_action_exists'
+      - '@permissions.model.userrolerepository'
+      - '@permissions.cache'

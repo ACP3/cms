@@ -12,7 +12,7 @@ services:
   menus.installer.sample_data:
     class: ACP3\Modules\ACP3\Menus\Installer\SampleData
     arguments:
-    - '@core.modules.schemaHelper'
-    - '@core.i18n.translator'
+      - '@core.modules.schemaHelper'
+      - '@core.i18n.translator'
     tags:
       - { name: core.installer.sample_data }

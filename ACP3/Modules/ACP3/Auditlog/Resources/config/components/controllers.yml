@@ -1,16 +1,16 @@
 services:
   _defaults:
     tags:
-    - { name: acp3.controller.action }
+      - { name: acp3.controller.action }
 
   auditlog.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index\Index
     arguments:
-    - '@core.context.frontend'
-    - '@auditlog.view_providers.data_grid'
+      - '@core.context.frontend'
+      - '@auditlog.view_providers.data_grid'
 
   auditlog.controller.admin.index.table:
     class: ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index\Table
     arguments:
-    - '@core.context.frontend'
-    - '@auditlog.view_providers.data_grid_by_table'
+      - '@core.context.frontend'
+      - '@auditlog.view_providers.data_grid_by_table'

@@ -5,4 +5,4 @@ services:
       - '@core.assets.page_css_classes'
       - '@core.http.request'
     tags:
-    - { name: smarty.plugin.filter, filterType: output }
+      - { name: smarty.plugin.filter, filterType: output }

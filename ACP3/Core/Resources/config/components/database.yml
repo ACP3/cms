@@ -6,7 +6,7 @@ services:
       - '@core.db.logger'
       - '@core.cache.cache_driver_factory'
       - '%core.environment%'
-      - { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%'}
+      - { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%' }
       - '%db_table_prefix%'
 
   core.db.logger:

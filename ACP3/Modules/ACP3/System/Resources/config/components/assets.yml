@@ -53,22 +53,22 @@ services:
   system.assets.bootstrap:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-     - 'bootstrap'
-     - false
-     - ['jquery']
-     - ['bootstrap.min.css']
-     - ['bootstrap.min.js']
+      - 'bootstrap'
+      - false
+      - ['jquery']
+      - ['bootstrap.min.css']
+      - ['bootstrap.min.js']
 
   system.assets.ajax-form:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-     - 'ajax-form'
-     - false
-     - ['bootstrap', 'jquery']
-     - ['loading-layer.min.css']
-     - ['partials/ajax-form.js']
-     - null
-     - true
+      - 'ajax-form'
+      - false
+      - ['bootstrap', 'jquery']
+      - ['loading-layer.min.css']
+      - ['partials/ajax-form.js']
+      - null
+      - true
 
   system.assets.bootbox:
     class: ACP3\Core\Assets\Entity\LibraryEntity

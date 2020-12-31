@@ -4,7 +4,7 @@ services:
     parent: core.validator.abstract
 
   comments.validation.admin_form_validation:
-    class:  ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation
+    class: ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation
     parent: core.validator.abstract
 
   comments.validation.admin_settings_form_validation:

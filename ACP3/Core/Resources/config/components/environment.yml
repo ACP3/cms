@@ -6,6 +6,6 @@ services:
   core.environment.theme:
     class: ACP3\Core\Environment\Theme
     arguments:
-    - '@core.environment.application_path'
-    - '@core.config'
-    - '@core.xml'
+      - '@core.environment.application_path'
+      - '@core.config'
+      - '@core.xml'

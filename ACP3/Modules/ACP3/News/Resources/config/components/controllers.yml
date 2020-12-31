@@ -1,7 +1,7 @@
 services:
   _defaults:
     tags:
-    - { name: acp3.controller.action }
+      - { name: acp3.controller.action }
 
   news.controller.admin.index.create:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create

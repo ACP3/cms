@@ -2,16 +2,16 @@ services:
   core.context.widget:
     class: ACP3\Core\Controller\Context\WidgetContext
     arguments:
-    - '@service_container'
-    - '@core.i18n.translator'
-    - '@core.http.request'
-    - '@core.view'
-    - '@core.config'
-    - '@core.environment.application_path'
-    - '@core.http.response'
+      - '@service_container'
+      - '@core.i18n.translator'
+      - '@core.http.request'
+      - '@core.view'
+      - '@core.config'
+      - '@core.environment.application_path'
+      - '@core.http.response'
 
   core.context.frontend:
     class: ACP3\Core\Controller\Context\FrontendContext
     arguments:
-    - '@core.context.widget'
-    - '@core.event_dispatcher'
+      - '@core.context.widget'
+      - '@core.event_dispatcher'

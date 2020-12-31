@@ -1,7 +1,7 @@
 services:
   _defaults:
     tags:
-    - { name: acp3.controller.action }
+      - { name: acp3.controller.action }
 
   system.controller.admin.extensions.designs:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Designs
@@ -49,19 +49,19 @@ services:
   system.controller.admin.index.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Index
     arguments:
-    - '@core.context.frontend'
+      - '@core.context.frontend'
 
   system.controller.admin.maintenance.cache:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache
     arguments:
-    - '@core.context.frontend'
-    - '@core.helpers.redirect'
-    - '@system.services.cache_clear_service'
+      - '@core.context.frontend'
+      - '@core.helpers.redirect'
+      - '@system.services.cache_clear_service'
 
   system.controller.admin.maintenance.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index
     arguments:
-    - '@core.context.frontend'
+      - '@core.context.frontend'
 
   system.controller.admin.maintenance.update_check:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck

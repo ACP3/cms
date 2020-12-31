@@ -1,7 +1,7 @@
 services:
   _defaults:
     tags:
-    - { name: acp3.controller.action }
+      - { name: acp3.controller.action }
 
   seo.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create

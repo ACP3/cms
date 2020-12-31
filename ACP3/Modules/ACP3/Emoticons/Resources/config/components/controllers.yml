@@ -1,7 +1,7 @@
 services:
   _defaults:
     tags:
-    - { name: acp3.controller.action }
+      - { name: acp3.controller.action }
 
   emoticons.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index\Create

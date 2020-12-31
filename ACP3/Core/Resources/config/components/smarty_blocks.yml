@@ -2,9 +2,9 @@ services:
   smarty.plugin.javascripts:
     class: ACP3\Core\View\Renderer\Smarty\Blocks\Javascripts
     tags:
-    - { name: smarty.plugin.block, pluginName: javascripts }
+      - { name: smarty.plugin.block, pluginName: javascripts }
 
   smarty.plugin.stylesheets:
     class: ACP3\Core\View\Renderer\Smarty\Blocks\Stylesheets
     tags:
-    - { name: smarty.plugin.block, pluginName: stylesheets }
+      - { name: smarty.plugin.block, pluginName: stylesheets }

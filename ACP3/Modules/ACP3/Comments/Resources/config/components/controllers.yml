@@ -1,7 +1,7 @@
 services:
   _defaults:
     tags:
-    - { name: acp3.controller.action }
+      - { name: acp3.controller.action }
 
   comments.controller.admin.details.delete:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Delete

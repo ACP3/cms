@@ -18,5 +18,5 @@ services:
   categories.helpers.upload:
     class: ACP3\Core\Helpers\Upload
     arguments:
-    - '@core.environment.application_path'
-    - !php/const ACP3\Modules\ACP3\Categories\Installer\Schema::MODULE_NAME
+      - '@core.environment.application_path'
+      - !php/const ACP3\Modules\ACP3\Categories\Installer\Schema::MODULE_NAME

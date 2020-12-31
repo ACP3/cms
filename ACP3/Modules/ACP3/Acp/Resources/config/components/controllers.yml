@@ -6,5 +6,5 @@ services:
   acp.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Acp\Controller\Admin\Index\Index
     arguments:
-    - '@core.context.frontend'
-    - '@acl.view_providers.module_list'
+      - '@core.context.frontend'
+      - '@acl.view_providers.module_list'

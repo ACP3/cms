@@ -1,7 +1,7 @@
 services:
   _defaults:
     tags:
-    - { name: acp3.controller.action }
+      - { name: acp3.controller.action }
 
   installer.controller.installer.index.index:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\Index
@@ -25,7 +25,7 @@ services:
   installer.controller.installer.index.available_databases:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\AvailableDatabases
     arguments:
-    - '@core.context.install'
+      - '@core.context.install'
 
   installer.controller.installer.index.install:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\Install

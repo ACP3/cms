@@ -103,12 +103,12 @@ services:
   core.modules.helper.action:
     class: ACP3\Core\Modules\Helper\Action
     arguments:
-    - '@core.db'
-    - '@core.i18n.translator'
-    - '@core.http.request'
-    - '@core.router'
-    - '@core.helpers.alerts'
-    - '@core.helpers.redirect'
+      - '@core.db'
+      - '@core.i18n.translator'
+      - '@core.http.request'
+      - '@core.router'
+      - '@core.helpers.alerts'
+      - '@core.helpers.redirect'
 
   slugify:
     class: Cocur\Slugify\Slugify

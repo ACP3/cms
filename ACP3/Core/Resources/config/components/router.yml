@@ -2,6 +2,6 @@ services:
   core.router:
     class: ACP3\Core\Router\Router
     arguments:
-    - '@core.http.request'
-    - '@core.environment.application_path'
-    - '@core.config'
+      - '@core.http.request'
+      - '@core.environment.application_path'
+      - '@core.config'

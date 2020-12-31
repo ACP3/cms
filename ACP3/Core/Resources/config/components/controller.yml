@@ -18,7 +18,7 @@ services:
   core.controller.helper.controller_action_exists:
     class: ACP3\Core\Controller\Helper\ControllerActionExists
     arguments:
-    - '@core.controller.controller_action_locator'
+      - '@core.controller.controller_action_locator'
 
   core.modules.helper.controllerActionExists:
     alias: core.controller.helper.controller_action_exists

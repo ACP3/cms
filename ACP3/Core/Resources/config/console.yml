@@ -25,9 +25,9 @@ services:
   acp3.core.console.command.modules_update_command:
     class: ACP3\Core\Console\Command\ModulesUpdateCommand
     arguments:
-    - '@core.installer.model.schema_update_model'
+      - '@core.installer.model.schema_update_model'
     tags:
-    - { name: acp3.console.command }
+      - { name: acp3.console.command }
 
   acp3.core.console.command.component_paths_command:
     class: ACP3\Core\Console\Command\ComponentPathsCommand
