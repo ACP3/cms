@@ -1,5 +1,5 @@
 services:
-  cookieconsent.assets.klaro:
+  cookieconsent.assets.cookieconsent:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
       - 'consentManager'
