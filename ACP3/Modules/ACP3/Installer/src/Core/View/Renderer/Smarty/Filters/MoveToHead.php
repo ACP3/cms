@@ -7,8 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters;
 
-use ACP3\Core\View\Renderer\Smarty\Filters\AbstractMoveElementFilter;
-
 class MoveToHead extends AbstractMoveElementFilter
 {
     public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';

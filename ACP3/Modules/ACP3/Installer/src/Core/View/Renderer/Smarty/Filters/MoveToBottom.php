@@ -7,8 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters;
 
-use ACP3\Core\View\Renderer\Smarty\Filters\AbstractMoveElementFilter;
-
 class MoveToBottom extends AbstractMoveElementFilter
 {
     public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
