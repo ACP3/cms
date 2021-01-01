@@ -14,6 +14,7 @@ stages:
   - build
   - test
   - release
+  - trigger
 
 build:composer:
   image: composer:1
@@ -209,3 +210,13 @@ release:generate-artifact:
     - tags
   dependencies:
     - build:composer
+
+trigger:update_check:
+  stage: trigger
+  trigger: ACP3/update-check
+  variables:
+    VERSION_NUMBER: $CI_COMMIT_TAG
+  only:
+    - tags
+  needs:
+    - release:generate-artifact
