@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- [Core] Fixed a regression introduced with version 5.10.1. We can't be thaaaat lazy about initializing the theme.
+
 ## [5.10.1] - 2021-01-01
 ### Changed
 - [Core] Reworked the `ACP3\Core\Assets` class, so that the theme initialization happens much later (and only when really necessary)
