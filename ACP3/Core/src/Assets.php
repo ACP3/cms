@@ -21,10 +21,6 @@ class Assets
      */
     private $additionalThemeJsFiles = [];
     /**
-     * @var string
-     */
-    private $enabledLibraries = '';
-    /**
      * @var \SimpleXMLElement
      */
     private $designXml;
@@ -62,7 +58,7 @@ class Assets
     /**
      * @return $this
      */
-    public function addCssFile(string $file): self
+    private function addCssFile(string $file): self
     {
         $this->additionalThemeCssFiles[] = $file;
 
@@ -83,7 +79,7 @@ class Assets
     /**
      * @return $this
      */
-    public function addJsFile(string $file): self
+    private function addJsFile(string $file): self
     {
         $this->additionalThemeJsFiles[] = $file;
 
@@ -91,6 +87,8 @@ class Assets
     }
 
     /**
+     * @deprecated To be removed with version 6.x. Use ACP3\Core\Assets\Libraries::getLibraries() instead.
+     *
      * @return Array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
      *
      * @throws \MJS\TopSort\CircularDependencyException
@@ -102,15 +100,13 @@ class Assets
     }
 
     /**
+     * @deprecated To be removed with version 6.x. Use ACP3\Core\Assets\Libraries::getEnabledLibrariesAsString() instead.
+     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getEnabledLibrariesAsString(): string
     {
-        if (empty($this->enabledLibraries)) {
-            $this->enabledLibraries = \implode(',', $this->libraries->getEnabledLibraries());
-        }
-
-        return $this->enabledLibraries;
+        return $this->libraries->getEnabledLibrariesAsString();
     }
 }

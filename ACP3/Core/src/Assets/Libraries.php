@@ -52,6 +52,10 @@ class Libraries
      */
     public function getLibraries(): array
     {
+        if (!$this->libraries) {
+            return [];
+        }
+
         $topSort = new StringSort();
         foreach ($this->libraries as $libraryName => $options) {
             $topSort->add($libraryName, $options->getDependencies());
@@ -139,6 +143,15 @@ class Libraries
         }
 
         return $enabledLibraries;
+    }
+
+    /**
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
+    public function getEnabledLibrariesAsString(): string
+    {
+        return \implode(',', $this->getEnabledLibraries());
     }
 
     private function includeInXmlHttpRequest(LibraryEntity $library): bool

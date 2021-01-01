@@ -72,4 +72,19 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
         $this->libraries->enableLibraries(['foobar']);
     }
+
+    public function testGetEnabledLibrariesAsString(): void
+    {
+        self::assertEquals('', $this->libraries->getEnabledLibrariesAsString());
+
+        $this->libraries->addLibrary(new LibraryEntity('foobar', false, [], ['foo.css']));
+        $this->libraries->enableLibraries(['foobar']);
+
+        self::assertEquals('foobar', $this->libraries->getEnabledLibrariesAsString());
+
+        $this->libraries->addLibrary(new LibraryEntity('baz', false, [], ['baz.css']));
+        $this->libraries->enableLibraries(['baz']);
+
+        self::assertEquals('foobar,baz', $this->libraries->getEnabledLibrariesAsString());
+    }
 }

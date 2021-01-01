@@ -41,7 +41,7 @@ class DeferrableCSS extends CSS
      */
     private function fetchLibraries(): void
     {
-        foreach ($this->assets->getLibraries() as $library) {
+        foreach ($this->libraries->getLibraries() as $library) {
             if ($library->isEnabled() === false || !$library->getCss() || !$library->isDeferrableCss()) {
                 continue;
             }

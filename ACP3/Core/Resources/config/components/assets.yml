@@ -17,9 +17,11 @@ services:
       - 'assets'
 
   core.assets.abstract_minifier:
+    class: ACP3\Core\Assets\Minifier\AbstractMinifier
     arguments:
       - '@core.assets.logger'
       - '@core.assets'
+      - '@core.assets.libraries'
       - '@core.environment.application_path'
       - '@core.cache.system'
       - '@core.config'

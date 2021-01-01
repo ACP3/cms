@@ -53,6 +53,10 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     protected $environment;
     /**
+     * @var \ACP3\Core\Assets\Libraries
+     */
+    protected $libraries;
+    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -60,6 +64,7 @@ abstract class AbstractMinifier implements MinifierInterface
     public function __construct(
         LoggerInterface $logger,
         Assets $assets,
+        Assets\Libraries $libraries,
         ApplicationPath $appPath,
         Cache $systemCache,
         SettingsInterface $config,
@@ -75,6 +80,7 @@ abstract class AbstractMinifier implements MinifierInterface
         $this->fileResolver = $fileResolver;
         $this->environment = $environment;
         $this->logger = $logger;
+        $this->libraries = $libraries;
     }
 
     abstract protected function getAssetGroup(): string;
@@ -98,7 +104,7 @@ abstract class AbstractMinifier implements MinifierInterface
     {
         $filename = $this->config->getSettings(Schema::MODULE_NAME)['design'];
         $filename .= '_' . $layout;
-        $filename .= '_' . $this->assets->getEnabledLibrariesAsString();
+        $filename .= '_' . $this->libraries->getEnabledLibrariesAsString();
         $filename .= '_' . $this->getAssetGroup();
 
         return \md5($filename);

@@ -52,7 +52,7 @@ class JavaScript extends AbstractMinifier
      */
     protected function fetchLibraries(): void
     {
-        foreach ($this->assets->getLibraries() as $library) {
+        foreach ($this->libraries->getLibraries() as $library) {
             if ($library->isEnabled() === false || !$library->getJs()) {
                 continue;
             }
