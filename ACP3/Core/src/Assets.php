@@ -29,9 +29,6 @@ class Assets
      */
     private $theme;
 
-    /**
-     * Checks, whether the current design uses Bootstrap or not.
-     */
     public function __construct(ThemePathInterface $theme, Libraries $libraries)
     {
         $this->theme = $theme;
