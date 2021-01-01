@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- [Core] Reworked the `ACP3\Core\Assets` class, so that the theme initialization happens much later (and only when really necessary)
+
+### Deprecations
+- [Core] Deprecated the method ``ACP3\Core\Assets::getLibraries()``. Use `ACP3\Core\Assets\Libraries::getLibraries()` instead
+- [Core] Deprecated the method ``ACP3\Core\Assets::getEnabledLibrariesAsString()``. Use `ACP3\Core\Assets\Libraries::getEnabledLibrariesAsString()` instead
+
+### Fixed
+- [Core] Fixed a regression introduced with version 5.10.0 that made enabling the HTTP cache would result in incomplete asset delivery
+
 ## [5.10.0] - 2020-12-31
 ### Added
 - [Core] made it possible to register frontend libraries via the new DI container tag ``acp3.assets.library``
