@@ -40,14 +40,18 @@ class Assets
     public function fetchAdditionalThemeCssFiles(): array
     {
         if ($this->additionalThemeCssFiles === null) {
-            $this->initializeTheme();
+            throw new \RuntimeException('The theme hasn\'t been initialized. Please call "' . __CLASS__ . '::initializeTheme() first!');
         }
 
         return $this->additionalThemeCssFiles;
     }
 
-    private function initializeTheme(): void
+    public function initializeTheme(): void
     {
+        if ($this->additionalThemeCssFiles !== null && $this->additionalThemeJsFiles !== null) {
+            return;
+        }
+
         $themeConfig = \simplexml_load_string(\file_get_contents($this->theme->getDesignPathInternal() . 'info.xml'));
 
         if (isset($themeConfig->use_bootstrap) && (string) $themeConfig->use_bootstrap === 'true') {
@@ -84,7 +88,7 @@ class Assets
     public function fetchAdditionalThemeJsFiles(): array
     {
         if ($this->additionalThemeJsFiles === null) {
-            $this->initializeTheme();
+            throw new \RuntimeException('The theme hasn\'t been initialized. Please call "' . __CLASS__ . '::initializeTheme() first!');
         }
 
         return $this->additionalThemeJsFiles;

@@ -120,6 +120,11 @@ abstract class AbstractMinifier implements MinifierInterface
      */
     public function getURI(string $layout = 'layout'): string
     {
+        // We have to initialize the theme here,
+        // i.e. enabling the required libraries of the theme + adding theme specific stylesheets and javascript files.
+        // It has to be called before the "generateFilenameHash" method, otherwise would get incorrect results!
+        $this->assets->initializeTheme();
+
         $debug = $this->environment === ApplicationMode::DEVELOPMENT;
         $filenameHash = $this->generateFilenameHash($layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;

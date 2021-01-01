@@ -40,7 +40,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         $this->assets = new Assets($this->theme, $this->librariesMock);
     }
 
-    private function setUpMockObjects()
+    private function setUpMockObjects(): void
     {
         $this->theme = $this->createMock(ThemePathInterface::class);
         $this->requestMock = $this->createMock(RequestInterface::class);
@@ -54,7 +54,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
             ->willReturn(ACP3_ROOT_DIR . '/tests/designs/acp3/');
     }
 
-    public function testGetEnabledLibrariesAsString()
+    public function testGetEnabledLibrariesAsString(): void
     {
         $this->librariesMock->expects(self::once())
             ->method('getEnabledLibrariesAsString');
@@ -62,21 +62,37 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('', $this->assets->getEnabledLibrariesAsString());
     }
 
-    public function testFetchAdditionalThemeCssFiles()
+    public function testFetchAdditionalThemeCssFiles(): void
     {
         $this->configureThemeMock();
 
+        $this->assets->initializeTheme();
         $files = $this->assets->fetchAdditionalThemeCssFiles();
 
         self::assertEquals(['additional-style.css'], $files);
     }
 
-    public function testFetchAdditionalThemeJsFiles()
+    public function testFetchAdditionalThemeCssFilesThrowsException(): void
+    {
+        $this->expectException(\RuntimeException::class);
+
+        $this->assets->fetchAdditionalThemeCssFiles();
+    }
+
+    public function testFetchAdditionalThemeJsFiles(): void
     {
         $this->configureThemeMock();
 
+        $this->assets->initializeTheme();
         $files = $this->assets->fetchAdditionalThemeJsFiles();
 
         self::assertEquals(['additional-script.js'], $files);
+    }
+
+    public function testFetchAdditionalThemeJsFilesThrowsException(): void
+    {
+        $this->expectException(\RuntimeException::class);
+
+        $this->assets->fetchAdditionalThemeJsFiles();
     }
 }
