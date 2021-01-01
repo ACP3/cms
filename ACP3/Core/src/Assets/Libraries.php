@@ -9,9 +9,10 @@ namespace ACP3\Core\Assets;
 
 use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Assets\Event\AddLibraryEvent;
-use ACP3\Core\Http\RequestInterface;
 use MJS\TopSort\Implementations\StringSort;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Libraries
 {
@@ -24,16 +25,22 @@ class Libraries
      */
     private $eventDispatcher;
     /**
-     * @var \ACP3\Core\Http\RequestInterface
+     * @var \Symfony\Component\HttpFoundation\RequestStack
      */
-    private $request;
+    private $requestStack;
+    /**
+     * @var \ACP3\Core\Assets\LibrariesCache
+     */
+    private $librariesCache;
 
     public function __construct(
-        RequestInterface $request,
-        EventDispatcherInterface $eventDispatcher)
-    {
+        RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher,
+        LibrariesCache $librariesCache
+    ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->request = $request;
+        $this->requestStack = $requestStack;
+        $this->librariesCache = $librariesCache;
     }
 
     /**
@@ -105,17 +112,21 @@ class Libraries
      */
     public function enableLibraries(array $libraries): self
     {
-        foreach ($libraries as $library) {
-            if (\array_key_exists($library, $this->libraries) === true) {
-                // Resolve javascript library dependencies recursively
-                if (!empty($this->libraries[$library]->getDependencies())) {
-                    $this->enableLibraries($this->libraries[$library]->getDependencies());
-                }
+        foreach ($libraries as $libraryIdentifier) {
+            if (\array_key_exists($libraryIdentifier, $this->libraries) === false) {
+                throw new \InvalidArgumentException(\sprintf('Could not find library %s', $libraryIdentifier));
+            }
 
-                // Enable the javascript library
-                $this->libraries[$library] = $this->libraries[$library]->enable();
-            } else {
-                throw new \InvalidArgumentException(\sprintf('Could not find library %s', $library));
+            // Resolve javascript library dependencies recursively
+            if (!empty($this->libraries[$libraryIdentifier]->getDependencies())) {
+                $this->enableLibraries($this->libraries[$libraryIdentifier]->getDependencies());
+            }
+
+            // Enable the javascript library
+            $this->libraries[$libraryIdentifier] = $this->libraries[$libraryIdentifier]->enable();
+
+            if ($this->requestStack->getCurrentRequest()) {
+                $this->librariesCache->scheduleStoreEnabledLibraryInCache($this->requestStack->getCurrentRequest(), $libraryIdentifier);
             }
         }
 
@@ -154,9 +165,14 @@ class Libraries
         return \implode(',', $this->getEnabledLibraries());
     }
 
+    private function getMasterRequest(): Request
+    {
+        return $this->requestStack->getMasterRequest();
+    }
+
     private function includeInXmlHttpRequest(LibraryEntity $library): bool
     {
-        return $this->request->isXmlHttpRequest()
+        return $this->getMasterRequest()->isXmlHttpRequest()
             && $library->isEnabledForAjax() === false;
     }
 }

@@ -8,9 +8,9 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Assets\Entity\LibraryEntity;
+use ACP3\Core\Assets\Libraries;
 use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AssetsTest extends \PHPUnit\Framework\TestCase
 {
@@ -19,49 +19,53 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
      */
     private $assets;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & EventDispatcherInterface
-     */
-    private $eventDispatcherMock;
-    /**
      * @var \PHPUnit\Framework\MockObject\MockObject & RequestInterface
      */
     private $requestMock;
+    /**
+     * @var \ACP3\Core\Environment\ThemePathInterface & \PHPUnit\Framework\MockObject\MockObject
+     */
+    private $theme;
+    /**
+     * @var \ACP3\Core\Assets\Libraries & \PHPUnit\Framework\MockObject\MockObject
+     */
+    private $librariesMock;
 
     protected function setup(): void
     {
         $this->setUpMockObjects();
 
-        $theme = $this->createMock(ThemePathInterface::class);
-        $theme->expects(self::once())
-            ->method('getDesignPathInternal')
-            ->willReturn(ACP3_ROOT_DIR . '/tests/designs/acp3/');
-        $libraries = new Assets\Libraries($this->requestMock, $this->eventDispatcherMock);
-        $libraries->addLibrary(new LibraryEntity('bootstrap'));
+        $this->librariesMock->addLibrary(new LibraryEntity('bootstrap'));
 
-        $this->assets = new Assets($theme, $libraries);
+        $this->assets = new Assets($this->theme, $this->librariesMock);
     }
 
     private function setUpMockObjects()
     {
+        $this->theme = $this->createMock(ThemePathInterface::class);
         $this->requestMock = $this->createMock(RequestInterface::class);
-        $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $this->librariesMock = $this->createMock(Libraries::class);
     }
 
-    public function testDefaultLibrariesEnabled()
+    private function configureThemeMock(): void
     {
-        $libraries = $this->assets->getEnabledLibrariesAsString();
+        $this->theme->expects(self::once())
+            ->method('getDesignPathInternal')
+            ->willReturn(ACP3_ROOT_DIR . '/tests/designs/acp3/');
+    }
 
-        $expected = \explode(',', 'bootstrap');
-        $actual = \explode(',', $libraries);
+    public function testGetEnabledLibrariesAsString()
+    {
+        $this->librariesMock->expects(self::once())
+            ->method('getEnabledLibrariesAsString');
 
-        \sort($expected);
-        \sort($actual);
-
-        self::assertEquals($expected, $actual);
+        self::assertEquals('', $this->assets->getEnabledLibrariesAsString());
     }
 
     public function testFetchAdditionalThemeCssFiles()
     {
+        $this->configureThemeMock();
+
         $files = $this->assets->fetchAdditionalThemeCssFiles();
 
         self::assertEquals(['additional-style.css'], $files);
@@ -69,6 +73,8 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
 
     public function testFetchAdditionalThemeJsFiles()
     {
+        $this->configureThemeMock();
+
         $files = $this->assets->fetchAdditionalThemeJsFiles();
 
         self::assertEquals(['additional-script.js'], $files);

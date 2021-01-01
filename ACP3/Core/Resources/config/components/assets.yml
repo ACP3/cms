@@ -66,8 +66,20 @@ services:
   core.assets.libraries:
     class: ACP3\Core\Assets\Libraries
     arguments:
-      - '@core.http.request'
+      - '@request_stack'
       - '@core.event_dispatcher'
+      - '@core.assets.libraries_cache'
+
+  core.assets.cache_namespace_libraries:
+    class: ACP3\Core\Cache
+    arguments:
+      - '@core.cache.cache_driver_factory'
+      - 'libraries'
+
+  core.assets.libraries_cache:
+    class: ACP3\Core\Assets\LibrariesCache
+    arguments:
+      - '@core.assets.cache_namespace_libraries'
 
   core.assets.page_css_classes:
     class: ACP3\Core\Assets\PageCssClasses
@@ -83,5 +95,7 @@ services:
       - '@core.assets.minifier.deferrable_css'
       - '@core.assets.minifier.javascript'
       - '@request_stack'
+      - '@core.assets.libraries'
+      - '@core.assets.libraries_cache'
     tags:
       - { name: core.eventSubscriber }

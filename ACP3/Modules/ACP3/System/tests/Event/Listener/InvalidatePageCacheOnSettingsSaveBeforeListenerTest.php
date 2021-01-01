@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
+use ACP3\Core\Assets\LibrariesCache;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
@@ -39,6 +40,10 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
      * @var \PHPUnit\Framework\MockObject\MockObject & Psr6Store
      */
     private $httpCacheStoreMock;
+    /**
+     * @var \ACP3\Core\Assets\LibrariesCache & \PHPUnit\Framework\MockObject\MockObject
+     */
+    private $librariesCacheMock;
 
     protected function setup(): void
     {
@@ -49,7 +54,8 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
             $this->modulesMock,
             $this->settingsRepositoryMock,
             $this->canUsePageCacheMock,
-            $this->httpCacheStoreMock
+            $this->httpCacheStoreMock,
+            $this->librariesCacheMock
         );
     }
 
@@ -60,6 +66,7 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
         $this->settingsRepositoryMock = $this->createMock(SettingsRepository::class);
         $this->canUsePageCacheMock = $this->createMock(CanUsePageCache::class);
         $this->httpCacheStoreMock = $this->createMock(Psr6Store::class);
+        $this->librariesCacheMock = $this->createMock(LibrariesCache::class);
     }
 
     public function testDisabledPageCache()

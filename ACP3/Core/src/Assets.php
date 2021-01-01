@@ -13,46 +13,65 @@ use ACP3\Core\Environment\ThemePathInterface;
 class Assets
 {
     /**
-     * @var array
+     * @var array|null
      */
-    private $additionalThemeCssFiles = [];
+    private $additionalThemeCssFiles;
     /**
-     * @var array
+     * @var array|null
      */
-    private $additionalThemeJsFiles = [];
-    /**
-     * @var \SimpleXMLElement
-     */
-    private $designXml;
+    private $additionalThemeJsFiles;
     /**
      * @var Libraries
      */
     private $libraries;
+    /**
+     * @var \ACP3\Core\Environment\ThemePathInterface
+     */
+    private $theme;
 
     /**
      * Checks, whether the current design uses Bootstrap or not.
      */
     public function __construct(ThemePathInterface $theme, Libraries $libraries)
     {
-        $this->designXml = \simplexml_load_string(\file_get_contents($theme->getDesignPathInternal() . 'info.xml'));
+        $this->theme = $theme;
         $this->libraries = $libraries;
 
         $this->libraries->dispatchAddLibraryEvent();
-
-        if (isset($this->designXml->use_bootstrap) && (string) $this->designXml->use_bootstrap === 'true') {
-            $this->libraries->enableLibraries(['bootstrap']);
-        }
     }
 
     public function fetchAdditionalThemeCssFiles(): array
     {
-        if (isset($this->designXml->css) && empty($this->additionalThemeCssFiles)) {
-            foreach ($this->designXml->css->item as $file) {
+        if ($this->additionalThemeCssFiles === null) {
+            $this->initializeTheme();
+        }
+
+        return $this->additionalThemeCssFiles;
+    }
+
+    private function initializeTheme(): void
+    {
+        $themeConfig = \simplexml_load_string(\file_get_contents($this->theme->getDesignPathInternal() . 'info.xml'));
+
+        if (isset($themeConfig->use_bootstrap) && (string) $themeConfig->use_bootstrap === 'true') {
+            $this->libraries->enableLibraries(['bootstrap']);
+        }
+
+        $this->additionalThemeCssFiles = [];
+
+        if (isset($themeConfig->css)) {
+            foreach ($themeConfig->css->item as $file) {
                 $this->addCssFile($file);
             }
         }
 
-        return $this->additionalThemeCssFiles;
+        $this->additionalThemeJsFiles = [];
+
+        if (isset($themeConfig->js)) {
+            foreach ($themeConfig->js->item as $file) {
+                $this->addJsFile($file);
+            }
+        }
     }
 
     /**
@@ -67,10 +86,8 @@ class Assets
 
     public function fetchAdditionalThemeJsFiles(): array
     {
-        if (isset($this->designXml->js) && empty($this->additionalThemeJsFiles)) {
-            foreach ($this->designXml->js->item as $file) {
-                $this->addJsFile($file);
-            }
+        if ($this->additionalThemeJsFiles === null) {
+            $this->initializeTheme();
         }
 
         return $this->additionalThemeJsFiles;

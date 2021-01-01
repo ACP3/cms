@@ -8,9 +8,10 @@
 namespace ACP3\Core\Assets;
 
 use ACP3\Core\Assets\Entity\LibraryEntity;
-use ACP3\Core\Http\RequestInterface;
 use DMS\PHPUnitExtensions\ArraySubset\Assert;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class LibrariesTest extends \PHPUnit\Framework\TestCase
 {
@@ -19,20 +20,37 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
      */
     private $libraries;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & EventDispatcher
      */
     private $eventDispatcherMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & RequestStack
      */
-    private $requestMock;
+    private $requestStackMock;
+    /**
+     * @var \ACP3\Core\Assets\LibrariesCache & \PHPUnit\Framework\MockObject\MockObject
+     */
+    private $librariesCacheMock;
 
     protected function setup(): void
     {
-        $this->requestMock = $this->getMockForAbstractClass(RequestInterface::class);
+        $this->requestStackMock = $this->createMock(RequestStack::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
+        $this->librariesCacheMock = $this->createMock(LibrariesCache::class);
 
-        $this->libraries = new Libraries($this->requestMock, $this->eventDispatcherMock);
+        $this->libraries = new Libraries($this->requestStackMock, $this->eventDispatcherMock, $this->librariesCacheMock);
+    }
+
+    private function configureRequestStackMock(): void
+    {
+        $requestMock = $this->createMock(Request::class);
+
+        $this->requestStackMock->expects(self::atLeastOnce())
+            ->method('getMasterRequest')
+            ->willReturn($requestMock);
+        $this->requestStackMock->expects(self::atLeastOnce())
+            ->method('getCurrentRequest')
+            ->willReturn($requestMock);
     }
 
     public function testAddLibrary(): void
@@ -53,6 +71,8 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
     public function testEnableLibraries(): void
     {
+        $this->configureRequestStackMock();
+
         $this->testAddLibrary();
 
         $this->libraries->enableLibraries(['foobar']);
@@ -75,6 +95,8 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
     public function testGetEnabledLibrariesAsString(): void
     {
+        $this->configureRequestStackMock();
+
         self::assertEquals('', $this->libraries->getEnabledLibrariesAsString());
 
         $this->libraries->addLibrary(new LibraryEntity('foobar', false, [], ['foo.css']));

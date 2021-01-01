@@ -7,6 +7,8 @@
 
 namespace ACP3\Core\Assets\EventListener;
 
+use ACP3\Core\Assets\Libraries;
+use ACP3\Core\Assets\LibrariesCache;
 use ACP3\Core\Assets\Minifier\CSS;
 use ACP3\Core\Assets\Minifier\DeferrableCSS;
 use ACP3\Core\Assets\Minifier\JavaScript;
@@ -16,6 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class StaticAssetsListener implements EventSubscriberInterface
 {
@@ -40,13 +43,34 @@ class StaticAssetsListener implements EventSubscriberInterface
      * @var \Symfony\Component\HttpFoundation\RequestStack
      */
     private $requestStack;
+    /**
+     * @var \ACP3\Core\Assets\LibrariesCache
+     */
+    private $librariesCache;
+    /**
+     * @var \ACP3\Core\Assets\Libraries
+     */
+    private $libraries;
 
-    public function __construct(CSS $cssMinifier, DeferrableCSS $deferrableCssMinifier, JavaScript $javaScriptMinifier, RequestStack $requestStack)
-    {
+    /**
+     * @var Request[]
+     */
+    private $tracedRequests = [];
+
+    public function __construct(
+        CSS $cssMinifier,
+        DeferrableCSS $deferrableCssMinifier,
+        JavaScript $javaScriptMinifier,
+        RequestStack $requestStack,
+        Libraries $libraries,
+        LibrariesCache $librariesCache
+    ) {
         $this->cssMinifier = $cssMinifier;
         $this->deferrableCssMinifier = $deferrableCssMinifier;
         $this->javaScriptMinifier = $javaScriptMinifier;
         $this->requestStack = $requestStack;
+        $this->libraries = $libraries;
+        $this->librariesCache = $librariesCache;
     }
 
     /**
@@ -56,6 +80,7 @@ class StaticAssetsListener implements EventSubscriberInterface
     {
         return [
             Events::POST_HANDLE => 'postHandle',
+            KernelEvents::TERMINATE => 'onKernelTerminate',
         ];
     }
 
@@ -63,14 +88,50 @@ class StaticAssetsListener implements EventSubscriberInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function postHandle(CacheEvent $event)
+    public function postHandle(CacheEvent $event): void
     {
+        $this->tracedRequests[] = $event->getRequest();
+
         if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
             return;
         }
 
+        $this->enableLibraries($event);
+
         $this->moveCssBlocksToHead($event);
         $this->moveJavaScriptBlocksToBodyEnd($event);
+    }
+
+    /**
+     * Event subscriber for saving the libraries request cache.
+     * Postponing saving the cache through the kernel terminate event improves the perceived performance for the user,
+     * as the response has already been sent.
+     */
+    public function onKernelTerminate()
+    {
+        foreach ($this->tracedRequests as $request) {
+            $this->librariesCache->saveEnabledLibrariesByRequest($request);
+        }
+    }
+
+    private function enableLibraries(CacheEvent $event): void
+    {
+        $response = $event->getResponse();
+
+        if (!$response) {
+            return;
+        }
+
+        if (!$response->getContent()) {
+            return;
+        }
+
+        $libraries = [];
+        foreach ($this->tracedRequests as $request) {
+            $libraries = \array_merge($libraries, $this->librariesCache->getEnabledLibrariesByRequest($request));
+        }
+
+        $this->libraries->enableLibraries(\array_unique($libraries));
     }
 
     /**

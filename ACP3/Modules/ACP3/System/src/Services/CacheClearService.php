@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\System\Services;
 
+use ACP3\Core\Assets\LibrariesCache;
 use ACP3\Core\Cache\Purge;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Settings\SettingsInterface;
@@ -22,8 +23,12 @@ class CacheClearService
      */
     private $cacheTypes;
 
-    public function __construct(ApplicationPath $appPath, Psr6Store $httpCacheStore, SettingsInterface $settings)
-    {
+    public function __construct(
+        ApplicationPath $appPath,
+        Psr6Store $httpCacheStore,
+        SettingsInterface $settings,
+        LibrariesCache $librariesCache
+    ) {
         $this->cacheTypes = [
             'general' => [
                 'dependency' => 'page',
@@ -33,8 +38,9 @@ class CacheClearService
                 'dependency' => 'page',
                 'paths' => $appPath->getUploadsDir() . 'assets',
             ],
-            'page' => ['paths' => function () use ($httpCacheStore, $settings) {
+            'page' => ['paths' => function () use ($httpCacheStore, $settings, $librariesCache) {
                 $httpCacheStore->clear();
+                $librariesCache->deleteAll();
 
                 $settings->saveSettings(
                     ['page_cache_is_valid' => true],

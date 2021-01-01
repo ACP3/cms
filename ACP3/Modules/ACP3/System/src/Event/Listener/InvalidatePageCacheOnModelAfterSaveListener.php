@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\System\Event\Listener;
 
+use ACP3\Core\Assets\LibrariesCache;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -26,15 +27,21 @@ class InvalidatePageCacheOnModelAfterSaveListener
      * @var \Toflar\Psr6HttpCacheStore\Psr6Store
      */
     private $httpCacheStore;
+    /**
+     * @var \ACP3\Core\Assets\LibrariesCache
+     */
+    private $librariesCache;
 
     public function __construct(
         SettingsInterface $settings,
         CanUsePageCache $canUsePageCache,
-        Psr6Store $httpCacheStore
+        Psr6Store $httpCacheStore,
+        LibrariesCache $librariesCache
     ) {
         $this->settings = $settings;
         $this->canUsePageCache = $canUsePageCache;
         $this->httpCacheStore = $httpCacheStore;
+        $this->librariesCache = $librariesCache;
     }
 
     public function __invoke()
@@ -45,6 +52,7 @@ class InvalidatePageCacheOnModelAfterSaveListener
 
         if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_purge_mode'] == 1) {
             $this->httpCacheStore->clear();
+            $this->librariesCache->deleteAll();
         } else {
             $this->settings->saveSettings(['page_cache_is_valid' => false], Schema::MODULE_NAME);
         }

@@ -8,95 +8,66 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Cache\CacheDriverFactory;
+use Doctrine\Common\Cache\CacheProvider;
 
 class Cache
 {
     /**
      * @var \ACP3\Core\Cache\CacheDriverFactory
      */
-    protected $cacheDriverFactory;
+    private $cacheDriverFactory;
     /**
      * @var string
      */
-    protected $namespace = '';
+    private $namespace;
     /**
      * @return \Doctrine\Common\Cache\CacheProvider
      */
-    protected $driver;
+    private $driver;
 
-    /**
-     * Cache constructor.
-     *
-     * @param string $namespace
-     */
-    public function __construct(CacheDriverFactory $cacheDriverFactory, $namespace)
+    public function __construct(CacheDriverFactory $cacheDriverFactory, string $namespace)
     {
         $this->cacheDriverFactory = $cacheDriverFactory;
         $this->namespace = $namespace;
     }
 
     /**
-     * @param string $cacheId
-     *
      * @return bool|array|string
      */
-    public function fetch($cacheId)
+    public function fetch(string $cacheId)
     {
         return $this->getDriver()->fetch($cacheId);
     }
 
-    /**
-     * @param string $cacheId
-     *
-     * @return bool
-     */
-    public function contains($cacheId)
+    public function contains(string $cacheId): bool
     {
         return $this->getDriver()->contains($cacheId);
     }
 
     /**
-     * @param string $cacheId
-     * @param mixed  $data
-     * @param int    $lifetime
-     *
-     * @return bool
+     * @param mixed $data
      */
-    public function save($cacheId, $data, $lifetime = 0)
+    public function save(string $cacheId, $data, int $lifetime = 0): bool
     {
         return $this->getDriver()->save($cacheId, $data, $lifetime);
     }
 
-    /**
-     * @param string $cacheId
-     *
-     * @return bool
-     */
-    public function delete($cacheId)
+    public function delete(string $cacheId): bool
     {
         return $this->getDriver()->delete($cacheId);
     }
 
-    /**
-     * @return bool
-     */
-    public function deleteAll()
+    public function deleteAll(): bool
     {
         return $this->getDriver()->deleteAll();
     }
 
-    /**
-     * @return bool
-     */
-    public function flushAll()
+    public function flushAll(): bool
     {
         return $this->getDriver()->flushAll();
     }
 
-    /**
-     * @return \Doctrine\Common\Cache\CacheProvider
-     */
-    public function getDriver()
+    public function getDriver(): CacheProvider
     {
         if ($this->driver === null) {
             $this->driver = $this->cacheDriverFactory->create($this->namespace);
