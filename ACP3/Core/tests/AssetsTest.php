@@ -35,7 +35,7 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
     {
         $this->setUpMockObjects();
 
-        $this->librariesMock->addLibrary(new LibraryEntity('bootstrap'));
+        $this->librariesMock->addLibrary(new LibraryEntity('bootstrap', false, [], [], [], 'system'));
 
         $this->assets = new Assets($this->theme, $this->librariesMock);
     }

@@ -55,14 +55,15 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
     public function testAddLibrary(): void
     {
-        $this->libraries->addLibrary(new LibraryEntity('jquery'));
+        $this->libraries->addLibrary(new LibraryEntity('jquery', false, [], [], [], 'system'));
 
         $library = new LibraryEntity(
             'foobar',
             false,
             ['jquery'],
             ['foo.css'],
-            ['bar.js']
+            ['bar.js'],
+            'system'
         );
         $this->libraries->addLibrary($library);
 
@@ -78,7 +79,7 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
         $this->libraries->enableLibraries(['foobar']);
 
         $expected = ['jquery', 'foobar'];
-        $actual = $this->libraries->getEnabledLibraries();
+        $actual = array_keys($this->libraries->getEnabledLibraries());
 
         \sort($expected);
         \sort($actual);
@@ -99,12 +100,12 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals('', $this->libraries->getEnabledLibrariesAsString());
 
-        $this->libraries->addLibrary(new LibraryEntity('foobar', false, [], ['foo.css']));
+        $this->libraries->addLibrary(new LibraryEntity('foobar', false, [], ['foo.css'], [], 'testModule'));
         $this->libraries->enableLibraries(['foobar']);
 
         self::assertEquals('foobar', $this->libraries->getEnabledLibrariesAsString());
 
-        $this->libraries->addLibrary(new LibraryEntity('baz', false, [], ['baz.css']));
+        $this->libraries->addLibrary(new LibraryEntity('baz', false, [], ['baz.css'], [], 'testModule'));
         $this->libraries->enableLibraries(['baz']);
 
         self::assertEquals('foobar,baz', $this->libraries->getEnabledLibrariesAsString());
