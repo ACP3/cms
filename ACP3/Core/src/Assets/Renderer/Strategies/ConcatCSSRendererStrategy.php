@@ -125,6 +125,6 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
      */
     public function renderHtmlElement(string $layout = 'layout'): string
     {
-        return '<link rel="stylesheet" type="text/css" href="' . $this->getURI($layout) . '">';
+        return '<link rel="stylesheet" type="text/css" href="' . $this->getURI($layout) . '">' . "\n";
     }
 }

@@ -60,7 +60,7 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
     {
         $deferrableCssUri = $this->getURI($layout);
 
-        return '<link rel="stylesheet" href="' . $deferrableCssUri . '" media="print" onload="this.media=\'all\'; this.onload=null;">'
-            . '<noscript><link rel="stylesheet" href="' . $deferrableCssUri . '"></noscript>';
+        return '<link rel="stylesheet" href="' . $deferrableCssUri . '" media="print" onload="this.media=\'all\'; this.onload=null;">' . "\n"
+            . '<noscript><link rel="stylesheet" href="' . $deferrableCssUri . '"></noscript>' . "\n";
     }
 }

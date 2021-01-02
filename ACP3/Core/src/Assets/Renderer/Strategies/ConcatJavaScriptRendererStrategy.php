@@ -90,6 +90,6 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
      */
     public function renderHtmlElement(string $layout = 'layout'): string
     {
-        return "<script defer src=\"{$this->getURI($layout)}\"></script>";
+        return "<script defer src=\"{$this->getURI($layout)}\"></script>\n";
     }
 }
