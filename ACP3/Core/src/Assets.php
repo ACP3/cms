@@ -54,6 +54,13 @@ class Assets
 
         $themeConfig = \simplexml_load_string(\file_get_contents($this->theme->getDesignPathInternal() . 'info.xml'));
 
+        if (isset($themeConfig->libraries)) {
+            foreach ($themeConfig->libraries->item as $libraryName) {
+                $this->libraries->enableLibraries([(string) $libraryName]);
+            }
+        }
+
+        /* @deprecated To be removed this version 6.x. Use the <libraries><item>library-name</item></libraries> within the info.xml instead! */
         if (isset($themeConfig->use_bootstrap) && (string) $themeConfig->use_bootstrap === 'true') {
             $this->libraries->enableLibraries(['bootstrap']);
         }
