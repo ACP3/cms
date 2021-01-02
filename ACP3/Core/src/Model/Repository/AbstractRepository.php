@@ -11,8 +11,8 @@ use ACP3\Core\Database\Connection;
 
 abstract class AbstractRepository implements RepositoryInterface
 {
-    const TABLE_NAME = '';
-    const PRIMARY_KEY_COLUMN = 'id';
+    public const TABLE_NAME = '';
+    public const PRIMARY_KEY_COLUMN = 'id';
 
     /**
      * @var \ACP3\Core\Database\Connection
@@ -55,13 +55,12 @@ abstract class AbstractRepository implements RepositoryInterface
      * Executes the SQL delete statement.
      *
      * @param int|array $entryId
-     * @param string    $columnName
      *
      * @return bool|int
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function delete($entryId, $columnName = self::PRIMARY_KEY_COLUMN)
+    public function delete($entryId, ?string $columnName = null)
     {
         return $this->db->getConnection()->delete(
             $this->getTableName(),
@@ -71,12 +70,10 @@ abstract class AbstractRepository implements RepositoryInterface
 
     /**
      * @param int|array $entryId
-     *
-     * @return array
      */
-    private function getIdentifier($entryId, string $columnName = self::PRIMARY_KEY_COLUMN)
+    private function getIdentifier($entryId, ?string $columnName = null): array
     {
-        return \is_array($entryId) === true ? $entryId : [$columnName => (int) $entryId];
+        return \is_array($entryId) === true ? $entryId : [$columnName ?? static::PRIMARY_KEY_COLUMN => (int) $entryId];
     }
 
     /**
@@ -106,7 +103,9 @@ abstract class AbstractRepository implements RepositoryInterface
     {
         if ($limitStart !== null && $resultsPerPage !== null) {
             return " LIMIT {$limitStart},{$resultsPerPage}";
-        } elseif ($limitStart !== null) {
+        }
+
+        if ($limitStart !== null) {
             return " LIMIT {$limitStart}";
         }
 

@@ -29,9 +29,6 @@ abstract class AbstractModel
      */
     private $dataProcessor;
 
-    /**
-     * AbstractModel constructor.
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,

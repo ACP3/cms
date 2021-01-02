@@ -4,6 +4,11 @@ services:
     arguments:
       - '@core.db'
 
+  comments.repository.comment_by_module_repository:
+    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentByModuleRepository
+    arguments:
+      - '@core.db'
+
   comments.model.comments_data_grid_repository:
     class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentsDataGridRepository
     arguments:
@@ -20,3 +25,10 @@ services:
       - '@core.event_dispatcher'
       - '@core.model.data_processor'
       - '@comments.model.commentrepository'
+
+  comments.model.comment_by_module_model:
+    class: ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel
+    arguments:
+      - '@core.event_dispatcher'
+      - '@core.model.data_processor'
+      - '@comments.repository.comment_by_module_repository'

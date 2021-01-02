@@ -100,7 +100,7 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function delete($entryId, $columnName = 'id')
+    public function delete($entryId, ?string $columnName = null)
     {
         return 0;
     }

@@ -27,11 +27,10 @@ interface RepositoryInterface
      * Executes the SQL delete statement.
      *
      * @param int|array $entryId
-     * @param string    $columnName
      *
      * @return bool|int
      */
-    public function delete($entryId, $columnName = 'id');
+    public function delete($entryId, ?string $columnName = null);
 
     /**
      * Executes the SQL update statement.

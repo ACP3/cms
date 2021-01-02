@@ -10,34 +10,27 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Comments;
-use ACP3\Modules\ACP3\System\Services\CacheClearService;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
-     */
-    private $commentRepository;
     /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
     /**
-     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
+     * @var \ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel
      */
-    private $cacheClearService;
+    private $commentByModuleModel;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
         Action $actionHelper,
-        Comments\Model\Repository\CommentRepository $commentRepository,
-        CacheClearService $cacheClearService
+        Comments\Model\CommentByModuleModel $commentByModuleModel
     ) {
         parent::__construct($context);
 
-        $this->commentRepository = $commentRepository;
         $this->actionHelper = $actionHelper;
-        $this->cacheClearService = $cacheClearService;
+        $this->commentByModuleModel = $commentByModuleModel;
     }
 
     /**
@@ -48,14 +41,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
         return $this->actionHelper->handleDeleteAction(
             $action,
             function (array $items) {
-                $bool = false;
-                foreach ($items as $item) {
-                    $bool = $this->commentRepository->delete($item, 'module_id');
-                }
-
-                $this->cacheClearService->clearCacheByType('page');
-
-                return $bool;
+                return (bool) $this->commentByModuleModel->delete($items);
             }
         );
     }

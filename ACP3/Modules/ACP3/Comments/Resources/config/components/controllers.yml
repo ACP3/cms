@@ -37,8 +37,7 @@ services:
     arguments:
       - '@core.context.frontend'
       - '@core.modules.helper.action'
-      - '@comments.model.commentrepository'
-      - '@system.services.cache_clear_service'
+      - '@comments.model.comment_by_module_model'
 
   comments.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Index
