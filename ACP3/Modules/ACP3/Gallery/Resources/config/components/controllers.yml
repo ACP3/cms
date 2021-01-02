@@ -89,7 +89,7 @@ services:
       - '@gallery.helpers'
       - '@gallery.model.picturerepository'
       - '@gallery.cache'
-      - '@http_cache_store'
+      - '@system.services.cache_clear_service'
 
   gallery.controller.admin.pictures.edit:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit

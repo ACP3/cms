@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Gallery;
-use Toflar\Psr6HttpCacheStore\Psr6Store;
+use ACP3\Modules\ACP3\System\Services\CacheClearService;
 
 class Delete extends Core\Controller\AbstractFrontendAction
 {
@@ -31,9 +31,9 @@ class Delete extends Core\Controller\AbstractFrontendAction
      */
     private $actionHelper;
     /**
-     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
      */
-    private $httpCacheStore;
+    private $cacheClearService;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -41,7 +41,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Cache $galleryCache,
-        Psr6Store $httpCacheStore
+        CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
 
@@ -49,7 +49,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
         $this->pictureRepository = $pictureRepository;
         $this->galleryCache = $galleryCache;
         $this->actionHelper = $actionHelper;
-        $this->httpCacheStore = $httpCacheStore;
+        $this->cacheClearService = $cacheClearService;
     }
 
     /**
@@ -73,7 +73,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
                     }
                 }
 
-                $this->httpCacheStore->clear();
+                $this->cacheClearService->clearCacheByType('page');
 
                 return $bool;
             },

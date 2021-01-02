@@ -4,8 +4,7 @@ services:
     arguments:
       - '@core.config'
       - '@system.helpers.can_use_page_cache'
-      - '@http_cache_store'
-      - '@core.assets.libraries_cache'
+      - '@system.services.cache_clear_service'
     tags:
       - { name: core.eventListener, event: core.model.after_save }
       - { name: core.eventListener, event: core.model.after_delete }
@@ -17,8 +16,7 @@ services:
       - '@core.modules'
       - '@system.model.settingsrepository'
       - '@system.helpers.can_use_page_cache'
-      - '@http_cache_store'
-      - '@core.assets.libraries_cache'
+      - '@system.services.cache_clear_service'
     tags:
       - { name: core.eventListener, event: core.settings.save_before }
 

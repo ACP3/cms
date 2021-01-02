@@ -11,7 +11,6 @@ use ACP3\Core;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
-use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Modules extends Core\Controller\AbstractFrontendAction
 {
@@ -60,9 +59,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     private $redirectMessages;
     /**
-     * @var \Toflar\Psr6HttpCacheStore\Psr6Store
+     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
      */
-    private $httpCacheStore;
+    private $cacheClearService;
 
     public function __construct(
         Core\Controller\Context\FrontendContext $context,
@@ -77,7 +76,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         Core\Modules\SchemaInstaller $schemaInstaller,
         Core\Modules\AclInstaller $aclInstaller,
         System\ViewProviders\AdminModulesViewProvider $adminModulesViewProvider,
-        Psr6Store $httpCacheStore
+        System\Services\CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
 
@@ -92,7 +91,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $this->modules = $modules;
         $this->adminModulesViewProvider = $adminModulesViewProvider;
         $this->redirectMessages = $redirectMessages;
-        $this->httpCacheStore = $httpCacheStore;
+        $this->cacheClearService = $cacheClearService;
     }
 
     /**
@@ -196,13 +195,13 @@ class Modules extends Core\Controller\AbstractFrontendAction
     private function purgeCaches(): void
     {
         Core\Cache\Purge::doPurge([
-            $this->appPath->getCacheDir() . 'sql',
-            $this->appPath->getCacheDir() . 'tpl_compiled',
             $this->appPath->getCacheDir() . 'container.php',
             $this->appPath->getCacheDir() . 'container.php.meta',
         ]);
 
-        $this->httpCacheStore->clear();
+        $this->cacheClearService->clearCacheByType('general');
+        $this->cacheClearService->clearCacheByType('page');
+        $this->cacheClearService->clearCacheByType('templates');
     }
 
     /**
