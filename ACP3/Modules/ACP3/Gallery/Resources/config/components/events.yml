@@ -14,3 +14,12 @@ services:
       - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: data_grid.column_renderer.custom_option_before }
+
+  gallery.event_listener.picture_delete_listener:
+    class: ACP3\Modules\ACP3\Gallery\Event\Listener\PictureDeleteListener
+    arguments:
+      - '@gallery.cache'
+      - '@gallery.helpers'
+      - '@gallery.model.picturerepository'
+    tags:
+      - { name: core.eventSubscriber }

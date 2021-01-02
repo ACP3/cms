@@ -35,6 +35,10 @@ class UpdatePictureCacheOnModelAfterSaveListener implements EventSubscriberInter
      */
     public function __invoke(ModelSaveEvent $event): void
     {
+        if ($event->isDeleteStatement()) {
+            return;
+        }
+
         $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($event->getEntryId());
 
         $this->cache->saveCache($galleryId);
