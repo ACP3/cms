@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - [Core] Reverted the changes to the ``CacheResponseTrait`` and reworked it (breaking method signature change!), to hopefully fix some edge cases with the HTTP cache once and for all.
+- [System] Fixed the update check
 
 ## [5.10.2] - 2021-01-01
 ### Fixed
