@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Archive;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Details extends Core\Controller\AbstractFrontendAction
 {
@@ -38,14 +39,15 @@ class Details extends Core\Controller\AbstractFrontendAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function execute(int $id): Response
     {
         $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, 1);
 
         if (!empty($newsletter)) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $response = $this->renderTemplate(null, ($this->newsletterDetailsViewProvider)($newsletter));
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            return ($this->newsletterDetailsViewProvider)($newsletter);
+            return $response;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

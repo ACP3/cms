@@ -9,6 +9,8 @@ namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files\ViewProviders\RootCategoriesListViewProvider;
+use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -31,12 +33,11 @@ class Index extends Core\Controller\AbstractFrontendAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(): array
+    public function execute(): Response
     {
-        $this->setCacheResponseCacheable(
-            $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME)['cache_lifetime']
-        );
+        $response = $this->renderTemplate(null, ($this->rootCategoriesListViewProvider)());
+        $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return ($this->rootCategoriesListViewProvider)();
+        return $response;
     }
 }

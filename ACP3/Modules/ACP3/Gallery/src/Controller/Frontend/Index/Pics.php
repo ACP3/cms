@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Pics extends Core\Controller\AbstractFrontendAction
 {
@@ -46,12 +47,13 @@ class Pics extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function execute(int $id): Response
     {
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $response = $this->renderTemplate(null, ($this->galleryPictureListViewProvider)($id));
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            return ($this->galleryPictureListViewProvider)($id);
+            return $response;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

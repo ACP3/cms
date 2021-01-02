@@ -11,6 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Controller\Context\FrontendContext;
 use ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Imprint extends Core\Controller\AbstractFrontendAction
 {
@@ -30,10 +31,11 @@ class Imprint extends Core\Controller\AbstractFrontendAction
         $this->contactDetailsViewProvider = $contactDetailsViewProvider;
     }
 
-    public function execute(): array
+    public function execute(): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $response = $this->renderTemplate(null, ($this->contactDetailsViewProvider)());
+        $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return ($this->contactDetailsViewProvider)();
+        return $response;
     }
 }

@@ -63,6 +63,9 @@ trait DisplayActionTrait
      */
     abstract protected function applyTemplateAutomatically();
 
+    /**
+     * @deprecated To be removed with version 6.x.
+     */
     abstract protected function addCustomTemplateVarsBeforeOutput();
 
     /**
@@ -137,5 +140,19 @@ trait DisplayActionTrait
         $this->template = $template;
 
         return $this;
+    }
+
+    /**
+     * Renders the given template with its variables and returns it as a Response object.
+     */
+    public function renderTemplate(?string $template, array $templateVariables): Response
+    {
+        if ($template === null || $template === '') {
+            $template = $this->applyTemplateAutomatically();
+        }
+
+        $this->getView()->assign($templateVariables);
+
+        return new Response($this->getView()->fetchTemplate($template));
     }
 }

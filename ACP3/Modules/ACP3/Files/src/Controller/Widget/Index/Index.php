@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
@@ -32,12 +33,11 @@ class Index extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(?int $limit = null, ?int $categoryId = null, string $template = ''): array
+    public function execute(?int $limit = null, ?int $categoryId = null, string $template = ''): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $response = $this->renderTemplate(\urldecode($template), ($this->filesWidgetViewProvider)($categoryId, $limit));
+        $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $this->setTemplate(\urldecode($template));
-
-        return ($this->filesWidgetViewProvider)($categoryId, $limit);
+        return $response;
     }
 }

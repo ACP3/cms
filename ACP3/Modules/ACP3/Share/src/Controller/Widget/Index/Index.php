@@ -11,6 +11,7 @@ use ACP3\Core\Cache\CacheResponseTrait;
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Share\ViewProviders\ShareWidgetViewProvider;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends AbstractWidgetAction
 {
@@ -33,11 +34,11 @@ class Index extends AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(string $path, string $template = ''): array
+    public function execute(string $path, string $template = ''): Response
     {
-        $this->setCacheResponseCacheable(3600);
-        $this->setTemplate($template);
+        $response = $this->renderTemplate($template, ($this->shareWidgetViewProvider)($path));
+        $this->setCacheResponseCacheable($response, 3600);
 
-        return ($this->shareWidgetViewProvider)($path);
+        return $response;
     }
 }

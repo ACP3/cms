@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
+use Symfony\Component\HttpFoundation\Response;
 
 class ViewProfile extends Core\Controller\AbstractFrontendAction
 {
@@ -39,12 +40,13 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function execute(int $id): Response
     {
         if ($this->userRepository->resultExists($id) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $response = $this->renderTemplate(null, ($this->userProfileViewProvider)($id));
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            return ($this->userProfileViewProvider)($id);
+            return $response;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

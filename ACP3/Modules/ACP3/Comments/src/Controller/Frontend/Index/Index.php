@@ -12,6 +12,7 @@ use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -35,12 +36,13 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(string $module, int $entryId): array
+    public function execute(string $module, int $entryId): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
-
         try {
-            return ($this->commentListViewProvider)($module, $entryId);
+            $response = $this->renderTemplate(null, ($this->commentListViewProvider)($module, $entryId));
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+
+            return $response;
         } catch (InvalidPageException $e) {
             throw new ResultNotExistsException();
         }

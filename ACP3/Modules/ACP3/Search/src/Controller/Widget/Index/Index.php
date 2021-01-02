@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Search\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Search;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
@@ -29,10 +30,11 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->searchWidgetViewProvider = $searchWidgetViewProvider;
     }
 
-    public function execute(): array
+    public function execute(): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $response = $this->renderTemplate(null, ($this->searchWidgetViewProvider)());
+        $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return ($this->searchWidgetViewProvider)();
+        return $response;
     }
 }

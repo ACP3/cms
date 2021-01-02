@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Details extends Core\Controller\AbstractFrontendAction
 {
@@ -45,18 +46,19 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function execute(int $id): Response
     {
         if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
-
             $viewData = ($this->articlePaginatedViewProvider)($id);
 
             if ($this->articlePaginatedViewProvider->getLayout()) {
                 $this->setLayout($this->articlePaginatedViewProvider->getLayout());
             }
 
-            return $viewData;
+            $response = $this->renderTemplate(null, $viewData);
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+
+            return $response;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

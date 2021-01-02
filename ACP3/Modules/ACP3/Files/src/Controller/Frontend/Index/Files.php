@@ -11,6 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files\ViewProviders\FilesByCategoryIdViewProvider;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Files extends Core\Controller\AbstractFrontendAction
 {
@@ -40,12 +41,13 @@ class Files extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $cat): array
+    public function execute(int $cat): Response
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $response = $this->renderTemplate(null, ($this->filesByCategoryIdViewProvider)($cat));
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            return ($this->filesByCategoryIdViewProvider)($cat);
+            return $response;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

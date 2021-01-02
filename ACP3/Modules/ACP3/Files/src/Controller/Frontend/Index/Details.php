@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Details extends Core\Controller\AbstractFrontendAction
 {
@@ -44,12 +45,13 @@ class Details extends Core\Controller\AbstractFrontendAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function execute(int $id): Response
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $response = $this->renderTemplate(null, ($this->fileDetailsViewProvider)($id));
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            return ($this->fileDetailsViewProvider)($id);
+            return $response;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

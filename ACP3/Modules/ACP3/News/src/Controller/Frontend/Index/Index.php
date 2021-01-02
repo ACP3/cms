@@ -12,6 +12,7 @@ use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -35,12 +36,13 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $cat = 0): array
+    public function execute(int $cat = 0): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
-
         try {
-            return ($this->newsListViewProvider)($cat);
+            $response = $this->renderTemplate(null, ($this->newsListViewProvider)($cat));
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+
+            return $response;
         } catch (InvalidPageException $e) {
             throw new ResultNotExistsException();
         }

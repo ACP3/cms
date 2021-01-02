@@ -11,6 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\ViewProviders\UserMenuViewProvider;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserMenu extends Core\Controller\AbstractWidgetAction
 {
@@ -39,16 +40,16 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     /**
      * Displays the user menu, if the user is logged in.
      */
-    public function execute(): array
+    public function execute(): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
-
         if ($this->user->isAuthenticated() === true) {
-            return ($this->userMenuViewProvider)();
+            $response = $this->renderTemplate(null, ($this->userMenuViewProvider)());
+        } else {
+            $response = new Response('');
         }
 
-        $this->setContent(false);
+        $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return [];
+        return $response;
     }
 }

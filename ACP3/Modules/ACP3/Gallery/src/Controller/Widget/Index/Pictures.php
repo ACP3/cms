@@ -12,6 +12,7 @@ use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListWidgetViewProvider;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Pictures extends AbstractWidgetAction
 {
@@ -35,12 +36,11 @@ class Pictures extends AbstractWidgetAction
      * @throws \Doctrine\DBAL\DBALException
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    public function execute(int $id, string $template = ''): array
+    public function execute(int $id, string $template = ''): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $response = $this->renderTemplate(\urldecode($template), ($this->galleryPictureListWidgetViewProvider)($id));
+        $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $this->setTemplate(\urldecode($template));
-
-        return ($this->galleryPictureListWidgetViewProvider)($id);
+        return $response;
     }
 }

@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
@@ -32,12 +33,11 @@ class Index extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $categoryId = 0, string $template = ''): array
+    public function execute(int $categoryId = 0, string $template = ''): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $response = $this->renderTemplate($template, ($this->latestNewsListWidgetViewProvider)($categoryId));
+        $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        $this->setTemplate($template);
-
-        return ($this->latestNewsListWidgetViewProvider)($categoryId);
+        return $response;
     }
 }

@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Details extends Core\Controller\AbstractFrontendAction
 {
@@ -45,12 +46,13 @@ class Details extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function execute(int $id): Response
     {
         if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
-            $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+            $response = $this->renderTemplate(null, ($this->newsDetailsViewProvider)($id));
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-            return ($this->newsDetailsViewProvider)($id);
+            return $response;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

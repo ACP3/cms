@@ -11,8 +11,3 @@ services:
       - '@core.environment.application_path'
       - '%cache_driver%'
       - '%core.environment%'
-
-  core.cache.cache_response_listener:
-    class: ACP3\Core\Cache\EventListener\CacheResponseListener
-    tags:
-      - { name: core.eventSubscriber }

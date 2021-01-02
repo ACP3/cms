@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Result extends Core\Controller\AbstractFrontendAction
 {
@@ -44,12 +45,13 @@ class Result extends Core\Controller\AbstractFrontendAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id): array
+    public function execute(int $id): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
-
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
-            return ($this->pollResultViewProvider)($id);
+            $response = $this->renderTemplate(null, ($this->pollResultViewProvider)($id));
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+
+            return $response;
         }
 
         throw new Core\Controller\Exception\ResultNotExistsException();

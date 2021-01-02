@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
@@ -32,10 +33,11 @@ class Index extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(): array
+    public function execute(): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+        $response = $this->renderTemplate(null, ($this->galleryListWidgetViewProvider)());
+        $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return ($this->galleryListWidgetViewProvider)();
+        return $response;
     }
 }

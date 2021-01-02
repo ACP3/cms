@@ -10,7 +10,9 @@ namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\ViewProviders\LoginViewProvider;
+use Symfony\Component\HttpFoundation\Response;
 
 class Login extends Core\Controller\AbstractWidgetAction
 {
@@ -39,16 +41,16 @@ class Login extends Core\Controller\AbstractWidgetAction
     /**
      * Displays the login mask, if the user is not already logged in.
      */
-    public function execute(): ?array
+    public function execute(): Response
     {
-        $this->setCacheResponseCacheable();
-
         if ($this->user->isAuthenticated() === false) {
-            return ($this->loginViewProvider)();
+            $response = $this->renderTemplate(null, ($this->loginViewProvider)());
+        } else {
+            $response = new Response('');
         }
 
-        $this->setContent(false);
+        $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
-        return null;
+        return $response;
     }
 }

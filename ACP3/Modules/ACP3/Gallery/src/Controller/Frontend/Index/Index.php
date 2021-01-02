@@ -12,6 +12,7 @@ use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Core\Controller\AbstractFrontendAction
 {
@@ -36,12 +37,13 @@ class Index extends Core\Controller\AbstractFrontendAction
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(): array
+    public function execute(): Response
     {
-        $this->setCacheResponseCacheable($this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
-
         try {
-            return ($this->galleryListViewProvider)();
+            $response = $this->renderTemplate(null, ($this->galleryListViewProvider)());
+            $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
+
+            return $response;
         } catch (InvalidPageException $e) {
             throw new ResultNotExistsException();
         }
