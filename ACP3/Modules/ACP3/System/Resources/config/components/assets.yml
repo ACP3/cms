@@ -11,6 +11,7 @@ services:
       - []
       - []
       - ['polyfill.min.js']
+      - 'system'
 
   system.assets.jquery:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -20,6 +21,7 @@ services:
       - []
       - []
       - ['jquery.min.js']
+      - 'system'
 
   system.assets.font-awesome:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -29,7 +31,7 @@ services:
       - []
       - ['all.css']
       - []
-      - null
+      - 'system'
       - true
 
   system.assets.js-cookie:
@@ -40,6 +42,7 @@ services:
       - []
       - []
       - ['js.cookie.js']
+      - 'system'
 
   system.assets.moment:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -49,6 +52,7 @@ services:
       - []
       - []
       - ['moment.min.js']
+      - 'system'
 
   system.assets.bootstrap:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -58,6 +62,7 @@ services:
       - ['jquery']
       - ['bootstrap.min.css']
       - ['bootstrap.min.js']
+      - 'system'
 
   system.assets.ajax-form:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -67,6 +72,7 @@ services:
       - ['bootstrap', 'jquery']
       - ['loading-layer.min.css']
       - ['partials/ajax-form.js']
+      - 'system'
 
   system.assets.bootbox:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -76,6 +82,7 @@ services:
       - ['bootstrap']
       - []
       - ['bootbox.all.min.js']
+      - 'system'
 
   system.assets.datatables:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -85,7 +92,7 @@ services:
       - ['jquery', 'bootstrap']
       - ['dataTables.bootstrap.css']
       - ['jquery.dataTables.js']
-      - null
+      - 'system'
       - true
 
   system.assets.datetimepicker:
@@ -96,7 +103,7 @@ services:
       - ['jquery', 'moment']
       - ['bootstrap-datetimepicker.css']
       - ['bootstrap-datetimepicker.min.js']
-      - null
+      - 'system'
       - true
 
   system.assets.fancybox:
@@ -107,5 +114,5 @@ services:
       - ['jquery']
       - ['jquery.fancybox.css']
       - ['jquery.fancybox.min.js']
-      - null
+      - 'system'
       - true

@@ -34,7 +34,7 @@ final class LibraryEntity
      */
     private $js;
     /**
-     * @var string|null
+     * @var string
      */
     private $moduleName;
     /**
@@ -48,9 +48,13 @@ final class LibraryEntity
         array $dependencies = [],
         array $css = [],
         array $js = [],
-        ?string $moduleName = null,
+        string $moduleName = '',
         bool $deferrableCss = false
     ) {
+        if (!$moduleName) {
+            throw new \InvalidArgumentException('The argument `moduleName` is required!');
+        }
+
         $this->libraryIdentifier = $libraryIdentifier;
         $this->enabledForAjax = $enabledForAjax;
         $this->dependencies = $dependencies;
@@ -98,7 +102,7 @@ final class LibraryEntity
         return $this->js;
     }
 
-    public function getModuleName(): ?string
+    public function getModuleName(): string
     {
         return $this->moduleName;
     }
