@@ -9,6 +9,6 @@
         </div>
     </form>
     {javascripts}
-        {include_js module="system" file="partials/ajax-form"}
+        {js_libraries enable="ajax-form"}
     {/javascripts}
 {/block}

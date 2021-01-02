@@ -165,7 +165,7 @@
         </div>
     </div>
     {javascripts}
-        {include_js module="system" file="partials/ajax-form"}
+        {js_libraries enable="ajax-form"}
         {include_js module="installer" file="partials/available_databases"}
     {/javascripts}
 {/block}

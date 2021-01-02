@@ -85,7 +85,7 @@
                     {lang t="installer|check_again"}
                 </a>
                 {javascripts}
-                    {include_js module="system" file="partials/ajax-form"}
+                    {js_libraries enable="ajax-form"}
                 {/javascripts}
             {else}
                 <a href="{uri args="installer/index/install"}" class="btn btn-default">{lang t="installer|installer_index_install"}</a>

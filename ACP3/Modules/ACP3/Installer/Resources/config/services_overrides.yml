@@ -13,6 +13,18 @@ services:
     tags:
       - { name: core.eventSubscriber }
 
+  core.assets.renderer.css_renderer_factory:
+    class: ACP3\Core\Assets\Renderer\CSSRendererFactory
+    arguments:
+      - '@core.assets.renderer.strategy.service_locator'
+      - 'dev'
+
+  core.assets.renderer.javascript_renderer_factory:
+    class: ACP3\Core\Assets\Renderer\JavaScriptRendererFactory
+    arguments:
+      - '@core.assets.renderer.strategy.service_locator'
+      - 'dev'
+
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb\Steps
     arguments:
@@ -70,11 +82,15 @@ services:
 
   smarty.filter.move_to_bottom:
     class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom
+    arguments:
+      - '@core.assets.renderer.javascript_renderer'
     tags:
       - { name: smarty.plugin.filter, filterType: output }
 
   smarty.filter.move_to_head:
     class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead
+    arguments:
+      - '@core.assets.renderer.css_renderer'
     tags:
       - { name: smarty.plugin.filter, filterType: output }
 

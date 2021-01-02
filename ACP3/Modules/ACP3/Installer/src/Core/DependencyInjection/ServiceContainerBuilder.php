@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Installer\Core\DependencyInjection;
 
+use ACP3\Core\Assets\DependencyInjection\RegisterAssetLibraryPass;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
 use ACP3\Core\Environment\ApplicationMode;
@@ -71,6 +72,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterControllerActionsPass())
             ->addCompilerPass(new RegisterValidationRulesPass())
             ->addCompilerPass(new RegisterInstallersCompilerPass())
+            ->addCompilerPass(new RegisterAssetLibraryPass())
             ->addCompilerPass(new FragmentRendererPass());
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));

@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <title>{$TITLE} | {$PAGE_TITLE}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {include_stylesheet module="system" file="all"}
-    {include_stylesheet module="system" file="bootstrap"}
-    {include_stylesheet file="style"}
-    {include_stylesheet module="system" file="style"}
-    {include_stylesheet module="system" file="loading-layer"}
     <!-- STYLESHEETS -->
     <!--[if lt IE 9]>
         {include_js module="system" file="html5shiv"}
@@ -74,14 +69,13 @@
                         {lang t="installer|submit"}
                     </button>
                 </form>
+                {javascripts}
+                    {include_js file="language-switcher"}
+                {/javascripts}
             </div>
         </div>
     </footer>
 </div>
-{include_js module="system" file="polyfill"}
-{include_js module="system" file="jquery"}
-{include_js module="system" file="bootstrap"}
-{include_js file="language-switcher"}
 <!-- JAVASCRIPTS -->
 </body>
 </html>

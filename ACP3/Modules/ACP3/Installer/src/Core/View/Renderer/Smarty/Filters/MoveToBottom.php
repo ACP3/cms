@@ -7,17 +7,29 @@
 
 namespace ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters;
 
+use ACP3\Core\Assets\Renderer\JavaScriptRenderer;
+
 class MoveToBottom extends AbstractMoveElementFilter
 {
     public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
     protected const PLACEHOLDER = '<!-- JAVASCRIPTS -->';
 
     /**
+     * @var \ACP3\Core\Assets\Renderer\JavaScriptRenderer
+     */
+    private $javaScriptRenderer;
+
+    public function __construct(JavaScriptRenderer $javaScriptRenderer)
+    {
+        $this->javaScriptRenderer = $javaScriptRenderer;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function addElementFromMinifier()
     {
-        return '';
+        return $this->javaScriptRenderer->renderHtmlElement();
     }
 
     /**
