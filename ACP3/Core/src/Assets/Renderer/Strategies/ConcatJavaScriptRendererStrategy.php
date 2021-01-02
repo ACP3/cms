@@ -5,9 +5,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Assets\Minifier;
+namespace ACP3\Core\Assets\Renderer\Strategies;
 
-class JavaScript extends AbstractMinifier
+class ConcatJavaScriptRendererStrategy extends AbstractMinifier implements JavaScriptRendererStrategyInterface
 {
     protected const ASSETS_PATH_JS = 'Assets/js';
 
@@ -54,8 +54,8 @@ class JavaScript extends AbstractMinifier
      */
     protected function fetchLibraries(): void
     {
-        foreach ($this->libraries->getLibraries() as $library) {
-            if ($library->isEnabled() === false || !$library->getJs()) {
+        foreach ($this->libraries->getEnabledLibraries() as $library) {
+            if (!$library->getJs()) {
                 continue;
             }
 
@@ -80,5 +80,16 @@ class JavaScript extends AbstractMinifier
 
         // Include general js file of the layout
         $this->javascript[] = $this->fileResolver->getStaticAssetPath('', static::ASSETS_PATH_JS, $layout . '.js');
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
+    public function renderHtmlElement(string $layout = 'layout'): string
+    {
+        return "<script defer src=\"{$this->getURI($layout)}\"></script>";
     }
 }

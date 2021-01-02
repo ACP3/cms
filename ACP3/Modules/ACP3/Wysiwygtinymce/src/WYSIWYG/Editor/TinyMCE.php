@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Filemanager\Helpers;
 class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
     /**
-     * @var \ACP3\Core\Assets\Minifier\MinifierInterface
+     * @var \ACP3\Core\Assets\Renderer\Strategies\MinifierInterface
      */
     private $minifier;
     /**
@@ -39,7 +39,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 
     public function __construct(
         Core\ACL $acl,
-        Core\Assets\Minifier\MinifierInterface $minifier,
+        Core\Assets\Renderer\Strategies\MinifierInterface $minifier,
         Core\View $view,
         ?Helpers $filemanagerHelpers = null
     ) {

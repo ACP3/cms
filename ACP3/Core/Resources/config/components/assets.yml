@@ -17,7 +17,7 @@ services:
       - 'assets'
 
   core.assets.abstract_minifier:
-    class: ACP3\Core\Assets\Minifier\AbstractMinifier
+    class: ACP3\Core\Assets\Renderer\Strategies\AbstractMinifier
     arguments:
       - '@core.assets.logger'
       - '@core.assets'
@@ -30,16 +30,38 @@ services:
       - '%core.environment%'
     abstract: true
 
-  core.assets.minifier.css:
-    class: ACP3\Core\Assets\Minifier\CSS
+  core.assets.renderer.strategy.css:
+    class: ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy
+    arguments:
+      - '@core.assets'
+      - '@core.assets.libraries'
+      - '@core.modules'
+      - '@core.assets.file_resolver'
+
+  core.assets.renderer.strategy.deferrable_css:
+    class: ACP3\Core\Assets\Renderer\Strategies\DeferrableCSSRendererStrategy
+    arguments:
+      - '@core.assets'
+      - '@core.assets.libraries'
+      - '@core.assets.file_resolver'
+
+  core.assets.renderer.strategy.javascript:
+    class: ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy
+    arguments:
+      - '@core.assets'
+      - '@core.assets.file_resolver'
+      - '@core.assets.libraries'
+
+  core.assets.renderer.strategy.concat_css:
+    class: ACP3\Core\Assets\Renderer\Strategies\ConcatCSSRendererStrategy
     parent: core.assets.abstract_minifier
 
-  core.assets.minifier.deferrable_css:
-    class: ACP3\Core\Assets\Minifier\DeferrableCSS
+  core.assets.renderer.strategy.concat_deferrable_css:
+    class: ACP3\Core\Assets\Renderer\Strategies\ConcatDeferrableCSSRendererStrategy
     parent: core.assets.abstract_minifier
 
-  core.assets.minifier.javascript:
-    class: ACP3\Core\Assets\Minifier\JavaScript
+  core.assets.renderer.strategy.concat_javascript:
+    class: ACP3\Core\Assets\Renderer\Strategies\ConcatJavaScriptRendererStrategy
     parent: core.assets.abstract_minifier
 
   core.assets.file_resolver:
@@ -91,11 +113,41 @@ services:
   core.assets.event_listener.static_assets_listener:
     class: ACP3\Core\Assets\EventListener\StaticAssetsListener
     arguments:
-      - '@core.assets.minifier.css'
-      - '@core.assets.minifier.deferrable_css'
-      - '@core.assets.minifier.javascript'
+      - '@core.assets.renderer.css_renderer'
+      - '@core.assets.renderer.javascript_renderer'
       - '@request_stack'
       - '@core.assets.libraries'
       - '@core.assets.libraries_cache'
     tags:
       - { name: core.eventSubscriber }
+
+  core.assets.renderer.strategy.service_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - css_renderer_dev: '@core.assets.renderer.strategy.css'
+        css_renderer_prod: '@core.assets.renderer.strategy.concat_css'
+        deferrable_css_renderer_dev: '@core.assets.renderer.strategy.deferrable_css'
+        deferrable_css_renderer_prod: '@core.assets.renderer.strategy.concat_deferrable_css'
+        javascript_renderer_dev: '@core.assets.renderer.strategy.javascript'
+        javascript_renderer_prod: '@core.assets.renderer.strategy.concat_javascript'
+    tags: ['container.service_locator']
+
+  core.assets.renderer.css_renderer:
+    class: ACP3\Core\Assets\Renderer\CSSRenderer
+    factory: ['@core.assets.renderer.css_renderer_factory', 'create']
+
+  core.assets.renderer.css_renderer_factory:
+    class: ACP3\Core\Assets\Renderer\CSSRendererFactory
+    arguments:
+      - '@core.assets.renderer.strategy.service_locator'
+      - '%core.environment%'
+
+  core.assets.renderer.javascript_renderer:
+    class: ACP3\Core\Assets\Renderer\JavaScriptRenderer
+    factory: ['@core.assets.renderer.javascript_renderer_factory', 'create']
+
+  core.assets.renderer.javascript_renderer_factory:
+    class: ACP3\Core\Assets\Renderer\JavaScriptRendererFactory
+    arguments:
+      - '@core.assets.renderer.strategy.service_locator'
+      - '%core.environment%'

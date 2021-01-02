@@ -134,7 +134,7 @@ class Libraries
     }
 
     /**
-     * @return string[]
+     * @return Array<string, LibraryEntity>
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
@@ -150,7 +150,7 @@ class Libraries
                 continue;
             }
 
-            $enabledLibraries[] = $libraryName;
+            $enabledLibraries[$libraryName] = $options;
         }
 
         return $enabledLibraries;
@@ -162,7 +162,7 @@ class Libraries
      */
     public function getEnabledLibrariesAsString(): string
     {
-        return \implode(',', $this->getEnabledLibraries());
+        return \implode(',', \array_keys($this->getEnabledLibraries()));
     }
 
     private function getMasterRequest(): Request

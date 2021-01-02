@@ -5,9 +5,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Assets\Minifier;
+namespace ACP3\Core\Assets\Renderer\Strategies;
 
-class DeferrableCSS extends CSS
+class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
 {
     protected function getAssetGroup(): string
     {
@@ -41,8 +41,8 @@ class DeferrableCSS extends CSS
      */
     private function fetchLibraries(): void
     {
-        foreach ($this->libraries->getLibraries() as $library) {
-            if ($library->isEnabled() === false || !$library->getCss() || !$library->isDeferrableCss()) {
+        foreach ($this->libraries->getEnabledLibraries() as $library) {
+            if (!$library->getCss() || !$library->isDeferrableCss()) {
                 continue;
             }
 
@@ -54,5 +54,13 @@ class DeferrableCSS extends CSS
                 );
             }
         }
+    }
+
+    public function renderHtmlElement(string $layout = 'layout'): string
+    {
+        $deferrableCssUri = $this->getURI($layout);
+
+        return '<link rel="stylesheet" href="' . $deferrableCssUri . '" media="print" onload="this.media=\'all\'; this.onload=null;">'
+            . '<noscript><link rel="stylesheet" href="' . $deferrableCssUri . '"></noscript>';
     }
 }

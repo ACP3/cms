@@ -96,6 +96,20 @@ class FileResolver
         return $this->getStaticAssetPath($moduleName, 'View', $templatePath);
     }
 
+    public function getWebStaticAssetPath(
+        string $moduleName,
+        string $resourceDirectory = '',
+        string $file = ''
+    ): string {
+        $path = $this->getStaticAssetPath($moduleName, $resourceDirectory, $file);
+
+        if ($path === '') {
+            return '';
+        }
+
+        return $this->appPath->getWebRoot() . \str_replace(DIRECTORY_SEPARATOR, '/', \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR)));
+    }
+
     public function getStaticAssetPath(
         string $moduleName,
         string $resourceDirectory = '',

@@ -9,9 +9,8 @@ namespace ACP3\Core\Assets\EventListener;
 
 use ACP3\Core\Assets\Libraries;
 use ACP3\Core\Assets\LibrariesCache;
-use ACP3\Core\Assets\Minifier\CSS;
-use ACP3\Core\Assets\Minifier\DeferrableCSS;
-use ACP3\Core\Assets\Minifier\JavaScript;
+use ACP3\Core\Assets\Renderer\CSSRenderer;
+use ACP3\Core\Assets\Renderer\JavaScriptRenderer;
 use FOS\HttpCache\SymfonyCache\CacheEvent;
 use FOS\HttpCache\SymfonyCache\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -27,18 +26,6 @@ class StaticAssetsListener implements EventSubscriberInterface
     private const PLACEHOLDER_CSS = '<!-- STYLESHEETS -->';
     private const PLACEHOLDER_JS = '<!-- JAVASCRIPTS -->';
 
-    /**
-     * @var \ACP3\Core\Assets\Minifier\CSS
-     */
-    private $cssMinifier;
-    /**
-     * @var \ACP3\Core\Assets\Minifier\DeferrableCSS
-     */
-    private $deferrableCssMinifier;
-    /**
-     * @var \ACP3\Core\Assets\Minifier\JavaScript
-     */
-    private $javaScriptMinifier;
     /**
      * @var \Symfony\Component\HttpFoundation\RequestStack
      */
@@ -56,21 +43,27 @@ class StaticAssetsListener implements EventSubscriberInterface
      * @var Request[]
      */
     private $tracedRequests = [];
+    /**
+     * @var \ACP3\Core\Assets\Renderer\CSSRenderer
+     */
+    private $cssRenderer;
+    /**
+     * @var \ACP3\Core\Assets\Renderer\JavaScriptRenderer
+     */
+    private $javaScriptRenderer;
 
     public function __construct(
-        CSS $cssMinifier,
-        DeferrableCSS $deferrableCssMinifier,
-        JavaScript $javaScriptMinifier,
+        CSSRenderer $cssRenderer,
+        JavaScriptRenderer $javaScriptRenderer,
         RequestStack $requestStack,
         Libraries $libraries,
         LibrariesCache $librariesCache
     ) {
-        $this->cssMinifier = $cssMinifier;
-        $this->deferrableCssMinifier = $deferrableCssMinifier;
-        $this->javaScriptMinifier = $javaScriptMinifier;
         $this->requestStack = $requestStack;
         $this->libraries = $libraries;
         $this->librariesCache = $librariesCache;
+        $this->cssRenderer = $cssRenderer;
+        $this->javaScriptRenderer = $javaScriptRenderer;
     }
 
     /**
@@ -213,11 +206,7 @@ class StaticAssetsListener implements EventSubscriberInterface
      */
     private function addCssLibraries(): string
     {
-        $deferrableCssUri = $this->deferrableCssMinifier->getURI();
-
-        return '<link rel="stylesheet" type="text/css" href="' . $this->cssMinifier->getURI() . '">' . "\n"
-            . '<link rel="stylesheet" href="' . $deferrableCssUri . '" media="print" onload="this.media=\'all\'; this.onload=null;">' . "\n"
-            . '<noscript><link rel="stylesheet" href="' . $deferrableCssUri . '"></noscript>' . "\n";
+        return $this->cssRenderer->renderHtmlElement();
     }
 
     /**
@@ -230,6 +219,6 @@ class StaticAssetsListener implements EventSubscriberInterface
             return '';
         }
 
-        return "<script defer src=\"{$this->javaScriptMinifier->getURI()}\"></script>\n";
+        return $this->javaScriptRenderer->renderHtmlElement();
     }
 }

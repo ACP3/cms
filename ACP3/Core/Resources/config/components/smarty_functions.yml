@@ -60,7 +60,6 @@ services:
     arguments:
       - '@core.http.request'
       - '@core.assets.file_resolver'
-      - '@core.environment.application_path'
     tags:
       - { name: smarty.plugin.function, pluginName: image }
 

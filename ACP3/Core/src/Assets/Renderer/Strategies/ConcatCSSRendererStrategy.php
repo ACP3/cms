@@ -5,9 +5,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Assets\Minifier;
+namespace ACP3\Core\Assets\Renderer\Strategies;
 
-class CSS extends AbstractMinifier
+class ConcatCSSRendererStrategy extends AbstractMinifier implements CSSRendererStrategyInterface
 {
     protected const ASSETS_PATH_CSS = 'Assets/css';
 
@@ -55,8 +55,8 @@ class CSS extends AbstractMinifier
      */
     private function fetchLibraries(): void
     {
-        foreach ($this->libraries->getLibraries() as $library) {
-            if ($library->isEnabled() === false || !$library->getCss() || $library->isDeferrableCss()) {
+        foreach ($this->libraries->getEnabledLibraries() as $library) {
+            if (!$library->getCss() || $library->isDeferrableCss()) {
                 continue;
             }
 
@@ -115,5 +115,16 @@ class CSS extends AbstractMinifier
                 $this->stylesheets[] = $appendStylesheet;
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
+    public function renderHtmlElement(string $layout = 'layout'): string
+    {
+        return '<link rel="stylesheet" type="text/css" href="' . $this->getURI($layout) . '">';
     }
 }

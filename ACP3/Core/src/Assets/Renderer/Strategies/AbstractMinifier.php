@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Assets\Minifier;
+namespace ACP3\Core\Assets\Renderer\Strategies;
 
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
@@ -18,7 +18,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 use JSMin\JSMin;
 use Psr\Log\LoggerInterface;
 
-abstract class AbstractMinifier implements MinifierInterface
+abstract class AbstractMinifier implements MinifierInterface, RendererStrategyInterface
 {
     /**
      * @var \ACP3\Core\Assets
@@ -96,7 +96,7 @@ abstract class AbstractMinifier implements MinifierInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function generateFilenameHash(string $layout): string
+    private function generateFilenameHash(string $layout): string
     {
         $filename = $this->config->getSettings(Schema::MODULE_NAME)['design'];
         $filename .= '_' . $layout;
