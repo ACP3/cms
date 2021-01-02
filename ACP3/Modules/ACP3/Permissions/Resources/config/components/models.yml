@@ -1,34 +1,4 @@
 services:
-  permissions.model.rolerepository:
-    class: ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
-    arguments:
-      - '@core.db'
-
-  permissions.model.rulerepository:
-    class: ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
-    arguments:
-      - '@core.db'
-
-  permissions.model.resourcerepository:
-    class: ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
-    arguments:
-      - '@core.db'
-
-  permissions.model.privilegerepository:
-    class: ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
-    arguments:
-      - '@core.db'
-
-  permissions.model.userrolerepository:
-    class: ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
-    arguments:
-      - '@core.db'
-
-  permissions.model.roles_data_grid_repository:
-    class: ACP3\Modules\ACP3\Permissions\Model\Repository\RolesDataGridRepository
-    arguments:
-      - '@core.db'
-
   permissions.model.resources_model:
     class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
     arguments:

@@ -1,14 +1,4 @@
 services:
-  contact.model.repository.data_grid_repository:
-    class: ACP3\Modules\ACP3\Contact\Model\Repository\DataGridRepository
-    arguments:
-      - '@core.db'
-
-  contact.model.repository.contacts_repository:
-    class: ACP3\Modules\ACP3\Contact\Model\Repository\ContactsRepository
-    arguments:
-      - '@core.db'
-
   contact.model.contacts_model:
     class: ACP3\Modules\ACP3\Contact\Model\ContactsModel
     arguments:

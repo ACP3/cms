@@ -1,0 +1,10 @@
+services:
+  users.model.data_grid_repository:
+    class: ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository
+    arguments:
+      - '@core.db'
+
+  users.model.userrepository:
+    class: ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+    arguments:
+      - '@core.db'

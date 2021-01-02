@@ -1,24 +1,4 @@
 services:
-  comments.model.commentrepository:
-    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
-    arguments:
-      - '@core.db'
-
-  comments.repository.comment_by_module_repository:
-    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentByModuleRepository
-    arguments:
-      - '@core.db'
-
-  comments.model.comments_data_grid_repository:
-    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentsDataGridRepository
-    arguments:
-      - '@core.db'
-
-  comments.model.comments_by_module_data_grid_repository:
-    class: ACP3\Modules\ACP3\Comments\Model\Repository\CommentsByModuleDataGridRepository
-    arguments:
-      - '@core.db'
-
   comments.model.comments_model:
     class: ACP3\Modules\ACP3\Comments\Model\CommentsModel
     arguments:

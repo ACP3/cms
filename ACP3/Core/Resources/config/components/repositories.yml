@@ -1,0 +1,20 @@
+services:
+  permissions.model.privilegerepository:
+    synthetic: true
+    public: true
+
+  permissions.model.resourcerepository:
+    synthetic: true
+    public: true
+
+  permissions.model.rolerepository:
+    synthetic: true
+    public: true
+
+  permissions.model.rulerepository:
+    synthetic: true
+    public: true
+
+  permissions.model.userrolerepository:
+    synthetic: true
+    public: true
