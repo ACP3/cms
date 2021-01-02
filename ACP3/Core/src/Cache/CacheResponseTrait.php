@@ -36,19 +36,15 @@ trait CacheResponseTrait
             return;
         }
 
-        if ($response) {
-            $varyHeaderName = 'X-User-Context-Hash';
+        $varyHeaderName = 'X-User-Context-Hash';
 
-            $response
-                ->setVary($varyHeaderName)
-                ->setSharedMaxAge(1)
-                ->headers->add([
-                    $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
-                    'X-Reverse-Proxy-TTL' => $lifetime,
-                ]);
-        } else {
-            $this->getRequest()->getSymfonyRequest()->attributes->set('_acp3_http_cache_ttl', $lifetime);
-        }
+        $response
+            ->setVary($varyHeaderName)
+            ->setSharedMaxAge(1)
+            ->headers->add([
+                $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
+                'X-Reverse-Proxy-TTL' => $lifetime,
+            ]);
     }
 
     protected function canUsePageCache(): bool
