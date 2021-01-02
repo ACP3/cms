@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [5.11.0] - 2021-01-02
 ### Added
 - [Core] Extended the ``DisplayActionTrait`` with the new method `renderTemplate()`
+- [Core] Extended the ``TemplateEvent`` class with the new methods `addContent` and `getContent`
+
+# Changed
+- [Core] Got rid of the output buffering within the `{event}` Smarty function
+- [Core] Throw an ``\InvalidArgumentException`` if the `{event}` Smarty function gets called without a event name
 
 ### Deprecations
 - [Core] Deprecated the class ``ACP3\Core\Controller\Event\CustomTemplateVariableEvent`` and therefore the event itself
