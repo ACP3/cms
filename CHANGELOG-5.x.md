@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.11.0] - 2021-01-02
 ### Added
 - [Core] Extended the ``DisplayActionTrait`` with the new method `renderTemplate()`
 
@@ -186,7 +186,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - removed all deprecated code
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.10.2...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.11.0...5.x
+[5.11.0]: https://gitlab.com/ACP3/cms/compare/v5.10.2...v5.11.0
 [5.10.2]: https://gitlab.com/ACP3/cms/compare/v5.10.1...v5.10.2
 [5.10.1]: https://gitlab.com/ACP3/cms/compare/v5.10.0...v5.10.1
 [5.10.0]: https://gitlab.com/ACP3/cms/compare/v5.9.2...v5.10.0
