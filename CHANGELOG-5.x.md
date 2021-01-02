@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- [Core] Extended the ``DisplayActionTrait`` with the new method `renderTemplate()`
+
+### Deprecations
+- [Core] Deprecated the class ``ACP3\Core\Controller\Event\CustomTemplateVariableEvent`` and therefore the event itself
+- [Core] Deprecated the method ``ACP3\Core\Controller\DisplayActionTrait::addCustomTemplateVarsBeforeOutput`` and its implementations
+
+### Fixed
+- [Core] Reverted the changes to the ``CacheResponseTrait`` and reworked it (breaking method signature change!), to hopefully fix some edge cases with the HTTP cache once and for all.
+
 ## [5.10.2] - 2021-01-01
 ### Fixed
 - [Core] Fixed a regression introduced with version 5.10.1. We can't be thaaaat lazy about initializing the theme.
