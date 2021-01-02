@@ -1,15 +1,10 @@
 services:
-  share.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Share\Model\Repository\DataGridRepository
-    arguments:
-      - '@core.db'
+  _defaults:
+    autowire: true
 
-  share.model.share_ratings_repository:
-    class: ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository
-    arguments:
-      - '@core.db'
+  ACP3\Modules\ACP3\Share\Model\Repository\:
+    resource: '../../../src/Model/Repository/'
 
-  share.model.share_repository:
-    class: ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
-    arguments:
-      - '@core.db'
+  share.model.data_grid_repository: '@ACP3\Modules\ACP3\Share\Model\Repository\DataGridRepository'
+  share.model.share_ratings_repository: '@ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository'
+  share.model.share_repository: '@ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository'

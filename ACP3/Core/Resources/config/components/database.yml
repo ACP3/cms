@@ -9,6 +9,8 @@ services:
       - { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%' }
       - '%db_table_prefix%'
 
+  ACP3\Core\Database\Connection: '@core.db'
+
   core.db.logger:
     class: Psr\Log\LoggerInterface
     factory: ['@core.logger.logger_factory', 'create']

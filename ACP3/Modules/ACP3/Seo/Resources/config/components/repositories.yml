@@ -1,10 +1,9 @@
 services:
-  seo.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository
-    arguments:
-      - '@core.db'
+  _defaults:
+    autowire: true
 
-  seo.model.seorepository:
-    class: ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
-    arguments:
-      - '@core.db'
+  ACP3\Modules\ACP3\Seo\Model\Repository\:
+    resource: '../../../src/Model/Repository/'
+
+  seo.model.data_grid_repository: '@ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository'
+  seo.model.seorepository: '@ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository'

@@ -1,11 +1,9 @@
 services:
-  files.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository
-    arguments:
-      - '@core.db'
+  _defaults:
+    autowire: true
 
-  files.model.filesrepository:
-    class: ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
-    arguments:
-      - '@core.db'
-      - '@core.config'
+  ACP3\Modules\ACP3\Files\Model\Repository\:
+    resource: '../../../src/Model/Repository/'
+
+  files.model.data_grid_repository: '@ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository'
+  files.model.filesrepository: '@ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository'

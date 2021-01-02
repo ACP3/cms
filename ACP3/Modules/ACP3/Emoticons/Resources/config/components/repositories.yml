@@ -1,10 +1,9 @@
 services:
-  emoticons.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Emoticons\Model\Repository\DataGridRepository
-    arguments:
-      - '@core.db'
+  _defaults:
+    autowire: true
 
-  emoticons.model.emoticonrepository:
-    class: ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
-    arguments:
-      - '@core.db'
+  ACP3\Modules\ACP3\Emoticons\Model\Repository\:
+    resource: '../../../src/Model/Repository/'
+
+  emoticons.model.data_grid_repository: '@ACP3\Modules\ACP3\Emoticons\Model\Repository\DataGridRepository'
+  emoticons.model.emoticonrepository: '@ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository'

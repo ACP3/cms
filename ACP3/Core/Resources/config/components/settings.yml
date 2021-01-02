@@ -7,3 +7,6 @@ services:
       - '@core.cache.system'
       - '@system.model.modulerepository'
       - '@system.model.settingsrepository'
+
+  ACP3\Core\Settings\Settings: '@core.config'
+  ACP3\Core\Settings\SettingsInterface: '@core.config'

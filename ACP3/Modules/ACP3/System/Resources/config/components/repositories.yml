@@ -1,10 +1,9 @@
 services:
-  system.model.modulerepository:
-    class: ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository
-    arguments:
-      - '@core.db'
+  _defaults:
+    autowire: true
 
-  system.model.settingsrepository:
-    class: ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository
-    arguments:
-      - '@core.db'
+  ACP3\Modules\ACP3\System\Model\Repository\:
+    resource: '../../../src/Model/Repository/'
+
+  system.model.modulerepository: '@ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository'
+  system.model.settingsrepository: '@ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository'

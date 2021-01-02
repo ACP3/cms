@@ -1,10 +1,9 @@
 services:
-  users.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository
-    arguments:
-      - '@core.db'
+  _defaults:
+    autowire: true
 
-  users.model.userrepository:
-    class: ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
-    arguments:
-      - '@core.db'
+  ACP3\Modules\ACP3\Users\Model\Repository\:
+    resource: '../../../src/Model/Repository/'
+
+  users.model.data_grid_repository: '@ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository'
+  users.model.userrepository: '@ACP3\Modules\ACP3\Users\Model\Repository\UserRepository'

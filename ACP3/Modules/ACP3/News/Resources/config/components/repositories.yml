@@ -1,10 +1,9 @@
 services:
-  news.model.data_grid_repository:
-    class: ACP3\Modules\ACP3\News\Model\Repository\DataGridRepository
-    arguments:
-      - '@core.db'
+  _defaults:
+    autowire: true
 
-  news.model.newsrepository:
-    class: ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
-    arguments:
-      - '@core.db'
+  ACP3\Modules\ACP3\News\Model\Repository\:
+    resource: '../../../src/Model/Repository/'
+
+  news.model.data_grid_repository: '@ACP3\Modules\ACP3\News\Model\Repository\DataGridRepository'
+  news.model.newsrepository: '@ACP3\Modules\ACP3\News\Model\Repository\NewsRepository'

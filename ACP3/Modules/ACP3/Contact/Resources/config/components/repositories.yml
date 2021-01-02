@@ -1,10 +1,9 @@
 services:
-  contact.model.repository.data_grid_repository:
-    class: ACP3\Modules\ACP3\Contact\Model\Repository\DataGridRepository
-    arguments:
-      - '@core.db'
+  _defaults:
+    autowire: true
 
-  contact.model.repository.contacts_repository:
-    class: ACP3\Modules\ACP3\Contact\Model\Repository\ContactsRepository
-    arguments:
-      - '@core.db'
+  ACP3\Modules\ACP3\Contact\Model\Repository\:
+    resource: '../../../src/Model/Repository/'
+
+  contact.model.repository.data_grid_repository: '@ACP3\Modules\ACP3\Contact\Model\Repository\DataGridRepository'
+  contact.model.repository.contacts_repository: '@ACP3\Modules\ACP3\Contact\Model\Repository\ContactsRepository'

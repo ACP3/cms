@@ -1,10 +1,9 @@
 services:
-  menus.model.menurepository:
-    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
-    arguments:
-      - '@core.db'
+  _defaults:
+    autowire: true
 
-  menus.model.menuitemrepository:
-    class: ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
-    arguments:
-      - '@core.db'
+  ACP3\Modules\ACP3\Menus\Model\Repository\:
+    resource: '../../../src/Model/Repository/'
+
+  menus.model.menurepository: '@ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository'
+  menus.model.menuitemrepository: '@ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository'
