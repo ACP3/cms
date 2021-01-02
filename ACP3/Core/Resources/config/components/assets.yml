@@ -86,14 +86,12 @@ services:
     arguments:
       - '@core.assets.libraries'
       - '@core.assets.file_resolver'
-      - '@core.environment.application_path'
 
   core.assets.include_stylesheet:
     class: ACP3\Core\Assets\IncludeStylesheet
     arguments:
       - '@core.assets.libraries'
       - '@core.assets.file_resolver'
-      - '@core.environment.application_path'
 
   core.assets.libraries:
     class: ACP3\Core\Assets\Libraries

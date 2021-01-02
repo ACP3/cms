@@ -79,7 +79,7 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
         $this->libraries->enableLibraries(['foobar']);
 
         $expected = ['jquery', 'foobar'];
-        $actual = array_keys($this->libraries->getEnabledLibraries());
+        $actual = \array_keys($this->libraries->getEnabledLibraries());
 
         \sort($expected);
         \sort($actual);

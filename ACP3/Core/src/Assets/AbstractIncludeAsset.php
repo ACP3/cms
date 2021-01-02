@@ -8,7 +8,6 @@
 namespace ACP3\Core\Assets;
 
 use ACP3\Core\Application\BootstrapInterface;
-use ACP3\Core\Environment\ApplicationPath;
 
 abstract class AbstractIncludeAsset
 {
@@ -21,22 +20,16 @@ abstract class AbstractIncludeAsset
      */
     private $fileResolver;
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
      * @var array
      */
     private $alreadyIncluded = [];
 
     public function __construct(
         Libraries $libraries,
-        FileResolver $fileResolver,
-        ApplicationPath $appPath
+        FileResolver $fileResolver
     ) {
         $this->libraries = $libraries;
         $this->fileResolver = $fileResolver;
-        $this->appPath = $appPath;
     }
 
     /**
@@ -75,18 +68,17 @@ abstract class AbstractIncludeAsset
 
     private function resolvePath(string $moduleName, string $filePath): string
     {
-        $path = $this->fileResolver->getStaticAssetPath(
+        $path = $this->fileResolver->getWebStaticAssetPath(
             $moduleName,
             $this->getResourceDirectory(),
             $filePath . '.' . $this->getFileExtension()
         );
-        $path = \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR));
 
         if (!$path) {
-            throw new \RuntimeException(\sprintf('Could not find the request file %s of module %s', $filePath, $moduleName));
+            throw new \RuntimeException(\sprintf('Could not find the requested file %s of module %s!', $filePath, $moduleName));
         }
 
-        return $this->appPath->getWebRoot() . $path;
+        return $path;
     }
 
     abstract protected function getResourceDirectory(): string;
