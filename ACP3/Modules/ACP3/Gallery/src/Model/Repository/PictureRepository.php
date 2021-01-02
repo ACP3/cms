@@ -13,14 +13,12 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
 {
     use Core\Model\Repository\PublicationPeriodAwareTrait;
 
-    const TABLE_NAME = 'gallery_pictures';
+    public const TABLE_NAME = 'gallery_pictures';
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function pictureExists(int $pictureId, string $time = '')
+    public function pictureExists(int $pictureId, string $time = ''): bool
     {
         $period = empty($time) === false ? ' AND `active` = :active AND ' . $this->getPublicationPeriod('g.') : '';
 
@@ -31,13 +29,9 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $pictureId
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneById($pictureId)
+    public function getOneById(int $pictureId): array
     {
         return $this->db->fetchAssoc(
             'SELECT g.id AS gallery_id, g.title AS gallery_title, p.* FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = ? AND p.gallery_id = g.id',
@@ -46,11 +40,9 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getGalleryIdFromPictureId(int $pictureId)
+    public function getGalleryIdFromPictureId(int $pictureId): int
     {
         return (int) $this->db->fetchColumn(
             'SELECT gallery_id FROM ' . $this->getTableName() . ' WHERE id = ?',
@@ -59,11 +51,9 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLastPictureByGalleryId(int $galleryId)
+    public function getLastPictureByGalleryId(int $galleryId): int
     {
         return (int) $this->db->fetchColumn(
             'SELECT MAX(pic) FROM ' . $this->getTableName() . ' WHERE gallery_id = ?',
@@ -72,11 +62,9 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getPicturesByGalleryId(int $galleryId)
+    public function getPicturesByGalleryId(int $galleryId): array
     {
         return $this->db->fetchAll(
             'SELECT
@@ -92,11 +80,9 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getPreviousPictureId(int $pictureNumber, int $galleryId)
+    public function getPreviousPictureId(int $pictureNumber, int $galleryId): int
     {
         return (int) $this->db->fetchColumn(
             'SELECT id FROM ' . $this->getTableName() . ' WHERE pic < ? AND gallery_id = ? ORDER BY pic DESC LIMIT 1',
@@ -105,11 +91,9 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getNextPictureId(int $pictureNumber, int $galleryId)
+    public function getNextPictureId(int $pictureNumber, int $galleryId): int
     {
         return (int) $this->db->fetchColumn(
             'SELECT id FROM ' . $this->getTableName() . ' WHERE pic > ? AND gallery_id = ? ORDER BY pic ASC LIMIT 1',
@@ -118,11 +102,9 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return string
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getFileById(int $pictureId)
+    public function getFileById(int $pictureId): string
     {
         return $this->db->fetchColumn(
             'SELECT `file` FROM ' . $this->getTableName() . ' WHERE id = ?',
@@ -131,11 +113,9 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function updatePicturesNumbers(int $pictureNumber, int $galleryId)
+    public function updatePicturesNumbers(int $pictureNumber, int $galleryId): int
     {
         return $this->db->getConnection()->executeUpdate(
             'UPDATE ' . $this->getTableName() . ' SET pic = pic - 1 WHERE pic > ? AND gallery_id = ?',

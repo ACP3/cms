@@ -15,15 +15,12 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
 {
     use Core\Model\Repository\PublicationPeriodAwareTrait;
 
-    const TABLE_NAME = 'files';
+    public const TABLE_NAME = 'files';
     /**
      * @var Core\Settings\SettingsInterface
      */
     private $settings;
 
-    /**
-     * FilesRepository constructor.
-     */
     public function __construct(Connection $db, Core\Settings\SettingsInterface $settings)
     {
         parent::__construct($db);
@@ -32,11 +29,9 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists(int $fileId, string $time = '')
+    public function resultExists(int $fileId, string $time = ''): bool
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
@@ -47,13 +42,9 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $fileId
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneById($fileId)
+    public function getOneById(int $fileId): array
     {
         return $this->db->fetchAssoc(
             'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
@@ -62,23 +53,19 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return bool|string
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getFileById(int $fileId)
+    public function getFileById(int $fileId): string
     {
         return $this->db->fetchColumn("SELECT `file` FROM {$this->getTableName()} WHERE `id` = ?", [$fileId]);
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll(string $time = '', ?int $categoryId = null)
+    public function countAll(string $time = '', ?int $categoryId = null): int
     {
-        if (!empty($categoryId)) {
+        if ($categoryId !== null) {
             $results = $this->getAllByCategoryId($categoryId, $time);
         } else {
             $results = $this->getAll($time);
@@ -88,11 +75,9 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllByCategoryId(int $categoryId, string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAllByCategoryId(int $categoryId, string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -104,11 +89,9 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -120,19 +103,14 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getMaxSort()
+    public function getMaxSort(): int
     {
-        return (int) $this->db->fetchColumn("SELECT MAX(`sort`) FROM {$this->getTableName()};");
+        return $this->db->fetchColumn("SELECT MAX(`sort`) FROM {$this->getTableName()};");
     }
 
-    /**
-     * @return string
-     */
-    private function getOrderBy()
+    private function getOrderBy(): string
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 

@@ -17,11 +17,9 @@ interface RepositoryInterface
     public function insert(array $data);
 
     /**
-     * @param string $tableName
-     *
      * @return string
      */
-    public function getTableName($tableName = '');
+    public function getTableName(string $tableName = '');
 
     /**
      * Executes the SQL delete statement.
@@ -42,9 +40,7 @@ interface RepositoryInterface
     public function update(array $data, $entryId);
 
     /**
-     * @param int $entryId
-     *
-     * @return array
+     * Returns a single full result set by the value of its primary key.
      */
-    public function getOneById($entryId);
+    public function getOneById(int $entryId);
 }

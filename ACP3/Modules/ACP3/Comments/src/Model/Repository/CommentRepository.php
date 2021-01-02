@@ -10,27 +10,24 @@ namespace ACP3\Modules\ACP3\Comments\Model\Repository;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface;
 use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
+use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
 
 class CommentRepository extends AbstractRepository implements FloodBarrierAwareRepositoryInterface
 {
-    const TABLE_NAME = 'comments';
+    public const TABLE_NAME = 'comments';
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists(int $commentId)
+    public function resultExists(int $commentId): bool
     {
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = ?', [$commentId]) > 0;
     }
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultsExistByModuleId(int $moduleId)
+    public function resultsExistByModuleId(int $moduleId): bool
     {
         return $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
@@ -54,13 +51,9 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @param int $commentId
-     *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneById($commentId)
+    public function getOneById(int $commentId): array
     {
         return $this->db->fetchAssoc(
             'SELECT c.*, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?',
@@ -69,13 +62,11 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @param string $ipAddress
-     *
-     * @return string
+     * {@inheritDoc}
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLastDateFromIp($ipAddress)
+    public function getLastDateFromIp(string $ipAddress)
     {
         return $this->db->fetchColumn(
             'SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?',
@@ -84,26 +75,22 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAllByModule(int $moduleId, int $resultId, ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAllByModule(int $moduleId, int $resultId, ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 
         return $this->db->fetchAll(
-            'SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Users\Model\Repository\UserRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt,
+            'SELECT IF(c.user_id IS NULL, c.name, u.nickname) AS `name`, c.user_id, c.date, c.message FROM ' . $this->getTableName() . ' AS c LEFT JOIN ' . $this->getTableName(UserRepository::TABLE_NAME) . ' AS u ON (u.id = c.user_id) WHERE c.module_id = ? AND c.entry_id = ? ORDER BY c.date ASC' . $limitStmt,
             [$moduleId, $resultId]
         );
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAllByModule(int $moduleId, int $resultId)
+    public function countAllByModule(int $moduleId, int $resultId): int
     {
         return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ? AND entry_id = ?',

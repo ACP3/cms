@@ -8,19 +8,19 @@
 namespace ACP3\Modules\ACP3\News\Model\Repository;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use Doctrine\DBAL\Connection;
 
 class NewsRepository extends Core\Model\Repository\AbstractRepository
 {
     use Core\Model\Repository\PublicationPeriodAwareTrait;
 
-    const TABLE_NAME = 'news';
+    public const TABLE_NAME = 'news';
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function resultExists(int $newsId, string $time = '')
+    public function resultExists(int $newsId, string $time = ''): bool
     {
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
@@ -31,28 +31,22 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @param int $newsId
-     *
-     * @return array|mixed
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getOneById($newsId)
+    public function getOneById(int $newsId): array
     {
         return $this->db->fetchAssoc(
-            'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
+            'SELECT n.*, c.title AS category_title FROM ' . $this->getTableName() . ' AS n LEFT JOIN ' . $this->getTableName(CategoryRepository::TABLE_NAME) . ' AS c ON(n.category_id = c.id) WHERE n.id = ?',
             [$newsId]
         );
     }
 
     /**
-     * @return bool|string
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll(string $time = '', ?int $categoryId = null)
+    public function countAll(string $time = '', ?int $categoryId = null): int
     {
-        if (!empty($categoryId)) {
+        if ($categoryId !== null) {
             return $this->countAllByCategoryId([$categoryId], $time);
         }
 
@@ -75,14 +69,12 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
             'SELECT COUNT(*) FROM ' . $this->getTableName() . " WHERE `category_id` IN(:categoryId) {$where}",
             ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
             0,
-            ['time' => \PDO::PARAM_STR, 'categoryId' => \Doctrine\DBAL\Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
+            ['time' => \PDO::PARAM_STR, 'categoryId' => Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
         );
     }
 
     /**
      * @param int[]|int $categoryId
-     *
-     * @return array
      *
      * @throws \Doctrine\DBAL\DBALException
      */
@@ -91,7 +83,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
         string $time = '',
         ?int $limitStart = null,
         ?int $resultsPerPage = null
-    ) {
+    ): array {
         if (false === \is_array($categoryId)) {
             $categoryId = [$categoryId];
         }
@@ -102,16 +94,14 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} WHERE category_id IN(:categoryId) {$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
             ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
-            ['time' => \PDO::PARAM_STR, 'categoryId' => \Doctrine\DBAL\Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
+            ['time' => \PDO::PARAM_STR, 'categoryId' => Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
         );
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -123,11 +113,9 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLatestByCategoryId(int $categoryId, string $time)
+    public function getLatestByCategoryId(int $categoryId, string $time): array
     {
         $period = " AND {$this->getPublicationPeriod()} AND `active` = :active";
 
@@ -138,11 +126,9 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLatest(string $time)
+    public function getLatest(string $time): array
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE {$this->getPublicationPeriod()} AND `active` = :active ORDER BY `start` DESC LIMIT 1",
