@@ -40,6 +40,9 @@ class Image extends Core\Controller\AbstractWidgetAction
 
         if ($this->sessionHandler->has('captcha_' . $path)) {
             $response->setContent($this->generateCaptcha($this->sessionHandler->get('captcha_' . $path)));
+        } else {
+            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+            $response->setContent($this->generateCaptcha('invalid captcha!', true));
         }
 
         return $response;
@@ -48,9 +51,9 @@ class Image extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Exception
      */
-    protected function generateCaptcha(string $captchaText): string
+    protected function generateCaptcha(string $captchaText, bool $renderAsError = false): string
     {
-        $captchaLength = \strlen($captchaText);
+        $captchaLength = \mb_strlen($captchaText);
         $width = $captchaLength * 25;
         $height = 30;
 
@@ -64,9 +67,9 @@ class Image extends Core\Controller\AbstractWidgetAction
         $textColor = \imagecolorallocate($image, 0, 0, 0);
 
         for ($i = 0; $i < $captchaLength; ++$i) {
-            $font = \random_int(2, 5);
+            $font = $renderAsError ? 5 : \random_int(2, 5);
             $posLeft = 22 * $i + 10;
-            $posTop = \random_int(1, $height - \imagefontheight($font) - 3);
+            $posTop = $renderAsError ? $height - \imagefontheight($font) - 3 : \random_int(1, $height - \imagefontheight($font) - 3);
             \imagestring($image, $font, $posLeft, $posTop, $captchaText[$i], $textColor);
         }
 
