@@ -10,6 +10,9 @@ namespace ACP3\Core\Controller\Event;
 use ACP3\Core\View;
 use Symfony\Contracts\EventDispatcher\Event;
 
+/**
+ * @deprecated To be removed with version 6.x.
+ */
 class CustomTemplateVariableEvent extends Event
 {
     public const NAME = 'core.controller.custom_template_variable';
