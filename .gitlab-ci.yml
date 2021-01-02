@@ -208,6 +208,14 @@ release:generate-artifact:
       - README.md
   only:
     - tags
+  needs:
+    - build:composer
+    - test:php72-unit
+    - test:php73-unit
+    - test:php74-unit
+    - test:php-cs-fixer
+    - test:phpstan
+    - test:eslint
   dependencies:
     - build:composer
 
