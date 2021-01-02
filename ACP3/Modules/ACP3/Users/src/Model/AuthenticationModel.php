@@ -171,6 +171,7 @@ class AuthenticationModel implements AuthenticationModelInterface
                     );
                 }
 
+                $this->sessionHandler->getFlashBag()->clear();
                 $this->sessionHandler->migrate(true);
 
                 $this->authenticate($user);
