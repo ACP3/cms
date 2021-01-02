@@ -13,6 +13,7 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Composer\Semver\Comparator;
+use Composer\Semver\VersionParser;
 
 class UpdateCheck
 {
@@ -31,12 +32,17 @@ class UpdateCheck
      * @var UpdateFileParser
      */
     private $updateFileParser;
+    /**
+     * @var \Composer\Semver\VersionParser
+     */
+    private $versionParser;
 
-    public function __construct(Date $date, SettingsInterface $settings, UpdateFileParser $updateFileParser)
+    public function __construct(Date $date, SettingsInterface $settings, UpdateFileParser $updateFileParser, VersionParser $versionParser)
     {
         $this->settings = $settings;
         $this->date = $date;
         $this->updateFileParser = $updateFileParser;
+        $this->versionParser = $versionParser;
     }
 
     public function checkForNewVersion(): array
@@ -47,8 +53,8 @@ class UpdateCheck
             $update = $this->doUpdateCheck();
         } else {
             $update = [
-                'installed_version' => BootstrapInterface::VERSION,
-                'latest_version' => $settings['update_new_version'],
+                'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
+                'latest_version' => $this->versionParser->normalize($settings['update_new_version']),
                 'is_latest' => $this->isLatestVersion($settings['update_new_version']),
                 'url' => $settings['update_new_version_url'],
             ];
@@ -68,8 +74,8 @@ class UpdateCheck
             $data = $this->updateFileParser->parseUpdateFile(static::UPDATE_CHECK_FILE);
 
             $update = [
-                'installed_version' => BootstrapInterface::VERSION,
-                'latest_version' => $data['latest_version'],
+                'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
+                'latest_version' => $this->versionParser->normalize($data['latest_version']),
                 'is_latest' => $this->isLatestVersion($data['latest_version']),
                 'url' => $data['url'],
             ];
@@ -85,8 +91,8 @@ class UpdateCheck
     private function isLatestVersion(string $latestVersion): bool
     {
         return Comparator::greaterThanOrEqualTo(
-            BootstrapInterface::VERSION,
-            $latestVersion
+            $this->versionParser->normalize(BootstrapInterface::VERSION),
+            $this->versionParser->normalize($latestVersion)
         );
     }
 

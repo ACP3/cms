@@ -19,6 +19,3 @@ services:
     class: ACP3\Modules\ACP3\Installer\Helpers\Navigation
     arguments:
       - '@core.i18n.translator'
-
-  composer.semver.version_parser:
-    class: Composer\Semver\VersionParser
