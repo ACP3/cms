@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Assets\Renderer\Strategies;
 
-class ConcatCSSRendererStrategy extends AbstractMinifier implements CSSRendererStrategyInterface
+class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implements CSSRendererStrategyInterface
 {
     protected const ASSETS_PATH_CSS = 'Assets/css';
 

@@ -1,4 +1,15 @@
 services:
+  core.assets.event_listener.static_assets_listener:
+    class: ACP3\Core\Assets\EventListener\StaticAssetsListener
+    arguments:
+      - '@core.assets.renderer.css_renderer'
+      - '@core.assets.renderer.javascript_renderer'
+      - '@request_stack'
+      - '@core.assets.libraries'
+      - '@core.assets.libraries_cache'
+    tags:
+      - { name: core.eventSubscriber }
+
   core.assets:
     class: ACP3\Core\Assets
     arguments:
@@ -17,7 +28,7 @@ services:
       - 'assets'
 
   core.assets.abstract_minifier:
-    class: ACP3\Core\Assets\Renderer\Strategies\AbstractMinifier
+    class: ACP3\Core\Assets\Renderer\Strategies\AbstractConcatRendererStrategy
     arguments:
       - '@core.assets.logger'
       - '@core.assets'
@@ -27,7 +38,6 @@ services:
       - '@core.config'
       - '@core.modules'
       - '@core.assets.file_resolver'
-      - '%core.environment%'
     abstract: true
 
   core.assets.renderer.strategy.css:
@@ -109,17 +119,6 @@ services:
       - '@core.helpers.string_formatter'
       - '@core.breadcrumb.title'
       - '@core.http.request'
-
-  core.assets.event_listener.static_assets_listener:
-    class: ACP3\Core\Assets\EventListener\StaticAssetsListener
-    arguments:
-      - '@core.assets.renderer.css_renderer'
-      - '@core.assets.renderer.javascript_renderer'
-      - '@request_stack'
-      - '@core.assets.libraries'
-      - '@core.assets.libraries_cache'
-    tags:
-      - { name: core.eventSubscriber }
 
   core.assets.renderer.strategy.service_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator

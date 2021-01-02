@@ -10,7 +10,6 @@ namespace ACP3\Core\Assets\Renderer\Strategies;
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Cache;
-use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
@@ -18,24 +17,16 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 use JSMin\JSMin;
 use Psr\Log\LoggerInterface;
 
-abstract class AbstractMinifier implements MinifierInterface, RendererStrategyInterface
+abstract class AbstractConcatRendererStrategy implements RendererStrategyInterface
 {
     /**
      * @var \ACP3\Core\Assets
      */
     protected $assets;
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
      * @var \ACP3\Core\Cache
      */
     protected $systemCache;
-    /**
-     * @var SettingsInterface
-     */
-    protected $config;
     /**
      * @var \ACP3\Core\Modules
      */
@@ -45,13 +36,17 @@ abstract class AbstractMinifier implements MinifierInterface, RendererStrategyIn
      */
     protected $fileResolver;
     /**
-     * @var string
-     */
-    protected $environment;
-    /**
      * @var \ACP3\Core\Assets\Libraries
      */
     protected $libraries;
+    /**
+     * @var \ACP3\Core\Environment\ApplicationPath
+     */
+    private $appPath;
+    /**
+     * @var SettingsInterface
+     */
+    private $config;
     /**
      * @var LoggerInterface
      */
@@ -65,8 +60,7 @@ abstract class AbstractMinifier implements MinifierInterface, RendererStrategyIn
         Cache $systemCache,
         SettingsInterface $config,
         Modules $modules,
-        FileResolver $fileResolver,
-        string $environment
+        FileResolver $fileResolver
     ) {
         $this->assets = $assets;
         $this->appPath = $appPath;
@@ -74,7 +68,6 @@ abstract class AbstractMinifier implements MinifierInterface, RendererStrategyIn
         $this->config = $config;
         $this->modules = $modules;
         $this->fileResolver = $fileResolver;
-        $this->environment = $environment;
         $this->logger = $logger;
         $this->libraries = $libraries;
     }
@@ -82,6 +75,8 @@ abstract class AbstractMinifier implements MinifierInterface, RendererStrategyIn
     abstract protected function getAssetGroup(): string;
 
     abstract protected function getFileExtension(): string;
+
+    abstract protected function processLibraries(string $layout): array;
 
     /**
      * @throws \MJS\TopSort\CircularDependencyException
@@ -106,11 +101,7 @@ abstract class AbstractMinifier implements MinifierInterface, RendererStrategyIn
         return \md5($filename);
     }
 
-    abstract protected function processLibraries(string $layout): array;
-
     /**
-     * {@inheritdoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -118,10 +109,9 @@ abstract class AbstractMinifier implements MinifierInterface, RendererStrategyIn
     {
         // We have to initialize the theme here,
         // i.e. enabling the required libraries of the theme + adding theme specific stylesheets and javascript files.
-        // It has to be called before the "generateFilenameHash" method, otherwise would get incorrect results!
+        // It has to be called before the "generateFilenameHash" method, otherwise we would get incorrect results!
         $this->assets->initializeTheme();
 
-        $debug = $this->environment === ApplicationMode::DEVELOPMENT;
         $filenameHash = $this->generateFilenameHash($layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
@@ -129,10 +119,10 @@ abstract class AbstractMinifier implements MinifierInterface, RendererStrategyIn
             $lastGenerated = \time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
-        $path = $this->buildAssetPath($debug, $filenameHash, $lastGenerated);
+        $path = $this->buildAssetPath($filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
-        if ($debug === true || \is_file($this->appPath->getUploadsDir() . $path) === false) {
+        if (\is_file($this->appPath->getUploadsDir() . $path) === false) {
             // Get the enabled libraries and filter out empty entries
             $files = \array_filter(
                 $this->processLibraries($layout),
@@ -147,10 +137,10 @@ abstract class AbstractMinifier implements MinifierInterface, RendererStrategyIn
             $this->systemCache->save($cacheId, $lastGenerated);
         }
 
-        return $this->appPath->getWebRoot() . 'uploads/' . $path . ($debug === true ? '?v=' . $lastGenerated : '');
+        return $this->appPath->getWebRoot() . 'uploads/' . $path;
     }
 
-    protected function saveMinifiedAsset(array $files, string $path): void
+    private function saveMinifiedAsset(array $files, string $path): void
     {
         $options = [
             'options' => [
@@ -168,12 +158,8 @@ abstract class AbstractMinifier implements MinifierInterface, RendererStrategyIn
         \file_put_contents($path, $content, LOCK_EX);
     }
 
-    protected function buildAssetPath(bool $debug, string $filenameHash, int $lastGenerated): string
+    private function buildAssetPath(string $filenameHash, int $lastGenerated): string
     {
-        if ($debug === true) {
-            return 'assets/' . $filenameHash . '.' . $this->getFileExtension();
-        }
-
         return 'assets/' . $filenameHash . '-' . $lastGenerated . '.' . $this->getFileExtension();
     }
 

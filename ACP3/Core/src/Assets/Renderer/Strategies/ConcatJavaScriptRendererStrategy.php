@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Assets\Renderer\Strategies;
 
-class ConcatJavaScriptRendererStrategy extends AbstractMinifier implements JavaScriptRendererStrategyInterface
+class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy implements JavaScriptRendererStrategyInterface
 {
     protected const ASSETS_PATH_JS = 'Assets/js';
 
