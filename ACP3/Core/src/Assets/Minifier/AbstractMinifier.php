@@ -20,10 +20,6 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractMinifier implements MinifierInterface
 {
-    protected const ASSETS_PATH_CSS = 'Assets/css';
-    protected const ASSETS_PATH_JS = 'Assets/js';
-    protected const SYSTEM_MODULE_NAME = 'system';
-
     /**
      * @var \ACP3\Core\Assets
      */

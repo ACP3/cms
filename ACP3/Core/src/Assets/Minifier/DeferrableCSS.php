@@ -48,7 +48,7 @@ class DeferrableCSS extends CSS
 
             foreach ($library->getCss() as $stylesheet) {
                 $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                    $library->getModuleName() ?: static::SYSTEM_MODULE_NAME,
+                    $library->getModuleName(),
                     static::ASSETS_PATH_CSS,
                     $stylesheet
                 );

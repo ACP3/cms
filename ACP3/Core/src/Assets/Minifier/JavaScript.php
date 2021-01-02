@@ -9,6 +9,8 @@ namespace ACP3\Core\Assets\Minifier;
 
 class JavaScript extends AbstractMinifier
 {
+    protected const ASSETS_PATH_JS = 'Assets/js';
+
     /**
      * @var array
      */
@@ -59,7 +61,7 @@ class JavaScript extends AbstractMinifier
 
             foreach ($library->getJs() as $javascript) {
                 $this->javascript[] = $this->fileResolver->getStaticAssetPath(
-                    $library->getModuleName() ?: static::SYSTEM_MODULE_NAME,
+                    $library->getModuleName(),
                     static::ASSETS_PATH_JS,
                     $javascript
                 );

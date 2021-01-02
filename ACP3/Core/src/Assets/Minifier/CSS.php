@@ -9,6 +9,8 @@ namespace ACP3\Core\Assets\Minifier;
 
 class CSS extends AbstractMinifier
 {
+    protected const ASSETS_PATH_CSS = 'Assets/css';
+
     /**
      * @var array
      */
@@ -60,7 +62,7 @@ class CSS extends AbstractMinifier
 
             foreach ($library->getCss() as $stylesheet) {
                 $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                    $library->getModuleName() ?: static::SYSTEM_MODULE_NAME,
+                    $library->getModuleName(),
                     static::ASSETS_PATH_CSS,
                     $stylesheet
                 );
@@ -81,12 +83,6 @@ class CSS extends AbstractMinifier
             );
         }
 
-        // Include general system styles and the stylesheet of the current theme
-        $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-            static::SYSTEM_MODULE_NAME,
-            static::ASSETS_PATH_CSS,
-            'style.css'
-        );
         $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
             '',
             static::ASSETS_PATH_CSS,
@@ -105,7 +101,7 @@ class CSS extends AbstractMinifier
                 static::ASSETS_PATH_CSS,
                 'style.css'
             );
-            if ('' !== $stylesheet && $module['name'] !== self::SYSTEM_MODULE_NAME) {
+            if ('' !== $stylesheet) {
                 $this->stylesheets[] = $stylesheet;
             }
 
