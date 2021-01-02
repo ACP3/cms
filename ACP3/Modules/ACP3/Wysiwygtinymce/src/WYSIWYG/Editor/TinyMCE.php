@@ -16,10 +16,6 @@ use ACP3\Modules\ACP3\Filemanager\Helpers;
 class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
     /**
-     * @var \ACP3\Core\Assets\Renderer\Strategies\MinifierInterface
-     */
-    private $minifier;
-    /**
      * @var \ACP3\Modules\ACP3\Filemanager\Helpers|null
      */
     private $filemanagerHelpers;
@@ -39,11 +35,9 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 
     public function __construct(
         Core\ACL $acl,
-        Core\Assets\Renderer\Strategies\MinifierInterface $minifier,
         Core\View $view,
         ?Helpers $filemanagerHelpers = null
     ) {
-        $this->minifier = $minifier;
         $this->filemanagerHelpers = $filemanagerHelpers;
         $this->acl = $acl;
         $this->view = $view;
@@ -127,7 +121,6 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             'selector' => 'textarea#' . $this->id,
             'theme' => 'modern',
             'height' => $this->config['height'],
-            'content_css' => $this->minifier->getURI(),
         ];
 
         $this->configurePlugins();
