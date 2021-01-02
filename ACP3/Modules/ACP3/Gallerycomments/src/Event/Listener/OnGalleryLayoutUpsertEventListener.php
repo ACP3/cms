@@ -66,6 +66,6 @@ class OnGalleryLayoutUpsertEventListener
             )
         );
 
-        $this->view->displayTemplate('Gallerycomments/Partials/gallery_layout_upsert.tpl');
+        $event->addContent($this->view->fetchTemplate('Gallerycomments/Partials/gallery_layout_upsert.tpl'));
     }
 }

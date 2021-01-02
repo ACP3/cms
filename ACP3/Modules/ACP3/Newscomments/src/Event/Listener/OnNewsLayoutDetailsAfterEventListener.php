@@ -48,7 +48,7 @@ class OnNewsLayoutDetailsAfterEventListener
         if ($settings['comments'] == 1 && $news['comments'] == 1) {
             $this->view->assign('news', $news);
 
-            $this->view->displayTemplate('Newscomments/Partials/news_layout_details_after.tpl');
+            $event->addContent($this->view->fetchTemplate('Newscomments/Partials/news_layout_details_after.tpl'));
         }
     }
 }

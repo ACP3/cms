@@ -27,9 +27,6 @@ class OnLayoutHeadListener
      */
     private $modules;
 
-    /**
-     * OnLayoutHeadListener constructor.
-     */
     public function __construct(
         View $view,
         Modules $modules,
@@ -40,12 +37,12 @@ class OnLayoutHeadListener
         $this->modules = $modules;
     }
 
-    public function __invoke()
+    public function __invoke(View\Event\TemplateEvent $event): void
     {
         if ($this->modules->isActive(Schema::MODULE_NAME)) {
             $this->view->assign('available_feeds', $this->availableFeedsRegistrar->getAvailableModuleNames());
 
-            $this->view->displayTemplate('Feeds/Partials/head.feed_links.tpl');
+            $event->addContent($this->view->fetchTemplate('Feeds/Partials/head.feed_links.tpl'));
         }
     }
 }

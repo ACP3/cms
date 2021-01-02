@@ -55,6 +55,6 @@ class OnFilesLayoutSettingsEventListener
             $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
         );
 
-        $this->view->displayTemplate('Filescomments/Partials/files_layout_settings.tpl');
+        $event->addContent($this->view->fetchTemplate('Filescomments/Partials/files_layout_settings.tpl'));
     }
 }

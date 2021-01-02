@@ -48,7 +48,7 @@ class OnFilesLayoutDetailsAfterEventListener
         if ($settings['comments'] == 1 && $file['comments'] == 1) {
             $this->view->assign('file', $file);
 
-            $this->view->displayTemplate('Filescomments/Partials/files_layout_details_after.tpl');
+            $event->addContent($this->view->fetchTemplate('Filescomments/Partials/files_layout_details_after.tpl'));
         }
     }
 }

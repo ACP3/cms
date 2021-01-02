@@ -61,7 +61,7 @@ class OnNewsLayoutUpsertEventListener
                 )
             );
 
-            $this->view->displayTemplate('Newscomments/Partials/news_layout_upsert.tpl');
+            $event->addContent($this->view->fetchTemplate('Newscomments/Partials/news_layout_upsert.tpl'));
         }
     }
 }

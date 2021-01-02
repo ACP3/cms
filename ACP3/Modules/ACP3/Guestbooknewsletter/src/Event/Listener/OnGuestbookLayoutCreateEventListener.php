@@ -78,6 +78,6 @@ class OnGuestbookLayoutCreateEventListener
             $this->formsHelper->checkboxGenerator('subscribe_newsletter', $newsletterSubscription, 1)
         );
 
-        $this->view->displayTemplate('Guestbooknewsletter/Partials/guestbook_layout_create.tpl');
+        $event->addContent($this->view->fetchTemplate('Guestbooknewsletter/Partials/guestbook_layout_create.tpl'));
     }
 }

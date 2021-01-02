@@ -50,9 +50,9 @@ class OnLayoutSeoRenderFormFieldsListener
                 ['uri_pattern' => $parameters['uri_pattern'] ?? '']
             );
 
-            $this->view
-                ->assign('seo', $formFields)
-                ->displayTemplate('Seo/Partials/tab_seo_fields.tpl');
+            $this->view->assign('seo', $formFields);
+
+            $event->addContent($this->view->fetchTemplate('Seo/Partials/tab_seo_fields.tpl'));
         }
     }
 }

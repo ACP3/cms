@@ -67,6 +67,6 @@ class OnGalleryLayoutDetailsAfterEventListener
 
         $this->view->assign('gallery_picture', $galleryPicture);
 
-        $this->view->displayTemplate('Gallerycomments/Partials/gallery_layout_details_after.tpl');
+        $event->addContent($this->view->fetchTemplate('Gallerycomments/Partials/gallery_layout_details_after.tpl'));
     }
 }

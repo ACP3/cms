@@ -15,37 +15,26 @@ class Event extends AbstractFunction
     /**
      * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
 
-    /**
-     * Event constructor.
-     */
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * @return string
-     */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         if (isset($params['name'])) {
-            \ob_start();
-            $this->eventDispatcher->dispatch(new TemplateEvent($this->parseArguments($params)), $params['name']);
-            $result = \ob_get_contents();
-            \ob_end_clean();
+            $event = new TemplateEvent($this->parseArguments($params));
+            $this->eventDispatcher->dispatch($event, $params['name']);
 
-            return $result;
+            return $event->getContent();
         }
 
-        return '';
+        throw new \InvalidArgumentException('Could have to call the {event} Smarty function with the argument "name", which specifies the name of the event');
     }
 
-    /**
-     * @return array
-     */
-    protected function parseArguments(array $arguments)
+    protected function parseArguments(array $arguments): array
     {
         unset($arguments['name']);
 

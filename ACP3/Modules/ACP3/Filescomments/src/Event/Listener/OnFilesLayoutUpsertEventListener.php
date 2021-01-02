@@ -61,7 +61,7 @@ class OnFilesLayoutUpsertEventListener
                 )
             );
 
-            $this->view->displayTemplate('Filescomments/Partials/files_layout_upsert.tpl');
+            $event->addContent($this->view->fetchTemplate('Filescomments/Partials/files_layout_upsert.tpl'));
         }
     }
 }

@@ -63,7 +63,7 @@ class OnNewsLayoutItemIndexAfterEventListener
             );
             $this->view->assign('news', $news);
 
-            $this->view->displayTemplate('Newscomments/Partials/news_layout_item_index_after.tpl');
+            $event->addContent($this->view->fetchTemplate('Newscomments/Partials/news_layout_item_index_after.tpl'));
         }
     }
 }

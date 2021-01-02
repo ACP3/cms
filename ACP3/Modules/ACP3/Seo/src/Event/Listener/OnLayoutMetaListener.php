@@ -13,6 +13,7 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Core\View;
+use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
 class OnLayoutMetaListener
@@ -58,14 +59,14 @@ class OnLayoutMetaListener
         $this->aliases = $aliases;
     }
 
-    public function __invoke(): void
+    public function __invoke(TemplateEvent $event): void
     {
         $this->setCanonicalForExistingUriAlias();
         $this->setCanonicalForHomepage();
 
         $this->view->assign('META', $this->metaStatements->getMetaTags());
 
-        $this->view->displayTemplate('Seo/Partials/meta.tpl');
+        $event->addContent($this->view->fetchTemplate('Seo/Partials/meta.tpl'));
     }
 
     /**

@@ -55,6 +55,6 @@ class OnNewsLayoutSettingsEventListener
             $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
         );
 
-        $this->view->displayTemplate('Newscomments/Partials/news_layout_settings.tpl');
+        $event->addContent($this->view->fetchTemplate('Newscomments/Partials/news_layout_settings.tpl'));
     }
 }

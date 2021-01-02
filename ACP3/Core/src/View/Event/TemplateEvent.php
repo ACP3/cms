@@ -16,6 +16,11 @@ class TemplateEvent extends Event
      */
     private $parameters;
 
+    /**
+     * @var string
+     */
+    private $content = '';
+
     public function __construct(array $arguments)
     {
         $this->parameters = $arguments;
@@ -24,5 +29,15 @@ class TemplateEvent extends Event
     public function getParameters(): array
     {
         return $this->parameters;
+    }
+
+    public function addContent(string $content): void
+    {
+        $this->content .= $content;
+    }
+
+    public function getContent(): string
+    {
+        return $this->content;
     }
 }

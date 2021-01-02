@@ -55,6 +55,6 @@ class OnGuestbookLayoutSettingsEventListener
             $this->formsHelper->yesNoCheckboxGenerator('newsletter_integration', $settings['newsletter_integration'])
         );
 
-        $this->view->displayTemplate('Guestbooknewsletter/Partials/guestbook_layout_settings.tpl');
+        $event->addContent($this->view->fetchTemplate('Guestbooknewsletter/Partials/guestbook_layout_settings.tpl'));
     }
 }

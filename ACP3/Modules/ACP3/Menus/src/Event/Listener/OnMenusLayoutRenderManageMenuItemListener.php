@@ -42,9 +42,6 @@ class OnMenusLayoutRenderManageMenuItemListener
      */
     private $forms;
 
-    /**
-     * OnMenusLayoutRenderManageMenuItemListener constructor.
-     */
     public function __construct(
         ACL $acl,
         Translator $translator,
@@ -61,7 +58,10 @@ class OnMenusLayoutRenderManageMenuItemListener
         $this->forms = $forms;
     }
 
-    public function __invoke(TemplateEvent $event)
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function __invoke(TemplateEvent $event): void
     {
         $parameters = $event->getParameters();
 
@@ -79,17 +79,15 @@ class OnMenusLayoutRenderManageMenuItemListener
                     ->assign($formFields)
                     ->assign('uri_pattern', $parameters['uri_pattern']);
 
-                $this->view->displayTemplate('Menus/Partials/manage_menu_item.tpl');
+                $event->addContent($this->view->fetchTemplate('Menus/Partials/manage_menu_item.tpl'));
             }
         }
     }
 
     /**
-     * @param string $routeName
-     *
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    private function fetchMenuItem($routeName)
+    private function fetchMenuItem(string $routeName): array
     {
         $menuItem = $this->menuItemRepository->getOneMenuItemByUri($routeName);
 
@@ -100,12 +98,7 @@ class OnMenusLayoutRenderManageMenuItemListener
         return $menuItem;
     }
 
-    /**
-     * @param int $currentValue
-     *
-     * @return array
-     */
-    private function fetchCreateMenuItemOption($currentValue = 0)
+    private function fetchCreateMenuItemOption(int $currentValue = 0): array
     {
         $createMenuItem = [
             1 => $this->translator->t('menus', 'create_menu_item'),
@@ -114,10 +107,7 @@ class OnMenusLayoutRenderManageMenuItemListener
         return $this->forms->checkboxGenerator('create_menu_item', $createMenuItem, $currentValue);
     }
 
-    /**
-     * @return array|null
-     */
-    private function modifyFormValues(array $menuItem)
+    private function modifyFormValues(array $menuItem): ?array
     {
         $formData = $this->view->getRenderer()->getTemplateVars('form');
 
@@ -129,9 +119,9 @@ class OnMenusLayoutRenderManageMenuItemListener
     }
 
     /**
-     * @return array
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function addFormFields(array $menuItem)
+    protected function addFormFields(array $menuItem): array
     {
         if (!empty($menuItem)) {
             return $this->menuItemFormFields->createMenuItemFormFields(

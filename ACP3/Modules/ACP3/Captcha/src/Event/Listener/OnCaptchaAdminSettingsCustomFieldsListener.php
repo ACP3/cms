@@ -17,9 +17,6 @@ class OnCaptchaAdminSettingsCustomFieldsListener
      */
     private $view;
 
-    /**
-     * OnCaptchaAdminSettingsCustomFieldsListener constructor.
-     */
     public function __construct(View $view)
     {
         $this->view = $view;
@@ -30,6 +27,6 @@ class OnCaptchaAdminSettingsCustomFieldsListener
         $params = $event->getParameters();
         $this->view->assign('form', $params['form']);
 
-        $this->view->displayTemplate('Captcha/Partials/captcha_recaptcha.admin_settings.tpl');
+        $event->addContent($this->view->fetchTemplate('Captcha/Partials/captcha_recaptcha.admin_settings.tpl'));
     }
 }

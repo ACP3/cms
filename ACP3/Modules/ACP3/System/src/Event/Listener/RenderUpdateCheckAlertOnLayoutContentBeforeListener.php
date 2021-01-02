@@ -11,6 +11,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
+use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\System\Helper\UpdateCheck;
 
 class RenderUpdateCheckAlertOnLayoutContentBeforeListener
@@ -44,7 +45,7 @@ class RenderUpdateCheckAlertOnLayoutContentBeforeListener
         $this->acl = $acl;
     }
 
-    public function __invoke()
+    public function __invoke(TemplateEvent $event): void
     {
         if (!$this->canRunUpdateCheck()) {
             return;
@@ -54,7 +55,7 @@ class RenderUpdateCheckAlertOnLayoutContentBeforeListener
 
         if ($update && !$update['is_latest']) {
             $this->view->assign('update', $update);
-            $this->view->displayTemplate('System/Partials/alert_update_check.tpl');
+            $event->addContent($this->view->fetchTemplate('System/Partials/alert_update_check.tpl'));
         }
     }
 

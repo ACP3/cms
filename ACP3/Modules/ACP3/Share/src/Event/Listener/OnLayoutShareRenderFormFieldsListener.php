@@ -53,9 +53,9 @@ class OnLayoutShareRenderFormFieldsListener
                 ['uri_pattern' => $parameters['uri_pattern'] ?? '']
             );
 
-            $this->view
-                ->assign('share', $formFields)
-                ->displayTemplate('Share/Partials/tab_share_fields.tpl');
+            $this->view->assign('share', $formFields);
+
+            $event->addContent($this->view->fetchTemplate('Share/Partials/tab_share_fields.tpl'));
         }
     }
 }

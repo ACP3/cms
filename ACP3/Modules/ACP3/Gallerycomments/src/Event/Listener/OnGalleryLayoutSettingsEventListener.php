@@ -55,6 +55,6 @@ class OnGalleryLayoutSettingsEventListener
             $this->formsHelper->yesNoCheckboxGenerator('comments', $settings['comments'])
         );
 
-        $this->view->displayTemplate('Gallerycomments/Partials/gallery_layout_settings.tpl');
+        $event->addContent($this->view->fetchTemplate('Gallerycomments/Partials/gallery_layout_settings.tpl'));
     }
 }

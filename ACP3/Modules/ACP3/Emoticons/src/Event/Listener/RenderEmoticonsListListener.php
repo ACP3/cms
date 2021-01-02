@@ -38,6 +38,6 @@ class RenderEmoticonsListListener
         $parameters = $event->getParameters();
         $formFieldId = !empty($parameters['form_field_id']) ? $parameters['form_field_id'] : '';
 
-        echo $this->emoticonsHelpers->emoticonsList($formFieldId);
+        $event->addContent($this->emoticonsHelpers->emoticonsList($formFieldId));
     }
 }

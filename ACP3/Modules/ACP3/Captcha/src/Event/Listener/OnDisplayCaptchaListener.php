@@ -16,17 +16,12 @@ class OnDisplayCaptchaListener
     /**
      * @var \ACP3\Core\ACL
      */
-    protected $acl;
+    private $acl;
     /**
      * @var CaptchaExtensionInterface
      */
     private $captchaExtension;
 
-    /**
-     * OnDisplayCaptchaListener constructor.
-     *
-     * @param CaptchaExtensionInterface $captchaExtension
-     */
     public function __construct(ACL $acl, CaptchaExtensionInterface $captchaExtension = null)
     {
         $this->acl = $acl;
@@ -35,16 +30,16 @@ class OnDisplayCaptchaListener
 
     public function __invoke(TemplateEvent $templateEvent)
     {
-        if ($this->acl->hasPermission('frontend/captcha/index/image') === true
-            && $this->captchaExtension instanceof CaptchaExtensionInterface
-        ) {
+        if ($this->captchaExtension instanceof CaptchaExtensionInterface && $this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $arguments = $templateEvent->getParameters();
 
-            echo $this->captchaExtension->getCaptcha(
-                $arguments['length'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
-                $arguments['input_id'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
-                $arguments['input_only'] ?? false,
-                $arguments['path'] ?? ''
+            $templateEvent->addContent(
+                $this->captchaExtension->getCaptcha(
+                    $arguments['length'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
+                    $arguments['input_id'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
+                    $arguments['input_only'] ?? false,
+                    $arguments['path'] ?? ''
+                )
             );
         }
     }

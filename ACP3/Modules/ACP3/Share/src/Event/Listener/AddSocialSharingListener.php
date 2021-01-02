@@ -11,6 +11,7 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\View;
+use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
@@ -65,7 +66,7 @@ class AddSocialSharingListener
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function __invoke(): void
+    public function __invoke(TemplateEvent $event): void
     {
         if ($this->modules->isActive(Schema::MODULE_NAME) === false) {
             return;
@@ -87,7 +88,7 @@ class AddSocialSharingListener
             }
 
             $this->view->assign('sharing', $sharing);
-            $this->view->displayTemplate('Share/Partials/add_social_sharing.tpl');
+            $event->addContent($this->view->fetchTemplate('Share/Partials/add_social_sharing.tpl'));
         }
     }
 }

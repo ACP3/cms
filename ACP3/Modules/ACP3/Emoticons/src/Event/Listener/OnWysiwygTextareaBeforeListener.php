@@ -34,8 +34,8 @@ class OnWysiwygTextareaBeforeListener
     public function __invoke(TemplateEvent $templateEvent)
     {
         $arguments = $templateEvent->getParameters();
-        if ($this->modules->isActive(Schema::MODULE_NAME) && !empty($arguments['id'])) {
-            echo $this->emoticonsHelper->emoticonsList($arguments['id']);
+        if (!empty($arguments['id']) && $this->modules->isActive(Schema::MODULE_NAME)) {
+            $templateEvent->addContent($this->emoticonsHelper->emoticonsList($arguments['id']));
         }
     }
 }
