@@ -3,9 +3,11 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Articles\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules'
+    resource: '../../../src/Validation/ValidationRules/'
     tags:
       - { name: core.validation.validation_rule }
 
-  articles.validation.admin_form_validation:
-    class: ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
+  ACP3\Modules\ACP3\Articles\Validation\:
+    resource: '../../../src/Validation/'
+
+  articles.validation.admin_form_validation: '@ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation'

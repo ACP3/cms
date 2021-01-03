@@ -1,74 +1,38 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $seoModel: '@seo.model.seo_model'
+      $sitemapGenerationModel: '@seo.model.sitemap_generation_model'
     tags:
       - { name: acp3.controller.action }
 
   seo.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@seo.view_providers.admin_seo_edit'
 
   seo.controller.admin.index.create_post:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@seo.model.seo_model'
-      - '@seo.validation.admin_form_validation'
 
   seo.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@seo.cache'
-      - '@seo.model.seo_model'
 
   seo.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@seo.model.seo_model'
-      - '@seo.view_providers.admin_seo_edit'
 
   seo.controller.admin.index.edit_post:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@seo.model.seo_model'
-      - '@seo.validation.admin_form_validation'
 
   seo.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@seo.view_providers.data_grid'
 
   seo.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Settings
-    arguments:
-      - '@core.context.frontend'
-      - '@seo.view_providers.admin_settings'
 
   seo.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.helpers.secure'
-      - '@seo.validation.admin_settings_form_validation'
 
   seo.controller.admin.index.sitemap:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Sitemap
-    arguments:
-      - '@core.context.frontend'
-      - '@core.helpers.redirect'
-      - '@seo.model.sitemap_generation_model'
 
   seo.controller.admin.index.suggest:
     class: ACP3\Modules\ACP3\Seo\Controller\Admin\Index\Suggest
-    arguments:
-      - '@core.context.frontend'
-      - '@core.helpers.string_formatter'

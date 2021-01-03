@@ -5,6 +5,8 @@ services:
       - '@categories.cache.core'
       - '@categories.model.categories_repository'
 
+  ACP3\Modules\ACP3\Categories\Cache: '@categories.cache'
+
   categories.cache.core:
     class: ACP3\Core\Cache
     arguments:

@@ -5,15 +5,13 @@ services:
       ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface: '@guestbook.model.guestbookrepository'
 
   ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules'
+    resource: '../../../src/Validation/ValidationRules/'
     tags:
       - { name: core.validation.validation_rule }
 
-  guestbook.validation.form_validation:
-    class: ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
+  ACP3\Modules\ACP3\Guestbook\Validation\:
+    resource: '../../../src/Validation/'
 
-  guestbook.validation.admin_form_validation:
-    class: ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation
-
-  guestbook.validation.admin_settings_form_validation:
-    class: ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation
+  guestbook.validation.form_validation: '@ACP3\Modules\ACP3\Guestbook\Validation\FormValidation'
+  guestbook.validation.admin_form_validation: '@ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation'
+  guestbook.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation'

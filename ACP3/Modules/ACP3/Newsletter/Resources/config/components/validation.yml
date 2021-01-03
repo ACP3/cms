@@ -3,21 +3,15 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules'
+    resource: '../../../src/Validation/ValidationRules/'
     tags:
       - { name: core.validation.validation_rule }
 
-  newsletter.validation.admin_form_validation:
-    class: ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
+  ACP3\Modules\ACP3\Newsletter\Validation\:
+    resource: '../../../src/Validation/'
 
-  newsletter.validation.activate_account_form_validation:
-    class: ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation
-
-  newsletter.validation.admin_settings_form_validation:
-    class: ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation
-
-  newsletter.validation.subscribe_form_validation:
-    class: ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation
-
-  newsletter.validation.unsubscribe_form_validation:
-    class: ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation
+  newsletter.validation.admin_form_validation: '@ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation'
+  newsletter.validation.activate_account_form_validation: '@ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation'
+  newsletter.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Newsletter\Validation\AdminSettingsFormValidation'
+  newsletter.validation.subscribe_form_validation: '@ACP3\Modules\ACP3\Newsletter\Validation\SubscribeFormValidation'
+  newsletter.validation.unsubscribe_form_validation: '@ACP3\Modules\ACP3\Newsletter\Validation\UnsubscribeFormValidation'

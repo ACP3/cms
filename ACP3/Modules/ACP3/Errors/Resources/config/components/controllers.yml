@@ -1,22 +1,14 @@
 services:
   _defaults:
+    autowire: true
     tags:
       - { name: acp3.controller.action }
 
   errors.controller.frontend.index.access_forbidden:
     class: ACP3\Modules\ACP3\Errors\Controller\Frontend\Index\AccessForbidden
-    arguments:
-      - '@core.context.frontend'
-      - '@core.breadcrumb'
 
   errors.controller.frontend.index.not_found:
     class: ACP3\Modules\ACP3\Errors\Controller\Frontend\Index\NotFound
-    arguments:
-      - '@core.context.frontend'
-      - '@core.breadcrumb'
 
   errors.controller.frontend.index.server_error:
     class: ACP3\Modules\ACP3\Errors\Controller\Frontend\Index\ServerError
-    arguments:
-      - '@core.context.frontend'
-      - '@core.breadcrumb'

@@ -1,23 +1,11 @@
 services:
   _defaults:
+    autowire: true
     tags:
       - { name: acp3.controller.action }
 
   search.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Search\Controller\Frontend\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.acl'
-      - '@core.helpers.secure'
-      - '@search.helpers'
-      - '@search.validation.form_validation'
-      - '@search.utility.search_availability_registrar'
-      - '@search.view_providers.search'
-      - '@search.view_providers.search_results'
 
   search.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Search\Controller\Widget\Index\Index
-    arguments:
-      - '@core.context.widget'
-      - '@search.view_providers.search_widget'

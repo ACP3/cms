@@ -1,162 +1,73 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $galleryModel: '@gallery.model.gallery_model'
+      $pictureModel: '@gallery.model.picture_model'
+      $galleryCoreCache: '@gallery.cache.core'
+      $galleryUploadHelper: '@gallery.helpers.upload'
     tags:
       - { name: acp3.controller.action }
 
   gallery.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.view_providers.admin_gallery_edit'
 
   gallery.controller.admin.index.create_post:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@gallery.model.gallery_model'
-      - '@gallery.validation.gallery_form_validation'
 
   gallery.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@gallery.cache'
-      - '@gallery.helpers'
-      - '@gallery.model.gallery_model'
-      - '@gallery.model.picturerepository'
 
   gallery.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.model.gallery_model'
-      - '@gallery.view_providers.admin_gallery_edit'
 
   gallery.controller.admin.index.edit_post:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@gallery.model.gallery_model'
-      - '@gallery.validation.gallery_form_validation'
 
   gallery.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.view_providers.data_grid'
 
   gallery.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\Settings
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.view_providers.admim_settings'
 
   gallery.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@gallery.cache.core'
-      - '@core.helpers.secure'
-      - '@gallery.validation.admin_settings_form_validation'
 
   gallery.controller.admin.pictures.create:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.model.galleryrepository'
-      - '@gallery.view_providers.admin_gallery_picture_create'
 
   gallery.controller.admin.pictures.create_post:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@gallery.model.picture_model'
-      - '@gallery.validation.picture_form_validation'
-      - '@gallery.helpers.upload'
 
   gallery.controller.admin.pictures.delete:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@gallery.model.picture_model'
 
   gallery.controller.admin.pictures.edit:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.model.picture_model'
-      - '@gallery.view_providers.admin_gallery_picture_edit'
 
   gallery.controller.admin.pictures.edit_post:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@gallery.helpers'
-      - '@gallery.model.picture_model'
-      - '@gallery.validation.picture_form_validation'
-      - '@gallery.helpers.upload'
 
   gallery.controller.admin.pictures.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.model.gallery_model'
-      - '@gallery.view_providers.picture_data_grid'
 
   gallery.controller.admin.pictures.order:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order
-    arguments:
-      - '@core.context.frontend'
-      - '@core.http.redirect_response'
-      - '@gallery.model.picturerepository'
-      - '@gallery.model.picture_model'
 
   gallery.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details
-    arguments:
-      - '@core.context.frontend'
-      - '@core.date'
-      - '@gallery.model.picturerepository'
-      - '@gallery.view_providers.gallery_picture_details'
 
   gallery.controller.frontend.index.image:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Image
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.model.picturerepository'
-      - '@gallery.helpers.thumbnail_generator'
 
   gallery.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@gallery.view_providers.gallery_list'
 
   gallery.controller.frontend.index.pics:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Pics
-    arguments:
-      - '@core.context.frontend'
-      - '@core.date'
-      - '@gallery.model.galleryrepository'
-      - '@gallery.view_providers.gallery_picture_list'
 
   gallery.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Index
-    arguments:
-      - '@core.context.widget'
-      - '@gallery.view_providers.gallery_list_widget'
 
   gallery.controller.widget.index.pictures:
     class: ACP3\Modules\ACP3\Gallery\Controller\Widget\Index\Pictures
-    arguments:
-      - '@core.context.widget'
-      - '@gallery.view_providers.gallery_picture_list_widget'

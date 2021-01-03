@@ -3,12 +3,12 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Polls\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules'
+    resource: '../../../src/Validation/ValidationRules/'
     tags:
       - { name: core.validation.validation_rule }
 
-  polls.validation.admin_form_validation:
-    class: ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
+  ACP3\Modules\ACP3\Polls\Validation\:
+    resource: '../../../src/Validation/'
 
-  polls.validation.vote_validation:
-    class: ACP3\Modules\ACP3\Polls\Validation\VoteValidation
+  polls.validation.admin_form_validation: '@ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation'
+  polls.validation.vote_validation: '@ACP3\Modules\ACP3\Polls\Validation\VoteValidation'

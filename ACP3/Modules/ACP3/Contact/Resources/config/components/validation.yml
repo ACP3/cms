@@ -2,8 +2,8 @@ services:
   _defaults:
     autowire: true
 
-  contact.validation.form_validation:
-    class: ACP3\Modules\ACP3\Contact\Validation\FormValidation
+  ACP3\Modules\ACP3\Contact\Validation\:
+    resource: '../../../src/Validation/'
 
-  contact.validation.admin_settings_form_validation:
-    class: ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation
+  contact.validation.form_validation: '@ACP3\Modules\ACP3\Contact\Validation\FormValidation'
+  contact.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Contact\Validation\AdminSettingsFormValidation'

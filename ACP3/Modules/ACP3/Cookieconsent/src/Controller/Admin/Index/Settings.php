@@ -19,7 +19,7 @@ class Settings extends AbstractFrontendAction implements InvokableActionInterfac
      */
     private $adminSettingsViewProvider;
 
-    public function __construct(AdminSettingsViewProvider $adminSettingsViewProvider, FrontendContext $context)
+    public function __construct(FrontendContext $context, AdminSettingsViewProvider $adminSettingsViewProvider)
     {
         parent::__construct($context);
 

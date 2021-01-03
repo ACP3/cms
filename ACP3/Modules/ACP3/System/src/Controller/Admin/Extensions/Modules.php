@@ -31,7 +31,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     private $permissionsCache;
     /**
-     * @var Core\I18n\DictionaryCache
+     * @var \ACP3\Core\I18n\DictionaryCacheInterface
      */
     private $dictionaryCache;
     /**
@@ -67,7 +67,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         Core\Controller\Context\FrontendContext $context,
         RedirectMessages $redirectMessages,
         Core\Modules $modules,
-        Core\I18n\DictionaryCache $dictionaryCache,
+        Core\I18n\DictionaryCacheInterface $dictionaryCache,
         Core\Modules\ModuleInfoCacheInterface $moduleInfoCache,
         System\Model\Repository\ModulesRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,

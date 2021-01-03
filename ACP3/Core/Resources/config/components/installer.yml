@@ -11,6 +11,8 @@ services:
     class: ACP3\Core\Installer\SchemaRegistrar
     public: true
 
+  ACP3\Core\Installer\SchemaRegistrar: '@core.installer.schema_registrar'
+
   core.installer.model.schema_update_model:
     class: ACP3\Core\Installer\Model\SchemaUpdateModel
     arguments:

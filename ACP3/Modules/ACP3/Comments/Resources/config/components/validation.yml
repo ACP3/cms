@@ -5,15 +5,13 @@ services:
       ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface: '@comments.model.commentrepository'
 
   ACP3\Modules\ACP3\Comments\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules'
+    resource: '../../../src/Validation/ValidationRules/'
     tags:
       - { name: core.validation.validation_rule }
 
-  comments.validation.form_validation:
-    class: ACP3\Modules\ACP3\Comments\Validation\FormValidation
+  ACP3\Modules\ACP3\Comments\Validation\:
+    resource: '../../../src/Validation/'
 
-  comments.validation.admin_form_validation:
-    class: ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation
-
-  comments.validation.admin_settings_form_validation:
-    class: ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation
+  comments.validation.form_validation: '@ACP3\Modules\ACP3\Comments\Validation\FormValidation'
+  comments.validation.admin_form_validation: '@ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation'
+  comments.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation'

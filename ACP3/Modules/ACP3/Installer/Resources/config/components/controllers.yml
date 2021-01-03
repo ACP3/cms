@@ -1,64 +1,34 @@
 services:
   _defaults:
+    autowire: true
     tags:
       - { name: acp3.controller.action }
 
   installer.controller.installer.index.index:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\Index
-    arguments:
-      - '@core.context.install'
-      - '@installer.helpers.navigation'
 
   installer.controller.installer.index.licence:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\Licence
-    arguments:
-      - '@core.context.install'
-      - '@installer.helpers.navigation'
 
   installer.controller.installer.index.requirements:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\Requirements
-    arguments:
-      - '@core.context.install'
-      - '@installer.helpers.navigation'
-      - '@installer.helpers.requirements'
 
   installer.controller.installer.index.available_databases:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\AvailableDatabases
-    arguments:
-      - '@core.context.install'
 
   installer.controller.installer.index.install:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\Install
-    arguments:
-      - '@core.context.install'
-      - '@installer.helpers.navigation'
-      - '@core.date'
-      - '@core.xml'
-      - '@core.helpers.date'
-      - '@core.helpers.forms'
 
   installer.controller.installer.index.install_post:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\InstallPost
     arguments:
-      - '@core.context.install'
-      - '@core.logger.system_logger'
-      - '@core.helpers.alerts'
-      - '@installer.helpers.navigation'
-      - '@installer.model.install_model'
-      - '@installer.validator'
+      $logger: '@core.logger.system_logger'
 
   installer.controller.installer.update.index:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Update\Index
-    arguments:
-      - '@core.context.install'
-      - '@installer.model.schema_update_model'
 
   installer.controller.installer.error.not_found:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Error\NotFound
-    arguments:
-      - '@core.context.install'
 
   installer.controller.installer.error.server_error:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Error\ServerError
-    arguments:
-      - '@core.context.install'

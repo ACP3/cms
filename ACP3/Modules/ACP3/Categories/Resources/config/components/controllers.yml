@@ -1,70 +1,35 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $categoriesModel: '@categories.model.categories_model'
+      $categoriesUploadHelper: '@categories.helpers.upload'
     tags:
       - { name: acp3.controller.action }
 
   categories.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@categories.view_providers.admin_category_edit'
 
   categories.controller.admin.index.create_post:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@categories.model.categories_model'
-      - '@categories.validation.admin_form_validation'
-      - '@categories.helpers.upload'
 
   categories.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@categories.model.categories_model'
-      - '@categories.cache'
 
   categories.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@categories.model.categories_model'
-      - '@categories.view_providers.admin_category_edit'
 
   categories.controller.admin.index.edit_post:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@categories.model.categories_model'
-      - '@categories.validation.admin_form_validation'
-      - '@categories.helpers.upload'
 
   categories.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@categories.view_providers.data_grid'
 
   categories.controller.admin.index.order:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Order
-    arguments:
-      - '@core.context.frontend'
-      - '@core.http.redirect_response'
-      - '@categories.model.categories_repository'
-      - '@categories.model.categories_model'
 
   categories.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Settings
-    arguments:
-      - '@core.context.frontend'
-      - '@categories.view_providers.admin_category_settings'
 
   categories.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@categories.validation.admin_settings_form_validation'

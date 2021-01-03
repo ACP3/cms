@@ -1,89 +1,41 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $pollsModel: '@polls.model.polls_model'
+      $voteModel: '@polls.model.vote_model'
     tags:
       - { name: acp3.controller.action }
 
   polls.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@polls.view_providers.admin_poll_edit'
 
   polls.controller.admin.index.create_post:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@polls.model.polls_model'
-      - '@polls.validation.admin_form_validation'
 
   polls.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@polls.model.polls_model'
 
   polls.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@polls.model.polls_model'
-      - '@polls.view_providers.admin_poll_edit'
 
   polls.controller.admin.index.edit_post:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@polls.model.polls_model'
-      - '@polls.validation.admin_form_validation'
 
   polls.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@polls.view_providers.data_grid'
 
   polls.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@polls.view_providers.poll_list'
 
   polls.controller.frontend.index.result:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Result
-    arguments:
-      - '@core.context.frontend'
-      - '@core.date'
-      - '@polls.model.pollrepository'
-      - '@polls.view_providers.poll_result'
 
   polls.controller.frontend.index.vote:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\Vote
-    arguments:
-      - '@core.context.frontend'
-      - '@core.date'
-      - '@polls.model.pollrepository'
-      - '@polls.view_providers.poll_vote'
 
   polls.controller.frontend.index.vote_post:
     class: ACP3\Modules\ACP3\Polls\Controller\Frontend\Index\VotePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.date'
-      - '@polls.validation.vote_validation'
-      - '@polls.model.vote_model'
 
   polls.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Polls\Controller\Widget\Index\Index
-    arguments:
-      - '@core.context.widget'
-      - '@core.date'
-      - '@polls.model.pollrepository'
-      - '@polls.view_providers.poll_widget'
-      - '@polls.helpers'
-

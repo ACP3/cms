@@ -1,70 +1,32 @@
 services:
   _defaults:
+    autowire: true
     tags:
       - { name: acp3.controller.action }
 
   system.controller.admin.extensions.designs:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Designs
-    arguments:
-      - '@core.context.frontend'
-      - '@core.helpers.redirect'
-      - '@core.xml'
 
   system.controller.admin.extensions.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Index
-    arguments:
-      - '@core.context.frontend'
 
   system.controller.admin.extensions.modules:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
-    arguments:
-      - '@core.context.frontend'
-      - '@core.helpers.redirect'
-      - '@core.modules'
-      - '@core.i18n.dictionary_cache'
-      - '@core.modules.moduleInfoCache'
-      - '@system.model.modulerepository'
-      - '@system.helpers.installer'
-      - '@permissions.cache'
-      - '@core.installer.schema_registrar'
-      - '@core.modules.schemaInstaller'
-      - '@core.modules.aclInstaller'
-      - '@system.view_providers.admin_modules'
-      - '@system.services.cache_clear_service'
 
   system.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Settings
-    arguments:
-      - '@core.context.frontend'
-      - '@system.view_providers.admin_settings'
 
   system.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.helpers.secure'
-      - '@system.validation.admin_settings_form_validation'
 
   system.controller.admin.index.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
 
   system.controller.admin.maintenance.cache:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Cache
-    arguments:
-      - '@core.context.frontend'
-      - '@core.helpers.redirect'
-      - '@system.services.cache_clear_service'
 
   system.controller.admin.maintenance.index:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\Index
-    arguments:
-      - '@core.context.frontend'
 
   system.controller.admin.maintenance.update_check:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Maintenance\UpdateCheck
-    arguments:
-      - '@core.context.frontend'
-      - '@system.helpers.update_check'

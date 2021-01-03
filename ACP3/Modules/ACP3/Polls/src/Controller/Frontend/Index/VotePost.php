@@ -20,7 +20,7 @@ class VotePost extends Core\Controller\AbstractFrontendAction implements Core\Co
     /**
      * @var Polls\Model\VoteModel
      */
-    private $pollsModel;
+    private $voteModel;
     /**
      * @var Polls\Validation\VoteValidation
      */
@@ -35,13 +35,13 @@ class VotePost extends Core\Controller\AbstractFrontendAction implements Core\Co
         Action $actionHelper,
         Core\Date $date,
         Polls\Validation\VoteValidation $voteValidation,
-        Polls\Model\VoteModel $pollsModel
+        Polls\Model\VoteModel $voteModel
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->voteValidation = $voteValidation;
-        $this->pollsModel = $pollsModel;
+        $this->voteModel = $voteModel;
         $this->actionHelper = $actionHelper;
     }
 
@@ -64,7 +64,7 @@ class VotePost extends Core\Controller\AbstractFrontendAction implements Core\Co
                     ->setIpAddress($ipAddress)
                     ->validate($formData);
 
-                $result = $this->pollsModel->vote($formData, $id, $ipAddress, $time);
+                $result = $this->voteModel->vote($formData, $id, $ipAddress, $time);
 
                 $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
 

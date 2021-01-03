@@ -1,118 +1,54 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $filesModel: '@files.model.files_model'
+      $filesUploadHelper: '@files.helpers.upload'
+      $categoriesHelpers: '@categories.helpers'
     tags:
       - { name: acp3.controller.action }
 
   files.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@files.view_providers.admin_file_edit'
 
   files.controller.admin.index.create_post:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@files.model.files_model'
-      - '@files.validation.admin_form_validation'
-      - '@files.helpers.upload'
-      - '@categories.helpers'
 
   files.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@files.model.files_model'
 
   files.controller.admin.index.duplicate:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Duplicate
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@files.model.files_model'
 
   files.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@files.model.files_model'
-      - '@files.view_providers.admin_file_edit'
 
   files.controller.admin.index.edit_post:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@files.model.files_model'
-      - '@files.validation.admin_form_validation'
-      - '@files.helpers.upload'
-      - '@categories.helpers'
 
   files.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@files.view_providers.data_grid'
 
   files.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Settings
-    arguments:
-      - '@core.context.frontend'
-      - '@files.view_providers.admin_settings'
 
   files.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.helpers.secure'
-      - '@files.validation.admin_settings_form_validation'
 
   files.controller.admin.index.sort:
     class: ACP3\Modules\ACP3\Files\Controller\Admin\Index\Sort
-    arguments:
-      - '@core.context.frontend'
-      - '@core.http.redirect_response'
-      - '@files.model.filesrepository'
-      - '@files.model.files_model'
 
   files.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Details
-    arguments:
-      - '@core.context.frontend'
-      - '@core.date'
-      - '@files.model.filesrepository'
-      - '@files.view_providers.file_details'
 
   files.controller.frontend.index.download:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Download
-    arguments:
-      - '@core.context.frontend'
-      - '@core.date'
-      - '@core.http.redirect_response'
-      - '@core.helpers.string_formatter'
-      - '@files.model.filesrepository'
-      - '@files.cache'
 
   files.controller.frontend.index.files:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Files
-    arguments:
-      - '@core.context.frontend'
-      - '@categories.model.categories_repository'
-      - '@files.view_providers.files_by_category_id'
 
   files.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Files\Controller\Frontend\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@files.view_providers.root_categories_list'
 
   files.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Files\Controller\Widget\Index\Index
-    arguments:
-      - '@core.context.widget'
-      - '@files.view_providers.files_widget'

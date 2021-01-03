@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Search\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
+
+  search.view_providers.search: '@ACP3\Modules\ACP3\Search\ViewProviders\SearchViewProvider'
+  search.view_providers.search_results: '@ACP3\Modules\ACP3\Search\ViewProviders\SearchResultsViewProvider'
+  search.view_providers.search_widget: '@ACP3\Modules\ACP3\Search\ViewProviders\SearchWidgetViewProvider'

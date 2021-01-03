@@ -3,12 +3,12 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Files\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules'
+    resource: '../../../src/Validation/ValidationRules/'
     tags:
       - { name: core.validation.validation_rule }
 
-  files.validation.admin_form_validation:
-    class: ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
+  ACP3\Modules\ACP3\Files\Validation\:
+    resource: '../../../src/Validation/'
 
-  files.validation.admin_settings_form_validation:
-    class: ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation
+  files.validation.admin_form_validation: '@ACP3\Modules\ACP3\Files\Validation\AdminFormValidation'
+  files.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Files\Validation\AdminSettingsFormValidation'

@@ -25,6 +25,8 @@ services:
       - '@core.environment.application_path'
       - '@core.http.redirect_response'
 
+  ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext: '@core.context.install'
+
   core.controller.install:
     abstract: true
     arguments:

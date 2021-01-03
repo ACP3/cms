@@ -2,5 +2,7 @@ services:
   _defaults:
     autowire: true
 
-  feeds.validation.admin_form_validation:
-    class: ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation
+  ACP3\Modules\ACP3\Feeds\Validation\:
+    resource: '../../../src/Validation/'
+
+  feeds.validation.admin_form_validation: '@ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation'

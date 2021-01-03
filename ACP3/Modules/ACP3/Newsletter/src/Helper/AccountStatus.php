@@ -13,9 +13,9 @@ use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 
 class AccountStatus
 {
-    const ACCOUNT_STATUS_CONFIRMATION_NEEDED = 0;
-    const ACCOUNT_STATUS_CONFIRMED = 1;
-    const ACCOUNT_STATUS_DISABLED = 2;
+    public const ACCOUNT_STATUS_CONFIRMATION_NEEDED = 0;
+    public const ACCOUNT_STATUS_CONFIRMED = 1;
+    public const ACCOUNT_STATUS_DISABLED = 2;
 
     /**
      * @var \ACP3\Core\Date

@@ -10,5 +10,9 @@ services:
       - '@core.helpers.forms'
       - '@search.utility.search_availability_registrar'
 
+  ACP3\Modules\ACP3\Search\Helpers: '@search.helpers'
+
   search.utility.search_availability_registrar:
     class: ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityRegistrar
+
+  ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityRegistrar: '@search.utility.search_availability_registrar'

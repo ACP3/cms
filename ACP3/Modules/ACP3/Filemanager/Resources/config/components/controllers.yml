@@ -1,10 +1,10 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $applicationMode: '%core.environment%'
     tags:
       - { name: acp3.controller.action }
 
   filemanager.controller.admin.index.richfilemanager:
     class: ACP3\Modules\ACP3\Filemanager\Controller\Admin\Index\RichFileManager
-    arguments:
-      - '@core.context.frontend'
-      - '%core.environment%'

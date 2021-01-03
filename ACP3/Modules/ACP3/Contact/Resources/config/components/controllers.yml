@@ -1,61 +1,32 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $contactsModel: '@contact.model.contacts_model'
+      $contactFormModel: '@contact.model.contact_form_model'
     tags:
       - { name: acp3.controller.action }
 
   contact.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@contact.model.contacts_model'
 
   contact.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@contact.view_provider.data_grid'
 
   contact.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\Settings
-    arguments:
-      - '@core.context.frontend'
-      - '@contact.view_providers.admin_settings'
 
   contact.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\Contact\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.helpers.secure'
-      - '@contact.validation.admin_settings_form_validation'
 
   contact.controller.frontend.index.imprint:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Imprint
-    arguments:
-      - '@core.context.frontend'
-      - '@contact.view_providers.contact_details'
 
   contact.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@contact.view_providers.contact_form'
 
   contact.controller.frontend.index.index_post:
     class: ACP3\Modules\ACP3\Contact\Controller\Frontend\Index\IndexPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.router'
-      - '@core.helpers.alerts'
-      - '@contact.validation.form_validation'
-      - '@contact.model.contacts_model'
-      - '@contact.model.contact_form_model'
 
   contact.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Contact\Controller\Widget\Index\Index
-    arguments:
-      - '@core.context.widget'
-      - '@contact.view_providers.contact_details'
-

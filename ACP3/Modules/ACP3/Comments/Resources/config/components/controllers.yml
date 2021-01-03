@@ -1,82 +1,41 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $commentsModel: '@comments.model.comments_model'
+      $commentByModuleModel: '@comments.model.comment_by_module_model'
     tags:
       - { name: acp3.controller.action }
 
   comments.controller.admin.details.delete:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@comments.model.comments_model'
-      - '@comments.model.commentrepository'
 
   comments.controller.admin.details.edit:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@comments.model.comments_model'
-      - '@comments.view_providers.admin_comment_edit'
 
   comments.controller.admin.details.edit_post:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@comments.model.comments_model'
-      - '@comments.validation.admin_form_validation'
 
   comments.controller.admin.details.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Details\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@comments.view_providers.data_grid_by_module'
 
   comments.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@comments.model.comment_by_module_model'
 
   comments.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@comments.view_providers.data_grid'
 
   comments.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\Settings
-    arguments:
-      - '@core.context.frontend'
-      - '@comments.view_providers.admin_comments_settings'
 
   comments.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\Comments\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.helpers.secure'
-      - '@comments.validation.admin_settings_form_validation'
 
   comments.controller.frontend.index.create:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@comments.view_providers.comment_create'
 
   comments.controller.frontend.index.create_post:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.modules'
-      - '@users.model.user_model'
-      - '@comments.model.comments_model'
-      - '@comments.validation.form_validation'
 
   comments.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Comments\Controller\Frontend\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@comments.view_providers.comment_list'

@@ -1,100 +1,47 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $categoriesHelpers: '@categories.helpers'
+      $newsModel: '@news.model'
     tags:
       - { name: acp3.controller.action }
 
   news.controller.admin.index.create:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@news.view_providers.admin_news_edit'
 
   news.controller.admin.index.create_post:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@news.model'
-      - '@news.validation.admin_form_validation'
-      - '@categories.helpers'
 
   news.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@news.model'
 
   news.controller.admin.index.duplicate:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Duplicate
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@news.model'
 
   news.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@news.model'
-      - '@news.view_providers.admin_news_edit'
 
   news.controller.admin.index.edit_post:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@news.model'
-      - '@news.validation.admin_form_validation'
-      - '@categories.helpers'
 
   news.controller.admin.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@news.view_providers.data_grid'
-      - '@core.helpers.results_per_page'
-      - '@news.model.data_grid_repository'
-      - '@core.data_grid.data_grid'
 
   news.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\Settings
-    arguments:
-      - '@core.context.frontend'
-      - '@news.view_providers.admin_settings'
 
   news.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\News\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.helpers.secure'
-      - '@news.validation.admin_settings_form_validation'
 
   news.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Details
-    arguments:
-      - '@core.context.frontend'
-      - '@core.date'
-      - '@news.model.newsrepository'
-      - '@news.view_providers.news_details'
 
   news.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Frontend\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@news.view_providers.news_list'
 
   news.controller.widget.index.index:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Index
-    arguments:
-      - '@core.context.widget'
-      - '@news.view_providers.latest_news_list_widget'
 
   news.controller.widget.index.latest:
     class: ACP3\Modules\ACP3\News\Controller\Widget\Index\Latest
-    arguments:
-      - '@core.context.widget'
-      - '@news.view_providers.latest_news_widget'

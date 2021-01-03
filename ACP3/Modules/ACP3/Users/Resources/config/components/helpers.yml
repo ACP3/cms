@@ -16,3 +16,5 @@ services:
       - '@core.helpers.sendEmail'
       - '@core.config'
       - '@core.i18n.translator'
+
+  ACP3\Modules\ACP3\Users\Helpers\SendPasswordChangeEmail: '@users.helpers.send_password_change_email'

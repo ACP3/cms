@@ -1,80 +1,41 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $shareModel: '@share.model.share_model'
+      $shareRatingModel: '@share.model.share_rating_model'
     tags:
       - { name: acp3.controller.action }
 
   share.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@share.view_providers.admin_share_edit'
 
   share.controller.admin.index.create_post:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@share.model.share_model'
-      - '@share.validation.admin_form_validation'
 
   share.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@share.model.share_model'
 
   share.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@share.model.share_model'
-      - '@share.view_providers.admin_share_edit'
 
   share.controller.admin.index.edit_post:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@share.model.share_model'
-      - '@share.validation.admin_form_validation'
 
   share.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@share.view_providers.data_grid'
 
   share.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\Settings
-    arguments:
-      - '@core.context.frontend'
-      - '@share.view_providers.admin_settings'
 
   share.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\Share\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@core.helpers.secure'
-      - '@share.validation.admin_settings_form_validation'
 
   share.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Share\Controller\Frontend\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@shariff.backend'
 
   share.controller.frontend.index.rate:
     class: ACP3\Modules\ACP3\Share\Controller\Frontend\Index\Rate
-    arguments:
-      - '@core.context.frontend'
-      - '@share.model.share_repository'
-      - '@share.model.share_ratings_repository'
-      - '@share.model.share_rating_model'
 
   share.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Share\Controller\Widget\Index\Index
-    arguments:
-      - '@core.context.widget'
-      - '@share.view_providers.share_widget'

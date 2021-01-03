@@ -6,3 +6,5 @@ services:
       - '@http_cache_store'
       - '@core.config'
       - '@core.assets.libraries_cache'
+
+  ACP3\Modules\ACP3\System\Services\CacheClearService: '@system.services.cache_clear_service'

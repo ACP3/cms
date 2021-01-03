@@ -12,6 +12,8 @@ services:
       - '@core.http.request'
       - '@core.view'
 
+  ACP3\Core\Helpers\Alerts: '@core.helpers.alerts'
+
   core.helpers.date:
     class: ACP3\Core\Helpers\Date
     arguments:
@@ -43,8 +45,12 @@ services:
       - '@core.http.request'
       - '@core.session'
 
+  ACP3\Core\Helpers\RedirectMessages: '@core.helpers.redirect'
+
   core.helpers.secure:
     class: ACP3\Core\Helpers\Secure
+
+  ACP3\Core\Helpers\Secure: '@core.helpers.secure'
 
   core.helpers.formToken:
     class: ACP3\Core\Helpers\FormToken
@@ -121,6 +127,8 @@ services:
       - '@core.router'
       - '@core.helpers.alerts'
       - '@core.helpers.redirect'
+
+  ACP3\Core\Modules\Helper\Action: '@core.modules.helper.action'
 
   slugify:
     class: Cocur\Slugify\Slugify

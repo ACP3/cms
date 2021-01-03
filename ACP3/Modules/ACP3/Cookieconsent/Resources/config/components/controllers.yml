@@ -1,22 +1,14 @@
 services:
   _defaults:
+    autowire: true
     tags:
       - { name: acp3.controller.action }
 
   cookieconsent.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Cookieconsent\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
 
   cookieconsent.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Cookieconsent\Controller\Admin\Index\Settings
-    arguments:
-      - '@cookieconsent.view_providers.admin_settings'
-      - '@core.context.frontend'
 
   cookieconsent.controller.admin.index.settings_post:
     class: ACP3\Modules\ACP3\Cookieconsent\Controller\Admin\Index\SettingsPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@cookieconsent.validation.admin_settings_form_validation'

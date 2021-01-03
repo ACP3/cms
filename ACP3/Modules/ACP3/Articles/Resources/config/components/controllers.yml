@@ -1,83 +1,40 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $articlesModel: '@articles.model'
     tags:
       - { name: acp3.controller.action }
 
   articles.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@articles.view_providers.admin_article_edit'
 
   articles.controller.admin.index.create_post:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@articles.model'
-      - '@articles.validation.admin_form_validation'
 
   articles.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@articles.model'
 
   articles.controller.admin.index.duplicate:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Duplicate
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@articles.model'
 
   articles.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@articles.view_providers.admin_article_edit'
-      - '@articles.model'
 
   articles.controller.admin.index.edit_post:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@users.model.user_model'
-      - '@articles.model'
-      - '@articles.validation.admin_form_validation'
 
   articles.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@articles.view_providers.data_grid'
 
   articles.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Details
-    arguments:
-      - '@core.context.frontend'
-      - '@articles.view_providers.article_paginated'
-      - '@core.date'
-      - '@articles.model.articlerepository'
 
   articles.controller.frontend.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Frontend\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@articles.view_providers.article_list'
 
   articles.controller.widget.index.index:
     class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Index
-    arguments:
-      - '@core.context.widget'
-      - '@articles.view_providers.latest_articles'
 
   articles.controller.widget.index.single:
     class: ACP3\Modules\ACP3\Articles\Controller\Widget\Index\Single
-    arguments:
-      - '@core.context.widget'
-      - '@core.date'
-      - '@articles.model.articlerepository'
-      - '@article.view_providers.article_full'

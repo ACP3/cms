@@ -2,8 +2,8 @@ services:
   _defaults:
     autowire: true
 
-  share.validation.admin_form_validation:
-    class: ACP3\Modules\ACP3\Share\Validation\AdminFormValidation
+  ACP3\Modules\ACP3\Share\Validation\:
+    resource: '../../../src/Validation/'
 
-  share.validation.admin_settings_form_validation:
-    class: ACP3\Modules\ACP3\Share\Validation\AdminSettingsFormValidation
+  share.validation.admin_form_validation: '@ACP3\Modules\ACP3\Share\Validation\AdminFormValidation'
+  share.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Share\Validation\AdminSettingsFormValidation'

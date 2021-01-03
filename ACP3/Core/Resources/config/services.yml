@@ -23,6 +23,8 @@ services:
   core.xml:
     class: ACP3\Core\XML
 
+  ACP3\Core\XML: '@core.xml'
+
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\EventDispatcher
     public: true

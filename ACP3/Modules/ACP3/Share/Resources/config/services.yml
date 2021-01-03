@@ -13,3 +13,5 @@ services:
   shariff.backend:
     class: Heise\Shariff\Backend
     factory: ['@shariff.backend_factory', 'create']
+
+  Heise\Shariff\Backend: '@shariff.backend'

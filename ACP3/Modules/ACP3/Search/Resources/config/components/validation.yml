@@ -2,6 +2,8 @@ services:
   _defaults:
     autowire: true
 
-  search.validation.form_validation:
-    class: ACP3\Modules\ACP3\Search\Validation\FormValidation
+  ACP3\Modules\ACP3\Search\Validation\:
+    resource: '../../../src/Validation/'
+
+  search.validation.form_validation: '@ACP3\Modules\ACP3\Search\Validation\FormValidation'
 

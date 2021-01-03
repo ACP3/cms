@@ -1,90 +1,44 @@
 services:
   _defaults:
+    autowire: true
+    bind:
+      $menusModel: '@menus.model.menus_model'
+      $menuItemsModel: '@menus.model.menu_items_model'
     tags:
       - { name: acp3.controller.action }
 
   menus.controller.admin.index.create:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@menus.view_providers.admin_menu_edit'
 
   menus.controller.admin.index.create_post:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@menus.model.menus_model'
-      - '@menus.validation.menu_form_validation'
 
   menus.controller.admin.index.delete:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@menus.model.menus_model'
 
   menus.controller.admin.index.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@menus.model.menus_model'
-      - '@menus.view_providers.admin_menu_edit'
 
   menus.controller.admin.index.edit_post:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@menus.model.menus_model'
-      - '@menus.validation.menu_form_validation'
 
   menus.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Index\Index
-    arguments:
-      - '@core.context.frontend'
-      - '@menus.view_providers.data_grid'
 
   menus.controller.admin.items.create:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Create
-    arguments:
-      - '@core.context.frontend'
-      - '@menus.view_providers.admin_menu_item_edit'
 
   menus.controller.admin.items.create_post:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\CreatePost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@menus.model.menu_items_model'
-      - '@menus.validation.menu_item_form_validation'
 
   menus.controller.admin.items.delete:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Delete
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@menus.model.menu_items_model'
 
   menus.controller.admin.items.edit:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Edit
-    arguments:
-      - '@core.context.frontend'
-      - '@menus.model.menu_items_model'
-      - '@menus.view_providers.admin_menu_item_edit'
 
   menus.controller.admin.items.edit_post:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\EditPost
-    arguments:
-      - '@core.context.frontend'
-      - '@core.modules.helper.action'
-      - '@menus.model.menu_items_model'
-      - '@menus.validation.menu_item_form_validation'
 
   menus.controller.admin.items.order:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Order
-    arguments:
-      - '@core.context.frontend'
-      - '@core.http.redirect_response'
-      - '@menus.model.menuitemrepository'
-      - '@menus.model.menu_items_model'

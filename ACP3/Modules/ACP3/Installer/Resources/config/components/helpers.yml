@@ -9,6 +9,8 @@ services:
       - '@core.i18n.translator'
       - '@composer.semver.version_parser'
 
+  ACP3\Modules\ACP3\Installer\Helpers\Requirements: '@installer.helpers.requirements'
+
   installer.helpers.module_installer:
     class: ACP3\Modules\ACP3\Installer\Helpers\ModuleInstaller
     arguments:
@@ -19,3 +21,5 @@ services:
     class: ACP3\Modules\ACP3\Installer\Helpers\Navigation
     arguments:
       - '@core.i18n.translator'
+
+  ACP3\Modules\ACP3\Installer\Helpers\Navigation: '@installer.helpers.navigation'
