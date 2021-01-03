@@ -22,9 +22,6 @@ class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
      */
     private $categoriesUploadHelper;
 
-    /**
-     * OnCategoriesModelDeleteBeforeListener constructor.
-     */
     public function __construct(
         Upload $categoriesUploadHelper,
         CategoryRepository $categoryRepository

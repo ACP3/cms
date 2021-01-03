@@ -1,14 +1,15 @@
 services:
+  _defaults:
+    autowire: true
+
   files.cache:
     class: ACP3\Modules\ACP3\Files\Cache
     arguments:
-      - '@files.cache.core'
-      - '@files.model.filesrepository'
+      $cache: '@files.cache.core'
 
   ACP3\Modules\ACP3\Files\Cache: '@files.cache'
 
   files.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'files'
+      $namespace: 'files'

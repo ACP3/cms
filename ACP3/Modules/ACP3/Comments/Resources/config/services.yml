@@ -2,8 +2,10 @@ imports:
   - { resource: components/*.yml }
 
 services:
+  _defaults:
+    autowire: true
+
   comments.helpers:
     class: ACP3\Modules\ACP3\Comments\Helpers
-    arguments:
-      - '@core.modules'
-      - '@comments.model.commentrepository'
+
+  ACP3\Modules\ACP3\Comments\Helpers: '@comments.helpers'

@@ -1,16 +1,15 @@
 services:
+  _defaults:
+    autowire: true
+
   categories.event.update_categories_cache_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Categories\Event\Listener\UpdateCategoriesCacheOnModelAfterSaveListener
-    arguments:
-      - '@categories.cache'
-      - '@categories.model.categories_repository'
     tags:
       - { name: core.eventListener, event: categories.model.categories.after_save }
 
   categories.event.on_categories_model_delete_before_listener:
     class: ACP3\Modules\ACP3\Categories\Event\Listener\DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
     arguments:
-      - '@categories.helpers.upload'
-      - '@categories.model.categories_repository'
+      $categoriesUploadHelper: '@categories.helpers.upload'
     tags:
       - { name: core.eventListener, event: categories.model.categories.before_delete }

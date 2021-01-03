@@ -1,5 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+
   gallerycomments.repository.gallery_picture_repository:
     class: ACP3\Modules\ACP3\Gallerycomments\Repository\GalleryPictureRepository
-    arguments:
-      - '@core.db'
+
+  ACP3\Modules\ACP3\Gallerycomments\Repository\GalleryPictureRepository: '@gallerycomments.repository.gallery_picture_repository'

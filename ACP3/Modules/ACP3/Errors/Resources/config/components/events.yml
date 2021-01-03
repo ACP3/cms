@@ -1,8 +1,10 @@
 services:
+  _defaults:
+    autowire: true
+    tags:
+      - { name: core.eventSubscriber }
+
   errors.event_listener.handle_generic_errors_exception_listener:
     class: ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener
     arguments:
-      - '@core.application.controller_action_dispatcher'
-      - '%core.environment%'
-    tags:
-      - { name: core.eventSubscriber }
+      $applicationMode: '%core.environment%'

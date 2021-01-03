@@ -13,8 +13,8 @@ use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
 class Cache extends Core\Modules\AbstractCacheStorage
 {
-    const CACHE_ID = 'items';
-    const CACHE_ID_VISIBLE = 'visible_items_';
+    public const CACHE_ID = 'items';
+    public const CACHE_ID_VISIBLE = 'visible_items_';
 
     /**
      * @var \ACP3\Core\I18n\Translator

@@ -1,9 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+
   cookieconsent.event.listener.enable_consent_manager_assets_listener:
     class: ACP3\Modules\ACP3\Cookieconsent\Event\Listener\EnableConsentManagementAssetsListener
-    arguments:
-      - '@core.modules'
-      - '@core.assets.libraries'
-      - '@core.config'
     tags:
       - { name: core.eventListener, event: 'layout.content_before' }

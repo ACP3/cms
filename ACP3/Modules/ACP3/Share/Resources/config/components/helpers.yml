@@ -16,3 +16,5 @@ services:
     class: ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager
     arguments:
       $shareModel: '@share.model.share_model'
+
+  ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager: '@share.helpers.social_sharing_manager'

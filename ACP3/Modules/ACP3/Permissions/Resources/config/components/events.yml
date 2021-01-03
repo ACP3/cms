@@ -1,8 +1,9 @@
 services:
+  _defaults:
+    autowire: true
+
   permissions.event.update_resources_cache_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Permissions\Event\Listener\UpdateResourcesCacheOnModelAfterSaveListener
-    arguments:
-      - '@permissions.cache'
     tags:
       - { name: core.eventListener, event: permissions.model.acl_resources.after_save }
       - { name: core.eventListener, event: permissions.model.acl_resources.after_delete }

@@ -12,6 +12,8 @@ services:
     arguments:
       $environment: '%core.environment%'
 
+  ACP3\Modules\ACP3\System\Helper\CanUsePageCache: '@system.helpers.can_use_page_cache'
+
   system.helpers.update_check:
     class: ACP3\Modules\ACP3\System\Helper\UpdateCheck
     arguments:

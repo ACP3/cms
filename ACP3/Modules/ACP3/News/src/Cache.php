@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
 class Cache extends Core\Modules\AbstractCacheStorage
 {
-    const CACHE_ID = 'details_id_';
+    public const CACHE_ID = 'details_id_';
     /**
      * @var NewsRepository
      */

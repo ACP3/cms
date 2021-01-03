@@ -1,35 +1,24 @@
 services:
+  _defaults:
+    autowire: true
+
   users.event.forbid_super_user_delete_listener:
     class: ACP3\Modules\ACP3\Users\Event\Listener\ForbidSuperUserDeleteListener
-    arguments:
-      - '@users.model.user_model'
     tags:
       - { name: core.eventListener, event: users.model.users.before_delete }
 
   users.event.is_user_authenticated_listener:
     class: ACP3\Modules\ACP3\Users\Event\Listener\IsUserAuthenticatedListener
-    arguments:
-      - '@core.http.request'
-      - '@core.helpers.redirect'
-      - '@core.i18n.translator'
-      - '@users.model.user_model'
     tags:
       - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch, priority: 255 }
 
   users.event.send_registration_mail_listener:
     class: ACP3\Modules\ACP3\Users\Event\Listener\SendRegistrationMailListener
-    arguments:
-      - '@core.http.request'
-      - '@core.helpers.sendEmail'
-      - '@core.config'
-      - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: users.model.users.after_save }
 
   users.events.hash_password_on_user_model_prepare_data:
     class: ACP3\Modules\ACP3\Users\Event\Listener\HashPasswordOnUserModelPrepareData
-    arguments:
-      - '@core.helpers.secure'
     tags:
       - { name: core.eventListener, event: users.model.users.prepare_data }
 

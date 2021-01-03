@@ -1,56 +1,33 @@
 services:
+  _defaults:
+    autowire: true
+
   guestbooknewsletter.event.on_guestbook_settings_save_before_event_listener:
     class: ACP3\Modules\ACP3\Guestbooknewsletter\Event\Listener\OnGuestbookSettingsSaveBeforeEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.http.request'
-      - '@core.config'
     tags:
       - { name: core.eventListener, event: guestbook.settings.save_before }
 
   guestbooknewsletter.event.on_guestbook_validation_admin_settings_event_listener:
     class: ACP3\Modules\ACP3\Guestbooknewsletter\Event\Listener\OnGuestbookValidationAdminSettingsEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: guestbook.validation.admin_settings }
 
   guestbooknewsletter.event.on_guestbook_validation_create_event_listener:
     class: ACP3\Modules\ACP3\Guestbooknewsletter\Event\Listener\OnGuestbookValidationCreateEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.config'
-      - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: guestbook.validation.create }
 
   guestbooknewsletter.event.on_guestbook_layout_create_event_listener:
     class: ACP3\Modules\ACP3\Guestbooknewsletter\Event\Listener\OnGuestbookLayoutCreateEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.config'
-      - '@core.i18n.translator'
-      - '@core.view'
-      - '@core.helpers.forms'
     tags:
       - { name: core.eventListener, event: guestbook.layout.create }
 
   guestbooknewsletter.event.on_guestbook_layout_settings_event_listener:
     class: ACP3\Modules\ACP3\Guestbooknewsletter\Event\Listener\OnGuestbookLayoutSettingsEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.view'
-      - '@core.config'
-      - '@core.helpers.forms'
     tags:
       - { name: core.eventListener, event: guestbook.layout.settings }
 
   guestbooknewsletter.event.subscribe_to_newsletter_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Guestbooknewsletter\Event\Listener\SubscribeToNewsletterOnModelAfterSaveListener
-    arguments:
-      - '@core.modules'
-      - '@core.config'
-      - '@newsletter.helper.subscribe'
     tags:
       - { name: core.eventListener, event: guestbook.model.guestbook.after_save }

@@ -1,66 +1,43 @@
 services:
+  _defaults:
+    autowire: true
+
   seo.event.on_breadcrumb_title_get_site_and_page_title_before_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener
-    arguments:
-      - '@core.http.request'
-      - '@core.seo.meta_statements_service'
     tags:
       - { name: core.eventListener, event: core.breadcrumb.title.get_site_and_page_title_before, priority: -255 }
 
   seo.event.on_layout_meta_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnLayoutMetaListener
-    arguments:
-      - '@core.view'
-      - '@core.seo.meta_statements_service'
-      - '@core.environment.application_path'
-      - '@core.http.request'
-      - '@core.router'
-      - '@seo.core.router.aliases'
     tags:
       - { name: core.eventListener, event: core.layout.meta }
 
   seo.event.on_layout_seo_render_form_fields_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnLayoutSeoRenderFormFieldsListener
-    arguments:
-      - '@core.acl'
-      - '@core.view'
-      - '@seo.helper.meta_form_fields'
     tags:
       - { name: core.eventListener, event: core.layout.form_extension }
 
   seo.event.generate_sitemap_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\GenerateSitemapListener
     arguments:
-      - '@seo.sitemap_logger'
-      - '@core.modules'
-      - '@core.config'
-      - '@seo.utility.sitemap_availability_registrar'
-      - '@seo.model.sitemap_generation_model'
-      - '@request_stack'
+      $logger: '@seo.sitemap_logger'
+      $sitemapGenerationModel: '@seo.model.sitemap_generation_model'
     tags:
       - { name: core.eventSubscriber }
 
   seo.event.insert_uri_alias_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\InsertUriAliasOnModelAfterSaveListener
-    arguments:
-      - '@core.acl'
-      - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: core.model.after_save }
 
   seo.event.on_validation_validate_uri_alias_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\OnSeoValidationValidateUriAlias
-    arguments:
-      - '@core.acl'
-      - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: core.validation.form_extension }
       - { name: core.eventListener, event: seo.validation.validate_uri_alias }
 
   seo.event.update_seo_cache_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\UpdateSeoCacheOnModelAfterSaveListener
-    arguments:
-      - '@seo.cache'
     tags:
       - { name: core.eventListener, event: seo.model.seo.after_save }
       - { name: core.eventListener, event: seo.model.seo.after_delete }

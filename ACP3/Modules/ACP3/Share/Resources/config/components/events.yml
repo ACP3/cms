@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   share.event.add_shariff_assets_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\AddShariffAssetsListener
     tags:
@@ -6,48 +9,28 @@ services:
 
   share.event.add_social_sharing_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\AddSocialSharingListener
-    arguments:
-      - '@core.modules'
-      - '@core.http.request'
-      - '@core.view'
-      - '@share.helpers.social_services'
-      - '@share.model.share_repository'
-      - '@share.model.share_ratings_repository'
     tags:
       - { name: core.eventListener, event: share.layout.add_social_sharing }
 
   share.event.validate_sharing_info_on_validation_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\ValidateSharingInfoOnValidationInfo
-    arguments:
-      - '@core.acl'
-      - '@core.i18n.translator'
-      - '@share.helpers.social_services'
     tags:
       - { name: core.eventListener, event: core.validation.form_extension }
       - { name: core.eventListener, event: share.validation.validate_sharing_info }
 
   share.event.save_sharing_info_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\SaveSharingInfoOnModelAfterSaveListener
-    arguments:
-      - '@core.acl'
-      - '@share.helpers.social_sharing_manager'
     tags:
       - { name: core.eventListener, event: core.model.after_save }
 
   share.event.on_layout_share_render_form_fields_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\OnLayoutShareRenderFormFieldsListener
-    arguments:
-      - '@core.acl'
-      - '@core.view'
-      - '@share.helpers.share_form_fields'
     tags:
       - { name: core.eventListener, event: core.layout.form_extension }
 
   share.event.update_services_on_settings_save_before_listener:
     class: ACP3\Modules\ACP3\Share\Event\Listener\UpdateServicesOnSettingsSaveBeforeListener
     arguments:
-      - '@core.config'
-      - '@share.model.share_model'
-      - '@share.model.share_repository'
+      $shareModel: '@share.model.share_model'
     tags:
       - { name: core.eventListener, event: share.settings.save_before }

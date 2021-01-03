@@ -1,73 +1,43 @@
 services:
+  _defaults:
+    autowire: true
+
   gallerycomments.event.gallery_settings_save_before_event_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGallerySettingsSaveBeforeEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.http.request'
-      - '@core.config'
     tags:
       - { name: core.eventListener, event: gallery.settings.save_before }
 
   gallerycomments.event.gallery_validation_admin_settings_event_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGalleryValidationAdminSettingsEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: gallery.validation.admin_settings }
 
   gallerycomments.event.on_gallery_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGalleryModelBeforeDeleteListener
-    arguments:
-      - '@core.modules'
-      - '@gallerycomments.repository.gallery_picture_repository'
-      - '@comments.helpers'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery.before_delete }
 
   gallerycomments.event.on_gallery_picture_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGalleryPictureModelBeforeDeleteListener
-    arguments:
-      - '@core.modules'
-      - '@comments.helpers'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery_pictures.before_delete }
 
   gallerycomments.event.on_gallery_model_prepare_data_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGalleryModelPrepareDataEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.http.request'
-      - '@core.config'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery.prepare_data }
 
   gallerycomments.event.gallery_layout_details_after_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGalleryLayoutDetailsAfterEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.view'
-      - '@core.config'
-      - '@gallery.model.galleryrepository'
     tags:
       - { name: core.eventListener, event: gallery.layout.details_after }
 
   gallerycomments.event.gallery_layout_settings_event_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGalleryLayoutSettingsEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.view'
-      - '@core.config'
-      - '@core.helpers.forms'
     tags:
       - { name: core.eventListener, event: gallery.layout.settings }
 
   gallerycomments.event.gallery_layout_upsert_event_listener:
     class: ACP3\Modules\ACP3\Gallerycomments\Event\Listener\OnGalleryLayoutUpsertEventListener
-    arguments:
-      - '@core.modules'
-      - '@core.view'
-      - '@core.config'
-      - '@core.helpers.forms'
     tags:
       - { name: core.eventListener, event: gallery.layout.upsert }
