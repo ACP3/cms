@@ -50,7 +50,6 @@ class SchemaUpdateModel
     {
         $this->container = ServiceContainerBuilder::create(
             $this->appPath,
-            $this->container->getParameter('core.environment'),
             true
         );
     }

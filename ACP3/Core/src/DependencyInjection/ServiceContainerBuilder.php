@@ -102,6 +102,8 @@ final class ServiceContainerBuilder extends ContainerBuilder
             $this->registerCompilerPass($module);
         }
 
+        $this->setParameter('kernel.debug', $this->applicationPath->isDebug());
+
         $this->compile();
     }
 

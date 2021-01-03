@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Installer\Model;
 
 use ACP3\Core\Helpers\Secure;
-use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules\Exception\ModuleMigrationException;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
@@ -82,11 +81,10 @@ class InstallModel
     /**
      * @throws \Exception
      */
-    public function updateContainer(RequestInterface $request): void
+    public function updateContainer(): void
     {
         $this->container = ServiceContainerBuilder::create(
             $this->appPath,
-            $this->container->getParameter('core.environment'),
             true
         );
     }

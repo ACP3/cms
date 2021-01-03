@@ -68,7 +68,7 @@ class InstallPost extends AbstractAction implements InvokableActionInterface
                 ->validate($formData);
 
             $this->installModel->writeConfigFile($configFilePath, $formData);
-            $this->installModel->updateContainer($this->request);
+            $this->installModel->updateContainer();
             $this->installModel->installModules();
             $this->installModel->installAclResources();
             $this->installModel->createSuperUser($formData);

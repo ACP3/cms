@@ -5,6 +5,7 @@ imports:
 parameters:
   env(ACP3_APPLICATION_MODE): !php/const ACP3\Core\Environment\ApplicationMode::PRODUCTION
   core.environment: "%env(ACP3_APPLICATION_MODE)%"
+  kernel.debug: false
 
 services:
   permissions.cache:

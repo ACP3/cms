@@ -41,6 +41,14 @@ class ApplicationPath
      * @var string
      */
     private $designRootPathInternal;
+    /**
+     * @var string
+     */
+    private $applicationMode;
+    /**
+     * @var bool
+     */
+    private $debug;
 
     public function __construct(string $applicationMode)
     {
@@ -52,6 +60,8 @@ class ApplicationPath
         $this->uploadsDir = ACP3_ROOT_DIR . '/uploads/';
         $this->cacheDir = ACP3_ROOT_DIR . '/cache/' . $applicationMode . '/';
         $this->designRootPathInternal = ACP3_ROOT_DIR . '/designs/';
+        $this->applicationMode = $applicationMode;
+        $this->debug = $applicationMode === ApplicationMode::DEVELOPMENT;
     }
 
     public function getPhpSelf(): string
@@ -111,5 +121,15 @@ class ApplicationPath
         $this->designRootPathInternal = $designRootPathInternal;
 
         return $this;
+    }
+
+    public function getApplicationMode(): string
+    {
+        return $this->applicationMode;
+    }
+
+    public function isDebug(): bool
+    {
+        return $this->debug;
     }
 }

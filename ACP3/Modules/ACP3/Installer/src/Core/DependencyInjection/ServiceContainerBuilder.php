@@ -28,10 +28,6 @@ final class ServiceContainerBuilder extends ContainerBuilder
      */
     private $applicationPath;
     /**
-     * @var string
-     */
-    private $applicationMode;
-    /**
      * @var bool
      */
     private $isInstallingOrUpdating;
@@ -41,13 +37,11 @@ final class ServiceContainerBuilder extends ContainerBuilder
      */
     public function __construct(
         ApplicationPath $applicationPath,
-        string $applicationMode,
         bool $isInstallingOrUpdating = false
     ) {
         parent::__construct();
 
         $this->applicationPath = $applicationPath;
-        $this->applicationMode = $applicationMode;
         $this->isInstallingOrUpdating = $isInstallingOrUpdating;
 
         $this->setUpContainer();
@@ -87,7 +81,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
             $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_overrides.yml');
         }
 
-        if ($this->applicationMode === ApplicationMode::UPDATER) {
+        if ($this->applicationPath->getApplicationMode() === ApplicationMode::UPDATER) {
             $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_updater.yml');
         }
 
@@ -121,9 +115,8 @@ final class ServiceContainerBuilder extends ContainerBuilder
      */
     public static function create(
         ApplicationPath $applicationPath,
-        string $applicationMode,
         bool $isInstallingOrUpdating = false
     ): ServiceContainerBuilder {
-        return new ServiceContainerBuilder($applicationPath, $applicationMode, $isInstallingOrUpdating);
+        return new ServiceContainerBuilder($applicationPath, $isInstallingOrUpdating);
     }
 }

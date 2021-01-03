@@ -50,6 +50,7 @@ services:
     arguments:
       - '@service_container'
       - '@request_stack'
+      - '%kernel.debug%'
 
   Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler: '@fragment.handler'
   Symfony\Component\HttpKernel\Fragment\FragmentHandler: '@fragment.handler'
@@ -86,14 +87,11 @@ services:
     class: Toflar\Psr6HttpCacheStore\Psr6Store
     factory: '@http_cache_store_factory'
 
-  http_cache_factory:
-    class: ACP3\Core\Application\HttpCacheFactory
-    arguments:
-      $httpKernel: '@kernel'
-      $store: '@http_cache_store'
-      $applicationMode: '%core.environment%'
+  Symfony\Component\HttpKernel\HttpCache\StoreInterface: '@http_cache_store'
 
   http_cache:
     class: ACP3\Core\Application\BootstrapCache
     public: true
-    factory: '@http_cache_factory'
+    arguments:
+      $kernel: '@kernel'
+      $options: { debug: '%kernel.debug%' }
