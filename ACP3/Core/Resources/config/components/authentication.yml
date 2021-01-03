@@ -3,12 +3,16 @@ parameters:
 
 services:
   core.authentication.authentication_registrar:
-    class: ACP3\Core\Authentication\AuthenticationRegistrar
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - []
+    public: true
+    tags: ['container.service_locator']
 
   core.authentication.factory:
     class: ACP3\Core\Authentication\AuthenticationFactory
     arguments:
-      $authenticationRegistrar: '@core.authentication.authentication_registrar'
+      $authenticationLocator: '@core.authentication.authentication_registrar'
 
   core.authentication:
     class: ACP3\Core\Authentication\AuthenticationInterface

@@ -37,25 +37,25 @@ class RegisterInstallersCompilerPass implements CompilerPassInterface
 
     private function registerMigrations(ContainerBuilder $container): void
     {
-        $migrationServiceLocatorDefinition = $container->findDefinition('core.installer.migration_registrar');
+        $migrationLocatorDefinition = $container->findDefinition('core.installer.migration_registrar');
 
         $locatableMigrations = [];
         foreach ($container->findTaggedServiceIds('core.installer.migration') as $serviceId => $tags) {
             $locatableMigrations[$serviceId] = new Reference($serviceId);
         }
 
-        $migrationServiceLocatorDefinition->replaceArgument(0, $locatableMigrations);
+        $migrationLocatorDefinition->replaceArgument(0, $locatableMigrations);
     }
 
     private function registerSampleData(ContainerBuilder $container): void
     {
-        $sampleDataServiceLocatorDefinition = $container->findDefinition('core.installer.sample_data_registrar');
+        $sampleDataLocatorDefinition = $container->findDefinition('core.installer.sample_data_registrar');
 
         $locatableSampleData = [];
         foreach ($container->findTaggedServiceIds('core.installer.sample_data') as $serviceId => $tags) {
             $locatableSampleData[$serviceId] = new Reference($serviceId);
         }
 
-        $sampleDataServiceLocatorDefinition->replaceArgument(0, $locatableSampleData);
+        $sampleDataLocatorDefinition->replaceArgument(0, $locatableSampleData);
     }
 }

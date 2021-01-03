@@ -7,16 +7,18 @@
 
 namespace ACP3\Core\Authentication;
 
+use Psr\Container\ContainerInterface;
+
 class AuthenticationFactory
 {
     /**
-     * @var AuthenticationRegistrar
+     * @var \Psr\Container\ContainerInterface
      */
-    private $authenticationRegistrar;
+    private $authenticationLocator;
 
-    public function __construct(AuthenticationRegistrar $authenticationRegistrar)
+    public function __construct(ContainerInterface $authenticationLocator)
     {
-        $this->authenticationRegistrar = $authenticationRegistrar;
+        $this->authenticationLocator = $authenticationLocator;
     }
 
     /**
@@ -30,6 +32,6 @@ class AuthenticationFactory
     {
         $serviceId = 'core.authentication.' . $authenticationMethod;
 
-        return $this->authenticationRegistrar->get($serviceId);
+        return $this->authenticationLocator->get($serviceId);
     }
 }

@@ -18,13 +18,13 @@ class RegisterAuthenticationsCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('core.authentication.authentication_registrar');
+        $authenticationLocatorDefinition = $container->findDefinition('core.authentication.authentication_registrar');
 
+        $locatableAuthentications = [];
         foreach ($container->findTaggedServiceIds('core.authentication') as $serviceId => $tags) {
-            $definition->addMethodCall(
-                'set',
-                [$serviceId, new Reference($serviceId)]
-            );
+            $locatableAuthentications[$serviceId] = new Reference($serviceId);
         }
+
+        $authenticationLocatorDefinition->replaceArgument(0, $locatableAuthentications);
     }
 }
