@@ -1,17 +1,15 @@
 services:
+  _defaults:
+    autowire: true
+
   seo.helper.meta_form_fields:
     class: ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-    arguments:
-      - '@core.seo.meta_statements_service'
-      - '@core.i18n.translator'
-      - '@core.http.request'
-      - '@seo.core.router.aliases'
-      - '@core.helpers.forms'
 
   ACP3\Modules\ACP3\Seo\Helper\MetaFormFields: '@seo.helper.meta_form_fields'
 
   seo.helper.uri_alias_manager:
     class: ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
     arguments:
-      - '@seo.model.seo_model'
-      - '@seo.model.seorepository'
+      $seoModel: '@seo.model.seo_model'
+
+  ACP3\Modules\ACP3\Seo\Helper\UriAliasManager: '@seo.helper.uri_alias_manager'

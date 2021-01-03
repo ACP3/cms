@@ -1,14 +1,15 @@
 services:
+  _defaults:
+    autowire: true
+
   menus.cache:
     class: ACP3\Modules\ACP3\Menus\Cache
     arguments:
-      - '@menus.cache.core'
-      - '@core.i18n.translator'
-      - '@menus.model.menurepository'
-      - '@menus.model.menuitemrepository'
+      $cache: '@menus.cache.core'
+
+  ACP3\Modules\ACP3\Menus\Cache: '@menus.cache'
 
   menus.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'menus'
+      $namespace: 'menus'

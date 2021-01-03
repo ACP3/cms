@@ -11,8 +11,8 @@ use ACP3\Core\Helpers\Upload;
 
 class Helpers
 {
-    const URL_KEY_PATTERN_GALLERY = 'gallery/index/pics/id_%s/';
-    const URL_KEY_PATTERN_PICTURE = 'gallery/index/details/id_%s/';
+    public const URL_KEY_PATTERN_GALLERY = 'gallery/index/pics/id_%s/';
+    public const URL_KEY_PATTERN_PICTURE = 'gallery/index/details/id_%s/';
 
     /**
      * @var \ACP3\Core\Helpers\Upload
@@ -23,9 +23,6 @@ class Helpers
      */
     private $cachedImagesUploadHelper;
 
-    /**
-     * Helpers constructor.
-     */
     public function __construct(
         Upload $cachedImagesUploadHelper,
         Upload $galleryUploadHelper

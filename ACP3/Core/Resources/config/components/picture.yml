@@ -9,3 +9,5 @@ services:
     class: ACP3\Core\Picture\Picture
     arguments:
       $fastImageSize: '@fast_image_size'
+
+  ACP3\Core\Picture\Picture: '@core.picture.picture'

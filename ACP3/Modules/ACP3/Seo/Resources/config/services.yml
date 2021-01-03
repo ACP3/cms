@@ -8,6 +8,8 @@ services:
   seo.core.router.aliases:
     class: ACP3\Modules\ACP3\Seo\Core\Router\Aliases
 
+  ACP3\Modules\ACP3\Seo\Core\Router\Aliases: '@seo.core.router.aliases'
+
   seo.utility.sitemap_availability_registrar:
     class: ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar
 
