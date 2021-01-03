@@ -25,7 +25,7 @@ services:
   core.controller.helper.controller_action_exists:
     class: ACP3\Core\Controller\Helper\ControllerActionExists
     arguments:
-      - '@core.controller.controller_action_locator'
+      $container: '@core.controller.controller_action_locator'
 
   ACP3\Core\Controller\Helper\ControllerActionExists: '@core.controller.helper.controller_action_exists'
 

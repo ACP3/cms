@@ -2,8 +2,8 @@ imports:
   - { resource: components/*.yml }
 
 services:
+  _defaults:
+    autowire: true
+
   permissions.helpers:
     class: ACP3\Modules\ACP3\Permissions\Helpers
-    arguments:
-      - '@permissions.model.rolerepository'
-      - '@permissions.model.userrolerepository'

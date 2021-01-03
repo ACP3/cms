@@ -16,7 +16,7 @@ services:
   users.model.user_model_configurator:
     class: ACP3\Modules\ACP3\Users\Model\UserModelConfigurator
     arguments:
-      - '@core.authentication.native'
+      $authentication: '@core.authentication.native'
 
   users.model.users_model:
     class: ACP3\Modules\ACP3\Users\Model\UsersModel

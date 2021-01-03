@@ -1,14 +1,15 @@
 services:
+  _defaults:
+    autowire: true
+
   seo.cache:
     class: ACP3\Modules\ACP3\Seo\Cache
     arguments:
-      - '@seo.cache.core'
-      - '@seo.model.seorepository'
+      $cache: '@seo.cache.core'
 
   ACP3\Modules\ACP3\Seo\Cache: '@seo.cache'
 
   seo.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'seo'
+      $namespace: 'seo'

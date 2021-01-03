@@ -1,15 +1,16 @@
 services:
+  _defaults:
+    autowire: true
+
   core.cache.system:
     class: ACP3\Core\Cache
     arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'system'
+      $namespace: 'system'
 
   core.cache.cache_driver_factory:
     class: ACP3\Core\Cache\CacheDriverFactory
     arguments:
-      - '@core.environment.application_path'
-      - '%cache_driver%'
-      - '%core.environment%'
+      $cacheDriver: '%cache_driver%'
+      $environment: '%core.environment%'
 
   ACP3\Core\Cache\CacheDriverFactory: '@core.cache.cache_driver_factory'

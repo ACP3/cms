@@ -1,25 +1,20 @@
 services:
+  _defaults:
+    autowire: true
+    bind:
+      $nestedSetRepository: '@categories.model.categories_repository'
+
   categories.nested_set.operation.insert:
     class: ACP3\Core\NestedSet\Operation\Insert
-    arguments:
-      - '@categories.model.categories_repository'
 
   categories.nested_set.operation.edit:
     class: ACP3\Core\NestedSet\Operation\Edit
-    arguments:
-      - '@categories.model.categories_repository'
 
   categories.nested_set.operation.delete:
     class: ACP3\Core\NestedSet\Operation\Delete
-    arguments:
-      - '@categories.model.categories_repository'
 
   categories.nested_set.operation.repair:
     class: ACP3\Core\NestedSet\Operation\Repair
-    arguments:
-      - '@categories.model.categories_repository'
 
   categories.nested_set.operation.sort:
     class: ACP3\Core\NestedSet\Operation\Sort
-    arguments:
-      - '@categories.model.categories_repository'

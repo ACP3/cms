@@ -23,10 +23,8 @@ class ControllerActionExists
 
     /**
      * Returns, whether the given module controller action exists.
-     *
-     * @return bool
      */
-    public function controllerActionExists(string $path)
+    public function controllerActionExists(string $path): bool
     {
         $pathArray = \explode('/', \strtolower($path));
 

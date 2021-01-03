@@ -1,10 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+
   newsfeed.extenion.feed_availability_extension:
     class: ACP3\Modules\ACP3\Newsfeed\Extension\FeedAvailabilityExtension
-    arguments:
-      - '@core.date'
-      - '@core.router'
-      - '@core.helpers.string_formatter'
-      - '@news.model.newsrepository'
     tags:
       - { name: feeds.extension.feed_availability }

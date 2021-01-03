@@ -2,23 +2,17 @@ imports:
   - { resource: components/*.yml }
 
 services:
+  _defaults:
+    autowire: true
+
   categories.helpers:
     class: ACP3\Modules\ACP3\Categories\Helpers
     arguments:
-      - '@core.acl'
-      - '@core.i18n.translator'
-      - '@core.modules'
-      - '@core.http.request'
-      - '@core.helpers.forms'
-      - '@core.helpers.secure'
-      - '@categories.cache'
-      - '@categories.model.categories_model'
-      - '@categories.model.categories_repository'
+      $categoriesModel: '@categories.model.categories_model'
 
   ACP3\Modules\ACP3\Categories\Helpers: '@categories.helpers'
 
   categories.helpers.upload:
     class: ACP3\Core\Helpers\Upload
     arguments:
-      - '@core.environment.application_path'
-      - !php/const ACP3\Modules\ACP3\Categories\Installer\Schema::MODULE_NAME
+      $directory: !php/const ACP3\Modules\ACP3\Categories\Installer\Schema::MODULE_NAME

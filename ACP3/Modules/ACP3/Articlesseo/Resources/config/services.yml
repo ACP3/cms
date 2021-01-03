@@ -1,18 +1,13 @@
 services:
+  _defaults:
+    autowire: true
+
   articlesseo.events.on_articles_model_delete_after_listener:
     class: ACP3\Modules\ACP3\Articlesseo\Event\Listener\OnArticlesModelDeleteAfterListener
-    arguments:
-      - '@core.modules'
-      - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: articles.model.articles.after_delete }
 
   articlesseo.extension.sitemap_availability_extension:
     class: ACP3\Modules\ACP3\Articlesseo\Extension\SitemapAvailabilityExtension
-    arguments:
-      - '@core.date'
-      - '@core.router'
-      - '@articles.model.articlerepository'
-      - '@core.seo.meta_statements_service'
     tags:
       - { name: seo.extension.sitemap_availability }

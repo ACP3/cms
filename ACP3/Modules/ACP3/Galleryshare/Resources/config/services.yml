@@ -1,17 +1,13 @@
 services:
+  _defaults:
+    autowire: true
+
   galleryshare.events.on_gallery_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Galleryshare\Event\Listener\OnGalleryModelBeforeDeleteListener
-    arguments:
-      - '@core.modules'
-      - '@gallery.model.picturerepository'
-      - '@share.helpers.social_sharing_manager'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery.before_delete }
 
   galleryshare.event.on_gallery_picture_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Galleryshare\Event\Listener\OnGalleryPictureModelBeforeDeleteListener
-    arguments:
-      - '@core.modules'
-      - '@share.helpers.social_sharing_manager'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery_pictures.before_delete }

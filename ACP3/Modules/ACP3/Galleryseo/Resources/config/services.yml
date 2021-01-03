@@ -1,49 +1,28 @@
 services:
+  _defaults:
+    autowire: true
+
   galleryseo.event.on_gallery_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\OnGalleryModelBeforeDeleteListener
-    arguments:
-      - '@core.modules'
-      - '@gallery.model.picturerepository'
-      - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery.before_delete }
 
   galleryseo.event.on_gallery_picture_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\OnGalleryPictureModelBeforeDeleteListener
-    arguments:
-      - '@core.modules'
-      - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery_pictures.before_delete }
 
   galleryseo.event.generate_picture_uri_alias_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\GeneratePictureUriAliasOnModelAfterSaveListener
-    arguments:
-      - '@core.modules'
-      - '@gallery.model.picturerepository'
-      - '@seo.core.router.aliases'
-      - '@seo.helper.uri_alias_manager'
-      - '@core.seo.meta_statements_service'
     tags:
       - { name: core.eventListener, event: gallery.model.gallery_pictures.after_save, priority: -250 }
 
   galleryseo.event.generate_picture_uri_aliases_on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Galleryseo\Event\Listener\GeneratePictureUriAliasesOnModelAfterSaveListener
-    arguments:
-      - '@core.modules'
-      - '@gallery.model.picturerepository'
-      - '@seo.helper.uri_alias_manager'
     tags:
       - { name: core.eventListener, event: core.model.after_save, priority: -250 }
 
   galleryseo.extension.sitemap_availability_extension:
     class: ACP3\Modules\ACP3\Galleryseo\Extension\SitemapAvailabilityExtension
-    arguments:
-      - '@core.date'
-      - '@core.router'
-      - '@core.config'
-      - '@gallery.model.galleryrepository'
-      - '@gallery.model.picturerepository'
-      - '@core.seo.meta_statements_service'
     tags:
       - { name: seo.extension.sitemap_availability }

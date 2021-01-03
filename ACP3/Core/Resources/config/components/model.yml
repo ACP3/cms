@@ -55,7 +55,7 @@ services:
   core.model.data_processor:
     class: ACP3\Core\Model\DataProcessor
     arguments:
-      - '@core.model.column_type_strategy_factory'
+      $factory: '@core.model.column_type_strategy_factory'
 
   ACP3\Core\Model\DataProcessor: '@core.model.data_processor'
 

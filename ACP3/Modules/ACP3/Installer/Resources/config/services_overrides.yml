@@ -34,8 +34,7 @@ services:
     class: ACP3\Modules\ACP3\Installer\Core\Controller\EventListener\DecoratingForwardControllerActionExceptionErrorListener
     decorates: 'core.controller.forward_controller_action_exception_error_listener'
     arguments:
-      - '@core.application.controller_action_dispatcher'
-      - '@core.controller.decorating_forward_controller_action_exception_error_listener.inner'
+      $forwardControllerActionExceptionErrorListener: '@core.controller.decorating_forward_controller_action_exception_error_listener.inner'
     tags:
       - { name: core.eventSubscriber }
 
@@ -56,7 +55,7 @@ services:
   system.model.settingsrepository:
     class: ACP3\Modules\ACP3\Installer\Repository\SettingsRepository
     arguments:
-      - '%core.environment%'
+      $environment: '%core.environment%'
 
   ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface: '@system.model.settingsrepository'
 
@@ -72,17 +71,14 @@ services:
 
   smarty.filter.move_to_head:
     class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead
-    arguments:
-      - '@core.assets.renderer.css_renderer'
     tags:
       - { name: smarty.plugin.filter, filterType: output }
 
   errors.event_listener.handle_generic_errors_exception_listener:
     class: ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener
     arguments:
-      - '@core.application.controller_action_dispatcher'
-      - '%core.environment%'
-      - 'installer.controller.installer.error.server_error'
+      $applicationMode: '%core.environment%'
+      $serviceId: 'installer.controller.installer.error.server_error'
     tags:
       - { name: core.eventSubscriber }
 

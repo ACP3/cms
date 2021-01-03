@@ -44,11 +44,15 @@ services:
     abstract: true
     arguments:
       - '@core.modules.schemaHelper'
+    deprecated:
+      message: 'Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead.'
 
   core.modules.installer.abstractSampleData:
     abstract: true
     arguments:
       - '@core.modules.schemaHelper'
+    deprecated:
+      message: 'Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead.'
 
   core.modules.schemaInstaller:
     class: ACP3\Core\Modules\SchemaInstaller

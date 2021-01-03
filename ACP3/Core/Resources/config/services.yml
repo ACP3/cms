@@ -11,6 +11,8 @@ services:
     synthetic: true
     public: true
 
+  ACP3\Core\ACL\PermissionCacheInterface: '@permissions.cache'
+
   users.model.user_model:
     synthetic: true
     public: true

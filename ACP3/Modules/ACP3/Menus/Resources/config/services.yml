@@ -2,12 +2,10 @@ imports:
   - { resource: components/*.yml }
 
 services:
+  _defaults:
+    autowire: true
+
   smarty.plugin.navbar:
     class: ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar
-    arguments:
-      - '@core.http.request'
-      - '@core.router'
-      - '@menus.model.menuitemrepository'
-      - '@menus.cache'
     tags:
       - { name: smarty.plugin.function, pluginName: navbar }

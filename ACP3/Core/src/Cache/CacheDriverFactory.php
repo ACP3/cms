@@ -28,9 +28,6 @@ class CacheDriverFactory
      */
     private $environment;
 
-    /**
-     * CacheDriverFactory constructor.
-     */
     public function __construct(ApplicationPath $appPath, string $cacheDriver, string $environment)
     {
         $this->appPath = $appPath;

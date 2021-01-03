@@ -2,14 +2,15 @@ imports:
   - { resource: components/*.yml }
 
 services:
+  _defaults:
+    autowire: true
+
   gallery.helpers.upload:
     class: ACP3\Core\Helpers\Upload
     arguments:
-      - '@core.environment.application_path'
-      - !php/const ACP3\Modules\ACP3\Gallery\Installer\Schema::MODULE_NAME
+      $directory: !php/const ACP3\Modules\ACP3\Gallery\Installer\Schema::MODULE_NAME
 
   gallery.helpers.upload_cached_images:
     class: ACP3\Core\Helpers\Upload
     arguments:
-      - '@core.environment.application_path'
-      - 'cache/images'
+      $directory: 'cache/images'

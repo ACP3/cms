@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   system.installer.schema:
     class: ACP3\Modules\ACP3\System\Installer\Schema
     tags:
@@ -6,13 +9,6 @@ services:
 
   system.installer.migration:
     class: ACP3\Modules\ACP3\System\Installer\Migration
-    arguments:
-      - '@core.modules.schemaHelper'
-      - '@core.environment.application_path'
-      - '@core.modules.schemaInstaller'
-      - '@core.modules.aclInstaller'
-      - '@core.modules'
-      - '@core.config'
     calls:
       - ['setSeoInstallerSchema', ['@?seo.installer.schema']]
       - ['setMinifyInstallerSchema', ['@?minify.installer.schema']]

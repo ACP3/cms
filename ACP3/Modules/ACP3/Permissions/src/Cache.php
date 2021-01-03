@@ -15,22 +15,22 @@ use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
 
 class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCacheInterface
 {
-    const CACHE_ID_RESOURCES = 'acl_resources';
-    const CACHE_ID_ROLES = 'acl_roles';
-    const CACHE_ID_RULES = 'acl_rules_';
+    public const CACHE_ID_RESOURCES = 'acl_resources';
+    public const CACHE_ID_ROLES = 'acl_roles';
+    public const CACHE_ID_RULES = 'acl_rules_';
 
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
-    protected $roleRepository;
+    private $roleRepository;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
      */
-    protected $resourceRepository;
+    private $resourceRepository;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
      */
-    protected $ruleRepository;
+    private $ruleRepository;
 
     /**
      * @param \ACP3\Core\Cache $cache
@@ -62,24 +62,25 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function saveResourcesCache()
     {
         $resources = $this->resourceRepository->getAllResources();
-        $cResources = \count($resources);
         $data = [];
 
-        for ($i = 0; $i < $cResources; ++$i) {
+        foreach ($resources as $i => $resource) {
             $area = $resources[$i]['area'];
             if (isset($data[$area]) === false) {
                 $data[$area] = [];
             }
-            $path = $resources[$i]['module_name'] . '/' . $resources[$i]['controller'] . '/' . $resources[$i]['page'] . '/';
-            $path .= !empty($resources[$i]['params']) ? $resources[$i]['params'] . '/' : '';
+            $path = $resource['module_name'] . '/' . $resource['controller'] . '/' . $resource['page'] . '/';
+            $path .= !empty($resource['params']) ? $resource['params'] . '/' : '';
             $data[$area][$path] = [
-                'resource_id' => $resources[$i]['resource_id'],
-                'privilege_id' => $resources[$i]['privilege_id'],
-                'key' => $resources[$i]['privilege_name'],
+                'resource_id' => $resource['resource_id'],
+                'privilege_id' => $resource['privilege_id'],
+                'key' => $resource['privilege_name'],
             ];
         }
 
@@ -106,12 +107,12 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
         $roles = $this->roleRepository->getAllRoles();
         $cRoles = \count($roles);
 
-        for ($i = 0; $i < $cRoles; ++$i) {
+        foreach ($roles as $i => $role) {
             // Bestimmen, ob die Seite die Erste und/oder Letzte eines Knotens ist
             $first = $last = true;
             if ($i > 0) {
                 for ($j = $i - 1; $j >= 0; --$j) {
-                    if ($roles[$j]['parent_id'] === $roles[$i]['parent_id']) {
+                    if ($roles[$j]['parent_id'] === $role['parent_id']) {
                         $first = false;
 
                         break;
@@ -120,7 +121,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
             }
 
             for ($j = $i + 1; $j < $cRoles; ++$j) {
-                if ($roles[$i]['parent_id'] === $roles[$j]['parent_id']) {
+                if ($role['parent_id'] === $roles[$j]['parent_id']) {
                     $last = false;
 
                     break;

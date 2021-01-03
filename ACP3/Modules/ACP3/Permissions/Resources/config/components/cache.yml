@@ -1,16 +1,15 @@
 services:
+  _defaults:
+    autowire: true
+
   permissions.cache:
     class: ACP3\Modules\ACP3\Permissions\Cache
     arguments:
-      - '@permissions.cache.core'
-      - '@permissions.model.rolerepository'
-      - '@permissions.model.resourcerepository'
-      - '@permissions.model.rulerepository'
+      $cache: '@permissions.cache.core'
 
   ACP3\Modules\ACP3\Permissions\Cache: '@permissions.cache'
 
   permissions.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'permissions'
+      $namespace: 'permissions'

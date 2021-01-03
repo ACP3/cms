@@ -1,14 +1,13 @@
 services:
+  _defaults:
+    autowire: true
+
   system.console.maintenance_mode_disable_command:
     class: ACP3\Modules\ACP3\System\Console\MaintenanceModeDisableCommand
-    arguments:
-      - '@core.config'
     tags:
-      - { name: 'acp3.console.command' }
+      - { name: acp3.console.command }
 
   system.console.maintenance_mode_enable_command:
     class: ACP3\Modules\ACP3\System\Console\MaintenanceModeEnableCommand
-    arguments:
-      - '@core.config'
     tags:
-      - { name: 'acp3.console.command' }
+      - { name: acp3.console.command }

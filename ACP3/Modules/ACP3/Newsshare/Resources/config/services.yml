@@ -1,8 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+
   newsshare.events.on_news_model_after_delete_listener:
     class: ACP3\Modules\ACP3\Newsshare\Event\Listener\OnNewsModelAfterDeleteListener
-    arguments:
-      - '@core.modules'
-      - '@share.helpers.social_sharing_manager'
     tags:
       - { name: core.eventListener, event: news.model.news.after_delete }

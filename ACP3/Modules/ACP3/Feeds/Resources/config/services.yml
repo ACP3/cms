@@ -2,11 +2,11 @@ imports:
   - { resource: components/*.yml }
 
 services:
+  _defaults:
+    autowire: true
+
   feeds.view.renderer.feedgenerator:
     class: ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
-    arguments:
-      - '@core.config'
-      - '@core.router'
 
   ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator: '@feeds.view.renderer.feedgenerator'
 

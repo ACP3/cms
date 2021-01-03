@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   captcha.extension.captcha:
     class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface
     factory: ['@captcha.extension.captcha_factory', 'create']
@@ -7,40 +10,18 @@ services:
 
   captcha.extension.captcha_factory:
     class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory
-    arguments:
-      - '@core.config'
-      - '@captcha.utility.captcha_registrar'
 
   captcha.extension.honeypot_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\HoneypotCaptchaExtension
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.view'
-      - '@users.model.user_model'
     tags:
-      - { name: 'captcha.extension.captcha' }
+      - { name: captcha.extension.captcha }
 
   captcha.extension.native_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\NativeCaptchaExtension
-    arguments:
-      - '@core.acl'
-      - '@core.i18n.translator'
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.session'
-      - '@core.view'
-      - '@core.helpers.secure'
-      - '@users.model.user_model'
     tags:
-      - { name: 'captcha.extension.captcha' }
+      - { name: captcha.extension.captcha }
 
   captcha.extension.recaptcha_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\ReCaptchaCaptchaExtension
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.http.request'
-      - '@core.config'
-      - '@core.view'
-      - '@users.model.user_model'
     tags:
-      - { name: 'captcha.extension.captcha' }
+      - { name: captcha.extension.captcha }

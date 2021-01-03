@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   files.installer.schema:
     class: ACP3\Modules\ACP3\Files\Installer\Schema
     tags:
@@ -6,8 +9,5 @@ services:
 
   files.installer.migration:
     class: ACP3\Modules\ACP3\Files\Installer\Migration
-    arguments:
-      - '@core.modules.schemaHelper'
-      - '@files.model.filesrepository'
     tags:
       - { name: core.installer.migration }

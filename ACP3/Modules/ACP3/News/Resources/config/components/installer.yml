@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   news.installer.schema:
     class: ACP3\Modules\ACP3\News\Installer\Schema
     tags:
@@ -12,8 +15,5 @@ services:
 
   news.installer.sample_data:
     class: ACP3\Modules\ACP3\News\Installer\SampleData
-    arguments:
-      - '@core.modules.schemaHelper'
-      - '@core.i18n.translator'
     tags:
       - { name: core.installer.sample_data }

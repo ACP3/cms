@@ -1,8 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+
   contactseo.extension.sitemap_availability_extension:
     class: ACP3\Modules\ACP3\Contactseo\Extension\SitemapAvailabilityExtension
-    arguments:
-      - '@core.router'
-      - '@core.seo.meta_statements_service'
     tags:
       - { name: seo.extension.sitemap_availability }

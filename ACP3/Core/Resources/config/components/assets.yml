@@ -20,7 +20,7 @@ services:
   core.assets.cache:
     class: ACP3\Core\Assets\Cache
     arguments:
-      - '@core.cache.system'
+      $cache: '@core.cache.system'
 
   core.assets.logger:
     class: Psr\Log\LoggerInterface
@@ -91,7 +91,7 @@ services:
   core.assets.libraries_cache:
     class: ACP3\Core\Assets\LibrariesCache
     arguments:
-      - '@core.assets.cache_namespace_libraries'
+      $cache: '@core.assets.cache_namespace_libraries'
 
   ACP3\Core\Assets\LibrariesCache: '@core.assets.libraries_cache'
 

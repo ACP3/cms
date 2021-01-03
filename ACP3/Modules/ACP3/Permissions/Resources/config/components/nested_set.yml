@@ -1,20 +1,17 @@
 services:
+  _defaults:
+    autowire: true
+    bind:
+      $nestedSetRepository: '@permissions.model.rolerepository'
+
   permissions.nested_set.operation.insert:
     class: ACP3\Core\NestedSet\Operation\Insert
-    arguments:
-      - '@permissions.model.rolerepository'
 
   permissions.nested_set.operation.edit:
     class: ACP3\Core\NestedSet\Operation\Edit
-    arguments:
-      - '@permissions.model.rolerepository'
 
   permissions.nested_set.operation.delete:
     class: ACP3\Core\NestedSet\Operation\Delete
-    arguments:
-      - '@permissions.model.rolerepository'
 
   permissions.nested_set.operation.sort:
     class: ACP3\Core\NestedSet\Operation\Sort
-    arguments:
-      - '@permissions.model.rolerepository'
