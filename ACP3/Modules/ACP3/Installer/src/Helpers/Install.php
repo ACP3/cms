@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Installer\Helpers;
 
 use ACP3\Core;
+use ACP3\Core\Modules\Installer\SampleDataInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Modules\SchemaHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -67,7 +68,7 @@ class Install
      * @throws \Doctrine\DBAL\DBALException
      */
     public function installSampleData(
-        Core\Modules\Installer\SampleDataInterface $sampleData,
+        SampleDataInterface $sampleData,
         SchemaHelper $schemaHelper
     ): void {
         $schemaHelper->executeSqlQueries($sampleData->sampleData());

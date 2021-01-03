@@ -170,15 +170,15 @@ class InstallModel
      */
     public function installSampleData(): void
     {
-        /** @var \ACP3\Core\Installer\SampleDataRegistrar $sampleDataRegistrar */
+        /** @var \Symfony\Component\DependencyInjection\ServiceLocator $sampleDataRegistrar */
         $sampleDataRegistrar = $this->container->get('core.installer.sample_data_registrar');
         /** @var \ACP3\Core\Modules\SchemaHelper $schemaHelper */
         $schemaHelper = $this->container->get('core.modules.schemaHelper');
 
-        foreach ($sampleDataRegistrar->all() as $serviceId => $sampleData) {
+        foreach ($sampleDataRegistrar->getProvidedServices() as $serviceId) {
             try {
                 $this->installHelper->installSampleData(
-                    $sampleData,
+                    $sampleDataRegistrar->get($serviceId),
                     $schemaHelper
                 );
             } catch (\Throwable $e) {

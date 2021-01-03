@@ -10,10 +10,11 @@ services:
     tags: ['container.service_locator']
 
   core.installer.sample_data_registrar:
-    class: ACP3\Core\Installer\SampleDataRegistrar
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - []
     public: true
-
-  ACP3\Core\Installer\SampleDataRegistrar: '@core.installer.sample_data_registrar'
+    tags: ['container.service_locator']
 
   core.installer.schema_registrar:
     class: ACP3\Core\Installer\SchemaRegistrar

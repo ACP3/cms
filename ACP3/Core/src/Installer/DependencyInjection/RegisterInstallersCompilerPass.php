@@ -27,6 +27,12 @@ class RegisterInstallersCompilerPass implements CompilerPassInterface
             );
         }
 
+        $this->registerMigrations($container);
+        $this->registerSampleData($container);
+    }
+
+    private function registerMigrations(ContainerBuilder $container): void
+    {
         $migrationServiceLocatorDefinition = $container->findDefinition('core.installer.migration_registrar');
 
         $locatableMigrations = [];
@@ -35,14 +41,17 @@ class RegisterInstallersCompilerPass implements CompilerPassInterface
         }
 
         $migrationServiceLocatorDefinition->replaceArgument(0, $locatableMigrations);
+    }
 
-        $sampleDataDefinition = $container->findDefinition('core.installer.sample_data_registrar');
+    private function registerSampleData(ContainerBuilder $container): void
+    {
+        $sampleDataServiceLocatorDefinition = $container->findDefinition('core.installer.sample_data_registrar');
 
+        $locatableSampleData = [];
         foreach ($container->findTaggedServiceIds('core.installer.sample_data') as $serviceId => $tags) {
-            $sampleDataDefinition->addMethodCall(
-                'set',
-                [$serviceId, new Reference($serviceId)]
-            );
+            $locatableSampleData[$serviceId] = new Reference($serviceId);
         }
+
+        $sampleDataServiceLocatorDefinition->replaceArgument(0, $locatableSampleData);
     }
 }
