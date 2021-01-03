@@ -15,14 +15,13 @@ class RegisterColumnTypesCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('core.model.column_type_strategy_factory');
-        $plugins = $container->findTaggedServiceIds('core.model.column_type');
+        $columnTypeStrategyLocatorDefinition = $container->findDefinition('core.model.column_type_strategy_locator');
 
-        foreach ($plugins as $serviceId => $tags) {
-            $definition->addMethodCall(
-                'registerColumnType',
-                [new Reference($serviceId), \reset($tags)['columnType']]
-            );
+        $locatableColumnTypeStrategies = [];
+        foreach ($container->findTaggedServiceIds('core.model.column_type') as $serviceId => $tags) {
+            $locatableColumnTypeStrategies[\reset($tags)['columnType']] = new Reference($serviceId);
         }
+
+        $columnTypeStrategyLocatorDefinition->replaceArgument(0, $locatableColumnTypeStrategies);
     }
 }

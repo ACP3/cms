@@ -7,18 +7,18 @@
 
 namespace ACP3\Core\Model;
 
-use ACP3\Core\Model\DataProcessor\ColumnTypeStrategyFactory;
+use Psr\Container\ContainerInterface;
 
 class DataProcessor
 {
     /**
-     * @var ColumnTypeStrategyFactory
+     * @var \Psr\Container\ContainerInterface
      */
-    private $factory;
+    private $columnTypeStrategyLocator;
 
-    public function __construct(ColumnTypeStrategyFactory $factory)
+    public function __construct(ContainerInterface $columnTypeStrategyLocator)
     {
-        $this->factory = $factory;
+        $this->columnTypeStrategyLocator = $columnTypeStrategyLocator;
     }
 
     public function escape(array $columnData, array $columnConstraints): array
@@ -26,12 +26,12 @@ class DataProcessor
         $data = [];
         foreach ($columnData as $column => $value) {
             if (\array_key_exists($column, $columnConstraints)) {
-                $data[$column] = $this->factory->getStrategy($columnConstraints[$column])->doEscape($value);
+                $data[$column] = $this->columnTypeStrategyLocator->get($columnConstraints[$column])->doEscape($value);
             }
         }
 
         foreach ($this->findMissingColumns($columnData, $columnConstraints) as $columnName) {
-            $data[$columnName] = $this->factory->getStrategy($columnConstraints[$columnName])->getDefaultValue();
+            $data[$columnName] = $this->columnTypeStrategyLocator->get($columnConstraints[$columnName])->getDefaultValue();
         }
 
         return $data;
@@ -42,12 +42,12 @@ class DataProcessor
         $data = [];
         foreach ($columnData as $column => $value) {
             if (\array_key_exists($column, $columnConstraints)) {
-                $data[$column] = $this->factory->getStrategy($columnConstraints[$column])->doUnescape($value);
+                $data[$column] = $this->columnTypeStrategyLocator->get($columnConstraints[$column])->doUnescape($value);
             }
         }
 
         foreach ($this->findMissingColumns($columnData, $columnConstraints) as $columnName) {
-            $data[$columnName] = $this->factory->getStrategy($columnConstraints[$columnName])->getDefaultValue();
+            $data[$columnName] = $this->columnTypeStrategyLocator->get($columnConstraints[$columnName])->getDefaultValue();
         }
 
         return $data;

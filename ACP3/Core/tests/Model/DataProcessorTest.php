@@ -7,14 +7,16 @@
 
 namespace ACP3\Core\Model;
 
+use Psr\Container\ContainerInterface;
+
 class DataProcessorTest extends \PHPUnit\Framework\TestCase
 {
     use CreateRawColumnTypeMockTrait;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \Psr\Container\ContainerInterface
      */
-    private $columnTypeStrategyFactoryMock;
+    private $columnTypeStrategyLocator;
     /**
      * @var DataProcessor
      */
@@ -22,11 +24,11 @@ class DataProcessorTest extends \PHPUnit\Framework\TestCase
 
     protected function setup(): void
     {
-        $this->columnTypeStrategyFactoryMock = $this->createMock(DataProcessor\ColumnTypeStrategyFactory::class);
-        $this->dataProcessor = new DataProcessor($this->columnTypeStrategyFactoryMock);
+        $this->columnTypeStrategyLocator = $this->createMock(ContainerInterface::class);
+        $this->dataProcessor = new DataProcessor($this->columnTypeStrategyLocator);
     }
 
-    public function testProcessColumnData()
+    public function testProcessColumnData(): void
     {
         $columnData = [
             'foo' => 'Lorem',
@@ -48,19 +50,19 @@ class DataProcessorTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->dataProcessor->escape($columnData, $columnConstraints));
     }
 
-    private function setUpColumnTypeStrategyFactoryExpectations()
+    private function setUpColumnTypeStrategyFactoryExpectations(): void
     {
         $columnTypeMock = $this->getRawColumnTypeInstance($this);
 
         $columnTypeMock
             ->expects(self::exactly(2))
             ->method('doEscape')
-            ->with($this->logicalOr('Lorem', 'Ipsum'))
+            ->with(self::logicalOr('Lorem', 'Ipsum'))
             ->willReturnOnConsecutiveCalls('Lorem', 'Ipsum');
 
-        $this->columnTypeStrategyFactoryMock
+        $this->columnTypeStrategyLocator
             ->expects(self::exactly(2))
-            ->method('getStrategy')
+            ->method('get')
             ->with(DataProcessor\ColumnTypes::COLUMN_TYPE_RAW)
             ->willReturn($columnTypeMock);
     }
