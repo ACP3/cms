@@ -7,12 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Installer\Model;
 
-use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Installer\Exception\MissingInstallerException;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
+use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SchemaUpdateModel
 {
@@ -21,7 +20,7 @@ class SchemaUpdateModel
      */
     protected $results = [];
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     private $container;
     /**
@@ -46,7 +45,7 @@ class SchemaUpdateModel
     /**
      * @throws \Exception
      */
-    public function updateContainer(RequestInterface $request): void
+    public function updateContainer(): void
     {
         $this->container = ServiceContainerBuilder::create(
             $this->appPath,
@@ -98,7 +97,7 @@ class SchemaUpdateModel
 
         /** @var \ACP3\Core\Installer\SchemaRegistrar $schemaRegistrar */
         $schemaRegistrar = $this->container->get('core.installer.schema_registrar');
-        /** @var \ACP3\Core\Installer\MigrationRegistrar $migrationRegistrar */
+        /** @var \Psr\Container\ContainerInterface $migrationRegistrar */
         $migrationRegistrar = $this->container->get('core.installer.migration_registrar');
         /** @var \ACP3\Core\Modules\SchemaUpdater $schemaUpdater */
         $schemaUpdater = $this->container->get('core.modules.schemaUpdater');

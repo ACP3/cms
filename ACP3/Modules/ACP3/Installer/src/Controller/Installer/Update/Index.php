@@ -52,7 +52,7 @@ class Index extends AbstractInstallerAction
      */
     protected function executePost(): array
     {
-        $this->schemaUpdateModel->updateContainer($this->request);
+        $this->schemaUpdateModel->updateContainer();
         $results = $this->schemaUpdateModel->updateModules();
 
         $this->setTemplate('Installer/Installer/update.index.result.tpl');

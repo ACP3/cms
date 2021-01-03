@@ -3,10 +3,11 @@ services:
     autowire: true
 
   core.installer.migration_registrar:
-    class: ACP3\Core\Installer\MigrationRegistrar
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - []
     public: true
-
-  ACP3\Core\Installer\MigrationRegistrar: '@core.installer.migration_registrar'
+    tags: ['container.service_locator']
 
   core.installer.sample_data_registrar:
     class: ACP3\Core\Installer\SampleDataRegistrar
@@ -24,5 +25,6 @@ services:
     class: ACP3\Core\Installer\Model\SchemaUpdateModel
     arguments:
       $logger: '@core.modules.installer_logger'
+      $migrationContainer: '@core.installer.migration_registrar'
 
   ACP3\Core\Installer\Model\SchemaUpdateModel: '@core.installer.model.schema_update_model'

@@ -27,14 +27,14 @@ class RegisterInstallersCompilerPass implements CompilerPassInterface
             );
         }
 
-        $migrationDefinition = $container->findDefinition('core.installer.migration_registrar');
+        $migrationServiceLocatorDefinition = $container->findDefinition('core.installer.migration_registrar');
 
+        $locatableMigrations = [];
         foreach ($container->findTaggedServiceIds('core.installer.migration') as $serviceId => $tags) {
-            $migrationDefinition->addMethodCall(
-                'set',
-                [$serviceId, new Reference($serviceId)]
-            );
+            $locatableMigrations[$serviceId] = new Reference($serviceId);
         }
+
+        $migrationServiceLocatorDefinition->replaceArgument(0, $locatableMigrations);
 
         $sampleDataDefinition = $container->findDefinition('core.installer.sample_data_registrar');
 

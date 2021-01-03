@@ -8,11 +8,11 @@
 namespace ACP3\Core\Installer\Model;
 
 use ACP3\Core\Installer\Exception\MissingInstallerException;
-use ACP3\Core\Installer\MigrationRegistrar;
 use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\SchemaUpdater;
 use ACP3\Core\XML;
+use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
 class SchemaUpdateModel
@@ -32,9 +32,9 @@ class SchemaUpdateModel
      */
     private $schemaRegistrar;
     /**
-     * @var MigrationRegistrar
+     * @var \Psr\Container\ContainerInterface
      */
-    private $migrationRegistrar;
+    private $migrationContainer;
     /**
      * @var \ACP3\Core\XML
      */
@@ -51,7 +51,7 @@ class SchemaUpdateModel
     public function __construct(
         LoggerInterface $logger,
         SchemaRegistrar $schemaRegistrar,
-        MigrationRegistrar $migrationRegistrar,
+        ContainerInterface $migrationContainer,
         Modules $modules,
         SchemaUpdater $schemaUpdater,
         XML $xml
@@ -59,7 +59,7 @@ class SchemaUpdateModel
         $this->modules = $modules;
         $this->schemaUpdater = $schemaUpdater;
         $this->schemaRegistrar = $schemaRegistrar;
-        $this->migrationRegistrar = $migrationRegistrar;
+        $this->migrationContainer = $migrationContainer;
         $this->xml = $xml;
         $this->logger = $logger;
     }
@@ -106,12 +106,12 @@ class SchemaUpdateModel
         }
 
         $serviceIdMigration = $moduleName . '.installer.migration';
-        if (!$this->schemaRegistrar->has($moduleName) || !$this->migrationRegistrar->has($serviceIdMigration)) {
+        if (!$this->schemaRegistrar->has($moduleName) || !$this->migrationContainer->has($serviceIdMigration)) {
             throw new MissingInstallerException(\sprintf('Could not find any schema or migration files for module "%s"', $moduleName));
         }
 
         $moduleSchema = $this->schemaRegistrar->get($moduleName);
-        $moduleMigration = $this->migrationRegistrar->get($serviceIdMigration);
+        $moduleMigration = $this->migrationContainer->get($serviceIdMigration);
         if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
             $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
         }
