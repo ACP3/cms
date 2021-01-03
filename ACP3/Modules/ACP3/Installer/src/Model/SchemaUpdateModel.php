@@ -95,9 +95,9 @@ class SchemaUpdateModel
             return;
         }
 
-        /** @var \ACP3\Core\Installer\SchemaRegistrar $schemaRegistrar */
+        /** @var ContainerInterface $schemaRegistrar */
         $schemaRegistrar = $this->container->get('core.installer.schema_registrar');
-        /** @var \Psr\Container\ContainerInterface $migrationRegistrar */
+        /** @var ContainerInterface $migrationRegistrar */
         $migrationRegistrar = $this->container->get('core.installer.migration_registrar');
         /** @var \ACP3\Core\Modules\SchemaUpdater $schemaUpdater */
         $schemaUpdater = $this->container->get('core.modules.schemaUpdater');

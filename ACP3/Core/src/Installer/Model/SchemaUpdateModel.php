@@ -8,7 +8,6 @@
 namespace ACP3\Core\Installer\Model;
 
 use ACP3\Core\Installer\Exception\MissingInstallerException;
-use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\SchemaUpdater;
 use ACP3\Core\XML;
@@ -28,13 +27,13 @@ class SchemaUpdateModel
      */
     private $schemaUpdater;
     /**
-     * @var SchemaRegistrar
+     * @var \Psr\Container\ContainerInterface
      */
-    private $schemaRegistrar;
+    private $schemaLocator;
     /**
      * @var \Psr\Container\ContainerInterface
      */
-    private $migrationContainer;
+    private $migrationLocator;
     /**
      * @var \ACP3\Core\XML
      */
@@ -50,16 +49,16 @@ class SchemaUpdateModel
 
     public function __construct(
         LoggerInterface $logger,
-        SchemaRegistrar $schemaRegistrar,
-        ContainerInterface $migrationContainer,
+        ContainerInterface $schemaLocator,
+        ContainerInterface $migrationLocator,
         Modules $modules,
         SchemaUpdater $schemaUpdater,
         XML $xml
     ) {
         $this->modules = $modules;
         $this->schemaUpdater = $schemaUpdater;
-        $this->schemaRegistrar = $schemaRegistrar;
-        $this->migrationContainer = $migrationContainer;
+        $this->schemaLocator = $schemaLocator;
+        $this->migrationLocator = $migrationLocator;
         $this->xml = $xml;
         $this->logger = $logger;
     }
@@ -106,12 +105,12 @@ class SchemaUpdateModel
         }
 
         $serviceIdMigration = $moduleName . '.installer.migration';
-        if (!$this->schemaRegistrar->has($moduleName) || !$this->migrationContainer->has($serviceIdMigration)) {
+        if (!$this->schemaLocator->has($moduleName) || !$this->migrationLocator->has($serviceIdMigration)) {
             throw new MissingInstallerException(\sprintf('Could not find any schema or migration files for module "%s"', $moduleName));
         }
 
-        $moduleSchema = $this->schemaRegistrar->get($moduleName);
-        $moduleMigration = $this->migrationContainer->get($serviceIdMigration);
+        $moduleSchema = $this->schemaLocator->get($moduleName);
+        $moduleMigration = $this->migrationLocator->get($serviceIdMigration);
         if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
             $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
         }

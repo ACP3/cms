@@ -8,10 +8,9 @@
 namespace ACP3\Modules\ACP3\Installer\Helpers;
 
 use ACP3\Core\Component\ComponentRegistry;
-use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\XML;
 use ACP3\Modules\ACP3\System\Exception\ModuleInstallerException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class ModuleInstaller
 {
@@ -43,7 +42,7 @@ class ModuleInstaller
      */
     public function installModules(ContainerInterface $container): array
     {
-        /** @var SchemaRegistrar $schemaRegistrar */
+        /** @var \Psr\Container\ContainerInterface $schemaRegistrar */
         $schemaRegistrar = $container->get('core.installer.schema_registrar');
 
         foreach (ComponentRegistry::allTopSorted() as $module) {

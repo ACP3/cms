@@ -8,11 +8,12 @@
 namespace ACP3\Core\Installer;
 
 use ACP3\Core\Modules\Installer\SchemaInterface;
+use Psr\Container\ContainerInterface;
 
-class SchemaRegistrar
+class SchemaRegistrar implements ContainerInterface
 {
     /**
-     * @var SchemaInterface[]
+     * @var Array<string, SchemaInterface>
      */
     private $schemas = [];
 
@@ -22,7 +23,7 @@ class SchemaRegistrar
     }
 
     /**
-     * @return SchemaInterface[]
+     * @return Array<string, SchemaInterface>
      */
     public function all()
     {
@@ -30,19 +31,21 @@ class SchemaRegistrar
     }
 
     /**
+     * @param string $moduleName
+     *
      * @return bool
      */
-    public function has(string $moduleName)
+    public function has($moduleName)
     {
         return isset($this->schemas[$moduleName]);
     }
 
     /**
-     * @return SchemaInterface
+     * @param string $moduleName
      *
-     * @throws \InvalidArgumentException
+     * @return \ACP3\Core\Modules\Installer\SchemaInterface
      */
-    public function get(string $moduleName)
+    public function get($moduleName)
     {
         if ($this->has($moduleName)) {
             return $this->schemas[$moduleName];

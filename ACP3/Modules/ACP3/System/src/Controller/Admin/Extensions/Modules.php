@@ -11,6 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
+use Psr\Container\ContainerInterface;
 
 class Modules extends Core\Controller\AbstractFrontendAction
 {
@@ -35,9 +36,9 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     private $dictionaryCache;
     /**
-     * @var Core\Installer\SchemaRegistrar
+     * @var \Psr\Container\ContainerInterface
      */
-    private $schemaRegistrar;
+    private $schemaLocator;
     /**
      * @var Core\Modules\SchemaInstaller
      */
@@ -72,7 +73,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         System\Model\Repository\ModulesRepository $systemModuleRepository,
         System\Helper\Installer $installerHelper,
         Permissions\Cache $permissionsCache,
-        Core\Installer\SchemaRegistrar $schemaRegistrar,
+        ContainerInterface $schemaLocator,
         Core\Modules\SchemaInstaller $schemaInstaller,
         Core\Modules\AclInstaller $aclInstaller,
         System\ViewProviders\AdminModulesViewProvider $adminModulesViewProvider,
@@ -85,7 +86,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
         $this->installerHelper = $installerHelper;
         $this->permissionsCache = $permissionsCache;
         $this->dictionaryCache = $dictionaryCache;
-        $this->schemaRegistrar = $schemaRegistrar;
+        $this->schemaLocator = $schemaLocator;
         $this->schemaInstaller = $schemaInstaller;
         $this->aclInstaller = $aclInstaller;
         $this->modules = $modules;
@@ -98,8 +99,6 @@ class Modules extends Core\Controller\AbstractFrontendAction
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\DBALException
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function execute(?string $action = null, ?string $dir = null)
     {
@@ -131,7 +130,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
             $this->moduleInstallerExists($moduleDirectory);
 
-            $moduleSchema = $this->schemaRegistrar->get($moduleDirectory);
+            $moduleSchema = $this->schemaLocator->get($moduleDirectory);
 
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
@@ -167,7 +166,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
      */
     private function moduleInstallerExists(string $serviceId): void
     {
-        if ($this->schemaRegistrar->has($serviceId) === false) {
+        if ($this->schemaLocator->has($serviceId) === false) {
             throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'module_installer_not_found'));
         }
     }
@@ -205,8 +204,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws \Doctrine\DBAL\DBALException
      */
     private function renewCaches(): void
     {
@@ -229,7 +227,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
             $this->moduleInstallerExists($moduleDirectory);
 
-            $moduleSchema = $this->schemaRegistrar->get($moduleDirectory);
+            $moduleSchema = $this->schemaLocator->get($moduleDirectory);
 
             $dependencies = $this->installerHelper->checkUninstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'module_disable_not_possible');
@@ -265,7 +263,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
             $this->moduleInstallerExists($moduleDirectory);
 
-            $moduleSchema = $this->schemaRegistrar->get($moduleDirectory);
+            $moduleSchema = $this->schemaLocator->get($moduleDirectory);
 
             $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
@@ -301,7 +299,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
 
             $this->moduleInstallerExists($moduleDirectory);
 
-            $moduleSchema = $this->schemaRegistrar->get($moduleDirectory);
+            $moduleSchema = $this->schemaLocator->get($moduleDirectory);
 
             $dependencies = $this->installerHelper->checkUninstallDependencies($moduleSchema);
             $this->checkForFailedModuleDependencies($dependencies, 'uninstall_following_modules_first');
@@ -323,8 +321,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
     }
 
     /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws \Doctrine\DBAL\DBALException
      */
     private function outputPage(): array
     {

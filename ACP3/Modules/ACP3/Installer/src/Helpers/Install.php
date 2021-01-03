@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Modules\Installer\SampleDataInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Modules\SchemaHelper;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Yaml\Dumper;
 
 class Install

@@ -18,6 +18,13 @@ class RegisterInstallersCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
+        $this->registerSchemaInstallers($container);
+        $this->registerMigrations($container);
+        $this->registerSampleData($container);
+    }
+
+    private function registerSchemaInstallers(ContainerBuilder $container): void
+    {
         $schemaDefinition = $container->findDefinition('core.installer.schema_registrar');
 
         foreach ($container->findTaggedServiceIds('core.installer.schema') as $serviceId => $tags) {
@@ -26,9 +33,6 @@ class RegisterInstallersCompilerPass implements CompilerPassInterface
                 [new Reference($serviceId)]
             );
         }
-
-        $this->registerMigrations($container);
-        $this->registerSampleData($container);
     }
 
     private function registerMigrations(ContainerBuilder $container): void

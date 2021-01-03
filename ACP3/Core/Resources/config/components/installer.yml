@@ -26,6 +26,7 @@ services:
     class: ACP3\Core\Installer\Model\SchemaUpdateModel
     arguments:
       $logger: '@core.modules.installer_logger'
-      $migrationContainer: '@core.installer.migration_registrar'
+      $schemaLocator: '@core.installer.schema_registrar'
+      $migrationLocator: '@core.installer.migration_registrar'
 
   ACP3\Core\Installer\Model\SchemaUpdateModel: '@core.installer.model.schema_update_model'
