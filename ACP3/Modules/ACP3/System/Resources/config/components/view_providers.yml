@@ -1,6 +1,8 @@
 services:
   _defaults:
     autowire: true
+    bind:
+      $editorLocator: '@core.wysiwyg.wysiwyg_editor_registrar'
 
   ACP3\Modules\ACP3\System\ViewProviders\:
     resource: '../../../src/ViewProviders/'

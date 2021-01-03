@@ -8,21 +8,18 @@
 namespace ACP3\Modules\ACP3\System\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Core\WYSIWYG\WysiwygEditorRegistrar;
+use Psr\Container\ContainerInterface;
 
 class IsWysiwygEditorValidationRule extends AbstractValidationRule
 {
     /**
-     * @var WysiwygEditorRegistrar
+     * @var \Psr\Container\ContainerInterface
      */
-    private $editorRegistrar;
+    private $editorLocator;
 
-    /**
-     * IsWysiwygEditorValidationRule constructor.
-     */
-    public function __construct(WysiwygEditorRegistrar $editorRegistrar)
+    public function __construct(ContainerInterface $editorLocator)
     {
-        $this->editorRegistrar = $editorRegistrar;
+        $this->editorLocator = $editorLocator;
     }
 
     /**
@@ -44,6 +41,6 @@ class IsWysiwygEditorValidationRule extends AbstractValidationRule
      */
     protected function isValidWysiwygEditor($data)
     {
-        return !empty($data) && $this->editorRegistrar->has($data) && $this->editorRegistrar->get($data)->isValid();
+        return !empty($data) && $this->editorLocator->has($data) && $this->editorLocator->get($data)->isValid();
     }
 }

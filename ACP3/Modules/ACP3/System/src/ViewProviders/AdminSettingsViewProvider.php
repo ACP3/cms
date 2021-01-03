@@ -13,8 +13,8 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\WYSIWYG\WysiwygEditorRegistrar;
-use ACP3\Modules\ACP3\System\Installer\Schema as SystemAlias;
+use ACP3\Modules\ACP3\System\Installer\Schema as SystemSchema;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class AdminSettingsViewProvider
 {
@@ -43,9 +43,9 @@ class AdminSettingsViewProvider
      */
     private $translator;
     /**
-     * @var \ACP3\Core\WYSIWYG\WysiwygEditorRegistrar
+     * @var \Symfony\Component\DependencyInjection\ServiceLocator
      */
-    private $editorRegistrar;
+    private $editorLocator;
 
     public function __construct(
         Date $dateHelper,
@@ -54,7 +54,7 @@ class AdminSettingsViewProvider
         RequestInterface $request,
         SettingsInterface $settings,
         Translator $translator,
-        WysiwygEditorRegistrar $editorRegistrar
+        ServiceLocator $editorLocator
     ) {
         $this->dateHelper = $dateHelper;
         $this->formsHelper = $formsHelper;
@@ -62,12 +62,12 @@ class AdminSettingsViewProvider
         $this->request = $request;
         $this->settings = $settings;
         $this->translator = $translator;
-        $this->editorRegistrar = $editorRegistrar;
+        $this->editorLocator = $editorLocator;
     }
 
     public function __invoke(): array
     {
-        $systemSettings = $this->settings->getSettings(SystemAlias::MODULE_NAME);
+        $systemSettings = $this->settings->getSettings(SystemSchema::MODULE_NAME);
 
         $siteSubtitleMode = [
             1 => $this->translator->t('system', 'site_subtitle_mode_all_pages'),
@@ -145,7 +145,10 @@ class AdminSettingsViewProvider
     private function fetchWysiwygEditors(string $currentWysiwygEditor): array
     {
         $wysiwyg = [];
-        foreach ($this->editorRegistrar->all() as $serviceId => $editorInstance) {
+        foreach ($this->editorLocator->getProvidedServices() as $serviceId) {
+            /** @var \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG $editorInstance */
+            $editorInstance = $this->editorLocator->get($serviceId);
+
             if ($editorInstance->isValid()) {
                 $wysiwyg[$serviceId] = $editorInstance->getFriendlyName();
             }

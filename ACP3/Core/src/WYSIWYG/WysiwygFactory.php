@@ -8,21 +8,22 @@
 namespace ACP3\Core\WYSIWYG;
 
 use ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG;
+use Psr\Container\ContainerInterface;
 
 class WysiwygFactory
 {
     /**
-     * @var WysiwygEditorRegistrar
+     * @var \Psr\Container\ContainerInterface
      */
-    private $editorRegistrar;
+    private $editorLocator;
 
-    public function __construct(WysiwygEditorRegistrar $editorRegistrar)
+    public function __construct(ContainerInterface $editorLocator)
     {
-        $this->editorRegistrar = $editorRegistrar;
+        $this->editorLocator = $editorLocator;
     }
 
     public function create(string $wysiwygEditorName): AbstractWYSIWYG
     {
-        return $this->editorRegistrar->get($wysiwygEditorName);
+        return $this->editorLocator->get($wysiwygEditorName);
     }
 }
