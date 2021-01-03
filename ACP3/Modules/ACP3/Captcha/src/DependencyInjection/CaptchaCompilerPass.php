@@ -18,14 +18,13 @@ class CaptchaCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('captcha.utility.captcha_registrar');
-        $plugins = $container->findTaggedServiceIds('captcha.extension.captcha');
+        $captchaLocatorDefinition = $container->findDefinition('captcha.utility.captcha_registrar');
 
-        foreach ($plugins as $serviceId => $tags) {
-            $definition->addMethodCall(
-                'registerCaptcha',
-                [$serviceId, new Reference($serviceId)]
-            );
+        $locatableCaptchas = [];
+        foreach ($container->findTaggedServiceIds('captcha.extension.captcha') as $serviceId => $tags) {
+            $locatableCaptchas[$serviceId] = new Reference($serviceId);
         }
+
+        $captchaLocatorDefinition->replaceArgument(0, $locatableCaptchas);
     }
 }

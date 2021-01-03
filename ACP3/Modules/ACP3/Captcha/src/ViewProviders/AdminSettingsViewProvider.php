@@ -12,7 +12,7 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
-use ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class AdminSettingsViewProvider
 {
@@ -25,9 +25,9 @@ class AdminSettingsViewProvider
      */
     private $forms;
     /**
-     * @var \ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar
+     * @var \Symfony\Component\DependencyInjection\ServiceLocator
      */
-    private $captchaRegistrar;
+    private $captchaLocator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -40,13 +40,13 @@ class AdminSettingsViewProvider
     public function __construct(
         FormToken $formToken,
         Forms $forms,
-        CaptchaRegistrar $captchaRegistrar,
+        ServiceLocator $captchaLocator,
         RequestInterface $request,
         SettingsInterface $settings
     ) {
         $this->formToken = $formToken;
         $this->forms = $forms;
-        $this->captchaRegistrar = $captchaRegistrar;
+        $this->captchaLocator = $captchaLocator;
         $this->request = $request;
         $this->settings = $settings;
     }
@@ -56,7 +56,10 @@ class AdminSettingsViewProvider
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         $captchas = [];
-        foreach ($this->captchaRegistrar->getAvailableCaptchas() as $serviceId => $captcha) {
+        foreach ($this->captchaLocator->getProvidedServices() as $serviceId) {
+            /** @var \ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface $captcha */
+            $captcha = $this->captchaLocator->get($serviceId);
+
             $captchas[$serviceId] = $captcha->getCaptchaName();
         }
 

@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Captcha\Extension;
 
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
-use ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar;
+use Psr\Container\ContainerInterface;
 
 class CaptchaFactory
 {
@@ -18,14 +18,14 @@ class CaptchaFactory
      */
     private $settings;
     /**
-     * @var CaptchaRegistrar
+     * @var \Psr\Container\ContainerInterface
      */
-    private $captchaRegistrar;
+    private $captchaLocator;
 
-    public function __construct(SettingsInterface $settings, CaptchaRegistrar $captchaRegistrar)
+    public function __construct(SettingsInterface $settings, ContainerInterface $captchaLocator)
     {
         $this->settings = $settings;
-        $this->captchaRegistrar = $captchaRegistrar;
+        $this->captchaLocator = $captchaLocator;
     }
 
     /**
@@ -35,6 +35,6 @@ class CaptchaFactory
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        return isset($settings['captcha']) ? $this->captchaRegistrar->getCaptcha($settings['captcha']) : null;
+        return isset($settings['captcha']) ? $this->captchaLocator->get($settings['captcha']) : null;
     }
 }

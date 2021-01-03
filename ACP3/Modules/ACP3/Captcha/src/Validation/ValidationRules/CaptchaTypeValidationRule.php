@@ -8,21 +8,18 @@
 namespace ACP3\Modules\ACP3\Captcha\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar;
+use Psr\Container\ContainerInterface;
 
 class CaptchaTypeValidationRule extends AbstractValidationRule
 {
     /**
-     * @var CaptchaRegistrar
+     * @var \Psr\Container\ContainerInterface
      */
-    private $captchaRegistrar;
+    private $captchaLocator;
 
-    /**
-     * CaptchaTypeValidationRule constructor.
-     */
-    public function __construct(CaptchaRegistrar $captchaRegistrar)
+    public function __construct(ContainerInterface $captchaLocator)
     {
-        $this->captchaRegistrar = $captchaRegistrar;
+        $this->captchaLocator = $captchaLocator;
     }
 
     /**
@@ -34,6 +31,6 @@ class CaptchaTypeValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->captchaRegistrar->hasCaptcha($data);
+        return $this->captchaLocator->has($data);
     }
 }

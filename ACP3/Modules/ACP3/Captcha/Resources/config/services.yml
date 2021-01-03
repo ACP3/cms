@@ -3,6 +3,8 @@ imports:
 
 services:
   captcha.utility.captcha_registrar:
-    class: ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar
-
-  ACP3\Modules\ACP3\Captcha\Utility\CaptchaRegistrar: '@captcha.utility.captcha_registrar'
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - []
+    public: true
+    tags: ['container.service_locator']
