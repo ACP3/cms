@@ -14,7 +14,7 @@ use ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
-use Symfony\Component\DependencyInjection\ServiceLocator;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGrid
@@ -41,7 +41,7 @@ class DataGrid
     private $serviceLocator;
 
     public function __construct(
-        ServiceLocator $serviceLocator,
+        ContainerInterface $serviceLocator,
         RequestInterface $request,
         ConfigProcessor $configProcessor,
         ACL $acl,
