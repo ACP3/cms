@@ -1,42 +1,14 @@
 services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Menus\Validation\ValidationRules\:
+    resource: '../../../src/Validation/ValidationRules'
+    tags:
+      - { name: core.validation.validation_rule }
+
   menus.validation.menu_form_validation:
     class: ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation
-    parent: core.validator.abstract
 
   menus.validation.menu_item_form_validation:
     class: ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation
-    parent: core.validator.abstract
-
-  menus.validation.validation_rules.allowed_menu_validation_rule:
-    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule
-    arguments:
-      - '@menus.model.menuitemrepository'
-    tags:
-      - { name: core.validation.validation_rule }
-
-  menus.validation.validation_rules.link_mode_validation_rule:
-    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\LinkModeValidationRule
-    arguments:
-      - '@core.modules'
-      - '@core.validation.validation_rules.internal_uri_validation_rule'
-    tags:
-      - { name: core.validation.validation_rule }
-
-  menus.validation.validation_rules.menu_already_exists_validation_rule:
-    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuAlreadyExistsValidationRule
-    arguments:
-      - '@menus.model.menurepository'
-    tags:
-      - { name: core.validation.validation_rule }
-
-  menus.validation.validation_rules.menu_name_validation_rule:
-    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule
-    tags:
-      - { name: core.validation.validation_rule }
-
-  menus.validation.validation_rules.parent_id_validation_rule:
-    class: ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule
-    arguments:
-      - '@menus.model.menuitemrepository'
-    tags:
-      - { name: core.validation.validation_rule }

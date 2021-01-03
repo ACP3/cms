@@ -5,6 +5,8 @@ services:
       - '@news.cache.core'
       - '@news.model.newsrepository'
 
+  ACP3\Modules\ACP3\News\Cache: '@news.cache'
+
   news.cache.core:
     class: ACP3\Core\Cache
     arguments:

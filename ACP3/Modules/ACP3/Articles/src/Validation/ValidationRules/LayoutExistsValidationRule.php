@@ -17,9 +17,6 @@ class LayoutExistsValidationRule extends AbstractValidationRule
      */
     private $view;
 
-    /**
-     * LayoutExistsValidationRule constructor.
-     */
     public function __construct(View $view)
     {
         $this->view = $view;

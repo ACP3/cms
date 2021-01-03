@@ -6,6 +6,8 @@ services:
       - '@core.config'
       - '@core.picture.picture'
 
+  ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator: '@gallery.helpers.thumbnail_generator'
+
   gallery.helpers:
     class: ACP3\Modules\ACP3\Gallery\Helpers
     arguments:

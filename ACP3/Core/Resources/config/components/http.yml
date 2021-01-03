@@ -11,6 +11,9 @@ services:
     public: true
     factory: ['@core.http.request_factory', create]
 
+  ACP3\Core\Http\Request: '@core.http.request'
+  ACP3\Core\Http\RequestInterface: '@core.http.request'
+
   core.http.request_factory:
     class: ACP3\Core\Http\RequestFactory
     arguments:

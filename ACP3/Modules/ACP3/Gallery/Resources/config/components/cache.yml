@@ -8,6 +8,8 @@ services:
       - '@core.config'
       - '@gallery.helpers.thumbnail_generator'
 
+  ACP3\Modules\ACP3\Gallery\Cache: '@gallery.cache'
+
   gallery.cache.core:
     class: ACP3\Core\Cache
     arguments:

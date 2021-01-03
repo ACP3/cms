@@ -1,52 +1,13 @@
 services:
-  comments.view_providers.admin_comment_edit:
-    class: ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentEditViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.breadcrumb'
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
+  _defaults:
+    autowire: true
 
-  comments.view_providers.admin_comments_settings:
-    class: ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentsSettingsViewProvider
-    arguments:
-      - '@core.helpers.date'
-      - '@core.helpers.formToken'
-      - '@core.config'
+  ACP3\Modules\ACP3\Comments\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
 
-  comments.view_providers.comment_create:
-    class: ACP3\Modules\ACP3\Comments\ViewProviders\CommentCreateViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@users.model.user_model'
-
-  comments.view_providers.comment_list:
-    class: ACP3\Modules\ACP3\Comments\ViewProviders\CommentListViewProvider
-    arguments:
-      - '@core.modules'
-      - '@core.pagination'
-      - '@core.helpers.results_per_page'
-      - '@core.config'
-      - '@core.i18n.translator'
-      - '@comments.model.commentrepository'
-
-  comments.view_providers.data_grid:
-    class: ACP3\Modules\ACP3\Comments\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@comments.model.comments_by_module_data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
-
-  comments.view_providers.data_grid_by_module:
-    class: ACP3\Modules\ACP3\Comments\ViewProviders\DataGridByModuleViewProvider
-    arguments:
-      - '@comments.model.comments_data_grid_repository'
-      - '@core.data_grid.data_grid'
-      - '@system.model.modulerepository'
-      - '@core.http.request'
-      - '@core.helpers.results_per_page'
-      - '@core.breadcrumb'
-      - '@core.i18n.translator'
+  comments.view_providers.admin_comment_edit: '@ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentEditViewProvider'
+  comments.view_providers.admin_comments_settings: '@ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentsSettingsViewProvider'
+  comments.view_providers.comment_create: '@ACP3\Modules\ACP3\Comments\ViewProviders\CommentCreateViewProvider'
+  comments.view_providers.comment_list: '@ACP3\Modules\ACP3\Comments\ViewProviders\CommentListViewProvider'
+  comments.view_providers.data_grid: '@ACP3\Modules\ACP3\Comments\ViewProviders\DataGridViewProvider'
+  comments.view_providers.data_grid_by_module: '@ACP3\Modules\ACP3\Comments\ViewProviders\DataGridByModuleViewProvider'

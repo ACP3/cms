@@ -14,6 +14,8 @@ services:
       - '@core.acl'
       - '@core.i18n.translator'
 
+  ACP3\Core\DataGrid\DataGrid: '@core.data_grid.data_grid'
+
   core.data_grid.column_renderer_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:

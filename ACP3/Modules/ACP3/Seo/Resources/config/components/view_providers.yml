@@ -1,26 +1,10 @@
 services:
-  seo.view_providers.admin_seo_edit:
-    class: ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@seo.helper.meta_form_fields'
-      - '@core.http.request'
-      - '@core.breadcrumb.title'
+  _defaults:
+    autowire: true
 
-  seo.view_providers.admin_settings:
-    class: ACP3\Modules\ACP3\Seo\ViewProviders\AdminSettingsViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.config'
-      - '@core.i18n.translator'
+  ACP3\Modules\ACP3\Seo\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
 
-  seo.view_providers.data_grid:
-    class: ACP3\Modules\ACP3\Seo\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@seo.model.data_grid_repository'
-      - '@core.seo.meta_statements_service'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
+  seo.view_providers.admin_seo_edit: '@ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider'
+  seo.view_providers.admin_settings: '@ACP3\Modules\ACP3\Seo\ViewProviders\AdminSettingsViewProvider'
+  seo.view_providers.data_grid: '@ACP3\Modules\ACP3\Seo\ViewProviders\DataGridViewProvider'

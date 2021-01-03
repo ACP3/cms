@@ -15,11 +15,8 @@ class ArticleExistsValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
-    protected $articleRepository;
+    private $articleRepository;
 
-    /**
-     * ArticleExistsValidationRule constructor.
-     */
     public function __construct(ArticleRepository $articleRepository)
     {
         $this->articleRepository = $articleRepository;

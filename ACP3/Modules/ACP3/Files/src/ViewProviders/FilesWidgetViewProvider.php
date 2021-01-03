@@ -50,7 +50,7 @@ class FilesWidgetViewProvider
     public function __invoke(?int $categoryId, ?int $limit): array
     {
         return [
-            'category' => $categoryId ?$this->categoryRepository->getOneById($categoryId) : [],
+            'category' => $categoryId ? $this->categoryRepository->getOneById($categoryId) : [],
             'sidebar_files' => $this->fetchFiles($categoryId, $limit),
         ];
     }

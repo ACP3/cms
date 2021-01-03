@@ -1,68 +1,16 @@
 services:
-  newsletter.view_providers.account_data_grid:
-    class: ACP3\Modules\ACP3\Newsletter\ViewProviders\AccountDataGridViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@newsletter.model.account_data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
+  _defaults:
+    autowire: true
 
-  newsletter.view_providers.admin_newsletter_edit:
-    class: ACP3\Modules\ACP3\Newsletter\ViewProviders\AdminNewsletterEditViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.config'
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
+  ACP3\Modules\ACP3\Newsletter\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
 
-  newsletter.view_providers.admin_settings:
-    class: ACP3\Modules\ACP3\Newsletter\ViewProviders\AdminSettingsViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.config'
-
-  newsletter.view_providers.data_grid:
-    class: ACP3\Modules\ACP3\Newsletter\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@newsletter.model.newsletter_data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
-
-  newsletter.view_providers.newsletter_archive:
-    class: ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterArchiveViewProvider
-    arguments:
-      - '@newsletter.model.newsletterrepository'
-      - '@core.pagination'
-      - '@core.helpers.results_per_page'
-
-  newsletter.view_providers.newsletter_details:
-    class: ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterDetailsViewProvider
-    arguments:
-      - '@core.http.request'
-      - '@core.breadcrumb'
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
-
-  newsletter.view_providers.newsletter_subscribe:
-    class: ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterSubscribeViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.i18n.translator'
-
-  newsletter.view_providers.newsletter_subscribe_widget:
-    class: ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterSubscribeWidgetViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-
-  newsletter.view_providers.newsletter_unsubscribe:
-    class: ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterUnsubscribeViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
+  newsletter.view_providers.account_data_grid: '@ACP3\Modules\ACP3\Newsletter\ViewProviders\AccountDataGridViewProvider'
+  newsletter.view_providers.admin_newsletter_edit: '@ACP3\Modules\ACP3\Newsletter\ViewProviders\AdminNewsletterEditViewProvider'
+  newsletter.view_providers.admin_settings: '@ACP3\Modules\ACP3\Newsletter\ViewProviders\AdminSettingsViewProvider'
+  newsletter.view_providers.data_grid: '@ACP3\Modules\ACP3\Newsletter\ViewProviders\DataGridViewProvider'
+  newsletter.view_providers.newsletter_archive: '@ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterArchiveViewProvider'
+  newsletter.view_providers.newsletter_details: '@ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterDetailsViewProvider'
+  newsletter.view_providers.newsletter_subscribe: '@ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterSubscribeViewProvider'
+  newsletter.view_providers.newsletter_subscribe_widget: '@ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterSubscribeWidgetViewProvider'
+  newsletter.view_providers.newsletter_unsubscribe: '@ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterUnsubscribeViewProvider'

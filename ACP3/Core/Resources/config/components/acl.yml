@@ -7,3 +7,5 @@ services:
       - '@core.controller.helper.controller_action_exists'
       - '@permissions.model.userrolerepository'
       - '@permissions.cache'
+
+  ACP3\Core\ACL: '@core.acl'

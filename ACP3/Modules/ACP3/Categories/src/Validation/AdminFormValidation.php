@@ -33,13 +33,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      */
     protected $categoryId = 0;
 
-    /**
-     * Validator constructor.
-     *
-     * @param \ACP3\Core\Settings\SettingsInterface $settings
-     * @param \ACP3\Core\I18n\Translator            $translator
-     * @param \ACP3\Core\Validation\Validator       $validator
-     */
     public function __construct(
         Core\Settings\SettingsInterface $settings,
         Core\I18n\Translator $translator,

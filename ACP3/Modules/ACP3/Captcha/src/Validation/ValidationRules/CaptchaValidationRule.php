@@ -7,28 +7,23 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Validation\ValidationRules;
 
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class CaptchaValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
-    protected $user;
+    private $user;
     /**
      * @var CaptchaExtensionInterface
      */
     private $captcha;
 
-    /**
-     * CaptchaValidationRule constructor.
-     *
-     * @param CaptchaExtensionInterface $captcha
-     */
     public function __construct(
-        UserModel $user,
+        UserModelInterface $user,
         CaptchaExtensionInterface $captcha = null
     ) {
         $this->user = $user;

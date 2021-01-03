@@ -8,8 +8,8 @@
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
 use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\I18n\Translator;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class NativeCaptchaExtension implements CaptchaExtensionInterface
@@ -39,7 +39,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
      */
     private $view;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
     /**
@@ -55,7 +55,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         Session $sessionHandler,
         Core\View $view,
         Core\Helpers\Secure $secureHelper,
-        UserModel $user
+        UserModelInterface $user
     ) {
         $this->translator = $translator;
         $this->request = $request;

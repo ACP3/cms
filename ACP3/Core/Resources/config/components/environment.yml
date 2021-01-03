@@ -3,9 +3,13 @@ services:
     public: true
     synthetic: true
 
+  ACP3\Core\Environment\ApplicationPath: '@core.environment.application_path'
+
   core.environment.theme:
     class: ACP3\Core\Environment\Theme
     arguments:
       - '@core.environment.application_path'
       - '@core.config'
       - '@core.xml'
+
+  ACP3\Core\Environment\Theme: '@core.environment.theme'

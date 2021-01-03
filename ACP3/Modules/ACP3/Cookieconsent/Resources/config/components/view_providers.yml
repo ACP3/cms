@@ -1,9 +1,8 @@
 services:
-  cookieconsent.view_providers.admin_settings:
-    class: ACP3\Modules\ACP3\Cookieconsent\ViewProviders\AdminSettingsViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.config'
-      - '@core.i18n.translator'
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Cookieconsent\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
+
+  cookieconsent.view_providers.admin_settings: '@ACP3\Modules\ACP3\Cookieconsent\ViewProviders\AdminSettingsViewProvider'

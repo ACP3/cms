@@ -7,9 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\View;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class HoneypotCaptchaExtension implements CaptchaExtensionInterface
 {
@@ -22,11 +22,11 @@ class HoneypotCaptchaExtension implements CaptchaExtensionInterface
      */
     private $view;
     /**
-     * @var UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $userModel;
 
-    public function __construct(Translator $translator, View $view, UserModel $userModel)
+    public function __construct(Translator $translator, View $view, UserModelInterface $userModel)
     {
         $this->translator = $translator;
         $this->view = $view;

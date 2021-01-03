@@ -7,21 +7,18 @@
 
 namespace ACP3\Modules\ACP3\Users\Event\Listener;
 
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Users\Exception\SuperUserNotDeletableException;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class ForbidSuperUserDeleteListener
 {
     /**
-     * @var UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $userModel;
 
-    /**
-     * OnUsersModelDeleteBeforeListener constructor.
-     */
-    public function __construct(UserModel $userModel)
+    public function __construct(UserModelInterface $userModel)
     {
         $this->userModel = $userModel;
     }

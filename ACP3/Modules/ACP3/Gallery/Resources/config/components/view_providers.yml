@@ -1,103 +1,18 @@
 services:
-  gallery.view_providers.admin_gallery_edit:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryEditViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.breadcrumb.title'
+  _defaults:
+    autowire: true
 
-  gallery.view_providers.admin_gallery_picture_create:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@gallery.model.galleryrepository'
-      - '@core.http.request'
-      - '@core.breadcrumb'
-      - '@core.i18n.translator'
+  ACP3\Modules\ACP3\Gallery\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
 
-  gallery.view_providers.admin_gallery_picture_edit:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureEditViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@gallery.model.galleryrepository'
-      - '@core.http.request'
-      - '@core.breadcrumb'
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
-
-  gallery.view_providers.admim_settings:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\AdminSettingsViewProvider
-    arguments:
-      - '@core.helpers.date'
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.config'
-
-  gallery.view_providers.data_grid:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@gallery.model.gallery_data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
-
-  gallery.view_providers.picture_data_grid:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\PictureDataGridViewProvider
-    arguments:
-      - '@core.acl'
-      - '@core.data_grid.data_grid'
-      - '@gallery.model.gallery_pictures_data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.breadcrumb'
-      - '@gallery.helpers.thumbnail_generator'
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
-
-  gallery.view_providers.gallery_list:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryListViewProvider
-    arguments:
-      - '@core.date'
-      - '@gallery.model.galleryrepository'
-      - '@core.pagination'
-      - '@core.helpers.results_per_page'
-      - '@core.config'
-      - '@gallery.helpers.thumbnail_generator'
-
-  gallery.view_providers.gallery_list_widget:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryListWidgetViewProvider
-    arguments:
-      - '@core.date'
-      - '@gallery.model.galleryrepository'
-      - '@core.config'
-
-  gallery.view_providers.gallery_picture_details:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureDetailsViewProvider
-    arguments:
-      - '@core.seo.meta_statements_service'
-      - '@gallery.model.picturerepository'
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.breadcrumb'
-      - '@gallery.helpers.thumbnail_generator'
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
-
-  gallery.view_providers.gallery_picture_list:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListViewProvider
-    arguments:
-      - '@gallery.cache'
-      - '@gallery.model.galleryrepository'
-      - '@core.http.request'
-      - '@core.config'
-      - '@core.breadcrumb'
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
-
-  gallery.view_providers.gallery_picture_list_widget:
-    class: ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListWidgetViewProvider
-    arguments:
-      - '@gallery.cache'
-      - '@gallery.model.galleryrepository'
+  gallery.view_providers.admin_gallery_edit: '@ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryEditViewProvider'
+  gallery.view_providers.admin_gallery_picture_create: '@ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider'
+  gallery.view_providers.admin_gallery_picture_edit: '@ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureEditViewProvider'
+  gallery.view_providers.admim_settings: '@ACP3\Modules\ACP3\Gallery\ViewProviders\AdminSettingsViewProvider'
+  gallery.view_providers.data_grid: '@ACP3\Modules\ACP3\Gallery\ViewProviders\DataGridViewProvider'
+  gallery.view_providers.picture_data_grid: '@ACP3\Modules\ACP3\Gallery\ViewProviders\PictureDataGridViewProvider'
+  gallery.view_providers.gallery_list: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryListViewProvider'
+  gallery.view_providers.gallery_list_widget: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryListWidgetViewProvider'
+  gallery.view_providers.gallery_picture_details: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureDetailsViewProvider'
+  gallery.view_providers.gallery_picture_list: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListViewProvider'
+  gallery.view_providers.gallery_picture_list_widget: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListWidgetViewProvider'

@@ -62,5 +62,7 @@ services:
     arguments:
       - '@core.model.column_type_strategy_factory'
 
+  ACP3\Core\Model\DataProcessor: '@core.model.data_processor'
+
   core.model.column_type_strategy_factory:
     class: ACP3\Core\Model\DataProcessor\ColumnTypeStrategyFactory

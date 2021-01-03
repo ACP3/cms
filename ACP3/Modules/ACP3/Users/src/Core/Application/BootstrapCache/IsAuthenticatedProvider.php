@@ -8,9 +8,9 @@
 namespace ACP3\Modules\ACP3\Users\Core\Application\BootstrapCache;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 use FOS\HttpCache\UserContext\ContextProvider;
 use FOS\HttpCache\UserContext\UserContext;
 
@@ -21,7 +21,7 @@ class IsAuthenticatedProvider implements ContextProvider
      */
     private $settings;
     /**
-     * @var UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $userModel;
     /**
@@ -29,10 +29,7 @@ class IsAuthenticatedProvider implements ContextProvider
      */
     private $acl;
 
-    /**
-     * IsAuthenticatedProvider constructor.
-     */
-    public function __construct(SettingsInterface $settings, ACL $acl, UserModel $userModel)
+    public function __construct(SettingsInterface $settings, ACL $acl, UserModelInterface $userModel)
     {
         $this->settings = $settings;
         $this->userModel = $userModel;

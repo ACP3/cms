@@ -5,6 +5,8 @@ services:
       - '@core.helpers.forms'
       - '@menus.cache'
 
+  ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList: '@menus.helpers.menuitemslist'
+
   menus.helpers.managemenuitem:
     class: ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
     arguments:
@@ -17,3 +19,5 @@ services:
       - '@core.helpers.forms'
       - '@menus.helpers.menuitemslist'
       - '@menus.model.menurepository'
+
+  ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields: '@menus.helpers.menuitemformfields'

@@ -2,6 +2,8 @@ services:
   core.wysiwyg.wysiwyg_editor_registrar:
     class: ACP3\Core\WYSIWYG\WysiwygEditorRegistrar
 
+  ACP3\Core\WYSIWYG\WysiwygEditorRegistrar: '@core.wysiwyg.wysiwyg_editor_registrar'
+
   core.wysiwyg.wysiwyg_factory:
     class: ACP3\Core\WYSIWYG\WysiwygFactory
     arguments:

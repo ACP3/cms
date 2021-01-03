@@ -1,11 +1,11 @@
 services:
-  system.validation.admin_settings_form_validation:
-    class: ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation
-    parent: core.validator.abstract
+  _defaults:
+    autowire: true
 
-  system.validation.validation_rules.is_wysiwyg_editor_validation_rule:
-    class: ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule
-    arguments:
-      - '@core.wysiwyg.wysiwyg_editor_registrar'
+  ACP3\Modules\ACP3\System\Validation\ValidationRules\:
+    resource: '../../../src/Validation/ValidationRules'
     tags:
       - { name: core.validation.validation_rule }
+
+  system.validation.admin_settings_form_validation:
+    class: ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation

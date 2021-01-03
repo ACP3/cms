@@ -1,15 +1,13 @@
 services:
+  _defaults:
+    autowire: true
+
   acp.event.listener.add_admin_panel_link_to_breadcrumb_listener:
     class: ACP3\Modules\ACP3\Acp\Event\Listener\AddAdminPanelLinkToBreadcrumbListener
-    arguments:
-      - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: core.breadcrumb.steps.build_admin_cache_not_empty_steps_after }
 
   acp.event.listener.add_admin_panel_title_postfix_listener:
     class: ACP3\Modules\ACP3\Acp\Event\Listener\AddAdminPanelTitlePostfixListener
-    arguments:
-      - '@core.http.request'
-      - '@core.i18n.translator'
     tags:
       - { name: core.eventListener, event: core.breadcrumb.title.get_site_and_page_title_before }

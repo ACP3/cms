@@ -5,6 +5,8 @@ services:
       - '@core.modules.moduleInfoCache'
     public: true
 
+  ACP3\Core\Modules: '@core.modules'
+
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
     public: true

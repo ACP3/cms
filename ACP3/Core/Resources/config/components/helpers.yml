@@ -21,11 +21,15 @@ services:
       - '@core.helpers.forms'
       - '@core.validation.validation_rules.date_validation_rule'
 
+  ACP3\Core\Helpers\Date: '@core.helpers.date'
+
   core.helpers.forms:
     class: ACP3\Core\Helpers\Forms
     arguments:
       - '@core.i18n.translator'
       - '@core.http.request'
+
+  ACP3\Core\Helpers\Forms: '@core.helpers.forms'
 
   core.helpers.sendEmail:
     class: ACP3\Core\Helpers\SendEmail
@@ -48,6 +52,8 @@ services:
       - '@core.http.request'
       - '@core.session'
 
+  ACP3\Core\Helpers\FormToken: '@core.helpers.formToken'
+
   core.helpers.pageBreaks:
     class: ACP3\Core\Helpers\PageBreaks
     arguments:
@@ -55,10 +61,14 @@ services:
       - '@core.router'
       - '@core.helpers.toc'
 
+  ACP3\Core\Helpers\PageBreaks: '@core.helpers.pageBreaks'
+
   core.helpers.results_per_page:
     class: ACP3\Core\Helpers\ResultsPerPage
     arguments:
       - '@core.config'
+
+  ACP3\Core\Helpers\ResultsPerPage: '@core.helpers.results_per_page'
 
   core.helpers.sort:
     class: ACP3\Core\Helpers\Sort
@@ -79,6 +89,8 @@ services:
     class: ACP3\Core\Helpers\StringFormatter
     arguments:
       - '@slugify'
+
+  ACP3\Core\Helpers\StringFormatter: '@core.helpers.string_formatter'
 
   core.helpers.formatter.date_range:
     class: ACP3\Core\Helpers\Formatter\DateRange

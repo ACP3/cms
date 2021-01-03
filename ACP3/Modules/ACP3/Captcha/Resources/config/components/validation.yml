@@ -1,19 +1,11 @@
 services:
-  captcha.validation.validation_rules.captcha_validation_rule:
-    class: ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaValidationRule
-    arguments:
-      - '@users.model.user_model'
-      - '@captcha.extension.captcha'
-    tags:
-      - { name: core.validation.validation_rule }
+  _defaults:
+    autowire: true
 
-  captcha.validation.validation_rules.captcha_type_validation_rule:
-    class: ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\CaptchaTypeValidationRule
-    arguments:
-      - '@captcha.utility.captcha_registrar'
+  ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\:
+    resource: '../../../src/Validation/ValidationRules'
     tags:
       - { name: core.validation.validation_rule }
 
   cpatcha.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation
-    parent: core.validator.abstract

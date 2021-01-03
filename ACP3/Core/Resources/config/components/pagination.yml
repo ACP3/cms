@@ -6,3 +6,5 @@ services:
       - '@core.i18n.translator'
       - '@core.http.request'
       - '@core.router'
+
+  ACP3\Core\Pagination: '@core.pagination'

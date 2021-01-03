@@ -10,8 +10,12 @@ services:
       - '@core.environment.application_path'
       - '@core.http.response'
 
+  ACP3\Core\Controller\Context\WidgetContext: '@core.context.widget'
+
   core.context.frontend:
     class: ACP3\Core\Controller\Context\FrontendContext
     arguments:
       - '@core.context.widget'
       - '@core.event_dispatcher'
+
+  ACP3\Core\Controller\Context\FrontendContext: '@core.context.frontend'

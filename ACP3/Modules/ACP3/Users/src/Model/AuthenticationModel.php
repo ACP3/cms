@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Model;
 
 use ACP3\Core\Authentication\Model\AuthenticationModelInterface;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
@@ -49,7 +50,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      */
     private $response;
     /**
-     * @var UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $userModel;
 
@@ -59,7 +60,7 @@ class AuthenticationModel implements AuthenticationModelInterface
         ApplicationPath $appPath,
         Session $sessionHandler,
         Secure $secureHelper,
-        UserModel $userModel,
+        UserModelInterface $userModel,
         UserRepository $userRepository
     ) {
         $this->request = $request;

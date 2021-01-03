@@ -1,4 +1,6 @@
 services:
+  _defaults:
+    autowire: true
+
   cookieconsent.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Cookieconsent\Validation\AdminSettingsFormValidation
-    parent: core.validator.abstract

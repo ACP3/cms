@@ -3,6 +3,8 @@ services:
     class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface
     factory: ['@captcha.extension.captcha_factory', 'create']
 
+  ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface: '@captcha.extension.captcha'
+
   captcha.extension.captcha_factory:
     class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory
     arguments:

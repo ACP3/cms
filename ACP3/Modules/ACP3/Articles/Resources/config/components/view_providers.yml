@@ -1,47 +1,13 @@
 services:
-  articles.view_providers.admin_article_edit:
-    class: ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.environment.theme'
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
+  _defaults:
+    autowire: true
 
-  article.view_providers.article_full:
-    class: ACP3\Modules\ACP3\Articles\ViewProviders\ArticleFullViewProvider
-    arguments:
-      - '@articles.cache'
+  ACP3\Modules\ACP3\Articles\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
 
-  articles.view_providers.article_list:
-    class: ACP3\Modules\ACP3\Articles\ViewProviders\ArticleListViewProvider
-    arguments:
-      - '@articles.model.articlerepository'
-      - '@core.date'
-      - '@core.pagination'
-      - '@core.helpers.results_per_page'
-
-  articles.view_providers.article_paginated:
-    class: ACP3\Modules\ACP3\Articles\ViewProviders\ArticlePaginatedViewProvider
-    arguments:
-      - '@articles.cache'
-      - '@core.helpers.pageBreaks'
-      - '@core.http.request'
-      - '@core.breadcrumb'
-      - '@core.breadcrumb.title'
-      - '@core.view'
-
-  articles.view_providers.data_grid:
-    class: ACP3\Modules\ACP3\Articles\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@articles.model.data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
-
-  articles.view_providers.latest_articles:
-    class: ACP3\Modules\ACP3\Articles\ViewProviders\LatestArticlesViewProvider
-    arguments:
-      - '@articles.model.articlerepository'
-      - '@core.date'
+  articles.view_providers.admin_article_edit: '@ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider'
+  article.view_providers.article_full: '@ACP3\Modules\ACP3\Articles\ViewProviders\ArticleFullViewProvider'
+  articles.view_providers.article_list: '@ACP3\Modules\ACP3\Articles\ViewProviders\ArticleListViewProvider'
+  articles.view_providers.article_paginated: '@ACP3\Modules\ACP3\Articles\ViewProviders\ArticlePaginatedViewProvider'
+  articles.view_providers.data_grid: '@ACP3\Modules\ACP3\Articles\ViewProviders\DataGridViewProvider'
+  articles.view_providers.latest_articles: '@ACP3\Modules\ACP3\Articles\ViewProviders\LatestArticlesViewProvider'

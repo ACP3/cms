@@ -1,26 +1,10 @@
 services:
-  categories.view_providers.admin_category_edit:
-    class: ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategoryEditViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@core.modules'
-      - '@core.http.request'
-      - '@core.breadcrumb.title'
-      - '@categories.model.categories_repository'
+  _defaults:
+    autowire: true
 
-  categories.view_providers.admin_category_settings:
-    class: ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategorySettingsViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.config'
+  ACP3\Modules\ACP3\Categories\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
 
-  categories.view_providers.data_grid:
-    class: ACP3\Modules\ACP3\Categories\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.acl'
-      - '@core.data_grid.data_grid'
-      - '@categories.model.data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
+  categories.view_providers.admin_category_edit: '@ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategoryEditViewProvider'
+  categories.view_providers.admin_category_settings: '@ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategorySettingsViewProvider'
+  categories.view_providers.data_grid: '@ACP3\Modules\ACP3\Categories\ViewProviders\DataGridViewProvider'

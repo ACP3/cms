@@ -1,25 +1,10 @@
 services:
-  menus.view_providers.admin_menu_edit:
-    class: ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuEditViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.breadcrumb.title'
+  _defaults:
+    autowire: true
 
-  menus.view_providers.admin_menu_item_edit:
-    class: ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuItemEditViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.helpers.formToken'
-      - '@menus.helpers.menuitemformfields'
-      - '@core.modules'
-      - '@core.http.request'
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
+  ACP3\Modules\ACP3\Menus\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
 
-  menus.view_providers.data_grid:
-    class: ACP3\Modules\ACP3\Menus\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.acl'
-      - '@menus.helpers.menuitemslist'
-      - '@menus.model.menurepository'
+  menus.view_providers.admin_menu_edit: '@ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuEditViewProvider'
+  menus.view_providers.admin_menu_item_edit: '@ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuItemEditViewProvider'
+  menus.view_providers.data_grid: '@ACP3\Modules\ACP3\Menus\ViewProviders\DataGridViewProvider'

@@ -15,6 +15,8 @@ services:
     synthetic: true
     public: true
 
+  ACP3\Core\Authentication\Model\UserModelInterface: '@users.model.user_model'
+
   core.registry:
     class: ACP3\Core\Registry
 
@@ -24,3 +26,6 @@ services:
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\EventDispatcher
     public: true
+
+  Symfony\Component\EventDispatcher\EventDispatcher: '@core.event_dispatcher'
+  Symfony\Component\EventDispatcher\EventDispatcherInterface: '@core.event_dispatcher'

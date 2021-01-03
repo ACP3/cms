@@ -7,11 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Auditlog\Event\Listener;
 
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Date;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 use Doctrine\DBAL\DBALException;
 use Psr\Log\LoggerInterface;
 
@@ -22,7 +22,7 @@ class OnModelAfterSaveListener
      */
     private $date;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $userModel;
     /**
@@ -38,13 +38,10 @@ class OnModelAfterSaveListener
      */
     private $logger;
 
-    /**
-     * OnModelAfterSaveListener constructor.
-     */
     public function __construct(
         LoggerInterface $logger,
         Date $date,
-        UserModel $userModel,
+        UserModelInterface $userModel,
         ModuleAwareRepositoryInterface $moduleAwareRepository,
         AuditLogRepository $auditLogRepository)
     {

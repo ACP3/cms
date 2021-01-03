@@ -1,90 +1,19 @@
 services:
-  users.view_providers.account_edit:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\AccountEditViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@users.model.user_model'
-      - '@users.helpers.forms'
+  _defaults:
+    autowire: true
 
-  users.view_providers.account_settings:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\AccountSettingsViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@users.model.user_model'
-      - '@users.helpers.forms'
+  ACP3\Modules\ACP3\Users\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
 
-  users.view_providers.admin_settings:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\AdminSettingsViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.helpers.forms'
-      - '@core.http.request'
-      - '@core.config'
-
-  users.view_providers.admin_user_edit:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider
-    arguments:
-      - '@core.acl'
-      - '@core.helpers.formToken'
-      - '@core.helpers.forms'
-      - '@users.helpers.forms'
-      - '@core.http.request'
-      - '@core.breadcrumb.title'
-
-  users.view_providers.data_grid:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@users.model.data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
-
-  users.view_providers.forgot_password:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\ForgotPasswordViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-
-  users.view_providers.login:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\LoginViewProvider
-    arguments:
-      - '@core.helpers.forms'
-      - '@core.http.request'
-      - '@core.config'
-      - '@core.i18n.translator'
-
-  users.view_providers.logout:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\LogoutViewProvider
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.http.request'
-      - '@core.router'
-
-  users.view_providers.registration:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\RegistrationViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-
-  users.view_providers.user_list:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\UserListViewProvider
-    arguments:
-      - '@core.pagination'
-      - '@core.helpers.results_per_page'
-      - '@users.model.userrepository'
-
-  users.view_providers.user_menu:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\UserMenuViewProvider
-    arguments:
-      - '@core.http.request'
-      - '@core.acl'
-      - '@core.modules'
-      - '@core.i18n.translator'
-
-  users.view_providers.user_profile:
-    class: ACP3\Modules\ACP3\Users\ViewProviders\UserProfileViewProvider
-    arguments:
-      - '@core.i18n.translator'
-      - '@users.model.user_model'
+  users.view_providers.account_edit: '@ACP3\Modules\ACP3\Users\ViewProviders\AccountEditViewProvider'
+  users.view_providers.account_settings: '@ACP3\Modules\ACP3\Users\ViewProviders\AccountSettingsViewProvider'
+  users.view_providers.admin_settings: '@ACP3\Modules\ACP3\Users\ViewProviders\AdminSettingsViewProvider'
+  users.view_providers.admin_user_edit: '@ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider'
+  users.view_providers.data_grid: '@ACP3\Modules\ACP3\Users\ViewProviders\DataGridViewProvider'
+  users.view_providers.forgot_password: '@ACP3\Modules\ACP3\Users\ViewProviders\ForgotPasswordViewProvider'
+  users.view_providers.login: '@ACP3\Modules\ACP3\Users\ViewProviders\LoginViewProvider'
+  users.view_providers.logout: '@ACP3\Modules\ACP3\Users\ViewProviders\LogoutViewProvider'
+  users.view_providers.registration: '@ACP3\Modules\ACP3\Users\ViewProviders\RegistrationViewProvider'
+  users.view_providers.user_list: '@ACP3\Modules\ACP3\Users\ViewProviders\UserListViewProvider'
+  users.view_providers.user_menu: '@ACP3\Modules\ACP3\Users\ViewProviders\UserMenuViewProvider'
+  users.view_providers.user_profile: '@ACP3\Modules\ACP3\Users\ViewProviders\UserProfileViewProvider'

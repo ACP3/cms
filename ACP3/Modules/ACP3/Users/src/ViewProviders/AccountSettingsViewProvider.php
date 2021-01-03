@@ -7,10 +7,10 @@
 
 namespace ACP3\Modules\ACP3\Users\ViewProviders;
 
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Users\Helpers\Forms as UserFormsHelper;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class AccountSettingsViewProvider
 {
@@ -19,7 +19,7 @@ class AccountSettingsViewProvider
      */
     private $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $userModel;
     /**
@@ -34,7 +34,7 @@ class AccountSettingsViewProvider
     public function __construct(
         FormToken $formTokenHelper,
         RequestInterface $request,
-        UserModel $userModel,
+        UserModelInterface $userModel,
         UserFormsHelper $userFormsHelper)
     {
         $this->formTokenHelper = $formTokenHelper;

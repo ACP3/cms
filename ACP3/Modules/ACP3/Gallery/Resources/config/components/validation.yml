@@ -1,19 +1,17 @@
 services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Gallery\Validation\ValidationRules\:
+    resource: '../../../src/Validation/ValidationRules'
+    tags:
+      - { name: core.validation.validation_rule }
+
   gallery.validation.gallery_form_validation:
     class: ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation
-    parent: core.validator.abstract
 
   gallery.validation.picture_form_validation:
     class: ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
-    parent: core.validator.abstract
 
   gallery.validation.admin_settings_form_validation:
     class: ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
-    parent: core.validator.abstract
-
-  gallery.validation.validation_rules.gallery_exists_validation_rule:
-    class: ACP3\Modules\ACP3\Gallery\Validation\ValidationRules\GalleryExistsValidationRule
-    arguments:
-      - '@gallery.model.galleryrepository'
-    tags:
-      - { name: core.validation.validation_rule }

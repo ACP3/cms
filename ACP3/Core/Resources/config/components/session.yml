@@ -4,6 +4,8 @@ services:
     arguments:
       - '@core.session.storage'
 
+  Symfony\Component\HttpFoundation\Session\Session: '@core.session'
+
   core.session.storage:
     class: Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage
     arguments:

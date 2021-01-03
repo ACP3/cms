@@ -7,14 +7,14 @@
 
 namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
 
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 
 class AlreadyVotedValidationRule extends AbstractValidationRule
 {
     /**
-     * @var UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     protected $userModel;
     /**
@@ -22,11 +22,8 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
      */
     protected $voteRepository;
 
-    /**
-     * AlreadyVotedValidationRule constructor.
-     */
     public function __construct(
-        UserModel $userModel,
+        UserModelInterface $userModel,
         VoteRepository $voteRepository
     ) {
         $this->userModel = $userModel;

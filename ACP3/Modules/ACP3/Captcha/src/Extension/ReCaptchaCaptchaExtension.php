@@ -7,12 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Extension;
 
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
-use ACP3\Modules\ACP3\Users\Model\UserModel;
 use ReCaptcha\ReCaptcha;
 
 class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
@@ -28,7 +28,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
      */
     private $view;
     /**
-     * @var UserModel
+     * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
     /**
@@ -49,7 +49,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
         RequestInterface $request,
         SettingsInterface $settings,
         View $view,
-        UserModel $user
+        UserModelInterface $user
     ) {
         $this->translator = $translator;
         $this->view = $view;

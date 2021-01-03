@@ -41,3 +41,5 @@ services:
       - '@core.modules'
       - '@seo.cache'
       - '@core.config'
+
+  ACP3\Modules\ACP3\Seo\Core\SEO\MetaStatementsService: '@core.seo.meta_statements_service'

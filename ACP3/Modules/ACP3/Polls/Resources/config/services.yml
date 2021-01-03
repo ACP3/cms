@@ -8,3 +8,5 @@ services:
       - '@polls.model.voterepository'
       - '@core.http.request'
       - '@users.model.user_model'
+
+  ACP3\Modules\ACP3\Polls\Helpers: '@polls.helpers'

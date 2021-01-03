@@ -7,6 +7,8 @@ services:
       - '@core.http.request'
       - '@core.helpers.forms'
 
+  ACP3\Modules\ACP3\Users\Helpers\Forms: '@users.helpers.forms'
+
   users.helpers.send_password_change_email:
     class: ACP3\Modules\ACP3\Users\Helpers\SendPasswordChangeEmail
     arguments:

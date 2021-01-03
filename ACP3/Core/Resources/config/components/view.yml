@@ -4,6 +4,8 @@ services:
     arguments:
       - '@core.view.renderer.smarty'
 
+  ACP3\Core\View: '@core.view'
+
   core.view.renderer.smarty.smarty_configurator:
     class: ACP3\Core\View\Renderer\Smarty\SmartyConfigurator
     arguments:

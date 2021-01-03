@@ -5,6 +5,8 @@ services:
       - '@core.date.date_translator'
     configurator: ['@core.date.date_configurator', 'configure']
 
+  ACP3\Core\Date: '@core.date'
+
   core.date.date_configurator:
     class: ACP3\Core\Date\DateConfigurator
     arguments:

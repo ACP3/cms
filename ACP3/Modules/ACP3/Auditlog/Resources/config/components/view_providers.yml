@@ -1,16 +1,9 @@
 services:
-  auditlog.view_providers.data_grid:
-    class: ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@auditlog.models.repository.audit_log_data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
+  _defaults:
+    autowire: true
 
-  auditlog.view_providers.data_grid_by_table:
-    class: ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridByTableViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@auditlog.models.repository.audit_log_by_table_data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
+  ACP3\Modules\ACP3\Auditlog\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
+
+  auditlog.view_providers.data_grid: '@ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridViewProvider'
+  auditlog.view_providers.data_grid_by_table: '@ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridByTableViewProvider'

@@ -1,31 +1,11 @@
 services:
-  contact.view_providers.admin_settings:
-    class: ACP3\Modules\ACP3\Contact\ViewProviders\AdminSettingsViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.config'
+  _defaults:
+    autowire: true
 
-  contact.view_providers.contact_form:
-    class: ACP3\Modules\ACP3\Contact\ViewProviders\ContactFormViewProvider
-    arguments:
-      - '@core.helpers.formToken'
-      - '@core.http.request'
-      - '@core.config'
-      - '@users.model.user_model'
+  ACP3\Modules\ACP3\Contact\ViewProviders\:
+    resource: '../../../src/ViewProviders/'
 
-  contact.view_providers.contact_details:
-    class: ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider
-    arguments:
-      - '@core.http.request'
-      - '@core.config'
-      - '@core.breadcrumb'
-      - '@core.i18n.translator'
-
-  contact.view_provider.data_grid:
-    class: ACP3\Modules\ACP3\Contact\ViewProviders\DataGridViewProvider
-    arguments:
-      - '@core.data_grid.data_grid'
-      - '@contact.model.repository.data_grid_repository'
-      - '@core.helpers.results_per_page'
-      - '@core.i18n.translator'
+  contact.view_providers.admin_settings: '@ACP3\Modules\ACP3\Contact\ViewProviders\AdminSettingsViewProvider'
+  contact.view_providers.contact_form: '@ACP3\Modules\ACP3\Contact\ViewProviders\ContactFormViewProvider'
+  contact.view_providers.contact_details: '@ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider'
+  contact.view_provider.data_grid: '@ACP3\Modules\ACP3\Contact\ViewProviders\DataGridViewProvider'

@@ -5,6 +5,8 @@ services:
       - '@files.cache.core'
       - '@files.model.filesrepository'
 
+  ACP3\Modules\ACP3\Files\Cache: '@files.cache'
+
   files.cache.core:
     class: ACP3\Core\Cache
     arguments:

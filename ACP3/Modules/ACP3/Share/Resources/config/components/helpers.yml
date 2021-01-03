@@ -8,10 +8,14 @@ services:
       - '@share.helpers.social_services'
       - '@share.model.share_repository'
 
+  ACP3\Modules\ACP3\Share\Helpers\ShareFormFields: '@share.helpers.share_form_fields'
+
   share.helpers.social_services:
     class: ACP3\Modules\ACP3\Share\Helpers\SocialServices
     arguments:
       - '@core.config'
+
+  ACP3\Modules\ACP3\Share\Helpers\SocialServices: '@share.helpers.social_services'
 
   share.helpers.social_sharing_manager:
     class: ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager

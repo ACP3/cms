@@ -7,3 +7,4 @@ services:
 
   system.model.modulerepository: '@ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository'
   system.model.settingsrepository: '@ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository'
+  ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface: '@ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository'

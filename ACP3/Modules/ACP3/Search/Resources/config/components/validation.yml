@@ -1,5 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   search.validation.form_validation:
     class: ACP3\Modules\ACP3\Search\Validation\FormValidation
-    parent: core.validator.abstract
 
