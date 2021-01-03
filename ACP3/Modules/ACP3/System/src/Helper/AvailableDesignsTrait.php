@@ -15,6 +15,10 @@ trait AvailableDesignsTrait
     {
         $designs = [];
         foreach ($this->getDesignPaths() as $file) {
+            if (\strpos($file, 'acp3-installer') !== false) {
+                continue;
+            }
+
             $designInfo = $this->getXml()->parseXmlFile($file, '/design');
             if (!empty($designInfo)) {
                 $directory = $this->getDesignDirectory($file);
@@ -50,9 +54,7 @@ trait AvailableDesignsTrait
     }
 
     /**
-     * @param string $directory
-     *
      * @return string
      */
-    abstract protected function selectEntry($directory);
+    abstract protected function selectEntry(string $directory);
 }
