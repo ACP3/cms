@@ -11,6 +11,7 @@ services:
 
   ACP3\Modules\ACP3\Guestbook\Validation\:
     resource: '../../../src/Validation/'
+    exclude: '../../../src/Validation/ValidationRules/'
 
   guestbook.validation.form_validation: '@ACP3\Modules\ACP3\Guestbook\Validation\FormValidation'
   guestbook.validation.admin_form_validation: '@ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation'

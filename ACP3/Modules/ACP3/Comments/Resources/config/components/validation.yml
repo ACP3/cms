@@ -11,6 +11,7 @@ services:
 
   ACP3\Modules\ACP3\Comments\Validation\:
     resource: '../../../src/Validation/'
+    exclude: '../../../src/Validation/ValidationRules/'
 
   comments.validation.form_validation: '@ACP3\Modules\ACP3\Comments\Validation\FormValidation'
   comments.validation.admin_form_validation: '@ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation'

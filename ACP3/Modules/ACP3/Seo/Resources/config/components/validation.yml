@@ -9,6 +9,7 @@ services:
 
   ACP3\Modules\ACP3\Seo\Validation\:
     resource: '../../../src/Validation/'
+    exclude: '../../../src/Validation/ValidationRules/'
 
   seo.validation.admin_form_validation: '@ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation'
   seo.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation'

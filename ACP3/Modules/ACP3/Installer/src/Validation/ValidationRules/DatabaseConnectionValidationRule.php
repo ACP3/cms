@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Installer\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 
 class DatabaseConnectionValidationRule extends AbstractValidationRule
 {
@@ -23,7 +25,7 @@ class DatabaseConnectionValidationRule extends AbstractValidationRule
             $dbName = \next($field);
 
             try {
-                $config = new \Doctrine\DBAL\Configuration();
+                $config = new Configuration();
 
                 $connectionParams = [
                     'dbname' => $data[$dbName],
@@ -33,7 +35,7 @@ class DatabaseConnectionValidationRule extends AbstractValidationRule
                     'driver' => 'pdo_mysql',
                     'charset' => 'utf8',
                 ];
-                $db = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+                $db = DriverManager::getConnection($connectionParams, $config);
                 $db->query('USE `' . $data[$dbName] . '`');
 
                 return true;

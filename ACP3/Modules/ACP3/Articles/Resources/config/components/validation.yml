@@ -9,5 +9,6 @@ services:
 
   ACP3\Modules\ACP3\Articles\Validation\:
     resource: '../../../src/Validation/'
+    exclude: '../../../src/Validation/ValidationRules/'
 
   articles.validation.admin_form_validation: '@ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation'

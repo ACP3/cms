@@ -9,6 +9,7 @@ services:
 
   ACP3\Modules\ACP3\Newsletter\Validation\:
     resource: '../../../src/Validation/'
+    exclude: '../../../src/Validation/ValidationRules/'
 
   newsletter.validation.admin_form_validation: '@ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation'
   newsletter.validation.activate_account_form_validation: '@ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation'

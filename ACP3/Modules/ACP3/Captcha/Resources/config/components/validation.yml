@@ -7,8 +7,8 @@ services:
     tags:
       - { name: core.validation.validation_rule }
 
-
   ACP3\Modules\ACP3\Captcha\Validation\:
     resource: '../../../src/Validation/'
+    exclude: '../../../src/Validation/ValidationRules/'
 
   cpatcha.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation'

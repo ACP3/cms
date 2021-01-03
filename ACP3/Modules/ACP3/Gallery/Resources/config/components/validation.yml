@@ -9,6 +9,7 @@ services:
 
   ACP3\Modules\ACP3\Gallery\Validation\:
     resource: '../../../src/Validation/'
+    exclude: '../../../src/Validation/ValidationRules/'
 
   gallery.validation.gallery_form_validation: '@ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation'
   gallery.validation.picture_form_validation: '@ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation'

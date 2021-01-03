@@ -9,6 +9,7 @@ services:
 
   ACP3\Modules\ACP3\Users\Validation\:
     resource: '../../../src/Validation/'
+    exclude: '../../../src/Validation/ValidationRules/'
 
   users.validation.account_form_validation: '@ACP3\Modules\ACP3\Users\Validation\AccountFormValidation'
   users.validation.account_forgot_password_form_validation: '@ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation'
