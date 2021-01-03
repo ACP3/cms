@@ -37,8 +37,7 @@ class OnDisplayCaptchaListener
                 $this->captchaExtension->getCaptcha(
                     $arguments['length'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
                     $arguments['input_id'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
-                    $arguments['input_only'] ?? false,
-                    $arguments['path'] ?? ''
+                    $arguments['input_only'] ?? false
                 )
             );
         }

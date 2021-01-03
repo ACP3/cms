@@ -9,7 +9,7 @@
 
 {block FORM_GROUP_LABEL_ID}for="{$captcha.id}"{/block}
 {block FORM_GROUP_FORM_FIELD}
-    <img src="{uri args="captcha/index/image/path_`$captcha.path`"}"
+    <img src="{load_module module="frontend/captcha/index/image/" args=["token" => $captcha.token]}"
          width="{$captcha.width}"
          height="{$captcha.height}"
          class="captcha-image"
@@ -20,4 +20,7 @@
            id="{$captcha.id}"
            value=""
            required>
+    <input type="hidden"
+           name="captcha_token"
+           value="{$captcha.token}">
 {/block}

@@ -20,8 +20,7 @@ interface CaptchaExtensionInterface
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        bool $inputOnly = false,
-        string $path = ''
+        bool $inputOnly = false
     ): string;
 
     /**

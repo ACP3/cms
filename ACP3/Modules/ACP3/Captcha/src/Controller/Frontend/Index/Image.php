@@ -30,18 +30,17 @@ class Image extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Exception
      */
-    public function execute(string $path): Response
+    public function execute(string $token): Response
     {
         $response = new Response();
-        $response->headers->set('Content-type', 'image/gif');
+        $response->headers->set('Content-type', 'text/plain');
         $response->headers->addCacheControlDirective('no-cache', true);
         $response->headers->addCacheControlDirective('must-revalidate', true);
         $response->headers->add(['Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT']);
 
-        if ($this->sessionHandler->has('captcha_' . $path)) {
-            $response->setContent($this->generateCaptcha($this->sessionHandler->get('captcha_' . $path)));
+        if ($this->sessionHandler->has('captcha_' . $token)) {
+            $response->setContent($this->generateCaptcha($this->sessionHandler->get('captcha_' . $token)));
         } else {
-            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
             $response->setContent($this->generateCaptcha('invalid captcha!', true));
         }
 
@@ -76,6 +75,6 @@ class Image extends Core\Controller\AbstractWidgetAction
         \imagegif($image);
         \imagedestroy($image);
 
-        return \ob_get_clean();
+        return 'data:image/gif;base64,' . \base64_encode(\ob_get_clean());
     }
 }

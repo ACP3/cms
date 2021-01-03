@@ -78,20 +78,19 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        bool $inputOnly = false,
-        string $path = ''
+        bool $inputOnly = false
     ): string {
         if (!$this->user->isAuthenticated() && $this->hasCaptchaAccess()) {
-            $path = \sha1($this->router->route(empty($path) === true ? $this->request->getQuery() : $path));
+            $token = \sha1(\mt_rand());
 
-            $this->sessionHandler->set('captcha_' . $path, $this->secureHelper->salt($captchaLength));
+            $this->sessionHandler->set('captcha_' . $token, $this->secureHelper->salt($captchaLength));
 
             $this->view->assign('captcha', [
                 'width' => $captchaLength * 25,
                 'id' => $formFieldId,
                 'height' => 30,
                 'input_only' => $inputOnly,
-                'path' => $path,
+                'token' => $token,
             ]);
 
             return $this->view->fetchTemplate('Captcha/Partials/captcha_native.tpl');
@@ -100,10 +99,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         return '';
     }
 
-    /**
-     * @return bool
-     */
-    private function hasCaptchaAccess()
+    private function hasCaptchaAccess(): bool
     {
         return $this->acl->hasPermission('frontend/captcha/index/image') === true;
     }
@@ -122,8 +118,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         }
 
         $value = $formData[$formFieldName];
-        $routePath = empty($extra['path']) === true ? $this->request->getQuery() : $extra['path'];
-        $indexName = 'captcha_' . \sha1($this->router->route($routePath));
+        $indexName = 'captcha_' . $formData['captcha_token'];
 
         return \preg_match('/^[a-zA-Z0-9]+$/', $value)
             && \strtolower($value) === \strtolower($this->sessionHandler->get($indexName, ''));

@@ -72,8 +72,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        bool $inputOnly = false,
-        string $path = ''
+        bool $inputOnly = false
     ): string {
         if (!$this->user->isAuthenticated()) {
             $settings = $this->settings->getSettings(Schema::MODULE_NAME);
