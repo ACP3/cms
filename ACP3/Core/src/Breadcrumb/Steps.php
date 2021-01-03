@@ -46,9 +46,6 @@ class Steps
      */
     protected $breadcrumbCache = [];
 
-    /**
-     * Breadcrumb constructor.
-     */
     public function __construct(
         ContainerInterface $container,
         Translator $translator,

@@ -54,11 +54,6 @@ class Title
      */
     private $siteSubtitle;
 
-    /**
-     * Title constructor.
-     *
-     * @param \ACP3\Core\Breadcrumb\Steps $steps
-     */
     public function __construct(Steps $steps, EventDispatcherInterface $eventDispatcher)
     {
         $this->steps = $steps;

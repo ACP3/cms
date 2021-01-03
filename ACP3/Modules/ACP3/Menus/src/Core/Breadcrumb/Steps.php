@@ -25,13 +25,6 @@ class Steps extends Core\Breadcrumb\Steps
      */
     protected $stepsFromDb = [];
 
-    /**
-     * Breadcrumb constructor.
-     *
-     * @param \ACP3\Core\I18n\Translator                                   $translator
-     * @param \ACP3\Core\Router\RouterInterface                            $router
-     * @param \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository $menuItemRepository
-     */
     public function __construct(
         ContainerInterface $container,
         Core\I18n\Translator $translator,

@@ -4,6 +4,8 @@ services:
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb\Steps
+    arguments:
+      $container: '@core.controller.controller_action_locator'
 
   ACP3\Core\Breadcrumb\Steps: '@core.breadcrumb'
 

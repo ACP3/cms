@@ -2,43 +2,33 @@ parameters:
   cache_driver: 'Array'
 
 services:
+  _defaults:
+    autowire: true
+    bind:
+      $assetRendererStrategyServiceLocator: '@core.assets.renderer.strategy.service_locator'
+
   core.application.event.add_template_variables_listener:
     class: ACP3\Modules\ACP3\Installer\Event\Listener\AddTemplateVariablesListener
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.environment.theme'
-      - '@core.i18n.translator'
-      - '@core.view'
-      - '@core.http.request'
     tags:
       - { name: core.eventSubscriber }
 
   core.assets.renderer.css_renderer_factory:
     class: ACP3\Core\Assets\Renderer\CSSRendererFactory
     arguments:
-      - '@core.assets.renderer.strategy.service_locator'
-      - 'dev'
+      $applicationMode: 'dev'
 
   core.assets.renderer.javascript_renderer_factory:
     class: ACP3\Core\Assets\Renderer\JavaScriptRendererFactory
     arguments:
-      - '@core.assets.renderer.strategy.service_locator'
-      - 'dev'
+      $applicationMode: 'dev'
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb\Steps
     arguments:
-      - '@core.controller.controller_action_locator'
-      - '@core.i18n.translator'
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.event_dispatcher'
+      $container: '@core.controller.controller_action_locator'
 
   core.breadcrumb.title:
     class: ACP3\Core\Breadcrumb\Title
-    arguments:
-      - '@core.breadcrumb'
-      - '@core.event_dispatcher'
 
   core.controller.decorating_forward_controller_action_exception_error_listener:
     class: ACP3\Modules\ACP3\Installer\Core\Controller\EventListener\DecoratingForwardControllerActionExceptionErrorListener
@@ -56,14 +46,9 @@ services:
 
   core.request_factory:
     class: ACP3\Modules\ACP3\Installer\Core\Http\RequestFactory
-    arguments:
-      - '@request_stack'
-      - '@core.config'
 
   core.modules.moduleInfoCache:
     class: ACP3\Modules\ACP3\Installer\Core\Modules\ModuleInfoCache
-    arguments:
-      - '@core.xml'
 
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler
@@ -77,15 +62,11 @@ services:
 
   smarty.resource.asset:
     class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
-    arguments:
-      - '@core.assets.file_resolver'
     tags:
       - { name: smarty.plugin.resource, pluginName: asset }
 
   smarty.filter.move_to_bottom:
     class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom
-    arguments:
-      - '@core.assets.renderer.javascript_renderer'
     tags:
       - { name: smarty.plugin.filter, filterType: output }
 
@@ -107,6 +88,3 @@ services:
 
   users.model.user_model:
     class: ACP3\Modules\ACP3\Users\Model\UserModel
-    arguments:
-      - '@core.i18n.country_list'
-      - '@users.model.userrepository'
