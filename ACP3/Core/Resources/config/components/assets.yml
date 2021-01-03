@@ -1,20 +1,21 @@
 services:
+  _defaults:
+    autowire: true
+    bind:
+      $assetRendererStrategyServiceLocator: '@core.assets.renderer.strategy.service_locator'
+      $applicationMode: '%core.environment%'
+      $logger: '@core.assets.logger'
+      $systemCache: '@core.cache.system'
+
   core.assets.event_listener.static_assets_listener:
     class: ACP3\Core\Assets\EventListener\StaticAssetsListener
-    arguments:
-      - '@core.assets.renderer.css_renderer'
-      - '@core.assets.renderer.javascript_renderer'
-      - '@request_stack'
-      - '@core.assets.libraries'
-      - '@core.assets.libraries_cache'
     tags:
       - { name: core.eventSubscriber }
 
   core.assets:
     class: ACP3\Core\Assets
-    arguments:
-      - '@core.environment.theme'
-      - '@core.assets.libraries'
+
+  ACP3\Core\Assets: '@core.assets'
 
   core.assets.cache:
     class: ACP3\Core\Assets\Cache
@@ -39,84 +40,65 @@ services:
       - '@core.modules'
       - '@core.assets.file_resolver'
     abstract: true
+    deprecated:
+      message: 'Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead.'
 
   core.assets.renderer.strategy.css:
     class: ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy
-    arguments:
-      - '@core.assets'
-      - '@core.assets.libraries'
-      - '@core.modules'
-      - '@core.assets.file_resolver'
 
   core.assets.renderer.strategy.deferrable_css:
     class: ACP3\Core\Assets\Renderer\Strategies\DeferrableCSSRendererStrategy
-    arguments:
-      - '@core.assets'
-      - '@core.assets.libraries'
-      - '@core.assets.file_resolver'
 
   core.assets.renderer.strategy.javascript:
     class: ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy
-    arguments:
-      - '@core.assets'
-      - '@core.assets.file_resolver'
-      - '@core.assets.libraries'
 
   core.assets.renderer.strategy.concat_css:
     class: ACP3\Core\Assets\Renderer\Strategies\ConcatCSSRendererStrategy
-    parent: core.assets.abstract_minifier
 
   core.assets.renderer.strategy.concat_deferrable_css:
     class: ACP3\Core\Assets\Renderer\Strategies\ConcatDeferrableCSSRendererStrategy
-    parent: core.assets.abstract_minifier
 
   core.assets.renderer.strategy.concat_javascript:
     class: ACP3\Core\Assets\Renderer\Strategies\ConcatJavaScriptRendererStrategy
-    parent: core.assets.abstract_minifier
 
   core.assets.file_resolver:
     class: ACP3\Core\Assets\FileResolver
     arguments:
-      - '@core.assets.cache'
-      - '@core.environment.application_path'
-      - '@core.environment.theme'
+      $resourcesCache: '@core.assets.cache'
+
+  ACP3\Core\Assets\FileResolver: '@core.assets.file_resolver'
 
   core.assets.include_js:
     class: ACP3\Core\Assets\IncludeJs
-    arguments:
-      - '@core.assets.libraries'
-      - '@core.assets.file_resolver'
+
+  ACP3\Core\Assets\IncludeJs: '@core.assets.include_js'
 
   core.assets.include_stylesheet:
     class: ACP3\Core\Assets\IncludeStylesheet
-    arguments:
-      - '@core.assets.libraries'
-      - '@core.assets.file_resolver'
+
+  ACP3\Core\Assets\IncludeStylesheet: '@core.assets.include_stylesheet'
 
   core.assets.libraries:
     class: ACP3\Core\Assets\Libraries
-    arguments:
-      - '@request_stack'
-      - '@core.event_dispatcher'
-      - '@core.assets.libraries_cache'
+
+  ACP3\Core\Assets\Libraries: '@core.assets.libraries'
 
   core.assets.cache_namespace_libraries:
     class: ACP3\Core\Cache
     arguments:
-      - '@core.cache.cache_driver_factory'
-      - 'libraries'
+      $namespace: 'libraries'
 
   core.assets.libraries_cache:
     class: ACP3\Core\Assets\LibrariesCache
     arguments:
       - '@core.assets.cache_namespace_libraries'
 
+  ACP3\Core\Assets\LibrariesCache: '@core.assets.libraries_cache'
+
   core.assets.page_css_classes:
     class: ACP3\Core\Assets\PageCssClasses
-    arguments:
-      - '@core.helpers.string_formatter'
-      - '@core.breadcrumb.title'
-      - '@core.http.request'
+
+  ACP3\Core\Assets\PageCssClasses: '@core.assets.page_css_classes'
 
   core.assets.renderer.strategy.service_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
@@ -133,18 +115,16 @@ services:
     class: ACP3\Core\Assets\Renderer\CSSRenderer
     factory: ['@core.assets.renderer.css_renderer_factory', 'create']
 
+  ACP3\Core\Assets\Renderer\CSSRenderer: '@core.assets.renderer.css_renderer'
+
   core.assets.renderer.css_renderer_factory:
     class: ACP3\Core\Assets\Renderer\CSSRendererFactory
-    arguments:
-      - '@core.assets.renderer.strategy.service_locator'
-      - '%core.environment%'
 
   core.assets.renderer.javascript_renderer:
     class: ACP3\Core\Assets\Renderer\JavaScriptRenderer
     factory: ['@core.assets.renderer.javascript_renderer_factory', 'create']
 
+  ACP3\Core\Assets\Renderer\JavaScriptRenderer: '@core.assets.renderer.javascript_renderer'
+
   core.assets.renderer.javascript_renderer_factory:
     class: ACP3\Core\Assets\Renderer\JavaScriptRendererFactory
-    arguments:
-      - '@core.assets.renderer.strategy.service_locator'
-      - '%core.environment%'

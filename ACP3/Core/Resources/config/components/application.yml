@@ -2,17 +2,22 @@ parameters:
   fragment_path: '/_fragment'
 
 services:
+  _defaults:
+    autowire: true
+
   core.application.controller_action_dispatcher:
     class: ACP3\Core\Application\ControllerActionDispatcher
     public: true
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.http.request'
-      - '@core.controller.controller_action_locator'
-      - '@core.application.argument_resolver'
+      $serviceLocator: '@core.controller.controller_action_locator'
+
+  ACP3\Core\Application\ControllerActionDispatcher: '@core.application.controller_action_dispatcher'
 
   core.application.argument_resolver:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
+
+  Symfony\Component\HttpKernel\Controller\ArgumentResolver: '@core.application.argument_resolver'
+  Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface: '@core.application.argument_resolver'
 
   kernel:
     synthetic: true
@@ -21,18 +26,17 @@ services:
   esi:
     class: Symfony\Component\HttpKernel\HttpCache\Esi
 
+  Symfony\Component\HttpKernel\HttpCache\SurrogateInterface: '@esi'
+
   esi_listener:
     class: Symfony\Component\HttpKernel\EventListener\SurrogateListener
-    arguments:
-      - '@esi'
     tags:
       - { name: core.eventSubscriber }
 
   fragment_listener:
     class: Symfony\Component\HttpKernel\EventListener\FragmentListener
     arguments:
-      - '@uri_signer'
-      - '%fragment_path%'
+      $fragmentPath: '%fragment_path%'
     tags:
       - { name: core.eventSubscriber }
 
@@ -47,11 +51,13 @@ services:
       - '@service_container'
       - '@request_stack'
 
+  Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler: '@fragment.handler'
+  Symfony\Component\HttpKernel\Fragment\FragmentHandler: '@fragment.handler'
+
   fragment.renderer.inline:
     class: Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer
     arguments:
-      - '@kernel'
-      - '@core.event_dispatcher'
+      $kernel: '@kernel'
     calls:
       - setFragmentPath: ['%fragment_path%']
     tags:
@@ -60,8 +66,7 @@ services:
   fragment.renderer.esi:
     class: Symfony\Component\HttpKernel\Fragment\EsiFragmentRenderer
     arguments:
-      - '@esi'
-      - '@fragment.renderer.inline'
+      $inlineStrategy: '@fragment.renderer.inline'
     calls:
       - setFragmentPath: ['%fragment_path%']
     tags:
@@ -72,10 +77,10 @@ services:
     arguments:
       - ''
 
+  Symfony\Component\HttpKernel\UriSigner: '@uri_signer'
+
   http_cache_store_factory:
     class: ACP3\Core\Application\BootstrapCache\Psr6StoreFactory
-    arguments:
-      - '@core.environment.application_path'
 
   http_cache_store:
     class: Toflar\Psr6HttpCacheStore\Psr6Store
@@ -84,11 +89,9 @@ services:
   http_cache_factory:
     class: ACP3\Core\Application\HttpCacheFactory
     arguments:
-      - '@core.event_dispatcher'
-      - '@kernel'
-      - '@http_cache_store'
-      - '@esi'
-      - '%core.environment%'
+      $httpKernel: '@kernel'
+      $store: '@http_cache_store'
+      $applicationMode: '%core.environment%'
 
   http_cache:
     class: ACP3\Core\Application\BootstrapCache

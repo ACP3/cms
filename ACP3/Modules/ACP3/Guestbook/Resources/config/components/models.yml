@@ -1,7 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+
   guestbook.model.guestbook_model:
     class: ACP3\Modules\ACP3\Guestbook\Model\GuestbookModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@guestbook.model.guestbookrepository'
+      $repository: '@guestbook.model.guestbookrepository'

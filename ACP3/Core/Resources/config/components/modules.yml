@@ -1,8 +1,9 @@
 services:
+  _defaults:
+    autowire: true
+
   core.modules:
     class: ACP3\Core\Modules
-    arguments:
-      - '@core.modules.moduleInfoCache'
     public: true
 
   ACP3\Core\Modules: '@core.modules'
@@ -11,21 +12,16 @@ services:
     class: ACP3\Core\Modules\AclInstaller
     public: true
     arguments:
-      - '@core.cache.system'
-      - '@core.modules.schemaHelper'
-      - '@permissions.model.rolerepository'
-      - '@permissions.model.rulerepository'
-      - '@permissions.model.resourcerepository'
-      - '@permissions.model.privilegerepository'
+      $aclCache: '@core.cache.system'
+      $ruleRepository: '@permissions.model.rulerepository'
+      $resourceRepository: '@permissions.model.resourcerepository'
 
   ACP3\Core\Modules\AclInstaller: '@core.modules.aclInstaller'
 
   core.modules.moduleInfoCache:
     class: ACP3\Core\Modules\ModuleInfoCache
     arguments:
-      - '@core.cache.system'
-      - '@core.xml'
-      - '@system.model.modulerepository'
+      $cache: '@core.cache.system'
 
   ACP3\Core\Modules\ModuleInfoCache: '@core.modules.moduleInfoCache'
   ACP3\Core\Modules\ModuleInfoCacheInterface: '@core.modules.moduleInfoCache'
@@ -33,11 +29,10 @@ services:
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper
     public: true
-    arguments:
-      - '@core.db'
-      - '@system.model.modulerepository'
     calls:
       - ['setContainer', ['@service_container']]
+
+  ACP3\Core\Modules\SchemaHelper: '@core.modules.schemaHelper'
 
   core.modules.installer_logger:
     class: Psr\Log\LoggerInterface
@@ -59,10 +54,7 @@ services:
     class: ACP3\Core\Modules\SchemaInstaller
     public: true
     arguments:
-      - '@core.modules.installer_logger'
-      - '@core.db'
-      - '@system.model.modulerepository'
-      - '@system.model.settingsrepository'
+      $logger: '@core.modules.installer_logger'
     calls:
       - ['setContainer', ['@service_container']]
 
@@ -71,6 +63,5 @@ services:
   core.modules.schemaUpdater:
     class: ACP3\Core\Modules\SchemaUpdater
     public: true
-    arguments:
-      - '@core.modules.schemaHelper'
-      - '@system.model.modulerepository'
+
+  ACP3\Core\Modules\SchemaUpdater: '@core.modules.schemaUpdater'

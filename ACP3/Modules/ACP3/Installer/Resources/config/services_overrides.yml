@@ -73,6 +73,8 @@ services:
     arguments:
       - '%core.environment%'
 
+  ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface: '@system.model.settingsrepository'
+
   smarty.resource.asset:
     class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
     arguments:

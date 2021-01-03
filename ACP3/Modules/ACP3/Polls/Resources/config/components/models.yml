@@ -1,17 +1,15 @@
 services:
+  _defaults:
+    autowire: true
+
   polls.model.polls_model:
     class: ACP3\Modules\ACP3\Polls\Model\PollsModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@core.helpers.secure'
-      - '@polls.model.pollrepository'
-      - '@polls.model.answerrepository'
-      - '@polls.model.voterepository'
+      $pollRepository: '@polls.model.pollrepository'
+      $answerRepository: '@polls.model.answerrepository'
+      $voteRepository: '@polls.model.voterepository'
 
   polls.model.vote_model:
     class: ACP3\Modules\ACP3\Polls\Model\VoteModel
     arguments:
-      - '@core.validator'
-      - '@users.model.user_model'
-      - '@polls.model.voterepository'
+      $voteRepository: '@polls.model.voterepository'

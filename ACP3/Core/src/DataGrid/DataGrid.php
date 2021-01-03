@@ -14,7 +14,7 @@ use ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
-use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGrid
@@ -38,13 +38,10 @@ class DataGrid
     /**
      * @var \Psr\Container\ContainerInterface
      */
-    private $container;
+    private $serviceLocator;
 
-    /**
-     * @param \ACP3\Core\DataGrid\ConfigProcessor $configProcessor
-     */
     public function __construct(
-        ContainerInterface $container,
+        ServiceLocator $serviceLocator,
         RequestInterface $request,
         ConfigProcessor $configProcessor,
         ACL $acl,
@@ -54,7 +51,7 @@ class DataGrid
         $this->translator = $translator;
         $this->configProcessor = $configProcessor;
         $this->request = $request;
-        $this->container = $container;
+        $this->serviceLocator = $serviceLocator;
     }
 
     /**
@@ -110,9 +107,9 @@ class DataGrid
         foreach ($input->getResults() as $result) {
             $row = [];
             foreach (clone $input->getColumns() as $column) {
-                if ($this->container->has($column['type']) && !empty($column['label'])) {
+                if ($this->serviceLocator->has($column['type']) && !empty($column['label'])) {
                     /** @var ColumnRendererInterface $columnRenderer */
-                    $columnRenderer = $this->container->get($column['type']);
+                    $columnRenderer = $this->serviceLocator->get($column['type']);
 
                     $row[] = $columnRenderer
                         ->setIdentifier($input->getIdentifier())
@@ -139,7 +136,7 @@ class DataGrid
         $header = '';
         foreach (clone $input->getColumns() as $column) {
             if (!empty($column['label'])) {
-                $header .= $this->container->get(HeaderColumnRenderer::class)
+                $header .= $this->serviceLocator->get(HeaderColumnRenderer::class)
                     ->setIdentifier($input->getIdentifier())
                     ->setPrimaryKey($input->getPrimaryKey())
                     ->fetchDataAndRenderColumn($column, []);
@@ -165,9 +162,9 @@ class DataGrid
         foreach ($input->getResults() as $result) {
             $renderedResults .= '<tr>';
             foreach (clone $input->getColumns() as $column) {
-                if ($this->container->has($column['type']) && !empty($column['label'])) {
+                if ($this->serviceLocator->has($column['type']) && !empty($column['label'])) {
                     /** @var ColumnRendererInterface $columnRenderer */
-                    $columnRenderer = $this->container->get($column['type']);
+                    $columnRenderer = $this->serviceLocator->get($column['type']);
 
                     $renderedResults .= $columnRenderer
                         ->setIdentifier($input->getIdentifier())

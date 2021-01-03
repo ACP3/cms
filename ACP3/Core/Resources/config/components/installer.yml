@@ -1,11 +1,18 @@
 services:
+  _defaults:
+    autowire: true
+
   core.installer.migration_registrar:
     class: ACP3\Core\Installer\MigrationRegistrar
     public: true
 
+  ACP3\Core\Installer\MigrationRegistrar: '@core.installer.migration_registrar'
+
   core.installer.sample_data_registrar:
     class: ACP3\Core\Installer\SampleDataRegistrar
     public: true
+
+  ACP3\Core\Installer\SampleDataRegistrar: '@core.installer.sample_data_registrar'
 
   core.installer.schema_registrar:
     class: ACP3\Core\Installer\SchemaRegistrar
@@ -16,9 +23,6 @@ services:
   core.installer.model.schema_update_model:
     class: ACP3\Core\Installer\Model\SchemaUpdateModel
     arguments:
-      - '@core.modules.installer_logger'
-      - '@core.installer.schema_registrar'
-      - '@core.installer.migration_registrar'
-      - '@core.modules'
-      - '@core.modules.schemaUpdater'
-      - '@core.xml'
+      $logger: '@core.modules.installer_logger'
+
+  ACP3\Core\Installer\Model\SchemaUpdateModel: '@core.installer.model.schema_update_model'

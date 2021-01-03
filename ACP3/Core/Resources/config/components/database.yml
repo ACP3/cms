@@ -1,13 +1,15 @@
 services:
+  _defaults:
+    autowire: true
+
   core.db:
     class: ACP3\Core\Database\Connection
     public: true
     arguments:
-      - '@core.db.logger'
-      - '@core.cache.cache_driver_factory'
-      - '%core.environment%'
-      - { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%' }
-      - '%db_table_prefix%'
+      $logger: '@core.db.logger'
+      $appMode: '%core.environment%'
+      $connectionParams: { dbname: '%db_name%', user: '%db_user%', password: '%db_password%', host: '%db_host%', driver: '%db_driver%', charset: '%db_charset%' }
+      $tablePrefix: '%db_table_prefix%'
 
   ACP3\Core\Database\Connection: '@core.db'
 

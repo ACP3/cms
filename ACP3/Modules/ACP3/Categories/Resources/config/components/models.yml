@@ -1,11 +1,12 @@
 services:
+  _defaults:
+    autowire: true
+
   categories.model.categories_model:
     class: ACP3\Modules\ACP3\Categories\Model\CategoriesModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@categories.model.categories_repository'
-      - '@categories.nested_set.operation.insert'
-      - '@categories.nested_set.operation.edit'
-      - '@categories.nested_set.operation.delete'
-      - '@categories.nested_set.operation.sort'
+      $repository: '@categories.model.categories_repository'
+      $insertOperation: '@categories.nested_set.operation.insert'
+      $editOperation: '@categories.nested_set.operation.edit'
+      $deleteOperation: '@categories.nested_set.operation.delete'
+      $sortOperation: '@categories.nested_set.operation.sort'

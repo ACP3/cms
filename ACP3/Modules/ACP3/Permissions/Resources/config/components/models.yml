@@ -1,26 +1,22 @@
 services:
+  _defaults:
+    autowire: true
+
   permissions.model.resources_model:
     class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@permissions.model.resourcerepository'
+      $repository: '@permissions.model.resourcerepository'
 
   permissions.model.roles_model:
     class: ACP3\Modules\ACP3\Permissions\Model\RolesModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@permissions.model.rolerepository'
-      - '@permissions.nested_set.operation.insert'
-      - '@permissions.nested_set.operation.edit'
-      - '@permissions.nested_set.operation.delete'
-      - '@permissions.nested_set.operation.sort'
+      $repository: '@permissions.model.rolerepository'
+      $insertOperation: '@permissions.nested_set.operation.insert'
+      $editOperation: '@permissions.nested_set.operation.edit'
+      $deleteOperation: '@permissions.nested_set.operation.delete'
+      $sortOperation: '@permissions.nested_set.operation.sort'
 
   permissions.model.rules_model:
     class: ACP3\Modules\ACP3\Permissions\Model\RulesModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@permissions.model.rulerepository'
-      - '@permissions.cache'
+      $repository: '@permissions.model.rulerepository'

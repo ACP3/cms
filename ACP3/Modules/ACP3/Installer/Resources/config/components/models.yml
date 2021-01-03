@@ -1,21 +1,18 @@
 services:
+  _defaults:
+    autowire: true
+
   installer.model.install_model:
     class: ACP3\Modules\ACP3\Installer\Model\InstallModel
     arguments:
-      - '@service_container'
-      - '@core.environment.application_path'
-      - '@core.helpers.secure'
-      - '@core.i18n.translator'
-      - '@installer.helpers.install'
-      - '@installer.helpers.module_installer'
+      $container: '@service_container'
 
   ACP3\Modules\ACP3\Installer\Model\InstallModel: '@installer.model.install_model'
 
   installer.model.schema_update_model:
     class: ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel
     arguments:
-      - '@core.environment.application_path'
-      - '@core.modules.installer_logger'
-      - '@service_container'
+      $logger: '@core.modules.installer_logger'
+      $container: '@service_container'
 
   ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel: '@installer.model.schema_update_model'

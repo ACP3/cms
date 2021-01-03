@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   smarty.plugin.add_protocol:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\PrefixUri
     tags:
@@ -6,21 +9,15 @@ services:
 
   smarty.plugin.content_decorator:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\ContentDecorator
-    arguments:
-      - '@core.content_decorator'
     tags:
       - { name: smarty.plugin.modifier, pluginName: decorate }
 
   smarty.plugin.nl2p:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\Nl2p
-    arguments:
-      - '@core.helpers.string_formatter'
     tags:
       - { name: smarty.plugin.modifier, pluginName: nl2p }
 
   smarty.plugin.rewrite_uri:
     class: ACP3\Core\View\Renderer\Smarty\Modifiers\RewriteUri
-    arguments:
-      - '@core.helpers.formatter.rewrite_internal_uri'
     tags:
       - { name: smarty.plugin.modifier, pluginName: rewrite_uri }

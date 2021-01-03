@@ -34,9 +34,6 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
      */
     protected $voteRepository;
 
-    /**
-     * PollsModel constructor.
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,

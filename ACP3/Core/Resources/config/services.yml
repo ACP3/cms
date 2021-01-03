@@ -31,3 +31,4 @@ services:
 
   Symfony\Component\EventDispatcher\EventDispatcher: '@core.event_dispatcher'
   Symfony\Component\EventDispatcher\EventDispatcherInterface: '@core.event_dispatcher'
+  Psr\EventDispatcher\EventDispatcherInterface: '@core.event_dispatcher'

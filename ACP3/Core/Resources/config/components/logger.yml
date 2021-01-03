@@ -1,8 +1,9 @@
 services:
+  _defaults:
+    autowire: true
+
   core.logger.logger_factory:
     class: ACP3\Core\Logger\LoggerFactory
-    arguments:
-      - '@core.environment.application_path'
 
   core.logger.system_logger:
     class: Psr\Log\LoggerInterface

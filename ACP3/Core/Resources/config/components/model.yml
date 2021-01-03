@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   core.model.column_type.boolean_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType
     tags:
@@ -6,15 +9,11 @@ services:
 
   core.model.column_type.date_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\DateColumnType
-    arguments:
-      - '@core.date'
     tags:
       - { name: core.model.column_type, columnType: 'date' }
 
   core.model.column_type.date_time_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType
-    arguments:
-      - '@core.date'
     tags:
       - { name: core.model.column_type, columnType: 'datetime' }
 
@@ -45,15 +44,11 @@ services:
 
   core.model.column_type.text_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType
-    arguments:
-      - '@core.helpers.secure'
     tags:
       - { name: core.model.column_type, columnType: 'text' }
 
   core.model.column_type.text_wysiwyg_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType
-    arguments:
-      - '@core.helpers.secure'
     tags:
       - { name: core.model.column_type, columnType: 'text_wysiwyg' }
 

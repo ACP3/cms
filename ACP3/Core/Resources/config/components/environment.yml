@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   core.environment.application_path:
     public: true
     synthetic: true
@@ -7,9 +10,6 @@ services:
 
   core.environment.theme:
     class: ACP3\Core\Environment\Theme
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.config'
-      - '@core.xml'
 
   ACP3\Core\Environment\Theme: '@core.environment.theme'
+  ACP3\Core\Environment\ThemePathInterface: '@core.environment.theme'

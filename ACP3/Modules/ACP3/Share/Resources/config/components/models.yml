@@ -1,14 +1,13 @@
 services:
+  _defaults:
+    autowire: true
+
   share.model.share_model:
     class: ACP3\Modules\ACP3\Share\Model\ShareModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@share.model.share_repository'
+      $repository: '@share.model.share_repository'
 
   share.model.share_rating_model:
     class: ACP3\Modules\ACP3\Share\Model\ShareRatingModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@share.model.share_ratings_repository'
+      $repository: '@share.model.share_ratings_repository'

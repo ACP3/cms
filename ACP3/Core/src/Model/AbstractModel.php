@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractModel
 {
-    const EVENT_PREFIX = '';
+    public const EVENT_PREFIX = '';
 
     /**
      * @var EventDispatcherInterface

@@ -1,42 +1,22 @@
 services:
-  core.application.event.add_esi_surrogate_header_listener:
-    class: ACP3\Core\Application\Event\Listener\AddEsiSurrogateHeaderListener
-    arguments:
-      - '@esi'
+  _defaults:
+    autowire: true
     tags:
       - { name: core.eventSubscriber }
+
+  core.application.event.add_esi_surrogate_header_listener:
+    class: ACP3\Core\Application\Event\Listener\AddEsiSurrogateHeaderListener
 
   core.application.event.add_template_variables_listener:
     class: ACP3\Core\Application\Event\Listener\AddTemplateVariablesListener
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.http.request'
-      - '@core.environment.theme'
-      - '@core.view'
-      - '@core.i18n.translator'
-    tags:
-      - { name: core.eventSubscriber }
 
   core.application.event.check_maintenance_mode_listener:
     class: ACP3\Core\Application\Event\Listener\CheckMaintenanceModeListener
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.config'
-      - '@core.breadcrumb.title'
-      - '@core.view'
-    tags:
-      - { name: core.eventSubscriber }
 
   core.application.event.check_permission_listener:
     class: ACP3\Core\Application\Event\Listener\CheckPermissionListener
-    arguments:
-      - '@core.acl'
-    tags:
-      - { name: core.eventSubscriber }
 
   core.application.event.on_output_page_listener:
     class: ACP3\Core\Application\Event\Listener\OnOutputPageExceptionListener
     arguments:
-      - '@core.logger.system_logger'
-    tags:
-      - { name: core.eventSubscriber }
+      $logger: '@core.logger.system_logger'

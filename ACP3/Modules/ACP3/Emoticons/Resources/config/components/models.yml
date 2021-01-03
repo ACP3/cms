@@ -1,7 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+
   emoticons.model:
     class: ACP3\Modules\ACP3\Emoticons\Model\EmoticonsModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@emoticons.model.emoticonrepository'
+      $repository: '@emoticons.model.emoticonrepository'

@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+    tags:
+      - { name: core.data_grid.column_renderer }
+
+  newsletter.data_grid.column_renderer.account_status_column_renderer:
+    class: ACP3\Modules\ACP3\Newsletter\DataGrid\ColumnRenderer\AccountStatusColumnRenderer

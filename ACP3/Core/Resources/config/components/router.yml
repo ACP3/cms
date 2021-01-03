@@ -1,9 +1,8 @@
 services:
+  _defaults:
+    autowire: true
+
   core.router:
     class: ACP3\Core\Router\Router
-    arguments:
-      - '@core.http.request'
-      - '@core.environment.application_path'
-      - '@core.config'
 
   ACP3\Core\Router\RouterInterface: '@core.router'

@@ -1,18 +1,17 @@
 services:
+  _defaults:
+    autowire: true
+
   menus.model.menus_model:
     class: ACP3\Modules\ACP3\Menus\Model\MenusModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@menus.model.menurepository'
+      $repository: '@menus.model.menurepository'
 
   menus.model.menu_items_model:
     class: ACP3\Modules\ACP3\Menus\Model\MenuItemsModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@menus.model.menuitemrepository'
-      - '@menus.nested_set.operation.insert'
-      - '@menus.nested_set.operation.edit'
-      - '@menus.nested_set.operation.delete'
-      - '@menus.nested_set.operation.sort'
+      $repository: '@menus.model.menuitemrepository'
+      $insertOperation: '@menus.nested_set.operation.insert'
+      $editOperation: '@menus.nested_set.operation.edit'
+      $deleteOperation: '@menus.nested_set.operation.delete'
+      $sortOperation: '@menus.nested_set.operation.sort'

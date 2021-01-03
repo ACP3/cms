@@ -31,3 +31,5 @@ services:
     abstract: true
     arguments:
       - '@core.context.install'
+
+  ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath: '@core.environment.application_path'

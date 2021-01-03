@@ -1,18 +1,16 @@
 services:
+  _defaults:
+    autowire: true
+
   core.data_grid.config_processor:
     class: ACP3\Core\DataGrid\ConfigProcessor
-    arguments:
-      - '@core.http.request'
-      - '@core.i18n.translator'
+
+  ACP3\Core\DataGrid\ConfigProcessor: '@core.data_grid.config_processor'
 
   core.data_grid.data_grid:
     class: ACP3\Core\DataGrid\DataGrid
     arguments:
-      - '@core.data_grid.column_renderer_locator'
-      - '@core.http.request'
-      - '@core.data_grid.config_processor'
-      - '@core.acl'
-      - '@core.i18n.translator'
+      $serviceLocator: '@core.data_grid.column_renderer_locator'
 
   ACP3\Core\DataGrid\DataGrid: '@core.data_grid.data_grid'
 
@@ -22,101 +20,28 @@ services:
       - []
     tags: ['container.service_locator']
 
-  core.data_grid.column_renderer.date_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\DateColumnRenderer
-    arguments:
-      - '@core.date'
-      - '@core.helpers.formatter.date_range'
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.header_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\HeaderColumnRenderer
-    arguments:
-      - '@core.helpers.formatter.mark_entries'
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.integer_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\IntegerColumnRenderer
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.mass_action_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.nested_set_sort_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\NestedSetSortColumnRenderer
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.router'
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.nl2p_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\Nl2pColumnRenderer
-    arguments:
-      - '@core.helpers.string_formatter'
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.option_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.data_grid.column_renderer.option_column_renderer.option_renderer'
-      - '@core.event_dispatcher'
-    tags:
-      - { name: core.data_grid.column_renderer }
-
   core.data_grid.column_renderer.option_column_renderer.option_renderer:
     class: ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
-    arguments:
-      - '@core.router'
 
-  core.data_grid.column_renderer.picture_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\PictureColumnRenderer
-    arguments:
-      - '@core.router'
+  ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer: '@core.data_grid.column_renderer.option_column_renderer.option_renderer'
+
+  ACP3\Core\DataGrid\ColumnRenderer\:
+    resource: '../../../src/DataGrid/ColumnRenderer/*'
+    exclude: '../../../src/DataGrid/ColumnRenderer/{Event,OptionColumnRenderer}'
     tags:
       - { name: core.data_grid.column_renderer }
 
-  core.data_grid.column_renderer.replace_value_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.round_number_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\RoundNumberColumnRenderer
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.route_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\RouteColumnRenderer
-    arguments:
-      - '@core.router'
-      - '@core.i18n.translator'
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.sort_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\SortColumnRenderer
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.router'
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.text_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\TextColumnRenderer
-    tags:
-      - { name: core.data_grid.column_renderer }
-
-  core.data_grid.column_renderer.translate_column_renderer:
-    class: ACP3\Core\DataGrid\ColumnRenderer\TranslateColumnRenderer
-    arguments:
-      - '@core.i18n.translator'
-    tags:
-      - { name: core.data_grid.column_renderer }
+  core.data_grid.column_renderer.date_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\DateColumnRenderer'
+  core.data_grid.column_renderer.header_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\HeaderColumnRenderer'
+  core.data_grid.column_renderer.integer_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\IntegerColumnRenderer'
+  core.data_grid.column_renderer.mass_action_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\MassActionColumnRenderer'
+  core.data_grid.column_renderer.nested_set_sort_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\NestedSetSortColumnRenderer'
+  core.data_grid.column_renderer.nl2p_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\Nl2pColumnRenderer'
+  core.data_grid.column_renderer.option_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer'
+  core.data_grid.column_renderer.picture_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\PictureColumnRenderer'
+  core.data_grid.column_renderer.replace_value_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\ReplaceValueColumnRenderer'
+  core.data_grid.column_renderer.round_number_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\RoundNumberColumnRenderer'
+  core.data_grid.column_renderer.route_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\RouteColumnRenderer'
+  core.data_grid.column_renderer.sort_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\SortColumnRenderer'
+  core.data_grid.column_renderer.text_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\TextColumnRenderer'
+  core.data_grid.column_renderer.translate_column_renderer: '@ACP3\Core\DataGrid\ColumnRenderer\TranslateColumnRenderer'

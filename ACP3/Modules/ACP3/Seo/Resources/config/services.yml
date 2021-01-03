@@ -2,16 +2,16 @@ imports:
   - { resource: components/*.yml }
 
 services:
+  _defaults:
+    autowire: true
+
   seo.core.router.aliases:
     class: ACP3\Modules\ACP3\Seo\Core\Router\Aliases
-    arguments:
-      - '@core.modules'
-      - '@seo.cache'
 
   seo.utility.sitemap_availability_registrar:
     class: ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar
-    arguments:
-      - '@core.modules'
+
+  ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar: '@seo.utility.sitemap_availability_registrar'
 
   seo.sitemap_logger:
     class: Psr\Log\LoggerInterface

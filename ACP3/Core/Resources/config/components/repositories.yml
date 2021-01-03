@@ -3,6 +3,8 @@ services:
     synthetic: true
     public: true
 
+  ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface: '@permissions.model.privilegerepository'
+
   permissions.model.resourcerepository:
     synthetic: true
     public: true
@@ -11,6 +13,8 @@ services:
     synthetic: true
     public: true
 
+  ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface: '@permissions.model.rolerepository'
+
   permissions.model.rulerepository:
     synthetic: true
     public: true
@@ -18,3 +22,5 @@ services:
   permissions.model.userrolerepository:
     synthetic: true
     public: true
+
+  ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface: '@permissions.model.userrolerepository'

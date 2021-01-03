@@ -1,15 +1,11 @@
 services:
+  _defaults:
+    autowire: true
+
   contact.model.contacts_model:
     class: ACP3\Modules\ACP3\Contact\Model\ContactsModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@contact.model.repository.contacts_repository'
+      $repository: '@contact.model.repository.contacts_repository'
 
   contact.model.contact_form_model:
     class: ACP3\Modules\ACP3\Contact\Model\ContactFormModel
-    arguments:
-      - '@core.config'
-      - '@core.i18n.translator'
-      - '@core.helpers.secure'
-      - '@core.helpers.sendEmail'

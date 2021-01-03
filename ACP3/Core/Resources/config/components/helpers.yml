@@ -1,49 +1,34 @@
 services:
+  _defaults:
+    autowire: true
+
   core.helpers.view.checkAccess:
     class: ACP3\Core\Helpers\View\CheckAccess
-    arguments:
-      - '@core.acl'
-      - '@core.i18n.translator'
-      - '@core.router'
+
+  ACP3\Core\Helpers\View\CheckAccess: '@core.helpers.view.checkAccess'
 
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts
-    arguments:
-      - '@core.http.request'
-      - '@core.view'
 
   ACP3\Core\Helpers\Alerts: '@core.helpers.alerts'
 
   core.helpers.date:
     class: ACP3\Core\Helpers\Date
-    arguments:
-      - '@core.date'
-      - '@core.i18n.translator'
-      - '@core.http.request'
-      - '@core.helpers.forms'
-      - '@core.validation.validation_rules.date_validation_rule'
 
   ACP3\Core\Helpers\Date: '@core.helpers.date'
 
   core.helpers.forms:
     class: ACP3\Core\Helpers\Forms
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.http.request'
 
   ACP3\Core\Helpers\Forms: '@core.helpers.forms'
 
   core.helpers.sendEmail:
     class: ACP3\Core\Helpers\SendEmail
-    arguments:
-      - '@core.mailer'
+
+  ACP3\Core\Helpers\SendEmail: '@core.helpers.sendEmail'
 
   core.helpers.redirect:
     class: ACP3\Core\Helpers\RedirectMessages
-    arguments:
-      - '@core.http.redirect_response'
-      - '@core.http.request'
-      - '@core.session'
 
   ACP3\Core\Helpers\RedirectMessages: '@core.helpers.redirect'
 
@@ -54,79 +39,53 @@ services:
 
   core.helpers.formToken:
     class: ACP3\Core\Helpers\FormToken
-    arguments:
-      - '@core.http.request'
-      - '@core.session'
 
   ACP3\Core\Helpers\FormToken: '@core.helpers.formToken'
 
   core.helpers.pageBreaks:
     class: ACP3\Core\Helpers\PageBreaks
-    arguments:
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.helpers.toc'
 
   ACP3\Core\Helpers\PageBreaks: '@core.helpers.pageBreaks'
 
   core.helpers.results_per_page:
     class: ACP3\Core\Helpers\ResultsPerPage
-    arguments:
-      - '@core.config'
 
   ACP3\Core\Helpers\ResultsPerPage: '@core.helpers.results_per_page'
 
   core.helpers.sort:
     class: ACP3\Core\Helpers\Sort
-    arguments:
-      - '@core.db'
+
+  ACP3\Core\Helpers\Sort: '@core.helpers.sort'
 
   core.helpers.toc:
     class: ACP3\Core\Helpers\TableOfContents
-    arguments:
-      - '@core.breadcrumb.title'
-      - '@core.i18n.translator'
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.validation.validation_rules.integer_validation_rule'
-      - '@core.view'
+
+  ACP3\Core\Helpers\TableOfContents: '@core.helpers.toc'
 
   core.helpers.string_formatter:
     class: ACP3\Core\Helpers\StringFormatter
     arguments:
-      - '@slugify'
+      $slugify: '@slugify'
 
   ACP3\Core\Helpers\StringFormatter: '@core.helpers.string_formatter'
 
   core.helpers.formatter.date_range:
     class: ACP3\Core\Helpers\Formatter\DateRange
-    arguments:
-      - '@core.date'
-      - '@core.i18n.translator'
+
+  ACP3\Core\Helpers\Formatter\DateRange: '@core.helpers.formatter.date_range'
 
   core.helpers.formatter.mark_entries:
     class: ACP3\Core\Helpers\Formatter\MarkEntries
-    arguments:
-      - '@core.i18n.translator'
+
+  ACP3\Core\Helpers\Formatter\MarkEntries: '@core.helpers.formatter.mark_entries'
 
   core.helpers.formatter.rewrite_internal_uri:
     class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
-    arguments:
-      - '@core.environment.application_path'
-      - '@core.controller.helper.controller_action_exists'
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.validation.validation_rules.internal_uri_validation_rule'
+
+  ACP3\Core\Helpers\Formatter\RewriteInternalUri: '@core.helpers.formatter.rewrite_internal_uri'
 
   core.modules.helper.action:
     class: ACP3\Core\Modules\Helper\Action
-    arguments:
-      - '@core.db'
-      - '@core.i18n.translator'
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.helpers.alerts'
-      - '@core.helpers.redirect'
 
   ACP3\Core\Modules\Helper\Action: '@core.modules.helper.action'
 

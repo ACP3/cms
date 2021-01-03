@@ -37,7 +37,7 @@ class ControllerActionDispatcher
     /**
      * @var \Psr\Container\ContainerInterface
      */
-    private $container;
+    private $serviceLocator;
     /**
      * @var ArgumentResolverInterface
      */
@@ -46,12 +46,12 @@ class ControllerActionDispatcher
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         RequestInterface $request,
-        ContainerInterface $container,
+        ContainerInterface $serviceLocator,
         ArgumentResolverInterface $argumentResolver
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->request = $request;
-        $this->container = $container;
+        $this->serviceLocator = $serviceLocator;
         $this->argumentResolver = $argumentResolver;
     }
 
@@ -82,7 +82,7 @@ class ControllerActionDispatcher
             $serviceId .= self::POST_SERVICE_ID_SUFFIX;
         }
 
-        if ($this->container->has($serviceId)) {
+        if ($this->serviceLocator->has($serviceId)) {
             $normalizedServiceId = $serviceId;
 
             $suffixLengthOffset = \strlen(self::POST_SERVICE_ID_SUFFIX) * -1;
@@ -96,7 +96,7 @@ class ControllerActionDispatcher
             );
 
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
-            $controller = $this->container->get($serviceId);
+            $controller = $this->serviceLocator->get($serviceId);
             $controller->preDispatch();
             $response = $controller->display($this->executeControllerAction($controller, $arguments));
 
@@ -136,7 +136,7 @@ class ControllerActionDispatcher
 
     private function shouldUsePostAction(?string $serviceId): bool
     {
-        return $this->container->has($serviceId . self::POST_SERVICE_ID_SUFFIX)
+        return $this->serviceLocator->has($serviceId . self::POST_SERVICE_ID_SUFFIX)
             && $this->request->getSymfonyRequest()->isMethod('POST')
             && ($this->request->getPost()->has('submit') || $this->request->getPost()->has('continue'));
     }

@@ -1,8 +1,6 @@
 services:
+  _defaults:
+    autowire: true
+
   newsletter.model:
     class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterModel
-    arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@core.config'
-      - '@newsletter.model.newsletterrepository'

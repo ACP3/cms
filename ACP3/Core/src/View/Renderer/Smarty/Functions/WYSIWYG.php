@@ -21,10 +21,6 @@ class WYSIWYG extends AbstractFunction
      */
     protected $config;
 
-    /**
-     * @param \ACP3\Core\WYSIWYG\WysiwygFactory     $wysiwygFactory
-     * @param \ACP3\Core\Settings\SettingsInterface $config
-     */
     public function __construct(
         Core\WYSIWYG\WysiwygFactory $wysiwygFactory,
         Core\Settings\SettingsInterface $config

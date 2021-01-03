@@ -2,45 +2,20 @@ imports:
   - { resource: components/*.yml }
 
 services:
+  _defaults:
+    autowire: true
+
   newsletter.helper.accountstatus:
     class: ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
-    arguments:
-      - '@core.date'
-      - '@newsletter.model.accountrepository'
-      - '@newsletter.model.accounthistoryrepository'
 
   ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus: '@newsletter.helper.accountstatus'
 
   newsletter.helper.sendnewsletter:
     class: ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
-    arguments:
-      - '@core.mailer'
-      - '@core.router'
-      - '@core.config'
-      - '@newsletter.model.newsletterrepository'
 
   ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter: '@newsletter.helper.sendnewsletter'
 
   newsletter.helper.subscribe:
     class: ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
-    arguments:
-      - '@core.date'
-      - '@core.i18n.translator'
-      - '@core.mailer'
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.helpers.string_formatter'
-      - '@core.helpers.secure'
-      - '@core.config'
-      - '@newsletter.helper.accountstatus'
-      - '@newsletter.model.accountrepository'
 
   ACP3\Modules\ACP3\Newsletter\Helper\Subscribe: '@newsletter.helper.subscribe'
-
-  newsletter.data_grid.column_renderer.account_status_column_renderer:
-    class: ACP3\Modules\ACP3\Newsletter\DataGrid\ColumnRenderer\AccountStatusColumnRenderer
-    arguments:
-      - '@core.i18n.translator'
-      - '@core.router'
-    tags:
-      - { name: core.data_grid.column_renderer }

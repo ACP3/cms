@@ -1,18 +1,17 @@
 services:
+  _defaults:
+    autowire: true
+
   core.date:
     class: ACP3\Core\Date
-    arguments:
-      - '@core.date.date_translator'
     configurator: ['@core.date.date_configurator', 'configure']
 
   ACP3\Core\Date: '@core.date'
 
   core.date.date_configurator:
     class: ACP3\Core\Date\DateConfigurator
-    arguments:
-      - '@core.config'
 
   core.date.date_translator:
     class: ACP3\Core\Date\DateTranslator
-    arguments:
-      - '@core.i18n.translator'
+
+  ACP3\Core\Date\DateTranslator: '@core.date.date_translator'

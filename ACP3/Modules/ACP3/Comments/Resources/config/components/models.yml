@@ -1,14 +1,13 @@
 services:
+  _defaults:
+    autowire: true
+
   comments.model.comments_model:
     class: ACP3\Modules\ACP3\Comments\Model\CommentsModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@comments.model.commentrepository'
+      $repository: '@comments.model.commentrepository'
 
   comments.model.comment_by_module_model:
     class: ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@comments.repository.comment_by_module_repository'
+      $repository: '@comments.repository.comment_by_module_repository'

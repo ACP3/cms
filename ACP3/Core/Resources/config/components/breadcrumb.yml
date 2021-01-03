@@ -1,19 +1,13 @@
 services:
+  _defaults:
+    autowire: true
+
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb\Steps
-    arguments:
-      - '@core.controller.controller_action_locator'
-      - '@core.i18n.translator'
-      - '@core.http.request'
-      - '@core.router'
-      - '@core.event_dispatcher'
 
   ACP3\Core\Breadcrumb\Steps: '@core.breadcrumb'
 
   core.breadcrumb.title:
     class: ACP3\Core\Breadcrumb\Title
-    arguments:
-      - '@core.breadcrumb'
-      - '@core.event_dispatcher'
 
   ACP3\Core\Breadcrumb\Title: '@core.breadcrumb.title'

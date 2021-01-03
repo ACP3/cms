@@ -1,16 +1,11 @@
 services:
+  _defaults:
+    autowire: true
+
   gallery.model.gallery_model:
     class: ACP3\Modules\ACP3\Gallery\Model\GalleryModel
     arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@gallery.model.galleryrepository'
+      $repository: '@gallery.model.galleryrepository'
 
   gallery.model.picture_model:
     class: ACP3\Modules\ACP3\Gallery\Model\PictureModel
-    arguments:
-      - '@core.event_dispatcher'
-      - '@core.model.data_processor'
-      - '@core.config'
-      - '@gallery.model.picturerepository'
-      - '@core.helpers.sort'

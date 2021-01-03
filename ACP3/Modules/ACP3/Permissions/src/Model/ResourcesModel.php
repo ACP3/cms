@@ -18,14 +18,14 @@ class ResourcesModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $entryId = null)
+    public function save(array $rawData, $entryId = null)
     {
-        $data = \array_merge($data, [
-            'page' => $data['resource'],
-            'privilege_id' => $data['privileges'],
+        $rawData = \array_merge($rawData, [
+            'page' => $rawData['resource'],
+            'privilege_id' => $rawData['privileges'],
         ]);
 
-        return parent::save($data, $entryId);
+        return parent::save($rawData, $entryId);
     }
 
     /**

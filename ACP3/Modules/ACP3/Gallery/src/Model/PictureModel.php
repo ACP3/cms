@@ -52,21 +52,21 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $entryId = null)
+    public function save(array $rawData, $entryId = null)
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
         if ($entryId === null) {
-            $data['pic'] = $this->getPictureSortIndex($data['gallery_id']);
+            $rawData['pic'] = $this->getPictureSortIndex($rawData['gallery_id']);
         } else {
             $picture = $this->repository->getOneById($entryId);
 
-            if ((int) $data['gallery_id'] !== (int) $picture['gallery_id']) {
-                $data['pic'] = $this->getPictureSortIndex($data['gallery_id']);
+            if ((int) $rawData['gallery_id'] !== (int) $picture['gallery_id']) {
+                $rawData['pic'] = $this->getPictureSortIndex($rawData['gallery_id']);
             }
         }
 
-        return parent::save($data, $entryId);
+        return parent::save($rawData, $entryId);
     }
 
     /**

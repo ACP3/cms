@@ -41,17 +41,17 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $newsId = null)
+    public function save(array $rawData, $newsId = null)
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $data = \array_merge($data, [
+        $rawData = \array_merge($rawData, [
             'updated_at' => 'now',
-            'readmore' => $this->useReadMore($data, $settings),
-            'category_id' => $data['cat'] ?? $data['category_id'],
+            'readmore' => $this->useReadMore($rawData, $settings),
+            'category_id' => $rawData['cat'] ?? $rawData['category_id'],
         ]);
 
-        return parent::save($data, $newsId);
+        return parent::save($rawData, $newsId);
     }
 
     protected function useReadMore(array $formData, array $settings): int

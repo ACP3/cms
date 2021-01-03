@@ -49,22 +49,22 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $entryId = null)
+    public function save(array $rawData, $entryId = null)
     {
-        $data = \array_merge($data, [
-            'category_id' => $data['cat'] ?? $data['category_id'],
+        $rawData = \array_merge($rawData, [
+            'category_id' => $rawData['cat'] ?? $rawData['category_id'],
             'updated_at' => 'now',
         ]);
 
-        if (!empty($data['filesize'])) {
-            $data['size'] = $data['filesize'];
+        if (!empty($rawData['filesize'])) {
+            $rawData['size'] = $rawData['filesize'];
         }
 
         if ($entryId === null) {
-            $data['sort'] = $this->repository->getMaxSort() + 1;
+            $rawData['sort'] = $this->repository->getMaxSort() + 1;
         }
 
-        return parent::save($data, $entryId);
+        return parent::save($rawData, $entryId);
     }
 
     /**

@@ -11,7 +11,8 @@ use ACP3\Core;
 
 class Cache
 {
-    const CACHE_ID = 'resources';
+    public const CACHE_ID = 'resources';
+
     /**
      * @var \ACP3\Core\Cache
      */

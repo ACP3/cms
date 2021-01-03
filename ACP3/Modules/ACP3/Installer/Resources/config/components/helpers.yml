@@ -1,25 +1,25 @@
 services:
+  _defaults:
+    autowire: true
+
   installer.helpers.install:
     class: ACP3\Modules\ACP3\Installer\Helpers\Install
+
+  ACP3\Modules\ACP3\Installer\Helpers\Install: '@installer.helpers.install'
 
   installer.helpers.requirements:
     class: ACP3\Modules\ACP3\Installer\Helpers\Requirements
     arguments:
-      - '@core.modules'
-      - '@core.i18n.translator'
-      - '@composer.semver.version_parser'
+      $versionParser: '@composer.semver.version_parser'
 
   ACP3\Modules\ACP3\Installer\Helpers\Requirements: '@installer.helpers.requirements'
 
   installer.helpers.module_installer:
     class: ACP3\Modules\ACP3\Installer\Helpers\ModuleInstaller
-    arguments:
-      - '@core.xml'
-      - '@installer.helpers.install'
+
+  ACP3\Modules\ACP3\Installer\Helpers\ModuleInstaller: '@installer.helpers.module_installer'
 
   installer.helpers.navigation:
     class: ACP3\Modules\ACP3\Installer\Helpers\Navigation
-    arguments:
-      - '@core.i18n.translator'
 
   ACP3\Modules\ACP3\Installer\Helpers\Navigation: '@installer.helpers.navigation'

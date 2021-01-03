@@ -18,11 +18,11 @@ class MenuItemsModel extends AbstractNestedSetModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $data, $entryId = null)
+    public function save(array $rawData, $entryId = null)
     {
-        $data['target'] = $data['display'] == 0 ? 1 : $data['target'];
+        $rawData['target'] = $rawData['display'] == 0 ? 1 : $rawData['target'];
 
-        return parent::save($data, $entryId);
+        return parent::save($rawData, $entryId);
     }
 
     /**

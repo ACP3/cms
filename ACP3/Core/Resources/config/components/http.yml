@@ -1,10 +1,10 @@
 services:
+  _defaults:
+    autowire: true
+
   core.http.redirect_response:
     class: ACP3\Core\Http\RedirectResponse
     public: true
-    arguments:
-      - '@core.http.request'
-      - '@core.router'
 
   ACP3\Core\Http\RedirectResponse: '@core.http.redirect_response'
 
@@ -18,16 +18,17 @@ services:
 
   core.http.request_factory:
     class: ACP3\Core\Http\RequestFactory
-    arguments:
-      - '@core.config'
-      - '@request_stack'
 
   core.http.response:
     class: Symfony\Component\HttpFoundation\Response
 
+  Symfony\Component\HttpFoundation\Response: '@core.http.response'
+
   request_stack:
     class: Symfony\Component\HttpFoundation\RequestStack
     public: true
+
+  Symfony\Component\HttpFoundation\RequestStack: '@request_stack'
 
   core.http.reset_request_listener:
     class: ACP3\Core\Http\EventListener\ResetRequestListener
