@@ -4,12 +4,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- [ALL] Make use of symfony's DI container autowiring
+- [Core] Implemented different strategies for outputting the static assets (CSS and JavaScripts) in development mode and production mode
+- [Core] Made it possible to state the always enabled frontend libraries of a theme directly within the ``info.xml``. Use the `<libraries><item>lib-name</item></libraries>` for this.
+- [Core] Added support for source maps
+
+### Changed
+- [Core] Changed the ``$moduleName`` argument of the `LibraryEntity` to be mandatory. Use version 6.x this parameter with move to another position
+- [Core] Use the ``CacheClearService`` where possible
+- [Core] Replaced the ``MigrationRegistrar`` class with a "plain" symfony service locator
+- [Core] Replaced the ``SampleDataRegistrar`` class with a "plain" symfony service locator
+- [Core] Replaced the ``AuthenticationRegistrar`` class with a "plain" symfony service locator
+- [Core] Replaced the ``WysiwygEditorRegistrar`` class with a "plain" symfony service locator
+- [Core] Replaced the ``ColumnTypeStrategyFactory`` class with a "plain" symfony service locator
+- [Captcha] Print out the native captchas as inline images
+- [Captcha] Replaced the ``CaptchaRegistrar`` class with a "plain" symfony service locator
+- [Gallery] Reworked the gallery picture delete process to use events
+- [System] Exclude the installer theme to show up in the available themes
+- [TinyMCE] Removed the ``content_css`` feature
+- [Users] Clear the flash messages when logging in
+
+### Deprecations
+- [Core] Deprecated the ``ACP3\Core\Assets\Event\AddLibraryEvent``
+
+### Fixed
+- [Core] Fixed the missing constructor argument of the ``CacheClearService``
+
 ## [5.11.0] - 2021-01-02
 ### Added
 - [Core] Extended the ``DisplayActionTrait`` with the new method `renderTemplate()`
 - [Core] Extended the ``TemplateEvent`` class with the new methods `addContent` and `getContent`
 
-# Changed
+### Changed
 - [Core] Got rid of the output buffering within the `{event}` Smarty function
 - [Core] Throw an ``\InvalidArgumentException`` if the `{event}` Smarty function gets called without a event name
 
