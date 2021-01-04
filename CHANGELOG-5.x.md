@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- [Captcha] fix the captcha settings
+- [Installer] fix installing the sample data
+- [System] fix the system settings
+
 ## [5.12.0] - 2021-01-04
 ### Added
 - [ALL] Make use of symfony's DI container autowiring
