@@ -18,7 +18,7 @@
   "require": {
     "acp3/core": "^5.12.0",
     "acp3/module-permissions": "^5.12.0",
-    "acp3/module-system": "^5.12.0",
+    "acp3/module-system": "^5.12.1",
     "acp3/module-users": "^5.12.0",
     "google/recaptcha": "^1.2.0"
   },
