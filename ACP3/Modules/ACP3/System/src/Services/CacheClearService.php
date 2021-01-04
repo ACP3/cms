@@ -39,6 +39,17 @@ class CacheClearService
                 'paths' => $appPath->getUploadsDir() . 'assets',
             ],
             'page' => ['paths' => function () use ($httpCacheStore, $settings, $librariesCache) {
+                // We need to remember how many times this method has been called,
+                // as updating the `page_cache_is_valid` config settings triggers itself events
+                // which can result in an infinite recursion loop here.
+                static $callCount = 0;
+
+                if ($callCount === 1) {
+                    return;
+                }
+
+                ++$callCount;
+
                 $httpCacheStore->clear();
                 $librariesCache->deleteAll();
 
