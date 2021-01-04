@@ -145,7 +145,7 @@ class AdminSettingsViewProvider
     private function fetchWysiwygEditors(string $currentWysiwygEditor): array
     {
         $wysiwyg = [];
-        foreach ($this->editorLocator->getProvidedServices() as $serviceId) {
+        foreach ($this->editorLocator->getProvidedServices() as $serviceId => $class) {
             /** @var \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG $editorInstance */
             $editorInstance = $this->editorLocator->get($serviceId);
 

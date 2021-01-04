@@ -56,7 +56,7 @@ class AdminSettingsViewProvider
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         $captchas = [];
-        foreach ($this->captchaLocator->getProvidedServices() as $serviceId) {
+        foreach ($this->captchaLocator->getProvidedServices() as $serviceId => $class) {
             /** @var \ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface $captcha */
             $captcha = $this->captchaLocator->get($serviceId);
 

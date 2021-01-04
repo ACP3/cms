@@ -175,7 +175,7 @@ class InstallModel
         /** @var \ACP3\Core\Modules\SchemaHelper $schemaHelper */
         $schemaHelper = $this->container->get('core.modules.schemaHelper');
 
-        foreach ($sampleDataRegistrar->getProvidedServices() as $serviceId) {
+        foreach ($sampleDataRegistrar->getProvidedServices() as $serviceId => $class) {
             try {
                 $this->installHelper->installSampleData(
                     $sampleDataRegistrar->get($serviceId),
