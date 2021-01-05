@@ -12,25 +12,19 @@ use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\Model\SortingAwareTrait;
-use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @property PictureRepository $repository
+ */
 class PictureModel extends AbstractModel implements SortingAwareInterface
 {
     use SortingAwareTrait;
 
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * @var PictureRepository
-     */
-    protected $repository;
-    /**
-     * @var SettingsInterface
-     */
-    protected $config;
     /**
      * @var \ACP3\Core\Helpers\Sort
      */
@@ -39,13 +33,11 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
-        SettingsInterface $config,
         PictureRepository $pictureRepository,
         Sort $sortHelper
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $pictureRepository);
 
-        $this->config = $config;
         $this->sortHelper = $sortHelper;
     }
 
@@ -54,15 +46,13 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
      */
     public function save(array $rawData, $entryId = null)
     {
-        $settings = $this->config->getSettings(Schema::MODULE_NAME);
-
         if ($entryId === null) {
-            $rawData['pic'] = $this->getPictureSortIndex($rawData['gallery_id']);
+            $rawData[$this->getSortingField()] = $this->getPictureSortIndex($rawData['gallery_id']);
         } else {
             $picture = $this->repository->getOneById($entryId);
 
             if ((int) $rawData['gallery_id'] !== (int) $picture['gallery_id']) {
-                $rawData['pic'] = $this->getPictureSortIndex($rawData['gallery_id']);
+                $rawData[$this->getSortingField()] = $this->getPictureSortIndex($rawData['gallery_id']);
             }
         }
 
@@ -112,5 +102,13 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
     protected function getSortingField(): string
     {
         return 'pic';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSortingConstraint(): string
+    {
+        return 'gallery_id';
     }
 }
