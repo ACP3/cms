@@ -123,18 +123,15 @@ class ACL
      */
     public function hasPermission(string $resource): bool
     {
-        if (empty($resource)) {
+        [$area, $module, $controller, $action] = $this->convertResourcePathToArray($resource);
+
+        if (empty($module)) {
             return false;
         }
 
-        $resourceParts = $this->convertResourcePathToArray($resource);
+        $resource = $module . '/' . $controller . '/' . $action . '/';
 
-        $area = $resourceParts[0];
-        $resource = $resourceParts[1] . '/' . $resourceParts[2] . '/' . $resourceParts[3] . '/';
-
-        // At least allow users to access the login page
         if (isset($this->getResources()[$area][$resource])) {
-            $module = $resourceParts[1];
             $privilegeKey = $this->getResources()[$area][$resource]['key'];
 
             return $this->userHasPrivilege($module, $privilegeKey) === true || $this->user->isSuperUser() === true;
@@ -145,16 +142,10 @@ class ACL
 
     private function convertResourcePathToArray(string $resource): array
     {
-        $resourceArray = \explode('/', $resource);
-
-        if (empty($resourceArray[2]) === true) {
-            $resourceArray[2] = 'index';
-        }
-        if (empty($resourceArray[3]) === true) {
-            $resourceArray[3] = 'index';
-        }
-
-        return $resourceArray;
+        return \array_replace(
+            [0 => null, 1 => null, 2 => 'index', 3 => 'index'],
+            \preg_split('=/=', $resource, -1, PREG_SPLIT_NO_EMPTY)
+        );
     }
 
     /**
