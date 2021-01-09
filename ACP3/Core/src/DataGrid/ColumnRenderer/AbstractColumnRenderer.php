@@ -156,8 +156,10 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
             }
 
             return $data;
-        } elseif ($attributeData !== null && $attributeData !== '') {
-            if (\in_array($attributeName, static::mandatoryAttributes())) {
+        }
+
+        if ($attributeData !== null && $attributeData !== '') {
+            if (\in_array($attributeName, static::mandatoryAttributes(), true)) {
                 $attributeName = 'data-' . $attributeName;
             }
 

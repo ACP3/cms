@@ -18,7 +18,8 @@
                 loadingOverlay: true,
                 loadingText: '',
                 customFormData: null,
-                scrollOffsetElement: null
+                scrollOffsetElement: null,
+                method: null,
             };
             this.settings = $.extend({}, this._defaults, options);
             this._name = pluginName;
@@ -173,7 +174,7 @@
 
             $.ajax({
                 url: $form.attr('action') || $form.attr('href'),
-                type: $form.attr('method') ? $form.attr('method').toUpperCase() : 'GET',
+                type: $form.attr('method') ? $form.attr('method').toUpperCase() : this.settings.method?.toUpperCase() ?? 'GET',
                 data: data,
                 processData: processData,
                 contentType: processData ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,

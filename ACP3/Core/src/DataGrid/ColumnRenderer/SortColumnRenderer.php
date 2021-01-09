@@ -15,15 +15,12 @@ class SortColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
 
-    /**
-     * PictureSortColumnRenderer constructor.
-     */
     public function __construct(
         Translator $translator,
         RouterInterface $router
@@ -68,13 +65,10 @@ class SortColumnRenderer extends AbstractColumnRenderer
         return $this->render($column, $value);
     }
 
-    /**
-     * @return string
-     */
-    protected function fetchSortDirectionHtml(string $url, string $direction)
+    private function fetchSortDirectionHtml(string $url, string $direction): string
     {
         $html = <<<HTML
-<a href="%s" title="%s" data-ajax-form="true" data-ajax-form-loading-text="%s">
+<a href="%s" title="%s" data-ajax-form="true" data-ajax-form-method="post" data-ajax-form-loading-text="%s">
     <i class="fas fa-arrow-%s" aria-hidden="true"></i>
 </a>
 HTML;
@@ -88,10 +82,7 @@ HTML;
         );
     }
 
-    /**
-     * @return string
-     */
-    protected function fetchSortForbiddenHtml()
+    private function fetchSortForbiddenHtml(): string
     {
         $html = <<<HTML
 <i class="fas fa-times-circle text-danger text-danger" aria-hidden="true" title="%s"></i>
