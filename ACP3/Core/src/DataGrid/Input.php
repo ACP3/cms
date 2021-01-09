@@ -20,13 +20,13 @@ class Input
      */
     private $results = [];
     /**
-     * @var string|null
+     * @var string
      */
-    private $resourcePathEdit;
+    private $resourcePathEdit = '';
     /**
-     * @var string|null
+     * @var string
      */
-    private $resourcePathDelete;
+    private $resourcePathDelete = '';
     /**
      * @var string|null
      */
@@ -203,12 +203,12 @@ class Input
         return \count($this->getResults());
     }
 
-    public function getResourcePathEdit(): ?string
+    public function getResourcePathEdit(): string
     {
         return $this->resourcePathEdit;
     }
 
-    public function getResourcePathDelete(): ?string
+    public function getResourcePathDelete(): string
     {
         return $this->resourcePathDelete;
     }

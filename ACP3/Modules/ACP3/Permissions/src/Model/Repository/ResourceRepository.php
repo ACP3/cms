@@ -26,12 +26,19 @@ class ResourceRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
+     * Returns all the resources of the currently installed and activated modules.
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getAllResources(): array
     {
-        return $this->db->fetchAll(
-            'SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller, r.privilege_id, p.key AS privilege_name FROM ' . $this->getTableName() . ' AS r JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(r.module_id = m.id) JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . ' AS p ON(r.privilege_id = p.id) WHERE m.active = 1 ORDER BY r.module_id ASC, r.area ASC, r.controller ASC, r.page ASC'
-        );
+        return $this->db->fetchAll('
+            SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller, r.privilege_id, p.key AS privilege_name
+              FROM ' . $this->getTableName() . ' AS r
+              JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(r.module_id = m.id)
+              JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . ' AS p ON(r.privilege_id = p.id)
+             WHERE m.active = 1
+          ORDER BY r.module_id ASC, r.area ASC, r.controller ASC, r.page ASC
+        ');
     }
 }

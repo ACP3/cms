@@ -10,82 +10,64 @@ namespace ACP3\Core;
 use ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface;
 use ACP3\Core\ACL\PermissionCacheInterface;
 use ACP3\Core\Authentication\Model\UserModelInterface;
-use ACP3\Core\Controller\Helper\ControllerActionExists;
 
 class ACL
 {
     /**
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
-    protected $user;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
+    private $user;
     /**
      * @var \ACP3\Core\ACL\PermissionCacheInterface
      */
-    protected $permissionsCache;
+    private $permissionsCache;
     /**
      * @var \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface
      */
-    protected $userRoleRepository;
+    private $userRoleRepository;
     /**
-     * Array mit den jeweiligen Rollen zugewiesenen Berechtigungen.
+     * Array mit den den jeweiligen Rollen zugewiesenen Berechtigungen.
      *
      * @var array
      */
-    protected $privileges = [];
+    private $privileges = [];
     /**
      * Array mit den dem Benutzer zugewiesenen Rollen.
      *
      * @var array
      */
-    protected $userRoles = [];
+    private $userRoles = [];
     /**
      * Array mit allen registrierten Ressourcen.
      *
      * @var array
      */
-    protected $resources = [];
-    /**
-     * @var \ACP3\Core\Controller\Helper\ControllerActionExists
-     */
-    private $controllerActionExists;
+    private $resources = [];
 
-    /**
-     * ACL constructor.
-     *
-     * @param \ACP3\Core\Modules $modules
-     */
     public function __construct(
         UserModelInterface $user,
-        Modules $modules,
-        ControllerActionExists $controllerActionExists,
         UserRoleRepositoryInterface $userRoleRepository,
         PermissionCacheInterface $permissionsCache
     ) {
         $this->user = $user;
-        $this->modules = $modules;
         $this->userRoleRepository = $userRoleRepository;
         $this->permissionsCache = $permissionsCache;
-        $this->controllerActionExists = $controllerActionExists;
     }
 
     /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
      *
-     * @return array
+     * @returns int[]
      */
-    public function getUserRoleIds(int $userId)
+    public function getUserRoleIds(int $userId): array
     {
         if (isset($this->userRoles[$userId]) === false) {
             // Special case for guest user
-            if ($userId == 0) {
+            if ($userId === 0) {
                 $this->userRoles[$userId][] = 1; // @TODO: Add config option for this
             } else {
                 foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
-                    $this->userRoles[$userId][] = $userRole['id'];
+                    $this->userRoles[$userId][] = (int) $userRole['id'];
                 }
             }
         }
@@ -95,10 +77,8 @@ class ACL
 
     /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
-     *
-     * @return array
      */
-    public function getUserRoleNames(int $userId)
+    public function getUserRoleNames(int $userId): array
     {
         $roles = [];
         foreach ($this->userRoleRepository->getRolesByUserId($userId) as $userRole) {
@@ -108,26 +88,20 @@ class ACL
         return $roles;
     }
 
-    /**
-     * @return array
-     */
-    public function getAllRoles()
+    public function getAllRoles(): array
     {
         return $this->permissionsCache->getRolesCache();
     }
 
-    /**
-     * @return bool
-     */
-    public function userHasRole(int $roleId)
+    public function userHasRole(int $roleId): bool
     {
-        return \in_array($roleId, $this->getUserRoleIds($this->user->getUserId()));
+        return \in_array($roleId, $this->getUserRoleIds($this->user->getUserId()), true);
     }
 
     /**
      * Initializes the available user privileges.
      */
-    protected function getPrivileges()
+    private function getPrivileges(): array
     {
         if ($this->privileges === []) {
             $this->privileges = $this->getRules($this->getUserRoleIds($this->user->getUserId()));
@@ -138,37 +112,21 @@ class ACL
 
     /**
      * Returns the role permissions.
-     *
-     * @return array
      */
-    protected function getRules(array $roleIds)
+    private function getRules(array $roleIds): array
     {
         return $this->permissionsCache->getRulesCache($roleIds);
     }
 
     /**
      * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat.
-     *
-     * @return bool
      */
-    public function hasPermission(?string $resource)
+    public function hasPermission(string $resource): bool
     {
-        if (!empty($resource) && $this->controllerActionExists->controllerActionExists($resource) === true) {
-            $resourceParts = \explode('/', $resource);
-
-            if ($this->modules->isActive($resourceParts[1]) === true) {
-                return $this->canAccessResource($resource);
-            }
+        if (empty($resource)) {
+            return false;
         }
 
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function canAccessResource(string $resource)
-    {
         $resourceParts = $this->convertResourcePathToArray($resource);
 
         $area = $resourceParts[0];
@@ -185,10 +143,7 @@ class ACL
         return false;
     }
 
-    /**
-     * @return array
-     */
-    protected function convertResourcePathToArray(string $resource)
+    private function convertResourcePathToArray(string $resource): array
     {
         $resourceArray = \explode('/', $resource);
 
@@ -204,10 +159,8 @@ class ACL
 
     /**
      * Gibt alle in der Datenbank vorhandenen Ressourcen zurück.
-     *
-     * @return array
      */
-    protected function getResources()
+    private function getResources(): array
     {
         if ($this->resources === []) {
             $this->resources = $this->permissionsCache->getResourcesCache();
@@ -218,10 +171,8 @@ class ACL
 
     /**
      * Returns, whether the current user has the given privilege.
-     *
-     * @return bool
      */
-    protected function userHasPrivilege(string $module, string $privilegeKey)
+    private function userHasPrivilege(string $module, string $privilegeKey): bool
     {
         $privilegeKey = \strtolower($privilegeKey);
         if (isset($this->getPrivileges()[$module][$privilegeKey])) {
