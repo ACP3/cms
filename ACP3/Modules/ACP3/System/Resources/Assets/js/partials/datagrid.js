@@ -3,11 +3,15 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-(($) => {
+(($, window) => {
     $('[data-datatable-init]').each(function () {
         const $this = $(this),
             json = $this.data('datatable-init');
 
-        $this.dataTable(json);
+        const table = $this.DataTable(json);
+
+        window[$this.attr('id') + 'ReloadDataTable'] = () => {
+            table.ajax.reload(null, false);
+        }
     });
-})(jQuery);
+})(jQuery, window);

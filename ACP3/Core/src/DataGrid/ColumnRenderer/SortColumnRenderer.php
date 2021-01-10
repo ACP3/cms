@@ -68,7 +68,13 @@ class SortColumnRenderer extends AbstractColumnRenderer
     private function fetchSortDirectionHtml(string $url, string $direction): string
     {
         $html = <<<HTML
-<a href="%s" title="%s" data-ajax-form="true" data-ajax-form-method="post" data-ajax-form-loading-text="%s" data-ajax-form-custom-form-data='%s'>
+<a href="%s"
+   title="%s"
+   data-ajax-form="true"
+   data-ajax-form-method="post"
+   data-ajax-form-loading-text="%s"
+   data-ajax-form-custom-form-data='%s'
+   data-ajax-form-complete-callback="%s">
     <i class="fas fa-arrow-%s" aria-hidden="true"></i>
 </a>
 HTML;
@@ -79,6 +85,7 @@ HTML;
             $this->translator->t('system', 'move_' . $direction),
             $this->translator->t('system', 'loading_please_wait'),
             \json_encode(['submit' => true]),
+            \substr($this->getIdentifier(), 1) . 'ReloadDataTable',
             $direction
         );
     }
