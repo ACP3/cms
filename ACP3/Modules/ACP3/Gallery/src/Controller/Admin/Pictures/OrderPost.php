@@ -7,10 +7,15 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\Gallery;
+use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Controller\InvokableActionInterface;
+use ACP3\Core\Http\RedirectResponse;
+use ACP3\Modules\ACP3\Gallery\Model\PictureModel;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 
-class Order extends Core\Controller\AbstractFrontendAction
+class OrderPost extends AbstractFrontendAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
@@ -26,10 +31,10 @@ class Order extends Core\Controller\AbstractFrontendAction
     private $pictureModel;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
-        Core\Http\RedirectResponse $redirectResponse,
-        Gallery\Model\Repository\PictureRepository $pictureRepository,
-        Gallery\Model\PictureModel $pictureModel
+        FrontendContext $context,
+        RedirectResponse $redirectResponse,
+        PictureRepository $pictureRepository,
+        PictureModel $pictureModel
     ) {
         parent::__construct($context);
 
@@ -43,7 +48,7 @@ class Order extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id, string $action)
+    public function __invoke(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->pictureRepository->pictureExists($id) === true) {
             if ($action === 'up') {
@@ -57,6 +62,6 @@ class Order extends Core\Controller\AbstractFrontendAction
             return $this->redirectResponse->temporary('acp/gallery/pictures/index/id_' . $galleryId);
         }
 
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        throw new ResultNotExistsException();
     }
 }

@@ -26,8 +26,8 @@ services:
   permissions.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Index
 
-  permissions.controller.admin.index.order:
-    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\Order
+  permissions.controller.admin.index.order_post:
+    class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Index\OrderPost
 
   permissions.controller.admin.resources.create:
     class: ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources\Create

@@ -7,11 +7,15 @@
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Controller\InvokableActionInterface;
+use ACP3\Core\Http\RedirectResponse;
 use ACP3\Modules\ACP3\Categories\Model\CategoriesModel;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
-class Order extends Core\Controller\AbstractFrontendAction
+class OrderPost extends AbstractFrontendAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
@@ -27,8 +31,8 @@ class Order extends Core\Controller\AbstractFrontendAction
     private $categoriesModel;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
-        Core\Http\RedirectResponse $redirectResponse,
+        FrontendContext $context,
+        RedirectResponse $redirectResponse,
         CategoryRepository $categoriesRepository,
         CategoriesModel $categoriesModel
     ) {
@@ -44,7 +48,7 @@ class Order extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id, string $action)
+    public function __invoke(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->categoriesRepository->resultExists($id) === true) {
             if ($action === 'up') {
@@ -56,6 +60,6 @@ class Order extends Core\Controller\AbstractFrontendAction
             return $this->redirectResponse->temporary('acp/categories');
         }
 
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        throw new ResultNotExistsException();
     }
 }

@@ -51,8 +51,8 @@ services:
   gallery.controller.admin.pictures.index:
     class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Index
 
-  gallery.controller.admin.pictures.order:
-    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\Order
+  gallery.controller.admin.pictures.order_post:
+    class: ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures\OrderPost
 
   gallery.controller.frontend.index.details:
     class: ACP3\Modules\ACP3\Gallery\Controller\Frontend\Index\Details

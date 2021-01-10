@@ -7,10 +7,15 @@
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\Menus;
+use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Controller\InvokableActionInterface;
+use ACP3\Core\Http\RedirectResponse;
+use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 
-class Order extends Core\Controller\AbstractFrontendAction
+class OrderPost extends AbstractFrontendAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
@@ -26,10 +31,10 @@ class Order extends Core\Controller\AbstractFrontendAction
     private $menuItemsModel;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
-        Core\Http\RedirectResponse $redirectResponse,
-        Menus\Model\Repository\MenuItemRepository $menuItemRepository,
-        Menus\Model\MenuItemsModel $menuItemsModel
+        FrontendContext $context,
+        RedirectResponse $redirectResponse,
+        MenuItemRepository $menuItemRepository,
+        MenuItemsModel $menuItemsModel
     ) {
         parent::__construct($context);
 
@@ -43,7 +48,7 @@ class Order extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id, string $action)
+    public function __invoke(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->menuItemRepository->menuItemExists($id) === true) {
             if ($action === 'up') {
@@ -55,6 +60,6 @@ class Order extends Core\Controller\AbstractFrontendAction
             return $this->redirectResponse->temporary('acp/menus');
         }
 
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        throw new ResultNotExistsException();
     }
 }

@@ -7,10 +7,15 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\Permissions;
+use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Controller\InvokableActionInterface;
+use ACP3\Core\Http\RedirectResponse;
+use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Model\RolesModel;
 
-class Order extends Core\Controller\AbstractFrontendAction
+class OrderPost extends AbstractFrontendAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
@@ -26,10 +31,10 @@ class Order extends Core\Controller\AbstractFrontendAction
     private $rolesModel;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
-        Core\Http\RedirectResponse $redirectResponse,
-        Permissions\Model\Repository\RoleRepository $roleRepository,
-        Permissions\Model\RolesModel $rolesModel
+        FrontendContext $context,
+        RedirectResponse $redirectResponse,
+        RoleRepository $roleRepository,
+        RolesModel $rolesModel
     ) {
         parent::__construct($context);
 
@@ -43,7 +48,7 @@ class Order extends Core\Controller\AbstractFrontendAction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(int $id, string $action)
+    public function __invoke(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->roleRepository->roleExists($id) === true) {
             if ($action === 'up') {
@@ -55,6 +60,6 @@ class Order extends Core\Controller\AbstractFrontendAction
             return $this->redirectResponse->temporary('acp/permissions');
         }
 
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        throw new ResultNotExistsException();
     }
 }

@@ -25,8 +25,8 @@ services:
   categories.controller.admin.index.index:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Index
 
-  categories.controller.admin.index.order:
-    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Order
+  categories.controller.admin.index.order_post:
+    class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\OrderPost
 
   categories.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\Categories\Controller\Admin\Index\Settings

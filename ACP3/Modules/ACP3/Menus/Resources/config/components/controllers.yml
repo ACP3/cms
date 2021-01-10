@@ -40,5 +40,5 @@ services:
   menus.controller.admin.items.edit_post:
     class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\EditPost
 
-  menus.controller.admin.items.order:
-    class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\Order
+  menus.controller.admin.items.order_post:
+    class: ACP3\Modules\ACP3\Menus\Controller\Admin\Items\OrderPost
