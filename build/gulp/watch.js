@@ -28,8 +28,7 @@ module.exports = (gulp) => {
         gulp.watch(
             componentPaths.js.concat(
                 [
-                    './designs/**/Assets/js/**/*.js',
-                    '!./designs/**/Assets/js/**/*.min.js',
+                    './designs/**/Assets/js/**/!(*.min).js',
                 ]
             ),
             {cwd: './'},

@@ -7,7 +7,6 @@ module.exports = (gulp, plugins) => {
     'use strict';
 
     const babel = require("gulp-babel");
-    const sourcemaps = require("gulp-sourcemaps");
     const componentPaths = require('./component-paths');
 
     return () => {
@@ -15,20 +14,17 @@ module.exports = (gulp, plugins) => {
             .src(
                 componentPaths.js.concat(
                     [
-                        './designs/*/*/Assets/js/{admin,frontend,partials,widget}/*.js',
-                        './designs/*/Assets/js/*.js',
-                        '!./designs/**/Assets/js/**/*.min.js',
+                        './designs/*/*/Assets/js/{admin,frontend,partials,widget}/!(*.min).js',
+                        './designs/*/Assets/js/!(*.min).js',
                     ]
                 ),
-                {base: './', since: gulp.lastRun('babel')}
+                {base: './', since: gulp.lastRun('babel'), sourcemaps: true}
             )
             .pipe(plugins.plumber())
-            .pipe(sourcemaps.init())
             .pipe(babel())
             .pipe(plugins.rename((path) => {
                 path.basename += '.min';
             }))
-            .pipe(sourcemaps.write('.'))
-            .pipe(gulp.dest('./'));
+            .pipe(gulp.dest('./', { sourcemaps: '.' }));
     };
 };
