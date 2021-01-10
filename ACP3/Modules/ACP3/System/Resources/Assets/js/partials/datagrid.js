@@ -12,6 +12,6 @@
 
         window[$this.attr('id') + 'ReloadDataTable'] = () => {
             table.ajax.reload(null, false);
-        }
+        };
     });
 })(jQuery, window);
