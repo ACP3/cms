@@ -137,6 +137,28 @@ test:phpstan:
       - phpstan.neon.dist
       - .gitlab-ci.yml
 
+test:csslint:
+  image: node:lts-alpine
+  stage: test
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - .stylelintcache
+  script:
+    - npm run-script css-lint
+  needs:
+    - build:npm
+  only:
+    changes:
+      - 'ACP3/**/*.{css,less,scss}'
+      - 'design/**/*.{css,less,scss}'
+      - 'installation/**/*.{css,less,scss}'
+      - package.json
+      - package-lock.json
+      - .stylelintignore
+      - .stylelintrc
+      - .gitlab-ci.yml
+
 test:eslint:
   image: node:lts-alpine
   stage: test
