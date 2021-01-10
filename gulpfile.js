@@ -19,7 +19,8 @@
     gulp.task('less', getTask('less'));
     gulp.task('babel', getTask('babel'));
     gulp.task('eslint', getTask('eslint'));
-    gulp.task('watch', gulp.series(gulp.parallel('less', 'scss', 'babel', 'eslint'), getTask('watch')));
+    gulp.task('stylelint', getTask('stylelint'));
+    gulp.task('default', gulp.parallel('less', 'scss', 'babel', 'eslint', 'stylelint'));
 
-    gulp.task('default', gulp.parallel('less', 'scss', 'babel', 'eslint'));
+    gulp.task('watch', gulp.series('default', getTask('watch')));
 })();
