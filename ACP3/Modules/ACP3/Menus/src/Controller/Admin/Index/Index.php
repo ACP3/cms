@@ -7,30 +7,67 @@
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\Menus;
+use ACP3\Core\ACL;
+use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\InvokableActionInterface;
+use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\ViewProviders\MenuItemsDataGridViewProvider;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-class Index extends Core\Controller\AbstractFrontendAction
+class Index extends AbstractFrontendAction implements InvokableActionInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\ViewProviders\DataGridViewProvider
+     * @var \ACP3\Core\ACL
      */
-    private $dataGridViewProvider;
+    private $acl;
+    /**
+     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
+     */
+    private $menuRepository;
+    /**
+     * @var \ACP3\Modules\ACP3\Menus\ViewProviders\MenuItemsDataGridViewProvider
+     */
+    private $menuItemsDataGridViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
-        Menus\ViewProviders\DataGridViewProvider $dataGridViewProvider
+        FrontendContext $context,
+        ACL $acl,
+        MenuRepository $menuRepository,
+        MenuItemsDataGridViewProvider $menuItemsDataGridViewProvider
     ) {
         parent::__construct($context);
 
-        $this->dataGridViewProvider = $dataGridViewProvider;
+        $this->acl = $acl;
+        $this->menuRepository = $menuRepository;
+        $this->menuItemsDataGridViewProvider = $menuItemsDataGridViewProvider;
     }
 
     /**
+     * @returns array|\Symfony\Component\HttpFoundation\JsonResponse
+     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function execute(): array
+    public function __invoke()
     {
-        return ($this->dataGridViewProvider)();
+        $menus = $this->menuRepository->getAllMenus();
+
+        $dataGrids = [];
+        foreach ($menus as $menu) {
+            $dataGrids[$menu['id']] = ($this->menuItemsDataGridViewProvider)($menu['id']);
+        }
+
+        foreach ($dataGrids as $dataGrid) {
+            if ($dataGrid instanceof JsonResponse) {
+                return $dataGrid;
+            }
+        }
+
+        return [
+            'menus' => $menus,
+            'data_grids' => $dataGrids,
+            'can_delete' => $this->acl->hasPermission('admin/menus/index/delete'),
+            'can_edit' => $this->acl->hasPermission('admin/menus/index/edit'),
+        ];
     }
 }

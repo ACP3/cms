@@ -19,7 +19,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    private $router;
+    protected $router;
 
     public function __construct(
         Translator $translator,
@@ -65,7 +65,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
         return $this->render($column, $value);
     }
 
-    private function fetchSortDirectionHtml(string $url, string $direction): string
+    protected function fetchSortDirectionHtml(string $url, string $direction): string
     {
         $html = <<<HTML
 <a href="%s"
@@ -90,7 +90,7 @@ HTML;
         );
     }
 
-    private function fetchSortForbiddenHtml(): string
+    protected function fetchSortForbiddenHtml(): string
     {
         $html = <<<HTML
 <i class="fas fa-times-circle text-danger text-danger" aria-hidden="true" title="%s"></i>

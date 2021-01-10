@@ -2,6 +2,9 @@ services:
   _defaults:
     autowire: true
 
+  ACP3\Modules\ACP3\Menus\Repository\:
+    resource: '../../../src/Repository/'
+
   ACP3\Modules\ACP3\Menus\Model\Repository\:
     resource: '../../../src/Model/Repository/'
 
