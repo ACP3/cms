@@ -1,4 +1,4 @@
-<nav id="toc" class="panel panel-default">
+<nav id="toc" class="panel panel-default table-of-contents">
     <div class="panel-heading">
         <h3 class="panel-title">{lang t="system|table_of_contents"}</h3>
     </div>

@@ -8,7 +8,7 @@
 $system-toc-margin: ($line-height-computed / 4) ($line-height-computed / 2) ($line-height-computed / 2) 0 !default;
 
 #toc {
+  float: left;
   width: 20%;
   margin: $system-toc-margin;
-  float: left;
 }

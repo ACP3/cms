@@ -11,9 +11,9 @@
 /* Position Bootstrap modal dialogs statically */
 .modal {
   &.static {
-    margin: 0 auto;
     position: static;
     display: block;
+    margin: 0 auto;
     overflow: auto;
 
     .modal-footer {
@@ -26,8 +26,8 @@
 .panel-body {
   p {
     &:last-child {
-      margin-bottom: 0;
       padding-bottom: 0;
+      margin-bottom: 0;
     }
   }
 }

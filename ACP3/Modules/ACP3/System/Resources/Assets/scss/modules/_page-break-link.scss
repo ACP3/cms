@@ -5,7 +5,7 @@
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
-$system-page-break-link-margin-y: ($line-height-computed / 4);
+$system-page-break-link-margin-y: ($line-height-computed / 4) !default;
 
 #page-break-link {
   margin: $system-page-break-link-margin-y 0;

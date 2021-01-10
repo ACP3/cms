@@ -18,9 +18,9 @@ $forms-required-star-text-color: inherit !default;
   text-overflow: ellipsis;
 
   &.required {
-    &:after {
-      content: ' *';
+    &::after {
       color: $forms-required-star-text-color;
+      content: " *";
     }
   }
 }
@@ -30,7 +30,7 @@ $forms-required-star-text-color: inherit !default;
     &.required {
       position: relative;
 
-      &:after {
+      &::after {
         position: absolute;
         right: 5px;
 

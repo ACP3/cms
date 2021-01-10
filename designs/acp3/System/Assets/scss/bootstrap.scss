@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-base: -apple-system, blinkmacsystemfont, "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif !default;
 
 // Core variables and mixins
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";

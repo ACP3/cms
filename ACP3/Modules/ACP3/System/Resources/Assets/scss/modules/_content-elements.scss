@@ -16,9 +16,9 @@ $system-dataset-box-padding-x: floor(($grid-gutter-width / 2)) !default;
     float: left;
 
     .navbar-text {
+      float: left;
       margin-right: $system-dataset-box-padding-x;
       margin-left: $system-dataset-box-padding-x;
-      float: left;
     }
   }
 
@@ -37,8 +37,8 @@ $system-dataset-box-padding-x: floor(($grid-gutter-width / 2)) !default;
 
   .hyperlink {
     a.download-file {
-      font-weight: bold;
       display: block;
+      font-weight: 700;
 
       &:hover,
       &:focus {

@@ -3,11 +3,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-$rating-star-empty-font-family: 'Font Awesome 5 Free';
-$rating-star-empty-font-weight: 400;
-$rating-star-empty-glyph: "\f005";
+$rating-star-empty-font-family: "Font Awesome 5 Free" !default;
+$rating-star-empty-font-weight: 400 !default;
+$rating-star-empty-glyph: "\f005" !default;
 
-$rating-star-filled-font-weight: 900;
-$rating-star-filled-glyph: "\f005";
+$rating-star-filled-font-weight: 900 !default;
+$rating-star-filled-glyph: "\f005" !default;
 
 @import "ACP3/Modules/ACP3/Share/Resources/Assets/scss/style";

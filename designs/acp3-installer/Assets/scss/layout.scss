@@ -1,10 +1,10 @@
 @import "../../../acp3/Assets/scss/components/variables";
 
-$navbar-complete-bg-color: #449d44;
-$navbar-complete-text-color: #fff;
-$navbar-arrow-height: ($navbar-height / 2);
-$navbar-arrow-width: 10px;
-$breakpoint-tablet-min: $screen-sm-min;
+$navbar-complete-bg-color: #449d44 !default;
+$navbar-complete-text-color: #fff !default;
+$navbar-arrow-height: ($navbar-height / 2) !default;
+$navbar-arrow-width: 10px !default;
+$breakpoint-tablet-min: $screen-sm-min !default;
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -44,25 +44,25 @@ p {
         @media (min-width: $breakpoint-tablet-min) {
           position: relative;
 
-          &:after {
-            border-bottom: $navbar-arrow-height solid transparent;
-            border-top: $navbar-arrow-height solid transparent;
-            border-left: $navbar-arrow-width solid $navbar-complete-bg-color;
-            content: "";
-            height: 0;
+          &::after {
             position: absolute;
-            right: -$navbar-arrow-width;
             top: 0;
-            width: 0;
+            right: -$navbar-arrow-width;
             z-index: 1;
+            width: 0;
+            height: 0;
+            content: "";
+            border-top: $navbar-arrow-height solid transparent;
+            border-bottom: $navbar-arrow-height solid transparent;
+            border-left: $navbar-arrow-width solid $navbar-complete-bg-color;
           }
         }
 
         > a,
         > a:focus,
         > a:hover {
-          background-color: $navbar-complete-bg-color;
           color: $navbar-complete-text-color;
+          background-color: $navbar-complete-bg-color;
         }
       }
 

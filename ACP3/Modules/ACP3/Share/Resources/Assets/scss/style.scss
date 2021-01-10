@@ -8,7 +8,7 @@
 $rating-star-color-default: #777 !default;
 $rating-star-color-active: #e3cf7a !default;
 
-$rating-star-empty-font-family: 'Glyphicons Halflings', sans-serif !default;
+$rating-star-empty-font-family: "Glyphicons Halflings", sans-serif !default;
 $rating-star-empty-font-weight: normal !default;
 $rating-star-empty-glyph: "\e007" !default;
 
@@ -19,10 +19,10 @@ $rating-star-filled-glyph: "\e006" !default;
 $rating-star-font-size: 24px !default;
 
 .rating {
-  direction: rtl;
+  position: relative;
   display: inline-block;
   font-size: 0;
-  position: relative;
+  direction: rtl;
   unicode-bidi: bidi-override;
 
   &:hover {
@@ -33,37 +33,37 @@ $rating-star-font-size: 24px !default;
 }
 
 .rating__average {
-  direction: ltr;
-  height: 100%;
-  left: 0;
-  overflow: hidden;
   position: absolute;
   top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
   white-space: nowrap;
+  direction: ltr;
 
   .rating__star {
     font-family: $rating-star-filled-font-family;
     font-weight: $rating-star-filled-font-weight;
 
     &::before {
-      content: $rating-star-filled-glyph;
       color: $rating-star-color-active;
+      content: $rating-star-filled-glyph;
     }
   }
 }
 
 .rating__star {
-  cursor: pointer;
+  margin-bottom: 0;
   font-family: $rating-star-empty-font-family;
   font-size: $rating-star-font-size;
   font-style: normal;
   font-weight: $rating-star-empty-font-weight;
-  margin-bottom: 0;
+  cursor: pointer;
 
   &::before {
+    padding-right: ($line-height-computed / 4);
     color: $rating-star-color-default;
     content: $rating-star-empty-glyph;
-    padding-right: ($line-height-computed / 4);
   }
 
   &.rating__star_active,
@@ -73,7 +73,7 @@ $rating-star-font-size: 24px !default;
     text-decoration: none;
 
     &::before,
-    & ~ .rating__star::before {
+    ~ .rating__star::before {
       color: $rating-star-color-active;
     }
   }

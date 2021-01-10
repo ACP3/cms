@@ -14,19 +14,21 @@ $system-admin-list-icon-font-size: 32px !default;
     }
 
     .btn-link {
-      margin-left: $system-admin-list-item-spacing;
-      padding-left: 0;
       padding-right: 0;
+      padding-left: 0;
+      margin-left: $system-admin-list-item-spacing;
     }
 
-    .fa, .fas, .fab {
+    .fa,
+    .fas,
+    .fab {
       font-size: $system-admin-list-icon-font-size;
     }
   }
 
   a,
   input {
-    margin: $system-admin-list-item-spacing 0 0 $system-admin-list-item-spacing;
     float: right;
+    margin: $system-admin-list-item-spacing 0 0 $system-admin-list-item-spacing;
   }
 }

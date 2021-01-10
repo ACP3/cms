@@ -12,10 +12,10 @@ $bs-pagination-margin: 0 0 ($line-height-computed / 2) !default;
   }
 
   > a {
+    display: block;
     padding: $system-list-group-item-padding;
     color: $system-list-group-item-link-text-color;
     text-decoration: none;
-    display: block;
 
     &:hover {
       background-color: $system-list-group-item-link-hover-bg-color;

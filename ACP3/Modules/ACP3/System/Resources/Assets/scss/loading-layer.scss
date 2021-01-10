@@ -5,7 +5,7 @@
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
-$system-loading-layer-bg-color: rgba(255, 255, 255, 0.5) !default;
+$system-loading-layer-bg-color: rgba(255, 255, 255, .5) !default;
 $system-loading-layer-font-size: 26px !default;
 
 @keyframes rotate {
@@ -18,24 +18,24 @@ $system-loading-layer-font-size: 26px !default;
 }
 
 .loading-layer {
-  align-items: center;
-  background: $system-loading-layer-bg-color;
-  display: flex;
-  justify-content: center;
-  left: 0;
-  height: 100%;
-  opacity: 0;
-  overflow: hidden;
   position: fixed;
   top: 0;
-  transition: opacity 0.5s, visibility 0.5s;
-  visibility: hidden;
-  width: 100%;
+  left: 0;
   z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  visibility: hidden;
+  background: $system-loading-layer-bg-color;
+  opacity: 0;
+  transition: opacity .5s, visibility .5s;
 
   &.loading-layer__active {
-    opacity: 1;
     visibility: visible;
+    opacity: 1;
   }
 
   h1 {

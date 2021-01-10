@@ -5,6 +5,6 @@
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
-$layout-navbar-height: $navbar-height;
-$layout-navbar-logo-height: 40px;
-$layout-navbar-spacing-y: ($layout-navbar-height - $layout-navbar-logo-height) / 2;
+$layout-navbar-height: $navbar-height !default;
+$layout-navbar-logo-height: 40px !default;
+$layout-navbar-spacing-y: ($layout-navbar-height - $layout-navbar-logo-height) / 2 !default;
