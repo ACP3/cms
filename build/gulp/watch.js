@@ -32,7 +32,7 @@ module.exports = (gulp) => {
                 ]
             ),
             {cwd: './'},
-            gulp.task('babel')
+            gulp.parallel('babel', 'eslint')
         );
 
         done();

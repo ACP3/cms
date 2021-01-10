@@ -18,7 +18,8 @@
     gulp.task('scss', getTask('scss'));
     gulp.task('less', getTask('less'));
     gulp.task('babel', getTask('babel'));
-    gulp.task('watch', gulp.series(gulp.parallel('less', 'scss', 'babel'), getTask('watch')));
+    gulp.task('eslint', getTask('eslint'));
+    gulp.task('watch', gulp.series(gulp.parallel('less', 'scss', 'babel', 'eslint'), getTask('watch')));
 
-    gulp.task('default', gulp.parallel('less', 'scss', 'babel'));
+    gulp.task('default', gulp.parallel('less', 'scss', 'babel', 'eslint'));
 })();
