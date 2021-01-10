@@ -127,8 +127,10 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
             $this->initialize($layout);
         }
 
-        return \array_reduce($this->stylesheets, static function ($accumulator, $stylesheet) {
-            return $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '">' . "\n";
+        $currentTimestamp = \time();
+
+        return \array_reduce($this->stylesheets, static function ($accumulator, $stylesheet) use ($currentTimestamp) {
+            return $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '?' . $currentTimestamp . '">' . "\n";
         }, '');
     }
 
