@@ -13,11 +13,10 @@ module.exports = (gulp) => {
     return () => {
         return gulp
             .src(
-                componentPaths.less.watch
-                    .concat(componentPaths.scss.watch)
+                componentPaths.scss.watch
                     .concat([
-                        './designs/*/*/Assets/{less,scss}/**/!(*.min).{scss,less}',
-                        './designs/*/Assets/{less,scss}/!(*.min).{less,scss}',
+                        './designs/*/*/Assets/scss/**/!(*.min).scss',
+                        './designs/*/Assets/scss/!(*.min).scss',
                     ]),
                 {base: './', allowEmpty: true}
             )

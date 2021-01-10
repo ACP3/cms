@@ -6,11 +6,10 @@
 (() => {
     'use strict';
 
-    const gulp = require('gulp'),
-        plugins = require('gulp-load-plugins')();
+    const gulp = require('gulp');
 
     function getTask(task) {
-        return require('./build/gulp/' + task)(gulp, plugins);
+        return require('./build/gulp/' + task)(gulp);
     }
 
     gulp.task('copy', getTask('copy'));
@@ -19,7 +18,9 @@
     gulp.task('less', getTask('less'));
     gulp.task('babel', getTask('babel'));
     gulp.task('eslint', getTask('eslint'));
-    gulp.task('stylelint', getTask('stylelint'));
+    gulp.task('stylelint-less', getTask('stylelint-less'));
+    gulp.task('stylelint-scss', getTask('stylelint-scss'));
+    gulp.task('stylelint', gulp.parallel('stylelint-less', 'stylelint-scss'));
     gulp.task('default', gulp.parallel('less', 'scss', 'babel', 'eslint', 'stylelint'));
 
     gulp.task('watch', gulp.series('default', getTask('watch')));

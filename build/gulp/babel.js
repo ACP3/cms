@@ -3,9 +3,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-module.exports = (gulp, plugins) => {
+module.exports = (gulp) => {
     'use strict';
 
+    const plumber = require('gulp-plumber');
+    const rename = require('gulp-rename');
     const babel = require("gulp-babel");
     const componentPaths = require('./component-paths');
 
@@ -20,9 +22,9 @@ module.exports = (gulp, plugins) => {
                 ),
                 {base: './', since: gulp.lastRun('babel'), sourcemaps: true}
             )
-            .pipe(plugins.plumber())
+            .pipe(plumber())
             .pipe(babel())
-            .pipe(plugins.rename((path) => {
+            .pipe(rename((path) => {
                 path.basename += '.min';
             }))
             .pipe(gulp.dest('./', { sourcemaps: '.' }));

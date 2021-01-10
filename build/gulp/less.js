@@ -3,11 +3,15 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-module.exports = (gulp, plugins) => {
+module.exports = (gulp) => {
     'use strict';
 
     const autoprefixer = require('autoprefixer');
     const componentPaths = require('./component-paths');
+    const plumber = require('gulp-plumber');
+    const less = require('gulp-less');
+    const postcss = require('gulp-postcss');
+    const rename = require('gulp-rename');
 
     return () => {
         return gulp
@@ -19,10 +23,10 @@ module.exports = (gulp, plugins) => {
                 ]),
                 {base: './'}
             )
-            .pipe(plugins.plumber())
-            .pipe(plugins.less())
-            .pipe(plugins.postcss([autoprefixer()]))
-            .pipe(plugins.rename((path) => {
+            .pipe(plumber())
+            .pipe(less())
+            .pipe(postcss([autoprefixer()]))
+            .pipe(rename((path) => {
                 path.dirname = path.dirname.substring(0, path.dirname.length - 4) + 'css';
             }))
             .pipe(gulp.dest('./'));

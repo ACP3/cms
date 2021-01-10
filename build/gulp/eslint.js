@@ -3,10 +3,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-module.exports = (gulp, plugins) => {
+module.exports = (gulp) => {
     'use strict';
 
     const componentPaths = require('./component-paths');
+    const plumber = require('gulp-plumber');
     const eslint = require('gulp-eslint');
 
     return () => {
@@ -20,7 +21,7 @@ module.exports = (gulp, plugins) => {
                 ),
                 {base: './'}
             )
-            .pipe(plugins.plumber())
+            .pipe(plumber())
             .pipe(eslint())
             .pipe(eslint.format());
     };

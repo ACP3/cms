@@ -3,15 +3,17 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-const argv = require('yargs').argv;
-const moment = require('moment');
-const git = require('simple-git');
-const semver = require('semver');
-const yaml = require('js-yaml');
-const fs = require('fs');
-
-module.exports = (gulp, plugins) => {
+module.exports = (gulp) => {
     'use strict';
+
+    const argv = require('yargs').argv;
+    const moment = require('moment');
+    const git = require('simple-git');
+    const semver = require('semver');
+    const yaml = require('js-yaml');
+    const fs = require('fs');
+    const bump = require('gulp-bump');
+    const change = require('gulp-change');
 
     function loadComponents() {
         const document = yaml.safeLoad(fs.readFileSync(__dirname + '/../../.gitsplit.yml', 'utf8'));
@@ -124,7 +126,7 @@ module.exports = (gulp, plugins) => {
                     base: './'
                 }
             )
-            .pipe(plugins.bump({version: newVersion}))
+            .pipe(bump({version: newVersion}))
             .pipe(gulp.dest('./'));
 
         if (changedComponents.includes('acp3/core')) {
@@ -133,7 +135,7 @@ module.exports = (gulp, plugins) => {
                 {
                     base: './'
                 }
-            ).pipe(plugins.change((content) => {
+            ).pipe(change((content) => {
                 const search = 'const VERSION = \'.+\'';
                 const replace = 'const VERSION = \'' + newVersion + '\'';
 
@@ -185,7 +187,7 @@ module.exports = (gulp, plugins) => {
             {
                 base: './'
             }
-        ).pipe(plugins.change((content) => {
+        ).pipe(change((content) => {
             for (const packageName of changedComponents) {
                 const search = '"' + packageName + '": "^[~0-9.]+"';
                 const replace = '"' + packageName + '": "^' + newVersion + '"';
@@ -223,7 +225,7 @@ module.exports = (gulp, plugins) => {
             [
                 './' + changelogName,
             ]
-        ).pipe(plugins.change((content) => {
+        ).pipe(change((content) => {
             const currentDate = moment().format('YYYY-MM-DD');
             return content
                 .replace('## [Unreleased]', `## [${newVersion}] - ${currentDate}`)
