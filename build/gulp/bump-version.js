@@ -104,9 +104,11 @@ module.exports = (gulp) => {
     function getNewVersion(cliArgument, currentVersion) {
         if (cliArgument.major) {
             return semver.inc(currentVersion, 'major');
-        } else if (cliArgument.minor) {
+        }
+        if (cliArgument.minor) {
             return semver.inc(currentVersion, 'minor');
-        } else if (cliArgument.patch) {
+        }
+        if (cliArgument.patch) {
             return semver.inc(currentVersion, 'patch');
         }
 
