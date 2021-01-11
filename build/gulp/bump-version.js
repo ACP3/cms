@@ -70,7 +70,7 @@ module.exports = (gulp) => {
         const changedComponents = new Set();
 
         for (const diffFile of diffSummary.files) {
-            for (const [ componentPath, composerPackageName ] of componentMap) {
+            for (const [componentPath, composerPackageName] of componentMap) {
                 if (diffFile.file.indexOf(componentPath) === 0 && !changedComponents.has(composerPackageName)) {
                     changedComponents.add(composerPackageName);
                 }
@@ -88,10 +88,12 @@ module.exports = (gulp) => {
      * @param {string} newVersion
      */
     function bumpVersions(changedComponents, componentMap, newVersion) {
-        // We need to bump the version number of the ACP3/core package everytime (even if there hasn't been any change),
-        // as the update check is relying on this version.
-        bumpCore(newVersion);
-        bumpComponents(changedComponents, componentMap, newVersion);
+        return Promise.all([
+            // We need to bump the version number of the ACP3/core package everytime (even if there hasn't been any change),
+            // as the update check is relying on this version.
+            bumpCore(newVersion),
+            bumpComponents(changedComponents, componentMap, newVersion),
+        ]);
     }
 
     /**
@@ -121,28 +123,37 @@ module.exports = (gulp) => {
      * @param {string} newVersion
      * @returns {*}
      */
-    function bumpCore(newVersion) {
-        gulp
-            .src(
-                ['./package.json', './package-lock.json'],
-                {
-                    base: './'
-                }
-            )
-            .pipe(bump({version: newVersion}))
-            .pipe(gulp.dest('./'));
+    async function bumpCore(newVersion) {
+        return Promise.all([
+            new Promise(((resolve, reject) => {
+                gulp
+                    .src(
+                        ['./package.json', './package-lock.json'],
+                        {
+                            base: './'
+                        }
+                    )
+                    .pipe(bump({version: newVersion}))
+                    .pipe(gulp.dest('./'))
+                    .on('finish', resolve)
+                    .on('error', reject);
+            })),
+            new Promise(((resolve, reject) => {
+                gulp.src(
+                    './ACP3/Core/src/Application/BootstrapInterface.php',
+                    {
+                        base: './'
+                    }
+                ).pipe(change((content) => {
+                    const search = 'const VERSION = \'.+\'';
+                    const replace = 'const VERSION = \'' + newVersion + '\'';
 
-        return gulp.src(
-            './ACP3/Core/src/Application/BootstrapInterface.php',
-            {
-                base: './'
-            }
-        ).pipe(change((content) => {
-            const search = 'const VERSION = \'.+\'';
-            const replace = 'const VERSION = \'' + newVersion + '\'';
-
-            return replaceAll(content, search, replace);
-        })).pipe(gulp.dest('./'));
+                    return replaceAll(content, search, replace);
+                })).pipe(gulp.dest('./'))
+                    .on('finish', resolve)
+                    .on('error', reject);
+            }))
+        ]);
     }
 
     /**
@@ -173,7 +184,7 @@ module.exports = (gulp) => {
      * @param {string} newVersion
      * @returns {*}
      */
-    function bumpComponents(changedComponents, componentMap, newVersion) {
+    async function bumpComponents(changedComponents, componentMap, newVersion) {
         const changedPaths = [];
         for (const [componentPath, composerPackageName] of componentMap) {
             if (!changedComponents.includes(composerPackageName)) {
@@ -183,21 +194,25 @@ module.exports = (gulp) => {
             changedPaths.push(componentPath + '/composer.json');
         }
 
-        return gulp.src(
-            changedPaths,
-            {
-                base: './'
-            }
-        ).pipe(change((content) => {
-            for (const packageName of changedComponents) {
-                const search = '"' + packageName + '": "^[~0-9.]+"';
-                const replace = '"' + packageName + '": "^' + newVersion + '"';
+        return new Promise(((resolve, reject) => {
+            gulp.src(
+                changedPaths,
+                {
+                    base: './'
+                }
+            ).pipe(change((content) => {
+                for (const packageName of changedComponents) {
+                    const search = '"' + packageName + '": "^[~0-9.]+"';
+                    const replace = '"' + packageName + '": "^' + newVersion + '"';
 
-                content = replaceAll(content, search, replace);
-            }
+                    content = replaceAll(content, search, replace);
+                }
 
-            return content;
-        })).pipe(gulp.dest('./'));
+                return content;
+            })).pipe(gulp.dest('./'))
+                .on('finish', resolve)
+                .on('error', reject);
+        }));
     }
 
     /**
@@ -207,7 +222,7 @@ module.exports = (gulp) => {
      * @param {string} currentVersion
      * @param {string} newVersion
      */
-    function bumpChangelog(nameOfCurrentBranch, currentVersion, newVersion) {
+    async function bumpChangelog(nameOfCurrentBranch, currentVersion, newVersion) {
         const changelogName = 'CHANGELOG-' + nameOfCurrentBranch + '.md';
         const changelogPath = __dirname + '/../../' + changelogName;
 
@@ -222,60 +237,86 @@ module.exports = (gulp) => {
             );
         }
 
-        gulp.src(
-            [
-                './' + changelogName,
-            ]
-        ).pipe(change((content) => {
-            const currentDate = moment().format('YYYY-MM-DD');
-            return content
-                .replace('## [Unreleased]', `## [${newVersion}] - ${currentDate}`)
-                .replace(
-                    `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...${nameOfCurrentBranch}`,
-                    `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${newVersion}...${nameOfCurrentBranch}\n` +
-                    `[${newVersion}]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...v${newVersion}`
-                );
-        })).pipe(gulp.dest('./'));
+        return new Promise((resolve, reject) => {
+            gulp.src(
+                [
+                    './' + changelogName,
+                ]
+            ).pipe(change((content) => {
+                const currentDate = moment().format('YYYY-MM-DD');
+                return content
+                    .replace('## [Unreleased]', `## [${newVersion}] - ${currentDate}`)
+                    .replace(
+                        `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...${nameOfCurrentBranch}`,
+                        `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${newVersion}...${nameOfCurrentBranch}\n` +
+                        `[${newVersion}]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...v${newVersion}`
+                    );
+            })).pipe(gulp.dest('./'))
+                .on('finish', resolve)
+                .on('error', reject);
+        });
     }
 
     /**
      * Check, whether the version bumping can take place at all
      *
      * @param {string} nameOfCurrentBranch
+     * @param {string} newVersion
      * @param {boolean} isMajorUpdate
      */
-    function checkVersionBumpConstraints(nameOfCurrentBranch, isMajorUpdate) {
+    async function checkVersionBumpConstraints(nameOfCurrentBranch, newVersion, isMajorUpdate) {
         if (!nameOfCurrentBranch.match(/^\d+\.x$/)) {
+            const versionBranch = Number(newVersion.split('.')[0]) + 1;
+
             throw new Error(
-                `Can't bump the version outside a version branch. Please switch to one of them!`
+                `Can't bump the version outside a version branch. Please switch to branch "${versionBranch}.x"!`
             );
-        } else if (isMajorUpdate) {
+        }
+        if (isMajorUpdate) {
             const nextVersionBranch = Number(nameOfCurrentBranch.split('.')[0]) + 1;
 
             throw new Error(
                 `Can't do a major version bump within branch "${nameOfCurrentBranch}". Please switch to branch "${nextVersionBranch}.x"!`
             );
         }
+        if ((await git().status()).modified.length) {
+            throw new Error(
+                `The working copy is not clean. Please commit all unsaved changes before running the bump-version task!`
+            );
+        }
     }
 
-    return async () => {
+    /**
+     * Commits made by the bump-version task and creates the new tag.
+     *
+     * @param {string} newVersion
+     */
+    async function commitAndTag(newVersion) {
+        // Get the modified files so that we can commit these files
+        const modifiedFiles = (await git().status()).modified;
+
+        await git().commit(`bump the version to ${newVersion}`, modifiedFiles);
+        await git().addAnnotatedTag(`v${newVersion}`, `v${newVersion}`);
+    }
+
+    return async (done) => {
         try {
             const nameOfCurrentBranch = await getNameOfCurrentBranch();
             const currentVersion = await getCurrentVersion();
             const newVersion = getNewVersion(argv, currentVersion);
             const components = loadComponents();
 
-            checkVersionBumpConstraints(nameOfCurrentBranch, argv.major);
+            await checkVersionBumpConstraints(nameOfCurrentBranch, newVersion, argv.major);
 
-            bumpChangelog(nameOfCurrentBranch, currentVersion, newVersion);
-
-            bumpVersions(
-                await findChangedComponents(components, argv.major, currentVersion),
-                components,
-                newVersion
-            );
+            await Promise.all([
+                bumpChangelog(nameOfCurrentBranch, currentVersion, newVersion),
+                bumpVersions(await findChangedComponents(components, argv.major, currentVersion), components, newVersion)
+            ]);
+            await commitAndTag(newVersion);
         } catch (e) {
             console.error(e.message);
+        } finally {
+            done();
         }
     };
 };

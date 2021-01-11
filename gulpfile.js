@@ -13,7 +13,6 @@
     }
 
     gulp.task('copy', getTask('copy'));
-    gulp.task('bump-version', getTask('bump-version'));
     gulp.task('scss', getTask('scss'));
     gulp.task('less', getTask('less'));
     gulp.task('babel', getTask('babel'));
@@ -21,7 +20,9 @@
     gulp.task('stylelint-less', getTask('stylelint-less'));
     gulp.task('stylelint-scss', getTask('stylelint-scss'));
     gulp.task('stylelint', gulp.parallel('stylelint-less', 'stylelint-scss'));
-    gulp.task('default', gulp.parallel('less', 'scss', 'babel', 'eslint', 'stylelint'));
+    gulp.task('lint', gulp.parallel('stylelint', 'eslint'));
+    gulp.task('bump-version', getTask('bump-version'));
+    gulp.task('default', gulp.parallel('less', 'scss', 'babel', 'lint'));
 
     gulp.task('watch', gulp.series('default', getTask('watch')));
 })();
