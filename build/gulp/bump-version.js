@@ -16,7 +16,7 @@ module.exports = (gulp) => {
     const change = require('gulp-change');
 
     function loadComponents() {
-        const document = yaml.safeLoad(fs.readFileSync(__dirname + '/../../.gitsplit.yml', 'utf8'));
+        const document = yaml.load(fs.readFileSync(__dirname + '/../../.gitsplit.yml', 'utf8'));
 
         const componentPathMap = new Map();
         const componentPaths = document.splits.map((split) => split.prefix);
