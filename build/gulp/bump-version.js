@@ -194,6 +194,10 @@ module.exports = (gulp) => {
             changedPaths.push(componentPath + '/composer.json');
         }
 
+        if (changedPaths.length === 0) {
+            return Promise.resolve();
+        }
+
         return new Promise(((resolve, reject) => {
             gulp.src(
                 changedPaths,
