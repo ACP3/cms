@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- [Core] Changed stylelint to be a bit less strict
+
+### Fixed
+- [Core] Fixed that stylelint was linting the ``uploads`` folder
+
 ## [5.13.0] - 2021-01-11
 ### Added
 - [Core] Bust the browser cache for the libraries when in development mode
