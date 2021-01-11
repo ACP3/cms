@@ -88,7 +88,9 @@ module.exports = (gulp) => {
      * @param {string} newVersion
      */
     function bumpVersions(changedComponents, componentMap, newVersion) {
-        bumpCore(changedComponents, newVersion);
+        // We need to bump the version number of the ACP3/core package everytime (even if there hasn't been any change),
+        // as the update check is relying on this version.
+        bumpCore(newVersion);
         bumpComponents(changedComponents, componentMap, newVersion);
     }
 
@@ -112,13 +114,12 @@ module.exports = (gulp) => {
     }
 
     /**
-     * Bumps the versions number of various files of the acp3/core component
+     * Bumps the version numbers of various files of the acp3/core component
      *
-     * @param {string[]} changedComponents
      * @param {string} newVersion
      * @returns {*}
      */
-    function bumpCore(changedComponents, newVersion) {
+    function bumpCore(newVersion) {
         gulp
             .src(
                 ['./package.json', './package-lock.json'],
@@ -129,19 +130,17 @@ module.exports = (gulp) => {
             .pipe(bump({version: newVersion}))
             .pipe(gulp.dest('./'));
 
-        if (changedComponents.includes('acp3/core')) {
-            return gulp.src(
-                './ACP3/Core/src/Application/BootstrapInterface.php',
-                {
-                    base: './'
-                }
-            ).pipe(change((content) => {
-                const search = 'const VERSION = \'.+\'';
-                const replace = 'const VERSION = \'' + newVersion + '\'';
+        return gulp.src(
+            './ACP3/Core/src/Application/BootstrapInterface.php',
+            {
+                base: './'
+            }
+        ).pipe(change((content) => {
+            const search = 'const VERSION = \'.+\'';
+            const replace = 'const VERSION = \'' + newVersion + '\'';
 
-                return replaceAll(content, search, replace);
-            })).pipe(gulp.dest('./'));
-        }
+            return replaceAll(content, search, replace);
+        })).pipe(gulp.dest('./'));
     }
 
     /**
