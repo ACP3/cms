@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.13.0] - 2021-01-11
 ### Added
 - [Core] Bust the browser cache for the libraries when in development mode
 - [Core] Lint the stylesheets and the javascript files when running the gulp tasks
@@ -248,7 +248,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Breaking
 - removed all deprecated code
 
-[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.12.2...5.x
+[Unreleased]: https://gitlab.com/ACP3/cms/compare/v5.13.0...5.x
+[5.13.0]: https://gitlab.com/ACP3/cms/compare/v5.12.2...v5.13.0
 [5.12.2]: https://gitlab.com/ACP3/cms/compare/v5.12.1...v5.12.2
 [5.12.1]: https://gitlab.com/ACP3/cms/compare/v5.12.0...v5.12.1
 [5.12.0]: https://gitlab.com/ACP3/cms/compare/v5.11.0...v5.12.0

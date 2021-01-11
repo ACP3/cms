@@ -17,9 +17,9 @@
   "prefer-stable": true,
   "require": {
     "ext-gd": "*",
-    "acp3/core": "^5.12.0",
-    "acp3/module-permissions": "^5.12.0",
-    "acp3/module-system": "^5.12.0",
+    "acp3/core": "^5.13.0",
+    "acp3/module-permissions": "^5.13.0",
+    "acp3/module-system": "^5.13.0",
     "acp3/module-users": "^5.12.0"
   },
   "suggest": {
