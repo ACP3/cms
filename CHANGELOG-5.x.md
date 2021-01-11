@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- [Core] Bust the browser cache for the libraries when in development mode
+- [Core] Lint the stylesheets and the javascript files when running the gulp tasks
+- [System] Made it possible to specify the transfer method via a data attribute when using the ajax-form
+
+### Changed
+- [Core] Generate the sourcemaps with gulp directly, instead of relying on the package ``gulp-sourcemaps``
+- [Core] Changing the sort order of entries within a data grid will not trigger a full page reload anymore
+- [Core] Optimized the ``Sort``-helper class
+- [Core] Optimized the ``ACL``-class to remove some obsolete method calls
+- [Core] Refactor the gulp tasks
+- [Menus] Rework the menus' data grid
+- [Gallery] Removed some obsolete/redundant code from the ``PictureModel``
+
+### Fixed
+- [Core] fixed a possible infinite loop when running the ``babel`` gulp task in watch mode
+
 ## [5.12.2] - 2021-01-04
 ### Fixed
 - [System] Fixed a infinite recursion loop when clearing the page cache
