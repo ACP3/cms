@@ -6,10 +6,6 @@ $navbar-arrow-height: ($navbar-height / 2) !default;
 $navbar-arrow-width: 10px !default;
 $breakpoint-tablet-min: $screen-sm-min !default;
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
 ul,
 ol {
   &.unstyled {
