@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- [Core] Applied some minor fixes to the gulp tasks
+
 ## [5.13.1] - 2021-01-11
 ### Changed
 - [Core] Changed stylelint to be a bit less strict
