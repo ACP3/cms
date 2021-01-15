@@ -14,11 +14,8 @@ const modulePathsLessWatch = componentPaths.map((componentPath) => {
 const modulePathsLessProcess = componentPaths.map((componentPath) => {
     return componentPath + '/Resources/Assets/less/{style,append}.less';
 });
-const modulePathsScssWatch = componentPaths.map((componentPath) => {
+const modulePathsScss = componentPaths.map((componentPath) => {
     return componentPath + '/Resources/Assets/scss/**/*.scss';
-});
-const modulePathsScssProcess = componentPaths.map((componentPath) => {
-    return componentPath + '/Resources/Assets/scss/*.scss';
 });
 const modulePathsJs = componentPaths.map((componentPath) => {
     return componentPath + '/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js';
@@ -29,9 +26,6 @@ module.exports = {
         watch: modulePathsLessWatch.slice(),
         process: modulePathsLessProcess.slice(),
     },
-    scss: {
-        watch: modulePathsScssWatch.slice(),
-        process: modulePathsScssProcess.slice()
-    },
+    scss: modulePathsScss.slice(),
     js: modulePathsJs.slice(),
 };

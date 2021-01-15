@@ -15,8 +15,7 @@ module.exports = (gulp) => {
             .src(
                 componentPaths.less.watch
                     .concat([
-                        './designs/*/*/Assets/less/**/!(*.min).less',
-                        './designs/*/Assets/less/**/!(*.min).less',
+                        './designs/*/**/Assets/less/**/*.less',
                     ]),
                 {base: './', allowEmpty: true, since: gulp.lastRun('stylelint-less')}
             )

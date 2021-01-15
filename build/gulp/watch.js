@@ -17,7 +17,7 @@ module.exports = (gulp) => {
             gulp.parallel('less', 'stylelint-less')
         );
         gulp.watch(
-            componentPaths.scss.watch.concat([
+            componentPaths.scss.concat([
                 'designs/*/**/Assets/scss/**/*.scss',
             ]),
             {cwd: './'},

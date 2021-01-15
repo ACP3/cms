@@ -17,9 +17,8 @@ module.exports = (gulp) => {
     return () => {
         return gulp
             .src(
-                componentPaths.scss.process.concat([
-                    './designs/*/*/Assets/scss/*.scss',
-                    './designs/*/Assets/scss/*.scss',
+                componentPaths.scss.concat([
+                    './designs/*/**/Assets/scss/**/*.scss',
                 ]),
                 {base: './', allowEmpty: true}
             )
