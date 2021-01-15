@@ -16,7 +16,7 @@ module.exports = (gulp) => {
                 componentPaths.scss.watch
                     .concat([
                         './designs/*/*/Assets/scss/**/!(*.min).scss',
-                        './designs/*/Assets/scss/!(*.min).scss',
+                        './designs/*/Assets/scss/**/!(*.min).scss',
                     ]),
                 {base: './', allowEmpty: true}
             )

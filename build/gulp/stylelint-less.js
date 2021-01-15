@@ -16,7 +16,7 @@ module.exports = (gulp) => {
                 componentPaths.less.watch
                     .concat([
                         './designs/*/*/Assets/less/**/!(*.min).less',
-                        './designs/*/Assets/less/!(*.min).less',
+                        './designs/*/Assets/less/**/!(*.min).less',
                     ]),
                 {base: './', allowEmpty: true}
             )
