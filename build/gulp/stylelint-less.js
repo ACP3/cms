@@ -18,7 +18,7 @@ module.exports = (gulp) => {
                         './designs/*/*/Assets/less/**/!(*.min).less',
                         './designs/*/Assets/less/**/!(*.min).less',
                     ]),
-                {base: './', allowEmpty: true}
+                {base: './', allowEmpty: true, since: gulp.lastRun('stylelint-less')}
             )
             .pipe(plumber())
             .pipe(gulpStylelint({

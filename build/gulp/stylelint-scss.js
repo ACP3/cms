@@ -18,7 +18,7 @@ module.exports = (gulp) => {
                         './designs/*/*/Assets/scss/**/!(*.min).scss',
                         './designs/*/Assets/scss/**/!(*.min).scss',
                     ]),
-                {base: './', allowEmpty: true}
+                {base: './', allowEmpty: true, since: gulp.lastRun('stylelint-scss')}
             )
             .pipe(plumber())
             .pipe(gulpStylelint({
