@@ -13,6 +13,7 @@ module.exports = (gulp) => {
     const plumber = require('gulp-plumber');
     const postcss = require('gulp-postcss');
     const rename = require('gulp-rename');
+    const dependents = require('gulp-dependents');
 
     return () => {
         return gulp
@@ -20,9 +21,10 @@ module.exports = (gulp) => {
                 componentPaths.scss.concat([
                     './designs/*/**/Assets/scss/**/*.scss',
                 ]),
-                {base: './', allowEmpty: true}
+                {base: './', allowEmpty: true, since: gulp.lastRun('scss')}
             )
             .pipe(plumber())
+            .pipe(dependents())
             .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
             .pipe(postcss([autoprefixer()]))
             .pipe(rename((path) => {
