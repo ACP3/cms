@@ -27,8 +27,8 @@ module.exports = (gulp) => {
             .pipe(plumber())
             .pipe(dependents())
             .pipe(filter([
-                ...componentPaths.less.process,
-                './designs/*/**/Assets/less/*.less',
+                '**',
+                '!**/less/*/**/*.less',
             ]))
             .pipe(less())
             .pipe(postcss([autoprefixer()]))
