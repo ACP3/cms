@@ -7,16 +7,16 @@
 
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
+use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Installer\Core\Controller\AbstractInstallerAction;
+use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class AvailableDatabases extends AbstractInstallerAction
+class AvailableDatabases extends AbstractInstallerAction implements InvokableActionInterface
 {
-    /**
-     * @return JsonResponse
-     */
-    public function execute()
+    public function __invoke(): JsonResponse
     {
         $availableDatabases = [];
         if ($this->request->getPost()->count() > 0) {
@@ -33,36 +33,26 @@ class AvailableDatabases extends AbstractInstallerAction
         return new JsonResponse($availableDatabases);
     }
 
-    /**
-     * @param string $hostname
-     * @param string $userName
-     * @param string $password
-     *
-     * @return \Doctrine\DBAL\Connection|null
-     */
-    private function getDatabaseConnection($hostname, $userName, $password)
+    private function getDatabaseConnection(string $hostname, string $userName, string $password): ?Connection
     {
         try {
-            $config = new \Doctrine\DBAL\Configuration();
+            $config = new Configuration();
 
             $connectionParams = [
                 'user' => $userName,
                 'password' => $password,
                 'host' => $hostname,
                 'driver' => 'pdo_mysql',
-                'charset' => 'utf8',
+                'charset' => 'utf8mb4',
             ];
 
-            return \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+            return DriverManager::getConnection($connectionParams, $config);
         } catch (\Exception $e) {
             return null;
         }
     }
 
-    /**
-     * @return array
-     */
-    private function retrieveAvailableDatabases(Connection $conn)
+    private function retrieveAvailableDatabases(Connection $conn): array
     {
         $availableDatabases = [];
         $databases = $conn->fetchAll('SHOW DATABASES');
@@ -73,10 +63,7 @@ class AvailableDatabases extends AbstractInstallerAction
         return \array_values(\array_diff($availableDatabases, $this->getMySQLDefaultDatabases()));
     }
 
-    /**
-     * @return array
-     */
-    private function getMySQLDefaultDatabases()
+    private function getMySQLDefaultDatabases(): array
     {
         return ['information_schema', 'performance_schema', 'mysql', 'test'];
     }
