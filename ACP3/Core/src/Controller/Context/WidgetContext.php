@@ -43,6 +43,8 @@ class WidgetContext
     private $appPath;
     /**
      * @var \Symfony\Component\HttpFoundation\Response
+     *
+     * @deprecated since version 5.14.0. To be removed with version 6.x.
      */
     private $response;
 
@@ -114,6 +116,8 @@ class WidgetContext
 
     /**
      * @return Response
+     *
+     * @deprecated since version 5.14.0. To be removed with version 6.x.
      */
     public function getResponse()
     {

@@ -40,6 +40,8 @@ abstract class AbstractWidgetAction implements ActionInterface
     protected $appPath;
     /**
      * @var Response
+     *
+     * @deprecated since version 5.14.0. To be removed with version 6.x.
      */
     protected $response;
 

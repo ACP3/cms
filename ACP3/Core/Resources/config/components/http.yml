@@ -21,8 +21,13 @@ services:
 
   core.http.response:
     class: Symfony\Component\HttpFoundation\Response
+    deprecated:
+      message: 'Service %service_id% is deprecated since version 5.14.0. To be removed with version 6.x.'
 
-  Symfony\Component\HttpFoundation\Response: '@core.http.response'
+  Symfony\Component\HttpFoundation\Response:
+    alias: 'core.http.response'
+    deprecated:
+      message: 'Service %alias_id% is deprecated since version 5.14.0. To be removed with version 6.x.'
 
   request_stack:
     class: Symfony\Component\HttpFoundation\RequestStack
@@ -30,7 +35,6 @@ services:
 
   Symfony\Component\HttpFoundation\RequestStack: '@request_stack'
 
-  core.http.reset_request_listener:
-    class: ACP3\Core\Http\EventListener\ResetRequestListener
+  ACP3\Core\Http\EventListener\ResetRequestListener:
     tags:
       - { name: core.eventSubscriber }
