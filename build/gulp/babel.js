@@ -14,12 +14,11 @@ module.exports = (gulp) => {
     return () => {
         return gulp
             .src(
-                componentPaths.js.concat(
-                    [
-                        './designs/*/*/Assets/js/{admin,frontend,partials,widget}/!(*.min).js',
-                        './designs/*/Assets/js/!(*.min).js',
-                    ]
-                ),
+                [
+                    ...componentPaths.js,
+                    './designs/*/*/Assets/js/{admin,frontend,partials,widget}/!(*.min).js',
+                    './designs/*/Assets/js/!(*.min).js',
+                ],
                 {base: './', since: gulp.lastRun('babel'), sourcemaps: true}
             )
             .pipe(plumber())

@@ -10,25 +10,26 @@ module.exports = (gulp) => {
 
     return (done) => {
         gulp.watch(
-            componentPaths.less.watch.concat([
+            [
+                ...componentPaths.less.watch,
                 'designs/*/**/Assets/less/**/*.less',
-            ]),
+            ],
             {cwd: './'},
             gulp.parallel('less', 'stylelint-less')
         );
         gulp.watch(
-            componentPaths.scss.concat([
+            [
+                ...componentPaths.scss,
                 'designs/*/**/Assets/scss/**/*.scss',
-            ]),
+            ],
             {cwd: './'},
             gulp.parallel('scss', 'stylelint-scss')
         );
         gulp.watch(
-            componentPaths.js.concat(
-                [
-                    './designs/**/Assets/js/**/!(*.min).js',
-                ]
-            ),
+            [
+                ...componentPaths.js,
+                './designs/**/Assets/js/**/!(*.min).js',
+            ],
             {cwd: './'},
             gulp.parallel('babel', 'eslint')
         );

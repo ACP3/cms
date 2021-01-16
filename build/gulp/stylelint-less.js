@@ -13,10 +13,10 @@ module.exports = (gulp) => {
     return () => {
         return gulp
             .src(
-                componentPaths.less.watch
-                    .concat([
-                        './designs/*/**/Assets/less/**/*.less',
-                    ]),
+                [
+                    ...componentPaths.less.watch,
+                    './designs/*/**/Assets/less/**/*.less',
+                ],
                 {base: './', allowEmpty: true, since: gulp.lastRun('stylelint-less')}
             )
             .pipe(plumber())
