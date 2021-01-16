@@ -12,7 +12,7 @@ const modulePathsLessWatch = componentPaths.map((componentPath) => {
     return componentPath + '/Resources/Assets/less/**/*.less';
 });
 const modulePathsLessProcess = componentPaths.map((componentPath) => {
-    return componentPath + '/Resources/Assets/less/{style,append}.less';
+    return componentPath + '/Resources/Assets/less/*.less';
 });
 const modulePathsScss = componentPaths.map((componentPath) => {
     return componentPath + '/Resources/Assets/scss/**/*.scss';

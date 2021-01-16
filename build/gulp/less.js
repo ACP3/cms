@@ -12,18 +12,24 @@ module.exports = (gulp) => {
     const less = require('gulp-less');
     const postcss = require('gulp-postcss');
     const rename = require('gulp-rename');
+    const dependents = require('gulp-dependents');
+    const filter = require('gulp-filter');
 
     return () => {
         return gulp
             .src(
-                componentPaths.less.process.concat([
-                    './designs/*/*/Assets/less/style.less',
-                    './designs/*/*/Assets/less/append.less',
-                    './designs/*/Assets/less/*.less',
-                ]),
-                {base: './'}
+                [
+                    ...componentPaths.less.watch,
+                    './designs/*/**/Assets/less/**/*.less',
+                ],
+                {base: './', since: gulp.lastRun('less')},
             )
             .pipe(plumber())
+            .pipe(dependents())
+            .pipe(filter([
+                ...componentPaths.less.process,
+                './designs/*/**/Assets/less/*.less',
+            ]))
             .pipe(less())
             .pipe(postcss([autoprefixer()]))
             .pipe(rename((path) => {
