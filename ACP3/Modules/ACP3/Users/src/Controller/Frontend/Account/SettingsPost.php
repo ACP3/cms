@@ -77,12 +77,15 @@ class SettingsPost extends AbstractAction
                     $this->user->getUserId(),
                     $user['remember_me_token']
                 );
-                $this->response->headers->setCookie($cookie);
 
-                return $this->actionHelper->setRedirectMessage(
+                $response = $this->actionHelper->setRedirectMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'settings_success' : 'settings_error')
                 );
+
+                $response->headers->setCookie($cookie);
+
+                return $response;
             }
         );
     }

@@ -9,10 +9,15 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Core\Modules\Helper\Action;
-use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\Permissions\Helpers;
 use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
+use ACP3\Modules\ACP3\Users\Model\UsersModel;
+use ACP3\Modules\ACP3\Users\Validation\AdminFormValidation;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
@@ -40,15 +45,20 @@ class EditPost extends Core\Controller\AbstractFrontendAction implements Core\Co
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
+    /**
+     * @var \ACP3\Core\Helpers\RedirectMessages
+     */
+    private $redirectMessages;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        FrontendContext $context,
         Action $actionHelper,
         UserModelInterface $user,
         AuthenticationModel $authenticationModel,
-        Users\Model\UsersModel $usersModel,
-        Users\Validation\AdminFormValidation $adminFormValidation,
-        Permissions\Helpers $permissionsHelpers
+        UsersModel $usersModel,
+        AdminFormValidation $adminFormValidation,
+        Helpers $permissionsHelpers,
+        RedirectMessages $redirectMessages
     ) {
         parent::__construct($context);
 
@@ -58,6 +68,7 @@ class EditPost extends Core\Controller\AbstractFrontendAction implements Core\Co
         $this->usersModel = $usersModel;
         $this->user = $user;
         $this->actionHelper = $actionHelper;
+        $this->redirectMessages = $redirectMessages;
     }
 
     /**
@@ -81,18 +92,23 @@ class EditPost extends Core\Controller\AbstractFrontendAction implements Core\Co
                 $formData['pwd'] = $formData['new_pwd'];
             }
 
-            $bool = $this->usersModel->save($formData, $id);
+            $result = $this->usersModel->save($formData, $id);
 
-            $this->updateCurrentlyLoggedInUserCookie($id);
+            $response = $this->redirectMessages->setMessage(
+                $result,
+                $this->translator->t('system', 'save' . ($result !== false ? '_success' : '_error'))
+            );
 
-            return $bool;
+            $this->updateCurrentlyLoggedInUserCookie($id, $response);
+
+            return $response;
         });
     }
 
     /**
      * @throws \Exception
      */
-    protected function updateCurrentlyLoggedInUserCookie(int $userId): void
+    protected function updateCurrentlyLoggedInUserCookie(int $userId, Response $response): void
     {
         if ($userId === $this->user->getUserId() && $this->request->getCookies()->has(AuthenticationModel::AUTH_NAME)) {
             $user = $this->usersModel->getOneById($userId);
@@ -100,7 +116,7 @@ class EditPost extends Core\Controller\AbstractFrontendAction implements Core\Co
                 $userId,
                 $user['remember_me_token']
             );
-            $this->response->headers->setCookie($cookie);
+            $response->headers->setCookie($cookie);
         }
     }
 }
