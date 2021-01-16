@@ -3,24 +3,54 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-(($) => {
-    const $doc = $(document),
-        $languages = $('#languages');
+class LanguageSwitcher {
+    #languageSwitcherFormName;
+    #languageSwitcherForm;
+    #mustConfirm = false;
 
-    $doc.data('has-changes', false);
-    $('#content').find(':input').change(() => {
-        $doc.data('has-changes', true);
-    });
+    constructor(languageSwitcherFormName) {
+        this.#languageSwitcherFormName = languageSwitcherFormName;
+        this.#languageSwitcherForm = document.getElementById(languageSwitcherFormName);
+    }
 
-    $languages.find('.btn').addClass('hidden');
-    $('#lang').change(function () {
-        let submitForm = true;
-        if ($doc.length > 0 && $doc.data('has-changes') === true) {
-            submitForm = confirm($(this).data('change-language-warning'));
-        }
+    init() {
+        this.#hideSubmitButton();
+        this.#bindFormValuesChangesListener();
+        this.#bindLanguageChangeListener();
+    }
 
-        if (submitForm === true) {
-            $languages.submit();
-        }
-    });
-})(jQuery);
+    #hideSubmitButton() {
+        this.#languageSwitcherForm.querySelector('.btn').classList.add('hidden');
+    }
+
+    #bindFormValuesChangesListener() {
+        document.querySelectorAll('input, textarea, select').forEach((elem) => {
+            elem.addEventListener('change', (event) => {
+                if (event.target.form.id === 'languages') {
+                    return;
+                }
+
+                this.#mustConfirm = true;
+            });
+        });
+    }
+
+    #bindLanguageChangeListener() {
+        document.getElementById('lang').addEventListener('change', (event) => {
+            let canSubmitForm = true;
+
+            if (this.#mustConfirm === true) {
+                canSubmitForm = confirm(event.target.dataset.changeLanguageWarning);
+            }
+
+            if (canSubmitForm === true) {
+                this.#languageSwitcherForm.submit();
+            }
+        });
+    }
+}
+
+(() => {
+    const languageSwitcher = new LanguageSwitcher('languages');
+    languageSwitcher.init();
+})();
