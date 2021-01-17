@@ -10,12 +10,6 @@
                 "corejs": 3,
                 "useBuiltIns": "entry"
             }
-        ],
-        [
-            "minify",
-            {
-                "builtIns": false
-            }
         ]
     ]
 }
