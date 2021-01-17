@@ -27,7 +27,7 @@ module.exports = (gulp) => {
         );
         gulp.watch(
             [
-                ...componentPaths.js,
+                ...componentPaths.js.watch,
                 './designs/**/Assets/js/**/!(*.min).js',
             ],
             {cwd: './'},

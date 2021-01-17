@@ -14,8 +14,8 @@ module.exports = (gulp) => {
         return gulp
             .src(
                 [
-                    ...componentPaths.js,
-                    './designs/*/*/Assets/js/{admin,frontend,partials,widget}/!(*.min).js',
+                    ...componentPaths.js.watch,
+                    './designs/*/*/Assets/js/{admin,frontend,partials,widget,lib}/!(*.min).js',
                     './designs/*/Assets/js/!(*.min).js',
                 ],
                 {base: './'}

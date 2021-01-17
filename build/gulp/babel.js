@@ -18,7 +18,7 @@ module.exports = (gulp) => {
         return gulp
             .src(
                 [
-                    ...componentPaths.js,
+                    ...componentPaths.js.process,
                     './designs/*/*/Assets/js/{admin,frontend,partials,widget}/!(*.min).js',
                     './designs/*/Assets/js/!(*.min).js',
                 ],
