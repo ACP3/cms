@@ -30,7 +30,7 @@ module.exports = (gulp) => {
             .pipe(postcss([autoprefixer()]))
             .pipe(rename((path) => {
                 path.dirname = path.dirname.substring(0, path.dirname.length - 4) + 'css';
-                path.basename += '.min';
+                path.extname = '.min.css';
             }))
             .pipe(gulp.dest('./'));
     };

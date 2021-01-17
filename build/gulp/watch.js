@@ -31,7 +31,7 @@ module.exports = (gulp) => {
                 './designs/**/Assets/js/**/!(*.min).js',
             ],
             {cwd: './'},
-            gulp.parallel('babel', 'eslint')
+            gulp.series('eslint')
         );
 
         done();

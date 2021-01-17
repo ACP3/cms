@@ -47,7 +47,5 @@ export default class LanguageSwitcher {
                 this.#languageSwitcherForm.submit();
             }
         });
-
-        console.log('huhu');
     }
 }

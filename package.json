@@ -34,6 +34,8 @@
     "bootstrap": "^3.4.1",
     "browserify": "^17.0.0",
     "eslint": "^7.17.0",
+    "event-stream": "^4.0.1",
+    "globby": "^11.0.2",
     "gulp": "^4.0.2",
     "gulp-buffer": "0.0.2",
     "gulp-bump": "^3.2.0",
@@ -49,6 +51,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-stylelint": "^13.0.0",
     "gulp-tap": "^2.0.0",
+    "gulplog": "^1.0.0",
     "js-yaml": "^4.0.0",
     "node-sass": "^5.0.0",
     "postcss": "^8.2.4",
@@ -57,6 +60,8 @@
     "stylelint": "^13.8.0",
     "stylelint-config-twbs-bootstrap": "^2.1.0",
     "tinyify": "^3.0.0",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^3.11.1",
     "yargs": "^16.2.0"
   },
   "dependencies": {

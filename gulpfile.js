@@ -24,5 +24,9 @@
     gulp.task('bump-version', getTask('bump-version'));
     gulp.task('default', gulp.parallel('less', 'scss', 'babel', 'lint'));
 
-    gulp.task('watch', gulp.series('default', getTask('watch')));
+    gulp.task('watch', (done) => {
+        process.env.GULP_MODE = 'watch';
+
+        return gulp.series(gulp.parallel('less', 'scss', 'babel', 'lint'), getTask('watch'))(done);
+    });
 })();
