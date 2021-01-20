@@ -5,6 +5,6 @@
 
 (($) => {
     $('input[name="active"]').on('click change', function () {
-        $('#publication-period-wrapper').toggle(this.value === '1');
+        $('#publication-period-wrapper')[0].classList.toggle('hidden',Number(this.value) === 0);
     }).filter(':checked').click();
 })(jQuery);

@@ -3,13 +3,15 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-(($) => {
-    const $recaptchaWrapper = $('#recaptcha-wrapper'),
+((document) => {
+    const recaptchaWrapper = document.getElementById('recaptcha-wrapper'),
+        captchaTypes = document.querySelector('select[name="captcha"]'),
         serviceIds = [
             'captcha.extension.recaptcha_captcha_extension'
         ];
 
-    $(':input[name="captcha"]').on('change', function () {
-        $recaptchaWrapper.toggle(serviceIds.indexOf(this.value) !== -1);
-    }).triggerHandler('change');
-})(jQuery);
+    captchaTypes.addEventListener('change', function () {
+        recaptchaWrapper.classList.toggle('hidden', !serviceIds.includes(this.value));
+    });
+    captchaTypes.dispatchEvent(new InputEvent('change'));
+})(document);

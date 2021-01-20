@@ -2,6 +2,7 @@
 <language>
     <keys>
         <item key="access_to_following_modules">You have access to the following %d modules.</item>
+        <item key="active">Active</item>
         <item key="acp3_not_up_to_date">A newer version of ACP3 is available. Click %link_start%here%link_end% to
             download the latest version.
         </item>

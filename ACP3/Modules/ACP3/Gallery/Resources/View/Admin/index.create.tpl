@@ -8,10 +8,7 @@
         </ul>
         <div class="tab-content">
             <div id="tab-1" class="tab-pane fade in active">
-                {include file="asset:System/Partials/form_group.button_group.tpl" options=$active name="active" required=true label={lang t="gallery|active"}}
-                <div id="publication-period-wrapper">
-                    {datepicker name=['start', 'end'] value=[$form.start, $form.end]}
-                </div>
+                {include file="asset:System/Partials/form.publication.tpl" options=$active publication_period=[$form.start, $form.end]}
             </div>
             <div id="tab-2" class="tab-pane fade">
                 {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="gallery|title"}}
@@ -22,7 +19,4 @@
         </div>
     </div>
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/gallery"}}
-    {javascripts}
-        {include_js module="gallery" file="admin/index.create"}
-    {/javascripts}
 {/block}
