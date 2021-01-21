@@ -3,22 +3,17 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
 {block CONTENT_AJAX_FORM}
-    <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-1" data-toggle="tab">{lang t="system|publication"}</a></li>
-            <li><a href="#tab-2" data-toggle="tab">{lang t="files|file_statements"}</a></li>
-        </ul>
-        <div class="tab-content">
-            <div id="tab-1" class="tab-pane fade in active">
-                {include file="asset:System/Partials/form.publication.tpl" options=$active publication_period=[$form.start, $form.end]}
-            </div>
-            <div id="tab-2" class="tab-pane fade">
-                {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="files|title"}}
-                {block FILES_FILE_UPLOAD}
-                    <div id="file-internal-toggle">
-                        {include file="asset:System/Partials/form_group.input_file.tpl" name="file_internal" labelRequired=true label={lang t="files|file"}}
-                    </div>
-                {/block}
+    {tabset identifier="file-admin-edit-form"}
+        {tab title={lang t="system|publication"}}
+            {include file="asset:System/Partials/form.publication.tpl" options=$active publication_period=[$form.start, $form.end]}
+        {/tab}
+        {tab title={lang t="files|file_statements"}}
+            {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="files|title"}}
+            {block FILES_FILE_UPLOAD}
+                <div id="file-internal-toggle">
+                    {include file="asset:System/Partials/form_group.input_file.tpl" name="file_internal" labelRequired=true label={lang t="files|file"}}
+                </div>
+            {/block}
                 <div id="file-external-toggle">
                     {include file="asset:System/Partials/form_group.input_url.tpl" name="file_external" value=$form.file_external labelRequired=true maxlength=120 label={lang t="files|uri"}}
                     <div class="form-group">
@@ -50,11 +45,10 @@
                         {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
                     </div>
                 </div>
-                {event name="files.layout.upsert" form_data=$form}
-            </div>
-            {event name="core.layout.form_extension"  uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
-        </div>
-    </div>
+            {event name="files.layout.upsert" form_data=$form}
+        {/tab}
+    {event name="core.layout.form_extension"  uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
+    {/tabset}
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/files"}}
     {javascripts}
         {include_js module="files" file="admin/index.create"}

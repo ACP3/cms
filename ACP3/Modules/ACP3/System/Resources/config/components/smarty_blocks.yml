@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Blocks\Tab:
+    tags:
+      - { name: smarty.plugin.block, pluginName: tab }
+
+  ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Blocks\Tabset:
+    tags:
+      - { name: smarty.plugin.block, pluginName: tabset }

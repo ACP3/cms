@@ -1,10 +1,11 @@
 services:
-  smarty.plugin.javascripts:
-    class: ACP3\Core\View\Renderer\Smarty\Blocks\Javascripts
+  _defaults:
+    autowire: true
+
+  ACP3\Core\View\Renderer\Smarty\Blocks\Javascripts:
     tags:
       - { name: smarty.plugin.block, pluginName: javascripts }
 
-  smarty.plugin.stylesheets:
-    class: ACP3\Core\View\Renderer\Smarty\Blocks\Stylesheets
+  ACP3\Core\View\Renderer\Smarty\Blocks\Stylesheets:
     tags:
       - { name: smarty.plugin.block, pluginName: stylesheets }
