@@ -14,8 +14,9 @@ use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class OnMenusLayoutRenderManageMenuItemListener
+class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInterface
 {
     /**
      * @var ACL
@@ -77,9 +78,10 @@ class OnMenusLayoutRenderManageMenuItemListener
                     )
                     ->assign('form', $this->modifyFormValues($menuItem))
                     ->assign($formFields)
+                    ->assign('titleFormFieldName', 'menu_item_title')
                     ->assign('uri_pattern', $parameters['uri_pattern']);
 
-                $event->addContent($this->view->fetchTemplate('Menus/Partials/manage_menu_item.tpl'));
+                $event->addContent($this->view->fetchTemplate('Menus/Partials/tab_menu_item_fields.tpl'));
             }
         }
     }
@@ -134,5 +136,15 @@ class OnMenusLayoutRenderManageMenuItemListener
         }
 
         return $this->menuItemFormFields->createMenuItemFormFields();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            'core.layout.form_extension' => ['__invoke', 255],
+        ];
     }
 }

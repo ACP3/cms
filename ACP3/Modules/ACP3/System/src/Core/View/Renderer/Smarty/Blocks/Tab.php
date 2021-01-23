@@ -29,6 +29,10 @@ class Tab extends AbstractBlock
     public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat): string
     {
         if (!$repeat) {
+            if (\count($smarty->smarty->_tag_stack) > 2) {
+                throw new \InvalidArgumentException('It is currently not possible to nest tabs!');
+            }
+
             $tagStack = \array_filter($smarty->smarty->_tag_stack, static function ($tag) {
                 return $tag[0] === 'tabset';
             });

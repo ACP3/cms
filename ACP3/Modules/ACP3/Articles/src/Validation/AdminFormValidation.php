@@ -15,14 +15,12 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * @var string
      */
-    protected $uriAlias = '';
+    private $uriAlias = '';
 
     /**
-     * @param string $uriAlias
-     *
      * @return $this
      */
-    public function setUriAlias($uriAlias)
+    public function setUriAlias(string $uriAlias): self
     {
         $this->uriAlias = $uriAlias;
 
@@ -32,7 +30,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * {@inheritdoc}
      */
-    public function validate(array $formData)
+    public function validate(array $formData): void
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
@@ -86,10 +84,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 ]
             );
 
-        $this->validator->dispatchValidationEvent(
-            'menus.validation.validate_manage_menu_item',
-            $formData
-        );
         $this->validator->dispatchValidationEvent(
             'core.validation.form_extension',
             $formData,

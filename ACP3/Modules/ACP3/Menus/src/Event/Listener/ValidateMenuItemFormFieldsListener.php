@@ -15,8 +15,9 @@ use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class OnMenusValidationValidateManageMenuItem
+class ValidateMenuItemFormFieldsListener implements EventSubscriberInterface
 {
     /**
      * @var ACL
@@ -27,9 +28,6 @@ class OnMenusValidationValidateManageMenuItem
      */
     private $translator;
 
-    /**
-     * OnMenusValidationValidateManageMenuItem constructor.
-     */
     public function __construct(ACL $acl, Translator $translator)
     {
         $this->acl = $acl;
@@ -40,7 +38,7 @@ class OnMenusValidationValidateManageMenuItem
     {
         $formData = $event->getFormData();
 
-        if ($this->acl->hasPermission('admin/menus/items/create') === true && isset($formData['create_menu_item']) === true) {
+        if (isset($formData['create_menu_item']) === true && $this->acl->hasPermission('admin/menus/items/create') === true) {
             $event
                 ->getValidator()
                 ->addConstraint(
@@ -87,5 +85,15 @@ class OnMenusValidationValidateManageMenuItem
                     ]
                 );
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'core.validation.form_extension' => '__invoke',
+        ];
     }
 }

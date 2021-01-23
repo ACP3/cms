@@ -2,31 +2,26 @@ services:
   _defaults:
     autowire: true
 
-  menus.event.on_menus_model_before_delete_listener:
-    class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusModelBeforeDeleteListener
+  ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusModelBeforeDeleteListener:
     arguments:
       $menuItemsModel: '@menus.model.menu_items_model'
     tags:
       - { name: core.eventListener, event: menus.model.menus.before_delete }
 
-  menus.event.manage_menu_item_on_model_after_save_listener:
-    class: ACP3\Modules\ACP3\Menus\Event\Listener\ManageMenuItemOnModelSaveAfterListener
+  ACP3\Modules\ACP3\Menus\Event\Listener\ManageMenuItemOnModelSaveAfterListener:
     tags:
       - { name: core.eventListener, event: core.model.after_save }
 
-  menus.event.update_menus_cache_on_model_after_save_listener:
-    class: ACP3\Modules\ACP3\Menus\Event\Listener\UpdateMenusCacheOnModelAfterSaveListener
+  ACP3\Modules\ACP3\Menus\Event\Listener\UpdateMenusCacheOnModelAfterSaveListener:
     tags:
       - { name: core.eventListener, event: menus.model.menus.after_save }
       - { name: core.eventListener, event: menus.model.menu_items.after_save }
       - { name: core.eventListener, event: menus.model.menu_items.after_delete }
 
-  menus.event.on_menus_layout_render_manage_menu_item_listener:
-    class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusLayoutRenderManageMenuItemListener
+  ACP3\Modules\ACP3\Menus\Event\Listener\RenderMenuItemManagementFormFieldsListener:
     tags:
-      - { name: core.eventListener, event: menus.layout.render_manage_menu_item }
+      - { name: core.eventSubscriber }
 
-  menus.event_on_menus_validation_validate_manage_menu_item_listener:
-    class: ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusValidationValidateManageMenuItem
+  ACP3\Modules\ACP3\Menus\Event\Listener\ValidateMenuItemFormFieldsListener:
     tags:
-      - { name: core.eventListener, event: menus.validation.validate_manage_menu_item }
+      - { name: core.eventSubscriber }

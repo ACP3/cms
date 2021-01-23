@@ -22,9 +22,6 @@ class ManageMenuItemOnModelSaveAfterListener
      */
     private $acl;
 
-    /**
-     * OnModelSaveAfterListener constructor.
-     */
     public function __construct(ACL $acl, ManageMenuItem $menuItemManager)
     {
         $this->menuItemManager = $menuItemManager;
@@ -56,10 +53,7 @@ class ManageMenuItemOnModelSaveAfterListener
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function hasNecessaryMenuItemFormFields(array $formData)
+    private function hasNecessaryMenuItemFormFields(array $formData): bool
     {
         return isset(
             $formData['block_id'],
