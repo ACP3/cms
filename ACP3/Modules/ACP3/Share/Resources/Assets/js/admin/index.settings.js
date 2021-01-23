@@ -3,8 +3,16 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-(($) => {
-    $('#services').on('change', function () {
-        $('#fb-credentials-wrapper').toggle($(this).val() && $(this).val().indexOf('facebook') !== -1);
-    }).triggerHandler('change');
-})(jQuery);
+((document) => {
+    const socialSharingServices = document.getElementById('services');
+
+    socialSharingServices.addEventListener('change', function (event) {
+        if (event.detail?.init === true) {
+            event.preventDefault();
+        }
+
+        document.getElementById('fb-credentials-wrapper').classList.toggle('hidden', !Array.from(this.selectedOptions).some((option) => option.value === 'facebook'));
+    });
+
+    socialSharingServices.dispatchEvent(new CustomEvent('change', {detail: {init: true}}));
+})(document);

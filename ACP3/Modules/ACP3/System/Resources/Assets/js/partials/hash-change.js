@@ -1,19 +1,17 @@
-(($) => {
-    const $window = $(window);
+((window, document) => {
+    window.addEventListener('hashchange', function () {
+        const hash = window.location.hash,
+            linkElem = document.querySelector('a[href="' + hash + '"]'),
+            targetElem = document.querySelector(hash);
 
-    $window.on('hashchange', function () {
-        const hash = location.hash,
-            $link = $('a[href="' + hash + '"]'),
-            $element = $(hash);
-
-        if ($link.length) {
-            $link.click();
-        } else if ($element.length) {
-            $element.click();
+        if (linkElem.length) {
+            linkElem.dispatchEvent(new MouseEvent('click'));
+        } else if (targetElem.length) {
+            targetElem.dispatchEvent(new MouseEvent('click'));
         }
     });
 
-    if (location.hash) {
-        $window.trigger('hashchange');
+    if (window.location.hash) {
+        window.dispatchEvent(new CustomEvent('hashchange'));
     }
-})(jQuery);
+})(window, document);

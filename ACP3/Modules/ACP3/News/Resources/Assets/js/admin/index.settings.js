@@ -1,5 +1,5 @@
-(($) => {
+(($, document) => {
     $('input[name="readmore"]').on('click change', function () {
-        $('#readmore-container').toggle(this.value === '1');
+        document.getElementById('readmore-characters-wrapper').classList.toggle('hidden', Number(this.value) === 0);
     }).filter(':checked').click();
-})(jQuery);
+})(jQuery, document);

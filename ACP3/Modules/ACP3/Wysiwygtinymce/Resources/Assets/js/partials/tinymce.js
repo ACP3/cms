@@ -17,7 +17,10 @@ const initializeTinyMCEInstances = () => {
             };
         }
 
-        const finalConfig = Object.assign({}, config, fileManagerConfig);
+        const finalConfig = {
+            ...config,
+            ...fileManagerConfig,
+        };
         const existingInstance = tinymce.get(element.id);
 
         if (existingInstance) {

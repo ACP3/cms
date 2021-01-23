@@ -3,8 +3,8 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-(($) => {
-    $('#search-advanced-toggle').click(() => {
-        $('#search-advanced-wrapper').toggleClass('hidden');
+((document) => {
+    document.getElementById('search-advanced-toggle').addEventListener('click', () => {
+        document.getElementById('search-advanced-wrapper').classList.toggle('hidden');
     });
-})(jQuery);
+})(document);
