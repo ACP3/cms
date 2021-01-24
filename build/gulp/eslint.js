@@ -18,7 +18,7 @@ module.exports = (gulp) => {
                     './designs/*/*/Assets/js/{admin,frontend,partials,widget,lib}/!(*.min).js',
                     './designs/*/Assets/js/!(*.min).js',
                 ],
-                {base: './'}
+                {base: './', since: gulp.lastRun('eslint')}
             )
             .pipe(plumber())
             .pipe(eslint())

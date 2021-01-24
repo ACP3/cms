@@ -10,7 +10,7 @@
 
         const table = $this.DataTable(json);
 
-        window[$this.attr('id') + 'ReloadDataTable'] = () => {
+        window[this.id + 'ReloadDataTable'] = () => {
             table.ajax.reload(null, false);
         };
     });
