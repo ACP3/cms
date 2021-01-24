@@ -3,7 +3,9 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-import { AjaxForm, LoadingLayer } from "../lib/ajax-form";
+import { AjaxForm } from "../lib/ajax-form";
+import { LoadingLayer } from "../lib/loading-layer";
+import { FormValidator } from "../lib/form-validator";
 
 (($) => {
   const pluginName = "formSubmit";
@@ -11,7 +13,11 @@ import { AjaxForm, LoadingLayer } from "../lib/ajax-form";
   $.fn[pluginName] = function (options) {
     return this.each(function () {
       if (!$.data(this, "plugin_" + pluginName)) {
-        $.data(this, "plugin_" + pluginName, new AjaxForm(this, new LoadingLayer(this, options), options));
+        $.data(
+          this,
+          "plugin_" + pluginName,
+          new AjaxForm(this, new LoadingLayer(this, options), new FormValidator(), options)
+        );
       }
     });
   };
