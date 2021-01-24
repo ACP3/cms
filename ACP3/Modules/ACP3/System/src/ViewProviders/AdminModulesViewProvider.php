@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\System\ViewProviders;
 
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
 
 class AdminModulesViewProvider
@@ -15,23 +16,32 @@ class AdminModulesViewProvider
      * @var \ACP3\Core\Modules
      */
     private $modules;
+    /**
+     * @var \ACP3\Core\I18n\Translator
+     */
+    private $translator;
 
-    public function __construct(Modules $modules)
+    public function __construct(Modules $modules, Translator $translator)
     {
         $this->modules = $modules;
+        $this->translator = $translator;
     }
 
     public function __invoke(): array
     {
         $installedModules = $newModules = [];
 
-        foreach ($this->modules->getAllModulesAlphabeticallySorted() as $key => $values) {
+        foreach ($this->modules->getAllModulesAlphabeticallySorted() as $moduleName => $values) {
+            $translatedModuleName = $this->translator->t($moduleName, $moduleName);
             if ($values['installable'] === false || $this->modules->isInstalled($values['name']) === true) {
-                $installedModules[$key] = $values;
+                $installedModules[$translatedModuleName] = $values;
             } else {
-                $newModules[$key] = $values;
+                $newModules[$translatedModuleName] = $values;
             }
         }
+
+        \ksort($installedModules);
+        \ksort($newModules);
 
         return [
             'installed_modules' => $installedModules,

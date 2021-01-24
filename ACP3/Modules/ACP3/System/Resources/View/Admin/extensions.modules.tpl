@@ -16,9 +16,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {foreach $installed_modules as $row}
+                    {foreach $installed_modules as $translatedModuleName => $row}
                         <tr>
-                            <td>{lang t="`$row.name`|`$row.name`"}</td>
+                            <td>{$translatedModuleName}</td>
                             <td>{lang t="`$row.name`|mod_description"}</td>
                             <td>{$row.version}</td>
                             <td>{$row.author}</td>
@@ -79,9 +79,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {foreach $new_modules as $row}
+                        {foreach $new_modules as $translatedModuleName => $row}
                             <tr>
-                                <td>{lang t="`$row.name`|`$row.name`"}</td>
+                                <td>{$translatedModuleName}</td>
                                 <td>{lang t="`$row.name`|mod_description"}</td>
                                 <td>{$row.version}</td>
                                 <td>{$row.author}</td>

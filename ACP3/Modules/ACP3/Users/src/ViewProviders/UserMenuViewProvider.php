@@ -100,12 +100,14 @@ class UserMenuViewProvider
             if (!\in_array($info['name'], ['acp', 'system'])
                 && $this->acl->hasPermission('admin/' . $info['name'] . '/index') === true
             ) {
-                $navMods[$name] = [
+                $navMods[$this->translator->t($name, $name)] = [
                     'name' => $name,
                     'is_active' => $this->request->getArea() === AreaEnum::AREA_ADMIN && $info['name'] === $this->request->getModule(),
                 ];
             }
         }
+
+        \ksort($navMods);
 
         return $navMods;
     }
