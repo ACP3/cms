@@ -9,3 +9,5 @@ parameters:
   excludes_analyse:
     - %rootDir%/ACP3/Modules/*/*/Resources/*
   tmpDir: .phpstan-cache
+  ignoreErrors:
+    - '#Access to an undefined property Smarty::\$_tag_stack#'
