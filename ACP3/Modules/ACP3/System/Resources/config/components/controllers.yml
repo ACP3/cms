@@ -13,7 +13,7 @@ services:
   system.controller.admin.extensions.modules:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Extensions\Modules
     arguments:
-      $schemaLocator: '@core.installer.schema_registrar'
+      $schemaLocator: "@core.installer.schema_registrar"
 
   system.controller.admin.index.settings:
     class: ACP3\Modules\ACP3\System\Controller\Admin\Index\Settings

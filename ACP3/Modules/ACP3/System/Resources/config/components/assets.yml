@@ -6,113 +6,113 @@ services:
   system.assets.polyfill:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'polyfill'
+      - "polyfill"
       - false
       - []
       - []
-      - ['polyfill.min.js']
-      - 'system'
+      - ["polyfill.min.js"]
+      - "system"
 
   system.assets.jquery:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'jquery'
+      - "jquery"
       - false
       - []
       - []
-      - ['jquery.min.js']
-      - 'system'
+      - ["jquery.min.js"]
+      - "system"
 
   system.assets.font-awesome:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'font-awesome'
+      - "font-awesome"
       - false
       - []
-      - ['all.css']
+      - ["all.css"]
       - []
-      - 'system'
+      - "system"
       - true
 
   system.assets.js-cookie:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'js-cookie'
+      - "js-cookie"
       - false
       - []
       - []
-      - ['js.cookie.js']
-      - 'system'
+      - ["js.cookie.js"]
+      - "system"
 
   system.assets.moment:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'moment'
+      - "moment"
       - false
       - []
       - []
-      - ['moment.min.js']
-      - 'system'
+      - ["moment.min.js"]
+      - "system"
 
   system.assets.bootstrap:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'bootstrap'
+      - "bootstrap"
       - false
-      - ['jquery']
-      - ['bootstrap.min.css']
-      - ['bootstrap.min.js']
-      - 'system'
+      - ["jquery"]
+      - ["bootstrap.min.css"]
+      - ["bootstrap.min.js"]
+      - "system"
 
   system.assets.ajax-form:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'ajax-form'
+      - "ajax-form"
       - false
-      - ['bootstrap', 'jquery']
-      - ['loading-layer.min.css']
-      - ['partials/ajax-form.js']
-      - 'system'
+      - ["bootstrap", "jquery"]
+      - ["loading-layer.min.css"]
+      - ["partials/ajax-form.js"]
+      - "system"
 
   system.assets.bootbox:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'bootbox'
+      - "bootbox"
       - false
-      - ['bootstrap']
+      - ["bootstrap"]
       - []
-      - ['bootbox.all.min.js']
-      - 'system'
+      - ["bootbox.all.min.js"]
+      - "system"
 
   system.assets.datatables:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'datatables'
+      - "datatables"
       - false
-      - ['jquery', 'bootstrap']
-      - ['dataTables.bootstrap.css']
-      - ['jquery.dataTables.js']
-      - 'system'
+      - ["jquery", "bootstrap"]
+      - ["dataTables.bootstrap.css"]
+      - ["jquery.dataTables.js"]
+      - "system"
       - true
 
   system.assets.datetimepicker:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'datetimepicker'
+      - "datetimepicker"
       - false
-      - ['jquery', 'moment']
-      - ['bootstrap-datetimepicker.css']
-      - ['bootstrap-datetimepicker.min.js']
-      - 'system'
+      - ["jquery", "moment"]
+      - ["bootstrap-datetimepicker.css"]
+      - ["bootstrap-datetimepicker.min.js"]
+      - "system"
       - true
 
   system.assets.fancybox:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
-      - 'fancybox'
+      - "fancybox"
       - false
-      - ['jquery']
-      - ['jquery.fancybox.css']
-      - ['jquery.fancybox.min.js']
-      - 'system'
+      - ["jquery"]
+      - ["jquery.fancybox.css"]
+      - ["jquery.fancybox.min.js"]
+      - "system"
       - true

@@ -5,20 +5,20 @@ services:
   users.model.authentication_model:
     class: ACP3\Modules\ACP3\Users\Model\AuthenticationModel
 
-  ACP3\Modules\ACP3\Users\Model\AuthenticationModel: '@users.model.authentication_model'
+  ACP3\Modules\ACP3\Users\Model\AuthenticationModel: "@users.model.authentication_model"
 
   users.model.user_model:
     class: ACP3\Modules\ACP3\Users\Model\UserModel
-    configurator: ['@users.model.user_model_configurator', 'configure']
+    configurator: ["@users.model.user_model_configurator", "configure"]
 
-  ACP3\Modules\ACP3\Users\Model\UserModel: '@users.model.user_model'
+  ACP3\Modules\ACP3\Users\Model\UserModel: "@users.model.user_model"
 
   users.model.user_model_configurator:
     class: ACP3\Modules\ACP3\Users\Model\UserModelConfigurator
     arguments:
-      $authentication: '@core.authentication.native'
+      $authentication: "@core.authentication.native"
 
   users.model.users_model:
     class: ACP3\Modules\ACP3\Users\Model\UsersModel
     arguments:
-      $repository: '@users.model.userrepository'
+      $repository: "@users.model.userrepository"

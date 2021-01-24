@@ -5,11 +5,11 @@ services:
   files.cache:
     class: ACP3\Modules\ACP3\Files\Cache
     arguments:
-      $cache: '@files.cache.core'
+      $cache: "@files.cache.core"
 
-  ACP3\Modules\ACP3\Files\Cache: '@files.cache'
+  ACP3\Modules\ACP3\Files\Cache: "@files.cache"
 
   files.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      $namespace: 'files'
+      $namespace: "files"

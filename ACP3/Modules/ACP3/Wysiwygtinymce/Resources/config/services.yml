@@ -5,6 +5,6 @@ services:
   core.wysiwyg.tinymce:
     class: ACP3\Modules\ACP3\Wysiwygtinymce\WYSIWYG\Editor\TinyMCE
     arguments:
-      $filemanagerHelpers: '@?filemanager.helpers'
+      $filemanagerHelpers: "@?filemanager.helpers"
     tags:
       - { name: core.wysiwyg.editor }

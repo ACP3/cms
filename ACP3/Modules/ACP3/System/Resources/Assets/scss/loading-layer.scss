@@ -5,7 +5,7 @@
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
-$system-loading-layer-bg-color: rgba(255, 255, 255, .5) !default;
+$system-loading-layer-bg-color: rgba(255, 255, 255, 0.5) !default;
 $system-loading-layer-font-size: 26px !default;
 
 @keyframes rotate {
@@ -31,7 +31,7 @@ $system-loading-layer-font-size: 26px !default;
   visibility: hidden;
   background: $system-loading-layer-bg-color;
   opacity: 0;
-  transition: opacity .5s, visibility .5s;
+  transition: opacity 0.5s, visibility 0.5s;
 
   &.loading-layer__active {
     visibility: visible;

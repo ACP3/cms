@@ -4,9 +4,9 @@ services:
 
   core.date:
     class: ACP3\Core\Date
-    configurator: ['@core.date.date_configurator', 'configure']
+    configurator: ["@core.date.date_configurator", "configure"]
 
-  ACP3\Core\Date: '@core.date'
+  ACP3\Core\Date: "@core.date"
 
   core.date.date_configurator:
     class: ACP3\Core\Date\DateConfigurator
@@ -14,4 +14,4 @@ services:
   core.date.date_translator:
     class: ACP3\Core\Date\DateTranslator
 
-  ACP3\Core\Date\DateTranslator: '@core.date.date_translator'
+  ACP3\Core\Date\DateTranslator: "@core.date.date_translator"

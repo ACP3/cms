@@ -5,9 +5,9 @@ services:
   comments.model.comments_model:
     class: ACP3\Modules\ACP3\Comments\Model\CommentsModel
     arguments:
-      $repository: '@comments.model.commentrepository'
+      $repository: "@comments.model.commentrepository"
 
   comments.model.comment_by_module_model:
     class: ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel
     arguments:
-      $repository: '@comments.repository.comment_by_module_repository'
+      $repository: "@comments.repository.comment_by_module_repository"

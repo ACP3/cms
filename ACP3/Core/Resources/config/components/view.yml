@@ -5,27 +5,27 @@ services:
   core.view:
     class: ACP3\Core\View
     arguments:
-      $renderer: '@core.view.renderer.smarty'
+      $renderer: "@core.view.renderer.smarty"
 
-  ACP3\Core\View: '@core.view'
+  ACP3\Core\View: "@core.view"
 
   core.view.renderer.smarty.smarty_configurator:
     class: ACP3\Core\View\Renderer\Smarty\SmartyConfigurator
     arguments:
-      $environment: '%core.environment%'
+      $environment: "%core.environment%"
 
   smarty:
     class: Smarty
-    configurator: ['@core.view.renderer.smarty.smarty_configurator', 'configure']
+    configurator: ["@core.view.renderer.smarty.smarty_configurator", "configure"]
 
   core.view.renderer.smarty:
     class: ACP3\Core\View\Renderer\Smarty
     arguments:
-      $smarty: '@smarty'
-      $container: '@core.view.renderer.smarty.plugin_service_locator'
+      $smarty: "@smarty"
+      $container: "@core.view.renderer.smarty.plugin_service_locator"
 
   core.view.renderer.smarty.plugin_service_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
       - []
-    tags: ['container.service_locator']
+    tags: ["container.service_locator"]

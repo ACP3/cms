@@ -5,11 +5,11 @@ services:
   seo.cache:
     class: ACP3\Modules\ACP3\Seo\Cache
     arguments:
-      $cache: '@seo.cache.core'
+      $cache: "@seo.cache.core"
 
-  ACP3\Modules\ACP3\Seo\Cache: '@seo.cache'
+  ACP3\Modules\ACP3\Seo\Cache: "@seo.cache"
 
   seo.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      $namespace: 'seo'
+      $namespace: "seo"

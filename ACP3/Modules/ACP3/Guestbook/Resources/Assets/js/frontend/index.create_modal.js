@@ -4,5 +4,5 @@
  */
 
 (($) => {
-    $('#modal-create [data-ajax-form="true"]').formSubmit();
+  $('#modal-create [data-ajax-form="true"]').formSubmit();
 })(jQuery);

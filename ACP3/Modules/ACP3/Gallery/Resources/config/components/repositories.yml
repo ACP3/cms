@@ -3,7 +3,7 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Gallery\Model\Repository\:
-    resource: '../../../src/Model/Repository/'
+    resource: "../../../src/Model/Repository/"
 
   gallery.model.galleryrepository: '@ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository'
   gallery.model.gallery_data_grid_repository: '@ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository'

@@ -2,8 +2,8 @@ services:
   _defaults:
     autowire: true
     bind:
-      $contactsModel: '@contact.model.contacts_model'
-      $contactFormModel: '@contact.model.contact_form_model'
+      $contactsModel: "@contact.model.contacts_model"
+      $contactFormModel: "@contact.model.contact_form_model"
     tags:
       - { name: acp3.controller.action }
 

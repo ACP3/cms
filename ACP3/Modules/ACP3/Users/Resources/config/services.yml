@@ -16,4 +16,4 @@ services:
   http_cache.hash_generator:
     class: FOS\HttpCache\UserContext\DefaultHashGenerator
     arguments:
-      - ['@users.core.application.bootstrap_cache.is_authenticated_provider']
+      - ["@users.core.application.bootstrap_cache.is_authenticated_provider"]

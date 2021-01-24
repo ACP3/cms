@@ -3,7 +3,7 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Emoticons\ViewProviders\:
-    resource: '../../../src/ViewProviders/'
+    resource: "../../../src/ViewProviders/"
 
   emoticons.view_providers.admin_emoticon_edit: '@ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminEmoticonEditViewProvider'
   emoticons.view_providers.admin_settings: '@ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminSettingsViewProvider'

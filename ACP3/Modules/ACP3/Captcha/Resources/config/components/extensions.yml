@@ -2,13 +2,13 @@ services:
   _defaults:
     autowire: true
     bind:
-      $captchaLocator: '@captcha.utility.captcha_registrar'
+      $captchaLocator: "@captcha.utility.captcha_registrar"
 
   captcha.extension.captcha:
     class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface
-    factory: ['@captcha.extension.captcha_factory', 'create']
+    factory: ["@captcha.extension.captcha_factory", "create"]
 
-  ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface: '@captcha.extension.captcha'
+  ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface: "@captcha.extension.captcha"
 
   captcha.extension.captcha_factory:
     class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory

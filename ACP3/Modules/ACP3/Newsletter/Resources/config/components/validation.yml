@@ -3,13 +3,13 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
 
   ACP3\Modules\ACP3\Newsletter\Validation\:
-    resource: '../../../src/Validation/'
-    exclude: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/"
+    exclude: "../../../src/Validation/ValidationRules/"
 
   newsletter.validation.admin_form_validation: '@ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation'
   newsletter.validation.activate_account_form_validation: '@ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation'

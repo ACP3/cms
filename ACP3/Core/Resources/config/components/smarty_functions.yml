@@ -65,7 +65,7 @@ services:
   smarty.plugin.load_module:
     class: ACP3\Core\View\Renderer\Smarty\Functions\LoadModule
     arguments:
-      $applicationMode: '%core.environment%'
+      $applicationMode: "%core.environment%"
     tags:
       - { name: smarty.plugin.function, pluginName: load_module }
 
@@ -117,6 +117,6 @@ services:
   smarty.plugin.wysiwyg:
     class: ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG
     arguments:
-      $wysiwygFactory: '@core.wysiwyg.wysiwyg_factory'
+      $wysiwygFactory: "@core.wysiwyg.wysiwyg_factory"
     tags:
       - { name: smarty.plugin.function, pluginName: wysiwyg }

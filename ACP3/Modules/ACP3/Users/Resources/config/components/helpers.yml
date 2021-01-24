@@ -5,9 +5,9 @@ services:
   users.helpers.forms:
     class: ACP3\Modules\ACP3\Users\Helpers\Forms
 
-  ACP3\Modules\ACP3\Users\Helpers\Forms: '@users.helpers.forms'
+  ACP3\Modules\ACP3\Users\Helpers\Forms: "@users.helpers.forms"
 
   users.helpers.send_password_change_email:
     class: ACP3\Modules\ACP3\Users\Helpers\SendPasswordChangeEmail
 
-  ACP3\Modules\ACP3\Users\Helpers\SendPasswordChangeEmail: '@users.helpers.send_password_change_email'
+  ACP3\Modules\ACP3\Users\Helpers\SendPasswordChangeEmail: "@users.helpers.send_password_change_email"

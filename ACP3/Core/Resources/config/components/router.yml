@@ -5,4 +5,4 @@ services:
   core.router:
     class: ACP3\Core\Router\Router
 
-  ACP3\Core\Router\RouterInterface: '@core.router'
+  ACP3\Core\Router\RouterInterface: "@core.router"

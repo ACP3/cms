@@ -7,4 +7,4 @@ services:
     arguments:
       - []
     public: true
-    tags: ['container.service_locator']
+    tags: ["container.service_locator"]

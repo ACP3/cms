@@ -5,11 +5,11 @@ services:
   categories.cache:
     class: ACP3\Modules\ACP3\Categories\Cache
     arguments:
-      $cache: '@categories.cache.core'
+      $cache: "@categories.cache.core"
 
-  ACP3\Modules\ACP3\Categories\Cache: '@categories.cache'
+  ACP3\Modules\ACP3\Categories\Cache: "@categories.cache"
 
   categories.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      $namespace: 'categories'
+      $namespace: "categories"

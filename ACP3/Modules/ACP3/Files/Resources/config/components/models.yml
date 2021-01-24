@@ -5,4 +5,4 @@ services:
   files.model.files_model:
     class: ACP3\Modules\ACP3\Files\Model\FilesModel
     arguments:
-      $repository: '@files.model.filesrepository'
+      $repository: "@files.model.filesrepository"

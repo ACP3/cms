@@ -3,13 +3,13 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Seo\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
 
   ACP3\Modules\ACP3\Seo\Validation\:
-    resource: '../../../src/Validation/'
-    exclude: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/"
+    exclude: "../../../src/Validation/ValidationRules/"
 
   seo.validation.admin_form_validation: '@ACP3\Modules\ACP3\Seo\Validation\AdminFormValidation'
   seo.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Seo\Validation\AdminSettingsFormValidation'

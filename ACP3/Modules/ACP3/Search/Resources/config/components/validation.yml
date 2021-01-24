@@ -3,7 +3,6 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Search\Validation\:
-    resource: '../../../src/Validation/'
+    resource: "../../../src/Validation/"
 
   search.validation.form_validation: '@ACP3\Modules\ACP3\Search\Validation\FormValidation'
-

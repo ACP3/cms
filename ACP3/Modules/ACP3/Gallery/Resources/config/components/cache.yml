@@ -5,11 +5,11 @@ services:
   gallery.cache:
     class: ACP3\Modules\ACP3\Gallery\Cache
     arguments:
-      $cache: '@gallery.cache.core'
+      $cache: "@gallery.cache.core"
 
-  ACP3\Modules\ACP3\Gallery\Cache: '@gallery.cache'
+  ACP3\Modules\ACP3\Gallery\Cache: "@gallery.cache"
 
   gallery.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      $namespace: 'gallery'
+      $namespace: "gallery"

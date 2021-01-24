@@ -2,9 +2,9 @@ services:
   _defaults:
     autowire: true
     bind:
-      $filesModel: '@files.model.files_model'
-      $filesUploadHelper: '@files.helpers.upload'
-      $categoriesHelpers: '@categories.helpers'
+      $filesModel: "@files.model.files_model"
+      $filesUploadHelper: "@files.helpers.upload"
+      $categoriesHelpers: "@categories.helpers"
     tags:
       - { name: acp3.controller.action }
 

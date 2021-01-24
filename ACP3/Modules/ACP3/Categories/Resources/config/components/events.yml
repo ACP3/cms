@@ -10,6 +10,6 @@ services:
   categories.event.on_categories_model_delete_before_listener:
     class: ACP3\Modules\ACP3\Categories\Event\Listener\DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener
     arguments:
-      $categoriesUploadHelper: '@categories.helpers.upload'
+      $categoriesUploadHelper: "@categories.helpers.upload"
     tags:
       - { name: core.eventListener, event: categories.model.categories.before_delete }

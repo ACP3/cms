@@ -5,29 +5,29 @@ services:
   core.controller.widget:
     abstract: true
     arguments:
-      - '@core.context.widget'
+      - "@core.context.widget"
     deprecated:
-      message: 'Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead.'
+      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead."
 
   core.controller.frontend:
     abstract: true
     arguments:
-      - '@core.context.frontend'
+      - "@core.context.frontend"
     deprecated:
-      message: 'Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead.'
+      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead."
 
   core.controller.controller_action_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
       - []
-    tags: ['container.service_locator']
+    tags: ["container.service_locator"]
 
   core.controller.helper.controller_action_exists:
     class: ACP3\Core\Controller\Helper\ControllerActionExists
     arguments:
-      $container: '@core.controller.controller_action_locator'
+      $container: "@core.controller.controller_action_locator"
 
-  ACP3\Core\Controller\Helper\ControllerActionExists: '@core.controller.helper.controller_action_exists'
+  ACP3\Core\Controller\Helper\ControllerActionExists: "@core.controller.helper.controller_action_exists"
 
   core.modules.helper.controllerActionExists:
     alias: core.controller.helper.controller_action_exists

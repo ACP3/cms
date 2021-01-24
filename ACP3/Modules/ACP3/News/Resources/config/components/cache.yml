@@ -5,11 +5,11 @@ services:
   news.cache:
     class: ACP3\Modules\ACP3\News\Cache
     arguments:
-      $cache: '@news.cache.core'
+      $cache: "@news.cache.core"
 
-  ACP3\Modules\ACP3\News\Cache: '@news.cache'
+  ACP3\Modules\ACP3\News\Cache: "@news.cache"
 
   news.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      $namespace: 'news'
+      $namespace: "news"

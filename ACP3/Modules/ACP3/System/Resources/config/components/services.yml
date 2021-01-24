@@ -5,6 +5,6 @@ services:
   system.services.cache_clear_service:
     class: ACP3\Modules\ACP3\System\Services\CacheClearService
     arguments:
-      $httpCacheStore: '@http_cache_store'
+      $httpCacheStore: "@http_cache_store"
 
-  ACP3\Modules\ACP3\System\Services\CacheClearService: '@system.services.cache_clear_service'
+  ACP3\Modules\ACP3\System\Services\CacheClearService: "@system.services.cache_clear_service"

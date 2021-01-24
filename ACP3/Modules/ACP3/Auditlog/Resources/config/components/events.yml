@@ -5,7 +5,7 @@ services:
   auditlog.events.on_model_after_save_listener:
     class: ACP3\Modules\ACP3\Auditlog\Event\Listener\OnModelAfterSaveListener
     arguments:
-      $logger: '@core.logger.system_logger'
+      $logger: "@core.logger.system_logger"
     tags:
       - { name: core.eventListener, event: core.model.after_save, priority: -255 }
       - { name: core.eventListener, event: core.model.after_delete, priority: -255 }

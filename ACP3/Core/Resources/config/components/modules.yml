@@ -6,66 +6,66 @@ services:
     class: ACP3\Core\Modules
     public: true
 
-  ACP3\Core\Modules: '@core.modules'
+  ACP3\Core\Modules: "@core.modules"
 
   core.modules.aclInstaller:
     class: ACP3\Core\Modules\AclInstaller
     public: true
     arguments:
-      $aclCache: '@core.cache.system'
-      $ruleRepository: '@permissions.model.rulerepository'
-      $resourceRepository: '@permissions.model.resourcerepository'
+      $aclCache: "@core.cache.system"
+      $ruleRepository: "@permissions.model.rulerepository"
+      $resourceRepository: "@permissions.model.resourcerepository"
 
-  ACP3\Core\Modules\AclInstaller: '@core.modules.aclInstaller'
+  ACP3\Core\Modules\AclInstaller: "@core.modules.aclInstaller"
 
   core.modules.moduleInfoCache:
     class: ACP3\Core\Modules\ModuleInfoCache
     arguments:
-      $cache: '@core.cache.system'
+      $cache: "@core.cache.system"
 
-  ACP3\Core\Modules\ModuleInfoCache: '@core.modules.moduleInfoCache'
-  ACP3\Core\Modules\ModuleInfoCacheInterface: '@core.modules.moduleInfoCache'
+  ACP3\Core\Modules\ModuleInfoCache: "@core.modules.moduleInfoCache"
+  ACP3\Core\Modules\ModuleInfoCacheInterface: "@core.modules.moduleInfoCache"
 
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper
     public: true
     calls:
-      - ['setContainer', ['@service_container']]
+      - ["setContainer", ["@service_container"]]
 
-  ACP3\Core\Modules\SchemaHelper: '@core.modules.schemaHelper'
+  ACP3\Core\Modules\SchemaHelper: "@core.modules.schemaHelper"
 
   core.modules.installer_logger:
     class: Psr\Log\LoggerInterface
-    factory: ['@core.logger.logger_factory', 'create']
+    factory: ["@core.logger.logger_factory", "create"]
     arguments:
-      - 'installer'
+      - "installer"
 
   core.modules.installer.abstractMigration:
     abstract: true
     arguments:
-      - '@core.modules.schemaHelper'
+      - "@core.modules.schemaHelper"
     deprecated:
-      message: 'Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead.'
+      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead."
 
   core.modules.installer.abstractSampleData:
     abstract: true
     arguments:
-      - '@core.modules.schemaHelper'
+      - "@core.modules.schemaHelper"
     deprecated:
-      message: 'Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead.'
+      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead."
 
   core.modules.schemaInstaller:
     class: ACP3\Core\Modules\SchemaInstaller
     public: true
     arguments:
-      $logger: '@core.modules.installer_logger'
+      $logger: "@core.modules.installer_logger"
     calls:
-      - ['setContainer', ['@service_container']]
+      - ["setContainer", ["@service_container"]]
 
-  ACP3\Core\Modules\SchemaInstaller: '@core.modules.schemaInstaller'
+  ACP3\Core\Modules\SchemaInstaller: "@core.modules.schemaInstaller"
 
   core.modules.schemaUpdater:
     class: ACP3\Core\Modules\SchemaUpdater
     public: true
 
-  ACP3\Core\Modules\SchemaUpdater: '@core.modules.schemaUpdater'
+  ACP3\Core\Modules\SchemaUpdater: "@core.modules.schemaUpdater"

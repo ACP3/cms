@@ -7,16 +7,16 @@ services:
     arguments:
       - []
     public: true
-    tags: ['container.service_locator']
+    tags: ["container.service_locator"]
 
   core.authentication.factory:
     class: ACP3\Core\Authentication\AuthenticationFactory
     arguments:
-      $authenticationLocator: '@core.authentication.authentication_registrar'
+      $authenticationLocator: "@core.authentication.authentication_registrar"
 
   core.authentication:
     class: ACP3\Core\Authentication\AuthenticationInterface
     public: true
-    factory: ['@core.authentication.factory', 'get']
+    factory: ["@core.authentication.factory", "get"]
     arguments:
-      - '%core.authentication.method%'
+      - "%core.authentication.method%"

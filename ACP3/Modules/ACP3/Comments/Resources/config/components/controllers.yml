@@ -2,8 +2,8 @@ services:
   _defaults:
     autowire: true
     bind:
-      $commentsModel: '@comments.model.comments_model'
-      $commentByModuleModel: '@comments.model.comment_by_module_model'
+      $commentsModel: "@comments.model.comments_model"
+      $commentByModuleModel: "@comments.model.comment_by_module_model"
     tags:
       - { name: acp3.controller.action }
 

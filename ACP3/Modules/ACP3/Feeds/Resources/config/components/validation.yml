@@ -3,6 +3,6 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Feeds\Validation\:
-    resource: '../../../src/Validation/'
+    resource: "../../../src/Validation/"
 
   feeds.validation.admin_form_validation: '@ACP3\Modules\ACP3\Feeds\Validation\AdminFormValidation'

@@ -6,32 +6,32 @@
 /**
  * @type {string[]}
  */
-const componentPaths = require('../../.component-paths.json');
+const componentPaths = require("../../.component-paths.json");
 
 const modulePathsLessWatch = componentPaths.map((componentPath) => {
-    return componentPath + '/Resources/Assets/less/**/*.less';
+  return componentPath + "/Resources/Assets/less/**/*.less";
 });
 const modulePathsLessProcess = componentPaths.map((componentPath) => {
-    return componentPath + '/Resources/Assets/less/*.less';
+  return componentPath + "/Resources/Assets/less/*.less";
 });
 const modulePathsScss = componentPaths.map((componentPath) => {
-    return componentPath + '/Resources/Assets/scss/**/*.scss';
+  return componentPath + "/Resources/Assets/scss/**/*.scss";
 });
 const modulePathsJsWatch = componentPaths.map((componentPath) => {
-    return componentPath + '/Resources/Assets/js/{admin,frontend,partials,widget,lib}/!(*.min).js';
+  return componentPath + "/Resources/Assets/js/{admin,frontend,partials,widget,lib}/!(*.min).js";
 });
 const modulePathsJsProcess = componentPaths.map((componentPath) => {
-    return componentPath + '/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js';
+  return componentPath + "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
 });
 
 module.exports = {
-    less: {
-        watch: modulePathsLessWatch.slice(),
-        process: modulePathsLessProcess.slice(),
-    },
-    scss: modulePathsScss.slice(),
-    js: {
-        watch: modulePathsJsWatch.slice(),
-        process: modulePathsJsProcess.slice(),
-    }
+  less: {
+    watch: modulePathsLessWatch.slice(),
+    process: modulePathsLessProcess.slice(),
+  },
+  scss: modulePathsScss.slice(),
+  js: {
+    watch: modulePathsJsWatch.slice(),
+    process: modulePathsJsProcess.slice(),
+  },
 };

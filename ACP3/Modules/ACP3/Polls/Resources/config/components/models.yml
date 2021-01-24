@@ -5,11 +5,11 @@ services:
   polls.model.polls_model:
     class: ACP3\Modules\ACP3\Polls\Model\PollsModel
     arguments:
-      $pollRepository: '@polls.model.pollrepository'
-      $answerRepository: '@polls.model.answerrepository'
-      $voteRepository: '@polls.model.voterepository'
+      $pollRepository: "@polls.model.pollrepository"
+      $answerRepository: "@polls.model.answerrepository"
+      $voteRepository: "@polls.model.voterepository"
 
   polls.model.vote_model:
     class: ACP3\Modules\ACP3\Polls\Model\VoteModel
     arguments:
-      $voteRepository: '@polls.model.voterepository'
+      $voteRepository: "@polls.model.voterepository"

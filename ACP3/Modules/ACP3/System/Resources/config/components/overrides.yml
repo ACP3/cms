@@ -4,7 +4,7 @@ services:
 
   core.breadcrumb.title:
     class: ACP3\Modules\ACP3\System\Core\Breadcrumb\Title
-    configurator: ['@core.breadcrumb.title_configurator', 'configure']
+    configurator: ["@core.breadcrumb.title_configurator", "configure"]
 
   core.breadcrumb.title_configurator:
     class: ACP3\Modules\ACP3\System\Core\Breadcrumb\TitleConfigurator

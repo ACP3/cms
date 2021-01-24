@@ -5,11 +5,11 @@ services:
   core.context.widget:
     class: ACP3\Core\Controller\Context\WidgetContext
     arguments:
-      $container: '@service_container'
+      $container: "@service_container"
 
-  ACP3\Core\Controller\Context\WidgetContext: '@core.context.widget'
+  ACP3\Core\Controller\Context\WidgetContext: "@core.context.widget"
 
   core.context.frontend:
     class: ACP3\Core\Controller\Context\FrontendContext
 
-  ACP3\Core\Controller\Context\FrontendContext: '@core.context.frontend'
+  ACP3\Core\Controller\Context\FrontendContext: "@core.context.frontend"

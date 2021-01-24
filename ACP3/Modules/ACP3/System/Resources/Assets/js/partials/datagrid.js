@@ -4,14 +4,14 @@
  */
 
 (($, window) => {
-    $('[data-datatable-init]').each(function () {
-        const $this = $(this),
-            json = $this.data('datatable-init');
+  $("[data-datatable-init]").each(function () {
+    const $this = $(this),
+      json = $this.data("datatable-init");
 
-        const table = $this.DataTable(json);
+    const table = $this.DataTable(json);
 
-        window[this.id + 'ReloadDataTable'] = () => {
-            table.ajax.reload(null, false);
-        };
-    });
+    window[this.id + "ReloadDataTable"] = () => {
+      table.ajax.reload(null, false);
+    };
+  });
 })(jQuery, window);

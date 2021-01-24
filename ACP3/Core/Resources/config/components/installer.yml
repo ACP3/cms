@@ -7,26 +7,26 @@ services:
     arguments:
       - []
     public: true
-    tags: ['container.service_locator']
+    tags: ["container.service_locator"]
 
   core.installer.sample_data_registrar:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
       - []
     public: true
-    tags: ['container.service_locator']
+    tags: ["container.service_locator"]
 
   core.installer.schema_registrar:
     class: ACP3\Core\Installer\SchemaRegistrar
     public: true
 
-  ACP3\Core\Installer\SchemaRegistrar: '@core.installer.schema_registrar'
+  ACP3\Core\Installer\SchemaRegistrar: "@core.installer.schema_registrar"
 
   core.installer.model.schema_update_model:
     class: ACP3\Core\Installer\Model\SchemaUpdateModel
     arguments:
-      $logger: '@core.modules.installer_logger'
-      $schemaLocator: '@core.installer.schema_registrar'
-      $migrationLocator: '@core.installer.migration_registrar'
+      $logger: "@core.modules.installer_logger"
+      $schemaLocator: "@core.installer.schema_registrar"
+      $migrationLocator: "@core.installer.migration_registrar"
 
-  ACP3\Core\Installer\Model\SchemaUpdateModel: '@core.installer.model.schema_update_model'
+  ACP3\Core\Installer\Model\SchemaUpdateModel: "@core.installer.model.schema_update_model"

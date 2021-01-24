@@ -2,16 +2,16 @@ services:
   _defaults:
     autowire: true
     bind:
-      ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface: '@guestbook.model.guestbookrepository'
+      ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface: "@guestbook.model.guestbookrepository"
 
   ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
 
   ACP3\Modules\ACP3\Guestbook\Validation\:
-    resource: '../../../src/Validation/'
-    exclude: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/"
+    exclude: "../../../src/Validation/ValidationRules/"
 
   guestbook.validation.form_validation: '@ACP3\Modules\ACP3\Guestbook\Validation\FormValidation'
   guestbook.validation.admin_form_validation: '@ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation'

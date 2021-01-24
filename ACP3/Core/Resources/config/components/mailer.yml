@@ -5,12 +5,12 @@ services:
   core.mailer:
     class: ACP3\Core\Mailer
     arguments:
-      $logger: '@core.mailer.logger'
+      $logger: "@core.mailer.logger"
 
-  ACP3\Core\Mailer: '@core.mailer'
+  ACP3\Core\Mailer: "@core.mailer"
 
   core.mailer.logger:
     class: Psr\Log\LoggerInterface
-    factory: ['@core.logger.logger_factory', 'create']
+    factory: ["@core.logger.logger_factory", "create"]
     arguments:
-      - 'mailer'
+      - "mailer"

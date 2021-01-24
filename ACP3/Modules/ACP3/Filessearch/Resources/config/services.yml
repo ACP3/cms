@@ -8,6 +8,6 @@ services:
   filessearch.extension.search_availability_extension:
     class: ACP3\Modules\ACP3\Filessearch\Extension\SearchAvailabilityExtension
     arguments:
-      $repository: '@filessearch.repository.search_results_aware_repository'
+      $repository: "@filessearch.repository.search_results_aware_repository"
     tags:
       - { name: search.extension.search_availability }

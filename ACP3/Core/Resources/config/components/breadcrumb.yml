@@ -5,11 +5,11 @@ services:
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb\Steps
     arguments:
-      $container: '@core.controller.controller_action_locator'
+      $container: "@core.controller.controller_action_locator"
 
-  ACP3\Core\Breadcrumb\Steps: '@core.breadcrumb'
+  ACP3\Core\Breadcrumb\Steps: "@core.breadcrumb"
 
   core.breadcrumb.title:
     class: ACP3\Core\Breadcrumb\Title
 
-  ACP3\Core\Breadcrumb\Title: '@core.breadcrumb.title'
+  ACP3\Core\Breadcrumb\Title: "@core.breadcrumb.title"

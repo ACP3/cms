@@ -5,4 +5,4 @@ services:
   core.acl:
     class: ACP3\Core\ACL
 
-  ACP3\Core\ACL: '@core.acl'
+  ACP3\Core\ACL: "@core.acl"

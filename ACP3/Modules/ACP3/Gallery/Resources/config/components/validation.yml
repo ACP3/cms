@@ -3,13 +3,13 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Gallery\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
 
   ACP3\Modules\ACP3\Gallery\Validation\:
-    resource: '../../../src/Validation/'
-    exclude: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/"
+    exclude: "../../../src/Validation/ValidationRules/"
 
   gallery.validation.gallery_form_validation: '@ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation'
   gallery.validation.picture_form_validation: '@ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation'

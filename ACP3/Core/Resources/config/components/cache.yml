@@ -5,12 +5,12 @@ services:
   core.cache.system:
     class: ACP3\Core\Cache
     arguments:
-      $namespace: 'system'
+      $namespace: "system"
 
   core.cache.cache_driver_factory:
     class: ACP3\Core\Cache\CacheDriverFactory
     arguments:
-      $cacheDriver: '%cache_driver%'
-      $environment: '%core.environment%'
+      $cacheDriver: "%cache_driver%"
+      $environment: "%core.environment%"
 
-  ACP3\Core\Cache\CacheDriverFactory: '@core.cache.cache_driver_factory'
+  ACP3\Core\Cache\CacheDriverFactory: "@core.cache.cache_driver_factory"

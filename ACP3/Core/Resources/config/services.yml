@@ -12,13 +12,13 @@ services:
     synthetic: true
     public: true
 
-  ACP3\Core\ACL\PermissionCacheInterface: '@permissions.cache'
+  ACP3\Core\ACL\PermissionCacheInterface: "@permissions.cache"
 
   users.model.user_model:
     synthetic: true
     public: true
 
-  ACP3\Core\Authentication\Model\UserModelInterface: '@users.model.user_model'
+  ACP3\Core\Authentication\Model\UserModelInterface: "@users.model.user_model"
 
   core.registry:
     class: ACP3\Core\Registry
@@ -26,12 +26,12 @@ services:
   core.xml:
     class: ACP3\Core\XML
 
-  ACP3\Core\XML: '@core.xml'
+  ACP3\Core\XML: "@core.xml"
 
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\EventDispatcher
     public: true
 
-  Symfony\Component\EventDispatcher\EventDispatcher: '@core.event_dispatcher'
-  Symfony\Component\EventDispatcher\EventDispatcherInterface: '@core.event_dispatcher'
-  Psr\EventDispatcher\EventDispatcherInterface: '@core.event_dispatcher'
+  Symfony\Component\EventDispatcher\EventDispatcher: "@core.event_dispatcher"
+  Symfony\Component\EventDispatcher\EventDispatcherInterface: "@core.event_dispatcher"
+  Psr\EventDispatcher\EventDispatcherInterface: "@core.event_dispatcher"

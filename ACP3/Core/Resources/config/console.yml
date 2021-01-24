@@ -8,11 +8,11 @@ services:
   symfony_console:
     class: Symfony\Component\Console\Application
     calls:
-      - ['setDispatcher', ['@core.event_dispatcher']]
+      - ["setDispatcher", ["@core.event_dispatcher"]]
     public: true
 
   ACP3\Core\Console\Command\:
-    resource: '../../../src/Console/Command/'
+    resource: "../../../src/Console/Command/"
     tags:
       - { name: acp3.console.command }
 

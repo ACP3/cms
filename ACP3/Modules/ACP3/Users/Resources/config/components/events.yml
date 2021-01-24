@@ -10,7 +10,11 @@ services:
   users.event.is_user_authenticated_listener:
     class: ACP3\Modules\ACP3\Users\Event\Listener\IsUserAuthenticatedListener
     tags:
-      - { name: core.eventListener, event: core.application.controller_action_dispatcher.before_dispatch, priority: 255 }
+      - {
+          name: core.eventListener,
+          event: core.application.controller_action_dispatcher.before_dispatch,
+          priority: 255,
+        }
 
   users.event.send_registration_mail_listener:
     class: ACP3\Modules\ACP3\Users\Event\Listener\SendRegistrationMailListener
@@ -25,7 +29,7 @@ services:
   users.events.user_context_listener:
     class: ACP3\Modules\ACP3\Users\Event\Listener\UserContextListener
     arguments:
-      - user_hash_uri: '/widget/users/index/hash/'
+      - user_hash_uri: "/widget/users/index/hash/"
         session_name_prefix: !php/const ACP3\Core\Session\SessionConstants::SESSION_NAME
     tags:
       - { name: core.eventSubscriber }

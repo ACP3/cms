@@ -5,4 +5,4 @@ services:
   gallerycomments.repository.gallery_picture_repository:
     class: ACP3\Modules\ACP3\Gallerycomments\Repository\GalleryPictureRepository
 
-  ACP3\Modules\ACP3\Gallerycomments\Repository\GalleryPictureRepository: '@gallerycomments.repository.gallery_picture_repository'
+  ACP3\Modules\ACP3\Gallerycomments\Repository\GalleryPictureRepository: "@gallerycomments.repository.gallery_picture_repository"

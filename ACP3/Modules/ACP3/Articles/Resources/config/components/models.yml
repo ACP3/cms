@@ -5,4 +5,4 @@ services:
   articles.model:
     class: ACP3\Modules\ACP3\Articles\Model\ArticlesModel
     arguments:
-      $repository: '@articles.model.articlerepository'
+      $repository: "@articles.model.articlerepository"

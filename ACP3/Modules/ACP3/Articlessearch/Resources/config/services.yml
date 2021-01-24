@@ -8,6 +8,6 @@ services:
   articlessearch.extension.search_availability_extension:
     class: ACP3\Modules\ACP3\Articlessearch\Extension\SearchAvailabilityExtension
     arguments:
-      $repository: '@articlessearch.repository.search_results_aware_repository'
+      $repository: "@articlessearch.repository.search_results_aware_repository"
     tags:
       - { name: search.extension.search_availability }

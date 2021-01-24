@@ -5,4 +5,4 @@ services:
   core.breadcrumb:
     class: ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps
     arguments:
-      $container: '@core.controller.controller_action_locator'
+      $container: "@core.controller.controller_action_locator"

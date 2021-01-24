@@ -5,33 +5,15 @@
     "node": true,
     "es6": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "prettier", "prettier/babel"],
   "globals": {
     "grecaptcha": false,
     "bootbox": false,
     "Cookies": false
   },
   "parser": "@babel/eslint-parser",
-  "plugins": [
-    "@babel"
-  ],
+  "plugins": ["@babel"],
   "rules": {
-    "indent": [
-      "error",
-      4
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
     "no-unused-vars": [
       "error",
       {
@@ -42,10 +24,7 @@
     "no-console": [
       "error",
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "allow": ["warn", "error"]
       }
     ]
   }

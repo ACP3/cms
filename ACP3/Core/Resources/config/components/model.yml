@@ -5,63 +5,63 @@ services:
   core.model.column_type.boolean_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'boolean' }
+      - { name: core.model.column_type, columnType: "boolean" }
 
   core.model.column_type.date_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\DateColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'date' }
+      - { name: core.model.column_type, columnType: "date" }
 
   core.model.column_type.date_time_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'datetime' }
+      - { name: core.model.column_type, columnType: "datetime" }
 
   core.model.column_type.double_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\DoubleColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'double' }
+      - { name: core.model.column_type, columnType: "double" }
 
   core.model.column_type.integer_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'integer' }
+      - { name: core.model.column_type, columnType: "integer" }
 
   core.model.column_type.integer_nullable_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\IntegerNullableColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'integer_nullable' }
+      - { name: core.model.column_type, columnType: "integer_nullable" }
 
   core.model.column_type.raw_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'raw' }
+      - { name: core.model.column_type, columnType: "raw" }
 
   core.model.column_type.serializable_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\SerializableColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'serializable' }
+      - { name: core.model.column_type, columnType: "serializable" }
 
   core.model.column_type.text_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'text' }
+      - { name: core.model.column_type, columnType: "text" }
 
   core.model.column_type.text_wysiwyg_column_type_strategy:
     class: ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType
     tags:
-      - { name: core.model.column_type, columnType: 'text_wysiwyg' }
+      - { name: core.model.column_type, columnType: "text_wysiwyg" }
 
   core.model.data_processor:
     class: ACP3\Core\Model\DataProcessor
     arguments:
-      $columnTypeStrategyLocator: '@core.model.column_type_strategy_locator'
+      $columnTypeStrategyLocator: "@core.model.column_type_strategy_locator"
 
-  ACP3\Core\Model\DataProcessor: '@core.model.data_processor'
+  ACP3\Core\Model\DataProcessor: "@core.model.data_processor"
 
   core.model.column_type_strategy_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
       - []
     public: true
-    tags: ['container.service_locator']
+    tags: ["container.service_locator"]

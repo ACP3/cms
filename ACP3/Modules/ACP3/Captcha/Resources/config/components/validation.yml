@@ -2,15 +2,15 @@ services:
   _defaults:
     autowire: true
     bind:
-      $captchaLocator: '@captcha.utility.captcha_registrar'
+      $captchaLocator: "@captcha.utility.captcha_registrar"
 
   ACP3\Modules\ACP3\Captcha\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
 
   ACP3\Modules\ACP3\Captcha\Validation\:
-    resource: '../../../src/Validation/'
-    exclude: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/"
+    exclude: "../../../src/Validation/ValidationRules/"
 
   cpatcha.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation'

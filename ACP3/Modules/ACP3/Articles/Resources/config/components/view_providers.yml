@@ -3,7 +3,7 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Articles\ViewProviders\:
-    resource: '../../../src/ViewProviders/'
+    resource: "../../../src/ViewProviders/"
 
   articles.view_providers.admin_article_edit: '@ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider'
   article.view_providers.article_full: '@ACP3\Modules\ACP3\Articles\ViewProviders\ArticleFullViewProvider'

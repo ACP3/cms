@@ -2,9 +2,9 @@ services:
   _defaults:
     autowire: true
     bind:
-      $captchaLocator: '@captcha.utility.captcha_registrar'
+      $captchaLocator: "@captcha.utility.captcha_registrar"
 
   ACP3\Modules\ACP3\Captcha\ViewProviders\:
-    resource: '../../../src/ViewProviders/'
+    resource: "../../../src/ViewProviders/"
 
   captcha.view_provider.admin_settings: '@ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider'

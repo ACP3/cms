@@ -2,16 +2,16 @@ services:
   _defaults:
     autowire: true
     bind:
-      ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface: '@comments.model.commentrepository'
+      ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface: "@comments.model.commentrepository"
 
   ACP3\Modules\ACP3\Comments\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
 
   ACP3\Modules\ACP3\Comments\Validation\:
-    resource: '../../../src/Validation/'
-    exclude: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/"
+    exclude: "../../../src/Validation/ValidationRules/"
 
   comments.validation.form_validation: '@ACP3\Modules\ACP3\Comments\Validation\FormValidation'
   comments.validation.admin_form_validation: '@ACP3\Modules\ACP3\Comments\Validation\AdminFormValidation'

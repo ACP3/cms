@@ -5,7 +5,7 @@ services:
   core.content_decorator:
     class: ACP3\Core\Helpers\ContentDecorator
 
-  ACP3\Core\Helpers\ContentDecorator: '@core.content_decorator'
+  ACP3\Core\Helpers\ContentDecorator: "@core.content_decorator"
 
   core.content_decorator.nl2p:
     class: ACP3\Core\Helpers\ContentDecorator\Nl2pContentDecorator

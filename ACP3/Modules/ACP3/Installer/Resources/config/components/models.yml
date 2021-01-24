@@ -5,14 +5,14 @@ services:
   installer.model.install_model:
     class: ACP3\Modules\ACP3\Installer\Model\InstallModel
     arguments:
-      $container: '@service_container'
+      $container: "@service_container"
 
-  ACP3\Modules\ACP3\Installer\Model\InstallModel: '@installer.model.install_model'
+  ACP3\Modules\ACP3\Installer\Model\InstallModel: "@installer.model.install_model"
 
   installer.model.schema_update_model:
     class: ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel
     arguments:
-      $logger: '@core.modules.installer_logger'
-      $container: '@service_container'
+      $logger: "@core.modules.installer_logger"
+      $container: "@service_container"
 
-  ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel: '@installer.model.schema_update_model'
+  ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel: "@installer.model.schema_update_model"

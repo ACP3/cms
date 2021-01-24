@@ -5,4 +5,4 @@ services:
   guestbook.model.guestbook_model:
     class: ACP3\Modules\ACP3\Guestbook\Model\GuestbookModel
     arguments:
-      $repository: '@guestbook.model.guestbookrepository'
+      $repository: "@guestbook.model.guestbookrepository"

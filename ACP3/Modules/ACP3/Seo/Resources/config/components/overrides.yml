@@ -17,4 +17,4 @@ services:
   core.seo.meta_statements_service:
     class: ACP3\Modules\ACP3\Seo\Core\SEO\MetaStatementsService
 
-  ACP3\Modules\ACP3\Seo\Core\SEO\MetaStatementsService: '@core.seo.meta_statements_service'
+  ACP3\Modules\ACP3\Seo\Core\SEO\MetaStatementsService: "@core.seo.meta_statements_service"

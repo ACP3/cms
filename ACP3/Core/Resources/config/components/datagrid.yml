@@ -5,29 +5,29 @@ services:
   core.data_grid.config_processor:
     class: ACP3\Core\DataGrid\ConfigProcessor
 
-  ACP3\Core\DataGrid\ConfigProcessor: '@core.data_grid.config_processor'
+  ACP3\Core\DataGrid\ConfigProcessor: "@core.data_grid.config_processor"
 
   core.data_grid.data_grid:
     class: ACP3\Core\DataGrid\DataGrid
     arguments:
-      $serviceLocator: '@core.data_grid.column_renderer_locator'
+      $serviceLocator: "@core.data_grid.column_renderer_locator"
 
-  ACP3\Core\DataGrid\DataGrid: '@core.data_grid.data_grid'
+  ACP3\Core\DataGrid\DataGrid: "@core.data_grid.data_grid"
 
   core.data_grid.column_renderer_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
       - []
-    tags: ['container.service_locator']
+    tags: ["container.service_locator"]
 
   core.data_grid.column_renderer.option_column_renderer.option_renderer:
     class: ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
 
-  ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer: '@core.data_grid.column_renderer.option_column_renderer.option_renderer'
+  ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer: "@core.data_grid.column_renderer.option_column_renderer.option_renderer"
 
   ACP3\Core\DataGrid\ColumnRenderer\:
-    resource: '../../../src/DataGrid/ColumnRenderer/*'
-    exclude: '../../../src/DataGrid/ColumnRenderer/{Event,OptionColumnRenderer}'
+    resource: "../../../src/DataGrid/ColumnRenderer/*"
+    exclude: "../../../src/DataGrid/ColumnRenderer/{Event,OptionColumnRenderer}"
     tags:
       - { name: core.data_grid.column_renderer }
 

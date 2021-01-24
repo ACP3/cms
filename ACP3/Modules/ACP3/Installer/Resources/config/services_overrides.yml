@@ -1,11 +1,11 @@
 parameters:
-  cache_driver: 'Array'
+  cache_driver: "Array"
 
 services:
   _defaults:
     autowire: true
     bind:
-      $assetRendererStrategyServiceLocator: '@core.assets.renderer.strategy.service_locator'
+      $assetRendererStrategyServiceLocator: "@core.assets.renderer.strategy.service_locator"
 
   core.application.event.add_template_variables_listener:
     class: ACP3\Modules\ACP3\Installer\Event\Listener\AddTemplateVariablesListener
@@ -15,33 +15,33 @@ services:
   core.assets.renderer.css_renderer_factory:
     class: ACP3\Core\Assets\Renderer\CSSRendererFactory
     arguments:
-      $applicationMode: 'dev'
+      $applicationMode: "dev"
 
   core.assets.renderer.javascript_renderer_factory:
     class: ACP3\Core\Assets\Renderer\JavaScriptRendererFactory
     arguments:
-      $applicationMode: 'dev'
+      $applicationMode: "dev"
 
   core.breadcrumb:
     class: ACP3\Core\Breadcrumb\Steps
     arguments:
-      $container: '@core.controller.controller_action_locator'
+      $container: "@core.controller.controller_action_locator"
 
   core.breadcrumb.title:
     class: ACP3\Core\Breadcrumb\Title
 
   core.controller.decorating_forward_controller_action_exception_error_listener:
     class: ACP3\Modules\ACP3\Installer\Core\Controller\EventListener\DecoratingForwardControllerActionExceptionErrorListener
-    decorates: 'core.controller.forward_controller_action_exception_error_listener'
+    decorates: "core.controller.forward_controller_action_exception_error_listener"
     arguments:
-      $forwardControllerActionExceptionErrorListener: '@core.controller.decorating_forward_controller_action_exception_error_listener.inner'
+      $forwardControllerActionExceptionErrorListener: "@core.controller.decorating_forward_controller_action_exception_error_listener.inner"
     tags:
       - { name: core.eventSubscriber }
 
   core.http.request:
     class: ACP3\Modules\ACP3\Installer\Core\Http\Request
     public: true
-    factory: ['@core.request_factory', create]
+    factory: ["@core.request_factory", create]
 
   core.request_factory:
     class: ACP3\Modules\ACP3\Installer\Core\Http\RequestFactory
@@ -55,9 +55,9 @@ services:
   system.model.settingsrepository:
     class: ACP3\Modules\ACP3\Installer\Repository\SettingsRepository
     arguments:
-      $environment: '%core.environment%'
+      $environment: "%core.environment%"
 
-  ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface: '@system.model.settingsrepository'
+  ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface: "@system.model.settingsrepository"
 
   smarty.resource.asset:
     class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
@@ -77,8 +77,8 @@ services:
   errors.event_listener.handle_generic_errors_exception_listener:
     class: ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener
     arguments:
-      $applicationMode: '%core.environment%'
-      $serviceId: 'installer.controller.installer.error.server_error'
+      $applicationMode: "%core.environment%"
+      $serviceId: "installer.controller.installer.error.server_error"
     tags:
       - { name: core.eventSubscriber }
 

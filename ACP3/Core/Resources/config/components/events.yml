@@ -19,4 +19,4 @@ services:
   core.application.event.on_output_page_listener:
     class: ACP3\Core\Application\Event\Listener\OnOutputPageExceptionListener
     arguments:
-      $logger: '@core.logger.system_logger'
+      $logger: "@core.logger.system_logger"

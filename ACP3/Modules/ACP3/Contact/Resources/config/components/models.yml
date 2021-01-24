@@ -5,7 +5,7 @@ services:
   contact.model.contacts_model:
     class: ACP3\Modules\ACP3\Contact\Model\ContactsModel
     arguments:
-      $repository: '@contact.model.repository.contacts_repository'
+      $repository: "@contact.model.repository.contacts_repository"
 
   contact.model.contact_form_model:
     class: ACP3\Modules\ACP3\Contact\Model\ContactFormModel

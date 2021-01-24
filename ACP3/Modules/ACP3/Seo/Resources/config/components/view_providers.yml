@@ -3,7 +3,7 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Seo\ViewProviders\:
-    resource: '../../../src/ViewProviders/'
+    resource: "../../../src/ViewProviders/"
 
   seo.view_providers.admin_seo_edit: '@ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider'
   seo.view_providers.admin_settings: '@ACP3\Modules\ACP3\Seo\ViewProviders\AdminSettingsViewProvider'

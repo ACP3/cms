@@ -4,7 +4,10 @@
  */
 
 (($, document) => {
-    $(':radio[name="sitemap_is_enabled"]').on('click change', function () {
-        document.getElementById('seo-sitemap-wrapper').classList.toggle('hidden', Number(this.value) === 0);
-    }).filter(':checked').triggerHandler('click');
+  $(':radio[name="sitemap_is_enabled"]')
+    .on("click change", function () {
+      document.getElementById("seo-sitemap-wrapper").classList.toggle("hidden", Number(this.value) === 0);
+    })
+    .filter(":checked")
+    .triggerHandler("click");
 })(jQuery, document);

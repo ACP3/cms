@@ -2,10 +2,10 @@ services:
   _defaults:
     autowire: true
     bind:
-      $galleryModel: '@gallery.model.gallery_model'
-      $pictureModel: '@gallery.model.picture_model'
-      $galleryCoreCache: '@gallery.cache.core'
-      $galleryUploadHelper: '@gallery.helpers.upload'
+      $galleryModel: "@gallery.model.gallery_model"
+      $pictureModel: "@gallery.model.picture_model"
+      $galleryCoreCache: "@gallery.cache.core"
+      $galleryUploadHelper: "@gallery.helpers.upload"
     tags:
       - { name: acp3.controller.action }
 

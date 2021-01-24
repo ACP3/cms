@@ -8,6 +8,6 @@ services:
   newssearch.extension.search_availability_extension:
     class: ACP3\Modules\ACP3\Newssearch\Extension\SearchAvailabilityExtension
     arguments:
-      $repository: '@newssearch.repository.search_results_aware_repository'
+      $repository: "@newssearch.repository.search_results_aware_repository"
     tags:
       - { name: search.extension.search_availability }

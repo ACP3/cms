@@ -16,8 +16,8 @@ services:
   core.context.install:
     class: ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext
     arguments:
-      $container: '@service_container'
+      $container: "@service_container"
 
-  ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext: '@core.context.install'
+  ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext: "@core.context.install"
 
-  ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath: '@core.environment.application_path'
+  ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath: "@core.environment.application_path"

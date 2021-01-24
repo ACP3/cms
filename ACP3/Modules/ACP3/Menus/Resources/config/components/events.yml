@@ -4,7 +4,7 @@ services:
 
   ACP3\Modules\ACP3\Menus\Event\Listener\OnMenusModelBeforeDeleteListener:
     arguments:
-      $menuItemsModel: '@menus.model.menu_items_model'
+      $menuItemsModel: "@menus.model.menu_items_model"
     tags:
       - { name: core.eventListener, event: menus.model.menus.before_delete }
 

@@ -10,7 +10,7 @@ services:
   emoticons.event.on_emoticons_model_before_delete_listener:
     class: ACP3\Modules\ACP3\Emoticons\Event\Listener\OnEmoticonsModelBeforeDeleteListener
     arguments:
-      $emoticonsUploadHelper: '@emoticons.helpers.upload'
+      $emoticonsUploadHelper: "@emoticons.helpers.upload"
     tags:
       - { name: core.eventListener, event: emoticons.model.emoticons.before_delete }
 

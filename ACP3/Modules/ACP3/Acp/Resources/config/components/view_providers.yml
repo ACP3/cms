@@ -3,6 +3,6 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Acp\ViewProviders\:
-    resource: '../../../src/ViewProviders/'
+    resource: "../../../src/ViewProviders/"
 
   acl.view_providers.module_list: '@ACP3\Modules\ACP3\Acp\ViewProviders\ModuleListViewProvider'

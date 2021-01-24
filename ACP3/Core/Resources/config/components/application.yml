@@ -1,5 +1,5 @@
 parameters:
-  fragment_path: '/_fragment'
+  fragment_path: "/_fragment"
 
 services:
   _defaults:
@@ -9,15 +9,15 @@ services:
     class: ACP3\Core\Application\ControllerActionDispatcher
     public: true
     arguments:
-      $serviceLocator: '@core.controller.controller_action_locator'
+      $serviceLocator: "@core.controller.controller_action_locator"
 
-  ACP3\Core\Application\ControllerActionDispatcher: '@core.application.controller_action_dispatcher'
+  ACP3\Core\Application\ControllerActionDispatcher: "@core.application.controller_action_dispatcher"
 
   core.application.argument_resolver:
     class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
 
-  Symfony\Component\HttpKernel\Controller\ArgumentResolver: '@core.application.argument_resolver'
-  Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface: '@core.application.argument_resolver'
+  Symfony\Component\HttpKernel\Controller\ArgumentResolver: "@core.application.argument_resolver"
+  Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface: "@core.application.argument_resolver"
 
   kernel:
     synthetic: true
@@ -26,7 +26,7 @@ services:
   esi:
     class: Symfony\Component\HttpKernel\HttpCache\Esi
 
-  Symfony\Component\HttpKernel\HttpCache\SurrogateInterface: '@esi'
+  Symfony\Component\HttpKernel\HttpCache\SurrogateInterface: "@esi"
 
   esi_listener:
     class: Symfony\Component\HttpKernel\EventListener\SurrogateListener
@@ -36,7 +36,7 @@ services:
   fragment_listener:
     class: Symfony\Component\HttpKernel\EventListener\FragmentListener
     arguments:
-      $fragmentPath: '%fragment_path%'
+      $fragmentPath: "%fragment_path%"
     tags:
       - { name: core.eventSubscriber }
 
@@ -48,50 +48,50 @@ services:
   fragment.handler:
     class: Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler
     arguments:
-      - '@service_container'
-      - '@request_stack'
-      - '%kernel.debug%'
+      - "@service_container"
+      - "@request_stack"
+      - "%kernel.debug%"
 
-  Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler: '@fragment.handler'
-  Symfony\Component\HttpKernel\Fragment\FragmentHandler: '@fragment.handler'
+  Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler: "@fragment.handler"
+  Symfony\Component\HttpKernel\Fragment\FragmentHandler: "@fragment.handler"
 
   fragment.renderer.inline:
     class: Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer
     arguments:
-      $kernel: '@kernel'
+      $kernel: "@kernel"
     calls:
-      - setFragmentPath: ['%fragment_path%']
+      - setFragmentPath: ["%fragment_path%"]
     tags:
-      - { name: kernel.fragment_renderer, alias: 'inline' }
+      - { name: kernel.fragment_renderer, alias: "inline" }
 
   fragment.renderer.esi:
     class: Symfony\Component\HttpKernel\Fragment\EsiFragmentRenderer
     arguments:
-      $inlineStrategy: '@fragment.renderer.inline'
+      $inlineStrategy: "@fragment.renderer.inline"
     calls:
-      - setFragmentPath: ['%fragment_path%']
+      - setFragmentPath: ["%fragment_path%"]
     tags:
-      - { name: kernel.fragment_renderer, alias: 'esi' }
+      - { name: kernel.fragment_renderer, alias: "esi" }
 
   uri_signer:
     class: Symfony\Component\HttpKernel\UriSigner
     arguments:
-      - ''
+      - ""
 
-  Symfony\Component\HttpKernel\UriSigner: '@uri_signer'
+  Symfony\Component\HttpKernel\UriSigner: "@uri_signer"
 
   http_cache_store_factory:
     class: ACP3\Core\Application\BootstrapCache\Psr6StoreFactory
 
   http_cache_store:
     class: Toflar\Psr6HttpCacheStore\Psr6Store
-    factory: '@http_cache_store_factory'
+    factory: "@http_cache_store_factory"
 
-  Symfony\Component\HttpKernel\HttpCache\StoreInterface: '@http_cache_store'
+  Symfony\Component\HttpKernel\HttpCache\StoreInterface: "@http_cache_store"
 
   http_cache:
     class: ACP3\Core\Application\BootstrapCache
     public: true
     arguments:
-      $kernel: '@kernel'
-      $options: { debug: '%kernel.debug%' }
+      $kernel: "@kernel"
+      $options: { debug: "%kernel.debug%" }

@@ -5,11 +5,11 @@ services:
   permissions.cache:
     class: ACP3\Modules\ACP3\Permissions\Cache
     arguments:
-      $cache: '@permissions.cache.core'
+      $cache: "@permissions.cache.core"
 
-  ACP3\Modules\ACP3\Permissions\Cache: '@permissions.cache'
+  ACP3\Modules\ACP3\Permissions\Cache: "@permissions.cache"
 
   permissions.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      $namespace: 'permissions'
+      $namespace: "permissions"

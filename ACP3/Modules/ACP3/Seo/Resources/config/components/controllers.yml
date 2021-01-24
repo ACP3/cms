@@ -2,8 +2,8 @@ services:
   _defaults:
     autowire: true
     bind:
-      $seoModel: '@seo.model.seo_model'
-      $sitemapGenerationModel: '@seo.model.sitemap_generation_model'
+      $seoModel: "@seo.model.seo_model"
+      $sitemapGenerationModel: "@seo.model.sitemap_generation_model"
     tags:
       - { name: acp3.controller.action }
 

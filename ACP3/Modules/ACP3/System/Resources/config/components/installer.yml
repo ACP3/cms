@@ -10,7 +10,7 @@ services:
   system.installer.migration:
     class: ACP3\Modules\ACP3\System\Installer\Migration
     calls:
-      - ['setSeoInstallerSchema', ['@?seo.installer.schema']]
-      - ['setMinifyInstallerSchema', ['@?minify.installer.schema']]
+      - ["setSeoInstallerSchema", ["@?seo.installer.schema"]]
+      - ["setMinifyInstallerSchema", ["@?minify.installer.schema"]]
     tags:
       - { name: core.installer.migration }

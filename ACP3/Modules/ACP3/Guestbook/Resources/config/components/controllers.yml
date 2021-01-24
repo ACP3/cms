@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     bind:
-      $guestbookModel: '@guestbook.model.guestbook_model'
+      $guestbookModel: "@guestbook.model.guestbook_model"
     tags:
       - { name: acp3.controller.action }
 

@@ -5,4 +5,4 @@ services:
   news.model:
     class: ACP3\Modules\ACP3\News\Model\NewsModel
     arguments:
-      $newsRepository: '@news.model.newsrepository'
+      $newsRepository: "@news.model.newsrepository"

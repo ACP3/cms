@@ -8,9 +8,9 @@ services:
   feeds.view.renderer.feedgenerator:
     class: ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
 
-  ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator: '@feeds.view.renderer.feedgenerator'
+  ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator: "@feeds.view.renderer.feedgenerator"
 
   feeds.utility.feed_availability_registrar:
     class: ACP3\Modules\ACP3\Feeds\Utility\FeedAvailabilityRegistrar
 
-  ACP3\Modules\ACP3\Feeds\Utility\FeedAvailabilityRegistrar: '@feeds.utility.feed_availability_registrar'
+  ACP3\Modules\ACP3\Feeds\Utility\FeedAvailabilityRegistrar: "@feeds.utility.feed_availability_registrar"

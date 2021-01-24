@@ -4,7 +4,10 @@
  */
 
 (($, document) => {
-    $('input[name="active"]').on('click change', function () {
-        document.getElementById('publication-period-wrapper').classList.toggle('hidden',Number(this.value) === 0);
-    }).filter(':checked').click();
+  $('input[name="active"]')
+    .on("click change", function () {
+      document.getElementById("publication-period-wrapper").classList.toggle("hidden", Number(this.value) === 0);
+    })
+    .filter(":checked")
+    .click();
 })(jQuery, document);

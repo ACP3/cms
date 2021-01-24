@@ -4,7 +4,7 @@
  */
 
 ((document) => {
-    document.getElementById('search-advanced-toggle').addEventListener('click', () => {
-        document.getElementById('search-advanced-wrapper').classList.toggle('hidden');
-    });
+  document.getElementById("search-advanced-toggle").addEventListener("click", () => {
+    document.getElementById("search-advanced-wrapper").classList.toggle("hidden");
+  });
 })(document);

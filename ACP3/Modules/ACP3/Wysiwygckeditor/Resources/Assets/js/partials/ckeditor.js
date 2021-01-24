@@ -6,39 +6,39 @@
 /* global CKEDITOR */
 
 const initializeCKEditorInstances = () => {
-    jQuery('.wysiwyg-ckeditor').each((index, element) => {
-        const config = jQuery(element).data('wysiwygConfig');
+  jQuery(".wysiwyg-ckeditor").each((index, element) => {
+    const config = jQuery(element).data("wysiwygConfig");
 
-        if (typeof CKEDITOR.instances[element.id] !== 'undefined') {
-            CKEDITOR.instances[element.id].destroy(true);
-        }
+    if (typeof CKEDITOR.instances[element.id] !== "undefined") {
+      CKEDITOR.instances[element.id].destroy(true);
+    }
 
-        if (config) {
-            CKEDITOR.replace(element.id, config);
-        } else {
-            CKEDITOR.replace(element.id);
-        }
-    });
+    if (config) {
+      CKEDITOR.replace(element.id, config);
+    } else {
+      CKEDITOR.replace(element.id);
+    }
+  });
 };
 
 (($) => {
-    $(document).on('acp3.ajaxFrom.submit.before', () => {
-        if (typeof CKEDITOR === 'undefined') {
-            return;
-        }
+  $(document).on("acp3.ajaxFrom.submit.before", () => {
+    if (typeof CKEDITOR === "undefined") {
+      return;
+    }
 
-        for (const instance in CKEDITOR.instances) {
-            if (!Object.prototype.hasOwnProperty.call(CKEDITOR.instances, instance)) {
-                return;
-            }
+    for (const instance in CKEDITOR.instances) {
+      if (!Object.prototype.hasOwnProperty.call(CKEDITOR.instances, instance)) {
+        return;
+      }
 
-            CKEDITOR.instances[instance].updateElement();
-        }
-    });
+      CKEDITOR.instances[instance].updateElement();
+    }
+  });
 
-    $(document).on('acp3.ajaxFrom.complete', () => {
-        initializeCKEditorInstances();
-    });
-
+  $(document).on("acp3.ajaxFrom.complete", () => {
     initializeCKEditorInstances();
+  });
+
+  initializeCKEditorInstances();
 })(jQuery);

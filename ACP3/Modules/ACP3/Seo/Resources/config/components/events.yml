@@ -20,8 +20,8 @@ services:
   seo.event.generate_sitemap_listener:
     class: ACP3\Modules\ACP3\Seo\Event\Listener\GenerateSitemapListener
     arguments:
-      $logger: '@seo.sitemap_logger'
-      $sitemapGenerationModel: '@seo.model.sitemap_generation_model'
+      $logger: "@seo.sitemap_logger"
+      $sitemapGenerationModel: "@seo.model.sitemap_generation_model"
     tags:
       - { name: core.eventSubscriber }
 

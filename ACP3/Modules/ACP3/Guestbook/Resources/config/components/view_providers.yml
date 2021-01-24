@@ -3,7 +3,7 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Guestbook\ViewProviders\:
-    resource: '../../../src/ViewProviders/'
+    resource: "../../../src/ViewProviders/"
 
   guestbook.view_providers.admin_guestbook_edit: '@ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminGuestbookEditViewProvider'
   guestbook.view_providers.admin_settings: '@ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminSettingsViewProvider'

@@ -4,24 +4,24 @@
  */
 
 module.exports = (gulp) => {
-    'use strict';
+  "use strict";
 
-    const componentPaths = require('./component-paths');
-    const plumber = require('gulp-plumber');
-    const eslint = require('gulp-eslint');
+  const componentPaths = require("./component-paths");
+  const plumber = require("gulp-plumber");
+  const eslint = require("gulp-eslint");
 
-    return () => {
-        return gulp
-            .src(
-                [
-                    ...componentPaths.js.watch,
-                    './designs/*/*/Assets/js/{admin,frontend,partials,widget,lib}/!(*.min).js',
-                    './designs/*/Assets/js/!(*.min).js',
-                ],
-                {base: './', since: gulp.lastRun('eslint')}
-            )
-            .pipe(plumber())
-            .pipe(eslint())
-            .pipe(eslint.format());
-    };
+  return () => {
+    return gulp
+      .src(
+        [
+          ...componentPaths.js.watch,
+          "./designs/*/*/Assets/js/{admin,frontend,partials,widget,lib}/!(*.min).js",
+          "./designs/*/Assets/js/!(*.min).js",
+        ],
+        { base: "./", since: gulp.lastRun("eslint") }
+      )
+      .pipe(plumber())
+      .pipe(eslint())
+      .pipe(eslint.format());
+  };
 };

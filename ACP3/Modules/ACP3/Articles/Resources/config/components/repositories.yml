@@ -3,7 +3,7 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Articles\Model\Repository\:
-    resource: '../../../src/Model/Repository/'
+    resource: "../../../src/Model/Repository/"
 
   articles.model.data_grid_repository: '@ACP3\Modules\ACP3\Articles\Model\Repository\DataGridRepository'
   articles.model.articlerepository: '@ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository'

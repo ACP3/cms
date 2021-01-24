@@ -3,12 +3,12 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Installer\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
 
   ACP3\Modules\ACP3\Installer\Validation\:
-    resource: '../../../src/Validation/'
-    exclude: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/"
+    exclude: "../../../src/Validation/ValidationRules/"
 
   installer.validator: '@ACP3\Modules\ACP3\Installer\Validation\FormValidation'

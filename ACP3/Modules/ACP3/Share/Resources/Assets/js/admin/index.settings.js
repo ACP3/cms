@@ -4,15 +4,17 @@
  */
 
 ((document) => {
-    const socialSharingServices = document.getElementById('services');
+  const socialSharingServices = document.getElementById("services");
 
-    socialSharingServices.addEventListener('change', function (event) {
-        if (event.detail?.init === true) {
-            event.preventDefault();
-        }
+  socialSharingServices.addEventListener("change", function (event) {
+    if (event.detail?.init === true) {
+      event.preventDefault();
+    }
 
-        document.getElementById('fb-credentials-wrapper').classList.toggle('hidden', !Array.from(this.selectedOptions).some((option) => option.value === 'facebook'));
-    });
+    document
+      .getElementById("fb-credentials-wrapper")
+      .classList.toggle("hidden", !Array.from(this.selectedOptions).some((option) => option.value === "facebook"));
+  });
 
-    socialSharingServices.dispatchEvent(new CustomEvent('change', {detail: {init: true}}));
+  socialSharingServices.dispatchEvent(new CustomEvent("change", { detail: { init: true } }));
 })(document);

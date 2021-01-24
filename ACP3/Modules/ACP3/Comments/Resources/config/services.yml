@@ -8,4 +8,4 @@ services:
   comments.helpers:
     class: ACP3\Modules\ACP3\Comments\Helpers
 
-  ACP3\Modules\ACP3\Comments\Helpers: '@comments.helpers'
+  ACP3\Modules\ACP3\Comments\Helpers: "@comments.helpers"

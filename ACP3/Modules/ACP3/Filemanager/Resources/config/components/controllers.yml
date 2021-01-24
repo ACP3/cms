@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     bind:
-      $applicationMode: '%core.environment%'
+      $applicationMode: "%core.environment%"
     tags:
       - { name: acp3.controller.action }
 

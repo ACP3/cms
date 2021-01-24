@@ -5,18 +5,18 @@ services:
   permissions.model.resources_model:
     class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
     arguments:
-      $repository: '@permissions.model.resourcerepository'
+      $repository: "@permissions.model.resourcerepository"
 
   permissions.model.roles_model:
     class: ACP3\Modules\ACP3\Permissions\Model\RolesModel
     arguments:
-      $repository: '@permissions.model.rolerepository'
-      $insertOperation: '@permissions.nested_set.operation.insert'
-      $editOperation: '@permissions.nested_set.operation.edit'
-      $deleteOperation: '@permissions.nested_set.operation.delete'
-      $sortOperation: '@permissions.nested_set.operation.sort'
+      $repository: "@permissions.model.rolerepository"
+      $insertOperation: "@permissions.nested_set.operation.insert"
+      $editOperation: "@permissions.nested_set.operation.edit"
+      $deleteOperation: "@permissions.nested_set.operation.delete"
+      $sortOperation: "@permissions.nested_set.operation.sort"
 
   permissions.model.rules_model:
     class: ACP3\Modules\ACP3\Permissions\Model\RulesModel
     arguments:
-      $repository: '@permissions.model.rulerepository'
+      $repository: "@permissions.model.rulerepository"

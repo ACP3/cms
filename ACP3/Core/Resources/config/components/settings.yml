@@ -6,7 +6,7 @@ services:
     class: ACP3\Core\Settings\Settings
     public: true
     arguments:
-      $coreCache: '@core.cache.system'
+      $coreCache: "@core.cache.system"
 
-  ACP3\Core\Settings\Settings: '@core.config'
-  ACP3\Core\Settings\SettingsInterface: '@core.config'
+  ACP3\Core\Settings\Settings: "@core.config"
+  ACP3\Core\Settings\SettingsInterface: "@core.config"

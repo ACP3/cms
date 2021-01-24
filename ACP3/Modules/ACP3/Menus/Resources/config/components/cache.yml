@@ -5,11 +5,11 @@ services:
   menus.cache:
     class: ACP3\Modules\ACP3\Menus\Cache
     arguments:
-      $cache: '@menus.cache.core'
+      $cache: "@menus.cache.core"
 
-  ACP3\Modules\ACP3\Menus\Cache: '@menus.cache'
+  ACP3\Modules\ACP3\Menus\Cache: "@menus.cache"
 
   menus.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      $namespace: 'menus'
+      $namespace: "menus"

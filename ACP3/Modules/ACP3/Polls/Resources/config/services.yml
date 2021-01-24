@@ -8,4 +8,4 @@ services:
   polls.helpers:
     class: ACP3\Modules\ACP3\Polls\Helpers
 
-  ACP3\Modules\ACP3\Polls\Helpers: '@polls.helpers'
+  ACP3\Modules\ACP3\Polls\Helpers: "@polls.helpers"

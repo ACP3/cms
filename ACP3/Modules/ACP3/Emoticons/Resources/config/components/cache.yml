@@ -5,11 +5,11 @@ services:
   emoticons.cache:
     class: ACP3\Modules\ACP3\Emoticons\Cache
     arguments:
-      $cache: '@emoticons.cache.core'
+      $cache: "@emoticons.cache.core"
 
-  ACP3\Modules\ACP3\Emoticons\Cache: '@emoticons.cache'
+  ACP3\Modules\ACP3\Emoticons\Cache: "@emoticons.cache"
 
   emoticons.cache.core:
     class: ACP3\Core\Cache
     arguments:
-      $namespace: 'emoticons'
+      $namespace: "emoticons"

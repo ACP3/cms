@@ -3,7 +3,7 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Auditlog\ViewProviders\:
-    resource: '../../../src/ViewProviders/'
+    resource: "../../../src/ViewProviders/"
 
   auditlog.view_providers.data_grid: '@ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridViewProvider'
   auditlog.view_providers.data_grid_by_table: '@ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridByTableViewProvider'

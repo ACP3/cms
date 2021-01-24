@@ -5,18 +5,18 @@ services:
   core.validator:
     class: ACP3\Core\Validation\Validator
     arguments:
-      $container: '@core.validator.validation_rule_locator'
+      $container: "@core.validator.validation_rule_locator"
 
-  ACP3\Core\Validation\Validator: '@core.validator'
+  ACP3\Core\Validation\Validator: "@core.validator"
 
   core.validator.validation_rule_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
       - []
-    tags: ['container.service_locator']
+    tags: ["container.service_locator"]
 
   ACP3\Core\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
 
@@ -43,7 +43,7 @@ services:
   core.validator.abstract:
     abstract: true
     arguments:
-      - '@core.i18n.translator'
-      - '@core.validator'
+      - "@core.i18n.translator"
+      - "@core.validator"
     deprecated:
-      message: 'Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead.'
+      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead."

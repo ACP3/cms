@@ -4,7 +4,7 @@
  */
 
 (($) => {
-    $('#modal-create').on('shown.bs.modal', function () {
-        $(this).find('[data-ajax-form="true"]').formSubmit();
-    });
+  $("#modal-create").on("shown.bs.modal", function () {
+    $(this).find('[data-ajax-form="true"]').formSubmit();
+  });
 })(jQuery);

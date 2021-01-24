@@ -13,4 +13,4 @@ services:
   gallery.helpers.upload_cached_images:
     class: ACP3\Core\Helpers\Upload
     arguments:
-      $directory: 'cache/images'
+      $directory: "cache/images"

@@ -3,11 +3,11 @@ version: "3.7"
 services:
   app:
     build:
-      context: './build/docker/php/'
+      context: "./build/docker/php/"
       args:
         PHP_VERSION: 7.2
     depends_on:
-     - db
+      - db
     networks:
       - acp3-cms
     volumes:
@@ -17,7 +17,7 @@ services:
 
   web:
     build:
-      context: './build/docker/apache/'
+      context: "./build/docker/apache/"
       args:
         APACHE_VERSION: 2.4
     depends_on:

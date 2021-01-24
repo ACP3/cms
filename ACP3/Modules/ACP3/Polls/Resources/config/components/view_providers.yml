@@ -3,7 +3,7 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Polls\ViewProviders\:
-    resource: '../../../src/ViewProviders/'
+    resource: "../../../src/ViewProviders/"
 
   polls.view_providers.admin_poll_edit: '@ACP3\Modules\ACP3\Polls\ViewProviders\AdminPollEditViewProvider'
   polls.view_providers.data_grid: '@ACP3\Modules\ACP3\Polls\ViewProviders\DataGridViewProvider'

@@ -2,15 +2,15 @@ services:
   _defaults:
     autowire: true
     bind:
-      $editorLocator: '@core.wysiwyg.wysiwyg_editor_registrar'
+      $editorLocator: "@core.wysiwyg.wysiwyg_editor_registrar"
 
   ACP3\Modules\ACP3\System\Validation\ValidationRules\:
-    resource: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
 
   ACP3\Modules\ACP3\System\Validation\:
-    resource: '../../../src/Validation/'
-    exclude: '../../../src/Validation/ValidationRules/'
+    resource: "../../../src/Validation/"
+    exclude: "../../../src/Validation/ValidationRules/"
 
   system.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation'

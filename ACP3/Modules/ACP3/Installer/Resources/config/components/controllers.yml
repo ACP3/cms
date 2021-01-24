@@ -22,7 +22,7 @@ services:
   installer.controller.installer.index.install_post:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Index\InstallPost
     arguments:
-      $logger: '@core.logger.system_logger'
+      $logger: "@core.logger.system_logger"
 
   installer.controller.installer.update.index:
     class: ACP3\Modules\ACP3\Installer\Controller\Installer\Update\Index

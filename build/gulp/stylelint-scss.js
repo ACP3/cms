@@ -4,26 +4,24 @@
  */
 
 module.exports = (gulp) => {
-    'use strict';
+  "use strict";
 
-    const componentPaths = require('./component-paths');
-    const gulpStylelint = require('gulp-stylelint');
-    const plumber = require('gulp-plumber');
+  const componentPaths = require("./component-paths");
+  const gulpStylelint = require("gulp-stylelint");
+  const plumber = require("gulp-plumber");
 
-    return () => {
-        return gulp
-            .src(
-                [
-                    ...componentPaths.scss,
-                    './designs/*/**/Assets/scss/**/*.scss',
-                ],
-                {base: './', allowEmpty: true, since: gulp.lastRun('stylelint-scss')}
-            )
-            .pipe(plumber())
-            .pipe(gulpStylelint({
-                reporters: [
-                    {formatter: 'string', console: true}
-                ]
-            }));
-    };
+  return () => {
+    return gulp
+      .src([...componentPaths.scss, "./designs/*/**/Assets/scss/**/*.scss"], {
+        base: "./",
+        allowEmpty: true,
+        since: gulp.lastRun("stylelint-scss"),
+      })
+      .pipe(plumber())
+      .pipe(
+        gulpStylelint({
+          reporters: [{ formatter: "string", console: true }],
+        })
+      );
+  };
 };

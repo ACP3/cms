@@ -6,15 +6,15 @@ services:
     class: ACP3\Core\Http\RedirectResponse
     public: true
 
-  ACP3\Core\Http\RedirectResponse: '@core.http.redirect_response'
+  ACP3\Core\Http\RedirectResponse: "@core.http.redirect_response"
 
   core.http.request:
     class: ACP3\Core\Http\Request
     public: true
-    factory: ['@core.http.request_factory', create]
+    factory: ["@core.http.request_factory", create]
 
-  ACP3\Core\Http\Request: '@core.http.request'
-  ACP3\Core\Http\RequestInterface: '@core.http.request'
+  ACP3\Core\Http\Request: "@core.http.request"
+  ACP3\Core\Http\RequestInterface: "@core.http.request"
 
   core.http.request_factory:
     class: ACP3\Core\Http\RequestFactory
@@ -22,18 +22,18 @@ services:
   core.http.response:
     class: Symfony\Component\HttpFoundation\Response
     deprecated:
-      message: 'Service %service_id% is deprecated since version 5.14.0. To be removed with version 6.x.'
+      message: "Service %service_id% is deprecated since version 5.14.0. To be removed with version 6.x."
 
   Symfony\Component\HttpFoundation\Response:
-    alias: 'core.http.response'
+    alias: "core.http.response"
     deprecated:
-      message: 'Service %alias_id% is deprecated since version 5.14.0. To be removed with version 6.x.'
+      message: "Service %alias_id% is deprecated since version 5.14.0. To be removed with version 6.x."
 
   request_stack:
     class: Symfony\Component\HttpFoundation\RequestStack
     public: true
 
-  Symfony\Component\HttpFoundation\RequestStack: '@request_stack'
+  Symfony\Component\HttpFoundation\RequestStack: "@request_stack"
 
   ACP3\Core\Http\EventListener\ResetRequestListener:
     tags:

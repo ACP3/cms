@@ -2,8 +2,8 @@ services:
   _defaults:
     autowire: true
     bind:
-      $menusModel: '@menus.model.menus_model'
-      $menuItemsModel: '@menus.model.menu_items_model'
+      $menusModel: "@menus.model.menus_model"
+      $menuItemsModel: "@menus.model.menu_items_model"
     tags:
       - { name: acp3.controller.action }
 

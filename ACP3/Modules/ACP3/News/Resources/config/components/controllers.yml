@@ -2,8 +2,8 @@ services:
   _defaults:
     autowire: true
     bind:
-      $categoriesHelpers: '@categories.helpers'
-      $newsModel: '@news.model'
+      $categoriesHelpers: "@categories.helpers"
+      $newsModel: "@news.model"
     tags:
       - { name: acp3.controller.action }
 

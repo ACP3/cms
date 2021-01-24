@@ -8,9 +8,9 @@ services:
   categories.helpers:
     class: ACP3\Modules\ACP3\Categories\Helpers
     arguments:
-      $categoriesModel: '@categories.model.categories_model'
+      $categoriesModel: "@categories.model.categories_model"
 
-  ACP3\Modules\ACP3\Categories\Helpers: '@categories.helpers'
+  ACP3\Modules\ACP3\Categories\Helpers: "@categories.helpers"
 
   categories.helpers.upload:
     class: ACP3\Core\Helpers\Upload
