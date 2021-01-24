@@ -17,16 +17,7 @@
         {/tab}
         {tab title={lang t="installer|general"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true label={lang t="installer|site_title"}}
-            <div class="form-group">
-                <label for="design" class="col-sm-2 control-label required">{lang t="installer|design"}</label>
-                <div class="col-sm-10">
-                    <select name="design" id="design" class="form-control">
-                        {foreach $designs as $row}
-                            <option value="{$row.dir}"{$row.selected}>{$row.name}</option>
-                        {/foreach}
-                    </select>
-                </div>
-            </div>
+            {include file="asset:System/Partials/form_group.select.tpl" options=$designs required=true label={lang t="installer|design"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="installer|date_format_long"} help={lang t="installer|php_date_function"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="installer|date_format_short"} help={lang t="installer|php_date_function"}}
             <div class="form-group">

@@ -5,16 +5,7 @@
         {tab title={lang t="system|general_statements"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="name" value=$form.name required=true maxlength=100 label={lang t="system|name"}}
             {if !empty($parent)}
-                <div class="form-group">
-                    <label for="parent-id" class="col-sm-2 control-label required">{lang t="permissions|superior_role"}</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" name="parent_id" id="parent-id" required>
-                            {foreach $parent as $row}
-                                <option value="{$row.id}"{$row.selected}>{$row.name}</option>
-                            {/foreach}
-                        </select>
-                    </div>
-                </div>
+                {include file="asset:System/Partials/form_group.select.tpl" options=$parent required=true label={lang t="permissions|superior_role"}}
             {/if}
         {/tab}
         {tab title={lang t="permissions|permissions"}}

@@ -10,9 +10,7 @@
         {tab title={lang t="files|file_statements"}}
             {block FILES_FILE_UPLOAD}
                 {include file="asset:System/Partials/form_group.checkbox.tpl" options=$external}
-                <div id="file-internal-toggle">
-                    {include file="asset:System/Partials/form_group.input_file.tpl" name="file_internal" labelRequired=true label={lang t="files|file"}}
-                </div>
+                {include file="asset:System/Partials/form_group.input_file.tpl" name="file_internal" formGroupId="file-internal-toggle" labelRequired=true label={lang t="files|file"}}
             {/block}
             <div id="file-external-toggle">
                 {include file="asset:System/Partials/form_group.input_url.tpl" name="file_external" value=$form.file_external labelRequired=true maxlength=120 label={lang t="files|uri"}}

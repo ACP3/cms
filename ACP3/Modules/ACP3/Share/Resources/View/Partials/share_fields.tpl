@@ -2,9 +2,7 @@
 <div id="share-services-wrapper">
     {include file="asset:System/Partials/form_group.button_group.tpl" options=$share.customize_services required=true label={lang t="share|customize_services"}}
     {if !empty($share.services)}
-        <div id="share-custom-services-wrapper">
-            {include file="asset:System/Partials/form_group.select.tpl" options=$share.services multiple=true required=true label={lang t="share|active_services"}}
-        </div>
+        {include file="asset:System/Partials/form_group.select.tpl" options=$share.services multiple=true required=true formGroupId="share-custom-services-wrapper" label={lang t="share|active_services"}}
     {/if}
 </div>
 {include file="asset:System/Partials/form_group.button_group.tpl" options=$share.ratings_active required=true label={lang t="share|activate_ratings"}}

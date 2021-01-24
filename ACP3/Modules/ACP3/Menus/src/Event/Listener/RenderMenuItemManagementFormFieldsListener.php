@@ -141,7 +141,7 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
     /**
      * {@inheritDoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'core.layout.form_extension' => ['__invoke', 255],

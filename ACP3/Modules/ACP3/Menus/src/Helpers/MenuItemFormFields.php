@@ -42,12 +42,12 @@ class MenuItemFormFields
      */
     protected function menusDropDown(int $selected = 0): array
     {
-        $menus = $this->menuRepository->getAllMenus();
-        foreach ($menus as $i => $menu) {
-            $menus[$i]['selected'] = $this->formsHelper->selectEntry('block_id', (int) $menu['id'], $selected);
+        $menus = [];
+        foreach ($this->menuRepository->getAllMenus() as $menu) {
+            $menus[(int) $menu['id']] = $menu['title'];
         }
 
-        return $menus;
+        return $this->formsHelper->choicesGenerator('block_id', $menus, $selected);
     }
 
     /**

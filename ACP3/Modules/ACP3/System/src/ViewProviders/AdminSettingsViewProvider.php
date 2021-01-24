@@ -103,7 +103,7 @@ class AdminSettingsViewProvider
             ),
             'entries' => $this->formsHelper->recordsPerPage($systemSettings['entries']),
             'wysiwyg' => $this->fetchWysiwygEditors($systemSettings['wysiwyg']),
-            'languages' => $this->translator->getLanguagePacks($systemSettings['lang']),
+            'languages' => $this->fetchLanguages($systemSettings['lang']),
             'mod_rewrite' => $this->formsHelper->yesNoCheckboxGenerator('mod_rewrite', $systemSettings['mod_rewrite']),
             'time_zones' => $this->dateHelper->getTimeZones($systemSettings['date_time_zone']),
             'maintenance' => $this->formsHelper->yesNoCheckboxGenerator(
@@ -155,5 +155,16 @@ class AdminSettingsViewProvider
         }
 
         return $this->formsHelper->choicesGenerator('wysiwyg', $wysiwyg, $currentWysiwygEditor);
+    }
+
+    private function fetchLanguages(string $currentLanguage): array
+    {
+        $languages = [];
+
+        foreach ($this->translator->getLanguagePacks() as $languagePack) {
+            $languages[$languagePack['iso']] = $languagePack['name'];
+        }
+
+        return $this->formsHelper->choicesGenerator('languages', $languages, $currentLanguage);
     }
 }

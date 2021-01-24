@@ -97,17 +97,16 @@ class AdminRoleEditViewProvider
 
     private function fetchRoles(int $roleParentId = 0, int $roleLeftId = 0, int $roleRightId = 0): array
     {
-        $roles = $this->acl->getAllRoles();
-        foreach ($roles as $i => $role) {
+        $roles = [];
+        foreach ($this->acl->getAllRoles() as $role) {
             if ($role['left_id'] >= $roleLeftId && $role['right_id'] <= $roleRightId) {
-                unset($roles[$i]);
-            } else {
-                $roles[$i]['selected'] = $this->formsHelper->selectEntry('roles', $role['id'], $roleParentId);
-                $roles[$i]['name'] = \str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
+                continue;
             }
+
+            $roles[(int) $role['id']] = \str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
         }
 
-        return $roles;
+        return $this->formsHelper->choicesGenerator('parent_id', $roles, $roleParentId);
     }
 
     /**

@@ -20,7 +20,7 @@
                 <td>{$row.author}</td>
                 <td class="text-right">{$row.version}</td>
                 <td class="text-center">
-                    {if $row.selected == 1}
+                    {if $row.selected === true}
                         <i class="fas fa-toggle-on text-success"></i>
                     {else}
                         <a href="{uri args="acp/system/extensions/designs/dir_`$row.dir`"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">

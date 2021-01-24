@@ -112,18 +112,12 @@ class Translator
     /**
      * Gets all currently available languages.
      */
-    public function getLanguagePacks(string $locale): array
+    public function getLanguagePacks(): array
     {
         if (empty($this->languagePacks)) {
             $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
         }
 
-        $languages = $this->languagePacks;
-
-        foreach ($languages as $key => $value) {
-            $languages[$key]['selected'] = $languages[$key]['iso'] === $locale;
-        }
-
-        return $languages;
+        return $this->languagePacks;
     }
 }

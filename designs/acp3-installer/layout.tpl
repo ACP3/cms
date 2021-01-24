@@ -63,7 +63,7 @@
                             title="{lang t="installer|select_language"}"
                             data-change-language-warning="{lang t="installer|form_change_warning"}">
                         {foreach $LANGUAGES as $row}
-                            <option value="{$row.iso}"{if $row.selected} selected="selected"{/if}>{$row.name}</option>
+                            <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
                         {/foreach}
                     </select>
                     <button type="submit" name="languages" class="btn btn-primary btn-sm">

@@ -11,6 +11,7 @@ use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
 
@@ -40,6 +41,10 @@ class AdminCategoryEditViewProvider
      * @var \ACP3\Core\Modules
      */
     private $modules;
+    /**
+     * @var \ACP3\Core\I18n\Translator
+     */
+    private $translator;
 
     public function __construct(
         Forms $formsHelper,
@@ -47,6 +52,7 @@ class AdminCategoryEditViewProvider
         Modules $modules,
         RequestInterface $request,
         Title $title,
+        Translator $translator,
         CategoryRepository $categoryRepository
     ) {
         $this->formsHelper = $formsHelper;
@@ -55,6 +61,7 @@ class AdminCategoryEditViewProvider
         $this->title = $title;
         $this->categoryRepository = $categoryRepository;
         $this->modules = $modules;
+        $this->translator = $translator;
     }
 
     /**
@@ -79,16 +86,18 @@ class AdminCategoryEditViewProvider
 
     private function fetchModules(): array
     {
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $name => $info) {
-            if ($info['active'] && \in_array('categories', $info['dependencies'], true) === true) {
-                $modules[$name]['selected'] = $this->formsHelper->selectEntry('module_id', $info['id']);
-            } else {
-                unset($modules[$name]);
+        $modules = [];
+        foreach ($this->modules->getActiveModules() as $info) {
+            if (\in_array('categories', $info['dependencies'], true) === true) {
+                $modules[(int) $info['id']] = $this->translator->t($info['name'], $info['name']);
             }
         }
 
-        return $modules;
+        \uasort($modules, static function ($a, $b) {
+            return $a <=> $b;
+        });
+
+        return $this->formsHelper->choicesGenerator('module_id', $modules);
     }
 
     /**
@@ -100,19 +109,19 @@ class AdminCategoryEditViewProvider
         ?int $leftId = null,
         ?int $rightId = null
     ): array {
-        $categories = [];
-        if ($moduleId !== null) {
-            $categories = $this->categoryRepository->getAllByModuleId($moduleId);
-            foreach ($categories as $i => $category) {
-                if ($category['left_id'] >= $leftId && $category['right_id'] <= $rightId) {
-                    unset($categories[$i]);
-                } else {
-                    $categories[$i]['selected'] = $this->formsHelper->selectEntry('parent_id', $category['id'], $parentId);
-                    $categories[$i]['title'] = \str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
-                }
-            }
+        if ($moduleId === null) {
+            return [];
         }
 
-        return $categories;
+        $categories = [];
+        foreach ($this->categoryRepository->getAllByModuleId($moduleId) as $i => $category) {
+            if ($category['left_id'] >= $leftId && $category['right_id'] <= $rightId) {
+                continue;
+            }
+
+            $categories[(int) $category['id']] = \str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
+        }
+
+        return $this->formsHelper->choicesGenerator('parent_id', $categories, $parentId);
     }
 }

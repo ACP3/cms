@@ -102,15 +102,15 @@ class AdminMenuItemEditViewProvider
 
     private function fetchModules(array $menuItem = []): array
     {
-        $modules = $this->modules->getAllModulesAlphabeticallySorted();
-        foreach ($modules as $row) {
-            $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(
-                'module',
-                $row['name'],
-                !empty($menuItem) && $menuItem['mode'] == 1 ? $menuItem['uri'] : ''
-            );
+        $modules = [];
+        foreach ($this->modules->getAllModulesAlphabeticallySorted() as $info) {
+            $modules[$info['name']] = $this->translator->t($info['name'], $info['name']);
         }
 
-        return $modules;
+        \uasort($modules, static function ($a, $b) {
+            return $a <=> $b;
+        });
+
+        return $this->formsHelper->choicesGenerator('module', $modules, !empty($menuItem) && $menuItem['mode'] == 1 ? $menuItem['uri'] : '');
     }
 }

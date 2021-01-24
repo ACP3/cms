@@ -11,6 +11,7 @@ use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
 
@@ -36,19 +37,25 @@ class AdminResourceEditViewProvider
      * @var \ACP3\Core\Http\RequestInterface
      */
     private $request;
+    /**
+     * @var \ACP3\Core\I18n\Translator
+     */
+    private $translator;
 
     public function __construct(
         Forms $formsHelper,
         FormToken $formTokenHelper,
         Modules $modules,
         PrivilegeRepository $privilegeRepository,
-        RequestInterface $request
+        RequestInterface $request,
+        Translator $translator
     ) {
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->modules = $modules;
         $this->privilegeRepository = $privilegeRepository;
         $this->request = $request;
+        $this->translator = $translator;
     }
 
     /**
@@ -73,16 +80,16 @@ class AdminResourceEditViewProvider
 
     private function fetchActiveModules(?string $currentModule = null): array
     {
-        $modules = $this->modules->getActiveModules();
-        foreach ($modules as $row) {
-            $modules[$row['name']]['selected'] = $this->formsHelper->selectEntry(
-                'modules',
-                $row['name'],
-                \ucfirst(\trim($currentModule))
-            );
+        $modules = [];
+        foreach ($this->modules->getActiveModules() as $info) {
+            $modules[$info['name']] = $this->translator->t($info['name'], $info['name']);
         }
 
-        return $modules;
+        \uasort($modules, static function ($a, $b) {
+            return $a <=> $b;
+        });
+
+        return $this->formsHelper->choicesGenerator('modules', $modules, $currentModule);
     }
 
     /**
@@ -97,15 +104,11 @@ class AdminResourceEditViewProvider
 
     private function fetchPrivileges(int $privilegeId): array
     {
-        $privileges = $this->privilegeRepository->getAllPrivileges();
-        foreach ($privileges as $i => $privilege) {
-            $privileges[$i]['selected'] = $this->formsHelper->selectEntry(
-                'privileges',
-                $privilege['id'],
-                $privilegeId
-            );
+        $privileges = [];
+        foreach ($this->privilegeRepository->getAllPrivileges() as $i => $privilege) {
+            $privileges[(int) $privilege['id']] = $privilege['key'];
         }
 
-        return $privileges;
+        return $this->formsHelper->choicesGenerator('privileges', $privileges, $privilegeId);
     }
 }

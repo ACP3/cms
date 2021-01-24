@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Date;
+use ACP3\Core\Helpers\Date as DateHelper;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\XML;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
@@ -41,7 +42,7 @@ class Install extends AbstractAction implements InvokableActionInterface
         Navigation $navigation,
         Date $date,
         XML $xml,
-        \ACP3\Core\Helpers\Date $dateHelper,
+        DateHelper $dateHelper,
         Forms $forms
     ) {
         parent::__construct($context, $navigation);
@@ -57,7 +58,7 @@ class Install extends AbstractAction implements InvokableActionInterface
         return [
             'time_zones' => $this->dateHelper->getTimeZones(\date_default_timezone_get()),
             'form' => \array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
-            'designs' => $this->getAvailableDesigns(),
+            'designs' => $this->getThemeFormOptions(),
         ];
     }
 
@@ -90,5 +91,17 @@ class Install extends AbstractAction implements InvokableActionInterface
     protected function selectEntry($directory)
     {
         return $this->forms->selectEntry('design', $directory);
+    }
+
+    protected function getThemeFormOptions(): array
+    {
+        $themes = $this->getAvailableDesigns();
+
+        $options = [];
+        foreach ($themes as $theme) {
+            $options[$theme['dir']] = $theme['name'];
+        }
+
+        return $this->forms->choicesGenerator('design', $options);
     }
 }

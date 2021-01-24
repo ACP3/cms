@@ -83,8 +83,8 @@ class Designs extends Core\Controller\AbstractFrontendAction
     /**
      * {@inheritdoc}
      */
-    protected function selectEntry($directory)
+    protected function selectEntry($directory): bool
     {
-        return $this->config->getSettings(Schema::MODULE_NAME)['design'] === $directory ? 1 : 0;
+        return $this->config->getSettings(Schema::MODULE_NAME)['design'] === $directory;
     }
 }

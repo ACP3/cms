@@ -55,12 +55,8 @@ class Date
 
     /**
      * Liefert ein Array mit allen Zeitzonen dieser Welt aus.
-     *
-     * @param string $currentValue
-     *
-     * @return array
      */
-    public function getTimeZones($currentValue = '')
+    public function getTimeZones(?string $currentValue = ''): array
     {
         $timeZones = [
             'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),

@@ -16,22 +16,10 @@
             {include file="asset:System/Partials/form_group.input_text.tpl" name="site_title" value=$form.site_title required=true label={lang t="system|site_title"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="site_subtitle" value=$form.site_subtitle label={lang t="system|site_subtitle"}}
             {include file="asset:System/Partials/form_group.button_group.tpl" options=$site_subtitle_mode required=true label={lang t="system|site_subtitle_mode"}}
-            <div id="site-subtitle-homepage-home-container">
-                {include file="asset:System/Partials/form_group.button_group.tpl" options=$site_subtitle_homepage_mode required=true label={lang t="system|site_subtitle_homepage_mode"}}
-            </div>
+            {include file="asset:System/Partials/form_group.button_group.tpl" options=$site_subtitle_homepage_mode formGroupId="site-subtitle-homepage-home-container" required=true label={lang t="system|site_subtitle_homepage_mode"}}
         {/tab}
         {tab title={lang t="system|localization"}}
-            <div class="form-group">
-                <label for="language" class="col-sm-2 control-label required">{lang t="system|language"}</label>
-
-                <div class="col-sm-10">
-                    <select class="form-control" name="language" id="language" size="{count($languages)}" required>
-                        {foreach $languages as $row}
-                            <option value="{$row.iso}"{if $row.selected} selected="selected"{/if}>{$row.name}</option>
-                        {/foreach}
-                    </select>
-                </div>
-            </div>
+            {include file="asset:System/Partials/form_group.select.tpl" options=$languages required=true label={lang t="system|language"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="system|date_format_short"} help={lang t="system|php_date_function"}}
             <div class="form-group">
@@ -52,9 +40,7 @@
         {/tab}
         {tab title={lang t="system|maintenance"}}
             {include file="asset:System/Partials/form_group.button_group.tpl" options=$maintenance required=true label={lang t="system|maintenance_mode"}}
-            <div id="maintenance-message-container">
-                {include file="asset:System/Partials/form_group.textarea.tpl" name="maintenance_message" value=$form.maintenance_message required=true label={lang t="system|maintenance_msg"}}
-            </div>
+            {include file="asset:System/Partials/form_group.textarea.tpl" name="maintenance_message" formGroupId="maintenance-message-container" value=$form.maintenance_message required=true label={lang t="system|maintenance_msg"}}
         {/tab}
         {tab title={lang t="system|performance"}}
             {include file="asset:System/Partials/form_group.button_group.tpl" options=$page_cache required=true label={lang t="system|enable_page_cache"}}

@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Installer\Event\Listener;
 
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Environment\ThemePathInterface;
+use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\ExtractFromPathTrait;
 use ACP3\Core\I18n\Translator;
@@ -40,9 +41,14 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
      * @var \ACP3\Core\Environment\ThemePathInterface
      */
     private $theme;
+    /**
+     * @var \ACP3\Core\Helpers\Forms
+     */
+    private $formsHelper;
 
     public function __construct(
         ApplicationPath $appPath,
+        Forms $formsHelper,
         ThemePathInterface $theme,
         Translator $translator,
         View $view,
@@ -53,6 +59,7 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
         $this->view = $view;
         $this->request = $request;
         $this->theme = $theme;
+        $this->formsHelper = $formsHelper;
     }
 
     public function __invoke()
@@ -107,13 +114,18 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
      */
     private function languagesDropdown(string $selectedLanguage): array
     {
-        return $this->translator->getLanguagePacks($selectedLanguage);
+        $languages = [];
+        foreach ($this->translator->getLanguagePacks() as $languagePack) {
+            $languages[$languagePack['iso']] = $languagePack['name'];
+        }
+
+        return $this->formsHelper->choicesGenerator('languages', $languages, $selectedLanguage);
     }
 
     /**
      * {@inheritDoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             ControllerActionBeforeDispatchEvent::NAME => '__invoke',

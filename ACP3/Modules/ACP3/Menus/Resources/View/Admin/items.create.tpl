@@ -7,24 +7,9 @@
             {include file="asset:Menus/Partials/menu_item_fields.tpl"}
         {/tab}
         {tab title={lang t="menus|page_type"}}
-            <div id="module-container" class="form-group">
-                <label for="link-module" class="col-sm-2 control-label required">{lang t="menus|module"}</label>
-
-                <div class="col-sm-10">
-                    <select class="form-control" name="module" id="link-module">
-                        <option value="">{lang t="system|pls_select"}</option>
-                        {foreach $modules as $row}
-                            <option value="{$row.name|lower}"{$row.selected}>{lang t="`$row.name`|`$row.name`"}</option>
-                        {/foreach}
-                    </select>
-                </div>
-            </div>
-            <div id="link-container">
-                {include file="asset:System/Partials/form_group.input_text.tpl" name="uri" value=$form.uri labelRequired=true maxlength=120 label={lang t="menus|uri"} help={lang t="menus|dynamic_page_hints"}}
-            </div>
-            <div id="target-container">
-                {include file="asset:System/Partials/form_group.select.tpl" options=$target labelRequired=true label={lang t="menus|target_page"}}
-            </div>
+            {include file="asset:System/Partials/form_group.select.tpl" options=$modules formGroupId="module-container" labelRequired=true label={lang t="menus|module"}}
+            {include file="asset:System/Partials/form_group.input_text.tpl" name="uri" formGroupId="link-container" value=$form.uri labelRequired=true maxlength=120 label={lang t="menus|uri"} help={lang t="menus|dynamic_page_hints"}}
+            {include file="asset:System/Partials/form_group.select.tpl" options=$target formGroupId="target-container" labelRequired=true label={lang t="menus|target_page"}}
         {/tab}
     {/tabset}
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/menus"}}
