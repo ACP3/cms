@@ -9,3 +9,7 @@ exclude_patterns:
   - "ACP3/Modules/ACP3/Filemanager/Resources/Assets/rich-filemanager/"
   - "ACP3/Modules/ACP3/System/Resources/Assets/js/*.js"
   - "ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/"
+
+checks:
+  similar-code:
+    enabled: false
