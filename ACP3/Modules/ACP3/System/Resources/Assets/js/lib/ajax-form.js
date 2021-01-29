@@ -8,6 +8,13 @@ import { mergeSettings } from "./utils";
 export class AjaxForm {
   #loadingLayer;
   #formValidator;
+  #defaults = {
+    targetElement: "#content",
+    loadingOverlay: true,
+    customFormData: null,
+    scrollOffsetElement: null,
+    method: null,
+  };
 
   /**
    *
@@ -23,14 +30,7 @@ export class AjaxForm {
     this.#loadingLayer = loadingLayer;
     this.#formValidator = formValidator;
 
-    this._defaults = {
-      targetElement: "#content",
-      loadingOverlay: true,
-      customFormData: null,
-      scrollOffsetElement: null,
-      method: null,
-    };
-    this.settings = mergeSettings(this._defaults, options, jQuery(element).data());
+    this.settings = mergeSettings(this.#defaults, options, jQuery(element).data());
     this.#init();
   }
 
@@ -38,7 +38,7 @@ export class AjaxForm {
     const that = this;
 
     this.findSubmitButton();
-    this.#loadingLayer.addLoadingLayer();
+    this.addLoadingLayer();
     this.element.noValidate = true;
 
     jQuery(this.element)

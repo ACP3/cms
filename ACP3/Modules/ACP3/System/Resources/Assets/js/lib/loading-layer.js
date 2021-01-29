@@ -15,7 +15,7 @@ export class LoadingLayer {
   }
 
   addLoadingLayer() {
-    if (document.getElementById("loading-layer")?.length === 0) {
+    if (!document.getElementById("loading-layer")) {
       const $body = jQuery("body"),
         html =
           '<div id="loading-layer" class="loading-layer"><h1><span class="fas fa-spinner fa-spin"></span> ' +
