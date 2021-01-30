@@ -2,120 +2,97 @@ services:
   _defaults:
     autowire: true
 
-  smarty.plugin.breadcrumb:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Breadcrumb
+  ACP3\Core\View\Renderer\Smarty\Functions\Breadcrumb:
     tags:
       - { name: smarty.plugin.function, pluginName: breadcrumb }
 
-  smarty.plugin.check_access:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\CheckAccess
+  ACP3\Core\View\Renderer\Smarty\Functions\CheckAccess:
     tags:
       - { name: smarty.plugin.function, pluginName: check_access }
 
-  smarty.plugin.date_format:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\DateFormat
+  ACP3\Core\View\Renderer\Smarty\Functions\DateFormat:
     tags:
       - { name: smarty.plugin.function, pluginName: date_format }
 
-  smarty.plugin.date_picker:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Datepicker
+  ACP3\Core\View\Renderer\Smarty\Functions\Datepicker:
     tags:
       - { name: smarty.plugin.function, pluginName: datepicker }
 
-  smarty.plugin.date_ramge:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\DateRange
+  ACP3\Core\View\Renderer\Smarty\Functions\DateRange:
     tags:
       - { name: smarty.plugin.function, pluginName: date_range }
 
-  smarty.plugin.event:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Event
+  ACP3\Core\View\Renderer\Smarty\Functions\Event:
     tags:
       - { name: smarty.plugin.function, pluginName: event }
 
-  smarty.plugin.redirect_message:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\RedirectMessage
+  ACP3\Core\View\Renderer\Smarty\Functions\RedirectMessage:
     tags:
       - { name: smarty.plugin.function, pluginName: redirect_message }
 
-  smarty.plugin.has_permission:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\HasPermission
+  ACP3\Core\View\Renderer\Smarty\Functions\HasPermission:
     tags:
       - { name: smarty.plugin.function, pluginName: has_permission }
 
-  smarty.plugin.image:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Image
+  ACP3\Core\View\Renderer\Smarty\Functions\Image:
     tags:
       - { name: smarty.plugin.function, pluginName: image }
 
-  smarty.plugin.include_js:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeJs
+  ACP3\Core\View\Renderer\Smarty\Functions\IncludeJs:
     tags:
       - { name: smarty.plugin.function, pluginName: include_js }
 
-  smarty.plugin.include_stylesheet:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\IncludeStylesheet
+  ACP3\Core\View\Renderer\Smarty\Functions\IncludeStylesheet:
     tags:
       - { name: smarty.plugin.function, pluginName: include_stylesheet }
 
-  smarty.plugin.js_libraries:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\JsLibraries
+  ACP3\Core\View\Renderer\Smarty\Functions\JsLibraries:
     tags:
       - { name: smarty.plugin.function, pluginName: js_libraries }
 
-  smarty.plugin.load_module:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\LoadModule
+  ACP3\Core\View\Renderer\Smarty\Functions\LoadModule:
     arguments:
       $applicationMode: "%core.environment%"
     tags:
       - { name: smarty.plugin.function, pluginName: load_module }
 
-  smarty.plugin.mark:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Mark
+  ACP3\Core\View\Renderer\Smarty\Functions\Mark:
     tags:
       - { name: smarty.plugin.function, pluginName: mark }
 
-  smarty.plugin.page_css_classes:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\PageCssClasses
+  ACP3\Core\View\Renderer\Smarty\Functions\PageCssClasses:
     tags:
       - { name: smarty.plugin.function, pluginName: page_css_classes }
 
-  smarty.plugin.page_title:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\PageTitle
+  ACP3\Core\View\Renderer\Smarty\Functions\PageTitle:
     tags:
       - { name: smarty.plugin.function, pluginName: page_title }
 
-  smarty.plugin.site_title:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\SiteTitle
+  ACP3\Core\View\Renderer\Smarty\Functions\SiteTitle:
     tags:
       - { name: smarty.plugin.function, pluginName: site_title }
 
-  smarty.plugin.site_and_page_title:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\SiteAndPageTitle
+  ACP3\Core\View\Renderer\Smarty\Functions\SiteAndPageTitle:
     tags:
       - { name: smarty.plugin.function, pluginName: site_and_page_title }
 
-  smarty.plugin.site_subtitle:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\SiteSubtitle
+  ACP3\Core\View\Renderer\Smarty\Functions\SiteSubtitle:
     tags:
       - { name: smarty.plugin.function, pluginName: site_subtitle }
 
-  smarty.plugin.template_path:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\TemplatePath
+  ACP3\Core\View\Renderer\Smarty\Functions\TemplatePath:
     tags:
       - { name: smarty.plugin.function, pluginName: template_path }
 
-  smarty.plugin.translate:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Translate
+  ACP3\Core\View\Renderer\Smarty\Functions\Translate:
     tags:
       - { name: smarty.plugin.function, pluginName: lang }
 
-  smarty.plugin.uri:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\Uri
+  ACP3\Core\View\Renderer\Smarty\Functions\Uri:
     tags:
       - { name: smarty.plugin.function, pluginName: uri }
 
-  smarty.plugin.wysiwyg:
-    class: ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG
+  ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG:
     arguments:
       $wysiwygFactory: "@core.wysiwyg.wysiwyg_factory"
     tags:

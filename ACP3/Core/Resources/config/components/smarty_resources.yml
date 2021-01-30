@@ -2,7 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  smarty.resource.asset:
-    class: ACP3\Core\View\Renderer\Smarty\Resources\Asset
+  ACP3\Core\View\Renderer\Smarty\Resources\Asset:
     tags:
       - { name: smarty.plugin.resource, pluginName: asset }
