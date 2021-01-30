@@ -1,8 +1,0 @@
-services:
-  _defaults:
-    autowire: true
-
-  guestbook.event.send_notification_email_on_guestbook_model_after_save_listener:
-    class: ACP3\Modules\ACP3\Guestbook\Event\Listener\SendNotificationEmailOnGuestbookModelAfterSaveListener
-    tags:
-      - { name: core.eventListener, event: guestbook.model.guestbook.after_save }

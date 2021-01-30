@@ -48,7 +48,7 @@ class DecoratingForwardControllerActionExceptionErrorListener implements EventSu
     /**
      * {@inheritDoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             OutputPageExceptionEvent::NAME => '__invoke',

@@ -52,7 +52,7 @@ class HandleGenericErrorsExceptionListener implements EventSubscriberInterface
     /**
      * {@inheritDoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             OutputPageExceptionEvent::NAME => ['__invoke', -1024],

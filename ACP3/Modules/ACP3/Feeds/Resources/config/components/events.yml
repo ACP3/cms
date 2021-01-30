@@ -1,8 +1,0 @@
-services:
-  _defaults:
-    autowire: true
-
-  feeds.events.on_layout_head_listener:
-    class: ACP3\Modules\ACP3\Feeds\Event\Listener\OnLayoutHeadListener
-    tags:
-      - { name: core.eventListener, event: core.layout.head }

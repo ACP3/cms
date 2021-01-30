@@ -2,16 +2,18 @@ services:
   _defaults:
     autowire: true
 
-  menus.model.menus_model:
-    class: ACP3\Modules\ACP3\Menus\Model\MenusModel
+  ACP3\Modules\ACP3\Menus\Model\MenusModel:
     arguments:
       $repository: "@menus.model.menurepository"
 
-  menus.model.menu_items_model:
-    class: ACP3\Modules\ACP3\Menus\Model\MenuItemsModel
+  menus.model.menus_model: '@ACP3\Modules\ACP3\Menus\Model\MenusModel'
+
+  ACP3\Modules\ACP3\Menus\Model\MenuItemsModel:
     arguments:
       $repository: "@menus.model.menuitemrepository"
       $insertOperation: "@menus.nested_set.operation.insert"
       $editOperation: "@menus.nested_set.operation.edit"
       $deleteOperation: "@menus.nested_set.operation.delete"
       $sortOperation: "@menus.nested_set.operation.sort"
+
+  menus.model.menu_items_model: '@ACP3\Modules\ACP3\Menus\Model\MenuItemsModel'

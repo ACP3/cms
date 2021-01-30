@@ -8,10 +8,10 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Modules\ACP3\Installer\Event\Listener\OnLanguageChangeListener:
+  ACP3\Modules\ACP3\Installer\EventListener\OnLanguageChangeListener:
     tags:
       - { name: core.eventSubscriber }
 
-  ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext:
+  ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext: ~
 
   ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath: "@core.environment.application_path"

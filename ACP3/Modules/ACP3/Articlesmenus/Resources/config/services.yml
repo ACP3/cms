@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
 
-  articlesmenus.events.on_articles_model_after_delete_listener:
-    class: ACP3\Modules\ACP3\Articlesmenus\Event\Listener\OnArticlesModelAfterDeleteListener
+  ACP3\Modules\ACP3\Articlesmenus\EventListener\:
+    resource: "../../src/EventListener/"
     tags:
-      - { name: core.eventListener, event: articles.model.articles.after_delete }
+      - { name: core.eventSubscriber }

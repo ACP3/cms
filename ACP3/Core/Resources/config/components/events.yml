@@ -1,22 +1,8 @@
 services:
   _defaults:
     autowire: true
+
+  ACP3\Core\Application\EventListener\:
+    resource: "../../../src/Application/EventListener/"
     tags:
       - { name: core.eventSubscriber }
-
-  core.application.event.add_esi_surrogate_header_listener:
-    class: ACP3\Core\Application\Event\Listener\AddEsiSurrogateHeaderListener
-
-  core.application.event.add_template_variables_listener:
-    class: ACP3\Core\Application\Event\Listener\AddTemplateVariablesListener
-
-  core.application.event.check_maintenance_mode_listener:
-    class: ACP3\Core\Application\Event\Listener\CheckMaintenanceModeListener
-
-  core.application.event.check_permission_listener:
-    class: ACP3\Core\Application\Event\Listener\CheckPermissionListener
-
-  core.application.event.on_output_page_listener:
-    class: ACP3\Core\Application\Event\Listener\OnOutputPageExceptionListener
-    arguments:
-      $logger: "@core.logger.system_logger"

@@ -22,9 +22,6 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
      */
     private $translator;
 
-    /**
-     * AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener constructor.
-     */
     public function __construct(
         ACL $acl,
         Translator $translator

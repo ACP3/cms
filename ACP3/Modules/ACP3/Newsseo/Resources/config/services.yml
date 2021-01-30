@@ -2,12 +2,11 @@ services:
   _defaults:
     autowire: true
 
-  newsseo.events.on_news_model_delete_after_listener:
-    class: ACP3\Modules\ACP3\Newsseo\Event\Listener\OnNewsModelAfterDeleteListener
+  ACP3\Modules\ACP3\Newsseo\EventListener\:
+    resource: "../../src/EventListener/"
     tags:
-      - { name: core.eventListener, event: news.model.news.after_delete }
+      - { name: core.eventSubscriber }
 
-  newsseo.extension.sitemap_availability_extension:
-    class: ACP3\Modules\ACP3\Newsseo\Extension\SitemapAvailabilityExtension
+  ACP3\Modules\ACP3\Newsseo\Extension\SitemapAvailabilityExtension:
     tags:
       - { name: seo.extension.sitemap_availability }

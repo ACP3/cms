@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Auditlog\EventListener\:
+    resource: "../../../src/EventListener/"
+    tags:
+      - { name: core.eventSubscriber }

@@ -2,12 +2,11 @@ services:
   _defaults:
     autowire: true
 
-  articlesseo.events.on_articles_model_delete_after_listener:
-    class: ACP3\Modules\ACP3\Articlesseo\Event\Listener\OnArticlesModelDeleteAfterListener
+  ACP3\Modules\ACP3\Articlesseo\EventListener\:
+    resource: "../../src/EventListener/"
     tags:
-      - { name: core.eventListener, event: articles.model.articles.after_delete }
+      - { name: core.eventSubscriber }
 
-  articlesseo.extension.sitemap_availability_extension:
-    class: ACP3\Modules\ACP3\Articlesseo\Extension\SitemapAvailabilityExtension
+  ACP3\Modules\ACP3\Articlesseo\Extension\SitemapAvailabilityExtension:
     tags:
       - { name: seo.extension.sitemap_availability }

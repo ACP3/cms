@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    bind:
+      $logger: "@seo.sitemap_logger"
+      $sitemapGenerationModel: "@seo.model.sitemap_generation_model"
+
+  ACP3\Modules\ACP3\Seo\EventListener\:
+    resource: "../../../src/EventListener/"
+    tags:
+      - { name: core.eventSubscriber }

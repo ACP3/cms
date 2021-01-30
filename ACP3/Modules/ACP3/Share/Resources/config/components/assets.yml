@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    tags:
+      - { name: acp3.assets.library }
+
+  share.assets.shariff:
+    class: ACP3\Core\Assets\Entity\LibraryEntity
+    arguments:
+      - "shariff"
+      - false
+      - ["font-awesome"]
+      - ["shariff.min.css"]
+      - ["shariff.min.js"]
+      - "share"
+      - true

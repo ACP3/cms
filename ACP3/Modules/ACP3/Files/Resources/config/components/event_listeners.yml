@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    bind:
+      $filesUploadHelper: "@files.helpers.upload"
+
+  ACP3\Modules\ACP3\Files\EventListener\:
+    resource: "../../../src/EventListener/"
+    tags:
+      - { name: core.eventSubscriber }

@@ -7,8 +7,8 @@ services:
     bind:
       $assetRendererStrategyServiceLocator: "@core.assets.renderer.strategy.service_locator"
 
-  core.application.event.add_template_variables_listener:
-    class: ACP3\Modules\ACP3\Installer\Event\Listener\AddTemplateVariablesListener
+  ACP3\Core\ApplicationEventListener\AddTemplateVariablesListener:
+    class: ACP3\Modules\ACP3\Installer\EventListener\AddTemplateVariablesListener
     tags:
       - { name: core.eventSubscriber }
 

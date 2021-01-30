@@ -2,12 +2,11 @@ services:
   _defaults:
     autowire: true
 
-  filesseo.events.on_news_model_delete_after_listener:
-    class: ACP3\Modules\ACP3\Filesseo\Event\Listener\OnFilesModelDeleteAfterListener
+  ACP3\Modules\ACP3\Filesseo\EventListener\:
+    resource: "../../src/EventListener/"
     tags:
-      - { name: core.eventListener, event: files.model.files.after_delete }
+      - { name: core.eventSubscriber }
 
-  filesseo.extension.sitemap_availability_extension:
-    class: ACP3\Modules\ACP3\Filesseo\Extension\SitemapAvailabilityExtension
+  ACP3\Modules\ACP3\Filesseo\Extension\SitemapAvailabilityExtension:
     tags:
       - { name: seo.extension.sitemap_availability }

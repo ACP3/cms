@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
 
-  newsshare.events.on_news_model_after_delete_listener:
-    class: ACP3\Modules\ACP3\Newsshare\Event\Listener\OnNewsModelAfterDeleteListener
+  ACP3\Modules\ACP3\Newsshare\EventListener\:
+    resource: "../../src/EventListener/"
     tags:
-      - { name: core.eventListener, event: news.model.news.after_delete }
+      - { name: core.eventSubscriber }

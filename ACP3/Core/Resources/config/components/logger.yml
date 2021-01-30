@@ -10,3 +10,5 @@ services:
     factory: ["@core.logger.logger_factory", "create"]
     arguments:
       - "error"
+
+  Psr\Log\LoggerInterface: "@core.logger.system_logger"
