@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Share;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Share\Model\ShareModel

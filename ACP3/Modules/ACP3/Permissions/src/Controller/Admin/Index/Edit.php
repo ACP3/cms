@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-class Edit extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var Permissions\Model\RolesModel

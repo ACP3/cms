@@ -13,7 +13,7 @@ use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation;
 
-class SettingsPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation

@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Users;
 
-class Edit extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider

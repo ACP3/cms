@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-class Send extends Core\Controller\AbstractFrontendAction
+class Send extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository

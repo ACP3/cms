@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Files;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-class Download extends Core\Controller\AbstractFrontendAction
+class Download extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\Date

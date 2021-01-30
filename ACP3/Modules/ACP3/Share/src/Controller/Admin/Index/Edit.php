@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Share\Model\ShareModel;
 use ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider;
 
-class Edit extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Share\Model\ShareModel

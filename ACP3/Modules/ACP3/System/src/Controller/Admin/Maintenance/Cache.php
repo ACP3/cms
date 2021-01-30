@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Exception\CacheClearException;
 use ACP3\Modules\ACP3\System\Exception\InvalidCacheTypeException;
 
-class Cache extends Core\Controller\AbstractFrontendAction
+class Cache extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\Helpers\RedirectMessages

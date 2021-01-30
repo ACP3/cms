@@ -7,11 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridByTableViewProvider;
 
-class Table extends AbstractFrontendAction
+class Table extends AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridByTableViewProvider

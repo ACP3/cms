@@ -7,14 +7,14 @@
 
 namespace ACP3\Modules\ACP3\Filemanager\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Environment\ApplicationMode;
 use RFM\Api\LocalApi;
 use RFM\Application;
 use RFM\Repository\Local\Storage;
 
-class RichFileManager extends AbstractFrontendAction
+class RichFileManager extends AbstractWidgetAction
 {
     /**
      * @var string

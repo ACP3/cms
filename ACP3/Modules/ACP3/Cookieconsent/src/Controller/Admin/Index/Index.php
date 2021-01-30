@@ -7,10 +7,10 @@
 
 namespace ACP3\Modules\ACP3\Cookieconsent\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\InvokableActionInterface;
 
-class Index extends AbstractFrontendAction implements InvokableActionInterface
+class Index extends AbstractWidgetAction implements InvokableActionInterface
 {
     public function __invoke(): void
     {

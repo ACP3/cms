@@ -7,14 +7,14 @@
 
 namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 use ACP3\Modules\ACP3\Share\Model\ShareRatingModel;
 
-class Rate extends AbstractFrontendAction implements InvokableActionInterface
+class Rate extends AbstractWidgetAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository

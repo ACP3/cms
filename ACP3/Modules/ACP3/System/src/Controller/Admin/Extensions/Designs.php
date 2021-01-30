@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
-class Designs extends Core\Controller\AbstractFrontendAction
+class Designs extends Core\Controller\AbstractWidgetAction
 {
     use System\Helper\AvailableDesignsTrait;
 

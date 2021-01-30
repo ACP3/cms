@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Users;
 
-class Logout extends Core\Controller\AbstractFrontendAction
+class Logout extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Users\Model\AuthenticationModel

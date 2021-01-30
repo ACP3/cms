@@ -8,10 +8,10 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Modules\ACP3\Gallery;
 
-class Index extends AbstractFrontendAction
+class Index extends AbstractWidgetAction
 {
     /**
      * @var Gallery\Model\GalleryModel

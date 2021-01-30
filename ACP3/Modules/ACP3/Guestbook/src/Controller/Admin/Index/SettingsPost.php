@@ -12,7 +12,7 @@ use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Guestbook;
 
-class SettingsPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminSettingsFormValidation

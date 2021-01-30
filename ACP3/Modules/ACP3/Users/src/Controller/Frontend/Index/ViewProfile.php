@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\Response;
 
-class ViewProfile extends Core\Controller\AbstractFrontendAction
+class ViewProfile extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 

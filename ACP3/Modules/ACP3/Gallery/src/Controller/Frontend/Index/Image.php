@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class Image extends Core\Controller\AbstractFrontendAction
+class Image extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository

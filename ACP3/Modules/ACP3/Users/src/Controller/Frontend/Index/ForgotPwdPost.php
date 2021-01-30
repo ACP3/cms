@@ -12,7 +12,7 @@ use ACP3\Core\Modules\Helper\Action;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Modules\ACP3\Users;
 
-class ForgotPwdPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class ForgotPwdPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Core\Helpers\Secure

@@ -19,7 +19,7 @@ use ACP3\Modules\ACP3\Users\Model\UsersModel;
 use ACP3\Modules\ACP3\Users\Validation\AdminFormValidation;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation

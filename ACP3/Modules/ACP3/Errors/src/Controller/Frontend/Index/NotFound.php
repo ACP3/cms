@@ -12,7 +12,7 @@ use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Controller\Context\WidgetContext;
 use Symfony\Component\HttpFoundation\Response;
 
-class NotFound extends Core\Controller\AbstractFrontendAction
+class NotFound extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\Breadcrumb\Steps

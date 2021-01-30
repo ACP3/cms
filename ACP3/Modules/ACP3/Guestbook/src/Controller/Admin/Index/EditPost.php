@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Guestbook;
 
-class EditPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation

@@ -12,7 +12,7 @@ use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
 
-class RegisterPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class RegisterPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation

@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Gallery;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
-class Pics extends Core\Controller\AbstractFrontendAction
+class Pics extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 

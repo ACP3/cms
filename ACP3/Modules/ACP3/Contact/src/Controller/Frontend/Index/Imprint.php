@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
-class Imprint extends Core\Controller\AbstractFrontendAction
+class Imprint extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 

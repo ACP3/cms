@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Share;
 
-class Index extends Core\Controller\AbstractFrontendAction
+class Index extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Share\ViewProviders\DataGridViewProvider

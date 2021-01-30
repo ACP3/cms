@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Feeds\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Feeds;
 
-class Settings extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class Settings extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Feeds\ViewProviders\AdminSettingsViewProvider

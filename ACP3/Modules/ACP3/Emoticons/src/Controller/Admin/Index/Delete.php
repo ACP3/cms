@@ -12,7 +12,7 @@ use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Emoticons;
 
-class Delete extends Core\Controller\AbstractFrontendAction
+class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Emoticons\Model\EmoticonsModel

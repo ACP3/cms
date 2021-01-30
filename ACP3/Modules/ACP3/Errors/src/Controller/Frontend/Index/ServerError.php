@@ -12,7 +12,7 @@ use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Controller\Context\WidgetContext;
 use Symfony\Component\HttpFoundation\Response;
 
-class ServerError extends Core\Controller\AbstractFrontendAction
+class ServerError extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\Breadcrumb\Steps

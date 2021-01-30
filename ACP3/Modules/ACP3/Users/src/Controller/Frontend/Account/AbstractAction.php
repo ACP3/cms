@@ -9,11 +9,11 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
 use ACP3\Core\Authentication\Exception\UnauthorizedAccessException;
 use ACP3\Core\Authentication\Model\UserModelInterface;
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context;
 use ACP3\Core\Controller\InvokableActionInterface;
 
-abstract class AbstractAction extends AbstractFrontendAction implements InvokableActionInterface
+abstract class AbstractAction extends AbstractWidgetAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Core\Authentication\Model\UserModelInterface

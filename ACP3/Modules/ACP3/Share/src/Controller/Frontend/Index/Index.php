@@ -7,12 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use Heise\Shariff\Backend;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class Index extends AbstractFrontendAction
+class Index extends AbstractWidgetAction
 {
     /**
      * @var \Heise\Shariff\Backend

@@ -12,7 +12,7 @@ use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Contact;
 
-class IndexPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class IndexPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation

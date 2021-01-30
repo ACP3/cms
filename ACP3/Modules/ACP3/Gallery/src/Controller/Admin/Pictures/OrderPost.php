@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Controller\InvokableActionInterface;
@@ -15,7 +15,7 @@ use ACP3\Core\Http\RedirectResponse;
 use ACP3\Modules\ACP3\Gallery\Model\PictureModel;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 
-class OrderPost extends AbstractFrontendAction implements InvokableActionInterface
+class OrderPost extends AbstractWidgetAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository

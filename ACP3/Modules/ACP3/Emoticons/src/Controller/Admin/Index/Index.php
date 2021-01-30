@@ -7,11 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
-use ACP3\Core\Controller\AbstractFrontendAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Emoticons\ViewProviders\DataGridViewProvider;
 
-class Index extends AbstractFrontendAction
+class Index extends AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\ViewProviders\DataGridViewProvider

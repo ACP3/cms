@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 
 use ACP3\Core;
 
-class Index extends Core\Controller\AbstractFrontendAction
+class Index extends Core\Controller\AbstractWidgetAction
 {
     public function execute(): void
     {

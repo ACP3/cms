@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\System;
 use Psr\Container\ContainerInterface;
 
-class Modules extends Core\Controller\AbstractFrontendAction
+class Modules extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\Modules\ModuleInfoCacheInterface

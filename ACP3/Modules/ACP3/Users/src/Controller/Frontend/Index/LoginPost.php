@@ -12,7 +12,7 @@ use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\Response;
 
-class LoginPost extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
+class LoginPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
      * @var Users\Model\AuthenticationModel

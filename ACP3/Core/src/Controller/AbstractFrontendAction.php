@@ -7,6 +7,10 @@
 
 namespace ACP3\Core\Controller;
 
+/**
+ * @deprecated since ACP3 version 5.15.0. To be removed with version 6.x. Use the AbstractWidgetAction instead
+ * @see \ACP3\Core\Controller\AbstractWidgetAction
+ */
 abstract class AbstractFrontendAction extends AbstractWidgetAction
 {
     /**
