@@ -14,15 +14,15 @@ class PageCssClasses extends AbstractFilter
     /**
      * @var \ACP3\Core\Assets\PageCssClasses
      */
-    protected $pageCssClasses;
+    private $pageCssClasses;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var string
      */
-    protected $cssClassCache = '';
+    private $cssClassCache = '';
 
     /**
      * @param \ACP3\Core\Assets\PageCssClasses $pageCssClasses
@@ -52,10 +52,7 @@ class PageCssClasses extends AbstractFilter
         return $tplOutput;
     }
 
-    /**
-     * @return array
-     */
-    protected function buildPageCssClasses()
+    private function buildPageCssClasses(): array
     {
         $pieces = [
             $this->pageCssClasses->getModule(),
