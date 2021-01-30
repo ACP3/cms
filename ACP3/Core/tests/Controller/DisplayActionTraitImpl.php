@@ -8,48 +8,24 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core\View;
-use Symfony\Component\HttpFoundation\Response;
 
 class DisplayActionTraitImpl
 {
     use DisplayActionTrait;
 
     /**
-     * @var Response
-     */
-    private $response;
-    /**
      * @var View
      */
     private $view;
 
-    /**
-     * DisplayActionTraitImpl constructor.
-     */
-    public function __construct(Response $response, View $view)
+    public function __construct(View $view)
     {
-        $this->response = $response;
         $this->view = $view;
     }
 
-    /**
-     * @return string
-     */
-    protected function applyTemplateAutomatically()
+    protected function applyTemplateAutomatically(): string
     {
         return 'Foo/Frontend/index.index.tpl';
-    }
-
-    protected function addCustomTemplateVarsBeforeOutput()
-    {
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function getResponse()
-    {
-        return $this->response;
     }
 
     /**

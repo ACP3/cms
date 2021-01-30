@@ -9,11 +9,12 @@ namespace ACP3\Modules\ACP3\Installer\Helpers;
 
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Modules\ACP3\Installer\Helpers\Navigation\NavigationStep;
 
 class Navigation
 {
     /**
-     * @var array
+     * @var \ACP3\Modules\ACP3\Installer\Helpers\Navigation\NavigationStep[]
      */
     private $navbar = [];
     /**
@@ -55,7 +56,8 @@ class Navigation
     private function addStep(string $stepName, array $options): self
     {
         if (!$this->has($stepName)) {
-            $this->navbar[$stepName] = \array_merge($this->getDefaultOptions(), $options);
+            $options = \array_merge($this->getDefaultOptions(), $options);
+            $this->navbar[$stepName] = new NavigationStep($options['lang'], $options['active'], $options['complete']);
         }
 
         return $this;
@@ -76,7 +78,7 @@ class Navigation
     public function markStepComplete(string $stepName): self
     {
         if ($this->has($stepName)) {
-            $this->navbar[$stepName]['complete'] = true;
+            $this->navbar[$stepName]->setIsComplete(true);
         }
 
         return $this;
@@ -84,7 +86,7 @@ class Navigation
 
     public function has(string $stepName): bool
     {
-        return isset($this->navbar[$stepName]);
+        return \array_key_exists($stepName, $this->navbar);
     }
 
     /**
@@ -93,7 +95,7 @@ class Navigation
     public function markStepActive(string $stepName): self
     {
         if ($this->has($stepName)) {
-            $this->navbar[$stepName]['active'] = true;
+            $this->navbar[$stepName]->setIsActive(true);
         }
 
         return $this;

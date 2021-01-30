@@ -32,11 +32,6 @@ abstract class AbstractAction extends AbstractInstallerAction
         parent::preDispatch();
 
         $this->navigation->setProgress($this->request);
-    }
-
-    protected function addCustomTemplateVarsBeforeOutput()
-    {
-        parent::addCustomTemplateVarsBeforeOutput();
 
         $this->view->assign('navbar', $this->navigation->all());
     }

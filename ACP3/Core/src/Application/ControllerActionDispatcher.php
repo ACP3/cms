@@ -98,7 +98,12 @@ class ControllerActionDispatcher
             /** @var \ACP3\Core\Controller\ActionInterface $controller */
             $controller = $this->serviceLocator->get($serviceId);
             $controller->preDispatch();
-            $response = $controller->display($this->executeControllerAction($controller, $arguments));
+
+            $response = $this->executeControllerAction($controller, $arguments);
+
+            if (!($response instanceof Response)) {
+                $response = $controller->display($response);
+            }
 
             $afterDispatchEvent = new ControllerActionAfterDispatchEvent($normalizedServiceId, $this->request, $response);
             $this->eventDispatcher->dispatch(

@@ -2,14 +2,10 @@ services:
   _defaults:
     autowire: true
 
-  core.context.widget:
-    class: ACP3\Core\Controller\Context\WidgetContext
-    arguments:
-      $container: "@service_container"
+  ACP3\Core\Controller\Context\WidgetContext:
 
-  ACP3\Core\Controller\Context\WidgetContext: "@core.context.widget"
+  core.context.widget: '@ACP3\Core\Controller\Context\WidgetContext'
 
-  core.context.frontend:
-    class: ACP3\Core\Controller\Context\FrontendContext
+  ACP3\Core\Controller\Context\FrontendContext:
 
-  ACP3\Core\Controller\Context\FrontendContext: "@core.context.frontend"
+  core.context.frontend: '@ACP3\Core\Controller\Context\FrontendContext'

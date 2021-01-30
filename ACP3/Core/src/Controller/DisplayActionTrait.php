@@ -23,18 +23,10 @@ trait DisplayActionTrait
     /**
      * Outputs the requested module controller action.
      *
-     * @param Response|string|array $actionResult
+     * @param string|array $actionResult
      */
     public function display($actionResult): Response
     {
-        if ($actionResult instanceof Response) {
-            foreach ($this->getResponse()->headers->getCookies() as $cookie) {
-                $actionResult->headers->setCookie($cookie);
-            }
-
-            return $actionResult;
-        }
-
         if (\is_string($actionResult)) {
             $this->setContent($actionResult);
         } elseif (\is_array($actionResult)) {
@@ -46,57 +38,20 @@ trait DisplayActionTrait
                 $this->setTemplate($this->applyTemplateAutomatically());
             }
 
-            $this->addCustomTemplateVarsBeforeOutput();
-
             $content = $this->getView()->fetchTemplate($this->getTemplate());
         } else {
             $content = $this->getContent() === false ? '' : $this->getContent();
         }
 
-        $this->getResponse()->setContent($content);
-
-        return $this->getResponse();
+        return new Response($content);
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function applyTemplateAutomatically();
-
-    /**
-     * @deprecated To be removed with version 6.x.
-     */
-    abstract protected function addCustomTemplateVarsBeforeOutput();
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    abstract protected function getResponse();
+    abstract protected function applyTemplateAutomatically(): string;
 
     /**
      * @return \ACP3\Core\View
      */
     abstract protected function getView();
-
-    /**
-     * Gibt den Content-Type der anzuzeigenden Seiten zurück.
-     */
-    public function getContentType(): string
-    {
-        return $this->getResponse()->headers->get('Content-type');
-    }
-
-    /**
-     * Weist der aktuell auszugebenden Seite den Content-Type zu.
-     *
-     * @return $this
-     */
-    public function setContentType(string $data): self
-    {
-        $this->getResponse()->headers->set('Content-type', $data);
-
-        return $this;
-    }
 
     /**
      * Gibt den auszugebenden Seiteninhalt zurück.

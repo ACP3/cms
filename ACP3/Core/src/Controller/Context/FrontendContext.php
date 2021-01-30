@@ -7,35 +7,10 @@
 
 namespace ACP3\Core\Controller\Context;
 
-use ACP3\Core;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-class FrontendContext extends Core\Controller\Context\WidgetContext
+/**
+ * @deprecated since ACP3 version 5.15. To be removed with version 6.x. Use the WidgetContext instead
+ * @see \ACP3\Core\Controller\Context\WidgetContext
+ */
+class FrontendContext extends WidgetContext
 {
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    public function __construct(
-        Core\Controller\Context\WidgetContext $context,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        parent::__construct(
-            $context->getContainer(),
-            $context->getTranslator(),
-            $context->getRequest(),
-            $context->getView(),
-            $context->getConfig(),
-            $context->getAppPath(),
-            $context->getResponse()
-        );
-
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
-    public function getEventDispatcher(): EventDispatcherInterface
-    {
-        return $this->eventDispatcher;
-    }
 }

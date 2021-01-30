@@ -38,8 +38,8 @@
             <div id="navbar-collapse" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     {foreach $navbar as $key => $value}
-                        <li {if $value.active === true} class="active"{elseif $value.complete === true} class="complete"{/if}>
-                            <a href="#">{$value.lang}</a>
+                        <li {if $value->isActive() === true} class="active"{elseif $value->isComplete() === true} class="complete"{/if}>
+                            <a href="#">{$value->getTitle()}</a>
                         </li>
                     {/foreach}
                 </ul>

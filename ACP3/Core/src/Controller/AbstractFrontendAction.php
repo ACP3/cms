@@ -7,38 +7,12 @@
 
 namespace ACP3\Core\Controller;
 
-use ACP3\Core;
-use ACP3\Core\Controller\Event\CustomTemplateVariableEvent;
-
-abstract class AbstractFrontendAction extends Core\Controller\AbstractWidgetAction
+abstract class AbstractFrontendAction extends AbstractWidgetAction
 {
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    public function __construct(Context\FrontendContext $context)
-    {
-        parent::__construct($context);
-
-        $this->eventDispatcher = $context->getEventDispatcher();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function addCustomTemplateVarsBeforeOutput()
-    {
-        $this->eventDispatcher->dispatch(
-            new CustomTemplateVariableEvent($this->view),
-            CustomTemplateVariableEvent::NAME
-        );
-    }
-
     /**
      * @return $this
      */
-    public function setLayout(string $layout)
+    public function setLayout(string $layout): self
     {
         $this->view->setLayout($layout);
 

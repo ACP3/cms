@@ -8,16 +8,10 @@ services:
   _defaults:
     autowire: true
 
-  installer.event.listener.on_language_change_listener:
-    class: ACP3\Modules\ACP3\Installer\Event\Listener\OnLanguageChangeListener
+  ACP3\Modules\ACP3\Installer\Event\Listener\OnLanguageChangeListener:
     tags:
       - { name: core.eventSubscriber }
 
-  core.context.install:
-    class: ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext
-    arguments:
-      $container: "@service_container"
-
-  ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext: "@core.context.install"
+  ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext:
 
   ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath: "@core.environment.application_path"

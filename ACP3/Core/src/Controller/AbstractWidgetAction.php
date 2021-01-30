@@ -8,11 +8,12 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core;
-use Symfony\Component\HttpFoundation\Response;
+use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Http\RequestInterface;
 
 abstract class AbstractWidgetAction implements ActionInterface
 {
-    use Core\Controller\DisplayActionTrait;
+    use DisplayActionTrait;
 
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
@@ -38,14 +39,8 @@ abstract class AbstractWidgetAction implements ActionInterface
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     protected $appPath;
-    /**
-     * @var Response
-     *
-     * @deprecated since version 5.14.0. To be removed with version 6.x.
-     */
-    protected $response;
 
-    public function __construct(Core\Controller\Context\WidgetContext $context)
+    public function __construct(WidgetContext $context)
     {
         $this->container = $context->getContainer();
         $this->translator = $context->getTranslator();
@@ -53,7 +48,6 @@ abstract class AbstractWidgetAction implements ActionInterface
         $this->view = $context->getView();
         $this->config = $context->getConfig();
         $this->appPath = $context->getAppPath();
-        $this->response = $context->getResponse();
     }
 
     /**
@@ -74,27 +68,12 @@ abstract class AbstractWidgetAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    protected function applyTemplateAutomatically()
+    protected function applyTemplateAutomatically(): string
     {
         return $this->request->getModule()
             . '/' . \ucfirst($this->request->getArea())
             . '/' . $this->request->getController()
             . '.' . $this->request->getAction() . '.tpl';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function addCustomTemplateVarsBeforeOutput()
-    {
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function getResponse()
-    {
-        return $this->response;
     }
 
     /**
@@ -121,7 +100,7 @@ abstract class AbstractWidgetAction implements ActionInterface
         return $this->container->getParameter('core.environment');
     }
 
-    protected function getRequest(): Core\Http\RequestInterface
+    protected function getRequest(): RequestInterface
     {
         return $this->request;
     }

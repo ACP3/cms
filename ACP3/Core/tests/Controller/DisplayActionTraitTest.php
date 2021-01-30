@@ -8,20 +8,16 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core\View;
-use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\TestCase;
 
-class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
+class DisplayActionTraitTest extends TestCase
 {
     /**
      * @var DisplayActionTraitImpl
      */
     private $displayAction;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Response
-     */
-    private $responseMock;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & View
      */
     private $viewMock;
 
@@ -29,68 +25,36 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
     {
         $this->setUpMockObjects();
         $this->displayAction = new DisplayActionTraitImpl(
-            $this->responseMock,
             $this->viewMock
         );
     }
 
-    private function setUpMockObjects()
+    private function setUpMockObjects(): void
     {
-        $this->responseMock = $this->getMockBuilder(Response::class)->getMock();
         $this->viewMock = $this->createMock(View::class);
     }
 
-    public function testDisplayWithResponseObjActionResult()
-    {
-        $actionResult = new Response();
-        $actionResult->setContent('foo-bar-baz');
-
-        $actual = $this->displayAction->display($actionResult);
-        self::assertInstanceOf(Response::class, $actual);
-        self::assertSame($actionResult, $actual);
-    }
-
-    public function testDisplayWithStringActionResult()
+    public function testDisplayWithStringActionResult(): void
     {
         $actionResult = 'foo-bar-baz';
 
-        $this->setUpResponseMockExpectations($actionResult);
-
         $actual = $this->displayAction->display($actionResult);
-        self::assertInstanceOf(Response::class, $actual);
+
         self::assertEquals($actionResult, $actual->getContent());
     }
 
-    /**
-     * @param string $actionResult
-     */
-    private function setUpResponseMockExpectations($actionResult)
-    {
-        $this->responseMock->expects(self::once())
-            ->method('setContent')
-            ->with($actionResult)
-            ->willReturnSelf();
-        $this->responseMock->expects($this->atLeastOnce())
-            ->method('getContent')
-            ->willReturn($actionResult);
-    }
-
-    public function testDisplayWithVoidActionResult()
+    public function testDisplayWithVoidActionResult(): void
     {
         $templateOutput = 'foo-bar-baz';
-        $this->setUpResponseMockExpectations($templateOutput);
         $this->setUpViewMockExpectations($templateOutput);
         $actionResult = null;
 
         $actual = $this->displayAction->display($actionResult);
-        self::assertInstanceOf(Response::class, $actual);
+
         self::assertEquals($templateOutput, $actual->getContent());
     }
 
-    /**
-     * @param string $templateOutput
-     */
-    private function setUpViewMockExpectations($templateOutput, array $tplVars = [])
+    private function setUpViewMockExpectations(string $templateOutput, array $tplVars = []): void
     {
         $this->viewMock->expects(self::once())
             ->method('fetchTemplate')
@@ -100,22 +64,21 @@ class DisplayActionTraitTest extends \PHPUnit\Framework\TestCase
             $this->viewMock->expects(self::once())
                 ->method('assign')
                 ->with($tplVars)
-                ->willReturn($this->returnSelf());
+                ->willReturn(self::returnSelf());
         }
     }
 
-    public function testDisplayWithArrayActionResult()
+    public function testDisplayWithArrayActionResult(): void
     {
         $templateOutput = 'foo-bar-baz-array';
         $actionResult = [
             'lorem-ispum' => 'lorem ipsum dolor',
         ];
 
-        $this->setUpResponseMockExpectations($templateOutput);
         $this->setUpViewMockExpectations($templateOutput, $actionResult);
 
         $actual = $this->displayAction->display($actionResult);
-        self::assertInstanceOf(Response::class, $actual);
+
         self::assertEquals($templateOutput, $actual->getContent());
     }
 }

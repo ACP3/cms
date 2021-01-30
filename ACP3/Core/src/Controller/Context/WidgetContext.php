@@ -13,7 +13,6 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class WidgetContext
 {
@@ -41,12 +40,6 @@ class WidgetContext
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     private $appPath;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Response
-     *
-     * @deprecated since version 5.14.0. To be removed with version 6.x.
-     */
-    private $response;
 
     public function __construct(
         ContainerInterface $container,
@@ -54,8 +47,7 @@ class WidgetContext
         RequestInterface $request,
         View $view,
         SettingsInterface $config,
-        ApplicationPath $appPath,
-        Response $response
+        ApplicationPath $appPath
     ) {
         $this->container = $container;
         $this->translator = $translator;
@@ -63,64 +55,35 @@ class WidgetContext
         $this->view = $view;
         $this->config = $config;
         $this->appPath = $appPath;
-        $this->response = $response;
     }
 
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer()
+    public function getContainer(): ContainerInterface
     {
         return $this->container;
     }
 
-    /**
-     * @return \ACP3\Core\I18n\Translator
-     */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
 
-    /**
-     * @return \ACP3\Core\Http\RequestInterface
-     */
-    public function getRequest()
+    public function getRequest(): RequestInterface
     {
         return $this->request;
     }
 
-    /**
-     * @return \ACP3\Core\View
-     */
-    public function getView()
+    public function getView(): View
     {
         return $this->view;
     }
 
-    /**
-     * @return \ACP3\Core\Settings\SettingsInterface
-     */
-    public function getConfig()
+    public function getConfig(): SettingsInterface
     {
         return $this->config;
     }
 
-    /**
-     * @return \ACP3\Core\Environment\ApplicationPath
-     */
-    public function getAppPath()
+    public function getAppPath(): ApplicationPath
     {
         return $this->appPath;
-    }
-
-    /**
-     * @return Response
-     *
-     * @deprecated since version 5.14.0. To be removed with version 6.x.
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }
