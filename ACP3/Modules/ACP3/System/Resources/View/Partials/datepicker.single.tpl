@@ -8,16 +8,15 @@
 {block FORM_GROUP_FORM_FIELD}
     <div class="input-group date"
          id="{$datepicker.id}"
-         data-datepicker="#{$datepicker.id}">
+         data-datepicker='{$datepicker.config|json_encode}'>
         <input class="form-control"
                type="text"
                name="{$datepicker.name}"
                id="{$datepicker.id}-input"
                value="{$datepicker.value}"
                maxlength="{$datepicker.length}"
-               data-date-format="{$datepicker.params.format}"
-               data-date-picktime="{$datepicker.with_time}">
-        <span class="input-group-addon">
+               data-input>
+        <span class="input-group-addon" data-toggle>
             <i class="fas fa-calendar" aria-hidden="true"></i>
         </span>
     </div>

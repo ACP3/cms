@@ -9,37 +9,39 @@ namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\Validation\ValidationRules\DateValidationRule;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Date
 {
     /**
      * @var \ACP3\Core\Date
      */
-    protected $date;
+    private $date;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
-    protected $formsHelper;
+    private $formsHelper;
     /**
      * @var \ACP3\Core\Validation\ValidationRules\DateValidationRule
      */
-    protected $dateValidationRule;
-
+    private $dateValidationRule;
     /**
-     * Date constructor.
-     *
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
+     * @var \ACP3\Core\Settings\SettingsInterface
      */
+    private $settings;
+
     public function __construct(
+        SettingsInterface $settings,
         \ACP3\Core\Date $date,
         Translator $translator,
         RequestInterface $request,
@@ -51,6 +53,7 @@ class Date
         $this->request = $request;
         $this->formsHelper = $formsHelper;
         $this->dateValidationRule = $dateValidationRule;
+        $this->settings = $settings;
     }
 
     /**
@@ -91,12 +94,8 @@ class Date
     /**
      * Gibts ein Array mit den möglichen Datumsformaten aus,
      * um diese als Dropdownmenü darstellen zu können.
-     *
-     * @param string $currentDateFormat
-     *
-     * @return array
      */
-    public function dateFormatDropdown($currentDateFormat = '')
+    public function dateFormatDropdown(string $currentDateFormat = ''): array
     {
         $dateFormats = [
             'short' => $this->translator->t('system', 'date_format_short'),
@@ -111,26 +110,21 @@ class Date
      *
      * @param string|array $name
      * @param string|array $value
-     * @param bool         $showTime
-     * @param bool         $inputFieldOnly
-     *
-     * @return array
      */
     public function datepicker(
         $name,
         $value = '',
-        $showTime = true,
-        $inputFieldOnly = false
-    ) {
+        bool $showTime = true,
+        bool $inputFieldOnly = false
+    ): array {
         $datePicker = [
             'range' => $this->isRange($name),
-            'with_time' => (bool) $showTime,
+            'with_time' => $showTime,
             'length' => $showTime === true ? 16 : 10,
-            'input_only' => (bool) $inputFieldOnly,
-            'params' => [
-                'format' => $this->getPickerDateFormat($showTime),
-                'changeMonth' => 'true',
-                'changeYear' => 'true',
+            'input_only' => $inputFieldOnly,
+            'config' => [
+                'altFormat' => $this->getPickerDateFormat($showTime),
+                'enableTime' => $showTime,
             ],
         ];
 
@@ -142,7 +136,8 @@ class Date
 
             $datePicker = \array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $showTime));
 
-            $datePicker['range_json'] = \json_encode(
+            $datePicker['config'] = \array_merge(
+                $datePicker['config'],
                 [
                     'start' => '#' . $datePicker['id_start'],
                     'startDefaultDate' => $datePicker['value_start_r'],
@@ -154,28 +149,23 @@ class Date
             $datePicker['name'] = $name;
             $datePicker['id'] = $this->getInputId($name);
             $datePicker['value'] = $this->fetchSimpleDatePickerValue($name, $value, $showTime);
+            $datePicker['config'] = \array_merge(
+                $datePicker['config'],
+                [
+                    'element' => '#' . $datePicker['id'],
+                ]
+            );
         }
 
         return $datePicker;
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return string
-     */
-    protected function getInputId($fieldName)
+    private function getInputId(string $fieldName): string
     {
         return 'date-' . \str_replace('_', '-', $fieldName);
     }
 
-    /**
-     * @param array $value
-     * @param bool  $showTime
-     *
-     * @return array
-     */
-    protected function fetchRangeDatePickerValues(array $name, $value, $showTime)
+    private function fetchRangeDatePickerValues(array $name, array $value, bool $showTime): array
     {
         if ($this->request->getPost()->has($name[0]) && $this->request->getPost()->has($name[1])) {
             $valueStart = $this->request->getPost()->get($name[0]);
@@ -202,50 +192,32 @@ class Date
         ];
     }
 
-    /**
-     * @param string $name
-     * @param string $value
-     * @param bool   $showTime
-     *
-     * @return string
-     */
-    protected function fetchSimpleDatePickerValue($name, $value, $showTime)
+    private function fetchSimpleDatePickerValue(string $name, string $value, bool $showTime): string
     {
         if ($this->request->getPost()->has($name)) {
             return $this->request->getPost()->get($name, '');
-        } elseif ($this->dateValidationRule->isValid($value) === true) {
+        }
+        if ($this->dateValidationRule->isValid($value) === true) {
             return $this->date->format($value, $this->getDateFormat($showTime));
         }
 
         return $this->date->format('now', $this->getDateFormat($showTime), false);
     }
 
-    /**
-     * @param bool $showTime
-     *
-     * @return string
-     */
-    protected function getPickerDateFormat($showTime)
+    private function getPickerDateFormat(bool $showTime): string
     {
-        return 'YYYY-MM-DD' . ($showTime === true ? ' HH:mm' : '');
+        return $this->settings->getSettings(Schema::MODULE_NAME)[$showTime ? 'date_format_long' : 'date_format_short'];
     }
 
     /**
      * @param string|array $name
-     *
-     * @return bool
      */
-    protected function isRange($name)
+    private function isRange($name): bool
     {
         return \is_array($name) === true;
     }
 
-    /**
-     * @param bool $showTime
-     *
-     * @return string
-     */
-    protected function getDateFormat($showTime)
+    private function getDateFormat(bool $showTime): string
     {
         return $showTime === true ? \ACP3\Core\Date::DEFAULT_DATE_FORMAT_LONG : \ACP3\Core\Date::DEFAULT_DATE_FORMAT_SHORT;
     }

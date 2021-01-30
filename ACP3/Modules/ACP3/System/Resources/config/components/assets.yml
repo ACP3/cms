@@ -23,6 +23,17 @@ services:
       - ["jquery.min.js"]
       - "system"
 
+  system.assets.flatpickr:
+    class: ACP3\Core\Assets\Entity\LibraryEntity
+    arguments:
+      - "flatpickr"
+      - false
+      - []
+      - ["flatpickr.min.css"]
+      - ["flatpickr.min.js"]
+      - "system"
+      - true
+
   system.assets.font-awesome:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:

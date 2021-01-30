@@ -1,40 +1,17 @@
-(($) => {
-  const $datepickerRange = $("[data-datepicker-range]"),
-    $datepicker = $("[data-datepicker]"),
-    datepickerIcons = {
-      time: "fas fa-clock",
-      date: "fas fa-calendar",
-      up: "fas fa-chevron-up",
-      down: "fas fa-chevron-down",
-      previous: "fas fa-chevron-left",
-      next: "fas fa-chevron-right",
-      today: "fas fa-calendar-day",
-      clear: "fas fa-trash",
-      close: "fas fa-remove",
-    };
+/* global flatpickr */
 
-  if ($datepickerRange.length > 0) {
-    $datepickerRange.each(function () {
-      const datepickers = $(this).data("datepicker-range");
+const datePickers = document.querySelectorAll("[data-datepicker]");
 
-      if (datepickers.start && datepickers.end) {
-        const $datepickerStart = $(datepickers.start),
-          $datepickerEnd = $(datepickers.end);
+datePickers.forEach((datePicker) => {
+  const datepickerConfig = JSON.parse(datePicker.dataset.datepicker);
 
-        $datepickerStart.datetimepicker({ icons: datepickerIcons });
-        $datepickerEnd.datetimepicker({ icons: datepickerIcons });
-
-        $datepickerStart.on("dp.change", function (e) {
-          $datepickerEnd.data("DateTimePicker").minDate(e.date);
-        });
-
-        $datepickerEnd.data("DateTimePicker").minDate(datepickers.startDefaultDate);
-      }
-    });
-  }
-  if ($datepicker.length > 0) {
-    $datepicker.each(function () {
-      $(this).datetimepicker({ icons: datepickerIcons });
-    });
-  }
-})(jQuery);
+  flatpickr(datepickerConfig.element, {
+    altInput: true,
+    altFormat: datepickerConfig.altFormat,
+    enableTime: datepickerConfig.enableTime,
+    minuteIncrement: 1,
+    time_24hr: true,
+    weekNumbers: true,
+    wrap: true,
+  });
+});

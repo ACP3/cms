@@ -7,7 +7,7 @@
 
 {block FORM_GROUP_LABEL_ID}for="{$datepicker.id_start}-input"{/block}
 {block FORM_GROUP_FORM_FIELD}
-    <div class="row" data-datepicker-range='{$datepicker.range_json}'>
+    <div class="row" data-datepicker-range='{$datepicker.config|json_encode}'>
         <div class="col-sm-6">
             <div class="input-group date" id="{$datepicker.id_start}">
                 <input class="form-control"
@@ -17,12 +17,11 @@
                        value="{$datepicker.value_start}"
                        maxlength="{$datepicker.length}"
                        title="{lang t="system|start_date"}"
-                       data-date-format="{$datepicker.params.format}"
-                       data-date-picktime="{$datepicker.with_time}"
+                       data-input
                        required>
-                <span class="input-group-addon">
-                <i class="fas fa-calendar" aria-hidden="true"></i>
-            </span>
+                <span class="input-group-addon" data-toggle>
+                    <i class="fas fa-calendar" aria-hidden="true"></i>
+                </span>
             </div>
         </div>
         <div class="col-sm-6">
@@ -34,12 +33,11 @@
                        value="{$datepicker.value_end}"
                        maxlength="{$datepicker.length}"
                        title="{lang t="system|end_date"}"
-                       data-date-format="{$datepicker.params.format}"
-                       data-date-picktime="{$datepicker.with_time}"
+                       data-input
                        required>
-                <span class="input-group-addon">
-                <i class="fas fa-calendar" aria-hidden="true"></i>
-            </span>
+                <span class="input-group-addon" data-toggle>
+                    <i class="fas fa-calendar" aria-hidden="true"></i>
+                </span>
             </div>
         </div>
     </div>
