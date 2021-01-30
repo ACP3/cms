@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminResourceEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Permissions\Model\ResourcesModel $resourcesModel,
         Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
     ) {

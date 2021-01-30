@@ -36,7 +36,7 @@ class Download extends Core\Controller\AbstractFrontendAction
     private $redirectResponse;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\StringFormatter $stringFormatter,

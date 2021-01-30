@@ -22,7 +22,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $pollListViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Polls\ViewProviders\PollListViewProvider $pollListViewProvider
     ) {
         parent::__construct($context);

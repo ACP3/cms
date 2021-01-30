@@ -18,7 +18,7 @@ class Create extends Core\Controller\AbstractFrontendAction implements Core\Cont
     private $adminShareEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         AdminShareEditViewProvider $adminShareEditViewProvider
     ) {
         parent::__construct($context);

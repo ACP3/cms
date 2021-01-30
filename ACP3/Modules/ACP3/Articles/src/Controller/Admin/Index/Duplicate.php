@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
 
@@ -24,7 +24,7 @@ class Duplicate extends AbstractFrontendAction
     private $actionHelper;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Action $actionHelper,
         ArticlesModel $articlesModel
     ) {

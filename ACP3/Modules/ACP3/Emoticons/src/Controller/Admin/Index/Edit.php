@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Emoticons;
 
 class Edit extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
@@ -23,7 +23,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminEmoticonEditViewProvider;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Emoticons\Model\EmoticonsModel $emoticonsModel,
         Emoticons\ViewProviders\AdminEmoticonEditViewProvider $adminEmoticonEditViewProvider
     ) {

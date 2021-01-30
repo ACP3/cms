@@ -30,7 +30,7 @@ class Pics extends Core\Controller\AbstractFrontendAction
     private $galleryPictureListViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\ViewProviders\GalleryPictureListViewProvider $galleryPictureListViewProvider

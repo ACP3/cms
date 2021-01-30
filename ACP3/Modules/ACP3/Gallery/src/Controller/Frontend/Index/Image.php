@@ -23,7 +23,7 @@ class Image extends Core\Controller\AbstractFrontendAction
     private $thumbnailGenerator;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
     ) {

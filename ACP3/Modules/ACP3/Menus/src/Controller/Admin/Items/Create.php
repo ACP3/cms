@@ -18,7 +18,7 @@ class Create extends Core\Controller\AbstractFrontendAction implements Core\Cont
     private $adminMenuItemEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Menus\ViewProviders\AdminMenuItemEditViewProvider $adminMenuItemEditViewProvider
     ) {
         parent::__construct($context);

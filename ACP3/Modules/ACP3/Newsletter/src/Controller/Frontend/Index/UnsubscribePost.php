@@ -31,7 +31,7 @@ class UnsubscribePost extends Core\Controller\AbstractFrontendAction implements 
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Core\Helpers\Alerts $alertsHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,

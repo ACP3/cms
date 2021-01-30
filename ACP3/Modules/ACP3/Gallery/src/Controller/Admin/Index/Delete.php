@@ -35,7 +35,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,

@@ -24,7 +24,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $guestbookListViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Guestbook\ViewProviders\GuestbookListViewProvider $guestbookListViewProvider
     ) {
         parent::__construct($context);

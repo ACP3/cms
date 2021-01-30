@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Articles;
 
@@ -32,7 +33,7 @@ class EditPost extends Core\Controller\AbstractFrontendAction implements Core\Co
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        WidgetContext $context,
         Action $actionHelper,
         UserModelInterface $user,
         Articles\Model\ArticlesModel $articlesModel,

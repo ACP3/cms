@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Cookieconsent\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Cookieconsent\ViewProviders\AdminSettingsViewProvider;
 
@@ -19,7 +19,7 @@ class Settings extends AbstractFrontendAction implements InvokableActionInterfac
      */
     private $adminSettingsViewProvider;
 
-    public function __construct(FrontendContext $context, AdminSettingsViewProvider $adminSettingsViewProvider)
+    public function __construct(WidgetContext $context, AdminSettingsViewProvider $adminSettingsViewProvider)
     {
         parent::__construct($context);
 

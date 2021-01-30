@@ -30,7 +30,7 @@ class Result extends Core\Controller\AbstractFrontendAction
     private $pollResultViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Polls\Model\Repository\PollRepository $pollRepository,
         Polls\ViewProviders\PollResultViewProvider $pollResultViewProvider

@@ -23,7 +23,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $user;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         UserModelInterface $user,
         Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider
     ) {

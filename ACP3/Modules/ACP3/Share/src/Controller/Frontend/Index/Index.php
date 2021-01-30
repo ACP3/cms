@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use Heise\Shariff\Backend;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -20,7 +20,7 @@ class Index extends AbstractFrontendAction
     private $shariffBackend;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Backend $shariffBackend
     ) {
         parent::__construct($context);

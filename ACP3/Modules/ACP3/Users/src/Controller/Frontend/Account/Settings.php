@@ -19,7 +19,7 @@ class Settings extends AbstractAction
     private $accountSettingsViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         UserModelInterface $user,
         Users\ViewProviders\AccountSettingsViewProvider $accountSettingsViewProvider
     ) {

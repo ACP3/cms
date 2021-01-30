@@ -30,7 +30,7 @@ class Send extends Core\Controller\AbstractFrontendAction
     private $redirectMessages;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Helpers\RedirectMessages $redirectMessages,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
         Newsletter\Model\Repository\AccountRepository $accountRepository,

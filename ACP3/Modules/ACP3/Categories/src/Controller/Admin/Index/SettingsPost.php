@@ -23,7 +23,7 @@ class SettingsPost extends Core\Controller\AbstractFrontendAction implements Cor
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Categories\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {

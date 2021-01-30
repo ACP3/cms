@@ -26,7 +26,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     private $newsletterDetailsViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
         Newsletter\ViewProviders\NewsletterDetailsViewProvider $newsletterDetailsViewProvider
     ) {

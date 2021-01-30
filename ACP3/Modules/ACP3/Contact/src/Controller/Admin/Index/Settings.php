@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Contact;
 
 class Settings extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
@@ -19,7 +19,7 @@ class Settings extends Core\Controller\AbstractFrontendAction implements Core\Co
     private $adminSettingsViewProvider;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Contact\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);

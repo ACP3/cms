@@ -26,7 +26,7 @@ class Vote extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $pollVoteViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Polls\Model\Repository\PollRepository $pollRepository,
         Polls\ViewProviders\PollVoteViewProvider $pollVoteViewProvider

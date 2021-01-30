@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions\Helpers;
@@ -51,7 +51,7 @@ class EditPost extends Core\Controller\AbstractFrontendAction implements Core\Co
     private $redirectMessages;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Action $actionHelper,
         UserModelInterface $user,
         AuthenticationModel $authenticationModel,

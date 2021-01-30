@@ -20,7 +20,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction implements Core
     private $categoriesHelpers;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context);

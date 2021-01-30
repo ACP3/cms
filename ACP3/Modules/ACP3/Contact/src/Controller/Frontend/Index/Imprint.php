@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ class Imprint extends Core\Controller\AbstractFrontendAction
     private $contactDetailsViewProvider;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         ContactDetailsViewProvider $contactDetailsViewProvider
     ) {
         parent::__construct($context);

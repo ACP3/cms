@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminCommentEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Comments\Model\CommentsModel $commentsModel,
         Comments\ViewProviders\AdminCommentEditViewProvider $adminCommentEditViewProvider
     ) {

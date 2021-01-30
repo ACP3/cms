@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminPollEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Polls\Model\PollsModel $pollsModel,
         Polls\ViewProviders\AdminPollEditViewProvider $adminPollEditViewProvider
     ) {

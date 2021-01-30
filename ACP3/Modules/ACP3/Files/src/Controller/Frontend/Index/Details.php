@@ -30,7 +30,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     private $fileDetailsViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Files\Model\Repository\FilesRepository $filesRepository,
         Files\ViewProviders\FileDetailsViewProvider $fileDetailsViewProvider

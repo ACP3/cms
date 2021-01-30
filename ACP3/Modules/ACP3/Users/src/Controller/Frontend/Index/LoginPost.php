@@ -32,7 +32,7 @@ class LoginPost extends Core\Controller\AbstractFrontendAction implements Core\C
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\Secure $secureHelper,

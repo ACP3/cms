@@ -18,7 +18,7 @@ class Create extends Core\Controller\AbstractFrontendAction implements Core\Cont
     private $adminRoleEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Permissions\ViewProviders\AdminRoleEditViewProvider $adminRoleEditViewProvider
     ) {
         parent::__construct($context);

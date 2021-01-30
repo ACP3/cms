@@ -18,7 +18,7 @@ class Create extends Core\Controller\AbstractFrontendAction implements Core\Cont
     private $adminGalleryEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
     ) {
         parent::__construct($context);

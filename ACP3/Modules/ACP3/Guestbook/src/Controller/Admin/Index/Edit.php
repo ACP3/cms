@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminGuestbookEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Guestbook\Model\GuestbookModel $guestbookModel,
         Guestbook\ViewProviders\AdminGuestbookEditViewProvider $adminGuestbookEditViewProvider
     ) {

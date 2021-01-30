@@ -48,7 +48,7 @@ class ForgotPwdPost extends Core\Controller\AbstractFrontendAction implements Co
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Core\Validation\Validator $validator,
         Core\Helpers\Alerts $alertsHelper,

@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 use ACP3\Modules\ACP3\Menus\ViewProviders\MenuItemsDataGridViewProvider;
@@ -31,7 +31,7 @@ class Index extends AbstractFrontendAction implements InvokableActionInterface
     private $menuItemsDataGridViewProvider;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         ACL $acl,
         MenuRepository $menuRepository,
         MenuItemsDataGridViewProvider $menuItemsDataGridViewProvider

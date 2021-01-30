@@ -18,7 +18,7 @@ class Settings extends Core\Controller\AbstractFrontendAction implements Core\Co
     private $adminSettingsViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Guestbook\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);

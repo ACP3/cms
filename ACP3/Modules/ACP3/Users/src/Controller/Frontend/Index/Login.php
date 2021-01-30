@@ -28,7 +28,7 @@ class Login extends Core\Controller\AbstractFrontendAction implements Core\Contr
     private $user;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         UserModelInterface $user,
         Core\Http\RedirectResponse $redirectResponse,
         Users\ViewProviders\LoginViewProvider $loginViewProvider

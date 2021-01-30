@@ -24,7 +24,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $galleryListViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Gallery\ViewProviders\GalleryListViewProvider $galleryListViewProvider
     ) {
         parent::__construct($context);

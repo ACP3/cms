@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminGalleryEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
     ) {

@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminMenuEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Menus\Model\MenusModel $menusModel,
         Menus\ViewProviders\AdminMenuEditViewProvider $adminMenuEditViewProvider
     ) {

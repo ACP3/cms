@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation;
@@ -25,7 +25,7 @@ class SettingsPost extends Core\Controller\AbstractFrontendAction implements Cor
     private $actionHelper;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Action $actionHelper,
         AdminSettingsFormValidation $adminSettingsFormValidation
     ) {

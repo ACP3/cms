@@ -19,7 +19,7 @@ class UpdateCheck extends Core\Controller\AbstractFrontendAction
     private $updateCheck;
 
     public function __construct(
-        Context\FrontendContext $context,
+        Context\WidgetContext $context,
         System\Helper\UpdateCheck $updateCheck
     ) {
         parent::__construct($context);

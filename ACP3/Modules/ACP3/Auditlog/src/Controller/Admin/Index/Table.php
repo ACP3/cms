@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Auditlog\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridByTableViewProvider;
 
 class Table extends AbstractFrontendAction
@@ -19,7 +19,7 @@ class Table extends AbstractFrontendAction
     private $dataGridByTableViewProvider;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         DataGridByTableViewProvider $dataGridByTableViewProvider
     ) {
         parent::__construct($context);

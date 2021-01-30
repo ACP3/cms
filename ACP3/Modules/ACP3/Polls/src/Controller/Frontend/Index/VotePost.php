@@ -31,7 +31,7 @@ class VotePost extends Core\Controller\AbstractFrontendAction implements Core\Co
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Core\Date $date,
         Polls\Validation\VoteValidation $voteValidation,

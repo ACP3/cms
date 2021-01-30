@@ -21,7 +21,7 @@ abstract class AbstractAction extends AbstractFrontendAction implements Invokabl
     private $user;
 
     public function __construct(
-        Context\FrontendContext $context,
+        Context\WidgetContext $context,
         UserModelInterface $user
     ) {
         parent::__construct($context);

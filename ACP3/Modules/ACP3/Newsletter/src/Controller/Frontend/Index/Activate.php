@@ -26,7 +26,7 @@ class Activate extends Core\Controller\AbstractFrontendAction
     private $alertsHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Helpers\Alerts $alertsHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper,
         Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation

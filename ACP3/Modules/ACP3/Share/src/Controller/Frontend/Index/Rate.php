@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
@@ -34,7 +34,7 @@ class Rate extends AbstractFrontendAction implements InvokableActionInterface
     private $alreadyRated;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         ShareRepository $shareRepository,
         ShareRatingsRepository $shareRatingsRepository,
         ShareRatingModel $shareRatingModel

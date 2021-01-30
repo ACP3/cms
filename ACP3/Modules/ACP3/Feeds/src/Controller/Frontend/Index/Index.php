@@ -30,7 +30,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $acl;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\ACL $acl,
         Feeds\View\Renderer\FeedGenerator $feedGenerator,
         Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar

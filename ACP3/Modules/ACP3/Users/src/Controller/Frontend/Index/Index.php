@@ -24,7 +24,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $userListViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Users\ViewProviders\UserListViewProvider $userListViewProvider
     ) {
         parent::__construct($context);

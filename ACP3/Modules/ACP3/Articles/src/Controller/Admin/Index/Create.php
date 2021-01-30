@@ -8,7 +8,8 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Articles;
+use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider;
 
 class Create extends Core\Controller\AbstractFrontendAction implements Core\Controller\InvokableActionInterface
 {
@@ -18,8 +19,8 @@ class Create extends Core\Controller\AbstractFrontendAction implements Core\Cont
     private $adminArticleEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
-        Articles\ViewProviders\AdminArticleEditViewProvider $adminArticleEditViewProvider
+        WidgetContext $context,
+        AdminArticleEditViewProvider $adminArticleEditViewProvider
     ) {
         parent::__construct($context);
 

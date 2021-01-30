@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider;
 
@@ -20,7 +20,7 @@ class Settings extends AbstractFrontendAction implements InvokableActionInterfac
     private $adminSettingsViewProvider;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);

@@ -65,7 +65,7 @@ class Modules extends Core\Controller\AbstractFrontendAction
     private $cacheClearService;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         RedirectMessages $redirectMessages,
         Core\Modules $modules,
         Core\I18n\DictionaryCacheInterface $dictionaryCache,

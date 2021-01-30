@@ -32,7 +32,7 @@ class CreatePost extends Core\Controller\AbstractFrontendAction implements Core\
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         UserModelInterface $user,
         Gallery\Model\GalleryModel $galleryModel,

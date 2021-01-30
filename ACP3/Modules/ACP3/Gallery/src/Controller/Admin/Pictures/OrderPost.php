@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Http\RedirectResponse;
@@ -31,7 +31,7 @@ class OrderPost extends AbstractFrontendAction implements InvokableActionInterfa
     private $pictureModel;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         RedirectResponse $redirectResponse,
         PictureRepository $pictureRepository,
         PictureModel $pictureModel

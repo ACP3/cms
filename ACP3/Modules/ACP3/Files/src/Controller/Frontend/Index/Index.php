@@ -22,7 +22,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $rootCategoriesListViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         RootCategoriesListViewProvider $rootCategoriesListViewProvider
     ) {
         parent::__construct($context);

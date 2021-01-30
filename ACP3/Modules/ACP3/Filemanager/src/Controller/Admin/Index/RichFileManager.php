@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Filemanager\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Environment\ApplicationMode;
 use RFM\Api\LocalApi;
 use RFM\Application;
@@ -21,7 +21,7 @@ class RichFileManager extends AbstractFrontendAction
      */
     private $applicationMode;
 
-    public function __construct(FrontendContext $context, string $applicationMode)
+    public function __construct(WidgetContext $context, string $applicationMode)
     {
         parent::__construct($context);
 

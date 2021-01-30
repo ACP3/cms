@@ -18,7 +18,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $dataGridViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Newsletter\ViewProviders\DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);

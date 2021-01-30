@@ -23,7 +23,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
     private $commentByModuleModel;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Comments\Model\CommentByModuleModel $commentByModuleModel
     ) {

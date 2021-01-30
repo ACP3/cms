@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Modules;
 
@@ -20,7 +20,7 @@ abstract class AbstractFormAction extends AbstractFrontendAction implements Invo
     private $modules;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Modules $modules
     ) {
         parent::__construct($context);

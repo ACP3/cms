@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Errors\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Breadcrumb\Steps;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use Symfony\Component\HttpFoundation\Response;
 
 class NotFound extends Core\Controller\AbstractFrontendAction
@@ -20,7 +20,7 @@ class NotFound extends Core\Controller\AbstractFrontendAction
     private $breadcrumb;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Steps $breadcrumb
     ) {
         parent::__construct($context);

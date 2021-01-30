@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Exception\CacheClearException;
@@ -26,7 +26,7 @@ class Cache extends Core\Controller\AbstractFrontendAction
     private $cacheClearService;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         RedirectMessages $redirectMessages,
         System\Services\CacheClearService $cacheClearService
     ) {

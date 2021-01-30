@@ -32,7 +32,7 @@ class EditPost extends AbstractFormAction
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         UserModelInterface $user,
         Newsletter\Model\NewsletterModel $newsletterModel,

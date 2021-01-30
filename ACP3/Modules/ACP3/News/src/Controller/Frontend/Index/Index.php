@@ -24,7 +24,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $newsListViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         News\ViewProviders\NewsListViewProvider $newsListViewProvider
     ) {
         parent::__construct($context);

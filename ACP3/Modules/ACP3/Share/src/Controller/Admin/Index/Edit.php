@@ -23,7 +23,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminShareEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         ShareModel $shareModel,
         AdminShareEditViewProvider $adminShareEditViewProvider
     ) {

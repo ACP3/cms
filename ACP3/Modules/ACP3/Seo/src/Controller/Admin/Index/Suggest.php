@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Helpers\StringFormatter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -19,7 +19,7 @@ class Suggest extends AbstractFrontendAction
      */
     private $stringFormatter;
 
-    public function __construct(FrontendContext $context, StringFormatter $stringFormatter)
+    public function __construct(WidgetContext $context, StringFormatter $stringFormatter)
     {
         parent::__construct($context);
 

@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Contact;
 
@@ -40,7 +40,7 @@ class IndexPost extends Core\Controller\AbstractFrontendAction implements Core\C
     private $actionHelper;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Action $actionHelper,
         Core\Router\RouterInterface $router,
         Core\Helpers\Alerts $alertsHelper,

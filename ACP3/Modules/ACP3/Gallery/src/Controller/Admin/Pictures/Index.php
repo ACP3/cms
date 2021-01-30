@@ -23,7 +23,7 @@ class Index extends AbstractFrontendAction
     private $pictureDataGridViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\ViewProviders\PictureDataGridViewProvider $pictureDataGridViewProvider
     ) {

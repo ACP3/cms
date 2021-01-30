@@ -25,7 +25,7 @@ class Designs extends Core\Controller\AbstractFrontendAction
     private $redirectMessages;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Helpers\RedirectMessages $redirectMessages,
         Core\XML $xml
     ) {

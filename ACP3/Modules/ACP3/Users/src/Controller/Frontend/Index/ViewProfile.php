@@ -26,7 +26,7 @@ class ViewProfile extends Core\Controller\AbstractFrontendAction
     private $userProfileViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Users\ViewProviders\UserProfileViewProvider $userProfileViewProvider,
         Users\Model\Repository\UserRepository $userRepository
     ) {

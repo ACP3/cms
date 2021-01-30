@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminRoleEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\ViewProviders\AdminRoleEditViewProvider $adminRoleEditViewProvider
     ) {

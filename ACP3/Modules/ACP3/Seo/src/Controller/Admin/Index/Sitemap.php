@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel;
@@ -25,7 +25,7 @@ class Sitemap extends AbstractFrontendAction
     private $redirectMessages;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         RedirectMessages $redirectMessages,
         SitemapGenerationModel $sitemapGenerationModel
     ) {

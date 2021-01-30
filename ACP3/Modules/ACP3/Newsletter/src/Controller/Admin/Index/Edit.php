@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminNewsletterEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Newsletter\Model\NewsletterModel $newsletterModel,
         Newsletter\ViewProviders\AdminNewsletterEditViewProvider $adminNewsletterEditViewProvider
     ) {

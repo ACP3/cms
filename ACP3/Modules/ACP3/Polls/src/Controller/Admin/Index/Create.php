@@ -18,7 +18,7 @@ class Create extends Core\Controller\AbstractFrontendAction implements Core\Cont
     private $adminPollEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Polls\ViewProviders\AdminPollEditViewProvider $adminPollEditViewProvider
     ) {
         parent::__construct($context);

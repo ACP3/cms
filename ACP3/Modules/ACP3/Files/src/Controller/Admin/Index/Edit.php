@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractFrontendAction implements Core\Contro
     private $adminFileEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Files\Model\FilesModel $filesModel,
         Files\ViewProviders\AdminFileEditViewProvider $adminFileEditViewProvider
     ) {

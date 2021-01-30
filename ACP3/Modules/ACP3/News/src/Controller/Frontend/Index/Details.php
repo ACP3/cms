@@ -30,7 +30,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     private $newsDetailsViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         News\Model\Repository\NewsRepository $newsRepository,
         News\ViewProviders\NewsDetailsViewProvider $newsDetailsViewProvider

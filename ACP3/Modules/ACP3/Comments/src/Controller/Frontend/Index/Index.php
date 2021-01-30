@@ -24,7 +24,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $commentListViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Comments\ViewProviders\CommentListViewProvider $commentListViewProvider
     ) {
         parent::__construct($context);

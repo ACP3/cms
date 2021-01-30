@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Http\RedirectResponse;
@@ -31,7 +31,7 @@ class OrderPost extends AbstractFrontendAction implements InvokableActionInterfa
     private $menuItemsModel;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         RedirectResponse $redirectResponse,
         MenuItemRepository $menuItemRepository,
         MenuItemsModel $menuItemsModel

@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Emoticons\ViewProviders\DataGridViewProvider;
 
 class Index extends AbstractFrontendAction
@@ -19,7 +19,7 @@ class Index extends AbstractFrontendAction
     private $dataGridViewProvider;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);

@@ -18,7 +18,7 @@ class Index extends Core\Controller\AbstractFrontendAction implements Core\Contr
     private $newsletterSubscribeViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Newsletter\ViewProviders\NewsletterSubscribeViewProvider $newsletterSubscribeViewProvider
     ) {
         parent::__construct($context);

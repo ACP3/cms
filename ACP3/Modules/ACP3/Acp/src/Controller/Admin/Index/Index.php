@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Acp\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Acp\ViewProviders\ModuleListViewProvider;
 
 class Index extends Core\Controller\AbstractFrontendAction
@@ -18,7 +18,7 @@ class Index extends Core\Controller\AbstractFrontendAction
      */
     private $modulesListViewProvider;
 
-    public function __construct(Context\FrontendContext $context, ModuleListViewProvider $modulesListViewProvider)
+    public function __construct(WidgetContext $context, ModuleListViewProvider $modulesListViewProvider)
     {
         parent::__construct($context);
 

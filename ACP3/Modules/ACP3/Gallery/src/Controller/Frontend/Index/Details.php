@@ -30,7 +30,7 @@ class Details extends Core\Controller\AbstractFrontendAction
     private $galleryPictureDetailsViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
         Gallery\Model\Repository\PictureRepository $pictureRepository,
         Gallery\ViewProviders\GalleryPictureDetailsViewProvider $galleryPictureDetailsViewProvider

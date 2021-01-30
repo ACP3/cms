@@ -23,7 +23,7 @@ class Delete extends Core\Controller\AbstractFrontendAction
     private $pictureModel;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Gallery\Model\PictureModel $pictureModel
     ) {

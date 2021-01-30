@@ -19,7 +19,7 @@ class Edit extends AbstractAction
     private $accountEditViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         UserModelInterface $user,
         Users\ViewProviders\AccountEditViewProvider $accountEditViewProvider
     ) {

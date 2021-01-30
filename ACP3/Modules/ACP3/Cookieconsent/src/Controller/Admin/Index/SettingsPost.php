@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Cookieconsent\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractFrontendAction;
-use ACP3\Core\Controller\Context\FrontendContext;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Cookieconsent\Installer\Schema;
@@ -26,7 +26,7 @@ class SettingsPost extends AbstractFrontendAction implements InvokableActionInte
     private $actionHelper;
 
     public function __construct(
-        FrontendContext $context,
+        WidgetContext $context,
         Action $actionHelper,
         AdminSettingsFormValidation $cookieConsentValidator
     ) {

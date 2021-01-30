@@ -22,7 +22,7 @@ class Create extends Core\Controller\AbstractFrontendAction implements Core\Cont
     private $adminGalleryPictureCreateViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Gallery\Model\Repository\GalleryRepository $galleryRepository,
         Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider $adminGalleryPictureCreateViewProvider
     ) {

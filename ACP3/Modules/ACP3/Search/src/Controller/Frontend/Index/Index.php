@@ -47,7 +47,7 @@ class Index extends Core\Controller\AbstractFrontendAction
     private $actionHelper;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Core\ACL $acl,
         Core\Helpers\Secure $secureHelper,

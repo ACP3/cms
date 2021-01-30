@@ -27,7 +27,7 @@ class Files extends Core\Controller\AbstractFrontendAction
     private $filesByCategoryIdViewProvider;
 
     public function __construct(
-        Core\Controller\Context\FrontendContext $context,
+        Core\Controller\Context\WidgetContext $context,
         Categories\Model\Repository\CategoryRepository $categoryRepository,
         FilesByCategoryIdViewProvider $filesByCategoryIdViewProvider
     ) {
