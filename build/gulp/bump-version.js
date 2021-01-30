@@ -7,7 +7,6 @@ module.exports = (gulp) => {
   "use strict";
 
   const argv = require("yargs").argv;
-  const moment = require("moment");
   const git = require("simple-git");
   const semver = require("semver");
   const yaml = require("js-yaml");
@@ -243,9 +242,10 @@ module.exports = (gulp) => {
         .src(["./" + changelogName])
         .pipe(
           change((content) => {
-            const currentDate = moment().format("YYYY-MM-DD");
+            const currentDate = new Date();
+            const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
             return content
-              .replace("## [Unreleased]", `## [${newVersion}] - ${currentDate}`)
+              .replace("## [Unreleased]", `## [${newVersion}] - ${formattedDate}`)
               .replace(
                 `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...${nameOfCurrentBranch}`,
                 `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${newVersion}...${nameOfCurrentBranch}\n` +

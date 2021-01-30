@@ -55,16 +55,6 @@ services:
       - ["js.cookie.js"]
       - "system"
 
-  system.assets.moment:
-    class: ACP3\Core\Assets\Entity\LibraryEntity
-    arguments:
-      - "moment"
-      - false
-      - []
-      - []
-      - ["moment.min.js"]
-      - "system"
-
   system.assets.bootstrap:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
@@ -103,17 +93,6 @@ services:
       - ["jquery", "bootstrap"]
       - ["dataTables.bootstrap.css"]
       - ["jquery.dataTables.js"]
-      - "system"
-      - true
-
-  system.assets.datetimepicker:
-    class: ACP3\Core\Assets\Entity\LibraryEntity
-    arguments:
-      - "datetimepicker"
-      - false
-      - ["jquery", "moment"]
-      - ["bootstrap-datetimepicker.css"]
-      - ["bootstrap-datetimepicker.min.js"]
       - "system"
       - true
 
