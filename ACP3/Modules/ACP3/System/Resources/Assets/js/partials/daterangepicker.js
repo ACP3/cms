@@ -26,6 +26,8 @@ dateRangePickers.forEach((dateRangePicker) => {
         datePickerEnd.setDate(selectedDates[0]);
       }
 
+      // It is important to set the "minDate" option after the actual date has been set.
+      // Otherwise the datepicker will just be emptied
       datePickerEnd.set("minDate", selectedDates[0]);
     },
     time_24hr: true,
