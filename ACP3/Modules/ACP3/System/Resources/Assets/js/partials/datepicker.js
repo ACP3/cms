@@ -6,6 +6,7 @@ datePickers.forEach((datePicker) => {
   const datepickerConfig = JSON.parse(datePicker.dataset.datepicker);
 
   flatpickr(datepickerConfig.element, {
+    allowInput: true,
     altInput: true,
     altFormat: datepickerConfig.altFormat,
     enableTime: datepickerConfig.enableTime,

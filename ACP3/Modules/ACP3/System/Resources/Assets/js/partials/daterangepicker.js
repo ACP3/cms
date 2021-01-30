@@ -6,6 +6,7 @@ dateRangePickers.forEach((dateRangePicker) => {
   const dateRangePickerConfig = JSON.parse(dateRangePicker.dataset.datepickerRange);
 
   const datePickerEnd = flatpickr(dateRangePickerConfig.end, {
+    allowInput: true,
     altInput: true,
     altFormat: dateRangePickerConfig.altFormat,
     enableTime: dateRangePickerConfig.enableTime,
@@ -17,6 +18,7 @@ dateRangePickers.forEach((dateRangePicker) => {
   });
 
   flatpickr(dateRangePickerConfig.start, {
+    allowInput: true,
     altInput: true,
     altFormat: dateRangePickerConfig.altFormat,
     enableTime: dateRangePickerConfig.enableTime,
