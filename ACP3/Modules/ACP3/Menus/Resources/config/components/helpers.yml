@@ -9,8 +9,6 @@ services:
 
   menus.helpers.managemenuitem:
     class: ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
-    arguments:
-      $menuItemsModel: "@menus.model.menu_items_model"
 
   ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem: "@menus.helpers.managemenuitem"
 
