@@ -24,14 +24,18 @@ const modulePathsJsProcess = componentPaths.map((componentPath) => {
   return componentPath + "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
 });
 
+function filterComposerVendorComponents(paths) {
+  return paths.filter((path) => !path.includes("/vendor/"));
+}
+
 module.exports = {
   less: {
-    watch: modulePathsLessWatch.slice(),
-    process: modulePathsLessProcess.slice(),
+    watch: filterComposerVendorComponents(modulePathsLessWatch),
+    process: filterComposerVendorComponents(modulePathsLessProcess),
   },
-  scss: modulePathsScss.slice(),
+  scss: filterComposerVendorComponents(modulePathsScss),
   js: {
-    watch: modulePathsJsWatch.slice(),
-    process: modulePathsJsProcess.slice(),
+    watch: filterComposerVendorComponents(modulePathsJsWatch),
+    process: filterComposerVendorComponents(modulePathsJsProcess),
   },
 };
