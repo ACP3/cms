@@ -7,10 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\Comments;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\InvokableActionInterface;
+use ACP3\Modules\ACP3\Comments\ViewProviders\DataGridViewProvider;
 
-class Index extends Core\Controller\AbstractWidgetAction
+class Index extends AbstractWidgetAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\ViewProviders\DataGridViewProvider
@@ -18,18 +20,15 @@ class Index extends Core\Controller\AbstractWidgetAction
     private $dataGridViewProvider;
 
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
-        Comments\ViewProviders\DataGridViewProvider $dataGridViewProvider
+        WidgetContext $context,
+        DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
 
         $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
-    /**
-     * @return array
-     */
-    public function execute()
+    public function __invoke()
     {
         return ($this->dataGridViewProvider)();
     }

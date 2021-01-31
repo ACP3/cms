@@ -7,11 +7,13 @@
 
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Modules\Helper\Action;
-use ACP3\Modules\ACP3\Comments;
+use ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel;
 
-class Delete extends Core\Controller\AbstractWidgetAction
+class Delete extends AbstractWidgetAction implements InvokableActionInterface
 {
     /**
      * @var \ACP3\Core\Modules\Helper\Action
@@ -23,9 +25,9 @@ class Delete extends Core\Controller\AbstractWidgetAction
     private $commentByModuleModel;
 
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        WidgetContext $context,
         Action $actionHelper,
-        Comments\Model\CommentByModuleModel $commentByModuleModel
+        CommentByModuleModel $commentByModuleModel
     ) {
         parent::__construct($context);
 
@@ -36,7 +38,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
     /**
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(?string $action = null)
+    public function __invoke(?string $action = null)
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
