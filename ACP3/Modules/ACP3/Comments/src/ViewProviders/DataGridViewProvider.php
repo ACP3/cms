@@ -63,7 +63,7 @@ class DataGridViewProvider
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#comments-data-grid')
             ->setResourcePathDelete('admin/comments/index/delete')
-            ->setResourcePathEdit('admin/comments/index/edit')
+            ->setResourcePathEdit('admin/comments/details/index')
             ->addColumn([
                 'label' => $this->translator->t('comments', 'module'),
                 'type' => TranslateColumnRenderer::class,
@@ -76,6 +76,8 @@ class DataGridViewProvider
                 'fields' => ['comments_count'],
             ], 20)
             ->addColumn([
+                'label' => $this->translator->t('system', 'id'),
+                'type' => IntegerColumnRenderer::class,
                 'fields' => ['module_id'],
                 'primary' => true,
             ], 10);
