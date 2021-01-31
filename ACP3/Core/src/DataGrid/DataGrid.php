@@ -22,11 +22,11 @@ class DataGrid
     /**
      * @var \ACP3\Core\ACL
      */
-    protected $acl;
+    private $acl;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\DataGrid\ConfigProcessor
      */
@@ -55,8 +55,6 @@ class DataGrid
     }
 
     /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     *
      * @return array|JsonResponse
      */
     public function render(Input $input)
@@ -87,9 +85,7 @@ class DataGrid
     }
 
     /**
-     * Checks, whether we have the required AJAX request in effect.
-     *
-     * @param \ACP3\Core\DataGrid\Input $input
+     * Checks, whether the required AJAX request is in effect.
      */
     private function isRequiredAjaxRequest(Input $input): bool
     {
@@ -97,9 +93,6 @@ class DataGrid
             && $this->request->getParameters()->get('ajax', '') === \substr($input->getIdentifier(), 1);
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     */
     private function mapTableColumnsToDbFieldsAjax(Input $input): array
     {
         $renderedResults = [];
@@ -107,7 +100,7 @@ class DataGrid
         foreach ($input->getResults() as $result) {
             $row = [];
             foreach (clone $input->getColumns() as $column) {
-                if ($this->serviceLocator->has($column['type']) && !empty($column['label'])) {
+                if (!empty($column['label']) && $this->serviceLocator->has($column['type'])) {
                     /** @var ColumnRendererInterface $columnRenderer */
                     $columnRenderer = $this->serviceLocator->get($column['type']);
 
@@ -126,12 +119,7 @@ class DataGrid
         return $renderedResults;
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     *
-     * @return string
-     */
-    protected function renderTableHeader(Input $input)
+    private function renderTableHeader(Input $input): string
     {
         $header = '';
         foreach (clone $input->getColumns() as $column) {
@@ -146,12 +134,7 @@ class DataGrid
         return $header;
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     *
-     * @return string
-     */
-    protected function mapTableColumnsToDbFields(Input $input)
+    private function mapTableColumnsToDbFields(Input $input): string
     {
         if ($input->isUseAjax()) {
             return '';
@@ -162,7 +145,7 @@ class DataGrid
         foreach ($input->getResults() as $result) {
             $renderedResults .= '<tr>';
             foreach (clone $input->getColumns() as $column) {
-                if ($this->serviceLocator->has($column['type']) && !empty($column['label'])) {
+                if (!empty($column['label']) && $this->serviceLocator->has($column['type'])) {
                     /** @var ColumnRendererInterface $columnRenderer */
                     $columnRenderer = $this->serviceLocator->get($column['type']);
 
@@ -181,49 +164,9 @@ class DataGrid
         return $renderedResults;
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     *
-     * @return array
-     */
-    protected function generateDataTableConfig(Input $input)
+    private function addDefaultColumns(Input $input, bool $canDelete, bool $canEdit): void
     {
-        $columnDefinitions = [];
-        $i = 0;
-
-        $defaultSortColumn = $defaultSortDirection = null;
-        foreach (clone $input->getColumns() as $column) {
-            if ($column['sortable'] === false) {
-                $columnDefinitions[] = $i;
-            }
-
-            if ($column['default_sort'] === true &&
-                \in_array($column['default_sort_direction'], ['asc', 'desc'])
-            ) {
-                $defaultSortColumn = $i;
-                $defaultSortDirection = $column['default_sort_direction'];
-            }
-
-            if (!empty($column['label'])) {
-                ++$i;
-            }
-        }
-
-        return [
-            'element' => $input->getIdentifier(),
-            'records_per_page' => $input->getRecordsPerPage(),
-            'hide_col_sort' => \implode(', ', $columnDefinitions),
-            'sort_col' => $defaultSortColumn,
-            'sort_dir' => $defaultSortDirection,
-        ];
-    }
-
-    /**
-     * @param \ACP3\Core\DataGrid\Input $input
-     */
-    protected function addDefaultColumns(Input $input, bool $canDelete, bool $canEdit)
-    {
-        if ($input->isEnableMassAction() && $canDelete) {
+        if ($canDelete && $input->isEnableMassAction()) {
             $input->addColumn([
                 'label' => $input->getIdentifier(),
                 'type' => MassActionColumnRenderer::class,
