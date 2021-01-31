@@ -26,7 +26,7 @@ export function highlightTableRow(markAllRowsCheckboxElem) {
 
   $table.on("click", "tr:has(td :checkbox)", function (e, action) {
     if (e.target.type !== "checkbox") {
-      if (e.target.nodeName === "A" || jQuery(e.target).closest("a")) {
+      if (e.target.nodeName === "A" || jQuery(e.target).closest("a").length) {
         return;
       }
 
