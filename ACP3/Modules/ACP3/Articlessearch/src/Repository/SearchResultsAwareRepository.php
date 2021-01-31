@@ -16,9 +16,8 @@ use ACP3\Modules\ACP3\Search\Model\Repository\SearchResultsAwareRepositoryInterf
 
 class SearchResultsAwareRepository extends AbstractRepository implements SearchResultsAwareRepositoryInterface
 {
-    const TABLE_NAME = ArticleRepository::TABLE_NAME;
-
     use PublicationPeriodAwareTrait;
+    const TABLE_NAME = ArticleRepository::TABLE_NAME;
 
     /**
      * @var Date

@@ -58,9 +58,6 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
     protected function getDefaultExpected(): array
     {
         return [
