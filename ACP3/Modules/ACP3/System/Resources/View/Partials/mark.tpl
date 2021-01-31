@@ -1,3 +1,3 @@
 {javascripts}
-    {include_js module="system" file="partials/mark" depends="bootbox"}
+    {include_js module="system" file="partials/mass-action" depends="bootbox"}
 {/javascripts}

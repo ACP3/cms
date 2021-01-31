@@ -5,12 +5,6 @@
 {block HEADER_BAR_OPTIONS}
     {check_access mode="link" path="acp/menus/items/create" class="fas fa-plus text-success"}
     {check_access mode="link" path="acp/menus/index/create" class="fas fa-th-list text-info"}
-    {foreach $data_grids as $data_grid}
-        {if $data_grid.grid.show_mass_delete}
-            {check_access mode="button" path="acp/menus/items/delete" class="fa fa-trash text-danger" lang="system|delete_marked"}
-            {break}
-        {/if}
-    {/foreach}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if !empty($menus)}

@@ -7,9 +7,12 @@
             {$dataTable.header}
         </tr>
         </thead>
+        {if $dataTable.show_mass_delete === true}
+            {include file="asset:System/Partials/datagrid-mass-action-bar.tpl" dataGridIdentifier=$dataTable.identifier dataGridColumnCount=$dataTable.column_count}
+        {/if}
         {if !empty($dataTable.results)}
             <tbody>
-            {$dataTable.results}
+                {$dataTable.results}
             </tbody>
         {/if}
     </table>

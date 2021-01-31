@@ -4,9 +4,6 @@
 
 {block HEADER_BAR_OPTIONS}
     {check_access mode="link" path="acp/permissions/resources/create"  class="fas fa-plus text-success"}
-    {if isset($resources)}
-        {check_access mode="button" path="acp/permissions/resources/delete" class="fa fa-trash text-danger" lang="system|delete_marked"}
-    {/if}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if isset($resources)}
@@ -26,6 +23,9 @@
                     {/if}
                 </tr>
                 </thead>
+                {if $can_delete_resource === true}
+                    {include file="asset:System/Partials/datagrid-mass-action-bar.tpl" dataGridIdentifier='resources-table' dataGridColumnCount=5}
+                {/if}
                 <tbody>
                 {foreach $resources as $module => $values}
                     <tr class="sub-table-header">

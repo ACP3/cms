@@ -74,6 +74,7 @@ class DataGrid
             'grid' => [
                 'can_edit' => $canEdit,
                 'can_delete' => $canDelete,
+                'column_count' => \count($input->getColumns()),
                 'identifier' => \substr($input->getIdentifier(), 1),
                 'header' => $this->renderTableHeader($input),
                 'config' => $this->configProcessor->generateDataTableConfig($input),

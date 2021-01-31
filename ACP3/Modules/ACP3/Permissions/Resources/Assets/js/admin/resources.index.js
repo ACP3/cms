@@ -5,10 +5,13 @@
   $resourcesTable.find(".sub-table-header").click(function () {
     $(this).nextUntil("tr.sub-table-header").toggle();
 
-    const visibleLength = $resourcesTable.find("tbody tr:has(:checkbox):visible").length,
-      allVisibleChecked =
-        visibleLength > 0 && visibleLength === $resourcesTable.find("tbody tr.selected:visible").length;
+    const visibleLength = $resourcesTable.find("tbody tr:has(:checkbox):visible").length;
+    const selectedElementsLength = $resourcesTable.find("tbody tr.selected:visible").length;
+    const allVisibleChecked = visibleLength > 0 && visibleLength === selectedElementsLength;
 
-    $("#mark-all").prop("checked", allVisibleChecked);
+    const markAllCheckbox = document.getElementById("mark-all");
+
+    markAllCheckbox.checked = allVisibleChecked;
+    markAllCheckbox.indeterminate = selectedElementsLength > 0 && !allVisibleChecked;
   });
 })(jQuery);

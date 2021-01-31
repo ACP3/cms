@@ -61,7 +61,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    protected function getDefaultExpected()
+    protected function getDefaultExpected(): array
     {
         return [
             'grid' => [
@@ -73,11 +73,12 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
                 'results' => '',
                 'num_results' => 0,
                 'show_mass_delete' => false,
+                'column_count' => 1,
             ],
         ];
     }
 
-    public function testRenderWithDefaults()
+    public function testRenderWithDefaults(): void
     {
         $this->aclMock
             ->expects(self::exactly(2))
@@ -89,7 +90,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }
 
-    public function testRenderWithOneTextColumn()
+    public function testRenderWithOneTextColumn(): void
     {
         $this->aclMock
             ->expects(self::exactly(2))
@@ -110,11 +111,12 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
 
         $expected = $this->getDefaultExpected();
         $expected['grid']['header'] = '<th>Foo</th>';
+        $expected['grid']['column_count'] = 2;
 
         self::assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }
 
-    public function testRenderWithOneTextColumnAndData()
+    public function testRenderWithOneTextColumnAndData(): void
     {
         $data = [
             [
@@ -146,6 +148,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         $expected['grid']['header'] = '<th>Foo</th>';
         $expected['grid']['results'] = "<tr><td>Lorem Ipsum</td></tr>\n<tr><td>Lorem Ipsum Dolor</td></tr>\n";
         $expected['grid']['num_results'] = 2;
+        $expected['grid']['column_count'] = 2;
 
         self::assertEquals($expected, $this->dataGrid->render($this->inputOptions));
     }

@@ -8,30 +8,32 @@ const cssClassName = "info";
 /**
  * Marks all visible results
  *
- * @param {HTMLElement} markAllRowsCheckboxElem
+ * @param {Element} markAllRowsCheckboxElem
  * @param {string} action
  */
 export function highlightAllTableRows(markAllRowsCheckboxElem, action) {
-  jQuery(markAllRowsCheckboxElem).closest("table").find("tr:has(td :checkbox)").trigger("click", [action]);
+  jQuery(markAllRowsCheckboxElem).closest("table").find("tr:has(td :checkbox:visible)").trigger("click", [action]);
 }
 
 /**
+ * Highlights a single table row
  *
- * @param {HTMLElement} markAllRowsCheckboxElem
+ * @param {Element} markAllRowsCheckboxElem
+ * @param {Element} massActionBarElem
  */
-export function highlightTableRow(markAllRowsCheckboxElem) {
+export function highlightTableRow(markAllRowsCheckboxElem, massActionBarElem) {
   const $markAllCheckbox = jQuery(markAllRowsCheckboxElem),
     $table = $markAllCheckbox.closest("table"),
     checkboxName = $markAllCheckbox.data("checkbox-name");
 
-  $table.on("click", "tr:has(td :checkbox)", function (e, action) {
-    if (e.target.type !== "checkbox") {
-      if (e.target.nodeName === "A" || jQuery(e.target).closest("a").length) {
+  $table.on("click", "tr:has(td :checkbox)", function (event, action) {
+    if (event.target.type !== "checkbox") {
+      if (event.target.nodeName === "A" || event.target.closest("a")) {
         return;
       }
 
-      const $rowCheckbox = jQuery('input[name="' + checkboxName + '[]"]', this);
-      $rowCheckbox.prop("checked", !$rowCheckbox.is(":checked") || action === "add");
+      const rowCheckbox = this.querySelector(`input[name="${checkboxName}[]"]`);
+      rowCheckbox.checked = !rowCheckbox.checked || action === "add";
     }
 
     if (action === "add") {
@@ -40,20 +42,21 @@ export function highlightTableRow(markAllRowsCheckboxElem) {
       this.classList.toggle(cssClassName);
     }
 
-    setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName);
+    setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName, massActionBarElem);
   });
 
   jQuery(document).on("draw.dt", () => {
-    setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName);
+    setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName, massActionBarElem);
   });
 }
 
 /**
  *
- * @param {HTMLElement} markAllRowsCheckboxElem
+ * @param {Element} markAllRowsCheckboxElem
  * @param {string} checkboxName
+ * @param {Element} massActionBarElem
  */
-function setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName) {
+function setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName, massActionBarElem) {
   const $tbody = jQuery(markAllRowsCheckboxElem).closest("table").find("tbody");
   const visibleSelectedTableRows = $tbody.find("tr." + cssClassName + ":visible").length;
   const visibleMassActionCheckboxes = $tbody.find('input[name="' + checkboxName + '[]"]:visible').length;
@@ -62,11 +65,13 @@ function setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName) {
     visibleSelectedTableRows > 0 && visibleMassActionCheckboxes !== visibleSelectedTableRows;
   markAllRowsCheckboxElem.checked =
     visibleSelectedTableRows > 0 && visibleMassActionCheckboxes === visibleSelectedTableRows;
+
+  massActionBarElem.classList.toggle("hidden", visibleSelectedTableRows === 0);
 }
 
 /**
  *
- * @param {HTMLElementEventMap} elem
+ * @param {HTMLElement} elem
  * @param options
  */
 export function deleteMarkedResults(elem, options) {
