@@ -79,32 +79,26 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
     abstract protected function processLibraries(string $layout): array;
 
     /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * This methods returns the currently enabled asset libraries as a comma-separated string.
+     * It must only contain the libraries names which are eligible according to the asset group.
      */
+    abstract protected function getEnabledLibrariesAsString(): string;
+
     protected function buildCacheId(string $layout): string
     {
         return 'assets_' . $this->generateFilenameHash($layout);
     }
 
-    /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
     private function generateFilenameHash(string $layout): string
     {
         $filename = $this->config->getSettings(Schema::MODULE_NAME)['design'];
         $filename .= '_' . $layout;
-        $filename .= '_' . $this->libraries->getEnabledLibrariesAsString();
+        $filename .= '_' . $this->getEnabledLibrariesAsString();
         $filename .= '_' . $this->getAssetGroup();
 
         return \md5($filename);
     }
 
-    /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
     public function getURI(string $layout = 'layout'): string
     {
         // We have to initialize the theme here,

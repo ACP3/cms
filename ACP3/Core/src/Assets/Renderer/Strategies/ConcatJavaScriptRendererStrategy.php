@@ -7,6 +7,8 @@
 
 namespace ACP3\Core\Assets\Renderer\Strategies;
 
+use ACP3\Core\Assets\Entity\LibraryEntity;
+
 class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy implements JavaScriptRendererStrategyInterface
 {
     protected const ASSETS_PATH_JS = 'Assets/js';
@@ -24,6 +26,30 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
     protected function getFileExtension(): string
     {
         return 'js';
+    }
+
+    /**
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
+    protected function getEnabledLibrariesAsString(): string
+    {
+        return \implode(',', \array_map(static function (LibraryEntity $library) {
+            return $library->getLibraryIdentifier();
+        }, $this->getEnabledLibraries()));
+    }
+
+    /**
+     * @return LibraryEntity[]
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
+    private function getEnabledLibraries(): array
+    {
+        return \array_filter($this->libraries->getEnabledLibraries(), static function (LibraryEntity $library) {
+            return $library->getJs();
+        });
     }
 
     /**
@@ -54,11 +80,7 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
      */
     protected function fetchLibraries(): void
     {
-        foreach ($this->libraries->getEnabledLibraries() as $library) {
-            if (!$library->getJs()) {
-                continue;
-            }
-
+        foreach ($this->getEnabledLibraries() as $library) {
             foreach ($library->getJs() as $javascript) {
                 $this->javascript[] = $this->fileResolver->getStaticAssetPath(
                     $library->getModuleName(),
@@ -84,9 +106,6 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
 
     /**
      * {@inheritDoc}
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function renderHtmlElement(string $layout = 'layout'): string
     {

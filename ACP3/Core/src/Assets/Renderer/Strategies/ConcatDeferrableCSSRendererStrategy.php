@@ -7,11 +7,37 @@
 
 namespace ACP3\Core\Assets\Renderer\Strategies;
 
+use ACP3\Core\Assets\Entity\LibraryEntity;
+
 class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
 {
     protected function getAssetGroup(): string
     {
         return 'css_deferrable';
+    }
+
+    /**
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
+    protected function getEnabledLibrariesAsString(): string
+    {
+        return \implode(',', \array_map(static function (LibraryEntity $library) {
+            return $library->getLibraryIdentifier();
+        }, $this->getEnabledLibraries()));
+    }
+
+    /**
+     * @return LibraryEntity[]
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
+    private function getEnabledLibraries(): array
+    {
+        return \array_filter($this->libraries->getEnabledLibraries(), static function (LibraryEntity $library) {
+            return $library->getCss() && $library->isDeferrableCss();
+        });
     }
 
     /**
@@ -41,11 +67,7 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
      */
     private function fetchLibraries(): void
     {
-        foreach ($this->libraries->getEnabledLibraries() as $library) {
-            if (!$library->getCss() || !$library->isDeferrableCss()) {
-                continue;
-            }
-
+        foreach ($this->getEnabledLibraries() as $library) {
             foreach ($library->getCss() as $stylesheet) {
                 $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
                     $library->getModuleName(),
