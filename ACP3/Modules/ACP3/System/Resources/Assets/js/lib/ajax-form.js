@@ -94,11 +94,12 @@ export class AjaxForm {
     this.disableSubmitButton($submitButton);
 
     try {
+      const method = $form.attr("method")
+        ? $form.attr("method").toUpperCase()
+        : this.settings.method?.toUpperCase() ?? "GET";
       const response = await fetch($form.attr("action") || $form.attr("href"), {
-        method: $form.attr("method")
-          ? $form.attr("method").toUpperCase()
-          : this.settings.method?.toUpperCase() ?? "GET",
-        body: this.prepareFormData($form),
+        method: method,
+        body: method !== "GET" ? this.prepareFormData($form) : null,
         headers: {
           "X-Requested-With": "XMLHttpRequest",
         },
