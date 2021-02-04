@@ -32,6 +32,7 @@ release:generate-artifact:
     paths:
       - ACP3
       - bin
+      - build/docker
       - build/gulp
       - designs
       - installation
@@ -39,15 +40,29 @@ release:generate-artifact:
       - uploads
       - vendor
       - .editorconfig
+      - .env.sample
+      - .eslintignore
+      - .eslintrc.json
       - .htaccess.sample
-      - CHANGELOG.md
+      - .nvmrc
+      - .php_cs.dist
+      - .prettierignore
+      - .prettierrc.json
+      - .stylelintignore
+      - .stylelintrc
+      - CHANGELOG-4.x.md
+      - CHANGELOG-5.x.md
       - composer.json
       - composer.lock
+      - docker-compose.override.yml.sample
+      - docker-compose.yml
+      - favicon.ico
       - gulpfile.js
       - index.php
       - LICENSE
       - package.json
       - package-lock.json
+      - phpstan.neon.dist
       - README.md
   rules:
     - if: "$CI_COMMIT_TAG"
