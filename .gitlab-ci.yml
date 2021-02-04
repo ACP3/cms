@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - sync
   - release
   - trigger
 
@@ -18,5 +19,6 @@ include:
   - local: .gitlab/ci/build.gitlab-ci.yml
   - local: .gitlab/ci/test-php.gitlab-ci.yml
   - local: .gitlab/ci/test-node.gitlab-ci.yml
+  - local: .gitlab/ci/sync.gitlab-ci.yml
   - local: .gitlab/ci/release.gitlab-ci.yml
   - local: .gitlab/ci/trigger.gitlab-ci.yml
