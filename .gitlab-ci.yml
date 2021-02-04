@@ -1,7 +1,8 @@
 stages:
-  - build
+  - prepare
   - test
   - sync
+  - package
   - release
   - trigger
 
@@ -16,9 +17,10 @@ variables:
 include:
   - template: Code-Quality.gitlab-ci.yml
   #  - template: Security/SAST.gitlab-ci.yml
-  - local: .gitlab/ci/build.gitlab-ci.yml
+  - local: .gitlab/ci/prepare.gitlab-ci.yml
   - local: .gitlab/ci/test-php.gitlab-ci.yml
   - local: .gitlab/ci/test-node.gitlab-ci.yml
   - local: .gitlab/ci/sync.gitlab-ci.yml
+  - local: .gitlab/ci/package.gitlab-ci.yml
   - local: .gitlab/ci/release.gitlab-ci.yml
   - local: .gitlab/ci/trigger.gitlab-ci.yml

@@ -1,6 +1,6 @@
-build:composer:
+composer:
   image: composer:1
-  stage: build
+  stage: prepare
   cache:
     key: $CI_JOB_NAME
     paths:
@@ -21,9 +21,9 @@ build:composer:
       - .php_cs.dist
       - .gitlab-ci.yml
 
-build:npm:
+npm:
   image: node:lts-alpine
-  stage: build
+  stage: prepare
   cache:
     key: $CI_JOB_NAME
     paths:
@@ -37,11 +37,15 @@ build:npm:
       - node_modules
   only:
     changes:
-      - "ACP3/**/*.js"
-      - "design/**/*.js"
-      - "installation/**/*.js"
+      - "ACP3/**/*.{css,js,less,scss}"
+      - "design/**/*.{css,js,less,scss}"
+      - "installation/**/*.{css,js,less,scss}"
       - package.json
       - package-lock.json
       - .eslintignore
       - .eslintrc.json
+      - .prettierignore
+      - .prettierrc.json
+      - .stylelintignore
+      - .stylelintrc
       - .gitlab-ci.yml

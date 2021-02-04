@@ -8,7 +8,7 @@ test:csslint:
   script:
     - npm run css-lint
   needs:
-    - build:npm
+    - npm
   only:
     changes:
       - "ACP3/**/*.{css,less,scss}"
@@ -26,7 +26,7 @@ test:prettier:
   script:
     - npm run prettier
   needs:
-    - build:npm
+    - npm
   only:
     changes:
       - "ACP3/**/*.{css,js,less,scss}"
@@ -44,7 +44,7 @@ test:eslint:
   script:
     - npm run eslint
   needs:
-    - build:npm
+    - npm
   only:
     changes:
       - "ACP3/**/*.js"

@@ -9,7 +9,7 @@ test:php72-unit:
     - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never --log-junit junit-report.xml
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   needs:
-    - build:composer
+    - composer
   artifacts:
     paths:
       - junit-report.xml
@@ -43,7 +43,7 @@ test:php-cs-fixer:
   script:
     - composer run-script lint
   needs:
-    - build:composer
+    - composer
   only:
     changes:
       - "**/*.php"
@@ -62,7 +62,7 @@ test:phpstan:
   script:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse --no-progress
   needs:
-    - build:composer
+    - composer
   only:
     changes:
       - "**/*.php"
