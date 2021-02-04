@@ -1,0 +1,47 @@
+build:composer:
+  image: composer:1
+  stage: build
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - ${COMPOSER_HOME}
+      - vendor
+  script:
+    - composer install -n --prefer-dist --ignore-platform-reqs
+  artifacts:
+    paths:
+      - vendor
+  only:
+    changes:
+      - "**/*.php"
+      - composer.json
+      - composer.lock
+      - tests/phpunit.dist.xml
+      - phpstan.neon.dist
+      - .php_cs.dist
+      - .gitlab-ci.yml
+
+build:npm:
+  image: node:lts-alpine
+  stage: build
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - ${npm_config_cache}
+  before_script:
+    - apk update && apk add --no-cache git
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules
+  only:
+    changes:
+      - "ACP3/**/*.js"
+      - "design/**/*.js"
+      - "installation/**/*.js"
+      - package.json
+      - package-lock.json
+      - .eslintignore
+      - .eslintrc.json
+      - .gitlab-ci.yml

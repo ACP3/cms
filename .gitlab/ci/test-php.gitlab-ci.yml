@@ -1,0 +1,72 @@
+test:php72-unit:
+  image: registry.gitlab.com/acp3/php-docker:7.2
+  stage: test
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - tests/.phpunit.result.cache
+  script:
+    - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never --log-junit junit-report.xml
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+  needs:
+    - build:composer
+  artifacts:
+    paths:
+      - junit-report.xml
+    reports:
+      junit: junit-report.xml
+  only:
+    changes:
+      - "**/*.php"
+      - composer.json
+      - composer.lock
+      - tests/phpunit.dist.xml
+      - .gitlab-ci.yml
+
+test:php73-unit:
+  extends: test:php72-unit
+  image: registry.gitlab.com/acp3/php-docker:7.3
+  coverage: ~
+
+test:php74-unit:
+  extends: test:php72-unit
+  image: registry.gitlab.com/acp3/php-docker:7.4
+  coverage: ~
+
+test:php-cs-fixer:
+  image: registry.gitlab.com/acp3/php-docker:7.2
+  stage: test
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - .php_cs.cache
+  script:
+    - composer run-script lint
+  needs:
+    - build:composer
+  only:
+    changes:
+      - "**/*.php"
+      - composer.json
+      - composer.lock
+      - .php_cs.dist
+      - .gitlab-ci.yml
+
+test:phpstan:
+  image: registry.gitlab.com/acp3/php-docker:7.2
+  stage: test
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - .phpstan-cache
+  script:
+    - php -d memory_limit=-1 vendor/bin/phpstan analyse --no-progress
+  needs:
+    - build:composer
+  only:
+    changes:
+      - "**/*.php"
+      - composer.json
+      - composer.lock
+      - phpstan.neon.dist
+      - .gitlab-ci.yml

@@ -1,0 +1,57 @@
+test:csslint:
+  image: node:lts-alpine
+  stage: test
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - .stylelintcache
+  script:
+    - npm run css-lint
+  needs:
+    - build:npm
+  only:
+    changes:
+      - "ACP3/**/*.{css,less,scss}"
+      - "design/**/*.{css,less,scss}"
+      - "installation/**/*.{css,less,scss}"
+      - package.json
+      - package-lock.json
+      - .stylelintignore
+      - .stylelintrc
+      - .gitlab-ci.yml
+
+test:prettier:
+  image: node:lts-alpine
+  stage: test
+  script:
+    - npm run prettier
+  needs:
+    - build:npm
+  only:
+    changes:
+      - "ACP3/**/*.{css,js,less,scss}"
+      - "design/**/*.{css,js,less,scss}"
+      - "installation/**/*.{css,js,less,scss}"
+      - package.json
+      - package-lock.json
+      - .prettierignore
+      - .prettierrc.json
+      - .gitlab-ci.yml
+
+test:eslint:
+  image: node:lts-alpine
+  stage: test
+  script:
+    - npm run eslint
+  needs:
+    - build:npm
+  only:
+    changes:
+      - "ACP3/**/*.js"
+      - "design/**/*.js"
+      - "installation/**/*.js"
+      - package.json
+      - package-lock.json
+      - .eslintignore
+      - .eslintrc.json
+      - .gitlab-ci.yml

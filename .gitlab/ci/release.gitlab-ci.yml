@@ -1,0 +1,65 @@
+release:subtree-split:
+  image: jderusse/gitsplit
+  stage: release
+  cache:
+    key: "$CI_JOB_NAME"
+    paths:
+      - .gitsplit-cache
+  variables:
+    GIT_STRATEGY: clone
+  before_script:
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - ssh-add -l
+  script:
+    - git config remote.origin.fetch "+refs/*:refs/*"
+    - git config remote.origin.mirror true
+    - git fetch --prune --unshallow || git fetch --prune
+    - gitsplit --ref "${CI_COMMIT_REF_NAME}"
+  dependencies: []
+  needs: []
+
+release:generate-artifact:
+  image: registry.gitlab.com/acp3/php-docker:7.2
+  stage: release
+  script:
+    - composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs
+  artifacts:
+    name: "release-${CI_COMMIT_TAG}"
+    paths:
+      - ACP3
+      - bin
+      - build/gulp
+      - designs
+      - installation
+      - tests
+      - uploads
+      - vendor
+      - .editorconfig
+      - .htaccess.sample
+      - CHANGELOG.md
+      - composer.json
+      - composer.lock
+      - gulpfile.js
+      - index.php
+      - LICENSE
+      - package.json
+      - package-lock.json
+      - README.md
+  rules:
+    - if: "$CI_COMMIT_TAG"
+  needs:
+    - build:composer
+    - test:php72-unit
+    - test:php73-unit
+    - test:php74-unit
+    - test:php-cs-fixer
+    - test:phpstan
+    - test:csslint
+    - test:eslint
+    - test:prettier
+  dependencies:
+    - build:composer
