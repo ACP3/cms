@@ -31,7 +31,7 @@ build:npm:
   before_script:
     - apk update && apk add --no-cache git
   script:
-    - npm ci
+    - npm ci --no-progress
   artifacts:
     paths:
       - node_modules
