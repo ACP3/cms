@@ -17,6 +17,7 @@ test:php72-unit:
       junit: junit-report.xml
   only:
     changes:
+      - ".gitlab/ci/*.yml"
       - "**/*.php"
       - composer.json
       - composer.lock
@@ -46,6 +47,7 @@ test:php-cs-fixer:
     - composer
   only:
     changes:
+      - ".gitlab/ci/*.yml"
       - "**/*.php"
       - composer.json
       - composer.lock
@@ -65,6 +67,7 @@ test:phpstan:
     - composer
   only:
     changes:
+      - ".gitlab/ci/*.yml"
       - "**/*.php"
       - composer.json
       - composer.lock

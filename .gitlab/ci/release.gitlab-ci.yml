@@ -1,15 +1,19 @@
 add-gitlab-release:
   stage: release
   image: registry.gitlab.com/gitlab-org/release-cli:latest
-  rules:
-    - if: $CI_COMMIT_TAG
+  #  rules:
+  #    - if: $CI_COMMIT_TAG
+  needs:
+    - composer
+  dependencies: []
   variables:
-    ASSET_URL: "https://gitlab.com/ACP3/cms/-/jobs/artifacts/$CI_COMMIT_TAG/download?job=release-artifact"
+    VERSION: "v5.13.2"
+    ASSET_URL: "https://gitlab.com/ACP3/cms/-/jobs/artifacts/$VERSION/download?job=release-artifact"
   script:
-    - CHANGELOG_MAJOR_VERSION=${CI_COMMIT_TAG:1}|cut -d"." -f 1
+    - CHANGELOG_MAJOR_VERSION=${VERSION:1}|cut -d"." -f 1
     - |
       release-cli create \
-        --name "Release $CI_COMMIT_TAG" \
-        --tag-name $CI_COMMIT_TAG \
-        --description "[Changelog](https://gitlab.com/ACP3/cms/-/blob/$CI_COMMIT_TAG/CHANGELOG-${CHANGELOG_MAJOR_VERSION}.x.md) " \
-        --assets-link "{\"name\":\"ACP3 CMS $CI_COMMIT_TAG\",\"url\":\"${ASSET_URL}\"}"
+        --name "Release $VERSION" \
+        --tag-name $VERSION \
+        --description "[Changelog](https://gitlab.com/ACP3/cms/-/blob/$VERSION/CHANGELOG-${CHANGELOG_MAJOR_VERSION}.x.md) " \
+        --assets-link "{\"name\":\"ACP3 CMS $VERSION\",\"url\":\"${ASSET_URL}\"}"

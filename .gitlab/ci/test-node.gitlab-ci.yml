@@ -11,6 +11,7 @@ test:csslint:
     - npm
   only:
     changes:
+      - ".gitlab/ci/*.yml"
       - "ACP3/**/*.{css,less,scss}"
       - "design/**/*.{css,less,scss}"
       - "installation/**/*.{css,less,scss}"
@@ -29,6 +30,7 @@ test:prettier:
     - npm
   only:
     changes:
+      - ".gitlab/ci/*.yml"
       - "ACP3/**/*.{css,js,less,scss}"
       - "design/**/*.{css,js,less,scss}"
       - "installation/**/*.{css,js,less,scss}"
@@ -47,6 +49,7 @@ test:eslint:
     - npm
   only:
     changes:
+      - ".gitlab/ci/*.yml"
       - "ACP3/**/*.js"
       - "design/**/*.js"
       - "installation/**/*.js"
