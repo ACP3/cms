@@ -43,7 +43,7 @@ module.exports = (gulp) => {
       const opts = {
         ...watchify.args,
         ignoreMissing: true,
-        debug: true, // debug enables the inline sourcemaps. gulp-sourcemaps takes care of them or correctly externalises them.
+        debug: true, // debug enables the inline sourcemaps. gulp-sourcemaps takes care of them and correctly externalises them.
       };
 
       const bundler = process.env.GULP_MODE === "watch" ? watchify(browserify(file, opts)) : browserify(file, opts);
