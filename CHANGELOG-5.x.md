@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+-   [ALL] Added a simple mass action bar to the data grids
+-   [Core] Reworked and optimized most of the gulp tasks
+-   [Core] Added to the Smarty block functions `{tabset}` and `{tab}`
+-   [Core] Introduced prettier
+
+### Deprecated
+
+-   [Core] Deprecated the `FrontendContext` class. It will be removed with ACP3 version 6.0
+-   [Core] Deprecated the `AbstractFrontendAction` class. It will be removed with ACP3 version 6.0
+
+### Changed
+
+-   [ALL] Reduced the usage of jQuery and replaced it with "vanilla JS"
+-   [ALL] Reworked all the event listeners to use the `ÈventSubscriberInterface`
+-   [System] Replaced the `bootstrap-datimepicker`-library with flatpickr
+
+### Fixed
+
+-   [Core] Fixed the potential duplicate generation of static assets
+
 ## [5.13.2] - 2021-01-15
 
 ### Fixed
