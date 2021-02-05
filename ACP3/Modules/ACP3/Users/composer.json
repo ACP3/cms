@@ -16,9 +16,9 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^5.12.0",
-    "acp3/module-permissions": "^5.12.0",
-    "acp3/module-system": "^5.12.0"
+    "acp3/core": "^5.14.0",
+    "acp3/module-permissions": "^5.14.0",
+    "acp3/module-system": "^5.14.0"
   },
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI.",

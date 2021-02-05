@@ -17,8 +17,8 @@
   "prefer-stable": true,
   "require": {
     "acp3/composer-installer": "^1.0",
-    "acp3/core": "^5.13.0",
-    "acp3/module-menus": "^5.13.0"
+    "acp3/core": "^5.14.0",
+    "acp3/module-menus": "^5.14.0"
   },
   "extra": {
     "installer-name": "acp3"
