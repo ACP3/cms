@@ -43,6 +43,10 @@ test:prettier:
 test:eslint:
   image: node:lts-alpine
   stage: test
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - .eslintcache
   script:
     - npm run eslint
   needs:

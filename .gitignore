@@ -4,6 +4,7 @@
 /.php_cs.cache
 /.phpstan-cache
 /.component-paths.json
+/.eslintcache
 /.stylelintcache
 /docker-compose.override.yml
 /ACP3/config.yml
