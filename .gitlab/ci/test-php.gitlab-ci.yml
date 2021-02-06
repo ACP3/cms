@@ -15,6 +15,7 @@ test:php72-unit:
       - junit-report.xml
     reports:
       junit: junit-report.xml
+    when: always
   only:
     changes:
       - ".gitlab/ci/*.yml"
