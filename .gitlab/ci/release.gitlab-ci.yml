@@ -5,7 +5,7 @@ add-gitlab-release:
     - tags
   dependencies: []
   variables:
-    VERSION: $CI_COMMIT TAG
+    VERSION: $CI_COMMIT_TAG
     ASSET_URL: "https://gitlab.com/ACP3/cms/-/jobs/artifacts/$VERSION/download?job=release-artifact"
   script:
     - |
