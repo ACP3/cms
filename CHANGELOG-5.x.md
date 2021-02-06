@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+-   [Captcha] Fixed initialising the reCaptcha
+
 ## [5.14.0] - 2021-2-5
 
 ### Added
@@ -22,7 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 -   [ALL] Reduced the usage of jQuery and replaced it with "vanilla JS"
--   [ALL] Reworked all the event listeners to use the `ÈventSubscriberInterface`
+-   [ALL] Reworked all the event listeners to use the `EventSubscriberInterface`
 -   [System] Replaced the `bootstrap-datimepicker`-library with flatpickr
 
 ### Fixed
