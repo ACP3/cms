@@ -4,7 +4,7 @@
  */
 
 /* global onloadCallback:true */
-const onloadCallback = () => {
+onloadCallback = () => {
   jQuery(".recaptcha-placeholder").each(function () {
     if (jQuery(this).children().length === 0) {
       const widgetId = grecaptcha.render(this.id, {
