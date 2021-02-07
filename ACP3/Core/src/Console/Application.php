@@ -11,7 +11,6 @@ use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Logger\LoggerFactory;
-use Patchwork\Utf8\Bootup;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\ErrorHandler\ErrorHandler;
 
@@ -35,8 +34,6 @@ class Application
     private $logger;
 
     /**
-     * Application constructor.
-     *
      * @throws \Exception
      */
     public function __construct(string $environment)
@@ -47,7 +44,7 @@ class Application
         $this->logger = (new LoggerFactory($this->appPath))->create('console');
     }
 
-    private function initializeApplicationPath()
+    private function initializeApplicationPath(): void
     {
         $this->appPath = new ApplicationPath($this->environment);
     }
@@ -69,19 +66,15 @@ class Application
     /**
      * Set monolog as the default PHP error handler.
      */
-    private function setErrorHandler()
+    private function setErrorHandler(): void
     {
         $errorHandler = new ErrorHandler();
         $errorHandler->setDefaultLogger($this->logger);
         ErrorHandler::register($errorHandler);
     }
 
-    public function initializeClasses()
+    public function initializeClasses(): void
     {
-        Bootup::initAll(); // Enables the portability layer and configures PHP for UTF-8
-        Bootup::filterRequestUri(); // Redirects to an UTF-8 encoded URL if it's not already the case
-        Bootup::filterRequestInputs(); // Normalizes HTTP inputs to UTF-8 NFC
-
         $this->container = ServiceContainerBuilder::create(
             $this->logger, $this->appPath
         );
