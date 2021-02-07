@@ -86,11 +86,17 @@ class ApplicationPath
         return $this->appDir;
     }
 
+    /**
+     * @deprecated since version v5.15.0. To be removed with version 6.x.
+     */
     public function getClassesDir(): string
     {
         return $this->classesDir;
     }
 
+    /**
+     * @deprecated since version v5.15.0. To be removed with version 6.x.
+     */
     public function getModulesDir(): string
     {
         return $this->modulesDir;
@@ -106,17 +112,20 @@ class ApplicationPath
         return $this->cacheDir;
     }
 
+    /**
+     * @deprecated since version v5.15.0. To be removed with version 6.x.
+     */
     public function getDesignRootPathInternal(): string
     {
         return $this->designRootPathInternal;
     }
 
     /**
-     * @param string $designRootPathInternal
+     * @deprecated since version v5.15.0. To be removed with version 6.x.
      *
-     * @return ApplicationPath
+     * @return $this
      */
-    public function setDesignRootPathInternal($designRootPathInternal)
+    public function setDesignRootPathInternal(string $designRootPathInternal): self
     {
         $this->designRootPathInternal = $designRootPathInternal;
 
