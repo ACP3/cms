@@ -5,10 +5,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Console\Command;
+namespace ACP3\Modules\ACP3\System\Console;
 
-use ACP3\Core\Cache\Purge;
-use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Modules\ACP3\System\Services\CacheClearService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,24 +16,21 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class AssetsClearCommand extends Command
 {
     /**
-     * @var ApplicationPath
+     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
      */
-    private $applicationPath;
+    private $cacheClearService;
 
-    /**
-     * AssetsClearCommand constructor.
-     */
-    public function __construct(ApplicationPath $applicationPath)
+    public function __construct(CacheClearService $cacheClearService)
     {
         parent::__construct();
 
-        $this->applicationPath = $applicationPath;
+        $this->cacheClearService = $cacheClearService;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('acp3:assets:clear')
@@ -45,12 +41,12 @@ class AssetsClearCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('Clearing assets...');
+        $io->title('Clearing generated assets...');
 
-        Purge::doPurge($this->applicationPath->getUploadsDir() . 'assets');
+        $this->cacheClearService->clearCacheByType('minify');
 
         $output->writeln('Done!');
 

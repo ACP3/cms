@@ -15,8 +15,3 @@ services:
     resource: "../../../src/Console/Command/"
     tags:
       - { name: acp3.console.command }
-
-  acp3.core.console.command.assets_clear_command: '@ACP3\Core\Console\Command\AssetsClearCommand'
-  acp3.core.console.command.cache_clear_command: '@ACP3\Core\Console\Command\CacheClearCommand'
-  acp3.core.console.command.modules_update_command: '@ACP3\Core\Console\Command\ModulesUpdateCommand'
-  acp3.core.console.command.component_paths_command: '@ACP3\Core\Console\Command\ComponentPathsCommand'

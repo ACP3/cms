@@ -20,9 +20,6 @@ class ModulesUpdateCommand extends Command
      */
     private $schemaUpdateModel;
 
-    /**
-     * ModulesUpdateCommand constructor.
-     */
     public function __construct(SchemaUpdateModel $schemaUpdateModel)
     {
         parent::__construct();
@@ -33,7 +30,7 @@ class ModulesUpdateCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('acp3:modules:update')
@@ -46,7 +43,7 @@ class ModulesUpdateCommand extends Command
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Updating installed modules...');

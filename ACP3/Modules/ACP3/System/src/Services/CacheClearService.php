@@ -105,4 +105,11 @@ class CacheClearService
             $this->clearCacheByType($cacheTypeData['dependency']);
         }
     }
+
+    public function clearAll(): void
+    {
+        foreach ($this->getCacheTypes() as $cacheType => $unused) {
+            $this->clearCacheByType($cacheType);
+        }
+    }
 }
