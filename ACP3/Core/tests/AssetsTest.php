@@ -10,7 +10,6 @@ namespace ACP3\Core;
 use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Assets\Libraries;
 use ACP3\Core\Environment\ThemePathInterface;
-use ACP3\Core\Http\RequestInterface;
 
 class AssetsTest extends \PHPUnit\Framework\TestCase
 {
@@ -18,10 +17,6 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
      * @var Assets
      */
     private $assets;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & RequestInterface
-     */
-    private $requestMock;
     /**
      * @var \ACP3\Core\Environment\ThemePathInterface & \PHPUnit\Framework\MockObject\MockObject
      */
@@ -43,7 +38,6 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
     private function setUpMockObjects(): void
     {
         $this->theme = $this->createMock(ThemePathInterface::class);
-        $this->requestMock = $this->createMock(RequestInterface::class);
         $this->librariesMock = $this->createMock(Libraries::class);
     }
 

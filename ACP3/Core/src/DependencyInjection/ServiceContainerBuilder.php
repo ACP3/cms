@@ -84,7 +84,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
         $loader->import($this->applicationPath->getAppDir() . 'config.yml');
 
-        $modules = ComponentRegistry::filterByType(
+        $components = ComponentRegistry::filterByType(
             ComponentRegistry::allTopSorted(),
             [
                 ComponentTypeEnum::CORE,
@@ -92,14 +92,14 @@ final class ServiceContainerBuilder extends ContainerBuilder
             ]
         );
 
-        foreach ($modules as $module) {
-            $path = $module->getPath() . '/Resources/config/services.yml';
+        foreach ($components as $component) {
+            $path = $component->getPath() . '/Resources/config/services.yml';
 
             if (\is_file($path)) {
                 $loader->import($path);
             }
 
-            $this->registerCompilerPass($module);
+            $this->registerCompilerPass($component);
         }
 
         $this->setParameter('kernel.debug', $this->applicationPath->isDebug());

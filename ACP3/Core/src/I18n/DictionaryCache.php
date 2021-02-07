@@ -9,6 +9,7 @@ namespace ACP3\Core\I18n;
 
 use ACP3\Core\Cache;
 use ACP3\Core\Component\ComponentRegistry;
+use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Environment\ThemePathInterface;
 use DomainException;
 use Fisharebest\Localization\Locale;
@@ -20,7 +21,7 @@ class DictionaryCache implements DictionaryCacheInterface
     /**
      * @var Cache
      */
-    protected $cache;
+    private $cache;
     /**
      * @var \ACP3\Core\Environment\ThemePathInterface
      */
@@ -65,19 +66,27 @@ class DictionaryCache implements DictionaryCacheInterface
             'keys' => [],
         ];
 
-        foreach (ComponentRegistry::allTopSorted() as $module) {
-            $i18nFile = "{$module->getPath()}/Resources/i18n/{$language}.xml";
+        $components = ComponentRegistry::filterByType(
+            ComponentRegistry::allTopSorted(),
+            [
+                ComponentTypeEnum::CORE,
+                ComponentTypeEnum::MODULE,
+            ]
+        );
+
+        foreach ($components as $component) {
+            $i18nFile = "{$component->getPath()}/Resources/i18n/{$language}.xml";
 
             if (\is_file($i18nFile) === false) {
                 continue;
             }
 
-            $data['keys'] += $this->parseI18nFile($i18nFile, $module->getName());
+            $data['keys'] += $this->parseI18nFile($i18nFile, $component->getName());
         }
 
         $themeDependenciesReversed = \array_reverse($this->theme->getCurrentThemeDependencies());
         foreach ($themeDependenciesReversed as $theme) {
-            $i18nFiles = \glob(ACP3_ROOT_DIR . "/designs/{$theme}/*/i18n/{$language}.xml");
+            $i18nFiles = \glob($this->theme->getDesignPathInternal($theme) . "/{$theme}/*/i18n/{$language}.xml");
 
             if ($i18nFiles === false) {
                 continue;

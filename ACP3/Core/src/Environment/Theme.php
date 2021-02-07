@@ -59,17 +59,20 @@ class Theme implements ThemePathInterface
 
     private function setAvailableThemes(): void
     {
-        $vendoredThemes = ComponentRegistry::filterByType(ComponentRegistry::all(), [ComponentTypeEnum::THEME]);
-        $unvendoredThemes = \glob(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . 'designs' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'info.xml');
+        $registeredThemes = ComponentRegistry::filterByType(ComponentRegistry::all(), [ComponentTypeEnum::THEME]);
+        /**
+         * @deprecated since version v5.15.0. To be removed with version 6.0.0. With ACP3 version 6.0.0 you will need add a registration.php with the themes root folder and add its composer.json.
+         */
+        $unregisteredThemes = \glob(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . 'designs' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'info.xml');
 
         $filteredThemes = \array_unique(
             \array_merge(
-                \array_map(static function (ComponentDataDto $vendoredTheme) {
-                    return $vendoredTheme->getPath();
-                }, $vendoredThemes),
-                \array_map(static function (string $unvendoredTheme) {
-                    return \dirname($unvendoredTheme);
-                }, $unvendoredThemes)
+                \array_map(static function (ComponentDataDto $registeredTheme) {
+                    return $registeredTheme->getPath();
+                }, $registeredThemes),
+                \array_map(static function (string $unregisteredTheme) {
+                    return \dirname($unregisteredTheme);
+                }, $unregisteredThemes)
             )
         );
 
