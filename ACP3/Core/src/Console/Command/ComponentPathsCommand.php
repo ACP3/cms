@@ -8,7 +8,6 @@
 namespace ACP3\Core\Console\Command;
 
 use ACP3\Core\Component\ComponentRegistry;
-use ACP3\Core\Component\Dto\ComponentDataDto;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,7 +17,7 @@ class ComponentPathsCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('acp3:components:paths')
@@ -28,15 +27,20 @@ class ComponentPathsCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $paths = \array_map(static function (ComponentDataDto $component) {
-            return \str_replace([ACP3_ROOT_DIR, '\\'], ['.', '/'], $component->getPath());
-        }, ComponentRegistry::all());
+        $paths = [];
+        foreach (ComponentRegistry::all() as $component) {
+            if (\array_key_exists($component->getComponentType(), $paths) === false) {
+                $paths[$component->getComponentType()] = [];
+            }
+
+            $paths[$component->getComponentType()][] = \str_replace([ACP3_ROOT_DIR, '\\'], ['.', '/'], $component->getPath());
+        }
 
         \file_put_contents(
             ACP3_ROOT_DIR . '/.component-paths.json',
-            \json_encode(\array_values($paths), JSON_PRETTY_PRINT)
+            \json_encode($paths, JSON_UNESCAPED_SLASHES ^ JSON_PRETTY_PRINT)
         );
 
         return 0;
