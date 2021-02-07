@@ -7,9 +7,6 @@
     <!-- STYLESHEETS -->
     {include_stylesheet module="system" file="style"}
     <!-- JAVASCRIPTS -->
-    <!--[if lt IE 9]>
-        {include_js module="system" file="html5shiv"}
-    <![endif]-->
 </head>
 
 <body>

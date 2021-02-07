@@ -4,6 +4,3 @@
 {event name="core.layout.meta"}
 <!-- STYLESHEETS -->
 {event name="core.layout.head"}
-<!--[if lt IE 9]>
-{include_js module="system" file="html5shiv.min"}
-<![endif]-->
