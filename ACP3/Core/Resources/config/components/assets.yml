@@ -41,7 +41,7 @@ services:
       - "@core.assets.file_resolver"
     abstract: true
     deprecated:
-      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.x. Use service autowiring instead."
+      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.0.0. Use service autowiring instead."
 
   core.assets.renderer.strategy.css:
     class: ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy

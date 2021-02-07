@@ -8,7 +8,7 @@
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
 /**
- * @deprecated To be removed with version 6.x. The file has been copied into the installer module, as the MoveTo* output filters are still needed there.
+ * @deprecated To be removed with version 6.0.0. The file has been copied into the installer module, as the MoveTo* output filters are still needed there.
  */
 abstract class AbstractMoveElementFilter extends AbstractFilter
 {

@@ -11,7 +11,7 @@ use ACP3\Core\Assets\Libraries;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * @deprecated To be removed with version 6.x. Use the DI tag `acp3.assets.library` instead.
+ * @deprecated To be removed with version 6.0.0. Use the DI tag `acp3.assets.library` instead.
  */
 class AddLibraryEvent extends Event
 {

@@ -87,7 +87,7 @@ class ApplicationPath
     }
 
     /**
-     * @deprecated since version v5.15.0. To be removed with version 6.x.
+     * @deprecated since version v5.15.0. To be removed with version 6.0.0.
      */
     public function getClassesDir(): string
     {
@@ -95,7 +95,7 @@ class ApplicationPath
     }
 
     /**
-     * @deprecated since version v5.15.0. To be removed with version 6.x.
+     * @deprecated since version v5.15.0. To be removed with version 6.0.0.
      */
     public function getModulesDir(): string
     {
@@ -113,7 +113,7 @@ class ApplicationPath
     }
 
     /**
-     * @deprecated since version v5.15.0. To be removed with version 6.x.
+     * @deprecated since version v5.15.0. To be removed with version 6.0.0.
      */
     public function getDesignRootPathInternal(): string
     {
@@ -121,7 +121,7 @@ class ApplicationPath
     }
 
     /**
-     * @deprecated since version v5.15.0. To be removed with version 6.x.
+     * @deprecated since version v5.15.0. To be removed with version 6.0.0.
      *
      * @return $this
      */

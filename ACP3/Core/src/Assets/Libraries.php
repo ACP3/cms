@@ -44,7 +44,7 @@ class Libraries
     }
 
     /**
-     * @deprecated To be removed with version 6.x. Register the libraries using the DI container compiler pass instead.
+     * @deprecated To be removed with version 6.0.0. Register the libraries using the DI container compiler pass instead.
      */
     public function dispatchAddLibraryEvent(): void
     {

@@ -8,7 +8,7 @@
 namespace ACP3\Core\Controller\Context;
 
 /**
- * @deprecated since ACP3 version 5.15. To be removed with version 6.x. Use the WidgetContext instead
+ * @deprecated since ACP3 version 5.15. To be removed with version 6.0.0. Use the WidgetContext instead
  * @see \ACP3\Core\Controller\Context\WidgetContext
  */
 class FrontendContext extends WidgetContext

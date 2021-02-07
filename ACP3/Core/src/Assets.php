@@ -60,7 +60,7 @@ class Assets
             }
         }
 
-        /* @deprecated To be removed this version 6.x. Use the <libraries><item>library-name</item></libraries> within the info.xml instead! */
+        /* @deprecated To be removed this version 6.0.0. Use the <libraries><item>library-name</item></libraries> within the info.xml instead! */
         if (isset($themeConfig->use_bootstrap) && (string) $themeConfig->use_bootstrap === 'true') {
             $this->libraries->enableLibraries(['bootstrap']);
         }
@@ -112,7 +112,7 @@ class Assets
     }
 
     /**
-     * @deprecated To be removed with version 6.x. Use ACP3\Core\Assets\Libraries::getLibraries() instead.
+     * @deprecated To be removed with version 6.0.0. Use ACP3\Core\Assets\Libraries::getLibraries() instead.
      *
      * @return Array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
      *
@@ -125,7 +125,7 @@ class Assets
     }
 
     /**
-     * @deprecated To be removed with version 6.x. Use ACP3\Core\Assets\Libraries::getEnabledLibrariesAsString() instead.
+     * @deprecated To be removed with version 6.0.0. Use ACP3\Core\Assets\Libraries::getEnabledLibrariesAsString() instead.
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
