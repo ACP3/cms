@@ -4,5 +4,7 @@
     <description>Default design of the ACP3 CMS.</description>
     <author>Tino Goratsch</author>
     <version core="true"/>
-    <use_bootstrap>true</use_bootstrap>
+    <libraries>
+        <item>bootstrap</item>
+    </libraries>
 </design>

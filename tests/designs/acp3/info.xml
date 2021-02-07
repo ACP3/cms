@@ -4,7 +4,9 @@
     <description>PHPUnit Theme Description</description>
     <author>Tino Goratsch</author>
     <version core="true"/>
-    <use_bootstrap>true</use_bootstrap>
+    <libraries>
+        <item>bootstrap</item>
+    </libraries>
     <css>
         <item>additional-style.css</item>
     </css>
