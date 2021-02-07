@@ -5,13 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.14.1] - 2021-2-6
+## [Unreleased]
+
+### Added
+
+-   [Core] Made it possible to let themes reside within Composer's vendor directory
+
+### Changed
+
+-   [Core] Moved the `acp3:assets:clear` and `acp3:cache:clear` CLI-commands into the System module
+-   [Core] Replaced the abandoned `patchwork/utf8` Composer package to Symfony's mbstring polyfill
+-   [Default themes] Moved the `<!--JAVASCRIPTS-->` comment from the `<body>`-end into the `<head>`. This is no problem, as all the javascripts assets are deferred.
+-   [System] Removed `html5shiv`. Internet Explorer version <= 9 aren't supported anyway
+-   [Core] Reworked the `acp3:components:paths` CLI command to include more information in the resulting `component-paths.json`. Be sure run `php bin/console.php acp3:components:paths` after the ACP3 version update before running the gulp tasks, as the new JSON-file version isn't compatible with the old one!
+
+### Deprecations
+
+-   [Core] Deprecated the `LESS` CSS preprocessor tool chain. To be removed with version 6.0.0. Use SCSS as a preprocessor instead.
+-   [Core] Deprecated the following methods from the `ACP3\Core\Environment\ApplicationPath` class:
+    -   `getClassesDir`
+    -   `getModulesDir`
+    -   `getDesignRootPathInternal`
+    -   `setDesignRootPathInternal`
+
+## [5.14.1] - 2021-02-06
 
 ### Fixed
 
 -   [Captcha] Fixed initialising the reCaptcha
 
-## [5.14.0] - 2021-2-5
+## [5.14.0] - 2021-02-05
 
 ### Added
 
@@ -98,7 +121,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
--   [Core] Changed the `$moduleName` argument of the `LibraryEntity` to be mandatory. Use version 6.x this parameter with move to another position
+-   [Core] Changed the `$moduleName` argument of the `LibraryEntity` to be mandatory. With version 6.0.0 this parameter with move to another position
 -   [Core] Use the `CacheClearService` where possible
 -   [Core] Replaced the `MigrationRegistrar` class with a "plain" symfony service locator
 -   [Core] Replaced the `SampleDataRegistrar` class with a "plain" symfony service locator
