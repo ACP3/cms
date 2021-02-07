@@ -9,25 +9,18 @@ namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Date;
+use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Helpers\Date as DateHelper;
 use ACP3\Core\Helpers\Forms;
-use ACP3\Core\XML;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
 use ACP3\Modules\ACP3\Installer\Helpers\Navigation;
-use ACP3\Modules\ACP3\System\Helper\AvailableDesignsTrait;
 
 class Install extends AbstractAction implements InvokableActionInterface
 {
-    use AvailableDesignsTrait;
-
     /**
      * @var \ACP3\Core\Date
      */
     private $date;
-    /**
-     * @var XML
-     */
-    private $xml;
     /**
      * @var \ACP3\Core\Helpers\Date
      */
@@ -36,21 +29,25 @@ class Install extends AbstractAction implements InvokableActionInterface
      * @var Forms
      */
     private $forms;
+    /**
+     * @var \ACP3\Core\Environment\ThemePathInterface
+     */
+    private $theme;
 
     public function __construct(
         InstallerContext $context,
+        ThemePathInterface $theme,
         Navigation $navigation,
         Date $date,
-        XML $xml,
         DateHelper $dateHelper,
         Forms $forms
     ) {
         parent::__construct($context, $navigation);
 
         $this->date = $date;
-        $this->xml = $xml;
         $this->dateHelper = $dateHelper;
         $this->forms = $forms;
+        $this->theme = $theme;
     }
 
     public function __invoke(): array
@@ -77,29 +74,17 @@ class Install extends AbstractAction implements InvokableActionInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getXml()
-    {
-        return $this->xml;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function selectEntry($directory)
-    {
-        return $this->forms->selectEntry('design', $directory);
-    }
-
     protected function getThemeFormOptions(): array
     {
-        $themes = $this->getAvailableDesigns();
+        $themes = $this->theme->getAvailableThemes();
 
         $options = [];
-        foreach ($themes as $theme) {
-            $options[$theme['dir']] = $theme['name'];
+        foreach ($themes as $themeName => $themeInfo) {
+            if ($themeName === 'acp3-installer') {
+                continue;
+            }
+
+            $options[$themeName] = $themeInfo['name'];
         }
 
         return $this->forms->choicesGenerator('design', $options);

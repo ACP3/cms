@@ -9,7 +9,7 @@ namespace ACP3\Core\Assets;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Environment\Theme;
+use ACP3\Core\Environment\ThemePathInterface;
 use PHPUnit\Framework\TestCase;
 
 class FileResolverTest extends TestCase
@@ -19,7 +19,7 @@ class FileResolverTest extends TestCase
      */
     private $fileResolver;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Cache
      */
     private $assetsCache;
     /**
@@ -27,7 +27,7 @@ class FileResolverTest extends TestCase
      */
     private $appPath;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Environment\ThemePathInterface
      */
     private $themeMock;
 
@@ -36,8 +36,6 @@ class FileResolverTest extends TestCase
         $this->setUpMockObjects();
 
         $this->appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
-        $this->appPath
-            ->setDesignRootPathInternal(ACP3_ROOT_DIR . '/tests/designs/');
 
         $this->fileResolver = new FileResolver(
             $this->assetsCache,
@@ -49,16 +47,16 @@ class FileResolverTest extends TestCase
     private function setUpMockObjects(): void
     {
         $this->assetsCache = $this->createMock(Cache::class);
-        $this->themeMock = $this->createMock(Theme::class);
+        $this->themeMock = $this->createMock(ThemePathInterface::class);
     }
 
     public function testResolveTemplatePath(): void
     {
-        $this->setUpThemeMockExpectations('acp3', ['acp3']);
+        $this->setUpThemeMockExpectations('acp3', [['acp3']], [ACP3_ROOT_DIR . '/tests/designs/acp3']);
 
         $expected = ACP3_ROOT_DIR . '/ACP3/Modules/ACP3/System/Resources/View/Partials/breadcrumb.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/breadcrumb.tpl');
-        self::assertSamePath($expected, $actual);
+        $this->assertSamePath($expected, $actual);
     }
 
     private function assertSamePath(string $expected, string $actual): void
@@ -71,49 +69,54 @@ class FileResolverTest extends TestCase
 
     public function testResolveTemplatePathWithInheritance(): void
     {
-        $this->setUpThemeMockExpectations('acp3', ['acp3']);
+        $this->setUpThemeMockExpectations('acp3', [['acp3']], [ACP3_ROOT_DIR . '/tests/designs/acp3']);
 
-        $expected = $this->appPath->getDesignRootPathInternal() . 'acp3/System/View/Partials/mark.tpl';
+        $expected = ACP3_ROOT_DIR . '/tests/designs/acp3/System/View/Partials/mark.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/mark.tpl');
-        self::assertSamePath($expected, $actual);
+        $this->assertSamePath($expected, $actual);
     }
 
     public function testResolveTemplatePathWithMultipleInheritance(): void
     {
-        $this->themeMock->expects($this->any())
-            ->method('getCurrentTheme')
-            ->willReturn('acp3-inherit');
-        $this->themeMock->expects($this->any())
-            ->method('getThemeDependencies')
-            ->willReturnOnConsecutiveCalls(['acp3-inherit', 'acp3'], ['acp3']);
+        $this->setUpThemeMockExpectations(
+            'acp3-inherit',
+            [['acp3-inherit', 'acp3'], ['acp3']],
+            [ACP3_ROOT_DIR . '/tests/designs/acp3-inherit', ACP3_ROOT_DIR . '/tests/designs/acp3', ACP3_ROOT_DIR . '/tests/designs/acp3-inherit']
+        );
 
         $expected = ACP3_ROOT_DIR . '/tests/designs/acp3/layout.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('layout.tpl');
-        self::assertSamePath($expected, $actual);
+        $this->assertSamePath($expected, $actual);
     }
 
-    private function setUpThemeMockExpectations(string $themeName, array $dependencies): void
+    /**
+     * @param string[][] $themeDependencies
+     * @param string[]   $designPathInternal
+     */
+    private function setUpThemeMockExpectations(string $themeName, array $themeDependencies, array $designPathInternal): void
     {
-        $this->themeMock->expects($this->any())
+        $this->themeMock
             ->method('getCurrentTheme')
             ->willReturn($themeName);
-        $this->themeMock->expects($this->any())
+        $this->themeMock
+            ->method('getDesignPathInternal')
+            ->willReturnOnConsecutiveCalls(...$designPathInternal);
+        $this->themeMock
             ->method('getThemeDependencies')
             ->with($themeName)
-            ->willReturn($dependencies);
+            ->willReturnOnConsecutiveCalls(...$themeDependencies);
     }
 
     public function testResolveTemplatePathWithDeeplyNestedFolderStructure(): void
     {
-        $this->themeMock->expects($this->any())
-            ->method('getCurrentTheme')
-            ->willReturn('acp3-inherit');
-        $this->themeMock->expects($this->any())
-            ->method('getThemeDependencies')
-            ->willReturnOnConsecutiveCalls(['acp3-inherit', 'acp3'], ['acp3']);
+        $this->setUpThemeMockExpectations(
+            'acp3-inherit',
+            [['acp3-inherit', 'acp3'], ['acp3']],
+            [ACP3_ROOT_DIR . '/tests/designs/acp3-inherit', ACP3_ROOT_DIR . '/tests/designs/acp3']
+        );
 
         $expected = ACP3_ROOT_DIR . '/tests/designs/acp3-inherit/System/View/Partials/Foo/bar/baz.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/Foo/bar/baz.tpl');
-        self::assertSamePath($expected, $actual);
+        $this->assertSamePath($expected, $actual);
     }
 }

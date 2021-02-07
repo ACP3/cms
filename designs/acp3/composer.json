@@ -1,7 +1,7 @@
 {
   "name": "acp3/theme-default",
   "description": "This is the default design of the ACP3 CMS.",
-  "type": "acp3-theme",
+  "type": "acp3-component",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
@@ -16,11 +16,12 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/composer-installer": "^1.0",
     "acp3/core": "^5.14.0",
     "acp3/module-menus": "^5.14.0"
   },
-  "extra": {
-    "installer-name": "acp3"
+  "autoload": {
+    "files": [
+      "registration.php"
+    ]
   }
 }

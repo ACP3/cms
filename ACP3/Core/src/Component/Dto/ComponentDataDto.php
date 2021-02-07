@@ -34,14 +34,14 @@ class ComponentDataDto
 
     public function __construct(
         string $componentType,
-        string $moduleName,
-        string $modulePath,
+        string $componentName,
+        string $componentPath,
         array $dependencies,
         ?ModuleRegistration $moduleRegistration = null)
     {
         $this->componentType = $componentType;
-        $this->name = \strtolower($moduleName);
-        $this->path = $modulePath;
+        $this->name = \strtolower($componentName);
+        $this->path = $componentPath;
         $this->dependencies = $dependencies;
         $this->moduleRegistration = $moduleRegistration;
     }

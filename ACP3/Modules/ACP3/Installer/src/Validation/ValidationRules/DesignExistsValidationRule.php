@@ -7,10 +7,21 @@
 
 namespace ACP3\Modules\ACP3\Installer\Validation\ValidationRules;
 
+use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
 class DesignExistsValidationRule extends AbstractValidationRule
 {
+    /**
+     * @var \ACP3\Core\Environment\ThemePathInterface
+     */
+    private $theme;
+
+    public function __construct(ThemePathInterface $theme)
+    {
+        $this->theme = $theme;
+    }
+
     /**
      * @param mixed  $data
      * @param string $field
@@ -23,18 +34,6 @@ class DesignExistsValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->checkDesignExists($data);
-    }
-
-    /**
-     * @param string $design
-     *
-     * @return bool
-     */
-    private function checkDesignExists($design)
-    {
-        $path = ACP3_ROOT_DIR . '/designs/' . $design . '/info.xml';
-
-        return !\preg_match('=/=', $design) && \is_file($path) === true;
+        return $this->theme->has($data);
     }
 }

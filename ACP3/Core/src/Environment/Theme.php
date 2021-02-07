@@ -7,6 +7,9 @@
 
 namespace ACP3\Core\Environment;
 
+use ACP3\Core\Component\ComponentRegistry;
+use ACP3\Core\Component\ComponentTypeEnum;
+use ACP3\Core\Component\Dto\ComponentDataDto;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\XML;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -56,27 +59,44 @@ class Theme implements ThemePathInterface
 
     private function setAvailableThemes(): void
     {
-        $designs = \glob(ACP3_ROOT_DIR . '/designs/*/info.xml');
+        $vendoredThemes = ComponentRegistry::filterByType(ComponentRegistry::all(), [ComponentTypeEnum::THEME]);
+        $unvendoredThemes = \glob(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . 'designs' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'info.xml');
 
-        if ($designs === false) {
-            return;
-        }
+        $filteredThemes = \array_unique(
+            \array_merge(
+                \array_map(static function (ComponentDataDto $vendoredTheme) {
+                    return $vendoredTheme->getPath();
+                }, $vendoredThemes),
+                \array_map(static function (string $unvendoredTheme) {
+                    return \dirname($unvendoredTheme);
+                }, $unvendoredThemes)
+            )
+        );
 
-        foreach ($designs as $design) {
-            $designInfo = $this->xml->parseXmlFile($design, '/design');
+        foreach ($filteredThemes as $themePath) {
+            $designInfo = $this->xml->parseXmlFile($themePath . DIRECTORY_SEPARATOR . 'info.xml', '/design');
             if (!empty($designInfo)) {
-                $identifier = $this->getThemeInternalName($design);
-                $this->availableThemes[$identifier] = $designInfo;
+                $themeName = $this->getThemeInternalName($themePath);
+                $this->availableThemes[$themeName] = \array_merge(
+                    $designInfo,
+                    [
+                        'internal_name' => $themeName,
+                        'path' => $themePath,
+                        'web_path' => $this->appPath->getWebRoot() . \str_replace([ACP3_ROOT_DIR, '\\'], ['', '/'], $themeName),
+                    ]
+                );
             }
         }
     }
 
-    private function getThemeInternalName(string $file): string
+    private function getThemeInternalName(string $themePath): string
     {
-        $path = \dirname($file);
-        $pathParts = \explode('/', $path);
+        return \str_replace([\dirname($themePath), DIRECTORY_SEPARATOR], '', $themePath);
+    }
 
-        return $pathParts[\count($pathParts) - 1];
+    public function has(string $themeName): bool
+    {
+        return \array_key_exists($themeName, $this->getAvailableThemes());
     }
 
     public function getCurrentTheme(): string
@@ -119,13 +139,19 @@ class Theme implements ThemePathInterface
         $this->sortedThemeDependencies[$themeName] = $parents;
     }
 
-    public function getDesignPathInternal(): string
+    /**
+     * {@inheritDoc}
+     */
+    public function getDesignPathInternal(?string $themeName = null): string
     {
-        return $this->appPath->getDesignRootPathInternal() . $this->getCurrentTheme() . '/';
+        return $this->getAvailableThemes()[$themeName ?? $this->getCurrentTheme()]['path'];
     }
 
-    public function getDesignPathWeb(): string
+    /**
+     * {@inheritDoc}
+     */
+    public function getDesignPathWeb(?string $themeName = null): string
     {
-        return $this->appPath->getWebRoot() . 'designs/' . $this->getCurrentTheme() . '/';
+        return $this->getAvailableThemes()[$themeName ?? $this->getCurrentTheme()]['web_path'];
     }
 }

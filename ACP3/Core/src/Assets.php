@@ -52,7 +52,7 @@ class Assets
             return;
         }
 
-        $themeConfig = \simplexml_load_string(\file_get_contents($this->theme->getDesignPathInternal() . 'info.xml'));
+        $themeConfig = \simplexml_load_string(\file_get_contents($this->theme->getDesignPathInternal() . DIRECTORY_SEPARATOR . 'info.xml'));
 
         if (isset($themeConfig->libraries)) {
             foreach ($themeConfig->libraries->item as $libraryName) {

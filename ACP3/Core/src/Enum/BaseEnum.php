@@ -34,12 +34,9 @@ class BaseEnum
     }
 
     /**
-     * @param string $name
-     * @param bool   $strict
-     *
      * @throws \ReflectionException
      */
-    public static function isValidName($name, $strict = false): bool
+    public static function isValidName(string $name, bool $strict = false): bool
     {
         $constants = self::getConstants();
 
@@ -54,11 +51,10 @@ class BaseEnum
 
     /**
      * @param mixed $value
-     * @param bool  $strict
      *
      * @throws \ReflectionException
      */
-    public static function isValidValue($value, $strict = true): bool
+    public static function isValidValue($value, bool $strict = true): bool
     {
         $values = \array_values(self::getConstants());
 

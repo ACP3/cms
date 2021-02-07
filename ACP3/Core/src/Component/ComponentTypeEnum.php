@@ -14,4 +14,5 @@ class ComponentTypeEnum extends BaseEnum
     public const CORE = 'core';
     public const INSTALLER = 'installer';
     public const MODULE = 'module';
+    public const THEME = 'theme';
 }

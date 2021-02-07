@@ -7,32 +7,46 @@
 
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\System;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Environment\ThemePathInterface;
+use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use ACP3\Modules\ACP3\System\Services\CacheClearService;
+use ACP3\Modules\ACP3\System\ViewProviders\AdminThemesViewProvider;
 
-class Designs extends Core\Controller\AbstractWidgetAction
+class Designs extends AbstractWidgetAction
 {
-    use System\Helper\AvailableDesignsTrait;
-
-    /**
-     * @var \ACP3\Core\XML
-     */
-    private $xml;
     /**
      * @var \ACP3\Core\Helpers\RedirectMessages
      */
     private $redirectMessages;
+    /**
+     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
+     */
+    private $cacheClearService;
+    /**
+     * @var \ACP3\Core\Environment\ThemePathInterface
+     */
+    private $theme;
+    /**
+     * @var \ACP3\Modules\ACP3\System\ViewProviders\AdminThemesViewProvider
+     */
+    private $adminThemesViewProvider;
 
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
-        Core\Helpers\RedirectMessages $redirectMessages,
-        Core\XML $xml
+        WidgetContext $context,
+        AdminThemesViewProvider $adminThemesViewProvider,
+        ThemePathInterface $theme,
+        RedirectMessages $redirectMessages,
+        CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
 
-        $this->xml = $xml;
         $this->redirectMessages = $redirectMessages;
+        $this->cacheClearService = $cacheClearService;
+        $this->theme = $theme;
+        $this->adminThemesViewProvider = $adminThemesViewProvider;
     }
 
     /**
@@ -44,9 +58,7 @@ class Designs extends Core\Controller\AbstractWidgetAction
             return $this->executePost($dir);
         }
 
-        return [
-            'designs' => $this->getAvailableDesigns(),
-        ];
+        return ($this->adminThemesViewProvider)();
     }
 
     /**
@@ -54,37 +66,17 @@ class Designs extends Core\Controller\AbstractWidgetAction
      */
     protected function executePost(string $design)
     {
-        $bool = false;
+        $result = false;
 
-        if ((bool) \preg_match('=/=', $design) === false &&
-            \is_file($this->appPath->getDesignRootPathInternal() . $design . '/info.xml') === true
-        ) {
-            $bool = $this->config->saveSettings(['design' => $design], Schema::MODULE_NAME);
+        if ($this->theme->has($design)) {
+            $result = $this->config->saveSettings(['design' => $design], Schema::MODULE_NAME);
 
-            Core\Cache\Purge::doPurge([
-                $this->appPath->getCacheDir() . 'sql',
-                $this->appPath->getCacheDir() . 'tpl_compiled',
-            ]);
+            $this->cacheClearService->clearCacheByType('templates');
+            $this->cacheClearService->clearCacheByType('general');
         }
 
-        $text = $this->translator->t('system', $bool === true ? 'designs_edit_success' : 'designs_edit_error');
+        $text = $this->translator->t('system', $result === true ? 'designs_edit_success' : 'designs_edit_error');
 
-        return $this->redirectMessages->setMessage($bool, $text, $this->request->getFullPath());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getXml()
-    {
-        return $this->xml;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function selectEntry($directory): bool
-    {
-        return $this->config->getSettings(Schema::MODULE_NAME)['design'] === $directory;
+        return $this->redirectMessages->setMessage($result, $text, $this->request->getFullPath());
     }
 }

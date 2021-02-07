@@ -1,7 +1,7 @@
 {
   "name": "acp3/theme-installer",
   "description": "This is the theme of the ACP3 CMS installer.",
-  "type": "acp3-theme",
+  "type": "acp3-component",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
@@ -16,10 +16,11 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/composer-installer": "^1.0",
     "acp3/core": "^5.14.0"
   },
-  "extra": {
-    "installer-name": "acp3-installer"
+  "autoload": {
+    "files": [
+      "registration.php"
+    ]
   }
 }

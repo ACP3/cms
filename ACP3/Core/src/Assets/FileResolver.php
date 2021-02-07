@@ -185,7 +185,7 @@ class FileResolver
     private function changeTheme(string $themeName): void
     {
         $this->currentTheme = $themeName;
-        $this->designAssetsPath = $this->appPath->getDesignRootPathInternal() . $themeName . '/';
+        $this->designAssetsPath = $this->theme->getDesignPathInternal($themeName) . DIRECTORY_SEPARATOR;
     }
 
     private function resetTheme(): void

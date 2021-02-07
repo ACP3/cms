@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Installer\Core\DependencyInjection;
 
 use ACP3\Core\Assets\DependencyInjection\RegisterAssetLibraryPass;
 use ACP3\Core\Component\ComponentRegistry;
+use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
@@ -73,8 +74,15 @@ final class ServiceContainerBuilder extends ContainerBuilder
 
         $this->includeCoreServices($loader);
 
-        foreach (ComponentRegistry::allTopSorted() as $module) {
-            $loader->import($module->getPath() . '/Resources/config/services.yml');
+        // Themes currently don't define or override service, so we have to filter theme out.
+        // Otherwise get would get errors...
+        $filteredComponents = ComponentRegistry::filterByType(
+            ComponentRegistry::allTopSorted(),
+            [ComponentTypeEnum::CORE, ComponentTypeEnum::INSTALLER, ComponentTypeEnum::MODULE]
+        );
+
+        foreach ($filteredComponents as $component) {
+            $loader->import($component->getPath() . '/Resources/config/services.yml');
         }
 
         if ($this->isInstallingOrUpdating === false) {
