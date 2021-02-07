@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- STYLESHEETS -->
     {include_stylesheet module="system" file="style"}
+    <!-- JAVASCRIPTS -->
     <!--[if lt IE 9]>
         {include_js module="system" file="html5shiv"}
     <![endif]-->
@@ -77,6 +78,5 @@
         </div>
     </footer>
 </div>
-<!-- JAVASCRIPTS -->
 </body>
 </html>

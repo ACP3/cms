@@ -2,6 +2,7 @@
 <html lang="{$LANG}" dir="{$LANG_DIRECTION}">
 <head>
     {include file="asset:System/Partials/head.tpl" inline}
+    <!-- JAVASCRIPTS -->
 </head>
 
 <body>
@@ -18,6 +19,5 @@
         {block CONTENT}{/block}
     </main>
 </div>
-<!-- JAVASCRIPTS -->
 </body>
 </html>

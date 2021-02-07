@@ -2,6 +2,7 @@
 <html lang="{$LANG}" dir="{$LANG_DIRECTION}">
 <head>
     {include file="asset:System/Partials/head.tpl" inline}
+    <!-- JAVASCRIPTS -->
 </head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
@@ -78,6 +79,5 @@
         </div>
     </footer>
 </div>
-<!-- JAVASCRIPTS -->
 </body>
 </html>
