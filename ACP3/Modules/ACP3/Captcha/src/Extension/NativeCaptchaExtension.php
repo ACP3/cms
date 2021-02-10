@@ -23,14 +23,6 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
      * @var \Symfony\Component\HttpFoundation\Session\Session
      */
     private $sessionHandler;
@@ -50,16 +42,12 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
     public function __construct(
         Core\ACL $acl,
         Translator $translator,
-        Core\Http\RequestInterface $request,
-        Core\Router\RouterInterface $router,
         Session $sessionHandler,
         Core\View $view,
         Core\Helpers\Secure $secureHelper,
         UserModelInterface $user
     ) {
         $this->translator = $translator;
-        $this->request = $request;
-        $this->router = $router;
         $this->sessionHandler = $sessionHandler;
         $this->view = $view;
         $this->secureHelper = $secureHelper;

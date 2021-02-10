@@ -31,10 +31,8 @@ class FormToken
 
     /**
      * Generates and renders the form token.
-     *
-     * @return string
      */
-    public function renderFormToken()
+    public function renderFormToken(): string
     {
         $tokenName = Core\Session\SessionConstants::XSRF_TOKEN_NAME;
         $sessionToken = $this->sessionHandler->get($tokenName);
@@ -49,10 +47,8 @@ class FormToken
 
     /**
      * Removes the form token from the session.
-     *
-     * @param string $token
      */
-    public function unsetFormToken($token = '')
+    public function unsetFormToken(string $token = ''): void
     {
         $tokenName = Core\Session\SessionConstants::XSRF_TOKEN_NAME;
         if (empty($token) && $this->request->getPost()->has($tokenName)) {

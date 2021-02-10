@@ -94,13 +94,12 @@ class Subscribe
     /**
      * Meldet eine E-Mail-Adresse beim Newsletter an.
      *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
+     * @throws \Exception
      */
-    public function subscribeToNewsletter(string $emailAddress, int $salutation = 0, string $firstName = '', string $lastName = '')
+    public function subscribeToNewsletter(string $emailAddress, int $salutation = 0, string $firstName = '', string $lastName = ''): bool
     {
-        $hash = $this->secureHelper->generateSaltedPassword('', \mt_rand(0, \microtime(true)), 'sha512');
+        $hash = $this->secureHelper->generateSaltedPassword('', \random_int(0, \microtime(true)), 'sha512');
         $mailSent = $this->sendDoubleOptInEmail($emailAddress, $hash);
         $result = $this->addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
 
@@ -125,10 +124,7 @@ class Subscribe
         return $accountId;
     }
 
-    /**
-     * @return bool
-     */
-    protected function sendDoubleOptInEmail(string $emailAddress, string $hash)
+    protected function sendDoubleOptInEmail(string $emailAddress, string $hash): bool
     {
         $url = $this->router->route('newsletter/index/activate/hash_' . $hash, true);
 
@@ -171,11 +167,9 @@ class Subscribe
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function updateExistingAccount(array $newsletterAccount, int $salutation, string $firstName, string $lastName, string $hash)
+    protected function updateExistingAccount(array $newsletterAccount, int $salutation, string $firstName, string $lastName, string $hash): int
     {
         $updateValues = [
             'salutation' => $salutation,

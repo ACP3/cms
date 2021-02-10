@@ -11,14 +11,8 @@ class Secure
 {
     /**
      * Generiert ein gesalzenes Passwort.
-     *
-     * @param string $salt
-     * @param string $password
-     * @param string $algorithm
-     *
-     * @return string
      */
-    public function generateSaltedPassword($salt, $password, $algorithm = 'sha1')
+    public function generateSaltedPassword(string $salt, string $password, string $algorithm = 'sha1'): string
     {
         return \hash($algorithm, $salt . \hash($algorithm, $password));
     }
@@ -26,17 +20,15 @@ class Secure
     /**
      * Generiert einen Zufallsstring beliebiger Länge.
      *
-     * @param int $length
-     *
-     * @return string
+     * @throws \Exception
      */
-    public function salt($length)
+    public function salt(int $length): string
     {
         $salt = '';
         $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         $cChars = \strlen($chars) - 1;
         while (\strlen($salt) < $length) {
-            $char = $chars[\mt_rand(0, $cChars)];
+            $char = $chars[\random_int(0, $cChars)];
             if (\strpos($salt, $char) === false) {
                 $salt .= $char;
             }
@@ -47,13 +39,8 @@ class Secure
 
     /**
      * Enkodiert alle HTML-Entitäten eines Strings zur Vermeidung von XSS.
-     *
-     * @param string $var
-     * @param bool   $scriptTagOnly
-     *
-     * @return string
      */
-    public function strEncode($var, $scriptTagOnly = false)
+    public function strEncode(string $var, bool $scriptTagOnly = false): string
     {
         $var = \preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
 
