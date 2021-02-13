@@ -54,7 +54,7 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\
 
             $data = [
                 'mail' => $formData['mail'],
-                'mailsig' => $this->secureHelper->strEncode($formData['mailsig'], true),
+                'mailsig' => $this->secureHelper->strEncode($formData['mailsig']),
                 'html' => (int) $formData['html'],
             ];
 

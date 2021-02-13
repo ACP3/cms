@@ -33,9 +33,6 @@ class ContactFormModel
      */
     protected $sendEmail;
 
-    /**
-     * ContactFormModel constructor.
-     */
     public function __construct(
         SettingsInterface $config,
         Translator $translator,
@@ -48,18 +45,12 @@ class ContactFormModel
         $this->sendEmail = $sendEmail;
     }
 
-    /**
-     * @return bool
-     */
-    public function sendContactFormEmail(array $formData)
+    public function sendContactFormEmail(array $formData): bool
     {
         return $this->sendEmail($formData);
     }
 
-    /**
-     * @return bool
-     */
-    protected function sendEmail(array $formData)
+    protected function sendEmail(array $formData): bool
     {
         $systemSettings = $this->getSystemSettings();
         $settings = $this->getContactSettings();
@@ -84,55 +75,35 @@ class ContactFormModel
         return $this->sendEmail->execute($data);
     }
 
-    /**
-     * @return array
-     */
-    protected function getSystemSettings()
+    protected function getSystemSettings(): array
     {
         return $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME);
     }
 
-    /**
-     * @return array
-     */
-    protected function getContactSettings()
+    protected function getContactSettings(): array
     {
         return $this->config->getSettings(Schema::MODULE_NAME);
     }
 
-    /**
-     * @param string $phrase
-     * @param string $siteTitle
-     *
-     * @return string
-     */
-    protected function buildSubject($phrase, $siteTitle)
+    protected function buildSubject(string $phrase, string $siteTitle): string
     {
         return $this->translator->t('contact', $phrase, ['%title%' => $siteTitle]);
     }
 
-    /**
-     * @param string $phrase
-     *
-     * @return string
-     */
-    protected function buildEmailBody(array $formData, $phrase)
+    protected function buildEmailBody(array $formData, string $phrase): string
     {
         return $this->translator->t(
             'contact',
             $phrase,
             [
-                '%name%' => $formData['name'],
+                '%name%' => $this->secure->strEncode($formData['name']),
                 '%mail%' => $formData['mail'],
-                '%message%' => $this->secure->strEncode($formData['message'], true),
+                '%message%' => $this->secure->strEncode($formData['message']),
             ]
         );
     }
 
-    /**
-     * @return bool
-     */
-    protected function sendEmailCopy(array $formData)
+    protected function sendEmailCopy(array $formData): bool
     {
         $systemSettings = $this->getSystemSettings();
         $settings = $this->getContactSettings();
@@ -156,10 +127,7 @@ class ContactFormModel
         return $this->sendEmail->execute($data);
     }
 
-    /**
-     * @return bool
-     */
-    public function sendContactFormEmailCopy(array $formData)
+    public function sendContactFormEmailCopy(array $formData): bool
     {
         return $this->sendEmailCopy($formData);
     }

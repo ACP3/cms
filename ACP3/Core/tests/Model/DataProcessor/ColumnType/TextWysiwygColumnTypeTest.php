@@ -7,18 +7,15 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-class TextWysiwygColumnTypeTest extends TextColumnTypeTest
+class TextWysiwygColumnTypeTest extends AbstractColumnTypeTest
 {
     protected function instantiateClassToTest()
     {
-        $this->columnType = new TextWysiwygColumnType($this->secureMock);
+        $this->columnType = new TextWysiwygColumnType();
     }
 
-    protected function setUpSecureMockExpectations()
+    public function testDoEscape()
     {
-        $this->secureMock->expects(self::once())
-            ->method('strEncode')
-            ->with('foo', true)
-            ->willReturn('foo');
+        self::assertIsString($this->columnType->doEscape('foo'));
     }
 }

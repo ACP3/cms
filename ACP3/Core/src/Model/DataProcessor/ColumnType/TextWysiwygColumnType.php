@@ -7,14 +7,14 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-class TextWysiwygColumnType extends TextColumnType
+class TextWysiwygColumnType implements ColumnTypeStrategyInterface
 {
     /**
      * {@inheritdoc}
      */
     public function doEscape($value)
     {
-        return $this->secure->strEncode($value, true);
+        return $value;
     }
 
     /**
@@ -23,5 +23,13 @@ class TextWysiwygColumnType extends TextColumnType
     public function doUnescape($value)
     {
         return $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefaultValue()
+    {
+        return '';
     }
 }

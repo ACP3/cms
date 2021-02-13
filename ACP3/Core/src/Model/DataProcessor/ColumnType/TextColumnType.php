@@ -16,9 +16,6 @@ class TextColumnType implements ColumnTypeStrategyInterface
      */
     protected $secure;
 
-    /**
-     * TextColumnType constructor.
-     */
     public function __construct(Secure $secure)
     {
         $this->secure = $secure;

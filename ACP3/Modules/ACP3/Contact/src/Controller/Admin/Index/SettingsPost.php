@@ -53,13 +53,13 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\
             $this->adminSettingsFormValidation->validate($formData);
 
             $data = [
-                'address' => $this->secureHelper->strEncode($formData['address'], true),
+                'address' => $formData['address'],
                 'ceo' => $this->secureHelper->strEncode($formData['ceo']),
-                'disclaimer' => $this->secureHelper->strEncode($formData['disclaimer'], true),
+                'disclaimer' => $formData['disclaimer'],
                 'fax' => $this->secureHelper->strEncode($formData['fax']),
                 'mail' => $formData['mail'],
                 'mobile_phone' => $this->secureHelper->strEncode($formData['mobile_phone']),
-                'picture_credits' => $this->secureHelper->strEncode($formData['picture_credits'], true),
+                'picture_credits' => $formData['picture_credits'],
                 'telephone' => $this->secureHelper->strEncode($formData['telephone']),
                 'vat_id' => $this->secureHelper->strEncode($formData['vat_id']),
             ];
