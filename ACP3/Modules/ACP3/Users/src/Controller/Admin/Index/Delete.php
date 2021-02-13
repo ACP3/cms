@@ -43,7 +43,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
             function (array $items) {
                 try {
                     $result = $this->usersModel->delete($items);
-                    $text = $this->translator->t('system', $result !== false ? 'delete_success' : 'delete_error');
+                    $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
                 } catch (Users\Exception\SuperUserNotDeletableException $e) {
                     $result = false;
                     $text = $this->translator->t('users', 'admin_user_undeletable');

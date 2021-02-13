@@ -9,10 +9,10 @@ namespace ACP3\Core\DataGrid;
 
 use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 
-class Input
+final class Input
 {
     /**
-     * @var AbstractDataGridRepository
+     * @var AbstractDataGridRepository|null
      */
     private $repository;
     /**
@@ -191,10 +191,7 @@ class Input
         return $this->results;
     }
 
-    /**
-     * @return int
-     */
-    public function getResultsCount()
+    public function getResultsCount(): int
     {
         if ($this->repository instanceof AbstractDataGridRepository) {
             return $this->repository->countAll(...$this->queryOptions);

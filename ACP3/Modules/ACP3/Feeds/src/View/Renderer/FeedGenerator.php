@@ -26,7 +26,7 @@ class FeedGenerator
      */
     private $router;
     /**
-     * @var \FeedWriter\Feed
+     * @var \FeedWriter\Feed|null
      */
     private $renderer;
 

@@ -49,18 +49,10 @@ class Navbar extends AbstractFunction
 
     /**
      * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'navbar';
-    }
-
-    /**
-     * {@inheritdoc}
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         return $this->getMenuByKey(
             $params['block'],
@@ -83,7 +75,7 @@ class Navbar extends AbstractFunction
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function getMenuByKey(
+    private function getMenuByKey(
         string $menu,
         MenuConfiguration $menuConfig
     ): string {
@@ -92,7 +84,7 @@ class Navbar extends AbstractFunction
         return $this->menus[$cacheKey] ?? $this->generateMenu($menu, $menuConfig);
     }
 
-    protected function buildMenuCacheKey(string $menu, MenuConfiguration $menuConfig): string
+    private function buildMenuCacheKey(string $menu, MenuConfiguration $menuConfig): string
     {
         return $menu . ':' . $menuConfig->__toString();
     }
@@ -100,7 +92,7 @@ class Navbar extends AbstractFunction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function generateMenu(string $menu, MenuConfiguration $menuConfig): string
+    private function generateMenu(string $menu, MenuConfiguration $menuConfig): string
     {
         $items = $this->menusCache->getVisibleMenuItems($menu);
         $cItems = \count($items);
@@ -154,7 +146,7 @@ class Navbar extends AbstractFunction
     /**
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function selectMenuItem(string $menu): int
+    private function selectMenuItem(string $menu): int
     {
         if ($this->request->getArea() !== Core\Controller\AreaEnum::AREA_ADMIN) {
             $in = [
@@ -171,7 +163,7 @@ class Navbar extends AbstractFunction
         return 0;
     }
 
-    protected function processMenuItemWithoutChildren(MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
+    private function processMenuItemWithoutChildren(MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
     {
         $link = \sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s</a>',
@@ -188,7 +180,7 @@ class Navbar extends AbstractFunction
         return \sprintf('<%1$s class="%2$s">%3$s</%1$s>', $menuConfig->getItemTag(), $cssSelectors, $link);
     }
 
-    protected function processMenuItemWithChildren(string $menu, MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
+    private function processMenuItemWithChildren(string $menu, MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
     {
         $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig);
         $caret = $subMenuCss = '';
@@ -226,7 +218,7 @@ class Navbar extends AbstractFunction
     /**
      * Close the list of child elements.
      */
-    protected function closeOpenedMenus(MenuConfiguration $menuConfig, array $items, int $currentIndex): string
+    private function closeOpenedMenus(MenuConfiguration $menuConfig, array $items, int $currentIndex): string
     {
         $data = '';
         if ((isset($items[$currentIndex + 1]) && $items[$currentIndex + 1]['level'] < $items[$currentIndex]['level']) ||
@@ -243,7 +235,7 @@ class Navbar extends AbstractFunction
         return $data;
     }
 
-    protected function getMenuItemHref(int $mode, string $uri): string
+    private function getMenuItemHref(int $mode, string $uri): string
     {
         if ($mode === 1 || $mode === 2) {
             return $this->router->route($uri);
@@ -252,12 +244,12 @@ class Navbar extends AbstractFunction
         return $uri;
     }
 
-    protected function getMenuItemHrefTarget(string $target): string
+    private function getMenuItemHrefTarget(int $target): string
     {
         return $target === 2 ? ' target="_blank"' : '';
     }
 
-    protected function calculateChildParentLevelDiff(array $items, int $currentIndex): int
+    private function calculateChildParentLevelDiff(array $items, int $currentIndex): int
     {
         $diff = $items[$currentIndex]['level'];
         if (isset($items[$currentIndex + 1]['level'])) {
@@ -268,7 +260,7 @@ class Navbar extends AbstractFunction
         return $diff;
     }
 
-    protected function getMenuItemSelector(array $item, int $selectedItemValue): string
+    private function getMenuItemSelector(array $item, int $selectedItemValue): string
     {
         $css = 'navi-' . $item['id'];
 
@@ -282,7 +274,7 @@ class Navbar extends AbstractFunction
         return $css;
     }
 
-    protected function prepareMenuHtmlAttributes(string $menu, MenuConfiguration $menuConfig): string
+    private function prepareMenuHtmlAttributes(string $menu, MenuConfiguration $menuConfig): string
     {
         $bootstrapSelector = $menuConfig->isUseBootstrap() === true ? ' nav navbar-nav' : '';
         $navigationSelectors = !empty($menuConfig->getSelector()) ? ' ' . $menuConfig->getSelector() : $bootstrapSelector;
@@ -292,7 +284,7 @@ class Navbar extends AbstractFunction
         return $attributes;
     }
 
-    protected function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig): string
+    private function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig): string
     {
         return !empty($menuConfig->getLinkSelector()) ? ' class="' . $menuConfig->getLinkSelector() . '"' : '';
     }

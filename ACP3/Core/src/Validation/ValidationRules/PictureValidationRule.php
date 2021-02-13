@@ -14,13 +14,8 @@ class PictureValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Core\Validation\ValidationRules\FileUploadValidationRule
      */
-    protected $fileUploadValidationRule;
+    private $fileUploadValidationRule;
 
-    /**
-     * PictureValidationRule constructor.
-     *
-     * @param \ACP3\Core\Validation\ValidationRules\FileUploadValidationRule $fileUploadValidationRule
-     */
     public function __construct(FileUploadValidationRule $fileUploadValidationRule)
     {
         $this->fileUploadValidationRule = $fileUploadValidationRule;
@@ -28,6 +23,8 @@ class PictureValidationRule extends AbstractValidationRule
 
     /**
      * {@inheritdoc}
+     *
+     * @param mixed $data
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -45,22 +42,16 @@ class PictureValidationRule extends AbstractValidationRule
                 $params['height'],
                 $params['filesize']
             );
-        } elseif ($params['required'] === false && empty($data)) {
+        }
+
+        if ($params['required'] === false && empty($data)) {
             return true;
         }
 
         return false;
     }
 
-    /**
-     * @param string $file
-     * @param int    $width
-     * @param int    $height
-     * @param int    $filesize
-     *
-     * @return bool
-     */
-    protected function isPicture($file, $width = 0, $height = 0, $filesize = 0)
+    private function isPicture(string $file, int $width = 0, int $height = 0, int $filesize = 0): bool
     {
         $info = \getimagesize($file);
         $isPicture = ($info[2] >= 1 && $info[2] <= 3);
@@ -78,18 +69,10 @@ class PictureValidationRule extends AbstractValidationRule
         return false;
     }
 
-    /**
-     * @param string $file
-     * @param int    $width
-     * @param int    $height
-     * @param int    $filesize
-     *
-     * @return bool
-     */
-    protected function validateOptionalParameters($file, array $info, $width, $height, $filesize)
+    private function validateOptionalParameters(string $file, array $info, int $width, int $height, int $filesize): bool
     {
-        return $width > 0 && $info[0] > $width ||
-        $height > 0 && $info[1] > $height ||
-        $filesize > 0 && \filesize($file) > $filesize;
+        return ($width > 0 && $info[0] > $width) ||
+        ($height > 0 && $info[1] > $height) ||
+        ($filesize > 0 && \filesize($file) > $filesize);
     }
 }

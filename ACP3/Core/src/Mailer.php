@@ -21,21 +21,21 @@ class Mailer
     /**
      * @var LoggerInterface
      */
-    protected $logger;
+    private $logger;
     /**
      * @var \ACP3\Core\View
      */
-    protected $view;
+    private $view;
     /**
      * @var SettingsInterface
      */
-    protected $config;
+    private $config;
     /**
      * @var \ACP3\Core\Helpers\StringFormatter
      */
-    protected $stringFormatter;
+    private $stringFormatter;
     /**
-     * @var PHPMailer
+     * @var PHPMailer|null
      */
     private $phpMailer;
 
@@ -76,9 +76,7 @@ class Mailer
             if (!empty($message->getRecipients())) {
                 return $message->isBcc() === true ? $this->sendBcc($message) : $this->sendTo($message);
             }
-        } catch (PHPMailerException $e) {
-            $this->logger->error($e);
-        } catch (\Exception $e) {
+        } catch (PHPMailerException | \Exception $e) {
             $this->logger->error($e);
         }
 
@@ -176,10 +174,7 @@ class Mailer
         return '';
     }
 
-    /**
-     * @param string $data
-     */
-    private function decodeHtmlEntities($data): string
+    private function decodeHtmlEntities(string $data): string
     {
         return \html_entity_decode($data, ENT_QUOTES, 'UTF-8');
     }
@@ -247,15 +242,11 @@ class Mailer
     /**
      * Adds a single recipient to the to be send email.
      *
-     * @param string $email
-     * @param string $name
-     * @param bool   $bcc
-     *
      * @return $this
      *
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function addRecipient($email, $name = '', $bcc = false): self
+    private function addRecipient(string $email, string $name = '', bool $bcc = false): self
     {
         if ($bcc === true) {
             $this->phpMailer->addBCC($email, $name);

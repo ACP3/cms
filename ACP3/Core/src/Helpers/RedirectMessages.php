@@ -48,14 +48,12 @@ class RedirectMessages
     /**
      * Sets a redirect messages and redirects to the given internal path.
      *
-     * @param int|bool $success
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function setMessage($success, string $text, ?string $path = null)
+    public function setMessage(bool $isSuccess, string $text, ?string $path = null)
     {
         $this->sessionHandler->getFlashBag()
-            ->set((bool) $success ? 'success' : 'error', $text);
+            ->set($isSuccess ? 'success' : 'error', $text);
 
         // If no path has been given, guess it automatically
         if ($path === null) {

@@ -57,14 +57,12 @@ class Action
     }
 
     /**
-     * @param string|null $path
-     *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function handlePostAction(callable $callback, $path = null)
+    public function handlePostAction(callable $callback, ?string $path = null)
     {
         try {
             $this->db->getConnection()->beginTransaction();
@@ -101,9 +99,6 @@ class Action
     }
 
     /**
-     * @param string|null $moduleConfirmUrl
-     * @param string|null $moduleIndexUrl
-     *
      * @return array|JsonResponse|RedirectResponse
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
@@ -111,8 +106,8 @@ class Action
     public function handleDeleteAction(
         ?string $action,
         callable $callback,
-        $moduleConfirmUrl = null,
-        $moduleIndexUrl = null
+        ?string $moduleConfirmUrl = null,
+        ?string $moduleIndexUrl = null
     ) {
         return $this->handleCustomDeleteAction(
             $action,
@@ -127,18 +122,13 @@ class Action
     }
 
     /**
-     * @param string|null $moduleConfirmUrl
-     * @param string|null $moduleIndexUrl
-     *
      * @return array|JsonResponse|RedirectResponse|Response
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleCustomDeleteAction(
         ?string $action,
         callable $callback,
-        $moduleConfirmUrl = null,
-        $moduleIndexUrl = null
+        ?string $moduleConfirmUrl = null,
+        ?string $moduleIndexUrl = null
     ) {
         [$moduleConfirmUrl, $moduleIndexUrl] = $this->generateDefaultConfirmationBoxUris(
             $moduleConfirmUrl,
@@ -150,26 +140,20 @@ class Action
             return $result;
         }
 
-        if (\is_array($result)) {
-            if ($action === 'confirmed') {
-                return $callback($result);
-            }
-
-            return $result;
+        if ($action === 'confirmed') {
+            return $callback($result);
         }
 
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        return $result;
     }
 
     /**
-     * @param string|null $path
-     *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function handleDuplicateAction(callable $callback, $path = null)
+    public function handleDuplicateAction(callable $callback, ?string $path = null)
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -179,14 +163,12 @@ class Action
     }
 
     /**
-     * @param string|null $path
-     *
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function handleSettingsPostAction(callable $callback, $path = null)
+    public function handleSettingsPostAction(callable $callback, ?string $path = null)
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -196,14 +178,12 @@ class Action
     }
 
     /**
-     * @param string|null $path
-     *
      * @return array|string|JsonResponse|RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function handleSaveAction(callable $callback, $path = null)
+    public function handleSaveAction(callable $callback, ?string $path = null)
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -289,16 +269,20 @@ class Action
         return $entries;
     }
 
+    /**
+     * @return array<string|int>
+     */
     private function prepareRequestData(): array
     {
-        $entries = [];
         if (\is_array($this->request->getPost()->get('entries')) === true) {
-            $entries = $this->request->getPost()->get('entries');
-        } elseif ((bool) \preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
-            $entries = \explode('|', $this->request->getParameters()->get('entries'));
+            return $this->request->getPost()->get('entries');
         }
 
-        return $entries;
+        if ((bool) \preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
+            return \explode('|', $this->request->getParameters()->get('entries'));
+        }
+
+        return [];
     }
 
     private function prepareConfirmationBoxText(array $entries): string

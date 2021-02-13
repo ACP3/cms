@@ -20,7 +20,7 @@ class ModelSaveEvent extends Event
      */
     private $filteredData;
     /**
-     * @var int|null
+     * @var int|array|null
      */
     private $entryId;
     /**
@@ -41,8 +41,6 @@ class ModelSaveEvent extends Event
     private $tableName;
 
     /**
-     * ModelSaveEvent constructor.
-     *
      * @param int|array|null $entryId
      */
     public function __construct(
@@ -63,26 +61,17 @@ class ModelSaveEvent extends Event
         $this->tableName = $tableName;
     }
 
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return $this->moduleName;
     }
 
-    /**
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         return $this->filteredData;
     }
 
-    /**
-     * @return array
-     */
-    public function getRawData()
+    public function getRawData(): array
     {
         return $this->rawData;
     }
@@ -95,18 +84,12 @@ class ModelSaveEvent extends Event
         return $this->entryId;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDeleteStatement()
+    public function isDeleteStatement(): bool
     {
         return \count($this->filteredData) === 0 && \is_array($this->entryId);
     }
 
-    /**
-     * @return bool
-     */
-    public function isIsNewEntry()
+    public function isIsNewEntry(): bool
     {
         return $this->isNewEntry;
     }

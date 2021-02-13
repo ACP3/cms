@@ -41,6 +41,8 @@ class Delete extends Core\Controller\AbstractWidgetAction
 
     /**
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function execute(?string $action = null)
     {
@@ -50,7 +52,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
                 $bool = $levelNotDeletable = false;
 
                 foreach ($items as $item) {
-                    if (\in_array($item, [1, 2, 4]) === true) {
+                    if (\in_array((int) $item, [1, 2, 4], true) === true) {
                         $levelNotDeletable = true;
                     } else {
                         $bool = $this->rolesModel->delete($item);
@@ -60,7 +62,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
                 $this->permissionsCache->getCacheDriver()->deleteAll();
 
                 if ($levelNotDeletable === true) {
-                    $result = !$levelNotDeletable;
+                    $result = false;
                     $text = $this->translator->t('permissions', 'role_not_deletable');
                 } else {
                     $result = $bool !== false;

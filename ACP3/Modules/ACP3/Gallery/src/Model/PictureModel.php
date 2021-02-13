@@ -66,7 +66,7 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
     {
         $picNum = $this->repository->getLastPictureByGalleryId($galleryId);
 
-        return $picNum !== null ? $picNum + 1 : 1;
+        return $picNum + 1;
     }
 
     /**
