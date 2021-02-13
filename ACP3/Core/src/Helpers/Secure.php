@@ -44,6 +44,6 @@ class Secure
     {
         $var = \preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
 
-        return $scriptTagOnly === true ? $var : \htmlentities($var, ENT_QUOTES, 'UTF-8');
+        return $scriptTagOnly === true ? $var : \htmlspecialchars($var);
     }
 }
