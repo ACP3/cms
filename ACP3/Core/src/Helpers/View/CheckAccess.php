@@ -14,23 +14,16 @@ class CheckAccess
     /**
      * @var \ACP3\Core\ACL
      */
-    protected $acl;
+    private $acl;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
 
-    /**
-     * CheckAccess constructor.
-     *
-     * @param \ACP3\Core\ACL                    $acl
-     * @param \ACP3\Core\I18n\Translator        $translator
-     * @param \ACP3\Core\Router\RouterInterface $router
-     */
     public function __construct(
         Core\ACL $acl,
         Core\I18n\Translator $translator,
@@ -42,11 +35,11 @@ class CheckAccess
     }
 
     /**
-     * @return string
+     * @return string|array
      */
     public function outputLinkOrButton(array $params)
     {
-        if (isset($params['mode']) && isset($params['path'])) {
+        if (isset($params['mode'], $params['path'])) {
             $action = [];
             $query = \explode('/', \strtolower($params['path']));
 
@@ -68,7 +61,9 @@ class CheckAccess
 
             if ($this->acl->hasPermission($permissionPath) === true) {
                 return $this->collectData($params, $action, $area);
-            } elseif ($params['mode'] === 'link' && isset($params['title'])) {
+            }
+
+            if ($params['mode'] === 'link' && isset($params['title'])) {
                 // If the user has no permission and the type is "link",
                 // just return the given title without the surrounding hyperlink
                 return $params['title'];
@@ -78,13 +73,7 @@ class CheckAccess
         return '';
     }
 
-    /**
-     * @param string $action
-     * @param string $area
-     *
-     * @return array
-     */
-    private function collectData(array $params, $action, $area)
+    private function collectData(array $params, array $action, string $area): array
     {
         $accessCheck = [];
         $accessCheck['uri'] = $this->router->route($params['path']);

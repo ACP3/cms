@@ -14,11 +14,8 @@ class Nl2pColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\Helpers\StringFormatter
      */
-    protected $stringFormatter;
+    private $stringFormatter;
 
-    /**
-     * Nl2pColumnRenderer constructor.
-     */
     public function __construct(StringFormatter $stringFormatter)
     {
         $this->stringFormatter = $stringFormatter;
@@ -27,8 +24,8 @@ class Nl2pColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field)
+    protected function getDbValueIfExists(array $dbResultRow, $field): ?string
     {
-        return isset($dbResultRow[$field]) ? $this->stringFormatter->nl2p($dbResultRow[$field]) : null;
+        return \array_key_exists($field, $dbResultRow) ? $this->stringFormatter->nl2p($dbResultRow[$field]) : null;
     }
 }

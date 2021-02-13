@@ -12,11 +12,11 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
     /**
      * @var array
      */
-    protected $search = [];
+    private $search = [];
     /**
      * @var array
      */
-    protected $replace = [];
+    private $replace = [];
 
     /**
      * {@inheritdoc}
@@ -32,8 +32,8 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field)
+    protected function getDbValueIfExists(array $dbResultRow, $field): ?string
     {
-        return isset($dbResultRow[$field]) ? \str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
+        return \array_key_exists($field, $dbResultRow) ? \str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
     }
 }

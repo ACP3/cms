@@ -13,14 +13,16 @@ use Doctrine\DBAL\Connection;
 
 class ModulesRepository extends AbstractRepository implements ModuleAwareRepositoryInterface
 {
-    const TABLE_NAME = 'modules';
+    public const TABLE_NAME = 'modules';
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getModuleId(string $moduleName): int
     {
-        return $this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             'SELECT `id` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
             [$moduleName]
         );
@@ -33,7 +35,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
      */
     public function getModuleSchemaVersion(string $moduleName): int
     {
-        return $this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             'SELECT `version` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
             [$moduleName]
         );

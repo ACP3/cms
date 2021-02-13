@@ -15,11 +15,8 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\ACL
      */
-    protected $acl;
+    private $acl;
 
-    /**
-     * UserRolesColumnRenderer constructor.
-     */
     public function __construct(ACL $acl)
     {
         $this->acl = $acl;
@@ -28,8 +25,8 @@ class UserRolesColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field)
+    protected function getDbValueIfExists(array $dbResultRow, $field): ?string
     {
-        return isset($dbResultRow[$field]) ? \implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
+        return \array_key_exists($field, $dbResultRow) ? \implode(', ', $this->acl->getUserRoleNames($dbResultRow[$field])) : null;
     }
 }

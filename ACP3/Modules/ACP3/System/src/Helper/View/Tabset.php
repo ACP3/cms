@@ -13,7 +13,7 @@ use ACP3\Core\Helpers\View\Exception\InvalidTabsetException;
 class Tabset
 {
     /**
-     * @var TabDto
+     * @var array<string, TabDto[]>
      */
     private $tabsets = [];
 

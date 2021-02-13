@@ -41,10 +41,10 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     public function countAll(int $moduleId = 0): int
     {
         if ($moduleId === 0) {
-            return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName());
+            return (int) $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName());
         }
 
-        return $this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
             [$moduleId]
         );
@@ -66,7 +66,7 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getLastDateFromIp(string $ipAddress)
+    public function getLastDateFromIp(string $ipAddress): string
     {
         return $this->db->fetchColumn(
             'SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?',

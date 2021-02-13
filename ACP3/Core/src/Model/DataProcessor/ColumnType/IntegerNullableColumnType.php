@@ -7,22 +7,31 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-class IntegerNullableColumnType extends IntegerColumnType
+class IntegerNullableColumnType implements ColumnTypeStrategyInterface
 {
     /**
      * @param mixed $value
-     *
-     * @return int|null
      */
-    public function doEscape($value)
+    public function doEscape($value): ?int
     {
         if ($value !== null) {
-            $value = parent::doEscape($value);
+            $value = (int) $value;
         }
 
         return $value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function doUnescape($value)
+    {
+        return $value;
+    }
+
+    /**
+     * @return null
+     */
     public function getDefaultValue()
     {
         return null;

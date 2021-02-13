@@ -10,12 +10,10 @@ namespace ACP3\Core\DataGrid\ColumnRenderer;
 class IntegerColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @param string $field
-     *
-     * @return int|null
+     * {@inheritDoc}
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field)
+    protected function getDbValueIfExists(array $dbResultRow, $field): ?string
     {
-        return isset($dbResultRow[$field]) ? (int) $dbResultRow[$field] : null;
+        return \array_key_exists($field, $dbResultRow) ? (string) (int) $dbResultRow[$field] : null;
     }
 }

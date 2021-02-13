@@ -12,7 +12,7 @@ class RoundNumberColumnRenderer extends AbstractColumnRenderer
     /**
      * @var int
      */
-    protected $precision = 0;
+    private $precision = 0;
 
     /**
      * {@inheritdoc}
@@ -27,8 +27,8 @@ class RoundNumberColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field)
+    protected function getDbValueIfExists(array $dbResultRow, $field): ?string
     {
-        return isset($dbResultRow[$field]) ? \round($dbResultRow[$field], $this->precision) : null;
+        return \array_key_exists($field, $dbResultRow) ? (string) \round($dbResultRow[$field], $this->precision) : null;
     }
 }

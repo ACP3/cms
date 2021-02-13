@@ -9,15 +9,36 @@ namespace ACP3\Core\Model\Repository;
 
 interface ModuleAwareRepositoryInterface extends RepositoryInterface
 {
+    /**
+     * Returns the ID of the given module.
+     */
     public function getModuleId(string $moduleName): int;
 
+    /**
+     * Returns the current DB schema version of the given module.
+     */
     public function getModuleSchemaVersion(string $moduleName): int;
 
+    /**
+     * Checks, whether the given is registered within the database or not.
+     */
     public function moduleExists(string $moduleName): bool;
 
+    /**
+     * Checks, whether the bare minimum of the required database tables exist.
+     * This method is only relevant when newly installing the ACP3.
+     */
     public function coreTablesExist(): bool;
 
+    /**
+     * Returns the basic information about the given module.
+     * When success, it returns an array with the module-ID, its DB schema version and whether it is acitve or not.
+     */
     public function getInfoByModuleName(string $moduleName): array;
 
+    /**
+     * Returns the internal module name by the given module-ID.
+     * It is effectively the reserve of ::getModuleId().
+     */
     public function getModuleNameById(int $moduleId): string;
 }

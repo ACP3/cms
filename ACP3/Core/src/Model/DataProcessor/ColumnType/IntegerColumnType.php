@@ -11,10 +11,8 @@ class IntegerColumnType implements ColumnTypeStrategyInterface
 {
     /**
      * @param mixed $value
-     *
-     * @return int
      */
-    public function doEscape($value)
+    public function doEscape($value): int
     {
         return (int) $value;
     }
@@ -27,10 +25,7 @@ class IntegerColumnType implements ColumnTypeStrategyInterface
         return $value;
     }
 
-    /**
-     * @return string|int
-     */
-    public function getDefaultValue()
+    public function getDefaultValue(): int
     {
         return 0;
     }

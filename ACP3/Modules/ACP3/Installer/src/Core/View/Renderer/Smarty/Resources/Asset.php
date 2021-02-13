@@ -17,14 +17,6 @@ class Asset extends AbstractResource
      */
     private $fileResolver;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtensionName()
-    {
-        return 'asset';
-    }
-
     public function __construct(FileResolver $fileResolver)
     {
         $this->recompiled = true;
@@ -65,7 +57,7 @@ class Asset extends AbstractResource
         $compiled->file_dependency = [];
         $compiled->includes = [];
         $compiled->nocache_hash = null;
-        $compiled->unifunc = null;
+        $compiled->unifunc = '';
         $level = \ob_get_level();
         \ob_start();
         $_smarty_tpl->loadCompiler();
@@ -95,6 +87,7 @@ class Asset extends AbstractResource
      */
     public function populateCompiledFilepath(\Smarty_Template_Compiled $compiled, \Smarty_Internal_Template $_template)
     {
+        /* @phpstan-ignore-next-line */
         $compiled->filepath = false;
         $compiled->timestamp = false;
         $compiled->exists = false;

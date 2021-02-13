@@ -26,7 +26,7 @@ interface ColumnTypeStrategyInterface
     public function doUnescape($value);
 
     /**
-     * @return string|int
+     * @return string|int|null
      */
     public function getDefaultValue();
 }

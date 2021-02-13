@@ -16,6 +16,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     use Core\Model\Repository\PublicationPeriodAwareTrait;
 
     public const TABLE_NAME = 'files';
+
     /**
      * @var Core\Settings\SettingsInterface
      */
@@ -107,7 +108,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
      */
     public function getMaxSort(): int
     {
-        return $this->db->fetchColumn("SELECT MAX(`sort`) FROM {$this->getTableName()};");
+        return (int) $this->db->fetchColumn("SELECT MAX(`sort`) FROM {$this->getTableName()};");
     }
 
     private function getOrderBy(): string
@@ -119,7 +120,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
             'custom' => '`sort` ASC',
         ];
 
-        if (isset($settings['order_by']) && isset($orderByMap[$settings['order_by']])) {
+        if (isset($settings['order_by'], $orderByMap[$settings['order_by']])) {
             return $orderByMap[$settings['order_by']];
         }
 

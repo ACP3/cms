@@ -52,7 +52,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
 
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
-        return $this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . $where,
             ['time' => $time, 'active' => 1]
         );

@@ -130,7 +130,7 @@ class Action
      * @param string|null $moduleConfirmUrl
      * @param string|null $moduleIndexUrl
      *
-     * @return array|JsonResponse|RedirectResponse
+     * @return array|JsonResponse|RedirectResponse|Response
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */

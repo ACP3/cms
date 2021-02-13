@@ -100,9 +100,9 @@ class SchemaUpdater
     }
 
     /**
-     * @param Array<int, string|callable|string[]|callable[]> $migrations
+     * @param array<int, string|callable|array<string|callable>> $migrations
      *
-     * @return Array<int, string[]|callable[]>
+     * @return array<int, array<string|callable>>
      */
     private function prepareMigrationsForRecursiveMerge(array $migrations): array
     {
@@ -113,6 +113,7 @@ class SchemaUpdater
             $migrationsNew['index_' . $schemaVersion] = \is_array($queries) ? $queries : [$queries];
         }
 
+        /* @phpstan-ignore-next-line */
         return $migrationsNew;
     }
 
