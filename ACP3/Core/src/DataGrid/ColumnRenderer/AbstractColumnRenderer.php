@@ -9,7 +9,7 @@ namespace ACP3\Core\DataGrid\ColumnRenderer;
 
 abstract class AbstractColumnRenderer implements ColumnRendererInterface
 {
-    const CELL_TYPE = 'td';
+    public const CELL_TYPE = 'td';
 
     /**
      * @var string
@@ -108,12 +108,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $this->render($column, $this->getValue($column, $dbResultRow));
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    protected function render(array $column, $value = '')
+    protected function render(array $column, ?string $value = ''): string
     {
         if ($this->getUseAjax()) {
             return $this->renderAjax($column, $value);
@@ -143,11 +138,8 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
 
     /**
      * @param string|array $attributeName
-     * @param string|null  $attributeData
-     *
-     * @return string
      */
-    protected function addHtmlAttribute($attributeName, $attributeData = null)
+    protected function addHtmlAttribute($attributeName, ?string $attributeData = null): string
     {
         if (\is_array($attributeName)) {
             $data = '';
@@ -169,10 +161,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return '';
     }
 
-    /**
-     * @return string
-     */
-    protected function getFirstDbField(array $column)
+    protected function getFirstDbField(array $column): string
     {
         $fields = $this->getDbFields($column);
 
@@ -204,18 +193,12 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $dbResultRow[$field] ?? null;
     }
 
-    /**
-     * @return string
-     */
-    protected function getDefaultValue(array $column)
+    protected function getDefaultValue(array $column): string
     {
         return $column['custom']['default_value'] ?? '';
     }
 
-    /**
-     * @return array
-     */
-    protected function getDbFields(array $column)
+    protected function getDbFields(array $column): array
     {
         return $column['fields'];
     }

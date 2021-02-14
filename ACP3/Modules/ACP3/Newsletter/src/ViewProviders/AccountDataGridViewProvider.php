@@ -69,7 +69,7 @@ class AccountDataGridViewProvider
             ->setResourcePathDelete('admin/newsletter/accounts/delete')
             ->setQueryOptions(new QueryOption(
                 'status',
-                AccountStatus::ACCOUNT_STATUS_DISABLED,
+                (string) AccountStatus::ACCOUNT_STATUS_DISABLED,
                 'main',
                 '!='
             ))

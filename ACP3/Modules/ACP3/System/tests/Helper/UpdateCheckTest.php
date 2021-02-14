@@ -60,7 +60,7 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
     {
         $this->dateMock->expects(self::once())
             ->method('timestamp')
-            ->willReturn((new \DateTime())->modify('-1 hour')->format('U'));
+            ->willReturn((int) (new \DateTime())->modify('-1 hour')->format('U'));
 
         $this->settingsMock->expects(self::once())
             ->method('getSettings')
@@ -87,7 +87,7 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
     {
         $this->dateMock->expects(self::exactly(2))
             ->method('timestamp')
-            ->willReturn((new \DateTime())->format('U'));
+            ->willReturn((int) (new \DateTime())->format('U'));
 
         $this->settingsMock->expects(self::once())
             ->method('getSettings')

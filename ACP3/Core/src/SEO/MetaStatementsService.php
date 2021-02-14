@@ -213,9 +213,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
             return \strtr($this->getSettings()['robots'], $this->getRobotsMap());
         }
 
-        $robot = $this->getSeoInformation($path, 'robots', 0);
+        $robot = $this->getSeoInformation($path, 'robots', '0');
 
-        if ($robot == 0) {
+        if ($robot === '0') {
             $robot = $this->getSettings()['robots'];
         }
 

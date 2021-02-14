@@ -29,6 +29,6 @@ class RoundNumberColumnRenderer extends AbstractColumnRenderer
      */
     protected function getDbValueIfExists(array $dbResultRow, $field): ?string
     {
-        return \array_key_exists($field, $dbResultRow) ? (string) \round($dbResultRow[$field], $this->precision) : null;
+        return !empty($dbResultRow[$field]) ? (string) \round($dbResultRow[$field], $this->precision) : null;
     }
 }

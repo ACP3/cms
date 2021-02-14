@@ -77,7 +77,7 @@ class MenuItemsDataGridViewProvider
             ->setQueryOptions(
                 new QueryOption(
                     'block_id',
-                    $menuId,
+                    (string) $menuId,
                     'r'
                 )
             )

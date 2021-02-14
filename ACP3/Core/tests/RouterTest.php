@@ -19,15 +19,15 @@ class RouterTest extends \PHPUnit\Framework\TestCase
      */
     protected $router;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Request
      */
     protected $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & ApplicationPath
      */
     protected $appPathMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & SettingsInterface
      */
     protected $configMock;
 
@@ -63,10 +63,10 @@ class RouterTest extends \PHPUnit\Framework\TestCase
 
     protected function setUpRequestMockExpectations()
     {
-        $this->requestMock->expects($this->any())
+        $this->requestMock->expects(self::any())
             ->method('getScheme')
             ->willReturn('http');
-        $this->requestMock->expects($this->any())
+        $this->requestMock->expects(self::any())
             ->method('getHost')
             ->willReturn('example.com');
     }
@@ -83,7 +83,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
 
     protected function setUpConfigMockExpectations(bool $useModRewrite = false)
     {
-        $this->configMock->expects($this->atLeastOnce())
+        $this->configMock->expects(self::atLeastOnce())
             ->method('getSettings')
             ->with('system')
             ->willReturn(['mod_rewrite' => $useModRewrite, 'homepage' => 'foo/bar/baz/']);

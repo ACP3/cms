@@ -11,27 +11,27 @@ use ACP3\Core\Date\DateTranslator;
 
 class Date
 {
-    const DEFAULT_DATE_FORMAT_LONG = 'Y-m-d H:i';
-    const DEFAULT_DATE_FORMAT_FULL = 'Y-m-d H:i:s';
-    const DEFAULT_DATE_FORMAT_SHORT = 'Y-m-d';
+    public const DEFAULT_DATE_FORMAT_LONG = 'Y-m-d H:i';
+    public const DEFAULT_DATE_FORMAT_FULL = 'Y-m-d H:i:s';
+    public const DEFAULT_DATE_FORMAT_SHORT = 'Y-m-d';
 
     /**
      * @var string
      */
-    protected $dateFormatLong = '';
+    private $dateFormatLong = '';
     /**
      * @var string
      */
-    protected $dateFormatShort = '';
+    private $dateFormatShort = '';
     /**
      * @var \DateTimeZone
      */
-    protected $dateTimeZone;
+    private $dateTimeZone;
 
     /**
      * @var \ACP3\Core\Date\DateTranslator
      */
-    protected $dateTranslator;
+    private $dateTranslator;
 
     public function __construct(
         DateTranslator $dateTranslator
@@ -39,10 +39,7 @@ class Date
         $this->dateTranslator = $dateTranslator;
     }
 
-    /**
-     * @return string
-     */
-    public function getDateFormatLong()
+    public function getDateFormatLong(): string
     {
         return $this->dateFormatLong;
     }
@@ -50,17 +47,14 @@ class Date
     /**
      * @return $this
      */
-    public function setDateFormatLong(string $dateFormatLong)
+    public function setDateFormatLong(string $dateFormatLong): self
     {
         $this->dateFormatLong = $dateFormatLong;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDateFormatShort()
+    public function getDateFormatShort(): string
     {
         return $this->dateFormatShort;
     }
@@ -68,7 +62,7 @@ class Date
     /**
      * @return $this
      */
-    public function setDateFormatShort(string $dateFormatShort)
+    public function setDateFormatShort(string $dateFormatShort): self
     {
         $this->dateFormatShort = $dateFormatShort;
 
@@ -78,7 +72,7 @@ class Date
     /**
      * @return $this
      */
-    public function setDateTimeZone(\DateTimeZone $dateTimeZone)
+    public function setDateTimeZone(\DateTimeZone $dateTimeZone): self
     {
         $this->dateTimeZone = $dateTimeZone;
 
@@ -88,14 +82,9 @@ class Date
     /**
      * Gibt ein formatiertes Datum zurück.
      *
-     * @param string $time
-     * @param string $format
-     * @param bool   $toLocalTimeZone
-     * @param bool   $isLocalTimeZone
-     *
-     * @return string
+     * @throws \Exception
      */
-    public function format($time = 'now', $format = 'long', $toLocalTimeZone = true, $isLocalTimeZone = true)
+    public function format(string $time = 'now', string $format = 'long', bool $toLocalTimeZone = true, bool $isLocalTimeZone = true): string
     {
         switch ($format) {
             case '':
@@ -110,7 +99,7 @@ class Date
         }
 
         if (\is_numeric($time)) {
-            $time = \date('c', $time);
+            $time = \date('c', (int) $time);
         }
 
         $dateTime = new \DateTime($time, $this->dateTimeZone);
@@ -128,12 +117,9 @@ class Date
     /**
      * Gibt einen einfachen Zeitstempel zurück, welcher sich an UTC ausrichtet.
      *
-     * @param string $value
-     * @param bool   $isLocalTime
-     *
-     * @return int
+     * @throws \Exception
      */
-    public function timestamp($value = 'now', $isLocalTime = false)
+    public function timestamp(string $value = 'now', bool $isLocalTime = false): int
     {
         return (int) $this->format($value, 'U', true, $isLocalTime);
     }
@@ -141,11 +127,9 @@ class Date
     /**
      * Gibt die aktuelle Uhrzeit im MySQL-Datetime Format zurück.
      *
-     * @param bool $isLocalTime
-     *
-     * @return string
+     * @throws \Exception
      */
-    public function getCurrentDateTime($isLocalTime = false)
+    public function getCurrentDateTime(bool $isLocalTime = false): string
     {
         return $this->format('now', self::DEFAULT_DATE_FORMAT_FULL, true, $isLocalTime);
     }
@@ -153,24 +137,19 @@ class Date
     /**
      * Gibt einen an UTC ausgerichteten Zeitstempel im MySQL DateTime Format zurück.
      *
-     * @param string $value
-     *
-     * @return string
+     * @throws \Exception
      */
-    public function toSQL($value = '')
+    public function toSQL(string $value = ''): string
     {
         return $this->format(empty($value) === true ? 'now' : $value, self::DEFAULT_DATE_FORMAT_FULL, true, false);
     }
 
     /**
-     * Konvertiert einen Unixstamp in das MySQL-Datetime Format.
+     * Konvertiert einen Unix timestamp in das MySQL-Datetime Format.
      *
-     * @param string $value
-     * @param bool   $isLocalTime
-     *
-     * @return string
+     * @throws \Exception
      */
-    public function timestampToDateTime($value, $isLocalTime = false)
+    public function timestampToDateTime(string $value, bool $isLocalTime = false): string
     {
         return $this->format($value, self::DEFAULT_DATE_FORMAT_FULL, true, $isLocalTime);
     }
@@ -178,9 +157,9 @@ class Date
     /**
      * @param string|int $time
      *
-     * @return \DateTime
+     * @throws \Exception
      */
-    public function toDateTime($time = 'now')
+    public function toDateTime($time = 'now'): \DateTime
     {
         if (\is_numeric($time)) {
             $time = \date('c', $time);

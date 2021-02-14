@@ -106,6 +106,7 @@ class FeedGenerator
 
         if ($this->renderer instanceof ATOM) {
             $this->renderer->setChannelElement('updated', \date(DATE_ATOM));
+            /* @phpstan-ignore-next-line */
             $this->renderer->setChannelElement('author', ['name' => $this->title]);
         } else {
             $this->renderer->setDescription($this->description);

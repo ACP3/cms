@@ -77,10 +77,6 @@ class StaticAssetsListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
     public function postHandle(CacheEvent $event): void
     {
         $this->tracedRequests[] = $event->getRequest();
@@ -100,7 +96,7 @@ class StaticAssetsListener implements EventSubscriberInterface
      * Postponing saving the cache through the kernel terminate event improves the perceived performance for the user,
      * as the response has already been sent.
      */
-    public function onKernelTerminate()
+    public function onKernelTerminate(): void
     {
         foreach ($this->tracedRequests as $request) {
             $this->librariesCache->saveEnabledLibrariesByRequest($request);
@@ -127,10 +123,6 @@ class StaticAssetsListener implements EventSubscriberInterface
         $this->libraries->enableLibraries(\array_unique($libraries));
     }
 
-    /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
     private function moveCssBlocksToHead(CacheEvent $event): void
     {
         $response = $event->getResponse();
@@ -151,16 +143,12 @@ class StaticAssetsListener implements EventSubscriberInterface
             );
 
             $response->setContent($content);
-            $response->headers->set('Content-Length', \strlen($content));
+            $response->headers->set('Content-Length', (string) \strlen($content));
 
             $this->requestStack->pop();
         }
     }
 
-    /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
     private function moveJavaScriptBlocksToBodyEnd(CacheEvent $event): void
     {
         $response = $event->getResponse();
@@ -181,7 +169,7 @@ class StaticAssetsListener implements EventSubscriberInterface
             );
 
             $response->setContent($content);
-            $response->headers->set('Content-Length', \strlen($content));
+            $response->headers->set('Content-Length', (string) \strlen($content));
 
             $this->requestStack->pop();
         }
@@ -200,19 +188,11 @@ class StaticAssetsListener implements EventSubscriberInterface
         return \implode("\n", \array_unique($matches[1])) . "\n";
     }
 
-    /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
     private function addCssLibraries(): string
     {
         return $this->cssRenderer->renderHtmlElement();
     }
 
-    /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
     private function addJavaScriptLibraries(Request $request): string
     {
         if ($request->isXmlHttpRequest() === true) {

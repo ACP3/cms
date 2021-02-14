@@ -17,23 +17,23 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 class StepsTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Container
      */
     protected $containerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Translator
      */
     protected $translatorMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Request
      */
     protected $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & RouterInterface
      */
     protected $routerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & EventDispatcher
      */
     protected $eventDispatcherMock;
     /**
@@ -84,52 +84,41 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    /**
-     * @param string $area
-     * @param string $moduleName
-     * @param string $controller
-     * @param string $action
-     * @param string $parameters
-     */
-    protected function setUpRequestMockExpectations($area, $moduleName, $controller, $action, $parameters = '')
+    protected function setUpRequestMockExpectations(string $area, string $moduleName, string $controller, string $action, string $parameters = ''): void
     {
-        $this->requestMock->expects($this->atLeastOnce())
+        $this->requestMock->expects(self::atLeastOnce())
             ->method('getArea')
             ->willReturn($area);
-        $this->requestMock->expects($this->any())
+        $this->requestMock->expects(self::any())
             ->method('getModule')
             ->willReturn($moduleName);
-        $this->requestMock->expects($this->any())
+        $this->requestMock->expects(self::any())
             ->method('getController')
             ->willReturn($controller);
-        $this->requestMock->expects($this->any())
+        $this->requestMock->expects(self::any())
             ->method('getAction')
             ->willReturn($action);
-        $this->requestMock->expects($this->any())
+        $this->requestMock->expects(self::any())
             ->method('getModuleAndController')
             ->willReturn(
                 ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/'
             );
-        $this->requestMock->expects($this->any())
+        $this->requestMock->expects(self::any())
             ->method('getFullPath')
             ->willReturn(
                 ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/' . $action . '/'
             );
 
         $parameters .= \preg_match('=/$=', $parameters) ? '' : '/';
-        $this->requestMock->expects($this->any())
+        $this->requestMock->expects(self::any())
             ->method('getQuery')
             ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);
-        $this->requestMock->expects($this->any())
+        $this->requestMock->expects(self::any())
             ->method('getUriWithoutPages')
             ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);
     }
 
-    /**
-     * @param string $serviceId
-     * @param bool   $serviceExists
-     */
-    private function setUpContainerMockExpectations($serviceId, $serviceExists)
+    private function setUpContainerMockExpectations(string $serviceId, bool $serviceExists): void
     {
         $this->containerMock->expects(self::once())
             ->method('has')
@@ -139,16 +128,16 @@ class StepsTest extends \PHPUnit\Framework\TestCase
 
     protected function setUpRouterMockExpectations()
     {
-        $this->routerMock->expects($this->atLeastOnce())
+        $this->routerMock->expects(self::atLeastOnce())
             ->method('route')
             ->willReturnCallback(function ($path) {
                 return '/' . $path . (!\preg_match('=/$=', $path) ? '/' : '');
             });
     }
 
-    protected function setUpTranslatorMockExpectations($callCount = 1)
+    protected function setUpTranslatorMockExpectations(int $callCount = 1)
     {
-        $this->translatorMock->expects($this->atLeast($callCount))
+        $this->translatorMock->expects(self::atLeast($callCount))
             ->method('t')
             ->willReturnCallback(function ($module, $phrase) {
                 return \strtoupper('{' . $module . '_' . $phrase . '}');

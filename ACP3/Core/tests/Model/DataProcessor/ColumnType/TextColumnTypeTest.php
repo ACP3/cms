@@ -12,7 +12,7 @@ use ACP3\Core\Helpers\Secure;
 class TextColumnTypeTest extends AbstractColumnTypeTest
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Secure
      */
     protected $secureMock;
 

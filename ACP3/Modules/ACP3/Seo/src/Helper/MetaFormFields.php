@@ -18,23 +18,23 @@ class MetaFormFields
     /**
      * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
-    protected $metaStatements;
+    private $metaStatements;
     /**
      * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
      */
-    protected $aliases;
+    private $aliases;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
-    protected $formsHelper;
+    private $formsHelper;
 
     public function __construct(
         MetaStatementsServiceInterface $metaStatements,
@@ -65,7 +65,7 @@ class MetaFormFields
                 'seo_description',
                 $this->metaStatements->getDescription($path)
             );
-            $robots = $this->metaStatements->getSeoInformation($path, 'robots', 0);
+            $robots = $this->metaStatements->getSeoInformation($path, 'robots', '0');
         } else {
             $alias = $title = $keywords = $description = '';
             $robots = 0;

@@ -13,11 +13,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class RedirectResponseTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Http\Request
      */
     private $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & RouterInterface
      */
     private $routerMock;
     /**
@@ -35,13 +35,13 @@ class RedirectResponseTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    private function setUpMockObjects()
+    private function setUpMockObjects(): void
     {
         $this->requestMock = $this->createMock(Request::class);
         $this->routerMock = $this->createMock(RouterInterface::class);
     }
 
-    public function testRedirectToExternalWebsite()
+    public function testRedirectToExternalWebsite(): void
     {
         $this->setUpRequestMockExpectations(false);
 
@@ -54,17 +54,14 @@ class RedirectResponseTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('http://www.google.de', $response->getTargetUrl());
     }
 
-    /**
-     * @param bool $isAjax
-     */
-    private function setUpRequestMockExpectations($isAjax)
+    private function setUpRequestMockExpectations(bool $isAjax): void
     {
         $this->requestMock->expects(self::once())
             ->method('isXmlHttpRequest')
             ->willReturn($isAjax);
     }
 
-    public function testAjaxRedirectToExternalWebsite()
+    public function testAjaxRedirectToExternalWebsite(): void
     {
         $this->setUpRequestMockExpectations(true);
 
@@ -78,19 +75,14 @@ class RedirectResponseTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($this->buildJsonResponseContent('http:\/\/www.google.de'), $response->getContent());
     }
 
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
-    private function buildJsonResponseContent($url)
+    private function buildJsonResponseContent(string $url): string
     {
         return <<<JSON
 {"redirect_url":"$url"}
 JSON;
     }
 
-    public function testTemporaryRedirect()
+    public function testTemporaryRedirect(): void
     {
         $this->setUpRequestMockExpectations(false);
         $this->setUpRouterMockExpectations('foo/bar/baz');
@@ -104,7 +96,7 @@ JSON;
         self::assertEquals('http://www.example.com/foo/bar/baz/', $response->getTargetUrl());
     }
 
-    private function setUpRouterMockExpectations($path)
+    private function setUpRouterMockExpectations(string $path): void
     {
         $this->routerMock->expects(self::once())
             ->method('route')
@@ -112,7 +104,7 @@ JSON;
             ->willReturn('http://www.example.com/' . $path . '/');
     }
 
-    public function testAjaxTemporaryRedirect()
+    public function testAjaxTemporaryRedirect(): void
     {
         $this->setUpRequestMockExpectations(true);
         $this->setUpRouterMockExpectations('foo/bar/baz');
@@ -129,7 +121,7 @@ JSON;
         );
     }
 
-    public function testPermanentRedirect()
+    public function testPermanentRedirect(): void
     {
         $this->setUpRequestMockExpectations(false);
         $this->setUpRouterMockExpectations('foo/bar/baz');
@@ -143,7 +135,7 @@ JSON;
         self::assertEquals('http://www.example.com/foo/bar/baz/', $response->getTargetUrl());
     }
 
-    public function testAjaxPermanentRedirect()
+    public function testAjaxPermanentRedirect(): void
     {
         $this->setUpRequestMockExpectations(true);
         $this->setUpRouterMockExpectations('foo/bar/baz');

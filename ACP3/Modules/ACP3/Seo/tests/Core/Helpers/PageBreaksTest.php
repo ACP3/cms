@@ -12,7 +12,7 @@ use ACP3\Core\SEO\MetaStatementsServiceInterface;
 class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & MetaStatementsServiceInterface
      */
     protected $metaStatements;
 
@@ -37,22 +37,15 @@ class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
 
     /**
      * @dataProvider splitTextIntoPagesDataProvider
-     *
-     * @param string $sourceText
-     * @param int    $currentPage
-     * @param string $currentPageText
-     * @param string $baseUrlPath
-     * @param string $nextPageUrl
-     * @param string $prevPageUrl
      */
     public function testSplitTextIntoPages(
-        $sourceText,
-        $currentPage,
-        $currentPageText,
-        $baseUrlPath,
-        $nextPageUrl,
-        $prevPageUrl
-    ) {
+        string $sourceText,
+        int $currentPage,
+        string $currentPageText,
+        string $baseUrlPath,
+        string $nextPageUrl,
+        string $prevPageUrl
+    ): void {
         $this->setUpMetaStatementsMockExpectations($nextPageUrl, $prevPageUrl);
 
         parent::testSplitTextIntoPages(
@@ -65,11 +58,7 @@ class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
         );
     }
 
-    /**
-     * @param string $nextPageUrl
-     * @param string $prevPageUrl
-     */
-    private function setUpMetaStatementsMockExpectations($nextPageUrl, $prevPageUrl)
+    private function setUpMetaStatementsMockExpectations(string $nextPageUrl, string $prevPageUrl): void
     {
         $this->metaStatements->expects(self::once())
             ->method('setNextPage')

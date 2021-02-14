@@ -84,7 +84,7 @@ class DataGridRepository extends AbstractDataGridRepository
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->join('main', $this->getTableName(), 'c', true);
+        $queryBuilder->join('main', $this->getTableName(), 'c');
         $queryBuilder->leftJoin(
             'main',
             $this->getTableName(ModulesRepository::TABLE_NAME),

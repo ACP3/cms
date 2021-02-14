@@ -17,15 +17,15 @@ class SmartyConfigurator
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
     /**
      * @var SettingsInterface
      */
-    protected $config;
+    private $config;
     /**
      * @var string
      */
-    protected $environment;
+    private $environment;
 
     public function __construct(ApplicationPath $appPath, SettingsInterface $config, string $environment)
     {
@@ -38,7 +38,7 @@ class SmartyConfigurator
     {
         $smarty->setErrorReporting($this->isProduction() ? 0 : E_ALL);
         $smarty->setCompileId($this->config->getSettings(Schema::MODULE_NAME)['design']);
-        $smarty->setCompileCheck(!$this->isProduction());
+        $smarty->setCompileCheck($this->isProduction() ? \Smarty::COMPILECHECK_OFF : \Smarty::COMPILECHECK_ON);
         $smarty->setCompileDir($this->appPath->getCacheDir() . 'tpl_compiled/');
         $smarty->setCacheDir($this->appPath->getCacheDir() . 'tpl_cached/');
     }

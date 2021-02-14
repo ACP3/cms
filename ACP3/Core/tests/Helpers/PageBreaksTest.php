@@ -9,6 +9,7 @@ namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Http\Request;
 use ACP3\Core\Router\RouterInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 class PageBreaksTest extends \PHPUnit\Framework\TestCase
 {
@@ -17,15 +18,15 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
      */
     protected $pageBreaks;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Request
      */
     protected $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Router\RouterInterface
      */
     protected $routerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Helpers\TableOfContents
      */
     protected $tocMock;
 
@@ -81,22 +82,15 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider splitTextIntoPagesDataProvider
-     *
-     * @param string $sourceText
-     * @param int    $currentPage
-     * @param string $currentPageText
-     * @param string $baseUrlPath
-     * @param string $nextPageUrl
-     * @param string $prevPageUrl
      */
     public function testSplitTextIntoPages(
-        $sourceText,
-        $currentPage,
-        $currentPageText,
-        $baseUrlPath,
-        $nextPageUrl,
-        $prevPageUrl
-    ) {
+        string $sourceText,
+        int $currentPage,
+        string $currentPageText,
+        string $baseUrlPath,
+        string $nextPageUrl,
+        string $prevPageUrl
+    ): void {
         $this->setUpExpectations($currentPage, $baseUrlPath);
 
         $expected = [
@@ -109,19 +103,15 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->pageBreaks->splitTextIntoPages($sourceText, $baseUrlPath));
     }
 
-    /**
-     * @param int    $currentPage
-     * @param string $baseUrlPath
-     */
-    private function setUpExpectations($currentPage, $baseUrlPath)
+    private function setUpExpectations(int $currentPage, string $baseUrlPath)
     {
         $this->requestMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getParameters')
-            ->willReturn(new \Symfony\Component\HttpFoundation\ParameterBag(['page' => $currentPage]));
+            ->willReturn(new ParameterBag(['page' => $currentPage]));
 
         $this->routerMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('route')
             ->with($baseUrlPath)
             ->willReturn('/' . $baseUrlPath);

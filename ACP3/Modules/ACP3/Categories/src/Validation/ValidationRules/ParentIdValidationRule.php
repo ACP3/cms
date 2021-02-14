@@ -17,9 +17,6 @@ class ParentIdValidationRule extends AbstractValidationRule
      */
     private $categoriesRepository;
 
-    /**
-     * ParentIdValidationRule constructor.
-     */
     public function __construct(CategoryRepository $categoriesRepository)
     {
         $this->categoriesRepository = $categoriesRepository;
@@ -42,16 +39,14 @@ class ParentIdValidationRule extends AbstractValidationRule
     /**
      * @param string $value
      *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function checkParentIdExists($value)
+    protected function checkParentIdExists($value): bool
     {
         if (empty($value)) {
             return true;
         }
 
-        return $this->categoriesRepository->resultExists($value);
+        return $this->categoriesRepository->resultExists((int) $value);
     }
 }

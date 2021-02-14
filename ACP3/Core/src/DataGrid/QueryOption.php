@@ -26,9 +26,6 @@ class QueryOption
      */
     private $operator;
 
-    /**
-     * QueryOption constructor.
-     */
     public function __construct(
         string $columnName,
         string $value,

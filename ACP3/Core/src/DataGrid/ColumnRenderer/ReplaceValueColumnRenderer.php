@@ -34,6 +34,6 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
      */
     protected function getDbValueIfExists(array $dbResultRow, $field): ?string
     {
-        return \array_key_exists($field, $dbResultRow) ? \str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
+        return !empty($dbResultRow[$field]) ? \str_replace($this->search, $this->replace, $dbResultRow[$field]) : null;
     }
 }

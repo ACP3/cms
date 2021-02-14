@@ -16,11 +16,11 @@ class TitleTest extends \PHPUnit\Framework\TestCase
      */
     protected $title;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Breadcrumb\Steps
      */
     protected $stepsMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & EventDispatcher
      */
     protected $eventDispatcherMock;
 
@@ -34,20 +34,20 @@ class TitleTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    protected function initializeMockObjects()
+    protected function initializeMockObjects(): void
     {
         $this->stepsMock = $this->createMock(Steps::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
     }
 
-    public function testGetSiteAndPageTitleWithNoCustomSiteTitle()
+    public function testGetSiteAndPageTitleWithNoCustomSiteTitle(): void
     {
         $this->setUpStepsExpectations(1);
 
         self::assertEquals('Foo', $this->title->getSiteAndPageTitle());
     }
 
-    protected function setUpStepsExpectations(int $callCount)
+    protected function setUpStepsExpectations(int $callCount): void
     {
         $steps = [
             [
@@ -61,7 +61,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
             ->willReturn($steps);
     }
 
-    public function testGetSiteAndPageTitleWithCustomSiteTitle()
+    public function testGetSiteAndPageTitleWithCustomSiteTitle(): void
     {
         $this->setUpStepsExpectations(1);
 
@@ -70,7 +70,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('Foo | Lorem Ipsum', $this->title->getSiteAndPageTitle());
     }
 
-    public function testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator()
+    public function testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator(): void
     {
         $this->setUpStepsExpectations(1);
 
@@ -84,7 +84,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->title->getSiteAndPageTitle());
     }
 
-    public function testGetSiteAndPageTitleWithCustomPageTitle()
+    public function testGetSiteAndPageTitleWithCustomPageTitle(): void
     {
         $this->setUpStepsExpectations(0);
 
@@ -96,7 +96,7 @@ class TitleTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->title->getSiteAndPageTitle());
     }
 
-    public function testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle()
+    public function testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle(): void
     {
         $this->setUpStepsExpectations(0);
 

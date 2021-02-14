@@ -79,7 +79,7 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->join('main', $this->getTableName(), 'r', true);
+        $queryBuilder->join('main', $this->getTableName(), 'r');
     }
 
     protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)

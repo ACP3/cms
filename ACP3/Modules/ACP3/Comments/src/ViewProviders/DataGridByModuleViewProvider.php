@@ -99,7 +99,7 @@ class DataGridByModuleViewProvider
             ->setIdentifier('#comments-details-data-grid')
             ->setResourcePathDelete('admin/comments/details/delete/id_' . $moduleId)
             ->setResourcePathEdit('admin/comments/details/edit')
-            ->setQueryOptions(new QueryOption('module_id', $moduleId))
+            ->setQueryOptions(new QueryOption('module_id', (string) $moduleId))
             ->addColumn([
                 'label' => $this->translator->t('system', 'date'),
                 'type' => DateColumnRenderer::class,

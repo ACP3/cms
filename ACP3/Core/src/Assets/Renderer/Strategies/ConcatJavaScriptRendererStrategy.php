@@ -48,7 +48,7 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
     private function getEnabledLibraries(): array
     {
         return \array_filter($this->libraries->getEnabledLibraries(), static function (LibraryEntity $library) {
-            return $library->getJs();
+            return !empty($library->getJs());
         });
     }
 

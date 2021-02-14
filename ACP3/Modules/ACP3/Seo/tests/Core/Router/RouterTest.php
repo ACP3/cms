@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Seo\Core\Router;
 class RouterTest extends \ACP3\Core\RouterTest
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
      */
     private $aliasesMock;
 
@@ -60,11 +60,7 @@ class RouterTest extends \ACP3\Core\RouterTest
         self::assertEquals($expected, $this->router->route($path));
     }
 
-    /**
-     * @param int    $callCount
-     * @param string $returnValue
-     */
-    private function setUpAliasesMockExpectations($callCount, $returnValue)
+    private function setUpAliasesMockExpectations(int $callCount, string $returnValue): void
     {
         $this->aliasesMock->expects(self::exactly($callCount))
             ->method('getUriAlias')

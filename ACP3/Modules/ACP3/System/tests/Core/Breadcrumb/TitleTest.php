@@ -21,11 +21,11 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
      */
     private $titleConfigurator;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & SettingsInterface
      */
     private $configMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Request
      */
     private $requestMock;
 
@@ -42,7 +42,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         );
     }
 
-    protected function initializeMockObjects()
+    protected function initializeMockObjects(): void
     {
         parent::initializeMockObjects();
 
@@ -50,12 +50,12 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         $this->configMock = $this->createMock(SettingsInterface::class);
     }
 
-    private function setUpTitleConfigurator()
+    private function setUpTitleConfigurator(): void
     {
         $this->titleConfigurator = new TitleConfigurator($this->configMock);
     }
 
-    public function testGetSiteAndPageTitleWithCustomSiteTitle()
+    public function testGetSiteAndPageTitleWithCustomSiteTitle(): void
     {
         $this->setUpConfigMockExpectations('SEO Title', '', 1, 0);
         $this->titleConfigurator->configure($this->title);
@@ -63,7 +63,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         parent::testGetSiteAndPageTitleWithCustomSiteTitle();
     }
 
-    public function testGetSiteAndPageTitleWithNoCustomSiteTitle()
+    public function testGetSiteAndPageTitleWithNoCustomSiteTitle(): void
     {
         $this->setUpStepsExpectations(1);
 
@@ -77,9 +77,9 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         string $siteTitle,
         string $siteSubtitle,
         int $subtitleMode,
-        int $subtitleHomepageMode)
+        int $subtitleHomepageMode): void
     {
-        $this->configMock->expects($this->atLeastOnce())
+        $this->configMock->expects(self::atLeastOnce())
             ->method('getSettings')
             ->with('system')
             ->willReturn([
@@ -90,7 +90,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
             ]);
     }
 
-    public function testGetSiteAndPageTitleWithSubtitle()
+    public function testGetSiteAndPageTitleWithSubtitle(): void
     {
         $this->setUpStepsExpectations(1);
 
@@ -100,18 +100,18 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         self::assertEquals('Foo | SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
     }
 
-    public function testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator()
+    public function testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator(): void
     {
         $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 0);
 
         parent::testGetSiteAndPageTitleWithPrefixAndPostfixAndSeparator();
     }
 
-    public function testGetSiteAndPageTitleForHomepageWithOverride()
+    public function testGetSiteAndPageTitleForHomepageWithOverride(): void
     {
         $this->setUpStepsExpectations(0);
 
-        $this->requestMock->expects($this->atLeastOnce())
+        $this->requestMock->expects(self::atLeastOnce())
             ->method('isHomepage')
             ->willReturn(true);
 
@@ -121,11 +121,11 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         self::assertEquals('SEO Title - Subtitle', $this->title->getSiteAndPageTitle());
     }
 
-    public function testGetSiteAndPageTitleForNotHomepage()
+    public function testGetSiteAndPageTitleForNotHomepage(): void
     {
         $this->setUpStepsExpectations(1);
 
-        $this->requestMock->expects($this->atLeastOnce())
+        $this->requestMock->expects(self::atLeastOnce())
             ->method('isHomepage')
             ->willReturn(false);
 
@@ -135,14 +135,14 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
         self::assertEquals('Foo | SEO Title', $this->title->getSiteAndPageTitle());
     }
 
-    public function testGetSiteAndPageTitleWithCustomPageTitle()
+    public function testGetSiteAndPageTitleWithCustomPageTitle(): void
     {
         $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 0);
 
         parent::testGetSiteAndPageTitleWithCustomPageTitle();
     }
 
-    public function testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle()
+    public function testGetSiteAndPageTitleMetaTitleTakesPrecedenceOverPageTitle(): void
     {
         $this->setUpConfigMockExpectations('SEO Title', 'Subtitle', 1, 0);
 

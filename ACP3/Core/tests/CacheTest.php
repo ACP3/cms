@@ -17,7 +17,7 @@ class CacheTest extends \PHPUnit\Framework\TestCase
      */
     private $cache;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Cache\CacheDriverFactory
      */
     private $cacheDriverFactoryMock;
 

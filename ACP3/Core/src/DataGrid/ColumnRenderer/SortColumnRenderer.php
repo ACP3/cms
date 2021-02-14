@@ -56,7 +56,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
         $column['attribute'] += [
             'sort' => \str_pad(
                 $dbResultRow[$this->getFirstDbField($column)],
-                \strlen($this->getTotalResults()),
+                \strlen((string) $this->getTotalResults()),
                 '0',
                 STR_PAD_LEFT
             ),

@@ -18,15 +18,15 @@ class PageCssClassesTest extends \PHPUnit\Framework\TestCase
      */
     private $pageCssClasses;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Breadcrumb\Title
      */
     private $titleMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Request
      */
     private $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & StringFormatter
      */
     private $stringFormatterMock;
 
@@ -41,14 +41,14 @@ class PageCssClassesTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    private function setUpMockObjects()
+    private function setUpMockObjects(): void
     {
         $this->titleMock = $this->createMock(Title::class);
         $this->requestMock = $this->createMock(Request::class);
         $this->stringFormatterMock = $this->createMock(StringFormatter::class);
     }
 
-    public function testGetModule()
+    public function testGetModule(): void
     {
         $this->requestMock->expects(self::once())
             ->method('getModule')
@@ -57,7 +57,7 @@ class PageCssClassesTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('foo', $this->pageCssClasses->getModule());
     }
 
-    public function testGetControllerAction()
+    public function testGetControllerAction(): void
     {
         $this->requestMock->expects(self::once())
             ->method('getModule')
@@ -72,7 +72,7 @@ class PageCssClassesTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('foo-bar-baz', $this->pageCssClasses->getControllerAction());
     }
 
-    public function testGetDetails()
+    public function testGetDetails(): void
     {
         $this->requestMock->expects(self::once())
             ->method('getModule')

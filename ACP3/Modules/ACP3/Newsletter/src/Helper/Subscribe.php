@@ -14,61 +14,39 @@ use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
 class Subscribe
 {
     /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Mailer
      */
-    protected $mailer;
+    private $mailer;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \ACP3\Core\Helpers\StringFormatter
      */
-    protected $stringFormatter;
+    private $stringFormatter;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
-    protected $secureHelper;
+    private $secureHelper;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
      */
-    protected $accountRepository;
+    private $accountRepository;
     /**
      * @var \ACP3\Core\Settings\SettingsInterface
      */
-    protected $config;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
-     */
-    protected $accountStatusHelper;
+    private $config;
 
-    /**
-     * Subscribe constructor.
-     *
-     * @param \ACP3\Core\Date                                    $date
-     * @param \ACP3\Core\I18n\Translator                         $translator
-     * @param \ACP3\Core\Mailer                                  $mailer
-     * @param \ACP3\Core\Http\RequestInterface                   $request
-     * @param \ACP3\Core\Router\RouterInterface                  $router
-     * @param \ACP3\Core\Helpers\StringFormatter                 $stringFormatter
-     * @param \ACP3\Core\Helpers\Secure                          $secureHelper
-     * @param \ACP3\Core\Settings\SettingsInterface              $config
-     * @param \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus $accountStatusHelper
-     */
     public function __construct(
-        Core\Date $date,
         Core\I18n\Translator $translator,
         Core\Mailer $mailer,
         Core\Http\RequestInterface $request,
@@ -76,10 +54,8 @@ class Subscribe
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Helpers\Secure $secureHelper,
         Core\Settings\SettingsInterface $config,
-        AccountStatus $accountStatusHelper,
         AccountRepository $accountRepository
     ) {
-        $this->date = $date;
         $this->translator = $translator;
         $this->mailer = $mailer;
         $this->request = $request;
@@ -87,7 +63,6 @@ class Subscribe
         $this->stringFormatter = $stringFormatter;
         $this->secureHelper = $secureHelper;
         $this->config = $config;
-        $this->accountStatusHelper = $accountStatusHelper;
         $this->accountRepository = $accountRepository;
     }
 
@@ -99,7 +74,7 @@ class Subscribe
      */
     public function subscribeToNewsletter(string $emailAddress, int $salutation = 0, string $firstName = '', string $lastName = ''): bool
     {
-        $hash = $this->secureHelper->generateSaltedPassword('', \random_int(0, \microtime(true)), 'sha512');
+        $hash = $this->secureHelper->generateSaltedPassword('', (string) \random_int(0, (int) \microtime(true)), 'sha512');
         $mailSent = $this->sendDoubleOptInEmail($emailAddress, $hash);
         $result = $this->addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
 

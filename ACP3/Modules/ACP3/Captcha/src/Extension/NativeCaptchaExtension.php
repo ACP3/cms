@@ -62,6 +62,8 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
@@ -69,7 +71,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         bool $inputOnly = false
     ): string {
         if (!$this->user->isAuthenticated() && $this->hasCaptchaAccess()) {
-            $token = \sha1(\mt_rand());
+            $token = \sha1((string) \mt_rand());
 
             $this->sessionHandler->set('captcha_' . $token, $this->secureHelper->salt($captchaLength));
 

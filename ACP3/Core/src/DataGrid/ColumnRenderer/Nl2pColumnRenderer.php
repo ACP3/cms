@@ -26,6 +26,6 @@ class Nl2pColumnRenderer extends AbstractColumnRenderer
      */
     protected function getDbValueIfExists(array $dbResultRow, $field): ?string
     {
-        return \array_key_exists($field, $dbResultRow) ? $this->stringFormatter->nl2p($dbResultRow[$field]) : null;
+        return !empty($dbResultRow[$field]) ? $this->stringFormatter->nl2p($dbResultRow[$field]) : null;
     }
 }

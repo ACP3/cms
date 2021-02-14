@@ -7,20 +7,19 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Model\Repository;
 
-use ACP3\Core;
+use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\Model\Repository\PublicationPeriodAwareTrait;
 
-class GalleryRepository extends Core\Model\Repository\AbstractRepository
+class GalleryRepository extends AbstractRepository
 {
-    use Core\Model\Repository\PublicationPeriodAwareTrait;
+    use PublicationPeriodAwareTrait;
 
-    const TABLE_NAME = 'gallery';
+    public const TABLE_NAME = 'gallery';
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function galleryExists(int $galleryId, string $time = '')
+    public function galleryExists(int $galleryId, string $time = ''): bool
     {
         $period = !empty($time) ? ' AND `active` = :active AND ' . $this->getPublicationPeriod() : '';
 
@@ -31,11 +30,9 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return bool|string
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getGalleryTitle(int $galleryId)
+    public function getGalleryTitle(int $galleryId): string
     {
         return $this->db->fetchColumn(
             'SELECT title FROM ' . $this->getTableName() . ' WHERE id = ?',
@@ -44,26 +41,22 @@ class GalleryRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @return bool|string
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function countAll(string $time)
+    public function countAll(string $time): int
     {
         $where = !empty($time) ? ' WHERE `active` = :active AND ' . $this->getPublicationPeriod() : '';
 
-        return $this->db->fetchColumn(
+        return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()}{$where}",
             ['active' => 1, 'time' => $time]
         );
     }
 
     /**
-     * @return array
-     *
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = !empty($time) ? ' WHERE `active` = :active AND ' . $this->getPublicationPeriod('g.') : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

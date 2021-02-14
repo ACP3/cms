@@ -16,7 +16,7 @@ use Doctrine\Common\Cache\PhpFileCache;
 class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & ApplicationPath
      */
     private $appPathMock;
     /**
@@ -29,12 +29,12 @@ class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
         $this->initializeMockObjects();
     }
 
-    private function initializeMockObjects()
+    private function initializeMockObjects(): void
     {
         $this->appPathMock = $this->createMock(ApplicationPath::class);
     }
 
-    private function initializeCacheDriverFactory($cacheDriver, $environment)
+    private function initializeCacheDriverFactory($cacheDriver, $environment): void
     {
         $this->cacheDriverFactory = new CacheDriverFactory(
             $this->appPathMock,
@@ -43,7 +43,7 @@ class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testCreateWithValidCacheDriver()
+    public function testCreateWithValidCacheDriver(): void
     {
         $this->setUpAppPathMockExpectations();
 
@@ -52,14 +52,14 @@ class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertInstanceOf(CacheProvider::class, $this->cacheDriverFactory->create('test'));
     }
 
-    private function setUpAppPathMockExpectations()
+    private function setUpAppPathMockExpectations(): void
     {
-        $this->appPathMock->expects($this->any())
+        $this->appPathMock->expects(self::any())
             ->method('getCacheDir')
             ->willReturn('cache/');
     }
 
-    public function testCreateInvalidCacheDriverThrowsException()
+    public function testCreateInvalidCacheDriverThrowsException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -70,7 +70,7 @@ class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
         $this->cacheDriverFactory->create('test');
     }
 
-    public function testCreateForceArrayCacheForDeveloperMode()
+    public function testCreateForceArrayCacheForDeveloperMode(): void
     {
         $this->setUpAppPathMockExpectations();
 
@@ -79,7 +79,7 @@ class CacheDriverFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertInstanceOf(ArrayCache::class, $this->cacheDriverFactory->create('test'));
     }
 
-    public function testCreateWithPhpFileCacheDriver()
+    public function testCreateWithPhpFileCacheDriver(): void
     {
         $this->setUpAppPathMockExpectations();
 

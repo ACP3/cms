@@ -195,7 +195,7 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             60 => [
                 "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'security_secret', '" . \uniqid(
-                    \mt_rand(),
+                    (string) \mt_rand(),
                     true
                 ) . "');",
             ],

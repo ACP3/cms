@@ -93,7 +93,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      * @throws \Doctrine\DBAL\DBALException
      * @throws \Exception
      */
-    public function logout($userId = 0)
+    public function logout($userId = 0): void
     {
         if ($userId === 0) {
             $userId = $this->userModel->getUserId();
@@ -219,7 +219,7 @@ class AuthenticationModel implements AuthenticationModelInterface
 
     protected function generateRememberMeToken(array $user): string
     {
-        return \hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . \uniqid(\mt_rand(), true));
+        return \hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . \uniqid((string) \mt_rand(), true));
     }
 
     /**

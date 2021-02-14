@@ -14,7 +14,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class RolesDataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = RoleRepository::TABLE_NAME;
+    public const TABLE_NAME = RoleRepository::TABLE_NAME;
 
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
     {
@@ -23,10 +23,7 @@ class RolesDataGridRepository extends AbstractDataGridRepository
         return $this->calculateFirstAndLastPage($results);
     }
 
-    /**
-     * @return array
-     */
-    private function calculateFirstAndLastPage(array $results)
+    private function calculateFirstAndLastPage(array $results): array
     {
         foreach ($results as $index => &$result) {
             $result['first'] = $this->isFirstInSet($index, $results);
@@ -78,7 +75,7 @@ class RolesDataGridRepository extends AbstractDataGridRepository
      */
     protected function addJoin(QueryBuilder $queryBuilder)
     {
-        $queryBuilder->join('main', $this->getTableName(), 'r', true);
+        $queryBuilder->join('main', $this->getTableName(), 'r');
     }
 
     protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)

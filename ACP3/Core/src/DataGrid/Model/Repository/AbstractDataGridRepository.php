@@ -18,6 +18,8 @@ abstract class AbstractDataGridRepository extends AbstractRepository
      * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
      *
      * @return array
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
     {
@@ -39,6 +41,8 @@ abstract class AbstractDataGridRepository extends AbstractRepository
      * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
      *
      * @return int
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function countAll(QueryOption ...$queryOptions)
     {

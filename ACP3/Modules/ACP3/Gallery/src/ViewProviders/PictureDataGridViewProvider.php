@@ -105,7 +105,7 @@ class PictureDataGridViewProvider
             ->setIdentifier('#gallery-pictures-data-grid')
             ->setResourcePathDelete('admin/gallery/pictures/delete/id_' . $id)
             ->setResourcePathEdit('admin/gallery/pictures/edit')
-            ->setQueryOptions(new QueryOption('gallery_id', $id))
+            ->setQueryOptions(new QueryOption('gallery_id', (string) $id))
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'picture'),
                 'type' => PictureColumnRenderer::class,

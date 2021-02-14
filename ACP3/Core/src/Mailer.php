@@ -141,6 +141,7 @@ class Mailer
             $this->view->assign('mail', $mail);
 
             $htmlDocument = new InlineStyle($this->view->fetchTemplate($message->getTemplate()));
+            /* @phpstan-ignore-next-line */
             $htmlDocument->applyStylesheet($htmlDocument->extractStylesheets());
 
             $this->phpMailer->msgHTML($htmlDocument->getHTML());

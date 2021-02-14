@@ -158,10 +158,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
         $this->compareResults($expected);
     }
 
-    /**
-     * @param string $expected
-     */
-    protected function compareResults($expected)
+    protected function compareResults(string $expected): void
     {
         $actual = $this->columnRenderer
             ->setIdentifier($this->identifier)

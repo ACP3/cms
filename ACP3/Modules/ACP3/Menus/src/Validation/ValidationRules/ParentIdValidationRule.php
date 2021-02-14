@@ -15,11 +15,8 @@ class ParentIdValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
      */
-    protected $menuItemRepository;
+    private $menuItemRepository;
 
-    /**
-     * ParentIdValidationRule constructor.
-     */
     public function __construct(MenuItemRepository $menuItemRepository)
     {
         $this->menuItemRepository = $menuItemRepository;
@@ -27,6 +24,8 @@ class ParentIdValidationRule extends AbstractValidationRule
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -40,14 +39,14 @@ class ParentIdValidationRule extends AbstractValidationRule
     /**
      * @param string $value
      *
-     * @return bool
+     * @throws \Doctrine\DBAL\DBALException
      */
-    protected function checkParentIdExists($value)
+    protected function checkParentIdExists($value): bool
     {
         if (empty($value)) {
             return true;
         }
 
-        return $this->menuItemRepository->menuItemExists($value);
+        return $this->menuItemRepository->menuItemExists((int) $value);
     }
 }

@@ -23,7 +23,7 @@ trait DisplayActionTrait
     /**
      * Outputs the requested module controller action.
      *
-     * @param string|array $actionResult
+     * @param string|array|null $actionResult
      */
     public function display($actionResult): Response
     {
