@@ -108,7 +108,10 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $this->render($column, $this->getValue($column, $dbResultRow));
     }
 
-    protected function render(array $column, ?string $value = ''): string
+    /**
+     * @return string|array
+     */
+    protected function render(array $column, ?string $value = '')
     {
         if ($this->getUseAjax()) {
             return $this->renderAjax($column, $value);
