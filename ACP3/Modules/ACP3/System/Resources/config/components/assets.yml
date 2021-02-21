@@ -10,7 +10,7 @@ services:
       - false
       - []
       - []
-      - ["polyfill.min.js"]
+      - ["partials/polyfill.min.js"]
       - "system"
 
   system.assets.jquery:

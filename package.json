@@ -72,7 +72,6 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
     "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/fontawesome-free": "^5.15.2",
     "bootbox": "^5.5.2",
@@ -85,6 +84,7 @@
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",
     "klaro": "^0.7.11",
+    "regenerator-runtime": "^0.13.7",
     "rich-filemanager": "git+https://github.com/tinogo/RichFilemanager.git#rework-dependencies",
     "shariff": "^3.2.1"
   },
