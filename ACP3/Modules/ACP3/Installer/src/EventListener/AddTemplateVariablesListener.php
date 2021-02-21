@@ -11,7 +11,6 @@ use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\I18n\ExtractFromPathTrait;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
@@ -19,8 +18,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddTemplateVariablesListener implements EventSubscriberInterface
 {
-    use ExtractFromPathTrait;
-
     /**
      * @var \ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath
      */

@@ -9,7 +9,6 @@ namespace ACP3\Core\Environment;
 
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
-use ACP3\Core\Component\Dto\ComponentDataDto;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\XML;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -60,35 +59,37 @@ class Theme implements ThemePathInterface
     private function setAvailableThemes(): void
     {
         $registeredThemes = ComponentRegistry::filterByType(ComponentRegistry::all(), [ComponentTypeEnum::THEME]);
+
+        foreach ($registeredThemes as $registeredTheme) {
+            $this->addTheme($registeredTheme->getPath(), $registeredTheme->getName());
+        }
+
         /**
          * @deprecated since version v5.15.0. To be removed with version 6.0.0. With ACP3 version 6.0.0 you will need add a registration.php with the themes root folder and add its composer.json.
          */
         $unregisteredThemes = \glob(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . 'designs' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'info.xml');
 
-        $filteredThemes = \array_unique(
-            \array_merge(
-                \array_map(static function (ComponentDataDto $registeredTheme) {
-                    return $registeredTheme->getPath();
-                }, $registeredThemes),
-                \array_map(static function (string $unregisteredTheme) {
-                    return \dirname($unregisteredTheme);
-                }, $unregisteredThemes)
-            )
-        );
+        foreach ($unregisteredThemes as $unregisteredTheme) {
+            $this->addTheme(\dirname($unregisteredTheme), \str_replace([\dirname($unregisteredTheme, 2), DIRECTORY_SEPARATOR], '', \dirname($unregisteredTheme)));
+        }
+    }
 
-        foreach ($filteredThemes as $themePath) {
-            $designInfo = $this->xml->parseXmlFile($themePath . DIRECTORY_SEPARATOR . 'info.xml', '/design');
-            if (!empty($designInfo)) {
-                $themeName = $this->getThemeInternalName($themePath);
-                $this->availableThemes[$themeName] = \array_merge(
-                    $designInfo,
-                    [
-                        'internal_name' => $themeName,
-                        'path' => $themePath,
-                        'web_path' => $this->appPath->getWebRoot() . \str_replace([ACP3_ROOT_DIR, '\\'], ['', '/'], $themeName),
-                    ]
-                );
-            }
+    private function addTheme(string $themePath, string $themeName): void
+    {
+        if (\array_key_exists($themeName, $this->availableThemes)) {
+            return;
+        }
+
+        $designInfo = $this->xml->parseXmlFile($themePath . DIRECTORY_SEPARATOR . 'info.xml', '/design');
+        if (!empty($designInfo)) {
+            $this->availableThemes[$themeName] = \array_merge(
+                $designInfo,
+                [
+                    'internal_name' => $themeName,
+                    'path' => $themePath,
+                    'web_path' => $this->appPath->getWebRoot() . \str_replace([ACP3_ROOT_DIR, '\\'], ['', '/'], $themeName),
+                ]
+            );
         }
     }
 

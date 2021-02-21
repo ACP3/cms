@@ -16,8 +16,6 @@ use Fisharebest\Localization\Locale;
 
 class DictionaryCache implements DictionaryCacheInterface
 {
-    use ExtractFromPathTrait;
-
     /**
      * @var Cache
      */
@@ -71,6 +69,7 @@ class DictionaryCache implements DictionaryCacheInterface
             [
                 ComponentTypeEnum::CORE,
                 ComponentTypeEnum::MODULE,
+                ComponentTypeEnum::INSTALLER,
             ]
         );
 
@@ -174,5 +173,10 @@ class DictionaryCache implements DictionaryCacheInterface
             'iso' => $languageIsoCode,
             'name' => Locale::create($languageIsoCode)->endonym(),
         ];
+    }
+
+    private function getLanguagePackIsoCode(string $filePath): string
+    {
+        return \pathinfo($filePath)['filename'];
     }
 }
