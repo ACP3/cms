@@ -7,11 +7,14 @@
 
 namespace ACP3\Core\I18n;
 
+/**
+ * @deprecated since version v5.15.0. To be removed with version 6.0.0.
+ */
 trait ExtractFromPathTrait
 {
     protected function getLanguagePackIsoCode(string $filePath): string
     {
-        return \substr($filePath, \strrpos($filePath, '/') + 1, -4);
+        return \pathinfo($filePath)['filename'];
     }
 
     protected function getModuleFromPath(string $filePath): string
