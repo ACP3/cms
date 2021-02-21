@@ -5,7 +5,7 @@
     "node": true,
     "es6": true
   },
-  "extends": ["eslint:recommended", "prettier", "prettier/babel"],
+  "extends": ["eslint:recommended", "prettier"],
   "globals": {
     "grecaptcha": false,
     "bootbox": false,
