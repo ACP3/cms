@@ -13,10 +13,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+-   [ALL] Increased PHPStan's level to level 5
 -   [Core] Moved the `acp3:assets:clear` and `acp3:cache:clear` CLI-commands into the System module
--   [Core] Replaced the abandoned `patchwork/utf8` Composer package to Symfony's mbstring polyfill
+-   [Core] Replaced the abandoned `patchwork/utf8` Composer package with Symfony's mbstring polyfill
 -   [Default themes] Moved the `<!--JAVASCRIPTS-->` comment from the `<body>`-end into the `<head>`. This is no problem, as all the javascripts assets are deferred.
--   [System] Removed `html5shiv`. Internet Explorer version <= 9 aren't supported anyway
+-   [System] Removed `html5shiv`. Internet Explorer versions <= 9 aren't supported anyway
 -   [Core] Reworked the `acp3:components:paths` CLI command to include more information in the resulting `component-paths.json`. Be sure run `php bin/console.php acp3:components:paths` after the ACP3 version update before running the gulp tasks, as the new JSON-file version isn't compatible with the old one!
 
 ### Deprecations
@@ -27,6 +28,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     -   `getModulesDir`
     -   `getDesignRootPathInternal`
     -   `setDesignRootPathInternal`
+-   [Core] Deprecate the `ExtractFrom PathTrait`
+
+### Fixed
+
+-   [System] Fixed saving the system settings
 
 ## [5.14.1] - 2021-02-06
 
