@@ -165,6 +165,6 @@ class AdminSettingsViewProvider
             $languages[$languagePack['iso']] = $languagePack['name'];
         }
 
-        return $this->formsHelper->choicesGenerator('languages', $languages, $currentLanguage);
+        return $this->formsHelper->choicesGenerator('language', $languages, $currentLanguage);
     }
 }
