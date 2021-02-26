@@ -3,30 +3,39 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
+import { mergeSettings } from "./utils";
+
 export class FormValidator {
   #isFormValid = true;
+  #defaults = {
+    scrollOffsetElement: null,
+  };
+  #settings;
+  #formElement;
 
-  preValidateForm(form) {
-    this.removeAllPreviousErrors();
-    this.checkFormElementsForErrors(form);
+  constructor(formElement, options) {
+    this.#settings = mergeSettings(this.#defaults, options, jQuery(formElement).data());
+    this.#formElement = formElement;
+  }
+
+  preValidateForm() {
+    this.checkFormElementsForErrors();
     this.#focusTabWithFirstErrorMessage();
     this.#scrollToFirstFormError();
 
     return this.#isFormValid;
   }
 
-  removeAllPreviousErrors() {
-    jQuery("form .form-group.has-error").removeClass("has-error").find(".validation-failed").remove();
-  }
+  checkFormElementsForErrors() {
+    this.#removeAllPreviousErrors();
 
-  checkFormElementsForErrors(form) {
-    for (const field of form.elements) {
+    for (const field of this.#formElement.elements) {
       if (field.nodeName !== "INPUT" && field.nodeName !== "TEXTAREA" && field.nodeName !== "SELECT") {
         continue;
       }
 
       if (!field.checkValidity()) {
-        this.#addErrorDecorationToFormGroup(jQuery(field));
+        this.#addErrorDecorationToFormGroup(field);
         this.#addErrorMessageToFormField(jQuery(field), field.validationMessage);
 
         this.#isFormValid = false;
@@ -34,30 +43,46 @@ export class FormValidator {
     }
   }
 
-  #addErrorDecorationToFormGroup($elem) {
-    $elem.closest(".form-group").addClass("has-error");
+  #removeAllPreviousErrors() {
+    const $form = jQuery(this.#formElement);
+
+    $form.find(".form-group.has-error").removeClass("has-error");
+    $form.find(".validation-failed").remove();
   }
 
-  #removeErrorMessageFromFormField($elem) {
-    $elem.closest("div").find(".validation-failed").remove();
+  /**
+   *
+   * @param {HTMLElement} elem
+   */
+  #addErrorDecorationToFormGroup(elem) {
+    elem.closest(".form-group")?.classList.add("has-error");
+  }
+
+  /**
+   *
+   * @param {HTMLElement} elem
+   */
+  #removeErrorMessageFromFormField(elem) {
+    const elementContainingValidationErrors = elem.closest("div")?.querySelector(".validation-failed");
+
+    elementContainingValidationErrors?.parentElement.removeChild(elementContainingValidationErrors);
   }
 
   #addErrorMessageToFormField($element, errorMessage) {
-    this.#removeErrorMessageFromFormField($element);
+    this.#removeErrorMessageFromFormField($element[0]);
 
     $element
       .closest("div:not(.input-group):not(.btn-group)")
       .append(
-        '<small class="help-block validation-failed"><i class="fas fa-exclamation-circle"></i> ' +
-          errorMessage +
-          "</small>"
+        `<small class="help-block validation-failed"><i class="fas fa-exclamation-circle"></i> ${errorMessage}</small>`
       );
   }
 
   #focusTabWithFirstErrorMessage() {
     if (jQuery(".tabbable").length > 0) {
-      let $elem = jQuery(".tabbable .form-group.has-error:first"),
-        tabId = $elem.closest(".tab-pane").prop("id");
+      const $elem = jQuery(".tabbable .form-group.has-error:first");
+      const tabId = $elem.closest(".tab-pane").prop("id");
+
       jQuery('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab("show");
 
       $elem.find(":input").focus();
@@ -90,7 +115,7 @@ export class FormValidator {
   }
 
   #prettyPrintResponseErrorMessages($form, $errorBox) {
-    this.removeAllPreviousErrors();
+    this.#removeAllPreviousErrors();
 
     // highlight all input fields where the validation has failed
     $errorBox.find("li").each((index, element) => {
@@ -102,7 +127,7 @@ export class FormValidator {
           $form.find("#" + errorClass) || $form.find('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
 
         if ($elem.length > 0) {
-          this.#addErrorDecorationToFormGroup($elem);
+          this.#addErrorDecorationToFormGroup($elem[0]);
 
           // Move the error message to the responsible input field(s)
           // and remove the list item from the error box container
@@ -124,7 +149,7 @@ export class FormValidator {
   }
 
   #scrollToFirstFormError() {
-    const $form = jQuery(this.element);
+    const $form = jQuery(this.#formElement);
     const $formErrors = $form.find(".form-group.has-error");
 
     if ($form.closest(".modal").length > 0) {
@@ -141,20 +166,15 @@ export class FormValidator {
 
     let offsetTop = $formErrors.offset().top;
 
-    if (this.settings.scrollOffsetElement) {
-      const $scrollOffsetElement = jQuery(this.settings.scrollOffsetElement);
+    if (this.#settings.scrollOffsetElement) {
+      const $scrollOffsetElement = jQuery(this.#settings.scrollOffsetElement);
 
       if ($scrollOffsetElement && $scrollOffsetElement.length > 0) {
         offsetTop -= $scrollOffsetElement.height();
       }
     }
 
-    jQuery("html, body").animate(
-      {
-        scrollTop: offsetTop,
-      },
-      "fast"
-    );
+    window.scrollTo({ top: offsetTop, behavior: "smooth" });
   }
 
   #isElementInViewport(element) {
@@ -163,7 +183,7 @@ export class FormValidator {
       element = element[0];
     }
 
-    const $scrollOffsetElement = jQuery(this.settings.scrollOffsetElement);
+    const $scrollOffsetElement = jQuery(this.#settings.scrollOffsetElement);
     let offsetTop = 0;
 
     if ($scrollOffsetElement) {

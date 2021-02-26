@@ -16,7 +16,7 @@ import { FormValidator } from "../lib/form-validator";
         $.data(
           this,
           "plugin_" + pluginName,
-          new AjaxForm(this, new LoadingLayer(this, options), new FormValidator(), options)
+          new AjaxForm(this, new LoadingLayer(this, options), new FormValidator(this, options), options)
         );
       }
     });
