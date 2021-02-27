@@ -35,6 +35,12 @@ test:php74-unit:
   image: registry.gitlab.com/acp3/php-docker:7.4
   coverage: ~
 
+test:php80-unit:
+  extends: test:php72-unit
+  image: registry.gitlab.com/acp3/php-docker:8.0
+  coverage: ~
+  allow_failure: true
+
 test:php-cs-fixer:
   image: registry.gitlab.com/acp3/php-docker:7.2
   stage: test
