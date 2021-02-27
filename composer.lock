@@ -8,21 +8,21 @@
     "packages": [
         {
             "name": "acp3/composer-installer",
-            "version": "v1.2.1",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/ACP3/composer-installer.git",
-                "reference": "43113fea988dc6913236e01dc89030d2f7e0bfef"
+                "reference": "430a188eeac1fd89ee23bf357cefdf58d0f08d30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/ACP3%2Fcomposer-installer/repository/archive.zip?sha=43113fea988dc6913236e01dc89030d2f7e0bfef",
-                "reference": "43113fea988dc6913236e01dc89030d2f7e0bfef",
+                "url": "https://gitlab.com/api/v4/projects/ACP3%2Fcomposer-installer/repository/archive.zip?sha=430a188eeac1fd89ee23bf357cefdf58d0f08d30",
+                "reference": "430a188eeac1fd89ee23bf357cefdf58d0f08d30",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
-                "php": ">=7.1"
+                "php": ">=7.2"
             },
             "require-dev": {
                 "composer/composer": "^1.0 || ^2.0"
@@ -51,7 +51,7 @@
                 "email": "mail@acp3-cms.net",
                 "issues": "https://github.com/ACP3/composer-installer/issues"
             },
-            "time": "2020-11-22T21:55:24+00:00"
+            "time": "2021-02-27T19:27:46+00:00"
         },
         {
             "name": "ckeditor/ckeditor",

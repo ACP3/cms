@@ -14,7 +14,7 @@
     "issues": "https://gitlab.com/ACP3/cms/issues"
   },
   "require": {
-    "acp3/composer-installer": "^1.0",
+    "acp3/composer-installer": "^1.2.2",
     "acp3/core": "^5.15.0",
     "acp3/module-installer": "^5.15.0",
     "acp3/theme-installer": "^5.15.0"

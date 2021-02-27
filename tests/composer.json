@@ -14,7 +14,7 @@
     "issues": "https://gitlab.com/ACP3/cms/issues"
   },
   "require": {
-    "acp3/composer-installer": "^1.0",
+    "acp3/composer-installer": "^1.2.2",
     "dms/phpunit-arraysubset-asserts": "^0.1.1",
     "phpunit/phpunit": "^8.5"
   },
