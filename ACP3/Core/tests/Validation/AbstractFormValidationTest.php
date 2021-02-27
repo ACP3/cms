@@ -19,20 +19,17 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-/**
- * Class AbstractFormValidationTest.
- */
 abstract class AbstractFormValidationTest extends TestCase
 {
-    const XSRF_FORM_TOKEN = 'foo-bar-baz';
-    const XSRF_QUERY_STRING = 'module/controller/action/';
+    public const XSRF_FORM_TOKEN = 'foo-bar-baz';
+    public const XSRF_QUERY_STRING = 'module/controller/action/';
 
     /**
      * @var \ACP3\Core\Validation\AbstractFormValidation
      */
     protected $formValidation;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & EventDispatcher
      */
     protected $eventDispatcherMock;
 
@@ -55,7 +52,7 @@ abstract class AbstractFormValidationTest extends TestCase
 
     abstract protected function initializeFormValidation();
 
-    protected function initializeFormValidationDependencies()
+    protected function initializeFormValidationDependencies(): void
     {
         $this->translatorMock = $this->createMock(Translator::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
@@ -64,10 +61,7 @@ abstract class AbstractFormValidationTest extends TestCase
         $this->validator = new Validator($this->eventDispatcherMock, $this->container);
     }
 
-    /**
-     * @return FormTokenValidationRule
-     */
-    protected function setUpFormTokenRule()
+    protected function setUpFormTokenRule(): FormTokenValidationRule
     {
         return new FormTokenValidationRule(
             $this->setUpRequestMock(),
@@ -113,7 +107,7 @@ abstract class AbstractFormValidationTest extends TestCase
      */
     abstract public function invalidFormDataProvider();
 
-    public function testValidFormData()
+    public function testValidFormData(): void
     {
         $this->expectNotToPerformAssertions();
 
@@ -122,7 +116,7 @@ abstract class AbstractFormValidationTest extends TestCase
         }
     }
 
-    public function testInvalidFormData()
+    public function testInvalidFormData(): void
     {
         $this->expectException(ValidationFailedException::class);
 
@@ -131,9 +125,9 @@ abstract class AbstractFormValidationTest extends TestCase
         }
     }
 
-    private function setRequestMockExpectations(MockObject $requestMock)
+    private function setRequestMockExpectations(MockObject $requestMock): void
     {
-        $requestMock->expects($this->any())
+        $requestMock->expects(self::any())
             ->method('getPost')
             ->willReturn(
                 new ParameterBag(
@@ -141,14 +135,14 @@ abstract class AbstractFormValidationTest extends TestCase
                 )
             );
 
-        $requestMock->expects($this->any())
+        $requestMock->expects(self::any())
             ->method('getQuery')
             ->willReturn(self::XSRF_QUERY_STRING);
     }
 
-    private function setSessionMockExpectations(MockObject $sessionMock)
+    private function setSessionMockExpectations(MockObject $sessionMock): void
     {
-        $sessionMock->expects($this->any())
+        $sessionMock->expects(self::any())
             ->method('get')
             ->with(SessionConstants::XSRF_TOKEN_NAME)
             ->willReturn(self::XSRF_FORM_TOKEN);

@@ -18,11 +18,11 @@ use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsVali
 class SubscribeFormValidationTest extends AbstractFormValidationTest
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & AccountRepository
      */
     private $accountRepositoryMock;
 
-    protected function initializeFormValidation()
+    protected function initializeFormValidation(): void
     {
         $this->formValidation = new SubscribeFormValidation(
             $this->translatorMock,
@@ -30,7 +30,7 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
         );
     }
 
-    protected function registerValidationRules()
+    protected function registerValidationRules(): void
     {
         $this->container->set(FormTokenValidationRule::class, $this->setUpFormTokenRule());
         $this->container->set(InArrayValidationRule::class, new InArrayValidationRule());
@@ -40,10 +40,7 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
         $this->container->set(AccountNotExistsValidationRule::class, new AccountNotExistsValidationRule($this->accountRepositoryMock));
     }
 
-    /**
-     * @return array
-     */
-    public function validFormDataProvider()
+    public function validFormDataProvider(): array
     {
         return [
             [
@@ -71,10 +68,7 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function invalidFormDataProvider()
+    public function invalidFormDataProvider(): array
     {
         return [
             [
