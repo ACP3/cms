@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+-   [ALL] Added support for Composer 2.x
 -   [ALL] Increased PHPStan's level to level 5
 -   [Core] Moved the `acp3:assets:clear` and `acp3:cache:clear` CLI-commands into the System module
 -   [Core] Replaced the abandoned `patchwork/utf8` Composer package with Symfony's mbstring polyfill
@@ -28,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     -   `getModulesDir`
     -   `getDesignRootPathInternal`
     -   `setDesignRootPathInternal`
--   [Core] Deprecate the `ExtractFrom PathTrait`
+-   [Core] Deprecate the `ExtractFromPathTrait`
 
 ### Fixed
 
