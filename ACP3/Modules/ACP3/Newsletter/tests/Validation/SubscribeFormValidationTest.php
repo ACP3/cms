@@ -43,21 +43,21 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
     public function validFormDataProvider(): array
     {
         return [
-            [
+            'with-names' => [
                 SessionConstants::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'salutation' => '',
                 'first_name' => 'Foo',
                 'last_name' => 'bar',
             ],
-            [
+            'without-names' => [
                 SessionConstants::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'salutation' => '',
                 'first_name' => '',
                 'last_name' => '',
             ],
-            [
+            'with-captcha' => [
                 SessionConstants::XSRF_TOKEN_NAME => self::XSRF_FORM_TOKEN,
                 'mail' => 'test@example.com',
                 'salutation' => '',

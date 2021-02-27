@@ -16,10 +16,7 @@ class NumberGreaterThanValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
-    public function validationRuleProvider()
+    public function validationRuleProvider(): array
     {
         return [
             'valid-data-string' => ['2', '', ['value' => 1], true],

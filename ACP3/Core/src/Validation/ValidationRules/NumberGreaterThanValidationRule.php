@@ -20,6 +20,6 @@ class NumberGreaterThanValidationRule extends AbstractValidationRule
 
         $comparator = $extra['value'] ?? 0;
 
-        return $data > $comparator;
+        return (float) $data > $comparator;
     }
 }

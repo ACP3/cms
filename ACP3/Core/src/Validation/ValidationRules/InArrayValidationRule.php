@@ -27,14 +27,12 @@ class InArrayValidationRule extends AbstractValidationRule
 
     /**
      * @param string|array $data
-     *
-     * @return bool
      */
-    protected function checkInArray($data, string $field, array $haystack)
+    protected function checkInArray($data, string $field, array $haystack): bool
     {
         if (isset($data[$field]) && \is_array($data[$field])) {
             foreach ($data[$field] as $row) {
-                if (\in_array($row, $haystack) === false) {
+                if (\in_array($row, $haystack, false) === false) {
                     return false;
                 }
             }
@@ -42,6 +40,6 @@ class InArrayValidationRule extends AbstractValidationRule
             return true;
         }
 
-        return \in_array($data, $haystack);
+        return \in_array($data, $haystack, false);
     }
 }

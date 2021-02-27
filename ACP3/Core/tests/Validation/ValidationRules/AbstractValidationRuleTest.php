@@ -7,16 +7,21 @@
 
 namespace ACP3\Core\Validation\ValidationRules;
 
+use ACP3\Core\Validation\Validator;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
+abstract class AbstractValidationRuleTest extends TestCase
 {
     /**
-     * @var \ACP3\Core\Validation\ValidationRules\ValidationRuleInterface
+     * @var ValidationRuleInterface
      */
     protected $validationRule;
-
+    /**
+     * @var Validator & MockObject
+     */
     protected $validator;
 
     protected function setup(): void
@@ -27,7 +32,7 @@ abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
         $container = new Container();
 
         $this->validator = $this
-            ->getMockBuilder(\ACP3\Core\Validation\Validator::class)
+            ->getMockBuilder(Validator::class)
             ->setConstructorArgs([$eventDispatcherMock, $container])
             ->getMock();
 
@@ -63,7 +68,7 @@ abstract class AbstractValidationRuleTest extends \PHPUnit\Framework\TestCase
     public function testValidate($data, $field, $extra, $expected)
     {
         if ($expected === true) {
-            $this->validator->expects($this->never())
+            $this->validator->expects(self::never())
                 ->method('addError');
         } else {
             $this->validator->expects(self::once())

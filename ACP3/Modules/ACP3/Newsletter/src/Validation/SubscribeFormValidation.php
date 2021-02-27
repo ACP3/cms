@@ -27,7 +27,7 @@ class SubscribeFormValidation extends AbstractFormValidation
                     'field' => 'salutation',
                     'message' => $this->translator->t('newsletter', 'select_salutation'),
                     'extra' => [
-                        'haystack' => [0, 1, 2],
+                        'haystack' => ['', 0, 1, 2],
                     ],
                 ]
             )
