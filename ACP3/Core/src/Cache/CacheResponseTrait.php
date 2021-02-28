@@ -39,7 +39,7 @@ trait CacheResponseTrait
         $varyHeaderName = 'X-User-Context-Hash';
 
         $response
-            ->setVary($varyHeaderName)
+            ->setVary([$varyHeaderName, 'X-Requested-With'])
             ->setSharedMaxAge(1)
             ->headers->add([
                 $varyHeaderName => $this->getRequest()->getSymfonyRequest()->headers->get($varyHeaderName),
