@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.15.0] - 2021-2-27
+## [Unreleased]
+
+### Fixed
+
+-   [Articles] Fixed the custom article layout retrieval, when editing an article
+
+## [5.15.0] - 2021-02-27
 
 ### Added
 
