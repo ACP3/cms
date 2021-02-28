@@ -243,7 +243,9 @@ module.exports = (gulp) => {
         .pipe(
           change((content) => {
             const currentDate = new Date();
-            const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+            const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+              .toString()
+              .padStart(2, "0")}-${currentDate.getDate().toString().padStart(2, "0")}`;
             return content
               .replace("## [Unreleased]", `## [${newVersion}] - ${formattedDate}`)
               .replace(
