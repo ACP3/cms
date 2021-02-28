@@ -87,11 +87,11 @@ class AdminArticleEditViewProvider
     protected function getAvailableLayouts(): array
     {
         $paths = [
-            $this->theme->getDesignPathInternal() . '*/View/*/layout.tpl',
-            $this->theme->getDesignPathInternal() . '*/View/*/layout.*.tpl',
-            $this->theme->getDesignPathInternal() . '*/View/layout.tpl',
-            $this->theme->getDesignPathInternal() . '*/View/layout.*.tpl',
-            $this->theme->getDesignPathInternal() . 'layout.*.tpl',
+            $this->theme->getDesignPathInternal() . '/*/View/*/layout.tpl',
+            $this->theme->getDesignPathInternal() . '/*/View/*/layout.*.tpl',
+            $this->theme->getDesignPathInternal() . '/*/View/layout.tpl',
+            $this->theme->getDesignPathInternal() . '/*/View/layout.*.tpl',
+            $this->theme->getDesignPathInternal() . '/layout.*.tpl',
         ];
 
         $layouts = [];
@@ -100,7 +100,7 @@ class AdminArticleEditViewProvider
         }
 
         $layouts = \array_map(function ($value) {
-            return \str_replace([$this->theme->getDesignPathInternal(), '/View/'], ['', '/'], $value);
+            return \str_replace([$this->theme->getDesignPathInternal() . '/', '/View/'], ['', '/'], $value);
         }, $layouts);
 
         $layouts = \array_combine($layouts, $layouts);
