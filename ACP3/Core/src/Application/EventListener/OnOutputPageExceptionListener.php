@@ -34,7 +34,7 @@ class OnOutputPageExceptionListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            OutputPageExceptionEvent::NAME => ['__invoke'],
+            OutputPageExceptionEvent::NAME => ['__invoke', 1024],
         ];
     }
 }
