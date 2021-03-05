@@ -14,8 +14,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
-use JSMin\JSMin;
-use Psr\Log\LoggerInterface;
 
 abstract class AbstractConcatRendererStrategy implements RendererStrategyInterface
 {
@@ -47,13 +45,8 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
      * @var SettingsInterface
      */
     private $config;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
     public function __construct(
-        LoggerInterface $logger,
         Assets $assets,
         Assets\Libraries $libraries,
         ApplicationPath $appPath,
@@ -68,7 +61,6 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         $this->config = $config;
         $this->modules = $modules;
         $this->fileResolver = $fileResolver;
-        $this->logger = $logger;
         $this->libraries = $libraries;
     }
 
@@ -136,21 +128,18 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
 
     private function saveMinifiedAsset(array $files, string $path): void
     {
-        $options = [
-            'options' => [
-                \Minify::TYPE_CSS => [\Minify_CSSmin::class, 'minify'],
-                \Minify::TYPE_JS => [JSMin::class, 'minify'],
-            ],
-        ];
-
-        $minify = new \Minify(new \Minify_Cache_Null(), $this->logger);
-        $content = $minify->combine($files, $options);
+        $content = [];
+        foreach ($files as $file) {
+            $content[] = \file_get_contents($file) . "\n";
+        }
 
         $this->createAssetsDirectory();
 
         // Write the contents of the file to the uploads folder
-        \file_put_contents($path, $content, LOCK_EX);
+        \file_put_contents($path, $this->compress(\implode("\n", $content)), LOCK_EX);
     }
+
+    abstract protected function compress(string $assetContent): string;
 
     private function buildAssetPath(string $filenameHash, int $lastGenerated): string
     {

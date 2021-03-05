@@ -4,7 +4,6 @@ services:
     bind:
       $assetRendererStrategyServiceLocator: "@core.assets.renderer.strategy.service_locator"
       $applicationMode: "%core.environment%"
-      $logger: "@core.assets.logger"
       $systemCache: "@core.cache.system"
 
   core.assets.event_listener.static_assets_listener:
@@ -22,16 +21,11 @@ services:
     arguments:
       $cache: "@core.cache.system"
 
-  core.assets.logger:
-    class: Psr\Log\LoggerInterface
-    factory: ["@core.logger.logger_factory", "create"]
-    arguments:
-      - "assets"
+  tubalmartin\CssMin\Minifier: ~
 
   core.assets.abstract_minifier:
     class: ACP3\Core\Assets\Renderer\Strategies\AbstractConcatRendererStrategy
     arguments:
-      - "@core.assets.logger"
       - "@core.assets"
       - "@core.assets.libraries"
       - "@core.environment.application_path"

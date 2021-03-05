@@ -7,16 +7,43 @@
 
 namespace ACP3\Core\Assets\Renderer\Strategies;
 
+use ACP3\Core\Assets;
 use ACP3\Core\Assets\Entity\LibraryEntity;
+use ACP3\Core\Assets\FileResolver;
+use ACP3\Core\Cache;
+use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Modules;
+use ACP3\Core\Settings\SettingsInterface;
+use tubalmartin\CssMin\Minifier;
 
 class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implements CSSRendererStrategyInterface
 {
     protected const ASSETS_PATH_CSS = 'Assets/css';
 
     /**
+     * @var \tubalmartin\CssMin\Minifier
+     */
+    private $minifier;
+
+    /**
      * @var array
      */
     protected $stylesheets = [];
+
+    public function __construct(
+        Minifier $minifier,
+        Assets $assets,
+        Assets\Libraries $libraries,
+        ApplicationPath $appPath,
+        Cache $systemCache,
+        SettingsInterface $config,
+        Modules $modules,
+        FileResolver $fileResolver
+    ) {
+        parent::__construct($assets, $libraries, $appPath, $systemCache, $config, $modules, $fileResolver);
+
+        $this->minifier = $minifier;
+    }
 
     protected function getAssetGroup(): string
     {
@@ -148,5 +175,10 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     public function renderHtmlElement(string $layout = 'layout'): string
     {
         return '<link rel="stylesheet" type="text/css" href="' . $this->getURI($layout) . '">' . "\n";
+    }
+
+    protected function compress(string $assetContent): string
+    {
+        return $this->minifier->run($assetContent);
     }
 }

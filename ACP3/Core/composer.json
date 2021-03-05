@@ -14,7 +14,7 @@
     "issues": "https://gitlab.com/ACP3/cms/issues"
   },
   "require": {
-    "php": "^7.2.5",
+    "php": "^7.3.0",
     "ext-pdo": "*",
     "ext-pdo_mysql": "*",
     "doctrine/dbal": "^2.5",
@@ -26,7 +26,6 @@
     "marc1706/fast-image-size": "^1.1",
     "marcj/topsort": "^1.1",
     "monolog/monolog": "^2.0.0",
-    "mrclay/minify": "^3.0",
     "phpmailer/phpmailer": "^6.1.1",
     "php-http/guzzle6-adapter": "^2.0",
     "psr/container": "~1.0.0",
@@ -44,7 +43,8 @@
     "symfony/polyfill-mbstring": "v1.22.0",
     "symfony/proxy-manager-bridge": "^5.1.0",
     "symfony/yaml": "^5.1.0",
-    "toflar/psr6-symfony-http-cache-store": "^3.0"
+    "toflar/psr6-symfony-http-cache-store": "^3.0",
+    "tubalmartin/cssmin": "^v4.1.1"
   },
   "suggest": {
     "ext-gd": "Allows image manipulations (resizing)"

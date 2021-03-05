@@ -111,4 +111,9 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
     {
         return "<script defer src=\"{$this->getURI($layout)}\"></script>\n";
     }
+
+    protected function compress(string $assetContent): string
+    {
+        return $assetContent;
+    }
 }

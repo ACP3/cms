@@ -1,5 +1,5 @@
 release-artifact:
-  image: registry.gitlab.com/acp3/php-docker:7.2
+  image: registry.gitlab.com/acp3/php-docker:7.3
   stage: package
   script:
     - composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs

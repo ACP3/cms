@@ -1,5 +1,5 @@
-test:php72-unit:
-  image: registry.gitlab.com/acp3/php-docker:7.2
+test:php73-unit:
+  image: registry.gitlab.com/acp3/php-docker:7.3
   stage: test
   cache:
     key: $CI_JOB_NAME
@@ -25,24 +25,19 @@ test:php72-unit:
       - tests/phpunit.dist.xml
       - .gitlab-ci.yml
 
-test:php73-unit:
-  extends: test:php72-unit
-  image: registry.gitlab.com/acp3/php-docker:7.3
-  coverage: ~
-
 test:php74-unit:
-  extends: test:php72-unit
+  extends: test:php73-unit
   image: registry.gitlab.com/acp3/php-docker:7.4
   coverage: ~
 
 test:php80-unit:
-  extends: test:php72-unit
+  extends: test:php73-unit
   image: registry.gitlab.com/acp3/php-docker:8.0
   coverage: ~
   allow_failure: true
 
 test:php-cs-fixer:
-  image: registry.gitlab.com/acp3/php-docker:7.2
+  image: registry.gitlab.com/acp3/php-docker:7.3
   stage: test
   cache:
     key: $CI_JOB_NAME
@@ -62,7 +57,7 @@ test:php-cs-fixer:
       - .gitlab-ci.yml
 
 test:phpstan:
-  image: registry.gitlab.com/acp3/php-docker:7.2
+  image: registry.gitlab.com/acp3/php-docker:7.3
   stage: test
   cache:
     key: $CI_JOB_NAME
