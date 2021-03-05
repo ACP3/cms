@@ -77,7 +77,7 @@ class SchemaUpdater
     ): void {
         \ksort($schemaUpdates);
 
-        $latestSchemaVersion = array_key_last($schemaUpdates);
+        $latestSchemaVersion = \array_key_last($schemaUpdates);
 
         foreach ($schemaUpdates as $newSchemaVersion => $queries) {
             // Do schema updates only, if the current schema version is older then the new one

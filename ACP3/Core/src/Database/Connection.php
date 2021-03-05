@@ -103,13 +103,15 @@ class Connection
         ?string $cacheKey = null
     ): array {
         $stmt = $this->executeQuery($statement, $params, $types, $cache, $lifetime, $cacheKey);
-        $data = $stmt->fetchAll();
-        $stmt->closeCursor();
+        $data = $stmt->fetchAllAssociative();
+        $stmt->free();
 
         return $data;
     }
 
     /**
+     * @deprecated since version 5.16.0. To be removed with version 6.0.0. Use fetchAssoc() or executeQuery() instead.
+     *
      * @return mixed
      *
      * @throws \Doctrine\DBAL\DBALException
@@ -124,19 +126,21 @@ class Connection
      */
     public function fetchAssoc(string $statement, array $params = [], array $types = []): array
     {
-        $result = $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_ASSOC);
+        $result = $this->executeQuery($statement, $params, $types)->fetchAssociative();
 
         return $result !== false ? $result : [];
     }
 
     /**
+     * @deprecated The argument $column deprecated since version 5.16.0 and will be removed in version 6.0.0.
+     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\DBALException
      */
     public function fetchColumn(string $statement, array $params = [], int $column = 0, array $types = [])
     {
-        return $this->executeQuery($statement, $params, $types)->fetchColumn($column);
+        return $this->executeQuery($statement, $params, $types)->fetchOne();
     }
 
     /**
