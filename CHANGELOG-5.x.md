@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+-   [Core] Lock the `psr/container` package to version ~1.0.0, as there seems to be a BC break with version 1.1.0
+
 ## [5.15.4] - 2021-03-05
 
 ### Fixed
