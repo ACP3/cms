@@ -11,6 +11,9 @@ services:
       - acp3-cms
     volumes:
       - .:/var/www/html/
+    environment:
+      - ACP3_APPLICATION_MODE=dev
+      - XDEBUG_MODE=debug
     container_name: acp3-app
     restart: on-failure
 
@@ -23,6 +26,8 @@ services:
       - app
     networks:
       - acp3-cms
+    ports:
+      - "80:80"
     volumes:
       - ./build/docker/apache/vhost.conf:/usr/local/apache2/conf/sites-enabled/vhost.conf:ro
       - ./:/var/www/html/:ro
@@ -33,6 +38,8 @@ services:
     image: mysql:5.7
     networks:
       - acp3-cms
+    ports:
+      - "3306:3306"
     volumes:
       - acp3-data-mysql:/var/lib/mysql/
       - ./build/docker/mysql/dump:/docker-entrypoint-initdb.d
