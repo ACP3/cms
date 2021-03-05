@@ -6,6 +6,7 @@
 /.component-paths.json
 /.eslintcache
 /.stylelintcache
+/auth.json
 /docker-compose.override.yml
 /ACP3/config.yml
 /build/docker/mysql/dump/
