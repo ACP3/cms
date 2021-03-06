@@ -7,7 +7,7 @@
   "scripts": {
     "css-lint": "stylelint \"**/*.{css,less,scss}\" --cache --cache-location .stylelintcache --rd",
     "css-lint:fix": "npm run css-lint -- --fix",
-    "eslint": "node_modules/.bin/eslint -c .eslintrc.json --cache --cache-location=.eslintcache ./",
+    "eslint": "eslint -c .eslintrc.json --cache --cache-location=.eslintcache .",
     "eslint-fix": "npm run eslint -- --fix",
     "prettier": "prettier --check **/*.{css,js,json,less,md,scss,yml}",
     "prettier:fix": "prettier --write **/*.{css,js,json,less,md,scss,yml}"
