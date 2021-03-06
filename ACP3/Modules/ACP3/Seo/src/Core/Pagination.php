@@ -94,7 +94,7 @@ class Pagination extends \ACP3\Core\Pagination
         $seoSettings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         if ($seoSettings['index_paginated_content'] === IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY) {
-            $this->metaStatements->setPageRobotsSettings('noindex,follow');
+            $this->metaStatements->setPageRobotsSettings(MetaStatementsServiceInterface::NOINDEX_FOLLOW);
         }
     }
 
