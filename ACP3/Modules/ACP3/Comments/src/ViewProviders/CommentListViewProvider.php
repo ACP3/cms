@@ -60,7 +60,7 @@ class CommentListViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws InvalidPageException
      */
     public function __invoke(string $moduleName, int $entryId): array

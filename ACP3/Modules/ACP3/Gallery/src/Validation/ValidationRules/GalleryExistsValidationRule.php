@@ -25,7 +25,7 @@ class GalleryExistsValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function isValid($data, $field = '', array $extra = [])
     {

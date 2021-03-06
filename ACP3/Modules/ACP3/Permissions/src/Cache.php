@@ -63,7 +63,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function saveResourcesCache()
     {
@@ -138,7 +138,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getRulesCache(array $roles)
     {
@@ -153,7 +153,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function saveRulesCache(array $roles)
     {

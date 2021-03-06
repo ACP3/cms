@@ -31,7 +31,7 @@ class UpdatePictureCacheOnModelAfterSaveListener implements EventSubscriberInter
 
     /**
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(ModelSaveEvent $event): void
     {

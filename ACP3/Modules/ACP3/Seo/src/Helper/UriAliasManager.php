@@ -35,7 +35,7 @@ class UriAliasManager
     /**
      * Deletes the given URL alias.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function deleteUriAlias(string $path): bool
     {

@@ -41,7 +41,7 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(ModelSaveEvent $event): void
     {

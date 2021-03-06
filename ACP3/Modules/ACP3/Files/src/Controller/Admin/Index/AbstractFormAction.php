@@ -29,7 +29,7 @@ abstract class AbstractFormAction extends AbstractWidgetAction implements Core\C
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function fetchCategoryId(array $formData): int
     {

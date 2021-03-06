@@ -61,7 +61,7 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
      *
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function save(array $rawData, $entryId = null)
     {
@@ -99,7 +99,7 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
      *
      * @return int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function delete($entryId)
     {
@@ -132,7 +132,7 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     /**
      * {@inheritDoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function moveUp(int $id): void
     {
@@ -142,7 +142,7 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     /**
      * {@inheritDoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function moveDown(int $id): void
     {
@@ -150,7 +150,7 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function move(int $id, string $direction): void
     {

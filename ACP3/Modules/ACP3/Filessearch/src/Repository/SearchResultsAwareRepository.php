@@ -44,7 +44,7 @@ class SearchResultsAwareRepository extends AbstractRepository implements SearchR
      *
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllSearchResults($fields, $searchTerm, $sortDirection)
     {

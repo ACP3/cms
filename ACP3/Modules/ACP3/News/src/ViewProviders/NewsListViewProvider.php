@@ -108,7 +108,7 @@ class NewsListViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(?int $categoryId): array
     {
@@ -139,7 +139,7 @@ class NewsListViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function fetchNewsCount(int $categoryId, string $time): int
     {
@@ -154,7 +154,7 @@ class NewsListViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function fetchNews(int $categoryId, string $time): array
     {
@@ -190,7 +190,7 @@ class NewsListViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function addBreadcrumbStep(int $categoryId, bool $showCategoryInBreadcrumb): void
     {

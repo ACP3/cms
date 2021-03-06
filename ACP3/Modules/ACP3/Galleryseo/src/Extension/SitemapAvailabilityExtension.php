@@ -63,7 +63,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function fetchSitemapUrls($isSecure = null)
     {

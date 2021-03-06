@@ -33,7 +33,7 @@ class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controll
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $id): array
     {

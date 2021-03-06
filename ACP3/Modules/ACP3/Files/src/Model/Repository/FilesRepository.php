@@ -30,7 +30,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExists(int $fileId, string $time = ''): bool
     {
@@ -43,7 +43,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int $fileId): array
     {
@@ -54,7 +54,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getFileById(int $fileId): string
     {
@@ -62,7 +62,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAll(string $time = '', ?int $categoryId = null): int
     {
@@ -76,7 +76,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllByCategoryId(int $categoryId, string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
@@ -90,7 +90,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
@@ -104,7 +104,7 @@ class FilesRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getMaxSort(): int
     {

@@ -30,7 +30,7 @@ class Helpers
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function updateUserRoles(array $roles, int $userId): bool
     {

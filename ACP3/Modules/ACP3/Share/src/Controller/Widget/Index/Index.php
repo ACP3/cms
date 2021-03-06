@@ -32,7 +32,7 @@ class Index extends AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(string $path, string $template = ''): Response
     {

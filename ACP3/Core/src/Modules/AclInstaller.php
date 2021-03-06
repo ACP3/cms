@@ -69,7 +69,7 @@ class AclInstaller implements InstallerInterface
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function install(SchemaInterface $schema, $mode = self::INSTALL_RESOURCES_AND_RULES)
     {
@@ -87,7 +87,7 @@ class AclInstaller implements InstallerInterface
     /**
      * Inserts a new resource into the database.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function insertAclResources(SchemaInterface $schema): void
     {
@@ -118,7 +118,7 @@ class AclInstaller implements InstallerInterface
     /**
      * Insert new acl user rules.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function insertAclRules(string $moduleName): void
     {

@@ -16,7 +16,7 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     public const TABLE_NAME = 'gallery_pictures';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function pictureExists(int $pictureId, string $time = ''): bool
     {
@@ -29,7 +29,7 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int $pictureId): array
     {
@@ -40,7 +40,7 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getGalleryIdFromPictureId(int $pictureId): int
     {
@@ -51,7 +51,7 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getLastPictureByGalleryId(int $galleryId): int
     {
@@ -62,7 +62,7 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getPicturesByGalleryId(int $galleryId): array
     {
@@ -80,7 +80,7 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getPreviousPictureId(int $pictureNumber, int $galleryId): int
     {
@@ -91,7 +91,7 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getNextPictureId(int $pictureNumber, int $galleryId): int
     {
@@ -102,7 +102,7 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getFileById(int $pictureId): string
     {
@@ -113,7 +113,7 @@ class PictureRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function updatePicturesNumbers(int $pictureNumber, int $galleryId): int
     {

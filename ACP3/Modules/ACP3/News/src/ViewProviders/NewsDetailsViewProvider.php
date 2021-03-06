@@ -73,7 +73,7 @@ class NewsDetailsViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $newsId): array
     {
@@ -97,7 +97,7 @@ class NewsDetailsViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function addBreadcrumbSteps(array $news, int $categoryId, bool $showCategoriesInBreadcrumb): void
     {

@@ -33,7 +33,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getCache(string $moduleName)
     {
@@ -52,7 +52,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function saveCache(string $moduleName)
     {

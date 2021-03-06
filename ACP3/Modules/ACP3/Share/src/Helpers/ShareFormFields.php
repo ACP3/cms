@@ -58,7 +58,7 @@ class ShareFormFields
     /**
      * Returns the sharing form fields.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function formFields(string $path = ''): array
     {
@@ -86,7 +86,7 @@ class ShareFormFields
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function getData(string $path): array
     {

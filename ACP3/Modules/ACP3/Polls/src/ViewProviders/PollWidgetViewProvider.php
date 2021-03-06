@@ -30,7 +30,7 @@ class PollWidgetViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $poll): array
     {

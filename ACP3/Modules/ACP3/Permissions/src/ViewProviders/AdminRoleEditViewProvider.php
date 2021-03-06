@@ -79,7 +79,7 @@ class AdminRoleEditViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $role): array
     {
@@ -110,7 +110,7 @@ class AdminRoleEditViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function fetchModulePermissions(int $roleId, int $defaultValue = 0): array
     {

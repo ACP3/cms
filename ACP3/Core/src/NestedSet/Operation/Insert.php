@@ -12,7 +12,7 @@ class Insert extends AbstractOperation
     /**
      * @return int|false
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(array $insertValues, int $parentId = 0)
     {
@@ -47,7 +47,7 @@ class Insert extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function fetchMaximumRightId(int $blockId): int
     {

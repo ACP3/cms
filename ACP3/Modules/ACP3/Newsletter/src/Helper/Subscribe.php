@@ -69,7 +69,7 @@ class Subscribe
     /**
      * Meldet eine E-Mail-Adresse beim Newsletter an.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \Exception
      */
     public function subscribeToNewsletter(string $emailAddress, int $salutation = 0, string $firstName = '', string $lastName = ''): bool
@@ -84,7 +84,7 @@ class Subscribe
     /**
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function addNewsletterAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
     {
@@ -142,7 +142,7 @@ class Subscribe
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function updateExistingAccount(array $newsletterAccount, int $salutation, string $firstName, string $lastName, string $hash): int
     {
@@ -165,7 +165,7 @@ class Subscribe
     /**
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function insertNewAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
     {

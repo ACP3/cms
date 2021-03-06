@@ -46,7 +46,7 @@ class OrderPost extends AbstractWidgetAction implements InvokableActionInterface
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $id, string $action)
     {

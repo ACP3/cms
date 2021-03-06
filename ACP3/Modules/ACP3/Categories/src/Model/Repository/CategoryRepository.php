@@ -17,7 +17,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     public const BLOCK_COLUMN_NAME = 'module_id';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExists(int $categoryId): bool
     {
@@ -25,7 +25,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultIsDuplicate(string $title, int $moduleId, int $categoryId): bool
     {
@@ -33,7 +33,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int $categoryId): array
     {
@@ -41,7 +41,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getTitleById(int $categoryId): string
     {
@@ -49,7 +49,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllByModuleName(string $moduleName): array
     {
@@ -60,7 +60,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getModuleNameFromCategoryId(int $categoryId): string
     {
@@ -71,7 +71,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getModuleIdByCategoryId(int $categoryId): int
     {
@@ -79,7 +79,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getCategoryDeleteInfosById(int $categoryId): array
     {
@@ -90,7 +90,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByTitleAndModule(string $title, string $moduleName): array
     {
@@ -103,7 +103,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchAllSortedByBlock(): array
     {
@@ -111,7 +111,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllSiblingsAsId(int $categoryId): array
     {
@@ -124,7 +124,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllDirectSiblings(int $categoryId): array
     {
@@ -135,7 +135,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllRootCategoriesByModuleId(int $moduleId): array
     {
@@ -146,7 +146,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllRootCategoriesByModuleName(string $moduleName): array
     {
@@ -157,7 +157,7 @@ class CategoryRepository extends Core\NestedSet\Model\Repository\NestedSetReposi
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllByModuleId(int $moduleId): array
     {

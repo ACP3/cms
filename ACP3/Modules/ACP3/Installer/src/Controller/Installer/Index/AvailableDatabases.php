@@ -55,7 +55,7 @@ class AvailableDatabases extends AbstractInstallerAction implements InvokableAct
     private function retrieveAvailableDatabases(Connection $conn): array
     {
         $availableDatabases = [];
-        $databases = $conn->fetchAll('SHOW DATABASES');
+        $databases = $conn->fetchAllAssociative('SHOW DATABASES');
         foreach ($databases as $database) {
             $availableDatabases[] = $database['Database'];
         }

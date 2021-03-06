@@ -49,7 +49,7 @@ abstract class AbstractModel
      *
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function save(array $rawData, $entryId = null)
     {
@@ -81,7 +81,7 @@ abstract class AbstractModel
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function hasDataChanges(array $filteredData, ?int $entryId): bool
     {
@@ -150,7 +150,7 @@ abstract class AbstractModel
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function prepareData(array $rawData, ?int $entryId)
     {
@@ -198,7 +198,7 @@ abstract class AbstractModel
      *
      * @return int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function delete($entryId)
     {
@@ -233,7 +233,7 @@ abstract class AbstractModel
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int $entryId)
     {

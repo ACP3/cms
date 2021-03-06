@@ -16,7 +16,7 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     public const TABLE_NAME = 'polls';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function pollExists(int $pollId, string $time = '', bool $multiple = false): bool
     {
@@ -28,7 +28,7 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByIdWithTotalVotes(int $pollId): array
     {
@@ -43,7 +43,7 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
@@ -61,7 +61,7 @@ class PollRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getLatestPoll(string $time): array
     {

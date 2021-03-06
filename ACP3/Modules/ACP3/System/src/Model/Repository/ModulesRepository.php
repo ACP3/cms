@@ -18,7 +18,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getModuleId(string $moduleName): int
     {
@@ -31,7 +31,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getModuleSchemaVersion(string $moduleName): int
     {
@@ -42,7 +42,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function coreTablesExist(): bool
     {
@@ -62,7 +62,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function moduleExists(string $moduleName): bool
     {
@@ -75,7 +75,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getInfoByModuleName(string $moduleName): array
     {
@@ -88,7 +88,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getModuleNameById(int $moduleId): string
     {

@@ -14,7 +14,7 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     public const TABLE_NAME = 'users';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExists(int $userId): bool
     {
@@ -26,7 +26,7 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     /**
      * Überprüft, ob der übergebene Username bereits existiert.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExistsByUserName(string $nickname, ?int $userId = null): bool
     {
@@ -44,7 +44,7 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     /**
      * Überprüft, ob die übergebene E-Mail-Adresse bereits existiert.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExistsByEmail(string $mail, ?int $userId = null): bool
     {
@@ -58,7 +58,7 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByNickname(string $nickname): array
     {
@@ -66,7 +66,7 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneActiveUserByNickname(string $nickname): array
     {
@@ -77,7 +77,7 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByEmail(string $email): array
     {
@@ -88,7 +88,7 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAll(): int
     {
@@ -96,7 +96,7 @@ class UserRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(?int $limitStart = null, ?int $resultsPerPage = null): array
     {

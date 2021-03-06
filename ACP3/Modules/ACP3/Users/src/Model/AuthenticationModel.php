@@ -90,7 +90,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      *
      * @param int $userId
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \Exception
      */
     public function logout($userId = 0): void
@@ -142,7 +142,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      *
      * @throws Users\Exception\LoginFailedException
      * @throws Users\Exception\UserAccountLockedException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \Exception
      */
     public function login($username, $password, $rememberMe)
@@ -198,7 +198,7 @@ class AuthenticationModel implements AuthenticationModelInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function saveFailedLoginAttempts(array $userData): int
     {
@@ -228,7 +228,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      *
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function saveRememberMeToken($userId, $token)
     {
@@ -241,7 +241,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      * @param int    $userId
      * @param string $password
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function migratePasswordHashToSha512($userId, $password): array
     {

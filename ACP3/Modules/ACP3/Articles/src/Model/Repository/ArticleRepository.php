@@ -16,7 +16,7 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
     public const TABLE_NAME = 'articles';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExists(int $articleId, string $time = ''): bool
     {
@@ -29,7 +29,7 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAll(string $time = ''): int
     {
@@ -42,7 +42,7 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
@@ -56,7 +56,7 @@ class ArticleRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getLatest(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {

@@ -56,7 +56,7 @@ class Download extends Core\Controller\AbstractWidgetAction
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws Core\Controller\Exception\ResultNotExistsException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(int $id)
     {

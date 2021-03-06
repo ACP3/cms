@@ -45,7 +45,7 @@ class FilesWidgetViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(?int $categoryId, ?int $limit): array
     {
@@ -56,7 +56,7 @@ class FilesWidgetViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function fetchFiles(?int $categoryId, ?int $limit): array
     {

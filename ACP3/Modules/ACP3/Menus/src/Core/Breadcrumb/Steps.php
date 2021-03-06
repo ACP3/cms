@@ -54,7 +54,7 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function buildBreadcrumbCacheForFrontend(): void
     {
@@ -79,7 +79,7 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * Initializes and pre populates the breadcrumb.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function prePopulate(): void
     {

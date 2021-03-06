@@ -38,7 +38,7 @@ class RulesModel extends AbstractModel
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function updateRules(array $privileges, int $roleId): void
     {

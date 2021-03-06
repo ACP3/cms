@@ -51,7 +51,7 @@ class UserModel implements UserModelInterface
     /**
      * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getUserInfo(int $userId = 0): array
     {

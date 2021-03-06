@@ -38,7 +38,7 @@ class MenuItemFormFields
     /**
      * Gibt alle Menüleisten zur Benutzung in einem Dropdown-Menü aus.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function menusDropDown(int $selected = 0): array
     {
@@ -51,7 +51,7 @@ class MenuItemFormFields
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function createMenuItemFormFields(
         int $blockId = 0,

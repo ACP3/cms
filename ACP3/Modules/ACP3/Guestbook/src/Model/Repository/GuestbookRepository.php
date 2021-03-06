@@ -14,7 +14,7 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
     public const TABLE_NAME = 'guestbook';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExists(int $guestbookId): bool
     {
@@ -25,7 +25,7 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAll(?int $notify = null): int
     {
@@ -35,7 +35,7 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(?int $notify = null, ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
@@ -46,7 +46,7 @@ class GuestbookRepository extends Core\Model\Repository\AbstractRepository imple
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getLastDateFromIp(string $ipAddress): string
     {

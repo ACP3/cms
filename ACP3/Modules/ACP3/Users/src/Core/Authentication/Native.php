@@ -42,7 +42,7 @@ class Native implements AuthenticationInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function authenticate(UserModelInterface $userModel): void
     {
@@ -64,7 +64,7 @@ class Native implements AuthenticationInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function verifyCredentials(int $userId, string $token): ?array
     {

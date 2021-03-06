@@ -60,7 +60,7 @@ class Action
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function handlePostAction(callable $callback, ?string $path = null)
     {
@@ -151,7 +151,7 @@ class Action
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function handleDuplicateAction(callable $callback, ?string $path = null)
     {
@@ -166,7 +166,7 @@ class Action
      * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function handleSettingsPostAction(callable $callback, ?string $path = null)
     {
@@ -181,7 +181,7 @@ class Action
      * @return array|string|JsonResponse|RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function handleSaveAction(callable $callback, ?string $path = null)
     {

@@ -62,7 +62,7 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     /**
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function saveAnswers(array $answers, int $pollId)
     {
@@ -92,7 +92,7 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     /**
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resetVotesByPollId(int $pollId)
     {

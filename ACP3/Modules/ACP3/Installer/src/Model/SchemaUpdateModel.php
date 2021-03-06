@@ -84,7 +84,7 @@ class SchemaUpdateModel
      * Führt die Updateanweisungen eines Moduls aus.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function updateModule(string $moduleName): void
     {

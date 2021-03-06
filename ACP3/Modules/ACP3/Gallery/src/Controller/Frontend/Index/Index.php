@@ -35,7 +35,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(): Response
     {

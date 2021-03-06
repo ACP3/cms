@@ -33,7 +33,7 @@ class Pictures extends AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     public function execute(int $id, string $template = ''): Response

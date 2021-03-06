@@ -17,7 +17,7 @@ class GalleryRepository extends AbstractRepository
     public const TABLE_NAME = 'gallery';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function galleryExists(int $galleryId, string $time = ''): bool
     {
@@ -30,7 +30,7 @@ class GalleryRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getGalleryTitle(int $galleryId): string
     {
@@ -41,7 +41,7 @@ class GalleryRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAll(string $time): int
     {
@@ -54,7 +54,7 @@ class GalleryRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {

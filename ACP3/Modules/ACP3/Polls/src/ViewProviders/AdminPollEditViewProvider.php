@@ -58,7 +58,7 @@ class AdminPollEditViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $poll): array
     {
@@ -73,7 +73,7 @@ class AdminPollEditViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function getAnswers(?int $pollId): array
     {

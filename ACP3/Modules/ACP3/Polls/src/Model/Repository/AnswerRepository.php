@@ -14,7 +14,7 @@ class AnswerRepository extends Core\Model\Repository\AbstractRepository
     public const TABLE_NAME = 'poll_answers';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAnswersByPollId(int $pollId): array
     {
@@ -22,7 +22,7 @@ class AnswerRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAnswersWithVotesByPollId(int $pollId): array
     {

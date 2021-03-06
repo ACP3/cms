@@ -16,7 +16,7 @@ class RuleRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllRulesByRoleIds(array $roles)
     {

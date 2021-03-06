@@ -11,6 +11,7 @@ use ACP3\Core\Cache\CacheDriverFactory;
 use ACP3\Core\Environment\ApplicationMode;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
+use Doctrine\DBAL\Result;
 use Psr\Log\LoggerInterface;
 
 class Connection
@@ -55,7 +56,7 @@ class Connection
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getConnection(): DBAL\Connection
     {
@@ -69,7 +70,7 @@ class Connection
     /**
      * @return \Doctrine\DBAL\Driver\Connection|null
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getWrappedConnection(): ?DBAL\Driver\Connection
     {
@@ -92,7 +93,7 @@ class Connection
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchAll(
         string $statement,
@@ -114,7 +115,7 @@ class Connection
      *
      * @return mixed
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchArray(string $statement, array $params = [], array $types = [])
     {
@@ -122,7 +123,7 @@ class Connection
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchAssoc(string $statement, array $params = [], array $types = []): array
     {
@@ -136,7 +137,7 @@ class Connection
      *
      * @return bool|string
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchColumn(string $statement, array $params = [], int $column = 0, array $types = [])
     {
@@ -144,9 +145,9 @@ class Connection
     }
 
     /**
-     * @return \Doctrine\DBAL\Driver\ResultStatement|\Doctrine\DBAL\Driver\Statement
+     * @return DBAL\Result
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function executeQuery(
         string $query,
@@ -155,7 +156,7 @@ class Connection
         bool $cache = false,
         int $lifetime = 0,
         ?string $cacheKey = null
-    ) {
+    ): Result {
         return $this->getConnection()->executeQuery(
             $query,
             $params,
@@ -168,7 +169,7 @@ class Connection
      * @return mixed
      *
      * @throws DBAL\ConnectionException
-     * @throws DBAL\DBALException
+     * @throws DBAL\Exception
      */
     public function executeTransactionalQuery(callable $callback)
     {
@@ -178,7 +179,7 @@ class Connection
             $result = $callback();
 
             $this->getConnection()->commit();
-        } catch (DBAL\DBALException $e) {
+        } catch (DBAL\Exception $e) {
             $this->getConnection()->rollBack();
 
             throw $e;
@@ -188,7 +189,7 @@ class Connection
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function connect(): DBAL\Connection
     {

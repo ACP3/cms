@@ -60,7 +60,7 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function getPictureSortIndex(int $galleryId): int
     {

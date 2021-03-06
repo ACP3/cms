@@ -12,7 +12,7 @@ use ACP3\Core\Date;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -73,7 +73,7 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
                     'user_id' => $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null,
                 ]);
             }
-        } catch (DBALException $e) {
+        } catch (Exception $e) {
             $this->logger->error($e->getMessage(), $e->getTrace());
         }
     }

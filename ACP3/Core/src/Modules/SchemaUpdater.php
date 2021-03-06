@@ -32,7 +32,7 @@ class SchemaUpdater
      * Execute the schema updates which can be found within the methods `renameModule` and `schemaUpdates`.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
      */
     public function updateSchema(SchemaInterface $schema, MigrationInterface $migration): void
@@ -67,7 +67,7 @@ class SchemaUpdater
      * @param Array<int, string[]|callable[]> $schemaUpdates
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
      */
     private function iterateOverSchemaUpdates(

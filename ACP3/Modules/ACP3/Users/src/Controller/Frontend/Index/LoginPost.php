@@ -49,7 +49,7 @@ class LoginPost extends Core\Controller\AbstractWidgetAction implements Core\Con
     /**
      * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke()
     {

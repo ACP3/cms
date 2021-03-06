@@ -55,7 +55,7 @@ class SchemaHelper
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function executeSqlQueries(array $queries, string $moduleName = ''): void
     {

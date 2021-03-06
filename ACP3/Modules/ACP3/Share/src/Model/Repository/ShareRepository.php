@@ -14,7 +14,7 @@ class ShareRepository extends Core\Model\Repository\AbstractRepository
     const TABLE_NAME = 'share';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExistsById(int $id): bool
     {
@@ -25,7 +25,7 @@ class ShareRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByUri(string $uri): array
     {
@@ -33,7 +33,7 @@ class ShareRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(): array
     {

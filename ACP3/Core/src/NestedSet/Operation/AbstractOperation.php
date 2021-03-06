@@ -32,7 +32,7 @@ abstract class AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function adjustParentNodesAfterSeparation(int $diff, int $leftId, int $rightId): void
     {
@@ -40,7 +40,7 @@ abstract class AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function adjustParentNodesAfterInsert(int $diff, int $leftId, int $rightId): void
     {
@@ -48,7 +48,7 @@ abstract class AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function adjustFollowingNodesAfterSeparation(int $diff, int $leftId): void
     {
@@ -56,7 +56,7 @@ abstract class AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function adjustFollowingNodesAfterInsert(int $diff, int $leftId): void
     {

@@ -94,7 +94,7 @@ class SchemaUpdateModel
      * Führt die Updateanweisungen eines Moduls aus.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Installer\Exception\MissingInstallerException
      * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
      */

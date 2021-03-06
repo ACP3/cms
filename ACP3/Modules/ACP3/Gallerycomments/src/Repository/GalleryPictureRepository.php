@@ -17,7 +17,7 @@ class GalleryPictureRepository extends AbstractRepository
     /**
      * @return int[]
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getPictureIdsByGalleryId(int $galleryId): array
     {

@@ -10,7 +10,7 @@ namespace ACP3\Core\NestedSet\Operation;
 class Delete extends AbstractOperation
 {
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(int $resultId): bool
     {
@@ -29,7 +29,7 @@ class Delete extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function moveSiblingsOneLevelUp(array $nodes): void
     {

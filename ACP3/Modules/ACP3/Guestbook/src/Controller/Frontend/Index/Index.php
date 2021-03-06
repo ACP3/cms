@@ -33,7 +33,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function execute(): Response

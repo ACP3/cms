@@ -46,7 +46,7 @@ class Index extends AbstractWidgetAction implements InvokableActionInterface
     /**
      * @returns array|\Symfony\Component\HttpFoundation\JsonResponse
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke()
     {

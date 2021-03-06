@@ -72,7 +72,7 @@ class GenerateThumbnailsCommand extends Command
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     protected function execute(InputInterface $input, OutputInterface $output)

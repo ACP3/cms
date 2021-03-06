@@ -50,7 +50,7 @@ class Navbar extends AbstractFunction
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
@@ -73,7 +73,7 @@ class Navbar extends AbstractFunction
      * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
      * falls diese sich ebenfalls in der Navigationsleiste befindet.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function getMenuByKey(
         string $menu,
@@ -90,7 +90,7 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function generateMenu(string $menu, MenuConfiguration $menuConfig): string
     {
@@ -144,7 +144,7 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function selectMenuItem(string $menu): int
     {

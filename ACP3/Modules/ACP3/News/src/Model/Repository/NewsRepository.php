@@ -18,7 +18,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     public const TABLE_NAME = 'news';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExists(int $newsId, string $time = ''): bool
     {
@@ -31,7 +31,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int $newsId): array
     {
@@ -42,7 +42,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAll(string $time = '', ?int $categoryId = null): int
     {
@@ -59,7 +59,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAllByCategoryId(array $categoryId, string $time = ''): int
     {
@@ -76,7 +76,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @param int[]|int $categoryId
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllByCategoryId(
         $categoryId,
@@ -99,7 +99,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
@@ -113,7 +113,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getLatestByCategoryId(int $categoryId, string $time): array
     {
@@ -126,7 +126,7 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getLatest(string $time): array
     {

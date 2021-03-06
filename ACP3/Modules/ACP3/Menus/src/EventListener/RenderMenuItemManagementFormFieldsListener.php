@@ -60,7 +60,7 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(TemplateEvent $event): void
     {
@@ -87,7 +87,7 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function fetchMenuItem(string $routeName): array
     {
@@ -121,7 +121,7 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function addFormFields(array $menuItem): array
     {

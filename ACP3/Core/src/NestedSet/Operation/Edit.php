@@ -12,7 +12,7 @@ class Edit extends AbstractOperation
     /**
      * Methode zum Bearbeiten eines Knotens.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(int $resultId, int $parentId, int $blockId, array $updateValues): bool
     {
@@ -50,7 +50,7 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function nodeIsRootItemAndNoChangeNeed(int $parentId, int $blockId, array $items): bool
     {
@@ -60,7 +60,7 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function nodeBecomesRootNode(int $id, int $blockId, array $nodes): array
     {
@@ -83,7 +83,7 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function nodeBecomesRootNodeInNewBlock(int $blockId, array $nodes, int $itemDiff): int
     {
@@ -108,7 +108,7 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function nodeBecomesRootNodeInSameBlock(array $node, int $itemDiff): int
     {
@@ -122,7 +122,7 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function adjustNodeSiblings(int $blockId, array $nodes, int $diff, int $rootId): bool
     {
@@ -167,7 +167,7 @@ class Edit extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function moveNodeToNewParent(array $newParent, array $nodes): array
     {

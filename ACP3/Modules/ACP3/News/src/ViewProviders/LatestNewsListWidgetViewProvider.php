@@ -38,7 +38,7 @@ class LatestNewsListWidgetViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(?int $categoryId): array
     {
@@ -51,7 +51,7 @@ class LatestNewsListWidgetViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function fetchNews(int $categoryId, array $settings): array
     {

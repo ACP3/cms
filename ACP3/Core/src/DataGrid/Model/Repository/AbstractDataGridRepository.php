@@ -19,7 +19,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
      *
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
     {
@@ -42,7 +42,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
      *
      * @return int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAll(QueryOption ...$queryOptions)
     {
@@ -55,7 +55,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
         $this->addJoin($queryBuilder);
         $this->addWhere($queryBuilder, ...$queryOptions);
 
-        return (int) $queryBuilder->execute()->fetchColumn();
+        return (int) $queryBuilder->execute()->fetchOne();
     }
 
     /**

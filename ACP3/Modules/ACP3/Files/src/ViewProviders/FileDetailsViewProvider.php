@@ -73,7 +73,7 @@ class FileDetailsViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $fileId): array
     {
@@ -91,7 +91,7 @@ class FileDetailsViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function addBreadcrumbSteps(array $file, int $categoryId): void
     {

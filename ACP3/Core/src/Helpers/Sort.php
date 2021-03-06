@@ -8,7 +8,7 @@
 namespace ACP3\Core\Helpers;
 
 use ACP3\Core\Database\Connection;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 
 class Sort
 {
@@ -26,7 +26,7 @@ class Sort
      * Moves a database result one step upwards.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function up(string $table, string $idField, string $sortField, int $id, string $where = ''): bool
     {
@@ -37,7 +37,7 @@ class Sort
      * Moves a database result one step downwards.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function down(string $table, string $idField, string $sortField, int $id, string $where = ''): bool
     {
@@ -48,7 +48,7 @@ class Sort
      * Moves a database result one step upwards/downwards.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function moveOneStep(string $action, string $table, string $idField, string $sortField, int $id, string $where = ''): bool
     {
@@ -64,9 +64,9 @@ class Sort
             $query = 'SELECT a.%2$s AS other_id FROM %1$s AS a, %1$s AS b WHERE %4$sb.%2$s = :id AND a.%3$s %5$s b.%3$s ORDER BY a.%3$s %6$s LIMIT 1';
 
             if ($action === 'up') {
-                $otherId = $this->db->getConnection()->fetchColumn(\sprintf($query, $table, $idField, $sortField, $where, '<', 'DESC'), ['id' => $id]);
+                $otherId = $this->db->getConnection()->fetchOne(\sprintf($query, $table, $idField, $sortField, $where, '<', 'DESC'), ['id' => $id]);
             } else {
-                $otherId = $this->db->getConnection()->fetchColumn(\sprintf($query, $table, $idField, $sortField, $where, '>', 'ASC'), ['id' => $id]);
+                $otherId = $this->db->getConnection()->fetchOne(\sprintf($query, $table, $idField, $sortField, $where, '>', 'ASC'), ['id' => $id]);
             }
 
             if ($otherId !== null) {
@@ -80,7 +80,7 @@ class Sort
 
                 return true;
             }
-        } catch (DBALException $e) {
+        } catch (Exception $e) {
             $this->db->getConnection()->rollBack();
 
             throw $e;

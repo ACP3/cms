@@ -17,7 +17,7 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * Fetch the given node with all its parent nodes.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchNodeWithParents(int $nodeId): array
     {
@@ -30,7 +30,7 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * Die aktuelle Seite mit allen untergeordneten Seiten selektieren.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchNodeWithSiblings(int $nodeId): array
     {
@@ -41,7 +41,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchNextNodeWithSiblings(int $leftId): array
     {
@@ -52,7 +52,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchPrevNodeWithSiblings(int $rightId): array
     {
@@ -63,7 +63,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function nodeExists(int $nodeId): bool
     {
@@ -71,7 +71,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function nextNodeExists(int $rightId, int $blockId = 0): bool
     {
@@ -84,7 +84,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function previousNodeExists(int $rightId, int $blockId = 0): bool
     {
@@ -97,7 +97,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchNodeById(int $nodeId): array
     {
@@ -108,7 +108,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function nodeIsRootItem(int $leftId, int $rightId): bool
     {
@@ -119,7 +119,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchParentNode(int $leftId, int $rightId): int
     {
@@ -130,7 +130,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchRootNode(int $leftId, int $rightId): int
     {
@@ -141,7 +141,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchMaximumRightIdByBlockId(int $blockId): int
     {
@@ -152,7 +152,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchMaximumRightId(): int
     {
@@ -160,7 +160,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchMinimumLeftIdByBlockId(int $blockId): int
     {
@@ -171,7 +171,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function fetchAll(): array
     {
@@ -179,7 +179,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function updateRootIdAndParentIdOfNode(int $rootId, int $parentId, int $nodeId): void
     {
@@ -194,7 +194,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function moveNodesWithinTree(int $offsetLeftId, int $offsetRightId, array $nodeIds): bool
     {
@@ -206,7 +206,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function moveSubsequentNodesOfBlock(int $offset, int $leftIdConstraint, int $blockId): void
     {
@@ -217,7 +217,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function adjustParentNodesAfterSeparation(int $diff, int $leftId, int $rightId): void
     {
@@ -228,7 +228,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function adjustParentNodesAfterInsert(int $diff, int $leftId, int $rightId): void
     {
@@ -239,7 +239,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function adjustFollowingNodesAfterSeparation(int $diff, int $leftId): void
     {
@@ -250,7 +250,7 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function adjustFollowingNodesAfterInsert(int $diff, int $leftId): void
     {

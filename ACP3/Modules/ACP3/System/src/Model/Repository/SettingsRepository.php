@@ -17,7 +17,7 @@ class SettingsRepository extends AbstractRepository implements SettingsAwareRepo
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllSettings()
     {

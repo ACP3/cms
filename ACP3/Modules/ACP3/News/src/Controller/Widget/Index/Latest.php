@@ -27,7 +27,7 @@ class Latest extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(int $categoryId = 0): array
     {

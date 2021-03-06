@@ -20,7 +20,7 @@ class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function roleExistsByName(string $roleName, int $roleId = 0): bool
     {

@@ -16,7 +16,7 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @return bool
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function menuExists(int $menuId)
     {
@@ -26,7 +26,7 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @return bool
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function menuExistsByName(string $menuName, ?int $menuId = null)
     {
@@ -38,7 +38,7 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @return bool|string
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getMenuNameById(int $menuId)
     {
@@ -51,7 +51,7 @@ class MenuRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllMenus(?int $limitStart = null, ?int $resultsPerPage = null)
     {

@@ -16,7 +16,7 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @return bool
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function newsletterExists(int $newsletterId, ?int $status = null)
     {
@@ -31,7 +31,7 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @return mixed
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByIdAndStatus(int $newsletterId, int $status)
     {
@@ -44,7 +44,7 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @return int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAll(?int $status = null)
     {
@@ -59,7 +59,7 @@ class NewsletterRepository extends Core\Model\Repository\AbstractRepository
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(?int $status = null, ?int $limitStart = null, ?int $resultsPerPage = null)
     {

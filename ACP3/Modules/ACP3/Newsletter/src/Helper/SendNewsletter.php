@@ -56,7 +56,7 @@ class SendNewsletter
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function sendNewsletter(int $newsletterId, $recipients, bool $bcc = false)
     {

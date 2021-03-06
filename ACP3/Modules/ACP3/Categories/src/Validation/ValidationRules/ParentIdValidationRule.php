@@ -25,7 +25,7 @@ class ParentIdValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -39,7 +39,7 @@ class ParentIdValidationRule extends AbstractValidationRule
     /**
      * @param string $value
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function checkParentIdExists($value): bool
     {

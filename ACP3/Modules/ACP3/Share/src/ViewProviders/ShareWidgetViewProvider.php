@@ -39,7 +39,7 @@ class ShareWidgetViewProvider
     /**
      * @return array|array[]
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(string $path): array
     {

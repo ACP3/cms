@@ -98,7 +98,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     /**
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(?string $action = null, ?string $dir = null)
     {
@@ -119,7 +119,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function enableModule(string $moduleDirectory)
     {
@@ -184,7 +184,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     /**
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function saveModuleState(string $moduleDirectory, int $active)
     {
@@ -204,7 +204,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function renewCaches(): void
     {
@@ -216,7 +216,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function disableModule(string $moduleDirectory)
     {
@@ -250,7 +250,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function installModule(string $moduleDirectory)
     {
@@ -321,7 +321,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function outputPage(): array
     {

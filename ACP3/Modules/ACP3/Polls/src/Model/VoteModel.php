@@ -43,7 +43,7 @@ class VoteModel
      *
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function vote(array $formData, $pollId, $ipAddress, $time)

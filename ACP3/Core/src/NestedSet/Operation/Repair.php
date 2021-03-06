@@ -10,7 +10,7 @@ namespace ACP3\Core\NestedSet\Operation;
 class Repair extends AbstractOperation
 {
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(): void
     {
@@ -29,7 +29,7 @@ class Repair extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function getResults(): array
     {

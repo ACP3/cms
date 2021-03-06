@@ -29,7 +29,7 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function insert(array $data)
     {
@@ -58,7 +58,7 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function delete($entryId, ?string $columnName = null)
     {
@@ -83,7 +83,7 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return bool|int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function update(array $data, $entryId)
     {
@@ -115,7 +115,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int $entryId)
     {

@@ -47,7 +47,7 @@ class Rate extends AbstractWidgetAction implements InvokableActionInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $id): array
     {
@@ -74,7 +74,7 @@ class Rate extends AbstractWidgetAction implements InvokableActionInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function canSaveRating(int $shareId, int $stars, string $ipAddress): bool
     {
@@ -92,7 +92,7 @@ class Rate extends AbstractWidgetAction implements InvokableActionInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function hasAlreadyRated(string $ipAddress, int $shareId): bool
     {

@@ -36,7 +36,7 @@ class Index extends AbstractWidgetAction
     /**
      * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(int $id)
     {

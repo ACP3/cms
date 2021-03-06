@@ -28,7 +28,7 @@ class AllowedSuperiorCategoryValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function isValid($data, $field = '', array $extra = [])
     {
@@ -48,7 +48,7 @@ class AllowedSuperiorCategoryValidationRule extends AbstractValidationRule
      *
      * @return bool
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function checkIsAllowedMenu($parentId, $categoryId)
     {

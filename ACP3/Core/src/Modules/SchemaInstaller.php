@@ -39,7 +39,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     /**
      * Installs a module.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function install(SchemaInterface $schema): bool
     {
@@ -54,7 +54,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function moduleNeedsInstallation(SchemaInterface $schema): bool
     {
@@ -81,7 +81,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      * Installs all module settings.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function installSettings(string $moduleName, array $settings): bool
     {

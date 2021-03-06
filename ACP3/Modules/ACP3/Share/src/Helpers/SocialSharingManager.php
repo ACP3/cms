@@ -35,7 +35,7 @@ class SocialSharingManager
     /**
      * Deletes the given sharing info.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function deleteSharingInfo(string $path): bool
     {
@@ -53,7 +53,7 @@ class SocialSharingManager
     /**
      * Inserts/Updates the given sharing info.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function saveSharingInfo(
         string $path,

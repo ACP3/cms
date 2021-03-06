@@ -10,7 +10,7 @@ namespace ACP3\Core\NestedSet\Operation;
 class Sort extends AbstractOperation
 {
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(int $resultId, string $mode): bool
     {
@@ -36,7 +36,7 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function sortUp(array $nodes): bool
     {
@@ -48,7 +48,7 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function sortDown(array $nodes): bool
     {
@@ -70,7 +70,7 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function updateNodesDown(int $diff, array $nodes): bool
     {
@@ -78,7 +78,7 @@ class Sort extends AbstractOperation
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function moveNodesUp(int $diff, array $nodes): bool
     {

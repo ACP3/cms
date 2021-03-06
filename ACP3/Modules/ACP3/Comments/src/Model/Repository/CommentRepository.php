@@ -17,7 +17,7 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     public const TABLE_NAME = 'comments';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultExists(int $commentId): bool
     {
@@ -25,7 +25,7 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function resultsExistByModuleId(int $moduleId): bool
     {
@@ -36,7 +36,7 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAll(int $moduleId = 0): int
     {
@@ -51,7 +51,7 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int $commentId): array
     {
@@ -64,7 +64,7 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     /**
      * {@inheritDoc}
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getLastDateFromIp(string $ipAddress): string
     {
@@ -75,7 +75,7 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllByModule(int $moduleId, int $resultId, ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
@@ -88,7 +88,7 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function countAllByModule(int $moduleId, int $resultId): int
     {

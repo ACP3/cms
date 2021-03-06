@@ -65,7 +65,7 @@ class AdminGalleryPictureEditViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $picture): array
     {
@@ -96,7 +96,7 @@ class AdminGalleryPictureEditViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function getGalleries(): array
     {

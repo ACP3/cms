@@ -86,7 +86,7 @@ class Helpers
      *
      * @return int
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function categoriesCreate(string $categoryTitle, string $moduleName)
     {
@@ -109,7 +109,7 @@ class Helpers
      *
      * @return array
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function categoriesList(
         string $moduleName,

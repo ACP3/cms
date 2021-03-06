@@ -65,7 +65,7 @@ class Install
 
     /**
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function installSampleData(
         SampleDataInterface $sampleData,

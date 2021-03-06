@@ -17,7 +17,7 @@
     "php": "^7.3.0",
     "ext-pdo": "*",
     "ext-pdo_mysql": "*",
-    "doctrine/dbal": "^2.5",
+    "doctrine/dbal": "^3.0",
     "doctrine/cache": "^1.6",
     "fisharebest/localization": "^1.10",
     "friendsofsymfony/http-cache": "~2.0",

@@ -44,7 +44,7 @@ class PictureDeleteListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function beforeDelete(ModelSaveEvent $event): void
     {
@@ -57,7 +57,7 @@ class PictureDeleteListener implements EventSubscriberInterface
 
     /**
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function afterDelete(): void
     {

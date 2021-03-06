@@ -45,7 +45,7 @@ class ArticleListViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Pagination\Exception\InvalidPageException
      */
     public function __invoke(): array

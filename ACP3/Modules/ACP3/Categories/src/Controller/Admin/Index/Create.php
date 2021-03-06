@@ -28,7 +28,7 @@ class Create extends Core\Controller\AbstractWidgetAction implements Core\Contro
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(): array
     {

@@ -42,7 +42,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
     /**
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(?string $action = null)
     {

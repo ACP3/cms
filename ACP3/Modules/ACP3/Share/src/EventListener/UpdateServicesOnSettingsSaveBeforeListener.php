@@ -40,7 +40,7 @@ class UpdateServicesOnSettingsSaveBeforeListener implements EventSubscriberInter
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(SettingsSaveEvent $event): void
     {

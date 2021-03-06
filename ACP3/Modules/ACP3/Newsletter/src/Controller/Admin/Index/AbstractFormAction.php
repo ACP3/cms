@@ -27,7 +27,7 @@ class AbstractFormAction extends AbstractWidgetAction implements InvokableAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     protected function sendTestNewsletter(bool $isTest, int $id, bool $dbResult, string $testEmailAddress): array
     {

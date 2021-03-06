@@ -36,7 +36,7 @@ class Image extends Core\Controller\AbstractWidgetAction
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function execute(int $id, ?string $action = null)
     {

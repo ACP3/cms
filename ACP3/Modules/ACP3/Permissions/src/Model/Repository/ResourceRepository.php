@@ -15,7 +15,7 @@ class ResourceRepository extends Core\Model\Repository\AbstractRepository
     public const TABLE_NAME = 'acl_resources';
 
     /**
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int $resourceId): array
     {
@@ -28,7 +28,7 @@ class ResourceRepository extends Core\Model\Repository\AbstractRepository
     /**
      * Returns all the resources of the currently installed and activated modules.
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllResources(): array
     {
