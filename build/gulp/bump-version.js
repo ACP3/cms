@@ -242,12 +242,8 @@ module.exports = (gulp) => {
         .src(["./" + changelogName])
         .pipe(
           change((content) => {
-            const currentDate = new Date();
-            const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
-              .toString()
-              .padStart(2, "0")}-${currentDate.getDate().toString().padStart(2, "0")}`;
             return content
-              .replace("## [unreleased]", `## [${newVersion}] - ${formattedDate}`)
+              .replace("## [unreleased]", `## [${newVersion}] - ${getFormattedReleaseDate()}`)
               .replace(
                 `[unreleased]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...${nameOfCurrentBranch}`,
                 `[unreleased]: https://gitlab.com/ACP3/cms/compare/v${newVersion}...${nameOfCurrentBranch}\n` +
@@ -259,6 +255,13 @@ module.exports = (gulp) => {
         .on("finish", resolve)
         .on("error", reject);
     });
+  }
+
+  function getFormattedReleaseDate() {
+    const currentDate = new Date();
+    return `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${currentDate.getDate().toString().padStart(2, "0")}`;
   }
 
   /**
@@ -289,16 +292,53 @@ module.exports = (gulp) => {
   }
 
   /**
-   * Commits made by the bump-version task and creates the new tag.
+   * Commits the changes made by the bump-version task and creates the new tag.
    *
    * @param {string} newVersion
    */
-  async function commitAndTag(newVersion) {
+  async function tagNewRelease(newVersion) {
     // Get the modified files so that we can commit these files
     const modifiedFiles = (await git().status()).modified;
 
     await git().commit(`bump the version to ${newVersion}`, modifiedFiles);
     await git().addAnnotatedTag(`v${newVersion}`, `v${newVersion}`);
+  }
+
+  /**
+   * Commits the updated changelog.
+   */
+  async function commitExtendedChangelog() {
+    // Get the modified files so that we can commit these files
+    const modifiedFiles = (await git().status()).modified;
+
+    await git().commit(`update the changelog`, modifiedFiles);
+  }
+
+  /**
+   *
+   * @param {string} nameOfCurrentBranch
+   * @param {string} newVersion
+   * @returns {Promise<void>}
+   */
+  async function addChangelogEntryForNextRelease(nameOfCurrentBranch, newVersion) {
+    const changelogName = "CHANGELOG-" + nameOfCurrentBranch + ".md";
+
+    return new Promise((resolve, reject) => {
+      gulp
+        .src(["./" + changelogName])
+        .pipe(
+          change((content) => {
+            const formattedDate = getFormattedReleaseDate();
+            return content.replace(
+              `## [${newVersion}] - ${formattedDate}`,
+              `## [unreleased]\n\ntba\n\n## [${newVersion}] - ${formattedDate}`
+            );
+          })
+        )
+        .pipe(gulp.dest("./"))
+        .on("finish", resolve)
+        .on("error", reject);
+    });
   }
 
   return async (done) => {
@@ -314,7 +354,10 @@ module.exports = (gulp) => {
         bumpChangelog(nameOfCurrentBranch, currentVersion, newVersion),
         bumpVersions(await findChangedComponents(components, argv.major, currentVersion), components, newVersion),
       ]);
-      await commitAndTag(newVersion);
+      await tagNewRelease(newVersion);
+
+      await addChangelogEntryForNextRelease(nameOfCurrentBranch, newVersion);
+      await commitExtendedChangelog();
     } catch (e) {
       console.error(e.message);
     } finally {
