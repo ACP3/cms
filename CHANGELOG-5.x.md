@@ -450,7 +450,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   removed all deprecated code
 
-[unreleased]: https://gitlab.com/ACP3/cms/compare/v5.13.2...5.x
+[unreleased]: https://gitlab.com/ACP3/cms/compare/v5.15.5...5.x
+[5.15.5]: https://gitlab.com/ACP3/cms/compare/v5.15.4...v5.15.5
+[5.15.4]: https://gitlab.com/ACP3/cms/compare/v5.15.3...v5.15.4
+[5.15.3]: https://gitlab.com/ACP3/cms/compare/v5.15.2...v5.15.3
+[5.15.2]: https://gitlab.com/ACP3/cms/compare/v5.15.1...v5.15.2
+[5.15.1]: https://gitlab.com/ACP3/cms/compare/v5.15.0...v5.15.1
+[5.15.0]: https://gitlab.com/ACP3/cms/compare/v5.14.1...v5.15.0
+[5.14.1]: https://gitlab.com/ACP3/cms/compare/v5.14.0...v5.14.1
+[5.14.0]: https://gitlab.com/ACP3/cms/compare/v5.13.2...v5.14.0
 [5.13.2]: https://gitlab.com/ACP3/cms/compare/v5.13.1...v5.13.2
 [5.13.1]: https://gitlab.com/ACP3/cms/compare/v5.13.0...v5.13.1
 [5.13.0]: https://gitlab.com/ACP3/cms/compare/v5.12.2...v5.13.0
