@@ -233,8 +233,8 @@ module.exports = (gulp) => {
     if (!fs.existsSync(changelogPath)) {
       throw new Error(`Could not find the changelog with the name "${changelogName}". Please create it at first!`);
     }
-    if (!fs.readFileSync(changelogPath).includes("## [Unreleased]")) {
-      throw new Error(`Could not find an "## [Unreleased]" section within the changelog. Please create one at first!`);
+    if (!fs.readFileSync(changelogPath).includes("## [unreleased]")) {
+      throw new Error(`Could not find an "## [unreleased]" section within the changelog. Please create one at first!`);
     }
 
     return new Promise((resolve, reject) => {
@@ -247,10 +247,10 @@ module.exports = (gulp) => {
               .toString()
               .padStart(2, "0")}-${currentDate.getDate().toString().padStart(2, "0")}`;
             return content
-              .replace("## [Unreleased]", `## [${newVersion}] - ${formattedDate}`)
+              .replace("## [unreleased]", `## [${newVersion}] - ${formattedDate}`)
               .replace(
-                `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...${nameOfCurrentBranch}`,
-                `[Unreleased]: https://gitlab.com/ACP3/cms/compare/v${newVersion}...${nameOfCurrentBranch}\n` +
+                `[unreleased]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...${nameOfCurrentBranch}`,
+                `[unreleased]: https://gitlab.com/ACP3/cms/compare/v${newVersion}...${nameOfCurrentBranch}\n` +
                   `[${newVersion}]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...v${newVersion}`
               );
           })
