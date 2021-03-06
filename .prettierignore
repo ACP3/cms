@@ -1,5 +1,6 @@
 **/*.min.js
 **/*.min.css
+/.component-paths.json
 ACP3/Modules/ACP3/Cookieconsent/Resources/Assets/css/klaro.css
 ACP3/Modules/ACP3/Cookieconsent/Resources/Assets/js/klaro-no-css.js
 ACP3/Modules/ACP3/Filemanager/Resources/Assets/rich-filemanager/*
