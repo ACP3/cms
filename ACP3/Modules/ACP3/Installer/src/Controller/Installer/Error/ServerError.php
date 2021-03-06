@@ -15,7 +15,7 @@ class ServerError extends AbstractInstallerAction
     public function execute(): Response
     {
         return new Response(
-            $this->view->fetchTemplate('Installer/Installer/error.not_found.tpl'),
+            $this->view->fetchTemplate('Installer/Installer/error.server_error.tpl'),
             Response::HTTP_INTERNAL_SERVER_ERROR
         );
     }
