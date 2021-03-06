@@ -44,10 +44,10 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     private $metaRobots = '';
 
     private static $robotSettingsMaps = [
-        1 => 'index,follow',
-        2 => 'index,nofollow',
-        3 => 'noindex,follow',
-        4 => 'noindex,nofollow',
+        1 => MetaStatementsServiceInterface::INDEX_FOLLOW,
+        2 => MetaStatementsServiceInterface::INDEX_NOFOLLOW,
+        3 => MetaStatementsServiceInterface::NOINDEX_FOLLOW,
+        4 => MetaStatementsServiceInterface::NOINDEX_NOFOLLOW,
     ];
 
     public function __construct(
@@ -78,7 +78,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return [
             'description' => $this->isInAdmin() ? '' : $this->getPageDescription(),
             'keywords' => $this->isInAdmin() ? '' : $this->getPageKeywords(),
-            'robots' => $this->isInAdmin() ? 'noindex,nofollow' : $this->getPageRobotsSetting(),
+            'robots' => $this->isInAdmin() ? MetaStatementsServiceInterface::NOINDEX_NOFOLLOW : $this->getPageRobotsSetting(),
             'previous_page' => $this->previousPage,
             'next_page' => $this->nextPage,
             'canonical' => $this->canonicalUrl,

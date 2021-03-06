@@ -9,6 +9,11 @@ namespace ACP3\Core\SEO;
 
 interface MetaStatementsServiceInterface
 {
+    public const INDEX_FOLLOW = 'index,follow';
+    public const INDEX_NOFOLLOW = 'index,nofollow';
+    public const NOINDEX_FOLLOW = 'noindex,follow';
+    public const NOINDEX_NOFOLLOW = 'noindex,nofollow';
+
     /**
      * @return $this
      */

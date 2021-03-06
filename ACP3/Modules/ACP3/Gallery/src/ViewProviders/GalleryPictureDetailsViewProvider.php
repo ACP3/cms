@@ -13,8 +13,10 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Helpers as GalleryHelpers;
+use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 
 class GalleryPictureDetailsViewProvider
@@ -40,6 +42,10 @@ class GalleryPictureDetailsViewProvider
      */
     private $breadcrumb;
     /**
+     * @var SettingsInterface
+     */
+    private $settings;
+    /**
      * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
     private $thumbnailGenerator;
@@ -57,6 +63,7 @@ class GalleryPictureDetailsViewProvider
         PictureRepository $pictureRepository,
         RequestInterface $request,
         RouterInterface $router,
+        SettingsInterface $settings,
         Steps $breadcrumb,
         ThumbnailGenerator $thumbnailGenerator,
         Title $title,
@@ -67,6 +74,7 @@ class GalleryPictureDetailsViewProvider
         $this->request = $request;
         $this->router = $router;
         $this->breadcrumb = $breadcrumb;
+        $this->settings = $settings;
         $this->thumbnailGenerator = $thumbnailGenerator;
         $this->title = $title;
         $this->translator = $translator;
@@ -104,14 +112,10 @@ class GalleryPictureDetailsViewProvider
         $picture['height'] = $output->getHeight();
 
         $previousPicture = $this->pictureRepository->getPreviousPictureId($picture['pic'], $picture['gallery_id']);
-        if (!empty($previousPicture)) {
-            $this->setPreviousPage((int) $previousPicture);
-        }
 
         $nextPicture = $this->pictureRepository->getNextPictureId($picture['pic'], $picture['gallery_id']);
-        if (!empty($nextPicture)) {
-            $this->setNextPage((int) $nextPicture);
-        }
+
+        $this->setSeoSettings($previousPicture, $nextPicture);
 
         return [
             'picture' => $picture,
@@ -120,17 +124,23 @@ class GalleryPictureDetailsViewProvider
         ];
     }
 
-    private function setNextPage(int $nextPicture): void
+    private function setSeoSettings(int $previousPicture, int $nextPicture): void
     {
-        $this->metaStatements->setNextPage(
-            $this->router->route(\sprintf(GalleryHelpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
-        );
-    }
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-    private function setPreviousPage(int $previousPicture): void
-    {
-        $this->metaStatements->setPreviousPage(
-            $this->router->route(\sprintf(GalleryHelpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
-        );
+        if ((int) $settings['overlay'] === 1) {
+            $this->metaStatements->setPageRobotsSettings(MetaStatementsServiceInterface::NOINDEX_FOLLOW);
+        }
+
+        if (!empty($previousPicture)) {
+            $this->metaStatements->setPreviousPage(
+                $this->router->route(\sprintf(GalleryHelpers::URL_KEY_PATTERN_PICTURE, $previousPicture))
+            );
+        }
+        if (!empty($nextPicture)) {
+            $this->metaStatements->setNextPage(
+                $this->router->route(\sprintf(GalleryHelpers::URL_KEY_PATTERN_PICTURE, $nextPicture))
+            );
+        }
     }
 }
