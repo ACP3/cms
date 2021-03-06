@@ -98,7 +98,7 @@
     "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --dry-run --show-progress=estimating -v",
     "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --show-progress=estimating -v",
     "php-cs-fixer-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --show-progress=estimating -v",
-    "phpstan": "./vendor/bin/phpstan analyse",
+    "phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse",
     "phpstan-windows": ".\\vendor\\bin\\phpstan.bat analyse"
   },
   "extra": {
