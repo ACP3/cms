@@ -9,8 +9,5 @@ namespace ACP3\Core\Model\Repository;
 
 interface FloodBarrierAwareRepositoryInterface
 {
-    /**
-     * @return string
-     */
-    public function getLastDateFromIp(string $ipAddress);
+    public function getLastDateFromIp(string $ipAddress): ?string;
 }

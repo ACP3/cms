@@ -66,7 +66,7 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getLastDateFromIp(string $ipAddress): string
+    public function getLastDateFromIp(string $ipAddress): ?string
     {
         return $this->db->fetchColumn(
             'SELECT MAX(`date`) FROM ' . $this->getTableName() . ' WHERE ip = ?',
