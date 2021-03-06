@@ -74,6 +74,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             'value' => $this->value,
             'js' => $this->init(),
             'advanced' => $this->advanced,
+            'required' => $this->required,
             'data_config' => $this->configure(),
         ];
 

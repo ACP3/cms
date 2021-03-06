@@ -31,6 +31,11 @@ abstract class AbstractWYSIWYG
      */
     protected $advanced;
     /**
+     * @var bool
+     */
+    protected $required;
+
+    /**
      * Default value of the WYSIWYG editor.
      *
      * @var string

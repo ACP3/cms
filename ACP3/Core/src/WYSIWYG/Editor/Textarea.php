@@ -29,6 +29,7 @@ class Textarea extends AbstractWYSIWYG
         $this->name = $params['name'];
         $this->value = $params['value'];
         $this->advanced = isset($params['advanced']) ? (bool) $params['advanced'] : false;
+        $this->required = isset($params['required']) ? (bool) $params['required'] : false;
     }
 
     /**
@@ -44,6 +45,7 @@ class Textarea extends AbstractWYSIWYG
                 'value' => $this->value,
                 'js' => '',
                 'advanced' => false,
+                'required' => $this->required,
             ],
         ];
     }
