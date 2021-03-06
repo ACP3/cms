@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+-   [System] Correctly set the `required`-HTML-Attribute on the wysiwyg form-group partial template
+
+### Changed
+
+-   [ALL] Dropped the support for PHP 7.2
+-   [Core] Updated Doctrine-DBAL to version 3.x
+-   [Core] Update PHPUnit to version 9.5.
+-   [Gallery] Do not allow to index the gallery picture details page, if the overlay has been enabled in the module settings
+
+### Fixed
+
+-   [Core, Comments, Guestbook] Fixed an erroneous return type declaration regarding the flood barrier, which could cause a type error under certain conditions
+-   [Installer] Fixed the installers server-error page
+-   [Installer] Fixed the available databases action to be more robust against errors
+
 ## [5.15.5] - 2021-03-05
 
 ### Fixed
