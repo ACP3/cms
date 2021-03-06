@@ -68,13 +68,17 @@ class Connection
     }
 
     /**
-     * @return \Doctrine\DBAL\Driver\Connection|null
-     *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBAL\Exception
      */
-    public function getWrappedConnection(): ?DBAL\Driver\Connection
+    public function getWrappedConnection(): ?\PDO
     {
-        return $this->getConnection()->getWrappedConnection();
+        $connection = $this->getConnection()->getWrappedConnection();
+
+        if ($connection instanceof DBAL\Driver\PDO\Connection) {
+            return $connection->getWrappedConnection();
+        }
+
+        return null;
     }
 
     public function getDatabase(): string
