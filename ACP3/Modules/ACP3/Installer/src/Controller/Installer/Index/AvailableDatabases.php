@@ -12,6 +12,7 @@ use ACP3\Modules\ACP3\Installer\Core\Controller\AbstractInstallerAction;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception as DBALException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AvailableDatabases extends AbstractInstallerAction implements InvokableActionInterface
@@ -25,6 +26,7 @@ class AvailableDatabases extends AbstractInstallerAction implements InvokableAct
             $password = $this->request->getPost()->get('db_password', '');
 
             $conn = $this->getDatabaseConnection($hostName, $userName, $password);
+
             if ($conn instanceof Connection) {
                 $availableDatabases = $this->retrieveAvailableDatabases($conn);
             }
@@ -47,7 +49,7 @@ class AvailableDatabases extends AbstractInstallerAction implements InvokableAct
             ];
 
             return DriverManager::getConnection($connectionParams, $config);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return null;
         }
     }
@@ -55,7 +57,13 @@ class AvailableDatabases extends AbstractInstallerAction implements InvokableAct
     private function retrieveAvailableDatabases(Connection $conn): array
     {
         $availableDatabases = [];
-        $databases = $conn->fetchAllAssociative('SHOW DATABASES');
+
+        try {
+            $databases = $conn->fetchAllAssociative('SHOW DATABASES');
+        } catch (DBALException $e) {
+            $databases = [];
+        }
+
         foreach ($databases as $database) {
             $availableDatabases[] = $database['Database'];
         }
