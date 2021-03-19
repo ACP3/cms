@@ -34,7 +34,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
         $this->addGroupBy($queryBuilder);
         $this->setOrderBy($columns, $queryBuilder);
 
-        return $queryBuilder->execute()->fetchAll();
+        return $queryBuilder->execute()->fetchAllAssociative();
     }
 
     /**
