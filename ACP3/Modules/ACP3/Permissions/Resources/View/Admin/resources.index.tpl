@@ -3,7 +3,7 @@
 {$DELETE_ROUTE={uri args="acp/permissions/resources/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/permissions/resources/create"  class="fas fa-plus text-success"}
+    {check_access mode="link" path="acp/permissions/resources/create"  iconSet="solid" icon="plus" class="text-success"}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if isset($resources)}
@@ -46,14 +46,14 @@
                                             <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
                                                class="btn btn-default btn-xs"
                                                title="{lang t="permissions|admin_resources_edit"}">
-                                                <i class="fa fa-edit"></i>
+                                                {icon iconSet="solid" icon="edit"}
                                             </a>
                                         {/if}
                                         {if $can_delete_resource === true}
                                             <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
                                                class="btn btn-danger btn-xs"
                                                title="{lang t="permissions|admin_resources_delete"}">
-                                                <i class="fa fa-trash"></i>
+                                                {icon iconSet="solid" icon="trash"}
                                             </a>
                                         {/if}
                                     </div>

@@ -34,6 +34,10 @@ services:
     tags:
       - { name: smarty.plugin.function, pluginName: has_permission }
 
+  ACP3\Core\View\Renderer\Smarty\Functions\Icon:
+    tags:
+      - { name: smarty.plugin.function, pluginName: icon }
+
   ACP3\Core\View\Renderer\Smarty\Functions\Image:
     tags:
       - { name: smarty.plugin.function, pluginName: image }

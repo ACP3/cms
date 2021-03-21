@@ -1,8 +1,8 @@
 {extends file="asset:System/layout.header-bar.tpl"}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/system/extensions/modules" class="fas fa-th"}
-    {check_access mode="link" path="acp/system/extensions/designs" class="fas fa-font"}
+    {check_access mode="link" path="acp/system/extensions/modules" iconSet="solid" icon="th"}
+    {check_access mode="link" path="acp/system/extensions/designs" iconSet="solid" icon="font"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
     {redirect_message}

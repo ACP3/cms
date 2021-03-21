@@ -24,6 +24,11 @@ $system-admin-list-icon-font-size: 32px !default;
     .fab {
       font-size: $system-admin-list-icon-font-size;
     }
+
+    .svg-icon {
+      width: $system-admin-list-icon-font-size;
+      height: $system-admin-list-icon-font-size;
+    }
   }
 
   a,

@@ -7,27 +7,30 @@
 
 namespace ACP3\Core\Helpers\View;
 
-use ACP3\Core;
+use ACP3\Core\ACL;
+use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\I18n\Translator;
+use ACP3\Core\Router\RouterInterface;
 
 class CheckAccess
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var ACL
      */
     private $acl;
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var Translator
      */
     private $translator;
     /**
-     * @var \ACP3\Core\Router\RouterInterface
+     * @var RouterInterface
      */
     private $router;
 
     public function __construct(
-        Core\ACL $acl,
-        Core\I18n\Translator $translator,
-        Core\Router\RouterInterface $router
+        ACL $acl,
+        Translator $translator,
+        RouterInterface $router
     ) {
         $this->translator = $translator;
         $this->acl = $acl;
@@ -40,22 +43,8 @@ class CheckAccess
     public function outputLinkOrButton(array $params)
     {
         if (isset($params['mode'], $params['path'])) {
-            $action = [];
-            $query = \explode('/', \strtolower($params['path']));
-
-            if (isset($query[0]) && $query[0] === 'acp') {
-                $action[0] = ($query[1] ?? 'acp');
-                $action[1] = ($query[2] ?? 'index');
-                $action[2] = $query[3] ?? 'index';
-
-                $area = Core\Controller\AreaEnum::AREA_ADMIN;
-            } else {
-                $action[0] = $query[0];
-                $action[1] = $query[1] ?? 'index';
-                $action[2] = $query[2] ?? 'index';
-
-                $area = Core\Controller\AreaEnum::AREA_FRONTEND;
-            }
+            $action = $this->completeControllerAction($params['path']);
+            $area = $this->getArea($params['path']);
 
             $permissionPath = $area . '/' . $action[0] . '/' . $action[1] . '/' . $action[2];
 
@@ -73,26 +62,54 @@ class CheckAccess
         return '';
     }
 
+    private function completeControllerAction(string $path): array
+    {
+        $action = [];
+
+        $query = \explode('/', \strtolower($path));
+
+        if (isset($query[0]) && $query[0] === 'acp') {
+            $action[0] = $query[1] ?? 'acp';
+            $action[1] = $query[2] ?? 'index';
+            $action[2] = $query[3] ?? 'index';
+        } else {
+            $action[0] = $query[0];
+            $action[1] = $query[1] ?? 'index';
+            $action[2] = $query[2] ?? 'index';
+        }
+
+        return $action;
+    }
+
+    private function getArea(string $path): string
+    {
+        $query = \explode('/', \strtolower($path));
+
+        if (isset($query[0]) && $query[0] === 'acp') {
+            return AreaEnum::AREA_ADMIN;
+        }
+
+        return AreaEnum::AREA_FRONTEND;
+    }
+
     private function collectData(array $params, array $action, string $area): array
     {
-        $accessCheck = [];
-        $accessCheck['uri'] = $this->router->route($params['path']);
-
-        if (isset($params['title'])) {
-            $accessCheck['title'] = $params['title'];
-        }
         if (isset($params['lang'])) {
             $langArray = \explode('|', $params['lang']);
-            $accessCheck['lang'] = $this->translator->t($langArray[0], $langArray[1]);
+
+            $lang = $this->translator->t($langArray[0], $langArray[1]);
         } else {
-            $accessCheck['lang'] = $this->translator->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);
-        }
-        if (isset($params['class'])) {
-            $accessCheck['class'] = $params['class'];
+            $lang = $this->translator->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);
         }
 
-        $accessCheck['mode'] = $params['mode'];
-
-        return $accessCheck;
+        return [
+            'iconSet' => $params['iconSet'] ?? null,
+            'icon' => $params['icon'] ?? null,
+            'mode' => $params['mode'] ?? null,
+            'uri' => $this->router->route($params['path']),
+            'title' => $params['title'] ?? null,
+            'class' => $params['class'] ?? null,
+            'lang' => $lang,
+        ];
     }
 }

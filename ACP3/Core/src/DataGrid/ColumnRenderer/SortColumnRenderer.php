@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\DataGrid\ColumnRenderer;
 
+use ACP3\Core\Helpers\View\Icon;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 
@@ -20,13 +21,19 @@ class SortColumnRenderer extends AbstractColumnRenderer
      * @var \ACP3\Core\Router\RouterInterface
      */
     protected $router;
+    /**
+     * @var Icon
+     */
+    private $icon;
 
     public function __construct(
         Translator $translator,
-        RouterInterface $router
+        RouterInterface $router,
+        Icon $icon
     ) {
         $this->translator = $translator;
         $this->router = $router;
+        $this->icon = $icon;
     }
 
     /**
@@ -67,6 +74,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
 
     protected function fetchSortDirectionHtml(string $url, string $direction): string
     {
+        $arrowIcon = ($this->icon)('solid', 'arrow-' . $direction);
         $html = <<<HTML
 <a href="%s"
    title="%s"
@@ -75,7 +83,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
    data-ajax-form-loading-text="%s"
    data-ajax-form-custom-form-data='%s'
    data-ajax-form-complete-callback="%s">
-    <i class="fas fa-arrow-%s" aria-hidden="true"></i>
+    $arrowIcon
 </a>
 HTML;
 
@@ -84,7 +92,7 @@ HTML;
             $url,
             $this->translator->t('system', 'move_' . $direction),
             $this->translator->t('system', 'loading_please_wait'),
-            \json_encode(['submit' => true]),
+            \json_encode(['submit' => true], JSON_THROW_ON_ERROR),
             \substr($this->getIdentifier(), 1) . 'ReloadDataTable',
             $direction
         );
@@ -92,9 +100,7 @@ HTML;
 
     protected function fetchSortForbiddenHtml(): string
     {
-        $html = <<<HTML
-<i class="fas fa-times-circle text-danger text-danger" aria-hidden="true" title="%s"></i>
-HTML;
+        $html = ($this->icon)('solid', 'times-circle', 'text-danger', $this->translator->t('system', 'move_impossible'));
 
         return \sprintf($html, $this->translator->t('system', 'move_impossible'));
     }

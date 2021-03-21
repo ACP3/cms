@@ -17,7 +17,7 @@
                maxlength="{$datepicker.length}"
                data-input>
         <span class="input-group-addon" data-toggle>
-            <i class="fas fa-calendar" aria-hidden="true"></i>
+            {icon iconSet="solid" icon="calendar"}
         </span>
     </div>
 {/block}

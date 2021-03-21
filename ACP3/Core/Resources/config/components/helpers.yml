@@ -7,6 +7,8 @@ services:
 
   ACP3\Core\Helpers\View\CheckAccess: "@core.helpers.view.checkAccess"
 
+  ACP3\Core\Helpers\View\Icon: ~
+
   core.helpers.alerts:
     class: ACP3\Core\Helpers\Alerts
 

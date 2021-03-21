@@ -21,10 +21,10 @@
                 <td class="text-right">{$row.version}</td>
                 <td class="text-center">
                     {if $row.selected === true}
-                        <i class="fas fa-toggle-on text-success"></i>
+                        {icon iconSet="solid" icon="toggle-on" cssSelectors="text-success"}
                     {else}
                         <a href="{uri args="acp/system/extensions/designs/dir_`$row.internal_name`"}" data-ajax-form="true" data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                            <i class="fa fa-toggle-off text-danger"></i>
+                            {icon iconSet="solid" icon="toggle-off" cssSelectors="text-danger"}
                         </a>
                     {/if}
                 </td>

@@ -11,7 +11,7 @@
                        id="seo-alias-suggestion"
                        class="btn btn-default"
                        title="{lang t="seo|suggest_alias"}">
-                        <i class="fas fa-sync-alt"></i>
+                        {icon iconSet="solid" icon="sync-alt"}
                         <span class="hidden-xs">{lang t="seo|suggest_alias"}</span>
                     </a>
                 </span>

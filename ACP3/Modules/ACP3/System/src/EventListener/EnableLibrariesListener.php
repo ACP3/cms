@@ -24,7 +24,7 @@ class EnableLibrariesListener implements EventSubscriberInterface
 
     public function __invoke(): void
     {
-        $this->libraries->enableLibraries(['polyfill', 'jquery', 'font-awesome']);
+        $this->libraries->enableLibraries(['polyfill', 'jquery']);
     }
 
     /**

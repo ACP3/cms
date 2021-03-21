@@ -24,11 +24,9 @@
                             <td>{$row.author}</td>
                             <td class="text-center">
                                 {if $row.protected === true}
-                                    <i class="fas fa-times-circle text-danger"
-                                       title="{lang t="system|protected_module_description"}"></i>
+                                    {icon iconSet="solid" icon="times-circle" cssSelectors="text-danger" title={lang t="system|protected_module_description"}}
                                 {elseif $row.installable === false}
-                                    <i class="fas fa-info-circle text-info"
-                                       title="{lang t="system|not_installable_module_description"}"></i>
+                                    {icon iconSet="solid" icon="info-circle" cssSelectors="text-info" title={lang t="system|not_installable_module_description"}}
                                 {else}
                                     {if $row.active === true}
                                         <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_deactivate"}"
@@ -36,7 +34,7 @@
                                            title="{lang t="system|disable_module"}"
                                            data-ajax-form="true"
                                            data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            <i class="fa fa-times"></i>
+                                            {icon iconSet="solid" icon="times"}
                                             {lang t="system|disable"}
                                         </a>
                                     {else}
@@ -45,7 +43,7 @@
                                            title="{lang t="system|enable_module"}"
                                            data-ajax-form="true"
                                            data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            <i class="fas fa-check"></i>
+                                            {icon iconSet="solid" icon="check"}
                                             {lang t="system|enable"}
                                         </a>
                                     {/if}
@@ -54,7 +52,7 @@
                                        title="{lang t="system|uninstall_module"}"
                                        data-ajax-form="true"
                                        data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                        <i class="fas fa-power-off"></i>
+                                        {icon iconSet="solid" icon="power-off"}
                                         {lang t="system|uninstall"}
                                     </a>
                                 {/if}
@@ -92,7 +90,7 @@
                                        data-ajax-form="true"
                                        data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"
                                        data-hash-change="#tab-2">
-                                        <i class="fas fa-power-off"></i>
+                                        {icon iconSet="solid" icon="power-off"}
                                         {lang t="system|install"}
                                     </a>
                                 </td>

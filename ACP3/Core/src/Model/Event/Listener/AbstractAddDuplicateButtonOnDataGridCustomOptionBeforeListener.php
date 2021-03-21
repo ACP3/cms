@@ -40,7 +40,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
             $customOptionEvent->getOptionRenderer()->addOption(
                 $this->getRoute($dbResultRow),
                 $this->translator->t('system', 'duplicate_entry'),
-                'fa-copy',
+                'copy',
                 'btn-default',
                 true
             );

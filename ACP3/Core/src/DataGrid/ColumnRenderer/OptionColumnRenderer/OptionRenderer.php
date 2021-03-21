@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer;
 
+use ACP3\Core\Helpers\View\Icon;
 use ACP3\Core\Router\RouterInterface;
 
 class OptionRenderer
@@ -14,30 +15,32 @@ class OptionRenderer
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var array
      */
-    protected $options = [];
-
+    private $options = [];
     /**
-     * OptionRenderer constructor.
+     * @var Icon
      */
-    public function __construct(RouterInterface $router)
+    private $icon;
+
+    public function __construct(RouterInterface $router, Icon $icon)
     {
         $this->router = $router;
+        $this->icon = $icon;
     }
 
     public function addOption(
         string $route,
         string $translationPhrase,
-        string $iconClass,
+        string $icon,
         string $buttonClass = 'btn-default',
         bool $useAjax = false
-    ) {
+    ): void {
         $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
         $value = ' <a href="' . $this->router->route($route) . '" class="btn btn-xs ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
-        $value .= '<i class="fa ' . $iconClass . '"></i>';
+        $value .= ($this->icon)('solid', \strpos($icon, 'fa-') === 0 ? \substr($icon, 3) : $icon);
         $value .= '<span class="sr-only">' . $translationPhrase . '</span>';
         $value .= '</a>';
 

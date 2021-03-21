@@ -70,7 +70,7 @@ services:
     arguments:
       - "ajax-form"
       - false
-      - ["bootstrap", "jquery"]
+      - ["bootstrap", "jquery", "font-awesome"]
       - ["loading-layer.min.css"]
       - ["partials/ajax-form.js"]
       - "system"

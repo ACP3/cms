@@ -16,7 +16,7 @@
                        class="btn btn-block btn-warning"
                        data-ajax-form="true"
                        data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                        <i class="fas fa-sync-alt"></i>
+                        {icon iconSet="solid" icon="sync-alt"}
                         {lang t="system|refresh"}
                     </a>
                 </div>

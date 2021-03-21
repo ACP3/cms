@@ -10,7 +10,7 @@
                required>
     </div>
     <button type="submit" name="submit" class="btn btn-primary" title="{lang t="search|submit_search"}">
-        <i class="fas fa-search"></i>
+        {icon iconSet="solid" icon="search"}
     </button>
     {foreach $search_mods as $row}
         <input type="hidden" name="mods[]" value="{$row.name}">

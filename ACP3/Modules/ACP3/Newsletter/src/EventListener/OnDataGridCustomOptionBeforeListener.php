@@ -42,7 +42,7 @@ class OnDataGridCustomOptionBeforeListener implements EventSubscriberInterface
                 $customOptionEvent->getOptionRenderer()->addOption(
                     'acp/newsletter/index/send/id_' . $dbResultRow['id'],
                     $this->translator->t('newsletter', 'send'),
-                    'fa-envelope',
+                    'envelope',
                     'btn-primary',
                     true
                 );

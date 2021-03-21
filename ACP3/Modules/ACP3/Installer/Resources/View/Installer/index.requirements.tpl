@@ -81,7 +81,7 @@
                    class="btn btn-warning"
                    data-ajax-form="true"
                    data-ajax-form-loading-text="{lang t="installer|loading_please_wait"}">
-                    <i class="fas fa-sync-alt"></i>
+                    {icon iconSet="solid" icon="sync-alt"}
                     {lang t="installer|check_again"}
                 </a>
                 {javascripts}

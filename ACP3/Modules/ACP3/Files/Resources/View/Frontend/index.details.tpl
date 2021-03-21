@@ -15,7 +15,7 @@
                 {$file.text|rewrite_uri}
                 <footer class="well well-sm hyperlink">
                     <a href="{uri args="files/index/download/id_`$file.id`"}" class="download-file">
-                        <i class="fas fa-download"></i>
+                        {icon iconSet="solid" icon="download"}
                         {lang t="files|download_file"}
                         {if !empty($file.size)}
                             ({$file.size})

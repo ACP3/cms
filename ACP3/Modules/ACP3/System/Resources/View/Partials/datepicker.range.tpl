@@ -20,7 +20,7 @@
                        data-input
                        required>
                 <span class="input-group-addon" data-toggle>
-                    <i class="fas fa-calendar" aria-hidden="true"></i>
+                    {icon iconSet="solid" icon="calendar"}
                 </span>
             </div>
         </div>
@@ -36,7 +36,7 @@
                        data-input
                        required>
                 <span class="input-group-addon" data-toggle>
-                    <i class="fas fa-calendar" aria-hidden="true"></i>
+                    {icon iconSet="solid" icon="calendar"}
                 </span>
             </div>
         </div>

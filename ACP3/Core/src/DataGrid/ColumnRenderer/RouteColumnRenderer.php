@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\DataGrid\ColumnRenderer;
 
+use ACP3\Core\Helpers\View\Icon;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 
@@ -20,14 +21,16 @@ class RouteColumnRenderer extends AbstractColumnRenderer
      * @var Translator
      */
     private $translator;
-
     /**
-     * RouteColumnRenderer constructor.
+     * @var Icon
      */
-    public function __construct(RouterInterface $router, Translator $translator)
+    private $icon;
+
+    public function __construct(RouterInterface $router, Translator $translator, Icon $icon)
     {
         $this->router = $router;
         $this->translator = $translator;
+        $this->icon = $icon;
     }
 
     /**
@@ -39,8 +42,9 @@ class RouteColumnRenderer extends AbstractColumnRenderer
 
         if (!empty($column['custom']['path'])) {
             $route = $this->router->route(\sprintf($column['custom']['path'], $value));
+            $linkIcon = ($this->icon)('solid', 'lik');
             $pattern = <<<HTML
-<a href="%s" target="_blank" title="%s">%s <small><i class="fas fa-link"></i></small></a>
+<a href="%s" target="_blank" title="%s">%s <small>$linkIcon</small></a>
 HTML;
             $value = \sprintf(
                 $pattern,

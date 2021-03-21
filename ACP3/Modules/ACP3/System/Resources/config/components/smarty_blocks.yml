@@ -9,7 +9,3 @@ services:
   ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Blocks\Tabset:
     tags:
       - { name: smarty.plugin.block, pluginName: tabset }
-
-  ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Functions\FontAwesomeSvgIcon:
-    tags:
-      - { name: smarty.plugin.function, pluginName: iconSvg }

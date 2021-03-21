@@ -4,13 +4,13 @@
     </div>
     <div class="list-group">
         <a href="{uri args="users/account"}" class="list-group-item">
-            <i class="fas fa-home"></i>
+            {icon iconSet="solid" icon="home"}
             {lang t="users|home"}
         </a>
         {if !empty($user_sidebar.modules)}
             <div id="menu-administration" class="list-group-item dropdown">
                 <a href="{uri args="acp/acp"}" id="menu-admin-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-administration">
-                    <i class="fas fa-file"></i>
+                    {icon iconSet="solid" icon="file"}
                     {lang t="users|administration"}
                     <b class="caret"></b>
                 </a>
@@ -26,7 +26,7 @@
         {if !empty($user_sidebar.system)}
             <div id="menu-system" class="list-group-item dropdown">
                 <a href="{uri args="acp/system"}" id="menu-system-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-system">
-                    <i class="fas fa-cog"></i>
+                    {icon iconSet="solid" icon="cog"}
                     {lang t="system|system"}
                     <b class="caret"></b>
                 </a>
@@ -38,7 +38,7 @@
             </div>
         {/if}
         <a href="{uri args="users/index/logout"}" class="list-group-item">
-            <i class="fas fa-power-off"></i>
+            {icon iconSet="solid" icon="power-off"}
             {lang t="users|logout"}
         </a>
     </div>

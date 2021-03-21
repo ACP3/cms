@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\DataGrid\ColumnRenderer;
 
 use ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer;
+use ACP3\Core\Helpers\View\Icon;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 
@@ -16,21 +17,24 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
-
+    private $router;
     /**
-     * AccountStatusColumnRenderer constructor.
+     * @var Icon
      */
+    private $icon;
+
     public function __construct(
         Translator $translator,
-        RouterInterface $router
+        RouterInterface $router,
+        Icon $icon
     ) {
         $this->translator = $translator;
         $this->router = $router;
+        $this->icon = $icon;
     }
 
     /**
@@ -60,12 +64,12 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
 
         if ((int) $dbValue === 0 && isset($dbResultRow[$this->getPrimaryKey()])) {
             return \sprintf(
-                '<a href="%s" title="%s"><i class="fa fa-trash text-danger"></i></a>',
+                '<a href="%s" title="%s">' . ($this->icon)('solid', 'trash', 'text-danger') . '</a>',
                 $this->router->route('acp/newsletter/accounts/activate/id_' . $dbResultRow[$this->getPrimaryKey()]),
                 $this->translator->t('newsletter', 'activate_account')
             );
         }
 
-        return '<i class="fas fa-check text-success"></i>';
+        return ($this->icon)('solid', 'check', 'text-success');
     }
 }
