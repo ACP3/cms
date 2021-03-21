@@ -13,58 +13,46 @@ class Purge
 {
     /**
      * @param string|array $directory
-     * @param string       $cacheId
-     *
-     * @return bool
      */
-    public static function doPurge($directory, $cacheId = '')
+    public static function doPurge($directory, string $cacheIdPrefix = ''): bool
     {
         if (\is_array($directory)) {
-            return self::handleMultipleDirectories($directory, $cacheId);
+            return self::handleMultipleDirectories($directory, $cacheIdPrefix);
         }
 
-        self::purgeCurrentDirectory($directory, $cacheId);
+        self::purgeCurrentDirectory($directory, $cacheIdPrefix);
 
         return true;
     }
 
-    /**
-     * @param string $cacheId
-     *
-     * @return bool
-     */
-    protected static function handleMultipleDirectories(array $directories, $cacheId)
+    private static function handleMultipleDirectories(array $directories, string $cacheIdPrefix): bool
     {
         foreach ($directories as $directory) {
-            static::doPurge($directory, $cacheId);
+            static::doPurge($directory, $cacheIdPrefix);
         }
 
         return true;
     }
 
-    /**
-     * @param string $directory
-     * @param string $cacheId
-     */
-    protected static function purgeCurrentDirectory($directory, $cacheId)
+    private static function purgeCurrentDirectory(string $fileOrDirectory, string $cacheIdPrefix): void
     {
-        if (\is_link($directory)) {
-            static::purgeCurrentDirectory(\readlink($directory), $cacheId);
-        } elseif (\is_dir($directory)) {
-            foreach (Filesystem::scandir($directory) as $dirContent) {
-                $path = "$directory/$dirContent";
+        if (\is_link($fileOrDirectory)) {
+            static::purgeCurrentDirectory(\readlink($fileOrDirectory), $cacheIdPrefix);
+        } elseif (\is_dir($fileOrDirectory)) {
+            foreach (Filesystem::scandir($fileOrDirectory) as $dirContent) {
+                $path = "$fileOrDirectory/$dirContent";
 
                 if (\is_dir($path)) {
-                    static::purgeCurrentDirectory($path, $cacheId);
-                    if (empty($cacheId)) {
+                    static::purgeCurrentDirectory($path, $cacheIdPrefix);
+                    if (empty($cacheIdPrefix)) {
                         @\rmdir($path);
                     }
-                } elseif (empty($cacheId) || \strpos($dirContent, $cacheId) !== false) {
+                } elseif (empty($cacheIdPrefix) || \strpos($dirContent, $cacheIdPrefix) === 0) {
                     @\unlink($path);
                 }
             }
-        } elseif (\is_file($directory)) {
-            @\unlink($directory);
+        } elseif (\is_file($fileOrDirectory)) {
+            @\unlink($fileOrDirectory);
         }
     }
 }

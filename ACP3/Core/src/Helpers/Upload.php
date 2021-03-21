@@ -19,11 +19,8 @@ class Upload
     /**
      * @var string
      */
-    private $directory = '';
+    private $directory;
 
-    /**
-     * Upload constructor.
-     */
     public function __construct(ApplicationPath $appPath, string $directory)
     {
         $this->appPath = $appPath;
@@ -36,11 +33,9 @@ class Upload
      * @param string $tmpFilename Temporäre Datei
      * @param string $filename    Dateiname
      *
-     * @return array
-     *
      * @throws ValidationFailedException
      */
-    public function moveFile(string $tmpFilename, string $filename, bool $retainFilename = false)
+    public function moveFile(string $tmpFilename, string $filename, bool $retainFilename = false): array
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/';
 
@@ -83,11 +78,11 @@ class Upload
     /**
      * Ermittelt die Dateigröße gemäß IEC 60027-2.
      *
-     * @param int $value Die Dateigröße in Byte
+     * @param int|float $value Die Dateigröße in Byte
      *
      * @return string Die Dateigröße als Fließkommazahl mit der dazugehörigen Einheit
      */
-    public function calcFilesize(int $value)
+    public function calcFilesize($value): string
     {
         $units = [
             0 => 'Byte',
@@ -102,7 +97,7 @@ class Upload
         ];
 
         for ($i = 0; $value >= 1024; ++$i) {
-            $value = $value / 1024;
+            $value /= 1024;
         }
 
         return \round($value, 2) . ' ' . $units[$i];
@@ -110,10 +105,8 @@ class Upload
 
     /**
      * Löscht eine Datei im uploads Ordner.
-     *
-     * @return bool
      */
-    public function removeUploadedFile(string $file)
+    public function removeUploadedFile(string $file): bool
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/' . $file;
         if (!empty($file) && !\preg_match('=/=', $file) && \is_file($path) === true) {

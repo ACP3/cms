@@ -12,20 +12,15 @@ class Filesystem
     /**
      * @var array
      */
-    protected static $excluded = ['.', '..', '.gitignore', '.svn', '.htaccess', '.htpasswd'];
+    private static $excluded = ['.', '..', '.git', '.gitignore', '.svn', '.htaccess', '.htpasswd'];
 
-    /**
-     * @param string $directory
-     *
-     * @return array
-     */
-    public static function scandir($directory, array $excluded = [])
+    public static function scandir(string $directory, array $excluded = []): array
     {
-        $directory = @\scandir($directory);
+        $scannedDirectory = @\scandir($directory);
 
-        if ($directory !== false) {
+        if ($scannedDirectory !== false) {
             $filesAndDirectories = \array_diff(
-                $directory,
+                $scannedDirectory,
                 \array_merge(static::$excluded, $excluded)
             );
 

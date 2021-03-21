@@ -18,27 +18,18 @@ class Helpers
      * @var \ACP3\Core\Helpers\Upload
      */
     private $galleryUploadHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Upload
-     */
-    private $cachedImagesUploadHelper;
 
     public function __construct(
-        Upload $cachedImagesUploadHelper,
         Upload $galleryUploadHelper
     ) {
         $this->galleryUploadHelper = $galleryUploadHelper;
-        $this->cachedImagesUploadHelper = $cachedImagesUploadHelper;
     }
 
     /**
      * Löscht ein Bild aus dem Dateisystem.
      */
-    public function removePicture(string $file)
+    public function removePicture(string $file): void
     {
-        $this->cachedImagesUploadHelper->removeUploadedFile('gallery_thumb_' . $file);
-        $this->cachedImagesUploadHelper->removeUploadedFile('gallery_' . $file);
-
         $this->galleryUploadHelper->removeUploadedFile($file);
     }
 }

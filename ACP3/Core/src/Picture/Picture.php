@@ -55,7 +55,7 @@ class Picture
 
             // Direct output of the picture, if it is already cached
             if ($input->isEnableCache() === true && \is_file($cacheFile) === true) {
-                $this->calcNewDimensions($input, $output);
+                $this->calcDestDimensions($input, $output);
                 $output->setDestFile($cacheFile);
             } elseif ($this->resamplingIsNecessary($input, $output)) { // Resize the picture
                 $this->createCacheDir($input);
@@ -122,7 +122,7 @@ class Picture
     private function resamplingIsNecessary(Input $input, Output $output): bool
     {
         return ($input->isForceResample() || $this->hasNecessaryResamplingDimensions($input, $output))
-            && \in_array($output->getType(), [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG]);
+            && \in_array($output->getType(), [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true);
     }
 
     private function hasNecessaryResamplingDimensions(Input $input, Output $output): bool
@@ -136,7 +136,7 @@ class Picture
      * @param \ACP3\Core\Picture\Input  $input
      * @param \ACP3\Core\Picture\Output $output
      */
-    private function calcNewDimensions(Input $input, Output $output): void
+    private function calcDestDimensions(Input $input, Output $output): void
     {
         if ($input->isPreferHeight() === false && ($output->getSrcWidth() >= $output->getSrcHeight() || $input->isPreferWidth() === true)) {
             $newWidth = $input->getMaxWidth();
@@ -157,13 +157,13 @@ class Picture
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    private function createCacheDir(Input $input)
+    private function createCacheDir(Input $input): void
     {
         if (\is_dir($input->getCacheDir())) {
             return;
         }
 
-        if (!@\mkdir($input->getCacheDir())) {
+        if (!\mkdir($concurrentDirectory = $input->getCacheDir()) && !\is_dir($concurrentDirectory)) {
             throw new PictureGenerateException(\sprintf('Could not create cache dir: %s', $input->getCacheDir()));
         }
     }
@@ -176,7 +176,7 @@ class Picture
      */
     private function resample(Input $input, Output $output): void
     {
-        $this->calcNewDimensions($input, $output);
+        $this->calcDestDimensions($input, $output);
 
         $this->image = \imagecreatetruecolor($output->getDestWidth(), $output->getDestHeight());
 

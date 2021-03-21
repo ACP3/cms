@@ -10,7 +10,6 @@ services:
   gallery.helpers:
     class: ACP3\Modules\ACP3\Gallery\Helpers
     arguments:
-      $cachedImagesUploadHelper: "@gallery.helpers.upload_cached_images"
       $galleryUploadHelper: "@gallery.helpers.upload"
 
   ACP3\Modules\ACP3\Gallery\Helpers: "@gallery.helpers"

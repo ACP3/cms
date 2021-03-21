@@ -17,20 +17,12 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * @var string
      */
-    const CACHE_ID = 'pics_id_';
+    public const CACHE_ID = 'pics_id_';
 
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
-    protected $pictureRepository;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    protected $config;
+    private $pictureRepository;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
      */
@@ -38,28 +30,22 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     public function __construct(
         Core\Cache $cache,
-        Core\Environment\ApplicationPath $appPath,
         PictureRepository $pictureRepository,
-        Core\Settings\SettingsInterface $config,
         ThumbnailGenerator $thumbnailGenerator
     ) {
         parent::__construct($cache);
 
-        $this->appPath = $appPath;
         $this->pictureRepository = $pictureRepository;
-        $this->config = $config;
         $this->thumbnailGenerator = $thumbnailGenerator;
     }
 
     /**
      * Bindet die gecachete Galerie anhand ihrer ID ein.
      *
-     * @return array
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getCache(int $galleryId)
+    public function getCache(int $galleryId): array
     {
         if ($this->cache->contains(self::CACHE_ID . $galleryId) === false) {
             $this->saveCache($galleryId);
@@ -71,19 +57,16 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * Erstellt den Galerie-Cache anhand der angegebenen ID.
      *
-     * @return bool
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function saveCache(int $galleryId)
+    public function saveCache(int $galleryId): bool
     {
         $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
-        $cPictures = \count($pictures);
 
-        for ($i = 0; $i < $cPictures; ++$i) {
-            $cachedThumbnail = $this->cachePicture($pictures[$i]['file'], 'thumb');
-            $cachedPicture = $this->cachePicture($pictures[$i]['file'], null);
+        foreach ($pictures as $i => $picture) {
+            $cachedThumbnail = $this->cachePicture($picture['file'], 'thumb');
+            $cachedPicture = $this->cachePicture($picture['file'], null);
 
             $pictures[$i]['width'] = $cachedThumbnail->getWidth();
             $pictures[$i]['height'] = $cachedThumbnail->getHeight();
