@@ -17,7 +17,7 @@
                     {if !empty($user_sidebar.modules)}
                         <li class="dropdown">
                             <a href="{uri args="acp/acp"}" id="menu-admin-label" class="dropdown-toggle" data-toggle="dropdown" data-target="#menu-administration">
-                                <i class="fas fa-file"></i>
+                                {iconSvg iconSet="solid" icon="file"}
                                 {lang t="users|administration"}
                                 <b class="caret"></b>
                             </a>

@@ -3,6 +3,7 @@
 $system-dataset-box-margin-bottom: ($line-height-computed / 2) !default;
 $system-dataset-box-download-icon-text-color: $text-color !default;
 $system-dataset-box-padding-x: floor(($grid-gutter-width / 2)) !default;
+$system-svg-icon-color: #333 !default;
 
 .dataset-box {
   margin: 0 auto $system-dataset-box-margin-bottom;
@@ -50,4 +51,11 @@ $system-dataset-box-padding-x: floor(($grid-gutter-width / 2)) !default;
       color: $system-dataset-box-download-icon-text-color;
     }
   }
+}
+
+.svg-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: $system-svg-icon-color;
 }
