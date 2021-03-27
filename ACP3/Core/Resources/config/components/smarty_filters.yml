@@ -5,3 +5,7 @@ services:
   ACP3\Core\View\Renderer\Smarty\Filters\PageCssClasses:
     tags:
       - { name: smarty.plugin.filter, filterType: output }
+
+  ACP3\Core\View\Renderer\Smarty\Filters\JsSvgIcons:
+    tags:
+      - { name: smarty.plugin.filter, filterType: output }

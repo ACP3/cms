@@ -24,10 +24,6 @@ class PageCssClasses extends AbstractFilter
      */
     private $cssClassCache = '';
 
-    /**
-     * @param \ACP3\Core\Assets\PageCssClasses $pageCssClasses
-     * @param \ACP3\Core\Http\RequestInterface $request
-     */
     public function __construct(
         Core\Assets\PageCssClasses $pageCssClasses,
         Core\Http\RequestInterface $request

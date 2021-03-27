@@ -16,13 +16,14 @@ export class LoadingLayer {
 
   addLoadingLayer() {
     if (!document.getElementById("loading-layer")) {
-      const $body = jQuery("body"),
-        html =
-          '<div id="loading-layer" class="loading-layer"><h1><svg class="svg-icon svg-icon__spinner svg-icon--spin" fill="currentColor"><use xlink:href="' +
-          window.loadingLayerIcon +
-          '"></use></svg> ' +
-          this.#options.loadingText +
-          "</h1></div>";
+      const $body = jQuery("body");
+      const jsSvgIcons = $body.data("svgIcons");
+      const html =
+        '<div id="loading-layer" class="loading-layer"><h1><svg class="svg-icon svg-icon__spinner svg-icon--spin" fill="currentColor"><use xlink:href="' +
+        jsSvgIcons["loadingLayerIcon"] +
+        '"></use></svg> ' +
+        this.#options.loadingText +
+        "</h1></div>";
 
       jQuery(html).appendTo($body);
     }

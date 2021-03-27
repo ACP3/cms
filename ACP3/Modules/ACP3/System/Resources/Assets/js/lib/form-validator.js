@@ -71,10 +71,13 @@ export class FormValidator {
   #addErrorMessageToFormField($element, errorMessage) {
     this.#removeErrorMessageFromFormField($element[0]);
 
+    const $body = jQuery("body");
+    const jsSvgIcons = $body.data("svgIcons");
+
     $element
       .closest("div:not(.input-group):not(.btn-group)")
       .append(
-        `<small class="help-block validation-failed"><svg class="svg-icon svg-icon__exclamation-circle" fill="currentColor"><use xlink:href="${window.ajaxFormValidationFailedIcon}"></use></svg> ${errorMessage}</small>`
+        `<small class="help-block validation-failed"><svg class="svg-icon svg-icon__exclamation-circle" fill="currentColor"><use xlink:href="${jsSvgIcons["validationFailedIcon"]}"></use></svg> ${errorMessage}</small>`
       );
   }
 

@@ -17,13 +17,13 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject & Translator
      */
-    protected $langMock;
+    private $langMock;
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject & RouterInterface
      */
-    protected $routerMock;
+    private $routerMock;
     /**
-     * @var Icon|\PHPUnit\Framework\MockObject\MockObject & Icon
+     * @var \PHPUnit\Framework\MockObject\MockObject & Icon
      */
     private $iconMock;
 

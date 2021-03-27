@@ -60,7 +60,7 @@ class BackendFactory
         if (\is_dir($this->getCacheDir())) {
             return;
         }
-        
+
         if (!\mkdir($concurrentDirectory = $this->getCacheDir()) && !\is_dir($concurrentDirectory)) {
             throw new \RuntimeException(\sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
