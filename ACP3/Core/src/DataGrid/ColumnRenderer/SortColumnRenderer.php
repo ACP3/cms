@@ -100,7 +100,7 @@ HTML;
 
     protected function fetchSortForbiddenHtml(): string
     {
-        $html = ($this->icon)('solid', 'times-circle', 'text-danger', $this->translator->t('system', 'move_impossible'));
+        $html = ($this->icon)('solid', 'times-circle', ['cssSelectors' => 'text-danger', 'title' => $this->translator->t('system', 'move_impossible')]);
 
         return \sprintf($html, $this->translator->t('system', 'move_impossible'));
     }

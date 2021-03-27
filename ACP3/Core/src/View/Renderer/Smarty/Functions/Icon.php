@@ -29,10 +29,8 @@ class Icon extends AbstractFunction
         if (isset($params['iconSet'], $params['icon'])) {
             $iconSet = $params['iconSet'];
             $icon = $params['icon'];
-            $cssSelectors = $params['cssSelectors'] ?? null;
-            $title = $params['title'] ?? null;
 
-            return ($this->iconHelper)($iconSet, $icon, $cssSelectors, $title);
+            return ($this->iconHelper)($iconSet, $icon, $params);
         }
 
         throw new \InvalidArgumentException(\sprintf('Not all necessary arguments for the function %s were passed!', __FUNCTION__));

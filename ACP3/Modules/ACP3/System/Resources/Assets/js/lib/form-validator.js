@@ -74,7 +74,7 @@ export class FormValidator {
     $element
       .closest("div:not(.input-group):not(.btn-group)")
       .append(
-        `<small class="help-block validation-failed"><i class="fas fa-exclamation-circle"></i> ${errorMessage}</small>`
+        `<small class="help-block validation-failed"><svg class="svg-icon svg-icon__exclamation-circle" fill="currentColor"><use xlink:href="${window.ajaxFormValidationFailedIcon}"></use></svg> ${errorMessage}</small>`
       );
   }
 

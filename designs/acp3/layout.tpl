@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{$LANG}" dir="{$LANG_DIRECTION}">
 <head>
-    {include file="asset:System/Partials/head.tpl" inline}
+    {include file="asset:System/Partials/head.tpl"}
     <!-- JAVASCRIPTS -->
 </head>
 

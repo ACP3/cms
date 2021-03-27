@@ -18,7 +18,9 @@ export class LoadingLayer {
     if (!document.getElementById("loading-layer")) {
       const $body = jQuery("body"),
         html =
-          '<div id="loading-layer" class="loading-layer"><h1><span class="fas fa-spinner fa-spin"></span> ' +
+          '<div id="loading-layer" class="loading-layer"><h1><svg class="svg-icon svg-icon__spinner svg-icon--spin" fill="currentColor"><use xlink:href="' +
+          window.loadingLayerIcon +
+          '"></use></svg> ' +
           this.#options.loadingText +
           "</h1></div>";
 

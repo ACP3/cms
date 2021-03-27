@@ -42,7 +42,7 @@ class RouteColumnRenderer extends AbstractColumnRenderer
 
         if (!empty($column['custom']['path'])) {
             $route = $this->router->route(\sprintf($column['custom']['path'], $value));
-            $linkIcon = ($this->icon)('solid', 'lik');
+            $linkIcon = ($this->icon)('solid', 'link');
             $pattern = <<<HTML
 <a href="%s" target="_blank" title="%s">%s <small>$linkIcon</small></a>
 HTML;

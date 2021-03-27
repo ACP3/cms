@@ -21,16 +21,22 @@ class Icon
         $this->fileResolver = $fileResolver;
     }
 
-    public function __invoke(string $iconSet, string $icon, ?string $additionalCssSelectors = null, ?string $title = null): string
+    public function __invoke(string $iconSet, string $icon, array $options = []): string
     {
         $path = $this->fileResolver->getWebStaticAssetPath('system', 'Assets/sprites', $iconSet . '.svg');
 
-        if ($additionalCssSelectors !== null) {
-            $additionalCssSelectors = ' ' . $additionalCssSelectors;
+        if (\array_key_exists('pathOnly', $options) && $options['pathOnly'] === true) {
+            return $path . '#' . $icon;
         }
 
-        if ($title !== null) {
-            $title = "<title>$title</title>";
+        $additionalCssSelectors = '';
+        if (\array_key_exists('cssSelectors', $options)) {
+            $additionalCssSelectors = ' ' . $options['cssSelectors'];
+        }
+
+        $title = '';
+        if (\array_key_exists('title', $options)) {
+            $title = "<title>{$options['title']}</title>";
         }
 
         return <<<HTML
