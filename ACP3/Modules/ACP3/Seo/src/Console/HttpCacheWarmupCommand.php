@@ -39,14 +39,14 @@ class HttpCacheWarmupCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 'How many seconds should the crawler pause after crawling an URL?',
-                0
+                '0'
             )
             ->addOption(
                 'limit',
                 null,
                 InputOption::VALUE_REQUIRED,
                 'How many URLs per sitemap should be crawled?',
-                0
+                '0'
             );
     }
 
@@ -74,7 +74,7 @@ class HttpCacheWarmupCommand extends Command
     /**
      * Parses the XML sitemap and crawls the URLs of it.
      */
-    private function processSitemap(string $sitemap, InputInterface $input, OutputInterface $output)
+    private function processSitemap(string $sitemap, InputInterface $input, OutputInterface $output): void
     {
         $output->writeln("Crawling URLs of file {$sitemap}...");
 
