@@ -6,7 +6,6 @@
     <version core="true"/>
     <libraries>
         <item>bootstrap</item>
-        <item>font-awesome</item>
         <item>jquery</item>
         <item>polyfill</item>
     </libraries>
