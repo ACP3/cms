@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 -   [ALL] Dropped the support for PHP 7.2
+-   [ALL] Replaced the usages of fontawesome webfont with its SVG-sprites
 -   [Core] Updated Doctrine-DBAL to version 3.x
 -   [Core] Update PHPUnit to version 9.5.
 -   [Gallery] Do not allow to index the gallery picture details page, if the overlay has been enabled in the module settings
