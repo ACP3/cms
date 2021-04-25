@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [5.16.0] - 2021-04-25
 
 ### Added
 
@@ -451,7 +451,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   removed all deprecated code
 
-[unreleased]: https://gitlab.com/ACP3/cms/compare/v5.15.5...5.x
+[unreleased]: https://gitlab.com/ACP3/cms/compare/v5.16.0...5.x
+[5.16.0]: https://gitlab.com/ACP3/cms/compare/v5.15.5...v5.16.0
 [5.15.5]: https://gitlab.com/ACP3/cms/compare/v5.15.4...v5.15.5
 [5.15.4]: https://gitlab.com/ACP3/cms/compare/v5.15.3...v5.15.4
 [5.15.3]: https://gitlab.com/ACP3/cms/compare/v5.15.2...v5.15.3
