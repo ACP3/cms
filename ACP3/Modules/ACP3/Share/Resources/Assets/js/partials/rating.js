@@ -13,6 +13,6 @@
     .on("click", ".rating__average .rating__star", function () {
       // .rating__average sets the direction back to ltr, so we have to account for this
       const index = 4 - $(this).index();
-      $(".rating > .rating__star").eq(index).addClass("rating__star_active").click();
+      $(".rating > .rating__star").eq(index).addClass("rating__star--active").click();
     });
 })(jQuery);

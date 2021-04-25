@@ -6,17 +6,18 @@
       data-ajax-form-loading-overlay="false">
     <div class="rating">
         <div class="rating__average" style="width:{(($rating.average_rating|default:0) * 100 / 5)|round:0}%">
-            <span class="rating__star"></span>
-            <span class="rating__star"></span>
-            <span class="rating__star"></span>
-            <span class="rating__star"></span>
-            <span class="rating__star"></span>
+            {for $i=1 to 5 step 1}
+                <div class="rating__star">
+                    {icon iconSet="solid" icon="star"}
+                </div>
+            {/for}
         </div>
         {for $i=5 to 1 step -1}
             <label for="rating-star-{$i}"
                    title="{lang t="share|rate_with_x_stars" args=['%stars%' => $i]}"
                    class="rating__star">
                 <input type="radio" id="rating-star-{$i}" name="stars" value="{$i}" class="hidden" required>
+                {icon iconSet="regular" icon="star"}
             </label>
         {/for}
     </div>
@@ -31,7 +32,7 @@
     <div class="rating-summary"
          itemprop="aggregateRating"
          itemscope itemtype="http://schema.org/AggregateRating">
-            <span itemprop="ratingValue">{$rating.average_rating|string_format:"%.2f"}</span> / 5
+        <span itemprop="ratingValue">{$rating.average_rating|string_format:"%.2f"}</span> / 5
         {if $rating.total_ratings > 1}
             ({lang t="share|total_x_ratings" args=['%ratings%' => $rating.total_ratings]})
         {else}
