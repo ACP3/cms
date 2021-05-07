@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Core] Made it possible to extend the JavaScript SVG icons object with custom icons, too
+
+### Changed
+
+-   [ALL] Update PHP CS Fixer to version 3.0.0
+
+### Fixed
+
+-   [System] Fixed a Smarty error, when a WYSIWYG form-field was optional
 
 ## [5.16.0] - 2021-04-25
 
