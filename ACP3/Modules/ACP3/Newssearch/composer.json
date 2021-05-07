@@ -16,10 +16,10 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^5.14.0",
-    "acp3/module-news": "^5.14.0",
-    "acp3/module-search": "^5.14.0",
-    "acp3/module-system": "^5.14.0"
+    "acp3/core": "^5.17.0",
+    "acp3/module-news": "^5.17.0",
+    "acp3/module-search": "^5.17.0",
+    "acp3/module-system": "^5.17.0"
   },
   "autoload": {
     "psr-4": {
