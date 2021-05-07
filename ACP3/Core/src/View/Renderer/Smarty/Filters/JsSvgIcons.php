@@ -7,22 +7,23 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
-use ACP3\Core\Helpers\View\Icon;
+use ACP3\Core\View\Renderer\Smarty\Filters\Event\JsSvgIconEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class JsSvgIcons extends AbstractFilter
 {
     /**
-     * @var Icon
-     */
-    private $icon;
-    /**
-     * @var string[]|null
+     * @var array<string, string>|null
      */
     private $svgIcons;
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
 
-    public function __construct(Icon $icon)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
-        $this->icon = $icon;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
@@ -44,9 +45,8 @@ class JsSvgIcons extends AbstractFilter
 
     private function addSvgIcons(): void
     {
-        $this->svgIcons = [
-            'loadingLayerIcon' => ($this->icon)('solid', 'spinner', ['pathOnly' => true]),
-            'validationFailedIcon' => ($this->icon)('solid', 'exclamation-circle', ['pathOnly' => true]),
-        ];
+        $event = $this->eventDispatcher->dispatch(new JsSvgIconEvent());
+
+        $this->svgIcons = $event->getIcons();
     }
 }
