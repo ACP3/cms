@@ -6,5 +6,6 @@
     {$advanced=(isset($advanced)) ? $advanced : false}
     {$value=(isset($value)) ? $value : ''}
     {$editor=(isset($editor)) ? $editor : null}
+    {$required=(isset($required)) ? $required : false}
     {wysiwyg name=$name value=$value toolbar=$toolbar editor=$editor advanced=$advanced required=$required}
 {/block}
