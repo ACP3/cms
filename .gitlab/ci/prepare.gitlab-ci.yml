@@ -19,7 +19,7 @@ composer:
       - composer.lock
       - tests/phpunit.dist.xml
       - phpstan.neon.dist
-      - .php_cs.dist
+      - .php-cs-fixer.dist.php
       - .gitlab-ci.yml
 
 npm:

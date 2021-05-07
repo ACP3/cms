@@ -15,17 +15,18 @@ Copyright (c) by the ACP3 Developers.
 See the LICENSE file at the top-level module directory for licensing details.
 DOCBLOCK;
 
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+return $config
     ->setRiskyAllowed(true)
     ->setLineEnding("\n")
     ->setRules([
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'class_attributes_separation' => ['elements' => ['method']],
+        'class_attributes_separation' => ['elements' => ['method' => 'one']],
         'concat_space' => ['spacing' => 'one'],
         'declare_equal_normalize' => ['space' => 'single'],
         'header_comment' => [
-            'commentType' => 'PHPDoc',
+            'comment_type' => 'PHPDoc',
             'header' => $header,
         ],
         'method_chaining_indentation' => true,
@@ -34,7 +35,7 @@ return PhpCsFixer\Config::create()
         'no_null_property_initialization' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
-        'ordered_imports' => ['importsOrder' => null],
+        'ordered_imports' => ['imports_order' => null],
         'ternary_to_null_coalescing' => true,
         'yoda_style' => false,
     ])

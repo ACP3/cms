@@ -21,7 +21,7 @@ release-artifact:
       - .eslintrc.json
       - .htaccess.sample
       - .nvmrc
-      - .php_cs.dist
+      - .php-cs-fixer.dist.php
       - .prettierignore
       - .prettierrc.json
       - .stylelintignore
