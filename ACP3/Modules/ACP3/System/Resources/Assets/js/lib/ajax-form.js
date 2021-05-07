@@ -9,7 +9,7 @@ export class AjaxForm {
   #loadingLayer;
   #formValidator;
   #defaults = {
-    completeCallback: undefined,
+    completeCallback: null,
     targetElement: "#content",
     loadingOverlay: true,
     customFormData: null,
