@@ -2,24 +2,15 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" bootstrap="./bootstrap.php">
   <coverage processUncoveredFiles="true">
     <include>
-      <directory suffix=".php">./../ACP3/Core/</directory>
-      <directory suffix=".php">./../ACP3/Modules/</directory>
-      <directory suffix=".php">./../installation/Installer/</directory>
+      <directory suffix=".php">./../ACP3/</directory>
     </include>
     <exclude>
-      <directory>./../ACP3/Core/tests/</directory>
-      <directory>./../ACP3/Modules/*/*/Test/</directory>
-      <directory>./../ACP3/Modules/*/*/tests/</directory>
-      <directory>./../ACP3/Modules/*/*/Resources/</directory>
-      <directory>./../vendor/</directory>
+      <directory suffix="Test.php">./../ACP3/</directory>
     </exclude>
   </coverage>
   <testsuites>
     <testsuite name="ACP3-CMS Test Suite">
-      <directory>./../ACP3/Core/tests/</directory>
-      <directory>./../ACP3/Modules/*/*/Test/</directory>
-      <directory>./../ACP3/Modules/*/*/tests/</directory>
-      <exclude>./../vendor/*</exclude>
+      <directory suffix="Test.php">./../ACP3/</directory>
     </testsuite>
   </testsuites>
 </phpunit>
