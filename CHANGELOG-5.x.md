@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [Tests] Updated the PHPUnit configuration file
 
 ## [5.17.1] - 2021-05-08
 
