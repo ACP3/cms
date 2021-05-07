@@ -40,7 +40,7 @@ class ComponentDataDto
         ?ModuleRegistration $moduleRegistration = null)
     {
         $this->componentType = $componentType;
-        $this->name = \strtolower($componentName);
+        $this->name = strtolower($componentName);
         $this->path = $componentPath;
         $this->dependencies = $dependencies;
         $this->moduleRegistration = $moduleRegistration;

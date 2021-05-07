@@ -13,7 +13,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class DataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = ShareRepository::TABLE_NAME;
+    public const TABLE_NAME = ShareRepository::TABLE_NAME;
 
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {

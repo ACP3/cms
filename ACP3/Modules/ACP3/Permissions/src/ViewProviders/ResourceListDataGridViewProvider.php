@@ -53,7 +53,7 @@ class ResourceListDataGridViewProvider
                 $output[$module][] = $resource;
             }
         }
-        \ksort($output);
+        ksort($output);
 
         return [
             'resources' => $output,

@@ -53,7 +53,7 @@ class AdminSettingsViewProvider
                 'enabled',
                 $cookieConsentSettings['enabled']
             ),
-            'form' => \array_merge($cookieConsentSettings, $this->request->getPost()->all()),
+            'form' => array_merge($cookieConsentSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

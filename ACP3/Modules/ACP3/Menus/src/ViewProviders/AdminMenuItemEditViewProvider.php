@@ -71,12 +71,12 @@ class AdminMenuItemEditViewProvider
     {
         $this->title->setPageTitlePrefix($menuItem['title']);
 
-        return \array_merge(
+        return array_merge(
             [
                 'mode' => $this->fetchMenuItemTypes($menuItem['mode']),
                 'modules' => $this->fetchModules($menuItem),
                 'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $menuItem['target']),
-                'form' => \array_merge($menuItem, $this->request->getPost()->all()),
+                'form' => array_merge($menuItem, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
             ],
             $this->menuItemFormFieldsHelper->createMenuItemFormFields(
@@ -107,7 +107,7 @@ class AdminMenuItemEditViewProvider
             $modules[$info['name']] = $this->translator->t($info['name'], $info['name']);
         }
 
-        \uasort($modules, static function ($a, $b) {
+        uasort($modules, static function ($a, $b) {
             return $a <=> $b;
         });
 

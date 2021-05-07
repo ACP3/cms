@@ -86,9 +86,9 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
             $this->initialize($layout);
         }
 
-        $currentTimestamp = \time();
+        $currentTimestamp = time();
 
-        return \array_reduce($this->javascripts, static function ($accumulator, $javascript) use ($currentTimestamp) {
+        return array_reduce($this->javascripts, static function ($accumulator, $javascript) use ($currentTimestamp) {
             if ($javascript === '') {
                 return $accumulator;
             }

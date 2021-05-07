@@ -76,11 +76,11 @@ class SitemapGenerationModel
     {
         $filePath = $this->getSitemapFilePath($filename);
 
-        if (!\is_file($filePath)) {
-            \touch($filePath);
+        if (!is_file($filePath)) {
+            touch($filePath);
         }
 
-        if (!\is_file($filePath) || !\is_writable($filePath)) {
+        if (!is_file($filePath) || !is_writable($filePath)) {
             throw new SitemapGenerationException('The requested file "' . $filePath . '" either not exists or is not writable. Aborting sitemap generation.');
         }
     }
@@ -106,6 +106,6 @@ class SitemapGenerationModel
     {
         $urlSet->accept($this->xmlSitemapDriver);
 
-        return \file_put_contents($this->getSitemapFilePath($filename), $this->xmlSitemapDriver->output()) !== false;
+        return file_put_contents($this->getSitemapFilePath($filename), $this->xmlSitemapDriver->output()) !== false;
     }
 }

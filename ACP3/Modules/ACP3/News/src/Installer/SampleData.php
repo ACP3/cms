@@ -33,7 +33,7 @@ class SampleData extends AbstractSampleData
      */
     public function sampleData()
     {
-        $currentDate = \gmdate(Date::DEFAULT_DATE_FORMAT_FULL);
+        $currentDate = gmdate(Date::DEFAULT_DATE_FORMAT_FULL);
         $translator = $this->translator;
 
         return [

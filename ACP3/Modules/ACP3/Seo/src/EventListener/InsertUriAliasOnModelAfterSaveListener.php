@@ -39,7 +39,7 @@ class InsertUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
 
             if ($event->getModuleName() !== Schema::MODULE_NAME && !empty($formData['seo_uri_pattern'])) {
                 $this->uriAliasManager->insertUriAlias(
-                    \sprintf($formData['seo_uri_pattern'], $event->getEntryId()),
+                    sprintf($formData['seo_uri_pattern'], $event->getEntryId()),
                     $formData['alias'],
                     $formData['seo_keywords'],
                     $formData['seo_description'],

@@ -44,9 +44,9 @@ class BaseEnum
             return \array_key_exists($name, $constants);
         }
 
-        $keys = \array_map('strtolower', \array_keys($constants));
+        $keys = array_map('strtolower', array_keys($constants));
 
-        return \in_array(\strtolower($name), $keys, true);
+        return \in_array(strtolower($name), $keys, true);
     }
 
     /**
@@ -56,7 +56,7 @@ class BaseEnum
      */
     public static function isValidValue($value, bool $strict = true): bool
     {
-        $values = \array_values(self::getConstants());
+        $values = array_values(self::getConstants());
 
         return \in_array($value, $values, $strict);
     }

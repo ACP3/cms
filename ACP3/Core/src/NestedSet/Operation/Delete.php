@@ -33,7 +33,7 @@ class Delete extends AbstractOperation
      */
     protected function moveSiblingsOneLevelUp(array $nodes): void
     {
-        \array_shift($nodes);
+        array_shift($nodes);
 
         // Update the root_id and parent_id of the siblings
         foreach ($nodes as $node) {
@@ -50,7 +50,7 @@ class Delete extends AbstractOperation
      */
     private function getNodeIds(array $nodes): array
     {
-        return \array_map(static function ($node) {
+        return array_map(static function ($node) {
             return (int) $node['id'];
         }, $nodes);
     }

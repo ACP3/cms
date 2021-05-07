@@ -54,13 +54,13 @@ class CacheDriverFactory
     protected function initializeCacheDriver(string $driverName): CacheProvider
     {
         /* @var \Doctrine\Common\Cache\CacheProvider $driver */
-        switch (\strtolower($driverName)) {
+        switch (strtolower($driverName)) {
             case 'phpfile':
                 return new PhpFileCache($this->appPath->getCacheDir() . 'sql/');
             case 'array':
                 return new ArrayCache();
             default:
-                throw new \InvalidArgumentException(\sprintf('Could not find the requested cache driver "%s"!', $driverName));
+                throw new \InvalidArgumentException(sprintf('Could not find the requested cache driver "%s"!', $driverName));
         }
     }
 }

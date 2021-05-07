@@ -69,12 +69,12 @@ class LibrariesCache
             return;
         }
 
-        $this->cache->save($this->getCacheId($request), \array_unique($this->librariesCache[$request->getUri()] ?? []));
+        $this->cache->save($this->getCacheId($request), array_unique($this->librariesCache[$request->getUri()] ?? []));
     }
 
     private function getCacheId(Request $request): string
     {
-        return 'libraries_' . \md5($request->getUri());
+        return 'libraries_' . md5($request->getUri());
     }
 
     public function deleteAll(): bool

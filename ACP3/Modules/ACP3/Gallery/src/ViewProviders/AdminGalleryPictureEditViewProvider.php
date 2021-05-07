@@ -84,7 +84,7 @@ class AdminGalleryPictureEditViewProvider
             );
 
         return [
-            'form' => \array_merge($picture, $this->request->getPost()->all()),
+            'form' => array_merge($picture, $this->request->getPost()->all()),
             'galleries' => $this->formsHelper->choicesGenerator(
                 'gallery_id',
                 $this->getGalleries(),

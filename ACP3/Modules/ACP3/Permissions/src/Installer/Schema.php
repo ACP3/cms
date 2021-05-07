@@ -12,7 +12,7 @@ use ACP3\Core\Modules;
 
 class Schema implements Modules\Installer\SchemaInterface
 {
-    const MODULE_NAME = 'permissions';
+    public const MODULE_NAME = 'permissions';
 
     /**
      * @return array

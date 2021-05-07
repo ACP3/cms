@@ -36,9 +36,9 @@ class LinkModeValidationRule extends AbstractValidationRule
     public function isValid($data, $field = '', array $extra = [])
     {
         if (\is_array($data) && \is_array($field)) {
-            $mode = \reset($field);
-            $moduleName = \next($field);
-            $uri = \next($field);
+            $mode = reset($field);
+            $moduleName = next($field);
+            $uri = next($field);
 
             return $this->isValidLink((int) $data[$mode], $data[$moduleName], $data[$uri]);
         }

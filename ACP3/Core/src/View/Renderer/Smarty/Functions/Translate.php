@@ -29,7 +29,7 @@ class Translate extends AbstractFunction
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty)
     {
-        $values = \explode('|', $params['t']);
+        $values = explode('|', $params['t']);
         $params = isset($params['args']) && \is_array($params['args']) ? $params['args'] : [];
 
         return $this->translator->t($values[0], $values[1], $params);

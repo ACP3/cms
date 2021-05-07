@@ -16,15 +16,15 @@ class DateValidationRule extends AbstractValidationRule
     {
         if (\is_array($data)) {
             if (\is_array($field)) {
-                $start = \reset($field);
-                $end = \next($field);
+                $start = reset($field);
+                $end = next($field);
 
                 return $this->checkIsValidDate($data[$start], $data[$end]);
             } elseif (!empty($field)) {
                 return $this->isValid($data[$field], $field, $extra);
             }
 
-            return $this->checkIsValidDate(\reset($data), \next($data));
+            return $this->checkIsValidDate(reset($data), next($data));
         }
 
         return $this->checkIsValidDate($data);
@@ -41,7 +41,7 @@ class DateValidationRule extends AbstractValidationRule
         if ($this->matchIsDate($start)) {
             // Check date range
             if ($end !== null && $this->matchIsDate($end)) {
-                return \strtotime($start) <= \strtotime($end);
+                return strtotime($start) <= strtotime($end);
             }
 
             return true;
@@ -58,7 +58,7 @@ class DateValidationRule extends AbstractValidationRule
     protected function matchIsDate($date)
     {
         $pattern = '/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3])(:([0-5][0-9])){1,2}){0,1}$/';
-        if (\preg_match($pattern, $date, $matches) && \checkdate($matches[2], $matches[3], $matches[1])) {
+        if (preg_match($pattern, $date, $matches) && checkdate($matches[2], $matches[3], $matches[1])) {
             return true;
         }
 

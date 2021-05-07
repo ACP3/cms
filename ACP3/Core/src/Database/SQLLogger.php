@@ -48,7 +48,7 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
      */
     public function startQuery($sql, array $params = null, array $types = null)
     {
-        $this->start = \microtime(true);
+        $this->start = microtime(true);
         $this->queries[$this->requestPath][++$this->currentQuery] = [
             'sql' => $sql,
             'params' => $params,
@@ -62,7 +62,7 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
      */
     public function stopQuery()
     {
-        $this->queries[$this->requestPath][$this->currentQuery]['executionMS'] = \microtime(true) - $this->start;
+        $this->queries[$this->requestPath][$this->currentQuery]['executionMS'] = microtime(true) - $this->start;
     }
 
     public function __destruct()

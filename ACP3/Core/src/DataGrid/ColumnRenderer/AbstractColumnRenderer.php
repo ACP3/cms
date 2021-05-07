@@ -168,7 +168,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     {
         $fields = $this->getDbFields($column);
 
-        return \reset($fields);
+        return reset($fields);
     }
 
     /**

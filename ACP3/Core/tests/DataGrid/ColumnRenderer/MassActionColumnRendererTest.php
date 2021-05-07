@@ -18,7 +18,7 @@ class MassActionColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'custom' => [
                 'can_delete' => true,
             ],

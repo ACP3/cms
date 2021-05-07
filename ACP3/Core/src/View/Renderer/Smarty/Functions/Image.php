@@ -33,7 +33,7 @@ class Image extends AbstractFunction
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
-        if (isset($params['file']) === true && (bool) \preg_match('=\./=', $params['file']) === false) {
+        if (isset($params['file']) === true && (bool) preg_match('=\./=', $params['file']) === false) {
             $file = $params['file'];
 
             $path = $this->fileResolver->getWebStaticAssetPath('', 'Assets/img', $file);
@@ -45,6 +45,6 @@ class Image extends AbstractFunction
             return $path . '?v=' . BootstrapInterface::VERSION;
         }
 
-        throw new \InvalidArgumentException(\sprintf('Not all necessary arguments for the function %s were passed!', __FUNCTION__));
+        throw new \InvalidArgumentException(sprintf('Not all necessary arguments for the function %s were passed!', __FUNCTION__));
     }
 }

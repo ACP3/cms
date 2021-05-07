@@ -15,7 +15,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class DataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = CategoryRepository::TABLE_NAME;
+    public const TABLE_NAME = CategoryRepository::TABLE_NAME;
 
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
     {

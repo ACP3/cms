@@ -13,7 +13,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class GalleryDataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = GalleryRepository::TABLE_NAME;
+    public const TABLE_NAME = GalleryRepository::TABLE_NAME;
 
     /**
      * {@inheritdoc}

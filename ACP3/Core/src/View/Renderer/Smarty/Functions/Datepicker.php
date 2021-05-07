@@ -52,6 +52,6 @@ class Datepicker extends AbstractFunction
             'label' => '',
         ];
 
-        return \array_merge($defaults, $params);
+        return array_merge($defaults, $params);
     }
 }

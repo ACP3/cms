@@ -155,7 +155,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
     {
         $path = $this->appPath->getAppDir() . 'config.yml';
 
-        return \is_file($path) === true && \filesize($path) !== 0;
+        return is_file($path) === true && filesize($path) !== 0;
     }
 
     public function terminate(SymfonyRequest $request, Response $response)

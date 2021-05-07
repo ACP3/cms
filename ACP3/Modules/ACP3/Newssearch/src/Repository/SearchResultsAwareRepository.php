@@ -18,7 +18,7 @@ class SearchResultsAwareRepository extends AbstractRepository implements SearchR
 {
     use PublicationPeriodAwareTrait;
 
-    const TABLE_NAME = NewsRepository::TABLE_NAME;
+    public const TABLE_NAME = NewsRepository::TABLE_NAME;
 
     /**
      * @var Date

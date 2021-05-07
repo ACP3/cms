@@ -109,7 +109,7 @@ class Index extends Core\Controller\AbstractWidgetAction
                         $formData['mods'],
                         $searchTerm,
                         $formData['area'],
-                        \strtoupper($formData['sort'])
+                        strtoupper($formData['sort'])
                     ),
                     $searchTerm
                 );
@@ -151,7 +151,7 @@ class Index extends Core\Controller\AbstractWidgetAction
                 }
             }
         }
-        \ksort($searchResults);
+        ksort($searchResults);
 
         return $searchResults;
     }

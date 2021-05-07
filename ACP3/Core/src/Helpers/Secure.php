@@ -14,7 +14,7 @@ class Secure
      */
     public function generateSaltedPassword(string $salt, string $password, string $algorithm = 'sha1'): string
     {
-        return \hash($algorithm, $salt . \hash($algorithm, $password));
+        return hash($algorithm, $salt . hash($algorithm, $password));
     }
 
     /**
@@ -28,8 +28,8 @@ class Secure
         $chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         $cChars = \strlen($chars) - 1;
         while (\strlen($salt) < $length) {
-            $char = $chars[\random_int(0, $cChars)];
-            if (\strpos($salt, $char) === false) {
+            $char = $chars[random_int(0, $cChars)];
+            if (strpos($salt, $char) === false) {
                 $salt .= $char;
             }
         }
@@ -42,8 +42,8 @@ class Secure
      */
     public function strEncode(string $var, bool $scriptTagOnly = false): string
     {
-        $var = \preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
+        $var = preg_replace('=<script[^>]*>.*</script>=isU', '', $var);
 
-        return $scriptTagOnly === true ? $var : \htmlspecialchars($var);
+        return $scriptTagOnly === true ? $var : htmlspecialchars($var);
     }
 }

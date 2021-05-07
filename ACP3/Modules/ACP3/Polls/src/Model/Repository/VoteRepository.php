@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class VoteRepository extends Core\Model\Repository\AbstractRepository
 {
-    const TABLE_NAME = 'poll_votes';
+    public const TABLE_NAME = 'poll_votes';
 
     /**
      * @param int    $pollId

@@ -11,7 +11,7 @@ use ACP3\Core\Helpers\Formatter\MarkEntries;
 
 class HeaderColumnRenderer extends AbstractColumnRenderer
 {
-    const CELL_TYPE = 'th';
+    public const CELL_TYPE = 'th';
 
     /**
      * @var \ACP3\Core\Helpers\Formatter\MarkEntries
@@ -32,7 +32,7 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
     {
         if ($column['type'] === MassActionColumnRenderer::class) {
-            $id = \preg_replace('=[^\w\d\-_]=', '', $column['label']) . '-mark-all';
+            $id = preg_replace('=[^\w\d\-_]=', '', $column['label']) . '-mark-all';
             $value = '<input type="checkbox" id="' . $id . '" value="1" ' . $this->markEntriesHelper->execute('entries', $id) . '>';
         } else {
             $value = $column['label'];

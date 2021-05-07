@@ -71,7 +71,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         bool $inputOnly = false
     ): string {
         if (!$this->user->isAuthenticated() && $this->hasCaptchaAccess()) {
-            $token = \sha1((string) \mt_rand());
+            $token = sha1((string) mt_rand());
 
             $this->sessionHandler->set('captcha_' . $token, $this->secureHelper->salt($captchaLength));
 
@@ -110,7 +110,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         $value = $formData[$formFieldName];
         $indexName = 'captcha_' . $formData['captcha_token'];
 
-        return \preg_match('/^[a-zA-Z0-9]+$/', $value)
-            && \strtolower($value) === \strtolower($this->sessionHandler->get($indexName, ''));
+        return preg_match('/^[a-zA-Z0-9]+$/', $value)
+            && strtolower($value) === strtolower($this->sessionHandler->get($indexName, ''));
     }
 }

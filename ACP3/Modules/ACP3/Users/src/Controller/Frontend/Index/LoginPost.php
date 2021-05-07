@@ -62,7 +62,7 @@ class LoginPost extends Core\Controller\AbstractWidgetAction implements Core\Con
 
             if ($this->request->getParameters()->has('redirect')) {
                 return $this->redirectResponse->temporary(
-                    \base64_decode($this->request->getParameters()->get('redirect'))
+                    base64_decode($this->request->getParameters()->get('redirect'))
                 );
             }
 

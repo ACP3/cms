@@ -68,7 +68,7 @@ class AvailableDatabases extends AbstractInstallerAction implements InvokableAct
             $availableDatabases[] = $database['Database'];
         }
 
-        return \array_values(\array_diff($availableDatabases, $this->getMySQLDefaultDatabases()));
+        return array_values(array_diff($availableDatabases, $this->getMySQLDefaultDatabases()));
     }
 
     private function getMySQLDefaultDatabases(): array

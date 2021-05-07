@@ -30,7 +30,7 @@ class ForgotPasswordViewProvider
     public function __invoke(): array
     {
         return [
-            'form' => \array_merge(['nick_mail' => ''], $this->request->getPost()->all()),
+            'form' => array_merge(['nick_mail' => ''], $this->request->getPost()->all()),
             'form_token' => $this->formToken->renderFormToken(),
         ];
     }

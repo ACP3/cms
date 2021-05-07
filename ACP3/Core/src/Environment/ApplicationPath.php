@@ -52,8 +52,8 @@ class ApplicationPath
 
     public function __construct(string $applicationMode)
     {
-        $this->phpSelf = \htmlentities($_SERVER['SCRIPT_NAME']);
-        $this->webRoot = \substr($this->phpSelf, 0, \strrpos($this->phpSelf, '/') + 1);
+        $this->phpSelf = htmlentities($_SERVER['SCRIPT_NAME']);
+        $this->webRoot = substr($this->phpSelf, 0, strrpos($this->phpSelf, '/') + 1);
         $this->appDir = ACP3_ROOT_DIR . '/ACP3/';
         $this->classesDir = $this->appDir . '/Core/';
         $this->modulesDir = $this->appDir . '/Modules/';

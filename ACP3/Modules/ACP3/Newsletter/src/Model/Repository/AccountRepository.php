@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
 
 class AccountRepository extends AbstractRepository
 {
-    const TABLE_NAME = 'newsletter_accounts';
+    public const TABLE_NAME = 'newsletter_accounts';
 
     /**
      * @param string $emailAddress

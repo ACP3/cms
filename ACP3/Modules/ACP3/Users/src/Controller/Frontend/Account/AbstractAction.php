@@ -34,7 +34,7 @@ abstract class AbstractAction extends AbstractWidgetAction implements InvokableA
         parent::preDispatch();
 
         if ($this->user->isAuthenticated() === false) {
-            throw new UnauthorizedAccessException(['redirect' => \base64_encode($this->request->getPathInfo())]);
+            throw new UnauthorizedAccessException(['redirect' => base64_encode($this->request->getPathInfo())]);
         }
     }
 }

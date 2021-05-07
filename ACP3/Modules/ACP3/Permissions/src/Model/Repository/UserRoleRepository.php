@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class UserRoleRepository extends Core\Model\Repository\AbstractRepository implements Core\ACL\Model\Repository\UserRoleRepositoryInterface
 {
-    const TABLE_NAME = 'acl_user_roles';
+    public const TABLE_NAME = 'acl_user_roles';
 
     /**
      * {@inheritdoc}

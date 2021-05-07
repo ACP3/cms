@@ -87,8 +87,8 @@ class ControllerActionDispatcher
 
             $suffixLengthOffset = \strlen(self::POST_SERVICE_ID_SUFFIX) * -1;
 
-            if (\substr($serviceId, $suffixLengthOffset) === self::POST_SERVICE_ID_SUFFIX) {
-                $normalizedServiceId = \substr($serviceId, 0, $suffixLengthOffset);
+            if (substr($serviceId, $suffixLengthOffset) === self::POST_SERVICE_ID_SUFFIX) {
+                $normalizedServiceId = substr($serviceId, 0, $suffixLengthOffset);
             }
             $this->eventDispatcher->dispatch(
                 new ControllerActionBeforeDispatchEvent($normalizedServiceId),
@@ -128,7 +128,7 @@ class ControllerActionDispatcher
 
     private function modifyRequest(string $serviceId, array $arguments): void
     {
-        [$module, , , $controller, $action] = \explode('.', $serviceId);
+        [$module, , , $controller, $action] = explode('.', $serviceId);
 
         $params = '';
         foreach ($arguments as $key => $value) {
@@ -173,7 +173,7 @@ class ControllerActionDispatcher
      */
     private function getCallable(ActionInterface $controller): array
     {
-        if ($controller instanceof InvokableActionInterface && \method_exists($controller, self::ACTION_METHOD_INVOKABLE) === true) {
+        if ($controller instanceof InvokableActionInterface && method_exists($controller, self::ACTION_METHOD_INVOKABLE) === true) {
             return [$controller, self::ACTION_METHOD_INVOKABLE];
         }
 
@@ -185,20 +185,20 @@ class ControllerActionDispatcher
             }
         }
 
-        if (\method_exists($controller, self::ACTION_METHOD_DEFAULT) === true) {
+        if (method_exists($controller, self::ACTION_METHOD_DEFAULT) === true) {
             return [$controller, self::ACTION_METHOD_DEFAULT];
         }
 
-        throw new ControllerActionNotFoundException(\sprintf('Could not find method <%s> in controller <%s>', self::ACTION_METHOD_DEFAULT, \get_class($controller)));
+        throw new ControllerActionNotFoundException(sprintf('Could not find method <%s> in controller <%s>', self::ACTION_METHOD_DEFAULT, \get_class($controller)));
     }
 
     private function isValidPostRequest(ActionInterface $controller): bool
     {
-        if (\method_exists($controller, self::ACTION_METHOD_POST)
+        if (method_exists($controller, self::ACTION_METHOD_POST)
             && $this->request->getSymfonyRequest()->isMethod('POST')) {
             return $this->request->getPost()->has('submit')
                 || $this->request->getPost()->has('continue')
-                || \method_exists($controller, self::ACTION_METHOD_DEFAULT) === false;
+                || method_exists($controller, self::ACTION_METHOD_DEFAULT) === false;
         }
 
         return false;

@@ -12,7 +12,7 @@ use ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface;
 
 class RoleRepository extends Core\NestedSet\Model\Repository\NestedSetRepository implements RoleRepositoryInterface
 {
-    const TABLE_NAME = 'acl_roles';
+    public const TABLE_NAME = 'acl_roles';
 
     public function roleExists(int $roleId): bool
     {

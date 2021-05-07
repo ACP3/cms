@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Menus\Installer\Schema;
 
 class MenuItemsModel extends AbstractNestedSetModel
 {
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * {@inheritdoc}

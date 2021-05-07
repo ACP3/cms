@@ -74,7 +74,7 @@ class Subscribe
      */
     public function subscribeToNewsletter(string $emailAddress, int $salutation = 0, string $firstName = '', string $lastName = ''): bool
     {
-        $hash = $this->secureHelper->generateSaltedPassword('', (string) \random_int(0, (int) \microtime(true)), 'sha512');
+        $hash = $this->secureHelper->generateSaltedPassword('', (string) random_int(0, (int) microtime(true)), 'sha512');
         $mailSent = $this->sendDoubleOptInEmail($emailAddress, $hash);
         $result = $this->addNewsletterAccount($emailAddress, $salutation, $firstName, $lastName, $hash);
 

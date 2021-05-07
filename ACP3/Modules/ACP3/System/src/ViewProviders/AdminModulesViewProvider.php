@@ -40,8 +40,8 @@ class AdminModulesViewProvider
             }
         }
 
-        \ksort($installedModules);
-        \ksort($newModules);
+        ksort($installedModules);
+        ksort($newModules);
 
         return [
             'installed_modules' => $installedModules,

@@ -61,7 +61,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
      */
     protected function getEnabledLibrariesAsString(): string
     {
-        return \implode(',', \array_map(static function (LibraryEntity $library) {
+        return implode(',', array_map(static function (LibraryEntity $library) {
             return $library->getLibraryIdentifier();
         }, $this->getEnabledLibraries()));
     }
@@ -74,7 +74,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
      */
     private function getEnabledLibraries(): array
     {
-        return \array_filter($this->libraries->getEnabledLibraries(), static function (LibraryEntity $library) {
+        return array_filter($this->libraries->getEnabledLibraries(), static function (LibraryEntity $library) {
             return $library->getCss() && !$library->isDeferrableCss();
         });
     }
@@ -128,7 +128,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
             $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
                 '',
                 static::ASSETS_PATH_CSS,
-                \trim($file)
+                trim($file)
             );
         }
 

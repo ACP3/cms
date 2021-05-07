@@ -59,7 +59,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Cont
             $formData = $this->request->getPost()->all();
 
             $this->adminFormValidation
-                ->setUriAlias(\sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
+                ->setUriAlias(sprintf(Articles\Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();

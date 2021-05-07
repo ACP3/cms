@@ -70,7 +70,7 @@ class SchemaUpdateModel
     public function updateModules(): array
     {
         foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
-            $moduleName = \strtolower($moduleInfo['name']);
+            $moduleName = strtolower($moduleInfo['name']);
 
             if (!$this->modules->isInstallable($moduleName)) {
                 continue;
@@ -106,7 +106,7 @@ class SchemaUpdateModel
 
         $serviceIdMigration = $moduleName . '.installer.migration';
         if (!$this->schemaLocator->has($moduleName) || !$this->migrationLocator->has($serviceIdMigration)) {
-            throw new MissingInstallerException(\sprintf('Could not find any schema or migration files for module "%s"', $moduleName));
+            throw new MissingInstallerException(sprintf('Could not find any schema or migration files for module "%s"', $moduleName));
         }
 
         $moduleSchema = $this->schemaLocator->get($moduleName);

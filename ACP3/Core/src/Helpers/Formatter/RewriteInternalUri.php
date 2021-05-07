@@ -48,11 +48,11 @@ class RewriteInternalUri
 
     public function rewriteInternalUri(string $text): string
     {
-        $rootDir = \str_replace('/', '\/', $this->appPath->getWebRoot());
+        $rootDir = str_replace('/', '\/', $this->appPath->getWebRoot());
         $host = $this->request->getServer()->get('HTTP_HOST');
         $pattern = '/(<a([^>]+)href=")?(http(s?):\/\/' . $host . ')?(' . $rootDir . ')?(index\.php)?(\/?)((?i:[a-z\d_\-]+\/){2,})(")?/i';
 
-        return \preg_replace_callback(
+        return preg_replace_callback(
             $pattern,
             [$this, 'rewriteInternalUriCallback'],
             $text
@@ -62,7 +62,7 @@ class RewriteInternalUri
     private function rewriteInternalUriCallback(array $matches): string
     {
         if ($this->internalUriValidationRule->isValid($matches[8]) === true) {
-            $resourceParts = \explode('/', $matches[8]);
+            $resourceParts = explode('/', $matches[8]);
             $path = $this->getResourcePath($resourceParts);
             if ($this->controllerActionExists->controllerActionExists($path) === true) {
                 if (!empty($matches[1])) {

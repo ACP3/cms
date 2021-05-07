@@ -79,19 +79,19 @@ class FileResolver
     public function resolveTemplatePath(string $templatePath): string
     {
         // A path without any slash was given -> has to be a layout file of the current design
-        if (\strpos($templatePath, '/') === false) {
+        if (strpos($templatePath, '/') === false) {
             return $this->getStaticAssetPath('', '', $templatePath);
         }
 
         // Split the template path in its components
-        $fragments = \explode('/', \ucfirst($templatePath));
+        $fragments = explode('/', ucfirst($templatePath));
 
         if (isset($fragments[2])) {
-            $fragments[1] = \ucfirst($fragments[1]);
+            $fragments[1] = ucfirst($fragments[1]);
         }
 
         $moduleName = $fragments[0];
-        $templatePath = \implode('/', \array_slice($fragments, 1));
+        $templatePath = implode('/', \array_slice($fragments, 1));
 
         return $this->getStaticAssetPath($moduleName, 'View', $templatePath);
     }
@@ -107,7 +107,7 @@ class FileResolver
             return '';
         }
 
-        return $this->appPath->getWebRoot() . \str_replace(DIRECTORY_SEPARATOR, '/', \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR)));
+        return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR)));
     }
 
     public function getStaticAssetPath(
@@ -115,7 +115,7 @@ class FileResolver
         string $resourceDirectory = '',
         string $file = ''
     ): string {
-        if (!empty($resourceDirectory) && !\preg_match('=/$=', $resourceDirectory)) {
+        if (!empty($resourceDirectory) && !preg_match('=/$=', $resourceDirectory)) {
             $resourceDirectory .= '/';
         }
 
@@ -136,7 +136,7 @@ class FileResolver
         }
 
         $assetPath = $this->findAssetInInheritedThemes(
-            \ucfirst($moduleName),
+            ucfirst($moduleName),
             !empty($resourceDirectory) ? '/' . $resourceDirectory : '',
             $file
         );
@@ -157,7 +157,7 @@ class FileResolver
         }
 
         $parentThemes = $this->theme->getThemeDependencies($this->currentTheme);
-        $parentTheme = \next($parentThemes);
+        $parentTheme = next($parentThemes);
 
         // Recursively iterate over the nested themes
         if ($parentTheme !== false) {

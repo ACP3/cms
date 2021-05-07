@@ -45,7 +45,7 @@ class OnGalleryPictureModelBeforeDeleteListener implements EventSubscriberInterf
         }
 
         foreach ($event->getEntryId() as $item) {
-            $uri = \sprintf(GalleryHelpers::URL_KEY_PATTERN_PICTURE, $item);
+            $uri = sprintf(GalleryHelpers::URL_KEY_PATTERN_PICTURE, $item);
 
             $this->socialSharingManager->saveSharingInfo($uri);
         }

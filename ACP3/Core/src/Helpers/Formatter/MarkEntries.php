@@ -33,7 +33,7 @@ class MarkEntries
     public function execute($name, $markAllId = '')
     {
         $markAllId = !empty($markAllId) ? $markAllId : 'mark-all';
-        $deleteOptions = \json_encode(
+        $deleteOptions = json_encode(
             [
                 'checkBoxName' => $name,
                 'language' => [

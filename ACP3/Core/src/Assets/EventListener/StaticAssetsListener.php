@@ -117,10 +117,10 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $libraries = [];
         foreach ($this->tracedRequests as $request) {
-            $libraries = \array_merge($libraries, $this->librariesCache->getEnabledLibrariesByRequest($request));
+            $libraries = array_merge($libraries, $this->librariesCache->getEnabledLibrariesByRequest($request));
         }
 
-        $this->libraries->enableLibraries(\array_unique($libraries));
+        $this->libraries->enableLibraries(array_unique($libraries));
     }
 
     private function moveCssBlocksToHead(CacheEvent $event): void
@@ -133,10 +133,10 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        if (\strpos($content, self::PLACEHOLDER_CSS) !== false) {
+        if (strpos($content, self::PLACEHOLDER_CSS) !== false) {
             $this->requestStack->push($event->getRequest());
 
-            $content = \str_replace(
+            $content = str_replace(
                 self::PLACEHOLDER_CSS,
                 $this->addCssLibraries() . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_CSS),
                 $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_CSS)
@@ -159,10 +159,10 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        if (\strpos($content, self::PLACEHOLDER_JS) !== false) {
+        if (strpos($content, self::PLACEHOLDER_JS) !== false) {
             $this->requestStack->push($event->getRequest());
 
-            $content = \str_replace(
+            $content = str_replace(
                 self::PLACEHOLDER_JS,
                 $this->addJavaScriptLibraries($event->getRequest()) . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_JS),
                 $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_JS)
@@ -177,15 +177,15 @@ class StaticAssetsListener implements EventSubscriberInterface
 
     private function getCleanedUpTemplateOutput(string $tplOutput, string $regexPattern): string
     {
-        return \preg_replace($regexPattern, '', $tplOutput);
+        return preg_replace($regexPattern, '', $tplOutput);
     }
 
     private function addElementsFromTemplates(string $tplOutput, string $regexPattern): string
     {
         $matches = [];
-        \preg_match_all($regexPattern, $tplOutput, $matches);
+        preg_match_all($regexPattern, $tplOutput, $matches);
 
-        return \implode("\n", \array_unique($matches[1])) . "\n";
+        return implode("\n", array_unique($matches[1])) . "\n";
     }
 
     private function addCssLibraries(): string

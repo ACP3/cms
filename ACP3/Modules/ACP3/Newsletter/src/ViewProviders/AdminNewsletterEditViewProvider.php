@@ -71,11 +71,11 @@ class AdminNewsletterEditViewProvider
 
         return [
             'settings' => isset($newsletter['html'])
-                ? \array_merge($settings, ['html' => $newsletter['html']])
+                ? array_merge($settings, ['html' => $newsletter['html']])
                 : $settings,
             'test' => $this->formsHelper->yesNoCheckboxGenerator('test', 0),
             'action' => $this->formsHelper->checkboxGenerator('action', $actions, 1),
-            'form' => \array_merge($newsletter, $this->request->getPost()->all()),
+            'form' => array_merge($newsletter, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

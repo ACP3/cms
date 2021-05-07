@@ -18,6 +18,6 @@ class InternalUriValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return (bool) \preg_match('/^([a-z\d_\-]+\/){3,}$/', $data);
+        return (bool) preg_match('/^([a-z\d_\-]+\/){3,}$/', $data);
     }
 }

@@ -52,29 +52,29 @@ class Image extends Core\Controller\AbstractWidgetAction
      */
     protected function generateCaptcha(string $captchaText, bool $renderAsError = false): string
     {
-        $captchaLength = \mb_strlen($captchaText);
+        $captchaLength = mb_strlen($captchaText);
         $width = $captchaLength * 25;
         $height = 30;
 
-        \ob_start();
+        ob_start();
 
-        $image = \imagecreate($width, $height);
+        $image = imagecreate($width, $height);
 
         // Background color
-        \imagecolorallocate($image, 255, 255, 255);
+        imagecolorallocate($image, 255, 255, 255);
 
-        $textColor = \imagecolorallocate($image, 0, 0, 0);
+        $textColor = imagecolorallocate($image, 0, 0, 0);
 
         for ($i = 0; $i < $captchaLength; ++$i) {
-            $font = $renderAsError ? 5 : \random_int(2, 5);
+            $font = $renderAsError ? 5 : random_int(2, 5);
             $posLeft = 22 * $i + 10;
-            $posTop = $renderAsError ? $height - \imagefontheight($font) - 3 : \random_int(1, $height - \imagefontheight($font) - 3);
-            \imagestring($image, $font, $posLeft, $posTop, $captchaText[$i], $textColor);
+            $posTop = $renderAsError ? $height - imagefontheight($font) - 3 : random_int(1, $height - imagefontheight($font) - 3);
+            imagestring($image, $font, $posLeft, $posTop, $captchaText[$i], $textColor);
         }
 
-        \imagegif($image);
-        \imagedestroy($image);
+        imagegif($image);
+        imagedestroy($image);
 
-        return 'data:image/gif;base64,' . \base64_encode(\ob_get_clean());
+        return 'data:image/gif;base64,' . base64_encode(ob_get_clean());
     }
 }

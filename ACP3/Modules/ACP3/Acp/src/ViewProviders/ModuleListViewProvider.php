@@ -48,13 +48,13 @@ class ModuleListViewProvider
         $allowedModules = [];
 
         foreach ($this->modules->getActiveModules() as $info) {
-            $moduleName = \strtolower($info['name']);
+            $moduleName = strtolower($info['name']);
             if ($moduleName !== 'acp' && $this->acl->hasPermission('admin/' . $moduleName) === true) {
                 $allowedModules[$this->translator->t($moduleName, $moduleName)] = $moduleName;
             }
         }
 
-        \ksort($allowedModules);
+        ksort($allowedModules);
 
         return $allowedModules;
     }

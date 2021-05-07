@@ -75,7 +75,7 @@ class DataGrid
                 'can_edit' => $canEdit,
                 'can_delete' => $canDelete,
                 'column_count' => \count($input->getColumns()),
-                'identifier' => \substr($input->getIdentifier(), 1),
+                'identifier' => substr($input->getIdentifier(), 1),
                 'header' => $this->renderTableHeader($input),
                 'config' => $this->configProcessor->generateDataTableConfig($input),
                 'results' => $this->mapTableColumnsToDbFields($input),
@@ -91,7 +91,7 @@ class DataGrid
     private function isRequiredAjaxRequest(Input $input): bool
     {
         return $this->request->isXmlHttpRequest()
-            && $this->request->getParameters()->get('ajax', '') === \substr($input->getIdentifier(), 1);
+            && $this->request->getParameters()->get('ajax', '') === substr($input->getIdentifier(), 1);
     }
 
     private function mapTableColumnsToDbFieldsAjax(Input $input): array

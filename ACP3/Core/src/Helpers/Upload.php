@@ -39,11 +39,11 @@ class Upload
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/';
 
-        if (!\is_dir($path)) {
-            $result = @\mkdir($path);
+        if (!is_dir($path)) {
+            $result = @mkdir($path);
 
             if (!$result) {
-                throw new ValidationFailedException([\sprintf('Could not create folder "%s"', $this->directory)]);
+                throw new ValidationFailedException([sprintf('Could not create folder "%s"', $this->directory)]);
             }
         }
 
@@ -51,23 +51,23 @@ class Upload
             $newFilename = $filename;
         } else {
             $newFilename = 1;
-            $ext = \strtolower(\strrchr($filename, '.'));
+            $ext = strtolower(strrchr($filename, '.'));
 
             // Dateiname solange ändern, wie eine Datei mit dem selben Dateinamen im aktuellen Ordner existiert
-            while (\is_file($path . $newFilename . $ext) === true) {
+            while (is_file($path . $newFilename . $ext) === true) {
                 ++$newFilename;
             }
 
             $newFilename .= $ext;
         }
 
-        if (\is_writable($path) === true) {
-            if (!@\move_uploaded_file($tmpFilename, $path . $newFilename)) {
+        if (is_writable($path) === true) {
+            if (!@move_uploaded_file($tmpFilename, $path . $newFilename)) {
                 return [];
             }
             $return = [];
             $return['name'] = $newFilename;
-            $return['size'] = $this->calcFilesize(\filesize($path . $return['name']));
+            $return['size'] = $this->calcFilesize(filesize($path . $return['name']));
 
             return $return;
         }
@@ -100,7 +100,7 @@ class Upload
             $value /= 1024;
         }
 
-        return \round($value, 2) . ' ' . $units[$i];
+        return round($value, 2) . ' ' . $units[$i];
     }
 
     /**
@@ -109,8 +109,8 @@ class Upload
     public function removeUploadedFile(string $file): bool
     {
         $path = $this->appPath->getUploadsDir() . $this->directory . '/' . $file;
-        if (!empty($file) && !\preg_match('=/=', $file) && \is_file($path) === true) {
-            return \unlink($path);
+        if (!empty($file) && !preg_match('=/=', $file) && is_file($path) === true) {
+            return unlink($path);
         }
 
         return false;

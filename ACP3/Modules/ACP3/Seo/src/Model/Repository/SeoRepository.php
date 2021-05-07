@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class SeoRepository extends Core\Model\Repository\AbstractRepository
 {
-    const TABLE_NAME = 'seo';
+    public const TABLE_NAME = 'seo';
 
     /**
      * @param string $path

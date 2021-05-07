@@ -57,7 +57,7 @@ class SearchViewProvider
         ];
 
         return [
-            'form' => \array_merge(['search_term' => ''], $this->request->getPost()->all()),
+            'form' => array_merge(['search_term' => ''], $this->request->getPost()->all()),
             'search_mods' => $this->searchHelpers->getModules(),
             'search_areas' => $this->formsHelper->checkboxGenerator(
                 'area',

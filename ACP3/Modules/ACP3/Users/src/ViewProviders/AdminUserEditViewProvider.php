@@ -61,7 +61,7 @@ class AdminUserEditViewProvider
     {
         $this->title->setPageTitlePrefix($userInfo['nickname']);
 
-        return \array_merge(
+        return array_merge(
             $this->userFormsHelpers->fetchUserSettingsFormFields(
                 $userInfo['address_display'] ?? 0,
                 $userInfo['birthday_display'] ?? 0,
@@ -85,7 +85,7 @@ class AdminUserEditViewProvider
                     $userInfo['icq'] ?? '',
                     $userInfo['skype'] ?? ''
                 ),
-                'form' => \array_merge($userInfo, $this->request->getPost()->all()),
+                'form' => array_merge($userInfo, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
             ]
         );
@@ -99,7 +99,7 @@ class AdminUserEditViewProvider
 
         $availableUserRoles = [];
         foreach ($roles as $role) {
-            $availableUserRoles[$role['id']] = \str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
+            $availableUserRoles[$role['id']] = str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
         }
 
         return $this->formsHelpers->choicesGenerator('roles', $availableUserRoles, $currentUserRoles);

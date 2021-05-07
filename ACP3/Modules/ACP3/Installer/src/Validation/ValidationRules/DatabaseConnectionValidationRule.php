@@ -19,10 +19,10 @@ class DatabaseConnectionValidationRule extends AbstractValidationRule
     public function isValid($data, $field = '', array $extra = [])
     {
         if (\is_array($data) && \is_array($field)) {
-            $dbHost = \reset($field);
-            $dbUser = \next($field);
-            $dbPassword = \next($field);
-            $dbName = \next($field);
+            $dbHost = reset($field);
+            $dbUser = next($field);
+            $dbPassword = next($field);
+            $dbName = next($field);
 
             try {
                 $config = new Configuration();
@@ -40,7 +40,7 @@ class DatabaseConnectionValidationRule extends AbstractValidationRule
 
                 return true;
             } catch (\Exception $e) {
-                $this->setMessage(\sprintf($this->getMessage(), $e->getMessage()));
+                $this->setMessage(sprintf($this->getMessage(), $e->getMessage()));
             }
         }
 

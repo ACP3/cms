@@ -11,7 +11,7 @@ class StraightFileCheckerStrategy implements FileCheckerStrategyInterface
 {
     public function findResource(string $resourcePath): ?string
     {
-        if (\is_file($resourcePath)) {
+        if (is_file($resourcePath)) {
             return $resourcePath;
         }
 

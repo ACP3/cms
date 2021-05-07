@@ -63,7 +63,7 @@ class Rate extends AbstractWidgetAction implements InvokableActionInterface
         }
 
         return [
-            'rating' => \array_merge(
+            'rating' => array_merge(
                 $this->shareRatingsRepository->getRatingStatistics($id),
                 [
                     'share_id' => $id,

@@ -57,7 +57,7 @@ class Requirements
         ];
 
         foreach ($requiredPHPExtensions as $requiredPHPExtension) {
-            $extensionLoaded = \extension_loaded(\substr($requiredPHPExtension, 4));
+            $extensionLoaded = \extension_loaded(substr($requiredPHPExtension, 4));
 
             $requirements[] = [
                 'name' => $requiredPHPExtension,
@@ -110,8 +110,8 @@ class Requirements
         return [
             [
                 'setting' => $this->translator->t('installer', 'maximum_uploadsize'),
-                'satisfied' => \ini_get('post_max_size') > 0,
-                'value' => \ini_get('post_max_size'),
+                'satisfied' => ini_get('post_max_size') > 0,
+                'value' => ini_get('post_max_size'),
             ],
         ];
     }
@@ -122,14 +122,14 @@ class Requirements
 
         $result = [];
         $result['path'] = $fileOrDirectory;
-        $result['writable'] = \is_writable($path) === true;
+        $result['writable'] = is_writable($path) === true;
 
         switch ($type) {
             case 'file':
-                $result['exists'] = \is_file($path) === true;
+                $result['exists'] = is_file($path) === true;
                 break;
             case 'directory':
-                $result['exists'] = \is_dir($path) === true;
+                $result['exists'] = is_dir($path) === true;
                 break;
             default:
                 $result['exists'] = false;
@@ -155,11 +155,11 @@ class Requirements
         foreach ($modules as $module) {
             $composerJsonPath = $module['dir'] . '/composer.json';
 
-            if (!\is_file($composerJsonPath)) {
+            if (!is_file($composerJsonPath)) {
                 continue;
             }
 
-            $composerJsoData = \json_decode(\file_get_contents($composerJsonPath), true);
+            $composerJsoData = json_decode(file_get_contents($composerJsonPath), true);
 
             if (!isset($composerJsoData['require']) || !\array_key_exists('php', $composerJsoData['require'])) {
                 continue;
@@ -189,24 +189,24 @@ class Requirements
         foreach ($modules as $module) {
             $composerJsonPath = $module['dir'] . '/composer.json';
 
-            if (!\is_file($composerJsonPath)) {
+            if (!is_file($composerJsonPath)) {
                 continue;
             }
 
-            $composerJsoData = \json_decode(\file_get_contents($composerJsonPath), true);
+            $composerJsoData = json_decode(file_get_contents($composerJsonPath), true);
 
             if (!isset($composerJsoData['require'])) {
                 continue;
             }
 
-            $componentExtensions = \array_filter(\array_keys($composerJsoData['require']), static function ($packages) {
-                return \strpos($packages, 'ext-') === 0;
+            $componentExtensions = array_filter(array_keys($composerJsoData['require']), static function ($packages) {
+                return strpos($packages, 'ext-') === 0;
             });
 
-            $extensions = \array_merge($extensions, $componentExtensions);
+            $extensions = array_merge($extensions, $componentExtensions);
         }
 
-        \sort($extensions);
+        sort($extensions);
 
         return $extensions;
     }

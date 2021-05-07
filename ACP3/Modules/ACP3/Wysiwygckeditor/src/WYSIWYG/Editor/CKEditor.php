@@ -148,7 +148,7 @@ class CKEditor extends Textarea
             $this->configureBasicToolbar();
         }
 
-        return \json_encode($this->config);
+        return json_encode($this->config);
     }
 
     /**
@@ -174,7 +174,7 @@ class CKEditor extends Textarea
         $out = '';
 
         // Skip relative paths...
-        if (\strpos($basePath, '..') !== 0) {
+        if (strpos($basePath, '..') !== 0) {
             $out .= $this->script("window.CKEDITOR_BASEPATH='" . $basePath . "';");
         }
 
@@ -183,11 +183,11 @@ class CKEditor extends Textarea
         // Add custom plugins
         $path = ComponentRegistry::getPathByName('wysiwygckeditor');
 
-        $ckeditorPluginsDir = \str_replace(
+        $ckeditorPluginsDir = str_replace(
             '\\',
             '/',
             $this->appPath->getWebRoot()
-            . \substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
+            . substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
             . '/Resources/Assets/js/ckeditor/plugins/'
         );
 

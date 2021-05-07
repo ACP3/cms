@@ -16,7 +16,7 @@ class SerializableColumnType implements ColumnTypeStrategyInterface
      */
     public function doEscape($value)
     {
-        return \serialize($value);
+        return serialize($value);
     }
 
     /**
@@ -24,7 +24,7 @@ class SerializableColumnType implements ColumnTypeStrategyInterface
      */
     public function doUnescape($value)
     {
-        return \unserialize($value);
+        return unserialize($value);
     }
 
     /**
@@ -32,6 +32,6 @@ class SerializableColumnType implements ColumnTypeStrategyInterface
      */
     public function getDefaultValue()
     {
-        return \serialize('');
+        return serialize('');
     }
 }

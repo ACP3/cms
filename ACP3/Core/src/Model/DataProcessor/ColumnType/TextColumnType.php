@@ -36,7 +36,7 @@ class TextColumnType implements ColumnTypeStrategyInterface
      */
     public function doUnescape($value)
     {
-        return \html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+        return html_entity_decode($value, ENT_QUOTES, 'UTF-8');
     }
 
     /**

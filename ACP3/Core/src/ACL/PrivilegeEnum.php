@@ -11,11 +11,11 @@ use ACP3\Core\Enum\BaseEnum;
 
 class PrivilegeEnum extends BaseEnum
 {
-    const ADMIN_SETTINGS = 7;
-    const ADMIN_DELETE = 6;
-    const ADMIN_EDIT = 5;
-    const ADMIN_CREATE = 4;
-    const ADMIN_VIEW = 3;
-    const FRONTEND_CREATE = 2;
-    const FRONTEND_VIEW = 1;
+    public const ADMIN_SETTINGS = 7;
+    public const ADMIN_DELETE = 6;
+    public const ADMIN_EDIT = 5;
+    public const ADMIN_CREATE = 4;
+    public const ADMIN_VIEW = 3;
+    public const FRONTEND_CREATE = 2;
+    public const FRONTEND_VIEW = 1;
 }

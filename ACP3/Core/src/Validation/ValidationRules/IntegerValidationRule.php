@@ -28,6 +28,6 @@ class IntegerValidationRule extends AbstractValidationRule
      */
     protected function checkAgainstPattern($value)
     {
-        return \preg_match('/^(\d+)$/', $value) === 1;
+        return preg_match('/^(\d+)$/', $value) === 1;
     }
 }

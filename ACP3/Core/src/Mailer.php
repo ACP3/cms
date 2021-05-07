@@ -68,7 +68,7 @@ class Mailer
 
             // Add attachments to the E-mail
             foreach ($message->getAttachments() as $attachment) {
-                if (!empty($attachment) && \is_file($attachment)) {
+                if (!empty($attachment) && is_file($attachment)) {
                     $this->phpMailer->addAttachment($attachment);
                 }
             }
@@ -134,7 +134,7 @@ class Mailer
             $mail = [
                 'charset' => 'UTF-8',
                 'title' => $message->getSubject(),
-                'body' => !empty($message->getHtmlBody()) ? $message->getHtmlBody() : $this->stringFormatter->nl2p(\htmlspecialchars($message->getBody())),
+                'body' => !empty($message->getHtmlBody()) ? $message->getHtmlBody() : $this->stringFormatter->nl2p(htmlspecialchars($message->getBody())),
                 'signature' => $this->getHtmlSignature($message),
                 'url_web_view' => $message->getUrlWeb(),
             ];
@@ -165,7 +165,7 @@ class Mailer
     private function getHtmlSignature(MailerMessage $message): string
     {
         if (!empty($message->getMailSignature())) {
-            if ($message->getMailSignature() === \strip_tags($message->getMailSignature())) {
+            if ($message->getMailSignature() === strip_tags($message->getMailSignature())) {
                 return $this->stringFormatter->nl2p($message->getMailSignature());
             }
 
@@ -177,7 +177,7 @@ class Mailer
 
     private function decodeHtmlEntities(string $data): string
     {
-        return \html_entity_decode($data, ENT_QUOTES, 'UTF-8');
+        return html_entity_decode($data, ENT_QUOTES, 'UTF-8');
     }
 
     private function getTextSignature(MailerMessage $message): string
@@ -201,7 +201,7 @@ class Mailer
         }
 
         foreach ($message->getRecipients() as $recipient) {
-            \set_time_limit(10);
+            set_time_limit(10);
 
             $this->addRecipients($recipient, true);
         }
@@ -270,7 +270,7 @@ class Mailer
         }
 
         foreach ($message->getRecipients() as $recipient) {
-            \set_time_limit(20);
+            set_time_limit(20);
             $this->addRecipients($recipient);
             $this->phpMailer->send();
             $this->phpMailer->clearAllRecipients();
@@ -306,7 +306,7 @@ class Mailer
 
             $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-            if (\strtolower($settings['mailer_type']) === 'smtp') {
+            if (strtolower($settings['mailer_type']) === 'smtp') {
                 $this->phpMailer->set('Mailer', 'smtp');
                 $this->phpMailer->Host = $settings['mailer_smtp_host'];
                 $this->phpMailer->Port = $settings['mailer_smtp_port'];

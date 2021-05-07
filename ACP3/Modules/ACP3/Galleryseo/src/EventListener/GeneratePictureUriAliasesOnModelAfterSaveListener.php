@@ -60,7 +60,7 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener implements EventSubscrib
 
             foreach ($pictures as $picture) {
                 $this->uriAliasManager->insertUriAlias(
-                    \sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
+                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
                     !empty($rawData['alias']) ? $rawData['alias'] . '/img-' . $picture['id'] : '',
                     $rawData['seo_keywords'],
                     $rawData['seo_description'],

@@ -47,7 +47,7 @@ class UriAliasManager
 
     protected function preparePath(string $path): string
     {
-        return !\preg_match('/\/$/', $path) ? '/' : '';
+        return !preg_match('/\/$/', $path) ? '/' : '';
     }
 
     /**

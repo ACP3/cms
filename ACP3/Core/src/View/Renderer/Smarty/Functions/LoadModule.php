@@ -61,7 +61,7 @@ class LoadModule extends AbstractFunction
 
     protected function convertPathToArray(string $resource): array
     {
-        $pathArray = \explode('/', \strtolower($resource));
+        $pathArray = explode('/', strtolower($resource));
 
         if (empty($pathArray[2]) === true) {
             $pathArray[2] = 'index';
@@ -86,9 +86,9 @@ class LoadModule extends AbstractFunction
 
     private function urlEncodeArguments(array $arguments): array
     {
-        return \array_map(
+        return array_map(
             static function ($item) {
-                return \urlencode($item);
+                return urlencode($item);
             },
             $arguments
         );

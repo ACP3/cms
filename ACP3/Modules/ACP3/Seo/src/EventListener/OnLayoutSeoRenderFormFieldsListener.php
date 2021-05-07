@@ -43,7 +43,7 @@ class OnLayoutSeoRenderFormFieldsListener implements EventSubscriberInterface
         if ($this->acl->hasPermission('admin/seo/index/create')) {
             $parameters = $event->getParameters();
 
-            $formFields = \array_merge(
+            $formFields = array_merge(
                 $this->metaFormFields->formFields($parameters['path'] ?? ''),
                 ['uri_pattern' => $parameters['uri_pattern'] ?? '']
             );

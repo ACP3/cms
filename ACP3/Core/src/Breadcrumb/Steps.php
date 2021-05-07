@@ -184,8 +184,8 @@ class Steps
     public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): self
     {
         if ($dbSteps === false) {
-            \end($this->steps);
-            $this->steps[(int) \key($this->steps)] = $this->buildStepItem($title, $path);
+            end($this->steps);
+            $this->steps[(int) key($this->steps)] = $this->buildStepItem($title, $path);
         }
 
         return $this;
@@ -222,7 +222,7 @@ class Steps
     {
         if (!$this->stepAlreadyExists($path)) {
             $step = $this->buildStepItem($title, $path);
-            \array_unshift($this->steps, $step);
+            array_unshift($this->steps, $step);
         }
 
         return $this;
@@ -235,7 +235,7 @@ class Steps
     {
         $path = $this->router->route($path, true);
 
-        $this->steps = \array_filter(
+        $this->steps = array_filter(
             $this->steps,
             function (array $step) use ($path) {
                 return $step['uri'] !== $path;

@@ -58,11 +58,11 @@ class HttpCacheWarmupCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Warming up the HTTP cache...');
 
-        if (\is_file($this->defaultSitemapName)) {
+        if (is_file($this->defaultSitemapName)) {
             $this->processSitemap($this->defaultSitemapName, $input, $output);
         } else {
             foreach ($this->splitSitemapNames as $sitemap) {
-                if (\is_file($sitemap)) {
+                if (is_file($sitemap)) {
                     $this->processSitemap($sitemap, $input, $output);
                 }
             }
@@ -78,7 +78,7 @@ class HttpCacheWarmupCommand extends Command
     {
         $output->writeln("Crawling URLs of file {$sitemap}...");
 
-        $xml = \simplexml_load_string(\file_get_contents($sitemap));
+        $xml = simplexml_load_string(file_get_contents($sitemap));
 
         $progress = new ProgressBar($output, \count($xml->url));
         ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message%: %result%');
@@ -101,7 +101,7 @@ class HttpCacheWarmupCommand extends Command
             ++$i;
 
             if ($sleep > 0) {
-                \usleep($sleep);
+                usleep($sleep);
             }
         }
 
@@ -118,7 +118,7 @@ class HttpCacheWarmupCommand extends Command
     private function crawlUrl(string $url): bool
     {
         try {
-            return \file_get_contents($url) !== false;
+            return file_get_contents($url) !== false;
         } catch (\Exception $e) {
             return false;
         }

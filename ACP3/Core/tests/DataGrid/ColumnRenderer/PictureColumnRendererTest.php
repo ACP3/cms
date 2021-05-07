@@ -29,7 +29,7 @@ class PictureColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['picture'],
             'custom' => [
                 'pattern' => 'gallery/index/pic/id_%s',
@@ -51,7 +51,7 @@ class PictureColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidFieldWithNoInternalRoute()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['picture'],
             'custom' => [
                 'pattern' => 'gallery/index/pic/id_%s',

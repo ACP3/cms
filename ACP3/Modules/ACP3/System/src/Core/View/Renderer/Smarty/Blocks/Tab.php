@@ -33,7 +33,7 @@ class Tab extends AbstractBlock
                 throw new \InvalidArgumentException('It is currently not possible to nest tabs!');
             }
 
-            $tagStack = \array_filter($smarty->smarty->_tag_stack, static function ($tag) {
+            $tagStack = array_filter($smarty->smarty->_tag_stack, static function ($tag) {
                 return $tag[0] === 'tabset';
             });
 
@@ -41,7 +41,7 @@ class Tab extends AbstractBlock
                 throw new \InvalidArgumentException('The {tab} block function needs to be called from within a {tabset} block function!');
             }
 
-            $tabSetIdentifier = \reset($tagStack)[1]['identifier'];
+            $tabSetIdentifier = reset($tagStack)[1]['identifier'];
 
             $this->tabset->addTab($tabSetIdentifier, new TabDto($params['title'], $content));
         }

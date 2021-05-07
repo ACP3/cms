@@ -31,7 +31,7 @@ class IncludeStylesheet extends AbstractFunction
         $dependencies = $params['depends'] ?? [];
 
         if (\is_string($dependencies)) {
-            $dependencies = \explode(',', $dependencies);
+            $dependencies = explode(',', $dependencies);
         }
 
         return $this->includeStylesheet->add($params['module'] ?? '', $params['file'], $dependencies);

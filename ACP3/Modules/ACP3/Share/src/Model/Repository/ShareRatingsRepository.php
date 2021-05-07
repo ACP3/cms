@@ -11,7 +11,7 @@ use ACP3\Core\Model\Repository\AbstractRepository;
 
 class ShareRatingsRepository extends AbstractRepository
 {
-    const TABLE_NAME = 'share_ratings';
+    public const TABLE_NAME = 'share_ratings';
 
     /**
      * @throws \Doctrine\DBAL\Exception

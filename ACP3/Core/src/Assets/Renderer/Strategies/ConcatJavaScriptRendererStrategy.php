@@ -34,7 +34,7 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
      */
     protected function getEnabledLibrariesAsString(): string
     {
-        return \implode(',', \array_map(static function (LibraryEntity $library) {
+        return implode(',', array_map(static function (LibraryEntity $library) {
             return $library->getLibraryIdentifier();
         }, $this->getEnabledLibraries()));
     }
@@ -47,7 +47,7 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
      */
     private function getEnabledLibraries(): array
     {
-        return \array_filter($this->libraries->getEnabledLibraries(), static function (LibraryEntity $library) {
+        return array_filter($this->libraries->getEnabledLibraries(), static function (LibraryEntity $library) {
             return !empty($library->getJs());
         });
     }

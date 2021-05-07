@@ -48,7 +48,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
             ->method('__invoke')
             ->willReturn('icon-success');
 
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['status'],
         ]);
         $this->dbData = [
@@ -78,7 +78,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
             ->method('__invoke')
             ->willReturn('icon-trash');
 
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['status'],
         ]);
         $this->dbData = [
@@ -94,7 +94,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
     public function testDefaultValueIfNull()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
             'custom' => [
                 'default_value' => 'Foo Bar',
@@ -110,7 +110,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 
     public function testDefaultValueIfNotFound()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['test'],
             'custom' => [
                 'default_value' => 'Foo Bar',

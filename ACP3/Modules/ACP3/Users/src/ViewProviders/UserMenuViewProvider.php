@@ -67,7 +67,7 @@ class UserMenuViewProvider
 
         return [
             'user_sidebar' => [
-                'current_page' => \base64_encode($prefix . $this->request->getQuery()),
+                'current_page' => base64_encode($prefix . $this->request->getQuery()),
                 'modules' => $this->getModules(),
                 'system' => $this->getSystemActions(),
             ],
@@ -84,7 +84,7 @@ class UserMenuViewProvider
                 $navSystem[] = [
                     'path' => $path,
                     'name' => $this->translator->t('system', $action['phrase']),
-                    'is_active' => \strpos($this->request->getQuery(), $path) === 0,
+                    'is_active' => strpos($this->request->getQuery(), $path) === 0,
                 ];
             }
         }
@@ -107,7 +107,7 @@ class UserMenuViewProvider
             }
         }
 
-        \ksort($navMods);
+        ksort($navMods);
 
         return $navMods;
     }

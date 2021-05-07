@@ -107,7 +107,7 @@ class TableOfContents
     protected function getHtmlAttributes($string)
     {
         $matches = [];
-        \preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
+        preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
 
         $return = [];
         if (!empty($matches)) {

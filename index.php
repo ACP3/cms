@@ -9,14 +9,14 @@ use ACP3\Core\Application\Bootstrap;
 use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\HttpFoundation\Request;
 
-\define('ACP3_ROOT_DIR', \realpath(__DIR__));
+\define('ACP3_ROOT_DIR', realpath(__DIR__));
 
 require ACP3_ROOT_DIR . '/vendor/autoload.php';
 
 $request = Request::createFromGlobals();
 
 $appMode = ApplicationMode::PRODUCTION;
-if (\getenv('ACP3_APPLICATION_MODE') === ApplicationMode::DEVELOPMENT) {
+if (getenv('ACP3_APPLICATION_MODE') === ApplicationMode::DEVELOPMENT) {
     $appMode = ApplicationMode::DEVELOPMENT;
 }
 

@@ -66,7 +66,7 @@ class Helpers
                 ];
             }
         }
-        \ksort($searchModules);
+        ksort($searchModules);
 
         return $searchModules;
     }

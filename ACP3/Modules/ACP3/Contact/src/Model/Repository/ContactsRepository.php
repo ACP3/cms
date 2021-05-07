@@ -11,5 +11,5 @@ use ACP3\Core\Model\Repository\AbstractRepository;
 
 class ContactsRepository extends AbstractRepository
 {
-    const TABLE_NAME = 'contacts';
+    public const TABLE_NAME = 'contacts';
 }

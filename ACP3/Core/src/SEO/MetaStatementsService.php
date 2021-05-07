@@ -93,7 +93,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         if (!empty($this->canonicalUrl)) {
             return;
         }
-        if (\strpos($this->request->getQuery(), 'errors/') === 0) {
+        if (strpos($this->request->getQuery(), 'errors/') === 0) {
             return;
         }
 
@@ -160,7 +160,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
             $keywords = $this->getKeywords($this->request->getModule());
         }
 
-        return \strtolower(!empty($keywords) ? $keywords : $this->getSettings()['meta_keywords']);
+        return strtolower(!empty($keywords) ? $keywords : $this->getSettings()['meta_keywords']);
     }
 
     /**
@@ -201,7 +201,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
             $robots = $this->getRobotsSetting($this->request->getModule());
         }
 
-        return \strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());
+        return strtolower(!empty($robots) ? $robots : $this->getRobotsSetting());
     }
 
     /**
@@ -210,7 +210,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     public function getRobotsSetting(string $path = ''): string
     {
         if ($path === '') {
-            return \strtr($this->getSettings()['robots'], $this->getRobotsMap());
+            return strtr($this->getSettings()['robots'], $this->getRobotsMap());
         }
 
         $robot = $this->getSeoInformation($path, 'robots', '0');
@@ -219,7 +219,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
             $robot = $this->getSettings()['robots'];
         }
 
-        return \strtr($robot, $this->getRobotsMap());
+        return strtr($robot, $this->getRobotsMap());
     }
 
     public function getRobotsMap(): array

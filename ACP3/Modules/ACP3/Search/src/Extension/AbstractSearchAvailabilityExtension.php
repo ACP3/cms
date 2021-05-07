@@ -49,7 +49,7 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
         $cResults = \count($results);
 
         for ($i = 0; $i < $cResults; ++$i) {
-            $results[$i]['hyperlink'] = $this->router->route(\sprintf($this->getRouteName(), $results[$i]['id']));
+            $results[$i]['hyperlink'] = $this->router->route(sprintf($this->getRouteName(), $results[$i]['id']));
         }
 
         return $results;

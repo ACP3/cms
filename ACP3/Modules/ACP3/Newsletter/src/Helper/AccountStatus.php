@@ -83,7 +83,7 @@ class AccountStatus
      */
     protected function retrieveAccountId(array $entry)
     {
-        switch (\key($entry)) {
+        switch (key($entry)) {
             case 'mail':
                 $account = $this->accountRepository->getOneByEmail($entry['mail']);
 

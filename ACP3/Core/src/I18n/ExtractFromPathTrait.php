@@ -14,12 +14,12 @@ trait ExtractFromPathTrait
 {
     protected function getLanguagePackIsoCode(string $filePath): string
     {
-        return \pathinfo($filePath)['filename'];
+        return pathinfo($filePath)['filename'];
     }
 
     protected function getModuleFromPath(string $filePath): string
     {
-        $pathArray = \explode('/', $filePath);
+        $pathArray = explode('/', $filePath);
 
         return $pathArray[\count($pathArray) - 4];
     }

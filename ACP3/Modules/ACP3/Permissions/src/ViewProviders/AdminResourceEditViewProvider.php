@@ -73,7 +73,7 @@ class AdminResourceEditViewProvider
             'modules' => $this->fetchActiveModules($resource['module_name']),
             'areas' => $this->fetchAreas($resource['area']),
             'privileges' => $this->fetchPrivileges($resource['privilege_id']),
-            'form' => \array_merge($defaults, $this->request->getPost()->all()),
+            'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
@@ -85,7 +85,7 @@ class AdminResourceEditViewProvider
             $modules[$info['name']] = $this->translator->t($info['name'], $info['name']);
         }
 
-        \uasort($modules, static function ($a, $b) {
+        uasort($modules, static function ($a, $b) {
             return $a <=> $b;
         });
 
@@ -97,9 +97,9 @@ class AdminResourceEditViewProvider
      */
     private function fetchAreas(?string $currentArea = null): array
     {
-        $areas = \array_values(AreaEnum::getAreas());
+        $areas = array_values(AreaEnum::getAreas());
 
-        return $this->formsHelper->choicesGenerator('area', \array_combine($areas, $areas), $currentArea);
+        return $this->formsHelper->choicesGenerator('area', array_combine($areas, $areas), $currentArea);
     }
 
     private function fetchPrivileges(int $privilegeId): array

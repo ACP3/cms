@@ -12,7 +12,7 @@ use ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface;
 
 class PrivilegeRepository extends Core\Model\Repository\AbstractRepository implements PrivilegeRepositoryInterface
 {
-    const TABLE_NAME = 'acl_privileges';
+    public const TABLE_NAME = 'acl_privileges';
 
     /**
      * @param int $privilegeId

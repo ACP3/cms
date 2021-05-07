@@ -13,7 +13,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class AuditLogByTableDataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = AuditLogRepository::TABLE_NAME;
+    public const TABLE_NAME = AuditLogRepository::TABLE_NAME;
 
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {

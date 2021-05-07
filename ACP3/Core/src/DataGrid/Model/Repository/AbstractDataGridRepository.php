@@ -116,7 +116,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
                 }
 
                 foreach ($gridColumn['fields'] as $field) {
-                    $queryBuilder->addOrderBy($field, \strtoupper($gridColumn['default_sort_direction']));
+                    $queryBuilder->addOrderBy($field, strtoupper($gridColumn['default_sort_direction']));
                 }
             }
         }

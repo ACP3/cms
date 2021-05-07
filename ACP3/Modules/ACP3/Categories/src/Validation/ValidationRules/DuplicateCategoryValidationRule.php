@@ -34,7 +34,7 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        $params = \array_merge([
+        $params = array_merge([
             'module_id' => 0,
             'category_id' => '',
         ], $extra);

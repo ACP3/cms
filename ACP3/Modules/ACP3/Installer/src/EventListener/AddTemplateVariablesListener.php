@@ -94,7 +94,7 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
             $language = 'en_US'; // Fallback language
 
             foreach ($this->request->getUserAgent()->parseAcceptLanguage() as $locale => $val) {
-                $locale = \str_replace('-', '_', $locale);
+                $locale = str_replace('-', '_', $locale);
                 if ($this->translator->languagePackExists($locale) === true) {
                     $language = $locale;
 

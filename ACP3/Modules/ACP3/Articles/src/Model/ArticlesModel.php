@@ -17,7 +17,7 @@ class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterfac
 {
     use DuplicationAwareTrait;
 
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * {@inheritdoc}

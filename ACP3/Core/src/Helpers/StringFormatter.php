@@ -31,7 +31,7 @@ class StringFormatter
      */
     public function makeStringUrlSafe($var)
     {
-        $var = \html_entity_decode(\strip_tags($var));
+        $var = html_entity_decode(strip_tags($var));
 
         return $this->slugify->slugify($var, '-');
     }
@@ -46,7 +46,7 @@ class StringFormatter
      */
     public function nl2p($data, $useLineBreaks = false)
     {
-        $data = \trim($data);
+        $data = trim($data);
         $pattern = "/([\n]{1,})/i";
         $replace = "</p>\n<p>";
 
@@ -61,7 +61,7 @@ class StringFormatter
             ];
         }
 
-        return '<p>' . \preg_replace($pattern, $replace, $data) . '</p>';
+        return '<p>' . preg_replace($pattern, $replace, $data) . '</p>';
     }
 
     /**
@@ -80,9 +80,9 @@ class StringFormatter
             throw new \InvalidArgumentException('The offset should not be bigger then the to be displayed characters.');
         }
 
-        $shortened = \utf8_decode(\html_entity_decode(\strip_tags($data), ENT_QUOTES, 'UTF-8'));
+        $shortened = utf8_decode(html_entity_decode(strip_tags($data), ENT_QUOTES, 'UTF-8'));
         if (\strlen($shortened) > $chars && \strlen($shortened) - $chars >= $offset) {
-            return \utf8_encode(\substr($shortened, 0, $chars - $offset)) . $append;
+            return utf8_encode(substr($shortened, 0, $chars - $offset)) . $append;
         }
 
         return $data;

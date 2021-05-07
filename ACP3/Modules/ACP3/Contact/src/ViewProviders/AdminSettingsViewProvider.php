@@ -42,7 +42,7 @@ class AdminSettingsViewProvider
         $settings = $this->settings->getSettings(ContactSchema::MODULE_NAME);
 
         return [
-            'form' => \array_merge($settings, $this->request->getPost()->all()),
+            'form' => array_merge($settings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

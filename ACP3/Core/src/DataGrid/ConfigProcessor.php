@@ -42,20 +42,20 @@ class ConfigProcessor
         ];
 
         if ($options->isUseAjax()) {
-            $config['ajax'] = $this->request->getFullPath() . 'ajax_' . \substr($options->getIdentifier(), 1);
+            $config['ajax'] = $this->request->getFullPath() . 'ajax_' . substr($options->getIdentifier(), 1);
         }
 
         return [
             'identifier' => $options->getIdentifier(),
-            'config' => \json_encode($config),
+            'config' => json_encode($config),
         ];
     }
 
     private function getLengthMenu(): array
     {
         return [
-            \array_keys($this->getLengthMap()),
-            \array_values($this->getLengthMap()),
+            array_keys($this->getLengthMap()),
+            array_values($this->getLengthMap()),
         ];
     }
 

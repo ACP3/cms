@@ -104,6 +104,6 @@ class MenuConfiguration
 
     public function __toString(): string
     {
-        return \implode(':', \get_object_vars($this));
+        return implode(':', get_object_vars($this));
     }
 }

@@ -12,7 +12,7 @@ use ACP3\Core\Modules;
 
 class Schema implements Modules\Installer\SchemaInterface
 {
-    const MODULE_NAME = 'auditlog';
+    public const MODULE_NAME = 'auditlog';
 
     /**
      * @return array

@@ -33,16 +33,16 @@ class AdminThemesViewProvider
         $currentTheme = $this->settings->getSettings(Schema::MODULE_NAME)['design'];
 
         return [
-            'designs' => \array_map(
+            'designs' => array_map(
                 static function (array $theme) use ($currentTheme) {
-                    return \array_merge(
+                    return array_merge(
                         $theme,
                         [
                             'selected' => $theme['internal_name'] === $currentTheme,
                         ]
                     );
                 },
-                \array_filter($this->theme->getAvailableThemes(), static function (array $theme) {
+                array_filter($this->theme->getAvailableThemes(), static function (array $theme) {
                     return $theme['internal_name'] !== 'acp3-installer';
                 })
             ),

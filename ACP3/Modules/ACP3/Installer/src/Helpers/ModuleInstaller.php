@@ -57,7 +57,7 @@ class ModuleInstaller
             }
 
             if ($this->installHelper->installModule($schemaRegistrar->get($module->getName()), $container) === false) {
-                throw new ModuleInstallerException(\sprintf('Error while installing module "%s"', $module->getName()));
+                throw new ModuleInstallerException(sprintf('Error while installing module "%s"', $module->getName()));
             }
 
             $this->installedModules[$module->getName()] = true;
@@ -68,7 +68,7 @@ class ModuleInstaller
 
     private function isValidModule(string $moduleConfigPath): bool
     {
-        if (\is_file($moduleConfigPath)) {
+        if (is_file($moduleConfigPath)) {
             $config = $this->xml->parseXmlFile($moduleConfigPath, '/module/info');
 
             return !isset($config['no_install']);

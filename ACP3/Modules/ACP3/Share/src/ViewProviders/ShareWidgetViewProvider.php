@@ -43,7 +43,7 @@ class ShareWidgetViewProvider
      */
     public function __invoke(string $path): array
     {
-        $path = \urldecode($path);
+        $path = urldecode($path);
         $sharingInfo = $this->shareRepository->getOneByUri($path);
 
         return [
@@ -59,12 +59,12 @@ class ShareWidgetViewProvider
     {
         $services = [];
         if (!empty($sharingInfo['services'])) {
-            $services = \unserialize($sharingInfo['services']);
+            $services = unserialize($sharingInfo['services']);
         }
         if (empty($services)) {
             $services = $this->socialServices->getActiveServices();
         }
 
-        return \array_values($services);
+        return array_values($services);
     }
 }

@@ -58,7 +58,7 @@ class MenuItemsList
             foreach ($this->menuItems as $row) {
                 if (!($row['left_id'] >= $leftId && $row['right_id'] <= $rightId)) {
                     $row['selected'] = $this->formsHelper->selectEntry('parent_id', $row['id'], $parentId);
-                    $row['spaces'] = \str_repeat('&nbsp;&nbsp;', $row['level']);
+                    $row['spaces'] = str_repeat('&nbsp;&nbsp;', $row['level']);
 
                     // Titel für den aktuellen Block setzen
                     $output[$row['block_name']]['title'] = $row['block_title'];

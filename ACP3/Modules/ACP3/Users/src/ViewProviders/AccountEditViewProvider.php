@@ -50,7 +50,7 @@ class AccountEditViewProvider
     {
         $user = $this->userModel->getUserInfo();
 
-        return \array_merge(
+        return array_merge(
             $this->userFormsHelper->fetchUserProfileFormFields(
                 $user['birthday'],
                 $user['country'],
@@ -63,7 +63,7 @@ class AccountEditViewProvider
                     $user['icq'],
                     $user['skype']
                 ),
-                'form' => \array_merge($user, $this->request->getPost()->all()),
+                'form' => array_merge($user, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
             ]
         );

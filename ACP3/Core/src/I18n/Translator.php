@@ -50,7 +50,7 @@ class Translator
             $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
         }
 
-        $foundLanguagePack = \array_filter($this->languagePacks, static function ($languagePack) use ($locale) {
+        $foundLanguagePack = array_filter($this->languagePacks, static function ($languagePack) use ($locale) {
             return $languagePack['iso'] === $locale;
         });
 
@@ -68,7 +68,7 @@ class Translator
 
     public function getShortIsoCode(): string
     {
-        return \substr($this->getLocale(), 0, \strpos($this->getLocale(), '_'));
+        return substr($this->getLocale(), 0, strpos($this->getLocale(), '_'));
     }
 
     /**
@@ -103,10 +103,10 @@ class Translator
 
         $key = $module . $phrase;
         if (isset($this->buffer[$this->getLocale()]['keys'][$key])) {
-            return \strtr($this->buffer[$this->getLocale()]['keys'][$key], $arguments);
+            return strtr($this->buffer[$this->getLocale()]['keys'][$key], $arguments);
         }
 
-        return \strtoupper('{' . $module . '_' . $phrase . '}');
+        return strtoupper('{' . $module . '_' . $phrase . '}');
     }
 
     /**

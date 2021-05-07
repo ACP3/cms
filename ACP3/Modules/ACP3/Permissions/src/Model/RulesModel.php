@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class RulesModel extends AbstractModel
 {
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * @var Cache

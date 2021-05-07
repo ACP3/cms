@@ -20,20 +20,20 @@ class NestedSetSortColumnRenderer extends SortColumnRenderer
         } else {
             if ($dbResultRow['last'] === false) {
                 $value .= $this->fetchSortDirectionHtml(
-                    $this->router->route(\sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->getPrimaryKey()])),
+                    $this->router->route(sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->getPrimaryKey()])),
                     'down'
                 );
             }
             if ($dbResultRow['first'] === false) {
                 $value .= $this->fetchSortDirectionHtml(
-                    $this->router->route(\sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->getPrimaryKey()])),
+                    $this->router->route(sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->getPrimaryKey()])),
                     'up'
                 );
             }
         }
 
         $column['attribute'] += [
-            'sort' => \str_pad(
+            'sort' => str_pad(
                 $dbResultRow[$this->getFirstDbField($column)],
                 \strlen((string) $this->getTotalResults()),
                 '0',

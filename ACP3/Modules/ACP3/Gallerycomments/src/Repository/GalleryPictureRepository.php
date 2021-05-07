@@ -26,7 +26,7 @@ class GalleryPictureRepository extends AbstractRepository
             [$galleryId]
         );
 
-        return \array_map(static function (array $galleryPicture) {
+        return array_map(static function (array $galleryPicture) {
             return (int) $galleryPicture['id'];
         }, $galleryPictures);
     }

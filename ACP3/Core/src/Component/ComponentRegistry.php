@@ -60,7 +60,7 @@ class ComponentRegistry
 
         self::$componentsTopSorted = [];
         foreach ($components as $component) {
-            $dependencies = \array_map(static function (string $componentName) {
+            $dependencies = array_map(static function (string $componentName) {
                 $coreData = self::findByName($componentName);
 
                 return $coreData ? $coreData->getPath() : null;
@@ -84,28 +84,28 @@ class ComponentRegistry
      */
     public static function filterByType(array $components, array $componentTypes): array
     {
-        return \array_filter($components, static function (ComponentDataDto $component) use ($componentTypes) {
+        return array_filter($components, static function (ComponentDataDto $component) use ($componentTypes) {
             return \in_array($component->getComponentType(), $componentTypes, true);
         });
     }
 
     private static function findByName(string $componentName): ?ComponentDataDto
     {
-        $componentName = \strtolower($componentName);
-        $filteredComponents = \array_filter(self::$components, static function (ComponentDataDto $component) use ($componentName) {
+        $componentName = strtolower($componentName);
+        $filteredComponents = array_filter(self::$components, static function (ComponentDataDto $component) use ($componentName) {
             return $component->getName() === $componentName;
         });
 
-        return \reset($filteredComponents) ?: null;
+        return reset($filteredComponents) ?: null;
     }
 
     private static function findByPath(string $componentPath): ?ComponentDataDto
     {
-        $filteredComponents = \array_filter(self::$components, static function (ComponentDataDto $component) use ($componentPath) {
+        $filteredComponents = array_filter(self::$components, static function (ComponentDataDto $component) use ($componentPath) {
             return $component->getPath() === $componentPath;
         });
 
-        return \reset($filteredComponents) ?: null;
+        return reset($filteredComponents) ?: null;
     }
 
     /**
@@ -119,7 +119,7 @@ class ComponentRegistry
         $component = self::findByName($componentName);
 
         if ($component === null) {
-            throw new ComponentNotFoundException(\sprintf('Could not find the component with name "%s".', $componentName));
+            throw new ComponentNotFoundException(sprintf('Could not find the component with name "%s".', $componentName));
         }
 
         return $component->getPath();

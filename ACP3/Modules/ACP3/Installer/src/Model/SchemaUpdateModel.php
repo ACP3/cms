@@ -104,7 +104,7 @@ class SchemaUpdateModel
 
         $serviceIdMigration = $moduleName . '.installer.migration';
         if (!$schemaRegistrar->has($moduleName) || !$migrationRegistrar->has($serviceIdMigration)) {
-            throw new MissingInstallerException(\sprintf('Could not find any schema or migration files for module "%s"', $moduleName));
+            throw new MissingInstallerException(sprintf('Could not find any schema or migration files for module "%s"', $moduleName));
         }
 
         $moduleSchema = $schemaRegistrar->get($moduleName);

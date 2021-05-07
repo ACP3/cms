@@ -30,8 +30,8 @@ class BirthdayValidationRule extends AbstractValidationRule
     {
         $regex = '/^(\d{4})-(\d{2})-(\d{2})$/';
         $matches = [];
-        if (\preg_match($regex, $value, $matches)) {
-            if (\checkdate($matches[2], $matches[3], $matches[1])) {
+        if (preg_match($regex, $value, $matches)) {
+            if (checkdate($matches[2], $matches[3], $matches[1])) {
                 return true;
             }
         }

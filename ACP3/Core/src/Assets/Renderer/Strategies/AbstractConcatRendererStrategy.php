@@ -88,7 +88,7 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         $filename .= '_' . $this->getEnabledLibrariesAsString();
         $filename .= '_' . $this->getAssetGroup();
 
-        return \md5($filename);
+        return md5($filename);
     }
 
     public function getURI(string $layout = 'layout'): string
@@ -102,15 +102,15 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
-            $lastGenerated = \time(); // Assets are not cached -> set the current time as the new timestamp
+            $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
         $path = $this->buildAssetPath($filenameHash, $lastGenerated);
 
         // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
-        if (\is_file($this->appPath->getUploadsDir() . $path) === false) {
+        if (is_file($this->appPath->getUploadsDir() . $path) === false) {
             // Get the enabled libraries and filter out empty entries
-            $files = \array_filter(
+            $files = array_filter(
                 $this->processLibraries($layout),
                 static function ($var) {
                     return !empty($var);
@@ -130,13 +130,13 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
     {
         $content = [];
         foreach ($files as $file) {
-            $content[] = \file_get_contents($file) . "\n";
+            $content[] = file_get_contents($file) . "\n";
         }
 
         $this->createAssetsDirectory();
 
         // Write the contents of the file to the uploads folder
-        \file_put_contents($path, $this->compress(\implode("\n", $content)), LOCK_EX);
+        file_put_contents($path, $this->compress(implode("\n", $content)), LOCK_EX);
     }
 
     abstract protected function compress(string $assetContent): string;
@@ -149,8 +149,8 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
     private function createAssetsDirectory(): void
     {
         $concurrentDirectory = $this->appPath->getUploadsDir() . 'assets';
-        if (!\is_dir($concurrentDirectory) && !\mkdir($concurrentDirectory, 0755) && !\is_dir($concurrentDirectory)) {
-            throw new \RuntimeException(\sprintf('Directory "%s" was not created', $concurrentDirectory));
+        if (!is_dir($concurrentDirectory) && !mkdir($concurrentDirectory, 0755) && !is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
     }
 }

@@ -48,7 +48,7 @@ class ManageMenuItemOnModelSaveAfterListener implements EventSubscriberInterface
             ];
 
             $this->menuItemManager->manageMenuItem(
-                \sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()),
+                sprintf($formData['menu_item_uri_pattern'], $event->getEntryId()),
                 isset($formData['create_menu_item']) ? $data : []
             );
         }

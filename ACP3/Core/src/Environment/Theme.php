@@ -67,10 +67,10 @@ class Theme implements ThemePathInterface
         /**
          * @deprecated since version v5.15.0. To be removed with version 6.0.0. With ACP3 version 6.0.0 you will need add a registration.php with the themes root folder and add its composer.json.
          */
-        $unregisteredThemes = \glob(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . 'designs' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'info.xml');
+        $unregisteredThemes = glob(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . 'designs' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'info.xml');
 
         foreach ($unregisteredThemes as $unregisteredTheme) {
-            $this->addTheme(\dirname($unregisteredTheme), \str_replace([\dirname($unregisteredTheme, 2), DIRECTORY_SEPARATOR], '', \dirname($unregisteredTheme)));
+            $this->addTheme(\dirname($unregisteredTheme), str_replace([\dirname($unregisteredTheme, 2), DIRECTORY_SEPARATOR], '', \dirname($unregisteredTheme)));
         }
     }
 
@@ -82,12 +82,12 @@ class Theme implements ThemePathInterface
 
         $designInfo = $this->xml->parseXmlFile($themePath . DIRECTORY_SEPARATOR . 'info.xml', '/design');
         if (!empty($designInfo)) {
-            $this->availableThemes[$themeName] = \array_merge(
+            $this->availableThemes[$themeName] = array_merge(
                 $designInfo,
                 [
                     'internal_name' => $themeName,
                     'path' => $themePath,
-                    'web_path' => $this->appPath->getWebRoot() . \str_replace([ACP3_ROOT_DIR, '\\'], ['', '/'], $themeName),
+                    'web_path' => $this->appPath->getWebRoot() . str_replace([ACP3_ROOT_DIR, '\\'], ['', '/'], $themeName),
                 ]
             );
         }
@@ -95,7 +95,7 @@ class Theme implements ThemePathInterface
 
     private function getThemeInternalName(string $themePath): string
     {
-        return \str_replace([\dirname($themePath), DIRECTORY_SEPARATOR], '', $themePath);
+        return str_replace([\dirname($themePath), DIRECTORY_SEPARATOR], '', $themePath);
     }
 
     public function has(string $themeName): bool

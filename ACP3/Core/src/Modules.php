@@ -46,7 +46,7 @@ class Modules
      */
     public function getModuleInfo(string $moduleName): array
     {
-        $moduleName = \strtolower($moduleName);
+        $moduleName = strtolower($moduleName);
         if (empty($this->modulesInfo)) {
             $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
         }
@@ -86,7 +86,7 @@ class Modules
      */
     public function getActiveModules(): array
     {
-        return \array_filter($this->getAllModulesAlphabeticallySorted(), static function (array $module) {
+        return array_filter($this->getAllModulesAlphabeticallySorted(), static function (array $module) {
             return $module['active'] === true;
         });
     }
@@ -96,7 +96,7 @@ class Modules
      */
     public function getInstalledModules(): array
     {
-        return \array_filter($this->getAllModulesAlphabeticallySorted(), static function (array $module) {
+        return array_filter($this->getAllModulesAlphabeticallySorted(), static function (array $module) {
             return $module['installed'] === true;
         });
     }
@@ -108,7 +108,7 @@ class Modules
     {
         $allModulesAlphabeticallySorted = $this->getAllModules();
 
-        \ksort($allModulesAlphabeticallySorted);
+        ksort($allModulesAlphabeticallySorted);
 
         return $allModulesAlphabeticallySorted;
     }
@@ -136,7 +136,7 @@ class Modules
             $modules = $this->getAllModules();
 
             foreach ($modules as $module) {
-                $topSort->add(\strtolower($module['name']), $module['dependencies']);
+                $topSort->add(strtolower($module['name']), $module['dependencies']);
             }
 
             foreach ($topSort->sort() as $module) {

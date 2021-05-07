@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class EmoticonRepository extends Core\Model\Repository\AbstractRepository
 {
-    const TABLE_NAME = 'emoticons';
+    public const TABLE_NAME = 'emoticons';
 
     /**
      * @param int $emoticonId

@@ -35,12 +35,12 @@ class ComponentPathsCommand extends Command
                 $paths[$component->getComponentType()] = [];
             }
 
-            $paths[$component->getComponentType()][] = \str_replace([ACP3_ROOT_DIR, '\\'], ['.', '/'], $component->getPath());
+            $paths[$component->getComponentType()][] = str_replace([ACP3_ROOT_DIR, '\\'], ['.', '/'], $component->getPath());
         }
 
-        \file_put_contents(
+        file_put_contents(
             ACP3_ROOT_DIR . '/.component-paths.json',
-            \json_encode($paths, JSON_UNESCAPED_SLASHES ^ JSON_PRETTY_PRINT)
+            json_encode($paths, JSON_UNESCAPED_SLASHES ^ JSON_PRETTY_PRINT)
         );
 
         return 0;

@@ -70,7 +70,7 @@ class MetaStatementsService extends CoreMetaStatementsService implements MetaSta
             $this->aliasesCache = $this->seoCache->getCache();
         }
 
-        $path .= !\preg_match('/\/$/', $path) ? '/' : '';
+        $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
         return $this->aliasesCache[$path][$key] ?? parent::getSeoInformation($path, $key, $defaultValue);
     }

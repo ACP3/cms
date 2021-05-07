@@ -85,7 +85,7 @@ class Libraries
     {
         if (\is_string($library)) {
             if ($options === null || empty($options)) {
-                throw new \InvalidArgumentException(\sprintf('You need to pass a valid options array for this asset library %s', $library));
+                throw new \InvalidArgumentException(sprintf('You need to pass a valid options array for this asset library %s', $library));
             }
 
             $library = new LibraryEntity(
@@ -114,7 +114,7 @@ class Libraries
     {
         foreach ($libraries as $libraryIdentifier) {
             if (\array_key_exists($libraryIdentifier, $this->libraries) === false) {
-                throw new \InvalidArgumentException(\sprintf('Could not find library %s', $libraryIdentifier));
+                throw new \InvalidArgumentException(sprintf('Could not find library %s', $libraryIdentifier));
             }
 
             // Resolve javascript library dependencies recursively
@@ -162,7 +162,7 @@ class Libraries
      */
     public function getEnabledLibrariesAsString(): string
     {
-        return \implode(',', \array_keys($this->getEnabledLibraries()));
+        return implode(',', array_keys($this->getEnabledLibraries()));
     }
 
     private function getMasterRequest(): Request

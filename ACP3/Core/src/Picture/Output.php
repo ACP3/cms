@@ -140,7 +140,7 @@ class Output
 
     public function getFileWeb(): string
     {
-        return $this->appPath->getWebRoot() . \substr(\str_replace(ACP3_ROOT_DIR, '', $this->getFile()), 1);
+        return $this->appPath->getWebRoot() . substr(str_replace(ACP3_ROOT_DIR, '', $this->getFile()), 1);
     }
 
     public function getFile(): string
@@ -187,7 +187,7 @@ class Output
                 return 'image/png';
         }
 
-        throw new PictureResponseException(\sprintf('Unsupported picture type: %s', $pictureType));
+        throw new PictureResponseException(sprintf('Unsupported picture type: %s', $pictureType));
     }
 
     private function setHeaders(BinaryFileResponse $response, string $mimeType)
@@ -196,8 +196,8 @@ class Output
             'Content-type' => $mimeType,
             'Cache-Control' => 'public',
             'Pragma' => 'public',
-            'Last-Modified' => \gmdate('D, d M Y H:i:s', \filemtime($this->getFile())) . ' GMT',
-            'Expires' => \gmdate('D, d M Y H:i:s', \time() + 31536000) . ' GMT',
+            'Last-Modified' => gmdate('D, d M Y H:i:s', filemtime($this->getFile())) . ' GMT',
+            'Expires' => gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT',
         ]);
     }
 }

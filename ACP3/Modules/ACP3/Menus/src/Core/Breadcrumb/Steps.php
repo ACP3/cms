@@ -44,8 +44,8 @@ class Steps extends Core\Breadcrumb\Steps
     public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): Core\Breadcrumb\Steps
     {
         if ($dbSteps === true) {
-            \end($this->stepsFromDb);
-            $this->stepsFromDb[(int) \key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
+            end($this->stepsFromDb);
+            $this->stepsFromDb[(int) key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
         }
 
         return parent::replaceAncestor($title, $path, $dbSteps);
@@ -72,7 +72,7 @@ class Steps extends Core\Breadcrumb\Steps
         if (!empty($this->stepsFromDb)) {
             $offset = $this->findFirstMatchingStep();
 
-            $this->breadcrumbCache = \array_merge($this->stepsFromDb, \array_slice($this->steps, $offset));
+            $this->breadcrumbCache = array_merge($this->stepsFromDb, \array_slice($this->steps, $offset));
         }
     }
 
@@ -110,7 +110,7 @@ class Steps extends Core\Breadcrumb\Steps
 
     private function findRestrictionInRoutes(array $items): array
     {
-        \rsort($items);
+        rsort($items);
         foreach ($items as $index => $item) {
             if (\in_array($item['uri'], $this->getPossiblyMatchingRoutes(), true)) {
                 return [
@@ -137,8 +137,8 @@ class Steps extends Core\Breadcrumb\Steps
 
     private function findFirstMatchingStep(): int
     {
-        $steps = \array_reverse($this->steps);
-        $lastDbStep = \end($this->stepsFromDb);
+        $steps = array_reverse($this->steps);
+        $lastDbStep = end($this->stepsFromDb);
 
         $matched = false;
         $offset = 0;
@@ -168,7 +168,7 @@ class Steps extends Core\Breadcrumb\Steps
 
         $path = $this->router->route($path, true);
 
-        $this->stepsFromDb = \array_filter(
+        $this->stepsFromDb = array_filter(
             $this->stepsFromDb,
             static function (array $step) use ($path) {
                 return $step['uri'] !== $path;

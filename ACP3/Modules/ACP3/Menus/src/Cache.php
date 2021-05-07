@@ -93,7 +93,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
             ];
 
             foreach ($menuItems as $i => $menu) {
-                $menuItems[$i]['mode_formatted'] = \str_replace($modeSearch, $modeReplace, $menu['mode']);
+                $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $menu['mode']);
                 $menuItems[$i]['first'] = $this->isFirstItemInSet($i, $menuItems);
                 $menuItems[$i]['last'] = $this->isLastItemInSet($i, $menuItems);
             }

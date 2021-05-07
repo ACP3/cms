@@ -12,14 +12,14 @@ use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 
 class GalleryPicturesDataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = PictureRepository::TABLE_NAME;
+    public const TABLE_NAME = PictureRepository::TABLE_NAME;
 
     /**
      * {@inheritdoc}
      */
     protected function getColumns(ColumnPriorityQueue $gridColumns)
     {
-        return \array_merge(
+        return array_merge(
             parent::getColumns($gridColumns),
             [
                 '(SELECT MIN(pmin.pic) FROM ' . $this->getTableName() . ' AS pmin WHERE pmin.gallery_id = main.gallery_id) AS `first`',

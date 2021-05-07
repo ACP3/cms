@@ -51,7 +51,7 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
         }
 
         foreach ($event->getEntryId() as $item) {
-            $uri = \sprintf(GalleryHelpers::URL_KEY_PATTERN_GALLERY, $item);
+            $uri = sprintf(GalleryHelpers::URL_KEY_PATTERN_GALLERY, $item);
 
             $this->uriAliasManager->deleteUriAlias($uri);
 
@@ -65,7 +65,7 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
     private function deletePictureAliases(int $galleryId): void
     {
         foreach ($this->pictureRepository->getPicturesByGalleryId($galleryId) as $picture) {
-            $uri = \sprintf(
+            $uri = sprintf(
                 GalleryHelpers::URL_KEY_PATTERN_PICTURE,
                 $picture['id']
             );

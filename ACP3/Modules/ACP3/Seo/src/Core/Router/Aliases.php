@@ -49,18 +49,18 @@ class Aliases
             $this->aliasesCache = $this->seoCache->getCache();
         }
 
-        $path .= (!\preg_match('/\/$/', $path) ? '/' : '');
-        $pathParts = \preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
+        $path .= (!preg_match('/\/$/', $path) ? '/' : '');
+        $pathParts = preg_split('=/=', $path, -1, PREG_SPLIT_NO_EMPTY);
         $routeArguments = [];
 
         while (\count($pathParts) >= 3) {
-            $newPath = \implode('/', $pathParts) . '/';
+            $newPath = implode('/', $pathParts) . '/';
             if (!empty($this->aliasesCache[$newPath]['alias'])) {
                 return $this->aliasesCache[$newPath]['alias']
-                    . (!empty($routeArguments) ? '/' . \implode('/', $routeArguments) : '');
+                    . (!empty($routeArguments) ? '/' . implode('/', $routeArguments) : '');
             }
 
-            $routeArguments[] = \array_pop($pathParts);
+            $routeArguments[] = array_pop($pathParts);
         }
 
         return $emptyOnNoResult === true ? '' : $path;

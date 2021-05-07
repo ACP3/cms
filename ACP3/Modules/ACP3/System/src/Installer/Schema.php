@@ -127,7 +127,7 @@ class Schema implements Modules\Installer\SchemaInterface
             'page_cache_is_enabled' => 0,
             'page_cache_is_valid' => 1,
             'page_cache_purge_mode' => 1,
-            'security_secret' => \uniqid((string) \mt_rand(), true),
+            'security_secret' => uniqid((string) mt_rand(), true),
             'site_title' => '',
             'site_subtitle' => '',
             'site_subtitle_homepage_mode' => 0,

@@ -20,7 +20,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     use DuplicationAwareTrait;
 
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * @var SettingsInterface
@@ -45,7 +45,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        $rawData = \array_merge($rawData, [
+        $rawData = array_merge($rawData, [
             'updated_at' => 'now',
             'readmore' => $this->useReadMore($rawData, $settings),
             'category_id' => $rawData['cat'] ?? $rawData['category_id'],

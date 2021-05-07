@@ -31,8 +31,8 @@ class AllowedMenuValidationRule extends AbstractValidationRule
     public function isValid($data, $field = '', array $extra = [])
     {
         if (\is_array($data) && \is_array($field)) {
-            $parentId = \reset($field);
-            $blockId = \next($field);
+            $parentId = reset($field);
+            $blockId = next($field);
 
             return $this->checkIsAllowedMenu($data[$parentId], $data[$blockId]);
         }

@@ -16,15 +16,15 @@ class Filesystem
 
     public static function scandir(string $directory, array $excluded = []): array
     {
-        $scannedDirectory = @\scandir($directory);
+        $scannedDirectory = @scandir($directory);
 
         if ($scannedDirectory !== false) {
-            $filesAndDirectories = \array_diff(
+            $filesAndDirectories = array_diff(
                 $scannedDirectory,
-                \array_merge(static::$excluded, $excluded)
+                array_merge(static::$excluded, $excluded)
             );
 
-            return \array_values($filesAndDirectories);
+            return array_values($filesAndDirectories);
         }
 
         return [];

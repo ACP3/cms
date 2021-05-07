@@ -35,12 +35,12 @@ class XML
             return $this->info[$path][$xpath];
         }
 
-        if (\is_file($path) === false) {
+        if (is_file($path) === false) {
             return [];
         }
 
         /** @var \SimpleXMLElement $xml */
-        $xml = \simplexml_load_string(\file_get_contents($path));
+        $xml = simplexml_load_string(file_get_contents($path));
         $data = $xml->xpath($xpath);
 
         if (empty($data)) {

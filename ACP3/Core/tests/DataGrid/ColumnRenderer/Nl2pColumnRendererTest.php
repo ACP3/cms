@@ -28,7 +28,7 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
         ]);
         $this->dbData = [
@@ -41,7 +41,7 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidFieldWithMultipleLines()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
         ]);
         $this->dbData = [

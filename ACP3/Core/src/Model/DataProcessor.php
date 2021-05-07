@@ -55,11 +55,11 @@ class DataProcessor
 
     private function findMissingColumns(array $columnData, array $columnConstraints): array
     {
-        return \array_diff(
-            \array_keys($columnConstraints),
-            \array_intersect(
-                \array_keys($columnData),
-                \array_keys($columnConstraints)
+        return array_diff(
+            array_keys($columnConstraints),
+            array_intersect(
+                array_keys($columnData),
+                array_keys($columnConstraints)
             )
         );
     }

@@ -13,14 +13,14 @@ use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
 class SeoModel extends AbstractModel
 {
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * {@inheritdoc}
      */
     public function save(array $rawData, $entryId = null)
     {
-        $rawData = \array_merge($rawData, [
+        $rawData = array_merge($rawData, [
             'title' => $rawData['seo_title'],
             'keywords' => $rawData['seo_keywords'],
             'description' => $rawData['seo_description'],

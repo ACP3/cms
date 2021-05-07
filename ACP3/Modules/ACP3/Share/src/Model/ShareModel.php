@@ -13,14 +13,14 @@ use ACP3\Modules\ACP3\Share\Installer\Schema;
 
 class ShareModel extends AbstractModel
 {
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * {@inheritdoc}
      */
     public function save(array $rawData, $entryId = null)
     {
-        $rawData = \array_merge($rawData, $this->mapDataFromRequest($rawData));
+        $rawData = array_merge($rawData, $this->mapDataFromRequest($rawData));
 
         return parent::save($rawData, $entryId);
     }

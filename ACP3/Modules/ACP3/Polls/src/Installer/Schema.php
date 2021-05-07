@@ -12,7 +12,7 @@ use ACP3\Core\Modules;
 
 class Schema implements Modules\Installer\SchemaInterface
 {
-    const MODULE_NAME = 'polls';
+    public const MODULE_NAME = 'polls';
 
     /**
      * @return array

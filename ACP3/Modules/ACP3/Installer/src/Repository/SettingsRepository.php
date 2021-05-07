@@ -76,7 +76,7 @@ class SettingsRepository implements SettingsAwareRepositoryInterface
             [
                 'module_name' => 'system',
                 'name' => 'date_time_zone',
-                'value' => \date_default_timezone_get(),
+                'value' => date_default_timezone_get(),
             ],
         ];
     }

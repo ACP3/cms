@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
 
 class Cache extends Core\Modules\AbstractCacheStorage
 {
-    const CACHE_ID = 'list';
+    public const CACHE_ID = 'list';
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
@@ -63,7 +63,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
         $data = [];
         for ($i = 0; $i < $cEmoticons; ++$i) {
-            $picInfos = \getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
+            $picInfos = getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
             $code = $emoticons[$i]['code'];
             $description = $emoticons[$i]['description'];
             $data[$code] = '<img src="' . $this->appPath->getWebRoot() . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';

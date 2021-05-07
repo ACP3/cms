@@ -67,7 +67,7 @@ class AdminPollEditViewProvider
         return [
             'answers' => $this->getAnswers($poll['id'] ?? null),
             'options' => $this->fetchOptions(!empty($poll['id']), $poll['multiple']),
-            'form' => \array_merge($poll, $this->request->getPost()->all()),
+            'form' => array_merge($poll, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
@@ -126,7 +126,7 @@ class AdminPollEditViewProvider
                 1 => $this->translator->t('polls', 'reset_votes'),
             ];
 
-            $options = \array_merge(
+            $options = array_merge(
                 $options,
                 $this->formsHelper->checkboxGenerator('reset', $reset, 0)
             );

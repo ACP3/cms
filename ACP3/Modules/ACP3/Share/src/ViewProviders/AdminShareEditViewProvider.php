@@ -43,7 +43,7 @@ class AdminShareEditViewProvider
     {
         return [
             'SHARE_FORM_FIELDS' => $this->shareFormFields->formFields($sharingInfo['uri']),
-            'form' => \array_merge(['uri' => $sharingInfo['uri']], $this->request->getPost()->all()),
+            'form' => array_merge(['uri' => $sharingInfo['uri']], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

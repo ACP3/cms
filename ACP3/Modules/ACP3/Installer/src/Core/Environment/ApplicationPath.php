@@ -20,7 +20,7 @@ class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
 
         $this->installerWebRoot = $this->getWebRoot();
         $this->setWebRoot(
-            \substr($this->getWebRoot() !== '/' ? $this->getWebRoot() . '/' : '/', 0, -14)
+            substr($this->getWebRoot() !== '/' ? $this->getWebRoot() . '/' : '/', 0, -14)
         );
     }
 

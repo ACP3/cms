@@ -72,7 +72,7 @@ class AdminCategoryEditViewProvider
         $this->title->setPageTitlePrefix($category['title']);
 
         return [
-            'form' => \array_merge($category, $this->request->getPost()->all()),
+            'form' => array_merge($category, $this->request->getPost()->all()),
             'category_tree' => $this->fetchCategoryTree(
                 $category['module_id'] ?? null,
                 $category['parent_id'] ?? null,
@@ -93,7 +93,7 @@ class AdminCategoryEditViewProvider
             }
         }
 
-        \uasort($modules, static function ($a, $b) {
+        uasort($modules, static function ($a, $b) {
             return $a <=> $b;
         });
 
@@ -119,7 +119,7 @@ class AdminCategoryEditViewProvider
                 continue;
             }
 
-            $categories[(int) $category['id']] = \str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
+            $categories[(int) $category['id']] = str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
         }
 
         return $this->formsHelper->choicesGenerator('parent_id', $categories, $parentId);

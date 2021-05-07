@@ -11,7 +11,7 @@ use ACP3\Core\Modules;
 
 class Schema implements Modules\Installer\SchemaInterface
 {
-    const MODULE_NAME = 'filescomments';
+    public const MODULE_NAME = 'filescomments';
 
     /**
      * @return array

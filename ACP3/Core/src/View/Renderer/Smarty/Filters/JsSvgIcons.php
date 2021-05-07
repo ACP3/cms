@@ -28,13 +28,13 @@ class JsSvgIcons extends AbstractFilter
 
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
-        if (\strpos($tplOutput, '<body') !== false) {
+        if (strpos($tplOutput, '<body') !== false) {
             if ($this->svgIcons === null) {
                 $this->addSvgIcons();
             }
 
             try {
-                $tplOutput = \str_replace('<body', '<body data-svg-icons="' . \htmlspecialchars(\json_encode($this->svgIcons, JSON_THROW_ON_ERROR), ENT_QUOTES) . '"', $tplOutput);
+                $tplOutput = str_replace('<body', '<body data-svg-icons="' . htmlspecialchars(json_encode($this->svgIcons, JSON_THROW_ON_ERROR), ENT_QUOTES) . '"', $tplOutput);
             } catch (\Throwable $e) {
                 // Intentionally omitted
             }

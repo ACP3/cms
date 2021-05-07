@@ -90,7 +90,7 @@ class AdminRoleEditViewProvider
                 ? $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id'])
                 : [],
             'modules' => $this->fetchModulePermissions($role['id']),
-            'form' => \array_merge($role, $this->request->getPost()->all()),
+            'form' => array_merge($role, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }
@@ -103,7 +103,7 @@ class AdminRoleEditViewProvider
                 continue;
             }
 
-            $roles[(int) $role['id']] = \str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
+            $roles[(int) $role['id']] = str_repeat('&nbsp;&nbsp;', $role['level']) . $role['name'];
         }
 
         return $this->formsHelper->choicesGenerator('parent_id', $roles, $roleParentId);
@@ -115,7 +115,7 @@ class AdminRoleEditViewProvider
     private function fetchModulePermissions(int $roleId, int $defaultValue = 0): array
     {
         $rules = $this->permissionsCache->getRulesCache([$roleId]);
-        $modules = \array_filter($this->modules->getActiveModules(), function ($module) {
+        $modules = array_filter($this->modules->getActiveModules(), function ($module) {
             return $this->modules->isInstallable($module['name']);
         });
         $privileges = $this->privilegeRepository->getAllPrivileges();
@@ -175,7 +175,7 @@ class AdminRoleEditViewProvider
 
     private function calculatePermission(array $rules, string $moduleDir, string $key): string
     {
-        return \sprintf(
+        return sprintf(
             $this->translator->t('permissions', 'calculated_permission'),
             $this->translator->t(
                 'permissions',

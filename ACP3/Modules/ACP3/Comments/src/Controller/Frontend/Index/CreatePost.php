@@ -80,7 +80,7 @@ class CreatePost extends Core\Controller\AbstractWidgetAction implements Core\Co
                 return $this->actionHelper->setRedirectMessage(
                     $bool,
                     $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
-                    \base64_decode(\urldecode($redirectUrl))
+                    base64_decode(urldecode($redirectUrl))
                 );
             }
         );

@@ -177,7 +177,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     private function checkForFailedModuleDependencies(array $dependencies, string $phrase): void
     {
         if (!empty($dependencies)) {
-            throw new System\Exception\ModuleInstallerException($this->translator->t('system', $phrase, ['%modules%' => \implode(', ', $dependencies)]));
+            throw new System\Exception\ModuleInstallerException($this->translator->t('system', $phrase, ['%modules%' => implode(', ', $dependencies)]));
         }
     }
 

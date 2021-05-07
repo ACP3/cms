@@ -87,7 +87,7 @@ class DataGridByModuleViewProvider
             'acp/' . $this->request->getQuery()
         );
 
-        return \array_merge($dataGrid, ['module_id' => $moduleId]);
+        return array_merge($dataGrid, ['module_id' => $moduleId]);
     }
 
     private function configureDataGrid(int $moduleId): Input

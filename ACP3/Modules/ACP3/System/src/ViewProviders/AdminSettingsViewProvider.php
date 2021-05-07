@@ -137,7 +137,7 @@ class AdminSettingsViewProvider
                 $mailerSmtpSecurity,
                 $systemSettings['mailer_smtp_security']
             ),
-            'form' => \array_merge($systemSettings, $this->request->getPost()->all()),
+            'form' => array_merge($systemSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

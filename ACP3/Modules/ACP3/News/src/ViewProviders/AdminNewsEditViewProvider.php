@@ -82,10 +82,10 @@ class AdminNewsEditViewProvider
             ),
             'options' => $this->fetchOptions($news['readmore']),
             'target' => $this->formsHelper->linkTargetChoicesGenerator('target', $news['target']),
-            'form' => \array_merge($news, $this->request->getPost()->all()),
+            'form' => array_merge($news, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => NewsHelpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => !empty($news['id']) ? \sprintf(NewsHelpers::URL_KEY_PATTERN, $news['id']) : '',
+            'SEO_ROUTE_NAME' => !empty($news['id']) ? sprintf(NewsHelpers::URL_KEY_PATTERN, $news['id']) : '',
         ];
     }
 

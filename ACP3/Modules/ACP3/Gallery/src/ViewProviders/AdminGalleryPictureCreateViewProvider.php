@@ -65,7 +65,7 @@ class AdminGalleryPictureCreateViewProvider
             );
 
         return [
-            'form' => \array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
+            'form' => array_merge(['title' => '', 'description' => ''], $this->request->getPost()->all()),
             'gallery_id' => $galleryId,
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];

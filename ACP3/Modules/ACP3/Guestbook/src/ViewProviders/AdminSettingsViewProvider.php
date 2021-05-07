@@ -72,7 +72,7 @@ class AdminSettingsViewProvider
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'notify' => $this->formsHelper->choicesGenerator('notify', $notificationTypes, $settings['notify']),
             'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
-            'form' => \array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()),
+            'form' => array_merge(['notify_email' => $settings['notify_email']], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

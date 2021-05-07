@@ -56,7 +56,7 @@ class Navigation
     private function addStep(string $stepName, array $options): self
     {
         if (!$this->has($stepName)) {
-            $options = \array_merge($this->getDefaultOptions(), $options);
+            $options = array_merge($this->getDefaultOptions(), $options);
             $this->navbar[$stepName] = new NavigationStep($options['lang'], $options['active'], $options['complete']);
         }
 
@@ -113,7 +113,7 @@ class Navigation
         $completedSteps = 0;
         if ($this->has($key) === true) {
             $this->markStepActive($key);
-            $completedSteps = \array_search($key, \array_keys($this->all()), true);
+            $completedSteps = array_search($key, array_keys($this->all()), true);
         }
 
         if ($completedSteps > 0) {

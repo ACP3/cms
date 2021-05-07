@@ -61,7 +61,7 @@ class ResourceFormValidation extends Core\Validation\AbstractFormValidation
             ->addConstraint(
                 Core\Validation\ValidationRules\InternalUriValidationRule::class,
                 [
-                    'data' => \strtolower($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/'),
+                    'data' => strtolower($formData['modules'] . '/' . $formData['controller'] . '/' . $formData['resource'] . '/'),
                     'field' => 'resource',
                     'message' => $this->translator->t('permissions', 'type_in_resource'),
                 ]

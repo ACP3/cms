@@ -37,8 +37,8 @@ class MoveToBottom extends AbstractMoveElementFilter
      */
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
-        if (\strpos($tplOutput, static::PLACEHOLDER) !== false) {
-            return \str_replace(
+        if (strpos($tplOutput, static::PLACEHOLDER) !== false) {
+            return str_replace(
                 static::PLACEHOLDER,
                 $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),
                 $this->getCleanedUpTemplateOutput($tplOutput)

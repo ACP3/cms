@@ -109,8 +109,8 @@ class Alerts
 
         $errors = $this->prepareErrorBoxData($errors);
 
-        foreach (\array_keys($errors) as $key) {
-            if (\is_numeric($key) === false) {
+        foreach (array_keys($errors) as $key) {
+            if (is_numeric($key) === false) {
                 $hasNonIntegerKeys = true;
 
                 break;
@@ -135,7 +135,7 @@ class Alerts
      */
     protected function prepareErrorBoxData($errors): array
     {
-        if (\is_string($errors) && ($data = @\unserialize($errors, ['allowed_classes' => true])) !== false) {
+        if (\is_string($errors) && ($data = @unserialize($errors, ['allowed_classes' => true])) !== false) {
             $errors = $data;
         }
 

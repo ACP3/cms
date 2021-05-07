@@ -64,7 +64,7 @@ class CheckMaintenanceModeListener implements EventSubscriberInterface
     {
         return (bool) $this->settings->getSettings('system')['maintenance_mode'] === true &&
             \in_array($request->getArea(), [AreaEnum::AREA_ADMIN, AreaEnum::AREA_WIDGET], true) === false &&
-            \strpos($request->getQuery(), 'users/index/login/') !== 0;
+            strpos($request->getQuery(), 'users/index/login/') !== 0;
     }
 
     private function renderMaintenanceMessage(ControllerActionRequestEvent $event): void

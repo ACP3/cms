@@ -76,23 +76,23 @@ class DictionaryCache implements DictionaryCacheInterface
         foreach ($components as $component) {
             $i18nFile = "{$component->getPath()}/Resources/i18n/{$language}.xml";
 
-            if (\is_file($i18nFile) === false) {
+            if (is_file($i18nFile) === false) {
                 continue;
             }
 
             $data['keys'] += $this->parseI18nFile($i18nFile, $component->getName());
         }
 
-        $themeDependenciesReversed = \array_reverse($this->theme->getCurrentThemeDependencies());
+        $themeDependenciesReversed = array_reverse($this->theme->getCurrentThemeDependencies());
         foreach ($themeDependenciesReversed as $theme) {
-            $i18nFiles = \glob($this->theme->getDesignPathInternal($theme) . "/*/i18n/{$language}.xml");
+            $i18nFiles = glob($this->theme->getDesignPathInternal($theme) . "/*/i18n/{$language}.xml");
 
             if ($i18nFiles === false) {
                 continue;
             }
 
             foreach ($i18nFiles as $i18nFile) {
-                $data['keys'] = \array_merge(
+                $data['keys'] = array_merge(
                     $data['keys'],
                     $this->parseI18nFile($i18nFile, $this->getModuleNameFromThemePath($i18nFile))
                 );
@@ -105,9 +105,9 @@ class DictionaryCache implements DictionaryCacheInterface
     private function parseI18nFile(string $i18nFile, string $moduleName): array
     {
         $data = [];
-        $xml = \simplexml_load_string(\file_get_contents($i18nFile));
+        $xml = simplexml_load_string(file_get_contents($i18nFile));
         foreach ($xml->keys->item as $item) {
-            $data[\strtolower($moduleName . $item['key'])] = \trim((string) $item);
+            $data[strtolower($moduleName . $item['key'])] = trim((string) $item);
         }
 
         return $data;
@@ -115,7 +115,7 @@ class DictionaryCache implements DictionaryCacheInterface
 
     private function getModuleNameFromThemePath(string $filePath): string
     {
-        $pathArray = \explode('/', $filePath);
+        $pathArray = explode('/', $filePath);
 
         return $pathArray[\count($pathArray) - 3];
     }
@@ -140,7 +140,7 @@ class DictionaryCache implements DictionaryCacheInterface
         $languagePacks = [];
 
         foreach (ComponentRegistry::all() as $component) {
-            $languageFiles = \glob($component->getPath() . '/Resources/i18n/*.xml');
+            $languageFiles = glob($component->getPath() . '/Resources/i18n/*.xml');
 
             if ($languageFiles === false) {
                 continue;
@@ -177,6 +177,6 @@ class DictionaryCache implements DictionaryCacheInterface
 
     private function getLanguagePackIsoCode(string $filePath): string
     {
-        return \pathinfo($filePath)['filename'];
+        return pathinfo($filePath)['filename'];
     }
 }

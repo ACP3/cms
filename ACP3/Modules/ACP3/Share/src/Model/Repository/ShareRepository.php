@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class ShareRepository extends Core\Model\Repository\AbstractRepository
 {
-    const TABLE_NAME = 'share';
+    public const TABLE_NAME = 'share';
 
     /**
      * @throws \Doctrine\DBAL\Exception

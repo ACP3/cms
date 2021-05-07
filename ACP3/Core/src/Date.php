@@ -98,8 +98,8 @@ class Date
                 break;
         }
 
-        if (\is_numeric($time)) {
-            $time = \date('c', (int) $time);
+        if (is_numeric($time)) {
+            $time = date('c', (int) $time);
         }
 
         $dateTime = new \DateTime($time, $this->dateTimeZone);
@@ -111,7 +111,7 @@ class Date
             }
         }
 
-        return \strtr($dateTime->format($format), $this->dateTranslator->localize($format));
+        return strtr($dateTime->format($format), $this->dateTranslator->localize($format));
     }
 
     /**
@@ -161,8 +161,8 @@ class Date
      */
     public function toDateTime($time = 'now'): \DateTime
     {
-        if (\is_numeric($time)) {
-            $time = \date('c', $time);
+        if (is_numeric($time)) {
+            $time = date('c', $time);
         }
 
         return new \DateTime($time, $this->dateTimeZone);

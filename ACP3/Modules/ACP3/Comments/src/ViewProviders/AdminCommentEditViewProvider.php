@@ -65,7 +65,7 @@ class AdminCommentEditViewProvider
         $this->title->setPageTitlePrefix($comment['name']);
 
         return [
-            'form' => \array_merge($comment, $this->request->getPost()->all()),
+            'form' => array_merge($comment, $this->request->getPost()->all()),
             'module_id' => (int) $comment['module_id'],
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'can_use_emoticons' => true,

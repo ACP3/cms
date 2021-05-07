@@ -77,7 +77,7 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
         $deferrableStylesheets = '';
         $deferrableStylesheetsNoScript = '';
 
-        $currentTimestamp = \time();
+        $currentTimestamp = time();
 
         foreach ($this->stylesheets as $stylesheet) {
             $deferrableStylesheets .= '<link rel="stylesheet" href="' . $stylesheet . '?' . $currentTimestamp . '" media="print" onload="this.media=\'all\'; this.onload=null;">' . "\n";

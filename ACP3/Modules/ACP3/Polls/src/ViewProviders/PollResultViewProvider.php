@@ -39,7 +39,7 @@ class PollResultViewProvider
         $totalVotes = $question['total_votes'];
 
         foreach ($answers as $i => $answer) {
-            $answers[$i]['percent'] = $totalVotes > 0 ? \round(100 * $answer['votes'] / $totalVotes, 2) : 0;
+            $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $answer['votes'] / $totalVotes, 2) : 0;
         }
 
         return [

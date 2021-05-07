@@ -16,6 +16,6 @@ class ValidationFailedException extends \Exception
      */
     public function __construct($message)
     {
-        parent::__construct(\serialize($message));
+        parent::__construct(serialize($message));
     }
 }

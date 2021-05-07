@@ -18,6 +18,6 @@ class EmailValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return (bool) \filter_var($data, FILTER_VALIDATE_EMAIL);
+        return (bool) filter_var($data, FILTER_VALIDATE_EMAIL);
     }
 }

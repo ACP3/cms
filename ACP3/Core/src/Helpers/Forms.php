@@ -91,7 +91,7 @@ class Forms
         string $htmlAttribute = 'selected'
     ): array {
         $choices = [];
-        $id = \str_replace('_', '-', $formFieldName);
+        $id = str_replace('_', '-', $formFieldName);
         foreach ($values as $value => $phrase) {
             $choices[] = [
                 'value' => $value,

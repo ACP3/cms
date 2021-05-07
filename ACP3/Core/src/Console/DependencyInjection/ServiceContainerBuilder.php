@@ -72,7 +72,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
         foreach (ComponentRegistry::allTopSorted() as $module) {
             $path = $module->getPath() . '/Resources/config/services.yml';
 
-            if (\is_file($path)) {
+            if (is_file($path)) {
                 $loader->import($path);
             }
         }

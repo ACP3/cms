@@ -30,7 +30,7 @@ class UserProfileViewProvider
     public function __invoke(int $userId): array
     {
         $user = $this->userModel->getUserInfo($userId);
-        $user['gender'] = \str_replace(
+        $user['gender'] = str_replace(
             [1, 2, 3],
             ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')],
             $user['gender']

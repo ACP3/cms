@@ -53,7 +53,7 @@ class AdminSettingsViewProvider
                 'enable_registration',
                 $settings['enable_registration']
             ),
-            'form' => \array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()),
+            'form' => array_merge(['mail' => $settings['mail']], $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

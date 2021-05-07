@@ -39,7 +39,7 @@ class GuestbookCreateViewProvider
     public function __invoke(): array
     {
         return [
-            'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

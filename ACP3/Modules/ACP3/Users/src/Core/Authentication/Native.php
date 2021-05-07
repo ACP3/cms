@@ -50,7 +50,7 @@ class Native implements AuthenticationInterface
         if ($this->sessionHandler->has(AuthenticationModel::AUTH_NAME)) {
             $userData = $this->sessionHandler->get(AuthenticationModel::AUTH_NAME);
         } elseif ($this->request->getCookies()->has(AuthenticationModel::AUTH_NAME)) {
-            [$userId, $token] = \explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
+            [$userId, $token] = explode('|', $this->request->getCookies()->get(AuthenticationModel::AUTH_NAME, ''));
 
             $userData = $this->verifyCredentials((int) $userId, $token);
         }

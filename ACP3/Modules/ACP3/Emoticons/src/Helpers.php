@@ -48,6 +48,6 @@ class Helpers
      */
     public function emoticonsReplace(string $string): string
     {
-        return \strtr($string, $this->emoticonsCache->getCache());
+        return strtr($string, $this->emoticonsCache->getCache());
     }
 }

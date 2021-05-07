@@ -77,17 +77,17 @@ class SchemaHelper
             foreach ($queries as $query) {
                 if (\is_callable($query)) {
                     if ($query() === false) {
-                        throw new Core\Modules\Exception\ModuleMigrationException(\sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
+                        throw new Core\Modules\Exception\ModuleMigrationException(sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
                     }
                 } elseif (!empty($query)) {
-                    $this->db->getConnection()->query(\str_ireplace($search, $replace, $query));
+                    $this->db->getConnection()->query(str_ireplace($search, $replace, $query));
                 }
             }
             $this->db->getConnection()->commit();
         } catch (\Exception $e) {
             $this->db->getConnection()->rollBack();
 
-            throw new Core\Modules\Exception\ModuleMigrationException(\sprintf('An error occurred while executing a migration for module "%s"', $moduleName), 0, $e);
+            throw new Core\Modules\Exception\ModuleMigrationException(sprintf('An error occurred while executing a migration for module "%s"', $moduleName), 0, $e);
         }
     }
 

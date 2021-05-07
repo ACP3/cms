@@ -97,9 +97,9 @@ class ShareFormFields
         ];
 
         if (!empty($path)) {
-            $path .= !\preg_match('/\/$/', $path) ? '/' : '';
+            $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
-            $sharingInfo = \array_merge(
+            $sharingInfo = array_merge(
                 $sharingInfo,
                 $this->shareRepository->getOneByUri($path)
             );
@@ -111,7 +111,7 @@ class ShareFormFields
             $sharingInfo['services'] = $settings['services'];
         }
 
-        $sharingInfo['services'] = \unserialize($sharingInfo['services']);
+        $sharingInfo['services'] = unserialize($sharingInfo['services']);
 
         if (\is_array($sharingInfo['services']) === false) {
             $sharingInfo['services'] = [];

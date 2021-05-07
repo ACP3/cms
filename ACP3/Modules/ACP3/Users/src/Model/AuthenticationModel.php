@@ -210,7 +210,7 @@ class AuthenticationModel implements AuthenticationModelInterface
 
     protected function getCookieDomain(): string
     {
-        if (\strpos($this->request->getServer()->get('HTTP_HOST'), '.') !== false) {
+        if (strpos($this->request->getServer()->get('HTTP_HOST'), '.') !== false) {
             return $this->request->getServer()->get('HTTP_HOST', '');
         }
 
@@ -219,7 +219,7 @@ class AuthenticationModel implements AuthenticationModelInterface
 
     protected function generateRememberMeToken(array $user): string
     {
-        return \hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . \uniqid((string) \mt_rand(), true));
+        return hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . uniqid((string) mt_rand(), true));
     }
 
     /**

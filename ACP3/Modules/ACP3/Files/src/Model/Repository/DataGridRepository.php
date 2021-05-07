@@ -14,7 +14,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 class DataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = FilesRepository::TABLE_NAME;
+    public const TABLE_NAME = FilesRepository::TABLE_NAME;
 
     /**
      * {@inheritdoc}

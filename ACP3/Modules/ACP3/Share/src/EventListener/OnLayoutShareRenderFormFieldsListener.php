@@ -46,7 +46,7 @@ class OnLayoutShareRenderFormFieldsListener implements EventSubscriberInterface
         if ($this->acl->hasPermission('admin/share/index/create')) {
             $parameters = $event->getParameters();
 
-            $formFields = \array_merge(
+            $formFields = array_merge(
                 $this->shareFormFields->formFields($parameters['path'] ?? ''),
                 ['uri_pattern' => $parameters['uri_pattern'] ?? '']
             );

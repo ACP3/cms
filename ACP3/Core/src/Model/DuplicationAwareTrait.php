@@ -23,7 +23,7 @@ trait DuplicationAwareTrait
         if (!empty($resultSet)) {
             $data = $this->getDataProcessor()->unescape($resultSet, $this->getAllowedColumns());
 
-            return $this->save(\array_merge($data, $this->getDefaultDataForDuplication()));
+            return $this->save(array_merge($data, $this->getDefaultDataForDuplication()));
         }
 
         return false;

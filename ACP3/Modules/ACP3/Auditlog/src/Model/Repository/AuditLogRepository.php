@@ -11,5 +11,5 @@ use ACP3\Core\Model\Repository\AbstractRepository;
 
 class AuditLogRepository extends AbstractRepository
 {
-    const TABLE_NAME = 'auditlog';
+    public const TABLE_NAME = 'auditlog';
 }

@@ -160,7 +160,7 @@ final class Input
      */
     public function addColumn(array $columnData, int $priority): self
     {
-        $columnData = \array_merge(
+        $columnData = array_merge(
             [
                 'label' => '',
                 'type' => '',
@@ -258,7 +258,7 @@ final class Input
         if ($this->primaryKey === null) {
             foreach (clone $this->getColumns() as $column) {
                 if ($column['primary'] === true && !empty($column['fields'])) {
-                    $this->primaryKey = \reset($column['fields']);
+                    $this->primaryKey = reset($column['fields']);
 
                     break;
                 }

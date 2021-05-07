@@ -78,7 +78,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             $expected = [
                 'mail' => 'Invalid E-mail address',
             ];
-            $errors = \unserialize($e->getMessage());
+            $errors = unserialize($e->getMessage());
 
             self::assertEquals($expected, $errors);
         }
@@ -101,7 +101,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             $expected = [
                 'Invalid E-mail address',
             ];
-            $errors = \unserialize($e->getMessage());
+            $errors = unserialize($e->getMessage());
 
             self::assertEquals($expected, $errors);
         }

@@ -93,7 +93,7 @@ class PictureDataGridViewProvider
         $this->breadcrumb->append($gallery['title'], 'acp/gallery/pictures/index/id_' . $id);
         $this->title->setPageTitlePrefix($this->translator->t('gallery', 'admin_pictures_index'));
 
-        return \array_merge($dataGrid, ['gallery_id' => $id]);
+        return array_merge($dataGrid, ['gallery_id' => $id]);
     }
 
     private function configureDataGrid(int $id): Input

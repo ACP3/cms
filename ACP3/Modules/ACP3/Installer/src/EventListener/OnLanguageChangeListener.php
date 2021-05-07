@@ -46,7 +46,7 @@ class OnLanguageChangeListener implements EventSubscriberInterface
                 new Cookie(
                     'ACP3_INSTALLER_LANG',
                     $request->getPost()->get('lang', ''),
-                    \time() + 3600,
+                    time() + 3600,
                     '/'
                 )
             );

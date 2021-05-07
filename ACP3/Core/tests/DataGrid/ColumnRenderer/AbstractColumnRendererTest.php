@@ -57,7 +57,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testSingleCustomHtmlAttribute()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'attribute' => [
                 'data-foo' => 'bar',
             ],
@@ -69,7 +69,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testMultipleCustomHtmlAttributes()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'attribute' => [
                 'data-foo' => 'bar',
                 'data-lorem' => 'ipsum',
@@ -82,7 +82,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testAddStyle()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'style' => 'width:50%',
         ]);
 
@@ -92,7 +92,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testAddCssClass()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'class' => 'foobar',
         ]);
 
@@ -102,7 +102,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testInvalidField()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['test'],
         ]);
         $this->dbData = [
@@ -115,7 +115,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testValidField()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
         ]);
         $this->dbData = [
@@ -128,7 +128,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testDefaultValueIfNull()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
             'custom' => [
                 'default_value' => 'Foo Bar',
@@ -144,7 +144,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testDefaultValueIfNotFound()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['test'],
             'custom' => [
                 'default_value' => 'Foo Bar',

@@ -36,23 +36,23 @@ class Purge
 
     private static function purgeCurrentDirectory(string $fileOrDirectory, string $cacheIdPrefix): void
     {
-        if (\is_link($fileOrDirectory)) {
-            static::purgeCurrentDirectory(\readlink($fileOrDirectory), $cacheIdPrefix);
-        } elseif (\is_dir($fileOrDirectory)) {
+        if (is_link($fileOrDirectory)) {
+            static::purgeCurrentDirectory(readlink($fileOrDirectory), $cacheIdPrefix);
+        } elseif (is_dir($fileOrDirectory)) {
             foreach (Filesystem::scandir($fileOrDirectory) as $dirContent) {
                 $path = "$fileOrDirectory/$dirContent";
 
-                if (\is_dir($path)) {
+                if (is_dir($path)) {
                     static::purgeCurrentDirectory($path, $cacheIdPrefix);
                     if (empty($cacheIdPrefix)) {
-                        @\rmdir($path);
+                        @rmdir($path);
                     }
-                } elseif (empty($cacheIdPrefix) || \strpos($dirContent, $cacheIdPrefix) === 0) {
-                    @\unlink($path);
+                } elseif (empty($cacheIdPrefix) || strpos($dirContent, $cacheIdPrefix) === 0) {
+                    @unlink($path);
                 }
             }
-        } elseif (\is_file($fileOrDirectory)) {
-            @\unlink($fileOrDirectory);
+        } elseif (is_file($fileOrDirectory)) {
+            @unlink($fileOrDirectory);
         }
     }
 }

@@ -48,7 +48,7 @@ class LoginViewProvider
     public function __invoke(): array
     {
         $prefix = $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '';
-        $currentPage = \base64_encode($prefix . $this->request->getQuery());
+        $currentPage = base64_encode($prefix . $this->request->getQuery());
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         $rememberMe = [

@@ -31,7 +31,7 @@ class ControllerActionBeforeDispatchEvent extends Event
 
     private function splitServiceIdIntoParts(): void
     {
-        $this->serviceIdParts = \explode('.', $this->controllerServiceId);
+        $this->serviceIdParts = explode('.', $this->controllerServiceId);
     }
 
     public function getControllerServiceId(): string

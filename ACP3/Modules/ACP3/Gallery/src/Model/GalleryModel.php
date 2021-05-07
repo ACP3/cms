@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 
 class GalleryModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * {@inheritdoc}

@@ -67,7 +67,7 @@ class AdminArticleEditViewProvider
 
         return [
             'active' => $this->formsHelper->yesNoCheckboxGenerator('active', $article['active']),
-            'form' => \array_merge($article, $this->request->getPost()->all()),
+            'form' => array_merge($article, $this->request->getPost()->all()),
             'layouts' => $this->formsHelper->choicesGenerator(
                 'layout',
                 $this->getAvailableLayouts(),
@@ -75,7 +75,7 @@ class AdminArticleEditViewProvider
             ),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => !empty($article['id']) ? \sprintf(Helpers::URL_KEY_PATTERN, $article['id']) : '',
+            'SEO_ROUTE_NAME' => !empty($article['id']) ? sprintf(Helpers::URL_KEY_PATTERN, $article['id']) : '',
         ];
     }
 
@@ -96,16 +96,16 @@ class AdminArticleEditViewProvider
 
         $layouts = [];
         foreach ($paths as $path) {
-            $layouts = \array_merge($layouts, \glob($path));
+            $layouts = array_merge($layouts, glob($path));
         }
 
-        $layouts = \array_map(function ($value) {
-            return \str_replace([$this->theme->getDesignPathInternal() . '/', '/View/'], ['', '/'], $value);
+        $layouts = array_map(function ($value) {
+            return str_replace([$this->theme->getDesignPathInternal() . '/', '/View/'], ['', '/'], $value);
         }, $layouts);
 
-        $layouts = \array_combine($layouts, $layouts);
+        $layouts = array_combine($layouts, $layouts);
 
-        $layouts = \array_merge(['' => $this->translator->t('articles', 'default_layout')], $layouts);
+        $layouts = array_merge(['' => $this->translator->t('articles', 'default_layout')], $layouts);
 
         return $layouts;
     }

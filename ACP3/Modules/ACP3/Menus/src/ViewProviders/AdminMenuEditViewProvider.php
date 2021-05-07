@@ -41,7 +41,7 @@ class AdminMenuEditViewProvider
         $this->title->setPageTitlePrefix($menu['title']);
 
         return [
-            'form' => \array_merge($menu, $this->request->getPost()->all()),
+            'form' => array_merge($menu, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

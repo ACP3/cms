@@ -38,7 +38,7 @@ class Pictures extends AbstractWidgetAction
      */
     public function execute(int $id, string $template = ''): Response
     {
-        $response = $this->renderTemplate(\urldecode($template), ($this->galleryPictureListWidgetViewProvider)($id));
+        $response = $this->renderTemplate(urldecode($template), ($this->galleryPictureListWidgetViewProvider)($id));
         $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
         return $response;

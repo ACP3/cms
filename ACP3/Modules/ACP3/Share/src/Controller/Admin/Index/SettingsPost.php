@@ -55,7 +55,7 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\
             $data = [
                 'fb_app_id' => $this->secure->strEncode($formData['fb_app_id']),
                 'fb_secret' => $this->secure->strEncode($formData['fb_secret']),
-                'services' => \serialize($formData['services']),
+                'services' => serialize($formData['services']),
             ];
 
             return $this->config->saveSettings($data, Share\Installer\Schema::MODULE_NAME);

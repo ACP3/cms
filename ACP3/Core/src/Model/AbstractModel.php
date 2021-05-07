@@ -158,7 +158,7 @@ abstract class AbstractModel
 
         if ($entryId !== null) {
             $currentData = $this->getOneById($entryId);
-            $rawData = \array_merge($currentData, $rawData);
+            $rawData = array_merge($currentData, $rawData);
         }
 
         $modelSavePrepareDataEvent = new ModelSavePrepareDataEvent($rawData, $currentData, $this->getAllowedColumns());

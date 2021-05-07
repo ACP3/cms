@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class MenuRepository extends Core\Model\Repository\AbstractRepository
 {
-    const TABLE_NAME = 'menus';
+    public const TABLE_NAME = 'menus';
 
     /**
      * @return bool

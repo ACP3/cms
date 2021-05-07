@@ -53,8 +53,8 @@ class Install extends AbstractAction implements InvokableActionInterface
     public function __invoke(): array
     {
         return [
-            'time_zones' => $this->dateHelper->getTimeZones(\date_default_timezone_get()),
-            'form' => \array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
+            'time_zones' => $this->dateHelper->getTimeZones(date_default_timezone_get()),
+            'form' => array_merge($this->getFormDefaults(), $this->request->getPost()->all()),
             'designs' => $this->getThemeFormOptions(),
         ];
     }

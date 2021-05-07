@@ -30,7 +30,7 @@ class UserRolesColumnRendererTest extends AbstractColumnRendererTest
             ->with(1)
             ->willReturn(['Administrator']);
 
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
         ]);
         $this->dbData = [

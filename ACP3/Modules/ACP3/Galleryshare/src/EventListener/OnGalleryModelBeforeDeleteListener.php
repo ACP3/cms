@@ -51,7 +51,7 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
         }
 
         foreach ($event->getEntryId() as $item) {
-            $uri = \sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $item);
+            $uri = sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $item);
             $this->socialSharingManager->deleteSharingInfo($uri);
 
             $this->deletePictureSocialSharing($item);
@@ -64,7 +64,7 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
     private function deletePictureSocialSharing(int $galleryId): void
     {
         foreach ($this->pictureRepository->getPicturesByGalleryId($galleryId) as $picture) {
-            $uri = \sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']);
+            $uri = sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']);
 
             $this->socialSharingManager->deleteSharingInfo($uri);
         }

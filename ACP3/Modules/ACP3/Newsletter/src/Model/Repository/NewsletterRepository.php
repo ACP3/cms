@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class NewsletterRepository extends Core\Model\Repository\AbstractRepository
 {
-    const TABLE_NAME = 'newsletters';
+    public const TABLE_NAME = 'newsletters';
 
     /**
      * @return bool

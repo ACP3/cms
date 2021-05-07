@@ -46,13 +46,13 @@ class SortColumnRenderer extends AbstractColumnRenderer
         $value = '';
         if ($dbResultRow['last'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(\sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->getPrimaryKey()])),
+                $this->router->route(sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->getPrimaryKey()])),
                 'down'
             );
         }
         if ($dbResultRow['first'] != $dbValue) {
             $value .= $this->fetchSortDirectionHtml(
-                $this->router->route(\sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->getPrimaryKey()])),
+                $this->router->route(sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->getPrimaryKey()])),
                 'up'
             );
         }
@@ -61,7 +61,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
         }
 
         $column['attribute'] += [
-            'sort' => \str_pad(
+            'sort' => str_pad(
                 $dbResultRow[$this->getFirstDbField($column)],
                 \strlen((string) $this->getTotalResults()),
                 '0',
@@ -87,13 +87,13 @@ class SortColumnRenderer extends AbstractColumnRenderer
 </a>
 HTML;
 
-        return \sprintf(
+        return sprintf(
             $html,
             $url,
             $this->translator->t('system', 'move_' . $direction),
             $this->translator->t('system', 'loading_please_wait'),
-            \json_encode(['submit' => true], JSON_THROW_ON_ERROR),
-            \substr($this->getIdentifier(), 1) . 'ReloadDataTable',
+            json_encode(['submit' => true], JSON_THROW_ON_ERROR),
+            substr($this->getIdentifier(), 1) . 'ReloadDataTable',
             $direction
         );
     }
@@ -102,7 +102,7 @@ HTML;
     {
         $html = ($this->icon)('solid', 'times-circle', ['cssSelectors' => 'text-danger', 'title' => $this->translator->t('system', 'move_impossible')]);
 
-        return \sprintf($html, $this->translator->t('system', 'move_impossible'));
+        return sprintf($html, $this->translator->t('system', 'move_impossible'));
     }
 
     public static function mandatoryAttributes(): array

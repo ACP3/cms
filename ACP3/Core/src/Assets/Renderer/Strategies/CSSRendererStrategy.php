@@ -77,7 +77,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
             $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
                 '',
                 static::ASSETS_PATH_CSS,
-                \trim($file)
+                trim($file)
             );
         }
 
@@ -127,9 +127,9 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
             $this->initialize($layout);
         }
 
-        $currentTimestamp = \time();
+        $currentTimestamp = time();
 
-        return \array_reduce($this->stylesheets, static function ($accumulator, $stylesheet) use ($currentTimestamp) {
+        return array_reduce($this->stylesheets, static function ($accumulator, $stylesheet) use ($currentTimestamp) {
             return $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '?' . $currentTimestamp . '">' . "\n";
         }, '');
     }

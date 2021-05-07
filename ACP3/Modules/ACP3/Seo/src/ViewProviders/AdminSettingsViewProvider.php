@@ -93,7 +93,7 @@ class AdminSettingsViewProvider
                 $sitemapSaveMode,
                 $seoSettings['sitemap_save_mode']
             ),
-            'form' => \array_merge($seoSettings, $this->request->getPost()->all()),
+            'form' => array_merge($seoSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

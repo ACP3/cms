@@ -11,6 +11,6 @@ use ACP3\Core\Enum\BaseEnum;
 
 class IndexPaginatedContentEnum extends BaseEnum
 {
-    const INDEX_ALL_PAGES = 'all';
-    const INDEX_FIST_PAGE_ONLY = 'first';
+    public const INDEX_ALL_PAGES = 'all';
+    public const INDEX_FIST_PAGE_ONLY = 'first';
 }

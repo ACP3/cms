@@ -57,12 +57,12 @@ class BackendFactory
 
     private function checkCacheDir(): void
     {
-        if (\is_dir($this->getCacheDir())) {
+        if (is_dir($this->getCacheDir())) {
             return;
         }
 
-        if (!\mkdir($concurrentDirectory = $this->getCacheDir()) && !\is_dir($concurrentDirectory)) {
-            throw new \RuntimeException(\sprintf('Directory "%s" was not created', $concurrentDirectory));
+        if (!mkdir($concurrentDirectory = $this->getCacheDir()) && !is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
     }
 
@@ -73,7 +73,7 @@ class BackendFactory
 
     private function getOptions(): array
     {
-        return \array_merge(
+        return array_merge(
             [
                 'domains' => [$this->request->getHttpHost()],
                 'cache' => [

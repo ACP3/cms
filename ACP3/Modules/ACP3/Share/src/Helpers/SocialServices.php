@@ -51,19 +51,19 @@ class SocialServices
 
     public function getAllServices(): array
     {
-        return \array_keys(self::$servicesMap);
+        return array_keys(self::$servicesMap);
     }
 
     public function getActiveServices(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        $services = \unserialize($settings['services']);
+        $services = unserialize($settings['services']);
         if (\is_array($services) === false) {
             $services = [];
         }
 
-        return \array_intersect(
+        return array_intersect(
             $this->getAllServices(),
             $services
         );
@@ -71,15 +71,15 @@ class SocialServices
 
     public function getAllBackendServices(): array
     {
-        return \array_filter(self::$servicesMap);
+        return array_filter(self::$servicesMap);
     }
 
     public function getActiveBackendServices(): array
     {
         $activeServices = $this->getActiveServices();
 
-        return \array_values(
-            \array_filter(
+        return array_values(
+            array_filter(
                 $this->getAllBackendServices(),
                 function (?string $value, string $key) use ($activeServices) {
                     return $value !== null && \in_array($key, $activeServices);

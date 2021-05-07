@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Share\Installer\Schema;
 
 class ShareRatingModel extends AbstractModel
 {
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * {@inheritdoc}

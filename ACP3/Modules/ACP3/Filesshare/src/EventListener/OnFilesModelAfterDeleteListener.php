@@ -45,7 +45,7 @@ class OnFilesModelAfterDeleteListener implements EventSubscriberInterface
         }
 
         foreach ($event->getEntryId() as $item) {
-            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $item);
+            $uri = sprintf(Helpers::URL_KEY_PATTERN, $item);
             $this->socialSharingManager->deleteSharingInfo($uri);
         }
     }

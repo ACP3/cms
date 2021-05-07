@@ -58,7 +58,7 @@ class IsUserAuthenticatedListener implements EventSubscriberInterface
                 $this->translator->t('users', 'authentication_required')
             );
 
-            throw new UnauthorizedAccessException(['redirect' => \base64_encode($this->request->getPathInfo())]);
+            throw new UnauthorizedAccessException(['redirect' => base64_encode($this->request->getPathInfo())]);
         }
     }
 

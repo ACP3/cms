@@ -25,7 +25,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     public function isInstalled(): bool
     {
         // Standardzeitzone festlegen
-        \date_default_timezone_set('UTC');
+        date_default_timezone_set('UTC');
 
         if ($this->appMode === ApplicationMode::UPDATER) {
             return $this->databaseConfigExists();

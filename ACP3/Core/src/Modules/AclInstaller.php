@@ -98,8 +98,8 @@ class AclInstaller implements InstallerInterface
                 foreach ($actions as $action => $privilegeId) {
                     $insertValues = [
                         'module_id' => $moduleId,
-                        'area' => !empty($area) ? \strtolower($area) : AreaEnum::AREA_FRONTEND,
-                        'controller' => \strtolower($controller),
+                        'area' => !empty($area) ? strtolower($area) : AreaEnum::AREA_FRONTEND,
+                        'controller' => strtolower($controller),
                         'page' => $this->convertCamelCaseToUnderscore($action),
                         'params' => '',
                         'privilege_id' => (int) $privilegeId,
@@ -112,7 +112,7 @@ class AclInstaller implements InstallerInterface
 
     private function convertCamelCaseToUnderscore(string $action): string
     {
-        return \strtolower(\preg_replace('/\B([A-Z])/', '_$1', $action));
+        return strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
     }
 
     /**

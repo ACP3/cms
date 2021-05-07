@@ -21,13 +21,13 @@ class Install
      */
     public function writeConfigFile(string $configFilePath, array $data): bool
     {
-        if (\is_writable($configFilePath) === true) {
-            \ksort($data);
+        if (is_writable($configFilePath) === true) {
+            ksort($data);
 
             $dumper = new Dumper();
             $yaml = $dumper->dump($data);
 
-            return \file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
+            return file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
         }
 
         return false;

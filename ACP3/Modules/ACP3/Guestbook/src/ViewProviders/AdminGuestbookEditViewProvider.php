@@ -58,7 +58,7 @@ class AdminGuestbookEditViewProvider
         $this->title->setPageTitlePrefix($guestbookEntry['name']);
 
         return [
-            'form' => \array_merge($guestbookEntry, $this->request->getPost()->all()),
+            'form' => array_merge($guestbookEntry, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'activate' => $settings['notify'] == 2
                 ? $this->formsHelper->yesNoCheckboxGenerator('active', $guestbookEntry['active'])

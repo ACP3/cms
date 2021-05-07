@@ -53,7 +53,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Cont
             function () use ($id, $comment) {
                 $formData = $this->request->getPost()->all();
 
-                $formData = \array_merge($comment, $formData);
+                $formData = array_merge($comment, $formData);
 
                 $this->adminFormValidation->validate($formData);
 

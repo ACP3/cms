@@ -128,7 +128,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         $this->configureToolbar();
         $this->configureAdvancedImages();
 
-        return \json_encode(\array_merge(
+        return json_encode(array_merge(
             $config,
             $this->configurePlugins(),
             $this->configureToolbar(),

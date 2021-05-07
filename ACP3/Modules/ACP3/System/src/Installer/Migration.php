@@ -194,8 +194,8 @@ class Migration extends Modules\Installer\AbstractMigration
                 "UPDATE `{pre}settings` SET `name` = 'cache_lifetime' WHERE `module_id` = {moduleId} AND `name` = 'cache_minify';",
             ],
             60 => [
-                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'security_secret', '" . \uniqid(
-                    (string) \mt_rand(),
+                "INSERT INTO `{pre}settings` (`id`, `module_id`, `name`, `value`) VALUES ('', '{moduleId}', 'security_secret', '" . uniqid(
+                    (string) mt_rand(),
                     true
                 ) . "');",
             ],
@@ -376,13 +376,13 @@ class Migration extends Modules\Installer\AbstractMigration
             $configParams = Yaml::parseFile($configFilePath);
             $configParams['parameters']['db_charset'] = 'utf8mb4';
 
-            if (\is_writable($configFilePath) === true) {
-                \ksort($configParams);
+            if (is_writable($configFilePath) === true) {
+                ksort($configParams);
 
                 $dumper = new Dumper();
                 $yaml = $dumper->dump($configParams);
 
-                return \file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
+                return file_put_contents($configFilePath, $yaml, LOCK_EX) !== false;
             }
 
             return false;

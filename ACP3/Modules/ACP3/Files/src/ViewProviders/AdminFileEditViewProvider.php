@@ -78,7 +78,7 @@ class AdminFileEditViewProvider
             'units' => $this->formsHelper->choicesGenerator(
                 'units',
                 $this->getUnits(),
-                \trim(\strrchr($file['size'], ' '))
+                trim(strrchr($file['size'], ' '))
             ),
             'categories' => $this->categoriesHelpers->categoriesList(
                 FilesSchema::MODULE_NAME,
@@ -87,10 +87,10 @@ class AdminFileEditViewProvider
             ),
             'external' => $this->formsHelper->checkboxGenerator('external', $external),
             'current_file' => $file['file'],
-            'form' => \array_merge($file, $this->request->getPost()->all()),
+            'form' => array_merge($file, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => FilesHelpers::URL_KEY_PATTERN,
-            'SEO_ROUTE_NAME' => !empty($file['id']) ? \sprintf(FilesHelpers::URL_KEY_PATTERN, $file['id']) : '',
+            'SEO_ROUTE_NAME' => !empty($file['id']) ? sprintf(FilesHelpers::URL_KEY_PATTERN, $file['id']) : '',
         ];
     }
 

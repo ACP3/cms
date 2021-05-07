@@ -142,9 +142,9 @@ class ACL
 
     private function convertResourcePathToArray(string $resource): array
     {
-        return \array_replace(
+        return array_replace(
             [0 => null, 1 => null, 2 => 'index', 3 => 'index'],
-            \preg_split('=/=', $resource, -1, PREG_SPLIT_NO_EMPTY)
+            preg_split('=/=', $resource, -1, PREG_SPLIT_NO_EMPTY)
         );
     }
 
@@ -165,7 +165,7 @@ class ACL
      */
     private function userHasPrivilege(string $module, string $privilegeKey): bool
     {
-        $privilegeKey = \strtolower($privilegeKey);
+        $privilegeKey = strtolower($privilegeKey);
         if (isset($this->getPrivileges()[$module][$privilegeKey])) {
             return $this->getPrivileges()[$module][$privilegeKey]['access'];
         }

@@ -45,7 +45,7 @@ class OnArticlesModelDeleteAfterListener implements EventSubscriberInterface
         }
 
         foreach ($event->getEntryId() as $articleId) {
-            $uri = \sprintf(Helpers::URL_KEY_PATTERN, $articleId);
+            $uri = sprintf(Helpers::URL_KEY_PATTERN, $articleId);
             $this->uriAliasManager->deleteUriAlias($uri);
         }
     }

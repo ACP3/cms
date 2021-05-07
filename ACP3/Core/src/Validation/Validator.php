@@ -47,7 +47,7 @@ class Validator
     {
         $this->constraints[] = [
             'rule' => $validationRule,
-            'params' => \array_merge($this->getDefaultConstraintParams(), $params),
+            'params' => array_merge($this->getDefaultConstraintParams(), $params),
         ];
 
         return $this;
@@ -86,10 +86,10 @@ class Validator
     private function mapField($field): string
     {
         if (\is_array($field)) {
-            $field = \reset($field);
+            $field = reset($field);
         }
 
-        return \str_replace('_', '-', $field);
+        return str_replace('_', '-', $field);
     }
 
     public function dispatchValidationEvent(string $eventName, array $formData, array $extra = []): void
@@ -109,7 +109,7 @@ class Validator
 
         foreach ($this->constraints as $constraint) {
             if (!$this->container->has($constraint['rule'])) {
-                throw new ValidationRuleNotFoundException(\sprintf($this->getExceptionMessage(), $constraint['rule']));
+                throw new ValidationRuleNotFoundException(sprintf($this->getExceptionMessage(), $constraint['rule']));
             }
 
             /** @var ValidationRuleInterface $validationRule */
@@ -154,6 +154,6 @@ class Validator
             return $this->container->get($validationRule)->isValid($field);
         }
 
-        throw new ValidationRuleNotFoundException(\sprintf($this->getExceptionMessage(), $validationRule));
+        throw new ValidationRuleNotFoundException(sprintf($this->getExceptionMessage(), $validationRule));
     }
 }

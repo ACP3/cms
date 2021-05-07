@@ -66,7 +66,7 @@ class CheckAccess
     {
         $action = [];
 
-        $query = \explode('/', \strtolower($path));
+        $query = explode('/', strtolower($path));
 
         if (isset($query[0]) && $query[0] === 'acp') {
             $action[0] = $query[1] ?? 'acp';
@@ -83,7 +83,7 @@ class CheckAccess
 
     private function getArea(string $path): string
     {
-        $query = \explode('/', \strtolower($path));
+        $query = explode('/', strtolower($path));
 
         if (isset($query[0]) && $query[0] === 'acp') {
             return AreaEnum::AREA_ADMIN;
@@ -95,7 +95,7 @@ class CheckAccess
     private function collectData(array $params, array $action, string $area): array
     {
         if (isset($params['lang'])) {
-            $langArray = \explode('|', $params['lang']);
+            $langArray = explode('|', $params['lang']);
 
             $lang = $this->translator->t($langArray[0], $langArray[1]);
         } else {

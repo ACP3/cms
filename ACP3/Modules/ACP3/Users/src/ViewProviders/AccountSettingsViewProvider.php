@@ -50,7 +50,7 @@ class AccountSettingsViewProvider
     {
         $user = $this->userModel->getUserInfo();
 
-        return \array_merge(
+        return array_merge(
             $this->userFormsHelper->fetchUserSettingsFormFields(
                 $user['address_display'],
                 $user['birthday_display'],
@@ -58,7 +58,7 @@ class AccountSettingsViewProvider
                 $user['mail_display']
             ),
             [
-                'form' => \array_merge($user, $this->request->getPost()->all()),
+                'form' => array_merge($user, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
             ]
         );

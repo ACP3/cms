@@ -76,7 +76,7 @@ class EditPost extends AbstractFormAction
 
             $this->adminFormValidation
                 ->setFile($file)
-                ->setUriAlias(\sprintf(Helpers::URL_KEY_PATTERN, $id))
+                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryId($formData);
@@ -85,7 +85,7 @@ class EditPost extends AbstractFormAction
             if (!empty($file)) {
                 $newFileSql = $this->updateAssociatedFile($file, $formData, $dl['file']);
 
-                $formData = \array_merge($formData, $newFileSql);
+                $formData = array_merge($formData, $newFileSql);
             }
 
             return $this->filesModel->save($formData, $id);

@@ -16,14 +16,14 @@ abstract class AbstractMoveElementFilter extends AbstractFilter
 
     protected function getCleanedUpTemplateOutput(string $tplOutput): string
     {
-        return \preg_replace(static::ELEMENT_CATCHER_REGEX_PATTERN, '', $tplOutput);
+        return preg_replace(static::ELEMENT_CATCHER_REGEX_PATTERN, '', $tplOutput);
     }
 
     protected function addElementsFromTemplates(string $tplOutput): string
     {
         $matches = [];
-        \preg_match_all(static::ELEMENT_CATCHER_REGEX_PATTERN, $tplOutput, $matches);
+        preg_match_all(static::ELEMENT_CATCHER_REGEX_PATTERN, $tplOutput, $matches);
 
-        return \implode("\n", \array_unique($matches[1])) . "\n";
+        return implode("\n", array_unique($matches[1])) . "\n";
     }
 }

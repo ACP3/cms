@@ -142,7 +142,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
      */
     public function getRulesCache(array $roles)
     {
-        $filename = static::CACHE_ID_RULES . \implode(',', $roles);
+        $filename = static::CACHE_ID_RULES . implode(',', $roles);
         if ($this->cache->contains($filename) === false) {
             $this->saveRulesCache($roles);
         }
@@ -159,7 +159,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
     {
         $privileges = [];
         foreach ($this->ruleRepository->getAllRulesByRoleIds($roles) as $rule) {
-            $privilegeKey = \strtolower($rule['key']);
+            $privilegeKey = strtolower($rule['key']);
             $privileges[$rule['module_name']][$privilegeKey] = [
                 'id' => $rule['privilege_id'],
                 'description' => $rule['description'],
@@ -168,7 +168,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
             ];
         }
 
-        return $this->cache->save(static::CACHE_ID_RULES . \implode(',', $roles), $privileges);
+        return $this->cache->save(static::CACHE_ID_RULES . implode(',', $roles), $privileges);
     }
 
     /**

@@ -50,7 +50,7 @@ class AdminSettingsViewProvider
 
         return [
             'html' => $this->formsHelper->yesNoCheckboxGenerator('html', $settings['html']),
-            'form' => \array_merge($settings, $this->request->getPost()->all()),
+            'form' => array_merge($settings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

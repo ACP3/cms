@@ -47,12 +47,12 @@ class UpdateServicesOnSettingsSaveBeforeListener implements EventSubscriberInter
         $diff = $this->getRemovedServices($event);
 
         foreach ($this->shareRepository->getAll() as $result) {
-            $services = \unserialize($result['services'], ['allowed_classes' => false]);
+            $services = unserialize($result['services'], ['allowed_classes' => false]);
 
             if (!empty($services) && \is_array($services)) {
                 $data = [
-                    'share_services' => \array_values(
-                        \array_diff($services, $diff)
+                    'share_services' => array_values(
+                        array_diff($services, $diff)
                     ),
                 ];
                 $this->shareModel->save($data, $result['id']);
@@ -64,11 +64,11 @@ class UpdateServicesOnSettingsSaveBeforeListener implements EventSubscriberInter
     {
         $currentSettings = $this->settings->getSettings(Schema::MODULE_NAME);
         $newSettings = $event->getData();
-        $currentServices = \unserialize($currentSettings['services'], ['allowed_classes' => false]);
+        $currentServices = unserialize($currentSettings['services'], ['allowed_classes' => false]);
 
-        return \array_diff(
+        return array_diff(
             \is_array($currentServices) ? $currentServices : [],
-            \unserialize($newSettings['services'], ['allowed_classes' => false])
+            unserialize($newSettings['services'], ['allowed_classes' => false])
         );
     }
 

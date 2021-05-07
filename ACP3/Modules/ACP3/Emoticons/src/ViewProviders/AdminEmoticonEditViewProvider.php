@@ -30,7 +30,7 @@ class AdminEmoticonEditViewProvider
     public function __invoke(array $emoticon): array
     {
         return [
-            'form' => \array_merge($emoticon, $this->request->getPost()->all()),
+            'form' => array_merge($emoticon, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
     }

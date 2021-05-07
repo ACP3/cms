@@ -40,7 +40,7 @@ class Image extends Core\Controller\AbstractWidgetAction
      */
     public function execute(int $id, ?string $action = null)
     {
-        \set_time_limit(20);
+        set_time_limit(20);
         $picture = $this->pictureRepository->getFileById($id);
         $action = $action === 'thumb' ? 'thumb' : '';
 

@@ -58,7 +58,7 @@ class SchemaUpdater
         $normalizedModuleRenameMigrations = $this->prepareMigrationsForRecursiveMerge($moduleRenameMigrations);
         $normalizedSchemaMigrations = $this->prepareMigrationsForRecursiveMerge($schemaMigrations);
 
-        $mergedMigrations = \array_merge_recursive($normalizedModuleRenameMigrations, $normalizedSchemaMigrations);
+        $mergedMigrations = array_merge_recursive($normalizedModuleRenameMigrations, $normalizedSchemaMigrations);
 
         return $this->normalizeMigrationsAfterRecursiveMerge($mergedMigrations);
     }
@@ -75,9 +75,9 @@ class SchemaUpdater
         array $schemaUpdates,
         int $installedSchemaVersion
     ): void {
-        \ksort($schemaUpdates);
+        ksort($schemaUpdates);
 
-        $latestSchemaVersion = \array_key_last($schemaUpdates);
+        $latestSchemaVersion = array_key_last($schemaUpdates);
 
         foreach ($schemaUpdates as $newSchemaVersion => $queries) {
             // Do schema updates only, if the current schema version is older then the new one
@@ -127,11 +127,11 @@ class SchemaUpdater
         $migrationsNormalized = [];
 
         foreach ($migrations as $schemaVersion => $queries) {
-            if (!\is_array($queries) || \strpos($schemaVersion, 'index_') !== 0) {
+            if (!\is_array($queries) || strpos($schemaVersion, 'index_') !== 0) {
                 throw new \InvalidArgumentException('Please call method "prepareMigrationsForRecursiveMerge" before calling ' . __METHOD__ . '!');
             }
 
-            $migrationsNormalized[(int) \substr($schemaVersion, 6)] = $queries;
+            $migrationsNormalized[(int) substr($schemaVersion, 6)] = $queries;
         }
 
         return $migrationsNormalized;

@@ -11,5 +11,5 @@ use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 
 class AccountDataGridRepository extends AbstractDataGridRepository
 {
-    const TABLE_NAME = AccountRepository::TABLE_NAME;
+    public const TABLE_NAME = AccountRepository::TABLE_NAME;
 }

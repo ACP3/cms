@@ -127,7 +127,7 @@ class Navbar extends AbstractFunction
             }
 
             if (!empty($this->menus[$cacheKey])) {
-                $this->menus[$cacheKey] = \sprintf(
+                $this->menus[$cacheKey] = sprintf(
                     '<%1$s%2$s>%3$s</%1$s>',
                     $menuConfig->getTag(),
                     $this->prepareMenuHtmlAttributes($menu, $menuConfig),
@@ -165,7 +165,7 @@ class Navbar extends AbstractFunction
 
     private function processMenuItemWithoutChildren(MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
     {
-        $link = \sprintf(
+        $link = sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s</a>',
             $this->getMenuItemHref($item['mode'], $item['uri']),
             $this->getMenuItemHrefTarget($item['target']),
@@ -177,7 +177,7 @@ class Navbar extends AbstractFunction
             return $link;
         }
 
-        return \sprintf('<%1$s class="%2$s">%3$s</%1$s>', $menuConfig->getItemTag(), $cssSelectors, $link);
+        return sprintf('<%1$s class="%2$s">%3$s</%1$s>', $menuConfig->getItemTag(), $cssSelectors, $link);
     }
 
     private function processMenuItemWithChildren(string $menu, MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
@@ -195,7 +195,7 @@ class Navbar extends AbstractFunction
             $subMenuCss = 'dropdown-menu ';
         }
 
-        $link = \sprintf(
+        $link = sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s%5$s</a>',
             $this->getMenuItemHref($item['mode'], $item['uri']),
             $this->getMenuItemHrefTarget($item['target']),
@@ -204,7 +204,7 @@ class Navbar extends AbstractFunction
             $caret
         );
 
-        return \sprintf(
+        return sprintf(
             '<%1$s class="%2$s">%3$s<ul class="%4$snavigation-%5$s-subnav-%6$d">',
             $menuConfig->getDropdownWrapperTag(),
             $cssSelectors,

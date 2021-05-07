@@ -11,7 +11,7 @@ use ACP3\Core\Enum\BaseEnum;
 
 class PermissionEnum extends BaseEnum
 {
-    const DENY_ACCESS = 0;
-    const PERMIT_ACCESS = 1;
-    const INHERIT_ACCESS = 2;
+    public const DENY_ACCESS = 0;
+    public const PERMIT_ACCESS = 1;
+    public const INHERIT_ACCESS = 2;
 }

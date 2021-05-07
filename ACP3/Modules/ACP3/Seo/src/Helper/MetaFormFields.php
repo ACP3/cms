@@ -56,7 +56,7 @@ class MetaFormFields
     public function formFields(string $path = ''): array
     {
         if (!empty($path)) {
-            $path .= !\preg_match('/\/$/', $path) ? '/' : '';
+            $path .= !preg_match('/\/$/', $path) ? '/' : '';
 
             $alias = $this->request->getPost()->get('alias', $this->aliases->getUriAlias($path, true));
             $title = $this->request->getPost()->get('seo_title', $this->metaStatements->getTitle($path));

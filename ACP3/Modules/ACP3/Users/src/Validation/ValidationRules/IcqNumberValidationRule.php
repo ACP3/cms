@@ -30,6 +30,6 @@ class IcqNumberValidationRule extends AbstractValidationRule
      */
     protected function isIcqNumber($value)
     {
-        return (bool) \preg_match('/^(\d{6,9})$/', $value);
+        return (bool) preg_match('/^(\d{6,9})$/', $value);
     }
 }

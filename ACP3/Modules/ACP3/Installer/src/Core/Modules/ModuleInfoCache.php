@@ -63,7 +63,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
     protected function fetchModuleInfo(ComponentDataDto $module): array
     {
         $path = $module->getPath() . '/Resources/config/module.xml';
-        if (\is_file($path) === false) {
+        if (is_file($path) === false) {
             return [];
         }
 

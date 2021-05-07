@@ -52,8 +52,8 @@ class PageBreaks
     public function splitTextIntoPages($text, $baseUrlPath)
     {
         $matches = [];
-        \preg_match_all($this->getSplitPagesRegex(), $text, $matches);
-        $pages = \preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
+        preg_match_all($this->getSplitPagesRegex(), $text, $matches);
+        $pages = preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
 
         $currentPage = $this->getCurrentPage($pages);
         $nextPage = !empty($pages[$currentPage]) ? $this->router->route($baseUrlPath) . 'page_' . ($currentPage + 1) . '/' : '';

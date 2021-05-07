@@ -49,7 +49,7 @@ class Migration extends Modules\Installer\AbstractMigration
             ],
             34 => [
                 'ALTER TABLE `{pre}users` ADD `registration_date` DATETIME NOT NULL AFTER `draft`;',
-                "UPDATE `{pre}users` SET `registration_date` = '" . \gmdate(Date::DEFAULT_DATE_FORMAT_FULL) . "';",
+                "UPDATE `{pre}users` SET `registration_date` = '" . gmdate(Date::DEFAULT_DATE_FORMAT_FULL) . "';",
             ],
             35 => [
                 "DELETE FROM `{pre}acl_resources` WHERE `module_id` = '{moduleId}' AND `page` = 'sidebar';",

@@ -62,8 +62,8 @@ class FileResolverTest extends TestCase
     private function assertSamePath(string $expected, string $actual): void
     {
         self::assertEquals(
-            \str_replace('\\', '/', $expected),
-            \str_replace('\\', '/', $actual)
+            str_replace('\\', '/', $expected),
+            str_replace('\\', '/', $actual)
         );
     }
 

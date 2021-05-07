@@ -120,7 +120,7 @@ class Helpers
     ) {
         $categories = $this->categoriesCache->getCache($moduleName);
         foreach ($categories as &$category) {
-            $category['title'] = \str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
+            $category['title'] = str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
             $category['selected'] = $this->formsHelper->selectEntry(
                 $formFieldName,
                 $category['id'],

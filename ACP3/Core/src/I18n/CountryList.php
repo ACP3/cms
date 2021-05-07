@@ -61,7 +61,7 @@ class CountryList
             }
         }
 
-        \asort($this->countries, SORT_STRING);
+        asort($this->countries, SORT_STRING);
     }
 
     /**
@@ -83,6 +83,6 @@ class CountryList
      */
     private function getTransformedLocale()
     {
-        return \strtolower(\str_replace('_', '-', $this->translator->getLocale()));
+        return strtolower(str_replace('_', '-', $this->translator->getLocale()));
     }
 }

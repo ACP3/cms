@@ -73,7 +73,7 @@ class ArticlePaginatedViewProvider
         }
 
         return [
-            'page' => \array_merge(
+            'page' => array_merge(
                 $article,
                 $this->pageBreaksHelper->splitTextIntoPages(
                     $this->view->fetchStringAsTemplate($article['text']),

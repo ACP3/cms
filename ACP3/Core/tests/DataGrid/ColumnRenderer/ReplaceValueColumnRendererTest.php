@@ -13,7 +13,7 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
     {
         $this->columnRenderer = new ReplaceValueColumnRenderer();
 
-        $this->columnData = \array_merge(
+        $this->columnData = array_merge(
             $this->getColumnDefaults(),
             [
                 'custom' => [
@@ -26,7 +26,7 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
             'custom' => [
                 'search' => ['Lorem'],
@@ -43,7 +43,7 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
 
     public function testDefaultValueIfNull()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
             'custom' => [
                 'default_value' => 'Foo Bar',
@@ -61,7 +61,7 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
 
     public function testDefaultValueIfNotFound()
     {
-        $this->columnData = \array_merge($this->columnData, [
+        $this->columnData = array_merge($this->columnData, [
             'fields' => ['test'],
             'custom' => [
                 'default_value' => 'Foo Bar',

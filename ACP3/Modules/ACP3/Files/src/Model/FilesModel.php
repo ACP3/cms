@@ -24,7 +24,7 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
     use DuplicationAwareTrait;
     use SortingAwareTrait;
 
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * @var FilesRepository
@@ -51,7 +51,7 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
      */
     public function save(array $rawData, $entryId = null)
     {
-        $rawData = \array_merge($rawData, [
+        $rawData = array_merge($rawData, [
             'category_id' => $rawData['cat'] ?? $rawData['category_id'],
             'updated_at' => 'now',
         ]);

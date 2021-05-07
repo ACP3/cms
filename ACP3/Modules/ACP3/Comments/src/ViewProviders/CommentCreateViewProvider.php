@@ -36,7 +36,7 @@ class CommentCreateViewProvider
     public function __invoke(string $module, int $entryId, string $redirectUrl): array
     {
         return [
-            'form' => \array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
+            'form' => array_merge($this->fetchFormDefaults(), $this->request->getPost()->all()),
             'module' => $module,
             'entry_id' => $entryId,
             'redirect_url' => $redirectUrl,

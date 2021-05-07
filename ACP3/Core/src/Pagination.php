@@ -190,7 +190,7 @@ class Pagination
     public function render(): array
     {
         if ($this->getResultsStartOffset() > $this->totalResults) {
-            throw new InvalidPageException(\sprintf('Could not find any entries for page %d', $this->currentPage));
+            throw new InvalidPageException(sprintf('Could not find any entries for page %d', $this->currentPage));
         }
 
         if ($this->totalResults > $this->resultsPerPage) {
@@ -198,7 +198,7 @@ class Pagination
             $link = $areaPrefix . $this->request->getUriWithoutPages();
 
             $this->currentPage = (int) $this->request->getParameters()->get('page', 1);
-            $this->totalPages = (int) \ceil($this->totalResults / $this->resultsPerPage);
+            $this->totalPages = (int) ceil($this->totalResults / $this->resultsPerPage);
 
             $this->setMetaStatements();
             [$rangeStart, $rangeEnd] = $this->calculateRange();
@@ -240,13 +240,13 @@ class Pagination
         $pagesToDisplay = $this->getPagesToDisplay();
 
         if ($this->totalPages > $pagesToDisplay) {
-            $center = \floor($pagesToDisplay / 2);
-            $rangeStart = \max(1, $this->currentPage - $center);
-            $rangeEnd = \min($this->totalPages, $rangeStart + $pagesToDisplay - 1);
+            $center = floor($pagesToDisplay / 2);
+            $rangeStart = max(1, $this->currentPage - $center);
+            $rangeEnd = min($this->totalPages, $rangeStart + $pagesToDisplay - 1);
 
             // Anzuzeigende Seiten immer auf dem Wert von $pagesToDisplay halten
             if ($rangeEnd === $this->totalPages) {
-                $rangeStart = \min($rangeStart, $rangeEnd - $pagesToDisplay + 1);
+                $rangeStart = min($rangeStart, $rangeEnd - $pagesToDisplay + 1);
             }
         }
 

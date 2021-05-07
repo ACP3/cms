@@ -65,7 +65,7 @@ class AdminSettingsViewProvider
 
         return [
             'captchas' => $this->forms->choicesGenerator('captcha', $captchas, $settings['captcha']),
-            'form' => \array_merge($settings, $this->request->getPost()->all()),
+            'form' => array_merge($settings, $this->request->getPost()->all()),
             'form_token' => $this->formToken->renderFormToken(),
         ];
     }

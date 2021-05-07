@@ -95,7 +95,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
         foreach ($components as $component) {
             $path = $component->getPath() . '/Resources/config/services.yml';
 
-            if (\is_file($path)) {
+            if (is_file($path)) {
                 $loader->import($path);
             }
 

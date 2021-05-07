@@ -278,8 +278,8 @@ class Action
             return $this->request->getPost()->get('entries');
         }
 
-        if ((bool) \preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
-            return \explode('|', $this->request->getParameters()->get('entries'));
+        if ((bool) preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
+            return explode('|', $this->request->getParameters()->get('entries'));
         }
 
         return [];

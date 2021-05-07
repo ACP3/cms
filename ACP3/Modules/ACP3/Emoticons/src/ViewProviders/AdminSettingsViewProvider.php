@@ -40,7 +40,7 @@ class AdminSettingsViewProvider
     public function __invoke(): array
     {
         return [
-            'form' => \array_merge(
+            'form' => array_merge(
                 $this->settings->getSettings(EmoticonsSchema::MODULE_NAME),
                 $this->request->getPost()->all()
             ),

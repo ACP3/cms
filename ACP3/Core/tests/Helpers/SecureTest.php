@@ -60,9 +60,9 @@ class SecureTest extends \PHPUnit\Framework\TestCase
     {
         $length = 10;
         $salt = $this->secureHelper->salt($length);
-        $saltArray = \str_split($salt);
+        $saltArray = str_split($salt);
 
         self::assertEquals($length, \strlen($salt));
-        self::assertCount($length, \array_unique($saltArray));
+        self::assertCount($length, array_unique($saltArray));
     }
 }

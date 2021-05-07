@@ -134,9 +134,9 @@ class Date
             $datePicker['id_start'] = $this->getInputId($name[0]);
             $datePicker['id_end'] = $this->getInputId($name[1]);
 
-            $datePicker = \array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $showTime));
+            $datePicker = array_merge($datePicker, $this->fetchRangeDatePickerValues($name, $value, $showTime));
 
-            $datePicker['config'] = \array_merge(
+            $datePicker['config'] = array_merge(
                 $datePicker['config'],
                 [
                     'start' => '#' . $datePicker['id_start'],
@@ -149,7 +149,7 @@ class Date
             $datePicker['name'] = $name;
             $datePicker['id'] = $this->getInputId($name);
             $datePicker['value'] = $this->fetchSimpleDatePickerValue($name, $value, $showTime);
-            $datePicker['config'] = \array_merge(
+            $datePicker['config'] = array_merge(
                 $datePicker['config'],
                 [
                     'element' => '#' . $datePicker['id'],
@@ -162,7 +162,7 @@ class Date
 
     private function getInputId(string $fieldName): string
     {
-        return 'date-' . \str_replace('_', '-', $fieldName);
+        return 'date-' . str_replace('_', '-', $fieldName);
     }
 
     private function fetchRangeDatePickerValues(array $name, array $value, bool $showTime): array

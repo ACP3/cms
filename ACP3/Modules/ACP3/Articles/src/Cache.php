@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 
 class Cache extends Core\Modules\AbstractCacheStorage
 {
-    const CACHE_ID = 'list_id_';
+    public const CACHE_ID = 'list_id_';
 
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository

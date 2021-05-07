@@ -109,7 +109,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/' . $action . '/'
             );
 
-        $parameters .= \preg_match('=/$=', $parameters) ? '' : '/';
+        $parameters .= preg_match('=/$=', $parameters) ? '' : '/';
         $this->requestMock->expects(self::any())
             ->method('getQuery')
             ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);
@@ -131,7 +131,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         $this->routerMock->expects(self::atLeastOnce())
             ->method('route')
             ->willReturnCallback(function ($path) {
-                return '/' . $path . (!\preg_match('=/$=', $path) ? '/' : '');
+                return '/' . $path . (!preg_match('=/$=', $path) ? '/' : '');
             });
     }
 
@@ -140,7 +140,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         $this->translatorMock->expects(self::atLeast($callCount))
             ->method('t')
             ->willReturnCallback(function ($module, $phrase) {
-                return \strtoupper('{' . $module . '_' . $phrase . '}');
+                return strtoupper('{' . $module . '_' . $phrase . '}');
             });
     }
 

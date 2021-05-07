@@ -54,7 +54,7 @@ abstract class AbstractIncludeAsset
 
         $this->alreadyIncluded[$key] = true;
 
-        return \sprintf(
+        return sprintf(
             $this->getHtmlTag(),
             $this->resolvePath($moduleName, $filePath) . '?v=' . BootstrapInterface::VERSION
         );
@@ -62,8 +62,8 @@ abstract class AbstractIncludeAsset
 
     private function hasValidParams(string $moduleName, string $filePath): bool
     {
-        return \preg_match('=/=', $moduleName) === 0
-            && \preg_match('=\./=', $filePath) === 0;
+        return preg_match('=/=', $moduleName) === 0
+            && preg_match('=\./=', $filePath) === 0;
     }
 
     private function resolvePath(string $moduleName, string $filePath): string
@@ -75,7 +75,7 @@ abstract class AbstractIncludeAsset
         );
 
         if (!$path) {
-            throw new \RuntimeException(\sprintf('Could not find the requested file %s of module %s!', $filePath, $moduleName));
+            throw new \RuntimeException(sprintf('Could not find the requested file %s of module %s!', $filePath, $moduleName));
         }
 
         return $path;

@@ -34,7 +34,7 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
         $fields = $this->getDbFields($column);
 
         if (\count($fields) === 2) {
-            $value = $this->translator->t($dbResultRow[\reset($fields)], $dbResultRow[\next($fields)]);
+            $value = $this->translator->t($dbResultRow[reset($fields)], $dbResultRow[next($fields)]);
         } elseif (!empty($value)) {
             $domain = $column['custom']['domain'] ?? $value;
 
