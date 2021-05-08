@@ -7,6 +7,5 @@
 <language>
     <keys>
         <item key="core">ACP3 framework</item>
-        <item key="mod_description">This module provides the core functionality of the ACP3.</item>
     </keys>
 </language>

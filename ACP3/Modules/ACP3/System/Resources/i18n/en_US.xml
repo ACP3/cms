@@ -171,7 +171,6 @@
         <item key="mod_deactivate_error">While disabling the module an error has occurred.</item>
         <item key="mod_deactivate_forbidden">It is impossible to enable resp. disable this module.</item>
         <item key="mod_deactivate_success">The module has been successfully disabled.</item>
-        <item key="mod_description">This module is responsible for the basic functions of the ACP3.</item>
         <item key="mod_installation_error">While installing the module an error has occurred.</item>
         <item key="mod_installation_success">The module has been successfully installed.</item>
         <item key="mod_rewrite">Use mod_rewrite</item>

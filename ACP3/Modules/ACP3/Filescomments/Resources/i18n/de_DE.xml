@@ -2,7 +2,6 @@
 <language>
     <keys>
         <item key="filescomments">Downloads Kommentare-Erweiterung</item>
-        <item key="mod_description">Dieses Modul integriert das Downloads-Modul in das Kommentare-Modul.</item>
         <item key="select_allow_comments">Bitte wählen Sie aus, ob Kommentare unter Downloads zugelassen werden sollen oder nicht.</item>
     </keys>
 </language>

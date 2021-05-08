@@ -5,7 +5,6 @@
         <item key="cookie_consent">Cookie-Richtlinie</item>
         <item key="cookieconsent">Cookie Richtlinie</item>
         <item key="enable_cookie_consent">Cookie-Richtlinie anzeigen</item>
-        <item key="mod_description">Dieses Modul ist für die Anzeige des Cookie-Richtlinien-Hinweises zuständig.</item>
         <item key="select_enable_cookie_consent">Bitte wählen Sie aus, ob der Cookie-Richtlinien-Hinweis angezeigt werden soll oder nicht.</item>
     </keys>
 </language>

@@ -2,7 +2,6 @@
 <language>
     <keys>
         <item key="gallerycomments">Gallery Comments-Extension</item>
-        <item key="mod_description">This module integrates the gallery module into the comments module.</item>
         <item key="select_allow_comments">Please select whether you want to allow comments under pictures or not.</item>
     </keys>
 </language>

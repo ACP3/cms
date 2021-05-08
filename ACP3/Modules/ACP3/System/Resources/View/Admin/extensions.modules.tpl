@@ -19,7 +19,7 @@
                     {foreach $installed_modules as $translatedModuleName => $row}
                         <tr>
                             <td>{$translatedModuleName}</td>
-                            <td>{lang t="`$row.name`|mod_description"}</td>
+                            <td>{$row.description}</td>
                             <td>{$row.version}</td>
                             <td>{$row.author}</td>
                             <td class="text-center">

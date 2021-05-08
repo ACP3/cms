@@ -10,7 +10,6 @@
         <item key="comments">Kommentare</item>
         <item key="comments_count">Kommentar Anzahl</item>
         <item key="ip">IP Adresse</item>
-        <item key="mod_description">Mit diesem Modul können Kommentare für andere Module erstellt werden.</item>
         <item key="module_doesnt_exist">Entweder existiert das ausgewählte Modul nicht oder es ist zur Zeit deaktiviert.</item>
         <item key="module">Modul</item>
     </keys>

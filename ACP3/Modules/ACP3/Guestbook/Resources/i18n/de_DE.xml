@@ -11,7 +11,6 @@
         <item key="guestbook">Gästebuch</item>
         <item key="guestbook_entries">Gästebucheinträge</item>
         <item key="ip">IP Adresse</item>
-        <item key="mod_description">Mit diesem Modul kann das Gästebuch verwaltet werden.</item>
         <item key="no_notification">Keine Benachrichtigung</item>
         <item key="notification">Benachrichtigung</item>
         <item key="notification_email">Zu verwendende E-Mail-Adresse bei Benachrichtigungen</item>

@@ -14,7 +14,6 @@
         <item key="index_paginated_content">Index paginated content</item>
         <item key="keywords">Keywords</item>
         <item key="keywords_separate_with_commas">Please seperate with commas.</item>
-        <item key="mod_description">This module is responsible for managing the url rewrites, keywords, descriptions and the robots settings.</item>
         <item key="robots">Robots</item>
         <item key="robots_use_system_default">Use system default (%default%)</item>
         <item key="robots_index_follow">index, follow</item>

@@ -14,7 +14,6 @@
         <item key="frontend_index_result">Ergebnis</item>
         <item key="frontend_index_vote">Abstimmen</item>
         <item key="latest_poll">Aktuelle Umfrage</item>
-        <item key="mod_description">Mit diesem Modul können die Umfragen verwaltet werden.</item>
         <item key="multiple_choice">Mehrfachauswahl erlauben</item>
         <item key="no_votes">Keine Stimmen</item>
         <item key="number_of_votes">%votes% Stimmen</item>

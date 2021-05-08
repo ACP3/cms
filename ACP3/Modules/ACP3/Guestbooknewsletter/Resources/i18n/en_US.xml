@@ -2,7 +2,6 @@
 <language>
     <keys>
         <item key="guestbooknewsletter">Guestbook Newsletter-Extension</item>
-        <item key="mod_description">This module integrates the guestbook module into the newsletter module.</item>
         <item key="newsletter_integration">Integrate into the newsletter</item>
         <item key="select_newsletter_integration">Please select whether you want to allow users to subscribe into the
             newsletter when creating a new guestbook entry.

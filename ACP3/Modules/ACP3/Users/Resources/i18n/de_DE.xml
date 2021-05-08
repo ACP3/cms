@@ -64,7 +64,6 @@
         <item key="log_in">Einloggen</item>
         <item key="login">Login</item>
         <item key="logout">Abmelden</item>
-        <item key="mod_description">Mit diesem Modul können die Benutzer verwaltet werden.</item>
         <item key="new_pwd">Neues Passwort</item>
         <item key="new_pwd_repeat">Neues Passwort wiederholen</item>
         <item key="nickname_or_email">Benutzername oder E-Mail-Adresse</item>

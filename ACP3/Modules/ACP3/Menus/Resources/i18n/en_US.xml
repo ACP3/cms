@@ -25,7 +25,6 @@
         <item key="menu_bar_title">Name of the menu bar</item>
         <item key="menu_bar_title_to_short">The name of the menu bar should not be empty.</item>
         <item key="menu_items">Menu items</item>
-        <item key="mod_description">This module is responsible for the navigation bars.</item>
         <item key="module">Module</item>
         <item key="no_superior_page">No superior page</item>
         <item key="page_type">Page type</item>

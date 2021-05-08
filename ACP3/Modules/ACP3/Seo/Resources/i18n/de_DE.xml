@@ -14,7 +14,6 @@
         <item key="index_paginated_content">Indexierung von paginierten Inhalten</item>
         <item key="keywords">Schlüsselwörter</item>
         <item key="keywords_separate_with_commas">Bitte mit Kommata trennen.</item>
-        <item key="mod_description">Dieses Modul ist für die Verwaltung von URL-Rewrites, Schlüsselwörtern, Beschreibungen und den Robots-Einstellungen zuständig.</item>
         <item key="robots">Robots</item>
         <item key="robots_use_system_default">Systemstandard verwenden (%default%)</item>
         <item key="robots_index_follow">index, follow</item>

@@ -16,7 +16,6 @@
             breit, zu hoch oder zu groß.
         </item>
         <item key="invalid_image_width_entered">Bitte geben Sie die maximale Bildbreite in Pixel an.</item>
-        <item key="mod_description">Mit diesem Modul können Emoticons z.B. in Kommentare eingefügt werden.</item>
         <item key="picture">Bild</item>
         <item key="replace_picture">Bild ersetzen</item>
         <item key="type_in_code">Bitte geben Sie einen Code an, der dann durch ein Bild ersetzt werden soll.</item>

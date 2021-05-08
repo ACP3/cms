@@ -2,6 +2,5 @@
 <language>
     <keys>
         <item key="newsfeed">News Feeds-Extension</item>
-        <item key="mod_description">This module integrates the news module into the feeds module.</item>
     </keys>
 </language>

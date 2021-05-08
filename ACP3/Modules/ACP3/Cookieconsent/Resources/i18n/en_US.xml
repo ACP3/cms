@@ -5,7 +5,6 @@
         <item key="cookie_consent">Cookie consent</item>
         <item key="cookieconsent">Cookie consent</item>
         <item key="enable_cookie_consent">Enable cookie consent</item>
-        <item key="mod_description">This module is responsible for the cookie consent.</item>
         <item key="select_enable_cookie_consent">Please select whether you want to display the cookie consent or not.</item>
     </keys>
 </language>

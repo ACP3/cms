@@ -20,7 +20,6 @@
         <item key="deny_access">Deny</item>
         <item key="inherit_access">Inherit</item>
         <item key="invalid_privileges">The submitted permissions contain unallowed values.</item>
-        <item key="mod_description">With this module you can set permissions for the users.</item>
         <item key="module_name">Module name</item>
         <item key="no_privilege_selected">Please set the permissions for each action that a user is allowed to perform.</item>
         <item key="permissions">Permissions</item>

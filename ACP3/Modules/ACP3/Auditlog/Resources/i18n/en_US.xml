@@ -13,7 +13,6 @@
         <item key="deleted">Deleted</item>
         <item key="entry_id">Entry ID</item>
         <item key="last_action">Last action</item>
-        <item key="mod_description">Logs every user action within the ACP3 CMS.</item>
         <item key="results_count">Results count</item>
         <item key="table_name">table name</item>
         <item key="updated">Updated</item>
