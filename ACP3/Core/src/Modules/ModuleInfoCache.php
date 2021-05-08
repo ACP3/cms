@@ -105,7 +105,6 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
             'author' => $moduleInfo['author'],
             'version' => $moduleInfo['version'] ?? InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],
             'name' => $moduleCoreData->getName(),
-            'categories' => isset($moduleInfo['categories']),
             'protected' => isset($moduleInfo['protected']),
             'installable' => !isset($moduleInfo['no_install']),
             'dependencies' => $moduleCoreData->getDependencies(),
