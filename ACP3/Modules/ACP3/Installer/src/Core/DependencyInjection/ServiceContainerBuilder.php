@@ -74,11 +74,11 @@ final class ServiceContainerBuilder extends ContainerBuilder
 
         $this->includeCoreServices($loader);
 
-        // Themes currently don't define or override service, so we have to filter theme out.
-        // Otherwise get would get errors...
-        $filteredComponents = ComponentRegistry::filterByType(
+        // Themes currently don't define or override services, so we have to filter them out.
+        // Otherwise we would get errors...
+        $filteredComponents = ComponentRegistry::excludeByType(
             ComponentRegistry::allTopSorted(),
-            [ComponentTypeEnum::CORE, ComponentTypeEnum::INSTALLER, ComponentTypeEnum::MODULE]
+            [ComponentTypeEnum::THEME]
         );
 
         foreach ($filteredComponents as $component) {
