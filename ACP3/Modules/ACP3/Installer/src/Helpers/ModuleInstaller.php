@@ -8,30 +8,23 @@
 namespace ACP3\Modules\ACP3\Installer\Helpers;
 
 use ACP3\Core\Component\ComponentRegistry;
-use ACP3\Core\XML;
+use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Modules\ACP3\System\Exception\ModuleInstallerException;
 use Psr\Container\ContainerInterface;
 
 class ModuleInstaller
 {
     /**
-     * @var XML
-     */
-    protected $xml;
-    /**
      * @var Install
      */
-    protected $installHelper;
+    private $installHelper;
     /**
      * @var array
      */
-    protected $installedModules = [];
+    private $installedModules = [];
 
-    public function __construct(
-        XML $xml,
-        Install $installHelper
-    ) {
-        $this->xml = $xml;
+    public function __construct(Install $installHelper)
+    {
         $this->installHelper = $installHelper;
     }
 
@@ -45,13 +38,7 @@ class ModuleInstaller
         /** @var \Psr\Container\ContainerInterface $schemaRegistrar */
         $schemaRegistrar = $container->get('core.installer.schema_registrar');
 
-        foreach (ComponentRegistry::allTopSorted() as $module) {
-            $moduleConfigPath = $module->getPath() . '/Resources/config/module.xml';
-
-            if (!$this->isValidModule($moduleConfigPath)) {
-                continue;
-            }
-
+        foreach (ComponentRegistry::excludeByType(ComponentRegistry::allTopSorted(), [ComponentTypeEnum::THEME]) as $module) {
             if (!$schemaRegistrar->has($module->getName())) {
                 continue;
             }
@@ -64,16 +51,5 @@ class ModuleInstaller
         }
 
         return $this->installedModules;
-    }
-
-    private function isValidModule(string $moduleConfigPath): bool
-    {
-        if (is_file($moduleConfigPath)) {
-            $config = $this->xml->parseXmlFile($moduleConfigPath, '/module/info');
-
-            return !isset($config['no_install']);
-        }
-
-        return false;
     }
 }
