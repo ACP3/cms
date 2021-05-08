@@ -7,7 +7,7 @@ services:
     bind:
       $assetRendererStrategyServiceLocator: "@core.assets.renderer.strategy.service_locator"
 
-  ACP3\Core\ApplicationEventListener\AddTemplateVariablesListener:
+  ACP3\Core\Application\EventListener\AddTemplateVariablesListener:
     class: ACP3\Modules\ACP3\Installer\EventListener\AddTemplateVariablesListener
     tags:
       - { name: core.eventSubscriber }
@@ -48,6 +48,8 @@ services:
 
   core.modules.moduleInfoCache:
     class: ACP3\Modules\ACP3\Installer\Core\Modules\ModuleInfoCache
+    arguments:
+      $schemaLocator: "@core.installer.schema_registrar"
 
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler

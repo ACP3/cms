@@ -13,6 +13,7 @@ use ACP3\Core\Component\Dto\ComponentDataDto;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
 use Composer\InstalledVersions;
+use Psr\Container\ContainerInterface;
 
 class ModuleInfoCache implements ModuleInfoCacheInterface
 {
@@ -25,6 +26,10 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
      */
     private $xml;
     /**
+     * @var ContainerInterface
+     */
+    private $schemaLocator;
+    /**
      * @var ModuleAwareRepositoryInterface
      */
     private $systemModuleRepository;
@@ -32,11 +37,13 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
     public function __construct(
         Cache $cache,
         XML $xml,
+        ContainerInterface $schemaLocator,
         ModuleAwareRepositoryInterface $systemModuleRepository
     ) {
         $this->cache = $cache;
         $this->xml = $xml;
         $this->systemModuleRepository = $systemModuleRepository;
+        $this->schemaLocator = $schemaLocator;
     }
 
     private function getCacheKey(): string
@@ -44,6 +51,9 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         return 'modules_info';
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function getModulesInfoCache(): array
     {
         if ($this->cache->contains($this->getCacheKey()) === false) {
@@ -55,12 +65,17 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
 
     /**
      * Saves the modules info cache.
+     *
+     * @throws \JsonException
      */
     public function saveModulesInfoCache(): void
     {
         $this->cache->save($this->getCacheKey(), $this->fetchAllModulesInfo());
     }
 
+    /**
+     * @throws \JsonException
+     */
     private function fetchAllModulesInfo(): array
     {
         $infos = [];
@@ -96,18 +111,20 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
 
         $composerData = json_decode(file_get_contents($moduleCoreData->getPath() . '/composer.json'), true, 512, JSON_THROW_ON_ERROR);
 
+        $needsInstallation = $this->schemaLocator->has($moduleCoreData->getName());
+
         return [
-            'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
+            'id' => $moduleInfoDb['id'] ?? 0,
             'dir' => $moduleCoreData->getPath(),
-            'installed' => (!empty($moduleInfoDb)) || isset($moduleInfo['no_install']),
-            'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1) || isset($moduleInfo['no_install']),
+            'installed' => (!empty($moduleInfoDb)) || !$needsInstallation,
+            'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1) || !$needsInstallation,
             'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
             'author' => $moduleInfo['author'],
             'version' => $moduleInfo['version'] ?? InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],
             'name' => $moduleCoreData->getName(),
             'description' => $composerData['description'],
             'protected' => isset($moduleInfo['protected']),
-            'installable' => !isset($moduleInfo['no_install']),
+            'installable' => $needsInstallation,
             'dependencies' => $moduleCoreData->getDependencies(),
         ];
     }

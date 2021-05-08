@@ -22,6 +22,7 @@ services:
     class: ACP3\Core\Modules\ModuleInfoCache
     arguments:
       $cache: "@core.cache.system"
+      $schemaLocator: "@core.installer.schema_registrar"
 
   ACP3\Core\Modules\ModuleInfoCache: "@core.modules.moduleInfoCache"
   ACP3\Core\Modules\ModuleInfoCacheInterface: "@core.modules.moduleInfoCache"
