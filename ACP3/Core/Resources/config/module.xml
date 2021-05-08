@@ -6,8 +6,6 @@
 
 <module>
     <info>
-        <name lang="true"/>
-        <description lang="true"/>
         <author>Tino Goratsch</author>
         <protected/>
         <no_install/>
