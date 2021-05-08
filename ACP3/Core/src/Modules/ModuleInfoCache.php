@@ -97,15 +97,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
     private function fetchModuleInfo(ComponentDataDto $moduleCoreData): array
     {
         $path = $moduleCoreData->getPath() . '/Resources/config/module.xml';
-        if (is_file($path) === false) {
-            return [];
-        }
-
-        $moduleInfo = $this->xml->parseXmlFile($path, 'info');
-
-        if (empty($moduleInfo) === true) {
-            return [];
-        }
+        $legacyModuleInfo = is_file($path) ? $this->xml->parseXmlFile($path, 'info') : [];
 
         $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleCoreData->getName());
 
@@ -119,13 +111,24 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
             'installed' => (!empty($moduleInfoDb)) || !$needsInstallation,
             'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1) || !$needsInstallation,
             'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
-            'author' => $moduleInfo['author'],
-            'version' => $moduleInfo['version'] ?? InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],
+            'author' => $legacyModuleInfo['author'] ?? $this->getAuthors($composerData),
+            'version' => $legacyModuleInfo['version'] ?? InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],
             'name' => $moduleCoreData->getName(),
             'description' => $composerData['description'],
-            'protected' => isset($moduleInfo['protected']),
+            'protected' => isset($legacyModuleInfo['protected']),
             'installable' => $needsInstallation,
             'dependencies' => $moduleCoreData->getDependencies(),
         ];
+    }
+
+    private function getAuthors(array $composerData): string
+    {
+        $authors = [];
+
+        foreach ($composerData['authors'] as $author) {
+            $authors[] = $author['name'];
+        }
+
+        return implode(', ', $authors);
     }
 }
