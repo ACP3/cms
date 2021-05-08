@@ -12,21 +12,22 @@ use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\Dto\ComponentDataDto;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
+use Composer\InstalledVersions;
 
 class ModuleInfoCache implements ModuleInfoCacheInterface
 {
     /**
      * @var \ACP3\Core\Cache
      */
-    protected $cache;
+    private $cache;
     /**
      * @var \ACP3\Core\XML
      */
-    protected $xml;
+    private $xml;
     /**
      * @var ModuleAwareRepositoryInterface
      */
-    protected $systemModuleRepository;
+    private $systemModuleRepository;
 
     public function __construct(
         Cache $cache,
@@ -38,7 +39,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         $this->systemModuleRepository = $systemModuleRepository;
     }
 
-    protected function getCacheKey(): string
+    private function getCacheKey(): string
     {
         return 'modules_info';
     }
@@ -60,7 +61,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         $this->cache->save($this->getCacheKey(), $this->fetchAllModulesInfo());
     }
 
-    protected function fetchAllModulesInfo(): array
+    private function fetchAllModulesInfo(): array
     {
         $infos = [];
 
@@ -75,7 +76,10 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
         return $infos;
     }
 
-    protected function fetchModuleInfo(ComponentDataDto $moduleCoreData): array
+    /**
+     * @throws \JsonException
+     */
+    private function fetchModuleInfo(ComponentDataDto $moduleCoreData): array
     {
         $path = $moduleCoreData->getPath() . '/Resources/config/module.xml';
         if (is_file($path) === false) {
@@ -90,6 +94,8 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
 
         $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleCoreData->getName());
 
+        $composerData = json_decode(file_get_contents($moduleCoreData->getPath() . '/composer.json'), true, 512, JSON_THROW_ON_ERROR);
+
         return [
             'id' => !empty($moduleInfoDb) ? $moduleInfoDb['id'] : 0,
             'dir' => $moduleCoreData->getPath(),
@@ -97,7 +103,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
             'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1) || isset($moduleInfo['no_install']),
             'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
             'author' => $moduleInfo['author'],
-            'version' => $moduleInfo['version'],
+            'version' => $moduleInfo['version'] ?? InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],
             'name' => $moduleCoreData->getName(),
             'categories' => isset($moduleInfo['categories']),
             'protected' => isset($moduleInfo['protected']),
