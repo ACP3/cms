@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Installer\Model;
 
 use ACP3\Core\Installer\Exception\MissingInstallerException;
+use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 use Psr\Container\ContainerInterface;
@@ -60,7 +61,7 @@ class SchemaUpdateModel
     public function updateModules(): array
     {
         /** @var \ACP3\Core\Modules $modules */
-        $modules = $this->container->get('core.modules');
+        $modules = $this->container->get(Modules::class);
         foreach ($modules->getAllModulesTopSorted() as $moduleInfo) {
             try {
                 $this->updateModule($moduleInfo['name']);
@@ -85,7 +86,7 @@ class SchemaUpdateModel
     private function updateModule(string $moduleName): void
     {
         /** @var \ACP3\Core\Modules $modules */
-        $modules = $this->container->get('core.modules');
+        $modules = $this->container->get(Modules::class);
 
         if (!$modules->isInstallable($moduleName)) {
             return;
@@ -96,7 +97,7 @@ class SchemaUpdateModel
         /** @var ContainerInterface $migrationRegistrar */
         $migrationRegistrar = $this->container->get('core.installer.migration_registrar');
         /** @var \ACP3\Core\Modules\SchemaUpdater $schemaUpdater */
-        $schemaUpdater = $this->container->get('core.modules.schemaUpdater');
+        $schemaUpdater = $this->container->get(Modules\SchemaUpdater::class);
 
         $serviceIdMigration = $moduleName . '.installer.migration';
         if (!$schemaRegistrar->has($moduleName) || !$migrationRegistrar->has($serviceIdMigration)) {

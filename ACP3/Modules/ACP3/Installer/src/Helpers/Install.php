@@ -8,9 +8,11 @@
 namespace ACP3\Modules\ACP3\Installer\Helpers;
 
 use ACP3\Core;
+use ACP3\Core\Modules\AclInstaller;
 use ACP3\Core\Modules\Installer\SampleDataInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Modules\SchemaHelper;
+use ACP3\Core\Modules\SchemaInstaller;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Yaml\Dumper;
 
@@ -38,7 +40,7 @@ class Install
      */
     public function installModule(SchemaInterface $schema, ContainerInterface $container): bool
     {
-        return $this->install($schema, $container, 'core.modules.schemaInstaller');
+        return $this->install($schema, $container, SchemaInstaller::class);
     }
 
     /**
@@ -46,7 +48,7 @@ class Install
      */
     public function installResources(SchemaInterface $schema, ContainerInterface $container): bool
     {
-        return $this->install($schema, $container, 'core.modules.aclInstaller');
+        return $this->install($schema, $container, AclInstaller::class);
     }
 
     /**

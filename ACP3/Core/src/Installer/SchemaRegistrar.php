@@ -17,7 +17,7 @@ class SchemaRegistrar implements ContainerInterface
      */
     private $schemas = [];
 
-    public function set(SchemaInterface $schema)
+    public function set(SchemaInterface $schema): void
     {
         $this->schemas[$schema->getModuleName()] = $schema;
     }
@@ -25,27 +25,23 @@ class SchemaRegistrar implements ContainerInterface
     /**
      * @return Array<string, SchemaInterface>
      */
-    public function all()
+    public function all(): array
     {
         return $this->schemas;
     }
 
     /**
-     * @param string $moduleName
-     *
-     * @return bool
+     * {@inheritDoc}
      */
-    public function has($moduleName)
+    public function has(string $moduleName): bool
     {
         return isset($this->schemas[$moduleName]);
     }
 
     /**
-     * @param string $moduleName
-     *
      * @return \ACP3\Core\Modules\Installer\SchemaInterface
      */
-    public function get($moduleName)
+    public function get(string $moduleName)
     {
         if ($this->has($moduleName)) {
             return $this->schemas[$moduleName];
