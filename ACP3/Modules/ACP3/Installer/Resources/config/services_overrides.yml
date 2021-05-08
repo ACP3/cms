@@ -47,12 +47,18 @@ services:
     class: ACP3\Modules\ACP3\Installer\Core\Http\RequestFactory
 
   core.modules.moduleInfoCache:
-    class: ACP3\Modules\ACP3\Installer\Core\Modules\ModuleInfoCache
+    class: ACP3\Core\Modules\ModuleInfoCache
     arguments:
+      $cache: "@core.cache.system"
       $schemaLocator: "@core.installer.schema_registrar"
 
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler
+
+  system.model.modulerepository:
+    class: ACP3\Modules\ACP3\Installer\Repository\ModulesRepository
+
+  ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface: "@system.model.modulerepository"
 
   system.model.settingsrepository:
     class: ACP3\Modules\ACP3\Installer\Repository\SettingsRepository

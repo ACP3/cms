@@ -38,6 +38,7 @@
         <item key="found">Gefunden</item>
         <item key="go_to_website">Zur Website</item>
         <item key="general">Allgemeines</item>
+        <item key="installer">Installationsroutine</item>
         <item key="installer_error_not_found">Seite nicht gefunden</item>
         <item key="installer_error_server_error">Interner Serverfehler</item>
         <item key="installer_index_index">Willkommen</item>

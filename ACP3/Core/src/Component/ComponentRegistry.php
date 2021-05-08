@@ -89,6 +89,19 @@ class ComponentRegistry
         });
     }
 
+    /**
+     * @param ComponentDataDto[] $components
+     * @param string[]           $componentTypes
+     *
+     * @return ComponentDataDto[]
+     */
+    public static function excludeByType(array $components, array $componentTypes): array
+    {
+        return array_filter($components, static function (ComponentDataDto $component) use ($componentTypes) {
+            return !\in_array($component->getComponentType(), $componentTypes, true);
+        });
+    }
+
     private static function findByName(string $componentName): ?ComponentDataDto
     {
         $componentName = strtolower($componentName);

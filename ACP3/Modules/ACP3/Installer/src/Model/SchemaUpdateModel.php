@@ -62,10 +62,6 @@ class SchemaUpdateModel
         /** @var \ACP3\Core\Modules $modules */
         $modules = $this->container->get('core.modules');
         foreach ($modules->getAllModulesTopSorted() as $moduleInfo) {
-            if (!$modules->isInstallable($moduleInfo['name'])) {
-                continue;
-            }
-
             try {
                 $this->updateModule($moduleInfo['name']);
 
@@ -81,12 +77,12 @@ class SchemaUpdateModel
     }
 
     /**
-     * Führt die Updateanweisungen eines Moduls aus.
+     * Führt die Update-Anweisungen eines Moduls aus.
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function updateModule(string $moduleName): void
+    private function updateModule(string $moduleName): void
     {
         /** @var \ACP3\Core\Modules $modules */
         $modules = $this->container->get('core.modules');

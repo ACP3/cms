@@ -36,6 +36,7 @@
         <item key="found">Found</item>
         <item key="go_to_website">Go to the website</item>
         <item key="general">General</item>
+        <item key="installer">Installer</item>
         <item key="installer_error_not_found">Page not found</item>
         <item key="installer_error_server_error">Internal server error</item>
         <item key="installer_index_index">Welcome</item>

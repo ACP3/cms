@@ -9,6 +9,7 @@ namespace ACP3\Core\Modules;
 
 use ACP3\Core\Cache;
 use ACP3\Core\Component\ComponentRegistry;
+use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Component\Dto\ComponentDataDto;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\XML;
@@ -80,7 +81,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
     {
         $infos = [];
 
-        foreach (ComponentRegistry::all() as $module) {
+        foreach (ComponentRegistry::excludeByType(ComponentRegistry::all(), [ComponentTypeEnum::THEME]) as $module) {
             $moduleInfo = $this->fetchModuleInfo($module);
 
             if (!empty($moduleInfo)) {
@@ -109,7 +110,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
             'id' => $moduleInfoDb['id'] ?? 0,
             'dir' => $moduleCoreData->getPath(),
             'installed' => (!empty($moduleInfoDb)) || !$needsInstallation,
-            'active' => (!empty($moduleInfoDb) && $moduleInfoDb['active'] == 1) || !$needsInstallation,
+            'active' => (!empty($moduleInfoDb) && (int) $moduleInfoDb['active'] === 1) || !$needsInstallation,
             'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
             'author' => $legacyModuleInfo['author'] ?? $this->getAuthors($composerData),
             'version' => $legacyModuleInfo['version'] ?? InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],
