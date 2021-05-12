@@ -137,7 +137,7 @@ class Connection
     }
 
     /**
-     * @deprecated The argument $column deprecated since version 5.16.0 and will be removed in version 6.0.0.
+     * @deprecated The argument $column is deprecated since version 5.16.0 and will be removed in version 6.0.0.
      *
      * @return bool|string
      *
