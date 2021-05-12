@@ -25,5 +25,6 @@
 /vendor
 /.htaccess
 /sitemap*.xml
+/robots.txt
 
 !.gitignore
