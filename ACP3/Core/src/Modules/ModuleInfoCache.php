@@ -74,8 +74,17 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
     {
         $infos = [];
 
+        $modules = ComponentRegistry::excludeByType(ComponentRegistry::all(), [ComponentTypeEnum::THEME]);
+
+        $moduleNames = [];
+        foreach ($modules as $module) {
+            $moduleNames[] = $module->getName();
+        }
+
+        $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleNameList($moduleNames);
+
         foreach (ComponentRegistry::excludeByType(ComponentRegistry::all(), [ComponentTypeEnum::THEME]) as $module) {
-            $moduleInfo = $this->fetchModuleInfo($module);
+            $moduleInfo = $this->fetchModuleInfo($module, $moduleInfoDb[$module->getName()] ?? []);
 
             if (!empty($moduleInfo)) {
                 $infos[$module->getName()] = $moduleInfo;
@@ -88,10 +97,8 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
     /**
      * @throws \JsonException
      */
-    private function fetchModuleInfo(ComponentDataDto $moduleCoreData): array
+    private function fetchModuleInfo(ComponentDataDto $moduleCoreData, array $moduleInfoDb): array
     {
-        $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleCoreData->getName());
-
         $composerData = json_decode(file_get_contents($moduleCoreData->getPath() . '/composer.json'), true, 512, JSON_THROW_ON_ERROR);
 
         $needsInstallation = $this->schemaLocator->has($moduleCoreData->getName());

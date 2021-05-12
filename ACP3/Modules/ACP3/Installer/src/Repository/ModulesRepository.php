@@ -54,6 +54,14 @@ class ModulesRepository extends AbstractStubRepository implements ModuleAwareRep
     /**
      * {@inheritDoc}
      */
+    public function getInfoByModuleNameList(array $moduleNames): array
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getModuleNameById(int $moduleId): string
     {
         return '';
