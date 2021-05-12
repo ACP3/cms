@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'galleryseo',
         __DIR__,
-        ['core', 'gallery', 'seo', 'system']
+        ['gallery', 'seo']
     )
 );

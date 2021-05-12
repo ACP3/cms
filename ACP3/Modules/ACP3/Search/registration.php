@@ -15,7 +15,7 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'search',
         __DIR__,
-        ['core', 'permissions', 'system'],
+        ['core'],
         new ModuleRegistration()
     )
 );

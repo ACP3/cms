@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'system',
         __DIR__,
-        ['core']
+        ['acp', 'core', 'permissions']
     )
 );

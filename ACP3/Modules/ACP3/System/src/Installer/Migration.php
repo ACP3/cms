@@ -267,6 +267,9 @@ class Migration extends Modules\Installer\AbstractMigration
                 'DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND `name` = \'cookie_consent_is_enabled\';',
                 'DELETE FROM `{pre}settings` WHERE `module_id` = {moduleId} AND `name` = \'cookie_consent_text\';',
             ],
+            76 => [
+                'ALTER TABLE `{pre}modules` DROP COLUMN `active`;',
+            ],
         ];
     }
 

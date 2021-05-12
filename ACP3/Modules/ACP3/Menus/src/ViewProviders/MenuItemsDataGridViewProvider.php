@@ -18,7 +18,7 @@ use ACP3\Core\DataGrid\QueryOption;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Menus\Repository\MenuItemDataGridRepository;
-use ACP3\Modules\ACP3\Permissions\Installer\Schema;
+use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class MenuItemsDataGridViewProvider
 {

@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'files',
         __DIR__,
-        ['core', 'categories', 'permissions', 'system']
+        ['acp', 'core', 'categories']
     )
 );

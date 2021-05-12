@@ -21,20 +21,12 @@ class ResultsPerPage
      */
     private $resultsPerPage = [];
 
-    /**
-     * ResultsPerPage constructor.
-     */
     public function __construct(SettingsInterface $settings)
     {
         $this->settings = $settings;
     }
 
-    /**
-     * @param string $moduleName
-     *
-     * @return int
-     */
-    public function getResultsPerPage($moduleName)
+    public function getResultsPerPage(string $moduleName): int
     {
         if (!isset($this->resultsPerPage[$moduleName])) {
             $moduleSettings = $this->settings->getSettings($moduleName);

@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'wysiwygtinymce',
         __DIR__,
-        ['core', 'permissions', 'system']
+        ['core']
     )
 );

@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'contactseo',
         __DIR__,
-        ['contact', 'core', 'seo', 'system']
+        ['contact', 'seo']
     )
 );

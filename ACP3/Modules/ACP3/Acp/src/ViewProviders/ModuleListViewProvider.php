@@ -47,7 +47,7 @@ class ModuleListViewProvider
     {
         $allowedModules = [];
 
-        foreach ($this->modules->getActiveModules() as $info) {
+        foreach ($this->modules->getInstalledModules() as $info) {
             $moduleName = strtolower($info['name']);
             if ($moduleName !== 'acp' && $this->acl->hasPermission('admin/' . $moduleName) === true) {
                 $allowedModules[$this->translator->t($moduleName, $moduleName)] = $moduleName;

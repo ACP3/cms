@@ -15,7 +15,7 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'captcha',
         __DIR__,
-        ['core', 'permissions', 'system'],
+        ['acp', 'core'],
         new ModuleRegistration()
     )
 );

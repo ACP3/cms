@@ -112,10 +112,10 @@ class AdminRoleEditViewProvider
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    private function fetchModulePermissions(int $roleId, int $defaultValue = 0): array
+    private function fetchModulePermissions(int $roleId): array
     {
         $rules = $this->permissionsCache->getRulesCache([$roleId]);
-        $modules = array_filter($this->modules->getActiveModules(), function ($module) {
+        $modules = array_filter($this->modules->getInstalledModules(), function ($module) {
             return $this->modules->isInstallable($module['name']);
         });
         $privileges = $this->privilegeRepository->getAllPrivileges();
@@ -126,7 +126,7 @@ class AdminRoleEditViewProvider
                     $roleId,
                     $moduleInfo['id'],
                     $privilege['id'],
-                    isset($rules[$moduleInfo['name']][$privilege['key']]['permission']) ? (int) $rules[$moduleInfo['name']][$privilege['key']]['permission'] : $defaultValue
+                    isset($rules[$moduleInfo['name']][$privilege['key']]['permission']) ? (int) $rules[$moduleInfo['name']][$privilege['key']]['permission'] : 0
                 );
                 if ($roleId !== 0) {
                     $privileges[$j]['calculated'] = $this->calculatePermission($rules, $moduleInfo['name'], $privilege['key']);

@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'guestbooknewsletter',
         __DIR__,
-        ['core', 'guestbook', 'newsletter', 'system']
+        ['guestbook', 'newsletter']
     )
 );

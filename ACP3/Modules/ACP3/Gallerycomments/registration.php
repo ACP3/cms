@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'gallerycomments',
         __DIR__,
-        ['comments', 'core', 'gallery', 'system']
+        ['comments', 'gallery']
     )
 );

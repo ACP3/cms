@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'filesfeed',
         __DIR__,
-        ['core', 'files', 'feeds', 'system']
+        ['files', 'feeds']
     )
 );

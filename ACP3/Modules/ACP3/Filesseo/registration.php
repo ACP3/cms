@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'filesseo',
         __DIR__,
-        ['core', 'files', 'seo', 'system']
+        ['files', 'seo']
     )
 );

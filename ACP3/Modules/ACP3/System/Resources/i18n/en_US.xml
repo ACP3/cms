@@ -46,7 +46,6 @@
         <item key="confirm_delete">Do you really want to delete the marked entries?</item>
         <item key="confirm_delete_multiple">Do you really want to delete the {items} selected entries?</item>
         <item key="confirm_delete_single">Do you really want to delete the selected entry?</item>
-        <item key="could_not_complete_request">Because of an error the request could not complete.</item>
         <item key="create_error">While creating the entry an error has occurred.</item>
         <item key="create_success">The entry has been successfully created.</item>
         <item key="critical_error_occurred_see_log">A critical error has occurred. For further details please see the log files.</item>
@@ -92,7 +91,6 @@
         <item key="designs_edit_error">While switching the design an error has occurred.</item>
         <item key="designs_edit_success">The design has been successfully selected and may now be used.</item>
         <item key="disable">Disable</item>
-        <item key="disable_module">Disable module</item>
         <item key="duplicate_entry">Duplicate entry</item>
         <item key="duplicate_error">While duplicating the entry an error has occurred.</item>
         <item key="duplicate_success">The entry has been successfully duplicated.</item>
@@ -107,7 +105,6 @@
         <item key="enable_following_modules_first">To install the module you have to enable the following modules first:
             %modules%
         </item>
-        <item key="enable_module">Enable module</item>
         <item key="enable_page_cache">Enable page cache</item>
         <item key="end_date">End date</item>
         <item key="entries">Entries</item>
@@ -166,11 +163,6 @@
         <item key="message">Message</item>
         <item key="message_to_short">The message should not be empty.</item>
         <item key="min">Minute</item>
-        <item key="mod_activate_error">While enabling the module an error has occurred.</item>
-        <item key="mod_activate_success">The module has been successfully enabled and may now be used.</item>
-        <item key="mod_deactivate_error">While disabling the module an error has occurred.</item>
-        <item key="mod_deactivate_forbidden">It is impossible to enable resp. disable this module.</item>
-        <item key="mod_deactivate_success">The module has been successfully disabled.</item>
         <item key="mod_installation_error">While installing the module an error has occurred.</item>
         <item key="mod_installation_success">The module has been successfully installed.</item>
         <item key="mod_rewrite">Use mod_rewrite</item>
@@ -184,6 +176,7 @@
         </item>
         <item key="module_installer_not_found">Unfortunately, this module does not have an installer!</item>
         <item key="module_name">Module name</item>
+        <item key="module_not_installed">The module %s can not be uninstalled, as it isn't installed.</item>
         <item key="modules">Modules</item>
         <item key="month">Month</item>
         <item key="month_abbr_apr">Apr</item>
@@ -245,8 +238,6 @@
         <item key="pls_select">Please select</item>
         <item key="previous">Previous</item>
         <item key="previous_page">Previous page</item>
-        <item key="protected_module">Protected module</item>
-        <item key="protected_module_description">Protected modules can't be disabled or uninstalled.</item>
         <item key="publication">Publication</item>
         <item key="publication_period">Publication period</item>
         <item key="records_per_page">Records per page</item>

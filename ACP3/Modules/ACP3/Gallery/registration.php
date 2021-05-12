@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'gallery',
         __DIR__,
-        ['core', 'permissions', 'system']
+        ['acp', 'core']
     )
 );

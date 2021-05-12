@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'articlesshare',
         __DIR__,
-        ['articles', 'core', 'share', 'system']
+        ['articles', 'share']
     )
 );

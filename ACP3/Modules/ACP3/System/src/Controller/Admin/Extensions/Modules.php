@@ -9,34 +9,38 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 
 use ACP3\Core;
 use ACP3\Core\Helpers\RedirectMessages;
-use ACP3\Modules\ACP3\Permissions;
-use ACP3\Modules\ACP3\System;
+use ACP3\Core\I18n\DictionaryCacheInterface;
+use ACP3\Core\Modules\ModuleInfoCacheInterface;
+use ACP3\Modules\ACP3\Permissions\Cache;
+use ACP3\Modules\ACP3\System\Exception\ModuleInstallerException;
+use ACP3\Modules\ACP3\System\Helper\Installer;
+use ACP3\Modules\ACP3\System\Services\CacheClearService;
+use ACP3\Modules\ACP3\System\ViewProviders\AdminModulesViewProvider;
+use Doctrine\DBAL\Exception as DBALException;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Modules extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Core\Modules\ModuleInfoCacheInterface
+     * @var ModuleInfoCacheInterface
      */
     private $moduleInfoCache;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository
-     */
-    private $systemModuleRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\System\Helper\Installer
+     * @var Installer
      */
     private $installerHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
+     * @var Cache
      */
     private $permissionsCache;
     /**
-     * @var \ACP3\Core\I18n\DictionaryCacheInterface
+     * @var DictionaryCacheInterface
      */
     private $dictionaryCache;
     /**
-     * @var \Psr\Container\ContainerInterface
+     * @var ContainerInterface
      */
     private $schemaLocator;
     /**
@@ -48,19 +52,19 @@ class Modules extends Core\Controller\AbstractWidgetAction
      */
     private $aclInstaller;
     /**
-     * @var \ACP3\Core\Modules
+     * @var Core\Modules
      */
     private $modules;
     /**
-     * @var \ACP3\Modules\ACP3\System\ViewProviders\AdminModulesViewProvider
+     * @var AdminModulesViewProvider
      */
     private $adminModulesViewProvider;
     /**
-     * @var \ACP3\Core\Helpers\RedirectMessages
+     * @var RedirectMessages
      */
     private $redirectMessages;
     /**
-     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
+     * @var CacheClearService
      */
     private $cacheClearService;
 
@@ -68,21 +72,19 @@ class Modules extends Core\Controller\AbstractWidgetAction
         Core\Controller\Context\WidgetContext $context,
         RedirectMessages $redirectMessages,
         Core\Modules $modules,
-        Core\I18n\DictionaryCacheInterface $dictionaryCache,
-        Core\Modules\ModuleInfoCacheInterface $moduleInfoCache,
-        System\Model\Repository\ModulesRepository $systemModuleRepository,
-        System\Helper\Installer $installerHelper,
-        Permissions\Cache $permissionsCache,
+        DictionaryCacheInterface $dictionaryCache,
+        ModuleInfoCacheInterface $moduleInfoCache,
+        Installer $installerHelper,
+        Cache $permissionsCache,
         ContainerInterface $schemaLocator,
         Core\Modules\SchemaInstaller $schemaInstaller,
         Core\Modules\AclInstaller $aclInstaller,
-        System\ViewProviders\AdminModulesViewProvider $adminModulesViewProvider,
-        System\Services\CacheClearService $cacheClearService
+        AdminModulesViewProvider $adminModulesViewProvider,
+        CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
 
         $this->moduleInfoCache = $moduleInfoCache;
-        $this->systemModuleRepository = $systemModuleRepository;
         $this->installerHelper = $installerHelper;
         $this->permissionsCache = $permissionsCache;
         $this->dictionaryCache = $dictionaryCache;
@@ -96,17 +98,13 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|RedirectResponse
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
     public function execute(?string $action = null, ?string $dir = null)
     {
         switch ($action) {
-            case 'activate':
-                return $this->enableModule($dir);
-            case 'deactivate':
-                return $this->disableModule($dir);
             case 'install':
                 return $this->installModule($dir);
             case 'uninstall':
@@ -117,78 +115,23 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    private function enableModule(string $moduleDirectory)
-    {
-        $result = false;
-
-        try {
-            $this->checkPreconditions($moduleDirectory);
-
-            $this->moduleInstallerExists($moduleDirectory);
-
-            $moduleSchema = $this->schemaLocator->get($moduleDirectory);
-
-            $dependencies = $this->installerHelper->checkInstallDependencies($moduleSchema);
-            $this->checkForFailedModuleDependencies($dependencies, 'enable_following_modules_first');
-
-            $result = $this->saveModuleState($moduleDirectory, 1);
-
-            $this->purgeCaches();
-
-            $text = $this->translator->t(
-                'system',
-                'mod_activate_' . ($result !== false ? 'success' : 'error')
-            );
-        } catch (System\Exception\ModuleInstallerException $e) {
-            $text = $e->getMessage();
-        }
-
-        return $this->redirectMessages->setMessage($result, $text, $this->request->getFullPath());
-    }
-
-    /**
-     * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
-     */
-    private function checkPreconditions(string $moduleDirectory): void
-    {
-        $info = $this->modules->getModuleInfo($moduleDirectory);
-        if (empty($info) || $info['protected'] === true || $info['installable'] === false) {
-            throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'could_not_complete_request'));
-        }
-    }
-
-    /**
-     * @throws System\Exception\ModuleInstallerException
+     * @throws ModuleInstallerException
      */
     private function moduleInstallerExists(string $serviceId): void
     {
         if ($this->schemaLocator->has($serviceId) === false) {
-            throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'module_installer_not_found'));
+            throw new ModuleInstallerException($this->translator->t('system', 'module_installer_not_found'));
         }
     }
 
     /**
-     * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
+     * @throws ModuleInstallerException
      */
     private function checkForFailedModuleDependencies(array $dependencies, string $phrase): void
     {
         if (!empty($dependencies)) {
-            throw new System\Exception\ModuleInstallerException($this->translator->t('system', $phrase, ['%modules%' => implode(', ', $dependencies)]));
+            throw new ModuleInstallerException($this->translator->t('system', $phrase, ['%modules%' => implode(', ', $dependencies)]));
         }
-    }
-
-    /**
-     * @return bool|int
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    private function saveModuleState(string $moduleDirectory, int $active)
-    {
-        return $this->systemModuleRepository->update(['active' => $active], ['name' => $moduleDirectory]);
     }
 
     private function purgeCaches(): void
@@ -204,7 +147,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
     private function renewCaches(): void
     {
@@ -214,43 +157,9 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return JsonResponse|RedirectResponse
      *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    private function disableModule(string $moduleDirectory)
-    {
-        $result = false;
-
-        try {
-            $this->checkPreconditions($moduleDirectory);
-
-            $this->moduleInstallerExists($moduleDirectory);
-
-            $moduleSchema = $this->schemaLocator->get($moduleDirectory);
-
-            $dependencies = $this->installerHelper->checkUninstallDependencies($moduleSchema);
-            $this->checkForFailedModuleDependencies($dependencies, 'module_disable_not_possible');
-
-            $result = $this->saveModuleState($moduleDirectory, 0);
-
-            $this->purgeCaches();
-
-            $text = $this->translator->t(
-                'system',
-                'mod_deactivate_' . ($result !== false ? 'success' : 'error')
-            );
-        } catch (System\Exception\ModuleInstallerException $e) {
-            $text = $e->getMessage();
-        }
-
-        return $this->redirectMessages->setMessage($result, $text, $this->request->getFullPath());
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
     private function installModule(string $moduleDirectory)
     {
@@ -258,7 +167,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
 
         try {
             if ($this->modules->isInstalled($moduleDirectory) === true) {
-                throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'module_already_installed'));
+                throw new ModuleInstallerException($this->translator->t('system', 'module_already_installed'));
             }
 
             $this->moduleInstallerExists($moduleDirectory);
@@ -277,7 +186,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
                 'system',
                 'mod_installation_' . ($result !== false && $resultAcl !== false ? 'success' : 'error')
             );
-        } catch (System\Exception\ModuleInstallerException $e) {
+        } catch (ModuleInstallerException $e) {
             $text = $e->getMessage();
         }
 
@@ -285,16 +194,15 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return JsonResponse|RedirectResponse
      */
     private function uninstallModule(string $moduleDirectory)
     {
         $result = false;
 
         try {
-            $info = $this->modules->getModuleInfo($moduleDirectory);
-            if ($info['protected'] === true || $this->modules->isInstalled($moduleDirectory) === false) {
-                throw new System\Exception\ModuleInstallerException($this->translator->t('system', 'protected_module_description'));
+            if ($this->modules->isInstalled($moduleDirectory) === false) {
+                throw new ModuleInstallerException(sprintf($this->translator->t('system', 'module_not_installed'), $moduleDirectory));
             }
 
             $this->moduleInstallerExists($moduleDirectory);
@@ -313,7 +221,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
                 'system',
                 'mod_uninstallation_' . ($result !== false && $resultAcl !== false ? 'success' : 'error')
             );
-        } catch (System\Exception\ModuleInstallerException $e) {
+        } catch (ModuleInstallerException $e) {
             $text = $e->getMessage();
         }
 
@@ -321,7 +229,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
     private function outputPage(): array
     {

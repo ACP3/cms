@@ -81,7 +81,7 @@ class AdminResourceEditViewProvider
     private function fetchActiveModules(?string $currentModule = null): array
     {
         $modules = [];
-        foreach ($this->modules->getActiveModules() as $info) {
+        foreach ($this->modules->getInstalledModules() as $info) {
             $modules[$info['name']] = $this->translator->t($info['name'], $info['name']);
         }
 

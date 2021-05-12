@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'newsseo',
         __DIR__,
-        ['core', 'news', 'seo', 'system']
+        ['news', 'seo']
     )
 );

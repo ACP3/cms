@@ -53,7 +53,7 @@ class Schema implements Modules\Installer\SchemaInterface
      */
     public function getSchemaVersion()
     {
-        return 75;
+        return 76;
     }
 
     /**
@@ -66,7 +66,6 @@ class Schema implements Modules\Installer\SchemaInterface
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(100) NOT NULL,
                 `version` TINYINT(3) UNSIGNED NOT NULL,
-                `active` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
             ) {ENGINE} {CHARSET};',
             'CREATE TABLE `{pre}sessions` (

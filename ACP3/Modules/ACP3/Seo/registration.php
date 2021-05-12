@@ -15,7 +15,7 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'seo',
         __DIR__,
-        ['core', 'permissions', 'system'],
+        ['acp', 'core'],
         new ModuleRegistration()
     )
 );

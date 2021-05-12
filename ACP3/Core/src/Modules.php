@@ -33,12 +33,12 @@ class Modules
 
     /**
      * Returns, whether a module is active or not.
+     *
+     * @deprecated since ACP3 version 5.18.0. To be removed with version 6.0.0. Use method Modules::isInstalled() instead.
      */
     public function isActive(string $moduleName): bool
     {
-        $info = $this->getModuleInfo($moduleName);
-
-        return !empty($info) && $info['active'] === true;
+        return $this->isInstalled($moduleName);
     }
 
     /**
@@ -83,12 +83,12 @@ class Modules
 
     /**
      * Returns all currently installed AND active modules.
+     *
+     * @deprecated since ACP3 version 5.18.0. To be removed with version 6.0.0. Use method Modules::getInstalledModules() instead.
      */
     public function getActiveModules(): array
     {
-        return array_filter($this->getAllModulesAlphabeticallySorted(), static function (array $module) {
-            return $module['active'] === true;
-        });
+        return $this->getInstalledModules();
     }
 
     /**

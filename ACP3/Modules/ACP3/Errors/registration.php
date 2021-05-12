@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'errors',
         __DIR__,
-        ['core', 'permissions', 'system']
+        ['core']
     )
 );

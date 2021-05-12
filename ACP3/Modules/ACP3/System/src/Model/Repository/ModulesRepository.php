@@ -80,7 +80,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     public function getInfoByModuleName(string $moduleName): array
     {
         return $this->db->fetchAssoc(
-            'SELECT `id`, `version`, `active` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
+            'SELECT `id`, `version` FROM ' . $this->getTableName() . ' WHERE `name` = ?',
             [$moduleName]
         );
     }

@@ -12,7 +12,6 @@ use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Component\Dto\ComponentDataDto;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
-use ACP3\Core\XML;
 use Composer\InstalledVersions;
 use Psr\Container\ContainerInterface;
 
@@ -22,10 +21,6 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
      * @var \ACP3\Core\Cache
      */
     private $cache;
-    /**
-     * @var \ACP3\Core\XML
-     */
-    private $xml;
     /**
      * @var ContainerInterface
      */
@@ -37,12 +32,10 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
 
     public function __construct(
         Cache $cache,
-        XML $xml,
         ContainerInterface $schemaLocator,
         ModuleAwareRepositoryInterface $systemModuleRepository
     ) {
         $this->cache = $cache;
-        $this->xml = $xml;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->schemaLocator = $schemaLocator;
     }
@@ -97,9 +90,6 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
      */
     private function fetchModuleInfo(ComponentDataDto $moduleCoreData): array
     {
-        $path = $moduleCoreData->getPath() . '/Resources/config/module.xml';
-        $legacyModuleInfo = is_file($path) ? $this->xml->parseXmlFile($path, 'info') : [];
-
         $moduleInfoDb = $this->systemModuleRepository->getInfoByModuleName($moduleCoreData->getName());
 
         $composerData = json_decode(file_get_contents($moduleCoreData->getPath() . '/composer.json'), true, 512, JSON_THROW_ON_ERROR);
@@ -108,15 +98,16 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
 
         return [
             'id' => $moduleInfoDb['id'] ?? 0,
+            'composer_package_name' => $composerData['name'],
             'dir' => $moduleCoreData->getPath(),
             'installed' => (!empty($moduleInfoDb)) || !$needsInstallation,
-            'active' => (!empty($moduleInfoDb) && (int) $moduleInfoDb['active'] === 1) || !$needsInstallation,
+            // @deprecated since version 5.18.0. To be removed with version 6.0.0.
+            'active' => (!empty($moduleInfoDb)) || !$needsInstallation,
             'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
-            'author' => $legacyModuleInfo['author'] ?? $this->getAuthors($composerData),
-            'version' => $legacyModuleInfo['version'] ?? InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],
+            'author' => $this->getAuthors($composerData),
+            'version' => InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],
             'name' => $moduleCoreData->getName(),
             'description' => $composerData['description'],
-            'protected' => isset($legacyModuleInfo['protected']),
             'installable' => $needsInstallation,
             'dependencies' => $moduleCoreData->getDependencies(),
         ];

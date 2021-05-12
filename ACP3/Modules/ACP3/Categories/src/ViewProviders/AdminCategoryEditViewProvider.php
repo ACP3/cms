@@ -87,7 +87,7 @@ class AdminCategoryEditViewProvider
     private function fetchModules(): array
     {
         $modules = [];
-        foreach ($this->modules->getActiveModules() as $info) {
+        foreach ($this->modules->getInstalledModules() as $info) {
             if (\in_array('categories', $info['dependencies'], true) === true) {
                 $modules[(int) $info['id']] = $this->translator->t($info['name'], $info['name']);
             }

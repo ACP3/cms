@@ -37,7 +37,6 @@ class ResourceRepository extends Core\Model\Repository\AbstractRepository
               FROM ' . $this->getTableName() . ' AS r
               JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(r.module_id = m.id)
               JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . ' AS p ON(r.privilege_id = p.id)
-             WHERE m.active = 1
           ORDER BY r.module_id ASC, r.area ASC, r.controller ASC, r.page ASC
         ');
     }

@@ -94,7 +94,7 @@ class UserMenuViewProvider
 
     private function getModules(): array
     {
-        $activeModules = $this->modules->getActiveModules();
+        $activeModules = $this->modules->getInstalledModules();
         $navMods = [];
         foreach ($activeModules as $name => $info) {
             if (!\in_array($info['name'], ['acp', 'system'])

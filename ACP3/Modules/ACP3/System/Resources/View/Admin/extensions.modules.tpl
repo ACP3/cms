@@ -23,30 +23,9 @@
                             <td>{$row.version}</td>
                             <td>{$row.author}</td>
                             <td class="text-center">
-                                {if $row.protected === true}
-                                    {icon iconSet="solid" icon="times-circle" cssSelectors="text-danger" title={lang t="system|protected_module_description"}}
-                                {elseif $row.installable === false}
+                                {if $row.installable === false}
                                     {icon iconSet="solid" icon="info-circle" cssSelectors="text-info" title={lang t="system|not_installable_module_description"}}
                                 {else}
-                                    {if $row.active === true}
-                                        <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_deactivate"}"
-                                           class="btn btn-block btn-default btn-xs"
-                                           title="{lang t="system|disable_module"}"
-                                           data-ajax-form="true"
-                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            {icon iconSet="solid" icon="times"}
-                                            {lang t="system|disable"}
-                                        </a>
-                                    {else}
-                                        <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_activate"}"
-                                           class="btn btn-block btn-primary btn-xs"
-                                           title="{lang t="system|enable_module"}"
-                                           data-ajax-form="true"
-                                           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                            {icon iconSet="solid" icon="check"}
-                                            {lang t="system|enable"}
-                                        </a>
-                                    {/if}
                                     <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_uninstall"}"
                                        class="btn btn-block btn-danger btn-xs"
                                        title="{lang t="system|uninstall_module"}"

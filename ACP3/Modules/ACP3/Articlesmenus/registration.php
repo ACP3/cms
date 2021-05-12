@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'articlesmenus',
         __DIR__,
-        ['articles', 'core', 'menus', 'system']
+        ['articles', 'menus']
     )
 );

@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'galleryshare',
         __DIR__,
-        ['core', 'gallery', 'share', 'system']
+        ['gallery', 'share']
     )
 );

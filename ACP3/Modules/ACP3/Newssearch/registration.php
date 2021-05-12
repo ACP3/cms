@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'newssearch',
         __DIR__,
-        ['core', 'news', 'search', 'system']
+        ['news', 'search']
     )
 );
