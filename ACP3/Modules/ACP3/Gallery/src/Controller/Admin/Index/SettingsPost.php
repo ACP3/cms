@@ -73,14 +73,14 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\
             if ($this->hasImageDimensionChanges($formData)) {
                 Core\Cache\Purge::doPurge($this->appPath->getUploadsDir() . 'gallery/cache', 'gallery');
 
-                $this->galleryCoreCache->getDriver()->deleteAll();
+                $this->galleryCoreCache->deleteAll();
             }
 
             return $bool;
         });
     }
 
-    protected function hasImageDimensionChanges(array $formData): bool
+    private function hasImageDimensionChanges(array $formData): bool
     {
         $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);
 

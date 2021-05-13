@@ -79,7 +79,7 @@ class AclInstaller implements InstallerInterface
             $this->insertAclRules($schema->getModuleName());
         }
 
-        $this->aclCache->getDriver()->deleteAll();
+        $this->aclCache->deleteAll();
 
         return true;
     }
@@ -165,7 +165,7 @@ class AclInstaller implements InstallerInterface
      */
     public function uninstall(SchemaInterface $schema): bool
     {
-        $this->aclCache->getDriver()->deleteAll();
+        $this->aclCache->deleteAll();
 
         return true;
     }
