@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Core] Fixed a possible PHP warning, if the authors section is missing within a composer.json file
 
 ## [5.18.0] - 2021-05-13
 
@@ -62,11 +64,13 @@ tba
 -   [ALL] Replaced the usages of fontawesome webfont with its SVG-sprites
 -   [Core] Updated Doctrine-DBAL to version 3.x
 -   [Core] Update PHPUnit to version 9.5.
--   [Gallery] Do not allow to index the gallery picture details page, if the overlay has been enabled in the module settings
+-   [Gallery] Do not allow to index the gallery picture details page, if the overlay has been enabled in the module
+    settings
 
 ### Fixed
 
--   [Core, Comments, Guestbook] Fixed an erroneous return type declaration regarding the flood barrier, which could cause a type error under certain conditions
+-   [Core, Comments, Guestbook] Fixed an erroneous return type declaration regarding the flood barrier, which could cause
+    a type error under certain conditions
 -   [Installer] Fixed the installers server-error page
 -   [Installer] Fixed the available databases action to be more robust against errors
 
@@ -112,13 +116,17 @@ tba
 -   [ALL] Increased PHPStan's level to level 5
 -   [Core] Moved the `acp3:assets:clear` and `acp3:cache:clear` CLI-commands into the System module
 -   [Core] Replaced the abandoned `patchwork/utf8` Composer package with Symfony's mbstring polyfill
--   [Default themes] Moved the `<!--JAVASCRIPTS-->` comment from the `<body>`-end into the `<head>`. This is no problem, as all the javascripts assets are deferred.
+-   [Default themes] Moved the `<!--JAVASCRIPTS-->` comment from the `<body>`-end into the `<head>`. This is no problem,
+    as all the javascripts assets are deferred.
 -   [System] Removed `html5shiv`. Internet Explorer versions <= 9 aren't supported anyway
--   [Core] Reworked the `acp3:components:paths` CLI command to include more information in the resulting `component-paths.json`. Be sure run `php bin/console.php acp3:components:paths` after the ACP3 version update before running the gulp tasks, as the new JSON-file version isn't compatible with the old one!
+-   [Core] Reworked the `acp3:components:paths` CLI command to include more information in the
+    resulting `component-paths.json`. Be sure run `php bin/console.php acp3:components:paths` after the ACP3 version
+    update before running the gulp tasks, as the new JSON-file version isn't compatible with the old one!
 
 ### Deprecations
 
--   [Core] Deprecated the `LESS` CSS preprocessor tool chain. To be removed with version 6.0.0. Use SCSS as a preprocessor instead.
+-   [Core] Deprecated the `LESS` CSS preprocessor tool chain. To be removed with version 6.0.0. Use SCSS as a preprocessor
+    instead.
 -   [Core] Deprecated the following methods from the `ACP3\Core\Environment\ApplicationPath` class:
     -   `getClassesDir`
     -   `getModulesDir`
@@ -217,13 +225,16 @@ tba
 ### Added
 
 -   [ALL] Make use of symfony's DI container autowiring
--   [Core] Implemented different strategies for outputting the static assets (CSS and JavaScripts) in development mode and production mode
--   [Core] Made it possible to state the always enabled frontend libraries of a theme directly within the `info.xml`. Use the `<libraries><item>lib-name</item></libraries>` for this.
+-   [Core] Implemented different strategies for outputting the static assets (CSS and JavaScripts) in development mode and
+    production mode
+-   [Core] Made it possible to state the always enabled frontend libraries of a theme directly within the `info.xml`. Use
+    the `<libraries><item>lib-name</item></libraries>` for this.
 -   [Core] Added support for source maps
 
 ### Changed
 
--   [Core] Changed the `$moduleName` argument of the `LibraryEntity` to be mandatory. With version 6.0.0 this parameter with move to another position
+-   [Core] Changed the `$moduleName` argument of the `LibraryEntity` to be mandatory. With version 6.0.0 this parameter
+    with move to another position
 -   [Core] Use the `CacheClearService` where possible
 -   [Core] Replaced the `MigrationRegistrar` class with a "plain" symfony service locator
 -   [Core] Replaced the `SampleDataRegistrar` class with a "plain" symfony service locator
@@ -260,11 +271,13 @@ tba
 ### Deprecations
 
 -   [Core] Deprecated the class `ACP3\Core\Controller\Event\CustomTemplateVariableEvent` and therefore the event itself
--   [Core] Deprecated the method `ACP3\Core\Controller\DisplayActionTrait::addCustomTemplateVarsBeforeOutput` and its implementations
+-   [Core] Deprecated the method `ACP3\Core\Controller\DisplayActionTrait::addCustomTemplateVarsBeforeOutput` and its
+    implementations
 
 ### Fixed
 
--   [Core] Reverted the changes to the `CacheResponseTrait` and reworked it (breaking method signature change!), to hopefully fix some edge cases with the HTTP cache once and for all.
+-   [Core] Reverted the changes to the `CacheResponseTrait` and reworked it (breaking method signature change!), to
+    hopefully fix some edge cases with the HTTP cache once and for all.
 -   [System] Fixed the update check
 
 ## [5.10.2] - 2021-01-01
@@ -277,16 +290,20 @@ tba
 
 ### Changed
 
--   [Core] Reworked the `ACP3\Core\Assets` class, so that the theme initialization happens much later (and only when really necessary)
+-   [Core] Reworked the `ACP3\Core\Assets` class, so that the theme initialization happens much later (and only when
+    really necessary)
 
 ### Deprecations
 
--   [Core] Deprecated the method `ACP3\Core\Assets::getLibraries()`. Use `ACP3\Core\Assets\Libraries::getLibraries()` instead
--   [Core] Deprecated the method `ACP3\Core\Assets::getEnabledLibrariesAsString()`. Use `ACP3\Core\Assets\Libraries::getEnabledLibrariesAsString()` instead
+-   [Core] Deprecated the method `ACP3\Core\Assets::getLibraries()`. Use `ACP3\Core\Assets\Libraries::getLibraries()`
+    instead
+-   [Core] Deprecated the method `ACP3\Core\Assets::getEnabledLibrariesAsString()`.
+    Use `ACP3\Core\Assets\Libraries::getEnabledLibrariesAsString()` instead
 
 ### Fixed
 
--   [Core] Fixed a regression introduced with version 5.10.0 that made enabling the HTTP cache would result in incomplete asset delivery
+-   [Core] Fixed a regression introduced with version 5.10.0 that made enabling the HTTP cache would result in incomplete
+    asset delivery
 
 ## [5.10.0] - 2020-12-31
 
@@ -303,7 +320,8 @@ tba
 
 ### Deprecations
 
--   [Core] Deprecated the `ACP3\Core\View\Renderer\Smarty\Filters\AbstractMoveElementFilter`, of the `MoveTo*`-output filters within the core module are obsolete now
+-   [Core] Deprecated the `ACP3\Core\View\Renderer\Smarty\Filters\AbstractMoveElementFilter`, of the `MoveTo*`-output
+    filters within the core module are obsolete now
 
 ### Fixed
 
@@ -326,8 +344,10 @@ tba
 ### Added
 
 -   [Core] Extended the `ControllerActionRequestEvent` with the ability to set a response
--   [Core] Implemented the `TerminableInterface` to allow running some longer processes without affecting the client's response times
--   [Core] Added the new interface `SortingAwareInterface` and trait `SortingAwareTrait` to extend the service models with the capability to change the order of DB results
+-   [Core] Implemented the `TerminableInterface` to allow running some longer processes without affecting the client's
+    response times
+-   [Core] Added the new interface `SortingAwareInterface` and trait `SortingAwareTrait` to extend the service models with
+    the capability to change the order of DB results
 -   [Core] The `AbstractNestedSetModel` classes implement the `SortingAwareInterface` by default now
 -   [System] Allow to override the text-color of the "mandatory form-field star" using a SCSS variable
 -   [System] Allow to override the margins of the pagination using a SCSS variable
@@ -336,15 +356,18 @@ tba
 
 -   [Core] Increase the minimum supported PHP version to 7.2.5
 -   [Core] Reworked the bootstrapping process, which allowed us to greatly simplify the front controllers
--   [Installer] Reworked the installer's requirements check, so that it automatically fetches the minimum required PHP version and to be installed PHP extensions from the `composer.json` files
+-   [Installer] Reworked the installer's requirements check, so that it automatically fetches the minimum required PHP
+    version and to be installed PHP extensions from the `composer.json` files
 -   [SEO] Move the regeneration of the XML-sitemaps to be handled by the `TerminateEvent`
--   [SEO] Combined 2 event listeners into a single one (which doesn't gets called that often) so slightly improve the performance
+-   [SEO] Combined 2 event listeners into a single one (which doesn't gets called that often) so slightly improve the
+    performance
 -   [System] Reworked the cache clear controller action page
 -   [System] Removed the `<!-- JAVASCRIPT -->` placeholder from the content-only layout file
 
 ### Deprecations
 
--   [Core] Deprecated the method `ACP3\Core\Helpers\Alerts::errorBoxContent()`. Use `ACP3\Core\Helpers\Alerts::errorBox()` instead.
+-   [Core] Deprecated the method `ACP3\Core\Helpers\Alerts::errorBoxContent()`. Use `ACP3\Core\Helpers\Alerts::errorBox()`
+    instead.
 
 ### Fixed
 
@@ -355,10 +378,12 @@ tba
 
 ### Changed
 
--   reworked the `ACP3\Core\Helpers\Alerts::confirmBox` and `ACP3\Core\Helpers\Alerts::confirmBoxPost` so that they return the already rendered template
+-   reworked the `ACP3\Core\Helpers\Alerts::confirmBox` and `ACP3\Core\Helpers\Alerts::confirmBoxPost` so that they return
+    the already rendered template
     -   This allowed us to remove all the `*.delete.tpl`-templates
 -   reworked the SchemaUpdater to be a little faster
--   optimized the bootstrapping process to that a sub request doesn't trigger a complete rebuild of the DI container anymore
+-   optimized the bootstrapping process to that a sub request doesn't trigger a complete rebuild of the DI container
+    anymore
 -   optimized the inclusion of the reCaptcha assets, so that they are only loaded when really needed
 
 ### Fixed
@@ -385,13 +410,15 @@ tba
 
 -   Fixed saving ACL rules
 -   Fixed the RSS/Atom feeds when there are no items to display
--   Fixed an incorrectly reported status when saving entities which are using the infrastructure of the `AbstractNestedSetModel`
+-   Fixed an incorrectly reported status when saving entities which are using the infrastructure of
+    the `AbstractNestedSetModel`
 
 ## [5.6.0] - 2020-12-15
 
 ### Changed
 
--   renamed the `LibraryDto` to `LibraryEntity`. This also removes the possibility to enable a frontend library by default --> you have to call "enableLibraries" explicitly
+-   renamed the `LibraryDto` to `LibraryEntity`. This also removes the possibility to enable a frontend library by default
+    --> you have to call "enableLibraries" explicitly
 
 ## [5.5.1] - 2020-12-15
 
@@ -420,7 +447,8 @@ tba
 
 ### Added
 
--   Extended the SCSS files of the various modules with SCSS variables to make it easier to customize the ACP3 default appearance
+-   Extended the SCSS files of the various modules with SCSS variables to make it easier to customize the ACP3 default
+    appearance
 
 ### Fixed
 
