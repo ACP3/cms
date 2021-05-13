@@ -16,10 +16,10 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^5.17.0",
-    "acp3/module-system": "^5.17.0",
-    "acp3/module-users": "^5.17.0",
-    "acp3/theme-installer": "^5.16.0",
+    "acp3/core": "^5.18.0",
+    "acp3/module-system": "^5.18.0",
+    "acp3/module-users": "^5.18.0",
+    "acp3/theme-installer": "^5.18.0",
     "composer/semver": "^3.2"
   },
   "autoload": {
