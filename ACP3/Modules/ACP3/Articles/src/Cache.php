@@ -17,7 +17,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
      */
-    protected $articleRepository;
+    private $articleRepository;
 
     public function __construct(
         Core\Cache $cache,
@@ -28,12 +28,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         $this->articleRepository = $articleRepository;
     }
 
-    /**
-     * @param int $articleId
-     *
-     * @return array
-     */
-    public function getCache($articleId)
+    public function getCache(int $articleId): array
     {
         if ($this->cache->contains(self::CACHE_ID . $articleId) === false) {
             $this->saveCache($articleId);
@@ -42,12 +37,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
         return $this->cache->fetch(self::CACHE_ID . $articleId);
     }
 
-    /**
-     * @param int $articleId
-     *
-     * @return bool
-     */
-    public function saveCache($articleId)
+    public function saveCache(int $articleId): bool
     {
         return $this->cache->save(self::CACHE_ID . $articleId, $this->articleRepository->getOneById($articleId));
     }
