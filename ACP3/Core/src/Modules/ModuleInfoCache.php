@@ -124,7 +124,7 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
     {
         $authors = [];
 
-        foreach ($composerData['authors'] as $author) {
+        foreach ($composerData['authors'] ?? [] as $author) {
             $authors[] = $author['name'];
         }
 
