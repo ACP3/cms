@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [Core] The composer.json for the ACP3 components is mandatory now
+-   [Core] Removed all the `module.xml` files from the modules
+
+### Removed
+
+-   [System] Removed the ability to enable or disable modules
+
+### Fixed
+
+-   [Core] Fixed an n+1 SQL-query problem when creating the module info cache
 
 ## [5.17.2] - 2021-05-08
 
