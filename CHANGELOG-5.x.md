@@ -17,6 +17,12 @@ tba
 
 ## [5.18.0] - 2021-05-13
 
+### Deprecations
+
+-   [Core] Deprecated the method `ACP3\Core\Modules::isActive()`, to be removed with version 6.0.0. Use `::isInstalled()` instead
+-   [Core] Deprecated the method `ACP3\Core\Modules::getActiveModules()`, to be removed with version 6.0.0. Use `::getInstalledModules()` instead
+-   [Core] Deprecated the `active` property from the module information. To be removed with version 6.0.0.
+
 ### Changed
 
 -   [Core] The composer.json for the ACP3 components is mandatory now
