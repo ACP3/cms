@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Users] Fixed saving users
+-   [Permissions] Fixed saving the ACL roles
 
 ## [5.18.1] - 2021-05-13
 
