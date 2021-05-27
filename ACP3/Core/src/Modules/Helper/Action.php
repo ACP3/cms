@@ -57,7 +57,7 @@ class Action
     }
 
     /**
-     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string|array|JsonResponse|RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
@@ -148,7 +148,7 @@ class Action
     }
 
     /**
-     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string|array|JsonResponse|RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
@@ -163,7 +163,7 @@ class Action
     }
 
     /**
-     * @return string|array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string|array|JsonResponse|RedirectResponse
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
@@ -193,15 +193,19 @@ class Action
     }
 
     /**
-     * @param bool|int $result
+     * @param bool|int|Response $response
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return JsonResponse|RedirectResponse|Response
      */
-    private function prepareRedirectMessageAfterPost($result, string $phrase, ?string $path = null)
+    private function prepareRedirectMessageAfterPost($response, string $phrase, ?string $path = null)
     {
+        if ($response instanceof Response) {
+            return $response;
+        }
+
         return $this->setRedirectMessage(
-            $result,
-            $this->translator->t('system', $phrase . ($result !== false ? '_success' : '_error')),
+            $response,
+            $this->translator->t('system', $phrase . ($response !== false ? '_success' : '_error')),
             $path
         );
     }
@@ -209,7 +213,7 @@ class Action
     /**
      * @param bool|int $result
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return JsonResponse|RedirectResponse
      */
     public function setRedirectMessage($result, string $translatedText, ?string $path = null)
     {
@@ -236,7 +240,7 @@ class Action
     /**
      * helper function for deleting a result set.
      *
-     * @return array|Response|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array|Response|JsonResponse|RedirectResponse
      */
     private function deleteItem(?string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null)
     {
