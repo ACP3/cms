@@ -46,14 +46,14 @@ class RulesModel extends AbstractModel
 
         foreach ($privileges as $moduleId => $modulePrivileges) {
             foreach ($modulePrivileges as $privilegeId => $permission) {
-                $ruleInsertValues = [
+                $ruleUpsertValues = [
                     'role_id' => $roleId,
                     'module_id' => $moduleId,
                     'privilege_id' => $privilegeId,
                     'permission' => $permission,
                 ];
 
-                $this->save($ruleInsertValues, $this->findRuleId($rules, $moduleId, $privilegeId));
+                $this->save($ruleUpsertValues, $this->findRuleId($rules, $moduleId, $privilegeId));
             }
         }
 
@@ -71,10 +71,7 @@ class RulesModel extends AbstractModel
         return null;
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'role_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
