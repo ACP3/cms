@@ -1,6 +1,9 @@
 services:
   _defaults:
     autowire: true
+    bind:
+      $systemCache: "@core.cache.system"
+      $i18nCache: "@core.cache.i18n"
 
   ACP3\Modules\ACP3\System\EventListener\:
     resource: "../../../src/EventListener/"
