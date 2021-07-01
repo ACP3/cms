@@ -7,29 +7,21 @@
 
 namespace ACP3\Core\I18n;
 
-use ACP3\Core\Cache;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Environment\ThemePathInterface;
 use DomainException;
 use Fisharebest\Localization\Locale;
 
-class DictionaryCache implements DictionaryCacheInterface
+class Dictionary implements DictionaryInterface
 {
-    /**
-     * @var Cache
-     */
-    private $cache;
     /**
      * @var \ACP3\Core\Environment\ThemePathInterface
      */
     private $theme;
 
-    public function __construct(
-        Cache $cache,
-        ThemePathInterface $theme
-    ) {
-        $this->cache = $cache;
+    public function __construct(ThemePathInterface $theme)
+    {
         $this->theme = $theme;
     }
 
@@ -39,22 +31,7 @@ class DictionaryCache implements DictionaryCacheInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function getLanguageCache(string $language): array
-    {
-        if ($this->cache->contains($language) === false) {
-            $this->saveLanguageCache($language);
-        }
-
-        return $this->cache->fetch($language);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
-    public function saveLanguageCache(string $language): bool
+    public function getDictionary(string $language): array
     {
         $locale = Locale::create($language);
         $data = [
@@ -99,7 +76,7 @@ class DictionaryCache implements DictionaryCacheInterface
             }
         }
 
-        return $this->cache->save($language, $data);
+        return $data;
     }
 
     private function parseI18nFile(string $i18nFile, string $moduleName): array
@@ -123,19 +100,7 @@ class DictionaryCache implements DictionaryCacheInterface
     /**
      * {@inheritdoc}
      */
-    public function getLanguagePacksCache(): array
-    {
-        if ($this->cache->contains('language_packs') === false) {
-            $this->saveLanguagePacksCache();
-        }
-
-        return $this->cache->fetch('language_packs');
-    }
-
-    /**
-     * Sets the cache for all registered languages.
-     */
-    protected function saveLanguagePacksCache(): bool
+    public function getLanguagePacks(): array
     {
         $languagePacks = [];
 
@@ -161,7 +126,7 @@ class DictionaryCache implements DictionaryCacheInterface
             }
         }
 
-        return $this->cache->save('language_packs', $languagePacks);
+        return $languagePacks;
     }
 
     /**

@@ -2,21 +2,18 @@ services:
   _defaults:
     autowire: true
 
-  core.i18n.translator:
-    class: ACP3\Core\I18n\Translator
-
-  ACP3\Core\I18n\Translator: "@core.i18n.translator"
-  core.lang: "@core.i18n.translator"
-
-  core.i18n.dictionary_cache:
-    class: ACP3\Core\I18n\DictionaryCache
+  core.cache.i18n:
+    class: ACP3\Core\Cache
     arguments:
-      $cache: "@core.cache.system"
+      $namespace: "i18n"
 
-  ACP3\Core\I18n\DictionaryCache: "@core.i18n.dictionary_cache"
-  ACP3\Core\I18n\DictionaryCacheInterface: "@core.i18n.dictionary_cache"
+  ACP3\Core\I18n\:
+    resource: "../../../src/I18n/"
 
-  core.i18n.country_list:
-    class: ACP3\Core\I18n\CountryList
+  ACP3\Core\I18n\CachingDictionary:
+    decorates: ACP3\Core\I18n\Dictionary
+    arguments:
+      - "@core.cache.i18n"
+      - "@.inner"
 
-  ACP3\Core\I18n\CountryList: "@core.i18n.country_list"
+  ACP3\Core\I18n\DictionaryInterface: '@ACP3\Core\I18n\Dictionary'

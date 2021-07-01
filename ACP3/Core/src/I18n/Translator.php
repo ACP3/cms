@@ -13,9 +13,9 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Translator
 {
     /**
-     * @var \ACP3\Core\I18n\DictionaryCacheInterface
+     * @var DictionaryInterface
      */
-    private $dictionaryCache;
+    private $dictionary;
     /**
      * @var string|null
      */
@@ -34,10 +34,10 @@ class Translator
     private $settings;
 
     public function __construct(
-        DictionaryCacheInterface $dictionaryCache,
+        DictionaryInterface $dictionary,
         SettingsInterface $settings
     ) {
-        $this->dictionaryCache = $dictionaryCache;
+        $this->dictionary = $dictionary;
         $this->settings = $settings;
     }
 
@@ -47,7 +47,7 @@ class Translator
     public function languagePackExists(string $locale): bool
     {
         if (empty($this->languagePacks)) {
-            $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
+            $this->languagePacks = $this->dictionary->getLanguagePacks();
         }
 
         $foundLanguagePack = array_filter($this->languagePacks, static function ($languagePack) use ($locale) {
@@ -89,7 +89,7 @@ class Translator
     public function getDirection(): string
     {
         if (isset($this->buffer[$this->getLocale()]) === false) {
-            $this->buffer[$this->getLocale()] = $this->dictionaryCache->getLanguageCache($this->getLocale());
+            $this->buffer[$this->getLocale()] = $this->dictionary->getDictionary($this->getLocale());
         }
 
         return $this->buffer[$this->getLocale()]['info']['direction'] ?? 'ltr';
@@ -98,7 +98,7 @@ class Translator
     public function t(string $module, string $phrase, array $arguments = []): string
     {
         if (isset($this->buffer[$this->getLocale()]) === false) {
-            $this->buffer[$this->getLocale()] = $this->dictionaryCache->getLanguageCache($this->getLocale());
+            $this->buffer[$this->getLocale()] = $this->dictionary->getDictionary($this->getLocale());
         }
 
         $key = $module . $phrase;
@@ -115,7 +115,7 @@ class Translator
     public function getLanguagePacks(): array
     {
         if (empty($this->languagePacks)) {
-            $this->languagePacks = $this->dictionaryCache->getLanguagePacksCache();
+            $this->languagePacks = $this->dictionary->getLanguagePacks();
         }
 
         return $this->languagePacks;
