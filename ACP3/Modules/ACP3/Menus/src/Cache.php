@@ -17,21 +17,18 @@ class Cache extends Core\Modules\AbstractCacheStorage
     public const CACHE_ID_VISIBLE = 'visible_items_';
 
     /**
-     * @var \ACP3\Core\I18n\Translator
+     * @var Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
+     * @var MenuRepository
      */
-    protected $menuRepository;
+    private $menuRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+     * @var MenuItemRepository
      */
-    protected $menuItemRepository;
+    private $menuItemRepository;
 
-    /**
-     * @param \ACP3\Core\I18n\Translator $translator
-     */
     public function __construct(
         Core\Cache $cache,
         Core\I18n\Translator $translator,
@@ -47,10 +44,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * Returns the cached menu items.
-     *
-     * @return array
      */
-    public function getMenusCache()
+    public function getMenusCache(): array
     {
         if ($this->cache->contains(self::CACHE_ID) === false) {
             $this->saveMenusCache();
@@ -62,9 +57,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * Saves the menu items to the cache.
      *
-     * @return bool
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function saveMenusCache()
+    public function saveMenusCache(): bool
     {
         $menuItems = $this->menuItemRepository->getAllMenuItems();
         $cMenuItems = \count($menuItems);
@@ -77,10 +72,10 @@ class Cache extends Core\Modules\AbstractCacheStorage
             }
 
             foreach ($menuItems as $i => $menuItem) {
-                foreach ($menus as $j => $menu) {
+                foreach ($menus as $menu) {
                     if ($menuItem['block_id'] === $menu['id']) {
-                        $menuItems[$i]['block_title'] = $menus[$j]['title'];
-                        $menuItems[$i]['block_name'] = $menus[$j]['index_name'];
+                        $menuItems[$i]['block_title'] = $menu['title'];
+                        $menuItems[$i]['block_name'] = $menu['index_name'];
                     }
                 }
             }
@@ -105,11 +100,9 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * Saves the visible menu items to the cache.
      *
-     * @param string $menuIdentifier
-     *
-     * @return bool
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function saveVisibleMenuItemsCache($menuIdentifier)
+    public function saveVisibleMenuItemsCache(string $menuIdentifier): bool
     {
         return $this->cache->save(
             self::CACHE_ID_VISIBLE . $menuIdentifier,
@@ -119,12 +112,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * Returns the cached visible menu items.
-     *
-     * @param string $menuIdentifier
-     *
-     * @return array
      */
-    public function getVisibleMenuItems($menuIdentifier)
+    public function getVisibleMenuItems(string $menuIdentifier): array
     {
         if ($this->cache->contains(self::CACHE_ID_VISIBLE . $menuIdentifier) === false) {
             $this->saveVisibleMenuItemsCache($menuIdentifier);
@@ -133,17 +122,12 @@ class Cache extends Core\Modules\AbstractCacheStorage
         return $this->cache->fetch(self::CACHE_ID_VISIBLE . $menuIdentifier);
     }
 
-    /**
-     * @param int $index
-     *
-     * @return bool
-     */
-    protected function isFirstItemInSet($index, array $menuItems)
+    private function isFirstItemInSet(int $index, array $menuItems): bool
     {
         if ($index > 0) {
             for ($j = $index - 1; $j >= 0; --$j) {
                 if ($menuItems[$j]['parent_id'] == $menuItems[$index]['parent_id']
-                    && $menuItems[$j]['block_name'] == $menuItems[$index]['block_name']
+                    && $menuItems[$j]['block_name'] === $menuItems[$index]['block_name']
                 ) {
                     return false;
                 }
@@ -153,17 +137,12 @@ class Cache extends Core\Modules\AbstractCacheStorage
         return true;
     }
 
-    /**
-     * @param int $index
-     *
-     * @return bool
-     */
-    protected function isLastItemInSet($index, array $menuItems)
+    private function isLastItemInSet(int $index, array $menuItems): bool
     {
         $cItems = \count($menuItems);
         for ($j = $index + 1; $j < $cItems; ++$j) {
             if ($menuItems[$index]['parent_id'] == $menuItems[$j]['parent_id']
-                && $menuItems[$j]['block_name'] == $menuItems[$index]['block_name']
+                && $menuItems[$j]['block_name'] === $menuItems[$index]['block_name']
             ) {
                 return false;
             }
