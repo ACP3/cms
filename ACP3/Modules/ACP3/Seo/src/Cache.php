@@ -15,11 +15,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
     /**
      * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
      */
-    protected $seoRepository;
+    private $seoRepository;
 
-    /**
-     * @param \ACP3\Core\Cache $cache
-     */
     public function __construct(
         Core\Cache $cache,
         SeoRepository $seoRepository
@@ -31,10 +28,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * Gibt den Cache der URI-Aliase zurück.
-     *
-     * @return array
      */
-    public function getCache()
+    public function getCache(): array
     {
         if ($this->cache->contains('seo') === false) {
             $this->saveCache();
@@ -45,10 +40,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * Setzt den Cache für die URI-Aliase.
-     *
-     * @return bool
      */
-    public function saveCache()
+    public function saveCache(): bool
     {
         $data = [];
         foreach ($this->seoRepository->getAllMetaTags() as $alias) {
