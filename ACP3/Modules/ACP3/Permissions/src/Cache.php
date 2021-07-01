@@ -32,9 +32,6 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
      */
     private $ruleRepository;
 
-    /**
-     * @param \ACP3\Core\Cache $cache
-     */
     public function __construct(
         Core\Cache $cache,
         RoleRepository $roleRepository,
@@ -70,8 +67,8 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
         $resources = $this->resourceRepository->getAllResources();
         $data = [];
 
-        foreach ($resources as $i => $resource) {
-            $area = $resources[$i]['area'];
+        foreach ($resources as $resource) {
+            $area = $resource['area'];
             if (isset($data[$area]) === false) {
                 $data[$area] = [];
             }
@@ -171,24 +168,17 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
         return $this->cache->save(static::CACHE_ID_RULES . implode(',', $roles), $privileges);
     }
 
-    /**
-     * @param string $privilegeKey
-     *
-     * @return bool
-     */
-    protected function hasAccess(array $rule, $privilegeKey)
+    private function hasAccess(array $rule, string $privilegeKey): bool
     {
         return $rule['permission'] == Core\ACL\PermissionEnum::PERMIT_ACCESS
         || ($rule['permission'] == Core\ACL\PermissionEnum::INHERIT_ACCESS
-            && $this->getPermissionValue($privilegeKey, $rule['module_id'], $rule['role_id']) == Core\ACL\PermissionEnum::PERMIT_ACCESS);
+            && $this->getPermissionValue($privilegeKey, $rule['module_id'], $rule['role_id']) === Core\ACL\PermissionEnum::PERMIT_ACCESS);
     }
 
     /**
      * Ermittelt die Berechtigung einer Privilegie von einer übergeordneten Rolle.
-     *
-     * @return int
      */
-    protected function getPermissionValue(string $privilegeKey, int $moduleId, int $roleId)
+    private function getPermissionValue(string $privilegeKey, int $moduleId, int $roleId): int
     {
         $permission = $this->roleRepository->getPermissionByKeyAndRoleId($privilegeKey, $moduleId, $roleId);
 
