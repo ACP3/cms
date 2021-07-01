@@ -15,19 +15,16 @@ class MenuItemsList
     /**
      * @var array
      */
-    protected $menuItems = [];
+    private $menuItems = [];
     /**
      * @var \ACP3\Core\Helpers\Forms
      */
-    protected $formsHelper;
+    private $formsHelper;
     /**
      * @var \ACP3\Modules\ACP3\Menus\Cache
      */
-    protected $menusCache;
+    private $menusCache;
 
-    /**
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     */
     public function __construct(
         Core\Helpers\Forms $formsHelper,
         Cache $menusCache
@@ -38,14 +35,8 @@ class MenuItemsList
 
     /**
      * List all available menu items.
-     *
-     * @param int $parentId
-     * @param int $leftId
-     * @param int $rightId
-     *
-     * @return array
      */
-    public function menuItemsList($parentId = 0, $leftId = 0, $rightId = 0)
+    public function menuItemsList(int $parentId = 0, int $leftId = 0, int $rightId = 0): array
     {
         // Menüpunkte einbinden
         if (empty($this->menuItems)) {
