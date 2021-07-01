@@ -14,15 +14,15 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
-use ACP3\Modules\ACP3\News\Cache;
 use ACP3\Modules\ACP3\News\Installer\Schema as NewsSchema;
+use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
 
 class NewsDetailsViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\News\Cache
+     * @var NewsRepository
      */
-    private $newsCache;
+    private $newsRepository;
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
      */
@@ -53,16 +53,16 @@ class NewsDetailsViewProvider
     private $view;
 
     public function __construct(
-        Cache $newsCache,
+        NewsRepository $newsRepository,
         CategoryRepository $categoryRepository,
         RequestInterface $request,
         SettingsInterface $settings,
         Steps $breadcrumb,
         Title $title,
         Translator $translator,
-        View $view)
-    {
-        $this->newsCache = $newsCache;
+        View $view
+    ) {
+        $this->newsRepository = $newsRepository;
         $this->categoryRepository = $categoryRepository;
         $this->request = $request;
         $this->settings = $settings;
@@ -79,7 +79,7 @@ class NewsDetailsViewProvider
     {
         $newsSettings = $this->settings->getSettings(NewsSchema::MODULE_NAME);
 
-        $news = $this->newsCache->getCache($newsId);
+        $news = $this->newsRepository->getOneById($newsId);
 
         $this->addBreadcrumbSteps(
             $news,
