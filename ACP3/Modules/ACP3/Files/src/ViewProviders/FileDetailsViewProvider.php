@@ -14,8 +14,8 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
-use ACP3\Modules\ACP3\Files\Cache;
 use ACP3\Modules\ACP3\Files\Installer\Schema as FilesSchema;
+use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
 
 class FileDetailsViewProvider
 {
@@ -24,9 +24,9 @@ class FileDetailsViewProvider
      */
     private $breadcrumb;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Cache
+     * @var FilesRepository
      */
-    private $filesCache;
+    private $filesRepository;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -54,7 +54,7 @@ class FileDetailsViewProvider
 
     public function __construct(
         Steps $breadcrumb,
-        Cache $filesCache,
+        FilesRepository $filesRepository,
         CategoryRepository $categoryRepository,
         RequestInterface $request,
         SettingsInterface $settings,
@@ -63,7 +63,7 @@ class FileDetailsViewProvider
         View $view
     ) {
         $this->breadcrumb = $breadcrumb;
-        $this->filesCache = $filesCache;
+        $this->filesRepository = $filesRepository;
         $this->request = $request;
         $this->settings = $settings;
         $this->title = $title;
@@ -77,7 +77,7 @@ class FileDetailsViewProvider
      */
     public function __invoke(int $fileId): array
     {
-        $file = $this->filesCache->getCache($fileId);
+        $file = $this->filesRepository->getOneById($fileId);
 
         $this->addBreadcrumbSteps($file, $file['category_id']);
 

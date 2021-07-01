@@ -27,10 +27,6 @@ class Download extends Core\Controller\AbstractWidgetAction
      */
     private $filesRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Cache
-     */
-    private $filesCache;
-    /**
      * @var \ACP3\Core\Http\RedirectResponse
      */
     private $redirectResponse;
@@ -40,15 +36,13 @@ class Download extends Core\Controller\AbstractWidgetAction
         Core\Date $date,
         Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\StringFormatter $stringFormatter,
-        Files\Model\Repository\FilesRepository $filesRepository,
-        Files\Cache $filesCache
+        Files\Model\Repository\FilesRepository $filesRepository
     ) {
         parent::__construct($context);
 
         $this->date = $date;
         $this->stringFormatter = $stringFormatter;
         $this->filesRepository = $filesRepository;
-        $this->filesCache = $filesCache;
         $this->redirectResponse = $redirectResponse;
     }
 
@@ -61,7 +55,7 @@ class Download extends Core\Controller\AbstractWidgetAction
     public function execute(int $id)
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
-            $file = $this->filesCache->getCache($id);
+            $file = $this->filesRepository->getOneById($id);
 
             $path = $this->appPath->getUploadsDir() . 'files/';
             if (is_file($path . $file['file'])) {
