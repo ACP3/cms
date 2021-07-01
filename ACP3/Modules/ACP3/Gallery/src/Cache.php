@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Gallery;
 
 use ACP3\Core;
-use ACP3\Core\Picture\Output;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 
@@ -65,8 +64,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
         $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
 
         foreach ($pictures as $i => $picture) {
-            $cachedThumbnail = $this->cachePicture($picture['file'], 'thumb');
-            $cachedPicture = $this->cachePicture($picture['file'], null);
+            $cachedThumbnail = $this->thumbnailGenerator->generateThumbnail($picture['file'], 'thumb');
+            $cachedPicture = $this->thumbnailGenerator->generateThumbnail($picture['file'], '');
 
             $pictures[$i]['width'] = $cachedThumbnail->getWidth();
             $pictures[$i]['height'] = $cachedThumbnail->getHeight();
@@ -76,15 +75,5 @@ class Cache extends Core\Modules\AbstractCacheStorage
         }
 
         return $this->cache->save(self::CACHE_ID . $galleryId, $pictures);
-    }
-
-    /**
-     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
-     */
-    private function cachePicture(string $fileName, ?string $action): Output
-    {
-        $action = $action === 'thumb' ? 'thumb' : '';
-
-        return $this->thumbnailGenerator->generateThumbnail($fileName, $action);
     }
 }
