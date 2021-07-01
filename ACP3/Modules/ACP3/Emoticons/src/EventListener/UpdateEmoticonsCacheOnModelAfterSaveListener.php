@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\EventListener;
 
-use ACP3\Modules\ACP3\Emoticons\Cache;
+use ACP3\Core\Cache;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UpdateEmoticonsCacheOnModelAfterSaveListener implements EventSubscriberInterface
@@ -15,16 +15,16 @@ class UpdateEmoticonsCacheOnModelAfterSaveListener implements EventSubscriberInt
     /**
      * @var Cache
      */
-    private $cache;
+    private $emoticonCache;
 
-    public function __construct(Cache $cache)
+    public function __construct(Cache $emoticonCache)
     {
-        $this->cache = $cache;
+        $this->emoticonCache = $emoticonCache;
     }
 
     public function __invoke()
     {
-        $this->cache->saveCache();
+        $this->emoticonCache->deleteAll();
     }
 
     /**

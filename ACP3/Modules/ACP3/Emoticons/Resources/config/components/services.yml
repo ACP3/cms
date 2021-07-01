@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Emoticons\Services\:
+    resource: "../../../src/Services/"
+
+  ACP3\Modules\ACP3\Emoticons\Services\EmoticonServiceInterface: '@ACP3\Modules\ACP3\Emoticons\Services\EmoticonService'
+
+  ACP3\Modules\ACP3\Emoticons\Services\CachingEmoticonService:
+    decorates: ACP3\Modules\ACP3\Emoticons\Services\EmoticonService
+    arguments:
+      - "@emoticons.cache.core"
+      - "@.inner"

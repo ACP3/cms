@@ -7,8 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\EventListener;
 
+use ACP3\Core\Cache;
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Emoticons\Cache;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnEmoticonsModelAfterDeleteListener implements EventSubscriberInterface
@@ -16,11 +16,11 @@ class OnEmoticonsModelAfterDeleteListener implements EventSubscriberInterface
     /**
      * @var Cache
      */
-    private $cache;
+    private $emoticonCache;
 
-    public function __construct(Cache $cache)
+    public function __construct(Cache $emoticonCache)
     {
-        $this->cache = $cache;
+        $this->emoticonCache = $emoticonCache;
     }
 
     public function __invoke(ModelSaveEvent $event): void
@@ -29,7 +29,7 @@ class OnEmoticonsModelAfterDeleteListener implements EventSubscriberInterface
             return;
         }
 
-        $this->cache->saveCache();
+        $this->emoticonCache->deleteAll();
     }
 
     /**
