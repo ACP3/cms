@@ -16,49 +16,36 @@ class Helpers
     /**
      * @var Core\ACL
      */
-    protected $acl;
+    private $acl;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var Core\Modules
      */
-    protected $modules;
+    private $modules;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
-    /**
-     * @var Cache
-     */
-    protected $categoriesCache;
+    private $request;
     /**
      * @var CategoryRepository
      */
-    protected $categoryRepository;
+    private $categoryRepository;
     /**
      * @var Core\Helpers\Forms
      */
-    protected $formsHelper;
+    private $formsHelper;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
-    protected $secureHelper;
+    private $secureHelper;
     /**
      * @var \ACP3\Modules\ACP3\Categories\Model\CategoriesModel
      */
     private $categoriesModel;
 
-    /**
-     * @param \ACP3\Core\ACL                      $acl
-     * @param \ACP3\Core\I18n\Translator          $translator
-     * @param \ACP3\Core\Modules                  $modules
-     * @param \ACP3\Core\Http\RequestInterface    $request
-     * @param \ACP3\Core\Helpers\Forms            $formsHelper
-     * @param \ACP3\Core\Helpers\Secure           $secureHelper
-     * @param \ACP3\Modules\ACP3\Categories\Cache $categoriesCache
-     */
     public function __construct(
         Core\ACL $acl,
         Core\I18n\Translator $translator,
@@ -66,7 +53,6 @@ class Helpers
         Core\Http\RequestInterface $request,
         Core\Helpers\Forms $formsHelper,
         Core\Helpers\Secure $secureHelper,
-        Cache $categoriesCache,
         CategoriesModel $categoriesModel,
         CategoryRepository $categoryRepository
     ) {
@@ -76,7 +62,6 @@ class Helpers
         $this->request = $request;
         $this->formsHelper = $formsHelper;
         $this->secureHelper = $secureHelper;
-        $this->categoriesCache = $categoriesCache;
         $this->categoryRepository = $categoryRepository;
         $this->categoriesModel = $categoriesModel;
     }
@@ -84,11 +69,9 @@ class Helpers
     /**
      * Erzeugt eine neue Kategorie und gibt ihre ID zurück.
      *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function categoriesCreate(string $categoryTitle, string $moduleName)
+    public function categoriesCreate(string $categoryTitle, string $moduleName): int
     {
         $moduleInfo = $this->modules->getModuleInfo($moduleName);
         if ($this->categoryRepository->resultIsDuplicate($categoryTitle, $moduleInfo['id'], 0) === false) {
@@ -107,8 +90,6 @@ class Helpers
     /**
      * Listet alle Kategorien eines Moduls auf.
      *
-     * @return array
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function categoriesList(
@@ -117,8 +98,8 @@ class Helpers
         bool $categoryCreate = false,
         string $formFieldName = 'cat',
         ?string $customText = null
-    ) {
-        $categories = $this->categoriesCache->getCache($moduleName);
+    ): array {
+        $categories = $this->categoryRepository->getAllByModuleName($moduleName);
         foreach ($categories as &$category) {
             $category['title'] = str_repeat('&nbsp;&nbsp;', $category['level']) . $category['title'];
             $category['selected'] = $this->formsHelper->selectEntry(

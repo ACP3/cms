@@ -14,10 +14,6 @@ use ACP3\Modules\ACP3\Categories;
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Cache
-     */
-    private $categoriesCache;
-    /**
      * @var Categories\Model\CategoriesModel
      */
     private $categoriesModel;
@@ -29,12 +25,10 @@ class Delete extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
-        Categories\Model\CategoriesModel $categoriesModel,
-        Categories\Cache $categoriesCache
+        Categories\Model\CategoriesModel $categoriesModel
     ) {
         parent::__construct($context);
 
-        $this->categoriesCache = $categoriesCache;
         $this->categoriesModel = $categoriesModel;
         $this->actionHelper = $actionHelper;
     }
@@ -47,11 +41,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
         return $this->actionHelper->handleDeleteAction(
             $action,
             function (array $items) {
-                $result = $this->categoriesModel->delete($items);
-
-                $this->categoriesCache->getCacheDriver()->deleteAll();
-
-                return $result;
+                return $this->categoriesModel->delete($items);
             }
         );
     }
