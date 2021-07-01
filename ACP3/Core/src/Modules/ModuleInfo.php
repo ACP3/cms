@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\Cache;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Component\Dto\ComponentDataDto;
@@ -15,12 +14,8 @@ use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use Composer\InstalledVersions;
 use Psr\Container\ContainerInterface;
 
-class ModuleInfoCache implements ModuleInfoCacheInterface
+class ModuleInfo implements ModuleInfoInterface
 {
-    /**
-     * @var \ACP3\Core\Cache
-     */
-    private $cache;
     /**
      * @var ContainerInterface
      */
@@ -31,46 +26,17 @@ class ModuleInfoCache implements ModuleInfoCacheInterface
     private $systemModuleRepository;
 
     public function __construct(
-        Cache $cache,
         ContainerInterface $schemaLocator,
         ModuleAwareRepositoryInterface $systemModuleRepository
     ) {
-        $this->cache = $cache;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->schemaLocator = $schemaLocator;
     }
 
-    private function getCacheKey(): string
-    {
-        return 'modules_info';
-    }
-
     /**
      * @throws \JsonException
      */
-    public function getModulesInfoCache(): array
-    {
-        if ($this->cache->contains($this->getCacheKey()) === false) {
-            $this->saveModulesInfoCache();
-        }
-
-        return $this->cache->fetch($this->getCacheKey());
-    }
-
-    /**
-     * Saves the modules info cache.
-     *
-     * @throws \JsonException
-     */
-    public function saveModulesInfoCache(): void
-    {
-        $this->cache->save($this->getCacheKey(), $this->fetchAllModulesInfo());
-    }
-
-    /**
-     * @throws \JsonException
-     */
-    private function fetchAllModulesInfo(): array
+    public function getModulesInfo(): array
     {
         $infos = [];
 

@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 
 use ACP3\Core;
 use ACP3\Core\Helpers\RedirectMessages;
-use ACP3\Core\Modules\ModuleInfoCacheInterface;
 use ACP3\Modules\ACP3\System\Exception\ModuleInstallerException;
 use ACP3\Modules\ACP3\System\Helper\Installer;
 use ACP3\Modules\ACP3\System\Services\CacheClearService;
@@ -21,10 +20,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Modules extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var ModuleInfoCacheInterface
-     */
-    private $moduleInfoCache;
     /**
      * @var Installer
      */
@@ -62,7 +57,6 @@ class Modules extends Core\Controller\AbstractWidgetAction
         Core\Controller\Context\WidgetContext $context,
         RedirectMessages $redirectMessages,
         Core\Modules $modules,
-        ModuleInfoCacheInterface $moduleInfoCache,
         Installer $installerHelper,
         ContainerInterface $schemaLocator,
         Core\Modules\SchemaInstaller $schemaInstaller,
@@ -72,7 +66,6 @@ class Modules extends Core\Controller\AbstractWidgetAction
     ) {
         parent::__construct($context);
 
-        $this->moduleInfoCache = $moduleInfoCache;
         $this->installerHelper = $installerHelper;
         $this->schemaLocator = $schemaLocator;
         $this->schemaInstaller = $schemaInstaller;
@@ -137,7 +130,6 @@ class Modules extends Core\Controller\AbstractWidgetAction
      */
     private function renewCaches(): void
     {
-        $this->moduleInfoCache->saveModulesInfoCache();
     }
 
     /**

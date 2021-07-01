@@ -12,12 +12,17 @@ services:
       $ruleRepository: "@permissions.model.rulerepository"
       $resourceRepository: "@permissions.model.resourcerepository"
 
-  ACP3\Core\Modules\ModuleInfoCache:
+  ACP3\Core\Modules\ModuleInfo:
     arguments:
-      $cache: "@core.cache.system"
       $schemaLocator: "@core.installer.schema_registrar"
 
-  ACP3\Core\Modules\ModuleInfoCacheInterface: '@ACP3\Core\Modules\ModuleInfoCache'
+  ACP3\Core\Modules\CachingModuleInfo:
+    decorates: ACP3\Core\Modules\ModuleInfo
+    arguments:
+      - "@core.cache.system"
+      - "@.inner"
+
+  ACP3\Core\Modules\ModuleInfoInterface: '@ACP3\Core\Modules\ModuleInfo'
 
   core.modules.schemaHelper:
     class: ACP3\Core\Modules\SchemaHelper

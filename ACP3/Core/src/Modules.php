@@ -7,15 +7,15 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\Modules\ModuleInfoCacheInterface;
+use ACP3\Core\Modules\ModuleInfoInterface;
 use MJS\TopSort\Implementations\StringSort;
 
 class Modules
 {
     /**
-     * @var \ACP3\Core\Modules\ModuleInfoCacheInterface
+     * @var ModuleInfoInterface
      */
-    private $moduleInfoCache;
+    private $moduleInfo;
     /**
      * @var array
      */
@@ -26,9 +26,9 @@ class Modules
     private $allModulesTopSorted = [];
 
     public function __construct(
-        ModuleInfoCacheInterface $moduleInfoCache
+        ModuleInfoInterface $moduleInfo
     ) {
-        $this->moduleInfoCache = $moduleInfoCache;
+        $this->moduleInfo = $moduleInfo;
     }
 
     /**
@@ -48,7 +48,7 @@ class Modules
     {
         $moduleName = strtolower($moduleName);
         if (empty($this->modulesInfo)) {
-            $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
+            $this->modulesInfo = $this->moduleInfo->getModulesInfo();
         }
 
         return !empty($this->modulesInfo[$moduleName]) ? $this->modulesInfo[$moduleName] : [];
@@ -116,7 +116,7 @@ class Modules
     private function getAllModules(): array
     {
         if (empty($this->modulesInfo)) {
-            $this->modulesInfo = $this->moduleInfoCache->getModulesInfoCache();
+            $this->modulesInfo = $this->moduleInfo->getModulesInfo();
         }
 
         return $this->modulesInfo;
