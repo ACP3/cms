@@ -12,14 +12,14 @@ use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\PageBreaks;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
-use ACP3\Modules\ACP3\Articles\Cache;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 
 class ArticlePaginatedViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
+     * @var ArticleRepository
      */
-    private $articlesCache;
+    private $articleRepository;
     /**
      * @var \ACP3\Core\Helpers\PageBreaks
      */
@@ -46,14 +46,14 @@ class ArticlePaginatedViewProvider
     private $layout;
 
     public function __construct(
-        Cache $articlesCache,
+        ArticleRepository $articleRepository,
         PageBreaks $pageBreaksHelper,
         RequestInterface $request,
         Steps $breadcrumb,
         Title $title,
         View $view
     ) {
-        $this->articlesCache = $articlesCache;
+        $this->articleRepository = $articleRepository;
         $this->pageBreaksHelper = $pageBreaksHelper;
         $this->request = $request;
         $this->breadcrumb = $breadcrumb;
@@ -63,7 +63,7 @@ class ArticlePaginatedViewProvider
 
     public function __invoke(int $articleId): array
     {
-        $article = $this->articlesCache->getCache($articleId);
+        $article = $this->articleRepository->getOneById($articleId);
 
         $this->breadcrumb->append($article['title'], $this->request->getUriWithoutPages());
         $this->title->setPageTitle($article['title']);

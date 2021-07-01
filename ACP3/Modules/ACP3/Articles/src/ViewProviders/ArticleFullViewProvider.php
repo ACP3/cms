@@ -7,24 +7,24 @@
 
 namespace ACP3\Modules\ACP3\Articles\ViewProviders;
 
-use ACP3\Modules\ACP3\Articles\Cache;
+use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
 
 class ArticleFullViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Cache
+     * @var ArticleRepository
      */
-    private $articlesCache;
+    private $articleRepository;
 
-    public function __construct(Cache $articlesCache)
+    public function __construct(ArticleRepository $articleRepository)
     {
-        $this->articlesCache = $articlesCache;
+        $this->articleRepository = $articleRepository;
     }
 
     public function __invoke(int $articleId): array
     {
         return [
-            'sidebar_article' => $this->articlesCache->getCache($articleId),
+            'sidebar_article' => $this->articleRepository->getOneById($articleId),
         ];
     }
 }
