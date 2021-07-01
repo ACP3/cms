@@ -66,7 +66,9 @@ function setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName, massActi
   markAllRowsCheckboxElem.checked =
     visibleSelectedTableRows > 0 && visibleMassActionCheckboxes === visibleSelectedTableRows;
 
-  massActionBarElem.classList.toggle("hidden", visibleSelectedTableRows === 0);
+  if (massActionBarElem) {
+    massActionBarElem.classList.toggle("hidden", visibleSelectedTableRows === 0);
+  }
 }
 
 /**
