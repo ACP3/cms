@@ -7,24 +7,24 @@
 
 namespace ACP3\Modules\ACP3\Permissions\EventListener;
 
-use ACP3\Modules\ACP3\Permissions\Cache;
+use ACP3\Core\Cache;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class UpdateResourcesCacheOnModelAfterSaveListener implements EventSubscriberInterface
+class ClearPermissionCacheOnModelAfterSaveListener implements EventSubscriberInterface
 {
     /**
      * @var Cache
      */
-    private $cache;
+    private $aclCache;
 
-    public function __construct(Cache $cache)
+    public function __construct(Cache $aclCache)
     {
-        $this->cache = $cache;
+        $this->aclCache = $aclCache;
     }
 
     public function __invoke()
     {
-        $this->cache->saveResourcesCache();
+        $this->aclCache->deleteAll();
     }
 
     /**
@@ -35,6 +35,8 @@ class UpdateResourcesCacheOnModelAfterSaveListener implements EventSubscriberInt
         return [
             'permissions.model.acl_resources.after_save' => '__invoke',
             'permissions.model.acl_resources.after_delete' => '__invoke',
+            'permissions.model.acl_roles.after_save' => '__invoke',
+            'permissions.model.acl_roles.after_delete' => '__invoke',
         ];
     }
 }

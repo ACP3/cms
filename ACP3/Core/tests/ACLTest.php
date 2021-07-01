@@ -7,6 +7,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\ACL\PermissionServiceInterface;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -25,9 +26,9 @@ class ACLTest extends TestCase
      */
     private $userRoleRepositoryMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\ACL\PermissionCacheInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\ACL\PermissionServiceInterface
      */
-    private $permissionsCacheMock;
+    private $permissionServiceMock;
 
     protected function setup(): void
     {
@@ -36,7 +37,7 @@ class ACLTest extends TestCase
         $this->acl = new ACL(
             $this->userMock,
             $this->userRoleRepositoryMock,
-            $this->permissionsCacheMock
+            $this->permissionServiceMock
         );
     }
 
@@ -44,7 +45,7 @@ class ACLTest extends TestCase
     {
         $this->userMock = $this->createMock(UserModelInterface::class);
         $this->userRoleRepositoryMock = $this->createMock(ACL\Model\Repository\UserRoleRepositoryInterface::class);
-        $this->permissionsCacheMock = $this->createMock(ACL\PermissionCacheInterface::class);
+        $this->permissionServiceMock = $this->createMock(PermissionServiceInterface::class);
     }
 
     public function testGetUserRoleIdsForGuest(): void
@@ -148,8 +149,8 @@ class ACLTest extends TestCase
         array $returnValueRulesCache,
         bool $hasAccess
     ): void {
-        $this->permissionsCacheMock->expects(self::exactly($callCountResourceCache))
-            ->method('getResourcesCache')
+        $this->permissionServiceMock->expects(self::exactly($callCountResourceCache))
+            ->method('getResources')
             ->willReturn([
                 'frontend' => [
                     'foo/index/index/' => [
@@ -159,8 +160,8 @@ class ACLTest extends TestCase
                 ],
             ]);
 
-        $this->permissionsCacheMock->expects(self::exactly($callCountRulesCache))
-            ->method('getRulesCache')
+        $this->permissionServiceMock->expects(self::exactly($callCountRulesCache))
+            ->method('getRules')
             ->with($returnValueRulesCache)
             ->willReturn([
                 'foo' => [

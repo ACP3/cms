@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Permissions\Services\:
+    resource: "../../../src/Services/"
+
+  ACP3\Core\ACL\PermissionServiceInterface: '@ACP3\Modules\ACP3\Permissions\Services\PermissionService'
+
+  ACP3\Modules\ACP3\Permissions\Services\CachingPermissionService:
+    decorates: ACP3\Modules\ACP3\Permissions\Services\PermissionService
+    arguments:
+      - "@permissions.cache.core"
+      - "@.inner"

@@ -7,9 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Model;
 
+use ACP3\Core\Cache;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
-use ACP3\Modules\ACP3\Permissions\Cache;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -24,17 +24,17 @@ class RulesModel extends AbstractModel
     /**
      * @var Cache
      */
-    protected $cache;
+    private $aclCache;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         RuleRepository $repository,
-        Cache $cache
+        Cache $aclCache
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
 
-        $this->cache = $cache;
+        $this->aclCache = $aclCache;
     }
 
     /**
@@ -57,7 +57,7 @@ class RulesModel extends AbstractModel
             }
         }
 
-        $this->cache->getCacheDriver()->deleteAll();
+        $this->aclCache->deleteAll();
     }
 
     private function findRuleId(array $rules, int $moduleId, int $privilegeId): ?int

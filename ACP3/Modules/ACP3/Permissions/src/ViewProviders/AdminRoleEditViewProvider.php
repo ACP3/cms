@@ -8,13 +8,13 @@
 namespace ACP3\Modules\ACP3\Permissions\ViewProviders;
 
 use ACP3\Core\ACL;
+use ACP3\Core\ACL\PermissionServiceInterface;
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Permissions\Cache as PermissionsCache;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
 
 class AdminRoleEditViewProvider
@@ -36,9 +36,9 @@ class AdminRoleEditViewProvider
      */
     private $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
+     * @var PermissionServiceInterface
      */
-    private $permissionsCache;
+    private $permissionService;
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
      */
@@ -61,7 +61,7 @@ class AdminRoleEditViewProvider
         Forms $formsHelper,
         FormToken $formTokenHelper,
         Modules $modules,
-        PermissionsCache $permissionsCache,
+        PermissionServiceInterface $permissionService,
         PrivilegeRepository $privilegeRepository,
         RequestInterface $request,
         Title $title,
@@ -71,7 +71,7 @@ class AdminRoleEditViewProvider
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->modules = $modules;
-        $this->permissionsCache = $permissionsCache;
+        $this->permissionService = $permissionService;
         $this->privilegeRepository = $privilegeRepository;
         $this->request = $request;
         $this->title = $title;
@@ -114,7 +114,7 @@ class AdminRoleEditViewProvider
      */
     private function fetchModulePermissions(int $roleId): array
     {
-        $rules = $this->permissionsCache->getRulesCache([$roleId]);
+        $rules = $this->permissionService->getRules([$roleId]);
         $modules = array_filter($this->modules->getInstalledModules(), function ($module) {
             return $this->modules->isInstallable($module['name']);
         });

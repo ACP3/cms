@@ -11,7 +11,6 @@ use ACP3\Core;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Core\I18n\DictionaryCacheInterface;
 use ACP3\Core\Modules\ModuleInfoCacheInterface;
-use ACP3\Modules\ACP3\Permissions\Cache;
 use ACP3\Modules\ACP3\System\Exception\ModuleInstallerException;
 use ACP3\Modules\ACP3\System\Helper\Installer;
 use ACP3\Modules\ACP3\System\Services\CacheClearService;
@@ -31,10 +30,6 @@ class Modules extends Core\Controller\AbstractWidgetAction
      * @var Installer
      */
     private $installerHelper;
-    /**
-     * @var Cache
-     */
-    private $permissionsCache;
     /**
      * @var DictionaryCacheInterface
      */
@@ -75,7 +70,6 @@ class Modules extends Core\Controller\AbstractWidgetAction
         DictionaryCacheInterface $dictionaryCache,
         ModuleInfoCacheInterface $moduleInfoCache,
         Installer $installerHelper,
-        Cache $permissionsCache,
         ContainerInterface $schemaLocator,
         Core\Modules\SchemaInstaller $schemaInstaller,
         Core\Modules\AclInstaller $aclInstaller,
@@ -86,7 +80,6 @@ class Modules extends Core\Controller\AbstractWidgetAction
 
         $this->moduleInfoCache = $moduleInfoCache;
         $this->installerHelper = $installerHelper;
-        $this->permissionsCache = $permissionsCache;
         $this->dictionaryCache = $dictionaryCache;
         $this->schemaLocator = $schemaLocator;
         $this->schemaInstaller = $schemaInstaller;
@@ -153,7 +146,6 @@ class Modules extends Core\Controller\AbstractWidgetAction
     {
         $this->dictionaryCache->saveLanguageCache($this->translator->getLocale());
         $this->moduleInfoCache->saveModulesInfoCache();
-        $this->permissionsCache->saveResourcesCache();
     }
 
     /**

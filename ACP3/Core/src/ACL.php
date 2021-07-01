@@ -8,7 +8,7 @@
 namespace ACP3\Core;
 
 use ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface;
-use ACP3\Core\ACL\PermissionCacheInterface;
+use ACP3\Core\ACL\PermissionServiceInterface;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 
 class ACL
@@ -18,13 +18,14 @@ class ACL
      */
     private $user;
     /**
-     * @var \ACP3\Core\ACL\PermissionCacheInterface
+     * @var PermissionServiceInterface
      */
-    private $permissionsCache;
+    private $permissionService;
     /**
      * @var \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface
      */
     private $userRoleRepository;
+
     /**
      * Array mit den den jeweiligen Rollen zugewiesenen Berechtigungen.
      *
@@ -47,11 +48,11 @@ class ACL
     public function __construct(
         UserModelInterface $user,
         UserRoleRepositoryInterface $userRoleRepository,
-        PermissionCacheInterface $permissionsCache
+        PermissionServiceInterface $permissionService
     ) {
         $this->user = $user;
         $this->userRoleRepository = $userRoleRepository;
-        $this->permissionsCache = $permissionsCache;
+        $this->permissionService = $permissionService;
     }
 
     /**
@@ -90,7 +91,7 @@ class ACL
 
     public function getAllRoles(): array
     {
-        return $this->permissionsCache->getRolesCache();
+        return $this->permissionService->getRoles();
     }
 
     public function userHasRole(int $roleId): bool
@@ -112,10 +113,12 @@ class ACL
 
     /**
      * Returns the role permissions.
+     *
+     * @param int[] $roleIds
      */
     private function getRules(array $roleIds): array
     {
-        return $this->permissionsCache->getRulesCache($roleIds);
+        return $this->permissionService->getRules($roleIds);
     }
 
     /**
@@ -154,7 +157,7 @@ class ACL
     private function getResources(): array
     {
         if ($this->resources === []) {
-            $this->resources = $this->permissionsCache->getResourcesCache();
+            $this->resources = $this->permissionService->getResources();
         }
 
         return $this->resources;

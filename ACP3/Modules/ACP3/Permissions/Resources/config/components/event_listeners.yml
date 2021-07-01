@@ -4,5 +4,7 @@ services:
 
   ACP3\Modules\ACP3\Permissions\EventListener\:
     resource: "../../../src/EventListener/"
+    arguments:
+      - "@permissions.cache.core"
     tags:
       - { name: core.eventSubscriber }

@@ -14,10 +14,6 @@ use ACP3\Modules\ACP3\Permissions;
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Cache
-     */
-    private $permissionsCache;
-    /**
      * @var Permissions\Model\RolesModel
      */
     private $rolesModel;
@@ -29,12 +25,10 @@ class Delete extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
-        Permissions\Model\RolesModel $rolesModel,
-        Permissions\Cache $permissionsCache
+        Permissions\Model\RolesModel $rolesModel
     ) {
         parent::__construct($context);
 
-        $this->permissionsCache = $permissionsCache;
         $this->rolesModel = $rolesModel;
         $this->actionHelper = $actionHelper;
     }
@@ -58,8 +52,6 @@ class Delete extends Core\Controller\AbstractWidgetAction
                         $bool = $this->rolesModel->delete($item);
                     }
                 }
-
-                $this->permissionsCache->getCacheDriver()->deleteAll();
 
                 if ($levelNotDeletable === true) {
                     $result = false;

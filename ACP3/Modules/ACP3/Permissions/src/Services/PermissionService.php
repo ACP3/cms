@@ -5,20 +5,16 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Permissions;
+namespace ACP3\Modules\ACP3\Permissions\Services;
 
-use ACP3\Core;
-use ACP3\Core\ACL\PermissionCacheInterface;
+use ACP3\Core\ACL\PermissionEnum;
+use ACP3\Core\ACL\PermissionServiceInterface;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
 
-class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCacheInterface
+class PermissionService implements PermissionServiceInterface
 {
-    public const CACHE_ID_RESOURCES = 'acl_resources';
-    public const CACHE_ID_ROLES = 'acl_roles';
-    public const CACHE_ID_RULES = 'acl_rules_';
-
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
      */
@@ -33,13 +29,10 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
     private $ruleRepository;
 
     public function __construct(
-        Core\Cache $cache,
         RoleRepository $roleRepository,
         ResourceRepository $resourceRepository,
         RuleRepository $ruleRepository
     ) {
-        parent::__construct($cache);
-
         $this->roleRepository = $roleRepository;
         $this->resourceRepository = $resourceRepository;
         $this->ruleRepository = $ruleRepository;
@@ -48,21 +41,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
     /**
      * {@inheritdoc}
      */
-    public function getResourcesCache()
-    {
-        if ($this->cache->contains(static::CACHE_ID_RESOURCES) === false) {
-            $this->saveResourcesCache();
-        }
-
-        return $this->cache->fetch(static::CACHE_ID_RESOURCES);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    public function saveResourcesCache()
+    public function getResources(): array
     {
         $resources = $this->resourceRepository->getAllResources();
         $data = [];
@@ -81,25 +60,13 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
             ];
         }
 
-        return $this->cache->save(static::CACHE_ID_RESOURCES, $data);
+        return $data;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRolesCache()
-    {
-        if ($this->cache->contains(static::CACHE_ID_ROLES) === false) {
-            $this->saveRolesCache();
-        }
-
-        return $this->cache->fetch(static::CACHE_ID_ROLES);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function saveRolesCache()
+    public function getRoles(): array
     {
         $roles = $this->roleRepository->getAllRoles();
         $cRoles = \count($roles);
@@ -129,7 +96,7 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
             $roles[$i]['last'] = $last;
         }
 
-        return $this->cache->save(static::CACHE_ID_ROLES, $roles);
+        return $roles;
     }
 
     /**
@@ -137,25 +104,10 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getRulesCache(array $roles)
-    {
-        $filename = static::CACHE_ID_RULES . implode(',', $roles);
-        if ($this->cache->contains($filename) === false) {
-            $this->saveRulesCache($roles);
-        }
-
-        return $this->cache->fetch($filename);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    public function saveRulesCache(array $roles)
+    public function getRules(array $roleIds): array
     {
         $privileges = [];
-        foreach ($this->ruleRepository->getAllRulesByRoleIds($roles) as $rule) {
+        foreach ($this->ruleRepository->getAllRulesByRoleIds($roleIds) as $rule) {
             $privilegeKey = strtolower($rule['key']);
             $privileges[$rule['module_name']][$privilegeKey] = [
                 'id' => $rule['privilege_id'],
@@ -165,14 +117,14 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
             ];
         }
 
-        return $this->cache->save(static::CACHE_ID_RULES . implode(',', $roles), $privileges);
+        return $privileges;
     }
 
     private function hasAccess(array $rule, string $privilegeKey): bool
     {
-        return $rule['permission'] == Core\ACL\PermissionEnum::PERMIT_ACCESS
-        || ($rule['permission'] == Core\ACL\PermissionEnum::INHERIT_ACCESS
-            && $this->getPermissionValue($privilegeKey, $rule['module_id'], $rule['role_id']) === Core\ACL\PermissionEnum::PERMIT_ACCESS);
+        return $rule['permission'] == PermissionEnum::PERMIT_ACCESS
+            || ($rule['permission'] == PermissionEnum::INHERIT_ACCESS
+                && $this->getPermissionValue($privilegeKey, $rule['module_id'], $rule['role_id']) === PermissionEnum::PERMIT_ACCESS);
     }
 
     /**
@@ -182,6 +134,6 @@ class Cache extends Core\Modules\AbstractCacheStorage implements PermissionCache
     {
         $permission = $this->roleRepository->getPermissionByKeyAndRoleId($privilegeKey, $moduleId, $roleId);
 
-        return $permission ?? Core\ACL\PermissionEnum::DENY_ACCESS;
+        return $permission ?? PermissionEnum::DENY_ACCESS;
     }
 }
