@@ -13,19 +13,16 @@ use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
 class Cache extends Core\Modules\AbstractCacheStorage
 {
     public const CACHE_ID = 'list';
+
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository
      */
-    protected $emoticonRepository;
+    private $emoticonRepository;
 
-    /**
-     * @param \ACP3\Core\Cache                       $cache
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     */
     public function __construct(
         Core\Cache $cache,
         Core\Environment\ApplicationPath $appPath,
@@ -39,10 +36,8 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * Bindet die gecacheten Emoticons ein.
-     *
-     * @return array
      */
-    public function getCache()
+    public function getCache(): array
     {
         if ($this->cache->contains(static::CACHE_ID) === false) {
             $this->saveCache();
@@ -53,20 +48,17 @@ class Cache extends Core\Modules\AbstractCacheStorage
 
     /**
      * Caches the emoticons.
-     *
-     * @return bool
      */
-    public function saveCache()
+    public function saveCache(): bool
     {
         $emoticons = $this->emoticonRepository->getAll();
-        $cEmoticons = \count($emoticons);
 
         $data = [];
-        for ($i = 0; $i < $cEmoticons; ++$i) {
-            $picInfos = getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticons[$i]['img']);
-            $code = $emoticons[$i]['code'];
-            $description = $emoticons[$i]['description'];
-            $data[$code] = '<img src="' . $this->appPath->getWebRoot() . 'uploads/emoticons/' . $emoticons[$i]['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
+        foreach ($emoticons as $emoticon) {
+            $picInfos = getimagesize($this->appPath->getUploadsDir() . 'emoticons/' . $emoticon['img']);
+            $code = $emoticon['code'];
+            $description = $emoticon['description'];
+            $data[$code] = '<img src="' . $this->appPath->getWebRoot() . 'uploads/emoticons/' . $emoticon['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
         }
 
         return $this->cache->save(static::CACHE_ID, $data);
