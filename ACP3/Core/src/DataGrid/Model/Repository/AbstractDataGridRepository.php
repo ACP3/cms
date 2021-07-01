@@ -34,7 +34,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
         $this->addGroupBy($queryBuilder);
         $this->setOrderBy($columns, $queryBuilder);
 
-        return $queryBuilder->execute()->fetchAllAssociative();
+        return $queryBuilder->executeQuery()->fetchAllAssociative();
     }
 
     /**
@@ -55,7 +55,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
         $this->addJoin($queryBuilder);
         $this->addWhere($queryBuilder, ...$queryOptions);
 
-        return (int) $queryBuilder->execute()->fetchOne();
+        return (int) $queryBuilder->executeQuery()->fetchOne();
     }
 
     /**
