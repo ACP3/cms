@@ -10,5 +10,5 @@ services:
   ACP3\Modules\ACP3\Emoticons\Services\CachingEmoticonService:
     decorates: ACP3\Modules\ACP3\Emoticons\Services\EmoticonService
     arguments:
-      - "@emoticons.cache.core"
+      - "@emoticons.cache_item_pool"
       - "@.inner"

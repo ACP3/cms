@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\Services;
 
-use ACP3\Core\Cache;
+use Psr\Cache\CacheItemPoolInterface;
 
 class CachingEmoticonService implements EmoticonServiceInterface
 {
@@ -18,22 +18,25 @@ class CachingEmoticonService implements EmoticonServiceInterface
      */
     private $emoticonService;
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $emoticonsCache;
+    private $emoticonsCachePool;
 
-    public function __construct(Cache $emoticonsCache, EmoticonService $emoticonService)
+    public function __construct(CacheItemPoolInterface $emoticonsCachePool, EmoticonService $emoticonService)
     {
-        $this->emoticonsCache = $emoticonsCache;
+        $this->emoticonsCachePool = $emoticonsCachePool;
         $this->emoticonService = $emoticonService;
     }
 
     public function getEmoticonList(): array
     {
-        if (!$this->emoticonsCache->contains(self::CACHE_KEY)) {
-            $this->emoticonsCache->save(self::CACHE_KEY, $this->emoticonService->getEmoticonList());
+        $cacheItem = $this->emoticonsCachePool->getItem(self::CACHE_KEY);
+
+        if (!$cacheItem->isHit()) {
+            $cacheItem->set($this->emoticonService->getEmoticonList());
+            $this->emoticonsCachePool->saveDeferred($cacheItem);
         }
 
-        return $this->emoticonsCache->fetch(self::CACHE_KEY);
+        return $cacheItem->get();
     }
 }

@@ -36,14 +36,14 @@ class CachingMenuService implements MenuServiceInterface
      */
     public function getAllMenuItems(): array
     {
-        $menuItems = $this->menusCachePool->getItem(self::CACHE_KEY_ALL_MENU_ITEMS);
+        $cacheItem = $this->menusCachePool->getItem(self::CACHE_KEY_ALL_MENU_ITEMS);
 
-        if (!$menuItems->isHit()) {
-            $menuItems->set($this->menuService->getAllMenuItems());
-            $this->menusCachePool->saveDeferred($menuItems);
+        if (!$cacheItem->isHit()) {
+            $cacheItem->set($this->menuService->getAllMenuItems());
+            $this->menusCachePool->saveDeferred($cacheItem);
         }
 
-        return $menuItems->get();
+        return $cacheItem->get();
     }
 
     /**
@@ -54,13 +54,13 @@ class CachingMenuService implements MenuServiceInterface
     public function getVisibleMenuItemsByMenu(string $menuIdentifier): array
     {
         $cacheKey = sprintf(self::CACHE_KEY_VISIBLE_MENU_ITEMS, $menuIdentifier);
-        $visibleMenuItems = $this->menusCachePool->getItem($cacheKey);
+        $cacheItem = $this->menusCachePool->getItem($cacheKey);
 
-        if (!$visibleMenuItems->isHit()) {
-            $visibleMenuItems->set($this->menuService->getVisibleMenuItemsByMenu($menuIdentifier));
-            $this->menusCachePool->saveDeferred($visibleMenuItems);
+        if (!$cacheItem->isHit()) {
+            $cacheItem->set($this->menuService->getVisibleMenuItemsByMenu($menuIdentifier));
+            $this->menusCachePool->saveDeferred($cacheItem);
         }
 
-        return $visibleMenuItems->get();
+        return $cacheItem->get();
     }
 }

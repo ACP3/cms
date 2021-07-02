@@ -9,3 +9,10 @@ services:
     class: ACP3\Core\Helpers\Upload
     arguments:
       $directory: !php/const ACP3\Modules\ACP3\Emoticons\Installer\Schema::MODULE_NAME
+
+  emoticons.cache_item_pool:
+    class: Psr\Cache\CacheItemPoolInterface
+    factory: "@Psr6CacheItemPoolFactory"
+    arguments: ["emoticons"]
+    tags:
+      - { name: acp3.cache_item_pool }

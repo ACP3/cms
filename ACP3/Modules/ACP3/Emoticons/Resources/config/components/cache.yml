@@ -1,8 +1,0 @@
-services:
-  _defaults:
-    autowire: true
-
-  emoticons.cache.core:
-    class: ACP3\Core\Cache
-    arguments:
-      $namespace: "emoticons"

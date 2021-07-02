@@ -7,24 +7,24 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\EventListener;
 
-use ACP3\Core\Cache;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class UpdateEmoticonsCacheOnModelAfterSaveListener implements EventSubscriberInterface
+class ClearEmoticonsCacheListener implements EventSubscriberInterface
 {
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $emoticonCache;
+    private $emoticonCachePool;
 
-    public function __construct(Cache $emoticonCache)
+    public function __construct(CacheItemPoolInterface $emoticonCachePool)
     {
-        $this->emoticonCache = $emoticonCache;
+        $this->emoticonCachePool = $emoticonCachePool;
     }
 
     public function __invoke()
     {
-        $this->emoticonCache->deleteAll();
+        $this->emoticonCachePool->clear();
     }
 
     /**
@@ -34,6 +34,7 @@ class UpdateEmoticonsCacheOnModelAfterSaveListener implements EventSubscriberInt
     {
         return [
             'emoticons.model.emoticons.after_save' => '__invoke',
+            'emoticons.model.emoticons.after_delete' => '__invoke',
         ];
     }
 }
