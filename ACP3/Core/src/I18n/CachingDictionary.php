@@ -7,42 +7,48 @@
 
 namespace ACP3\Core\I18n;
 
-use ACP3\Core\Cache;
+use Psr\Cache\CacheItemPoolInterface;
 
 class CachingDictionary implements DictionaryInterface
 {
     private const CACHE_ID_LANG_PACKS = 'language_packs';
 
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $i18nCache;
+    private $i18nCachePool;
     /**
      * @var Dictionary
      */
     private $dictionary;
 
-    public function __construct(Cache $i18nCache, Dictionary $dictionary)
+    public function __construct(CacheItemPoolInterface $i18nCachePool, Dictionary $dictionary)
     {
-        $this->i18nCache = $i18nCache;
+        $this->i18nCachePool = $i18nCachePool;
         $this->dictionary = $dictionary;
     }
 
     public function getDictionary(string $language): array
     {
-        if (!$this->i18nCache->contains($language)) {
-            $this->i18nCache->save($language, $this->dictionary->getDictionary($language));
+        $cacheItem = $this->i18nCachePool->getItem($language);
+
+        if (!$cacheItem->isHit()) {
+            $cacheItem->set($this->dictionary->getDictionary($language));
+            $this->i18nCachePool->saveDeferred($cacheItem);
         }
 
-        return $this->i18nCache->fetch($language);
+        return $cacheItem->get();
     }
 
     public function getLanguagePacks(): array
     {
-        if (!$this->i18nCache->contains(self::CACHE_ID_LANG_PACKS)) {
-            $this->i18nCache->save(self::CACHE_ID_LANG_PACKS, $this->dictionary->getLanguagePacks());
+        $cacheItem = $this->i18nCachePool->getItem(self::CACHE_ID_LANG_PACKS);
+
+        if (!$cacheItem->isHit()) {
+            $cacheItem->set($this->dictionary->getLanguagePacks());
+            $this->i18nCachePool->saveDeferred($cacheItem);
         }
 
-        return $this->i18nCache->fetch(self::CACHE_ID_LANG_PACKS);
+        return $cacheItem->get();
     }
 }

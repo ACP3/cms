@@ -2,10 +2,12 @@ services:
   _defaults:
     autowire: true
 
-  core.cache.i18n:
-    class: ACP3\Core\Cache
-    arguments:
-      $namespace: "i18n"
+  i18n.cache_item_pool:
+    class: Psr\Cache\CacheItemPoolInterface
+    factory: "@Psr6CacheItemPoolFactory"
+    arguments: ["i18n"]
+    tags:
+      - { name: acp3.cache_item_pool }
 
   ACP3\Core\I18n\:
     resource: "../../../src/I18n/"
@@ -13,7 +15,7 @@ services:
   ACP3\Core\I18n\CachingDictionary:
     decorates: ACP3\Core\I18n\Dictionary
     arguments:
-      - "@core.cache.i18n"
+      - "@i18n.cache_item_pool"
       - "@.inner"
 
   ACP3\Core\I18n\DictionaryInterface: '@ACP3\Core\I18n\Dictionary'

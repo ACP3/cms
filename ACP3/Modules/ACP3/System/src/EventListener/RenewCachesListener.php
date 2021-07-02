@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\System\EventListener;
 
 use ACP3\Core\Cache;
 use ACP3\Modules\ACP3\System\Event\RenewCacheEvent;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RenewCachesListener implements EventSubscriberInterface
@@ -18,20 +19,20 @@ class RenewCachesListener implements EventSubscriberInterface
      */
     private $systemCache;
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $i18nCache;
+    private $i18nCachePool;
 
-    public function __construct(Cache $systemCache, Cache $i18nCache)
+    public function __construct(Cache $systemCache, CacheItemPoolInterface $i18nCachePool)
     {
         $this->systemCache = $systemCache;
-        $this->i18nCache = $i18nCache;
+        $this->i18nCachePool = $i18nCachePool;
     }
 
     public function __invoke(): void
     {
         $this->systemCache->deleteAll();
-        $this->i18nCache->deleteAll();
+        $this->i18nCachePool->clear();
     }
 
     public static function getSubscribedEvents(): array
