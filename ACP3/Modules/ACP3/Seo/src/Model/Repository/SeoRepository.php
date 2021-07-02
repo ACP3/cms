@@ -13,23 +13,12 @@ class SeoRepository extends Core\Model\Repository\AbstractRepository
 {
     public const TABLE_NAME = 'seo';
 
-    /**
-     * @param string $path
-     *
-     * @return bool
-     */
-    public function uriAliasExists($path)
+    public function uriAliasExists(string $path): bool
     {
         return $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `uri` = ?', [$path]) > 0;
     }
 
-    /**
-     * @param string $alias
-     * @param string $path
-     *
-     * @return bool
-     */
-    public function uriAliasExistsByAlias($alias, $path = '')
+    public function uriAliasExistsByAlias(string $alias, string $path = ''): bool
     {
         return $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `alias` = ? AND `uri` != ?',
@@ -37,30 +26,17 @@ class SeoRepository extends Core\Model\Repository\AbstractRepository
         ) > 0;
     }
 
-    /**
-     * @param string $uri
-     *
-     * @return array
-     */
-    public function getOneByUri($uri)
+    public function getOneByUri(string $uri): array
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE `uri` = ?', [$uri]);
     }
 
-    /**
-     * @return array
-     */
-    public function getAllMetaTags()
+    public function getAllMetaTags(): array
     {
         return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE `alias` != "" OR `keywords` != "" OR `description` != "" OR `robots` != 0');
     }
 
-    /**
-     * @param string $alias
-     *
-     * @return bool|string
-     */
-    public function getUriByAlias($alias)
+    public function getUriByAlias(string $alias): ?string
     {
         return $this->db->fetchColumn('SELECT `uri` FROM ' . $this->getTableName() . ' WHERE `alias` = ?', [$alias]);
     }

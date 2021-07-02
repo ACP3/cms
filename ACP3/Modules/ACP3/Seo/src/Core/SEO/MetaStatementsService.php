@@ -11,12 +11,11 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\SEO\MetaStatementsService as CoreMetaStatementsService;
-use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
-class MetaStatementsService extends CoreMetaStatementsService implements MetaStatementsServiceInterface
+class MetaStatementsService extends CoreMetaStatementsService
 {
     /**
      * @var \ACP3\Core\Settings\SettingsInterface
@@ -52,7 +51,7 @@ class MetaStatementsService extends CoreMetaStatementsService implements MetaSta
 
     protected function getSettings(): array
     {
-        if (!$this->modules->isActive(Schema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return parent::getSettings();
         }
 
@@ -61,7 +60,7 @@ class MetaStatementsService extends CoreMetaStatementsService implements MetaSta
 
     public function getSeoInformation(string $path, string $key, string $defaultValue = ''): string
     {
-        if (!$this->modules->isActive(Schema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return parent::getSeoInformation($path, $key, $defaultValue);
         }
 
