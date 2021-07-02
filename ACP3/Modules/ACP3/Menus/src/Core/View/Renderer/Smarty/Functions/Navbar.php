@@ -31,20 +31,20 @@ class Navbar extends AbstractFunction
      */
     private $menuItemRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
+     * @var Menus\Services\MenuServiceInterface
      */
-    private $menusCache;
+    private $menuService;
 
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         Menus\Model\Repository\MenuItemRepository $menuItemRepository,
-        Menus\Cache $menusCache
+        Menus\Services\MenuServiceInterface $menuService
     ) {
         $this->request = $request;
         $this->router = $router;
         $this->menuItemRepository = $menuItemRepository;
-        $this->menusCache = $menusCache;
+        $this->menuService = $menuService;
     }
 
     /**
@@ -94,7 +94,7 @@ class Navbar extends AbstractFunction
      */
     private function generateMenu(string $menu, MenuConfiguration $menuConfig): string
     {
-        $items = $this->menusCache->getVisibleMenuItems($menu);
+        $items = $this->menuService->getVisibleMenuItemsByMenu($menu);
         $cItems = \count($items);
 
         if ($cItems > 0) {

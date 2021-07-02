@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Menus\Services\:
+    resource: "../../../src/Services/"
+
+  ACP3\Modules\ACP3\Menus\Services\MenuServiceInterface: '@ACP3\Modules\ACP3\Menus\Services\MenuService'
+
+  ACP3\Modules\ACP3\Menus\Services\CachingMenuService:
+    decorates: ACP3\Modules\ACP3\Menus\Services\MenuService
+    arguments:
+      - "@menus.cache.core"
+      - "@.inner"

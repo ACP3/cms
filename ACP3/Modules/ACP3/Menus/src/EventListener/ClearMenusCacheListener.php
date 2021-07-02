@@ -7,24 +7,24 @@
 
 namespace ACP3\Modules\ACP3\Menus\EventListener;
 
-use ACP3\Modules\ACP3\Menus\Cache;
+use ACP3\Core\Cache;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class UpdateMenusCacheOnModelAfterSaveListener implements EventSubscriberInterface
+class ClearMenusCacheListener implements EventSubscriberInterface
 {
     /**
      * @var Cache
      */
-    private $cache;
+    private $menusCache;
 
-    public function __construct(Cache $cache)
+    public function __construct(Cache $menusCache)
     {
-        $this->cache = $cache;
+        $this->menusCache = $menusCache;
     }
 
     public function __invoke()
     {
-        $this->cache->saveMenusCache();
+        $this->menusCache->deleteAll();
     }
 
     /**
@@ -34,6 +34,7 @@ class UpdateMenusCacheOnModelAfterSaveListener implements EventSubscriberInterfa
     {
         return [
             'menus.model.menus.after_save' => '__invoke',
+            'menus.model.menus.after_delete' => '__invoke',
             'menus.model.menu_items.after_save' => '__invoke',
             'menus.model.menu_items.after_delete' => '__invoke',
         ];

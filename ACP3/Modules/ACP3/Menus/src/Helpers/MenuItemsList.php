@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Cache;
+use ACP3\Modules\ACP3\Menus\Services\MenuServiceInterface;
 
 class MenuItemsList
 {
@@ -21,16 +21,16 @@ class MenuItemsList
      */
     private $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Cache
+     * @var MenuServiceInterface
      */
-    private $menusCache;
+    private $menuService;
 
     public function __construct(
         Core\Helpers\Forms $formsHelper,
-        Cache $menusCache
+        MenuServiceInterface $menuService
     ) {
         $this->formsHelper = $formsHelper;
-        $this->menusCache = $menusCache;
+        $this->menuService = $menuService;
     }
 
     /**
@@ -40,7 +40,7 @@ class MenuItemsList
     {
         // Menüpunkte einbinden
         if (empty($this->menuItems)) {
-            $this->menuItems = $this->menusCache->getMenusCache();
+            $this->menuItems = $this->menuService->getAllMenuItems();
         }
 
         $output = [];

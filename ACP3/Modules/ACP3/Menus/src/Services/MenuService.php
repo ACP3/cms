@@ -5,19 +5,16 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Menus;
+namespace ACP3\Modules\ACP3\Menus\Services;
 
-use ACP3\Core;
+use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
 use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
 
-class Cache extends Core\Modules\AbstractCacheStorage
+class MenuService implements MenuServiceInterface
 {
-    public const CACHE_ID = 'items';
-    public const CACHE_ID_VISIBLE = 'visible_items_';
-
     /**
-     * @var Core\I18n\Translator
+     * @var Translator
      */
     private $translator;
     /**
@@ -30,46 +27,27 @@ class Cache extends Core\Modules\AbstractCacheStorage
     private $menuItemRepository;
 
     public function __construct(
-        Core\Cache $cache,
-        Core\I18n\Translator $translator,
+        Translator $translator,
         MenuRepository $menuRepository,
         MenuItemRepository $menuItemRepository
     ) {
-        parent::__construct($cache);
-
         $this->translator = $translator;
         $this->menuRepository = $menuRepository;
         $this->menuItemRepository = $menuItemRepository;
     }
 
     /**
-     * Returns the cached menu items.
-     */
-    public function getMenusCache(): array
-    {
-        if ($this->cache->contains(self::CACHE_ID) === false) {
-            $this->saveMenusCache();
-        }
-
-        return $this->cache->fetch(self::CACHE_ID);
-    }
-
-    /**
-     * Saves the menu items to the cache.
+     * {@inheritDoc}
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function saveMenusCache(): bool
+    public function getAllMenuItems(): array
     {
         $menuItems = $this->menuItemRepository->getAllMenuItems();
         $cMenuItems = \count($menuItems);
 
         if ($cMenuItems > 0) {
             $menus = $this->menuRepository->getAllMenus();
-
-            foreach ($menus as $menu) {
-                $this->saveVisibleMenuItemsCache($menu['index_name']);
-            }
 
             foreach ($menuItems as $i => $menuItem) {
                 foreach ($menus as $menu) {
@@ -94,32 +72,7 @@ class Cache extends Core\Modules\AbstractCacheStorage
             }
         }
 
-        return $this->cache->save(self::CACHE_ID, $menuItems);
-    }
-
-    /**
-     * Saves the visible menu items to the cache.
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    public function saveVisibleMenuItemsCache(string $menuIdentifier): bool
-    {
-        return $this->cache->save(
-            self::CACHE_ID_VISIBLE . $menuIdentifier,
-            $this->menuItemRepository->getVisibleMenuItemsByBlockName($menuIdentifier)
-        );
-    }
-
-    /**
-     * Returns the cached visible menu items.
-     */
-    public function getVisibleMenuItems(string $menuIdentifier): array
-    {
-        if ($this->cache->contains(self::CACHE_ID_VISIBLE . $menuIdentifier) === false) {
-            $this->saveVisibleMenuItemsCache($menuIdentifier);
-        }
-
-        return $this->cache->fetch(self::CACHE_ID_VISIBLE . $menuIdentifier);
+        return $menuItems;
     }
 
     private function isFirstItemInSet(int $index, array $menuItems): bool
@@ -149,5 +102,15 @@ class Cache extends Core\Modules\AbstractCacheStorage
         }
 
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function getVisibleMenuItemsByMenu(string $menuIdentifier): array
+    {
+        return $this->menuItemRepository->getVisibleMenuItemsByBlockName($menuIdentifier);
     }
 }
