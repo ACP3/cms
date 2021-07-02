@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     bind:
-      $systemCache: "@core.cache.system"
+      $coreCachePool: "@core.cache_item_pool"
       $i18nCachePool: "@i18n.cache_item_pool"
 
   ACP3\Modules\ACP3\System\EventListener\:

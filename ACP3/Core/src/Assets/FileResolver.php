@@ -10,17 +10,21 @@ namespace ACP3\Core\Assets;
 use ACP3\Core;
 use ACP3\Core\Assets\FileResolver\FileCheckerStrategyInterface;
 use ACP3\Core\Component\ComponentRegistry;
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 class FileResolver
 {
+    private const CACHE_KEY = 'resources';
+
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
     private $appPath;
     /**
-     * @var \ACP3\Core\Assets\Cache
+     * @var CacheItemPoolInterface
      */
-    private $resourcesCache;
+    private $assetsCachePool;
     /**
      * @var \ACP3\Core\Environment\ThemePathInterface
      */
@@ -35,9 +39,9 @@ class FileResolver
      */
     private $cachedPaths;
     /**
-     * @var bool
+     * @var CacheItemInterface
      */
-    private $newAssetPathsAdded = false;
+    private $cacheItem;
     /**
      * @var string
      */
@@ -48,27 +52,16 @@ class FileResolver
     private $currentTheme;
 
     public function __construct(
-        Core\Assets\Cache $resourcesCache,
+        CacheItemPoolInterface $coreCachePool,
         Core\Environment\ApplicationPath $appPath,
         Core\Environment\ThemePathInterface $theme
     ) {
-        $this->resourcesCache = $resourcesCache;
+        $this->assetsCachePool = $coreCachePool;
         $this->appPath = $appPath;
-        $this->cachedPaths = $resourcesCache->getCache();
         $this->theme = $theme;
 
         $this->addStrategy(new Core\Assets\FileResolver\MinifiedAwareFileCheckerStrategy());
         $this->addStrategy(new Core\Assets\FileResolver\StraightFileCheckerStrategy());
-    }
-
-    /**
-     * Write newly added assets paths into the cache.
-     */
-    public function __destruct()
-    {
-        if ($this->newAssetPathsAdded === true) {
-            $this->resourcesCache->saveCache($this->cachedPaths);
-        }
     }
 
     public function addStrategy(FileCheckerStrategyInterface $strategy): void
@@ -119,11 +112,23 @@ class FileResolver
             $resourceDirectory .= '/';
         }
 
+        if ($this->cachedPaths === null) {
+            $cacheItem = $this->assetsCachePool->getItem(self::CACHE_KEY);
+
+            if (!$cacheItem->isHit()) {
+                $cacheItem->set([]);
+            }
+
+            $this->cachedPaths = $cacheItem->get();
+            $this->cacheItem = $cacheItem;
+        }
+
         $systemAssetPath = $moduleName . '-' . $resourceDirectory . '-' . $file;
         if (!isset($this->cachedPaths[$systemAssetPath])) {
             $this->cachedPaths[$systemAssetPath] = $this->resolveAssetPath($moduleName, $resourceDirectory, $file);
 
-            $this->newAssetPathsAdded = true;
+            $this->cacheItem->set($this->cachedPaths);
+            $this->assetsCachePool->saveDeferred($this->cacheItem);
         }
 
         return $this->cachedPaths[$systemAssetPath] ?: '';

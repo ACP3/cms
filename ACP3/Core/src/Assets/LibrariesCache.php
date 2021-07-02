@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Assets;
 
-use ACP3\Core\Cache;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,18 +16,18 @@ use Symfony\Component\HttpFoundation\Request;
 class LibrariesCache
 {
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $cache;
+    private $librariesCachePool;
 
     /**
      * @var Array<string, string[]>
      */
     private $librariesCache = [];
 
-    public function __construct(Cache $cache)
+    public function __construct(CacheItemPoolInterface $librariesCachePool)
     {
-        $this->cache = $cache;
+        $this->librariesCachePool = $librariesCachePool;
     }
 
     public function scheduleStoreEnabledLibraryInCache(Request $request, string $library): void
@@ -41,7 +41,7 @@ class LibrariesCache
 
     public function hasCacheForRequest(Request $request): bool
     {
-        return $this->cache->contains($this->getCacheId($request));
+        return $this->librariesCachePool->hasItem($this->getCacheId($request));
     }
 
     /**
@@ -53,7 +53,7 @@ class LibrariesCache
             return $this->librariesCache[$request->getUri()] ?? [];
         }
 
-        return $this->cache->fetch($this->getCacheId($request));
+        return $this->librariesCachePool->getItem($this->getCacheId($request))->get();
     }
 
     /**
@@ -69,7 +69,9 @@ class LibrariesCache
             return;
         }
 
-        $this->cache->save($this->getCacheId($request), array_unique($this->librariesCache[$request->getUri()] ?? []));
+        $cacheItem = $this->librariesCachePool->getItem($this->getCacheId($request));
+        $cacheItem->set(array_unique($this->librariesCache[$request->getUri()] ?? []));
+        $this->librariesCachePool->saveDeferred($cacheItem);
     }
 
     private function getCacheId(Request $request): string
@@ -79,6 +81,6 @@ class LibrariesCache
 
     public function deleteAll(): bool
     {
-        return $this->cache->deleteAll();
+        return $this->librariesCachePool->clear();
     }
 }

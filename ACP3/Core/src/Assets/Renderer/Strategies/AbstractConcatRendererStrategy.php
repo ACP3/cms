@@ -9,11 +9,11 @@ namespace ACP3\Core\Assets\Renderer\Strategies;
 
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
-use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Psr\Cache\CacheItemPoolInterface;
 
 abstract class AbstractConcatRendererStrategy implements RendererStrategyInterface
 {
@@ -22,9 +22,9 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
      */
     protected $assets;
     /**
-     * @var \ACP3\Core\Cache
+     * @var CacheItemPoolInterface
      */
-    protected $systemCache;
+    protected $coreCachePool;
     /**
      * @var \ACP3\Core\Modules
      */
@@ -50,14 +50,14 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         Assets $assets,
         Assets\Libraries $libraries,
         ApplicationPath $appPath,
-        Cache $systemCache,
+        CacheItemPoolInterface $coreCachePool,
         SettingsInterface $config,
         Modules $modules,
         FileResolver $fileResolver
     ) {
         $this->assets = $assets;
         $this->appPath = $appPath;
-        $this->systemCache = $systemCache;
+        $this->coreCachePool = $coreCachePool;
         $this->config = $config;
         $this->modules = $modules;
         $this->fileResolver = $fileResolver;
@@ -101,7 +101,9 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         $filenameHash = $this->generateFilenameHash($layout);
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
-        if (false === ($lastGenerated = $this->systemCache->fetch($cacheId))) {
+        $cacheItem = $this->coreCachePool->getItem($cacheId);
+
+        if (!$cacheItem->isHit() || false === ($lastGenerated = $cacheItem->get())) {
             $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
         }
 
@@ -120,7 +122,8 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
             $this->saveMinifiedAsset($files, $this->appPath->getUploadsDir() . $path);
 
             // Save the time of the generation of the requested file
-            $this->systemCache->save($cacheId, $lastGenerated);
+            $cacheItem->set($lastGenerated);
+            $this->coreCachePool->saveDeferred($cacheItem);
         }
 
         return $this->appPath->getWebRoot() . 'uploads/' . $path;

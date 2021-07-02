@@ -46,12 +46,6 @@ services:
   core.request_factory:
     class: ACP3\Modules\ACP3\Installer\Core\Http\RequestFactory
 
-  core.modules.moduleInfoCache:
-    class: ACP3\Core\Modules\ModuleInfoCache
-    arguments:
-      $cache: "@core.cache.system"
-      $schemaLocator: "@core.installer.schema_registrar"
-
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler
 

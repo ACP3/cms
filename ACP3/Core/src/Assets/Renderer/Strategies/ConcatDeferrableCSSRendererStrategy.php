@@ -49,14 +49,16 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
     protected function processLibraries(string $layout): array
     {
         $cacheId = $this->buildCacheId($layout);
+        $cacheItem = $this->coreCachePool->getItem($cacheId);
 
-        if ($this->systemCache->contains($cacheId) === false) {
+        if (!$cacheItem->isHit()) {
             $this->fetchLibraries();
 
-            $this->systemCache->save($cacheId, $this->stylesheets);
+            $cacheItem->set($this->stylesheets);
+            $this->coreCachePool->saveDeferred($cacheItem);
         }
 
-        return $this->systemCache->fetch($cacheId);
+        return $cacheItem->get();
     }
 
     /**

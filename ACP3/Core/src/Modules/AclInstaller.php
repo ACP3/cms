@@ -11,7 +11,6 @@ use ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface;
 use ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface;
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Cache;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Modules\Installer\SchemaInterface;
@@ -21,10 +20,6 @@ class AclInstaller implements InstallerInterface
     public const INSTALL_RESOURCES_AND_RULES = 1;
     public const INSTALL_RESOURCES = 2;
 
-    /**
-     * @var \ACP3\Core\Cache
-     */
-    private $aclCache;
     /**
      * @var \ACP3\Core\Modules\SchemaHelper
      */
@@ -47,14 +42,12 @@ class AclInstaller implements InstallerInterface
     private $ruleRepository;
 
     public function __construct(
-        Cache $aclCache,
         SchemaHelper $schemaHelper,
         RoleRepositoryInterface $roleRepository,
         AbstractRepository $ruleRepository,
         AbstractRepository $resourceRepository,
         PrivilegeRepositoryInterface $privilegeRepository
     ) {
-        $this->aclCache = $aclCache;
         $this->schemaHelper = $schemaHelper;
         $this->roleRepository = $roleRepository;
         $this->ruleRepository = $ruleRepository;
@@ -65,21 +58,17 @@ class AclInstaller implements InstallerInterface
     /**
      * Fügt die zu einen Modul zugehörigen Ressourcen ein.
      *
-     * @param int $mode
-     *
      * @return bool
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function install(SchemaInterface $schema, $mode = self::INSTALL_RESOURCES_AND_RULES)
+    public function install(SchemaInterface $schema, int $mode = self::INSTALL_RESOURCES_AND_RULES)
     {
         $this->insertAclResources($schema);
 
         if ($mode === self::INSTALL_RESOURCES_AND_RULES) {
             $this->insertAclRules($schema->getModuleName());
         }
-
-        $this->aclCache->deleteAll();
 
         return true;
     }
@@ -165,8 +154,6 @@ class AclInstaller implements InstallerInterface
      */
     public function uninstall(SchemaInterface $schema): bool
     {
-        $this->aclCache->deleteAll();
-
         return true;
     }
 }

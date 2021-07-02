@@ -4,22 +4,14 @@ services:
     bind:
       $assetRendererStrategyServiceLocator: "@core.assets.renderer.strategy.service_locator"
       $applicationMode: "%core.environment%"
-      $systemCache: "@core.cache.system"
+      $coreCachePool: "@core.cache_item_pool"
 
-  core.assets.event_listener.static_assets_listener:
-    class: ACP3\Core\Assets\EventListener\StaticAssetsListener
+  ACP3\Core\Assets\EventListener\StaticAssetsListener:
     tags:
       - { name: core.eventSubscriber }
 
-  core.assets:
-    class: ACP3\Core\Assets
-
-  ACP3\Core\Assets: "@core.assets"
-
-  core.assets.cache:
-    class: ACP3\Core\Assets\Cache
-    arguments:
-      $cache: "@core.cache.system"
+  ACP3\Core\Assets: ~
+  core.assets: '@ACP3\Core\Assets'
 
   tubalmartin\CssMin\Minifier: ~
 
@@ -29,7 +21,7 @@ services:
       - "@core.assets"
       - "@core.assets.libraries"
       - "@core.environment.application_path"
-      - "@core.cache.system"
+      - "@core.cache_item_pool"
       - "@core.config"
       - "@core.modules"
       - "@core.assets.file_resolver"
@@ -55,44 +47,32 @@ services:
   core.assets.renderer.strategy.concat_javascript:
     class: ACP3\Core\Assets\Renderer\Strategies\ConcatJavaScriptRendererStrategy
 
-  core.assets.file_resolver:
-    class: ACP3\Core\Assets\FileResolver
+  ACP3\Core\Assets\FileResolver: ~
+  core.assets.file_resolver: '@ACP3\Core\Assets\FileResolver'
+
+  ACP3\Core\Assets\IncludeJs: ~
+  core.assets.include_js: '@ACP3\Core\Assets\IncludeJs'
+
+  ACP3\Core\Assets\IncludeStylesheet: ~
+  core.assets.include_stylesheet: '@ACP3\Core\Assets\IncludeStylesheet'
+
+  ACP3\Core\Assets\Libraries: ~
+  core.assets.libraries: '@ACP3\Core\Assets\Libraries'
+
+  core.assets.libraries.cache_item_pool:
+    class: Psr\Cache\CacheItemPoolInterface
+    factory: "@Psr6CacheItemPoolFactory"
+    arguments: ["libraries"]
+    tags:
+      - { name: acp3.cache_item_pool }
+
+  ACP3\Core\Assets\LibrariesCache:
     arguments:
-      $resourcesCache: "@core.assets.cache"
+      $librariesCachePool: "@core.assets.libraries.cache_item_pool"
+  core.assets.libraries_cache: '@ACP3\Core\Assets\LibrariesCache'
 
-  ACP3\Core\Assets\FileResolver: "@core.assets.file_resolver"
-
-  core.assets.include_js:
-    class: ACP3\Core\Assets\IncludeJs
-
-  ACP3\Core\Assets\IncludeJs: "@core.assets.include_js"
-
-  core.assets.include_stylesheet:
-    class: ACP3\Core\Assets\IncludeStylesheet
-
-  ACP3\Core\Assets\IncludeStylesheet: "@core.assets.include_stylesheet"
-
-  core.assets.libraries:
-    class: ACP3\Core\Assets\Libraries
-
-  ACP3\Core\Assets\Libraries: "@core.assets.libraries"
-
-  core.assets.cache_namespace_libraries:
-    class: ACP3\Core\Cache
-    arguments:
-      $namespace: "libraries"
-
-  core.assets.libraries_cache:
-    class: ACP3\Core\Assets\LibrariesCache
-    arguments:
-      $cache: "@core.assets.cache_namespace_libraries"
-
-  ACP3\Core\Assets\LibrariesCache: "@core.assets.libraries_cache"
-
-  core.assets.page_css_classes:
-    class: ACP3\Core\Assets\PageCssClasses
-
-  ACP3\Core\Assets\PageCssClasses: "@core.assets.page_css_classes"
+  ACP3\Core\Assets\PageCssClasses: ~
+  core.assets.page_css_classes: '@ACP3\Core\Assets\PageCssClasses'
 
   core.assets.renderer.strategy.service_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
@@ -105,20 +85,17 @@ services:
         javascript_renderer_prod: "@core.assets.renderer.strategy.concat_javascript"
     tags: ["container.service_locator"]
 
-  core.assets.renderer.css_renderer:
-    class: ACP3\Core\Assets\Renderer\CSSRenderer
-    factory: ["@core.assets.renderer.css_renderer_factory", "create"]
-
-  ACP3\Core\Assets\Renderer\CSSRenderer: "@core.assets.renderer.css_renderer"
+  ACP3\Core\Assets\Renderer\CSSRenderer:
+    factory: "@core.assets.renderer.css_renderer_factory"
+  core.assets.renderer.css_renderer: '@ACP3\Core\Assets\Renderer\CSSRenderer'
 
   core.assets.renderer.css_renderer_factory:
     class: ACP3\Core\Assets\Renderer\CSSRendererFactory
 
-  core.assets.renderer.javascript_renderer:
-    class: ACP3\Core\Assets\Renderer\JavaScriptRenderer
-    factory: ["@core.assets.renderer.javascript_renderer_factory", "create"]
+  ACP3\Core\Assets\Renderer\JavaScriptRenderer:
+    factory: "@core.assets.renderer.javascript_renderer_factory"
 
-  ACP3\Core\Assets\Renderer\JavaScriptRenderer: "@core.assets.renderer.javascript_renderer"
+  core.assets.renderer.javascript_renderer: '@ACP3\Core\Assets\Renderer\JavaScriptRenderer'
 
   core.assets.renderer.javascript_renderer_factory:
     class: ACP3\Core\Assets\Renderer\JavaScriptRendererFactory

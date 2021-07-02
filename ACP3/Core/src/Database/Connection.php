@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Database;
 
-use ACP3\Core\Cache\CacheDriverFactory;
 use ACP3\Core\Environment\ApplicationMode;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
@@ -20,10 +19,6 @@ class Connection
      * @var LoggerInterface
      */
     private $logger;
-    /**
-     * @var \ACP3\Core\Cache\CacheDriverFactory
-     */
-    private $cacheDriverFactory;
     /**
      * @var \Doctrine\DBAL\Connection
      */
@@ -43,13 +38,11 @@ class Connection
 
     public function __construct(
         LoggerInterface $logger,
-        CacheDriverFactory $cacheDriverFactory,
         string $appMode,
         array $connectionParams,
         string $tablePrefix
     ) {
         $this->logger = $logger;
-        $this->cacheDriverFactory = $cacheDriverFactory;
         $this->appMode = $appMode;
         $this->connectionParams = $connectionParams;
         $this->prefix = $tablePrefix;
@@ -201,8 +194,6 @@ class Connection
         if ($this->appMode === ApplicationMode::DEVELOPMENT) {
             $config->setSQLLogger(new SQLLogger($this->logger));
         }
-
-        $config->setResultCacheImpl($this->cacheDriverFactory->create('db-queries'));
 
         return DBAL\DriverManager::getConnection($this->connectionParams, $config);
     }

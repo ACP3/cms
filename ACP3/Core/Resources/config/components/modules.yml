@@ -8,7 +8,6 @@ services:
   ACP3\Core\Modules\AclInstaller:
     public: true
     arguments:
-      $aclCache: "@core.cache.system"
       $ruleRepository: "@permissions.model.rulerepository"
       $resourceRepository: "@permissions.model.resourcerepository"
 
@@ -19,7 +18,7 @@ services:
   ACP3\Core\Modules\CachingModuleInfo:
     decorates: ACP3\Core\Modules\ModuleInfo
     arguments:
-      - "@core.cache.system"
+      - "@core.cache_item_pool"
       - "@.inner"
 
   ACP3\Core\Modules\ModuleInfoInterface: '@ACP3\Core\Modules\ModuleInfo'

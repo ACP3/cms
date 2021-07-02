@@ -7,33 +7,36 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\Cache;
+use Psr\Cache\CacheItemPoolInterface;
 
 class CachingModuleInfo implements ModuleInfoInterface
 {
     private const CACHE_ID_MODULES_INFO = 'modules_info';
 
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $modulesCache;
+    private $coreCachePool;
     /**
      * @var ModuleInfo
      */
     private $moduleInfo;
 
-    public function __construct(Cache $modulesCache, ModuleInfo $moduleInfo)
+    public function __construct(CacheItemPoolInterface $coreCachePool, ModuleInfo $moduleInfo)
     {
-        $this->modulesCache = $modulesCache;
+        $this->coreCachePool = $coreCachePool;
         $this->moduleInfo = $moduleInfo;
     }
 
     public function getModulesInfo(): array
     {
-        if (!$this->modulesCache->contains(self::CACHE_ID_MODULES_INFO)) {
-            $this->modulesCache->save(self::CACHE_ID_MODULES_INFO, $this->moduleInfo->getModulesInfo());
+        $cacheItem = $this->coreCachePool->getItem(self::CACHE_ID_MODULES_INFO);
+
+        if (!$cacheItem->isHit()) {
+            $cacheItem->set($this->moduleInfo->getModulesInfo());
+            $this->coreCachePool->saveDeferred($cacheItem);
         }
 
-        return $this->modulesCache->fetch(self::CACHE_ID_MODULES_INFO);
+        return $cacheItem->get();
     }
 }

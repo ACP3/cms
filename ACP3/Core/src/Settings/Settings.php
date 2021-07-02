@@ -7,10 +7,10 @@
 
 namespace ACP3\Core\Settings;
 
-use ACP3\Core\Cache;
 use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Settings\Event\SettingsSaveEvent;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -23,31 +23,31 @@ class Settings implements SettingsInterface
     /**
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    private $eventDispatcher;
     /**
      * @var ModuleAwareRepositoryInterface
      */
-    protected $systemModuleRepository;
+    private $systemModuleRepository;
     /**
      * @var SettingsAwareRepositoryInterface
      */
-    protected $systemSettingsRepository;
+    private $systemSettingsRepository;
     /**
-     * @var \ACP3\Core\Cache
+     * @var CacheItemPoolInterface
      */
-    protected $coreCache;
+    private $coreCachePool;
     /**
      * @var array
      */
-    protected $settings = [];
+    private $settings = [];
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        Cache $coreCache,
+        CacheItemPoolInterface $coreCachePool,
         ModuleAwareRepositoryInterface $systemModuleRepository,
         SettingsAwareRepositoryInterface $systemSettingsRepository
     ) {
-        $this->coreCache = $coreCache;
+        $this->coreCachePool = $coreCachePool;
         $this->systemModuleRepository = $systemModuleRepository;
         $this->systemSettingsRepository = $systemSettingsRepository;
         $this->eventDispatcher = $eventDispatcher;
@@ -75,7 +75,7 @@ class Settings implements SettingsInterface
             $moduleName . '.settings.save_before'
         );
 
-        $bool = $bool2 = false;
+        $result = false;
 
         foreach ($settingsSaveEvent->getData() as $key => $value) {
             $updateValues = [
@@ -85,27 +85,12 @@ class Settings implements SettingsInterface
                 'module_id' => $moduleId,
                 'name' => $key,
             ];
-            $bool = $this->systemSettingsRepository->update($updateValues, $where);
+            $result = $this->systemSettingsRepository->update($updateValues, $where);
         }
 
-        $bool2 = $this->saveCache();
+        $result2 = $this->coreCachePool->deleteItem(static::CACHE_ID);
 
-        return $bool !== false && $bool2 !== false;
-    }
-
-    /**
-     * Saves the modules settings to the cache.
-     */
-    protected function saveCache(): bool
-    {
-        $settings = $this->systemSettingsRepository->getAllSettings();
-
-        $data = [];
-        foreach ($settings as $setting) {
-            $data[$setting['module_name']][$setting['name']] = $setting['value'];
-        }
-
-        return $this->coreCache->save(static::CACHE_ID, $data);
+        return $result !== false && $result2 !== false;
     }
 
     /**
@@ -114,11 +99,21 @@ class Settings implements SettingsInterface
     public function getSettings(string $module): array
     {
         if ($this->settings === []) {
-            if ($this->coreCache->contains(static::CACHE_ID) === false) {
-                $this->saveCache();
+            $cacheItem = $this->coreCachePool->getItem(static::CACHE_ID);
+
+            if (!$cacheItem->isHit()) {
+                $settings = $this->systemSettingsRepository->getAllSettings();
+
+                $data = [];
+                foreach ($settings as $setting) {
+                    $data[$setting['module_name']][$setting['name']] = $setting['value'];
+                }
+
+                $cacheItem->set($data);
+                $this->coreCachePool->saveDeferred($cacheItem);
             }
 
-            $this->settings = $this->coreCache->fetch(static::CACHE_ID);
+            $this->settings = $cacheItem->get();
         }
 
         return $this->settings[$module] ?? [];

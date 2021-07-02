@@ -10,10 +10,10 @@ namespace ACP3\Core\Assets\Renderer\Strategies;
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Assets\FileResolver;
-use ACP3\Core\Cache;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use tubalmartin\CssMin\Minifier;
 
 class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implements CSSRendererStrategyInterface
@@ -35,12 +35,12 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
         Assets $assets,
         Assets\Libraries $libraries,
         ApplicationPath $appPath,
-        Cache $systemCache,
+        CacheItemPoolInterface $coreCachePool,
         SettingsInterface $config,
         Modules $modules,
         FileResolver $fileResolver
     ) {
-        parent::__construct($assets, $libraries, $appPath, $systemCache, $config, $modules, $fileResolver);
+        parent::__construct($assets, $libraries, $appPath, $coreCachePool, $config, $modules, $fileResolver);
 
         $this->minifier = $minifier;
     }
@@ -88,16 +88,18 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     protected function processLibraries(string $layout): array
     {
         $cacheId = $this->buildCacheId($layout);
+        $cacheItem = $this->coreCachePool->getItem($cacheId);
 
-        if ($this->systemCache->contains($cacheId) === false) {
+        if (!$cacheItem->isHit()) {
             $this->fetchLibraries();
             $this->fetchThemeStylesheets($layout);
             $this->fetchModuleStylesheets();
 
-            $this->systemCache->save($cacheId, $this->stylesheets);
+            $cacheItem->set($this->stylesheets);
+            $this->coreCachePool->saveDeferred($cacheItem);
         }
 
-        return $this->systemCache->fetch($cacheId);
+        return $cacheItem->get();
     }
 
     /**

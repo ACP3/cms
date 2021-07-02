@@ -28,7 +28,7 @@ class CSSRendererFactory
         $this->applicationMode = $applicationMode;
     }
 
-    public function create(): CSSRenderer
+    public function __invoke(): CSSRenderer
     {
         return new CSSRenderer(
             $this->assetRendererStrategyServiceLocator->get('css_renderer_' . $this->applicationMode),

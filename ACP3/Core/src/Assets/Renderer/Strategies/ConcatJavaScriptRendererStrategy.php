@@ -61,15 +61,17 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
     protected function processLibraries(string $layout): array
     {
         $cacheId = $this->buildCacheId($layout);
+        $cacheItem = $this->coreCachePool->getItem($cacheId);
 
-        if ($this->systemCache->contains($cacheId) === false) {
+        if (!$cacheItem->isHit()) {
             $this->fetchLibraries();
             $this->fetchThemeJavaScript($layout);
 
-            $this->systemCache->save($cacheId, $this->javascript);
+            $cacheItem->set($this->javascript);
+            $this->coreCachePool->saveDeferred($cacheItem);
         }
 
-        return $this->systemCache->fetch($cacheId);
+        return $cacheItem->get();
     }
 
     /**

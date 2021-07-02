@@ -28,7 +28,7 @@ class JavaScriptRendererFactory
         $this->applicationMode = $applicationMode;
     }
 
-    public function create(): JavaScriptRenderer
+    public function __invoke(): JavaScriptRenderer
     {
         return new JavaScriptRenderer(
             $this->assetRendererStrategyServiceLocator->get('javascript_renderer_' . $this->applicationMode)
