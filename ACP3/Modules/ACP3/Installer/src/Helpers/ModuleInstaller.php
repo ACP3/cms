@@ -38,11 +38,22 @@ class ModuleInstaller
         /** @var \Psr\Container\ContainerInterface $schemaRegistrar */
         $schemaRegistrar = $container->get('core.installer.schema_registrar');
 
-        foreach (ComponentRegistry::excludeByType(ComponentRegistry::allTopSorted(), [ComponentTypeEnum::THEME]) as $module) {
-            if (!$schemaRegistrar->has($module->getName())) {
-                continue;
+        $installableModules = array_filter(
+            ComponentRegistry::excludeByType(ComponentRegistry::allTopSorted(), [ComponentTypeEnum::THEME]),
+            static function ($module) use ($schemaRegistrar) {
+                return $schemaRegistrar->has($module->getName());
             }
+        );
+        // Manually priorities the system modules to be the first module to be installed
+        foreach ($installableModules as $i => $module) {
+            if ($module->getName() === 'system') {
+                array_splice($installableModules, $i, 1);
+                array_unshift($installableModules, $module);
+                break;
+            }
+        }
 
+        foreach ($installableModules as $module) {
             if ($this->installHelper->installModule($schemaRegistrar->get($module->getName()), $container) === false) {
                 throw new ModuleInstallerException(sprintf('Error while installing module "%s"', $module->getName()));
             }
