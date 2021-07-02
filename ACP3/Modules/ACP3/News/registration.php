@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'news',
         __DIR__,
-        ['acp', 'core', 'categories']
+        ['acp', 'core', 'categories', 'users']
     )
 );

@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'guestbook',
         __DIR__,
-        ['acp', 'core']
+        ['acp', 'core', 'users']
     )
 );

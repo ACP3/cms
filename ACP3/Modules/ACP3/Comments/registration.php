@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'comments',
         __DIR__,
-        ['acp', 'core']
+        ['acp', 'core', 'users']
     )
 );
