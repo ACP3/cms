@@ -13,6 +13,9 @@ use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\Common\Cache\PhpFileCache;
 
+/**
+ * @deprecated since version 5.19.0, to be removed with version 6.0.0. Use Psr6CacheItemPoolFactory instead.
+ */
 class CacheDriverFactory
 {
     /**

@@ -9,3 +9,10 @@ services:
     class: ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar
     tags:
       - { name: smarty.plugin.function, pluginName: navbar }
+
+  menus.cache_item_pool:
+    class: Psr\Cache\CacheItemPoolInterface
+    factory: "@Psr6CacheItemPoolFactory"
+    arguments: ["menus"]
+    tags:
+      - { name: acp3.cache_item_pool }

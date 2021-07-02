@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     bind:
-      $menusCache: "@menus.cache.core"
+      $menusCachePool: "@menus.cache_item_pool"
 
   ACP3\Modules\ACP3\Menus\EventListener\:
     resource: "../../../src/EventListener/"

@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Menus\Services;
 
-use ACP3\Core\Cache;
+use Psr\Cache\CacheItemPoolInterface;
 
 class CachingMenuService implements MenuServiceInterface
 {
@@ -15,17 +15,17 @@ class CachingMenuService implements MenuServiceInterface
     private const CACHE_KEY_VISIBLE_MENU_ITEMS = 'menu_items_visible_%s';
 
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $menusCache;
+    private $menusCachePool;
     /**
      * @var MenuService
      */
     private $menuService;
 
-    public function __construct(Cache $menusCache, MenuService $menuService)
+    public function __construct(CacheItemPoolInterface $menusCachePool, MenuService $menuService)
     {
-        $this->menusCache = $menusCache;
+        $this->menusCachePool = $menusCachePool;
         $this->menuService = $menuService;
     }
 
@@ -36,11 +36,14 @@ class CachingMenuService implements MenuServiceInterface
      */
     public function getAllMenuItems(): array
     {
-        if (!$this->menusCache->contains(self::CACHE_KEY_ALL_MENU_ITEMS)) {
-            $this->menusCache->save(self::CACHE_KEY_ALL_MENU_ITEMS, $this->menuService->getAllMenuItems());
+        $menuItems = $this->menusCachePool->getItem(self::CACHE_KEY_ALL_MENU_ITEMS);
+
+        if (!$menuItems->isHit()) {
+            $menuItems->set($this->menuService->getAllMenuItems());
+            $this->menusCachePool->saveDeferred($menuItems);
         }
 
-        return $this->menusCache->fetch(self::CACHE_KEY_ALL_MENU_ITEMS);
+        return $menuItems->get();
     }
 
     /**
@@ -51,11 +54,13 @@ class CachingMenuService implements MenuServiceInterface
     public function getVisibleMenuItemsByMenu(string $menuIdentifier): array
     {
         $cacheKey = sprintf(self::CACHE_KEY_VISIBLE_MENU_ITEMS, $menuIdentifier);
+        $visibleMenuItems = $this->menusCachePool->getItem($cacheKey);
 
-        if (!$this->menusCache->contains($cacheKey)) {
-            $this->menusCache->save($cacheKey, $this->menuService->getVisibleMenuItemsByMenu($menuIdentifier));
+        if (!$visibleMenuItems->isHit()) {
+            $visibleMenuItems->set($this->menuService->getVisibleMenuItemsByMenu($menuIdentifier));
+            $this->menusCachePool->saveDeferred($visibleMenuItems);
         }
 
-        return $this->menusCache->fetch($cacheKey);
+        return $visibleMenuItems->get();
     }
 }

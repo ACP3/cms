@@ -10,5 +10,5 @@ services:
   ACP3\Modules\ACP3\Menus\Services\CachingMenuService:
     decorates: ACP3\Modules\ACP3\Menus\Services\MenuService
     arguments:
-      - "@menus.cache.core"
+      - "@menus.cache_item_pool"
       - "@.inner"

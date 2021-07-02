@@ -8,8 +8,14 @@
 namespace ACP3\Core;
 
 use ACP3\Core\Cache\CacheDriverFactory;
+use ACP3\Core\Cache\Psr6CacheItemPoolFactory;
 use Doctrine\Common\Cache\CacheProvider;
 
+/**
+ * @deprecated since version 5.19.0, to be removed with version 6.0.0. Type hint against the \Psr\Cache\CacheItemPoolInterface instead.
+ * @see \Psr\Cache\CacheItemPoolInterface
+ * @see Psr6CacheItemPoolFactory
+ */
 class Cache
 {
     /**

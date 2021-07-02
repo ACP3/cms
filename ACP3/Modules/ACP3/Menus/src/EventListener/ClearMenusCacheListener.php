@@ -7,24 +7,24 @@
 
 namespace ACP3\Modules\ACP3\Menus\EventListener;
 
-use ACP3\Core\Cache;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearMenusCacheListener implements EventSubscriberInterface
 {
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $menusCache;
+    private $menusCachePool;
 
-    public function __construct(Cache $menusCache)
+    public function __construct(CacheItemPoolInterface $menusCachePool)
     {
-        $this->menusCache = $menusCache;
+        $this->menusCachePool = $menusCachePool;
     }
 
     public function __invoke()
     {
-        $this->menusCache->deleteAll();
+        $this->menusCachePool->clear();
     }
 
     /**
