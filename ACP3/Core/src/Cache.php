@@ -32,7 +32,7 @@ class Cache
     }
 
     /**
-     * @return bool|array|string
+     * @return mixed
      */
     public function fetch(string $cacheId)
     {

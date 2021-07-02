@@ -16,7 +16,7 @@ class CachingModuleInfo implements ModuleInfoInterface
     /**
      * @var Cache
      */
-    private $systemCache;
+    private $modulesCache;
     /**
      * @var ModuleInfo
      */
@@ -24,16 +24,16 @@ class CachingModuleInfo implements ModuleInfoInterface
 
     public function __construct(Cache $modulesCache, ModuleInfo $moduleInfo)
     {
-        $this->systemCache = $modulesCache;
+        $this->modulesCache = $modulesCache;
         $this->moduleInfo = $moduleInfo;
     }
 
     public function getModulesInfo(): array
     {
-        if (!$this->systemCache->contains(self::CACHE_ID_MODULES_INFO)) {
-            $this->systemCache->save(self::CACHE_ID_MODULES_INFO, $this->moduleInfo->getModulesInfo());
+        if (!$this->modulesCache->contains(self::CACHE_ID_MODULES_INFO)) {
+            $this->modulesCache->save(self::CACHE_ID_MODULES_INFO, $this->moduleInfo->getModulesInfo());
         }
 
-        return $this->systemCache->fetch(self::CACHE_ID_MODULES_INFO);
+        return $this->modulesCache->fetch(self::CACHE_ID_MODULES_INFO);
     }
 }
