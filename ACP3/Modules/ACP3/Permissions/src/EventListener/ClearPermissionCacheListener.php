@@ -7,25 +7,25 @@
 
 namespace ACP3\Modules\ACP3\Permissions\EventListener;
 
-use ACP3\Core\Cache;
 use ACP3\Modules\ACP3\System\Event\RenewCacheEvent;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearPermissionCacheListener implements EventSubscriberInterface
 {
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $aclCache;
+    private $permissionsCachePool;
 
-    public function __construct(Cache $aclCache)
+    public function __construct(CacheItemPoolInterface $permissionsCachePool)
     {
-        $this->aclCache = $aclCache;
+        $this->permissionsCachePool = $permissionsCachePool;
     }
 
     public function __invoke()
     {
-        $this->aclCache->deleteAll();
+        $this->permissionsCachePool->clear();
     }
 
     /**

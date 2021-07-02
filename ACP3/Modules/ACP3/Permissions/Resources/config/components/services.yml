@@ -10,5 +10,5 @@ services:
   ACP3\Modules\ACP3\Permissions\Services\CachingPermissionService:
     decorates: ACP3\Modules\ACP3\Permissions\Services\PermissionService
     arguments:
-      - "@permissions.cache.core"
+      - "@permissions.cache_item_pool"
       - "@.inner"

@@ -20,4 +20,4 @@ services:
     class: ACP3\Modules\ACP3\Permissions\Model\RulesModel
     arguments:
       $repository: "@permissions.model.rulerepository"
-      $aclCache: "@permissions.cache.core"
+      $permissionsCachePool: "@permissions.cache_item_pool"
