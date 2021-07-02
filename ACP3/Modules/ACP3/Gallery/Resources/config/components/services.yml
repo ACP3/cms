@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Gallery\Services\:
+    resource: "../../../src/Services/"
+
+  ACP3\Modules\ACP3\Gallery\Services\GalleryServiceInterface: '@ACP3\Modules\ACP3\Gallery\Services\GalleryService'
+
+  ACP3\Modules\ACP3\Gallery\Services\CachingGalleryService:
+    decorates: ACP3\Modules\ACP3\Gallery\Services\GalleryService
+    arguments:
+      - "@gallery.cache.core"
+      - "@.inner"

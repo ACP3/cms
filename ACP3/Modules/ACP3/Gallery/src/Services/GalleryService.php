@@ -5,61 +5,51 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Gallery;
+namespace ACP3\Modules\ACP3\Gallery\Services;
 
-use ACP3\Core;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
+use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
 use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
 
-class Cache extends Core\Modules\AbstractCacheStorage
+class GalleryService implements GalleryServiceInterface
 {
     /**
-     * @var string
-     */
-    public const CACHE_ID = 'pics_id_';
-
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var PictureRepository
      */
     private $pictureRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
+     * @var ThumbnailGenerator
      */
     private $thumbnailGenerator;
+    /**
+     * @var GalleryRepository
+     */
+    private $galleryRepository;
 
-    public function __construct(
-        Core\Cache $cache,
-        PictureRepository $pictureRepository,
-        ThumbnailGenerator $thumbnailGenerator
-    ) {
-        parent::__construct($cache);
-
+    public function __construct(GalleryRepository $galleryRepository, PictureRepository $pictureRepository, ThumbnailGenerator $thumbnailGenerator)
+    {
         $this->pictureRepository = $pictureRepository;
         $this->thumbnailGenerator = $thumbnailGenerator;
+        $this->galleryRepository = $galleryRepository;
     }
 
     /**
-     * Bindet die gecachete Galerie anhand ihrer ID ein.
+     * {@inheritDoc}
      *
-     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getCache(int $galleryId): array
+    public function getGallery(int $galleryId): array
     {
-        if ($this->cache->contains(self::CACHE_ID . $galleryId) === false) {
-            $this->saveCache($galleryId);
-        }
-
-        return $this->cache->fetch(self::CACHE_ID . $galleryId);
+        return $this->galleryRepository->getOneById($galleryId);
     }
 
     /**
-     * Erstellt den Galerie-Cache anhand der angegebenen ID.
+     * {@inheritDoc}
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function saveCache(int $galleryId): bool
+    public function getGalleryPictures(int $galleryId): array
     {
         $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
 
@@ -74,6 +64,20 @@ class Cache extends Core\Modules\AbstractCacheStorage
             $pictures[$i]['uri_picture'] = $cachedPicture->getFileWeb();
         }
 
-        return $this->cache->save(self::CACHE_ID . $galleryId, $pictures);
+        return $pictures;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function getGalleryWithPictures(int $galleryId): array
+    {
+        $gallery = $this->getGallery($galleryId);
+        $gallery['pictures'] = $this->getGalleryPictures($galleryId);
+
+        return $gallery;
     }
 }

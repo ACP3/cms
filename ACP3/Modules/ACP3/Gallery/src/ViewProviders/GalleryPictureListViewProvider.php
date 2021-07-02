@@ -12,20 +12,11 @@ use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Gallery\Cache;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema as GallerySchema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Services\GalleryServiceInterface;
 
 class GalleryPictureListViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
-     */
-    private $galleryCache;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
-     */
-    private $galleryRepository;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
@@ -46,23 +37,25 @@ class GalleryPictureListViewProvider
      * @var \ACP3\Core\I18n\Translator
      */
     private $translator;
+    /**
+     * @var GalleryServiceInterface
+     */
+    private $galleryService;
 
     public function __construct(
-        Cache $galleryCache,
-        GalleryRepository $galleryRepository,
+        GalleryServiceInterface $galleryService,
         RequestInterface $request,
         SettingsInterface $settings,
         Steps $breadcrumb,
         Title $title,
         Translator $translator
     ) {
-        $this->galleryCache = $galleryCache;
-        $this->galleryRepository = $galleryRepository;
         $this->request = $request;
         $this->settings = $settings;
         $this->breadcrumb = $breadcrumb;
         $this->title = $title;
         $this->translator = $translator;
+        $this->galleryService = $galleryService;
     }
 
     /**
@@ -72,20 +65,21 @@ class GalleryPictureListViewProvider
     public function __invoke(int $galleryId): array
     {
         $settings = $this->settings->getSettings(GallerySchema::MODULE_NAME);
-        $gallery = $this->galleryRepository->getOneById($galleryId);
+        $galleryWithPictures = $this->galleryService->getGalleryWithPictures($galleryId);
 
         $this->breadcrumb
             ->append($this->translator->t('gallery', 'gallery'), 'gallery')
             ->append(
-                $gallery['title'],
+                $galleryWithPictures['title'],
                 $this->request->getQuery()
             );
-        $this->title->setPageTitle($gallery['title']);
+        $this->title->setPageTitle($galleryWithPictures['title']);
 
         return [
-            'pictures' => $this->galleryCache->getCache($galleryId),
-            'gallery' => $gallery,
+            'gallery' => $galleryWithPictures,
             'overlay' => (int) $settings['overlay'],
+            // @deprecated since version 5.19.0, to be removed with version 6.0.0. Use $gallery['pictures'] instead
+            'pictures' => $galleryWithPictures['pictures'],
         ];
     }
 }

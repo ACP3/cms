@@ -1,5 +1,5 @@
 <ul class="gallery-pictures-widget list-unstyled">
-    {foreach $pictures as $picture}
+    {foreach $gallery.pictures as $picture}
         <li>
             <a href="{$picture.uri_picture}"
                {if !empty($picture.title)}title="{$picture.title}"{/if}>

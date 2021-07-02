@@ -4,9 +4,9 @@
     {if !empty($gallery.description)}
         {$gallery.description}
     {/if}
-    {if !empty($pictures)}
+    {if !empty($gallery.pictures)}
         {if $overlay == 1}
-            {foreach $pictures as $row}
+            {foreach $gallery.pictures as $row}
                 <a href="{$row.uri_picture}"
                    class="gallery-picture-thumb"
                    data-fancybox="gallery"
@@ -20,7 +20,7 @@
             {/foreach}
             {js_libraries enable="fancybox"}
         {else}
-            {foreach $pictures as $row}
+            {foreach $gallery.pictures as $row}
                 <a href="{uri args="gallery/index/details/id_`$row.id`"}"
                    class="gallery-picture-thumb">
                     <img src="{$row.uri_thumb}"

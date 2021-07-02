@@ -7,26 +7,19 @@
 
 namespace ACP3\Modules\ACP3\Gallery\ViewProviders;
 
-use ACP3\Modules\ACP3\Gallery\Cache;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Services\GalleryServiceInterface;
 
 class GalleryPictureListWidgetViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
+     * @var GalleryServiceInterface
      */
-    private $galleryCache;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
-     */
-    private $galleryRepository;
+    private $galleryService;
 
     public function __construct(
-        Cache $galleryCache,
-        GalleryRepository $galleryRepository
+        GalleryServiceInterface $galleryService
     ) {
-        $this->galleryCache = $galleryCache;
-        $this->galleryRepository = $galleryRepository;
+        $this->galleryService = $galleryService;
     }
 
     /**
@@ -35,9 +28,12 @@ class GalleryPictureListWidgetViewProvider
      */
     public function __invoke(int $galleryId): array
     {
+        $galleryWithPictures = $this->galleryService->getGalleryWithPictures($galleryId);
+
         return [
-            'gallery' => $this->galleryRepository->getOneById($galleryId),
-            'pictures' => $this->galleryCache->getCache($galleryId),
+            'gallery' => $galleryWithPictures,
+            // @deprecated since version 5.19.0, to be removed with version 6.0.0. Use $gallery['pictures'] instead
+            'pictures' => $galleryWithPictures['pictures'],
         ];
     }
 }

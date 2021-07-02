@@ -14,10 +14,6 @@ use ACP3\Modules\ACP3\Gallery;
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Cache
-     */
-    private $galleryCache;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Helpers
      */
     private $galleryHelpers;
@@ -37,14 +33,12 @@ class Delete extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
-        Gallery\Cache $galleryCache,
         Gallery\Helpers $galleryHelpers,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Model\Repository\PictureRepository $pictureRepository
     ) {
         parent::__construct($context);
 
-        $this->galleryCache = $galleryCache;
         $this->galleryHelpers = $galleryHelpers;
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
@@ -64,8 +58,6 @@ class Delete extends Core\Controller\AbstractWidgetAction
                     foreach ($pictures as $row) {
                         $this->galleryHelpers->removePicture($row['file']);
                     }
-
-                    $this->galleryCache->getCacheDriver()->delete(Gallery\Cache::CACHE_ID . $item);
                 }
 
                 return $this->galleryModel->delete($items);
