@@ -9,6 +9,9 @@ namespace ACP3\Core\Modules;
 
 use ACP3\Core;
 
+/**
+ * @deprecated since Version 5.19.0, to be removed with version 6.0.0.
+ */
 class AbstractCacheStorage
 {
     /**
