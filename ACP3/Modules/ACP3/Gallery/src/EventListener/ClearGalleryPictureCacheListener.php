@@ -7,24 +7,24 @@
 
 namespace ACP3\Modules\ACP3\Gallery\EventListener;
 
-use ACP3\Core\Cache;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearGalleryPictureCacheListener implements EventSubscriberInterface
 {
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $galleryCache;
+    private $galleryCachePool;
 
-    public function __construct(Cache $galleryCache)
+    public function __construct(CacheItemPoolInterface $galleryCachePool)
     {
-        $this->galleryCache = $galleryCache;
+        $this->galleryCachePool = $galleryCachePool;
     }
 
     public function __invoke(): void
     {
-        $this->galleryCache->deleteAll();
+        $this->galleryCachePool->clear();
     }
 
     public static function getSubscribedEvents(): array

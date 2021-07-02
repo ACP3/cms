@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Gallery;
+use Psr\Cache\CacheItemPoolInterface;
 
 class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
@@ -18,9 +19,9 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\
      */
     private $adminSettingsFormValidation;
     /**
-     * @var Core\Cache
+     * @var CacheItemPoolInterface
      */
-    private $galleryCoreCache;
+    private $galleryCachePool;
     /**
      * @var \ACP3\Core\Helpers\Secure
      */
@@ -33,14 +34,14 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
-        Core\Cache $galleryCoreCache,
+        CacheItemPoolInterface $galleryCachePool,
         Core\Helpers\Secure $secureHelper,
         Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
 
         $this->adminSettingsFormValidation = $adminSettingsFormValidation;
-        $this->galleryCoreCache = $galleryCoreCache;
+        $this->galleryCachePool = $galleryCachePool;
         $this->secureHelper = $secureHelper;
         $this->actionHelper = $actionHelper;
     }
@@ -73,7 +74,7 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\
             if ($this->hasImageDimensionChanges($formData)) {
                 Core\Cache\Purge::doPurge($this->appPath->getUploadsDir() . 'gallery/cache', 'gallery');
 
-                $this->galleryCoreCache->deleteAll();
+                $this->galleryCachePool->clear();
             }
 
             return $bool;

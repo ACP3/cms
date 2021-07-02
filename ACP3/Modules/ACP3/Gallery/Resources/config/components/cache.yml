@@ -1,8 +1,0 @@
-services:
-  _defaults:
-    autowire: true
-
-  gallery.cache.core:
-    class: ACP3\Core\Cache
-    arguments:
-      $namespace: "gallery"

@@ -10,5 +10,5 @@ services:
   ACP3\Modules\ACP3\Gallery\Services\CachingGalleryService:
     decorates: ACP3\Modules\ACP3\Gallery\Services\GalleryService
     arguments:
-      - "@gallery.cache.core"
+      - "@gallery.cache_item_pool"
       - "@.inner"

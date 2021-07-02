@@ -4,7 +4,7 @@ services:
     bind:
       $galleryModel: "@gallery.model.gallery_model"
       $pictureModel: "@gallery.model.picture_model"
-      $galleryCoreCache: "@gallery.cache.core"
+      $galleryCachePool: "@gallery.cache_item_pool"
       $galleryUploadHelper: "@gallery.helpers.upload"
     tags:
       - { name: acp3.controller.action }

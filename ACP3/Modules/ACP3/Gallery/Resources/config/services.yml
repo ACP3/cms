@@ -9,3 +9,10 @@ services:
     class: ACP3\Core\Helpers\Upload
     arguments:
       $directory: !php/const ACP3\Modules\ACP3\Gallery\Installer\Schema::MODULE_NAME
+
+  gallery.cache_item_pool:
+    class: Psr\Cache\CacheItemPoolInterface
+    factory: "@Psr6CacheItemPoolFactory"
+    arguments: ["gallery"]
+    tags:
+      - { name: acp3.cache_item_pool }

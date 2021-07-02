@@ -7,24 +7,24 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Services;
 
-use ACP3\Core\Cache;
+use Psr\Cache\CacheItemPoolInterface;
 
 class CachingGalleryService implements GalleryServiceInterface
 {
     public const CACHE_ID_GALLERY_PICTURES = 'gallery_pics_%d';
 
     /**
-     * @var Cache
+     * @var CacheItemPoolInterface
      */
-    private $galleryCache;
+    private $galleryCachePool;
     /**
      * @var GalleryService
      */
     private $galleryService;
 
-    public function __construct(Cache $galleryCache, GalleryService $galleryService)
+    public function __construct(CacheItemPoolInterface $galleryCachePool, GalleryService $galleryService)
     {
-        $this->galleryCache = $galleryCache;
+        $this->galleryCachePool = $galleryCachePool;
         $this->galleryService = $galleryService;
     }
 
@@ -47,12 +47,14 @@ class CachingGalleryService implements GalleryServiceInterface
     public function getGalleryPictures(int $galleryId): array
     {
         $cacheKey = sprintf(self::CACHE_ID_GALLERY_PICTURES, $galleryId);
+        $cacheItem = $this->galleryCachePool->getItem($cacheKey);
 
-        if (!$this->galleryCache->contains($cacheKey)) {
-            $this->galleryCache->save($cacheKey, $this->galleryService->getGalleryPictures($galleryId));
+        if (!$cacheItem->isHit()) {
+            $cacheItem->set($this->galleryService->getGalleryPictures($galleryId));
+            $this->galleryCachePool->saveDeferred($cacheItem);
         }
 
-        return $this->galleryCache->fetch($cacheKey);
+        return $cacheItem->get();
     }
 
     /**
