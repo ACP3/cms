@@ -7,40 +7,40 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Core\Modules;
 
+use ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface;
+use ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface;
+use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Modules\AclInstaller;
 use ACP3\Core\Modules\Installer\SchemaInterface;
-use ACP3\Core\Modules\InstallerInterface;
+use ACP3\Core\Modules\SchemaHelper;
 use Psr\Cache\CacheItemPoolInterface;
 
-class CacheAwareAclInstaller implements InstallerInterface
+class CacheAwareAclInstaller extends AclInstaller
 {
     /**
      * @var CacheItemPoolInterface
      */
     private $permissionsCachePool;
-    /**
-     * @var AclInstaller
-     */
-    private $aclInstaller;
 
-    public function __construct(CacheItemPoolInterface $permissionsCachePool, AclInstaller $aclInstaller)
+    public function __construct(CacheItemPoolInterface $permissionsCachePool, SchemaHelper $schemaHelper, RoleRepositoryInterface $roleRepository, AbstractRepository $ruleRepository, AbstractRepository $resourceRepository, PrivilegeRepositoryInterface $privilegeRepository)
     {
+        parent::__construct($schemaHelper, $roleRepository, $ruleRepository, $resourceRepository, $privilegeRepository);
+
         $this->permissionsCachePool = $permissionsCachePool;
-        $this->aclInstaller = $aclInstaller;
     }
 
-    public function install(SchemaInterface $schema)
+    public function install(SchemaInterface $schema, int $mode = self::INSTALL_RESOURCES_AND_RULES)
     {
-        $result = $this->aclInstaller->install($schema);
+        $result = parent::install($schema, $mode);
 
         $this->permissionsCachePool->clear();
 
         return $result;
     }
 
-    public function uninstall(SchemaInterface $schema)
+    public function uninstall(SchemaInterface $schema): bool
     {
-        $result = $this->aclInstaller->uninstall($schema);
+        $result = parent::uninstall($schema);
 
         $this->permissionsCachePool->clear();
 

@@ -18,5 +18,6 @@ services:
   ACP3\Modules\ACP3\Permissions\Core\Modules\CacheAwareAclInstaller:
     decorates: ACP3\Core\Modules\AclInstaller
     arguments:
-      - "@permissions.cache_item_pool"
-      - "@.inner"
+      $permissionsCachePool: "@permissions.cache_item_pool"
+      $ruleRepository: "@permissions.model.rulerepository"
+      $resourceRepository: "@permissions.model.resourcerepository"
