@@ -71,7 +71,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
         $insertValues = [
             'name' => $moduleName,
             'version' => $schemaVersion,
-            'active' => 1,
         ];
 
         return $this->getSystemModuleRepository()->insert($insertValues) !== false;
