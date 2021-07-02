@@ -8,33 +8,34 @@
 namespace ACP3\Modules\ACP3\Seo\Core\Router;
 
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Seo\Cache;
+use ACP3\Modules\ACP3\Seo\Services\SeoInformationService;
+use PHPUnit\Framework\TestCase;
 
-class AliasesTest extends \PHPUnit\Framework\TestCase
+class AliasesTest extends TestCase
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
      */
     private $aliases;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & SeoInformationService
      */
-    private $seoCacheMock;
+    private $seoInformationServiceMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject & Modules
      */
     private $modulesMock;
 
     protected function setup(): void
     {
-        $this->seoCacheMock = $this->createMock(Cache::class);
+        $this->seoInformationServiceMock = $this->createMock(SeoInformationService::class);
         $this->modulesMock = $this->createMock(Modules::class);
 
         $this->modulesMock->expects(self::once())
-            ->method('isActive')
+            ->method('isInstalled')
             ->willReturn(true);
 
-        $this->aliases = new Aliases($this->modulesMock, $this->seoCacheMock);
+        $this->aliases = new Aliases($this->modulesMock, $this->seoInformationServiceMock);
     }
 
     /**
@@ -87,9 +88,9 @@ class AliasesTest extends \PHPUnit\Framework\TestCase
 
     private function setUpSeoCacheExpectations(array $expectedReturn)
     {
-        $this->seoCacheMock
+        $this->seoInformationServiceMock
             ->expects(self::once())
-            ->method('getCache')
+            ->method('getAllSeoInformation')
             ->willReturn($expectedReturn);
     }
 

@@ -9,31 +9,29 @@ namespace ACP3\Modules\ACP3\Seo\Core\Router;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Seo;
+use ACP3\Modules\ACP3\Seo\Services\SeoInformationService;
 
 class Aliases
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
-     */
-    protected $seoCache;
-    /**
      * @var array
      */
-    protected $aliasesCache = [];
+    private $aliasesCache = [];
     /**
      * @var bool
      */
     private $isActive;
-
     /**
-     * @param \ACP3\Modules\ACP3\Seo\Cache $seoCache
+     * @var SeoInformationService
      */
+    private $seoInformationService;
+
     public function __construct(
         Core\Modules $modules,
-        Seo\Cache $seoCache
+        SeoInformationService $seoInformationService
     ) {
-        $this->seoCache = $seoCache;
-        $this->isActive = $modules->isActive(Seo\Installer\Schema::MODULE_NAME);
+        $this->seoInformationService = $seoInformationService;
+        $this->isActive = $modules->isInstalled(Seo\Installer\Schema::MODULE_NAME);
     }
 
     /**
@@ -46,7 +44,7 @@ class Aliases
         }
 
         if ($this->aliasesCache === []) {
-            $this->aliasesCache = $this->seoCache->getCache();
+            $this->aliasesCache = $this->seoInformationService->getAllSeoInformation();
         }
 
         $path .= (!preg_match('/\/$/', $path) ? '/' : '');

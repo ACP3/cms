@@ -12,8 +12,8 @@ use ACP3\Core\Modules;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\SEO\MetaStatementsService as CoreMetaStatementsService;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Seo\Cache as SeoCache;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
+use ACP3\Modules\ACP3\Seo\Services\SeoInformationService;
 
 class MetaStatementsService extends CoreMetaStatementsService
 {
@@ -21,10 +21,6 @@ class MetaStatementsService extends CoreMetaStatementsService
      * @var \ACP3\Core\Settings\SettingsInterface
      */
     private $config;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
-     */
-    private $seoCache;
     /**
      * @var \ACP3\Core\Modules
      */
@@ -34,19 +30,23 @@ class MetaStatementsService extends CoreMetaStatementsService
      * @var array|null
      */
     private $aliasesCache;
+    /**
+     * @var SeoInformationService
+     */
+    private $seoInformationService;
 
     public function __construct(
         RequestInterface $request,
         RouterInterface $router,
         Modules $modules,
-        SeoCache $seoCache,
+        SeoInformationService $seoInformationService,
         SettingsInterface $config
     ) {
         parent::__construct($request, $router);
 
-        $this->seoCache = $seoCache;
         $this->config = $config;
         $this->modules = $modules;
+        $this->seoInformationService = $seoInformationService;
     }
 
     protected function getSettings(): array
@@ -66,7 +66,7 @@ class MetaStatementsService extends CoreMetaStatementsService
 
         // Lazy load the cache
         if ($this->aliasesCache === null) {
-            $this->aliasesCache = $this->seoCache->getCache();
+            $this->aliasesCache = $this->seoInformationService->getAllSeoInformation();
         }
 
         $path .= !preg_match('/\/$/', $path) ? '/' : '';

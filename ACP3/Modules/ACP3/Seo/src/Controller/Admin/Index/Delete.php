@@ -14,10 +14,6 @@ use ACP3\Modules\ACP3\Seo;
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Cache
-     */
-    private $seoCache;
-    /**
      * @var Seo\Model\SeoModel
      */
     private $seoModel;
@@ -29,12 +25,10 @@ class Delete extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
-        Seo\Cache $seoCache,
         Seo\Model\SeoModel $seoModel
     ) {
         parent::__construct($context);
 
-        $this->seoCache = $seoCache;
         $this->seoModel = $seoModel;
         $this->actionHelper = $actionHelper;
     }
@@ -47,11 +41,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
         return $this->actionHelper->handleDeleteAction(
             $action,
             function (array $items) {
-                $result = $this->seoModel->delete($items);
-
-                $this->seoCache->saveCache();
-
-                return $result;
+                return $this->seoModel->delete($items);
             }
         );
     }
