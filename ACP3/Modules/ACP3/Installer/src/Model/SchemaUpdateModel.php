@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Installer\Model;
 
 use ACP3\Core\Installer\Exception\MissingInstallerException;
+use ACP3\Core\Installer\Exception\ModuleNotInstallableException;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
@@ -67,6 +68,8 @@ class SchemaUpdateModel
                 $this->updateModule($moduleInfo['name']);
 
                 $this->results[$moduleInfo['name']] = true;
+            } catch (ModuleNotInstallableException $e) {
+                // Intentionally omitted
             } catch (\Throwable $e) {
                 $this->results[$moduleInfo['name']] = false;
 
@@ -89,7 +92,7 @@ class SchemaUpdateModel
         $modules = $this->container->get(Modules::class);
 
         if (!$modules->isInstallable($moduleName)) {
-            return;
+            throw new ModuleNotInstallableException(sprintf('The module %s doesn\'t need to be installed, therefore it can\'t DB migrations.', $moduleName));
         }
 
         /** @var ContainerInterface $schemaRegistrar */
