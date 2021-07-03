@@ -7,7 +7,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [Articles] Removed the cache from the articles module
+-   [Categories] Removed the cache from the categories module
+-   [Files] Removed the cache from the files module
+-   [News] Removed the cache from the news module
+-   [SEO] Removed the cache from the SEO module
+-   [Core] Introduced a PSR-6 complaint caching library. To use it instantiate a cache pool using the `ACP3\Core\Cache\Psr6CacheItemPoolFactory`.
+
+### Fixed
+
+-   [Core] fixed a minor bug with the `ReplaceValueColumnRenderer`
+-   [Core] fixed a possible JavaScript error when there are no results within a datagrid
+-   [Share] fixed shariff's missing dependency on jquery
+-   [Installer] fixed the update wizard
+-   [Installer] fixed the installation
+-   [ALL] Revert the changes to the module dependencies to fix the installation of the ACP3
+
+### Deprecations
+
+-   [Core] Deprecated the class `ACP3\Core\Modules\AbstractCacheStorage`. To be removed with version 6.0.0. Type hint against the `Psr\Cache\CacheItemPoolInterface` instead
+-   [Core] Deprecated the class `ACP3\Core\Cache\CacheDriverFactory`. To be removed with version 6.0.0. Use the `ACP3\Core\Cache\Psr6CacheItemPoolFactory` instead
+-   [Core] Deprecated the class `ACP3\Core\Cache`. To be removed with version 6.0.0. Type hint against the `Psr\Cache\CacheItemPoolInterface` instead
 
 ## [5.18.2] - 2021-05-27
 
