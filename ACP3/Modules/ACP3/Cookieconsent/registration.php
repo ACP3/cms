@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'cookieconsent',
         __DIR__,
-        ['acp', 'core']
+        ['core', 'system']
     )
 );

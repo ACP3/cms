@@ -44,14 +44,6 @@ class ModuleInstaller
                 return $schemaRegistrar->has($module->getName());
             }
         );
-        // Manually priorities the system modules to be the first module to be installed
-        foreach ($installableModules as $i => $module) {
-            if ($module->getName() === 'system') {
-                array_splice($installableModules, $i, 1);
-                array_unshift($installableModules, $module);
-                break;
-            }
-        }
 
         foreach ($installableModules as $module) {
             if ($this->installHelper->installModule($schemaRegistrar->get($module->getName()), $container) === false) {

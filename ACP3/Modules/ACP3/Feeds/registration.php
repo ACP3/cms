@@ -15,7 +15,7 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'feeds',
         __DIR__,
-        ['acp', 'core'],
+        ['core', 'system'],
         new ModuleRegistration()
     )
 );

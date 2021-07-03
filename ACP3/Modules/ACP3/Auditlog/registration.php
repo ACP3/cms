@@ -14,6 +14,6 @@ ComponentRegistry::add(
         ComponentTypeEnum::MODULE,
         'auditlog',
         __DIR__,
-        ['acp', 'core']
+        ['core', 'system']
     )
 );
