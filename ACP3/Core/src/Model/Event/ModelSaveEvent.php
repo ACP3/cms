@@ -39,6 +39,10 @@ class ModelSaveEvent extends Event
      * @var string
      */
     private $tableName;
+    /**
+     * @var array|null
+     */
+    private $currentData;
 
     /**
      * @param int|array|null $entryId
@@ -50,7 +54,8 @@ class ModelSaveEvent extends Event
         $entryId,
         bool $isNewEntry,
         bool $hasDataChanges,
-        string $tableName)
+        string $tableName,
+        ?array $currentData)
     {
         $this->moduleName = $moduleName;
         $this->filteredData = $filteredData;
@@ -59,6 +64,7 @@ class ModelSaveEvent extends Event
         $this->isNewEntry = $isNewEntry;
         $this->hasDataChanges = $hasDataChanges;
         $this->tableName = $tableName;
+        $this->currentData = $currentData;
     }
 
     public function getModuleName(): string
@@ -74,6 +80,11 @@ class ModelSaveEvent extends Event
     public function getRawData(): array
     {
         return $this->rawData;
+    }
+
+    public function getCurrentData(): array
+    {
+        return $this->currentData;
     }
 
     /**

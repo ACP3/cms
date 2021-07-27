@@ -57,24 +57,14 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     }
 
     /**
-     * @param int|null $entryId
-     *
-     * @return bool|int
+     * @return array<int>
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function save(array $rawData, $entryId = null)
+    protected function doUpsert(?int $entryId, array $filteredNewData, bool $hasDataChanges): array
     {
-        $filteredData = $this->prepareData($rawData, $entryId);
-
-        $isNewEntry = $entryId === null;
-        $hasDataChanges = $this->hasDataChanges($filteredData, $entryId);
-        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredData, $rawData);
-
-        $this->dispatchBeforeSaveEvent($this->repository, $event);
-
         if ($entryId === null) {
-            $result = $this->insertOperation->execute($filteredData, $rawData['parent_id'] ?: 0);
+            $result = $this->insertOperation->execute($filteredNewData, $filteredNewData['parent_id'] ?: 0);
 
             if ($result !== false) {
                 $entryId = $result;
@@ -82,16 +72,16 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
         } else {
             $result = $this->editOperation->execute(
                 $entryId,
-                $filteredData['parent_id'],
-                $filteredData[$this->repository::BLOCK_COLUMN_NAME] ?? 0,
-                $filteredData
+                $filteredNewData['parent_id'],
+                $filteredNewData[$this->repository::BLOCK_COLUMN_NAME] ?? 0,
+                $filteredNewData
             );
         }
 
-        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredData, $rawData);
-        $this->dispatchAfterSaveEvent($this->repository, $event);
-
-        return $result;
+        return [
+            $entryId,
+            $result,
+        ];
     }
 
     /**

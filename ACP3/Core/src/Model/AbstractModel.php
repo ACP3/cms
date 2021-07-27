@@ -53,25 +53,18 @@ abstract class AbstractModel
      */
     public function save(array $rawData, $entryId = null)
     {
-        $filteredData = $this->prepareData($rawData, $entryId);
+        $currentData = $this->loadCurrentData($entryId);
+        $filteredNewData = $this->prepareData($rawData, $currentData);
 
         $isNewEntry = $entryId === null;
-        $hasDataChanges = $this->hasDataChanges($filteredData, $entryId);
-        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredData, $rawData);
+        $hasDataChanges = $this->hasDataChanges($filteredNewData, $currentData);
+        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredNewData, $rawData, $currentData);
 
         $this->dispatchBeforeSaveEvent($this->repository, $event);
 
-        if ($entryId === null) {
-            $result = $this->repository->insert($filteredData);
+        [$entryId, $result] = $this->doUpsert($entryId, $filteredNewData, $hasDataChanges);
 
-            if ($result !== false) {
-                $entryId = $result;
-            }
-        } else {
-            $result = $hasDataChanges ? $this->repository->update($filteredData, $entryId) : 1;
-        }
-
-        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredData, $rawData);
+        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredNewData, $rawData, $currentData);
         $this->dispatchAfterSaveEvent(
             $this->repository,
             $event
@@ -80,23 +73,31 @@ abstract class AbstractModel
         return $result;
     }
 
-    /**
-     * @throws \Doctrine\DBAL\Exception
-     */
-    protected function hasDataChanges(array $filteredData, ?int $entryId): bool
+    protected function loadCurrentData(?int $entryId): ?array
     {
         if ($entryId === null) {
-            return true;
+            return null;
         }
 
         $result = $this->getOneById($entryId);
-        $filteredResult = $this->dataProcessor->escape($result, $this->getAllowedColumns());
 
-        if ($this instanceof UpdatedAtAwareModelInterface) {
-            unset($result['updated_at']);
+        return $this->dataProcessor->escape($result, $this->getAllowedColumns());
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
+    protected function hasDataChanges(array $filteredData, ?array $currentData): bool
+    {
+        if ($currentData === null) {
+            return true;
         }
 
-        foreach ($filteredResult as $column => $value) {
+        if ($this instanceof UpdatedAtAwareModelInterface) {
+            unset($currentData['updated_at']);
+        }
+
+        foreach ($currentData as $column => $value) {
             if (\array_key_exists($column, $filteredData) && $filteredData[$column] !== $value) {
                 return true;
             }
@@ -134,7 +135,8 @@ abstract class AbstractModel
         bool $isNewEntry,
         bool $hasDataChanges,
         array $filteredData = [],
-        array $rawData = []
+        array $rawData = [],
+        ?array $currentData = null
     ): ModelSaveEvent {
         return new ModelSaveEvent(
             static::EVENT_PREFIX,
@@ -143,7 +145,8 @@ abstract class AbstractModel
             $entryId,
             $isNewEntry,
             $hasDataChanges,
-            $this->repository::TABLE_NAME
+            $this->repository::TABLE_NAME,
+            $currentData
         );
     }
 
@@ -152,12 +155,9 @@ abstract class AbstractModel
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function prepareData(array $rawData, ?int $entryId)
+    protected function prepareData(array $rawData, ?array $currentData)
     {
-        $currentData = null;
-
-        if ($entryId !== null) {
-            $currentData = $this->getOneById($entryId);
+        if ($currentData !== null) {
             $rawData = array_merge($currentData, $rawData);
         }
 
@@ -191,6 +191,29 @@ abstract class AbstractModel
             static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_save',
             $event
         );
+    }
+
+    /**
+     * @return array<int>
+     *
+     * @throws \Doctrine\DBAL\Exception
+     */
+    protected function doUpsert(?int $entryId, array $filteredNewData, bool $hasDataChanges): array
+    {
+        if ($entryId === null) {
+            $result = $this->repository->insert($filteredNewData);
+
+            if ($result !== false) {
+                $entryId = $result;
+            }
+        } else {
+            $result = $hasDataChanges ? $this->repository->update($filteredNewData, $entryId) : 1;
+        }
+
+        return [
+            $entryId,
+            $result,
+        ];
     }
 
     /**
