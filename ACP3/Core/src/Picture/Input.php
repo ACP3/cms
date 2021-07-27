@@ -201,4 +201,20 @@ class Input
 
         return $this;
     }
+
+    /**
+     * Returns the name of a possibly cached picture.
+     */
+    public function getCacheFileName(): string
+    {
+        return $this->getCacheDir() . $this->getCacheName();
+    }
+
+    /**
+     * Generates the file name of the picture to be cached.
+     */
+    public function getCacheName(): string
+    {
+        return $this->getCachePrefix() . substr($this->getFile(), strrpos($this->getFile(), '/') + 1);
+    }
 }

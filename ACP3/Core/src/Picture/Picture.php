@@ -36,16 +36,12 @@ class Picture
     }
 
     /**
-     * @param \ACP3\Core\Picture\Input $input
-     *
-     * @return \ACP3\Core\Picture\Output
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     public function process(Input $input): Output
     {
         if (is_file($input->getFile()) === true) {
-            $cacheFile = $this->getCacheFileName($input);
+            $cacheFile = $input->getCacheFileName();
 
             $picInfo = $this->getPictureInfo($input->getFile());
 
@@ -68,26 +64,6 @@ class Picture
         }
 
         throw new PictureGenerateException(sprintf('Could not find picture: %s', $input->getFile()));
-    }
-
-    /**
-     * Returns the name of a possibly cached picture.
-     *
-     * @param \ACP3\Core\Picture\Input $input
-     */
-    private function getCacheFileName(Input $input): string
-    {
-        return $input->getCacheDir() . $this->getCacheName($input);
-    }
-
-    /**
-     * Generates the file name of the picture to be cached.
-     *
-     * @param \ACP3\Core\Picture\Input $input
-     */
-    private function getCacheName(Input $input): string
-    {
-        return $input->getCachePrefix() . substr($input->getFile(), strrpos($input->getFile(), '/') + 1);
     }
 
     /**
@@ -115,10 +91,6 @@ class Picture
         return $picInfo;
     }
 
-    /**
-     * @param \ACP3\Core\Picture\Input  $input
-     * @param \ACP3\Core\Picture\Output $output
-     */
     private function resamplingIsNecessary(Input $input, Output $output): bool
     {
         return ($input->isForceResample() || $this->hasNecessaryResamplingDimensions($input, $output))
@@ -132,9 +104,6 @@ class Picture
 
     /**
      * Calculates the targeted picture dimensions.
-     *
-     * @param \ACP3\Core\Picture\Input  $input
-     * @param \ACP3\Core\Picture\Output $output
      */
     private function calcDestDimensions(Input $input, Output $output): void
     {
@@ -153,8 +122,6 @@ class Picture
     /**
      * Creates the cache directory if it's not already present.
      *
-     * @param \ACP3\Core\Picture\Input $input
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     private function createCacheDir(Input $input): void
@@ -170,9 +137,6 @@ class Picture
 
     /**
      * Resamples the picture to the given values.
-     *
-     * @param \ACP3\Core\Picture\Input  $input
-     * @param \ACP3\Core\Picture\Output $output
      */
     private function resample(Input $input, Output $output): void
     {
@@ -184,13 +148,13 @@ class Picture
             case IMAGETYPE_GIF:
                 $origPicture = imagecreatefromgif($input->getFile());
                 $this->scalePicture($output, $origPicture);
-                imagegif($this->image, $this->getCacheFileName($input));
+                imagegif($this->image, $input->getCacheFileName());
 
                 break;
             case IMAGETYPE_JPEG:
                 $origPicture = imagecreatefromjpeg($input->getFile());
                 $this->scalePicture($output, $origPicture);
-                imagejpeg($this->image, $this->getCacheFileName($input), $input->getJpgQuality());
+                imagejpeg($this->image, $input->getCacheFileName(), $input->getJpgQuality());
 
                 break;
             case IMAGETYPE_PNG:
@@ -198,7 +162,7 @@ class Picture
                 $origPicture = imagecreatefrompng($input->getFile());
                 $this->scalePicture($output, $origPicture);
                 imagesavealpha($this->image, true);
-                imagepng($this->image, $this->getCacheFileName($input), 9);
+                imagepng($this->image, $input->getCacheFileName(), 9);
 
                 break;
         }
@@ -207,8 +171,7 @@ class Picture
     }
 
     /**
-     * @param \ACP3\Core\Picture\Output $output
-     * @param resource                  $srcImage
+     * @param resource $srcImage
      */
     private function scalePicture(Output $output, $srcImage): void
     {
