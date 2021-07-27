@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 services:
   app:
@@ -10,7 +10,7 @@ services:
     networks:
       - acp3-cms
     volumes:
-      - .:/var/www/html/
+      - ./:/var/www/html
     environment:
       - ACP3_APPLICATION_MODE=dev
       - XDEBUG_MODE=debug
@@ -30,7 +30,7 @@ services:
       - "80:80"
     volumes:
       - ./build/docker/apache/vhost.conf:/usr/local/apache2/conf/sites-enabled/vhost.conf:ro
-      - ./:/var/www/html/:ro
+      - ./:/var/www/html:ro
     container_name: acp3-web
     restart: on-failure
 
