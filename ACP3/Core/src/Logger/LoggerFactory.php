@@ -30,6 +30,8 @@ class LoggerFactory
     }
 
     /**
+     * @param LogLevel::* $level
+     *
      * @throws \Exception
      */
     public function create(string $channel, string $level = LogLevel::WARNING): LoggerInterface

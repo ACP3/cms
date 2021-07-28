@@ -126,7 +126,7 @@ class ConfigProcessor
                 $columnDefinitions[$i]['className'] = $column['class'];
             }
             if ($useAjax && \is_callable($column['type'] . '::mandatoryAttributes')) {
-                $attributes = \call_user_func($column['type'] . '::mandatoryAttributes');
+                $attributes = ($column['type'] . '::mandatoryAttributes')();
                 if (\is_array($attributes) && !empty($attributes)) {
                     $mapper = [];
                     foreach ($attributes as $attribute) {
