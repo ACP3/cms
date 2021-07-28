@@ -23,7 +23,7 @@ module.exports = (gulp) => {
             nodeBasePath + "/datatables.net-bs/js/dataTables.bootstrap.js",
             nodeBasePath + "/bootstrap-sass/assets/javascripts/bootstrap.min.js",
             nodeBasePath + "/flatpickr/dist/flatpickr.min.js",
-            nodeBasePath + "/js-cookie/src/js.cookie.js",
+            nodeBasePath + "/js-cookie/dist/js.cookie.min.js",
           ],
           dest: systemBasePath + "/js",
         },

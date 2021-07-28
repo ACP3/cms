@@ -52,7 +52,7 @@ services:
       - false
       - []
       - []
-      - ["js.cookie.js"]
+      - ["js.cookie.min.js"]
       - "system"
 
   system.assets.bootstrap:
