@@ -1,15 +1,8 @@
 services:
   _defaults:
     autowire: true
-
-  gallery.helpers.thumbnail_generator:
-    class: ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
-
-  ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator: "@gallery.helpers.thumbnail_generator"
-
-  gallery.helpers:
-    class: ACP3\Modules\ACP3\Gallery\Helpers
-    arguments:
+    bind:
       $galleryUploadHelper: "@gallery.helpers.upload"
 
-  ACP3\Modules\ACP3\Gallery\Helpers: "@gallery.helpers"
+  ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator: ~
+  gallery.helpers.thumbnail_generator: '@ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator'

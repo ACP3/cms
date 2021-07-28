@@ -14,10 +14,6 @@ use ACP3\Modules\ACP3\Gallery;
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Helpers
-     */
-    private $galleryHelpers;
-    /**
      * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
      */
     private $pictureRepository;
@@ -29,20 +25,24 @@ class Delete extends Core\Controller\AbstractWidgetAction
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
+    /**
+     * @var Gallery\Helper\ThumbnailGenerator
+     */
+    private $thumbnailGenerator;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
-        Gallery\Helpers $galleryHelpers,
+        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
         Gallery\Model\GalleryModel $galleryModel,
         Gallery\Model\Repository\PictureRepository $pictureRepository
     ) {
         parent::__construct($context);
 
-        $this->galleryHelpers = $galleryHelpers;
         $this->pictureRepository = $pictureRepository;
         $this->galleryModel = $galleryModel;
         $this->actionHelper = $actionHelper;
+        $this->thumbnailGenerator = $thumbnailGenerator;
     }
 
     /**
@@ -56,7 +56,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
                 foreach ($items as $item) {
                     $pictures = $this->pictureRepository->getPicturesByGalleryId($item);
                     foreach ($pictures as $row) {
-                        $this->galleryHelpers->removePicture($row['file']);
+                        $this->thumbnailGenerator->removePictureFromFilesystem($row['file']);
                     }
                 }
 

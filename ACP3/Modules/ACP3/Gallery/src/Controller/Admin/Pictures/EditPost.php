@@ -15,9 +15,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Helpers
+     * @var Gallery\Helper\ThumbnailGenerator
      */
-    private $galleryHelpers;
+    private $thumbnailGenerator;
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
      */
@@ -38,14 +38,14 @@ class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Cont
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
-        Gallery\Helpers $galleryHelpers,
+        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
         Gallery\Model\PictureModel $pictureModel,
         Gallery\Validation\PictureFormValidation $pictureFormValidation,
         Core\Helpers\Upload $galleryUploadHelper
     ) {
         parent::__construct($context);
 
-        $this->galleryHelpers = $galleryHelpers;
+        $this->thumbnailGenerator = $thumbnailGenerator;
         $this->pictureFormValidation = $pictureFormValidation;
         $this->pictureModel = $pictureModel;
         $this->galleryUploadHelper = $galleryUploadHelper;
@@ -76,7 +76,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Cont
                 if ($file !== null) {
                     $result = $this->galleryUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
 
-                    $this->galleryHelpers->removePicture($picture['file']);
+                    $this->thumbnailGenerator->removePictureFromFilesystem($picture['file']);
 
                     $formData['file'] = $result['name'];
                 }
