@@ -11,13 +11,13 @@ The ACP3 CMS is a highly customizable and easy to use Web Content Management Sys
 -   Wordlike text input with the WYSIWYG-Editors CKEditor and TinyMCE
 -   Easy to customize: Layout based on html templates, which can be styled with CSS
 -   Search engine optimized URIs
--   Access Control Lists, which allow fine grained permissions
+-   Access Control Lists, which allow fine-grained permissions
 
 If you want to find out more information about the features and the requirements, just go to the official [Project-Website](http://www.acp3-cms.net).
 
 ## Installation
 
-To install the current development version directly from github, you have to do the following steps:
+To install the current development version directly from GitLab, you have to do the following steps:
 
 Clone the repository into a new directory:
 
@@ -33,12 +33,14 @@ If so, execute the following command from the projects root directory:
 $ composer install
 ```
 
-Make sure that you have installed node.js with npm and gulp-cli globally.
+Make sure that you have installed nvm (node version manager).
 
-If so, execute the following command from the projects root directory, to install the necessary frontend development dependencies:
+If so, execute the following command from the project's root directory, to install the necessary frontend development dependencies:
 
 ```sh
-$ npm install
+$ nvm install
+$ nvm use
+$ npm ci
 ```
 
 ## Contribute
