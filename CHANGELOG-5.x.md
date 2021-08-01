@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+- [Core] Reduced the amount of execute SQL queries when upserting DB entries
+- [Core] Explicitly bump the required Node.js version to 14.17
+
+### Fixed
+
+- [Base] Fixed the docker-compose configuration to work with Docker-Compose 2 beta
+- [Gallery] Correctly clean up the gallery picture cache after deleting/replacing a picture
 
 ## [5.19.0] - 2021-07-03
 
