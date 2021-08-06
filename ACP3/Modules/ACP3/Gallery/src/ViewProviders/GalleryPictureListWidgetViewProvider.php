@@ -28,12 +28,8 @@ class GalleryPictureListWidgetViewProvider
      */
     public function __invoke(int $galleryId): array
     {
-        $galleryWithPictures = $this->galleryService->getGalleryWithPictures($galleryId);
-
         return [
-            'gallery' => $galleryWithPictures,
-            // @deprecated since version 5.19.0, to be removed with version 6.0.0. Use $gallery['pictures'] instead
-            'pictures' => $galleryWithPictures['pictures'],
+            'gallery' => $this->galleryService->getGalleryWithPictures($galleryId),
         ];
     }
 }

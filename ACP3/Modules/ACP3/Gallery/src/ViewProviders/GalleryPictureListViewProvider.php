@@ -78,8 +78,6 @@ class GalleryPictureListViewProvider
         return [
             'gallery' => $galleryWithPictures,
             'overlay' => (int) $settings['overlay'],
-            // @deprecated since version 5.19.0, to be removed with version 6.0.0. Use $gallery['pictures'] instead
-            'pictures' => $galleryWithPictures['pictures'],
         ];
     }
 }
