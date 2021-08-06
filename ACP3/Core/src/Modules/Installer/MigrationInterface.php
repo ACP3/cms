@@ -17,7 +17,7 @@ interface MigrationInterface
     public function schemaUpdates();
 
     /**
-     * Returns an array with the SQL changes needed to convert a module, so that a functions with its new name.
+     * Returns an array with the SQL changes needed to convert a module, so that it functions with its new name.
      *
      * @return Array<int, string|callable|string[]|callable[]>
      */
