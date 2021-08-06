@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   emoticons.installer.schema:
     class: ACP3\Modules\ACP3\Emoticons\Installer\Schema
     tags:
@@ -11,6 +14,5 @@ services:
 
   emoticons.installer.sample_data:
     class: ACP3\Modules\ACP3\Emoticons\Installer\SampleData
-    parent: core.modules.installer.abstractSampleData
     tags:
       - { name: core.installer.sample_data }

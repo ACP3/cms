@@ -9,7 +9,6 @@ services:
 
   news.installer.migration:
     class: ACP3\Modules\ACP3\News\Installer\Migration
-    parent: core.modules.installer.abstractMigration
     tags:
       - { name: core.installer.migration }
 

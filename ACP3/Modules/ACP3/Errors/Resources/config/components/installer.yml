@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+
   errors.installer.schema:
     class: ACP3\Modules\ACP3\Errors\Installer\Schema
     tags:
@@ -6,6 +9,5 @@ services:
 
   errors.installer.migration:
     class: ACP3\Modules\ACP3\Errors\Installer\Migration
-    parent: core.modules.installer.abstractMigration
     tags:
       - { name: core.installer.migration }

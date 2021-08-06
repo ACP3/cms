@@ -2,10 +2,4 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Core\Controller\Context\WidgetContext:
-
-  core.context.widget: '@ACP3\Core\Controller\Context\WidgetContext'
-
-  ACP3\Core\Controller\Context\FrontendContext:
-
-  core.context.frontend: '@ACP3\Core\Controller\Context\FrontendContext'
+  ACP3\Core\Controller\Context\WidgetContext: ~
