@@ -4,8 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Comments\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  comments.model.commentrepository: '@ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository'
-  comments.repository.comment_by_module_repository: '@ACP3\Modules\ACP3\Comments\Model\Repository\CommentByModuleRepository'
-  comments.model.comments_data_grid_repository: '@ACP3\Modules\ACP3\Comments\Model\Repository\CommentsDataGridRepository'
-  comments.model.comments_by_module_data_grid_repository: '@ACP3\Modules\ACP3\Comments\Model\Repository\CommentsByModuleDataGridRepository'

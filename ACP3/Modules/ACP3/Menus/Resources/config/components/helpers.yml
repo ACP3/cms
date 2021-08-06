@@ -2,17 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  menus.helpers.menuitemslist:
-    class: ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList
-
-  ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList: "@menus.helpers.menuitemslist"
-
-  menus.helpers.managemenuitem:
-    class: ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
-
-  ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem: "@menus.helpers.managemenuitem"
-
-  menus.helpers.menuitemformfields:
-    class: ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields
-
-  ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields: "@menus.helpers.menuitemformfields"
+  ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList: ~
+  ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem: ~
+  ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields: ~

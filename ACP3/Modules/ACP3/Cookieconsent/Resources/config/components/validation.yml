@@ -4,5 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Cookieconsent\Validation\:
     resource: "../../../src/Validation/"
-
-  cookieconsent.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Cookieconsent\Validation\AdminSettingsFormValidation'

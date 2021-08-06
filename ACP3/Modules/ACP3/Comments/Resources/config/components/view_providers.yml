@@ -4,10 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Comments\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  comments.view_providers.admin_comment_edit: '@ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentEditViewProvider'
-  comments.view_providers.admin_comments_settings: '@ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentsSettingsViewProvider'
-  comments.view_providers.comment_create: '@ACP3\Modules\ACP3\Comments\ViewProviders\CommentCreateViewProvider'
-  comments.view_providers.comment_list: '@ACP3\Modules\ACP3\Comments\ViewProviders\CommentListViewProvider'
-  comments.view_providers.data_grid: '@ACP3\Modules\ACP3\Comments\ViewProviders\DataGridViewProvider'
-  comments.view_providers.data_grid_by_module: '@ACP3\Modules\ACP3\Comments\ViewProviders\DataGridByModuleViewProvider'

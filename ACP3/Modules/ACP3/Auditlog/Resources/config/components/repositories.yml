@@ -4,7 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Auditlog\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  auditlog.models.repository.audit_log_repository: '@ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository'
-  auditlog.models.repository.audit_log_by_table_data_grid_repository: '@ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogByTableDataGridRepository'
-  auditlog.models.repository.audit_log_data_grid_repository: '@ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogDataGridRepository'

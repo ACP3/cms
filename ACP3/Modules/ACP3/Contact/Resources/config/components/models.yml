@@ -2,10 +2,8 @@ services:
   _defaults:
     autowire: true
 
-  contact.model.contacts_model:
-    class: ACP3\Modules\ACP3\Contact\Model\ContactsModel
+  ACP3\Modules\ACP3\Contact\Model\ContactsModel:
     arguments:
-      $repository: "@contact.model.repository.contacts_repository"
+      $repository: '@ACP3\Modules\ACP3\Contact\Model\Repository\ContactsRepository'
 
-  contact.model.contact_form_model:
-    class: ACP3\Modules\ACP3\Contact\Model\ContactFormModel
+  ACP3\Modules\ACP3\Contact\Model\ContactFormModel: ~

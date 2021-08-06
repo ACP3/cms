@@ -2,12 +2,10 @@ services:
   _defaults:
     autowire: true
 
-  comments.model.comments_model:
-    class: ACP3\Modules\ACP3\Comments\Model\CommentsModel
+  ACP3\Modules\ACP3\Comments\Model\CommentsModel:
     arguments:
-      $repository: "@comments.model.commentrepository"
+      $repository: '@ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository'
 
-  comments.model.comment_by_module_model:
-    class: ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel
+  ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel:
     arguments:
-      $repository: "@comments.repository.comment_by_module_repository"
+      $repository: '@ACP3\Modules\ACP3\Comments\Model\Repository\CommentByModuleRepository'

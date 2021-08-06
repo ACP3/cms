@@ -2,10 +2,8 @@ services:
   _defaults:
     autowire: true
 
-  gallery.model.gallery_model:
-    class: ACP3\Modules\ACP3\Gallery\Model\GalleryModel
+  ACP3\Modules\ACP3\Gallery\Model\GalleryModel:
     arguments:
-      $repository: "@gallery.model.galleryrepository"
+      $repository: '@ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository'
 
-  gallery.model.picture_model:
-    class: ACP3\Modules\ACP3\Gallery\Model\PictureModel
+  ACP3\Modules\ACP3\Gallery\Model\PictureModel: ~

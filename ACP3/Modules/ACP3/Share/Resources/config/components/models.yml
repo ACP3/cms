@@ -2,12 +2,10 @@ services:
   _defaults:
     autowire: true
 
-  share.model.share_model:
-    class: ACP3\Modules\ACP3\Share\Model\ShareModel
+  ACP3\Modules\ACP3\Share\Model\ShareModel:
     arguments:
-      $repository: "@share.model.share_repository"
+      $repository: '@ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository'
 
-  share.model.share_rating_model:
-    class: ACP3\Modules\ACP3\Share\Model\ShareRatingModel
+  ACP3\Modules\ACP3\Share\Model\ShareRatingModel:
     arguments:
-      $repository: "@share.model.share_ratings_repository"
+      $repository: '@ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository'

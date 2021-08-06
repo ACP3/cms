@@ -4,5 +4,4 @@ services:
     tags:
       - { name: core.data_grid.column_renderer }
 
-  users.data_grid.column_renderer.user_roles_column_renderer:
-    class: ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer\UserRolesColumnRenderer
+  ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer\UserRolesColumnRenderer: ~

@@ -5,15 +5,11 @@ services:
   _defaults:
     autowire: true
 
-  core.authentication.native:
-    class: ACP3\Modules\ACP3\Users\Core\Authentication\Native
-    tags:
-      - { name: core.authentication }
+  ACP3\Modules\ACP3\Users\Core\Authentication\Native: ~
+  ACP3\Core\Authentication\AuthenticationInterface: '@ACP3\Modules\ACP3\Users\Core\Authentication\Native'
 
-  users.core.application.bootstrap_cache.is_authenticated_provider:
-    class: ACP3\Modules\ACP3\Users\Core\Application\BootstrapCache\IsAuthenticatedProvider
+  ACP3\Modules\ACP3\Users\Core\Application\BootstrapCache\IsAuthenticatedProvider: ~
 
-  http_cache.hash_generator:
-    class: FOS\HttpCache\UserContext\DefaultHashGenerator
+  FOS\HttpCache\UserContext\DefaultHashGenerator:
     arguments:
-      - ["@users.core.application.bootstrap_cache.is_authenticated_provider"]
+      - ['@ACP3\Modules\ACP3\Users\Core\Application\BootstrapCache\IsAuthenticatedProvider']

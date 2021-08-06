@@ -4,7 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Share\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  share.model.data_grid_repository: '@ACP3\Modules\ACP3\Share\Model\Repository\DataGridRepository'
-  share.model.share_ratings_repository: '@ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository'
-  share.model.share_repository: '@ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository'

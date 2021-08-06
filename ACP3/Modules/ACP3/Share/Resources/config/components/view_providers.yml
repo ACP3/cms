@@ -4,8 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Share\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  share.view_providers.admin_settings: '@ACP3\Modules\ACP3\Share\ViewProviders\AdminSettingsViewProvider'
-  share.view_providers.admin_share_edit: '@ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider'
-  share.view_providers.data_grid: '@ACP3\Modules\ACP3\Share\ViewProviders\DataGridViewProvider'
-  share.view_providers.share_widget: '@ACP3\Modules\ACP3\Share\ViewProviders\ShareWidgetViewProvider'

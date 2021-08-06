@@ -4,14 +4,10 @@ services:
     bind:
       $captchaLocator: "@captcha.utility.captcha_registrar"
 
-  captcha.extension.captcha:
-    class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface
-    factory: ["@captcha.extension.captcha_factory", "create"]
+  ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface:
+    factory: ['@ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory', "create"]
 
-  ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface: "@captcha.extension.captcha"
-
-  captcha.extension.captcha_factory:
-    class: ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory
+  ACP3\Modules\ACP3\Captcha\Extension\CaptchaFactory: ~
 
   captcha.extension.honeypot_captcha_extension:
     class: ACP3\Modules\ACP3\Captcha\Extension\HoneypotCaptchaExtension

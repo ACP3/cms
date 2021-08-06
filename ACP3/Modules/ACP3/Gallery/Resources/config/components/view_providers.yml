@@ -4,15 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Gallery\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  gallery.view_providers.admin_gallery_edit: '@ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryEditViewProvider'
-  gallery.view_providers.admin_gallery_picture_create: '@ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider'
-  gallery.view_providers.admin_gallery_picture_edit: '@ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureEditViewProvider'
-  gallery.view_providers.admim_settings: '@ACP3\Modules\ACP3\Gallery\ViewProviders\AdminSettingsViewProvider'
-  gallery.view_providers.data_grid: '@ACP3\Modules\ACP3\Gallery\ViewProviders\DataGridViewProvider'
-  gallery.view_providers.picture_data_grid: '@ACP3\Modules\ACP3\Gallery\ViewProviders\PictureDataGridViewProvider'
-  gallery.view_providers.gallery_list: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryListViewProvider'
-  gallery.view_providers.gallery_list_widget: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryListWidgetViewProvider'
-  gallery.view_providers.gallery_picture_details: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureDetailsViewProvider'
-  gallery.view_providers.gallery_picture_list: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListViewProvider'
-  gallery.view_providers.gallery_picture_list_widget: '@ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListWidgetViewProvider'

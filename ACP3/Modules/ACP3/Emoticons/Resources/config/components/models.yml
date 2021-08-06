@@ -2,7 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  emoticons.model:
-    class: ACP3\Modules\ACP3\Emoticons\Model\EmoticonsModel
+  ACP3\Modules\ACP3\Emoticons\Model\EmoticonsModel:
     arguments:
-      $repository: "@emoticons.model.emoticonrepository"
+      $repository: '@ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository'

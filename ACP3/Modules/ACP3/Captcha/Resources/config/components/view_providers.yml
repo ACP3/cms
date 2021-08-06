@@ -6,5 +6,3 @@ services:
 
   ACP3\Modules\ACP3\Captcha\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  captcha.view_provider.admin_settings: '@ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider'

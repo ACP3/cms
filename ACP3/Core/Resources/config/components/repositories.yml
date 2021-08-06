@@ -1,26 +1,8 @@
 services:
-  permissions.model.privilegerepository:
-    synthetic: true
-    public: true
-
-  ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface: "@permissions.model.privilegerepository"
-
   permissions.model.resourcerepository:
     synthetic: true
     public: true
 
-  permissions.model.rolerepository:
-    synthetic: true
-    public: true
-
-  ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface: "@permissions.model.rolerepository"
-
   permissions.model.rulerepository:
     synthetic: true
     public: true
-
-  permissions.model.userrolerepository:
-    synthetic: true
-    public: true
-
-  ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface: "@permissions.model.userrolerepository"

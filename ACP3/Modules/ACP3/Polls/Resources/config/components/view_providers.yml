@@ -4,10 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Polls\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  polls.view_providers.admin_poll_edit: '@ACP3\Modules\ACP3\Polls\ViewProviders\AdminPollEditViewProvider'
-  polls.view_providers.data_grid: '@ACP3\Modules\ACP3\Polls\ViewProviders\DataGridViewProvider'
-  polls.view_providers.poll_list: '@ACP3\Modules\ACP3\Polls\ViewProviders\PollListViewProvider'
-  polls.view_providers.poll_result: '@ACP3\Modules\ACP3\Polls\ViewProviders\PollResultViewProvider'
-  polls.view_providers.poll_vote: '@ACP3\Modules\ACP3\Polls\ViewProviders\PollVoteViewProvider'
-  polls.view_providers.poll_widget: '@ACP3\Modules\ACP3\Polls\ViewProviders\PollWidgetViewProvider'

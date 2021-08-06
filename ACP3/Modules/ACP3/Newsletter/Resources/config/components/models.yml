@@ -2,5 +2,4 @@ services:
   _defaults:
     autowire: true
 
-  newsletter.model:
-    class: ACP3\Modules\ACP3\Newsletter\Model\NewsletterModel
+  ACP3\Modules\ACP3\Newsletter\Model\NewsletterModel: ~

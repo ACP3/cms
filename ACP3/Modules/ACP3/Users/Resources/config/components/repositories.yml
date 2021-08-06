@@ -4,6 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Users\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  users.model.data_grid_repository: '@ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository'
-  users.model.userrepository: '@ACP3\Modules\ACP3\Users\Model\Repository\UserRepository'

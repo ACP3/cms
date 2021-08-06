@@ -4,9 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Newsletter\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  newsletter.model.newsletterrepository: '@ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository'
-  newsletter.model.newsletter_data_grid_repository: '@ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterDataGridRepository'
-  newsletter.model.accountrepository: '@ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository'
-  newsletter.model.account_data_grid_repository: '@ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository'
-  newsletter.model.accounthistoryrepository: '@ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountHistoryRepository'

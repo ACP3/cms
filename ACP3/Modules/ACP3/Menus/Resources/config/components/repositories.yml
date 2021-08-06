@@ -7,6 +7,3 @@ services:
 
   ACP3\Modules\ACP3\Menus\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  menus.model.menurepository: '@ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository'
-  menus.model.menuitemrepository: '@ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository'

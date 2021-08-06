@@ -4,11 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Files\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  files.view_providers.admin_file_edit: '@ACP3\Modules\ACP3\Files\ViewProviders\AdminFileEditViewProvider'
-  files.view_providers.admin_settings: '@ACP3\Modules\ACP3\Files\ViewProviders\AdminSettingsViewProvider'
-  files.view_providers.data_grid: '@ACP3\Modules\ACP3\Files\ViewProviders\DataGridViewProvider'
-  files.view_providers.file_details: '@ACP3\Modules\ACP3\Files\ViewProviders\FileDetailsViewProvider'
-  files.view_providers.files_by_category_id: '@ACP3\Modules\ACP3\Files\ViewProviders\FilesByCategoryIdViewProvider'
-  files.view_providers.files_widget: '@ACP3\Modules\ACP3\Files\ViewProviders\FilesWidgetViewProvider'
-  files.view_providers.root_categories_list: '@ACP3\Modules\ACP3\Files\ViewProviders\RootCategoriesListViewProvider'

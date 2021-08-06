@@ -12,5 +12,3 @@ services:
   ACP3\Modules\ACP3\System\Validation\:
     resource: "../../../src/Validation/"
     exclude: "../../../src/Validation/ValidationRules/"
-
-  system.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation'

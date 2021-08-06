@@ -5,8 +5,7 @@ services:
   _defaults:
     autowire: true
 
-  permissions.helpers:
-    class: ACP3\Modules\ACP3\Permissions\Helpers
+  ACP3\Modules\ACP3\Permissions\Helpers: ~
 
   permissions.cache_item_pool:
     class: Psr\Cache\CacheItemPoolInterface

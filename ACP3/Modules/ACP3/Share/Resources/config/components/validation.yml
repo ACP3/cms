@@ -4,6 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Share\Validation\:
     resource: "../../../src/Validation/"
-
-  share.validation.admin_form_validation: '@ACP3\Modules\ACP3\Share\Validation\AdminFormValidation'
-  share.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Share\Validation\AdminSettingsFormValidation'

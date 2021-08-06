@@ -4,16 +4,12 @@ services:
 
   ACP3\Modules\ACP3\Menus\Model\MenusModel:
     arguments:
-      $repository: "@menus.model.menurepository"
-
-  menus.model.menus_model: '@ACP3\Modules\ACP3\Menus\Model\MenusModel'
+      $repository: '@ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository'
 
   ACP3\Modules\ACP3\Menus\Model\MenuItemsModel:
     arguments:
-      $repository: "@menus.model.menuitemrepository"
+      $repository: '@ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository'
       $insertOperation: "@menus.nested_set.operation.insert"
       $editOperation: "@menus.nested_set.operation.edit"
       $deleteOperation: "@menus.nested_set.operation.delete"
       $sortOperation: "@menus.nested_set.operation.sort"
-
-  menus.model.menu_items_model: '@ACP3\Modules\ACP3\Menus\Model\MenuItemsModel'

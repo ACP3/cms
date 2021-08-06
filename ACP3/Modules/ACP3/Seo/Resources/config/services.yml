@@ -7,10 +7,7 @@ services:
 
   ACP3\Modules\ACP3\Seo\Core\Router\Aliases: ~
 
-  seo.utility.sitemap_availability_registrar:
-    class: ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar
-
-  ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar: "@seo.utility.sitemap_availability_registrar"
+  ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar: ~
 
   seo.sitemap_logger:
     class: Psr\Log\LoggerInterface

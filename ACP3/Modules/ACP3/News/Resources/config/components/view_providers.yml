@@ -4,11 +4,3 @@ services:
 
   ACP3\Modules\ACP3\News\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  news.view_providers.admin_news_edit: '@ACP3\Modules\ACP3\News\ViewProviders\AdminNewsEditViewProvider'
-  news.view_providers.admin_settings: '@ACP3\Modules\ACP3\News\ViewProviders\AdminSettingsViewProvider'
-  news.view_providers.data_grid: '@ACP3\Modules\ACP3\News\ViewProviders\DataGridViewProvider'
-  news.view_providers.latest_news_list_widget: '@ACP3\Modules\ACP3\News\ViewProviders\LatestNewsListWidgetViewProvider'
-  news.view_providers.latest_news_widget: '@ACP3\Modules\ACP3\News\ViewProviders\LatestNewsWidgetViewProvider'
-  news.view_providers.news_details: '@ACP3\Modules\ACP3\News\ViewProviders\NewsDetailsViewProvider'
-  news.view_providers.news_list: '@ACP3\Modules\ACP3\News\ViewProviders\NewsListViewProvider'

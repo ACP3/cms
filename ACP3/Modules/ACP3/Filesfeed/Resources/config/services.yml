@@ -2,7 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  filesfeed.extenion.feed_availability_extension:
-    class: ACP3\Modules\ACP3\Filesfeed\Extension\FeedAvailabilityExtension
+  ACP3\Modules\ACP3\Filesfeed\Extension\FeedAvailabilityExtension:
     tags:
       - { name: feeds.extension.feed_availability }

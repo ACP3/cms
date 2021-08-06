@@ -4,8 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Polls\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  polls.model.data_grid_repository: '@ACP3\Modules\ACP3\Polls\Model\Repository\DataGridRepository'
-  polls.model.answerrepository: '@ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository'
-  polls.model.pollrepository: '@ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository'
-  polls.model.voterepository: '@ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository'

@@ -4,8 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Permissions\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  permissions.view_providers.admin_resource_edit: '@ACP3\Modules\ACP3\Permissions\ViewProviders\AdminResourceEditViewProvider'
-  permissions.view_providers.admin_role_edit: '@ACP3\Modules\ACP3\Permissions\ViewProviders\AdminRoleEditViewProvider'
-  permissions.view_providers.data_grid: '@ACP3\Modules\ACP3\Permissions\ViewProviders\DataGridViewProvider'
-  permissions.view_providers.resource_list_data_grid: '@ACP3\Modules\ACP3\Permissions\ViewProviders\ResourceListDataGridViewProvider'

@@ -2,7 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  emoticons.content_decorator.emoticons:
-    class: ACP3\Modules\ACP3\Emoticons\ContentDecorator\EmoticonsContentDecorator
+  ACP3\Modules\ACP3\Emoticons\ContentDecorator\EmoticonsContentDecorator:
     tags:
       - { name: core.content_decorator }

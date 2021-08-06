@@ -2,31 +2,13 @@ services:
   _defaults:
     autowire: true
 
-  system.helpers.installer:
-    class: ACP3\Modules\ACP3\System\Helper\Installer
+  ACP3\Modules\ACP3\System\Helper\Installer: ~
 
-  ACP3\Modules\ACP3\System\Helper\Installer: "@system.helpers.installer"
-
-  system.helpers.can_use_page_cache:
-    class: ACP3\Modules\ACP3\System\Helper\CanUsePageCache
+  ACP3\Modules\ACP3\System\Helper\CanUsePageCache:
     arguments:
       $environment: "%core.environment%"
 
-  ACP3\Modules\ACP3\System\Helper\CanUsePageCache: "@system.helpers.can_use_page_cache"
-
-  system.helpers.update_check:
-    class: ACP3\Modules\ACP3\System\Helper\UpdateCheck
-    arguments:
-      $versionParser: "@composer.semver.version_parser"
-
-  ACP3\Modules\ACP3\System\Helper\UpdateCheck: "@system.helpers.update_check"
-
-  system.helpers.update_check.update_file_parser:
-    class: ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser
-
-  ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser: "@system.helpers.update_check.update_file_parser"
-
-  composer.semver.version_parser:
-    class: Composer\Semver\VersionParser
-
+  ACP3\Modules\ACP3\System\Helper\UpdateCheck:
+  ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser: ~
+  Composer\Semver\VersionParser: ~
   ACP3\Modules\ACP3\System\Helper\View\Tabset: ~

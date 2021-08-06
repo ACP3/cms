@@ -9,13 +9,11 @@ services:
     tags:
       - { name: core.eventSubscriber }
 
-  core.assets.renderer.css_renderer_factory:
-    class: ACP3\Core\Assets\Renderer\CSSRendererFactory
+  ACP3\Core\Assets\Renderer\CSSRendererFactory:
     arguments:
       $applicationMode: "dev"
 
-  core.assets.renderer.javascript_renderer_factory:
-    class: ACP3\Core\Assets\Renderer\JavaScriptRendererFactory
+  ACP3\Core\Assets\Renderer\JavaScriptRendererFactory:
     arguments:
       $applicationMode: "dev"
 
@@ -41,40 +39,31 @@ services:
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler
 
-  system.model.modulerepository:
+  ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository:
     class: ACP3\Modules\ACP3\Installer\Repository\ModulesRepository
 
-  ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface: "@system.model.modulerepository"
-
-  system.model.settingsrepository:
+  ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository:
     class: ACP3\Modules\ACP3\Installer\Repository\SettingsRepository
     arguments:
       $environment: "%core.environment%"
 
-  ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface: "@system.model.settingsrepository"
-
-  smarty.resource.asset:
+  ACP3\Core\View\Renderer\Smarty\Resources\Asset:
     class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
     tags:
       - { name: smarty.plugin.resource, pluginName: asset }
 
-  smarty.filter.move_to_bottom:
-    class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom
+  ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom:
     tags:
       - { name: smarty.plugin.filter, filterType: output }
 
-  smarty.filter.move_to_head:
-    class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead
+  ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead:
     tags:
       - { name: smarty.plugin.filter, filterType: output }
 
-  errors.event_listener.handle_generic_errors_exception_listener:
+  ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener:
     class: ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener
     arguments:
       $applicationMode: "%core.environment%"
       $serviceId: "installer.controller.installer.error.server_error"
     tags:
       - { name: core.eventSubscriber }
-
-  users.model.user_model:
-    class: ACP3\Modules\ACP3\Users\Model\UserModel

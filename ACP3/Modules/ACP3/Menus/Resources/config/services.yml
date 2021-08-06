@@ -5,8 +5,7 @@ services:
   _defaults:
     autowire: true
 
-  smarty.plugin.navbar:
-    class: ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar
+  ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions\Navbar:
     tags:
       - { name: smarty.plugin.function, pluginName: navbar }
 

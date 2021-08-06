@@ -1,8 +1,6 @@
 services:
   _defaults:
     autowire: true
-    bind:
-      $shareModel: "@share.model.share_model"
 
   ACP3\Modules\ACP3\Share\EventListener\:
     resource: "../../../src/EventListener/"

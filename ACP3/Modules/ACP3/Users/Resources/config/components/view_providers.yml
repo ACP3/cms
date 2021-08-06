@@ -4,16 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Users\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  users.view_providers.account_edit: '@ACP3\Modules\ACP3\Users\ViewProviders\AccountEditViewProvider'
-  users.view_providers.account_settings: '@ACP3\Modules\ACP3\Users\ViewProviders\AccountSettingsViewProvider'
-  users.view_providers.admin_settings: '@ACP3\Modules\ACP3\Users\ViewProviders\AdminSettingsViewProvider'
-  users.view_providers.admin_user_edit: '@ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider'
-  users.view_providers.data_grid: '@ACP3\Modules\ACP3\Users\ViewProviders\DataGridViewProvider'
-  users.view_providers.forgot_password: '@ACP3\Modules\ACP3\Users\ViewProviders\ForgotPasswordViewProvider'
-  users.view_providers.login: '@ACP3\Modules\ACP3\Users\ViewProviders\LoginViewProvider'
-  users.view_providers.logout: '@ACP3\Modules\ACP3\Users\ViewProviders\LogoutViewProvider'
-  users.view_providers.registration: '@ACP3\Modules\ACP3\Users\ViewProviders\RegistrationViewProvider'
-  users.view_providers.user_list: '@ACP3\Modules\ACP3\Users\ViewProviders\UserListViewProvider'
-  users.view_providers.user_menu: '@ACP3\Modules\ACP3\Users\ViewProviders\UserMenuViewProvider'
-  users.view_providers.user_profile: '@ACP3\Modules\ACP3\Users\ViewProviders\UserProfileViewProvider'

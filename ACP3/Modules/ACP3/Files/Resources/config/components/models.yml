@@ -2,7 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  files.model.files_model:
-    class: ACP3\Modules\ACP3\Files\Model\FilesModel
+  ACP3\Modules\ACP3\Files\Model\FilesModel:
     arguments:
-      $repository: "@files.model.filesrepository"
+      $repository: '@ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository'

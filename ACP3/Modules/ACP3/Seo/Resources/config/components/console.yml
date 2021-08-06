@@ -1,5 +1,4 @@
 services:
-  seo.console.http_cache_warmup_command:
-    class: ACP3\Modules\ACP3\Seo\Console\HttpCacheWarmupCommand
+  ACP3\Modules\ACP3\Seo\Console\HttpCacheWarmupCommand:
     tags:
       - { name: "acp3.console.command" }

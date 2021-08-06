@@ -1,9 +1,6 @@
 services:
   _defaults:
     autowire: true
-    bind:
-      $pollsModel: "@polls.model.polls_model"
-      $voteModel: "@polls.model.vote_model"
     tags:
       - { name: acp3.controller.action }
 

@@ -4,8 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Gallery\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  gallery.model.galleryrepository: '@ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository'
-  gallery.model.gallery_data_grid_repository: '@ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository'
-  gallery.model.picturerepository: '@ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository'
-  gallery.model.gallery_pictures_data_grid_repository: '@ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesDataGridRepository'

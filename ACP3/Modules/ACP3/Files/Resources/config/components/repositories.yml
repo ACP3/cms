@@ -4,6 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Files\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  files.model.data_grid_repository: '@ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository'
-  files.model.filesrepository: '@ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository'

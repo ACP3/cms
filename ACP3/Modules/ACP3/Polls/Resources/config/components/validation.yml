@@ -10,6 +10,3 @@ services:
   ACP3\Modules\ACP3\Polls\Validation\:
     resource: "../../../src/Validation/"
     exclude: "../../../src/Validation/ValidationRules/"
-
-  polls.validation.admin_form_validation: '@ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation'
-  polls.validation.vote_validation: '@ACP3\Modules\ACP3\Polls\Validation\VoteValidation'

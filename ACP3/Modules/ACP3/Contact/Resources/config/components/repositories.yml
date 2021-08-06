@@ -4,6 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Contact\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  contact.model.repository.data_grid_repository: '@ACP3\Modules\ACP3\Contact\Model\Repository\DataGridRepository'
-  contact.model.repository.contacts_repository: '@ACP3\Modules\ACP3\Contact\Model\Repository\ContactsRepository'

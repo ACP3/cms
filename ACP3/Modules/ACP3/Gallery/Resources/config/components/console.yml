@@ -2,7 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  gallery.console.generate_thumbnails_command:
-    class: ACP3\Modules\ACP3\Gallery\Console\GenerateThumbnailsCommand
+  ACP3\Modules\ACP3\Gallery\Console\GenerateThumbnailsCommand:
     tags:
       - { name: acp3.console.command }

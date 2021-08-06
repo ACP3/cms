@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     bind:
-      $nestedSetRepository: "@categories.model.categories_repository"
+      $nestedSetRepository: '@ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository'
 
   categories.nested_set.operation.insert:
     class: ACP3\Core\NestedSet\Operation\Insert

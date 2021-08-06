@@ -10,6 +10,3 @@ services:
   ACP3\Modules\ACP3\Permissions\Validation\:
     resource: "../../../src/Validation/"
     exclude: "../../../src/Validation/ValidationRules/"
-
-  permissions.validation.role_form_validation: '@ACP3\Modules\ACP3\Permissions\Validation\RoleFormValidation'
-  permissions.validation.resource_form_validation: '@ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation'

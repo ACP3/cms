@@ -10,10 +10,3 @@ services:
   ACP3\Modules\ACP3\Users\Validation\:
     resource: "../../../src/Validation/"
     exclude: "../../../src/Validation/ValidationRules/"
-
-  users.validation.account_form_validation: '@ACP3\Modules\ACP3\Users\Validation\AccountFormValidation'
-  users.validation.account_forgot_password_form_validation: '@ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation'
-  users.validation.account_settings_form_validation: '@ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation'
-  users.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Users\Validation\AdminSettingsFormValidation'
-  users.validation.admin_form_validation: '@ACP3\Modules\ACP3\Users\Validation\AdminFormValidation'
-  users.validation.registration_form_validation: '@ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation'

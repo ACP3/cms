@@ -2,23 +2,15 @@ services:
   _defaults:
     autowire: true
 
-  users.model.authentication_model:
-    class: ACP3\Modules\ACP3\Users\Model\AuthenticationModel
+  ACP3\Modules\ACP3\Users\Model\AuthenticationModel: ~
 
-  ACP3\Modules\ACP3\Users\Model\AuthenticationModel: "@users.model.authentication_model"
+  ACP3\Modules\ACP3\Users\Model\UserModel:
+    configurator: ['@ACP3\Modules\ACP3\Users\Model\UserModelConfigurator', "configure"]
 
-  users.model.user_model:
-    class: ACP3\Modules\ACP3\Users\Model\UserModel
-    configurator: ["@users.model.user_model_configurator", "configure"]
+  ACP3\Core\Authentication\Model\UserModelInterface: '@ACP3\Modules\ACP3\Users\Model\UserModel'
 
-  ACP3\Modules\ACP3\Users\Model\UserModel: "@users.model.user_model"
+  ACP3\Modules\ACP3\Users\Model\UserModelConfigurator: ~
 
-  users.model.user_model_configurator:
-    class: ACP3\Modules\ACP3\Users\Model\UserModelConfigurator
+  ACP3\Modules\ACP3\Users\Model\UsersModel:
     arguments:
-      $authentication: "@core.authentication.native"
-
-  users.model.users_model:
-    class: ACP3\Modules\ACP3\Users\Model\UsersModel
-    arguments:
-      $repository: "@users.model.userrepository"
+      $repository: '@ACP3\Modules\ACP3\Users\Model\Repository\UserRepository'

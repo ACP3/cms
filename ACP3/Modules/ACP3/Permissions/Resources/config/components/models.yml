@@ -2,22 +2,19 @@ services:
   _defaults:
     autowire: true
 
-  permissions.model.resources_model:
-    class: ACP3\Modules\ACP3\Permissions\Model\ResourcesModel
+  ACP3\Modules\ACP3\Permissions\Model\ResourcesModel:
     arguments:
       $repository: "@permissions.model.resourcerepository"
 
-  permissions.model.roles_model:
-    class: ACP3\Modules\ACP3\Permissions\Model\RolesModel
+  ACP3\Modules\ACP3\Permissions\Model\RolesModel:
     arguments:
-      $repository: "@permissions.model.rolerepository"
+      $repository: '@ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository'
       $insertOperation: "@permissions.nested_set.operation.insert"
       $editOperation: "@permissions.nested_set.operation.edit"
       $deleteOperation: "@permissions.nested_set.operation.delete"
       $sortOperation: "@permissions.nested_set.operation.sort"
 
-  permissions.model.rules_model:
-    class: ACP3\Modules\ACP3\Permissions\Model\RulesModel
+  ACP3\Modules\ACP3\Permissions\Model\RulesModel:
     arguments:
       $repository: "@permissions.model.rulerepository"
       $permissionsCachePool: "@permissions.cache_item_pool"

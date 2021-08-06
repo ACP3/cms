@@ -2,15 +2,11 @@ services:
   _defaults:
     autowire: true
 
-  seo.model.seo_model:
-    class: ACP3\Modules\ACP3\Seo\Model\SeoModel
+  ACP3\Modules\ACP3\Seo\Model\SeoModel:
     arguments:
-      $repository: "@seo.model.seorepository"
+      $repository: '@ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository'
 
-  seo.model.sitemap_generation_model:
-    class: ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel
-    arguments:
-      $xmlSitemapDriver: "@xml_writer_driver"
+  ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel: ~
 
-  xml_writer_driver:
-    class: Thepixeldeveloper\Sitemap\Drivers\XmlWriterDriver
+  Thepixeldeveloper\Sitemap\Drivers\XmlWriterDriver: ~
+  Thepixeldeveloper\Sitemap\Interfaces\DriverInterface: '@Thepixeldeveloper\Sitemap\Drivers\XmlWriterDriver'

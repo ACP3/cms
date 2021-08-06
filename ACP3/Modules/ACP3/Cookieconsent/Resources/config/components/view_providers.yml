@@ -4,5 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Cookieconsent\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  cookieconsent.view_providers.admin_settings: '@ACP3\Modules\ACP3\Cookieconsent\ViewProviders\AdminSettingsViewProvider'

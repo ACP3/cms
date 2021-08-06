@@ -21,9 +21,6 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
      */
     protected $repository;
 
-    /**
-     * AbstractSearchAvailabilityExtension constructor.
-     */
     public function __construct(
         RouterInterface $router,
         SearchResultsAwareRepositoryInterface $repository

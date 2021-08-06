@@ -5,17 +5,6 @@ services:
   _defaults:
     autowire: true
 
-  newsletter.helper.accountstatus:
-    class: ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
-
-  ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus: "@newsletter.helper.accountstatus"
-
-  newsletter.helper.sendnewsletter:
-    class: ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
-
-  ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter: "@newsletter.helper.sendnewsletter"
-
-  newsletter.helper.subscribe:
-    class: ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
-
-  ACP3\Modules\ACP3\Newsletter\Helper\Subscribe: "@newsletter.helper.subscribe"
+  ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus: ~
+  ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter: ~
+  ACP3\Modules\ACP3\Newsletter\Helper\Subscribe: ~

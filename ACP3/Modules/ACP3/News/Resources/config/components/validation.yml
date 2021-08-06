@@ -4,6 +4,3 @@ services:
 
   ACP3\Modules\ACP3\News\Validation\:
     resource: "../../../src/Validation/"
-
-  news.validation.admin_form_validation: '@ACP3\Modules\ACP3\News\Validation\AdminFormValidation'
-  news.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\News\Validation\AdminSettingsFormValidation'

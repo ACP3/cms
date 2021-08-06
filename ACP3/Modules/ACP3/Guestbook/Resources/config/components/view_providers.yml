@@ -4,9 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Guestbook\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  guestbook.view_providers.admin_guestbook_edit: '@ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminGuestbookEditViewProvider'
-  guestbook.view_providers.admin_settings: '@ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminSettingsViewProvider'
-  guestbook.view_providers.data_grid: '@ACP3\Modules\ACP3\Guestbook\ViewProviders\DataGridViewProvider'
-  guestbook.view_providers.guestbook_create: '@ACP3\Modules\ACP3\Guestbook\ViewProviders\GuestbookCreateViewProvider'
-  guestbook.view_providers.guestbook_list: '@ACP3\Modules\ACP3\Guestbook\ViewProviders\GuestbookListViewProvider'

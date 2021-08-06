@@ -2,14 +2,8 @@ services:
   _defaults:
     autowire: true
 
-  installer.model.install_model:
-    class: ACP3\Modules\ACP3\Installer\Model\InstallModel
+  ACP3\Modules\ACP3\Installer\Model\InstallModel: ~
 
-  ACP3\Modules\ACP3\Installer\Model\InstallModel: "@installer.model.install_model"
-
-  installer.model.schema_update_model:
-    class: ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel
+  ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel:
     arguments:
       $logger: "@core.modules.installer_logger"
-
-  ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel: "@installer.model.schema_update_model"

@@ -4,8 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Contact\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  contact.view_providers.admin_settings: '@ACP3\Modules\ACP3\Contact\ViewProviders\AdminSettingsViewProvider'
-  contact.view_providers.contact_form: '@ACP3\Modules\ACP3\Contact\ViewProviders\ContactFormViewProvider'
-  contact.view_providers.contact_details: '@ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider'
-  contact.view_provider.data_grid: '@ACP3\Modules\ACP3\Contact\ViewProviders\DataGridViewProvider'

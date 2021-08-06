@@ -4,6 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Guestbook\Model\Repository\:
     resource: "../../../src/Model/Repository/"
-
-  guestbook.model.data_grid_repository: '@ACP3\Modules\ACP3\Guestbook\Model\Repository\DataGridRepository'
-  guestbook.model.guestbookrepository: '@ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository'

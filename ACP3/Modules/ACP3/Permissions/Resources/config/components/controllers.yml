@@ -1,10 +1,6 @@
 services:
   _defaults:
     autowire: true
-    bind:
-      $rolesModel: "@permissions.model.roles_model"
-      $rulesModel: "@permissions.model.rules_model"
-      $resourcesModel: "@permissions.model.resources_model"
     tags:
       - { name: acp3.controller.action }
 

@@ -4,7 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Seo\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  seo.view_providers.admin_seo_edit: '@ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider'
-  seo.view_providers.admin_settings: '@ACP3\Modules\ACP3\Seo\ViewProviders\AdminSettingsViewProvider'
-  seo.view_providers.data_grid: '@ACP3\Modules\ACP3\Seo\ViewProviders\DataGridViewProvider'

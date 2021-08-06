@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\DependencyInjection;
 
+use ACP3\Modules\ACP3\Seo\Utility\SitemapAvailabilityRegistrar;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,7 +19,7 @@ class SitemapAvailabilityCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('seo.utility.sitemap_availability_registrar');
+        $definition = $container->findDefinition(SitemapAvailabilityRegistrar::class);
         $plugins = $container->findTaggedServiceIds('seo.extension.sitemap_availability');
 
         foreach ($plugins as $serviceId => $tags) {

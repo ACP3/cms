@@ -4,10 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Articles\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  articles.view_providers.admin_article_edit: '@ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider'
-  article.view_providers.article_full: '@ACP3\Modules\ACP3\Articles\ViewProviders\ArticleFullViewProvider'
-  articles.view_providers.article_list: '@ACP3\Modules\ACP3\Articles\ViewProviders\ArticleListViewProvider'
-  articles.view_providers.article_paginated: '@ACP3\Modules\ACP3\Articles\ViewProviders\ArticlePaginatedViewProvider'
-  articles.view_providers.data_grid: '@ACP3\Modules\ACP3\Articles\ViewProviders\DataGridViewProvider'
-  articles.view_providers.latest_articles: '@ACP3\Modules\ACP3\Articles\ViewProviders\LatestArticlesViewProvider'

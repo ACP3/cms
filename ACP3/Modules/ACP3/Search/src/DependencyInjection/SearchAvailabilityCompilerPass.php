@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Search\DependencyInjection;
 
+use ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityRegistrar;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,7 +19,7 @@ class SearchAvailabilityCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('search.utility.search_availability_registrar');
+        $definition = $container->findDefinition(SearchAvailabilityRegistrar::class);
         $plugins = $container->findTaggedServiceIds('search.extension.search_availability');
 
         foreach ($plugins as $serviceId => $tags) {

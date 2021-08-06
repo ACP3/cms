@@ -4,7 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Categories\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  categories.view_providers.admin_category_edit: '@ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategoryEditViewProvider'
-  categories.view_providers.admin_category_settings: '@ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategorySettingsViewProvider'
-  categories.view_providers.data_grid: '@ACP3\Modules\ACP3\Categories\ViewProviders\DataGridViewProvider'

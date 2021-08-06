@@ -4,7 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Menus\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  menus.view_providers.admin_menu_edit: '@ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuEditViewProvider'
-  menus.view_providers.admin_menu_item_edit: '@ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuItemEditViewProvider'
-  menus.view_providers.data_grid: '@ACP3\Modules\ACP3\Menus\ViewProviders\DataGridViewProvider'

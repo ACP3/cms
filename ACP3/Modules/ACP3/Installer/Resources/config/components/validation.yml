@@ -10,5 +10,3 @@ services:
   ACP3\Modules\ACP3\Installer\Validation\:
     resource: "../../../src/Validation/"
     exclude: "../../../src/Validation/ValidationRules/"
-
-  installer.validator: '@ACP3\Modules\ACP3\Installer\Validation\FormValidation'

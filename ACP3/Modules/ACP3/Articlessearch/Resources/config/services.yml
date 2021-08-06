@@ -2,12 +2,10 @@ services:
   _defaults:
     autowire: true
 
-  articlessearch.repository.search_results_aware_repository:
-    class: ACP3\Modules\ACP3\Articlessearch\Repository\SearchResultsAwareRepository
+  ACP3\Modules\ACP3\Articlessearch\Repository\SearchResultsAwareRepository: ~
 
-  articlessearch.extension.search_availability_extension:
-    class: ACP3\Modules\ACP3\Articlessearch\Extension\SearchAvailabilityExtension
+  ACP3\Modules\ACP3\Articlessearch\Extension\SearchAvailabilityExtension:
     arguments:
-      $repository: "@articlessearch.repository.search_results_aware_repository"
+      $repository: '@ACP3\Modules\ACP3\Articlessearch\Repository\SearchResultsAwareRepository'
     tags:
       - { name: search.extension.search_availability }

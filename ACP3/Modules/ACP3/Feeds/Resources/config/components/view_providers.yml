@@ -4,5 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Feeds\ViewProviders\:
     resource: "../../../src/ViewProviders/"
-
-  feeds.view_providers.admin_settings: '@ACP3\Modules\ACP3\Feeds\ViewProviders\AdminSettingsViewProvider'

@@ -2,12 +2,10 @@ services:
   _defaults:
     autowire: true
 
-  newssearch.repository.search_results_aware_repository:
-    class: ACP3\Modules\ACP3\Newssearch\Repository\SearchResultsAwareRepository
+  ACP3\Modules\ACP3\Newssearch\Repository\SearchResultsAwareRepository: ~
 
-  newssearch.extension.search_availability_extension:
-    class: ACP3\Modules\ACP3\Newssearch\Extension\SearchAvailabilityExtension
+  ACP3\Modules\ACP3\Newssearch\Extension\SearchAvailabilityExtension:
     arguments:
-      $repository: "@newssearch.repository.search_results_aware_repository"
+      $repository: '@ACP3\Modules\ACP3\Newssearch\Repository\SearchResultsAwareRepository'
     tags:
       - { name: search.extension.search_availability }

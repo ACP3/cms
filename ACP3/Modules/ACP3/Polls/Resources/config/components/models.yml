@@ -2,14 +2,5 @@ services:
   _defaults:
     autowire: true
 
-  polls.model.polls_model:
-    class: ACP3\Modules\ACP3\Polls\Model\PollsModel
-    arguments:
-      $pollRepository: "@polls.model.pollrepository"
-      $answerRepository: "@polls.model.answerrepository"
-      $voteRepository: "@polls.model.voterepository"
-
-  polls.model.vote_model:
-    class: ACP3\Modules\ACP3\Polls\Model\VoteModel
-    arguments:
-      $voteRepository: "@polls.model.voterepository"
+  ACP3\Modules\ACP3\Polls\Model\PollsModel: ~
+  ACP3\Modules\ACP3\Polls\Model\VoteModel: ~

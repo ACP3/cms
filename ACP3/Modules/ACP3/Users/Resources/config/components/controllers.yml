@@ -1,10 +1,6 @@
 services:
   _defaults:
     autowire: true
-    bind:
-      $usersModel: "@users.model.users_model"
-      $permissionsHelpers: "@permissions.helpers"
-      $hashGenerator: "@http_cache.hash_generator"
     tags:
       - { name: acp3.controller.action }
 

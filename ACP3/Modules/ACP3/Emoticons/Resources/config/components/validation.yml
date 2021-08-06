@@ -4,6 +4,3 @@ services:
 
   ACP3\Modules\ACP3\Emoticons\Validation\:
     resource: "../../../src/Validation/"
-
-  emoticons.validation.admin_form_validation: '@ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation'
-  emoticons.validation.admin_settings_form_validation: '@ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation'

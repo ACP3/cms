@@ -2,7 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  articles.model:
-    class: ACP3\Modules\ACP3\Articles\Model\ArticlesModel
+  ACP3\Modules\ACP3\Articles\Model\ArticlesModel:
     arguments:
-      $repository: "@articles.model.articlerepository"
+      $repository: '@ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository'

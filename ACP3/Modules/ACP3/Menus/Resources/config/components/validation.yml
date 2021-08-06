@@ -10,6 +10,3 @@ services:
   ACP3\Modules\ACP3\Menus\Validation\:
     resource: "../../../src/Validation/"
     exclude: "../../../src/Validation/ValidationRules/"
-
-  menus.validation.menu_form_validation: '@ACP3\Modules\ACP3\Menus\Validation\MenuFormValidation'
-  menus.validation.menu_item_form_validation: '@ACP3\Modules\ACP3\Menus\Validation\MenuItemFormValidation'
