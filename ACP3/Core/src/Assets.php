@@ -33,8 +33,6 @@ class Assets
     {
         $this->theme = $theme;
         $this->libraries = $libraries;
-
-        $this->libraries->dispatchAddLibraryEvent();
     }
 
     public function fetchAdditionalThemeCssFiles(): array
@@ -58,11 +56,6 @@ class Assets
             foreach ($themeConfig->libraries->item as $libraryName) {
                 $this->libraries->enableLibraries([(string) $libraryName]);
             }
-        }
-
-        /* @deprecated To be removed this version 6.0.0. Use the <libraries><item>library-name</item></libraries> within the info.xml instead! */
-        if (isset($themeConfig->use_bootstrap) && (string) $themeConfig->use_bootstrap === 'true') {
-            $this->libraries->enableLibraries(['bootstrap']);
         }
 
         $this->additionalThemeCssFiles = [];
@@ -109,29 +102,5 @@ class Assets
         $this->additionalThemeJsFiles[] = $file;
 
         return $this;
-    }
-
-    /**
-     * @deprecated To be removed with version 6.0.0. Use ACP3\Core\Assets\Libraries::getLibraries() instead.
-     *
-     * @return Array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
-    public function getLibraries(): array
-    {
-        return $this->libraries->getLibraries();
-    }
-
-    /**
-     * @deprecated To be removed with version 6.0.0. Use ACP3\Core\Assets\Libraries::getEnabledLibrariesAsString() instead.
-     *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
-    public function getEnabledLibrariesAsString(): string
-    {
-        return $this->libraries->getEnabledLibrariesAsString();
     }
 }

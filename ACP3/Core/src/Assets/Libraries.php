@@ -8,9 +8,7 @@
 namespace ACP3\Core\Assets;
 
 use ACP3\Core\Assets\Entity\LibraryEntity;
-use ACP3\Core\Assets\Event\AddLibraryEvent;
 use MJS\TopSort\Implementations\StringSort;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -20,10 +18,6 @@ class Libraries
      * @var Array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
      */
     private $libraries = [];
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
     /**
      * @var \Symfony\Component\HttpFoundation\RequestStack
      */
@@ -35,20 +29,10 @@ class Libraries
 
     public function __construct(
         RequestStack $requestStack,
-        EventDispatcherInterface $eventDispatcher,
         LibrariesCache $librariesCache
     ) {
-        $this->eventDispatcher = $eventDispatcher;
         $this->requestStack = $requestStack;
         $this->librariesCache = $librariesCache;
-    }
-
-    /**
-     * @deprecated To be removed with version 6.0.0. Register the libraries using the DI container compiler pass instead.
-     */
-    public function dispatchAddLibraryEvent(): void
-    {
-        $this->eventDispatcher->dispatch(new AddLibraryEvent($this), AddLibraryEvent::NAME);
     }
 
     /**

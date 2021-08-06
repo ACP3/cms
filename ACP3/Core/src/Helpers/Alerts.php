@@ -85,19 +85,9 @@ class Alerts
      */
     public function errorBox($errors): string
     {
-        return $this->view->fetchTemplate($this->errorBoxContent($errors));
-    }
-
-    /**
-     * @param string|array $errors
-     *
-     * @deprecated To be removed with ACP3 version 6.0.0. Use the method errorBox() instead.
-     */
-    public function errorBoxContent($errors): string
-    {
         $this->setErrorBoxData($errors);
 
-        return 'System/Alerts/error_box.tpl';
+        return $this->view->fetchTemplate('System/Alerts/error_box.tpl');
     }
 
     /**

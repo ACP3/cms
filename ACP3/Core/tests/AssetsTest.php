@@ -48,14 +48,6 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
             ->willReturn(ACP3_ROOT_DIR . '/tests/designs/acp3/');
     }
 
-    public function testGetEnabledLibrariesAsString(): void
-    {
-        $this->librariesMock->expects(self::once())
-            ->method('getEnabledLibrariesAsString');
-
-        self::assertEquals('', $this->assets->getEnabledLibrariesAsString());
-    }
-
     public function testFetchAdditionalThemeCssFiles(): void
     {
         $this->configureThemeMock();

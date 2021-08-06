@@ -17,7 +17,6 @@ use ACP3\Modules\ACP3\Users\Exception\LoginFailedException;
 use ACP3\Modules\ACP3\Users\Exception\UserAccountLockedException;
 use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class AuthenticationModel implements AuthenticationModelInterface
@@ -46,17 +45,12 @@ class AuthenticationModel implements AuthenticationModelInterface
      */
     private $appPath;
     /**
-     * @var Response
-     */
-    private $response;
-    /**
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $userModel;
 
     public function __construct(
         RequestInterface $request,
-        Response $response,
         ApplicationPath $appPath,
         Session $sessionHandler,
         Secure $secureHelper,
@@ -64,7 +58,6 @@ class AuthenticationModel implements AuthenticationModelInterface
         UserRepository $userRepository
     ) {
         $this->request = $request;
-        $this->response = $response;
         $this->appPath = $appPath;
         $this->sessionHandler = $sessionHandler;
         $this->secureHelper = $secureHelper;
@@ -101,9 +94,6 @@ class AuthenticationModel implements AuthenticationModelInterface
 
         $this->saveRememberMeToken($userId, '');
         $this->sessionHandler->invalidate();
-        $this->response->headers->setCookie(
-            $this->setRememberMeCookie($userId, '', -1 * self::REMEMBER_ME_COOKIE_LIFETIME)
-        );
     }
 
     /**
@@ -167,9 +157,6 @@ class AuthenticationModel implements AuthenticationModelInterface
                 if ($rememberMe === true) {
                     $token = $this->generateRememberMeToken($user);
                     $this->saveRememberMeToken($user['id'], $token);
-                    $this->response->headers->setCookie(
-                        $this->setRememberMeCookie($user['id'], $token)
-                    );
                 }
 
                 $this->sessionHandler->getFlashBag()->clear();

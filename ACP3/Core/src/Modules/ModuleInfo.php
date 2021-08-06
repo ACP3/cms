@@ -74,8 +74,6 @@ class ModuleInfo implements ModuleInfoInterface
             'composer_package_name' => $composerData['name'],
             'dir' => $moduleCoreData->getPath(),
             'installed' => (!empty($moduleInfoDb)) || !$needsInstallation,
-            // @deprecated since version 5.18.0. To be removed with version 6.0.0.
-            'active' => (!empty($moduleInfoDb)) || !$needsInstallation,
             'schema_version' => !empty($moduleInfoDb) ? (int) $moduleInfoDb['version'] : 0,
             'author' => $this->getAuthors($composerData),
             'version' => InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],

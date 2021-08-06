@@ -63,15 +63,6 @@ class Theme implements ThemePathInterface
         foreach ($registeredThemes as $registeredTheme) {
             $this->addTheme($registeredTheme->getPath(), $registeredTheme->getName());
         }
-
-        /**
-         * @deprecated since version v5.15.0. To be removed with version 6.0.0. With ACP3 version 6.0.0 you will need add a registration.php with the themes root folder and add its composer.json.
-         */
-        $unregisteredThemes = glob(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . 'designs' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'info.xml');
-
-        foreach ($unregisteredThemes as $unregisteredTheme) {
-            $this->addTheme(\dirname($unregisteredTheme), str_replace([\dirname($unregisteredTheme, 2), DIRECTORY_SEPARATOR], '', \dirname($unregisteredTheme)));
-        }
     }
 
     private function addTheme(string $themePath, string $themeName): void
@@ -91,11 +82,6 @@ class Theme implements ThemePathInterface
                 ]
             );
         }
-    }
-
-    private function getThemeInternalName(string $themePath): string
-    {
-        return str_replace([\dirname($themePath), DIRECTORY_SEPARATOR], '', $themePath);
     }
 
     public function has(string $themeName): bool
