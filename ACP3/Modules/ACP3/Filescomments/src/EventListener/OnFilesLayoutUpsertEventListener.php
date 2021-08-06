@@ -45,7 +45,7 @@ class OnFilesLayoutUpsertEventListener implements EventSubscriberInterface
 
     public function __invoke(TemplateEvent $event): void
     {
-        if (!$this->modules->isActive(CommentsSchema::MODULE_NAME) || !$this->modules->isActive(FilesCommentsSchema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(CommentsSchema::MODULE_NAME) || !$this->modules->isInstalled(FilesCommentsSchema::MODULE_NAME)) {
             return;
         }
 

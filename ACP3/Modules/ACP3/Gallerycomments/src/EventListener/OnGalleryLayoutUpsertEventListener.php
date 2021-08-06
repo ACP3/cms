@@ -46,7 +46,7 @@ class OnGalleryLayoutUpsertEventListener implements EventSubscriberInterface
 
     public function __invoke(TemplateEvent $event): void
     {
-        if (!$this->modules->isActive(CommentsSchema::MODULE_NAME) || !$this->modules->isActive(GalleryCommentsSchema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(CommentsSchema::MODULE_NAME) || !$this->modules->isInstalled(GalleryCommentsSchema::MODULE_NAME)) {
             return;
         }
 

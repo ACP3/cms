@@ -69,7 +69,7 @@ class GenerateSitemapListener implements EventSubscriberInterface
 
     public function onModelAfterSave(ModelSaveEvent $event): void
     {
-        if (!$this->modules->isActive(Schema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;
         }
 

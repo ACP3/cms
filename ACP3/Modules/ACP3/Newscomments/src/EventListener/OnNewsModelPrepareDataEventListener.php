@@ -42,7 +42,7 @@ class OnNewsModelPrepareDataEventListener implements EventSubscriberInterface
 
     public function __invoke(ModelSavePrepareDataEvent $event)
     {
-        if (!$this->modules->isActive(Schema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;
         }
 

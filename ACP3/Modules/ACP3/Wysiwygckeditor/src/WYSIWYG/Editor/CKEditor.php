@@ -257,7 +257,7 @@ class CKEditor extends Textarea
         ];
 
         // Include emoticons, if available
-        if ($this->modules->isActive('emoticons') === true) {
+        if ($this->modules->isInstalled('emoticons') === true) {
             $this->applyEmoticons();
         }
     }

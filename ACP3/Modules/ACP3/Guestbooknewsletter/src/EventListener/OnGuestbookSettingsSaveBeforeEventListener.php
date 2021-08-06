@@ -39,7 +39,7 @@ class OnGuestbookSettingsSaveBeforeEventListener implements EventSubscriberInter
 
     public function __invoke(SettingsSaveEvent $event): void
     {
-        if (!$this->modules->isActive(NewsletterSchema::MODULE_NAME) || !$this->modules->isActive(Schema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(NewsletterSchema::MODULE_NAME) || !$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;
         }
 

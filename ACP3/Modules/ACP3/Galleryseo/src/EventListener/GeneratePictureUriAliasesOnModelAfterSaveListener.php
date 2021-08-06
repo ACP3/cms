@@ -44,7 +44,7 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener implements EventSubscrib
      */
     public function __invoke(ModelSaveEvent $event)
     {
-        if (!$this->modules->isActive(SeoSchema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(SeoSchema::MODULE_NAME)) {
             return;
         }
 

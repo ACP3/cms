@@ -34,7 +34,7 @@ class OnGuestbookValidationAdminSettingsEventListener implements EventSubscriber
 
     public function __invoke(FormValidationEvent $event)
     {
-        if (!$this->modules->isActive(NewsletterSchema::MODULE_NAME) || !$this->modules->isActive(Schema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(NewsletterSchema::MODULE_NAME) || !$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;
         }
 

@@ -31,7 +31,7 @@ class SitemapAvailabilityRegistrar
 
     public function registerModule(SitemapAvailabilityExtensionInterface $availability)
     {
-        if ($this->modules->isActive($availability->getModuleName())) {
+        if ($this->modules->isInstalled($availability->getModuleName())) {
             $this->availableModules[$availability->getModuleName()] = $availability;
         }
     }

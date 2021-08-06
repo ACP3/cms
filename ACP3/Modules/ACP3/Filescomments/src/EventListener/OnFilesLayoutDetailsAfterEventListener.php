@@ -39,7 +39,7 @@ class OnFilesLayoutDetailsAfterEventListener implements EventSubscriberInterface
 
     public function __invoke(TemplateEvent $event): void
     {
-        if (!$this->modules->isActive(CommentsSchema::MODULE_NAME) || !$this->modules->isActive(Schema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(CommentsSchema::MODULE_NAME) || !$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;
         }
 

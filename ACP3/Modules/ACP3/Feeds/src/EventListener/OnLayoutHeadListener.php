@@ -40,7 +40,7 @@ class OnLayoutHeadListener implements EventSubscriberInterface
 
     public function __invoke(View\Event\TemplateEvent $event): void
     {
-        if ($this->modules->isActive(Schema::MODULE_NAME)) {
+        if ($this->modules->isInstalled(Schema::MODULE_NAME)) {
             $this->view->assign('available_feeds', $this->availableFeedsRegistrar->getAvailableModuleNames());
 
             $event->addContent($this->view->fetchTemplate('Feeds/Partials/head.feed_links.tpl'));

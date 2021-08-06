@@ -53,7 +53,7 @@ class LinkModeValidationRule extends AbstractValidationRule
     {
         switch ($mode) {
             case 1:
-                return $this->modules->isActive($moduleName);
+                return $this->modules->isInstalled($moduleName);
             case 2:
                 return $this->internalUriValidationRule->isValid($uri);
             case 3:

@@ -66,7 +66,7 @@ class AddSocialSharingListener implements EventSubscriberInterface
      */
     public function __invoke(TemplateEvent $event): void
     {
-        if ($this->modules->isActive(Schema::MODULE_NAME) === false) {
+        if ($this->modules->isInstalled(Schema::MODULE_NAME) === false) {
             return;
         }
 

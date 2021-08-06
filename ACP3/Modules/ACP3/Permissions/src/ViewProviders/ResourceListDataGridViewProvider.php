@@ -48,7 +48,7 @@ class ResourceListDataGridViewProvider
         $resources = $this->resourceRepository->getAllResources();
         $output = [];
         foreach ($resources as $resource) {
-            if ($this->modules->isActive($resource['module_name']) === true) {
+            if ($this->modules->isInstalled($resource['module_name']) === true) {
                 $module = $this->translator->t($resource['module_name'], $resource['module_name']);
                 $output[$module][] = $resource;
             }

@@ -41,7 +41,7 @@ class RequestFactory extends \ACP3\Core\Http\RequestFactory
      */
     protected function getRequest()
     {
-        if ($this->modules->isActive(Schema::MODULE_NAME)) {
+        if ($this->modules->isInstalled(Schema::MODULE_NAME)) {
             return new Request($this->requestStack, $this->seoRepository);
         }
 

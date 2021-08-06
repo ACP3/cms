@@ -45,7 +45,7 @@ class SubscribeToNewsletterOnModelAfterSaveListener implements EventSubscriberIn
      */
     public function __invoke(ModelSaveEvent $event)
     {
-        if (!$this->modules->isActive(NewsletterSchema::MODULE_NAME) || !$this->modules->isActive(Schema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(NewsletterSchema::MODULE_NAME) || !$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;
         }
 

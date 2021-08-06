@@ -37,7 +37,7 @@ class EnableConsentManagementAssetsListener implements EventSubscriberInterface
 
     public function __invoke(): void
     {
-        if (!$this->modules->isActive(Schema::MODULE_NAME)) {
+        if (!$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;
         }
 

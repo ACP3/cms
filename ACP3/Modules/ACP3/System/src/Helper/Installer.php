@@ -32,7 +32,7 @@ class Installer
         $modulesToEnable = [];
 
         foreach ($dependencies as $dependency) {
-            if ($this->modules->isActive($dependency)) {
+            if ($this->modules->isInstalled($dependency)) {
                 continue;
             }
 
