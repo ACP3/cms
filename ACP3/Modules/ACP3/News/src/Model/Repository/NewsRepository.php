@@ -68,7 +68,6 @@ class NewsRepository extends Core\Model\Repository\AbstractRepository
         return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . " WHERE `category_id` IN(:categoryId) {$where}",
             ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
-            0,
             ['time' => \PDO::PARAM_STR, 'categoryId' => Connection::PARAM_INT_ARRAY, 'active' => \PDO::PARAM_INT]
         );
     }

@@ -19,8 +19,8 @@ class ShareRatingsRepository extends AbstractRepository
     public function hasAlreadyRated(string $ipAddress, int $shareId): bool
     {
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `ip` = :ip AND `share_id` = :shareId;",
-            ['ip' => $ipAddress, 'shareId' => $shareId]
+                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `ip` = :ip AND `share_id` = :shareId;",
+                ['ip' => $ipAddress, 'shareId' => $shareId]
             ) > 0;
     }
 

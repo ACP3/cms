@@ -52,7 +52,6 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
                     'dbName' => $this->db->getDatabase(),
                     'requiredTables' => [$this->getTableName(), $this->getTableName(SettingsRepository::TABLE_NAME)],
                 ],
-                0,
                 [
                     'requiredTables' => Connection::PARAM_STR_ARRAY,
                 ]

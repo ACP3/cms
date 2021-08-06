@@ -108,18 +108,6 @@ class Connection
     }
 
     /**
-     * @deprecated since version 5.16.0. To be removed with version 6.0.0. Use fetchAssoc() or executeQuery() instead.
-     *
-     * @return mixed
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    public function fetchArray(string $statement, array $params = [], array $types = [])
-    {
-        return $this->executeQuery($statement, $params, $types)->fetch(\PDO::FETCH_BOTH);
-    }
-
-    /**
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchAssoc(string $statement, array $params = [], array $types = []): array
@@ -130,20 +118,16 @@ class Connection
     }
 
     /**
-     * @deprecated The argument $column is deprecated since version 5.16.0 and will be removed in version 6.0.0.
-     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function fetchColumn(string $statement, array $params = [], int $column = 0, array $types = [])
+    public function fetchColumn(string $statement, array $params = [], array $types = [])
     {
         return $this->executeQuery($statement, $params, $types)->fetchOne();
     }
 
     /**
-     * @return DBAL\Result
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function executeQuery(

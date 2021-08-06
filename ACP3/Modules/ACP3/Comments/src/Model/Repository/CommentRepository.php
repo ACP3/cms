@@ -30,8 +30,8 @@ class CommentRepository extends AbstractRepository implements FloodBarrierAwareR
     public function resultsExistByModuleId(int $moduleId): bool
     {
         return $this->db->fetchColumn(
-            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
-            [$moduleId]
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+                [$moduleId]
         ) > 0;
     }
 

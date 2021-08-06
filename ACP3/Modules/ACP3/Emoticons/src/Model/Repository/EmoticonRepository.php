@@ -31,8 +31,8 @@ class EmoticonRepository extends Core\Model\Repository\AbstractRepository
     public function resultsExist($moduleId)
     {
         return $this->db->fetchColumn(
-            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
-            [$moduleId]
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+                [$moduleId]
         ) > 0;
     }
 
