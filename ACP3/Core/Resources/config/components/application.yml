@@ -5,19 +5,13 @@ services:
   _defaults:
     autowire: true
 
-  core.application.controller_action_dispatcher:
-    class: ACP3\Core\Application\ControllerActionDispatcher
+  ACP3\Core\Application\ControllerActionDispatcher:
     public: true
     arguments:
       $serviceLocator: "@core.controller.controller_action_locator"
 
-  ACP3\Core\Application\ControllerActionDispatcher: "@core.application.controller_action_dispatcher"
-
-  core.application.argument_resolver:
-    class: Symfony\Component\HttpKernel\Controller\ArgumentResolver
-
-  Symfony\Component\HttpKernel\Controller\ArgumentResolver: "@core.application.argument_resolver"
-  Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface: "@core.application.argument_resolver"
+  Symfony\Component\HttpKernel\Controller\ArgumentResolver: ~
+  Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface: '@Symfony\Component\HttpKernel\Controller\ArgumentResolver'
 
   kernel:
     synthetic: true
@@ -28,20 +22,17 @@ services:
 
   Symfony\Component\HttpKernel\HttpCache\SurrogateInterface: "@esi"
 
-  esi_listener:
-    class: Symfony\Component\HttpKernel\EventListener\SurrogateListener
+  Symfony\Component\HttpKernel\EventListener\SurrogateListener:
     tags:
       - { name: core.eventSubscriber }
 
-  fragment_listener:
-    class: Symfony\Component\HttpKernel\EventListener\FragmentListener
+  Symfony\Component\HttpKernel\EventListener\FragmentListener:
     arguments:
       $fragmentPath: "%fragment_path%"
     tags:
       - { name: core.eventSubscriber }
 
-  streamed_response_listener:
-    class: Symfony\Component\HttpKernel\EventListener\StreamedResponseListener
+  Symfony\Component\HttpKernel\EventListener\StreamedResponseListener:
     tags:
       - { name: core.eventSubscriber }
 
@@ -49,14 +40,13 @@ services:
     class: Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler
     arguments:
       - "@service_container"
-      - "@request_stack"
+      - '@Symfony\Component\HttpFoundation\RequestStack'
       - "%kernel.debug%"
 
   Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler: "@fragment.handler"
   Symfony\Component\HttpKernel\Fragment\FragmentHandler: "@fragment.handler"
 
-  fragment.renderer.inline:
-    class: Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer
+  Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer:
     arguments:
       $kernel: "@kernel"
     calls:
@@ -64,33 +54,27 @@ services:
     tags:
       - { name: kernel.fragment_renderer, alias: "inline" }
 
-  fragment.renderer.esi:
-    class: Symfony\Component\HttpKernel\Fragment\EsiFragmentRenderer
+  Symfony\Component\HttpKernel\Fragment\EsiFragmentRenderer:
     arguments:
-      $inlineStrategy: "@fragment.renderer.inline"
+      $inlineStrategy: '@Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer'
     calls:
       - setFragmentPath: ["%fragment_path%"]
     tags:
       - { name: kernel.fragment_renderer, alias: "esi" }
 
-  uri_signer:
-    class: Symfony\Component\HttpKernel\UriSigner
+  Symfony\Component\HttpKernel\UriSigner:
     arguments:
       - ""
 
-  Symfony\Component\HttpKernel\UriSigner: "@uri_signer"
-
-  http_cache_store_factory:
-    class: ACP3\Core\Application\BootstrapCache\Psr6StoreFactory
+  ACP3\Core\Application\BootstrapCache\Psr6StoreFactory: ~
 
   http_cache_store:
     class: Toflar\Psr6HttpCacheStore\Psr6Store
-    factory: "@http_cache_store_factory"
+    factory: '@ACP3\Core\Application\BootstrapCache\Psr6StoreFactory'
 
   Symfony\Component\HttpKernel\HttpCache\StoreInterface: "@http_cache_store"
 
-  http_cache:
-    class: ACP3\Core\Application\BootstrapCache
+  ACP3\Core\Application\BootstrapCache:
     public: true
     arguments:
       $kernel: "@kernel"

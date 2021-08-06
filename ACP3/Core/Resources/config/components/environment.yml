@@ -8,8 +8,5 @@ services:
 
   ACP3\Core\Environment\ApplicationPath: "@core.environment.application_path"
 
-  core.environment.theme:
-    class: ACP3\Core\Environment\Theme
-
-  ACP3\Core\Environment\Theme: "@core.environment.theme"
-  ACP3\Core\Environment\ThemePathInterface: "@core.environment.theme"
+  ACP3\Core\Environment\Theme: ~
+  ACP3\Core\Environment\ThemePathInterface: '@ACP3\Core\Environment\Theme'

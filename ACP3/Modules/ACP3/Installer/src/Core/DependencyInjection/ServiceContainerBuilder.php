@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Installer\Core\DependencyInjection;
 
+use ACP3\Core\Application\BootstrapCache;
 use ACP3\Core\Assets\DependencyInjection\RegisterAssetLibraryPass;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
@@ -93,7 +94,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
             $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_updater.yml');
         }
 
-        $this->removeDefinition('http_cache');
+        $this->removeDefinition(BootstrapCache::class);
 
         $this->compile();
     }

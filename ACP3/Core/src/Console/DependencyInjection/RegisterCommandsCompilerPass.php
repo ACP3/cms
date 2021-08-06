@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Console\DependencyInjection;
 
+use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,7 +19,7 @@ class RegisterCommandsCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('symfony_console');
+        $definition = $container->findDefinition(Application::class);
         $plugins = $container->findTaggedServiceIds('acp3.console.command');
 
         foreach ($plugins as $serviceId => $tags) {

@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
 
-  core.breadcrumb:
+  ACP3\Core\Breadcrumb\Steps:
     class: ACP3\Modules\ACP3\Menus\Core\Breadcrumb\Steps
     arguments:
       $container: "@core.controller.controller_action_locator"

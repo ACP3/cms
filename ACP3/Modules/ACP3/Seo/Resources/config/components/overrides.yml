@@ -2,19 +2,17 @@ services:
   _defaults:
     autowire: true
 
-  core.helpers.pageBreaks:
+  ACP3\Core\Helpers\PageBreaks:
     class: ACP3\Modules\ACP3\Seo\Core\Helpers\PageBreaks
 
-  core.pagination:
+  ACP3\Core\Pagination:
     class: ACP3\Modules\ACP3\Seo\Core\Pagination
 
-  core.http.request_factory:
+  ACP3\Core\Http\RequestFactory:
     class: ACP3\Modules\ACP3\Seo\Core\Http\RequestFactory
 
-  core.router:
+  ACP3\Core\Router\Router:
     class: ACP3\Modules\ACP3\Seo\Core\Router\Router
 
-  core.seo.meta_statements_service:
+  ACP3\Core\SEO\MetaStatementsService:
     class: ACP3\Modules\ACP3\Seo\Core\SEO\MetaStatementsService
-
-  ACP3\Modules\ACP3\Seo\Core\SEO\MetaStatementsService: "@core.seo.meta_statements_service"

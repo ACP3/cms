@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Installer\DependencyInjection;
 
+use ACP3\Core\Installer\SchemaRegistrar;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -25,7 +26,7 @@ class RegisterInstallersCompilerPass implements CompilerPassInterface
 
     private function registerSchemaInstallers(ContainerBuilder $container): void
     {
-        $schemaDefinition = $container->findDefinition('core.installer.schema_registrar');
+        $schemaDefinition = $container->findDefinition(SchemaRegistrar::class);
 
         foreach ($container->findTaggedServiceIds('core.installer.schema') as $serviceId => $tags) {
             $schemaDefinition->addMethodCall(

@@ -2,94 +2,23 @@ services:
   _defaults:
     autowire: true
 
-  core.helpers.view.checkAccess:
-    class: ACP3\Core\Helpers\View\CheckAccess
-
-  ACP3\Core\Helpers\View\CheckAccess: "@core.helpers.view.checkAccess"
-
+  ACP3\Core\Helpers\View\CheckAccess: ~
   ACP3\Core\Helpers\View\Icon: ~
+  ACP3\Core\Helpers\Alerts: ~
+  ACP3\Core\Helpers\Date: ~
+  ACP3\Core\Helpers\Forms: ~
+  ACP3\Core\Helpers\SendEmail: ~
+  ACP3\Core\Helpers\RedirectMessages: ~
+  ACP3\Core\Helpers\Secure: ~
+  ACP3\Core\Helpers\FormToken: ~
+  ACP3\Core\Helpers\PageBreaks: ~
+  ACP3\Core\Helpers\ResultsPerPage: ~
+  ACP3\Core\Helpers\Sort: ~
+  ACP3\Core\Helpers\TableOfContents: ~
+  ACP3\Core\Helpers\StringFormatter: ~
+  ACP3\Core\Helpers\Formatter\DateRange: ~
+  ACP3\Core\Helpers\Formatter\MarkEntries: ~
+  ACP3\Core\Helpers\Formatter\RewriteInternalUri: ~
+  ACP3\Core\Modules\Helper\Action: ~
 
-  core.helpers.alerts:
-    class: ACP3\Core\Helpers\Alerts
-
-  ACP3\Core\Helpers\Alerts: "@core.helpers.alerts"
-
-  core.helpers.date:
-    class: ACP3\Core\Helpers\Date
-
-  ACP3\Core\Helpers\Date: "@core.helpers.date"
-
-  core.helpers.forms:
-    class: ACP3\Core\Helpers\Forms
-
-  ACP3\Core\Helpers\Forms: "@core.helpers.forms"
-
-  core.helpers.sendEmail:
-    class: ACP3\Core\Helpers\SendEmail
-
-  ACP3\Core\Helpers\SendEmail: "@core.helpers.sendEmail"
-
-  core.helpers.redirect:
-    class: ACP3\Core\Helpers\RedirectMessages
-
-  ACP3\Core\Helpers\RedirectMessages: "@core.helpers.redirect"
-
-  core.helpers.secure:
-    class: ACP3\Core\Helpers\Secure
-
-  ACP3\Core\Helpers\Secure: "@core.helpers.secure"
-
-  core.helpers.formToken:
-    class: ACP3\Core\Helpers\FormToken
-
-  ACP3\Core\Helpers\FormToken: "@core.helpers.formToken"
-
-  core.helpers.pageBreaks:
-    class: ACP3\Core\Helpers\PageBreaks
-
-  ACP3\Core\Helpers\PageBreaks: "@core.helpers.pageBreaks"
-
-  core.helpers.results_per_page:
-    class: ACP3\Core\Helpers\ResultsPerPage
-
-  ACP3\Core\Helpers\ResultsPerPage: "@core.helpers.results_per_page"
-
-  core.helpers.sort:
-    class: ACP3\Core\Helpers\Sort
-
-  ACP3\Core\Helpers\Sort: "@core.helpers.sort"
-
-  core.helpers.toc:
-    class: ACP3\Core\Helpers\TableOfContents
-
-  ACP3\Core\Helpers\TableOfContents: "@core.helpers.toc"
-
-  core.helpers.string_formatter:
-    class: ACP3\Core\Helpers\StringFormatter
-    arguments:
-      $slugify: "@slugify"
-
-  ACP3\Core\Helpers\StringFormatter: "@core.helpers.string_formatter"
-
-  core.helpers.formatter.date_range:
-    class: ACP3\Core\Helpers\Formatter\DateRange
-
-  ACP3\Core\Helpers\Formatter\DateRange: "@core.helpers.formatter.date_range"
-
-  core.helpers.formatter.mark_entries:
-    class: ACP3\Core\Helpers\Formatter\MarkEntries
-
-  ACP3\Core\Helpers\Formatter\MarkEntries: "@core.helpers.formatter.mark_entries"
-
-  core.helpers.formatter.rewrite_internal_uri:
-    class: ACP3\Core\Helpers\Formatter\RewriteInternalUri
-
-  ACP3\Core\Helpers\Formatter\RewriteInternalUri: "@core.helpers.formatter.rewrite_internal_uri"
-
-  core.modules.helper.action:
-    class: ACP3\Core\Modules\Helper\Action
-
-  ACP3\Core\Modules\Helper\Action: "@core.modules.helper.action"
-
-  slugify:
-    class: Cocur\Slugify\Slugify
+  Cocur\Slugify\Slugify: ~

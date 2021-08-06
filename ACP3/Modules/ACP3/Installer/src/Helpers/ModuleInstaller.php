@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Installer\Helpers;
 
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
+use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Modules\ACP3\System\Exception\ModuleInstallerException;
 use Psr\Container\ContainerInterface;
 
@@ -36,7 +37,7 @@ class ModuleInstaller
     public function installModules(ContainerInterface $container): array
     {
         /** @var \Psr\Container\ContainerInterface $schemaRegistrar */
-        $schemaRegistrar = $container->get('core.installer.schema_registrar');
+        $schemaRegistrar = $container->get(SchemaRegistrar::class);
 
         $installableModules = array_filter(
             ComponentRegistry::excludeByType(ComponentRegistry::allTopSorted(), [ComponentTypeEnum::THEME]),

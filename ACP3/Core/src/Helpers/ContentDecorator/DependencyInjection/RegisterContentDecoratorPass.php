@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Helpers\ContentDecorator\DependencyInjection;
 
+use ACP3\Core\Helpers\ContentDecorator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,7 +19,7 @@ class RegisterContentDecoratorPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('core.content_decorator');
+        $definition = $container->findDefinition(ContentDecorator::class);
 
         foreach ($container->findTaggedServiceIds('core.content_decorator') as $serviceId => $tags) {
             $definition->addMethodCall('registerContentDecorator', [new Reference($serviceId)]);

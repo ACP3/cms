@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Installer\Model;
 
 use ACP3\Core\Installer\Exception\MissingInstallerException;
 use ACP3\Core\Installer\Exception\ModuleNotInstallableException;
+use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
@@ -96,7 +97,7 @@ class SchemaUpdateModel
         }
 
         /** @var ContainerInterface $schemaRegistrar */
-        $schemaRegistrar = $this->container->get('core.installer.schema_registrar');
+        $schemaRegistrar = $this->container->get(SchemaRegistrar::class);
         /** @var ContainerInterface $migrationRegistrar */
         $migrationRegistrar = $this->container->get('core.installer.migration_registrar');
         /** @var \ACP3\Core\Modules\SchemaUpdater $schemaUpdater */

@@ -7,9 +7,13 @@
 
 namespace ACP3\Modules\ACP3\Installer\Model;
 
+use ACP3\Core\Database\Connection;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Modules\Exception\ModuleMigrationException;
+use ACP3\Core\Modules\SchemaHelper;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Installer\Helpers\Install;
@@ -103,7 +107,7 @@ class InstallModel
     public function installAclResources(): void
     {
         /** @var \ACP3\Core\Installer\SchemaRegistrar $schemaRegistrar */
-        $schemaRegistrar = $this->container->get('core.installer.schema_registrar');
+        $schemaRegistrar = $this->container->get(SchemaRegistrar::class);
 
         foreach ($schemaRegistrar->all() as $schema) {
             if ($this->installHelper->installResources($schema, $this->container) === false) {
@@ -133,7 +137,7 @@ class InstallModel
         ];
 
         /** @var \ACP3\Core\Settings\SettingsInterface $config */
-        $config = $this->container->get('core.config');
+        $config = $this->container->get(SettingsInterface::class);
 
         foreach ($settings as $module => $data) {
             $config->saveSettings($data, $module);
@@ -146,7 +150,7 @@ class InstallModel
     public function createSuperUser(array $formData): void
     {
         /** @var \ACP3\Core\Database\Connection $db */
-        $db = $this->container->get('core.db');
+        $db = $this->container->get(Connection::class);
 
         $salt = $this->secure->salt(UserModel::SALT_LENGTH);
         $currentDate = gmdate('Y-m-d H:i:s');
@@ -160,7 +164,7 @@ class InstallModel
         ];
 
         /** @var \ACP3\Core\Modules\SchemaHelper $schemaHelper */
-        $schemaHelper = $this->container->get('core.modules.schemaHelper');
+        $schemaHelper = $this->container->get(SchemaHelper::class);
 
         $schemaHelper->executeSqlQueries($queries);
     }
@@ -173,7 +177,7 @@ class InstallModel
         /** @var \Symfony\Component\DependencyInjection\ServiceLocator $sampleDataRegistrar */
         $sampleDataRegistrar = $this->container->get('core.installer.sample_data_registrar');
         /** @var \ACP3\Core\Modules\SchemaHelper $schemaHelper */
-        $schemaHelper = $this->container->get('core.modules.schemaHelper');
+        $schemaHelper = $this->container->get(SchemaHelper::class);
 
         foreach ($sampleDataRegistrar->getProvidedServices() as $serviceId => $class) {
             try {

@@ -55,7 +55,7 @@ class Application
         $this->initializeClasses();
 
         /** @var \Symfony\Component\Console\Application $console */
-        $console = $this->container->get('symfony_console');
+        $console = $this->container->get(\Symfony\Component\Console\Application::class);
 
         $console->setName('ACP3 CMS console application');
         $console->setVersion(BootstrapInterface::VERSION);

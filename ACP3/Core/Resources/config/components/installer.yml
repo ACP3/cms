@@ -16,17 +16,11 @@ services:
     public: true
     tags: ["container.service_locator"]
 
-  core.installer.schema_registrar:
-    class: ACP3\Core\Installer\SchemaRegistrar
+  ACP3\Core\Installer\SchemaRegistrar:
     public: true
 
-  ACP3\Core\Installer\SchemaRegistrar: "@core.installer.schema_registrar"
-
-  core.installer.model.schema_update_model:
-    class: ACP3\Core\Installer\Model\SchemaUpdateModel
+  ACP3\Core\Installer\Model\SchemaUpdateModel:
     arguments:
       $logger: "@core.modules.installer_logger"
-      $schemaLocator: "@core.installer.schema_registrar"
+      $schemaLocator: '@ACP3\Core\Installer\SchemaRegistrar'
       $migrationLocator: "@core.installer.migration_registrar"
-
-  ACP3\Core\Installer\Model\SchemaUpdateModel: "@core.installer.model.schema_update_model"

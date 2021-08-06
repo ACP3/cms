@@ -14,28 +14,16 @@ services:
 
   tubalmartin\CssMin\Minifier: ~
 
-  core.assets.renderer.strategy.css:
-    class: ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy
-
-  core.assets.renderer.strategy.deferrable_css:
-    class: ACP3\Core\Assets\Renderer\Strategies\DeferrableCSSRendererStrategy
-
-  core.assets.renderer.strategy.javascript:
-    class: ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy
-
-  core.assets.renderer.strategy.concat_css:
-    class: ACP3\Core\Assets\Renderer\Strategies\ConcatCSSRendererStrategy
-
-  core.assets.renderer.strategy.concat_deferrable_css:
-    class: ACP3\Core\Assets\Renderer\Strategies\ConcatDeferrableCSSRendererStrategy
-
-  core.assets.renderer.strategy.concat_javascript:
-    class: ACP3\Core\Assets\Renderer\Strategies\ConcatJavaScriptRendererStrategy
+  ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy: ~
+  ACP3\Core\Assets\Renderer\Strategies\DeferrableCSSRendererStrategy: ~
+  ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy: ~
+  ACP3\Core\Assets\Renderer\Strategies\ConcatCSSRendererStrategy: ~
+  ACP3\Core\Assets\Renderer\Strategies\ConcatDeferrableCSSRendererStrategy: ~
+  ACP3\Core\Assets\Renderer\Strategies\ConcatJavaScriptRendererStrategy: ~
 
   ACP3\Core\Assets\FileResolver: ~
 
   ACP3\Core\Assets\IncludeJs: ~
-
   ACP3\Core\Assets\IncludeStylesheet: ~
 
   ACP3\Core\Assets\Libraries: ~
@@ -56,22 +44,18 @@ services:
   core.assets.renderer.strategy.service_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
-      - css_renderer_dev: "@core.assets.renderer.strategy.css"
-        css_renderer_prod: "@core.assets.renderer.strategy.concat_css"
-        deferrable_css_renderer_dev: "@core.assets.renderer.strategy.deferrable_css"
-        deferrable_css_renderer_prod: "@core.assets.renderer.strategy.concat_deferrable_css"
-        javascript_renderer_dev: "@core.assets.renderer.strategy.javascript"
-        javascript_renderer_prod: "@core.assets.renderer.strategy.concat_javascript"
+      - css_renderer_dev: '@ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy'
+        css_renderer_prod: '@ACP3\Core\Assets\Renderer\Strategies\ConcatCSSRendererStrategy'
+        deferrable_css_renderer_dev: '@ACP3\Core\Assets\Renderer\Strategies\DeferrableCSSRendererStrategy'
+        deferrable_css_renderer_prod: '@ACP3\Core\Assets\Renderer\Strategies\ConcatDeferrableCSSRendererStrategy'
+        javascript_renderer_dev: '@ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy'
+        javascript_renderer_prod: '@ACP3\Core\Assets\Renderer\Strategies\ConcatJavaScriptRendererStrategy'
     tags: ["container.service_locator"]
 
   ACP3\Core\Assets\Renderer\CSSRenderer:
-    factory: "@core.assets.renderer.css_renderer_factory"
-
-  core.assets.renderer.css_renderer_factory:
-    class: ACP3\Core\Assets\Renderer\CSSRendererFactory
+    factory: '@ACP3\Core\Assets\Renderer\CSSRendererFactory'
+  ACP3\Core\Assets\Renderer\CSSRendererFactory: ~
 
   ACP3\Core\Assets\Renderer\JavaScriptRenderer:
-    factory: "@core.assets.renderer.javascript_renderer_factory"
-
-  core.assets.renderer.javascript_renderer_factory:
-    class: ACP3\Core\Assets\Renderer\JavaScriptRendererFactory
+    factory: '@ACP3\Core\Assets\Renderer\JavaScriptRendererFactory'
+  ACP3\Core\Assets\Renderer\JavaScriptRendererFactory: ~

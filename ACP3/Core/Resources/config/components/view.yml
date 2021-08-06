@@ -2,27 +2,22 @@ services:
   _defaults:
     autowire: true
 
-  core.view:
-    class: ACP3\Core\View
-    arguments:
-      $renderer: "@core.view.renderer.smarty"
+  ACP3\Core\View: ~
 
-  ACP3\Core\View: "@core.view"
-
-  core.view.renderer.smarty.smarty_configurator:
-    class: ACP3\Core\View\Renderer\Smarty\SmartyConfigurator
+  ACP3\Core\View\Renderer\Smarty\SmartyConfigurator:
     arguments:
       $environment: "%core.environment%"
 
   smarty:
     class: Smarty
-    configurator: ["@core.view.renderer.smarty.smarty_configurator", "configure"]
+    configurator: ['@ACP3\Core\View\Renderer\Smarty\SmartyConfigurator', "configure"]
 
-  core.view.renderer.smarty:
-    class: ACP3\Core\View\Renderer\Smarty
+  ACP3\Core\View\Renderer\Smarty:
     arguments:
       $smarty: "@smarty"
       $container: "@core.view.renderer.smarty.plugin_service_locator"
+
+  ACP3\Core\View\Renderer\RendererInterface: '@ACP3\Core\View\Renderer\Smarty'
 
   core.view.renderer.smarty.plugin_service_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator

@@ -2,8 +2,7 @@ services:
   _defaults:
     autowire: true
 
-  core.db:
-    class: ACP3\Core\Database\Connection
+  ACP3\Core\Database\Connection:
     public: true
     arguments:
       $logger: "@core.db.logger"
@@ -18,8 +17,6 @@ services:
           charset: "%db_charset%",
         }
       $tablePrefix: "%db_table_prefix%"
-
-  ACP3\Core\Database\Connection: "@core.db"
 
   core.db.logger:
     class: Psr\Log\LoggerInterface

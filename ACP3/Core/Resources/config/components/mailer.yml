@@ -2,12 +2,9 @@ services:
   _defaults:
     autowire: true
 
-  core.mailer:
-    class: ACP3\Core\Mailer
+  ACP3\Core\Mailer:
     arguments:
       $logger: "@core.mailer.logger"
-
-  ACP3\Core\Mailer: "@core.mailer"
 
   core.mailer.logger:
     class: Psr\Log\LoggerInterface

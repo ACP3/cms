@@ -1,5 +1,4 @@
 imports:
-  - { resource: cache.yml }
   - { resource: components/*.yml }
 
 parameters:
@@ -8,25 +7,14 @@ parameters:
   kernel.debug: false
 
 services:
-  permissions.cache:
-    synthetic: true
-    public: true
-
-  ACP3\Core\ACL\PermissionCacheInterface: "@permissions.cache"
-
   users.model.user_model:
     synthetic: true
     public: true
 
   ACP3\Core\Authentication\Model\UserModelInterface: "@users.model.user_model"
 
-  core.registry:
-    class: ACP3\Core\Registry
-
-  core.xml:
-    class: ACP3\Core\XML
-
-  ACP3\Core\XML: "@core.xml"
+  ACP3\Core\Registry: ~
+  ACP3\Core\XML: ~
 
   core.event_dispatcher:
     class: Symfony\Component\EventDispatcher\EventDispatcher

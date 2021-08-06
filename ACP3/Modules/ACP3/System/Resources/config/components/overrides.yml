@@ -2,9 +2,8 @@ services:
   _defaults:
     autowire: true
 
-  core.breadcrumb.title:
+  ACP3\Core\Breadcrumb\Title:
     class: ACP3\Modules\ACP3\System\Core\Breadcrumb\Title
-    configurator: ["@core.breadcrumb.title_configurator", "configure"]
+    configurator: ['@ACP3\Modules\ACP3\System\Core\Breadcrumb\TitleConfigurator', "configure"]
 
-  core.breadcrumb.title_configurator:
-    class: ACP3\Modules\ACP3\System\Core\Breadcrumb\TitleConfigurator
+  ACP3\Modules\ACP3\System\Core\Breadcrumb\TitleConfigurator: ~

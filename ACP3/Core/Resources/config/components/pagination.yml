@@ -2,7 +2,4 @@ services:
   _defaults:
     autowire: true
 
-  core.pagination:
-    class: ACP3\Core\Pagination
-
-  ACP3\Core\Pagination: "@core.pagination"
+  ACP3\Core\Pagination: ~

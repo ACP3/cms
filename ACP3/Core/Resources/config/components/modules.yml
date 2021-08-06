@@ -13,7 +13,7 @@ services:
 
   ACP3\Core\Modules\ModuleInfo:
     arguments:
-      $schemaLocator: "@core.installer.schema_registrar"
+      $schemaLocator: '@ACP3\Core\Installer\SchemaRegistrar'
 
   ACP3\Core\Modules\CachingModuleInfo:
     decorates: ACP3\Core\Modules\ModuleInfo
@@ -23,13 +23,10 @@ services:
 
   ACP3\Core\Modules\ModuleInfoInterface: '@ACP3\Core\Modules\ModuleInfo'
 
-  core.modules.schemaHelper:
-    class: ACP3\Core\Modules\SchemaHelper
+  ACP3\Core\Modules\SchemaHelper:
     public: true
     calls:
       - ["setContainer", ["@service_container"]]
-
-  ACP3\Core\Modules\SchemaHelper: "@core.modules.schemaHelper"
 
   core.modules.installer_logger:
     class: Psr\Log\LoggerInterface

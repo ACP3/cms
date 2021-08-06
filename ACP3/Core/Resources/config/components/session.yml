@@ -2,24 +2,19 @@ services:
   _defaults:
     autowire: true
 
-  core.session:
-    class: Symfony\Component\HttpFoundation\Session\Session
+  Symfony\Component\HttpFoundation\Session\Session: ~
 
-  Symfony\Component\HttpFoundation\Session\Session: "@core.session"
-
-  core.session.storage:
-    class: Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage
+  Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage:
     arguments:
       $options: { name: "ACP3_SID", cookie_httponly: true, cookie_secure: "auto", cookie_samesite: "lax" }
       $handler: "@core.session.handler"
 
-  Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage: "@core.session.storage"
-  Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface: "@core.session.storage"
+  Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface: '@Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage'
 
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
     arguments:
-      $pdoOrDsn: !service { class: PDO, factory: ["@core.db", "getWrappedConnection"] }
+      $pdoOrDsn: !service { class: PDO, factory: ['@ACP3\Core\Database\Connection', "getWrappedConnection"] }
       $options:
         {
           db_table: "%db_table_prefix%sessions",

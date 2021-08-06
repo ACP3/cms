@@ -5,8 +5,7 @@ services:
   _defaults:
     autowire: true
 
-  symfony_console:
-    class: Symfony\Component\Console\Application
+  Symfony\Component\Console\Application:
     calls:
       - ["setDispatcher", ["@core.event_dispatcher"]]
     public: true

@@ -8,17 +8,10 @@ services:
       - []
     tags: ["container.service_locator"]
 
-  core.controller.helper.controller_action_exists:
-    class: ACP3\Core\Controller\Helper\ControllerActionExists
+  ACP3\Core\Controller\Helper\ControllerActionExists:
     arguments:
       $container: "@core.controller.controller_action_locator"
 
-  ACP3\Core\Controller\Helper\ControllerActionExists: "@core.controller.helper.controller_action_exists"
-
-  core.modules.helper.controllerActionExists:
-    alias: core.controller.helper.controller_action_exists
-
-  core.controller.forward_controller_action_exception_error_listener:
-    class: ACP3\Core\Controller\EventListener\ForwardControllerActionExceptionErrorListener
+  ACP3\Core\Controller\EventListener\ForwardControllerActionExceptionErrorListener:
     tags:
       - { name: core.eventSubscriber }

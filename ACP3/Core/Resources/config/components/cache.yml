@@ -9,8 +9,6 @@ services:
     tags:
       - { name: acp3.cache_item_pool }
 
-  ACP3\Core\Cache\CacheDriverFactory: "@core.cache.cache_driver_factory"
-
   Psr6CacheItemPoolFactory:
     class: ACP3\Core\Cache\Psr6CacheItemPoolFactory
     arguments:

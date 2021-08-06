@@ -13,6 +13,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use Symfony\Component\ErrorHandler\ErrorHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -62,8 +63,8 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
         if (!$this->booted) {
             $this->boot();
 
-            if ($this->container->has('http_cache')) {
-                return $this->container->get('http_cache')->handle($request, $type, $catch);
+            if ($this->container->has(BootstrapCache::class)) {
+                return $this->container->get(BootstrapCache::class)->handle($request, $type, $catch);
             }
         }
 
@@ -113,12 +114,12 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
     public function outputPage(Request $request, bool $catch): Response
     {
         /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
-        $requestStack = $this->container->get('request_stack');
+        $requestStack = $this->container->get(RequestStack::class);
 
         $requestStack->push($request);
 
         /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
-        $controllerActionDispatcher = $this->container->get('core.application.controller_action_dispatcher');
+        $controllerActionDispatcher = $this->container->get(ControllerActionDispatcher::class);
 
         try {
             return $controllerActionDispatcher->dispatch();

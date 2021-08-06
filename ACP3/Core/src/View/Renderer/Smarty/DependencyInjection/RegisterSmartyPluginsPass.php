@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\DependencyInjection;
 
+use ACP3\Core\View\Renderer\Smarty;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -26,7 +27,7 @@ class RegisterSmartyPluginsPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('core.view.renderer.smarty');
+        $definition = $container->findDefinition(Smarty::class);
 
         $this->registerBlocks($definition, $container);
         $this->registerFilters($definition, $container);

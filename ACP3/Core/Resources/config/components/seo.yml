@@ -2,8 +2,5 @@ services:
   _defaults:
     autowire: true
 
-  core.seo.meta_statements_service:
-    class: ACP3\Core\SEO\MetaStatementsService
-
-  ACP3\Core\SEO\MetaStatementsServiceInterface: "@core.seo.meta_statements_service"
-  ACP3\Core\SEO\MetaStatementsService: "@core.seo.meta_statements_service"
+  ACP3\Core\SEO\MetaStatementsService: ~
+  ACP3\Core\SEO\MetaStatementsServiceInterface: '@ACP3\Core\SEO\MetaStatementsService'

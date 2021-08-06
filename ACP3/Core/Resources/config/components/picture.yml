@@ -2,12 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  fast_image_size:
-    class: FastImageSize\FastImageSize
+  FastImageSize\FastImageSize: ~
 
-  core.picture.picture:
-    class: ACP3\Core\Picture\Picture
-    arguments:
-      $fastImageSize: "@fast_image_size"
-
-  ACP3\Core\Picture\Picture: "@core.picture.picture"
+  ACP3\Core\Picture\Picture: ~
