@@ -10,14 +10,11 @@ namespace ACP3\Core\Installer\Model;
 use ACP3\Core\Installer\Exception\MissingInstallerException;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\SchemaUpdater;
-use ACP3\Core\XML;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
 class SchemaUpdateModel
 {
-    use Modules\ModuleDependenciesTrait;
-
     /**
      * @var \ACP3\Core\Modules
      */
@@ -35,31 +32,25 @@ class SchemaUpdateModel
      */
     private $migrationLocator;
     /**
-     * @var \ACP3\Core\XML
+     * @var \Psr\Log\LoggerInterface
      */
-    private $xml;
+    private $logger;
     /**
      * @var array
      */
     private $results = [];
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
 
     public function __construct(
         LoggerInterface $logger,
         ContainerInterface $schemaLocator,
         ContainerInterface $migrationLocator,
         Modules $modules,
-        SchemaUpdater $schemaUpdater,
-        XML $xml
+        SchemaUpdater $schemaUpdater
     ) {
         $this->modules = $modules;
         $this->schemaUpdater = $schemaUpdater;
         $this->schemaLocator = $schemaLocator;
         $this->migrationLocator = $migrationLocator;
-        $this->xml = $xml;
         $this->logger = $logger;
     }
 
@@ -114,13 +105,5 @@ class SchemaUpdateModel
         if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
             $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
         }
-    }
-
-    /**
-     * @return XML
-     */
-    protected function getXml()
-    {
-        return $this->xml;
     }
 }
