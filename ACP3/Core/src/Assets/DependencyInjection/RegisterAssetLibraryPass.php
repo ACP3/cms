@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Assets\DependencyInjection;
 
+use ACP3\Core\Assets\Libraries;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,7 +19,7 @@ class RegisterAssetLibraryPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $libraries = $container->findDefinition('core.assets.libraries');
+        $libraries = $container->findDefinition(Libraries::class);
 
         $librariesToAdd = $container->findTaggedServiceIds('acp3.assets.library');
 

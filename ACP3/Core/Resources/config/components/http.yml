@@ -19,16 +19,6 @@ services:
   core.http.request_factory:
     class: ACP3\Core\Http\RequestFactory
 
-  core.http.response:
-    class: Symfony\Component\HttpFoundation\Response
-    deprecated:
-      message: "Service %service_id% is deprecated since version 5.14.0. To be removed with version 6.0.0."
-
-  Symfony\Component\HttpFoundation\Response:
-    alias: "core.http.response"
-    deprecated:
-      message: "Service %alias_id% is deprecated since version 5.14.0. To be removed with version 6.0.0."
-
   request_stack:
     class: Symfony\Component\HttpFoundation\RequestStack
     public: true

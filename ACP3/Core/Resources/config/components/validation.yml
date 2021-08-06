@@ -2,12 +2,11 @@ services:
   _defaults:
     autowire: true
 
-  core.validator:
-    class: ACP3\Core\Validation\Validator
+  ACP3\Core\Validation\Validator:
     arguments:
       $container: "@core.validator.validation_rule_locator"
 
-  ACP3\Core\Validation\Validator: "@core.validator"
+  core.validator: '@ACP3\Core\Validation\Validator'
 
   core.validator.validation_rule_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
@@ -19,31 +18,3 @@ services:
     resource: "../../../src/Validation/ValidationRules/"
     tags:
       - { name: core.validation.validation_rule }
-
-  core.validation.validation_rules.birthday_validation_rule: '@ACP3\Core\Validation\ValidationRules\BirthdayValidationRule'
-  core.validation.validation_rules.change_password_validation_rule: '@ACP3\Core\Validation\ValidationRules\ChangePasswordValidationRule'
-  core.validation.validation_rules.date_validation_rule: '@ACP3\Core\Validation\ValidationRules\DateValidationRule'
-  core.validation.validation_rules.email_validation_rule: '@ACP3\Core\Validation\ValidationRules\EmailValidationRule'
-  core.validation.validation_rules.external_link_validation_rule: '@ACP3\Core\Validation\ValidationRules\ExternalLinkValidationRule'
-  core.validation.validation_rules.file_upload_validation_rule: '@ACP3\Core\Validation\ValidationRules\FileUploadValidationRule'
-  core.validation.validation_rules.form_token_validation_rule: '@ACP3\Core\Validation\ValidationRules\FormTokenValidationRule'
-  core.validation.validation_rules.in_array_validation_rule: '@ACP3\Core\Validation\ValidationRules\InArrayValidationRule'
-  core.validation.validation_rules.integer_validation_rule: '@ACP3\Core\Validation\ValidationRules\IntegerValidationRule'
-  core.validation.validation_rules.internal_uri_validation_rule: '@ACP3\Core\Validation\ValidationRules\InternalUriValidationRule'
-  core.validation.validation_rules.language_pack_exists_validation_rule: '@ACP3\Core\Validation\ValidationRules\LanguagePackExistsValidationRule'
-  core.validation.validation_rules.min_length_validation_rule: '@ACP3\Core\Validation\ValidationRules\MinLengthValidationRule'
-  core.validation.validation_rules.module_is_installed_validation_rule: '@ACP3\Core\Validation\ValidationRules\ModuleIsInstalledValidationRule'
-  core.validation.validation_rules.not_empty_validation_rule: '@ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule'
-  core.validation.validation_rules.number_greater_than_validation_rule: '@ACP3\Core\Validation\ValidationRules\NumberGreaterThanValidationRule'
-  core.validation.validation_rules.password_validation_rule: '@ACP3\Core\Validation\ValidationRules\PasswordValidationRule'
-  core.validation.validation_rules.picture_validation_rule: '@ACP3\Core\Validation\ValidationRules\PictureValidationRule'
-  core.validation.validation_rules.uri_safe_validation_rule: '@ACP3\Core\Validation\ValidationRules\UriSafeValidationRule'
-  core.validation.validation_rules.time_zone_exists_validation_rule: '@ACP3\Core\Validation\ValidationRules\TimeZoneExistsValidationRule'
-
-  core.validator.abstract:
-    abstract: true
-    arguments:
-      - "@core.i18n.translator"
-      - "@core.validator"
-    deprecated:
-      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.0.0. Use service autowiring instead."

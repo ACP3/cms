@@ -9,13 +9,6 @@ services:
     tags:
       - { name: acp3.cache_item_pool }
 
-  core.cache.cache_driver_factory:
-    class: ACP3\Core\Cache\CacheDriverFactory
-    arguments:
-      $cacheDriver: "%cache_driver%"
-      $environment: "%core.environment%"
-    deprecated: '%service_id% is deprecated since version 5.19.0, to be removed with version 6.0.0. Use service "Psr6CacheItemPoolFactory" instead.'
-
   ACP3\Core\Cache\CacheDriverFactory: "@core.cache.cache_driver_factory"
 
   Psr6CacheItemPoolFactory:

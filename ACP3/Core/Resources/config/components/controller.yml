@@ -2,20 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  core.controller.widget:
-    abstract: true
-    arguments:
-      - "@core.context.widget"
-    deprecated:
-      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.0.0. Use service autowiring instead."
-
-  core.controller.frontend:
-    abstract: true
-    arguments:
-      - "@core.context.frontend"
-    deprecated:
-      message: "Service %service_id% is deprecated since version 5.12.0. To be removed with version 6.0.0. Use service autowiring instead."
-
   core.controller.controller_action_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
