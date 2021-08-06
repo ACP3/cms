@@ -9,7 +9,6 @@ namespace ACP3\Core\Assets;
 
 use ACP3\Core\Assets\Entity\LibraryEntity;
 use DMS\PHPUnitExtensions\ArraySubset\Assert;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -19,10 +18,6 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
      * @var Libraries
      */
     private $libraries;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & EventDispatcher
-     */
-    private $eventDispatcherMock;
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject & RequestStack
      */
@@ -35,10 +30,9 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
     protected function setup(): void
     {
         $this->requestStackMock = $this->createMock(RequestStack::class);
-        $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
         $this->librariesCacheMock = $this->createMock(LibrariesCache::class);
 
-        $this->libraries = new Libraries($this->requestStackMock, $this->eventDispatcherMock, $this->librariesCacheMock);
+        $this->libraries = new Libraries($this->requestStackMock, $this->librariesCacheMock);
     }
 
     private function configureRequestStackMock(): void
