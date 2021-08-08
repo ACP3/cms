@@ -35,10 +35,9 @@ class AclResourceRepository extends Core\Repository\AbstractRepository
     public function getAllResources(): array
     {
         return $this->db->fetchAll('
-            SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller, r.privilege_id, p.key AS privilege_name
+            SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller, r.privilege_id
               FROM ' . $this->getTableName() . ' AS r
               JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(r.module_id = m.id)
-              JOIN ' . $this->getTableName(AclPrivilegeRepository::TABLE_NAME) . ' AS p ON(r.privilege_id = p.id)
           ORDER BY r.module_id ASC, r.area ASC, r.controller ASC, r.page ASC
         ');
     }

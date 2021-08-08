@@ -36,23 +36,4 @@ class AclRoleRepository extends Core\NestedSet\Repository\NestedSetRepository im
             'SELECT n.id, n.name, n.parent_id, n.left_id, n.right_id, COUNT(*)-1 AS `level`, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM ' . $this->getTableName() . ' AS p, ' . $this->getTableName() . ' AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id, n.id, n.name, n.parent_id, n.right_id ORDER BY n.left_id'
         );
     }
-
-    public function getPermissionByKeyAndRoleId(string $privilegeKey, int $moduleId, int $roleId): int
-    {
-        $query = <<<SQL
-SELECT ru.permission
-FROM {$this->getTableName()} AS r,
-     {$this->getTableName()} AS parent
-JOIN {$this->getTableName(AclRuleRepository::TABLE_NAME)} AS ru ON(parent.id = ru.role_id)
-JOIN {$this->getTableName(AclPrivilegeRepository::TABLE_NAME)} AS p ON(ru.privilege_id = p.id)
-WHERE r.id = :roleId AND p.key = :privilege AND ru.permission != :permission AND ru.module_id = :moduleId AND parent.left_id < r.left_id AND parent.right_id > r.right_id
-ORDER BY parent.left_id DESC
-LIMIT 1;
-SQL;
-
-        return (int) $this->db->fetchColumn(
-            $query,
-            ['roleId' => $roleId, 'privilege' => $privilegeKey, 'moduleId' => $moduleId, 'permission' => 2]
-        );
-    }
 }

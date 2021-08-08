@@ -3,7 +3,6 @@
     <keys>
         <item key="acl_resources">Resources</item>
         <item key="acl_roles">Roles</item>
-        <item key="acl_rules">Rules</item>
         <item key="admin_index_create">Create new role</item>
         <item key="admin_index_delete">Delete roles</item>
         <item key="admin_index_edit">Edit role</item>

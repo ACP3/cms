@@ -3,7 +3,6 @@
     <keys>
         <item key="acl_resources">Ressourcen</item>
         <item key="acl_roles">Rollen</item>
-        <item key="acl_rules">Regeln</item>
         <item key="admin_index_create">Neue Rolle erstellen</item>
         <item key="admin_index_delete">Rolle löschen</item>
         <item key="admin_index_edit">Rolle bearbeiten</item>

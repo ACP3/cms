@@ -14,7 +14,6 @@ class CachingPermissionService implements PermissionServiceInterface
 {
     private const CACHE_ID_RESOURCES = 'acl_resources';
     private const CACHE_ID_ROLES = 'acl_roles';
-    private const CACHE_ID_RULES = 'acl_rules_%s';
 
     /**
      * @var CacheItemPoolInterface
@@ -55,21 +54,13 @@ class CachingPermissionService implements PermissionServiceInterface
         return $cacheItem->get();
     }
 
-    public function getRules(array $roleIds): array
-    {
-        $cacheKey = sprintf(self::CACHE_ID_RULES, implode(',', $roleIds));
-        $cacheItem = $this->permissionsCachePool->getItem($cacheKey);
-
-        if (!$cacheItem->isHit()) {
-            $cacheItem->set($this->permissionService->getRules($roleIds));
-            $this->permissionsCachePool->saveDeferred($cacheItem);
-        }
-
-        return $cacheItem->get();
-    }
-
     public function getPermissions(array $roleIds): array
     {
         return $this->permissionService->getPermissions($roleIds);
+    }
+
+    public function getPermissionsWithInheritance(array $roleIds): array
+    {
+        return $this->permissionService->getPermissionsWithInheritance($roleIds);
     }
 }

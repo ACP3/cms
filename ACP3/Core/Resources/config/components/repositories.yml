@@ -2,7 +2,3 @@ services:
   permissions.model.resourcerepository:
     synthetic: true
     public: true
-
-  permissions.model.rulerepository:
-    synthetic: true
-    public: true

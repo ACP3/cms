@@ -7,8 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Core\Modules;
 
-use ACP3\Core\ACL\Repository\PrivilegeRepositoryInterface;
-use ACP3\Core\ACL\Repository\RoleRepositoryInterface;
 use ACP3\Core\Modules\AclInstaller;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Modules\SchemaHelper;
@@ -22,9 +20,9 @@ class CacheAwareAclInstaller extends AclInstaller
      */
     private $permissionsCachePool;
 
-    public function __construct(CacheItemPoolInterface $permissionsCachePool, SchemaHelper $schemaHelper, RoleRepositoryInterface $roleRepository, AbstractRepository $ruleRepository, AbstractRepository $resourceRepository, PrivilegeRepositoryInterface $privilegeRepository)
+    public function __construct(CacheItemPoolInterface $permissionsCachePool, SchemaHelper $schemaHelper, AbstractRepository $resourceRepository)
     {
-        parent::__construct($schemaHelper, $roleRepository, $ruleRepository, $resourceRepository, $privilegeRepository);
+        parent::__construct($schemaHelper, $resourceRepository);
 
         $this->permissionsCachePool = $permissionsCachePool;
     }

@@ -7,6 +7,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PermissionServiceInterface;
 use ACP3\Core\ACL\Repository\UserRoleRepositoryInterface;
 use ACP3\Core\Authentication\Model\UserModelInterface;
@@ -27,12 +28,6 @@ class ACL
     private $userRoleRepository;
 
     /**
-     * Array mit den den jeweiligen Rollen zugewiesenen Berechtigungen.
-     *
-     * @var array
-     */
-    private $privileges = [];
-    /**
      * Array mit den dem Benutzer zugewiesenen Rollen.
      *
      * @var array
@@ -44,6 +39,10 @@ class ACL
      * @var array
      */
     private $resources = [];
+    /**
+     * @var int[]
+     */
+    private $permissions = [];
 
     public function __construct(
         UserModelInterface $user,
@@ -100,29 +99,19 @@ class ACL
     }
 
     /**
-     * Initializes the available user privileges.
+     * @return int[]
      */
-    private function getPrivileges(): array
+    private function getPermissions(): array
     {
-        if ($this->privileges === []) {
-            $this->privileges = $this->getRules($this->getUserRoleIds($this->user->getUserId()));
+        if ($this->permissions === []) {
+            $this->permissions = $this->permissionService->getPermissionsWithInheritance($this->getUserRoleIds($this->user->getUserId()));
         }
 
-        return $this->privileges;
+        return $this->permissions;
     }
 
     /**
-     * Returns the role permissions.
-     *
-     * @param int[] $roleIds
-     */
-    private function getRules(array $roleIds): array
-    {
-        return $this->permissionService->getRules($roleIds);
-    }
-
-    /**
-     * Überpüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat.
+     * Überprüft, ob eine Modulaktion existiert und der Benutzer darauf Zugriff hat.
      */
     public function hasPermission(string $resource): bool
     {
@@ -135,9 +124,9 @@ class ACL
         $resource = $module . '/' . $controller . '/' . $action . '/';
 
         if (isset($this->getResources()[$area][$resource])) {
-            $privilegeKey = $this->getResources()[$area][$resource]['key'];
+            $resourceId = $this->getResources()[$area][$resource]['resource_id'];
 
-            return $this->userHasPrivilege($module, $privilegeKey) === true || $this->user->isSuperUser() === true;
+            return $this->getPermissions()[$resourceId] !== PermissionEnum::DENY_ACCESS || $this->user->isSuperUser() === true;
         }
 
         return false;
@@ -161,18 +150,5 @@ class ACL
         }
 
         return $this->resources;
-    }
-
-    /**
-     * Returns, whether the current user has the given privilege.
-     */
-    private function userHasPrivilege(string $module, string $privilegeKey): bool
-    {
-        $privilegeKey = strtolower($privilegeKey);
-        if (isset($this->getPrivileges()[$module][$privilegeKey])) {
-            return $this->getPrivileges()[$module][$privilegeKey]['access'];
-        }
-
-        return false;
     }
 }

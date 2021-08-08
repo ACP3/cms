@@ -7,10 +7,6 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\ACL\PermissionEnum;
-use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\ACL\Repository\PrivilegeRepositoryInterface;
-use ACP3\Core\ACL\Repository\RoleRepositoryInterface;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Repository\AbstractRepository;
@@ -25,34 +21,16 @@ class AclInstaller implements InstallerInterface
      */
     private $schemaHelper;
     /**
-     * @var \ACP3\Core\ACL\Repository\RoleRepositoryInterface
-     */
-    private $roleRepository;
-    /**
-     * @var \ACP3\Core\ACL\Repository\PrivilegeRepositoryInterface
-     */
-    private $privilegeRepository;
-    /**
      * @var \ACP3\Core\Repository\AbstractRepository
      */
     private $resourceRepository;
-    /**
-     * @var \ACP3\Core\Repository\AbstractRepository
-     */
-    private $ruleRepository;
 
     public function __construct(
         SchemaHelper $schemaHelper,
-        RoleRepositoryInterface $roleRepository,
-        AbstractRepository $ruleRepository,
-        AbstractRepository $resourceRepository,
-        PrivilegeRepositoryInterface $privilegeRepository
+        AbstractRepository $resourceRepository
     ) {
         $this->schemaHelper = $schemaHelper;
-        $this->roleRepository = $roleRepository;
-        $this->ruleRepository = $ruleRepository;
         $this->resourceRepository = $resourceRepository;
-        $this->privilegeRepository = $privilegeRepository;
     }
 
     /**
@@ -67,7 +45,7 @@ class AclInstaller implements InstallerInterface
         $this->insertAclResources($schema);
 
         if ($mode === self::INSTALL_RESOURCES_AND_RULES) {
-            $this->insertAclRules($schema->getModuleName());
+            $this->insertAclPermissions($schema->getModuleName());
         }
 
         return true;
@@ -109,44 +87,9 @@ class AclInstaller implements InstallerInterface
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    private function insertAclRules(string $moduleName): void
+    private function insertAclPermissions(string $moduleName): void
     {
-        $roles = $this->roleRepository->getAllRoles();
-        $privileges = $this->privilegeRepository->getAllPrivilegeIds();
-        $moduleId = $this->schemaHelper->getModuleId($moduleName);
-
-        foreach ($roles as $role) {
-            foreach ($privileges as $privilege) {
-                $insertValues = [
-                    'role_id' => $role['id'],
-                    'module_id' => $moduleId,
-                    'privilege_id' => $privilege['id'],
-                    'permission' => $this->getDefaultAclRulePermission($role, $privilege),
-                ];
-                $this->ruleRepository->insert($insertValues);
-            }
-        }
-    }
-
-    private function getDefaultAclRulePermission(array $role, array $privilege): int
-    {
-        $permission = PermissionEnum::DENY_ACCESS;
-        if ($role['id'] == 1 &&
-            ($privilege['id'] == PrivilegeEnum::FRONTEND_VIEW || $privilege['id'] == PrivilegeEnum::FRONTEND_CREATE)
-        ) {
-            $permission = PermissionEnum::PERMIT_ACCESS;
-        }
-        if ($role['id'] > 1 && $role['id'] < 4) {
-            $permission = PermissionEnum::INHERIT_ACCESS;
-        }
-        if ($role['id'] == 3 && $privilege['id'] == PrivilegeEnum::ADMIN_VIEW) {
-            $permission = PermissionEnum::PERMIT_ACCESS;
-        }
-        if ($role['id'] == 4) {
-            $permission = PermissionEnum::PERMIT_ACCESS;
-        }
-
-        return $permission;
+        // @TODO: Insert resources
     }
 
     /**
