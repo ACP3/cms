@@ -81,6 +81,18 @@ class Migration implements Modules\Installer\MigrationInterface
                 'ALTER TABLE `{pre}acl_rules` CONVERT TO {charset};',
                 'ALTER TABLE `{pre}acl_user_roles` CONVERT TO {charset};',
             ],
+            38 => [
+                'CREATE TABLE `{pre}acl_permission` (
+                `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                `role_id` int(10) unsigned NOT NULL,
+                `resource_id` int(10) unsigned NOT NULL,
+                `permission` tinyint(1) unsigned NOT NULL,
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `role_resource` (`role_id`, `resource_id`),
+                FOREIGN KEY (`role_id`) REFERENCES `{pre}acl_roles` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`resource_id`) REFERENCES `{pre}acl_resources` (`id`) ON DELETE CASCADE
+            ) {engine} {charset};',
+            ],
         ];
     }
 }

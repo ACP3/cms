@@ -14,10 +14,7 @@ class Schema implements Modules\Installer\SchemaInterface
 {
     public const MODULE_NAME = 'permissions';
 
-    /**
-     * @return array
-     */
-    public function specialResources()
+    public function specialResources(): array
     {
         return [
             'admin' => [
@@ -38,26 +35,17 @@ class Schema implements Modules\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return static::MODULE_NAME;
     }
 
-    /**
-     * @return int
-     */
-    public function getSchemaVersion()
+    public function getSchemaVersion(): int
     {
-        return 37;
+        return 38;
     }
 
-    /**
-     * @return array
-     */
-    public function createTables()
+    public function createTables(): array
     {
         return [
             'CREATE TABLE `{pre}acl_privileges` (
@@ -105,6 +93,16 @@ class Schema implements Modules\Installer\SchemaInterface
                 FOREIGN KEY (`privilege_id`) REFERENCES `{pre}acl_privileges` (`id`) ON DELETE CASCADE,
                 FOREIGN KEY (`module_id`) REFERENCES `{pre}modules` (`id`) ON DELETE CASCADE
             ) {engine} {charset};',
+            'CREATE TABLE `{pre}acl_permission` (
+                `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                `role_id` int(10) unsigned NOT NULL,
+                `resource_id` int(10) unsigned NOT NULL,
+                `permission` tinyint(1) unsigned NOT NULL,
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `role_resource` (`role_id`, `resource_id`),
+                FOREIGN KEY (`role_id`) REFERENCES `{pre}acl_roles` (`id`) ON DELETE CASCADE,
+                FOREIGN KEY (`resource_id`) REFERENCES `{pre}acl_resources` (`id`) ON DELETE CASCADE
+            ) {engine} {charset};',
             'CREATE TABLE `{pre}acl_user_roles` (
                 `user_id` int(10) unsigned,
                 `role_id` int(10) unsigned NOT NULL,
@@ -129,18 +127,12 @@ class Schema implements Modules\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function removeTables()
+    public function removeTables(): array
     {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function settings()
+    public function settings(): array
     {
         return [];
     }
