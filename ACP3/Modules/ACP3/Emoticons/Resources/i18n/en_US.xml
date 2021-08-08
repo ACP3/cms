@@ -4,6 +4,7 @@
         <item key="admin_index_create">Create new emoticon</item>
         <item key="admin_index_delete">Delete emoticons</item>
         <item key="admin_index_edit">Edit emoticon</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_index_settings">Settings</item>
         <item key="code">Code</item>
         <item key="emoticons">Emoticons</item>

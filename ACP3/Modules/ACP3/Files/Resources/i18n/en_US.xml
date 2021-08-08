@@ -5,6 +5,7 @@
         <item key="admin_index_create">Create new download</item>
         <item key="admin_index_delete">Delete downloads</item>
         <item key="admin_index_edit">Edit download</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_index_settings">Settings</item>
         <item key="category_select">Please select one of the categories below.</item>
         <item key="current_file">Current file</item>

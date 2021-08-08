@@ -5,6 +5,7 @@
         <item key="admin_index_create">Create new gallery</item>
         <item key="admin_index_delete">Delete galleries</item>
         <item key="admin_index_edit">Edit gallery</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_index_settings">Settings</item>
         <item key="admin_pictures_create">Add picture</item>
         <item key="admin_pictures_delete">Delete pictures</item>

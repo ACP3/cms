@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language>
     <keys>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="cookie_consent">Cookie-Richtlinie</item>
         <item key="cookieconsent">Cookie Richtlinie</item>

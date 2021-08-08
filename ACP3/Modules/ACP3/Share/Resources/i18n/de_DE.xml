@@ -12,6 +12,7 @@
         <item key="admin_index_create">Neuer Datensatz</item>
         <item key="admin_index_delete">Datensatz löschen</item>
         <item key="admin_index_edit">Datensatz bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="already_rated">Sie haben diese Seite bereits bewertet.</item>
         <item key="average_rating">Durchschnittliche Bewertung</item>

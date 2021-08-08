@@ -4,6 +4,7 @@
         <item key="admin_index_create">Neuen URL-Rewrite erstellen</item>
         <item key="admin_index_delete">URL-Rewrites löschen</item>
         <item key="admin_index_edit">URL-Rewrite bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="alias">Alias</item>
         <item key="alias_description">Bitte nur Kleinbuchstaben von a-z, Ziffern und den Bindestrich verwenden.</item>

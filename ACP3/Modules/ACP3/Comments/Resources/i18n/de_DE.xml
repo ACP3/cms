@@ -2,6 +2,7 @@
 <language>
     <keys>
         <item key="admin_index_delete">Kommentare löschen</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="admin_details_delete">Kommentare löschen</item>
         <item key="admin_details_edit">Kommentar bearbeiten</item>

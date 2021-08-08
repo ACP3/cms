@@ -4,6 +4,7 @@
         <item key="admin_index_create">Neue Navigationsleiste erstellen</item>
         <item key="admin_index_delete">Navigationsleiste löschen</item>
         <item key="admin_index_edit">Navigationsleiste bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_items_create">Neuen Menüpunkt erstellen</item>
         <item key="admin_items_delete">Menüpunkte löschen</item>
         <item key="admin_items_edit">Menüpunkt bearbeiten</item>

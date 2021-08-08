@@ -15,6 +15,7 @@
         <item key="admin_index_create">Create new newsletter</item>
         <item key="admin_index_delete">Delete newsletters</item>
         <item key="admin_index_edit">Edit newsletter</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_index_send">Send newsletter</item>
         <item key="admin_index_settings">Settings</item>
         <item key="already_sent">Already sent</item>

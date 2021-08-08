@@ -15,6 +15,7 @@
         <item key="admin_index_create">Neuen Newsletter erstellen</item>
         <item key="admin_index_delete">Newsletter löschen</item>
         <item key="admin_index_edit">Newsletter bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_send">Newsletter versenden</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="already_sent">Bereits versendet</item>

@@ -4,6 +4,7 @@
         <item key="address">Address</item>
         <item key="address_to_short">The address should not be empty.</item>
         <item key="admin_index_delete">Delete message</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_index_settings">Settings</item>
         <item key="ceo">Chief executive officer</item>
         <item key="contact">Contact</item>

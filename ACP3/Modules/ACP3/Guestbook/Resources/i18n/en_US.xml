@@ -4,6 +4,7 @@
         <item key="activate_entry">Approve entry</item>
         <item key="admin_index_delete">Delete guestbook entries</item>
         <item key="admin_index_edit">Edit guestbook entry</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_index_settings">Settings</item>
         <item key="activate_entry">Enable entry</item>
         <item key="create">New entry</item>

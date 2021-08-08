@@ -16,8 +16,9 @@
         <item key="admin_extensions_designs">Designs</item>
         <item key="admin_extensions_index">Erweiterungen</item>
         <item key="admin_extensions_modules">Module</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
-        <item key="admin_maintenance_cache">Cacheverwaltung</item>
+        <item key="admin_maintenance_cache">Cache-Verwaltung</item>
         <item key="admin_maintenance_index">Wartung</item>
         <item key="admin_maintenance_update_check">Versionsüberprüfung</item>
         <item key="allow_comments">Kommentare erlauben</item>

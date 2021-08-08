@@ -2,6 +2,7 @@
 <language>
     <keys>
         <item key="access_to_modules">Sie haben Zugriff auf folgende Module:</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="acp">Administration</item>
     </keys>
 </language>

@@ -5,6 +5,7 @@
         <item key="admin_index_create">Neuen Artikel erstellen</item>
         <item key="admin_index_delete">Artikel löschen</item>
         <item key="admin_index_edit">Artikel bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="article">Artikel</item>
         <item key="articles">Artikel</item>
         <item key="default_layout">Standard Seiten-Layout verwenden</item>

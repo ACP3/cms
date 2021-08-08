@@ -6,6 +6,7 @@
 
 <language>
     <keys>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_table">Gruppiert nach Datenbanktabelle</item>
         <item key="auditlog">Audit-Log</item>
         <item key="created">Erstellt</item>

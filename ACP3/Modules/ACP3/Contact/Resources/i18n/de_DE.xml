@@ -4,6 +4,7 @@
         <item key="address">Anschrift</item>
         <item key="address_to_short">Die Anschrift darf nicht leer sein.</item>
         <item key="admin_index_delete">Nachricht löschen</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="ceo">Geschäftsführer</item>
         <item key="contact">Kontakt</item>

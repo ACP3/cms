@@ -4,6 +4,7 @@
         <item key="admin_index_create">Neue Kategorie erstellen</item>
         <item key="admin_index_delete">Kategorien löschen</item>
         <item key="admin_index_edit">Kategorie bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="categories">Kategorien</item>
         <item key="category">Kategorie</item>

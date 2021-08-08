@@ -4,6 +4,7 @@
         <item key="admin_index_create">Create a new URL-Rewrite</item>
         <item key="admin_index_delete">Delete URL-Rewrites</item>
         <item key="admin_index_edit">Edit URL-Rewrite</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_index_settings">Settings</item>
         <item key="alias">Alias</item>
         <item key="alias_description">Please use only lower case letters, numbers and the hyphen.</item>

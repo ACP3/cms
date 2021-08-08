@@ -6,6 +6,7 @@
         <item key="admin_index_create">Neue Rolle erstellen</item>
         <item key="admin_index_delete">Rolle löschen</item>
         <item key="admin_index_edit">Rolle bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_resources_create">Neue Ressource erstellen</item>
         <item key="admin_resources_delete">Ressource löschen</item>
         <item key="admin_resources_edit">Ressource bearbeiten</item>

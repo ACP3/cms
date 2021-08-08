@@ -11,6 +11,7 @@
         <item key="admin_index_create">Create new user</item>
         <item key="admin_index_delete">Delete users</item>
         <item key="admin_index_edit">Edit user</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_index_settings">Settings</item>
         <item key="admin_user_undeletable">The administrator can't be deleted.</item>
         <item key="authentication_required">To display the requested page you need to log in.</item>

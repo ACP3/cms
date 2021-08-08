@@ -4,6 +4,7 @@
         <item key="activate_entry">Eintrag freischalten</item>
         <item key="admin_index_delete">Gästebucheinträge löschen</item>
         <item key="admin_index_edit">Gästebucheintrag bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="admin_index_activate_entry">Eintrag freischalten</item>
         <item key="create">Neuer Eintrag</item>

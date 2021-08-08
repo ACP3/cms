@@ -11,6 +11,7 @@
         <item key="admin_index_create">Neuen Benutzer erstellen</item>
         <item key="admin_index_delete">Benutzer löschen</item>
         <item key="admin_index_edit">Benutzer bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="admin_user_undeletable">Der Administrator kann nicht gelöscht werden.</item>
         <item key="authentication_required">Um die angeforderte Seite anzeigen zu können, müssen Sie sich anmelden.</item>

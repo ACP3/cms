@@ -6,6 +6,7 @@
         <item key="admin_index_create">Neue News erstellen</item>
         <item key="admin_index_delete">News löschen</item>
         <item key="admin_index_edit">News bearbeiten</item>
+        <item key="admin_index_index">Übersicht</item>
         <item key="admin_index_settings">Einstellungen</item>
         <item key="hyperlink">Link</item>
         <item key="complete_hyperlink_statements">Bitte vervollständigen Sie die Angaben zum Hyperlink</item>

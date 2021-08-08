@@ -4,6 +4,7 @@
         <item key="admin_index_create">Create new menu bar</item>
         <item key="admin_index_delete">Delete menu bar</item>
         <item key="admin_index_edit">Edit menu bar</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_items_create">Create new menu item</item>
         <item key="admin_items_delete">Delete menu items</item>
         <item key="admin_items_edit">Edit menu item</item>

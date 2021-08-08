@@ -12,6 +12,7 @@
         <item key="admin_index_create">New resultset</item>
         <item key="admin_index_delete">Delete resultset</item>
         <item key="admin_index_edit">Edit resultset</item>
+        <item key="admin_index_index">Overview</item>
         <item key="admin_index_settings">Settings</item>
         <item key="already_rated">You've already rated this page.</item>
         <item key="average_rating">Average rating</item>
