@@ -9,33 +9,40 @@ namespace ACP3\Modules\ACP3\Permissions\Services;
 
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PermissionServiceInterface;
-use ACP3\Modules\ACP3\Permissions\Repository\ResourceRepository;
-use ACP3\Modules\ACP3\Permissions\Repository\RoleRepository;
-use ACP3\Modules\ACP3\Permissions\Repository\RuleRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclPermissionRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclRuleRepository;
 
 class PermissionService implements PermissionServiceInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository
      */
     private $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\ResourceRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository
      */
     private $resourceRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\RuleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclRuleRepository
      */
     private $ruleRepository;
+    /**
+     * @var AclPermissionRepository
+     */
+    private $permissionRepository;
 
     public function __construct(
-        RoleRepository $roleRepository,
-        ResourceRepository $resourceRepository,
-        RuleRepository $ruleRepository
+        AclRoleRepository $roleRepository,
+        AclResourceRepository $resourceRepository,
+        AclRuleRepository $ruleRepository,
+        AclPermissionRepository $permissionRepository
     ) {
         $this->roleRepository = $roleRepository;
         $this->resourceRepository = $resourceRepository;
         $this->ruleRepository = $ruleRepository;
+        $this->permissionRepository = $permissionRepository;
     }
 
     /**
@@ -106,10 +113,10 @@ class PermissionService implements PermissionServiceInterface
      */
     public function getRules(array $roleIds): array
     {
-        $privileges = [];
+        $rules = [];
         foreach ($this->ruleRepository->getAllRulesByRoleIds($roleIds) as $rule) {
             $privilegeKey = strtolower($rule['key']);
-            $privileges[$rule['module_name']][$privilegeKey] = [
+            $rules[$rule['module_name']][$privilegeKey] = [
                 'id' => $rule['privilege_id'],
                 'description' => $rule['description'],
                 'permission' => $rule['permission'],
@@ -117,7 +124,27 @@ class PermissionService implements PermissionServiceInterface
             ];
         }
 
-        return $privileges;
+        return $rules;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function getPermissions(array $roleIds): array
+    {
+        $permissions = [];
+
+        foreach ($this->permissionRepository->getPermissionsByRoleIds($roleIds) as $permission) {
+            if (!\array_key_exists((int) $permission['role_id'], $permissions)) {
+                $permissions[(int) $permission['role_id']] = [];
+            }
+
+            $permissions[(int) $permission['role_id']][(int) $permission['resource_id']] = (int) $permission['permission'];
+        }
+
+        return $permissions;
     }
 
     private function hasAccess(array $rule, string $privilegeKey): bool

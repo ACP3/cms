@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Permissions\Repository;
 
 use ACP3\Core;
 
-class UserRoleRepository extends Core\Repository\AbstractRepository implements Core\ACL\Repository\UserRoleRepositoryInterface
+class AclUserRoleRepository extends Core\Repository\AbstractRepository implements Core\ACL\Repository\UserRoleRepositoryInterface
 {
     public const TABLE_NAME = 'acl_user_roles';
 
@@ -19,7 +19,7 @@ class UserRoleRepository extends Core\Repository\AbstractRepository implements C
     public function getRolesByUserId($userId)
     {
         return $this->db->fetchAll(
-            'SELECT r.* FROM ' . $this->getTableName() . ' AS ur JOIN ' . $this->getTableName(RoleRepository::TABLE_NAME) . ' AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC',
+            'SELECT r.* FROM ' . $this->getTableName() . ' AS ur JOIN ' . $this->getTableName(AclRoleRepository::TABLE_NAME) . ' AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC',
             [$userId],
             [\PDO::PARAM_INT]
         );

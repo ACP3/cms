@@ -13,7 +13,7 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Permissions\Repository\PrivilegeRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository;
 
 class AdminResourceEditViewProvider
 {
@@ -30,7 +30,7 @@ class AdminResourceEditViewProvider
      */
     private $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\PrivilegeRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository
      */
     private $privilegeRepository;
     /**
@@ -46,7 +46,7 @@ class AdminResourceEditViewProvider
         Forms $formsHelper,
         FormToken $formTokenHelper,
         Modules $modules,
-        PrivilegeRepository $privilegeRepository,
+        AclPrivilegeRepository $privilegeRepository,
         RequestInterface $request,
         Translator $translator
     ) {

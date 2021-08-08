@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Permissions\Repository;
 
 use ACP3\Core;
 
-class RoleRepository extends Core\NestedSet\Repository\NestedSetRepository implements Core\ACL\Repository\RoleRepositoryInterface
+class AclRoleRepository extends Core\NestedSet\Repository\NestedSetRepository implements Core\ACL\Repository\RoleRepositoryInterface
 {
     public const TABLE_NAME = 'acl_roles';
 
@@ -43,8 +43,8 @@ class RoleRepository extends Core\NestedSet\Repository\NestedSetRepository imple
 SELECT ru.permission
 FROM {$this->getTableName()} AS r,
      {$this->getTableName()} AS parent
-JOIN {$this->getTableName(RuleRepository::TABLE_NAME)} AS ru ON(parent.id = ru.role_id)
-JOIN {$this->getTableName(PrivilegeRepository::TABLE_NAME)} AS p ON(ru.privilege_id = p.id)
+JOIN {$this->getTableName(AclRuleRepository::TABLE_NAME)} AS ru ON(parent.id = ru.role_id)
+JOIN {$this->getTableName(AclPrivilegeRepository::TABLE_NAME)} AS p ON(ru.privilege_id = p.id)
 WHERE r.id = :roleId AND p.key = :privilege AND ru.permission != :permission AND ru.module_id = :moduleId AND parent.left_id < r.left_id AND parent.right_id > r.right_id
 ORDER BY parent.left_id DESC
 LIMIT 1;

@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Permissions\Repository;
 use ACP3\Core;
 use Doctrine\DBAL\Connection;
 
-class RuleRepository extends Core\Repository\AbstractRepository
+class AclRuleRepository extends Core\Repository\AbstractRepository
 {
     public const TABLE_NAME = 'acl_rules';
 
@@ -20,7 +20,7 @@ class RuleRepository extends Core\Repository\AbstractRepository
     public function getAllRulesByRoleIds(array $roleIds): array
     {
         return $this->db->getConnection()->executeQuery(
-            'SELECT ru.id, ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . $this->getTableName() . ' AS ru JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Repository\ModulesRepository::TABLE_NAME) . ' AS m ON (ru.module_id = m.id) JOIN ' . $this->getTableName(PrivilegeRepository::TABLE_NAME) . " AS p ON(ru.privilege_id = p.id) JOIN {$this->getTableName(RoleRepository::TABLE_NAME)} AS ro ON(ro.id = ru.role_id) AND ro.id IN(?)",
+            'SELECT ru.id, ru.role_id, ru.privilege_id, ru.permission, ru.module_id, m.name AS module_name, p.key, p.description FROM ' . $this->getTableName() . ' AS ru JOIN ' . $this->getTableName(\ACP3\Modules\ACP3\System\Repository\ModulesRepository::TABLE_NAME) . ' AS m ON (ru.module_id = m.id) JOIN ' . $this->getTableName(AclPrivilegeRepository::TABLE_NAME) . " AS p ON(ru.privilege_id = p.id) JOIN {$this->getTableName(AclRoleRepository::TABLE_NAME)} AS ro ON(ro.id = ru.role_id) AND ro.id IN(?)",
             [$roleIds],
             [Connection::PARAM_INT_ARRAY]
         )->fetchAllAssociative();

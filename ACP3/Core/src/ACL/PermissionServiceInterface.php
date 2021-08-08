@@ -21,4 +21,11 @@ interface PermissionServiceInterface
      * @param int[] $roleIds
      */
     public function getRules(array $roleIds): array;
+
+    /**
+     * @param int[] $roleIds
+     *
+     * @return array<int, array<int, int>>
+     */
+    public function getPermissions(array $roleIds): array;
 }

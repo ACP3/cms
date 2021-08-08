@@ -10,14 +10,14 @@ namespace ACP3\Modules\ACP3\Permissions\Model;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
-use ACP3\Modules\ACP3\Permissions\Repository\AclRuleRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclPermissionRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @method AclRuleRepository getRepository()
+ * @method AclPermissionRepository getRepository()
  */
-class RulesModel extends AbstractModel
+class AclPermissionModel extends AbstractModel
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
@@ -29,7 +29,7 @@ class RulesModel extends AbstractModel
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
-        AclRuleRepository $repository,
+        AclPermissionRepository $repository,
         CacheItemPoolInterface $permissionsCachePool
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
@@ -40,31 +40,28 @@ class RulesModel extends AbstractModel
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function updateRules(array $privileges, int $roleId): void
+    public function updatePermissions(array $resources, int $roleId): void
     {
-        $rules = $this->getRepository()->getAllRulesByRoleIds([$roleId]);
+        $permissionsByRoleIds = $this->getRepository()->getPermissionsByRoleIds([$roleId]);
 
-        foreach ($privileges as $moduleId => $modulePrivileges) {
-            foreach ($modulePrivileges as $privilegeId => $permission) {
-                $ruleUpsertValues = [
-                    'role_id' => $roleId,
-                    'module_id' => $moduleId,
-                    'privilege_id' => $privilegeId,
-                    'permission' => $permission,
-                ];
+        foreach ($resources as $resourceId => $permissionValue) {
+            $permissionUpsertValues = [
+                'role_id' => $roleId,
+                'resource_id' => $resourceId,
+                'permission' => $permissionValue,
+            ];
 
-                $this->save($ruleUpsertValues, $this->findRuleId($rules, $moduleId, $privilegeId));
-            }
+            $this->save($permissionUpsertValues, $this->findRuleId($permissionsByRoleIds, $resourceId, $roleId));
         }
 
         $this->permissionsCachePool->clear();
     }
 
-    private function findRuleId(array $rules, int $moduleId, int $privilegeId): ?int
+    private function findRuleId(array $permissions, int $resourceId, int $roleId): ?int
     {
-        foreach ($rules as $rule) {
-            if ((int) $rule['module_id'] === $moduleId && (int) $rule['privilege_id'] === $privilegeId) {
-                return (int) $rule['id'];
+        foreach ($permissions as $permission) {
+            if ((int) $permission['resource_id'] === $resourceId && (int) $permission['role_id'] === $roleId) {
+                return (int) $permission['id'];
             }
         }
 
@@ -75,8 +72,7 @@ class RulesModel extends AbstractModel
     {
         return [
             'role_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'privilege_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'resource_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'permission' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }

@@ -7,17 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Permissions;
 
-use ACP3\Modules\ACP3\Permissions\Repository\UserRoleRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclUserRoleRepository;
 
 class Helpers
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\UserRoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclUserRoleRepository
      */
     private $userRoleRepository;
 
     public function __construct(
-        UserRoleRepository $userRoleRepository
+        AclUserRoleRepository $userRoleRepository
     ) {
         $this->userRoleRepository = $userRoleRepository;
     }

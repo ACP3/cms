@@ -8,7 +8,7 @@ services:
 
   ACP3\Modules\ACP3\Permissions\Model\RolesModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Permissions\Repository\RoleRepository'
+      $repository: '@ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository'
       $insertOperation: "@permissions.nested_set.operation.insert"
       $editOperation: "@permissions.nested_set.operation.edit"
       $deleteOperation: "@permissions.nested_set.operation.delete"
@@ -17,4 +17,9 @@ services:
   ACP3\Modules\ACP3\Permissions\Model\RulesModel:
     arguments:
       $repository: "@permissions.model.rulerepository"
+      $permissionsCachePool: "@permissions.cache_item_pool"
+
+  ACP3\Modules\ACP3\Permissions\Model\AclPermissionModel:
+    arguments:
+      $repository: '@ACP3\Modules\ACP3\Permissions\Repository\AclPermissionRepository'
       $permissionsCachePool: "@permissions.cache_item_pool"

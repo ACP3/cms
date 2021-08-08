@@ -5,9 +5,9 @@ services:
   ACP3\Modules\ACP3\Permissions\Repository\:
     resource: "../../../src/Repository/"
 
-  permissions.model.rulerepository: '@ACP3\Modules\ACP3\Permissions\Repository\RuleRepository'
-  permissions.model.resourcerepository: '@ACP3\Modules\ACP3\Permissions\Repository\ResourceRepository'
+  permissions.model.rulerepository: '@ACP3\Modules\ACP3\Permissions\Repository\AclRuleRepository'
+  permissions.model.resourcerepository: '@ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository'
 
-  ACP3\Core\ACL\Repository\RoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\RoleRepository'
-  ACP3\Core\ACL\Repository\PrivilegeRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\PrivilegeRepository'
-  ACP3\Core\ACL\Repository\UserRoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\UserRoleRepository'
+  ACP3\Core\ACL\Repository\RoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository'
+  ACP3\Core\ACL\Repository\PrivilegeRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository'
+  ACP3\Core\ACL\Repository\UserRoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\AclUserRoleRepository'

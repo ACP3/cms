@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\ViewProviders;
 
 use ACP3\Core\ACL;
+use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PermissionServiceInterface;
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\Forms;
@@ -15,7 +16,8 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Permissions\Repository\PrivilegeRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository;
 
 class AdminRoleEditViewProvider
 {
@@ -40,7 +42,7 @@ class AdminRoleEditViewProvider
      */
     private $permissionService;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\PrivilegeRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository
      */
     private $privilegeRepository;
     /**
@@ -55,6 +57,10 @@ class AdminRoleEditViewProvider
      * @var \ACP3\Core\I18n\Translator
      */
     private $translator;
+    /**
+     * @var AclResourceRepository
+     */
+    private $resourceRepository;
 
     public function __construct(
         ACL $acl,
@@ -62,7 +68,8 @@ class AdminRoleEditViewProvider
         FormToken $formTokenHelper,
         Modules $modules,
         PermissionServiceInterface $permissionService,
-        PrivilegeRepository $privilegeRepository,
+        AclPrivilegeRepository $privilegeRepository,
+        AclResourceRepository $resourceRepository,
         RequestInterface $request,
         Title $title,
         Translator $translator
@@ -76,6 +83,7 @@ class AdminRoleEditViewProvider
         $this->request = $request;
         $this->title = $title;
         $this->translator = $translator;
+        $this->resourceRepository = $resourceRepository;
     }
 
     /**
@@ -115,35 +123,85 @@ class AdminRoleEditViewProvider
     private function fetchModulePermissions(int $roleId): array
     {
         $rules = $this->permissionService->getRules([$roleId]);
+        $permissions = $this->permissionService->getPermissions([$roleId]);
         $modules = array_filter($this->modules->getInstalledModules(), function ($module) {
             return $this->modules->isInstallable($module['name']);
         });
+        $allResources = $this->resourceRepository->getAllResources();
         $privileges = $this->privilegeRepository->getAllPrivileges();
 
-        foreach ($modules as $name => $moduleInfo) {
+        foreach ($modules as $moduleName => $moduleInfo) {
+            $moduleResources = array_filter($allResources, static function ($resource) use ($moduleInfo) {
+                return (int) $resource['module_id'] === $moduleInfo['id'];
+            });
+            foreach ($moduleResources as &$resource) {
+                $resource['select'] = $this->generatePermissionCheckboxes(
+                    $roleId,
+                    $moduleInfo['id'],
+                    $resource['resource_id'],
+                    (int) ($permissions[$roleId][(int) $resource['resource_id']] ?? 2)
+                );
+            }
+            unset($resource);
+
+            $modules[$moduleName]['resources'] = $moduleResources;
             foreach ($privileges as $j => $privilege) {
                 $privileges[$j]['select'] = $this->generatePrivilegeCheckboxes(
                     $roleId,
                     $moduleInfo['id'],
                     $privilege['id'],
-                    isset($rules[$moduleInfo['name']][$privilege['key']]['permission']) ? (int) $rules[$moduleInfo['name']][$privilege['key']]['permission'] : 0
+                    (int) ($rules[$moduleInfo['name']][$privilege['key']]['permission'] ?? 0)
                 );
                 if ($roleId !== 0) {
                     $privileges[$j]['calculated'] = $this->calculatePermission($rules, $moduleInfo['name'], $privilege['key']);
                 }
             }
-            $modules[$name]['privileges'] = $privileges;
+            $modules[$moduleName]['privileges'] = $privileges;
         }
 
         return $modules;
     }
 
+    private function generatePermissionCheckboxes(int $roleId, int $moduleId, int $resourceId, int $defaultValue): array
+    {
+        $permissions = [
+            PermissionEnum::PERMIT_ACCESS => 'allow_access',
+            PermissionEnum::INHERIT_ACCESS => 'inherit_access',
+        ];
+
+        $select = [];
+        foreach ($permissions as $value => $phrase) {
+            if ($roleId === 1 && $value === 2) {
+                continue;
+            }
+
+            $select[$value] = [
+                'value' => $value,
+                'selected' => $this->resourceIsChecked($moduleId, $resourceId, $value, $defaultValue),
+                'lang' => $this->translator->t('permissions', $phrase),
+            ];
+        }
+
+        return $select;
+    }
+
+    private function resourceIsChecked(int $moduleId, int $resourceId, int $value, int $defaultValue): string
+    {
+        if (($this->request->getPost()->count() === 0 && $defaultValue === $value) ||
+            ($this->request->getPost()->count() !== 0 && (int) $this->request->getPost()->get('resources')[$moduleId][$resourceId] === $value)
+        ) {
+            return ' checked="checked"';
+        }
+
+        return '';
+    }
+
     private function generatePrivilegeCheckboxes(int $roleId, int $moduleId, int $privilegeId, int $defaultValue): array
     {
         $permissions = [
-            0 => 'deny_access',
-            1 => 'allow_access',
-            2 => 'inherit_access',
+            PermissionEnum::DENY_ACCESS => 'deny_access',
+            PermissionEnum::PERMIT_ACCESS => 'allow_access',
+            PermissionEnum::INHERIT_ACCESS => 'inherit_access',
         ];
 
         $select = [];
@@ -173,13 +231,13 @@ class AdminRoleEditViewProvider
         return '';
     }
 
-    private function calculatePermission(array $rules, string $moduleDir, string $key): string
+    private function calculatePermission(array $rules, string $moduleName, string $key): string
     {
         return sprintf(
             $this->translator->t('permissions', 'calculated_permission'),
             $this->translator->t(
                 'permissions',
-                isset($rules[$moduleDir][$key]) && $rules[$moduleDir][$key]['access'] === true ? 'allow_access' : 'deny_access'
+                isset($rules[$moduleName][$key]) && $rules[$moduleName][$key]['access'] === true ? 'allow_access' : 'deny_access'
             )
         );
     }

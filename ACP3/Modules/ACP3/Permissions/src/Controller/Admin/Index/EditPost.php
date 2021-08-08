@@ -29,12 +29,17 @@ class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Cont
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
+    /**
+     * @var Permissions\Model\AclPermissionModel
+     */
+    private $aclPermissionModel;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Permissions\Model\RolesModel $rolesModel,
         Permissions\Model\RulesModel $rulesModel,
+        Permissions\Model\AclPermissionModel $aclPermissionModel,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
         parent::__construct($context);
@@ -43,6 +48,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Cont
         $this->rolesModel = $rolesModel;
         $this->rulesModel = $rulesModel;
         $this->actionHelper = $actionHelper;
+        $this->aclPermissionModel = $aclPermissionModel;
     }
 
     /**
@@ -64,6 +70,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Cont
 
             $result = $this->rolesModel->save($formData, $id);
             $this->rulesModel->updateRules($formData['privileges'], $id);
+            $this->aclPermissionModel->updatePermissions($formData['resources'], $id);
 
             return $result;
         });

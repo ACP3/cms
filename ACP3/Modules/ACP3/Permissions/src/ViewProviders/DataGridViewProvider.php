@@ -16,7 +16,7 @@ use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
-use ACP3\Modules\ACP3\Permissions\Repository\RolesDataGridRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\AclRolesDataGridRepository;
 
 class DataGridViewProvider
 {
@@ -29,7 +29,7 @@ class DataGridViewProvider
      */
     private $dataGrid;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\RolesDataGridRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclRolesDataGridRepository
      */
     private $dataGridRepository;
     /**
@@ -44,7 +44,7 @@ class DataGridViewProvider
     public function __construct(
         ACL $acl,
         DataGrid $dataGrid,
-        RolesDataGridRepository $dataGridRepository,
+        AclRolesDataGridRepository $dataGridRepository,
         ResultsPerPage $resultsPerPage,
         Translator $translator
     ) {

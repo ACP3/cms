@@ -12,9 +12,9 @@ use ACP3\Core\DataGrid\QueryOption;
 use ACP3\Core\DataGrid\Repository\AbstractDataGridRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class RolesDataGridRepository extends AbstractDataGridRepository
+class AclRolesDataGridRepository extends AbstractDataGridRepository
 {
-    public const TABLE_NAME = RoleRepository::TABLE_NAME;
+    public const TABLE_NAME = AclRoleRepository::TABLE_NAME;
 
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
     {

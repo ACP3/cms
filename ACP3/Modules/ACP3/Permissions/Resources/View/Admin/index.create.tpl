@@ -9,6 +9,27 @@
             {/if}
         {/tab}
         {tab title={lang t="permissions|permissions"}}
+            {foreach $modules as $moduleName => $values}
+                <fieldset>
+                    <legend>{lang t="`$moduleName`|`$moduleName`"}</legend>
+                    {foreach $values.resources as $resource}
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">{lang t="`$moduleName`|`$resource.area`_`$resource.controller`_`$resource.page`"}</label>
+
+                            <div class="col-sm-8">
+                                <div class="btn-group" data-toggle="buttons">
+                                    {foreach $resource.select as $row}
+                                        <label for="resource-{$resource.resource_id}-{$row.value}" class="btn btn-default{if !empty($row.selected)} active{/if}">
+                                            <input type="radio" name="resources[{$resource.resource_id}]" id="resource-{$resource.resource_id}-{$row.value}" value="{$row.value}"{$row.selected}>
+                                            {$row.lang}
+                                        </label>
+                                    {/foreach}
+                                </div>
+                            </div>
+                        </div>
+                    {/foreach}
+                </fieldset>
+            {/foreach}
             {foreach $modules as $module => $values}
                 {if $values@iteration % 2 !== 0}
                     <div class="row">

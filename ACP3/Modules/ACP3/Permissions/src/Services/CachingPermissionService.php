@@ -67,4 +67,9 @@ class CachingPermissionService implements PermissionServiceInterface
 
         return $cacheItem->get();
     }
+
+    public function getPermissions(array $roleIds): array
+    {
+        return $this->permissionService->getPermissions($roleIds);
+    }
 }
