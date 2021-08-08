@@ -7,7 +7,9 @@
 
 namespace ACP3\Core\ACL\Repository;
 
-interface RoleRepositoryInterface
+use ACP3\Core\Repository\RepositoryInterface;
+
+interface RoleRepositoryInterface extends RepositoryInterface
 {
     /**
      * @return array

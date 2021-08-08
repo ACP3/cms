@@ -7,5 +7,6 @@ services:
 
   permissions.model.resourcerepository: '@ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository'
 
+  ACP3\Core\ACL\Repository\AclPermissionRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\AclPermissionRepository'
   ACP3\Core\ACL\Repository\RoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository'
   ACP3\Core\ACL\Repository\UserRoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\AclUserRoleRepository'

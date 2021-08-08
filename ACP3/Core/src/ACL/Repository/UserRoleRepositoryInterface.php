@@ -7,7 +7,9 @@
 
 namespace ACP3\Core\ACL\Repository;
 
-interface UserRoleRepositoryInterface
+use ACP3\Core\Repository\RepositoryInterface;
+
+interface UserRoleRepositoryInterface extends RepositoryInterface
 {
     /**
      * @param int $userId

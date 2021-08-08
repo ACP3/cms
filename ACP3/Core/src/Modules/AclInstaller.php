@@ -7,6 +7,10 @@
 
 namespace ACP3\Core\Modules;
 
+use ACP3\Core\ACL\PermissionEnum;
+use ACP3\Core\ACL\PrivilegeEnum;
+use ACP3\Core\ACL\Repository\AclPermissionRepositoryInterface;
+use ACP3\Core\ACL\Repository\RoleRepositoryInterface;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Repository\AbstractRepository;
@@ -24,13 +28,25 @@ class AclInstaller implements InstallerInterface
      * @var \ACP3\Core\Repository\AbstractRepository
      */
     private $resourceRepository;
+    /**
+     * @var RoleRepositoryInterface
+     */
+    private $roleRepository;
+    /**
+     * @var AclPermissionRepositoryInterface
+     */
+    private $permissionRepository;
 
     public function __construct(
         SchemaHelper $schemaHelper,
-        AbstractRepository $resourceRepository
+        RoleRepositoryInterface $roleRepository,
+        AbstractRepository $resourceRepository,
+        AclPermissionRepositoryInterface $permissionRepository
     ) {
         $this->schemaHelper = $schemaHelper;
         $this->resourceRepository = $resourceRepository;
+        $this->roleRepository = $roleRepository;
+        $this->permissionRepository = $permissionRepository;
     }
 
     /**
@@ -42,22 +58,7 @@ class AclInstaller implements InstallerInterface
      */
     public function install(SchemaInterface $schema, int $mode = self::INSTALL_RESOURCES_AND_RULES)
     {
-        $this->insertAclResources($schema);
-
-        if ($mode === self::INSTALL_RESOURCES_AND_RULES) {
-            $this->insertAclPermissions($schema->getModuleName());
-        }
-
-        return true;
-    }
-
-    /**
-     * Inserts a new resource into the database.
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    private function insertAclResources(SchemaInterface $schema): void
-    {
+        $roles = $this->roleRepository->getAllRoles();
         $moduleId = $this->schemaHelper->getModuleId($schema->getModuleName());
 
         foreach ($schema->specialResources() as $area => $controllers) {
@@ -69,12 +70,25 @@ class AclInstaller implements InstallerInterface
                         'controller' => strtolower($controller),
                         'page' => $this->convertCamelCaseToUnderscore($action),
                         'params' => '',
-                        'privilege_id' => (int) $privilegeId,
                     ];
-                    $this->resourceRepository->insert($insertValues);
+                    $resourceId = $this->resourceRepository->insert($insertValues);
+
+                    if ($mode === self::INSTALL_RESOURCES_AND_RULES) {
+                        foreach ($roles as $role) {
+                            $permissionData = [
+                                'role_id' => $role['id'],
+                                'resource_id' => $resourceId,
+                                'permission' => $this->getDefaultAclRulePermission($role['id'], $privilegeId),
+                            ];
+
+                            $this->permissionRepository->insert($permissionData);
+                        }
+                    }
                 }
             }
         }
+
+        return true;
     }
 
     private function convertCamelCaseToUnderscore(string $action): string
@@ -82,14 +96,24 @@ class AclInstaller implements InstallerInterface
         return strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
     }
 
-    /**
-     * Insert new acl user rules.
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    private function insertAclPermissions(string $moduleName): void
+    private function getDefaultAclRulePermission(int $roleId, int $privilegeId): int
     {
-        // @TODO: Insert resources
+        if ($roleId === 1 &&
+            ($privilegeId === PrivilegeEnum::FRONTEND_VIEW || $privilegeId === PrivilegeEnum::FRONTEND_CREATE)
+        ) {
+            return PermissionEnum::PERMIT_ACCESS;
+        }
+        if ($roleId === 3 && $privilegeId === PrivilegeEnum::ADMIN_VIEW) {
+            return PermissionEnum::PERMIT_ACCESS;
+        }
+        if ($roleId > 1 && $roleId < 4) {
+            return PermissionEnum::INHERIT_ACCESS;
+        }
+        if ($roleId === 4) {
+            return PermissionEnum::PERMIT_ACCESS;
+        }
+
+        return PermissionEnum::INHERIT_ACCESS;
     }
 
     /**

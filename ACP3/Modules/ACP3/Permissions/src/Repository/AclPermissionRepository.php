@@ -8,10 +8,11 @@
 namespace ACP3\Modules\ACP3\Permissions\Repository;
 
 use ACP3\Core\ACL\PermissionEnum;
+use ACP3\Core\ACL\Repository\AclPermissionRepositoryInterface;
 use ACP3\Core\Repository\AbstractRepository;
 use Doctrine\DBAL\Connection;
 
-class AclPermissionRepository extends AbstractRepository
+class AclPermissionRepository extends AbstractRepository implements AclPermissionRepositoryInterface
 {
     public const TABLE_NAME = 'acl_permission';
 

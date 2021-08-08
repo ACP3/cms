@@ -3,8 +3,9 @@ services:
     autowire: true
 
   ACP3\Core\Settings\Settings:
-    public: true
     arguments:
       $coreCachePool: "@core.cache_item_pool"
 
-  ACP3\Core\Settings\SettingsInterface: '@ACP3\Core\Settings\Settings'
+  ACP3\Core\Settings\SettingsInterface:
+    alias: ACP3\Core\Settings\Settings
+    public: true
