@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 
-use ACP3\Core\ACL;
+use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository;
 
@@ -16,11 +16,8 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository
      */
-    protected $privilegeRepository;
+    private $privilegeRepository;
 
-    /**
-     * PrivilegesExistValidationRule constructor.
-     */
     public function __construct(AclPrivilegeRepository $privilegeRepository)
     {
         $this->privilegeRepository = $privilegeRepository;
@@ -35,16 +32,14 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return !empty($data) && \is_array($data) ? $this->privilegesExist($data) : false;
+        return !empty($data) && \is_array($data) && $this->privilegesExist($data);
     }
 
     /**
      * Überprüft, ob die übergebenen Privilegien existieren und
      * plausible Werte enthalten.
-     *
-     * @return bool
      */
-    public function privilegesExist(array $privilegeIds)
+    private function privilegesExist(array $privilegeIds): bool
     {
         $valid = false;
         foreach ($this->privilegeRepository->getAllPrivileges() as $privilege) {
@@ -63,16 +58,10 @@ class PrivilegesExistValidationRule extends AbstractValidationRule
         return $valid;
     }
 
-    /**
-     * @param int $privilegeId
-     * @param int $permission
-     *
-     * @return bool
-     */
-    protected function isValidPrivilege($privilegeId, array $privilege, $permission)
+    private function isValidPrivilege(int $privilegeId, array $privilege, int $permission): bool
     {
-        return $privilegeId == $privilege['id']
-        && $permission >= ACL\PermissionEnum::DENY_ACCESS
-        && $permission <= ACL\PermissionEnum::INHERIT_ACCESS;
+        return $privilegeId === (int) $privilege['id']
+        && $permission >= PermissionEnum::DENY_ACCESS
+        && $permission <= PermissionEnum::INHERIT_ACCESS;
     }
 }

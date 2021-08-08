@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Validation;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegesExistValidationRule;
+use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PermissionsExistValidationRule;
 use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValidationRule;
 
 class RoleFormValidation extends Core\Validation\AbstractFormValidation
@@ -57,11 +57,11 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
                 ]
             )
             ->addConstraint(
-                PrivilegesExistValidationRule::class,
+                PermissionsExistValidationRule::class,
                 [
                     'data' => $formData,
-                    'field' => 'privileges',
-                    'message' => $this->translator->t('permissions', 'invalid_privileges'),
+                    'field' => 'resources',
+                    'message' => $this->translator->t('permissions', 'invalid_resource_or_permission'),
                 ]
             );
 

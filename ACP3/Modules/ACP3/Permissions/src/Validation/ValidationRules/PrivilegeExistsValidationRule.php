@@ -15,11 +15,8 @@ class PrivilegeExistsValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository
      */
-    protected $privilegeRepository;
+    private $privilegeRepository;
 
-    /**
-     * PrivilegeExistsValidationRule constructor.
-     */
     public function __construct(AclPrivilegeRepository $privilegeRepository)
     {
         $this->privilegeRepository = $privilegeRepository;
