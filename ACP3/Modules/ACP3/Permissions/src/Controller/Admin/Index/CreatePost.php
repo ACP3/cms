@@ -22,27 +22,27 @@ class CreatePost extends Core\Controller\AbstractWidgetAction implements Core\Co
      */
     private $roleModel;
     /**
-     * @var Permissions\Model\RulesModel
-     */
-    private $rulesModel;
-    /**
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
+    /**
+     * @var Permissions\Model\AclPermissionModel
+     */
+    private $permissionModel;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Permissions\Model\RolesModel $rolesModel,
-        Permissions\Model\RulesModel $rulesModel,
+        Permissions\Model\AclPermissionModel $permissionModel,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
         parent::__construct($context);
 
         $this->roleFormValidation = $roleFormValidation;
         $this->roleModel = $rolesModel;
-        $this->rulesModel = $rulesModel;
         $this->actionHelper = $actionHelper;
+        $this->permissionModel = $permissionModel;
     }
 
     /**
@@ -59,7 +59,7 @@ class CreatePost extends Core\Controller\AbstractWidgetAction implements Core\Co
             $this->roleFormValidation->validate($formData);
 
             $roleId = $this->roleModel->save($formData);
-            $this->rulesModel->updateRules($formData['privileges'], $roleId);
+            $this->permissionModel->updatePermissions($formData['resources'], $roleId);
 
             return $roleId;
         });
