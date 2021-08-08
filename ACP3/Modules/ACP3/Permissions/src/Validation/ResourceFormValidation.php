@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Permissions\Validation;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\PrivilegeExistsValidationRule;
 
 class ResourceFormValidation extends Core\Validation\AbstractFormValidation
 {
@@ -48,14 +47,6 @@ class ResourceFormValidation extends Core\Validation\AbstractFormValidation
                     'data' => $formData,
                     'field' => 'controller',
                     'message' => $this->translator->t('permissions', 'type_in_controller'),
-                ]
-            )
-            ->addConstraint(
-                PrivilegeExistsValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'privileges',
-                    'message' => $this->translator->t('permissions', 'privilege_does_not_exist'),
                 ]
             )
             ->addConstraint(

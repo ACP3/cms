@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 
 class ResourcesModel extends AbstractModel
 {
-    const EVENT_PREFIX = Schema::MODULE_NAME;
+    public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
      * {@inheritdoc}
@@ -28,17 +28,13 @@ class ResourcesModel extends AbstractModel
         return parent::save($rawData, $entryId);
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
             'area' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'controller' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
             'page' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'privilege_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
         ];
     }
 }

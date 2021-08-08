@@ -16,7 +16,6 @@
                             <input type="checkbox" id="mark-all" value="1" {mark name="entries"}></th>
                     {/if}
                     <th>{lang t="permissions|route"}</th>
-                    <th>{lang t="permissions|assigned_privilege"}</th>
                     <th style="width:5%">{lang t="system|id"}</th>
                     {if $can_edit_resource === true || $can_delete_resource === true}
                         <th class="datagrid-column__actions">{lang t="system|action"}</th>
@@ -37,7 +36,6 @@
                                 <td><input type="checkbox" name="entries[]" value="{$row.resource_id}"></td>
                             {/if}
                             <td>{$row.area}/{$row.controller}/{$row.page}/</td>
-                            <td>{$row.privilege_name}</td>
                             <td>{$row.resource_id}</td>
                             {if $can_edit_resource === true || $can_delete_resource === true}
                                 <td class="datagrid-column__actions">

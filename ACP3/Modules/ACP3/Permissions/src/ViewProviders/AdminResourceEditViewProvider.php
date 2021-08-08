@@ -13,7 +13,6 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository;
 
 class AdminResourceEditViewProvider
 {
@@ -30,10 +29,6 @@ class AdminResourceEditViewProvider
      */
     private $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclPrivilegeRepository
-     */
-    private $privilegeRepository;
-    /**
      * @var \ACP3\Core\Http\RequestInterface
      */
     private $request;
@@ -46,14 +41,12 @@ class AdminResourceEditViewProvider
         Forms $formsHelper,
         FormToken $formTokenHelper,
         Modules $modules,
-        AclPrivilegeRepository $privilegeRepository,
         RequestInterface $request,
         Translator $translator
     ) {
         $this->formsHelper = $formsHelper;
         $this->formTokenHelper = $formTokenHelper;
         $this->modules = $modules;
-        $this->privilegeRepository = $privilegeRepository;
         $this->request = $request;
         $this->translator = $translator;
     }
@@ -72,7 +65,6 @@ class AdminResourceEditViewProvider
         return [
             'modules' => $this->fetchActiveModules($resource['module_name']),
             'areas' => $this->fetchAreas($resource['area']),
-            'privileges' => $this->fetchPrivileges($resource['privilege_id']),
             'form' => array_merge($defaults, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
@@ -100,15 +92,5 @@ class AdminResourceEditViewProvider
         $areas = array_values(AreaEnum::getAreas());
 
         return $this->formsHelper->choicesGenerator('area', array_combine($areas, $areas), $currentArea);
-    }
-
-    private function fetchPrivileges(int $privilegeId): array
-    {
-        $privileges = [];
-        foreach ($this->privilegeRepository->getAllPrivileges() as $i => $privilege) {
-            $privileges[(int) $privilege['id']] = $privilege['key'];
-        }
-
-        return $this->formsHelper->choicesGenerator('privileges', $privileges, $privilegeId);
     }
 }

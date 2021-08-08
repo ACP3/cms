@@ -36,7 +36,6 @@ class Create extends Core\Controller\AbstractWidgetAction implements Core\Contro
             'area' => '',
             'controller' => '',
             'module_name' => null,
-            'privilege_id' => 0,
         ];
 
         return ($this->adminResourceEditViewProvider)($defaults);
