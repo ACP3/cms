@@ -42,7 +42,7 @@ class Schema implements Modules\Installer\SchemaInterface
 
     public function getSchemaVersion(): int
     {
-        return 38;
+        return 39;
     }
 
     public function createTables(): array

@@ -93,6 +93,15 @@ class Migration implements Modules\Installer\MigrationInterface
                 FOREIGN KEY (`resource_id`) REFERENCES `{pre}acl_resources` (`id`) ON DELETE CASCADE
             ) {engine} {charset};',
             ],
+            39 => [
+                "insert into `{pre}acl_permission` (`role_id`, `resource_id`, `permission`)
+select aru.role_id, are.id, IF(aru.permission = 0, 2, aru.permission)
+from `{pre}acl_resources` are
+left join `{pre}modules` m on (m.id = are.module_id)
+left join `{pre}acl_rules` aru on (aru.module_id = are.module_id and aru.privilege_id = are.privilege_id)
+group by are.id, aru.role_id, aru.permission;
+",
+            ],
         ];
     }
 }
