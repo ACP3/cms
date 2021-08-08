@@ -7,6 +7,7 @@
 
 namespace ACP3\Core;
 
+use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PermissionServiceInterface;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use PHPUnit\Framework\TestCase;
@@ -109,9 +110,7 @@ class ACLTest extends TestCase
         $this->setUpPermissionsCacheMockExpectations(
             1,
             0,
-            [
-                0 => 1,
-            ],
+            [1],
             true
         );
 
@@ -127,9 +126,7 @@ class ACLTest extends TestCase
         $this->setUpPermissionsCacheMockExpectations(
             1,
             1,
-            [
-                0 => 1,
-            ],
+            [1],
             true
         );
 
@@ -145,8 +142,8 @@ class ACLTest extends TestCase
 
     protected function setUpPermissionsCacheMockExpectations(
         int $callCountResourceCache,
-        int $callCountRulesCache,
-        array $returnValueRulesCache,
+        int $callCountPermissionsCache,
+        array $roleIds,
         bool $hasAccess
     ): void {
         $this->permissionServiceMock->expects(self::exactly($callCountResourceCache))
@@ -154,24 +151,16 @@ class ACLTest extends TestCase
             ->willReturn([
                 'frontend' => [
                     'foo/index/index/' => [
-                        'key' => 'view',
-                        'access' => ACL\PermissionEnum::PERMIT_ACCESS,
+                        'resource_id' => 1,
                     ],
                 ],
             ]);
 
-        $this->permissionServiceMock->expects(self::exactly($callCountRulesCache))
-            ->method('getRules')
-            ->with($returnValueRulesCache)
+        $this->permissionServiceMock->expects(self::exactly($callCountPermissionsCache))
+            ->method('getPermissionsWithInheritance')
+            ->with($roleIds)
             ->willReturn([
-                'foo' => [
-                    'view' => [
-                        'id' => ACL\PrivilegeEnum::FRONTEND_VIEW,
-                        'description' => '',
-                        'permission' => ACL\PermissionEnum::PERMIT_ACCESS,
-                        'access' => $hasAccess,
-                    ],
-                ],
+                1 => $hasAccess ? PermissionEnum::PERMIT_ACCESS : PermissionEnum::DENY_ACCESS,
             ]);
     }
 
@@ -184,9 +173,7 @@ class ACLTest extends TestCase
         $this->setUpPermissionsCacheMockExpectations(
             1,
             1,
-            [
-                0 => 1,
-            ],
+            [1],
             true
         );
 
@@ -202,9 +189,7 @@ class ACLTest extends TestCase
         $this->setUpPermissionsCacheMockExpectations(
             1,
             0,
-            [
-                0 => 1,
-            ],
+            [1],
             true
         );
 
@@ -221,10 +206,7 @@ class ACLTest extends TestCase
         $this->setUpPermissionsCacheMockExpectations(
             1,
             1,
-            [
-                1 => 3,
-                0 => 2,
-            ],
+            [2, 3],
             false
         );
 
