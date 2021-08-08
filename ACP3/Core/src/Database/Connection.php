@@ -11,6 +11,7 @@ use ACP3\Core\Environment\ApplicationMode;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\DBAL\Result;
+use Doctrine\DBAL\Types\Type;
 use Psr\Log\LoggerInterface;
 
 class Connection
@@ -90,6 +91,8 @@ class Connection
     }
 
     /**
+     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchAll(
@@ -108,6 +111,8 @@ class Connection
     }
 
     /**
+     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchAssoc(string $statement, array $params = [], array $types = []): array
@@ -118,6 +123,8 @@ class Connection
     }
 
     /**
+     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     *
      * @return bool|string
      *
      * @throws \Doctrine\DBAL\Exception
@@ -128,6 +135,8 @@ class Connection
     }
 
     /**
+     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function executeQuery(
