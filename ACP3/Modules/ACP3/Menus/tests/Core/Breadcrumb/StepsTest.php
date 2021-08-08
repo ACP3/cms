@@ -8,12 +8,12 @@
 namespace ACP3\Modules\ACP3\Menus\Core\Breadcrumb;
 
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 
 class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & MenuItemRepository
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
      */
     private $menuItemRepositoryMock;
 

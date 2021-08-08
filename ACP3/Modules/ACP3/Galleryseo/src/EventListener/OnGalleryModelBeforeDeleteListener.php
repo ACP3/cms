@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Galleryseo\EventListener;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Gallery\Helpers as GalleryHelpers;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
      */
     private $pictureRepository;
     /**

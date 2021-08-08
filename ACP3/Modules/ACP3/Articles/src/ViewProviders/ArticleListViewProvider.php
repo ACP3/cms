@@ -11,12 +11,12 @@ use ACP3\Core\Date;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination;
 use ACP3\Modules\ACP3\Articles\Installer\Schema as ArticlesSchema;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class ArticleListViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Repository\ArticleRepository
      */
     private $articleRepository;
     /**

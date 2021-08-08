@@ -12,7 +12,7 @@ use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\PageBreaks;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class ArticlePaginatedViewProvider
 {

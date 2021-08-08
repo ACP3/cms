@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Comments;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository;
+use ACP3\Modules\ACP3\Comments\Repository\CommentRepository;
 
 class Helpers
 {
@@ -17,7 +17,7 @@ class Helpers
      */
     protected $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Repository\CommentRepository
      */
     protected $commentRepository;
 

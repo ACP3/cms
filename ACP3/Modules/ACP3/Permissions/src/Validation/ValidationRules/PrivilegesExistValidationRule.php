@@ -9,12 +9,12 @@ namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\PrivilegeRepository;
 
 class PrivilegesExistValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\PrivilegeRepository
      */
     protected $privilegeRepository;
 

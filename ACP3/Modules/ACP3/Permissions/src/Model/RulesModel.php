@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Permissions\Model;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\RuleRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

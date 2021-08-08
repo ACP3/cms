@@ -7,9 +7,9 @@
 
 namespace ACP3\Core\Settings;
 
-use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
-use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
+use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Settings\Event\SettingsSaveEvent;
+use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -25,11 +25,11 @@ class Settings implements SettingsInterface
      */
     private $eventDispatcher;
     /**
-     * @var ModuleAwareRepositoryInterface
+     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
      */
     private $systemModuleRepository;
     /**
-     * @var SettingsAwareRepositoryInterface
+     * @var \ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface
      */
     private $systemSettingsRepository;
     /**

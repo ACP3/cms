@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     bind:
-      $nestedSetRepository: '@ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository'
+      $nestedSetRepository: '@ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository'
 
   menus.nested_set.operation.insert:
     class: ACP3\Core\NestedSet\Operation\Insert

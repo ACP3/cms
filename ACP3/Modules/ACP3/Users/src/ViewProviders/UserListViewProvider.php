@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Users\ViewProviders;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination;
 use ACP3\Modules\ACP3\Users\Installer\Schema as UsersSchema;
-use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
+use ACP3\Modules\ACP3\Users\Repository\UserRepository;
 
 class UserListViewProvider
 {
@@ -23,7 +23,7 @@ class UserListViewProvider
      */
     private $resultsPerPage;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
      */
     private $userRepository;
 

@@ -10,8 +10,8 @@ namespace ACP3\Modules\ACP3\Auditlog\EventListener;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Date;
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
-use ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository;
+use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
+use ACP3\Modules\ACP3\Auditlog\Repository\AuditLogRepository;
 use Doctrine\DBAL\Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -27,11 +27,11 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
      */
     private $userModel;
     /**
-     * @var \ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface
+     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
      */
     private $moduleAwareRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogRepository
+     * @var \ACP3\Modules\ACP3\Auditlog\Repository\AuditLogRepository
      */
     private $auditLogRepository;
     /**

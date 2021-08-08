@@ -13,9 +13,9 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\News\Installer\Schema as NewsSchema;
-use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
+use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class NewsDetailsViewProvider
 {
@@ -24,7 +24,7 @@ class NewsDetailsViewProvider
      */
     private $newsRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
     private $categoryRepository;
     /**

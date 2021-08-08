@@ -17,7 +17,7 @@ class Vote extends Core\Controller\AbstractWidgetAction implements Core\Controll
      */
     private $date;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\PollRepository
      */
     private $pollRepository;
     /**
@@ -28,7 +28,7 @@ class Vote extends Core\Controller\AbstractWidgetAction implements Core\Controll
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Polls\Model\Repository\PollRepository $pollRepository,
+        Polls\Repository\PollRepository $pollRepository,
         Polls\ViewProviders\PollVoteViewProvider $pollVoteViewProvider
     ) {
         parent::__construct($context);

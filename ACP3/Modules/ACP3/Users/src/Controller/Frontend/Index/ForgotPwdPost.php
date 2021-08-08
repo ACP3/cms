@@ -19,7 +19,7 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction implements Core
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
      */
     private $userRepository;
     /**
@@ -54,7 +54,7 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction implements Core
         Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\Secure $secureHelper,
         Users\Model\UsersModel $usersModel,
-        Users\Model\Repository\UserRepository $userRepository,
+        Users\Repository\UserRepository $userRepository,
         Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
         Users\Helpers\SendPasswordChangeEmail $sendPasswordChangeEmail
     ) {

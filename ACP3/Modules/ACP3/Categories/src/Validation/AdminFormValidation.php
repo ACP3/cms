@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Categories\Validation;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Categories\Installer\Schema;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\AllowedSuperiorCategoryValidationRule;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\ParentIdValidationRule;
@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\ParentIdValidationRu
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
     protected $categoryRepository;
     /**

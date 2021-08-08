@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Polls\ViewProviders;
 
 use ACP3\Core\Date;
 use ACP3\Modules\ACP3\Polls\Helpers as PollHelpers;
-use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
+use ACP3\Modules\ACP3\Polls\Repository\PollRepository;
 
 class PollListViewProvider
 {
@@ -22,7 +22,7 @@ class PollListViewProvider
      */
     private $pollHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\PollRepository
      */
     private $pollRepository;
 

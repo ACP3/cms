@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Gallery\ViewProviders;
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema as GallerySchema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class GalleryListWidgetViewProvider
 {
@@ -19,7 +19,7 @@ class GalleryListWidgetViewProvider
      */
     private $date;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
      */
     private $galleryRepository;
     /**

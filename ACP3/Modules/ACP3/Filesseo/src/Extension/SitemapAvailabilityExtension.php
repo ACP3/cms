@@ -10,10 +10,10 @@ namespace ACP3\Modules\ACP3\Filesseo\Extension;
 use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
-use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
+use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension

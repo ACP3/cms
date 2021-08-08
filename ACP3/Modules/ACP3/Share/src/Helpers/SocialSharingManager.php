@@ -7,8 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Share\Helpers;
 
-use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 use ACP3\Modules\ACP3\Share\Model\ShareModel;
+use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class SocialSharingManager
 {
@@ -17,7 +17,7 @@ class SocialSharingManager
      */
     private $shareModel;
     /**
-     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
+     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
      */
     private $shareRepository;
 

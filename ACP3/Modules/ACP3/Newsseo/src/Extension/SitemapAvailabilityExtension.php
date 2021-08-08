@@ -12,7 +12,7 @@ use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\News\Helpers;
 use ACP3\Modules\ACP3\News\Installer\Schema;
-use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
+use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
@@ -22,7 +22,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      */
     protected $date;
     /**
-     * @var NewsRepository
+     * @var \ACP3\Modules\ACP3\News\Repository\NewsRepository
      */
     protected $newsRepository;
 

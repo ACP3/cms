@@ -13,7 +13,7 @@ use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema as GallerySchema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 use ACP3\Modules\ACP3\Gallerycomments\Installer\Schema as GalleryCommentsSchema;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -32,7 +32,7 @@ class OnGalleryLayoutDetailsAfterEventListener implements EventSubscriberInterfa
      */
     private $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
      */
     private $galleryRepository;
 

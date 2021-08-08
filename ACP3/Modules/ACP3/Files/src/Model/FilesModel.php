@@ -11,12 +11,12 @@ use ACP3\Core\Helpers\Sort;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\DuplicationAwareTrait;
-use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\Model\SortingAwareTrait;
 use ACP3\Core\Model\UpdatedAtAwareModelInterface;
+use ACP3\Core\Repository\AbstractRepository;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
-use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
+use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, SortingAwareInterface

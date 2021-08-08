@@ -12,7 +12,7 @@ use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\Articles\Helpers;
 use ACP3\Modules\ACP3\Articles\Installer\Schema;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension

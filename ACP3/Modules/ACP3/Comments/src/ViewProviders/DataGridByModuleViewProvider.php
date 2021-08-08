@@ -18,15 +18,15 @@ use ACP3\Core\DataGrid\QueryOption;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
-use ACP3\Modules\ACP3\Comments\Model\Repository\CommentsDataGridRepository;
+use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
+use ACP3\Modules\ACP3\Comments\Repository\CommentsDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGridByModuleViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentsDataGridRepository
+     * @var \ACP3\Modules\ACP3\Comments\Repository\CommentsDataGridRepository
      */
     private $dataGridRepository;
     /**
@@ -50,7 +50,7 @@ class DataGridByModuleViewProvider
      */
     private $breadcrumb;
     /**
-     * @var \ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface
+     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
      */
     private $systemModuleRepository;
 

@@ -9,7 +9,7 @@ namespace ACP3\Core\Model;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Model\Event\ModelSavePrepareDataEvent;
-use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\Repository\AbstractRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractModel
@@ -264,7 +264,7 @@ abstract class AbstractModel
     }
 
     /**
-     * @return AbstractRepository
+     * @return \ACP3\Core\Repository\AbstractRepository
      */
     protected function getRepository()
     {

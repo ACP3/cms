@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\News\ViewProviders;
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\News\Installer\Schema as NewsSchema;
-use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
+use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class LatestNewsListWidgetViewProvider
 {
@@ -19,7 +19,7 @@ class LatestNewsListWidgetViewProvider
      */
     private $date;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
+     * @var \ACP3\Modules\ACP3\News\Repository\NewsRepository
      */
     private $newsRepository;
     /**

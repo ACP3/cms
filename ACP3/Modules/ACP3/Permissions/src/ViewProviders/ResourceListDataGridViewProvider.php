@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Permissions\ViewProviders;
 use ACP3\Core\ACL;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\ResourceRepository;
 
 class ResourceListDataGridViewProvider
 {
@@ -23,7 +23,7 @@ class ResourceListDataGridViewProvider
      */
     private $modules;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\ResourceRepository
      */
     private $resourceRepository;
     /**

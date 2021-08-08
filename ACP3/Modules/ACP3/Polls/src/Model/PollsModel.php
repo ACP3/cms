@@ -12,9 +12,9 @@ use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Modules\ACP3\Polls\Installer\Schema;
-use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
-use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
-use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
+use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
+use ACP3\Modules\ACP3\Polls\Repository\PollRepository;
+use ACP3\Modules\ACP3\Polls\Repository\VoteRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
@@ -26,11 +26,11 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
      */
     protected $secure;
     /**
-     * @var AnswerRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
      */
     protected $answerRepository;
     /**
-     * @var VoteRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\VoteRepository
      */
     protected $voteRepository;
 

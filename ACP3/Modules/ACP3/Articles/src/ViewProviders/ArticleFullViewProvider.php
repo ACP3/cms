@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Articles\ViewProviders;
 
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class ArticleFullViewProvider
 {

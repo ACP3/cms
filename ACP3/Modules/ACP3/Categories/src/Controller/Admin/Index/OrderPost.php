@@ -13,12 +13,12 @@ use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Modules\ACP3\Categories\Model\CategoriesModel;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class OrderPost extends AbstractWidgetAction implements InvokableActionInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
     private $categoriesRepository;
     /**

@@ -9,12 +9,11 @@ namespace ACP3\Modules\ACP3\Articlessearch\Repository;
 
 use ACP3\Core\Database\Connection;
 use ACP3\Core\Date;
-use ACP3\Core\Model\Repository\AbstractRepository;
-use ACP3\Core\Model\Repository\PublicationPeriodAwareTrait;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
-use ACP3\Modules\ACP3\Search\Model\Repository\SearchResultsAwareRepositoryInterface;
+use ACP3\Core\Repository\PublicationPeriodAwareTrait;
+use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Search\Repository\SearchResultsAwareRepositoryInterface;
 
-class SearchResultsAwareRepository extends AbstractRepository implements SearchResultsAwareRepositoryInterface
+class SearchResultsAwareRepository extends \ACP3\Core\Repository\AbstractRepository implements SearchResultsAwareRepositoryInterface
 {
     use PublicationPeriodAwareTrait;
     public const TABLE_NAME = ArticleRepository::TABLE_NAME;

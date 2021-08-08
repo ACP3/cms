@@ -7,10 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Gallerycomments\Repository;
 
-use ACP3\Core\Model\Repository\AbstractRepository;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 
-class GalleryPictureRepository extends AbstractRepository
+class GalleryPictureRepository extends \ACP3\Core\Repository\AbstractRepository
 {
     public const TABLE_NAME = PictureRepository::TABLE_NAME;
 

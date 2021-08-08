@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository;
 
 class Subscribe
 {
@@ -38,7 +38,7 @@ class Subscribe
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository
      */
     private $accountRepository;
     /**

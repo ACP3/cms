@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Comments;
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Repository\CommentRepository
      */
     private $commentRepository;
     /**
@@ -30,7 +30,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Comments\Model\CommentsModel $commentsModel,
-        Comments\Model\Repository\CommentRepository $commentRepository
+        Comments\Repository\CommentRepository $commentRepository
     ) {
         parent::__construct($context);
 

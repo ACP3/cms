@@ -7,17 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Polls\ViewProviders;
 
-use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
-use ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository;
+use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
+use ACP3\Modules\ACP3\Polls\Repository\PollRepository;
 
 class PollResultViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\PollRepository
      */
     private $pollRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
      */
     private $answerRepository;
 

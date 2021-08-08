@@ -7,13 +7,13 @@
 
 namespace ACP3\Core\NestedSet\Operation;
 
-use ACP3\Core\NestedSet\Model\Repository\BlockAwareNestedSetRepositoryInterface;
-use ACP3\Core\NestedSet\Model\Repository\NestedSetRepository;
+use ACP3\Core\NestedSet\Repository\BlockAwareNestedSetRepositoryInterface;
+use ACP3\Core\NestedSet\Repository\NestedSetRepository;
 
 abstract class AbstractOperation
 {
     /**
-     * @var \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository|BlockAwareNestedSetRepositoryInterface
+     * @var \ACP3\Core\NestedSet\Repository\NestedSetRepository|BlockAwareNestedSetRepositoryInterface
      */
     protected $nestedSetRepository;
 

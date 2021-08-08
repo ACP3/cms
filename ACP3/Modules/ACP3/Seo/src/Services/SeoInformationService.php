@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\Services;
 
-use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
+use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 
 class SeoInformationService
 {

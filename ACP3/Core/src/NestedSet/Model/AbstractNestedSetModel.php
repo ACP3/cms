@@ -9,16 +9,16 @@ namespace ACP3\Core\NestedSet\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
-use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\NestedSet\Operation\Delete;
 use ACP3\Core\NestedSet\Operation\Edit;
 use ACP3\Core\NestedSet\Operation\Insert;
 use ACP3\Core\NestedSet\Operation\Sort;
+use ACP3\Core\Repository\AbstractRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @property \ACP3\Core\NestedSet\Model\Repository\NestedSetRepository $repository
+ * @property \ACP3\Core\NestedSet\Repository\NestedSetRepository $repository
  */
 abstract class AbstractNestedSetModel extends AbstractModel implements SortingAwareInterface
 {

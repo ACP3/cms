@@ -7,13 +7,13 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface;
-use ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface;
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PrivilegeEnum;
+use ACP3\Core\ACL\Repository\PrivilegeRepositoryInterface;
+use ACP3\Core\ACL\Repository\RoleRepositoryInterface;
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Model\Repository\AbstractRepository;
 use ACP3\Core\Modules\Installer\SchemaInterface;
+use ACP3\Core\Repository\AbstractRepository;
 
 class AclInstaller implements InstallerInterface
 {
@@ -25,19 +25,19 @@ class AclInstaller implements InstallerInterface
      */
     private $schemaHelper;
     /**
-     * @var \ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface
+     * @var \ACP3\Core\ACL\Repository\RoleRepositoryInterface
      */
     private $roleRepository;
     /**
-     * @var \ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface
+     * @var \ACP3\Core\ACL\Repository\PrivilegeRepositoryInterface
      */
     private $privilegeRepository;
     /**
-     * @var \ACP3\Core\Model\Repository\AbstractRepository
+     * @var \ACP3\Core\Repository\AbstractRepository
      */
     private $resourceRepository;
     /**
-     * @var \ACP3\Core\Model\Repository\AbstractRepository
+     * @var \ACP3\Core\Repository\AbstractRepository
      */
     private $ruleRepository;
 

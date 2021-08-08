@@ -4,7 +4,7 @@ services:
 
   ACP3\Modules\ACP3\Categories\Model\CategoriesModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository'
+      $repository: '@ACP3\Modules\ACP3\Categories\Repository\CategoryRepository'
       $insertOperation: "@categories.nested_set.operation.insert"
       $editOperation: "@categories.nested_set.operation.edit"
       $deleteOperation: "@categories.nested_set.operation.delete"

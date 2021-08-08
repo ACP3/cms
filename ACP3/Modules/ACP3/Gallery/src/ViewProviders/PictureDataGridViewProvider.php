@@ -21,7 +21,7 @@ use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Helpers;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesDataGridRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryPicturesDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -32,7 +32,7 @@ class PictureDataGridViewProvider
      */
     private $dataGrid;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryPicturesDataGridRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryPicturesDataGridRepository
      */
     private $dataGridRepository;
     /**

@@ -7,9 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Installer\Repository;
 
-use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
-
-class ModulesRepository extends AbstractStubRepository implements ModuleAwareRepositoryInterface
+class ModulesRepository extends AbstractStubRepository implements \ACP3\Core\Repository\ModuleAwareRepositoryInterface
 {
     /**
      * {@inheritDoc}

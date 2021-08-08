@@ -13,12 +13,12 @@ use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Http\RedirectResponse;
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 
 class OrderPost extends AbstractWidgetAction implements InvokableActionInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
      */
     private $menuItemRepository;
     /**

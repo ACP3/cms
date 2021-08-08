@@ -4,8 +4,8 @@ services:
 
   ACP3\Modules\ACP3\Comments\Model\CommentsModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository'
+      $repository: '@ACP3\Modules\ACP3\Comments\Repository\CommentRepository'
 
   ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Comments\Model\Repository\CommentByModuleRepository'
+      $repository: '@ACP3\Modules\ACP3\Comments\Repository\CommentByModuleRepository'

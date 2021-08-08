@@ -12,7 +12,7 @@ use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Feeds\Extension\FeedAvailabilityExtensionInterface;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
-use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
+use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
 {
@@ -29,7 +29,7 @@ class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
      */
     private $formatter;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Repository\FilesRepository
      */
     private $filesRepository;
 

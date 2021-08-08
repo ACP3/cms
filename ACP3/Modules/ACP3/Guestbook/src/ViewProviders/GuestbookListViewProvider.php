@@ -11,12 +11,12 @@ use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema as GuestbookSchema;
-use ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository;
+use ACP3\Modules\ACP3\Guestbook\Repository\GuestbookRepository;
 
 class GuestbookListViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository
+     * @var \ACP3\Modules\ACP3\Guestbook\Repository\GuestbookRepository
      */
     private $guestbookRepository;
     /**

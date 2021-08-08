@@ -4,6 +4,6 @@ services:
 
   ACP3\Modules\ACP3\Gallery\Model\GalleryModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository'
+      $repository: '@ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository'
 
   ACP3\Modules\ACP3\Gallery\Model\PictureModel: ~

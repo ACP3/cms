@@ -14,8 +14,8 @@ use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
-use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
-use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
+use ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository;
+use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddSocialSharingListener implements EventSubscriberInterface
@@ -37,11 +37,11 @@ class AddSocialSharingListener implements EventSubscriberInterface
      */
     private $socialServices;
     /**
-     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
+     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
      */
     private $shareRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository
+     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository
      */
     private $shareRatingsRepository;
 

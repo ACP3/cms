@@ -8,12 +8,12 @@
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 
 class ManageMenuItem
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
     /**

@@ -9,22 +9,22 @@ namespace ACP3\Modules\ACP3\Permissions\Services;
 
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PermissionServiceInterface;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\ResourceRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\RoleRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\RuleRepository;
 
 class PermissionService implements PermissionServiceInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\RoleRepository
      */
     private $roleRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\ResourceRepository
      */
     private $resourceRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\RuleRepository
      */
     private $ruleRepository;
 

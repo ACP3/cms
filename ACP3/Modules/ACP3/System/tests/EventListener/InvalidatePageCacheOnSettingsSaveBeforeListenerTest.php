@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\System\EventListener;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
-use ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository;
+use ACP3\Modules\ACP3\System\Repository\SettingsRepository;
 use ACP3\Modules\ACP3\System\Services\CacheClearService;
 
 class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Framework\TestCase

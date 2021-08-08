@@ -2,5 +2,5 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Modules\ACP3\Gallery\Model\Repository\:
-    resource: "../../../src/Model/Repository/"
+  ACP3\Modules\ACP3\Gallery\Repository\:
+    resource: "../../../src/Repository/"

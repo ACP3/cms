@@ -10,18 +10,18 @@ namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\InvokableActionInterface;
-use ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository;
-use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 use ACP3\Modules\ACP3\Share\Model\ShareRatingModel;
+use ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository;
+use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class Rate extends AbstractWidgetAction implements InvokableActionInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
+     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
      */
     private $shareRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository
+     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository
      */
     private $shareRatingsRepository;
     /**

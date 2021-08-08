@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Core;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 
 class MenuItemFormFields
 {
@@ -17,7 +17,7 @@ class MenuItemFormFields
      */
     private $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuRepository
      */
     private $menuRepository;
     /**

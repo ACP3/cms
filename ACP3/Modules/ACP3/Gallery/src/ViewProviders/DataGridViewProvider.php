@@ -17,7 +17,7 @@ use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Gallery\Helpers;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class DataGridViewProvider
@@ -27,7 +27,7 @@ class DataGridViewProvider
      */
     private $dataGrid;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryDataGridRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryDataGridRepository
      */
     private $dataGridRepository;
     /**

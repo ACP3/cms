@@ -7,9 +7,9 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Modules\Installer\MigrationInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
+use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 
 class SchemaUpdater
 {
@@ -18,7 +18,7 @@ class SchemaUpdater
      */
     private $schemaHelper;
     /**
-     * @var \ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface
+     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
      */
     private $moduleAwareRepository;
 

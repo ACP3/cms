@@ -9,12 +9,12 @@ namespace ACP3\Modules\ACP3\Share\ViewProviders;
 
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
-use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
+use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class ShareWidgetViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
+     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
      */
     private $shareRepository;
     /**

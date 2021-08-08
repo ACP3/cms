@@ -11,7 +11,7 @@ use ACP3\Core\Helpers\Forms;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
-use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
+use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class ShareFormFields
 {
@@ -20,7 +20,7 @@ class ShareFormFields
      */
     private $formsHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
+     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
      */
     private $shareRepository;
     /**

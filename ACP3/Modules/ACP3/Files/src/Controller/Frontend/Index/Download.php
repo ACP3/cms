@@ -23,7 +23,7 @@ class Download extends Core\Controller\AbstractWidgetAction
      */
     private $stringFormatter;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Repository\FilesRepository
      */
     private $filesRepository;
     /**
@@ -36,7 +36,7 @@ class Download extends Core\Controller\AbstractWidgetAction
         Core\Date $date,
         Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\StringFormatter $stringFormatter,
-        Files\Model\Repository\FilesRepository $filesRepository
+        Files\Repository\FilesRepository $filesRepository
     ) {
         parent::__construct($context);
 

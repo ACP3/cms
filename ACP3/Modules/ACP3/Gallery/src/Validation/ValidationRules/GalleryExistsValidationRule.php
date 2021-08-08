@@ -8,12 +8,12 @@
 namespace ACP3\Modules\ACP3\Gallery\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class GalleryExistsValidationRule extends AbstractValidationRule
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
      */
     private $galleryRepository;
 

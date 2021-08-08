@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Installer\Repository;
 
 use ACP3\Core\Environment\ApplicationMode;
-use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
+use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
 
 class SettingsRepository extends AbstractStubRepository implements SettingsAwareRepositoryInterface
 {

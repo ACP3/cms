@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Helper;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
+use ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository;
 
 class SendNewsletter
 {
@@ -22,7 +22,7 @@ class SendNewsletter
      */
     protected $router;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository
      */
     protected $newsletterRepository;
     /**

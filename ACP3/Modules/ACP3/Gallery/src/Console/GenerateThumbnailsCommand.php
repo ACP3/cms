@@ -11,8 +11,8 @@ use ACP3\Core\Cache\Purge;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,11 +23,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class GenerateThumbnailsCommand extends Command
 {
     /**
-     * @var GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
      */
     private $galleryRepository;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
      */
     private $galleryPicturesRepository;
     /**

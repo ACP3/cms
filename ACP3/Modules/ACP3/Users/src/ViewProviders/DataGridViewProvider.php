@@ -16,7 +16,7 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\DataGrid\ColumnRenderer\UserRolesColumnRenderer;
 use ACP3\Modules\ACP3\Users\Helpers;
-use ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository;
+use ACP3\Modules\ACP3\Users\Repository\DataGridRepository;
 
 class DataGridViewProvider
 {
@@ -29,7 +29,7 @@ class DataGridViewProvider
      */
     private $dataGrid;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\DataGridRepository
+     * @var \ACP3\Modules\ACP3\Users\Repository\DataGridRepository
      */
     private $dataGridRepository;
     /**

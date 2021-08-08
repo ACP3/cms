@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Steps extends Core\Breadcrumb\Steps
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
      */
     protected $menuItemRepository;
     /**
@@ -31,7 +31,7 @@ class Steps extends Core\Breadcrumb\Steps
         RequestInterface $request,
         Core\Router\RouterInterface $router,
         EventDispatcherInterface $eventDispatcher,
-        Menus\Model\Repository\MenuItemRepository $menuItemRepository
+        Menus\Repository\MenuItemRepository $menuItemRepository
     ) {
         parent::__construct($container, $translator, $request, $router, $eventDispatcher);
 

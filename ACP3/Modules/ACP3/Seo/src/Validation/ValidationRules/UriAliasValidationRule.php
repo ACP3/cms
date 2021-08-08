@@ -22,14 +22,14 @@ class UriAliasValidationRule extends AbstractValidationRule
      */
     protected $uriSafeValidationRule;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Repository\SeoRepository
      */
     protected $seoRepository;
 
     public function __construct(
         Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule,
         Core\Validation\ValidationRules\UriSafeValidationRule $uriSafeValidationRule,
-        Seo\Model\Repository\SeoRepository $seoRepository
+        Seo\Repository\SeoRepository $seoRepository
     ) {
         $this->internalUriValidationRule = $internalUriValidationRule;
         $this->uriSafeValidationRule = $uriSafeValidationRule;

@@ -7,13 +7,13 @@
 
 namespace ACP3\Modules\ACP3\Seo\Helper;
 
-use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
 use ACP3\Modules\ACP3\Seo\Model\SeoModel;
+use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 
 class UriAliasManager
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Repository\SeoRepository
      */
     protected $seoRepository;
     /**

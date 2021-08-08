@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Emoticons\Services;
 
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
+use ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository;
 
 class EmoticonService implements EmoticonServiceInterface
 {

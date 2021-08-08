@@ -4,4 +4,4 @@ services:
 
   ACP3\Modules\ACP3\Guestbook\Model\GuestbookModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository'
+      $repository: '@ACP3\Modules\ACP3\Guestbook\Repository\GuestbookRepository'

@@ -7,12 +7,12 @@
 
 namespace ACP3\Core\DataGrid;
 
-use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
+use ACP3\Core\DataGrid\Repository\AbstractDataGridRepository;
 
 final class Input
 {
     /**
-     * @var AbstractDataGridRepository|null
+     * @var \ACP3\Core\DataGrid\Repository\AbstractDataGridRepository|null
      */
     private $repository;
     /**

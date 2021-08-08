@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\EventListener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PictureDeleteListener implements EventSubscriberInterface
@@ -19,7 +19,7 @@ class PictureDeleteListener implements EventSubscriberInterface
      */
     private $thumbnailGenerator;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
      */
     private $pictureRepository;
 

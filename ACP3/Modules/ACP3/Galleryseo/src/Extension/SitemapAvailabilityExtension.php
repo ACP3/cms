@@ -13,8 +13,8 @@ use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
@@ -28,7 +28,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      */
     protected $galleryRepository;
     /**
-     * @var PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
      */
     protected $pictureRepository;
     /**

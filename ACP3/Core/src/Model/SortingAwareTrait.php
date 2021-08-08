@@ -9,12 +9,12 @@ namespace ACP3\Core\Model;
 
 use ACP3\Core\Helpers\Sort;
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\Repository\AbstractRepository;
 
 trait SortingAwareTrait
 {
     /**
-     * @return AbstractRepository
+     * @return \ACP3\Core\Repository\AbstractRepository
      */
     abstract protected function getRepository();
 

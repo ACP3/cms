@@ -14,7 +14,7 @@ use ACP3\Core\Pagination;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
-use ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository;
+use ACP3\Modules\ACP3\Comments\Repository\CommentRepository;
 
 class CommentListViewProvider
 {
@@ -39,7 +39,7 @@ class CommentListViewProvider
      */
     private $translator;
     /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\Repository\CommentRepository
+     * @var \ACP3\Modules\ACP3\Comments\Repository\CommentRepository
      */
     private $commentRepository;
 

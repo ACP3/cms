@@ -8,12 +8,12 @@
 namespace ACP3\Modules\ACP3\Articles\ViewProviders;
 
 use ACP3\Core\Date;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class LatestArticlesViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Repository\ArticleRepository
      */
     private $articleRepository;
     /**

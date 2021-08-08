@@ -22,7 +22,7 @@ class Details extends Core\Controller\AbstractWidgetAction
      */
     private $date;
     /**
-     * @var \ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository
+     * @var \ACP3\Modules\ACP3\Articles\Repository\ArticleRepository
      */
     private $articleRepository;
     /**
@@ -34,7 +34,7 @@ class Details extends Core\Controller\AbstractWidgetAction
         WidgetContext $context,
         Articles\ViewProviders\ArticlePaginatedViewProvider $articlePaginatedViewProvider,
         Core\Date $date,
-        Articles\Model\Repository\ArticleRepository $articleRepository
+        Articles\Repository\ArticleRepository $articleRepository
     ) {
         parent::__construct($context);
 

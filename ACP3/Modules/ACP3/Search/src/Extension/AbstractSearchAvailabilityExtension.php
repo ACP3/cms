@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Search\Extension;
 
 use ACP3\Core\Router\RouterInterface;
-use ACP3\Modules\ACP3\Search\Model\Repository\SearchResultsAwareRepositoryInterface;
+use ACP3\Modules\ACP3\Search\Repository\SearchResultsAwareRepositoryInterface;
 
 abstract class AbstractSearchAvailabilityExtension implements SearchAvailabilityExtensionInterface
 {
@@ -17,7 +17,7 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
      */
     protected $router;
     /**
-     * @var SearchResultsAwareRepositoryInterface
+     * @var \ACP3\Modules\ACP3\Search\Repository\SearchResultsAwareRepositoryInterface
      */
     protected $repository;
 

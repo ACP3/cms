@@ -4,6 +4,6 @@ services:
 
   ACP3\Modules\ACP3\Contact\Model\ContactsModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Contact\Model\Repository\ContactsRepository'
+      $repository: '@ACP3\Modules\ACP3\Contact\Repository\ContactsRepository'
 
   ACP3\Modules\ACP3\Contact\Model\ContactFormModel: ~

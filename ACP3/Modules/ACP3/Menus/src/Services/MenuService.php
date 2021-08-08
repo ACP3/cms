@@ -8,8 +8,8 @@
 namespace ACP3\Modules\ACP3\Menus\Services;
 
 use ACP3\Core\I18n\Translator;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 
 class MenuService implements MenuServiceInterface
 {

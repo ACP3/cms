@@ -17,7 +17,7 @@ class Details extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository
      */
     private $newsletterRepository;
     /**
@@ -27,7 +27,7 @@ class Details extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
+        Newsletter\Repository\NewsletterRepository $newsletterRepository,
         Newsletter\ViewProviders\NewsletterDetailsViewProvider $newsletterDetailsViewProvider
     ) {
         parent::__construct($context);

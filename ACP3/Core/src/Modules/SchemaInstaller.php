@@ -8,9 +8,9 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
-use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
+use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
+use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
 use Psr\Log\LoggerInterface;
 
 class SchemaInstaller extends SchemaHelper implements InstallerInterface
@@ -20,7 +20,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     private $logger;
     /**
-     * @var \ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface
+     * @var \ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface
      */
     private $systemSettingsRepository;
 

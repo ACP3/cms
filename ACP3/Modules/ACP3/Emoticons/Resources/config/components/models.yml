@@ -4,4 +4,4 @@ services:
 
   ACP3\Modules\ACP3\Emoticons\Model\EmoticonsModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository'
+      $repository: '@ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository'

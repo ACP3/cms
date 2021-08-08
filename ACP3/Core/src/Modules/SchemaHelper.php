@@ -20,13 +20,13 @@ class SchemaHelper
      */
     private $db;
     /**
-     * @var Core\Model\Repository\ModuleAwareRepositoryInterface
+     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
      */
     private $systemModuleRepository;
 
     public function __construct(
         Core\Database\Connection $db,
-        Core\Model\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
+        Core\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
     ) {
         $this->db = $db;
         $this->systemModuleRepository = $systemModuleRepository;
@@ -45,7 +45,7 @@ class SchemaHelper
         return $this->db;
     }
 
-    public function getSystemModuleRepository(): Core\Model\Repository\ModuleAwareRepositoryInterface
+    public function getSystemModuleRepository(): Core\Repository\ModuleAwareRepositoryInterface
     {
         return $this->systemModuleRepository;
     }

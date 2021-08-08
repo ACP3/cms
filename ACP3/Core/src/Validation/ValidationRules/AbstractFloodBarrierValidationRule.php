@@ -8,7 +8,7 @@
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Date;
-use ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface;
+use ACP3\Core\Repository\FloodBarrierAwareRepositoryInterface;
 
 abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
 {
@@ -17,7 +17,7 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
      */
     protected $date;
     /**
-     * @var \ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface
+     * @var \ACP3\Core\Repository\FloodBarrierAwareRepositoryInterface
      */
     protected $repository;
 

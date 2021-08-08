@@ -2,8 +2,8 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Modules\ACP3\System\Model\Repository\:
-    resource: "../../../src/Model/Repository/"
+  ACP3\Modules\ACP3\System\Repository\:
+    resource: "../../../src/Repository/"
 
-  ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface: '@ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository'
-  ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface: '@ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository'
+  ACP3\Core\Repository\ModuleAwareRepositoryInterface: '@ACP3\Modules\ACP3\System\Repository\ModulesRepository'
+  ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface: '@ACP3\Modules\ACP3\System\Repository\SettingsRepository'

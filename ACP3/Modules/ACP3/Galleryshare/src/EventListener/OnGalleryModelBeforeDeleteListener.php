@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Galleryshare\EventListener;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Gallery\Helpers;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 use ACP3\Modules\ACP3\Share\Installer\Schema as ShareSchema;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
      */
     private $pictureRepository;
     /**

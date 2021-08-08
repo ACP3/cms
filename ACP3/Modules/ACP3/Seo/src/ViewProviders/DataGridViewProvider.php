@@ -16,7 +16,7 @@ use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
-use ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository;
+use ACP3\Modules\ACP3\Seo\Repository\DataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class DataGridViewProvider
@@ -26,7 +26,7 @@ class DataGridViewProvider
      */
     private $dataGrid;
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\DataGridRepository
+     * @var \ACP3\Modules\ACP3\Seo\Repository\DataGridRepository
      */
     private $dataGridRepository;
     /**

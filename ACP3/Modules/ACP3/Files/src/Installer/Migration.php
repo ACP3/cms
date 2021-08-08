@@ -9,12 +9,12 @@ namespace ACP3\Modules\ACP3\Files\Installer;
 
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\SchemaHelper;
-use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
+use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class Migration extends Modules\Installer\AbstractMigration
 {
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Repository\FilesRepository
      */
     private $filesRepository;
 

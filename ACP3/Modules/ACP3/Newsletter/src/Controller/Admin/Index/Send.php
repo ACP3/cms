@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter;
 class Send extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository
      */
     private $newsletterRepository;
     /**
@@ -21,7 +21,7 @@ class Send extends Core\Controller\AbstractWidgetAction
      */
     private $newsletterHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository
      */
     private $accountRepository;
     /**
@@ -32,8 +32,8 @@ class Send extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Helpers\RedirectMessages $redirectMessages,
-        Newsletter\Model\Repository\NewsletterRepository $newsletterRepository,
-        Newsletter\Model\Repository\AccountRepository $accountRepository,
+        Newsletter\Repository\NewsletterRepository $newsletterRepository,
+        Newsletter\Repository\AccountRepository $accountRepository,
         Newsletter\Helper\SendNewsletter $newsletterHelpers
     ) {
         parent::__construct($context);

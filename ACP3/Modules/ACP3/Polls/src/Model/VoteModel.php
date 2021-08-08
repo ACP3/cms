@@ -9,12 +9,12 @@ namespace ACP3\Modules\ACP3\Polls\Model;
 
 use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
-use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
+use ACP3\Modules\ACP3\Polls\Repository\VoteRepository;
 
 class VoteModel
 {
     /**
-     * @var VoteRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\VoteRepository
      */
     protected $voteRepository;
     /**

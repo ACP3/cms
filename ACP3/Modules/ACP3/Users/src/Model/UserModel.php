@@ -32,7 +32,7 @@ class UserModel implements UserModelInterface
      */
     protected $userInfo = [];
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
      */
     protected $userRepository;
     /**
@@ -42,7 +42,7 @@ class UserModel implements UserModelInterface
 
     public function __construct(
         CountryList $countryList,
-        Users\Model\Repository\UserRepository $userRepository
+        Users\Repository\UserRepository $userRepository
     ) {
         $this->userRepository = $userRepository;
         $this->countryList = $countryList;

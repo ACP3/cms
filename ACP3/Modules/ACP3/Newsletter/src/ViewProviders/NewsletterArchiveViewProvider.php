@@ -11,12 +11,12 @@ use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\Pagination;
 use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema as NewsletterSchema;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository;
+use ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository;
 
 class NewsletterArchiveViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\NewsletterRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository
      */
     private $newsletterRepository;
     /**

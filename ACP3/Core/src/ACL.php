@@ -7,8 +7,8 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface;
 use ACP3\Core\ACL\PermissionServiceInterface;
+use ACP3\Core\ACL\Repository\UserRoleRepositoryInterface;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 
 class ACL
@@ -22,7 +22,7 @@ class ACL
      */
     private $permissionService;
     /**
-     * @var \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface
+     * @var \ACP3\Core\ACL\Repository\UserRoleRepositoryInterface
      */
     private $userRoleRepository;
 

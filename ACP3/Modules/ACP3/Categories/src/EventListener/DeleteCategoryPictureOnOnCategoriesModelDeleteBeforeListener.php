@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Categories\EventListener;
 
 use ACP3\Core\Helpers\Upload;
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener implements EventSubscriberInterface

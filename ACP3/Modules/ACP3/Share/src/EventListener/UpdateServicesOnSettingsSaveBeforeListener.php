@@ -10,8 +10,8 @@ namespace ACP3\Modules\ACP3\Share\EventListener;
 use ACP3\Core\Settings\Event\SettingsSaveEvent;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
-use ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository;
 use ACP3\Modules\ACP3\Share\Model\ShareModel;
+use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UpdateServicesOnSettingsSaveBeforeListener implements EventSubscriberInterface
@@ -21,7 +21,7 @@ class UpdateServicesOnSettingsSaveBeforeListener implements EventSubscriberInter
      */
     private $shareModel;
     /**
-     * @var \ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository
+     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
      */
     private $shareRepository;
     /**

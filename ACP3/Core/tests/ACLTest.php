@@ -22,7 +22,7 @@ class ACLTest extends TestCase
      */
     private $userMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\ACL\Repository\UserRoleRepositoryInterface
      */
     private $userRoleRepositoryMock;
     /**
@@ -44,7 +44,7 @@ class ACLTest extends TestCase
     private function initializeMockObjects(): void
     {
         $this->userMock = $this->createMock(UserModelInterface::class);
-        $this->userRoleRepositoryMock = $this->createMock(ACL\Model\Repository\UserRoleRepositoryInterface::class);
+        $this->userRoleRepositoryMock = $this->createMock(ACL\Repository\UserRoleRepositoryInterface::class);
         $this->permissionServiceMock = $this->createMock(PermissionServiceInterface::class);
     }
 

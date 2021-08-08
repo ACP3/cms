@@ -18,9 +18,9 @@ use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Categories\Helpers as CategoriesHelper;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\News\Installer\Schema as NewsSchema;
-use ACP3\Modules\ACP3\News\Model\Repository\NewsRepository;
+use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class NewsListViewProvider
 {
@@ -29,7 +29,7 @@ class NewsListViewProvider
      */
     private $categoriesHelpers;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
     private $categoryRepository;
     /**
@@ -41,7 +41,7 @@ class NewsListViewProvider
      */
     private $metaStatements;
     /**
-     * @var \ACP3\Modules\ACP3\News\Model\Repository\NewsRepository
+     * @var \ACP3\Modules\ACP3\News\Repository\NewsRepository
      */
     private $newsRepository;
     /**

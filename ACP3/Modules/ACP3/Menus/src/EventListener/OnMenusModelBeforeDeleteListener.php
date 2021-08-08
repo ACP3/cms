@@ -9,18 +9,18 @@ namespace ACP3\Modules\ACP3\Menus\EventListener;
 
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnMenusModelBeforeDeleteListener implements EventSubscriberInterface
 {
     /**
-     * @var MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuRepository
      */
     private $menuRepository;
     /**
-     * @var MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
      */
     private $menuItemRepository;
     /**

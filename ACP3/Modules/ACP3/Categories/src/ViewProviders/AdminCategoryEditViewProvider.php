@@ -13,7 +13,7 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class AdminCategoryEditViewProvider
 {
@@ -34,7 +34,7 @@ class AdminCategoryEditViewProvider
      */
     private $title;
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
     private $categoryRepository;
     /**

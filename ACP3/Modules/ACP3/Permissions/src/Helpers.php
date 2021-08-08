@@ -7,12 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Permissions;
 
-use ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository;
+use ACP3\Modules\ACP3\Permissions\Repository\UserRoleRepository;
 
 class Helpers
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\UserRoleRepository
      */
     private $userRoleRepository;
 

@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Installer\Repository;
 
-use ACP3\Core\Model\Repository\RepositoryInterface;
+use ACP3\Core\Repository\RepositoryInterface;
 
 class AbstractStubRepository implements RepositoryInterface
 {

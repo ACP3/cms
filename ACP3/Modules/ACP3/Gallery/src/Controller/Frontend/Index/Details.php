@@ -21,7 +21,7 @@ class Details extends Core\Controller\AbstractWidgetAction
      */
     private $date;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
      */
     private $pictureRepository;
     /**
@@ -32,7 +32,7 @@ class Details extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Gallery\Model\Repository\PictureRepository $pictureRepository,
+        Gallery\Repository\PictureRepository $pictureRepository,
         Gallery\ViewProviders\GalleryPictureDetailsViewProvider $galleryPictureDetailsViewProvider
     ) {
         parent::__construct($context);

@@ -12,12 +12,12 @@ use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
-use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
+use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
 
 class AdminPollEditViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
      */
     private $answerRepository;
     /**

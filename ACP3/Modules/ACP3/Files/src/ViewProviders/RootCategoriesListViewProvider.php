@@ -7,13 +7,13 @@
 
 namespace ACP3\Modules\ACP3\Files\ViewProviders;
 
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 
 class RootCategoriesListViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
     private $categoryRepository;
 

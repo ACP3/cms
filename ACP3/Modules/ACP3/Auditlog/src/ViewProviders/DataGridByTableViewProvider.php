@@ -15,7 +15,7 @@ use ACP3\Core\DataGrid\Input;
 use ACP3\Core\DataGrid\QueryOption;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
-use ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogByTableDataGridRepository;
+use ACP3\Modules\ACP3\Auditlog\Repository\AuditLogByTableDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class DataGridByTableViewProvider
@@ -29,7 +29,7 @@ class DataGridByTableViewProvider
      */
     private $dataGrid;
     /**
-     * @var \ACP3\Modules\ACP3\Auditlog\Model\Repository\AuditLogByTableDataGridRepository
+     * @var \ACP3\Modules\ACP3\Auditlog\Repository\AuditLogByTableDataGridRepository
      */
     private $dataGridRepository;
     /**

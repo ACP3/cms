@@ -8,9 +8,8 @@
 namespace ACP3\Modules\ACP3\Menus\Repository;
 
 use ACP3\Core\DataGrid\ColumnPriorityQueue;
-use ACP3\Core\DataGrid\Model\Repository\AbstractDataGridRepository;
 use ACP3\Core\DataGrid\QueryOption;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Core\DataGrid\Repository\AbstractDataGridRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 class MenuItemDataGridRepository extends AbstractDataGridRepository

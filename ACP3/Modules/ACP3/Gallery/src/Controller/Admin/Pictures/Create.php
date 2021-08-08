@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
 class Create extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
      */
     private $galleryRepository;
     /**
@@ -23,7 +23,7 @@ class Create extends Core\Controller\AbstractWidgetAction implements Core\Contro
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Gallery\Model\Repository\GalleryRepository $galleryRepository,
+        Gallery\Repository\GalleryRepository $galleryRepository,
         Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider $adminGalleryPictureCreateViewProvider
     ) {
         parent::__construct($context);

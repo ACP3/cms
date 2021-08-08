@@ -18,7 +18,7 @@ class Files extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
     private $categoryRepository;
     /**
@@ -28,7 +28,7 @@ class Files extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Categories\Model\Repository\CategoryRepository $categoryRepository,
+        Categories\Repository\CategoryRepository $categoryRepository,
         FilesByCategoryIdViewProvider $filesByCategoryIdViewProvider
     ) {
         parent::__construct($context);

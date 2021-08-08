@@ -39,10 +39,10 @@ services:
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler
 
-  ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository:
+  ACP3\Modules\ACP3\System\Repository\ModulesRepository:
     class: ACP3\Modules\ACP3\Installer\Repository\ModulesRepository
 
-  ACP3\Modules\ACP3\System\Model\Repository\SettingsRepository:
+  ACP3\Modules\ACP3\System\Repository\SettingsRepository:
     class: ACP3\Modules\ACP3\Installer\Repository\SettingsRepository
     arguments:
       $environment: "%core.environment%"

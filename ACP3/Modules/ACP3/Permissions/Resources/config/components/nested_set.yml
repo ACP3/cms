@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     bind:
-      $nestedSetRepository: '@ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository'
+      $nestedSetRepository: '@ACP3\Modules\ACP3\Permissions\Repository\RoleRepository'
 
   permissions.nested_set.operation.insert:
     class: ACP3\Core\NestedSet\Operation\Insert

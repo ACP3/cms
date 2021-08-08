@@ -13,7 +13,7 @@ use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\Model\SortingAwareTrait;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

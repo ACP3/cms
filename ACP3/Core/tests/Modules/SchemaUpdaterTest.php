@@ -9,7 +9,7 @@ namespace ACP3\Core\Modules;
 
 use ACP3\Core\Modules\Installer\MigrationInterface;
 use ACP3\Core\Modules\Installer\SchemaInterface;
-use ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository;
+use ACP3\Modules\ACP3\System\Repository\ModulesRepository;
 use PHPUnit\Framework\TestCase;
 
 class SchemaUpdaterTest extends TestCase
@@ -23,7 +23,7 @@ class SchemaUpdaterTest extends TestCase
      */
     private $schemaHelper;
     /**
-     * @var \ACP3\Modules\ACP3\System\Model\Repository\ModulesRepository &\PHPUnit\Framework\MockObject\MockObject
+     * @var \ACP3\Modules\ACP3\System\Repository\ModulesRepository &\PHPUnit\Framework\MockObject\MockObject
      */
     private $moduleRepositoryMock;
 

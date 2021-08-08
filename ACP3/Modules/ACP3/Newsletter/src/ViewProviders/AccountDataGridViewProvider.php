@@ -17,7 +17,7 @@ use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Newsletter\DataGrid\ColumnRenderer\AccountStatusColumnRenderer;
 use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository;
+use ACP3\Modules\ACP3\Newsletter\Repository\AccountDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class AccountDataGridViewProvider
@@ -27,7 +27,7 @@ class AccountDataGridViewProvider
      */
     private $dataGrid;
     /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountDataGridRepository
+     * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountDataGridRepository
      */
     private $dataGridRepository;
     /**

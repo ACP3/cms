@@ -9,13 +9,13 @@ namespace ACP3\Modules\ACP3\Polls;
 
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository;
+use ACP3\Modules\ACP3\Polls\Repository\VoteRepository;
 
 class Helpers
 {
     public const URL_KEY_PATTERN = 'polls/index/result/id_%d/';
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\VoteRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\VoteRepository
      */
     private $voteRepository;
     /**

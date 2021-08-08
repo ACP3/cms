@@ -8,13 +8,13 @@
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository;
+use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class Request extends \ACP3\Core\Http\Request
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Model\Repository\SeoRepository
+     * @var \ACP3\Modules\ACP3\Seo\Repository\SeoRepository
      */
     private $seoRepository;
 

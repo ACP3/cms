@@ -2,12 +2,12 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Modules\ACP3\Permissions\Model\Repository\:
-    resource: "../../../src/Model/Repository/"
+  ACP3\Modules\ACP3\Permissions\Repository\:
+    resource: "../../../src/Repository/"
 
-  permissions.model.rulerepository: '@ACP3\Modules\ACP3\Permissions\Model\Repository\RuleRepository'
-  permissions.model.resourcerepository: '@ACP3\Modules\ACP3\Permissions\Model\Repository\ResourceRepository'
+  permissions.model.rulerepository: '@ACP3\Modules\ACP3\Permissions\Repository\RuleRepository'
+  permissions.model.resourcerepository: '@ACP3\Modules\ACP3\Permissions\Repository\ResourceRepository'
 
-  ACP3\Core\ACL\Model\Repository\RoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository'
-  ACP3\Core\ACL\Model\Repository\PrivilegeRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Model\Repository\PrivilegeRepository'
-  ACP3\Core\ACL\Model\Repository\UserRoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Model\Repository\UserRoleRepository'
+  ACP3\Core\ACL\Repository\RoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\RoleRepository'
+  ACP3\Core\ACL\Repository\PrivilegeRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\PrivilegeRepository'
+  ACP3\Core\ACL\Repository\UserRoleRepositoryInterface: '@ACP3\Modules\ACP3\Permissions\Repository\UserRoleRepository'

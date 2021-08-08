@@ -13,7 +13,7 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInterface
@@ -27,7 +27,7 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
      */
     private $view;
     /**
-     * @var MenuItemRepository
+     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
      */
     private $menuItemRepository;
     /**

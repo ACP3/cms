@@ -10,7 +10,7 @@ namespace ACP3\Core\Modules;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Component\Dto\ComponentDataDto;
-use ACP3\Core\Model\Repository\ModuleAwareRepositoryInterface;
+use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use Composer\InstalledVersions;
 use Psr\Container\ContainerInterface;
 
@@ -21,7 +21,7 @@ class ModuleInfo implements ModuleInfoInterface
      */
     private $schemaLocator;
     /**
-     * @var ModuleAwareRepositoryInterface
+     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
      */
     private $systemModuleRepository;
 

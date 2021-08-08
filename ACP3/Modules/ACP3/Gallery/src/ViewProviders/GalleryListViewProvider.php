@@ -13,7 +13,7 @@ use ACP3\Core\Pagination;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema as GallerySchema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class GalleryListViewProvider
 {
@@ -22,7 +22,7 @@ class GalleryListViewProvider
      */
     private $date;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
      */
     private $galleryRepository;
     /**

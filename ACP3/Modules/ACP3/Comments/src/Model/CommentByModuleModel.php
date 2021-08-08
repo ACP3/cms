@@ -12,7 +12,7 @@ use ACP3\Core\Model\DataProcessor\ColumnTypes;
 use ACP3\Modules\ACP3\Comments\Installer\Schema;
 
 /**
- * @property \ACP3\Modules\ACP3\Comments\Model\Repository\CommentByModuleRepository $repository
+ * @property \ACP3\Modules\ACP3\Comments\Repository\CommentByModuleRepository $repository
  */
 class CommentByModuleModel extends AbstractModel
 {

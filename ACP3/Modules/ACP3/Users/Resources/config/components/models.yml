@@ -13,4 +13,4 @@ services:
 
   ACP3\Modules\ACP3\Users\Model\UsersModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Users\Model\Repository\UserRepository'
+      $repository: '@ACP3\Modules\ACP3\Users\Repository\UserRepository'

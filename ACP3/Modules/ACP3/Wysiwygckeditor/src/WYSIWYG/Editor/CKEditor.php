@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor;
 use ACP3\Core;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\WYSIWYG\Editor\Textarea;
-use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
+use ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository;
 use ACP3\Modules\ACP3\Filemanager\Helpers;
 
 /**
@@ -31,7 +31,7 @@ class CKEditor extends Textarea
      */
     private $appPath;
     /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository|null
+     * @var \ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository|null
      */
     private $emoticonRepository;
     /**

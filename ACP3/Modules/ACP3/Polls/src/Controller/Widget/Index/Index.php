@@ -17,7 +17,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      */
     private $date;
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\PollRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\PollRepository
      */
     private $pollRepository;
     /**
@@ -32,7 +32,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Core\Date $date,
-        Polls\Model\Repository\PollRepository $pollRepository,
+        Polls\Repository\PollRepository $pollRepository,
         Polls\ViewProviders\PollWidgetViewProvider $pollWidgetViewProvider,
         Polls\Helpers $pollHelpers
     ) {

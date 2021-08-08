@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Model;
 
-use ACP3\Core\Model\Repository\AbstractRepository;
+use ACP3\Core\Repository\AbstractRepository;
 
 trait DuplicationAwareTrait
 {

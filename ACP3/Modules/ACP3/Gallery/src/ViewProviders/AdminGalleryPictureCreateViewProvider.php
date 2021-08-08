@@ -11,7 +11,7 @@ use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class AdminGalleryPictureCreateViewProvider
 {
@@ -20,7 +20,7 @@ class AdminGalleryPictureCreateViewProvider
      */
     private $formTokenHelper;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
      */
     private $galleryRepository;
     /**

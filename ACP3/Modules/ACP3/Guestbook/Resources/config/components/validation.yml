@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     bind:
-      ACP3\Core\Model\Repository\FloodBarrierAwareRepositoryInterface: '@ACP3\Modules\ACP3\Guestbook\Model\Repository\GuestbookRepository'
+      ACP3\Core\Repository\FloodBarrierAwareRepositoryInterface: '@ACP3\Modules\ACP3\Guestbook\Repository\GuestbookRepository'
 
   ACP3\Modules\ACP3\Guestbook\Validation\ValidationRules\:
     resource: "../../../src/Validation/ValidationRules/"

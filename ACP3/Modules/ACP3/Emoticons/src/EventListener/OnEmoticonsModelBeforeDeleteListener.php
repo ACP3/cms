@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Emoticons\EventListener;
 
 use ACP3\Core\Helpers\Upload;
 use ACP3\Core\Model\Event\ModelSaveEvent;
-use ACP3\Modules\ACP3\Emoticons\Model\Repository\EmoticonRepository;
+use ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnEmoticonsModelBeforeDeleteListener implements EventSubscriberInterface

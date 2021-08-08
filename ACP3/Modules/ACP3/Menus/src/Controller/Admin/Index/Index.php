@@ -11,7 +11,7 @@ use ACP3\Core\ACL;
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\InvokableActionInterface;
-use ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository;
+use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 use ACP3\Modules\ACP3\Menus\ViewProviders\MenuItemsDataGridViewProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -22,7 +22,7 @@ class Index extends AbstractWidgetAction implements InvokableActionInterface
      */
     private $acl;
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\Repository\MenuRepository
+     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuRepository
      */
     private $menuRepository;
     /**

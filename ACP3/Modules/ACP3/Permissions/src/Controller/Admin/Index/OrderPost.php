@@ -12,13 +12,13 @@ use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Http\RedirectResponse;
-use ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository;
 use ACP3\Modules\ACP3\Permissions\Model\RolesModel;
+use ACP3\Modules\ACP3\Permissions\Repository\RoleRepository;
 
 class OrderPost extends AbstractWidgetAction implements InvokableActionInterface
 {
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\Repository\RoleRepository
+     * @var \ACP3\Modules\ACP3\Permissions\Repository\RoleRepository
      */
     private $roleRepository;
     /**

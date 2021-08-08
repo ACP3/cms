@@ -7,8 +7,8 @@
 
 namespace ACP3\Modules\ACP3\System\EventListener;
 
-use ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Modules;
+use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -22,7 +22,7 @@ class InvalidatePageCacheOnSettingsSaveBeforeListener implements EventSubscriber
      */
     private $settings;
     /**
-     * @var \ACP3\Core\Model\Repository\SettingsAwareRepositoryInterface
+     * @var \ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface
      */
     private $settingsRepository;
     /**

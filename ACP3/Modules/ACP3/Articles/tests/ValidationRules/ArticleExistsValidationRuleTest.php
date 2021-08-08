@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Articles\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRuleTest;
-use ACP3\Modules\ACP3\Articles\Model\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule;
 
 class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest

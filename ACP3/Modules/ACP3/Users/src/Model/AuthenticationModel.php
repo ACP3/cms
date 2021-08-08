@@ -15,7 +15,7 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Users\Exception\LoginFailedException;
 use ACP3\Modules\ACP3\Users\Exception\UserAccountLockedException;
-use ACP3\Modules\ACP3\Users\Model\Repository\UserRepository;
+use ACP3\Modules\ACP3\Users\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -33,7 +33,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      */
     private $sessionHandler;
     /**
-     * @var \ACP3\Modules\ACP3\Users\Model\Repository\UserRepository
+     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
      */
     private $userRepository;
     /**

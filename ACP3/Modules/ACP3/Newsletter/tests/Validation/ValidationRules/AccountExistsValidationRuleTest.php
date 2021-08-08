@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRuleTest;
-use ACP3\Modules\ACP3\Newsletter\Model\Repository\AccountRepository;
+use ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository;
 
 class AccountExistsValidationRuleTest extends AbstractValidationRuleTest
 {

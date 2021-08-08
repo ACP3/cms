@@ -8,8 +8,8 @@
 namespace ACP3\Modules\ACP3\Gallery\Services;
 
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\GalleryRepository;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 
 class GalleryService implements GalleryServiceInterface
 {

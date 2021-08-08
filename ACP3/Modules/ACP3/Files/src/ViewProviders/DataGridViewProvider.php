@@ -20,7 +20,7 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema as FilesSchema;
-use ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository;
+use ACP3\Modules\ACP3\Files\Repository\DataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class DataGridViewProvider
@@ -34,7 +34,7 @@ class DataGridViewProvider
      */
     private $dataGrid;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\DataGridRepository
+     * @var \ACP3\Modules\ACP3\Files\Repository\DataGridRepository
      */
     private $dataGridRepository;
     /**

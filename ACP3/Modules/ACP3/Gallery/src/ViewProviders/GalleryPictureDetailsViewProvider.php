@@ -17,7 +17,7 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Helpers as GalleryHelpers;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
-use ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 
 class GalleryPictureDetailsViewProvider
 {
@@ -26,7 +26,7 @@ class GalleryPictureDetailsViewProvider
      */
     private $metaStatements;
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
      */
     private $pictureRepository;
     /**

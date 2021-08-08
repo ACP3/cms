@@ -9,14 +9,14 @@ namespace ACP3\Modules\ACP3\Files\ViewProviders;
 
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Files\Installer\Schema as FilesSchema;
-use ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository;
+use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class FilesWidgetViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\Repository\CategoryRepository
+     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
     private $categoryRepository;
     /**
@@ -24,7 +24,7 @@ class FilesWidgetViewProvider
      */
     private $date;
     /**
-     * @var \ACP3\Modules\ACP3\Files\Model\Repository\FilesRepository
+     * @var \ACP3\Modules\ACP3\Files\Repository\FilesRepository
      */
     private $filesRepository;
     /**

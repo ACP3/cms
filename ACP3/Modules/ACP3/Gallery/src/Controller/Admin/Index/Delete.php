@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Gallery;
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\Repository\PictureRepository
+     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
      */
     private $pictureRepository;
     /**
@@ -35,7 +35,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
         Action $actionHelper,
         Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
         Gallery\Model\GalleryModel $galleryModel,
-        Gallery\Model\Repository\PictureRepository $pictureRepository
+        Gallery\Repository\PictureRepository $pictureRepository
     ) {
         parent::__construct($context);
 

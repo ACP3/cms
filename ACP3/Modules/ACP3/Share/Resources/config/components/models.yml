@@ -4,8 +4,8 @@ services:
 
   ACP3\Modules\ACP3\Share\Model\ShareModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Share\Model\Repository\ShareRepository'
+      $repository: '@ACP3\Modules\ACP3\Share\Repository\ShareRepository'
 
   ACP3\Modules\ACP3\Share\Model\ShareRatingModel:
     arguments:
-      $repository: '@ACP3\Modules\ACP3\Share\Model\Repository\ShareRatingsRepository'
+      $repository: '@ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository'

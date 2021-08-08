@@ -8,12 +8,12 @@
 namespace ACP3\Modules\ACP3\Polls\ViewProviders;
 
 use ACP3\Core\I18n\Translator;
-use ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository;
+use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
 
 class PollWidgetViewProvider
 {
     /**
-     * @var \ACP3\Modules\ACP3\Polls\Model\Repository\AnswerRepository
+     * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
      */
     private $answerRepository;
     /**
