@@ -102,6 +102,12 @@ left join `{pre}acl_rules` aru on (aru.module_id = are.module_id and aru.privile
 group by are.id, aru.role_id, aru.permission;
 ',
             ],
+            40 => [
+                'ALTER TABLE {pre}acl_resources DROP FOREIGN KEY {pre}acl_resources_ibfk_1;',
+                'ALTER TABLE {pre}acl_resources DROP COLUMN privilege_id;',
+                'DROP TABLE {pre}acl_rules;',
+                'DROP TABLE {pre}acl_privileges;',
+            ],
         ];
     }
 }
