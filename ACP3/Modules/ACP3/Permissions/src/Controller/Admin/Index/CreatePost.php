@@ -18,7 +18,7 @@ class CreatePost extends Core\Controller\AbstractWidgetAction implements Core\Co
      */
     private $roleFormValidation;
     /**
-     * @var Permissions\Model\RolesModel
+     * @var Permissions\Model\AclRoleModel
      */
     private $roleModel;
     /**
@@ -33,7 +33,7 @@ class CreatePost extends Core\Controller\AbstractWidgetAction implements Core\Co
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
-        Permissions\Model\RolesModel $rolesModel,
+        Permissions\Model\AclRoleModel $rolesModel,
         Permissions\Model\AclPermissionModel $permissionModel,
         Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {

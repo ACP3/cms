@@ -12,7 +12,7 @@ use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Http\RedirectResponse;
-use ACP3\Modules\ACP3\Permissions\Model\RolesModel;
+use ACP3\Modules\ACP3\Permissions\Model\AclRoleModel;
 use ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository;
 
 class OrderPost extends AbstractWidgetAction implements InvokableActionInterface
@@ -26,7 +26,7 @@ class OrderPost extends AbstractWidgetAction implements InvokableActionInterface
      */
     private $redirectResponse;
     /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\RolesModel
+     * @var \ACP3\Modules\ACP3\Permissions\Model\AclRoleModel
      */
     private $rolesModel;
 
@@ -34,7 +34,7 @@ class OrderPost extends AbstractWidgetAction implements InvokableActionInterface
         WidgetContext $context,
         RedirectResponse $redirectResponse,
         AclRoleRepository $roleRepository,
-        RolesModel $rolesModel
+        AclRoleModel $rolesModel
     ) {
         parent::__construct($context);
 

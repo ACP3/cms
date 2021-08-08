@@ -2,11 +2,11 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Modules\ACP3\Permissions\Model\ResourcesModel:
+  ACP3\Modules\ACP3\Permissions\Model\AclResourceModel:
     arguments:
       $repository: "@permissions.model.resourcerepository"
 
-  ACP3\Modules\ACP3\Permissions\Model\RolesModel:
+  ACP3\Modules\ACP3\Permissions\Model\AclRoleModel:
     arguments:
       $repository: '@ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository'
       $insertOperation: "@permissions.nested_set.operation.insert"

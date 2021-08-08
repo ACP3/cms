@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions;
 class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
 {
     /**
-     * @var Permissions\Model\ResourcesModel
+     * @var Permissions\Model\AclResourceModel
      */
     private $resourcesModel;
     /**
@@ -23,7 +23,7 @@ class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controll
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Permissions\Model\ResourcesModel $resourcesModel,
+        Permissions\Model\AclResourceModel $resourcesModel,
         Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
     ) {
         parent::__construct($context);

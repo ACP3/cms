@@ -11,7 +11,7 @@ use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 
-class ResourcesModel extends AbstractModel
+class AclResourceModel extends AbstractModel
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
@@ -20,7 +20,7 @@ class ResourcesModel extends AbstractModel
      */
     public function save(array $rawData, $entryId = null)
     {
-        $rawData = \array_merge($rawData, [
+        $rawData = array_merge($rawData, [
             'page' => $rawData['resource'],
             'privilege_id' => $rawData['privileges'],
         ]);

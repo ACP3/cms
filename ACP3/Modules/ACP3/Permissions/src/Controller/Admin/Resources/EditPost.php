@@ -18,7 +18,7 @@ class EditPost extends AbstractFormAction
      */
     private $resourceFormValidation;
     /**
-     * @var Permissions\Model\ResourcesModel
+     * @var Permissions\Model\AclResourceModel
      */
     private $resourcesModel;
     /**
@@ -30,7 +30,7 @@ class EditPost extends AbstractFormAction
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
         Core\Modules $modules,
-        Permissions\Model\ResourcesModel $resourcesModel,
+        Permissions\Model\AclResourceModel $resourcesModel,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
         parent::__construct($context, $modules);

@@ -11,14 +11,11 @@ use ACP3\Core\Model\DataProcessor;
 use ACP3\Core\NestedSet\Model\AbstractNestedSetModel;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 
-class RolesModel extends AbstractNestedSetModel
+class AclRoleModel extends AbstractNestedSetModel
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'name' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,

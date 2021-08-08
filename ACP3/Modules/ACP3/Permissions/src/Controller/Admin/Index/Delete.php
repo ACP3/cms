@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Permissions;
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var Permissions\Model\RolesModel
+     * @var Permissions\Model\AclRoleModel
      */
     private $rolesModel;
     /**
@@ -25,7 +25,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         Action $actionHelper,
-        Permissions\Model\RolesModel $rolesModel
+        Permissions\Model\AclRoleModel $rolesModel
     ) {
         parent::__construct($context);
 
