@@ -55,8 +55,6 @@ class PermissionService implements PermissionServiceInterface
             $path .= !empty($resource['params']) ? $resource['params'] . '/' : '';
             $data[$area][$path] = [
                 'resource_id' => $resource['resource_id'],
-                'privilege_id' => $resource['privilege_id'],
-                'key' => $resource['privilege_name'],
             ];
         }
 

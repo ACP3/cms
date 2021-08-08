@@ -22,7 +22,6 @@ class AclResourceModel extends AbstractModel
     {
         $rawData = array_merge($rawData, [
             'page' => $rawData['resource'],
-            'privilege_id' => $rawData['privileges'],
         ]);
 
         return parent::save($rawData, $entryId);

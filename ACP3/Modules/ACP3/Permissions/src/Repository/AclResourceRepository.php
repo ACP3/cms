@@ -20,7 +20,7 @@ class AclResourceRepository extends Core\Repository\AbstractRepository
     public function getOneById(int $resourceId): array
     {
         return $this->db->fetchAssoc(
-            'SELECT r.page, r.area, r.controller, r.privilege_id, m.name AS module_name FROM ' . $this->getTableName() . ' AS r JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = r.module_id) WHERE r.id = ?',
+            'SELECT r.page, r.area, r.controller, m.name AS module_name FROM ' . $this->getTableName() . ' AS r JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = r.module_id) WHERE r.id = ?',
             [$resourceId]
         );
     }
@@ -35,7 +35,7 @@ class AclResourceRepository extends Core\Repository\AbstractRepository
     public function getAllResources(): array
     {
         return $this->db->fetchAll('
-            SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller, r.privilege_id
+            SELECT m.id AS module_id, m.name AS module_name, r.id AS resource_id, r.page, r.area, r.controller
               FROM ' . $this->getTableName() . ' AS r
               JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(r.module_id = m.id)
           ORDER BY r.module_id ASC, r.area ASC, r.controller ASC, r.page ASC
