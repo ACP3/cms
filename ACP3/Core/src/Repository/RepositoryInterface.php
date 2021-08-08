@@ -12,14 +12,11 @@ interface RepositoryInterface
     /**
      * Executes the SQL insert statement.
      *
-     * @return bool|int
+     * The method will return the last inserted ID.
      */
-    public function insert(array $data);
+    public function insert(array $data): int;
 
-    /**
-     * @return string
-     */
-    public function getTableName(string $tableName = '');
+    public function getTableName(string $tableName = ''): string;
 
     /**
      * Executes the SQL delete statement.

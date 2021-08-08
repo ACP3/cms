@@ -14,7 +14,7 @@ class AbstractStubRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function insert(array $data)
+    public function insert(array $data): int
     {
         return 0;
     }
@@ -22,7 +22,7 @@ class AbstractStubRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getTableName($tableName = '')
+    public function getTableName($tableName = ''): string
     {
         return $tableName;
     }

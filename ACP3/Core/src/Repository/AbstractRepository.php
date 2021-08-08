@@ -25,13 +25,11 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * Executes the SQL insert statement.
-     *
-     * @return int
+     * {@inheritDoc}
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function insert(array $data)
+    public function insert(array $data): int
     {
         $this->db->getConnection()->insert(
             $this->getTableName(),
@@ -41,12 +39,7 @@ abstract class AbstractRepository implements RepositoryInterface
         return (int) $this->db->getConnection()->lastInsertId();
     }
 
-    /**
-     * @param string $tableName
-     *
-     * @return string
-     */
-    public function getTableName($tableName = '')
+    public function getTableName(string $tableName = ''): string
     {
         return $this->db->getPrefixedTableName(!empty($tableName) ? $tableName : static::TABLE_NAME);
     }
@@ -96,10 +89,8 @@ abstract class AbstractRepository implements RepositoryInterface
 
     /**
      * Build the SQL limit.
-     *
-     * @return string
      */
-    protected function buildLimitStmt(?int $limitStart = null, ?int $resultsPerPage = null)
+    protected function buildLimitStmt(?int $limitStart = null, ?int $resultsPerPage = null): string
     {
         if ($limitStart !== null && $resultsPerPage !== null) {
             return " LIMIT {$limitStart},{$resultsPerPage}";
