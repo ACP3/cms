@@ -22,6 +22,9 @@
                                         <label for="resource-{$resource.resource_id}-{$row.value}" class="btn btn-default{if !empty($row.selected)} active{/if}">
                                             <input type="radio" name="resources[{$resource.resource_id}]" id="resource-{$resource.resource_id}-{$row.value}" value="{$row.value}"{$row.selected}>
                                             {$row.lang}
+                                            {if $row.value === 2}
+                                                <small>({$resource.calculated})</small>
+                                            {/if}
                                         </label>
                                     {/foreach}
                                 </div>

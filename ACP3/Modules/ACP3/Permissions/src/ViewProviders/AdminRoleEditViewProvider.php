@@ -86,11 +86,11 @@ class AdminRoleEditViewProvider
     {
         $this->title->setPageTitlePrefix($role['name']);
 
+        $parents = $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id']);
+
         return [
-            'parent' => $role['id'] != 1
-                ? $this->fetchRoles($role['parent_id'], $role['left_id'], $role['right_id'])
-                : [],
-            'modules' => $this->fetchModulePermissions($role['id']),
+            'parent' => $parents,
+            'modules' => $this->fetchModulePermissions($role['id'], $role['parent_id'], !empty($parents)),
             'form' => array_merge($role, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
         ];
@@ -113,9 +113,10 @@ class AdminRoleEditViewProvider
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    private function fetchModulePermissions(int $roleId): array
+    private function fetchModulePermissions(int $roleId, int $parentRoleId, bool $canSelectParents): array
     {
         $permissions = $this->permissionService->getPermissions([$roleId]);
+        $inheritedPermissions = $this->permissionService->getPermissionsWithInheritance([$parentRoleId]);
         $modules = array_filter($this->modules->getInstalledModules(), function ($module) {
             return $this->modules->isInstallable($module['name']);
         });
@@ -127,11 +128,11 @@ class AdminRoleEditViewProvider
             });
             foreach ($moduleResources as &$resource) {
                 $resource['select'] = $this->generatePermissionCheckboxes(
-                    $roleId,
-                    $moduleInfo['id'],
+                    $canSelectParents,
                     $resource['resource_id'],
-                    ($permissions[$roleId][(int) $resource['resource_id']] ?? 2)
+                    ($permissions[$roleId][(int) $resource['resource_id']] ?? PermissionEnum::INHERIT_ACCESS)
                 );
+                $resource['calculated'] = $this->localizeInheritedPermission($inheritedPermissions[$resource['resource_id']]);
             }
             unset($resource);
 
@@ -141,22 +142,21 @@ class AdminRoleEditViewProvider
         return $modules;
     }
 
-    private function generatePermissionCheckboxes(int $roleId, int $moduleId, int $resourceId, int $defaultValue): array
+    private function generatePermissionCheckboxes(bool $showInheritedPermissions, int $resourceId, int $defaultValue): array
     {
         $permissions = [
             PermissionEnum::PERMIT_ACCESS => 'allow_access',
-            PermissionEnum::INHERIT_ACCESS => 'inherit_access',
         ];
+
+        if ($showInheritedPermissions) {
+            $permissions[PermissionEnum::INHERIT_ACCESS] = 'inherit_access';
+        }
 
         $select = [];
         foreach ($permissions as $value => $phrase) {
-            if ($roleId === 1 && $value === 2) {
-                continue;
-            }
-
             $select[$value] = [
                 'value' => $value,
-                'selected' => $this->resourceIsChecked($moduleId, $resourceId, $value, $defaultValue),
+                'selected' => $this->resourceIsChecked($resourceId, $value, $defaultValue),
                 'lang' => $this->translator->t('permissions', $phrase),
             ];
         }
@@ -164,14 +164,25 @@ class AdminRoleEditViewProvider
         return $select;
     }
 
-    private function resourceIsChecked(int $moduleId, int $resourceId, int $value, int $defaultValue): string
+    private function resourceIsChecked(int $resourceId, int $value, int $defaultValue): string
     {
         if (($this->request->getPost()->count() === 0 && $defaultValue === $value) ||
-            ($this->request->getPost()->count() !== 0 && (int) $this->request->getPost()->get('resources')[$moduleId][$resourceId] === $value)
+            ($this->request->getPost()->count() !== 0 && (int) $this->request->getPost()->get('resources')[$resourceId] === $value)
         ) {
             return ' checked="checked"';
         }
 
         return '';
+    }
+
+    private function localizeInheritedPermission(int $permission): string
+    {
+        return sprintf(
+            $this->translator->t('permissions', 'calculated_permission'),
+            $this->translator->t(
+                'permissions',
+                $permission === PermissionEnum::PERMIT_ACCESS ? 'allow_access' : 'deny_access'
+            )
+        );
     }
 }
