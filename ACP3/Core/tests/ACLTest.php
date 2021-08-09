@@ -10,6 +10,8 @@ namespace ACP3\Core;
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PermissionServiceInterface;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Controller\Helper\ControllerActionExists;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ACLTest extends TestCase
@@ -18,6 +20,10 @@ class ACLTest extends TestCase
      * @var \ACP3\Core\ACL
      */
     private $acl;
+    /**
+     * @var MockObject & ControllerActionExists
+     */
+    private $controllerActionExistsMock;
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject & UserModelInterface
      */
@@ -36,6 +42,7 @@ class ACLTest extends TestCase
         $this->initializeMockObjects();
 
         $this->acl = new ACL(
+            $this->controllerActionExistsMock,
             $this->userMock,
             $this->userRoleRepositoryMock,
             $this->permissionServiceMock
@@ -44,6 +51,7 @@ class ACLTest extends TestCase
 
     private function initializeMockObjects(): void
     {
+        $this->controllerActionExistsMock = $this->createMock(ControllerActionExists::class);
         $this->userMock = $this->createMock(UserModelInterface::class);
         $this->userRoleRepositoryMock = $this->createMock(ACL\Repository\UserRoleRepositoryInterface::class);
         $this->permissionServiceMock = $this->createMock(PermissionServiceInterface::class);
@@ -67,7 +75,7 @@ class ACLTest extends TestCase
         self::assertEquals($expected, $this->acl->getUserRoleIds($userId));
     }
 
-    private function setUpUserRoleExpectations(int $userId): void
+    private function setUpUserRoleExpectations(int $userId, int $callCount = 1): void
     {
         $returnValue = [
             [
@@ -80,7 +88,7 @@ class ACLTest extends TestCase
             ],
         ];
 
-        $this->userRoleRepositoryMock->expects(self::once())
+        $this->userRoleRepositoryMock->expects(self::exactly($callCount))
             ->method('getRolesByUserId')
             ->with($userId)
             ->willReturn($returnValue);
@@ -107,12 +115,7 @@ class ACLTest extends TestCase
     {
         $resource = 'frontend/news/index/index/';
 
-        $this->setUpPermissionsCacheMockExpectations(
-            1,
-            0,
-            [1],
-            true
-        );
+        $this->setUpControllerActionExistsExpectations(false);
 
         self::assertFalse($this->acl->hasPermission($resource));
     }
@@ -129,6 +132,7 @@ class ACLTest extends TestCase
             [1],
             true
         );
+        $this->setUpControllerActionExistsExpectations(true);
 
         self::assertTrue($this->acl->hasPermission($resource));
     }
@@ -138,6 +142,13 @@ class ACLTest extends TestCase
         $this->userMock->expects(self::exactly($callCount))
             ->method('getUserId')
             ->willReturn($userId);
+    }
+
+    private function setUpControllerActionExistsExpectations(bool $exists): void
+    {
+        $this->controllerActionExistsMock
+            ->method('controllerActionExists')
+            ->willReturn($exists);
     }
 
     protected function setUpPermissionsCacheMockExpectations(
@@ -176,6 +187,7 @@ class ACLTest extends TestCase
             [1],
             true
         );
+        $this->setUpControllerActionExistsExpectations(true);
 
         self::assertTrue($this->acl->hasPermission($resource));
     }
@@ -192,8 +204,9 @@ class ACLTest extends TestCase
             [1],
             true
         );
+        $this->setUpControllerActionExistsExpectations(true);
 
-        self::assertFalse($this->acl->hasPermission($resource));
+        self::assertTrue($this->acl->hasPermission($resource));
     }
 
     public function testHasPermissionAlwaysForSuperUser(): void
@@ -201,14 +214,15 @@ class ACLTest extends TestCase
         $resource = 'frontend/foo/index/index/';
         $userId = 1;
 
-        $this->setUpUserMockExpectations($userId);
-        $this->setUpUserRoleExpectations($userId);
+        $this->setUpUserMockExpectations($userId, 0);
+        $this->setUpUserRoleExpectations($userId, 0);
         $this->setUpPermissionsCacheMockExpectations(
-            1,
-            1,
+            0,
+            0,
             [2, 3],
             false
         );
+        $this->setUpControllerActionExistsExpectations(true);
 
         $this->userMock->expects(self::once())
             ->method('isSuperUser')

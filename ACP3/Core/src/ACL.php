@@ -11,6 +11,7 @@ use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PermissionServiceInterface;
 use ACP3\Core\ACL\Repository\UserRoleRepositoryInterface;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Controller\Helper\ControllerActionExists;
 
 class ACL
 {
@@ -43,8 +44,13 @@ class ACL
      * @var int[]
      */
     private $permissions = [];
+    /**
+     * @var ControllerActionExists
+     */
+    private $controllerActionExists;
 
     public function __construct(
+        ControllerActionExists $controllerActionExists,
         UserModelInterface $user,
         UserRoleRepositoryInterface $userRoleRepository,
         PermissionServiceInterface $permissionService
@@ -52,6 +58,7 @@ class ACL
         $this->user = $user;
         $this->userRoleRepository = $userRoleRepository;
         $this->permissionService = $permissionService;
+        $this->controllerActionExists = $controllerActionExists;
     }
 
     /**
@@ -115,21 +122,28 @@ class ACL
      */
     public function hasPermission(string $resource): bool
     {
-        [$area, $module, $controller, $action] = $this->convertResourcePathToArray($resource);
-
-        if (empty($module)) {
+        if (!$this->controllerActionExists->controllerActionExists($resource)) {
             return false;
         }
 
-        $resource = $module . '/' . $controller . '/' . $action . '/';
-
-        if (isset($this->getResources()[$area][$resource])) {
-            $resourceId = $this->getResources()[$area][$resource]['resource_id'];
-
-            return $this->getPermissions()[$resourceId] !== PermissionEnum::DENY_ACCESS || $this->user->isSuperUser() === true;
+        // Fast path for the super user, as he/she has access to all resources
+        if ($this->user->isSuperUser()) {
+            return true;
         }
 
-        return false;
+        [$area, $module, $controller, $action] = $this->convertResourcePathToArray($resource);
+
+        $aclResource = $module . '/' . $controller . '/' . $action . '/';
+
+        if (isset($this->getResources()[$area][$aclResource])) {
+            $resourceId = $this->getResources()[$area][$aclResource]['resource_id'];
+
+            return $this->getPermissions()[$resourceId] !== PermissionEnum::DENY_ACCESS;
+        }
+
+        // It's okay, when a resource doesn't exists within the ACL.
+        // It means, that a page doesn't need to be protected by the ACL.
+        return true;
     }
 
     private function convertResourcePathToArray(string $resource): array
