@@ -3,7 +3,3 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Installer\Model\InstallModel: ~
-
-  ACP3\Modules\ACP3\Installer\Model\SchemaUpdateModel:
-    arguments:
-      $logger: "@core.modules.installer_logger"

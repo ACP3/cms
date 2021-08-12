@@ -15,3 +15,11 @@ services:
   ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext: ~
 
   ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath: "@core.environment.application_path"
+
+  ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom:
+    tags:
+      - { name: smarty.plugin.filter, filterType: output }
+
+  ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead:
+    tags:
+      - { name: smarty.plugin.filter, filterType: output }

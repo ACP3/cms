@@ -1,0 +1,12 @@
+imports:
+  - { resource: services_overrides.yml }
+
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\System\Repository\ModulesRepository:
+    class: ACP3\Modules\ACP3\Installer\Repository\ModulesRepository
+    arguments:
+      - '@ACP3\Core\Database\Connection'
+      - "%installationIsInProgress%"

@@ -7,14 +7,28 @@
 
 namespace ACP3\Modules\ACP3\Installer\Repository;
 
-class ModulesRepository extends AbstractStubRepository implements \ACP3\Core\Repository\ModuleAwareRepositoryInterface
+use ACP3\Core\Database\Connection;
+
+class ModulesRepository extends \ACP3\Modules\ACP3\System\Repository\ModulesRepository
 {
+    /**
+     * @var bool
+     */
+    private $installationIsInProgress;
+
+    public function __construct(Connection $db, bool $installationIsInProgress)
+    {
+        parent::__construct($db);
+
+        $this->installationIsInProgress = $installationIsInProgress;
+    }
+
     /**
      * {@inheritDoc}
      */
     public function getModuleId(string $moduleName): int
     {
-        return 0;
+        return !$this->installationIsInProgress ? 0 : parent::getModuleId($moduleName);
     }
 
     /**
@@ -22,7 +36,7 @@ class ModulesRepository extends AbstractStubRepository implements \ACP3\Core\Rep
      */
     public function getModuleSchemaVersion(string $moduleName): int
     {
-        return 0;
+        return !$this->installationIsInProgress ? 0 : parent::getModuleSchemaVersion($moduleName);
     }
 
     /**
@@ -30,7 +44,7 @@ class ModulesRepository extends AbstractStubRepository implements \ACP3\Core\Rep
      */
     public function moduleExists(string $moduleName): bool
     {
-        return false;
+        return $this->installationIsInProgress && parent::moduleExists($moduleName);
     }
 
     /**
@@ -38,7 +52,7 @@ class ModulesRepository extends AbstractStubRepository implements \ACP3\Core\Rep
      */
     public function coreTablesExist(): bool
     {
-        return false;
+        return $this->installationIsInProgress && parent::coreTablesExist();
     }
 
     /**
@@ -46,7 +60,7 @@ class ModulesRepository extends AbstractStubRepository implements \ACP3\Core\Rep
      */
     public function getInfoByModuleName(string $moduleName): array
     {
-        return [];
+        return !$this->installationIsInProgress ? [] : parent::getInfoByModuleName($moduleName);
     }
 
     /**
@@ -54,7 +68,7 @@ class ModulesRepository extends AbstractStubRepository implements \ACP3\Core\Rep
      */
     public function getInfoByModuleNameList(array $moduleNames): array
     {
-        return [];
+        return !$this->installationIsInProgress ? [] : parent::getInfoByModuleNameList($moduleNames);
     }
 
     /**
@@ -62,6 +76,6 @@ class ModulesRepository extends AbstractStubRepository implements \ACP3\Core\Rep
      */
     public function getModuleNameById(int $moduleId): string
     {
-        return '';
+        return !$this->installationIsInProgress ? '' : parent::getModuleNameById($moduleId);
     }
 }

@@ -8,6 +8,7 @@
 namespace ACP3\Core\Installer\Model;
 
 use ACP3\Core\Installer\Exception\MissingInstallerException;
+use ACP3\Core\Installer\Exception\ModuleNotInstallableException;
 use ACP3\Core\Modules;
 use ACP3\Core\Modules\SchemaUpdater;
 use Psr\Container\ContainerInterface;
@@ -35,10 +36,6 @@ class SchemaUpdateModel
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
-    /**
-     * @var array
-     */
-    private $results = [];
 
     public function __construct(
         LoggerInterface $logger,
@@ -60,6 +57,8 @@ class SchemaUpdateModel
      */
     public function updateModules(): array
     {
+        $results = [];
+
         foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
             $moduleName = strtolower($moduleInfo['name']);
 
@@ -70,15 +69,17 @@ class SchemaUpdateModel
             try {
                 $this->updateModule($moduleName);
 
-                $this->results[$moduleName] = true;
+                $results[$moduleName] = true;
+            } catch (ModuleNotInstallableException $e) {
+                // Intentionally omitted
             } catch (\Throwable $e) {
-                $this->results[$moduleName] = false;
+                $results[$moduleName] = false;
 
                 $this->logger->error($e);
             }
         }
 
-        return $this->results;
+        return $results;
     }
 
     /**
@@ -92,7 +93,7 @@ class SchemaUpdateModel
     private function updateModule(string $moduleName): void
     {
         if (!$this->modules->isInstallable($moduleName)) {
-            return;
+            throw new ModuleNotInstallableException(sprintf('The module %s doesn\'t need to be installed, therefore it can\'t DB migrations.', $moduleName));
         }
 
         $serviceIdMigration = $moduleName . '.installer.migration';

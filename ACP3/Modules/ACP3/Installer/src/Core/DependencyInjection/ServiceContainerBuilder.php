@@ -32,19 +32,19 @@ final class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @var bool
      */
-    private $isInstallingOrUpdating;
+    private $installationIsInProgress;
 
     /**
      * @throws \Exception
      */
     public function __construct(
         ApplicationPath $applicationPath,
-        bool $isInstallingOrUpdating = false
+        bool $installationIsInProgress = false
     ) {
         parent::__construct();
 
         $this->applicationPath = $applicationPath;
-        $this->isInstallingOrUpdating = $isInstallingOrUpdating;
+        $this->installationIsInProgress = $installationIsInProgress;
 
         $this->setUpContainer();
     }
@@ -73,7 +73,9 @@ final class ServiceContainerBuilder extends ContainerBuilder
 
         $loader = new YamlFileLoader($this, new FileLocator(__DIR__));
 
-        $this->includeCoreServices($loader);
+        $this->setParameter('installationIsInProgress', $this->installationIsInProgress);
+
+        $this->includeConfig($loader);
 
         // Themes currently don't define or override services, so we have to filter them out.
         // Otherwise we would get errors...
@@ -86,13 +88,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
             $loader->import($component->getPath() . '/Resources/config/services.yml');
         }
 
-        if ($this->isInstallingOrUpdating === false) {
-            $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_overrides.yml');
-        }
-
-        if ($this->applicationPath->getApplicationMode() === ApplicationMode::UPDATER) {
-            $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_updater.yml');
-        }
+        $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_' . $this->applicationPath->getApplicationMode() . '.yml');
 
         $this->removeDefinition(BootstrapCache::class);
 
@@ -102,9 +98,9 @@ final class ServiceContainerBuilder extends ContainerBuilder
     /**
      * @throws \Exception
      */
-    private function includeCoreServices(YamlFileLoader $loader): void
+    private function includeConfig(YamlFileLoader $loader): void
     {
-        if ($this->isInstallingOrUpdating === false) {
+        if ($this->installationIsInProgress === false && $this->applicationPath->getApplicationMode() === ApplicationMode::INSTALLER) {
             $this->setParameter('db_host', '');
             $this->setParameter('db_name', '');
             $this->setParameter('db_table_prefix', '');
@@ -124,8 +120,8 @@ final class ServiceContainerBuilder extends ContainerBuilder
      */
     public static function create(
         ApplicationPath $applicationPath,
-        bool $isInstallingOrUpdating = false
+        bool $installationIsInProgress = false
     ): ServiceContainerBuilder {
-        return new ServiceContainerBuilder($applicationPath, $isInstallingOrUpdating);
+        return new ServiceContainerBuilder($applicationPath, $installationIsInProgress);
     }
 }

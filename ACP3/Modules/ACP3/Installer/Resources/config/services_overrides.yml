@@ -39,29 +39,17 @@ services:
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler
 
-  ACP3\Modules\ACP3\System\Repository\ModulesRepository:
-    class: ACP3\Modules\ACP3\Installer\Repository\ModulesRepository
+  ACP3\Core\View\Renderer\Smarty\Resources\Asset:
+    class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
+    tags:
+      - { name: smarty.plugin.resource, pluginName: asset }
 
   ACP3\Modules\ACP3\System\Repository\SettingsRepository:
     class: ACP3\Modules\ACP3\Installer\Repository\SettingsRepository
     arguments:
       $environment: "%core.environment%"
 
-  ACP3\Core\View\Renderer\Smarty\Resources\Asset:
-    class: ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Resources\Asset
-    tags:
-      - { name: smarty.plugin.resource, pluginName: asset }
-
-  ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom:
-    tags:
-      - { name: smarty.plugin.filter, filterType: output }
-
-  ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead:
-    tags:
-      - { name: smarty.plugin.filter, filterType: output }
-
   ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener:
-    class: ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener
     arguments:
       $applicationMode: "%core.environment%"
       $serviceId: "installer.controller.installer.error.server_error"

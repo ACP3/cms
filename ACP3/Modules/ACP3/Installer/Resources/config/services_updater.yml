@@ -1,2 +1,9 @@
+imports:
+  - { resource: services_overrides.yml }
+
 parameters:
   core.environment: !php/const ACP3\Core\Environment\ApplicationMode::UPDATER
+
+services:
+  _defaults:
+    autowire: true
