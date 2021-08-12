@@ -14,7 +14,8 @@
                     <legend>{lang t="`$moduleName`|`$moduleName`"}</legend>
                     {foreach $values.resources as $resource}
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">{lang t="`$moduleName`|`$resource.area`_`$resource.controller`_`$resource.page`"}</label>
+                            {$resourcePath="`$resource.area`/`$moduleName`/`$resource.controller`/`$resource.page`/"}
+                            <label class="col-sm-4 control-label">{$resourcePath}</label>
 
                             <div class="col-sm-8">
                                 <div class="btn-group" data-toggle="buttons">
