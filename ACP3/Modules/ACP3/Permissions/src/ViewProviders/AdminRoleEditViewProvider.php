@@ -113,7 +113,7 @@ class AdminRoleEditViewProvider
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    private function fetchModulePermissions(int $roleId, int $parentRoleId, bool $canSelectParents): array
+    private function fetchModulePermissions(int $roleId, int $parentRoleId, bool $showInheritedPermissions): array
     {
         $permissions = $this->permissionService->getPermissions([$roleId]);
         $inheritedPermissions = $this->permissionService->getPermissionsWithInheritance([$parentRoleId]);
@@ -128,7 +128,7 @@ class AdminRoleEditViewProvider
             });
             foreach ($moduleResources as &$resource) {
                 $resource['select'] = $this->generatePermissionCheckboxes(
-                    $canSelectParents,
+                    $showInheritedPermissions,
                     $resource['resource_id'],
                     ($permissions[$roleId][(int) $resource['resource_id']] ?? PermissionEnum::INHERIT_ACCESS)
                 );
@@ -175,13 +175,13 @@ class AdminRoleEditViewProvider
         return '';
     }
 
-    private function localizeInheritedPermission(int $permission): string
+    private function localizeInheritedPermission(int $permissionValue): string
     {
         return sprintf(
             $this->translator->t('permissions', 'calculated_permission'),
             $this->translator->t(
                 'permissions',
-                $permission === PermissionEnum::PERMIT_ACCESS ? 'allow_access' : 'deny_access'
+                $permissionValue === PermissionEnum::PERMIT_ACCESS ? 'allow_access' : 'deny_access'
             )
         );
     }
