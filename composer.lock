@@ -59,12 +59,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor4-releases.git",
-                "reference": "87298aeaf20c5496464c9620c00f7cce93380002"
+                "reference": "bb7a85ccf2b31888acaff3198f35cf4e4c9a510e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/87298aeaf20c5496464c9620c00f7cce93380002",
-                "reference": "87298aeaf20c5496464c9620c00f7cce93380002",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/bb7a85ccf2b31888acaff3198f35cf4e4c9a510e",
+                "reference": "bb7a85ccf2b31888acaff3198f35cf4e4c9a510e",
                 "shasum": ""
             },
             "type": "library",
@@ -99,7 +99,7 @@
                 "source": "https://github.com/ckeditor/ckeditor4",
                 "wiki": "https://ckeditor.com/docs/ckeditor4/latest/"
             },
-            "time": "2021-05-20T12:06:25+00:00"
+            "time": "2021-08-12T12:11:10+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -1833,16 +1833,16 @@
         },
         {
             "name": "laminas/laminas-cache",
-            "version": "2.12.2",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "36f5cef39f660cae7d0e1361e86e3b47d6448391"
+                "reference": "566948e32f30881cb903ffbd0e3e20dac00cd83e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/36f5cef39f660cae7d0e1361e86e3b47d6448391",
-                "reference": "36f5cef39f660cae7d0e1361e86e3b47d6448391",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/566948e32f30881cb903ffbd0e3e20dac00cd83e",
+                "reference": "566948e32f30881cb903ffbd0e3e20dac00cd83e",
                 "shasum": ""
             },
             "require": {
@@ -1934,7 +1934,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-08-06T07:32:13+00:00"
+            "time": "2021-08-08T10:21:18+00:00"
         },
         {
             "name": "laminas/laminas-cache-storage-adapter-apc",
@@ -2186,16 +2186,16 @@
         },
         {
             "name": "laminas/laminas-cache-storage-adapter-ext-mongodb",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-ext-mongodb.git",
-                "reference": "5810c3ffb442527b8b3429b0d29dce1ddabc92f2"
+                "reference": "72f68589cc8323fa688167a4720b795dd0907f4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-ext-mongodb/zipball/5810c3ffb442527b8b3429b0d29dce1ddabc92f2",
-                "reference": "5810c3ffb442527b8b3429b0d29dce1ddabc92f2",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-ext-mongodb/zipball/72f68589cc8323fa688167a4720b795dd0907f4e",
+                "reference": "72f68589cc8323fa688167a4720b795dd0907f4e",
                 "shasum": ""
             },
             "require": {
@@ -2211,10 +2211,11 @@
             "require-dev": {
                 "laminas/laminas-cache": "^2.10.3",
                 "laminas/laminas-cache-storage-adapter-test": "^1.1.1",
-                "laminas/laminas-coding-standard": "~1.0.0",
+                "laminas/laminas-coding-standard": "~2.2.0",
                 "laminas/laminas-serializer": "^2.10.1",
                 "mongodb/mongodb": "^1.8.0",
-                "squizlabs/php_codesniffer": "^2.7"
+                "psalm/plugin-phpunit": "^0.16.1",
+                "vimeo/psalm": "^4.9"
             },
             "suggest": {
                 "mongodb/mongodb": "MongoDB, to use the ExtMongoDb storage adapter"
@@ -2247,7 +2248,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-05-06T07:52:48+00:00"
+            "time": "2021-08-10T18:17:48+00:00"
         },
         {
             "name": "laminas/laminas-cache-storage-adapter-filesystem",
@@ -2376,20 +2377,20 @@
         },
         {
             "name": "laminas/laminas-cache-storage-adapter-memcached",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-memcached.git",
-                "reference": "f5d35cc2ef6264c76021bcc798569182103baa91"
+                "reference": "d05f33e43a352b85c6d0208e9cfbf2a59f02ede3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-memcached/zipball/f5d35cc2ef6264c76021bcc798569182103baa91",
-                "reference": "f5d35cc2ef6264c76021bcc798569182103baa91",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-memcached/zipball/d05f33e43a352b85c6d0208e9cfbf2a59f02ede3",
+                "reference": "d05f33e43a352b85c6d0208e9cfbf2a59f02ede3",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3"
+                "php": "^7.3 || ~8.0.0"
             },
             "conflict": {
                 "laminas/laminas-cache": "<2.10"
@@ -2400,9 +2401,8 @@
             "require-dev": {
                 "laminas/laminas-cache": "^2.10",
                 "laminas/laminas-cache-storage-adapter-test": "^1.0.2",
-                "laminas/laminas-coding-standard": "~1.0.0",
-                "phpunit/phpunit": "^7.5.20",
-                "squizlabs/php_codesniffer": "^2.7"
+                "laminas/laminas-coding-standard": "~2.2.0",
+                "phpunit/phpunit": "^9.5.8"
             },
             "suggest": {
                 "ext-memcached": "Memcached >= 1.0.0 to use the Memcached storage adapter"
@@ -2436,7 +2436,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-04-24T20:06:16+00:00"
+            "time": "2021-08-08T14:51:12+00:00"
         },
         {
             "name": "laminas/laminas-cache-storage-adapter-memory",
@@ -10137,21 +10137,21 @@
         },
         {
             "name": "phpstan/phpstan-phpunit",
-            "version": "0.12.21",
+            "version": "0.12.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "6aaff1196c4f808769774b49a94a60e5fdf18de7"
+                "reference": "7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/6aaff1196c4f808769774b49a94a60e5fdf18de7",
-                "reference": "6aaff1196c4f808769774b49a94a60e5fdf18de7",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc",
+                "reference": "7c01ef93bf128b4ac8bdad38c54b2a4fd6b0b3cc",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0",
-                "phpstan/phpstan": "^0.12.86"
+                "phpstan/phpstan": "^0.12.92"
             },
             "conflict": {
                 "phpunit/phpunit": "<7.0"
@@ -10185,9 +10185,9 @@
             "description": "PHPUnit extensions and rules for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-phpunit/issues",
-                "source": "https://github.com/phpstan/phpstan-phpunit/tree/0.12.21"
+                "source": "https://github.com/phpstan/phpstan-phpunit/tree/0.12.22"
             },
-            "time": "2021-07-14T10:48:30+00:00"
+            "time": "2021-08-12T10:53:43+00:00"
         },
         {
             "name": "symfony/finder",
@@ -10394,5 +10394,5 @@
     "platform-overrides": {
         "php": "7.3.0"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
