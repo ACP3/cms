@@ -58,9 +58,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     protected function moduleNeedsInstallation(SchemaInterface $schema): bool
     {
-        $modulesTableExists = $this->getDb()->fetchColumn("SHOW TABLES LIKE '{$this->getSystemModuleRepository()->getTableName()}'");
-
-        return !$modulesTableExists || !$this->getSystemModuleRepository()->moduleExists($schema->getModuleName());
+        return !$this->getSystemModuleRepository()->moduleExists($schema->getModuleName());
     }
 
     /**
@@ -73,7 +71,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             'version' => $schemaVersion,
         ];
 
-        return $this->getSystemModuleRepository()->insert($insertValues) !== false;
+        return (bool) $this->getSystemModuleRepository()->insert($insertValues);
     }
 
     /**
