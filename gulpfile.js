@@ -16,8 +16,7 @@
   gulp.task("scss", getTask("scss"));
   gulp.task("babel", getTask("babel"));
   gulp.task("eslint", getTask("eslint"));
-  gulp.task("stylelint-scss", getTask("stylelint-scss"));
-  gulp.task("stylelint", gulp.parallel("stylelint-scss"));
+  gulp.task("stylelint", getTask("stylelint"));
   gulp.task("lint", gulp.parallel("stylelint", "eslint"));
   gulp.task("bump-version", getTask("bump-version"));
   gulp.task("default", gulp.parallel("scss", "babel", "lint"));

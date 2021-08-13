@@ -15,7 +15,7 @@ module.exports = (gulp) => {
       .src([...componentPaths.scss, "./designs/*/**/Assets/scss/**/*.scss"], {
         base: "./",
         allowEmpty: true,
-        since: gulp.lastRun("stylelint-scss"),
+        since: gulp.lastRun("stylelint"),
       })
       .pipe(plumber())
       .pipe(
