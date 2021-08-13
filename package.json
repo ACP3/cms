@@ -5,12 +5,12 @@
   "main": "",
   "directories": {},
   "scripts": {
-    "css-lint": "stylelint \"**/*.{css,less,scss}\" --cache --cache-location .stylelintcache --rd",
+    "css-lint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .stylelintcache --rd",
     "css-lint:fix": "npm run css-lint -- --fix",
     "eslint": "eslint -c .eslintrc.json --cache --cache-location=.eslintcache .",
     "eslint-fix": "npm run eslint -- --fix",
-    "prettier": "prettier --check **/*.{css,js,json,less,md,scss,yml}",
-    "prettier:fix": "prettier --write **/*.{css,js,json,less,md,scss,yml}"
+    "prettier": "prettier --check **/*.{css,js,json,md,scss,yml}",
+    "prettier:fix": "prettier --write **/*.{css,js,json,md,scss,yml}"
   },
   "repository": {
     "type": "git",
@@ -47,7 +47,6 @@
     "gulp-dependents": "^1.2.5",
     "gulp-eslint": "^6.0.0",
     "gulp-filter": "^7.0.0",
-    "gulp-less": "^5.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.0",
     "gulp-rename": "^2.0.0",

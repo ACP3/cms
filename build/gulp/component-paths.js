@@ -8,18 +8,6 @@
  */
 const componentPaths = require("../../.component-paths.json");
 
-/**
- * @deprecated since version 5.15.0. To be removed with version 6.0.0. Use SCSS as a CSS preprocessor instead.
- */
-const modulePathsLessWatch = componentPaths.module.map((componentPath) => {
-  return componentPath + "/Resources/Assets/less/**/*.less";
-});
-/**
- * @deprecated since version 5.15.0. To be removed with version 6.0.0. Use SCSS as a CSS preprocessor instead.
- */
-const modulePathsLessProcess = componentPaths.module.map((componentPath) => {
-  return componentPath + "/Resources/Assets/less/*.less";
-});
 const modulePathsScss = componentPaths.module.map((componentPath) => {
   return componentPath + "/Resources/Assets/scss/**/*.scss";
 });
@@ -35,13 +23,6 @@ function filterComposerVendorComponents(paths) {
 }
 
 module.exports = {
-  /**
-   * @deprecated since version 5.15.0. To be removed with version 6.0.0. Use SCSS as a CSS preprocessor instead.
-   */
-  less: {
-    watch: filterComposerVendorComponents(modulePathsLessWatch),
-    process: filterComposerVendorComponents(modulePathsLessProcess),
-  },
   scss: filterComposerVendorComponents(modulePathsScss),
   js: {
     watch: filterComposerVendorComponents(modulePathsJsWatch),
