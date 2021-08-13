@@ -24,6 +24,6 @@
   gulp.task("watch", (done) => {
     process.env.GULP_MODE = "watch";
 
-    return gulp.series(gulp.parallel("scss", "babel", "lint"), getTask("watch"))(done);
+    return gulp.series("default", getTask("watch"))(done);
   });
 })();
