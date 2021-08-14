@@ -8,9 +8,9 @@
 namespace ACP3\Modules\ACP3\Seo\Migration;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Migration\MigrationInterface;
+use ACP3\Core\Migration\AbstractMigration;
 
-class Migration14 implements MigrationInterface
+class Migration14 extends AbstractMigration
 {
     /**
      * @var Connection
@@ -20,11 +20,6 @@ class Migration14 implements MigrationInterface
     public function __construct(Connection $db)
     {
         $this->db = $db;
-    }
-
-    public function getSchemaVersion(): int
-    {
-        return 14;
     }
 
     public function up(): void

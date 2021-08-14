@@ -8,9 +8,9 @@
 namespace ACP3\Modules\ACP3\Emoticons\Migration;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Migration\MigrationInterface;
+use ACP3\Core\Migration\AbstractMigration;
 
-class Migration33 implements MigrationInterface
+class Migration33 extends AbstractMigration
 {
     /**
      * @var Connection
@@ -20,11 +20,6 @@ class Migration33 implements MigrationInterface
     public function __construct(Connection $db)
     {
         $this->db = $db;
-    }
-
-    public function getSchemaVersion(): int
-    {
-        return 33;
     }
 
     public function up(): void

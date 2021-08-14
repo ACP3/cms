@@ -7,15 +7,10 @@
 
 namespace ACP3\Modules\ACP3\Acp\Migration;
 
-use ACP3\Core\Migration\MigrationInterface;
+use ACP3\Core\Migration\AbstractMigration;
 
-class Migration30 implements MigrationInterface
+class Migration30 extends AbstractMigration
 {
-    public function getSchemaVersion(): int
-    {
-        return 30;
-    }
-
     public function up(): void
     {
     }
