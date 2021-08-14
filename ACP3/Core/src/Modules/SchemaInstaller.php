@@ -56,7 +56,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
         $this->executeSqlQueries($schema->createTables(), $schema->getModuleName());
 
-        return $this->addToModulesTable($schema->getModuleName(), $this->migrationServiceLocator->getLatestMigrationByModuleName($schema->getModuleName())->getSchemaVersion())
+        return $this->addToModulesTable($schema->getModuleName(), $this->migrationServiceLocator->getLatestMigrationByModuleName($schema->getModuleName())->getSchemaVersion() ?? 1)
             && $this->installSettings($schema->getModuleName(), $schema->settings());
     }
 
