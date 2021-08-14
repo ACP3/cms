@@ -8,7 +8,7 @@
 namespace ACP3\Core\Migration;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Migration\DependencyInjection\ModuleMigrationException;
+use ACP3\Core\Migration\Exception\ModuleMigrationException;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use Psr\Log\LoggerInterface;
 
