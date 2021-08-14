@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Modules\ACP3\Feeds\Migration\:
+  ACP3\Modules\ACP3\Filemanager\Migration\:
     resource: "../../../src/Migration/"
     tags:
-      - { name: core.migration, moduleName: feeds }
+      - { name: core.migration, moduleName: filemanager }
