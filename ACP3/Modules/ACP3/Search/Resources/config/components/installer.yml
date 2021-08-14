@@ -6,8 +6,3 @@ services:
     class: ACP3\Modules\ACP3\Search\Installer\Schema
     tags:
       - { name: core.installer.schema }
-
-  search.installer.migration:
-    class: ACP3\Modules\ACP3\Search\Installer\Migration
-    tags:
-      - { name: core.installer.migration }
