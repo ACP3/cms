@@ -5,4 +5,4 @@ services:
   ACP3\Modules\ACP3\Acp\Migration\:
     resource: "../../../src/Migration/"
     tags:
-      - { name: core.migration, moduleName: acl }
+      - { name: core.migration, moduleName: acp }

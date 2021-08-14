@@ -8,6 +8,7 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Database\Connection;
+use ACP3\Core\Migration\Exception\NoExistingModuleMigrationsException;
 use ACP3\Core\Migration\MigrationServiceLocator;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
@@ -56,22 +57,31 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
         $this->executeSqlQueries($schema->createTables(), $schema->getModuleName());
 
-        return $this->addToModulesTable($schema->getModuleName(), $this->migrationServiceLocator->getLatestMigrationByModuleName($schema->getModuleName())->getSchemaVersion() ?? 1)
+        return $this->addToModulesTable($schema->getModuleName(), $this->getSchemaVersion($schema->getModuleName()))
             && $this->installSettings($schema->getModuleName(), $schema->settings());
     }
 
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function moduleNeedsInstallation(SchemaInterface $schema): bool
+    private function moduleNeedsInstallation(SchemaInterface $schema): bool
     {
         return !$this->getSystemModuleRepository()->moduleExists($schema->getModuleName());
+    }
+
+    private function getSchemaVersion(string $moduleName): int
+    {
+        try {
+            return $this->migrationServiceLocator->getLatestMigrationByModuleName($moduleName)->getSchemaVersion();
+        } catch (NoExistingModuleMigrationsException $e) {
+            return 1;
+        }
     }
 
     /**
      * Adds a module to the modules SQL-table.
      */
-    protected function addToModulesTable(string $moduleName, int $schemaVersion): bool
+    private function addToModulesTable(string $moduleName, int $schemaVersion): bool
     {
         $insertValues = [
             'name' => $moduleName,
@@ -87,7 +97,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function installSettings(string $moduleName, array $settings): bool
+    private function installSettings(string $moduleName, array $settings): bool
     {
         if (\count($settings) > 0) {
             $this->getDb()->getConnection()->beginTransaction();
@@ -132,7 +142,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     /**
      * Löscht ein Modul aus der modules DB-Tabelle.
      */
-    protected function removeFromModulesTable(string $moduleName): bool
+    private function removeFromModulesTable(string $moduleName): bool
     {
         return $this->getSystemModuleRepository()->delete($this->getModuleId($moduleName)) !== false;
     }

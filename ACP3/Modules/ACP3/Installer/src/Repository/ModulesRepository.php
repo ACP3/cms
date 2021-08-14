@@ -44,7 +44,11 @@ class ModulesRepository extends \ACP3\Modules\ACP3\System\Repository\ModulesRepo
      */
     public function moduleExists(string $moduleName): bool
     {
-        return $this->installationIsInProgress && parent::moduleExists($moduleName);
+        if ($this->installationIsInProgress) {
+            return false;
+        }
+
+        return parent::moduleExists($moduleName);
     }
 
     /**
@@ -52,7 +56,11 @@ class ModulesRepository extends \ACP3\Modules\ACP3\System\Repository\ModulesRepo
      */
     public function coreTablesExist(): bool
     {
-        return $this->installationIsInProgress && parent::coreTablesExist();
+        if ($this->installationIsInProgress) {
+            return false;
+        }
+
+        return parent::coreTablesExist();
     }
 
     /**

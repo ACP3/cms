@@ -71,6 +71,8 @@ class SchemaHelper
             $replace[] = $this->getModuleId($moduleName);
         }
 
+        $this->db->getConnection()->beginTransaction();
+
         try {
             foreach ($queries as $query) {
                 if (\is_callable($query)) {
@@ -78,7 +80,7 @@ class SchemaHelper
                         throw new Core\Modules\Exception\ModuleMigrationException(sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
                     }
                 } elseif (!empty($query)) {
-                    $this->db->getConnection()->query(str_ireplace($search, $replace, $query));
+                    $this->db->executeQuery(str_ireplace($search, $replace, $query));
                 }
             }
             $this->db->getConnection()->commit();
