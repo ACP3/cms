@@ -39,6 +39,3 @@ services:
       $logger: "@core.modules.installer_logger"
     calls:
       - ["setContainer", ["@service_container"]]
-
-  ACP3\Core\Modules\SchemaUpdater:
-    public: true
