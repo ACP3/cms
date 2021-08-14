@@ -6,8 +6,3 @@ services:
     class: ACP3\Modules\ACP3\Guestbooknewsletter\Installer\Schema
     tags:
       - { name: core.installer.schema }
-
-  guestbooknewsletter.installer.migration:
-    class: ACP3\Modules\ACP3\Guestbooknewsletter\Installer\Migration
-    tags:
-      - { name: core.installer.migration }
