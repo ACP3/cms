@@ -14,6 +14,7 @@ use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
+use ACP3\Core\Migration\DependencyInjection\RegisterMigrationsCompilerPass;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
@@ -68,6 +69,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
             ->addCompilerPass(new RegisterControllerActionsPass())
             ->addCompilerPass(new RegisterValidationRulesPass())
             ->addCompilerPass(new RegisterInstallersCompilerPass())
+            ->addCompilerPass(new RegisterMigrationsCompilerPass())
             ->addCompilerPass(new RegisterAssetLibraryPass())
             ->addCompilerPass(new FragmentRendererPass());
 

@@ -19,8 +19,4 @@ services:
   ACP3\Core\Installer\SchemaRegistrar:
     public: true
 
-  ACP3\Core\Installer\Model\SchemaUpdateModel:
-    arguments:
-      $logger: "@core.modules.installer_logger"
-      $schemaLocator: '@ACP3\Core\Installer\SchemaRegistrar'
-      $migrationLocator: "@core.installer.migration_registrar"
+  ACP3\Core\Installer\Model\SchemaUpdateModel: ~

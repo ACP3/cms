@@ -8,6 +8,7 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Database\Connection;
+use ACP3\Core\Migration\MigrationServiceLocator;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
@@ -23,17 +24,23 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      * @var \ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface
      */
     private $systemSettingsRepository;
+    /**
+     * @var MigrationServiceLocator
+     */
+    private $migrationServiceLocator;
 
     public function __construct(
         LoggerInterface $logger,
         Connection $db,
         ModuleAwareRepositoryInterface $systemModuleRepository,
-        SettingsAwareRepositoryInterface $systemSettingsRepository
+        SettingsAwareRepositoryInterface $systemSettingsRepository,
+        MigrationServiceLocator $migrationServiceLocator
     ) {
         parent::__construct($db, $systemModuleRepository);
 
         $this->logger = $logger;
         $this->systemSettingsRepository = $systemSettingsRepository;
+        $this->migrationServiceLocator = $migrationServiceLocator;
     }
 
     /**
@@ -49,7 +56,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
         $this->executeSqlQueries($schema->createTables(), $schema->getModuleName());
 
-        return $this->addToModulesTable($schema->getModuleName(), $schema->getSchemaVersion())
+        return $this->addToModulesTable($schema->getModuleName(), $this->migrationServiceLocator->getLatestMigrationByModuleName($schema->getModuleName())->getSchemaVersion())
             && $this->installSettings($schema->getModuleName(), $schema->settings());
     }
 

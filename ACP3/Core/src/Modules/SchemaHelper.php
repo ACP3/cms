@@ -71,8 +71,6 @@ class SchemaHelper
             $replace[] = $this->getModuleId($moduleName);
         }
 
-        $this->db->getConnection()->beginTransaction();
-
         try {
             foreach ($queries as $query) {
                 if (\is_callable($query)) {

@@ -7,12 +7,10 @@
 
 namespace ACP3\Core\Installer\Model;
 
-use ACP3\Core\Installer\Exception\MissingInstallerException;
 use ACP3\Core\Installer\Exception\ModuleNotInstallableException;
+use ACP3\Core\Migration\Exception\NoExistingModuleMigrationsException;
+use ACP3\Core\Migration\Migrator;
 use ACP3\Core\Modules;
-use ACP3\Core\Modules\SchemaUpdater;
-use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
 
 class SchemaUpdateModel
 {
@@ -21,34 +19,16 @@ class SchemaUpdateModel
      */
     private $modules;
     /**
-     * @var SchemaUpdater
+     * @var Migrator
      */
-    private $schemaUpdater;
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $schemaLocator;
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $migrationLocator;
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
+    private $migrator;
 
     public function __construct(
-        LoggerInterface $logger,
-        ContainerInterface $schemaLocator,
-        ContainerInterface $migrationLocator,
         Modules $modules,
-        SchemaUpdater $schemaUpdater
+        Migrator $migrator
     ) {
         $this->modules = $modules;
-        $this->schemaUpdater = $schemaUpdater;
-        $this->schemaLocator = $schemaLocator;
-        $this->migrationLocator = $migrationLocator;
-        $this->logger = $logger;
+        $this->migrator = $migrator;
     }
 
     /**
@@ -62,20 +42,16 @@ class SchemaUpdateModel
         foreach ($this->modules->getAllModulesTopSorted() as $moduleInfo) {
             $moduleName = strtolower($moduleInfo['name']);
 
-            if (!$this->modules->isInstallable($moduleName)) {
-                continue;
-            }
-
             try {
                 $this->updateModule($moduleName);
 
                 $results[$moduleName] = true;
             } catch (ModuleNotInstallableException $e) {
                 // Intentionally omitted
+            } catch (NoExistingModuleMigrationsException $e) {
+                $results[$moduleName] = true;
             } catch (\Throwable $e) {
                 $results[$moduleName] = false;
-
-                $this->logger->error($e);
             }
         }
 
@@ -84,27 +60,13 @@ class SchemaUpdateModel
 
     /**
      * Führt die Updateanweisungen eines Moduls aus.
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
-     * @throws \ACP3\Core\Installer\Exception\MissingInstallerException
-     * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
      */
     private function updateModule(string $moduleName): void
     {
         if (!$this->modules->isInstallable($moduleName)) {
-            throw new ModuleNotInstallableException(sprintf('The module %s doesn\'t need to be installed, therefore it can\'t DB migrations.', $moduleName));
+            throw new ModuleNotInstallableException(sprintf('The module %s doesn\'t need to be installed, therefore it can\'t have DB migrations.', $moduleName));
         }
 
-        $serviceIdMigration = $moduleName . '.installer.migration';
-        if (!$this->schemaLocator->has($moduleName) || !$this->migrationLocator->has($serviceIdMigration)) {
-            throw new MissingInstallerException(sprintf('Could not find any schema or migration files for module "%s"', $moduleName));
-        }
-
-        $moduleSchema = $this->schemaLocator->get($moduleName);
-        $moduleMigration = $this->migrationLocator->get($serviceIdMigration);
-        if ($this->modules->isInstalled($moduleName) || \count($moduleMigration->renameModule()) > 0) {
-            $this->schemaUpdater->updateSchema($moduleSchema, $moduleMigration);
-        }
+        $this->migrator->updateModule($moduleName);
     }
 }

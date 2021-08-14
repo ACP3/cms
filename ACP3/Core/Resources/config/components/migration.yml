@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Core\Migration\MigrationServiceLocator: ~
+
+  ACP3\Core\Migration\Migrator:
+    arguments:
+      $migrationLogger: "@core.migration.migration_logger"
+
+  core.migration.migration_logger:
+    class: Psr\Log\LoggerInterface
+    factory: ["@core.logger.logger_factory", "create"]
+    arguments:
+      - "migration"
