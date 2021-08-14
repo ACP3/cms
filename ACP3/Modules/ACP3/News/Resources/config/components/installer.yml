@@ -7,11 +7,6 @@ services:
     tags:
       - { name: core.installer.schema }
 
-  news.installer.migration:
-    class: ACP3\Modules\ACP3\News\Installer\Migration
-    tags:
-      - { name: core.installer.migration }
-
   news.installer.sample_data:
     class: ACP3\Modules\ACP3\News\Installer\SampleData
     tags:
