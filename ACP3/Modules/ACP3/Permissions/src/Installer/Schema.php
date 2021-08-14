@@ -40,11 +40,6 @@ class Schema implements Modules\Installer\SchemaInterface
         return static::MODULE_NAME;
     }
 
-    public function getSchemaVersion(): int
-    {
-        return 40;
-    }
-
     public function createTables(): array
     {
         return [

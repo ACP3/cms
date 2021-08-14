@@ -39,9 +39,4 @@ interface SchemaInterface
      * @return string
      */
     public function getModuleName();
-
-    /**
-     * @return int
-     */
-    public function getSchemaVersion();
 }

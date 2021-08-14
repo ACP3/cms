@@ -38,14 +38,6 @@ class Schema implements SchemaInterface
     }
 
     /**
-     * @return int
-     */
-    public function getSchemaVersion()
-    {
-        return 1;
-    }
-
-    /**
      * @return array
      */
     public function createTables()

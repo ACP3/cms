@@ -52,14 +52,6 @@ class Schema implements Modules\Installer\SchemaInterface
     }
 
     /**
-     * @return int
-     */
-    public function getSchemaVersion()
-    {
-        return 3;
-    }
-
-    /**
      * @return array
      */
     public function createTables()

@@ -23,14 +23,6 @@ class Schema implements Modules\Installer\SchemaInterface
     }
 
     /**
-     * @return int
-     */
-    public function getSchemaVersion()
-    {
-        return 45;
-    }
-
-    /**
      * @return array
      */
     public function specialResources()

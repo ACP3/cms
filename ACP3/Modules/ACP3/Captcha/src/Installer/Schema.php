@@ -69,12 +69,4 @@ class Schema implements Modules\Installer\SchemaInterface
     {
         return static::MODULE_NAME;
     }
-
-    /**
-     * @return int
-     */
-    public function getSchemaVersion()
-    {
-        return 34;
-    }
 }
