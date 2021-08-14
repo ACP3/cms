@@ -7,11 +7,6 @@ services:
     tags:
       - { name: core.installer.schema }
 
-  emoticons.installer.migration:
-    class: ACP3\Modules\ACP3\Emoticons\Installer\Migration
-    tags:
-      - { name: core.installer.migration }
-
   emoticons.installer.sample_data:
     class: ACP3\Modules\ACP3\Emoticons\Installer\SampleData
     tags:
