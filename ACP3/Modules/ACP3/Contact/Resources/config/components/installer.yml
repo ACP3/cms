@@ -6,8 +6,3 @@ services:
     class: ACP3\Modules\ACP3\Contact\Installer\Schema
     tags:
       - { name: core.installer.schema }
-
-  contact.installer.migration:
-    class: ACP3\Modules\ACP3\Contact\Installer\Migration
-    tags:
-      - { name: core.installer.migration }
