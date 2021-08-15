@@ -43,33 +43,32 @@ class Migrator
         $this->moduleRepository = $moduleRepository;
     }
 
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function updateModule(string $moduleName): void
     {
         foreach ($this->findNecessaryMigrations($moduleName) as $migration) {
-            $this->db->getConnection()->beginTransaction();
+            $this->db->beginTransaction();
 
             try {
                 $migration->up();
 
                 $this->updateSchemaVersion($moduleName, $migration->getSchemaVersion());
 
-                $this->db->getConnection()->commit();
+                $this->db->commit();
             } catch (\Throwable $e) {
                 $collectedErrors = [$e];
 
-                $this->db->getConnection()->rollBack();
-
                 // Attempt to rollback the faulty migration
                 try {
-                    $this->db->getConnection()->beginTransaction();
-
                     $migration->down();
 
-                    $this->db->getConnection()->commit();
+                    $this->db->commit();
                 } catch (\Throwable $rollbackException) {
                     $collectedErrors[] = $rollbackException;
 
-                    $this->db->getConnection()->rollBack();
+                    $this->db->rollBack();
                 }
 
                 foreach ($collectedErrors as $exception) {
@@ -83,7 +82,7 @@ class Migrator
 
     private function updateSchemaVersion(string $moduleName, int $schemaVersion): void
     {
-        $this->moduleRepository->update(['version' => $schemaVersion], ['name' => $moduleName]) !== false;
+        $this->moduleRepository->update(['version' => $schemaVersion], ['name' => $moduleName]);
     }
 
     /**

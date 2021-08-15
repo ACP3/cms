@@ -32,11 +32,8 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
     /**
      * @var string
      */
-    private $requestPath = '';
+    private $requestPath;
 
-    /**
-     * SQLLogger constructor.
-     */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
