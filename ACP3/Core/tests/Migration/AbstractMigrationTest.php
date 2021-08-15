@@ -8,6 +8,8 @@
 namespace ACP3\Core\Migration;
 
 use ACP3\Core\Migration\Exception\WrongMigrationNameException;
+use ACP3\Core\Migration\Providers\Migration1;
+use ACP3\Core\Migration\Providers\Migration123;
 use PHPUnit\Framework\TestCase;
 
 class AbstractMigrationTest extends TestCase
@@ -24,28 +26,6 @@ class AbstractMigrationTest extends TestCase
 
         (new Migration1Invalid())->getSchemaVersion();
         (new InvalidMigration1())->getSchemaVersion();
-    }
-}
-
-class Migration1 extends AbstractMigration
-{
-    public function up(): void
-    {
-    }
-
-    public function down(): void
-    {
-    }
-}
-
-class Migration123 extends AbstractMigration
-{
-    public function up(): void
-    {
-    }
-
-    public function down(): void
-    {
     }
 }
 

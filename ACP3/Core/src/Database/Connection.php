@@ -64,6 +64,30 @@ class Connection
     /**
      * @throws DBAL\Exception
      */
+    public function beginTransaction(): void
+    {
+        $this->connection->beginTransaction();
+    }
+
+    /**
+     * @throws DBAL\Exception
+     */
+    public function commit(): void
+    {
+        $this->connection->commit();
+    }
+
+    /**
+     * @throws DBAL\Exception
+     */
+    public function rollback(): void
+    {
+        $this->connection->rollBack();
+    }
+
+    /**
+     * @throws DBAL\Exception
+     */
     public function getWrappedConnection(): ?\PDO
     {
         $connection = $this->getConnection()->getWrappedConnection();
