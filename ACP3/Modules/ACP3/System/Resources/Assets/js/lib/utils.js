@@ -6,6 +6,10 @@
 export function mergeSettings(defaultSettings, constructorOptions, dataAttributeOptions) {
   const mergedSettings = { ...defaultSettings, ...constructorOptions };
 
+  if (!dataAttributeOptions) {
+    return mergedSettings;
+  }
+
   for (let [key, value] of Object.entries(dataAttributeOptions)) {
     const keyStripped = lowerCaseFirstLetter(key.replace("ajaxForm", ""));
 

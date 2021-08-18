@@ -5,9 +5,7 @@ document.querySelectorAll("[data-mark-all-id]").forEach((element) => {
   const tableIdentifier = element.closest("table").id;
   const massActionBar = document.getElementById(`${tableIdentifier}-mass-delete-bar`);
 
-  element.addEventListener("click", () =>
-    highlightAllTableRows(element, element.checked ? "add" : "remove", massActionBar)
-  );
+  element.addEventListener("click", () => highlightAllTableRows(element, element.checked ? "add" : "remove"));
 
   highlightTableRow(element, massActionBar);
 

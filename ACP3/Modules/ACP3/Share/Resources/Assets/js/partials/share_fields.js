@@ -3,18 +3,27 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-(($) => {
-  $(':radio[name="share_active"]')
-    .on("click change", function () {
-      $("#share-services-wrapper").toggle(parseInt(this.value) === 1);
-    })
-    .filter(":checked")
-    .triggerHandler("click");
+((document) => {
+  const shareServicesWrapper = document.getElementById("share-services-wrapper");
+  const shareCustomizeServicesWrapper = document.getElementById("share-custom-services-wrapper");
 
-  $(':radio[name="share_customize_services"]')
-    .on("click change", function () {
-      $("#share-custom-services-wrapper").toggle(parseInt(this.value) === 1);
-    })
-    .filter(":checked")
-    .triggerHandler("click");
-})(jQuery);
+  document.querySelectorAll('[name="share_active"]').forEach((elem) => {
+    elem.addEventListener("change", () => {
+      shareServicesWrapper.classList.toggle("d-none", Number(elem.value) === 0);
+    });
+
+    if (elem.checked) {
+      elem.dispatchEvent(new InputEvent("change"));
+    }
+  });
+
+  document.querySelectorAll('[name="share_customize_services"]').forEach((elem) => {
+    elem.addEventListener("change", () => {
+      shareCustomizeServicesWrapper.classList.toggle("d-none", Number(elem.value) === 0);
+    });
+
+    if (elem.checked) {
+      elem.dispatchEvent(new InputEvent("change"));
+    }
+  });
+})(document);

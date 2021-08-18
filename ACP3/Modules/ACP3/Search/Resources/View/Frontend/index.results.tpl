@@ -4,18 +4,14 @@
     {if !empty($results_mods)}
         {tabset identifier="search-results"}
             {foreach $results_mods as $module => $results}
-                {tab title="{lang t="`$module`|`$module`"} <span class=\"badge\">{count($results)}</span>"}
+                {tab title="{lang t="`$module`|`$module`"} <span class=\"badge bg-primary rounded-pill\">{count($results)}</span>"}
                     {foreach $results as $result}
-                        <div class="dataset-box">
-                            <header class="navbar navbar-default">
-                                <div class="navbar-header">
-                                    <h3 class="navbar-brand">
-                                        <a href="{$result.hyperlink}">{$result.title}</a>
-                                    </h3>
-                                </div>
-                            </header>
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <a href="{$result.hyperlink}">{$result.title}</a>
+                            </div>
                             {if !empty($result.text)}
-                                <div class="content">
+                                <div class="card-body">
                                     {$result.text|strip_tags|truncate:200}
                                 </div>
                             {/if}

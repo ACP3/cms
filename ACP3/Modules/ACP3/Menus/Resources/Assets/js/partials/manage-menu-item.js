@@ -1,29 +1,35 @@
-(($) => {
-  const $parentId = $("#parent-id"),
-    $blockId = $("#block-id"),
-    defaultBlockIndex = $blockId.find("option:selected").index() || 0;
+((document) => {
+  const manageMenuItemContainer = document.getElementById("manage-menu-item-container");
+  const parentIdFormField = document.getElementById("parent-id");
+  const blockIdFormField = document.getElementById("block-id");
 
-  $(':checkbox[name="create_menu_item"]')
-    .on("click", function () {
-      $("#manage-menu-item-container").toggle(this.checked);
-    })
-    .triggerHandler("click");
+  const createMenuItemFormField = document.querySelector('[name="create_menu_item"]');
+  createMenuItemFormField.addEventListener("click", (event) => {
+    if (event.detail?.init === true) {
+      event.preventDefault();
+    }
 
-  $blockId
-    .change(function () {
-      const blockName = $blockId.find("option:selected").eq(0).text();
+    manageMenuItemContainer.classList.toggle("d-none", !createMenuItemFormField.checked);
+  });
+  createMenuItemFormField.dispatchEvent(new CustomEvent("click", { detail: { init: true } }));
 
-      $parentId.find("optgroup").prop("disabled", true).hide();
-      $parentId
-        .find('optgroup[label="' + blockName + '"]')
-        .prop("disabled", false)
-        .show();
+  blockIdFormField.addEventListener("change", () => {
+    const blockName = blockIdFormField.options.item(blockIdFormField.selectedIndex).text;
 
-      $blockId.find("option").each(function (index) {
-        if ($(this).is(":selected") && index !== defaultBlockIndex) {
-          $parentId.find("optgroup option:selected").removeAttr("selected");
-        }
-      });
-    })
-    .triggerHandler("change");
-})(jQuery);
+    const optionGroups = parentIdFormField.querySelectorAll("optgroup");
+
+    optionGroups.forEach((optGroup) => {
+      const optGroupEnabled = optGroup.getAttribute("label") === blockName;
+      optGroup.disabled = !optGroupEnabled;
+      optGroup.classList.toggle("d-none", !optGroupEnabled);
+
+      if (!optGroupEnabled) {
+        optGroup.querySelectorAll("option").forEach((option) => {
+          option.selected = false;
+        });
+      }
+    });
+  });
+
+  blockIdFormField.dispatchEvent(new InputEvent("change"));
+})(document);

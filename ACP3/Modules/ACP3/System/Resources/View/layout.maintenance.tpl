@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>{site_title}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{$ROOT_DIR}ACP3/Modules/ACP3/System/Resources/Assets/css/bootstrap.min.css">
-    <style type="text/css">
+    <style>
         #maintenance {
             width: 70%;
             height: 40px;
@@ -21,7 +21,7 @@
 </head>
 
 <body>
-<div id="maintenance" class="alert alert-warning">
+<div id="maintenance" class="alert alert-warning" role="alert">
     <strong>{$CONTENT}</strong>
 </div>
 </body>

@@ -13,8 +13,8 @@ export class FormValidator {
   #settings;
   #formElement;
 
-  constructor(formElement, options) {
-    this.#settings = mergeSettings(this.#defaults, options, jQuery(formElement).data());
+  constructor(formElement, options = {}) {
+    this.#settings = mergeSettings(this.#defaults, options, formElement.dataset);
     this.#formElement = formElement;
   }
 
@@ -35,8 +35,7 @@ export class FormValidator {
       }
 
       if (!field.checkValidity()) {
-        this.#addErrorDecorationToFormGroup(field);
-        this.#addErrorMessageToFormField(jQuery(field), field.validationMessage);
+        this.#addErrorMessageToFormField(field, field.validationMessage);
 
         this.#isFormValid = false;
       }
@@ -44,52 +43,50 @@ export class FormValidator {
   }
 
   #removeAllPreviousErrors() {
-    const $form = jQuery(this.#formElement);
-
-    $form.find(".form-group.has-error").removeClass("has-error");
-    $form.find(".validation-failed").remove();
+    this.#formElement.querySelectorAll(".is-invalid").forEach((invalidFormField) => {
+      invalidFormField.classList.remove("is-invalid");
+    });
   }
 
   /**
    *
-   * @param {HTMLElement} elem
+   * @param {HTMLElement} formField
    */
-  #addErrorDecorationToFormGroup(elem) {
-    elem.closest(".form-group")?.classList.add("has-error");
+  #removeErrorMessageFromFormField(formField) {
+    formField.closest("div")?.querySelector(".invalid-feedback")?.remove();
   }
 
   /**
    *
-   * @param {HTMLElement} elem
+   * @param {HTMLElement} formField
+   * @param {string} errorMessage
    */
-  #removeErrorMessageFromFormField(elem) {
-    const elementContainingValidationErrors = elem.closest("div")?.querySelector(".validation-failed");
+  #addErrorMessageToFormField(formField, errorMessage) {
+    this.#removeErrorMessageFromFormField(formField);
 
-    elementContainingValidationErrors?.parentElement.removeChild(elementContainingValidationErrors);
-  }
+    formField.classList.add("is-invalid");
 
-  #addErrorMessageToFormField($element, errorMessage) {
-    this.#removeErrorMessageFromFormField($element[0]);
-
-    const $body = jQuery("body");
-    const jsSvgIcons = $body.data("svgIcons");
-
-    $element
+    formField
       .closest("div:not(.input-group):not(.btn-group)")
-      .append(
-        `<small class="help-block validation-failed"><svg class="svg-icon svg-icon__exclamation-circle" fill="currentColor"><use xlink:href="${jsSvgIcons["validationFailedIcon"]}"></use></svg> ${errorMessage}</small>`
-      );
+      .insertAdjacentHTML("beforeend", `<div class="invalid-feedback">${errorMessage}</div>`);
   }
 
   #focusTabWithFirstErrorMessage() {
-    if (jQuery(".tabbable").length > 0) {
-      const $elem = jQuery(".tabbable .form-group.has-error:first");
-      const tabId = $elem.closest(".tab-pane").prop("id");
-
-      jQuery('.tabbable .nav-tabs a[href="#' + tabId + '"]').tab("show");
-
-      $elem.find(":input").focus();
+    if (!this.#formElement.querySelector(".nav-tabs")) {
+      return;
     }
+
+    const firstElemWithError = this.#formElement.querySelector(".is-invalid");
+
+    if (!firstElemWithError) {
+      return;
+    }
+
+    const tabId = firstElemWithError.closest(".tab-pane").getAttribute("id");
+
+    this.#formElement.querySelector('.nav-tabs a[href="#' + tabId + '"]').click();
+
+    firstElemWithError.focus();
   }
 
   get isFormValid() {
@@ -100,51 +97,54 @@ export class FormValidator {
     this.#isFormValid = true;
   }
 
-  handleFormErrorMessages($form, errorMessagesHtml) {
-    let $errorBox = jQuery("#error-box");
-    const $modalBody = $form.find(".modal-body");
+  /**
+   *
+   * @param {HTMLElement} form
+   * @param {string} errorMessagesHtml
+   */
+  handleFormErrorMessages(form, errorMessagesHtml) {
+    const modalBody = form.querySelector(".modal-body");
 
-    $errorBox.remove();
+    // Remove the old - possible existing - error-box
+    document.getElementById("error-box")?.remove();
 
     // Place the error messages inside the modal body for a better styling
-    $errorBox = jQuery(errorMessagesHtml);
+    if (modalBody) {
+      modalBody.insertAdjacentHTML("afterbegin", errorMessagesHtml);
+    } else {
+      form.insertAdjacentHTML("afterbegin", errorMessagesHtml);
+    }
 
-    $errorBox
-      .hide()
-      .prependTo($modalBody.length > 0 && $modalBody.is(":visible") ? $modalBody : $form)
-      .fadeIn();
-
-    this.#prettyPrintResponseErrorMessages($form, $errorBox);
+    this.#prettyPrintResponseErrorMessages(form, document.getElementById("error-box"));
   }
 
-  #prettyPrintResponseErrorMessages($form, $errorBox) {
+  /**
+   *
+   * @param {HTMLElement} form
+   * @param {HTMLElement} errorBox
+   */
+  #prettyPrintResponseErrorMessages(form, errorBox) {
     this.#removeAllPreviousErrors();
 
     // highlight all input fields where the validation has failed
-    $errorBox.find("li").each((index, element) => {
-      let $this = jQuery(element),
-        errorClass = $this.data("error");
+    errorBox.querySelectorAll("li").forEach((errorMessageLine) => {
+      let errorClass = errorMessageLine.dataset.element;
 
       if (errorClass.length > 0) {
-        let $elem =
-          $form.find("#" + errorClass) || $form.find('[id|="' + errorClass + '"]').filter(':not([id$="container"])');
+        let elem = document.getElementById(errorClass) || form.querySelector('[id|="' + errorClass + '"]');
 
-        if ($elem.length > 0) {
-          this.#addErrorDecorationToFormGroup($elem[0]);
-
+        if (elem) {
           // Move the error message to the responsible input field(s)
           // and remove the list item from the error box container
-          if ($elem.length === 1) {
-            this.#addErrorMessageToFormField($elem, $this.html());
-            $this.remove();
-          }
+          this.#addErrorMessageToFormField(elem[0], errorMessageLine.innerHTML);
+          errorMessageLine.remove();
         }
       }
     });
 
     // if all list items have been removed, remove the error box container too
-    if ($errorBox.find("li").length === 0) {
-      $errorBox.remove();
+    if (errorBox.querySelectorAll("li").length === 0) {
+      errorBox.remove();
     }
 
     this.#focusTabWithFirstErrorMessage();
@@ -152,28 +152,27 @@ export class FormValidator {
   }
 
   #scrollToFirstFormError() {
-    const $form = jQuery(this.#formElement);
-    const $formErrors = $form.find(".form-group.has-error");
-
-    if ($form.closest(".modal").length > 0) {
+    if (this.#formElement.closest(".modal")?.length > 0) {
       return;
     }
 
-    if (!$formErrors || $formErrors.length === 0) {
+    const formErrors = this.#formElement.querySelectorAll(".is-invalid");
+
+    if (!formErrors || formErrors.length === 0) {
       return;
     }
 
-    if (this.#isElementInViewport($form.find(".help-block.validation-failed"))) {
+    if (this.#isElementInViewport(this.#formElement.querySelector(".invalid-feedback"))) {
       return;
     }
 
-    let offsetTop = $formErrors.offset().top;
+    let offsetTop = formErrors.item(0).getBoundingClientRect().top;
 
     if (this.#settings.scrollOffsetElement) {
-      const $scrollOffsetElement = jQuery(this.#settings.scrollOffsetElement);
+      const scrollOffsetElement = document.querySelector(this.#settings.scrollOffsetElement);
 
-      if ($scrollOffsetElement && $scrollOffsetElement.length > 0) {
-        offsetTop -= $scrollOffsetElement.height();
+      if (scrollOffsetElement) {
+        offsetTop -= scrollOffsetElement.clientHeight;
       }
     }
 
@@ -181,16 +180,11 @@ export class FormValidator {
   }
 
   #isElementInViewport(element) {
-    // special bonus for those using jQuery
-    if (typeof jQuery === "function" && element instanceof jQuery) {
-      element = element[0];
-    }
-
-    const $scrollOffsetElement = jQuery(this.#settings.scrollOffsetElement);
+    const scrollOffsetElement = document.querySelector(this.#settings.scrollOffsetElement);
     let offsetTop = 0;
 
-    if ($scrollOffsetElement) {
-      offsetTop = $scrollOffsetElement.height();
+    if (scrollOffsetElement) {
+      offsetTop = scrollOffsetElement.clientHeight;
     }
 
     const rect = element.getBoundingClientRect();

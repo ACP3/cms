@@ -12,7 +12,7 @@
                         {block CONFIRM_BOX_MODAL_FOOTER}
                             {if isset($confirm.backward)}
                                 <a href="{$confirm.forward}" class="btn btn-primary">{lang t="system|yes"}</a>
-                                <a href="{$confirm.backward}" class="btn btn-default">{lang t="system|no"}</a>
+                                <a href="{$confirm.backward}" class="btn btn-light">{lang t="system|no"}</a>
                             {elseif $confirm.overlay === true}
                                 <a href="javascript:window.parent.$.fancybox.close();window.parent.location.reload();" class="btn btn-primary">{lang t="system|close_window"}</a>
                             {elseif is_array($confirm.forward)}

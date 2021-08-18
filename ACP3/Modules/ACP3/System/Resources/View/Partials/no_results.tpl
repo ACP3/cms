@@ -1,4 +1,4 @@
-<div class="alert alert-warning text-center">
+<div class="alert alert-warning text-center" role="alert">
     <strong>
         {if !empty($no_results_text)}
             {$no_results_text}

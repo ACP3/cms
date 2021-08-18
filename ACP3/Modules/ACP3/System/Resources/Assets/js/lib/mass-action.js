@@ -3,7 +3,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-const cssClassName = "info";
+// @ToDO: Remove jQuery
+
+const cssClassName = "table-info";
 
 /**
  * Marks all visible results
@@ -67,7 +69,7 @@ function setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName, massActi
     visibleSelectedTableRows > 0 && visibleMassActionCheckboxes === visibleSelectedTableRows;
 
   if (massActionBarElem) {
-    massActionBarElem.classList.toggle("hidden", visibleSelectedTableRows === 0);
+    massActionBarElem.classList.toggle("d-none", visibleSelectedTableRows === 0);
   }
 }
 

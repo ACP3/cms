@@ -48,10 +48,10 @@
             .logo {
                 padding: 15px 0;
             }
-            .text-left {
+            .text-left, .text-start {
                 text-align: left;
             }
-            .text-right {
+            .text-right, .text-end {
                 text-align: right;
             }
             .text-center {

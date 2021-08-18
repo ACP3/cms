@@ -11,7 +11,7 @@
         </button>
     {/block}
     {if !empty($back_url)}
-        <a href="{$back_url}" class="btn{if !empty($back_btn_class)} {$back_btn_class}{else} btn-default{/if}">
+        <a href="{$back_url}" class="btn{if !empty($back_btn_class)} {$back_btn_class}{else} btn-light{/if}">
             {if !empty($back_label)}
                 {$back_label}
             {else}

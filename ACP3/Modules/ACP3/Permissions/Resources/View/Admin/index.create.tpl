@@ -13,15 +13,15 @@
                 <fieldset>
                     <legend>{lang t="`$moduleName`|`$moduleName`"}</legend>
                     {foreach $values.resources as $resource}
-                        <div class="form-group">
+                        <div class="row mb-3">
                             {$resourcePath="`$resource.area`/`$moduleName`/`$resource.controller`/`$resource.page`/"}
-                            <label class="col-sm-4 control-label">{$resourcePath}</label>
+                            <label class="col-sm-4 col-form-label">{$resourcePath}</label>
 
                             <div class="col-sm-8">
-                                <div class="btn-group" data-toggle="buttons">
+                                <div class="btn-group" role="group">
                                     {foreach $resource.select as $row}
-                                        <label for="resource-{$resource.resource_id}-{$row.value}" class="btn btn-default{if !empty($row.selected)} active{/if}">
-                                            <input type="radio" name="resources[{$resource.resource_id}]" id="resource-{$resource.resource_id}-{$row.value}" value="{$row.value}"{$row.selected}>
+                                        <input type="radio" class="btn-check" name="resources[{$resource.resource_id}]" id="resource-{$resource.resource_id}-{$row.value}" value="{$row.value}"{$row.selected}>
+                                        <label for="resource-{$resource.resource_id}-{$row.value}" class="btn btn-outline-secondary">
                                             {$row.lang}
                                             {if $row.value === 2}
                                                 <small>({$resource.calculated})</small>

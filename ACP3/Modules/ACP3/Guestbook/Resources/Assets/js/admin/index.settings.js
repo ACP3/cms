@@ -8,7 +8,7 @@
 
     document
       .getElementById("guestbook-entry-notification-wrapper")
-      .classList.toggle("hidden", Number(this.value) === 0);
+      .classList.toggle("d-none", Number(this.value) === 0);
   });
 
   notificationToggle.dispatchEvent(new CustomEvent("change", { detail: { init: true } }));

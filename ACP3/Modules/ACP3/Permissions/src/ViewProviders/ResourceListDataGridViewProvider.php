@@ -43,11 +43,10 @@ class ResourceListDataGridViewProvider
         $this->translator = $translator;
     }
 
-    public function __invoke()
+    public function __invoke(): array
     {
-        $resources = $this->resourceRepository->getAllResources();
         $output = [];
-        foreach ($resources as $resource) {
+        foreach ($this->resourceRepository->getAllResources() as $resource) {
             if ($this->modules->isInstalled($resource['module_name']) === true) {
                 $module = $this->translator->t($resource['module_name'], $resource['module_name']);
                 $output[$module][] = $resource;

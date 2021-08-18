@@ -1,8 +1,13 @@
-(($, document) => {
-  $('input[name="overlay"]')
-    .on("change click", function () {
-      document.getElementById("comments-container").classList.toggle("hidden", Number(this.value) !== 0);
-    })
-    .filter(":checked")
-    .trigger("click");
-})(jQuery, document);
+((document) => {
+  const overlayFormFields = document.querySelectorAll('[name="overlay"]');
+
+  overlayFormFields.forEach((elem) => {
+    elem.addEventListener("change", () => {
+      document.getElementById("comments-container").classList.toggle("d-none", Number(elem.value) !== 0);
+    });
+
+    if (elem.checked) {
+      elem.dispatchEvent(new InputEvent("change"));
+    }
+  });
+})(document);

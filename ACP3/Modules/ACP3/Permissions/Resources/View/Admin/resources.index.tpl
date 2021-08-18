@@ -27,11 +27,11 @@
                 {/if}
                 <tbody>
                 {foreach $resources as $module => $values}
-                    <tr class="sub-table-header">
+                    <tr class="table-secondary sub-table-header" data-module-name="{$values[0].module_name}">
                         <th colspan="{if $can_delete_resource === true}5{else}4{/if}">{$module}</th>
                     </tr>
                     {foreach $values as $row}
-                        <tr>
+                        <tr data-module-name="{$row.module_name}">
                             {if $can_delete_resource === true}
                                 <td><input type="checkbox" name="entries[]" value="{$row.resource_id}"></td>
                             {/if}
@@ -39,22 +39,20 @@
                             <td>{$row.resource_id}</td>
                             {if $can_edit_resource === true || $can_delete_resource === true}
                                 <td class="datagrid-column__actions">
-                                    <div class="btn-group pull-right">
-                                        {if $can_edit_resource === true}
-                                            <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
-                                               class="btn btn-default btn-xs"
-                                               title="{lang t="permissions|admin_resources_edit"}">
-                                                {icon iconSet="solid" icon="edit"}
-                                            </a>
-                                        {/if}
-                                        {if $can_delete_resource === true}
-                                            <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
-                                               class="btn btn-danger btn-xs"
-                                               title="{lang t="permissions|admin_resources_delete"}">
-                                                {icon iconSet="solid" icon="trash"}
-                                            </a>
-                                        {/if}
-                                    </div>
+                                    {if $can_edit_resource === true}
+                                        <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
+                                           class="btn btn-outline-secondary btn-sm"
+                                           title="{lang t="permissions|admin_resources_edit"}">
+                                            {icon iconSet="solid" icon="edit"}
+                                        </a>
+                                    {/if}
+                                    {if $can_delete_resource === true}
+                                        <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
+                                           class="btn btn-danger btn-sm"
+                                           title="{lang t="permissions|admin_resources_delete"}">
+                                            {icon iconSet="solid" icon="trash"}
+                                        </a>
+                                    {/if}
                                 </td>
                             {/if}
                         </tr>

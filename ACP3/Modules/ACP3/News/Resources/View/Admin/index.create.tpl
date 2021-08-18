@@ -8,8 +8,8 @@
         {tab title={lang t="news|news"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="news|title"}}
             {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true label={lang t="news|text"}}
-            <div class="form-group">
-                <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
+            <div class="row mb-3">
+                <label for="cat" class="col-sm-2 col-form-label required">{lang t="categories|category"}</label>
 
                 <div class="col-sm-10">
                     {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}

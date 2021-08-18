@@ -3,7 +3,8 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
 
 $rating-star-color-default: #777 !default;
 $rating-star-color-active: #e3cf7a !default;
@@ -61,5 +62,5 @@ $rating-star-font-size: 24px !default;
 }
 
 .rating__already-rated {
-  margin-bottom: ($line-height-computed / 4);
+  margin-bottom: $spacer * 0.25;
 }

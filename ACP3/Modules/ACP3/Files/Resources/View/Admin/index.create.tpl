@@ -14,8 +14,8 @@
             {/block}
             <div id="file-external-toggle">
                 {include file="asset:System/Partials/form_group.input_url.tpl" name="file_external" value=$form.file_external labelRequired=true maxlength=120 label={lang t="files|uri"}}
-                <div class="form-group">
-                    <label for="filesize" class="col-sm-2 control-label required">{lang t="files|filesize"}</label>
+                <div class="row mb-3">
+                    <label for="filesize" class="col-sm-2 col-form-label required">{lang t="files|filesize"}</label>
 
                     <div class="col-sm-4">
                         <div class="row">
@@ -23,8 +23,8 @@
                                 <input class="form-control" type="number" name="filesize" id="filesize" value="{$form.filesize}" maxlength="15" min="0">
                             </div>
                             <div class="col-sm-4">
-                                <label for="unit" class="sr-only">{lang t="files|unit"}</label>
-                                <select class="form-control" name="unit" id="unit">
+                                <label for="unit" class="visually-hidden">{lang t="files|unit"}</label>
+                                <select class="form-select" name="unit" id="unit">
                                     {foreach $units as $row}
                                         <option value="{$row.value}"{$row.selected}>{$row.value}</option>
                                     {/foreach}
@@ -36,8 +36,8 @@
             </div>
             {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="files|title"}}
             {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true toolbar="simple" label={lang t="system|description"}}
-            <div class="form-group">
-                <label for="cat" class="col-sm-2 control-label required">{lang t="categories|category"}</label>
+            <div class="row mb-3">
+                <label for="cat" class="col-sm-2 col-form-label required">{lang t="categories|category"}</label>
 
                 <div class="col-sm-10">
                     {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}

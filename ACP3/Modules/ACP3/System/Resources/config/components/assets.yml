@@ -60,9 +60,9 @@ services:
     arguments:
       - "bootstrap"
       - false
-      - ["jquery"]
+      - []
       - ["bootstrap.min.css"]
-      - ["bootstrap.min.js"]
+      - ["bootstrap.bundle.min.js"]
       - "system"
 
   system.assets.ajax-form:
@@ -70,7 +70,7 @@ services:
     arguments:
       - "ajax-form"
       - false
-      - ["bootstrap", "jquery"]
+      - ["jquery", "bootstrap"]
       - ["loading-layer.min.css"]
       - ["partials/ajax-form.js"]
       - "system"
@@ -80,7 +80,7 @@ services:
     arguments:
       - "bootbox"
       - false
-      - ["bootstrap"]
+      - ["jquery", "bootstrap"]
       - []
       - ["bootbox.all.min.js"]
       - "system"
@@ -91,8 +91,8 @@ services:
       - "datatables"
       - false
       - ["jquery", "bootstrap"]
-      - ["dataTables.bootstrap.css"]
-      - ["jquery.dataTables.js"]
+      - ["dataTables.bootstrap5.css"]
+      - ["jquery.dataTables.js", "dataTables.bootstrap5.js"]
       - "system"
       - true
 

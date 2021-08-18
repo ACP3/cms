@@ -10,26 +10,26 @@
     {include file="asset:System/Partials/wysiwyg_config.tpl" js=$wysiwyg.js}
 {/javascripts}
 {if $wysiwyg.advanced === true}
-    <div id="page-break-form" class="modal fade" role="dialog">
+    <div id="page-break-form" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
                     <h4 class="modal-title">{lang t="system|insert_page_break"}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{lang t="system|close"}"></button>
                 </div>
                 <div class="modal-body">
                     <label for="toc-title">{lang t="system|title_for_toc"}</label>
                     <input type="text" id="toc-title" class="form-control">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{lang t="system|close"}</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{lang t="system|close"}</button>
                     <button class="btn btn-primary">{lang t="system|submit"}</button>
                 </div>
             </div>
         </div>
     </div>
     <div id="page-break-link" class="align-left">
-        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#page-break-form">
+        <a href="#" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#page-break-form">
             {lang t="system|insert_page_break"}
         </a>
     </div>
@@ -39,6 +39,6 @@
                 {$wysiwyg.advanced_replace_content}
             };
         </script>
-        {include_js module="system" file="partials/wysiwyg" depends="bootstrap"}
+        {include_js module="system" file="partials/wysiwyg" depends=["bootstrap"]}
     {/javascripts}
 {/if}

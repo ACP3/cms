@@ -1,5 +1,4 @@
-<ul class="nav nav-list">
-    <li class="nav-header">{lang t="contact|contact"}</li>
+<ul class="list-unstyled">
     {if !empty($contact.address)}
         <li>{$contact.address|rewrite_uri}</li>
     {/if}

@@ -1,9 +1,8 @@
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
 
 .licence {
   width: 80%;
   height: 400px;
-  padding: ($line-height-computed / 2);
-  margin: 0 auto $line-height-computed;
   overflow: auto;
 }

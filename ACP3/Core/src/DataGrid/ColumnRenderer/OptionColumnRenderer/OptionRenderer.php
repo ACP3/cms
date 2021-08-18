@@ -35,13 +35,13 @@ class OptionRenderer
         string $route,
         string $translationPhrase,
         string $icon,
-        string $buttonClass = 'btn-default',
+        string $buttonClass = 'btn-outline-secondary',
         bool $useAjax = false
     ): void {
         $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
-        $value = ' <a href="' . $this->router->route($route) . '" class="btn btn-xs ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
+        $value = ' <a href="' . $this->router->route($route) . '" class="btn btn-sm ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
         $value .= ($this->icon)('solid', strpos($icon, 'fa-') === 0 ? substr($icon, 3) : $icon);
-        $value .= '<span class="sr-only">' . $translationPhrase . '</span>';
+        $value .= '<span class="visually-hidden">' . $translationPhrase . '</span>';
         $value .= '</a>';
 
         $this->options[] = $value;

@@ -8,13 +8,13 @@
  */
 const componentPaths = require("../../.component-paths.json");
 
-const modulePathsScss = componentPaths.module.map((componentPath) => {
+const modulePathsScss = componentPaths.module.concat(componentPaths.installer).map((componentPath) => {
   return componentPath + "/Resources/Assets/scss/**/*.scss";
 });
-const modulePathsJsWatch = componentPaths.module.map((componentPath) => {
+const modulePathsJsWatch = componentPaths.module.concat(componentPaths.installer).map((componentPath) => {
   return componentPath + "/Resources/Assets/js/{admin,frontend,partials,widget,lib}/!(*.min).js";
 });
-const modulePathsJsProcess = componentPaths.module.map((componentPath) => {
+const modulePathsJsProcess = componentPaths.module.concat(componentPaths.installer).map((componentPath) => {
   return componentPath + "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
 });
 

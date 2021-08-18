@@ -21,7 +21,7 @@
                     {foreach $requirements as $row}
                         <tr>
                             <td><strong>{$row.name}</strong></td>
-                            <td class="{if $row.satisfied}bg-success{else}bg-danger{/if}">
+                            <td class="{if $row.satisfied}table-success{else}table-danger{/if}">
                                 {$row.found}{if !$row.satisfied} - {lang t="installer|installation_impossible"}{/if}
                             </td>
                             <td>{$row.required}</td>
@@ -41,10 +41,10 @@
                         <tr>
                             <td><strong>{$row.path}</strong></td>
                             <td>
-                                <span class="label {if $row.exists}label-success{else}label-danger{/if}">
+                                <span class="badge {if $row.exists}bg-success{else}bg-danger{/if}">
                                     {lang t="installer|{if $row.exists}found{else}not_found{/if}"}
                                 </span>
-                                <span class="label {if $row.writable}label-success{else}label-danger{/if}">
+                                <span class="badge {if $row.writable}bg-success{else}bg-danger{/if}">
                                     {lang t="installer|{if $row.exists}writable{else}not_writable{/if}"}
                                 </span>
                             </td>
@@ -60,10 +60,10 @@
                 <p>
                     {lang t="installer|step_3_paragraph_2"}
                 </p>
-                <ul class="unstyled">
+                <ul class="list-unstyled">
                     {foreach $php_settings as $row}
                         <li>
-                            <strong>{$row.setting}</strong> <span class="label {if $row.satisfied}label-success{else}label-danger{/if}">{$row.value}</span>
+                            <strong>{$row.setting}</strong> <span class="badge {if $row.satisfied}bg-success{else}bg-danger{/if}">{$row.value}</span>
                         </li>
                     {/foreach}
                 </ul>
@@ -71,25 +71,27 @@
         </div>
     </div>
     {if $stop_install === true}
-        <div class="alert alert-danger text-center">
+        <div class="alert alert-danger text-center" role="alert">
             <strong>{lang t="installer|stop_installation"}</strong>
         </div>
     {else}
-        <div class="well well-sm text-center">
-            {if $check_again === true}
-                <a href="{$REQUEST_URI}"
-                   class="btn btn-warning"
-                   data-ajax-form="true"
-                   data-ajax-form-loading-text="{lang t="installer|loading_please_wait"}">
-                    {icon iconSet="solid" icon="sync-alt"}
-                    {lang t="installer|check_again"}
-                </a>
-                {javascripts}
-                    {js_libraries enable="ajax-form"}
-                {/javascripts}
-            {else}
-                <a href="{uri args="installer/index/install"}" class="btn btn-default">{lang t="installer|installer_index_install"}</a>
-            {/if}
+        <div class="card bg-light mb-3">
+            <div class="card-body text-center">
+                {if $check_again === true}
+                    <a href="{$REQUEST_URI}"
+                       class="btn btn-warning"
+                       data-ajax-form="true"
+                       data-ajax-form-loading-text="{lang t="installer|loading_please_wait"}">
+                        {icon iconSet="solid" icon="sync-alt"}
+                        {lang t="installer|check_again"}
+                    </a>
+                    {javascripts}
+                        {js_libraries enable="ajax-form"}
+                    {/javascripts}
+                {else}
+                    <a href="{uri args="installer/index/install"}" class="btn btn-outline-primary">{lang t="installer|installer_index_install"}</a>
+                {/if}
+            </div>
         </div>
     {/if}
 {/block}

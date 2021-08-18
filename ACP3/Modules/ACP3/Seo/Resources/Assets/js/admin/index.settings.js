@@ -3,11 +3,16 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-(($, document) => {
-  $(':radio[name="sitemap_is_enabled"]')
-    .on("click change", function () {
-      document.getElementById("seo-sitemap-wrapper").classList.toggle("hidden", Number(this.value) === 0);
-    })
-    .filter(":checked")
-    .triggerHandler("click");
-})(jQuery, document);
+((document) => {
+  const sitemapWrapper = document.getElementById("seo-sitemap-wrapper");
+
+  document.querySelectorAll('[name="sitemap_is_enabled"]').forEach((elem) => {
+    elem.addEventListener("change", () => {
+      sitemapWrapper.classList.toggle("d-none", Number(elem.value) === 0);
+    });
+
+    if (elem.checked) {
+      elem.dispatchEvent(new InputEvent("change"));
+    }
+  });
+})(document);

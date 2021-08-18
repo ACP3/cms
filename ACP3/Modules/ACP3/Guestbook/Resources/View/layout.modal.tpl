@@ -1,7 +1,7 @@
 <!-- JAVASCRIPTS -->
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title" id="modal-create">{page_title}</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
 </div>
 {block CONTENT}
     {$CONTENT}

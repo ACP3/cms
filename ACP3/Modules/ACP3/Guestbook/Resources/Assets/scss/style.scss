@@ -1,8 +1,10 @@
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
 
 $guestbook-item-width: 65% !default;
 
-@media (min-width: $screen-sm-min) {
+@include media-breakpoint-up("sm", $grid-breakpoints) {
   .dataset-box {
     &.dataset-box__guestbook {
       width: $guestbook-item-width;

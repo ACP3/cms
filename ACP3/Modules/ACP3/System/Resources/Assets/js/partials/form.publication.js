@@ -3,11 +3,12 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-(($, document) => {
-  $('input[name="active"]')
-    .on("click change", function () {
-      document.getElementById("publication-period-wrapper").classList.toggle("hidden", Number(this.value) === 0);
-    })
-    .filter(":checked")
-    .click();
-})(jQuery, document);
+((document) => {
+  document.querySelectorAll('input[name="active"]').forEach((elem) => {
+    elem.addEventListener("click", () => {
+      document.getElementById("publication-period-wrapper").classList.toggle("d-none", Number(elem.value) === 0);
+    });
+  });
+
+  document.querySelector('input[name="active"]:checked').dispatchEvent(new MouseEvent("click"));
+})(document);

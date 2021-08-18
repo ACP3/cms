@@ -3,19 +3,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
 
 $system-loading-layer-bg-color: rgba(255, 255, 255, 0.5) !default;
 $system-loading-layer-font-size: 26px !default;
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(350deg);
-  }
-}
 
 .loading-layer {
   position: fixed;
@@ -47,6 +39,6 @@ $system-loading-layer-font-size: 26px !default;
 
   .fas {
     display: block;
-    margin-bottom: ($line-height-computed / 2);
+    margin-bottom: $spacer * 0.5;
   }
 }

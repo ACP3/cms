@@ -2,7 +2,7 @@
 
 {block FORM_GROUP_LABEL_ID}{/block}
 {block FORM_GROUP_FORM_FIELD}
-    <div class="form-control-static">
+    <div class="form-control-plaintext">
         {if isset($value)}
             {$value}
         {/if}

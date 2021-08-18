@@ -1,21 +1,27 @@
 /* global wysiwygCallback */
+/* global bootstrap */
 
-(($) => {
-  $("#page-break-form")
-    .find(".modal-footer button.btn-primary")
-    .click(function (e) {
+((document) => {
+  const pageBreakFormEl = document.getElementById("page-break-form");
+  const modal = bootstrap.Modal.getOrCreateInstance(pageBreakFormEl);
+
+  document
+    .getElementById("page-break-form")
+    .querySelector(".modal-footer button.btn-primary")
+    .addEventListener("click", function (e) {
       e.preventDefault();
 
-      const $tocTitle = $("#toc-title");
+      const tocTitle = document.getElementById("toc-title");
       let text;
 
-      if ($tocTitle.val().length > 0) {
-        text = '<hr class="page-break" title="' + $tocTitle.val() + '" />';
+      if (tocTitle.value.length > 0) {
+        text = '<hr class="page-break" title="' + tocTitle.value + '" />';
       } else {
         text = '<hr class="page-break" />';
       }
 
       wysiwygCallback(text);
-      $("#page-break-form").modal("hide");
+
+      modal.hide();
     });
-})(jQuery);
+})(document);

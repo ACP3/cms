@@ -5,26 +5,24 @@
 
 /* global onloadCallback:true */
 onloadCallback = () => {
-  jQuery(".recaptcha-placeholder").each(function () {
-    if (jQuery(this).children().length === 0) {
-      const widgetId = grecaptcha.render(this.id, {
-        sitekey: this.dataset.sitekey,
-        size: this.dataset.size,
+  document.querySelectorAll(".recaptcha-placeholder").forEach((elem) => {
+    if (elem.children.length === 0) {
+      elem.dataset.recaptchaId = grecaptcha.render(elem.id, {
+        sitekey: elem.dataset.sitekey,
+        size: elem.dataset.size,
       });
-
-      jQuery(this).data("recaptchaId", widgetId);
     }
   });
 };
 
-jQuery(document).on("acp3.ajaxFrom.complete", () => {
+document.addEventListener("acp3.ajaxFrom.complete", () => {
   onloadCallback();
 });
 
-jQuery(document).on("acp3.ajaxFrom.submit.fail", (event, ajaxForm) => {
-  const $reCaptchaPlaceholder = jQuery(ajaxForm.element).find(".recaptcha-placeholder");
+document.addEventListener("acp3.ajaxFrom.submit.fail", (event, ajaxForm) => {
+  const reCaptchaPlaceholder = ajaxForm.element.querySelector(".recaptcha-placeholder");
 
-  if ($reCaptchaPlaceholder && $reCaptchaPlaceholder.length > 0) {
-    grecaptcha.reset($reCaptchaPlaceholder.data("recaptchaId"));
+  if (reCaptchaPlaceholder?.length > 0) {
+    grecaptcha.reset(reCaptchaPlaceholder.dataset.recaptchaId);
   }
 });

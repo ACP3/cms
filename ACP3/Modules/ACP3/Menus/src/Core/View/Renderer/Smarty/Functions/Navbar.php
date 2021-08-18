@@ -62,6 +62,7 @@ class Navbar extends AbstractFunction
                 $params['dropdownItemClass'] ?? '',
                 $params['tag'] ?? 'ul',
                 $params['itemTag'] ?? 'li',
+                $params['itemSelectors'] ?? '',
                 $params['dropdownWrapperTag'] ?? 'li',
                 $params['classLink'] ?? '',
                 $params['inlineStyles'] ?? ''
@@ -110,13 +111,13 @@ class Navbar extends AbstractFunction
                         $menu,
                         $menuConfig,
                         $item,
-                        $this->getMenuItemSelector($item, $selected)
+                        $this->getMenuItemSelector($item, $selected, $menuConfig)
                     );
                 } else {
                     $this->menus[$cacheKey] .= $this->processMenuItemWithoutChildren(
                         $menuConfig,
                         $item,
-                        $this->getMenuItemSelector($item, $selected)
+                        $this->getMenuItemSelector($item, $selected, $menuConfig)
                     );
                     $this->menus[$cacheKey] .= $this->closeOpenedMenus(
                         $menuConfig,
@@ -163,13 +164,16 @@ class Navbar extends AbstractFunction
         return 0;
     }
 
+    /**
+     * @param array<string, mixed> $item
+     */
     private function processMenuItemWithoutChildren(MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
     {
         $link = sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s</a>',
             $this->getMenuItemHref($item['mode'], $item['uri']),
             $this->getMenuItemHrefTarget($item['target']),
-            $this->prepareMenuItemHtmlAttributes($menuConfig),
+            $this->prepareMenuItemHtmlAttributes($menuConfig, $item),
             $item['title']
         );
 
@@ -180,28 +184,28 @@ class Navbar extends AbstractFunction
         return sprintf('<%1$s class="%2$s">%3$s</%1$s>', $menuConfig->getItemTag(), $cssSelectors, $link);
     }
 
-    private function processMenuItemWithChildren(string $menu, MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
+    /**
+     * @param array<string, mixed> $item
+     */
+    private function processMenuItemWithChildren(string $menuName, MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
     {
-        $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig);
-        $caret = $subMenuCss = '';
+        $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig, $item, ['dropdown-toggle']);
+        $subMenuCss = '';
         // Special styling for bootstrap enabled navigation bars
         if ($menuConfig->isUseBootstrap() === true) {
-            $dropDownItemClassName = 'navigation-' . $menu . '-subnav-' . $item['id'] . '-dropdown';
+            $dropDownItemClassName = 'navigation-' . $menuName . '-subnav-' . $item['id'] . '-dropdown';
             $cssSelectors .= !empty($menuConfig->getDropdownItemSelector()) ? ' ' . $menuConfig->getDropdownItemSelector() : ' dropdown';
             $cssSelectors .= ' ' . $dropDownItemClassName;
-            $caret = (int) $item['level'] === 0 ? ' <b class="caret"></b>' : '';
-            $attributes .= (int) $item['level'] === 0 ? '  data-target=".' . $dropDownItemClassName . '"' : '';
-            $attributes .= ' class="dropdown-toggle" data-toggle="dropdown"';
+            $attributes .= ' data-bs-toggle="dropdown" aria-expanded="false" role="button"';
             $subMenuCss = 'dropdown-menu ';
         }
 
         $link = sprintf(
-            '<a href="%1$s"%2$s%3$s>%4$s%5$s</a>',
+            '<a href="%1$s"%2$s%3$s>%4$s</a>',
             $this->getMenuItemHref($item['mode'], $item['uri']),
             $this->getMenuItemHrefTarget($item['target']),
             $attributes,
             $item['title'],
-            $caret
         );
 
         return sprintf(
@@ -210,7 +214,7 @@ class Navbar extends AbstractFunction
             $cssSelectors,
             $link,
             $subMenuCss,
-            $menu,
+            $menuName,
             $item['id']
         );
     }
@@ -260,23 +264,24 @@ class Navbar extends AbstractFunction
         return $diff;
     }
 
-    private function getMenuItemSelector(array $item, int $selectedItemValue): string
+    private function getMenuItemSelector(array $item, int $selectedItemValue, MenuConfiguration $menuConfig): string
     {
-        $css = 'navi-' . $item['id'];
+        $css = ['navi-' . $item['id']];
+        $css[] = $menuConfig->getItemSelectors();
 
         if (!empty($selectedItemValue) &&
             $item['left_id'] <= $selectedItemValue &&
             $item['right_id'] > $selectedItemValue
         ) {
-            $css .= ' active';
+            $css[] = ' active';
         }
 
-        return $css;
+        return implode(' ', $css);
     }
 
     private function prepareMenuHtmlAttributes(string $menu, MenuConfiguration $menuConfig): string
     {
-        $bootstrapSelector = $menuConfig->isUseBootstrap() === true ? ' nav navbar-nav' : '';
+        $bootstrapSelector = $menuConfig->isUseBootstrap() === true ? ' navbar-nav' : '';
         $navigationSelectors = !empty($menuConfig->getSelector()) ? ' ' . $menuConfig->getSelector() : $bootstrapSelector;
         $attributes = ' class="navigation-' . $menu . $navigationSelectors . '"';
         $attributes .= !empty($menuConfig->getInlineStyle()) ? ' style="' . $menuConfig->getInlineStyle() . '"' : '';
@@ -284,8 +289,17 @@ class Navbar extends AbstractFunction
         return $attributes;
     }
 
-    private function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig): string
+    /**
+     * @param array<string, mixed> $item
+     */
+    private function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig, array $item, array $additionalSelectors = []): string
     {
-        return !empty($menuConfig->getLinkSelector()) ? ' class="' . $menuConfig->getLinkSelector() . '"' : '';
+        if ($item['level'] > 0 && $menuConfig->isUseBootstrap()) {
+            $selectors = ['dropdown-item'];
+        } else {
+            $selectors = array_merge([$menuConfig->getLinkSelector()], $additionalSelectors);
+        }
+
+        return !empty($selectors) ? ' class="' . implode(' ', $selectors) . '"' : '';
     }
 }

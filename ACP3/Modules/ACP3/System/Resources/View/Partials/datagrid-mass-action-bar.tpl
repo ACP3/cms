@@ -1,4 +1,4 @@
-<tfoot id="{$dataGridIdentifier}-mass-delete-bar" class="hidden">
+<tfoot id="{$dataGridIdentifier}-mass-delete-bar" class="d-none">
 <tr>
     <td class="bg-danger" colspan="{$dataGridColumnCount}">
         <button id="{$dataGridIdentifier}-mass-delete" class="btn btn-danger btn-sm" type="submit" name="submit">

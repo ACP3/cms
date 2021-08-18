@@ -3,9 +3,10 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
 
-$system-toc-margin: ($line-height-computed / 4) ($line-height-computed / 2) ($line-height-computed / 2) 0 !default;
+$system-toc-margin: ($spacer * 0.25) ($spacer * 0.5) ($spacer * 0.5) 0 !default;
 
 #toc {
   float: left;

@@ -4,9 +4,9 @@
       linkElem = document.querySelector('a[href="' + hash + '"]'),
       targetElem = document.querySelector(hash);
 
-    if (linkElem.length) {
+    if (linkElem?.length) {
       linkElem.dispatchEvent(new MouseEvent("click"));
-    } else if (targetElem.length) {
+    } else if (targetElem?.length) {
       targetElem.dispatchEvent(new MouseEvent("click"));
     }
   });

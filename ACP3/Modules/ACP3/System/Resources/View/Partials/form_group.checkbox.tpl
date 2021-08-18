@@ -2,14 +2,15 @@
 
 {block FORM_GROUP_FORM_FIELD}
     {foreach $options as $row}
-        <div class="checkbox">
-            <label for="{$row.id}">
-                <input type="checkbox"
-                       name="{$row.name}"
-                       id="{$row.id}"
-                       value="{$row.value}"
-                        {$row.checked}
-                        {if isset($required) && $required === true} required{/if}>
+        <div class="form-check">
+            <input type="checkbox"
+                   class="form-check-input"
+                   name="{$row.name}"
+                   id="{$row.id}"
+                   value="{$row.value}"
+                    {$row.checked}
+                    {if isset($required) && $required === true} required{/if}>
+            <label for="{$row.id}" class="form-check-label">
                 {$row.lang}
             </label>
         </div>

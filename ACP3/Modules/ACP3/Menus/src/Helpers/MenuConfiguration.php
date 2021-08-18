@@ -41,6 +41,10 @@ class MenuConfiguration
      * @var string
      */
     private $inlineStyle;
+    /**
+     * @var string
+     */
+    private $itemSelectors;
 
     public function __construct(
         bool $useBootstrap = true,
@@ -48,6 +52,7 @@ class MenuConfiguration
         string $dropdownItemSelector = '',
         string $tag = 'ul',
         string $itemTag = 'li',
+        string $itemSelectors = '',
         string $dropdownWrapperTag = 'li',
         string $linkSelectors = '',
         string $inlineStyle = ''
@@ -60,6 +65,7 @@ class MenuConfiguration
         $this->dropdownWrapperTag = $dropdownWrapperTag;
         $this->linkSelector = $linkSelectors;
         $this->inlineStyle = $inlineStyle;
+        $this->itemSelectors = $itemSelectors;
     }
 
     public function isUseBootstrap(): bool
@@ -85,6 +91,11 @@ class MenuConfiguration
     public function getItemTag(): string
     {
         return $this->itemTag;
+    }
+
+    public function getItemSelectors(): string
+    {
+        return $this->itemSelectors;
     }
 
     public function getDropdownWrapperTag(): string

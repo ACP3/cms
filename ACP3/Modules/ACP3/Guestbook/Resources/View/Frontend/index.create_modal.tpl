@@ -16,6 +16,6 @@
         {$form_token}
     </div>
     {javascripts}
-        {include_js module="guestbook" file="frontend/index.create_modal"}
+        {include_js module="guestbook" file="frontend/index.create_modal" depends=["jquery"]}
     {/javascripts}
 {/block}

@@ -1,15 +1,17 @@
 {extends file="asset:System/Partials/form_group.base.tpl"}
 
 {block FORM_GROUP_FORM_FIELD}
-    <div class="btn-group" data-toggle="buttons">
+    <div class="btn-group" role="group">
         {foreach $options as $row}
-            <label for="{$row.id}" class="btn btn-default{if !empty($row.checked)} active{/if}">
-                <input type="radio"
-                       name="{$row.name}"
-                       id="{$row.id}"
-                       value="{$row.value}"
-                        {if isset($required) && $required === true} required{/if}
-                        {$row.checked}>
+            <input type="radio"
+                   class="btn-check"
+                   name="{$row.name}"
+                   id="{$row.id}"
+                   value="{$row.value}"
+                   autocomplete="off"
+                    {if isset($required) && $required === true} required{/if}
+                    {$row.checked}>
+            <label for="{$row.id}" class="btn btn-outline-secondary">
                 {$row.lang}
             </label>
         {/foreach}

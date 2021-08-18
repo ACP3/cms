@@ -7,7 +7,7 @@ module.exports = (gulp) => {
   "use strict";
 
   const autoprefixer = require("autoprefixer");
-  const sass = require("gulp-sass")(require("node-sass"));
+  const sass = require("gulp-sass")(require("sass"));
   const componentPaths = require("./component-paths");
   const plumber = require("gulp-plumber");
   const postcss = require("gulp-postcss");

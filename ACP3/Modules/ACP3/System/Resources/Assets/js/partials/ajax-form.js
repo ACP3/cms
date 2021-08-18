@@ -7,6 +7,7 @@ import { AjaxForm } from "../lib/ajax-form";
 import { LoadingLayer } from "../lib/loading-layer";
 import { FormValidator } from "../lib/form-validator";
 
+// @ToDO: Remove jQuery
 (($) => {
   const pluginName = "formSubmit";
 

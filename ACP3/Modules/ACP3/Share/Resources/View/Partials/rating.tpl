@@ -16,7 +16,7 @@
             <label for="rating-star-{$i}"
                    title="{lang t="share|rate_with_x_stars" args=['%stars%' => $i]}"
                    class="rating__star">
-                <input type="radio" id="rating-star-{$i}" name="stars" value="{$i}" class="hidden" required>
+                <input type="radio" id="rating-star-{$i}" name="stars" value="{$i}" class="rating__star-input d-none" required>
                 {icon iconSet="regular" icon="star"}
             </label>
         {/for}

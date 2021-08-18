@@ -1,25 +1,23 @@
-<div class="form-group">
-    <label for="alias" class="col-sm-2 control-label">
+<div class="row mb-3">
+    <label for="alias" class="col-sm-2 col-form-label">
         {lang t="seo|alias"}
     </label>
     <div class="col-sm-10">
         {if !isset($disable_alias_suggest)}
             <div class="input-group">
                 <input class="form-control" type="text" name="alias" id="alias" value="{$seo.alias}">
-                <span class="input-group-btn">
-                    <a href="{uri args="acp/seo/index/suggest"}"
-                       id="seo-alias-suggestion"
-                       class="btn btn-default"
-                       title="{lang t="seo|suggest_alias"}">
-                        {icon iconSet="solid" icon="sync-alt"}
-                        <span class="hidden-xs">{lang t="seo|suggest_alias"}</span>
-                    </a>
-                </span>
+                <a href="{uri args="acp/seo/index/suggest"}"
+                   id="seo-alias-suggestion"
+                   class="btn btn-outline-secondary"
+                   title="{lang t="seo|suggest_alias"}">
+                    {icon iconSet="solid" icon="sync-alt"}
+                    <span class="d-none d-sm-inline">{lang t="seo|suggest_alias"}</span>
+                </a>
             </div>
         {else}
             <input class="form-control" type="text" name="alias" id="alias" value="{$seo.alias}">
         {/if}
-        <p class="help-block">{lang t="seo|alias_description"}</p>
+        <p class="form-text">{lang t="seo|alias_description"}</p>
     </div>
 </div>
 {include file="asset:System/Partials/form_group.input_text.tpl" name="seo_title" value=$seo.title maxlength=255 label={lang t="seo|title"} help={lang t="seo|title_help"}}

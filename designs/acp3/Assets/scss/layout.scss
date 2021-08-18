@@ -1,11 +1,11 @@
 @import "components/variables";
 
 ul {
-  padding-left: $line-height-computed;
+  padding-left: $spacer;
 }
 
 #logo {
-  margin: ($line-height-computed / 2) $line-height-computed;
+  margin: ($spacer * 0.5) $spacer;
 }
 
 #main-navigation {
@@ -20,12 +20,5 @@ ul {
 }
 
 .footer {
-  margin-bottom: ($line-height-computed / 2);
-}
-
-.in-admin {
-  #content {
-    float: none;
-    width: auto;
-  }
+  margin-bottom: ($spacer * 0.5);
 }

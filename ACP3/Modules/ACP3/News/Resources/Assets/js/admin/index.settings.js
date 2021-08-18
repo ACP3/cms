@@ -1,8 +1,13 @@
-(($, document) => {
-  $('input[name="readmore"]')
-    .on("click change", function () {
-      document.getElementById("readmore-characters-wrapper").classList.toggle("hidden", Number(this.value) === 0);
-    })
-    .filter(":checked")
-    .click();
-})(jQuery, document);
+((document) => {
+  const readmoreWrapper = document.getElementById("readmore-characters-wrapper");
+
+  document.querySelectorAll('[name="readmore"]').forEach((elem) => {
+    elem.addEventListener("change", () => {
+      readmoreWrapper.classList.toggle("d-none", Number(elem.value) === 0);
+    });
+
+    if (elem.checked) {
+      elem.dispatchEvent(new InputEvent("change"));
+    }
+  });
+})(document);

@@ -14,10 +14,10 @@
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$sitemap_save_mode required=true label={lang t="seo|sitemap_save_mode"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$sitemap_separate required=true label={lang t="seo|sitemap_separate"}}
                 {if {has_permission path="admin/seo/index/sitemap"}}
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
+                    <div class="row mb-3">
+                        <div class="offset-sm-2 col-sm-10">
                             <a href="{uri args="acp/seo/index/sitemap"}"
-                               class="btn btn-default"
+                               class="btn btn-outline-secondary"
                                data-ajax-form="true">
                                 {lang t="seo|sitemap_refresh_now"}
                             </a>

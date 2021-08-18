@@ -5,14 +5,17 @@
         <div class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="modal-create" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
+                    <div class="p-3 text-center">
+                        {icon iconSet="solid" icon="spinner" cssSelectors="svg-icon--spin"}
+                    </div>
                 </div>
             </div>
         </div>
         <p class="text-center">
-            <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}" data-toggle="modal" data-target="#modal-create">{lang t="guestbook|create"}</a>
+            <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}" data-bs-toggle="modal" data-bs-target="#modal-create">{lang t="guestbook|create"}</a>
         </p>
         {javascripts}
-            {include_js module="guestbook" file="frontend/index.index" depends=["ajax-form"]}
+            {include_js module="guestbook" file="frontend/index.index" depends=["ajax-form", "jquery"]}
         {/javascripts}
     {else}
         <p class="text-center">
@@ -23,34 +26,30 @@
     {if !empty($guestbook)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $guestbook as $row}
-            <article id="gb-entry-{$row.id}" class="dataset-box dataset-box__guestbook clearfix">
-                <header class="navbar navbar-default">
-                    <div class="navbar-header">
-                        <strong class="navbar-text">
-                            {if !is_null($row.user_id)}
-                                <a href="{uri args="users/index/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>
-                            {else}
-                                {$row.name}
-                            {/if}
-                        </strong>
-                    </div>
-                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
-                </header>
-                <div class="content">
-                    <div class="pull-right">
+            <article id="gb-entry-{$row.id}" class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <strong>
+                        {if !is_null($row.user_id)}
+                            <a href="{uri args="users/index/view_profile/id_`$row.user_id`"}" title="{lang t="users|view_profile"}">{$row.name}</a>
+                        {else}
+                            {$row.name}
+                        {/if}
+                    </strong>
+                    <div>
+                        <time class="badge bg-primary rounded-pill" datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
                         {if $row.website != ''}
                             <a href="{$row.website|prefix_uri}"
+                               class="ms-2"
                                target="_blank"
                                rel="noopener nofollow"
-                               title="{lang t="guestbook|visit_website"}">
-                                {icon iconSet="solid" icon="link"}
-                            </a>
-                            <br>
+                               title="{lang t="guestbook|visit_website"}">{icon iconSet="solid" icon="link"}</a>
                         {/if}
                         {if $row.mail != ''}
-                            {mailto address=$row.mail encode="javascript" text={icon iconSet="solid" icon="envelope"}}
+                            {mailto address=$row.mail encode="javascript" text={icon iconSet="solid" icon="envelope" cssSelectors="ms-2"}}
                         {/if}
                     </div>
+                </div>
+                <div class="card-body">
                     {$row.message|decorate}
                 </div>
             </article>

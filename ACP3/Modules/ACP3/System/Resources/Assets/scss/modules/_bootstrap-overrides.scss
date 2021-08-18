@@ -1,10 +1,11 @@
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
 
-$system-list-group-item-padding: ($line-height-computed / 2) ($grid-gutter-width / 2) !default;
-$system-list-group-item-link-text-color: $list-group-link-color !default;
+$system-list-group-item-padding: ($spacer * 0.5) ($grid-gutter-width * 0.5) !default;
+$system-list-group-item-link-text-color: $list-group-action-color !default;
 $system-list-group-item-link-hover-bg-color: $list-group-hover-bg !default;
 
-$bs-pagination-margin: 0 0 ($line-height-computed / 2) !default;
+$bs-pagination-margin: 0 0 ($spacer * 0.5) !default;
 
 .list-group-item {
   &.dropdown {
@@ -21,13 +22,4 @@ $bs-pagination-margin: 0 0 ($line-height-computed / 2) !default;
       background-color: $system-list-group-item-link-hover-bg-color;
     }
   }
-}
-
-.btn-block.text-left {
-  text-align: left;
-}
-
-/* Pagination */
-.pagination {
-  margin: $bs-pagination-margin;
 }

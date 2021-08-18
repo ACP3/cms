@@ -3,20 +3,19 @@
 {block CONTENT}
     {if !empty($newsletters)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
-        {foreach $newsletters as $row}
-            <div class="dataset-box">
-                <div class="navbar navbar-default">
-                    <div class="navbar-header">
-                        <h3 class="navbar-brand">
-                            <a href="{uri args="newsletter/archive/details/id_`$row.id`"}">{$row.title}</a>
-                        </h3>
-                    </div>
-                    <time class="navbar-text small pull-right" datetime="{date_format date=$row.date format="c"}">
-                        {date_format date=$row.date format="short"}
-                    </time>
-                </div>
+        <div class="card mb-3">
+            <div class="list-group list-group-flush">
+                {foreach $newsletters as $row}
+                    <a href="{uri args="newsletter/archive/details/id_`$row.id`"}"
+                       class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                        <strong>{$row.title}</strong>
+                        <time class="badge bg-primary rounded-pill" datetime="{date_format date=$row.date format="c"}">
+                            {date_format date=$row.date format="short"}
+                        </time>
+                    </a>
+                {/foreach}
             </div>
-        {/foreach}
+        </div>
     {else}
         {include file="asset:System/Partials/no_results.tpl"}
     {/if}

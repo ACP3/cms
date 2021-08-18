@@ -6,8 +6,8 @@
 /* global CKEDITOR */
 
 const initializeCKEditorInstances = () => {
-  jQuery(".wysiwyg-ckeditor").each((index, element) => {
-    const config = jQuery(element).data("wysiwygConfig");
+  document.querySelectorAll(".wysiwyg-ckeditor").forEach((element) => {
+    const config = JSON.parse(element.dataset.wysiwygConfig);
 
     if (typeof CKEDITOR.instances[element.id] !== "undefined") {
       CKEDITOR.instances[element.id].destroy(true);
@@ -21,8 +21,8 @@ const initializeCKEditorInstances = () => {
   });
 };
 
-(($) => {
-  $(document).on("acp3.ajaxFrom.submit.before", () => {
+((document) => {
+  document.addEventListener("acp3.ajaxFrom.submit.before", () => {
     if (typeof CKEDITOR === "undefined") {
       return;
     }
@@ -36,9 +36,9 @@ const initializeCKEditorInstances = () => {
     }
   });
 
-  $(document).on("acp3.ajaxFrom.complete", () => {
+  document.addEventListener("acp3.ajaxFrom.complete", () => {
     initializeCKEditorInstances();
   });
 
   initializeCKEditorInstances();
-})(jQuery);
+})(document);

@@ -7,7 +7,7 @@
 
 {block FORM_GROUP_LABEL_ID}for="{$datepicker.id_start}-input"{/block}
 {block FORM_GROUP_FORM_FIELD}
-    <div class="row" data-datepicker-range='{$datepicker.config|json_encode}'>
+    <div class="row mb-3" data-datepicker-range='{$datepicker.config|json_encode}'>
         <div class="col-sm-6">
             <div class="input-group date" id="{$datepicker.id_start}">
                 <input class="form-control"
@@ -19,7 +19,7 @@
                        title="{lang t="system|start_date"}"
                        data-input
                        required>
-                <span class="input-group-addon" data-toggle>
+                <span class="input-group-text" data-toggle>
                     {icon iconSet="solid" icon="calendar"}
                 </span>
             </div>
@@ -35,11 +35,11 @@
                        title="{lang t="system|end_date"}"
                        data-input
                        required>
-                <span class="input-group-addon" data-toggle>
+                <span class="input-group-text" data-toggle>
                     {icon iconSet="solid" icon="calendar"}
                 </span>
             </div>
         </div>
     </div>
-    <span class="help-block">{lang t="system|date_description"}</span>
+    <span class="form-text">{lang t="system|date_description"}</span>
 {/block}

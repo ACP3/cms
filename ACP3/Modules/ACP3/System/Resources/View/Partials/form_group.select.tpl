@@ -1,7 +1,7 @@
 {extends file="asset:System/Partials/form_group.base.tpl"}
 
 {block FORM_GROUP_FORM_FIELD}
-    <select class="form-control"
+    <select class="form-select"
             name="{if isset($name)}{$name}{else}{$options[0].name}{/if}{if isset($multiple) && $multiple === true || isset($is_array) && $is_array === true}[]{/if}"
             id="{if !isset($options[0].id)}{$name|replace:'_':'-'}{else}{$options[0].id}{/if}"
             style="max-height:100px"

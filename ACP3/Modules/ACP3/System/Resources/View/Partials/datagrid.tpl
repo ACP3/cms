@@ -20,7 +20,6 @@
         {include file="asset:System/Partials/mark.tpl"}
     {/if}
     {javascripts}
-        {include_js module="system" file="dataTables.bootstrap" depends="datatables"}
         {include_js module="system" file="partials/datagrid" depends="datatables"}
     {/javascripts}
 {else}

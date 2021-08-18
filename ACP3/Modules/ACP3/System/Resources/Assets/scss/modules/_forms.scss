@@ -3,41 +3,18 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
 
 $forms-required-star-text-color: inherit !default;
 
-.tab-content {
-  > .tab-pane {
-    padding-top: floor($grid-gutter-width / 2);
-  }
-}
-
-.control-label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-
+.col-form-label,
+.form-label {
   &.required {
     &::after {
       color: $forms-required-star-text-color;
       content: " *";
-    }
-  }
-}
-
-.form-horizontal {
-  .control-label {
-    &.required {
-      position: relative;
-
-      &::after {
-        position: absolute;
-        right: 5px;
-
-        @media (min-width: $screen-sm-min) {
-          top: 7px;
-        }
-      }
     }
   }
 }
@@ -51,5 +28,5 @@ textarea {
 
 /* Inline validation errors */
 .validation-failed {
-  margin: floor($grid-gutter-width / 2) 0 0;
+  margin: floor($grid-gutter-width * 0.5) 0 0;
 }

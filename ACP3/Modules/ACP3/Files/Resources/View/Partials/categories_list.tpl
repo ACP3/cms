@@ -1,17 +1,16 @@
-<table class="table table-striped">
-    {if !empty($title)}
-        <thead>
-        <tr>
-            <th colspan="2">{$title}</th>
-        </tr>
-        </thead>
-    {/if}
-    <tbody>
+{if !empty($title)}
+    <p>{$title}</p>
+{/if}
+<div class="list-group">
     {foreach $categories as $category}
-        <tr>
-            <td style="width:25%"><a href="{uri args="files/index/files/cat_`$category.id`"}">{$category.title}</a></td>
-            <td>{$category.description}</td>
-        </tr>
+        <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
+           href="{uri args="files/index/files/cat_`$category.id`"}">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{$category.title}</div>
+                {if !empty($category.description)}
+                    {$category.description}
+                {/if}
+            </div>
+        </a>
     {/foreach}
-    </tbody>
-</table>
+</div>

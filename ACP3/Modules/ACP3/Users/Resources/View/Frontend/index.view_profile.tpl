@@ -3,7 +3,7 @@
 {block CONTENT}
     <fieldset>
         <legend>{lang t="system|general"}</legend>
-        <dl class="dl-horizontal">
+        <dl>
             <dt>{lang t="users|nickname"}</dt>
             <dd>{$user.nickname}</dd>
             {if !empty($user.realname)}
@@ -29,7 +29,7 @@
     {if $user.mail_display == 1 || !empty($user.icq) || !empty($user.skype) || !empty($user.website)}
         <fieldset>
             <legend>{lang t="users|contact"}</legend>
-            <dl class="dl-horizontal">
+            <dl>
                 {if $user.mail_display == 1}
                     <dt>{lang t="system|email_address"}</dt>
                     <dd>{mailto address=$user.mail encode="javascript"}</a></dd>
@@ -67,7 +67,7 @@
     {if $user.address_display == 1 || $user.country_display == 1}
         <fieldset>
             <legend>{lang t="users|address"}</legend>
-            <dl class="dl-horizontal">
+            <dl>
                 {if $user.address_display == 1}
                     {if !empty($user.street)}
                         <dt>{lang t="users|address_street"}</dt>

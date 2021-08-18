@@ -8,26 +8,17 @@
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if !empty($menus)}
-        <ul class="nav nav-tabs" role="tablist">
-            {foreach $menus $menu}
-                <li role="presentation"{if $menu@first} class="active"{/if}>
-                    <a href="#tab-{$menu.id}" aria-controls="tab-{$menu.id}" role="tab" data-toggle="tab">
-                        {$menu.title}
-                    </a>
-                </li>
-            {/foreach}
-        </ul>
-        <div class="tab-content">
-            {foreach $menus $menu}
-                <div class="tab-pane fade{if $menu@first} in active{/if}" role="tabpanel" id="tab-{$menu.id}">
+        {tabset identifier="menu-item-admin-grid"}
+            {foreach $menus as $menu}
+                {tab title=$menu.title}
                     <div class="row">
-                        <div class="{if $can_edit || $can_delete}col-sm-6{else}col-sm-12{/if}">
-                            <div class="form-control-static"><strong>{lang t="menus|index_name2"}</strong> {$menu.index_name}</div>
+                        <div class="align-self-center {if $can_edit || $can_delete}col-sm-6{else}col{/if}">
+                            <strong>{lang t="menus|index_name2"}</strong> {$menu.index_name}
                         </div>
                         {if $can_edit || $can_delete}
-                            <div class="col-sm-6 text-right">
+                            <div class="col-sm-6 text-end">
                                 {if $can_edit}
-                                    <a href="{uri args="acp/menus/index/edit/id_`$menu.id`"}" class="btn btn-default">
+                                    <a href="{uri args="acp/menus/index/edit/id_`$menu.id`"}" class="btn btn-outline-secondary">
                                         {icon iconSet="solid" icon="edit"} {lang t="menus|admin_index_edit"}
                                     </a>
                                 {/if}
@@ -41,9 +32,9 @@
                     </div>
                     <hr>
                     {include file="asset:System/Partials/datagrid.tpl" dataTable=$data_grids[$menu.id]['grid']}
-                </div>
+                {/tab}
             {/foreach}
-        </div>
+        {/tabset}
     {else}
         {include file="asset:System/Partials/no_results.tpl"}
     {/if}

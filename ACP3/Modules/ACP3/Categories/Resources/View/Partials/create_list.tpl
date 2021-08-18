@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mb-3">
     <div class="col-sm-{if isset($categories.create)}6{else}12{/if}">
         {include file="asset:Categories/Partials/list.tpl" categories=$categories}
     </div>

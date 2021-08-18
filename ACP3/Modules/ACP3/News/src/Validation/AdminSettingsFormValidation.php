@@ -50,7 +50,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                 ]
             )
             ->addConstraint(
-                Core\Validation\ValidationRules\NumberGreaterThanValidationRule::class,
+                Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'readmore',

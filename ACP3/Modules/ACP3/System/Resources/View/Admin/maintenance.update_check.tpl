@@ -2,8 +2,8 @@
 
 {block CONTENT}
     {if !empty($update)}
-        <div class="alert alert-{if $update.is_latest}success{else}danger{/if}">
-            <h4>
+        <div class="alert alert-{if $update.is_latest}success{else}danger{/if}" role="alert">
+            <h4 class="alert-heading">
                 {if $update.is_latest}
                     {lang t="system|acp3_up_to_date"}
                 {else}
@@ -22,7 +22,7 @@
             </ul>
         </div>
     {else}
-        <div class="alert alert-warning">
+        <div class="alert alert-warning" role="alert">
             <strong class="text-center">{lang t="system|error_update_check"}</strong>
         </div>
     {/if}

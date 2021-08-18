@@ -13,7 +13,7 @@
 
     document
       .getElementById("fb-credentials-wrapper")
-      .classList.toggle("hidden", !Array.from(this.selectedOptions).some((option) => option.value === "facebook"));
+      .classList.toggle("d-none", !Array.from(this.selectedOptions).some((option) => option.value === "facebook"));
   });
 
   socialSharingServices.dispatchEvent(new CustomEvent("change", { detail: { init: true } }));

@@ -5,13 +5,13 @@
         {lang t="installer|db_update_next_steps"}
     </p>
     {include file="asset:Installer/Partials/delete_installer_directory.tpl"}
-    <dl class="dl-horizontal">
+    <dl>
         {foreach $results as $module => $result}
             <dt>
                 {lang t="$module|$module"}
             </dt>
             <dd>
-                <span class="label label-{if $result === true}success{else}danger{/if}">
+                <span class="badge {if $result === true}bg-success{else}bg-danger{/if}">
                     {if $result === true}
                         {lang t="installer|db_update_success"}
                     {else}

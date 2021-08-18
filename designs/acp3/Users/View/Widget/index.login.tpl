@@ -1,25 +1,14 @@
-<nav class="navbar navbar-default navbar-static-top" id="nav-user-login">
+<nav id="nav-user-login" class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-user-login-collapse">
-                <span class="sr-only">{lang t="system|toggle_navigation"}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <span class="navbar-brand hidden-md hidden-lg">
-                {lang t="users|user_menu"}
-            </span>
-        </div>
-        <div id="nav-user-login-collapse" class="collapse navbar-collapse">
-            <form class="navbar-form navbar-right" action="{uri args="users/index/login/redirect_`$redirect_uri`"}" method="post" accept-charset="UTF-8">
-                <div class="form-group">
-                    <input class="form-control input-sm" type="text" name="nickname" id="nav-nickname" maxlength="30" placeholder="{lang t="users|nickname"}" required>
-                </div>
-                <div class="form-group">
-                    <input class="form-control input-sm" type="password" name="pwd" id="nav-pwd" placeholder="{lang t="users|pwd"}" required>
-                </div>
-                <button type="submit" name="submit" class="btn btn-primary btn-sm" title="{lang t="users|log_in"}">
+        <span class="navbar-brand d-lg-none">{lang t="users|user_menu"}</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-user-login-content" aria-controls="nav-user-login-content" aria-expanded="false" aria-label="{lang t="system|toggle_navigation"}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav-user-login-content">
+            <form class="d-flex ms-auto" action="{uri args="users/index/login/redirect_`$redirect_uri`"}" method="post" accept-charset="UTF-8">
+                <input class="form-control me-2" type="text" name="nickname" id="nav-nickname" maxlength="30" aria-label="{lang t="users|nickname"}" placeholder="{lang t="users|nickname"}" required>
+                <input class="form-control me-2" type="password" name="pwd" id="nav-pwd" aria-label="{lang t="users|pwd"}" placeholder="{lang t="users|pwd"}" required>
+                <button type="submit" name="submit" class="btn btn-outline-primary" title="{lang t="users|log_in"}">
                     {icon iconSet="solid" icon="sign-in-alt"}
                 </button>
             </form>

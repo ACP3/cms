@@ -2,38 +2,58 @@
  * Copyright (c) by the ACP3 Developers.
  * See the LICENSE file at the top-level module directory for licencing details.
  */
-(($) => {
-  const $dbName = $("#db-name"),
-    $formFields = $("#db-host, #db-user, #db-password"),
-    $formGroup = $formFields.closest(".form-group"),
-    ajaxUrl = $dbName.data("available-databases-url");
 
-  $formFields
-    .on("change", () => {
-      $dbName.prop("disabled", true).find("option").not(":first").remove();
-      $formGroup.removeClass("has-success").removeClass("has-error");
+((document) => {
+  const dbName = document.getElementById("db-name");
+  const formFields = document.querySelectorAll("#db-host, #db-user, #db-password");
+  const ajaxUrl = dbName.dataset.availableDatabasesUrl;
 
-      $.post(
-        ajaxUrl,
-        {
-          db_host: $("#db-host").val(),
-          db_user: $("#db-user").val(),
-          db_password: $("#db-password").val(),
-        },
-        function (response) {
-          if (response.length > 0) {
-            for (let i = 0; i < response.length; ++i) {
-              $dbName.append('<option value="' + response[i] + '">' + response[i] + "</option>");
-            }
+  formFields.forEach((formField) => {
+    formField.addEventListener("change", async () => {
+      dbName.disabled = true;
 
-            $formGroup.addClass("has-success");
-          } else {
-            $formGroup.addClass("has-error");
-          }
-        }
-      ).always(function () {
-        $dbName.prop("disabled", false);
+      for (let i = 1; i < dbName.children.length; ++i) {
+        dbName.children[i].remove();
+      }
+
+      formFields.forEach((formField) => {
+        formField.classList.remove("is-invalid", "is-valid");
       });
-    })
-    .triggerHandler("change");
-})(jQuery);
+
+      const formData = new FormData();
+      formData.append("db_host", document.getElementById("db-host").value);
+      formData.append("db_user", document.getElementById("db-user").value);
+      formData.append("db_password", document.getElementById("db-password").value);
+
+      try {
+        const response = await fetch(ajaxUrl, {
+          method: "POST",
+          body: formData,
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        });
+        const responseData = await response.json();
+
+        if (responseData.length > 0) {
+          for (let i = 0; i < responseData.length; ++i) {
+            dbName.insertAdjacentHTML(
+              "beforeend",
+              '<option value="' + responseData[i] + '">' + responseData[i] + "</option>"
+            );
+          }
+
+          formFields.forEach((formField) => {
+            formField.classList.add("is-valid");
+          });
+        } else {
+          formFields.forEach((formField) => {
+            formField.classList.add("is-invalid");
+          });
+        }
+      } finally {
+        dbName.disabled = false;
+      }
+    });
+  });
+})(document);

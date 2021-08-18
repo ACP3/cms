@@ -20,7 +20,7 @@ export default class LanguageSwitcher {
   }
 
   #hideSubmitButton() {
-    this.#languageSwitcherForm.querySelector(".btn").classList.add("hidden");
+    this.#languageSwitcherForm.querySelector(".btn").classList.add("d-none");
   }
 
   #bindFormValuesChangesListener() {

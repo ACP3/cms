@@ -22,11 +22,11 @@
             {include file="asset:System/Partials/form_group.select.tpl" options=$languages required=true label={lang t="system|language"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="system|date_format_short"} help={lang t="system|php_date_function"}}
-            <div class="form-group">
-                <label for="date-time-zone" class="col-sm-2 control-label required">{lang t="system|time_zone"}</label>
+            <div class="row mb-3">
+                <label for="date-time-zone" class="col-sm-2 col-form-label required">{lang t="system|time_zone"}</label>
 
                 <div class="col-sm-10">
-                    <select class="form-control" name="date_time_zone" id="date-time-zone">
+                    <select class="form-select" name="date_time_zone" id="date-time-zone">
                         {foreach $time_zones as $continent => $countries}
                             <optgroup label="{$continent}">
                                 {foreach $countries as $country => $data}

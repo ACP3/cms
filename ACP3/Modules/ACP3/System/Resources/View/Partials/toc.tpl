@@ -1,11 +1,11 @@
-<nav id="toc" class="panel panel-default table-of-contents">
-    <div class="panel-heading">
-        <h3 class="panel-title">{lang t="system|table_of_contents"}</h3>
+<nav id="toc" class="card mb-3 table-of-contents">
+    <div class="card-header">
+        {lang t="system|table_of_contents"}
     </div>
-
-    <div class="list-group">
+    <div class="list-group list-group-flush">
         {foreach $toc as $row}
-            <a href="{$row.uri}" class="list-group-item{if $row.selected} active{/if}">{$row.title}</a>
+            <a href="{$row.uri}"
+               class="list-group-item list-group-item-action{if $row.selected} active{/if}"{if $row.selected} aria-current="true"{/if}>{$row.title}</a>
         {/foreach}
     </div>
 </nav>

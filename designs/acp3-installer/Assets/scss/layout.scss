@@ -1,25 +1,18 @@
 @import "../../../acp3/Assets/scss/components/variables";
+@import "node_modules/bootstrap/scss/mixins";
 
-$navbar-complete-bg-color: #449d44 !default;
+$navbar-complete-bg-color: $success !default;
 $navbar-complete-text-color: #fff !default;
-$navbar-arrow-height: ($navbar-height / 2) !default;
-$navbar-arrow-width: 10px !default;
-$breakpoint-tablet-min: $screen-sm-min !default;
-
-ul,
-ol {
-  &.unstyled {
-    padding-left: $line-height-computed;
-  }
-}
-
-p {
-  text-align: justify;
-}
+$navbar-arrow-height: (($layout-navbar-height + $spacer) * 0.5) !default;
+$navbar-arrow-width: ($spacer * 0.5) !default;
 
 /* Layout */
+ul {
+  padding-left: $spacer;
+}
+
 #logo {
-  margin: ($line-height-computed / 2) 0;
+  margin: ($spacer * 0.5) $spacer;
 }
 
 #main-navigation {
@@ -30,14 +23,23 @@ p {
     padding-bottom: $layout-navbar-spacing-y;
   }
 
+  img {
+    height: $layout-navbar-logo-height;
+  }
+
   .navbar-nav {
-    > li {
-      > a {
+    > .nav-item {
+      > .nav-link {
         cursor: default;
+
+        @include media-breakpoint-up("lg", $grid-breakpoints) {
+          padding-top: $spacer;
+          padding-bottom: $spacer;
+        }
       }
 
       &.complete {
-        @media (min-width: $breakpoint-tablet-min) {
+        @include media-breakpoint-up("lg", $grid-breakpoints) {
           position: relative;
 
           &::after {
@@ -62,26 +64,21 @@ p {
         }
       }
 
-      @media (min-width: $breakpoint-tablet-min) {
-        &.complete ~ .active {
-          a {
-            padding-left: $navbar-arrow-width + floor($grid-gutter-width / 2);
+      @include media-breakpoint-up("lg", $grid-breakpoints) {
+        &.complete + :not(.complete) {
+          .nav-link {
+            padding-left: $navbar-arrow-width + ($spacer * 0.5);
           }
         }
       }
     }
 
-    @media (min-width: $breakpoint-tablet-min) {
-      margin-left: ($grid-gutter-width / -2);
+    @include media-breakpoint-up("lg", $grid-breakpoints) {
+      margin-left: ($grid-gutter-width * -0.5);
     }
-  }
-
-  img {
-    height: $layout-navbar-logo-height;
   }
 }
 
-#footer {
-  margin-bottom: ($line-height-computed / 2);
-  line-height: 30px;
+.footer {
+  margin-bottom: ($spacer * 0.5);
 }

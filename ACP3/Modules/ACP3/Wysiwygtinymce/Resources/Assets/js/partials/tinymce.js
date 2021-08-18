@@ -7,8 +7,8 @@
 /* global tinyMCEFileBrowserCallback */
 
 const initializeTinyMCEInstances = () => {
-  jQuery(".wysiwyg-tinymce").each((index, element) => {
-    const config = jQuery(element).data("wysiwygConfig");
+  document.querySelectorAll(".wysiwyg-tinymce").forEach((element) => {
+    const config = JSON.parse(element.dataset.wysiwygConfig);
     let fileManagerConfig = {};
 
     if (typeof tinyMCEFileBrowserCallback !== "undefined") {
@@ -31,16 +31,16 @@ const initializeTinyMCEInstances = () => {
   });
 };
 
-(($) => {
-  $(document).on("acp3.ajaxFrom.submit.before", () => {
+((document) => {
+  document.addEventListener("acp3.ajaxFrom.submit.before", () => {
     if (typeof tinymce !== "undefined") {
       tinymce.triggerSave();
     }
   });
 
-  $(document).on("acp3.ajaxFrom.complete", () => {
+  document.addEventListener("acp3.ajaxFrom.complete", () => {
     initializeTinyMCEInstances();
   });
 
   initializeTinyMCEInstances();
-})(jQuery);
+})(document);

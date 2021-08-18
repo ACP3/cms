@@ -27,7 +27,7 @@
                                     {icon iconSet="solid" icon="info-circle" cssSelectors="text-info" title={lang t="system|not_installable_module_description"}}
                                 {else}
                                     <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_uninstall"}"
-                                       class="btn btn-block btn-danger btn-xs"
+                                       class="btn btn-danger btn-sm"
                                        title="{lang t="system|uninstall_module"}"
                                        data-ajax-form="true"
                                        data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
@@ -59,16 +59,16 @@
                         {foreach $new_modules as $translatedModuleName => $row}
                             <tr>
                                 <td>{$translatedModuleName}</td>
-                                <td>{lang t="`$row.name`|mod_description"}</td>
+                                <td>{$row.description}</td>
                                 <td>{$row.version}</td>
                                 <td>{$row.author}</td>
                                 <td class="text-center">
                                     <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_install"}"
-                                       class="btn btn-block btn-success btn-xs"
+                                       class="btn btn-success btn-sm"
                                        title="{lang t="system|install_module"}"
                                        data-ajax-form="true"
                                        data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"
-                                       data-hash-change="#tab-2">
+                                       data-hash-change="#tab-content-2">
                                         {icon iconSet="solid" icon="power-off"}
                                         {lang t="system|install"}
                                     </a>

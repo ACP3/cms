@@ -10,22 +10,22 @@ export class LoadingLayer {
     loadingText: "",
   };
 
-  constructor(element, options) {
-    this.#options = mergeSettings(this.#options, options, jQuery(element).data() || {});
+  constructor(element, options = {}) {
+    this.#options = mergeSettings(this.#options, options, element.dataset || {});
   }
 
   addLoadingLayer() {
     if (!document.getElementById("loading-layer")) {
-      const $body = jQuery("body");
-      const jsSvgIcons = $body.data("svgIcons");
-      const html =
+      const body = document.querySelector("body");
+      const jsSvgIcons = JSON.parse(body.dataset.svgIcons);
+      const loadingLayerHtml =
         '<div id="loading-layer" class="loading-layer"><h1><svg class="svg-icon svg-icon__spinner svg-icon--spin" fill="currentColor"><use xlink:href="' +
         jsSvgIcons["loadingLayerIcon"] +
         '"></use></svg> ' +
         this.#options.loadingText +
         "</h1></div>";
 
-      jQuery(html).appendTo($body);
+      body.insertAdjacentHTML("beforeend", loadingLayerHtml);
     }
   }
 

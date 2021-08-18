@@ -9,7 +9,7 @@
     serviceIds = ["captcha.extension.recaptcha_captcha_extension"];
 
   captchaTypes.addEventListener("change", function () {
-    recaptchaWrapper.classList.toggle("hidden", !serviceIds.includes(this.value));
+    recaptchaWrapper.classList.toggle("d-none", !serviceIds.includes(this.value));
   });
   captchaTypes.dispatchEvent(new InputEvent("change"));
 })(document);

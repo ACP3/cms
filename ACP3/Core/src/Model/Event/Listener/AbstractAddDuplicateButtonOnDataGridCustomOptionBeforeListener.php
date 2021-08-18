@@ -41,7 +41,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
                 $this->getRoute($dbResultRow),
                 $this->translator->t('system', 'duplicate_entry'),
                 'copy',
-                'btn-default',
+                'btn-outline-secondary',
                 true
             );
         }

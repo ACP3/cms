@@ -8,8 +8,8 @@
         {tab title={lang t="polls|poll"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 label={lang t="polls|question"}}
             {foreach $answers as $row}
-                <div class="form-group">
-                    <label for="answer-{$row@index}" class="col-sm-2 control-label">{lang t="polls|answer_x" args=['%number%' => $row@index+1]}</label>
+                <div class="row mb-3">
+                    <label for="answer-{$row@index}" class="col-sm-2 col-form-label">{lang t="polls|answer_x" args=['%number%' => $row@index+1]}</label>
 
                     <div class="col-sm-10">
                         {if isset($row.id)}
@@ -19,16 +19,16 @@
                                     <input type="checkbox" name="answers[{$row@index}][delete]" value="1">
                                 </div>
                             </div>
-                            <input type="hidden" name="answers[{$row@index}][id]" value="{$row.id}" style="display:none">
+                            <input type="hidden" name="answers[{$row@index}][id]" value="{$row.id}">
                         {else}
                             <input class="form-control" type="text" name="answers[{$row@index}][text]" id="answer-{$row@index}" value="{$row.text}" maxlength="120">
                         {/if}
                     </div>
                 </div>
             {/foreach}
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" name="add_answer" class="btn btn-default" data-hash-change="#tab-2">
+            <div class="row mb-3">
+                <div class="offset-sm-2 col-sm-10">
+                    <button type="submit" name="add_answer" class="btn btn-outline-secondary" data-hash-change="#tab-content-2">
                         {lang t="polls|add_answer"}
                     </button>
                 </div>

@@ -16,7 +16,7 @@
                value="{$datepicker.value}"
                maxlength="{$datepicker.length}"
                data-input>
-        <span class="input-group-addon" data-toggle>
+        <span class="input-group-text" data-toggle>
             {icon iconSet="solid" icon="calendar"}
         </span>
     </div>
