@@ -12,7 +12,7 @@
  */
 export function delegateEvent(element, eventName, selectorOrTargetElement, handler) {
   element.addEventListener(eventName, (event) => {
-    if (typeof selectorOrTargetElement === 'string') {
+    if (typeof selectorOrTargetElement === "string") {
       const elems = document.querySelectorAll(selectorOrTargetElement);
 
       if (!elems) {

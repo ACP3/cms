@@ -6,8 +6,8 @@
 import { SuggestAlias } from "../lib/suggest-alias";
 
 ((document) => {
-  new SuggestAlias(document.getElementById('seo-alias-suggestion'), {
-    prefix: document.querySelector("[data-seo-slug-prefix]")?.dataset.seoSlugPrefix ?? '',
+  new SuggestAlias(document.getElementById("seo-alias-suggestion"), {
+    prefix: document.querySelector("[data-seo-slug-prefix]")?.dataset.seoSlugPrefix ?? "",
     slugBaseElement: document.querySelector('[data-seo-slug-base="true"]'),
     aliasElement: document.getElementById("alias"),
   });

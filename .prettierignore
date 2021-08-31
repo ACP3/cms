@@ -5,11 +5,9 @@ ACP3/Modules/ACP3/Cookieconsent/Resources/Assets/css/klaro.css
 ACP3/Modules/ACP3/Cookieconsent/Resources/Assets/js/klaro-no-css.js
 ACP3/Modules/ACP3/Filemanager/Resources/Assets/rich-filemanager/*
 ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/*
-ACP3/Modules/ACP3/System/Resources/Assets/js/dataTables.bootstrap.js
+ACP3/Modules/ACP3/System/Resources/Assets/js/dataTables.bootstrap5.js
 ACP3/Modules/ACP3/System/Resources/Assets/css/*.css
-ACP3/Modules/ACP3/System/Resources/Assets/js/js.cookie.js
-ACP3/Modules/ACP3/System/Resources/Assets/js/jquery.dataTables.js
-designs/*/System/Assets/css/dataTables.bootstrap.css
+designs/*/System/Assets/css/dataTables.bootstrap5.css
 node_modules
 cache
 vendor

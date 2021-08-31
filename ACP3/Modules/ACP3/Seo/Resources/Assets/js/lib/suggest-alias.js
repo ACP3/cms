@@ -6,11 +6,14 @@ export class SuggestAlias {
 
   constructor(element, options) {
     this.#element = element;
-    this.#settings = mergeSettings({
-      prefix: "",
-      slugBaseElement: null,
-      aliasElement: null
-    }, options);
+    this.#settings = mergeSettings(
+      {
+        prefix: "",
+        slugBaseElement: null,
+        aliasElement: null,
+      },
+      options
+    );
 
     this.#init();
   }
@@ -39,8 +42,8 @@ export class SuggestAlias {
         method: "POST",
         body: data,
         headers: {
-          "X-Requested-With": "XMLHttpRequest"
-        }
+          "X-Requested-With": "XMLHttpRequest",
+        },
       });
 
       if (response.ok) {
