@@ -2,8 +2,8 @@
 
 {block CONTENT}
     {if $overlay == 1}
-        <div class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="modal-create" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal fade" id="js-modal-create" tabindex="-1" role="dialog" aria-labelledby="js-modal-create" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="p-3 text-center">
                         {icon iconSet="solid" icon="spinner" cssSelectors="svg-icon--spin"}
@@ -12,14 +12,14 @@
             </div>
         </div>
         <p class="text-center">
-            <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}" data-bs-toggle="modal" data-bs-target="#modal-create">{lang t="guestbook|create"}</a>
+            <a href="{uri args="guestbook/index/create"}" id="js-create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
         </p>
         {javascripts}
             {include_js module="guestbook" file="frontend/index.index" depends=["ajax-form", "jquery"]}
         {/javascripts}
     {else}
         <p class="text-center">
-            <a href="{uri args="guestbook/index/create"}" id="create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
+            <a href="{uri args="guestbook/index/create"}" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
         </p>
     {/if}
     {redirect_message}
