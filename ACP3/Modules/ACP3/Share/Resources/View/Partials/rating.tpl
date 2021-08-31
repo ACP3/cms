@@ -21,6 +21,7 @@
             </label>
         {/for}
     </div>
+    <button type="submit" id="js-rating-form-submit" name="submit" class="d-none">{lang t="system|submit"}</button>
 </form>
 {js_libraries enable="ajax-form"}
 {if isset($rating.already_rated) && $rating.already_rated}

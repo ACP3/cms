@@ -7,15 +7,11 @@ import { delegateEvent } from "../../../../../System/Resources/Assets/js/lib/eve
 
 const ratingWrapper = document.getElementById("rating-wrapper");
 
-delegateEvent(ratingWrapper, "click", ".rating__star-input", (event, elem) => {
+delegateEvent(ratingWrapper, "click", ".rating__star-input", () => {
   document.querySelector(".rating__average")?.remove();
   document.querySelector(".rating__already-rated")?.remove();
 
-  elem.closest("form").dispatchEvent(
-    new Event("submit", {
-      cancelable: true,
-    })
-  );
+  document.getElementById('js-rating-form-submit').click();
 });
 
 // For touch based devices (i.e. w/o support for the hover event), we have to get a little creative
@@ -27,5 +23,5 @@ delegateEvent(ratingWrapper, "click", ".rating__average .rating__star", (event, 
   // .rating__average sets the direction back to ltr, so we have to account for this
   const index = ratingStars.length - 1 - elemIndex;
   ratingStars.item(index).classList.add("rating__star--active");
-  ratingStars.item(index).dispatchEvent(new MouseEvent("click"));
+  ratingStars.item(index).click();
 });
