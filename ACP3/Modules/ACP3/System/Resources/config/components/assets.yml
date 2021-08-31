@@ -92,7 +92,7 @@ services:
       - false
       - ["jquery", "bootstrap"]
       - ["dataTables.bootstrap5.css"]
-      - ["jquery.dataTables.js", "dataTables.bootstrap5.js"]
+      - ["jquery.dataTables.min.js", "dataTables.bootstrap5.js"]
       - "system"
       - true
 
