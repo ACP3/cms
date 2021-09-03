@@ -214,7 +214,6 @@
         <item key="next_page">Nächste Seite</item>
         <item key="no">Nein</item>
         <item key="no_entries">Es konnten keine Einträge gefunden werden.</item>
-        <item key="no_entries_selected">Bitte wählen Sie die zu löschenden Einträge aus.</item>
         <item key="no_entries_short">Keine Einträge vorhanden.</item>
         <item key="no_modules_available_for_installation">Es sind bereits alle lokal verfügbaren Module installiert!</item>
         <item key="not_installable_module_description">Dieses Modul benötigt keine Installation.</item>

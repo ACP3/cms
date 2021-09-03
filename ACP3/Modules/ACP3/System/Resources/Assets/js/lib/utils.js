@@ -14,7 +14,11 @@ export function mergeSettings(defaultSettings, constructorOptions, dataAttribute
     const keyStripped = lowerCaseFirstLetter(key.replace("ajaxForm", ""));
 
     if (keyStripped.length > 0 && typeof mergedSettings[keyStripped] !== "undefined") {
-      mergedSettings[keyStripped] = value;
+      try {
+        mergedSettings[keyStripped] = JSON.parse(value);
+      } catch {
+        mergedSettings[keyStripped] = value;
+      }
     }
   }
 

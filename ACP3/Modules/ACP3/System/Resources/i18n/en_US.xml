@@ -214,7 +214,6 @@
         <item key="next_page">Next page</item>
         <item key="no">No</item>
         <item key="no_entries">There are no entries available.</item>
-        <item key="no_entries_selected">Please select the entries that should be deleted.</item>
         <item key="no_entries_short">No entries available.</item>
         <item key="no_modules_available_for_installation">Currently there are no new modules available for installation!</item>
         <item key="not_installable_module_description">This module does not need any installation.</item>

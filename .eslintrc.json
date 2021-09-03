@@ -8,7 +8,6 @@
   "extends": ["eslint:recommended", "prettier"],
   "globals": {
     "grecaptcha": false,
-    "bootbox": false,
     "Cookies": false
   },
   "parser": "@babel/eslint-parser",

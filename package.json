@@ -73,7 +73,6 @@
     "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@popperjs/core": "^2.9.3",
-    "bootbox": "^5.5.2",
     "bootstrap": "^5.1.0",
     "ckeditor-codemirror-plugin": "^1.17.3",
     "core-js": "^3.16.4",

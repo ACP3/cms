@@ -75,16 +75,6 @@ services:
       - ["partials/ajax-form.js"]
       - "system"
 
-  system.assets.bootbox:
-    class: ACP3\Core\Assets\Entity\LibraryEntity
-    arguments:
-      - "bootbox"
-      - false
-      - ["jquery", "bootstrap"]
-      - []
-      - ["bootbox.all.min.js"]
-      - "system"
-
   system.assets.datatables:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:

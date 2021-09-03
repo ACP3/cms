@@ -1,16 +1,18 @@
 import { highlightAllTableRows, highlightTableRow, deleteMarkedResults } from "../lib/mass-action";
 
-document.querySelectorAll("[data-mark-all-id]").forEach((element) => {
+document.querySelectorAll("[data-mark-all-id]").forEach((markAllElem) => {
   // Get the unique identifier of the grid, so that we can find the element responsible for the mass actions
-  const tableIdentifier = element.closest("table").id;
+  const tableIdentifier = markAllElem.closest("table").id;
   const massActionBar = document.getElementById(`${tableIdentifier}-mass-delete-bar`);
 
-  element.addEventListener("click", () => highlightAllTableRows(element, element.checked ? "add" : "remove"));
+  markAllElem.addEventListener("click", () =>
+    highlightAllTableRows(markAllElem, markAllElem.checked ? "add" : "remove")
+  );
 
-  highlightTableRow(element, massActionBar);
+  highlightTableRow(markAllElem, massActionBar);
 
   deleteMarkedResults(
     document.getElementById(`${tableIdentifier}-mass-delete`),
-    JSON.parse(element.dataset.deleteOptions)
+    JSON.parse(markAllElem.dataset.deleteOptions)
   );
 });

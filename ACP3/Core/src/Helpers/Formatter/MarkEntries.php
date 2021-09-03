@@ -14,36 +14,26 @@ class MarkEntries
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
 
-    /**
-     * MarkEntries constructor.
-     */
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }
 
     /**
-     * @param string $name
-     * @param string $markAllId
-     *
-     * @return string
+     * @throws \JsonException
      */
-    public function execute($name, $markAllId = '')
+    public function execute(string $name, string $markAllId = ''): string
     {
         $markAllId = !empty($markAllId) ? $markAllId : 'mark-all';
-        $deleteOptions = json_encode(
-            [
-                'checkBoxName' => $name,
-                'language' => [
-                    'confirmationTextSingle' => $this->translator->t('system', 'confirm_delete_single'),
-                    'confirmationTextMultiple' => $this->translator->t('system', 'confirm_delete_multiple'),
-                    'noEntriesSelectedText' => $this->translator->t('system', 'no_entries_selected'),
-                ],
-                'bootboxLocale' => $this->translator->getShortIsoCode(),
-            ]
-        );
+        $deleteOptions = json_encode([
+            'checkBoxName' => $name,
+            'language' => [
+                'confirmationTextSingle' => $this->translator->t('system', 'confirm_delete_single'),
+                'confirmationTextMultiple' => $this->translator->t('system', 'confirm_delete_multiple'),
+            ],
+        ], JSON_THROW_ON_ERROR);
 
         return 'data-mark-all-id="' . $markAllId . '" data-checkbox-name="' . $name . '" data-delete-options=\'' . $deleteOptions . '\'';
     }
