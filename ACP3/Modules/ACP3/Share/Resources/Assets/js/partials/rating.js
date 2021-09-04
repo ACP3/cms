@@ -11,7 +11,7 @@ delegateEvent(ratingWrapper, "click", ".rating__star-input", () => {
   document.querySelector(".rating__average")?.remove();
   document.querySelector(".rating__already-rated")?.remove();
 
-  document.getElementById('js-rating-form-submit').click();
+  document.getElementById("js-rating-form-submit").click();
 });
 
 // For touch based devices (i.e. w/o support for the hover event), we have to get a little creative
