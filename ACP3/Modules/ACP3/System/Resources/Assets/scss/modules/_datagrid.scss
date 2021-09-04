@@ -16,14 +16,6 @@ $system-datagrid-cta-button-spacing: 3px !default;
     text-indent: -9999em;
   }
 
-  .btn-group {
-    display: flex;
-
-    > .btn {
-      float: none;
-    }
-  }
-
   .datagrid-column__actions {
     width: $system-datagrid-cta-column-width;
   }
@@ -43,7 +35,7 @@ $system-datagrid-cta-button-spacing: 3px !default;
   }
 
   tr:hover,
-  tr.info {
+  tr.table-info {
     .datagrid-column__action-buttons {
       visibility: visible;
     }
