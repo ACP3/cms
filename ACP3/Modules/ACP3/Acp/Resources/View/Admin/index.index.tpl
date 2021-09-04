@@ -1,8 +1,8 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    <div class="card">
-        <div class="card-body">
+    <div class="card mb-3">
+        <div class="card-body bg-light">
             <h4 class="card-title">{lang t="acp|access_to_modules"}</h4>
             <ul class="mb-0">
                 {foreach $modules as $translatedModuleName => $internalModuleName}
