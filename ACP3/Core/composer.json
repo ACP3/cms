@@ -20,7 +20,7 @@
     "doctrine/dbal": "^3.0",
     "fisharebest/localization": "^1.10",
     "friendsofsymfony/http-cache": "~2.0",
-    "giggsey/locale": "^1.2",
+    "giggsey/locale": "^2.0",
     "inlinestyle/inlinestyle": "^1.2",
     "marc1706/fast-image-size": "^1.1",
     "marcj/topsort": "^2.0.0",
