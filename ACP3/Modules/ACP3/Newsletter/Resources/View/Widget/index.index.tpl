@@ -6,6 +6,7 @@
         <form action="{uri args="newsletter"}"
               method="post"
               accept-charset="UTF-8"
+              novalidate
               data-ajax-form="true"
               data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
             <div class="mb-3">

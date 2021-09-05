@@ -7,6 +7,7 @@
     <form action="{block CONTENT_AJAX_FORM_URI}{$REQUEST_URI}{/block}"
           method="post"
           accept-charset="UTF-8"
+          novalidate
           {if isset($is_multipart) && $is_multipart === true}enctype="multipart/form-data"{/if}
           {if isset($scroll_offset_element)}data-scroll-offset-element="{$scroll_offset_element}"{/if}
           {if isset($form_id)}id="{$form_id}"{/if}

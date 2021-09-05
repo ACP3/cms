@@ -1,6 +1,7 @@
 <form action="{uri args="share/index/rate/id_`$rating.share_id`"}"
       method="post"
       accept-charset="UTF-8"
+      novalidate
       data-ajax-form="true"
       data-ajax-form-target-element="#rating-wrapper"
       data-ajax-form-loading-overlay="false">

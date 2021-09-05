@@ -4,10 +4,10 @@
  */
 
 import { mergeSettings } from "./utils";
+import { delegateEvent } from "./event-handler";
 
 export class AjaxForm {
-  #element;
-  #loadingLayer;
+  #loadingIndicator;
   #formValidator;
   #defaults = {
     completeCallback: null,
@@ -16,120 +16,121 @@ export class AjaxForm {
     customFormData: null,
     method: null,
   };
-  #settings;
 
   /**
    *
-   * @param {HTMLElement} element
-   * @param {LoadingLayer} loadingLayer
+   * @param {LoadingIndicator} loadingIndicator
    * @param {FormValidator} formValidator
-   * @param {object} options
    */
-  constructor(element, loadingLayer, formValidator, options = {}) {
-    this.#element = element;
-    this.isFormValid = true;
-
-    this.#loadingLayer = loadingLayer;
+  constructor(loadingIndicator, formValidator) {
+    this.#loadingIndicator = loadingIndicator;
     this.#formValidator = formValidator;
 
-    this.#settings = mergeSettings(this.#defaults, options, element.dataset);
     this.#init();
   }
 
   #init() {
-    this.#findSubmitButton();
-    this.#addLoadingLayer();
+    this.#registerClickedSubmitButton();
 
-    if (this.#element.nodeName === "A") {
-      this.#element.addEventListener("click", async () => {
-        await this.performAjaxRequest();
-      });
-    } else {
-      this.#element.noValidate = true;
+    delegateEvent(document, "click", 'a[data-ajax-form="true"]', async (event, elem) => {
+      event.preventDefault();
 
-      this.#element.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      await this.performAjaxRequest(elem);
+    });
 
-        this.#formValidator.setFormAsValid();
+    delegateEvent(document, "submit", 'form[data-ajax-form="true"]', async (event, elem) => {
+      event.preventDefault();
 
-        document.dispatchEvent(new CustomEvent("acp3.ajaxFrom.submit.before", { detail: this }));
+      this.#formValidator.setFormAsValid(elem);
 
-        if (this.#formValidator.isFormValid && this.#formValidator.preValidateForm()) {
-          await this.performAjaxRequest();
-        }
-      });
+      document.dispatchEvent(new CustomEvent("acp3.ajaxFrom.submit.before", { detail: this }));
 
-      this.#element.addEventListener("change", () => {
-        if (this.#formValidator.isFormValid === false) {
-          this.#formValidator.checkFormElementsForErrors();
-        }
-      });
-    }
-  }
+      if (this.#formValidator.isValid(elem) && this.#formValidator.preValidateForm(elem)) {
+        await this.performAjaxRequest(elem);
+      }
+    });
 
-  #findSubmitButton() {
-    this.#element.querySelectorAll("[type=submit]").forEach((submitElem) => {
-      submitElem.addEventListener("click", () => {
-        this.#element.querySelectorAll("[type=submit]").forEach((elem) => {
-          delete elem.dataset["clicked"];
-        });
-        submitElem.dataset.clicked = "true";
-      });
+    delegateEvent(document, "change", 'form[data-ajax-form="true"]', async (event, elem) => {
+      if (this.#formValidator.isValid(elem) === false) {
+        this.#formValidator.checkFormElementsForErrors(elem);
+      }
     });
   }
 
-  async performAjaxRequest() {
-    const form = this.#element;
+  #registerClickedSubmitButton() {
+    delegateEvent(document, "click", 'form[data-ajax-form="true"] [type="submit"]', (event, submitElem) => {
+      submitElem
+        .closest("form")
+        .querySelectorAll("[type=submit]")
+        .forEach((elem) => {
+          delete elem.dataset["clicked"];
+        });
+      submitElem.dataset.clicked = "true";
+    });
+  }
 
+  /**
+   *
+   * @param {HTMLElement} targetElement
+   * @returns {Promise<void>}
+   */
+  async performAjaxRequest(targetElement) {
+    const mergedSettings = mergeSettings(this.#defaults, {}, targetElement.dataset);
     let hash, submitButton;
 
-    if (this.#element.getAttribute("method")) {
-      submitButton = this.#element.querySelector('[type="submit"][data-clicked="true"]');
+    if (targetElement instanceof HTMLFormElement) {
+      submitButton = targetElement.querySelector('[type="submit"][data-clicked="true"]');
 
       hash = submitButton?.dataset.hashChange;
     } else {
-      hash = form.dataset.hashChange;
+      hash = targetElement.dataset.hashChange;
     }
 
-    this.#loadingLayer.showLoadingLayer();
+    if (mergedSettings.loadingOverlay) {
+      this.#loadingIndicator.addLoadingIndicator(submitButton || targetElement);
+      this.#loadingIndicator.showLoadingIndicator(submitButton || targetElement);
+    }
+
     this.#disableSubmitButton(submitButton);
 
     try {
-      const method = form.getAttribute("method")?.toUpperCase() ?? this.#settings.method?.toUpperCase() ?? "GET";
+      const method =
+        targetElement.getAttribute("method")?.toUpperCase() ?? mergedSettings.method?.toUpperCase() ?? "GET";
 
-      const response = await fetch(form.getAttribute("action") || form.getAttribute("href"), {
+      const response = await fetch(targetElement.getAttribute("action") || targetElement.getAttribute("href"), {
         method: method,
-        body: method !== "GET" ? this.#prepareFormData(submitButton) : null,
+        body: method !== "GET" ? this.#prepareFormData(targetElement, submitButton, mergedSettings) : null,
         headers: {
           "X-Requested-With": "XMLHttpRequest",
         },
       });
 
       if (!response.ok) {
-        await this.#handleResponseError(response);
+        await this.#handleResponseError(response, targetElement);
       } else {
-        await this.#handleSuccessfulResponse(response, hash);
+        await this.#handleSuccessfulResponse(response, hash, mergedSettings);
       }
     } catch (error) {
       console.error(error);
     } finally {
-      this.#loadingLayer.hideLoadingLayer();
+      this.#loadingIndicator.hideLoadingIndicator(submitButton || targetElement);
       this.#enableSubmitButton(submitButton);
     }
   }
 
   /**
    *
+   * @param {HTMLFormElement} formElement
+   * @param {HTMLElement} submitButton
+   * @param {Record<string, any>} mergedSettings
    * @returns {FormData}
    */
-  #prepareFormData(submitButton) {
-    const form = this.#element;
-
-    const initialData = this.#settings.customFormData || {};
+  #prepareFormData(formElement, submitButton, mergedSettings) {
+    const initialData = mergedSettings.customFormData || {};
     let data;
 
-    if (form.getAttribute("method")) {
-      data = new FormData(form);
+    if (formElement.getAttribute("method")) {
+      data = new FormData(formElement);
 
       if (submitButton) {
         data.append(submitButton.getAttribute("name"), "1");
@@ -148,13 +149,14 @@ export class AjaxForm {
   /**
    *
    * @param {Response} response
+   * @param {HTMLElement} targetElement
    * @returns {Promise<void>}
    */
-  async #handleResponseError(response) {
+  async #handleResponseError(response, targetElement) {
     const responseData = await response.clone().text();
 
     if (response.status === 400) {
-      this.#formValidator.handleFormErrorMessages(this.#element, responseData);
+      this.#formValidator.handleFormErrorMessages(targetElement, responseData);
 
       document.dispatchEvent(new CustomEvent("acp3.ajaxFrom.submit.fail", { detail: this }));
     } else if (responseData.length > 0) {
@@ -168,18 +170,19 @@ export class AjaxForm {
    *
    * @param {Response} response
    * @param {string} hash
+   * @param {Record<string, any>} mergedSettings
    * @returns {Promise<void>}
    */
-  async #handleSuccessfulResponse(response, hash) {
+  async #handleSuccessfulResponse(response, hash, mergedSettings) {
     const responseData = await this.#decodeResponse(response);
 
-    if (typeof window[this.#settings.completeCallback] === "function") {
-      window[this.#settings.completeCallback](responseData);
+    if (typeof window[mergedSettings.completeCallback] === "function") {
+      window[mergedSettings.completeCallback](responseData);
     } else if (responseData.redirect_url) {
       this.#redirectToNewPage(hash, responseData);
     } else {
-      this.#replaceContent(hash, responseData);
-      this.#scrollIntoView(hash);
+      this.#replaceContent(hash, responseData, mergedSettings);
+      this.#scrollIntoView(hash, mergedSettings);
 
       if (hash !== undefined) {
         window.location.hash = hash;
@@ -187,14 +190,6 @@ export class AjaxForm {
 
       document.dispatchEvent(new CustomEvent("acp3.ajaxFrom.complete"));
     }
-  }
-
-  #addLoadingLayer() {
-    if (this.#settings.loadingOverlay === false) {
-      return;
-    }
-
-    this.#loadingLayer.addLoadingLayer();
   }
 
   /**
@@ -239,14 +234,14 @@ export class AjaxForm {
     }
   }
 
-  #scrollIntoView(hash) {
+  #scrollIntoView(hash, mergedSettings) {
     setTimeout(() => {
       if (hash) {
         const targetElement = document.querySelector(`[data-hash-change="${hash}"]`);
 
         window.scrollTo({ top: targetElement.getBoundingClientRect().y, behavior: "smooth" });
       } else {
-        const targetElement = document.querySelector(this.#settings.targetElement);
+        const targetElement = document.querySelector(mergedSettings.targetElement);
         const offsetTop = targetElement.getBoundingClientRect().y;
 
         if (document.scrollTop > offsetTop) {
@@ -256,14 +251,14 @@ export class AjaxForm {
     });
   }
 
-  #replaceContent(hash, responseData) {
+  #replaceContent(hash, responseData, mergedSettings) {
     if (hash && document.querySelector(hash)) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(responseData, "text/html");
 
       document.querySelector(hash).innerHTML = doc.querySelector(hash).innerHTML;
     } else {
-      document.querySelector(this.#settings.targetElement).innerHTML = responseData;
+      document.querySelector(mergedSettings.targetElement).innerHTML = responseData;
     }
   }
 }

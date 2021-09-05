@@ -6,30 +6,36 @@
 import { mergeSettings } from "./utils";
 
 export class FormValidator {
-  #isFormValid = true;
   #defaults = {
     scrollOffsetElement: null,
   };
   #settings;
-  #formElement;
 
-  constructor(formElement, options = {}) {
-    this.#settings = mergeSettings(this.#defaults, options, formElement.dataset);
-    this.#formElement = formElement;
+  constructor(options = {}) {
+    this.#settings = mergeSettings(this.#defaults, options, {});
   }
 
-  preValidateForm() {
-    this.checkFormElementsForErrors();
-    this.#focusTabWithFirstErrorMessage();
-    this.#scrollToFirstFormError();
+  /**
+   *
+   * @param {HTMLFormElement} formElement
+   * @returns {boolean}
+   */
+  preValidateForm(formElement) {
+    this.checkFormElementsForErrors(formElement);
+    this.#focusTabWithFirstErrorMessage(formElement);
+    this.#scrollToFirstFormError(formElement);
 
-    return this.#isFormValid;
+    return this.isValid(formElement);
   }
 
-  checkFormElementsForErrors() {
-    this.#removeAllPreviousErrors();
+  /**
+   *
+   * @param {HTMLFormElement} formElement
+   */
+  checkFormElementsForErrors(formElement) {
+    this.#removeAllPreviousErrors(formElement);
 
-    for (const field of this.#formElement.elements) {
+    for (const field of formElement.elements) {
       if (field.nodeName !== "INPUT" && field.nodeName !== "TEXTAREA" && field.nodeName !== "SELECT") {
         continue;
       }
@@ -37,13 +43,16 @@ export class FormValidator {
       if (!field.checkValidity()) {
         this.#addErrorMessageToFormField(field, field.validationMessage);
 
-        this.#isFormValid = false;
+        formElement.formValidator.isValid = false;
       }
     }
   }
 
-  #removeAllPreviousErrors() {
-    this.#formElement.querySelectorAll(".is-invalid").forEach((invalidFormField) => {
+  /**
+   * @param {HTMLFormElement} formElement
+   */
+  #removeAllPreviousErrors(formElement) {
+    formElement.querySelectorAll(".is-invalid").forEach((invalidFormField) => {
       invalidFormField.classList.remove("is-invalid");
     });
   }
@@ -71,12 +80,16 @@ export class FormValidator {
       .insertAdjacentHTML("beforeend", `<div class="invalid-feedback">${errorMessage}</div>`);
   }
 
-  #focusTabWithFirstErrorMessage() {
-    if (!this.#formElement.querySelector(".nav-tabs")) {
+  /**
+   *
+   * @param {HTMLFormElement} formElement
+   */
+  #focusTabWithFirstErrorMessage(formElement) {
+    if (!formElement.querySelector(".nav-tabs")) {
       return;
     }
 
-    const firstElemWithError = this.#formElement.querySelector(".is-invalid");
+    const firstElemWithError = formElement.querySelector(".is-invalid");
 
     if (!firstElemWithError) {
       return;
@@ -84,26 +97,41 @@ export class FormValidator {
 
     const tabId = firstElemWithError.closest(".tab-pane").getAttribute("id");
 
-    this.#formElement.querySelector('.nav-tabs a[href="#' + tabId + '"]').click();
+    formElement.querySelector('.nav-tabs a[href="#' + tabId + '"]').click();
 
     firstElemWithError.focus();
   }
 
-  get isFormValid() {
-    return this.#isFormValid;
-  }
-
-  setFormAsValid() {
-    this.#isFormValid = true;
+  /**
+   *
+   * @param {HTMLFormElement} formElement
+   * @returns {boolean}
+   */
+  isValid(formElement) {
+    return !!formElement.formValidator?.isValid;
   }
 
   /**
    *
-   * @param {HTMLElement} form
+   * @param {HTMLFormElement} formElement
+   */
+  setFormAsValid(formElement) {
+    formElement.formValidator = {
+      isValid: true,
+    };
+  }
+
+  /**
+   *
+   * @param {HTMLElement} targetElement
    * @param {string} errorMessagesHtml
    */
-  handleFormErrorMessages(form, errorMessagesHtml) {
-    const modalBody = form.querySelector(".modal-body");
+  handleFormErrorMessages(targetElement, errorMessagesHtml) {
+    if (!(targetElement instanceof HTMLFormElement)) {
+      return;
+    }
+
+    const modalBody = targetElement.querySelector(".modal-body");
 
     // Remove the old - possible existing - error-box
     document.getElementById("error-box")?.remove();
@@ -112,26 +140,26 @@ export class FormValidator {
     if (modalBody) {
       modalBody.insertAdjacentHTML("afterbegin", errorMessagesHtml);
     } else {
-      form.insertAdjacentHTML("afterbegin", errorMessagesHtml);
+      targetElement.insertAdjacentHTML("afterbegin", errorMessagesHtml);
     }
 
-    this.#prettyPrintResponseErrorMessages(form, document.getElementById("error-box"));
+    this.#prettyPrintResponseErrorMessages(targetElement, document.getElementById("error-box"));
   }
 
   /**
    *
-   * @param {HTMLElement} form
+   * @param {HTMLFormElement} formElement
    * @param {HTMLElement} errorBox
    */
-  #prettyPrintResponseErrorMessages(form, errorBox) {
-    this.#removeAllPreviousErrors();
+  #prettyPrintResponseErrorMessages(formElement, errorBox) {
+    this.#removeAllPreviousErrors(formElement);
 
     // highlight all input fields where the validation has failed
     errorBox.querySelectorAll("li").forEach((errorMessageLine) => {
       let errorClass = errorMessageLine.dataset.element;
 
       if (errorClass.length > 0) {
-        let elem = document.getElementById(errorClass) || form.querySelector('[id|="' + errorClass + '"]');
+        let elem = document.getElementById(errorClass) || formElement.querySelector('[id|="' + errorClass + '"]');
 
         if (elem) {
           // Move the error message to the responsible input field(s)
@@ -147,22 +175,25 @@ export class FormValidator {
       errorBox.remove();
     }
 
-    this.#focusTabWithFirstErrorMessage();
-    this.#scrollToFirstFormError();
+    this.#focusTabWithFirstErrorMessage(formElement);
+    this.#scrollToFirstFormError(formElement);
   }
 
-  #scrollToFirstFormError() {
-    if (this.#formElement.closest(".modal")?.length > 0) {
+  /**
+   * @param {HTMLFormElement} formElement
+   */
+  #scrollToFirstFormError(formElement) {
+    if (formElement.closest(".modal")?.length > 0) {
       return;
     }
 
-    const formErrors = this.#formElement.querySelectorAll(".is-invalid");
+    const formErrors = formElement.querySelectorAll(".is-invalid");
 
     if (!formErrors || formErrors.length === 0) {
       return;
     }
 
-    if (this.#isElementInViewport(this.#formElement.querySelector(".invalid-feedback"))) {
+    if (this.#isElementInViewport(formElement.querySelector(".invalid-feedback"))) {
       return;
     }
 

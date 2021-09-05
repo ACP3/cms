@@ -70,8 +70,8 @@ services:
     arguments:
       - "ajax-form"
       - false
-      - ["jquery", "bootstrap"]
-      - ["loading-layer.min.css"]
+      - ["bootstrap"]
+      - ["loading-indicator.min.css"]
       - ["partials/ajax-form.js"]
       - "system"
 

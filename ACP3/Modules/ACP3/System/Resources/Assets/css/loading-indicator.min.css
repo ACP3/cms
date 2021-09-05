@@ -1,0 +1,4 @@
+/*!
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */.loading-indicator{visibility:hidden;opacity:0;transition:opacity .5s,visibility .5s}.loading-indicator.loading-indicator__active{visibility:visible;opacity:1}

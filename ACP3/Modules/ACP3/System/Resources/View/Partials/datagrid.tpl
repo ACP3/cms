@@ -2,6 +2,7 @@
     <form action="{$DELETE_ROUTE}"
           method="post"
           accept-charset="UTF-8"
+          novalidate
           data-ajax-form="true"
           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"
           data-ajax-form-custom-form-data='{ "action":"confirmed","submit":true }'>
