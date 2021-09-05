@@ -7,25 +7,31 @@
 
 namespace ACP3\Modules\ACP3\Installer\Repository;
 
+use ACP3\Core\Database\Connection;
 use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Repository\AbstractRepository;
 use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
 
-class SettingsRepository extends AbstractStubRepository implements SettingsAwareRepositoryInterface
+class SettingsRepository extends AbstractRepository implements SettingsAwareRepositoryInterface
 {
+    public const TABLE_NAME = 'settings';
+
     /**
      * @var string
      */
     private $environment;
 
-    public function __construct(string $environment)
+    public function __construct(Connection $db, string $environment)
     {
+        parent::__construct($db);
+
         $this->environment = $environment;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAllSettings()
+    public function getAllSettings(): array
     {
         return [
             [
