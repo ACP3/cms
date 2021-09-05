@@ -7,7 +7,7 @@
         <div class="form-check">
             <input type="checkbox"
                    class="form-check-input"
-                   name="{$row.name}"
+                   name="{$row.name}{if count($options) > 1}[]{/if}"
                    id="{$row.id}"
                    value="{$row.value}"
                     {$row.checked}

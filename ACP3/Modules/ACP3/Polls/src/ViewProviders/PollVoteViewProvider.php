@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Polls\ViewProviders;
 
+use ACP3\Core\Helpers\Forms;
 use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
 use ACP3\Modules\ACP3\Polls\Repository\PollRepository;
 
@@ -20,13 +21,19 @@ class PollVoteViewProvider
      * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
      */
     private $answerRepository;
+    /**
+     * @var Forms
+     */
+    private $formsHelper;
 
     public function __construct(
         PollRepository $pollRepository,
-        AnswerRepository $answerRepository
+        AnswerRepository $answerRepository,
+        Forms $formsHelper
     ) {
         $this->pollRepository = $pollRepository;
         $this->answerRepository = $answerRepository;
+        $this->formsHelper = $formsHelper;
     }
 
     /**
@@ -39,7 +46,26 @@ class PollVoteViewProvider
         return [
             'question' => $poll['title'],
             'multiple' => $poll['multiple'],
-            'answers' => $this->answerRepository->getAnswersByPollId($pollId),
+            'answers' => $this->fetchAnswers($poll['multiple'], $pollId),
         ];
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
+    private function fetchAnswers(bool $isMultipleChoice, int $pollId): array
+    {
+        $answers = $this->answerRepository->getAnswersByPollId($pollId);
+
+        $mappedAnswers = [];
+        foreach ($answers as $answer) {
+            $mappedAnswers[$answer['id']] = $answer['text'];
+        }
+
+        if ($isMultipleChoice) {
+            return $this->formsHelper->checkboxGenerator('answer', $mappedAnswers);
+        }
+
+        return $this->formsHelper->choicesGenerator('answer', $mappedAnswers, '', 'checked');
     }
 }

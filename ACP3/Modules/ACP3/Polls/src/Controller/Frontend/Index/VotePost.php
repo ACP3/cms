@@ -64,11 +64,9 @@ class VotePost extends Core\Controller\AbstractWidgetAction implements Core\Cont
                     ->setIpAddress($ipAddress)
                     ->validate($formData);
 
-                $result = $this->voteModel->vote($formData, $id, $ipAddress, $time);
+                $this->voteModel->vote($formData, $id, $ipAddress, $time);
 
-                $text = $this->translator->t('polls', $result !== false ? 'poll_success' : 'poll_error');
-
-                return $this->actionHelper->setRedirectMessage($result, $text, 'polls/index/result/id_' . $id);
+                return $this->actionHelper->setRedirectMessage(true, $this->translator->t('polls', 'poll_success'), 'polls/index/result/id_' . $id);
             },
             'polls/index/vote/id_' . $id
         );

@@ -37,20 +37,14 @@ class VoteModel
     }
 
     /**
-     * @param int    $pollId
-     * @param string $ipAddress
-     * @param string $time
-     *
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
-    public function vote(array $formData, $pollId, $ipAddress, $time)
+    public function vote(array $formData, int $pollId, string $ipAddress, string $time): bool
     {
         $answers = $formData['answer'];
 
-        $bool = false;
+        $result = false;
         $userId = $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null;
 
         // Multiple Answers
@@ -67,10 +61,10 @@ class VoteModel
                     'ip' => $ipAddress,
                     'time' => $time,
                 ];
-                $bool = $this->voteRepository->insert($insertValues);
+                $result = $this->voteRepository->insert($insertValues);
             }
         }
 
-        return $bool;
+        return $result;
     }
 }
