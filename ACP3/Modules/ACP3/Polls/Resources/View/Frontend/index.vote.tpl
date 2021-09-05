@@ -2,7 +2,7 @@
 
 {block CONTENT_AJAX_FORM}
     <div class="row mb-3">
-        <label for="answer-{$answers.0.id}" class="col-sm-2 col-form-label">{$question}</label>
+        <label for="answer-{$answers.0.id}" class="col-sm-2 col-form-label pt-0">{$question}</label>
 
         <div class="col-sm-10">
             {foreach $answers as $row}

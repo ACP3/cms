@@ -1,3 +1,5 @@
+{$labelSelectors="pt-0"}
+
 {extends file="asset:System/Partials/form_group.base.tpl"}
 
 {block FORM_GROUP_FORM_FIELD}
