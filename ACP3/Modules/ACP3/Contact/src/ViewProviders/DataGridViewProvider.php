@@ -86,6 +86,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('system', 'message'),
                 'type' => Nl2pColumnRenderer::class,
                 'fields' => ['message'],
+                'class' => 'w-100',
             ], 10)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),

@@ -76,6 +76,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('system', 'name'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['name_nested'],
+                'class' => 'w-100',
                 'sortable' => false,
             ], 30)
             ->addColumn([
@@ -92,6 +93,7 @@ class DataGridViewProvider
                     'label' => $this->translator->t('system', 'order'),
                     'type' => NestedSetSortColumnRenderer::class,
                     'fields' => ['left_id'],
+                    'class' => 'text-center',
                     'sortable' => false,
                     'custom' => [
                         'route_sort_down' => 'acp/permissions/index/order/id_%d/action_down',

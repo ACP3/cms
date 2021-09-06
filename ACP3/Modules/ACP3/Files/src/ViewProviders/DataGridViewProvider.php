@@ -102,12 +102,8 @@ class DataGridViewProvider
                 'label' => $this->translator->t('files', 'title'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['title'],
+                'class' => 'w-100',
             ], 40)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'description'),
-                'type' => TextColumnRenderer::class,
-                'fields' => ['text'],
-            ], 30)
             ->addColumn([
                 'label' => $this->translator->t('files', 'filesize'),
                 'type' => TextColumnRenderer::class,
@@ -132,6 +128,7 @@ class DataGridViewProvider
                     'label' => $this->translator->t('system', 'order'),
                     'type' => SortColumnRenderer::class,
                     'fields' => ['sort'],
+                    'class' => 'text-center',
                     'default_sort' => $settings['order_by'] === 'custom',
                     'custom' => [
                         'route_sort_down' => 'acp/files/index/sort/id_%d/action_down',

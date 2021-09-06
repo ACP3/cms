@@ -120,12 +120,8 @@ class PictureDataGridViewProvider
                 'label' => $this->translator->t('gallery', 'title'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['title'],
+                'class' => 'w-100',
             ], 35)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'description'),
-                'type' => TextColumnRenderer::class,
-                'fields' => ['description'],
-            ], 30)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),
                 'type' => RouteColumnRenderer::class,
@@ -142,6 +138,7 @@ class PictureDataGridViewProvider
                     'label' => $this->translator->t('system', 'order'),
                     'type' => SortColumnRenderer::class,
                     'fields' => ['pic'],
+                    'class' => 'text-center',
                     'default_sort' => true,
                     'custom' => [
                         'route_sort_down' => 'acp/gallery/pictures/order/id_%d/action_down',

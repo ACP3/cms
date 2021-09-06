@@ -79,6 +79,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('share', 'uri'),
                 'type' => RouteColumnRenderer::class,
                 'fields' => ['uri'],
+                'class' => 'w-100',
                 'default_sort' => true,
                 'custom' => [
                     'path' => '%s',

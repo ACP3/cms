@@ -77,6 +77,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('polls', 'question'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['title'],
+                'class' => 'w-100',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('system', 'id'),

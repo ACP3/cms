@@ -68,6 +68,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('auditlog', 'database_table'),
                 'type' => TranslateColumnRenderer::class,
                 'fields' => ['module_name', 'table_name'],
+                'class' => 'w-100',
                 'default_sort' => true,
             ], 20)
             ->addColumn([

@@ -85,6 +85,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('articles', 'title'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['title'],
+                'class' => 'w-100',
                 'default_sort' => true,
             ], 20)
             ->addColumn([

@@ -77,14 +77,9 @@ class DataGridViewProvider
                 'label' => $this->translator->t('categories', 'title'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['title_nested'],
+                'class' => 'w-100',
                 'sortable' => false,
             ], 50)
-            ->addColumn([
-                'label' => $this->translator->t('system', 'description'),
-                'type' => TextColumnRenderer::class,
-                'fields' => ['description'],
-                'sortable' => false,
-            ], 40)
             ->addColumn([
                 'label' => $this->translator->t('categories', 'module'),
                 'type' => TranslateColumnRenderer::class,
@@ -105,6 +100,7 @@ class DataGridViewProvider
                     'label' => $this->translator->t('system', 'order'),
                     'type' => NestedSetSortColumnRenderer::class,
                     'fields' => ['left_id'],
+                    'class' => 'text-center',
                     'sortable' => false,
                     'custom' => [
                         'route_sort_down' => 'acp/categories/index/order/id_%d/action_down',

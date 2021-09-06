@@ -68,6 +68,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('comments', 'module'),
                 'type' => TranslateColumnRenderer::class,
                 'fields' => ['module'],
+                'class' => 'w-100',
                 'default_sort' => true,
             ], 30)
             ->addColumn([

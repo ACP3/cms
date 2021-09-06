@@ -80,6 +80,7 @@ class DataGridByTableViewProvider
                 'label' => $this->translator->t('auditlog', 'last_action'),
                 'type' => TranslateColumnRenderer::class,
                 'fields' => ['last_action'],
+                'class' => 'w-100',
                 'custom' => [
                     'domain' => 'auditlog',
                 ],

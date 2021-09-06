@@ -88,6 +88,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('gallery', 'title'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['title'],
+                'class' => 'w-100',
             ], 20)
             ->addColumn([
                 'label' => $this->translator->t('gallery', 'pictures'),

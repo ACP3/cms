@@ -70,6 +70,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('users', 'nickname'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['nickname'],
+                'class' => 'w-100',
                 'default_sort' => true,
             ], 40)
             ->addColumn([

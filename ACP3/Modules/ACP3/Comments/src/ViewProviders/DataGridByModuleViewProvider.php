@@ -115,6 +115,7 @@ class DataGridByModuleViewProvider
                 'label' => $this->translator->t('system', 'message'),
                 'type' => Nl2pColumnRenderer::class,
                 'fields' => ['message'],
+                'class' => 'w-100',
             ], 30)
             ->addColumn([
                 'label' => $this->translator->t('comments', 'ip'),

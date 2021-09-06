@@ -77,6 +77,7 @@ class DataGridViewProvider
                 'label' => $this->translator->t('newsletter', 'subject'),
                 'type' => TextColumnRenderer::class,
                 'fields' => ['title'],
+                'class' => 'w-100',
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('newsletter', 'status'),
