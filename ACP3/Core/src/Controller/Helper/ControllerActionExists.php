@@ -37,6 +37,14 @@ class ControllerActionExists
 
         $serviceId = $pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3];
 
-        return $this->container->has($serviceId);
+        if ($this->container->has($serviceId)) {
+            return true;
+        }
+
+        if (!str_ends_with($pathArray[3], '_post')) {
+            return $this->container->has($serviceId . '_post');
+        }
+
+        return false;
     }
 }
