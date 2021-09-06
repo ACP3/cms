@@ -126,7 +126,7 @@ class ACL
             return false;
         }
 
-        // Fast path for the super user, as he/she has access to all resources
+        // Fast path for the superuser, as he/she has access to all resources
         if ($this->user->isSuperUser()) {
             return true;
         }
@@ -141,7 +141,7 @@ class ACL
             return $this->getPermissions()[$resourceId] !== PermissionEnum::DENY_ACCESS;
         }
 
-        // It's okay, when a resource doesn't exists within the ACL.
+        // It's okay, when a resource doesn't exist within the ACL.
         // It means, that a page doesn't need to be protected by the ACL.
         return true;
     }
