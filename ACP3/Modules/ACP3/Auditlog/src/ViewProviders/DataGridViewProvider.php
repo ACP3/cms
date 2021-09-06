@@ -62,7 +62,7 @@ class DataGridViewProvider
             ->setRepository($this->dataGridRepository)
             ->setRecordsPerPage($this->resultsPerPage->getResultsPerPage(Schema::MODULE_NAME))
             ->setIdentifier('#auditlog-data-grid')
-            ->setResourcePathEdit('admin/auditlog/index/edit')
+            ->setResourcePathEdit('admin/auditlog/index/table/table_%s')
             ->setPrimaryKey('table_name')
             ->addColumn([
                 'label' => $this->translator->t('auditlog', 'database_table'),
