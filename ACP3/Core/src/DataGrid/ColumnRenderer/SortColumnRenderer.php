@@ -78,6 +78,7 @@ class SortColumnRenderer extends AbstractColumnRenderer
         $html = <<<HTML
 <a href="%s"
    title="%s"
+   class="btn btn-light btn-sm mx-1"
    data-ajax-form="true"
    data-ajax-form-method="post"
    data-ajax-form-loading-text="%s"
@@ -102,7 +103,7 @@ HTML;
     {
         $html = ($this->icon)('solid', 'times-circle', ['cssSelectors' => 'text-danger', 'title' => $this->translator->t('system', 'move_impossible')]);
 
-        return sprintf($html, $this->translator->t('system', 'move_impossible'));
+        return '<span class="btn btn-light btn-sm disabled">' . sprintf($html, $this->translator->t('system', 'move_impossible')) . '</span>';
     }
 
     public static function mandatoryAttributes(): array

@@ -7,7 +7,7 @@
           data-ajax-form-loading-text="{lang t="system|loading_please_wait"}"
           data-ajax-form-custom-form-data='{ "action":"confirmed","submit":true }'>
         <table id="{$dataTable.identifier}"
-               class="table table-striped table-hover datagrid"
+               class="table table-striped table-hover datagrid align-middle"
                data-datatable-init="{$dataTable.config.config|escape}">
             <thead>
             <tr>
