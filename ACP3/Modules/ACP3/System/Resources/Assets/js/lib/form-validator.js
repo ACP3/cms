@@ -43,6 +43,10 @@ export class FormValidator {
       if (!field.checkValidity()) {
         this.#addErrorMessageToFormField(field, field.validationMessage);
 
+        if (!formElement.formValidator) {
+          formElement.formValidator = {};
+        }
+
         formElement.formValidator.isValid = false;
       }
     }
