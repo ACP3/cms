@@ -15,7 +15,7 @@
             <a href="{uri args="guestbook/index/create"}" id="js-create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
         </p>
         {javascripts}
-            {include_js module="guestbook" file="frontend/index.index" depends=["ajax-form", "jquery"]}
+            {include_js module="guestbook" file="frontend/index.index"}
         {/javascripts}
     {else}
         <p class="text-center">

@@ -5,8 +5,7 @@
 
 /* global bootstrap */
 
-// @ToDO: Remove jQuery
-(($, document) => {
+((document) => {
   const createLinkElem = document.getElementById("js-create-link");
   const modalElem = document.getElementById("js-modal-create");
   const modal = new bootstrap.Modal(modalElem);
@@ -28,7 +27,5 @@
 
     modalElem.querySelector(".modal-content").innerHTML = await response.text();
     modalElem.classList.add("js-replaced-content");
-
-    $(modalElem).find('[data-ajax-form="true"]').formSubmit();
   });
-})(jQuery, document);
+})(document);
