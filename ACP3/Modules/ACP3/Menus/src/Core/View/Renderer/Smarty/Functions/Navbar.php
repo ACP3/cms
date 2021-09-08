@@ -96,55 +96,61 @@ class Navbar extends AbstractFunction
     private function generateMenu(string $menu, MenuConfiguration $menuConfig): string
     {
         $items = $this->menuService->getVisibleMenuItemsByMenu($menu);
-        $cItems = \count($items);
 
-        if ($cItems > 0) {
-            $selected = $this->selectMenuItem($menu);
-
-            $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
-
-            $this->menus[$cacheKey] = '';
-
-            foreach ($items as $i => $item) {
-                if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $item['level']) {
-                    $this->menus[$cacheKey] .= $this->processMenuItemWithChildren(
-                        $menu,
-                        $menuConfig,
-                        $item,
-                        $this->getMenuItemSelector($item, $selected, $menuConfig)
-                    );
-                } else {
-                    $this->menus[$cacheKey] .= $this->processMenuItemWithoutChildren(
-                        $menuConfig,
-                        $item,
-                        $this->getMenuItemSelector($item, $selected, $menuConfig)
-                    );
-                    $this->menus[$cacheKey] .= $this->closeOpenedMenus(
-                        $menuConfig,
-                        $items,
-                        $i
-                    );
-                }
-            }
-
-            if (!empty($this->menus[$cacheKey])) {
-                $this->menus[$cacheKey] = sprintf(
-                    '<%1$s%2$s>%3$s</%1$s>',
-                    $menuConfig->getTag(),
-                    $this->prepareMenuHtmlAttributes($menu, $menuConfig),
-                    $this->menus[$cacheKey]
-                );
-            } else {
-                $this->menus[$cacheKey] = '';
-            }
-
-            return $this->menus[$cacheKey];
+        if (\count($items) === 0) {
+            return '';
         }
 
-        return '';
+        $leftIdOfMatchedMenuItem = $this->selectMenuItem($menu);
+
+        $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
+
+        $this->menus[$cacheKey] = '';
+
+        foreach ($items as $i => $item) {
+            $isSelected = $item['left_id'] <= $leftIdOfMatchedMenuItem && $item['right_id'] > $leftIdOfMatchedMenuItem;
+            $itemSelectors = $this->getMenuItemSelector($item, $menuConfig);
+
+            if (isset($items[$i + 1]) && $items[$i + 1]['level'] > $item['level']) {
+                $this->menus[$cacheKey] .= $this->processMenuItemWithChildren(
+                    $menu,
+                    $menuConfig,
+                    $item,
+                    $itemSelectors,
+                    $isSelected
+                );
+            } else {
+                $this->menus[$cacheKey] .= $this->processMenuItemWithoutChildren(
+                    $menuConfig,
+                    $item,
+                    $itemSelectors,
+                    $isSelected
+                );
+                $this->menus[$cacheKey] .= $this->closeOpenedMenus(
+                    $menuConfig,
+                    $items,
+                    $i
+                );
+            }
+        }
+
+        if (!empty($this->menus[$cacheKey])) {
+            $this->menus[$cacheKey] = sprintf(
+                '<%1$s%2$s>%3$s</%1$s>',
+                $menuConfig->getTag(),
+                $this->prepareMenuHtmlAttributes($menu, $menuConfig),
+                $this->menus[$cacheKey]
+            );
+        } else {
+            $this->menus[$cacheKey] = '';
+        }
+
+        return $this->menus[$cacheKey];
     }
 
     /**
+     * Returns the left_id of the matching menu item based on the current request-URI.
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function selectMenuItem(string $menu): int
@@ -167,13 +173,13 @@ class Navbar extends AbstractFunction
     /**
      * @param array<string, mixed> $item
      */
-    private function processMenuItemWithoutChildren(MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
+    private function processMenuItemWithoutChildren(MenuConfiguration $menuConfig, array $item, string $cssSelectors, bool $isSelected): string
     {
         $link = sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s</a>',
             $this->getMenuItemHref($item['mode'], $item['uri']),
             $this->getMenuItemHrefTarget($item['target']),
-            $this->prepareMenuItemHtmlAttributes($menuConfig, $item),
+            $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected),
             $item['title']
         );
 
@@ -187,9 +193,9 @@ class Navbar extends AbstractFunction
     /**
      * @param array<string, mixed> $item
      */
-    private function processMenuItemWithChildren(string $menuName, MenuConfiguration $menuConfig, array $item, string $cssSelectors): string
+    private function processMenuItemWithChildren(string $menuName, MenuConfiguration $menuConfig, array $item, string $cssSelectors, bool $isSelected): string
     {
-        $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig, $item, ['dropdown-toggle']);
+        $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected, ['dropdown-toggle']);
         $subMenuCss = '';
         // Special styling for bootstrap enabled navigation bars
         if ($menuConfig->isUseBootstrap() === true) {
@@ -264,19 +270,9 @@ class Navbar extends AbstractFunction
         return $diff;
     }
 
-    private function getMenuItemSelector(array $item, int $selectedItemValue, MenuConfiguration $menuConfig): string
+    private function getMenuItemSelector(array $item, MenuConfiguration $menuConfig): string
     {
-        $css = ['navi-' . $item['id']];
-        $css[] = $menuConfig->getItemSelectors();
-
-        if (!empty($selectedItemValue) &&
-            $item['left_id'] <= $selectedItemValue &&
-            $item['right_id'] > $selectedItemValue
-        ) {
-            $css[] = ' active';
-        }
-
-        return implode(' ', $css);
+        return implode(' ', ['navi-' . $item['id'], $menuConfig->getItemSelectors()]);
     }
 
     private function prepareMenuHtmlAttributes(string $menu, MenuConfiguration $menuConfig): string
@@ -292,12 +288,16 @@ class Navbar extends AbstractFunction
     /**
      * @param array<string, mixed> $item
      */
-    private function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig, array $item, array $additionalSelectors = []): string
+    private function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig, array $item, bool $isSelected, array $additionalSelectors = []): string
     {
         if ($item['level'] > 0 && $menuConfig->isUseBootstrap()) {
             $selectors = ['dropdown-item'];
         } else {
             $selectors = array_merge([$menuConfig->getLinkSelector()], $additionalSelectors);
+        }
+
+        if ($isSelected) {
+            $selectors[] = 'active';
         }
 
         return !empty($selectors) ? ' class="' . implode(' ', $selectors) . '"' : '';
