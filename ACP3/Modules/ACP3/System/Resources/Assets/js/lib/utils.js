@@ -28,3 +28,21 @@ export function mergeSettings(defaultSettings, constructorOptions, dataAttribute
 function lowerCaseFirstLetter(string) {
   return string.charAt(0).toLowerCase() + string.slice(1);
 }
+
+/**
+ * This function add downloads javascript code (e.g. after XHR requests) to the HTML documents <head>, so that the
+ * javascript code can actually get executed.
+ *
+ * @param {HTMLElement} elementContainingScriptTags
+ */
+export function addScriptsToHead(elementContainingScriptTags) {
+  for (const ajaxScriptElement of elementContainingScriptTags.getElementsByTagName("script")) {
+    const scriptElement = document.createElement("script");
+    if (!ajaxScriptElement.src) {
+      scriptElement.innerHTML = ajaxScriptElement.innerHTML;
+    } else {
+      scriptElement.src = ajaxScriptElement.src;
+    }
+    document.head.appendChild(scriptElement);
+  }
+}

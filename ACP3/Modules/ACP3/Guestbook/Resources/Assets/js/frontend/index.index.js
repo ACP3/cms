@@ -5,6 +5,8 @@
 
 /* global bootstrap */
 
+import { addScriptsToHead } from "../../../../../System/Resources/Assets/js/lib/utils";
+
 ((document) => {
   const createLinkElem = document.getElementById("js-create-link");
   const modalElem = document.getElementById("js-modal-create");
@@ -25,7 +27,10 @@
       },
     });
 
-    modalElem.querySelector(".modal-content").innerHTML = await response.text();
+    const modalContentElem = modalElem.querySelector(".modal-content");
+    modalContentElem.innerHTML = await response.text();
+    addScriptsToHead(modalContentElem);
+
     modalElem.classList.add("js-replaced-content");
   });
 })(document);

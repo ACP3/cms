@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-import { mergeSettings } from "./utils";
+import { addScriptsToHead, mergeSettings } from "./utils";
 import { delegateEvent } from "./event-handler";
 
 export class AjaxForm {
@@ -252,13 +252,21 @@ export class AjaxForm {
   }
 
   #replaceContent(hash, responseData, mergedSettings) {
+    let targetElement;
+    let updatedContentData;
+
     if (hash && document.querySelector(hash)) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(responseData, "text/html");
 
-      document.querySelector(hash).innerHTML = doc.querySelector(hash).innerHTML;
+      targetElement = document.querySelector(hash);
+      updatedContentData = doc.querySelector(hash).innerHTML;
     } else {
-      document.querySelector(mergedSettings.targetElement).innerHTML = responseData;
+      targetElement = document.querySelector(mergedSettings.targetElement);
+      updatedContentData = responseData;
     }
+
+    targetElement.innerHTML = updatedContentData;
+    addScriptsToHead(targetElement);
   }
 }
