@@ -1,11 +1,12 @@
 /.env
 /.idea
-/.php-cs-fixer.php
-/.php-cs-fixer.cache
-/.phpstan-cache
-/.component-paths.json
-/.eslintcache
-/.stylelintcache
+.php-cs-fixer.php
+.php-cs-fixer.cache
+.phpstan-cache
+.phpunit.result.cache
+.component-paths.json
+.eslintcache
+.stylelintcache
 /auth.json
 /docker-compose.override.yml
 /ACP3/config.yml
@@ -15,7 +16,6 @@
 /cache/*
 /node_modules
 /tests/cache/
-/tests/.phpunit.result.cache
 /uploads/.htaccess
 /uploads/_thumbs/*
 /uploads/assets/*
