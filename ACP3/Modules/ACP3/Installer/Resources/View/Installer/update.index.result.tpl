@@ -1,25 +1,42 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    <p>
-        {lang t="installer|db_update_next_steps"}
-    </p>
-    {include file="asset:Installer/Partials/delete_installer_directory.tpl"}
-    <dl>
-        {foreach $results as $module => $result}
-            <dt>
-                {lang t="$module|$module"}
-            </dt>
-            <dd>
-                <span class="badge {if $result === true}bg-success{else}bg-danger{/if}">
-                    {if $result === true}
-                        {lang t="installer|db_update_success"}
+    {if !$hasErrors}
+        <p>
+            {lang t="installer|db_update_next_steps"}
+        </p>
+        {include file="asset:Installer/Partials/delete_installer_directory.tpl"}
+    {else}
+        <p>
+            {lang t="installer|db_update_error"}
+        </p>
+    {/if}
+    {if count($results) > 0}
+        <dl>
+            {foreach $results as $migrationFqcn => $result}
+                <dt>
+                    {$migrationFqcn}
+                </dt>
+                <dd>
+                    {if $result === null}
+                        <span class="badge bg-success">
+                            {lang t="installer|migration_execution_success"}
+                        </span>
                     {else}
-                        {lang t="installer|db_update_error"}
+                        <div class="alert alert-danger">
+                            <h6 class="alert-heading">{lang t="installer|migration_execution_error"}</h6>
+                            <ul class="mb-0">
+                                {foreach $result as $error}
+                                    <li>
+                                        <pre>{$error}</pre>
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        </div>
                     {/if}
-                </span>
-            </dd>
-        {/foreach}
-    </dl>
+                </dd>
+            {/foreach}
+        </dl>
+    {/if}
     {include file="asset:Installer/Partials/next_steps.tpl"}
 {/block}

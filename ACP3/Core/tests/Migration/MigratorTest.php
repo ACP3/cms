@@ -8,13 +8,11 @@
 namespace ACP3\Core\Migration;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Migration\Exception\ModuleMigrationException;
 use ACP3\Core\Migration\Providers\Migration1;
 use ACP3\Core\Migration\Providers\Migration2;
-use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
+use ACP3\Core\Migration\Repository\MigrationRepositoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
 class MigratorTest extends TestCase
 {
@@ -23,17 +21,13 @@ class MigratorTest extends TestCase
      */
     private $dbMock;
     /**
-     * @var MockObject & LoggerInterface
-     */
-    private $loggerMock;
-    /**
      * @var MockObject & MigrationServiceLocator
      */
     private $migrationServiceLocatorMock;
     /**
-     * @var MockObject & ModuleAwareRepositoryInterface
+     * @var MockObject & MigrationRepositoryInterface
      */
-    private $moduleAwareRepositoryMock;
+    private $migrationRepositoryMock;
     /**
      * @var Migrator
      */
@@ -44,51 +38,50 @@ class MigratorTest extends TestCase
         parent::setUp();
 
         $this->dbMock = $this->createMock(Connection::class);
-        $this->loggerMock = $this->createMock(LoggerInterface::class);
         $this->migrationServiceLocatorMock = $this->createMock(MigrationServiceLocator::class);
-        $this->moduleAwareRepositoryMock = $this->createMock(ModuleAwareRepositoryInterface::class);
+        $this->migrationRepositoryMock = $this->createMock(MigrationRepositoryInterface::class);
         $this->migrator = new Migrator(
             $this->dbMock,
-            $this->loggerMock,
             $this->migrationServiceLocatorMock,
-            $this->moduleAwareRepositoryMock
+            $this->migrationRepositoryMock
         );
     }
 
-    public function testUpdateModuleWithUpToDateSchemaVersion(): void
+    public function testUpdateModulesWithUpToDateSchemaVersion(): void
     {
-        $this->moduleAwareRepositoryMock->expects(self::once())
-            ->method('getModuleSchemaVersion')
-            ->with('foo')
-            ->willReturn(2);
-        $this->migrationServiceLocatorMock->expects(self::once())
-            ->method('getMigrationsByModuleName')
-            ->with('foo')
+        $this->migrationRepositoryMock
+            ->method('findAllAlreadyExecutedMigrations')
             ->willReturn([
-                new Migration1(),
-                new Migration2(),
+                Migration1::class,
+                Migration2::class,
+            ]);
+        $this->migrationServiceLocatorMock->expects(self::once())
+            ->method('getMigrations')
+            ->willReturn([
+                Migration1::class => new Migration1(),
+                Migration2::class => new Migration2(),
             ]);
 
         $this->dbMock->expects(self::never())
             ->method('beginTransaction');
 
-        $this->migrator->updateModule('foo');
+        $this->migrator->updateModules();
     }
 
-    public function testUpdateModule(): void
+    public function testUpdateModules(): void
     {
-        $migration1Mock = $this->createMock(MigrationInterface::class);
-        $migration2Mock = $this->createMock(MigrationInterface::class);
-        $this->moduleAwareRepositoryMock->expects(self::once())
-            ->method('getModuleSchemaVersion')
-            ->with('foo')
-            ->willReturn(1);
-        $this->migrationServiceLocatorMock->expects(self::once())
-            ->method('getMigrationsByModuleName')
-            ->with('foo')
+        $migration1Mock = $this->createMock(Migration1::class);
+        $migration2Mock = $this->createMock(Migration2::class);
+        $this->migrationRepositoryMock
+            ->method('findAllAlreadyExecutedMigrations')
             ->willReturn([
-                $migration1Mock,
-                $migration2Mock,
+                \get_class($migration1Mock),
+            ]);
+        $this->migrationServiceLocatorMock->expects(self::once())
+            ->method('getMigrations')
+            ->willReturn([
+                \get_class($migration1Mock) => $migration1Mock,
+                \get_class($migration2Mock) => $migration2Mock,
             ]);
 
         $this->dbMock->expects(self::once())
@@ -96,37 +89,29 @@ class MigratorTest extends TestCase
         $this->dbMock->expects(self::once())
             ->method('commit');
 
-        $migration1Mock
-            ->method('getSchemaVersion')
-            ->willReturn(1);
         $migration1Mock->expects(self::never())
             ->method('up');
-        $migration2Mock
-            ->method('getSchemaVersion')
-            ->willReturn(2);
         $migration2Mock->expects(self::once())
             ->method('up');
-        $this->moduleAwareRepositoryMock->expects(self::once())
-            ->method('update')
-            ->with(['version' => 2], ['name' => 'foo']);
+        $this->migrationRepositoryMock->expects(self::once())
+            ->method('insert')
+            ->with(['name' => \get_class($migration2Mock)]);
 
-        $this->migrator->updateModule('foo');
+        $this->migrator->updateModules();
     }
 
-    public function testUpdateModuleWithSingleError(): void
+    public function testUpdateModulesWithSingleError(): void
     {
-        $this->expectException(ModuleMigrationException::class);
-
         $migration2Mock = $this->createMock(MigrationInterface::class);
-        $this->moduleAwareRepositoryMock->expects(self::once())
-            ->method('getModuleSchemaVersion')
-            ->with('foo')
-            ->willReturn(1);
-        $this->migrationServiceLocatorMock->expects(self::once())
-            ->method('getMigrationsByModuleName')
-            ->with('foo')
+        $this->migrationRepositoryMock
+            ->method('findAllAlreadyExecutedMigrations')
             ->willReturn([
-                $migration2Mock,
+                Migration1::class,
+            ]);
+        $this->migrationServiceLocatorMock->expects(self::once())
+            ->method('getMigrations')
+            ->willReturn([
+                \get_class($migration2Mock) => $migration2Mock,
             ]);
 
         $this->dbMock->expects(self::once())
@@ -134,34 +119,31 @@ class MigratorTest extends TestCase
         $this->dbMock->expects(self::once())
             ->method('commit');
 
-        $migration2Mock
-            ->method('getSchemaVersion')
-            ->willReturn(2);
+        $exception = new \Exception('Something\'s wrong here!');
+
         $migration2Mock->expects(self::once())
             ->method('up')
-            ->willThrowException(new \Exception('Something\'s wrong here!'));
+            ->willThrowException($exception);
         $migration2Mock->expects(self::once())
             ->method('down');
-        $this->moduleAwareRepositoryMock->expects(self::never())
-            ->method('update');
+        $this->migrationRepositoryMock->expects(self::never())
+            ->method('insert');
 
-        $this->migrator->updateModule('foo');
+        self::assertSame([\get_class($migration2Mock) => [$exception]], $this->migrator->updateModules());
     }
 
-    public function testUpdateModuleWithErrorInDowngrade(): void
+    public function testUpdateModulesWithErrorInDowngrade(): void
     {
-        $this->expectException(ModuleMigrationException::class);
-
         $migration2Mock = $this->createMock(MigrationInterface::class);
-        $this->moduleAwareRepositoryMock->expects(self::once())
-            ->method('getModuleSchemaVersion')
-            ->with('foo')
-            ->willReturn(1);
-        $this->migrationServiceLocatorMock->expects(self::once())
-            ->method('getMigrationsByModuleName')
-            ->with('foo')
+        $this->migrationRepositoryMock
+            ->method('findAllAlreadyExecutedMigrations')
             ->willReturn([
-                $migration2Mock,
+                Migration1::class,
+            ]);
+        $this->migrationServiceLocatorMock->expects(self::once())
+            ->method('getMigrations')
+            ->willReturn([
+                \get_class($migration2Mock) => $migration2Mock,
             ]);
 
         $this->dbMock->expects(self::once())
@@ -171,18 +153,22 @@ class MigratorTest extends TestCase
         $this->dbMock->expects(self::once())
             ->method('rollback');
 
-        $migration2Mock
-            ->method('getSchemaVersion')
-            ->willReturn(2);
+        $exceptionUp = new \Exception('Something\'s wrong here!');
+        $exceptionDown = new \Exception('Something\'s wrong here, too!');
         $migration2Mock->expects(self::once())
             ->method('up')
-            ->willThrowException(new \Exception('Something\'s wrong here!'));
+            ->willThrowException($exceptionUp);
         $migration2Mock->expects(self::once())
             ->method('down')
-            ->willThrowException(new \Exception('Something\'s wrong here, too!'));
-        $this->moduleAwareRepositoryMock->expects(self::never())
-            ->method('update');
+            ->willThrowException($exceptionDown);
+        $this->migrationRepositoryMock->expects(self::never())
+            ->method('insert');
 
-        $this->migrator->updateModule('foo');
+        self::assertSame([
+            \get_class($migration2Mock) => [
+                $exceptionUp,
+                $exceptionDown,
+            ],
+        ], $this->migrator->updateModules());
     }
 }

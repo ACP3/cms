@@ -7,3 +7,4 @@ services:
 
   ACP3\Core\Repository\ModuleAwareRepositoryInterface: '@ACP3\Modules\ACP3\System\Repository\ModulesRepository'
   ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface: '@ACP3\Modules\ACP3\System\Repository\SettingsRepository'
+  ACP3\Core\Migration\Repository\MigrationRepositoryInterface: '@ACP3\Modules\ACP3\System\Repository\MigrationRepository'

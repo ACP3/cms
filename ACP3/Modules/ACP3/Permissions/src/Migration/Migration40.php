@@ -8,9 +8,9 @@
 namespace ACP3\Modules\ACP3\Permissions\Migration;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Migration\AbstractMigration;
+use ACP3\Core\Migration\MigrationInterface;
 
-class Migration40 extends AbstractMigration
+final class Migration40 implements MigrationInterface
 {
     /**
      * @var Connection
@@ -32,5 +32,10 @@ class Migration40 extends AbstractMigration
 
     public function down(): void
     {
+    }
+
+    public function dependencies(): ?array
+    {
+        return [Migration39::class];
     }
 }

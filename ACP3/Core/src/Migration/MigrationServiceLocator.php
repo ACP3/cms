@@ -7,39 +7,39 @@
 
 namespace ACP3\Core\Migration;
 
-use ACP3\Core\Migration\Exception\NoExistingModuleMigrationsException;
+use MJS\TopSort\Implementations\StringSort;
 
 class MigrationServiceLocator
 {
     /**
-     * @var array<string, MigrationInterface[]>
+     * @var array<string, MigrationInterface>
      */
     private $migrations = [];
 
-    public function addMigration(string $moduleName, MigrationInterface $migration): void
+    public function addMigration(MigrationInterface $migration): void
     {
-        $this->migrations[$moduleName][] = $migration;
+        $this->migrations[\get_class($migration)] = $migration;
     }
 
     /**
-     * @return MigrationInterface[]
+     * @return array<string, MigrationInterface>
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function getMigrationsByModuleName(string $moduleName): array
+    public function getMigrations(): array
     {
-        if (!\array_key_exists($moduleName, $this->migrations)) {
-            throw new NoExistingModuleMigrationsException(sprintf('Could not find any migrations for module %s!', $moduleName));
+        $topSort = new StringSort();
+
+        foreach ($this->migrations as $fqcn => $migration) {
+            $topSort->add($fqcn, $migration->dependencies());
         }
 
-        return $this->migrations[$moduleName];
-    }
+        $migrationsTopSorted = [];
+        foreach ($topSort->sort() as $fqcn) {
+            $migrationsTopSorted[$fqcn] = $this->migrations[$fqcn];
+        }
 
-    public function getLatestMigrationByModuleName(string $moduleName): MigrationInterface
-    {
-        $migrations = $this->getMigrationsByModuleName($moduleName);
-        usort($migrations, static function (MigrationInterface $a, MigrationInterface $b) {
-            return $a->getSchemaVersion() <=> $b->getSchemaVersion();
-        });
-
-        return end($migrations);
+        return $migrationsTopSorted;
     }
 }

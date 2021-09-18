@@ -34,7 +34,7 @@ class CategoryRepository extends Core\NestedSet\Repository\NestedSetRepository i
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getOneById(int $categoryId): array
+    public function getOneById($categoryId): array
     {
         return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$categoryId]);
     }

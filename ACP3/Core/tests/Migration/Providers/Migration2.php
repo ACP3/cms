@@ -7,9 +7,9 @@
 
 namespace ACP3\Core\Migration\Providers;
 
-use ACP3\Core\Migration\AbstractMigration;
+use ACP3\Core\Migration\MigrationInterface;
 
-class Migration2 extends AbstractMigration
+class Migration2 implements MigrationInterface
 {
     public function up(): void
     {
@@ -17,5 +17,10 @@ class Migration2 extends AbstractMigration
 
     public function down(): void
     {
+    }
+
+    public function dependencies(): ?array
+    {
+        return null;
     }
 }

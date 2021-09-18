@@ -54,10 +54,13 @@ class Schema implements Modules\Installer\SchemaInterface
     public function createTables()
     {
         return [
+            'CREATE TABLE `{pre}migration` (
+                `name` VARCHAR(255) NOT NULL,
+                UNIQUE KEY `migrationName` (`name`)
+            ) {ENGINE} {CHARSET};',
             'CREATE TABLE `{pre}modules` (
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(100) NOT NULL,
-                `version` TINYINT(3) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
             ) {ENGINE} {CHARSET};',
             'CREATE TABLE `{pre}sessions` (

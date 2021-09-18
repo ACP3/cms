@@ -13,7 +13,7 @@ export class LoadingIndicator {
       const body = document.querySelector("body");
       const jsSvgIcons = JSON.parse(body.dataset.svgIcons);
       const loadingIndicatorHtml =
-        '<svg class="svg-icon svg-icon__spinner svg-icon--spin loading-indicator" fill="currentColor"><use xlink:href="' +
+        '<svg class="svg-icon svg-icon__spinner svg-icon--spin loading-indicator me-1" fill="currentColor"><use xlink:href="' +
         jsSvgIcons["loadingIndicatorIcon"] +
         '"></use></svg>';
 

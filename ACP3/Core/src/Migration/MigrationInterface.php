@@ -9,7 +9,10 @@ namespace ACP3\Core\Migration;
 
 interface MigrationInterface
 {
-    public function getSchemaVersion(): int;
+    /**
+     * @return string[]|null
+     */
+    public function dependencies(): ?array;
 
     public function up(): void;
 

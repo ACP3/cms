@@ -1,8 +1,0 @@
-services:
-  _defaults:
-    autowire: true
-
-  ACP3\Modules\ACP3\Guestbook\Migration\:
-    resource: "../../../src/Migration/"
-    tags:
-      - { name: core.migration, moduleName: guestbook }

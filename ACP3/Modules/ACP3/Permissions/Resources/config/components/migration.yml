@@ -5,4 +5,4 @@ services:
   ACP3\Modules\ACP3\Permissions\Migration\:
     resource: "../../../src/Migration/"
     tags:
-      - { name: core.migration, moduleName: permissions }
+      - { name: core.migration }

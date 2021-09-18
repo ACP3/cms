@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Console\Command;
 
-use ACP3\Core\Installer\Model\SchemaUpdateModel;
+use ACP3\Core\Migration\Migrator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,15 +16,15 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ModulesUpdateCommand extends Command
 {
     /**
-     * @var SchemaUpdateModel
+     * @var Migrator
      */
-    private $schemaUpdateModel;
+    private $migrator;
 
-    public function __construct(SchemaUpdateModel $schemaUpdateModel)
+    public function __construct(Migrator $migrator)
     {
         parent::__construct();
 
-        $this->schemaUpdateModel = $schemaUpdateModel;
+        $this->migrator = $migrator;
     }
 
     /**
@@ -40,6 +40,7 @@ class ModulesUpdateCommand extends Command
     /**
      * {@inheritdoc}
      *
+     * @throws \Doctrine\DBAL\Exception
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -48,16 +49,37 @@ class ModulesUpdateCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Updating installed modules...');
 
-        $hasError = false;
+        $executedMigrations = $this->migrator->updateModules();
 
-        foreach ($this->schemaUpdateModel->updateModules() as $module => $result) {
-            $output->writeln($result ? "<info>{$module}</info>" : "<error>{$module}</error>");
+        if (\count($executedMigrations) === 0) {
+            $output->writeln('Everything is already up to date!');
 
-            if (!$result) {
-                $hasError = true;
+            return 0;
+        }
+
+        $hasErrors = $this->displayExecutedMigrations($executedMigrations, $output);
+
+        return $hasErrors ? 1 : 0;
+    }
+
+    /**
+     * @param array<string, \Throwable[]|null> $executedMigrations
+     */
+    private function displayExecutedMigrations(array $executedMigrations, OutputInterface $output): bool
+    {
+        $hasErrors = false;
+        foreach ($executedMigrations as $migrationFqcn => $result) {
+            $output->writeln($result === null ? "<info>{$migrationFqcn}</info>" : "<error>{$migrationFqcn}</error>");
+
+            if ($result !== null) {
+                $hasErrors = true;
+
+                foreach ($result as $error) {
+                    $output->writeln("<error>{$error->getMessage()}</error>");
+                }
             }
         }
 
-        return $hasError ? 1 : 0;
+        return $hasErrors;
     }
 }

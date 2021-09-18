@@ -8,24 +8,24 @@
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Update;
 
 use ACP3\Core\Cache\Purge;
-use ACP3\Core\Installer\Model\SchemaUpdateModel;
+use ACP3\Core\Migration\Migrator;
 use ACP3\Modules\ACP3\Installer\Core\Controller\AbstractInstallerAction;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
 
 class Index extends AbstractInstallerAction
 {
     /**
-     * @var SchemaUpdateModel
+     * @var Migrator
      */
-    private $schemaUpdateModel;
+    private $migrator;
 
     public function __construct(
         InstallerContext $context,
-        SchemaUpdateModel $schemaUpdateModel
+        Migrator $migrator
     ) {
         parent::__construct($context);
 
-        $this->schemaUpdateModel = $schemaUpdateModel;
+        $this->migrator = $migrator;
     }
 
     /**
@@ -50,23 +50,39 @@ class Index extends AbstractInstallerAction
      * @throws \MJS\TopSort\ElementNotFoundException
      * @throws \Exception
      */
-    protected function executePost(): array
+    private function executePost(): array
     {
-        $results = $this->schemaUpdateModel->updateModules();
+        $results = $this->migrator->updateModules();
 
         $this->setTemplate('Installer/Installer/update.index.result.tpl');
         $this->clearCaches();
 
         return [
             'results' => $results,
+            'hasErrors' => $this->checkExecutedMigrationsForErrors($results),
         ];
     }
 
-    protected function clearCaches(): void
+    private function clearCaches(): void
     {
         Purge::doPurge([
             ACP3_ROOT_DIR . '/cache/',
             $this->appPath->getUploadsDir() . 'assets',
         ]);
+    }
+
+    /**
+     * @param array<string, \Throwable[]|null> $executedMigrations
+     * @return bool
+     */
+    private function checkExecutedMigrationsForErrors(array $executedMigrations): bool
+    {
+        foreach ($executedMigrations as $result) {
+            if ($result !== null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

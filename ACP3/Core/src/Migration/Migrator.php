@@ -8,9 +8,7 @@
 namespace ACP3\Core\Migration;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Migration\Exception\ModuleMigrationException;
-use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
-use Psr\Log\LoggerInterface;
+use ACP3\Core\Migration\Repository\MigrationRepositoryInterface;
 
 class Migrator
 {
@@ -19,87 +17,86 @@ class Migrator
      */
     private $db;
     /**
-     * @var LoggerInterface
-     */
-    private $migrationLogger;
-    /**
      * @var MigrationServiceLocator
      */
-    private $serviceLocator;
+    private $migrationServiceLocator;
     /**
-     * @var ModuleAwareRepositoryInterface
+     * @var MigrationRepositoryInterface
      */
-    private $moduleRepository;
+    private $migrationRepository;
 
     public function __construct(
         Connection $db,
-        LoggerInterface $migrationLogger,
-        MigrationServiceLocator $serviceLocator,
-        ModuleAwareRepositoryInterface $moduleRepository
+        MigrationServiceLocator $migrationServiceLocator,
+        MigrationRepositoryInterface $migrationRepository
     ) {
         $this->db = $db;
-        $this->migrationLogger = $migrationLogger;
-        $this->serviceLocator = $serviceLocator;
-        $this->moduleRepository = $moduleRepository;
+        $this->migrationServiceLocator = $migrationServiceLocator;
+        $this->migrationRepository = $migrationRepository;
     }
 
     /**
+     * @return array<string, \Throwable[]|null>
+     *
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
+    public function updateModules(): array
+    {
+        $migrations = $this->migrationServiceLocator->getMigrations();
+
+        $result = [];
+        foreach ($migrations as $fqcn => $migration) {
+            // We need to update the already executed migrations as migration are (theoretically)
+            // allowed to update/modify the data within the "migration" table, too.
+            if (\in_array($fqcn, $this->migrationRepository->findAllAlreadyExecutedMigrations(), true)) {
+                continue;
+            }
+
+            $result[$fqcn] = $this->migrate($migration);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return \Throwable[]|null
+     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function updateModule(string $moduleName): void
+    private function migrate(MigrationInterface $migration): ?array
     {
-        foreach ($this->findNecessaryMigrations($moduleName) as $migration) {
-            $this->db->beginTransaction();
+        $this->db->beginTransaction();
 
+        try {
+            $migration->up();
+
+            $this->markMigrationAsExecuted($migration);
+
+            $this->db->commit();
+        } catch (\Throwable $e) {
+            $collectedErrors = [$e];
+
+            // Attempt to rollback the faulty migration
             try {
-                $migration->up();
-
-                $this->updateSchemaVersion($moduleName, $migration->getSchemaVersion());
+                $migration->down();
 
                 $this->db->commit();
-            } catch (\Throwable $e) {
-                $collectedErrors = [$e];
+            } catch (\Throwable $rollbackException) {
+                $collectedErrors[] = $rollbackException;
 
-                // Attempt to rollback the faulty migration
-                try {
-                    $migration->down();
-
-                    $this->db->commit();
-                } catch (\Throwable $rollbackException) {
-                    $collectedErrors[] = $rollbackException;
-
-                    $this->db->rollBack();
-                }
-
-                foreach ($collectedErrors as $exception) {
-                    $this->migrationLogger->error($exception->getMessage());
-                }
-
-                throw new ModuleMigrationException(sprintf('An error occurred while running the migration "%d" for module "%s": %s', $migration->getSchemaVersion(), $moduleName, implode(', ', $collectedErrors)));
+                $this->db->rollBack();
             }
+
+            return $collectedErrors;
         }
+
+        return null;
     }
 
-    private function updateSchemaVersion(string $moduleName, int $schemaVersion): void
+    private function markMigrationAsExecuted(MigrationInterface $migration): void
     {
-        $this->moduleRepository->update(['version' => $schemaVersion], ['name' => $moduleName]);
-    }
-
-    /**
-     * @return MigrationInterface[]
-     */
-    private function findNecessaryMigrations(string $moduleName): array
-    {
-        $installedSchemaVersion = $this->moduleRepository->getModuleSchemaVersion($moduleName);
-
-        $migrations = $this->serviceLocator->getMigrationsByModuleName($moduleName);
-        $migrations = array_filter($migrations, static function (MigrationInterface $migration) use ($installedSchemaVersion) {
-            return $migration->getSchemaVersion() > $installedSchemaVersion;
-        });
-        usort($migrations, static function (MigrationInterface $a, MigrationInterface $b) {
-            return $a->getSchemaVersion() <=> $b->getSchemaVersion();
-        });
-
-        return $migrations;
+        $this->migrationRepository->insert(['name' => \get_class($migration)]);
     }
 }

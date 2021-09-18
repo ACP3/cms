@@ -8,8 +8,6 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Migration\Exception\NoExistingModuleMigrationsException;
-use ACP3\Core\Migration\MigrationServiceLocator;
 use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
@@ -25,23 +23,17 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      * @var \ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface
      */
     private $systemSettingsRepository;
-    /**
-     * @var MigrationServiceLocator
-     */
-    private $migrationServiceLocator;
 
     public function __construct(
         LoggerInterface $logger,
         Connection $db,
         ModuleAwareRepositoryInterface $systemModuleRepository,
-        SettingsAwareRepositoryInterface $systemSettingsRepository,
-        MigrationServiceLocator $migrationServiceLocator
+        SettingsAwareRepositoryInterface $systemSettingsRepository
     ) {
         parent::__construct($db, $systemModuleRepository);
 
         $this->logger = $logger;
         $this->systemSettingsRepository = $systemSettingsRepository;
-        $this->migrationServiceLocator = $migrationServiceLocator;
     }
 
     /**
@@ -57,7 +49,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
 
         $this->executeSqlQueries($schema->createTables(), $schema->getModuleName());
 
-        return $this->addToModulesTable($schema->getModuleName(), $this->getSchemaVersion($schema->getModuleName()))
+        return $this->addToModulesTable($schema->getModuleName())
             && $this->installSettings($schema->getModuleName(), $schema->settings());
     }
 
@@ -69,23 +61,13 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
         return !$this->getSystemModuleRepository()->moduleExists($schema->getModuleName());
     }
 
-    private function getSchemaVersion(string $moduleName): int
-    {
-        try {
-            return $this->migrationServiceLocator->getLatestMigrationByModuleName($moduleName)->getSchemaVersion();
-        } catch (NoExistingModuleMigrationsException $e) {
-            return 1;
-        }
-    }
-
     /**
      * Adds a module to the modules SQL-table.
      */
-    private function addToModulesTable(string $moduleName, int $schemaVersion): bool
+    private function addToModulesTable(string $moduleName): bool
     {
         $insertValues = [
             'name' => $moduleName,
-            'version' => $schemaVersion,
         ];
 
         return (bool) $this->getSystemModuleRepository()->insert($insertValues);

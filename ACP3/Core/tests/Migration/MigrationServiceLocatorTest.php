@@ -7,8 +7,8 @@
 
 namespace ACP3\Core\Migration;
 
-use ACP3\Core\Migration\Exception\NoExistingModuleMigrationsException;
 use ACP3\Core\Migration\Providers\Migration1;
+use ACP3\Core\Migration\Providers\Migration123;
 use ACP3\Core\Migration\Providers\Migration2;
 use PHPUnit\Framework\TestCase;
 
@@ -26,31 +26,18 @@ class MigrationServiceLocatorTest extends TestCase
         $this->serviceLocator = new MigrationServiceLocator();
     }
 
-    public function testGetLatestMigrationByModuleName(): void
-    {
-        $migration = new Migration2();
-
-        $this->serviceLocator->addMigration('foo', new Migration1());
-        $this->serviceLocator->addMigration('foo', $migration);
-
-        self::assertSame($migration, $this->serviceLocator->getLatestMigrationByModuleName('foo'));
-    }
-
-    public function testGetMigrationsByModuleName(): void
+    public function testGetMigrationsTopSorted(): void
     {
         $migration1 = new Migration1();
         $migration2 = new Migration2();
+        $migration123 = new Migration123();
+        $this->serviceLocator->addMigration($migration1);
+        $this->serviceLocator->addMigration($migration2);
+        $this->serviceLocator->addMigration($migration123);
 
-        $this->serviceLocator->addMigration('foo', $migration1);
-        $this->serviceLocator->addMigration('foo', $migration2);
-
-        self::assertSame([$migration1, $migration2], $this->serviceLocator->getMigrationsByModuleName('foo'));
-    }
-
-    public function testGetMigrationsByModuleNameWithInvalidModuleName(): void
-    {
-        $this->expectException(NoExistingModuleMigrationsException::class);
-
-        $this->serviceLocator->getMigrationsByModuleName('foo');
+        self::assertSame(
+            [Migration1::class => $migration1, Migration2::class => $migration2, Migration123::class => $migration123],
+            $this->serviceLocator->getMigrations()
+        );
     }
 }

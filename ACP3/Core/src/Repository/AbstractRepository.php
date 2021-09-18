@@ -47,7 +47,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * Executes the SQL delete statement.
      *
-     * @param int|array $entryId
+     * @param int|string|array $entryId
      *
      * @return bool|int
      *
@@ -62,7 +62,7 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @param int|array $entryId
+     * @param int|string|array $entryId
      */
     private function getIdentifier($entryId, ?string $columnName = null): array
     {
@@ -72,7 +72,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * Executes the SQL update statement.
      *
-     * @param int|array $entryId
+     * @param int|string|array $entryId
      *
      * @return bool|int
      *
@@ -104,11 +104,13 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @return array
+     * @param int|string $entryId
+     *
+     * @return array<string, mixed>
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getOneById(int $entryId)
+    public function getOneById($entryId)
     {
         return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$entryId]);
     }

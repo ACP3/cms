@@ -8,9 +8,9 @@
 namespace ACP3\Modules\ACP3\Permissions\Migration;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Migration\AbstractMigration;
+use ACP3\Core\Migration\MigrationInterface;
 
-class Migration39 extends AbstractMigration
+final class Migration39 implements MigrationInterface
 {
     /**
      * @var Connection
@@ -36,5 +36,10 @@ group by are.id, aru.role_id, aru.permission;",
 
     public function down(): void
     {
+    }
+
+    public function dependencies(): ?array
+    {
+        return [Migration38::class];
     }
 }

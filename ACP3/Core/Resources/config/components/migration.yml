@@ -4,9 +4,7 @@ services:
 
   ACP3\Core\Migration\MigrationServiceLocator: ~
 
-  ACP3\Core\Migration\Migrator:
-    arguments:
-      $migrationLogger: "@core.migration.migration_logger"
+  ACP3\Core\Migration\Migrator: ~
 
   core.migration.migration_logger:
     class: Psr\Log\LoggerInterface

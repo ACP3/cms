@@ -18,5 +18,3 @@ services:
 
   ACP3\Core\Installer\SchemaRegistrar:
     public: true
-
-  ACP3\Core\Installer\Model\SchemaUpdateModel: ~

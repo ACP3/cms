@@ -21,7 +21,7 @@ class RegisterMigrationsCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('core.migration') as $serviceId => $tags) {
             $migrationLocator->addMethodCall(
                 'addMigration',
-                [$tags[0]['moduleName'], new Reference($serviceId)]
+                [new Reference($serviceId)]
             );
         }
     }

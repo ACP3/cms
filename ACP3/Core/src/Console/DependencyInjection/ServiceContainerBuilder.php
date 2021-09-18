@@ -10,6 +10,7 @@ namespace ACP3\Core\Console\DependencyInjection;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
+use ACP3\Core\Migration\DependencyInjection\RegisterMigrationsCompilerPass;
 use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompilerPass;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\FileLocator;
@@ -62,6 +63,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
                 )
             )
             ->addCompilerPass(new RegisterInstallersCompilerPass())
+            ->addCompilerPass(new RegisterMigrationsCompilerPass())
             ->addCompilerPass(new RegisterCommandsCompilerPass())
             ->addCompilerPass(new RegisterColumnTypesCompilerPass());
 

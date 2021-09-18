@@ -19,9 +19,8 @@
         <item key="db_password">Password</item>
         <item key="db_table_prefix">Table prefix</item>
         <item key="db_update_description">To start the database update, please click on the button below.</item>
-        <item key="db_update_error">While updating the database an error has occurred!</item>
+        <item key="db_update_error">An error occurred in at least one of the executed migrations, which you can view below. Please fix the error and try again afterwards.</item>
         <item key="db_update_next_steps">The database has been successfully updated. You may return to your website now, but please follow the instructions below.</item>
-        <item key="db_update_success">The database has been successfully updated!</item>
         <item key="db_username">Username</item>
         <item key="do_db_update">Begin update process</item>
         <item key="decline">Decline</item>
@@ -56,8 +55,9 @@
         <item key="loading_please_wait">Loading - please wait...</item>
         <item key="log_into_admin_panel">Log into the administration panel</item>
         <item key="maximum_uploadsize">Maximum uploadsize:</item>
+        <item key="migration_execution_error">While executing the migration errors have occurred:</item>
+        <item key="migration_execution_success">Migration executed successfully!</item>
         <item key="navigation">Navigation</item>
-        <item key="newsletter_mailsig">the Newsletterteam</item>
         <item key="nickname">User name</item>
         <item key="not_found">Not found!</item>
         <item key="not_writable">Not writable!</item>

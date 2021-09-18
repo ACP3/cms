@@ -52,7 +52,7 @@ class CommentRepository extends \ACP3\Core\Repository\AbstractRepository impleme
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getOneById(int $commentId): array
+    public function getOneById($commentId): array
     {
         return $this->db->fetchAssoc(
             'SELECT c.*, m.name AS module FROM ' . $this->getTableName() . ' AS c JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = c.module_id) WHERE c.id = ?',
