@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 tba
 
+## [5.21.0] - 2021-09-19
+
+### Added
+
+-   [Core] Prepared the new DB migrations system coming with ACP3 version 6.0.0
+
 ## [5.20.1] - 2021-08-01
 
 ### Fixed
@@ -585,7 +591,8 @@ tba
 
 -   removed all deprecated code
 
-[unreleased]: https://gitlab.com/ACP3/cms/compare/v5.20.1...5.x
+[unreleased]: https://gitlab.com/ACP3/cms/compare/v5.21.0...5.x
+[5.21.0]: https://gitlab.com/ACP3/cms/compare/v5.20.1...v5.21.0
 [5.20.1]: https://gitlab.com/ACP3/cms/compare/v5.20.0...v5.20.1
 [5.20.0]: https://gitlab.com/ACP3/cms/compare/v5.19.0...v5.20.0
 [5.19.0]: https://gitlab.com/ACP3/cms/compare/v5.18.2...v5.19.0
