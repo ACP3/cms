@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Permissions\Migration;
 
 use ACP3\Core\Database\Connection;
 use ACP3\Core\Migration\MigrationInterface;
-use ACP3\Modules\ACP3\System\Migration\Migration77;
+use ACP3\Modules\ACP3\System\Migration\Migration78;
 
 final class Migration38 implements MigrationInterface
 {
@@ -45,6 +45,6 @@ final class Migration38 implements MigrationInterface
 
     public function dependencies(): ?array
     {
-        return [Migration77::class];
+        return [Migration78::class];
     }
 }

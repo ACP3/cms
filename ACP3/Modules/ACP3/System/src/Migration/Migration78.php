@@ -13,7 +13,7 @@ use ACP3\Core\Migration\Exception\WrongMigrationNameException;
 use ACP3\Core\Migration\MigrationInterface;
 use ACP3\Core\Migration\MigrationServiceLocator;
 
-final class Migration77 implements MigrationInterface
+final class Migration78 implements MigrationInterface
 {
     /**
      * @var Connection
@@ -38,11 +38,6 @@ final class Migration77 implements MigrationInterface
      */
     public function up(): void
     {
-        $this->db->executeQuery("CREATE TABLE `{$this->db->getPrefix()}migration` (
-            `name` VARCHAR(255) NOT NULL,
-            UNIQUE KEY `migrationName` (`name`)
-        ) ENGINE='InnoDB' CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`;");
-
         $this->markMigrationsAsExecuted();
 
         $this->db->executeQuery("ALTER TABLE `{$this->db->getPrefix()}modules` DROP COLUMN `version`;");
