@@ -73,7 +73,6 @@ class Index extends AbstractInstallerAction
 
     /**
      * @param array<string, \Throwable[]|null> $executedMigrations
-     * @return bool
      */
     private function checkExecutedMigrationsForErrors(array $executedMigrations): bool
     {
