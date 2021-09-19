@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Core] Prepared the new DB migrations system coming with ACP3 version 6.0.0
 
 ## [5.20.1] - 2021-08-01
 
