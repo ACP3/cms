@@ -270,6 +270,12 @@ class Migration extends Modules\Installer\AbstractMigration
             76 => [
                 'ALTER TABLE `{pre}modules` DROP COLUMN `active`;',
             ],
+            77 => [
+                'CREATE TABLE `{pre}migration` (
+                    `name` VARCHAR(255) NOT NULL,
+                    UNIQUE KEY `migrationName` (`name`)
+                ) {engine} {charset};',
+            ],
         ];
     }
 
