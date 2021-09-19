@@ -45,7 +45,7 @@ final class Migration77 implements MigrationInterface
 
         $this->markMigrationsAsExecuted();
 
-        //$this->db->executeQuery("ALTER TABLE `{$this->db->getPrefix()}modules` DROP COLUMN `version`;");
+        $this->db->executeQuery("ALTER TABLE `{$this->db->getPrefix()}modules` DROP COLUMN `version`;");
     }
 
     public function down(): void
