@@ -14,11 +14,8 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
 
-    /**
-     * TranslateColumnRenderer constructor.
-     */
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;

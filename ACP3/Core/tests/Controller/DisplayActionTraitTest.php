@@ -64,7 +64,7 @@ class DisplayActionTraitTest extends TestCase
             $this->viewMock->expects(self::once())
                 ->method('assign')
                 ->with($tplVars)
-                ->willReturn(self::returnSelf());
+                ->willReturn($this->viewMock);
         }
     }
 

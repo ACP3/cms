@@ -14,11 +14,8 @@ class ModuleIsInstalledValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Core\Modules
      */
-    protected $modules;
+    private $modules;
 
-    /**
-     * ModuleIsInstalledValidationRule constructor.
-     */
     public function __construct(Modules $modules)
     {
         $this->modules = $modules;

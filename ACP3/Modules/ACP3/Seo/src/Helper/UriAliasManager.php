@@ -15,15 +15,12 @@ class UriAliasManager
     /**
      * @var \ACP3\Modules\ACP3\Seo\Repository\SeoRepository
      */
-    protected $seoRepository;
+    private $seoRepository;
     /**
      * @var SeoModel
      */
-    protected $seoModel;
+    private $seoModel;
 
-    /**
-     * UriAliasManager constructor.
-     */
     public function __construct(
         SeoModel $seoModel,
         SeoRepository $seoRepository

@@ -17,18 +17,12 @@ class StepsBuildCacheEvent extends Event
      */
     private $steps;
 
-    /**
-     * BreadcrumbStepsBuildCacheEvent constructor.
-     */
     public function __construct(Steps $steps)
     {
         $this->steps = $steps;
     }
 
-    /**
-     * @return \ACP3\Core\Breadcrumb\Steps
-     */
-    public function getSteps()
+    public function getSteps(): Steps
     {
         return $this->steps;
     }

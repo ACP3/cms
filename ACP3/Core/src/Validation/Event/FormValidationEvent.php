@@ -25,9 +25,6 @@ class FormValidationEvent extends Event
      */
     private $extra;
 
-    /**
-     * FormValidationEvent constructor.
-     */
     public function __construct(
         Validator $validator,
         array $formData,
@@ -38,26 +35,20 @@ class FormValidationEvent extends Event
         $this->extra = $extra;
     }
 
-    /**
-     * @return Validator
-     */
-    public function getValidator()
+    public function getValidator(): Validator
     {
         return $this->validator;
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
-    public function getFormData()
+    public function getFormData(): array
     {
         return $this->formData;
     }
 
-    /**
-     * @return array
-     */
-    public function getExtra()
+    public function getExtra(): array
     {
         return $this->extra;
     }

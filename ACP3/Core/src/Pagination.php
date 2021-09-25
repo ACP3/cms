@@ -69,9 +69,6 @@ class Pagination
      */
     private $pagination = [];
 
-    /**
-     * Pagination constructor.
-     */
     public function __construct(
         Title $title,
         Translator $translator,

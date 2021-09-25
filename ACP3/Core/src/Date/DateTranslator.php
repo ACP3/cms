@@ -14,27 +14,27 @@ class DateTranslator
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
-     * @var array
+     * @var array<string, array<string, string>>
      */
-    protected $cache = [];
+    private $cache = [];
     /**
-     * @var array
+     * @var string[]
      */
-    protected $daysAbbr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    private $daysAbbr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     /**
-     * @var array
+     * @var string[]
      */
-    protected $daysFull = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    private $daysFull = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     /**
-     * @var array
+     * @var string[]
      */
-    protected $monthsAbbr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    private $monthsAbbr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     /**
-     * @var array
+     * @var string[]
      */
-    protected $monthsFull = [
+    private $monthsFull = [
         'January',
         'February',
         'March',
@@ -49,20 +49,15 @@ class DateTranslator
         'December',
     ];
 
-    /**
-     * DateTranslator constructor.
-     */
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }
 
     /**
-     * @param string $dateFormat
-     *
-     * @return array
+     * @return array<string, string>
      */
-    public function localize($dateFormat)
+    public function localize(string $dateFormat): array
     {
         $replace = [];
         // Localize days
@@ -83,11 +78,11 @@ class DateTranslator
     }
 
     /**
-     * @param string $translatorPrefix
+     * @param string[] $search
      *
-     * @return array
+     * @return array<string, string>
      */
-    protected function cacheLocalizedDate(array $search, $translatorPrefix)
+    private function cacheLocalizedDate(array $search, string $translatorPrefix): array
     {
         if (!isset($this->cache[$translatorPrefix])) {
             $buffer = [];
@@ -101,33 +96,33 @@ class DateTranslator
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
-    protected function localizeDaysAbbr()
+    private function localizeDaysAbbr(): array
     {
         return $this->cacheLocalizedDate($this->daysAbbr, 'day_abbr');
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
-    protected function localizeDays()
+    private function localizeDays(): array
     {
         return $this->cacheLocalizedDate($this->daysFull, 'day_full');
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
-    protected function localizeMonthsAbbr()
+    private function localizeMonthsAbbr(): array
     {
         return $this->cacheLocalizedDate($this->monthsAbbr, 'month_abbr');
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
-    protected function localizeMonths()
+    private function localizeMonths(): array
     {
         return $this->cacheLocalizedDate($this->monthsFull, 'month_full');
     }

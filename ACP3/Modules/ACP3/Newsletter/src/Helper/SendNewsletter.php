@@ -16,27 +16,20 @@ class SendNewsletter
     /**
      * @var \ACP3\Core\Mailer
      */
-    protected $mailer;
+    private $mailer;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository
      */
-    protected $newsletterRepository;
+    private $newsletterRepository;
     /**
      * @var \ACP3\Core\Settings\SettingsInterface
      */
-    protected $config;
+    private $config;
 
-    /**
-     * SendNewsletter constructor.
-     *
-     * @param \ACP3\Core\Mailer                     $mailer
-     * @param \ACP3\Core\Router\RouterInterface     $router
-     * @param \ACP3\Core\Settings\SettingsInterface $config
-     */
     public function __construct(
         Core\Mailer $mailer,
         Core\Router\RouterInterface $router,
@@ -54,11 +47,9 @@ class SendNewsletter
      *
      * @param string|array $recipients
      *
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function sendNewsletter(int $newsletterId, $recipients, bool $bcc = false)
+    public function sendNewsletter(int $newsletterId, $recipients, bool $bcc = false): bool
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 

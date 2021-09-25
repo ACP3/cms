@@ -36,11 +36,6 @@ class ShareFormFields
      */
     private $settings;
 
-    /**
-     * SharingInfoFormFields constructor.
-     *
-     * @param \ACP3\Modules\ACP3\Share\Helpers\SocialServices $socialServices
-     */
     public function __construct(
         SettingsInterface $settings,
         Translator $translator,
@@ -86,6 +81,8 @@ class ShareFormFields
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function getData(string $path): array

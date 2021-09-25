@@ -14,21 +14,16 @@ class View
     /**
      * @var RendererInterface
      */
-    protected $renderer;
+    private $renderer;
 
     /**
      * Gets the renderer.
-     *
-     * @return RendererInterface
      */
-    public function getRenderer()
+    public function getRenderer(): RendererInterface
     {
         return $this->renderer;
     }
 
-    /**
-     * View constructor.
-     */
     public function __construct(RendererInterface $renderer)
     {
         $this->renderer = $renderer;
@@ -36,32 +31,21 @@ class View
 
     /**
      * Fetches a template and outputs its contents.
-     *
-     * @param string $template
      */
-    public function displayTemplate($template)
+    public function displayTemplate(string $template): void
     {
         $this->renderer->display('asset:' . $template);
     }
 
     /**
      * Fetches a template and returns its contents.
-     *
-     * @param string $template
-     *
-     * @return string
      */
-    public function fetchTemplate($template)
+    public function fetchTemplate(string $template): string
     {
         return $this->renderer->fetch('asset:' . $template);
     }
 
-    /**
-     * @param string $template
-     *
-     * @return string
-     */
-    public function fetchStringAsTemplate($template)
+    public function fetchStringAsTemplate(string $template): string
     {
         try {
             return $this->renderer->fetch('string:' . $template);
@@ -72,12 +56,8 @@ class View
 
     /**
      * Checks, whether a template exists or not.
-     *
-     * @param string $template
-     *
-     * @return bool
      */
-    public function templateExists($template)
+    public function templateExists(string $template): bool
     {
         return $this->renderer->templateExists('asset:' . $template);
     }
@@ -90,7 +70,7 @@ class View
      *
      * @return $this
      */
-    public function assign($name, $value = null)
+    public function assign($name, $value = null): self
     {
         $this->renderer->assign($name, $value);
 

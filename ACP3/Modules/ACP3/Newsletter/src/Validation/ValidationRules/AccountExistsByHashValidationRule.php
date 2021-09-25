@@ -7,8 +7,21 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
 
-class AccountExistsByHashValidationRule extends AccountExistsValidationRule
+use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
+use ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository;
+
+class AccountExistsByHashValidationRule extends AbstractValidationRule
 {
+    /**
+     * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository
+     */
+    private $accountRepository;
+
+    public function __construct(AccountRepository $accountRepository)
+    {
+        $this->accountRepository = $accountRepository;
+    }
+
     /**
      * {@inheritdoc}
      */

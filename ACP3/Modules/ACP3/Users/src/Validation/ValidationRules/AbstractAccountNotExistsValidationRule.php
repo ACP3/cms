@@ -17,9 +17,6 @@ abstract class AbstractAccountNotExistsValidationRule extends AbstractValidation
      */
     protected $userRepository;
 
-    /**
-     * AccountExistsByNameValidationRule constructor.
-     */
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
@@ -40,11 +37,5 @@ abstract class AbstractAccountNotExistsValidationRule extends AbstractValidation
         return $this->accountExists($data, $extra['user_id'] ?? 0);
     }
 
-    /**
-     * @param string $data
-     * @param int    $userId
-     *
-     * @return bool
-     */
-    abstract protected function accountExists($data, $userId);
+    abstract protected function accountExists(string $data, int $userId): bool;
 }

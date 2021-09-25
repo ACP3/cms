@@ -14,38 +14,28 @@ class TableOfContents
     /**
      * @var \ACP3\Core\Breadcrumb\Title
      */
-    protected $title;
+    private $title;
     /**
      * @var \ACP3\Core\I18n\Translator
      */
-    protected $translator;
+    private $translator;
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \ACP3\Core\Validation\ValidationRules\IntegerValidationRule
      */
-    protected $integerValidationRule;
+    private $integerValidationRule;
     /**
      * @var \ACP3\Core\View
      */
-    protected $view;
+    private $view;
 
-    /**
-     * TableOfContents constructor.
-     *
-     * @param \ACP3\Core\Breadcrumb\Title                                 $title
-     * @param \ACP3\Core\I18n\Translator                                  $translator
-     * @param \ACP3\Core\Http\RequestInterface                            $request
-     * @param \ACP3\Core\Router\RouterInterface                           $router
-     * @param \ACP3\Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule
-     * @param \ACP3\Core\View                                             $view
-     */
     public function __construct(
         Core\Breadcrumb\Title $title,
         Core\I18n\Translator $translator,
@@ -64,14 +54,8 @@ class TableOfContents
 
     /**
      * Generates the table of contents.
-     *
-     * @param string $baseUrlPath
-     * @param bool   $titlesFromDb
-     * @param bool   $customUris
-     *
-     * @return string
      */
-    public function generateTOC(array $pages, $baseUrlPath = '', $titlesFromDb = false, $customUris = false)
+    public function generateTOC(array $pages, string $baseUrlPath = '', bool $titlesFromDb = false, bool $customUris = false): string
     {
         if (!empty($pages)) {
             $baseUrlPath = $baseUrlPath === '' ? $this->request->getUriWithoutPages() : $baseUrlPath;
@@ -99,12 +83,8 @@ class TableOfContents
     /**
      * Liest aus einem String alle vorhandenen HTML-Attribute ein und
      * liefert diese als assoziatives Array zurück.
-     *
-     * @param string $string
-     *
-     * @return array
      */
-    protected function getHtmlAttributes($string)
+    private function getHtmlAttributes(string $string): array
     {
         $matches = [];
         preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $matches);
@@ -121,18 +101,13 @@ class TableOfContents
     }
 
     /**
-     * @param bool         $customUris
      * @param array|string $page
-     * @param int          $pageNumber
-     * @param int          $currentIndex
-     *
-     * @return bool
      */
-    protected function isCurrentPage($customUris, $page, $pageNumber, $currentIndex)
+    private function isCurrentPage(bool $customUris, $page, int $pageNumber, int $currentIndex): bool
     {
         if ($customUris === true) {
-            if (\is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery())
-                || $this->router->route($this->request->getQuery()) === $this->router->route($this->request->getFullPath()) && $currentIndex == 0
+            if ((\is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery()))
+                || ($this->router->route($this->request->getQuery()) === $this->router->route($this->request->getFullPath()) && $currentIndex == 0)
             ) {
                 return true;
             }
@@ -147,12 +122,8 @@ class TableOfContents
 
     /**
      * @param array|string $page
-     * @param int          $pageNumber
-     * @param bool         $titlesFromDb
-     *
-     * @return string
      */
-    protected function fetchTocPageTitle($page, $pageNumber, $titlesFromDb)
+    private function fetchTocPageTitle($page, int $pageNumber, bool $titlesFromDb): string
     {
         if ($titlesFromDb === false && \is_array($page) === false) {
             $page = $this->getHtmlAttributes($page);
@@ -164,14 +135,9 @@ class TableOfContents
     }
 
     /**
-     * @param bool         $customUris
      * @param array|string $page
-     * @param int          $pageNumber
-     * @param string       $requestQuery
-     *
-     * @return string
      */
-    protected function fetchTocPageUri($customUris, $page, $pageNumber, $requestQuery)
+    private function fetchTocPageUri(bool $customUris, $page, int $pageNumber, string $requestQuery): string
     {
         if ($customUris === true && \is_array($page) === true) {
             return $page['uri'];

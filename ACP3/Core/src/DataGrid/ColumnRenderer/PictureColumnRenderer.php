@@ -14,11 +14,8 @@ class PictureColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
 
-    /**
-     * PictureColumnRenderer constructor.
-     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;

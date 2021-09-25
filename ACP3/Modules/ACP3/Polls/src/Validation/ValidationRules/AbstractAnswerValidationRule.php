@@ -15,20 +15,14 @@ abstract class AbstractAnswerValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule
      */
-    protected $notEmptyValidationRule;
+    private $notEmptyValidationRule;
 
-    /**
-     * AbstractAnswerValidationRule constructor.
-     */
     public function __construct(NotEmptyValidationRule $notEmptyValidationRule)
     {
         $this->notEmptyValidationRule = $notEmptyValidationRule;
     }
 
-    /**
-     * @return array
-     */
-    protected function validateAnswers(array $answers)
+    protected function validateAnswers(array $answers): array
     {
         $markedAnswers = 0;
         $notEmptyAnswers = 0;

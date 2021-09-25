@@ -19,18 +19,12 @@ class GetSiteAndPageTitleBeforeEvent extends Event
      */
     private $title;
 
-    /**
-     * GetSiteAndPageTitleBeforeEvent constructor.
-     */
     public function __construct(Title $title)
     {
         $this->title = $title;
     }
 
-    /**
-     * @return \ACP3\Core\Breadcrumb\Title
-     */
-    public function getTitle()
+    public function getTitle(): Title
     {
         return $this->title;
     }

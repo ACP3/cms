@@ -16,11 +16,8 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
     /**
      * @var \ACP3\Core\Helpers\Formatter\MarkEntries
      */
-    protected $markEntriesHelper;
+    private $markEntriesHelper;
 
-    /**
-     * HeaderColumnRenderer constructor.
-     */
     public function __construct(MarkEntries $markEntriesHelper)
     {
         $this->markEntriesHelper = $markEntriesHelper;

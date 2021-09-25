@@ -15,11 +15,8 @@ class DuplicateCategoryValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
-    protected $categoryRepository;
+    private $categoryRepository;
 
-    /**
-     * CategoryExistsValidationRule constructor.
-     */
     public function __construct(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;

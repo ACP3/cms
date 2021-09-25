@@ -14,22 +14,14 @@ class StringFormatter
     /**
      * @var Slugify
      */
-    protected $slugify;
+    private $slugify;
 
-    /**
-     * StringFormatter constructor.
-     */
     public function __construct(Slugify $slugify)
     {
         $this->slugify = $slugify;
     }
 
-    /**
-     * @param string $var
-     *
-     * @return string
-     */
-    public function makeStringUrlSafe($var)
+    public function makeStringUrlSafe(string $var): string
     {
         $var = html_entity_decode(strip_tags($var));
 
@@ -38,13 +30,8 @@ class StringFormatter
 
     /**
      * Converts new lines to HTML paragraphs and/or line breaks.
-     *
-     * @param string $data
-     * @param bool   $useLineBreaks
-     *
-     * @return string
      */
-    public function nl2p($data, $useLineBreaks = false)
+    public function nl2p(string $data, bool $useLineBreaks = false): string
     {
         $data = trim($data);
         $pattern = "/([\n]{1,})/i";
@@ -66,15 +53,8 @@ class StringFormatter
 
     /**
      * Shortens a string to the given length.
-     *
-     * @param string $data
-     * @param int    $chars
-     * @param int    $offset
-     * @param string $append
-     *
-     * @return string
      */
-    public function shortenEntry($data, $chars = 300, $offset = 50, $append = '')
+    public function shortenEntry(string $data, int $chars = 300, int $offset = 50, string $append = ''): string
     {
         if ($chars <= $offset) {
             throw new \InvalidArgumentException('The offset should not be bigger then the to be displayed characters.');

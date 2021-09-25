@@ -15,11 +15,8 @@ class AllowedSuperiorCategoryValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
      */
-    protected $categoriesRepository;
+    private $categoriesRepository;
 
-    /**
-     * AllowedSuperiorCategoryValidationRule constructor.
-     */
     public function __construct(CategoryRepository $categoriesRepository)
     {
         $this->categoriesRepository = $categoriesRepository;

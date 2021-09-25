@@ -15,11 +15,8 @@ class AllowedMenuValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
      */
-    protected $menuItemRepository;
+    private $menuItemRepository;
 
-    /**
-     * AllowedMenuValidationRule constructor.
-     */
     public function __construct(MenuItemRepository $menuItemRepository)
     {
         $this->menuItemRepository = $menuItemRepository;
@@ -40,13 +37,7 @@ class AllowedMenuValidationRule extends AbstractValidationRule
         return false;
     }
 
-    /**
-     * @param int $parentId
-     * @param int $menuId
-     *
-     * @return bool
-     */
-    protected function checkIsAllowedMenu($parentId, $menuId)
+    protected function checkIsAllowedMenu(int $parentId, int $menuId): bool
     {
         if (empty($parentId)) {
             return true;
@@ -54,6 +45,6 @@ class AllowedMenuValidationRule extends AbstractValidationRule
 
         $parentMenuId = $this->menuItemRepository->getMenuIdByMenuItemId($parentId);
 
-        return !empty($parentMenuId) && $parentMenuId == $menuId;
+        return !empty($parentMenuId) && $parentMenuId === $menuId;
     }
 }

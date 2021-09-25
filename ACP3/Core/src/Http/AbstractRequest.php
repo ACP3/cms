@@ -27,9 +27,6 @@ abstract class AbstractRequest implements RequestInterface
      */
     protected $userAgent;
 
-    /**
-     * AbstractRequest constructor.
-     */
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;

@@ -12,7 +12,7 @@ class AccountExistsByNameValidationRule extends AccountNotExistsByNameValidation
     /**
      * {@inheritdoc}
      */
-    protected function accountExists($data, $userId)
+    protected function accountExists(string $data, int $userId): bool
     {
         return !parent::accountExists($data, $userId);
     }

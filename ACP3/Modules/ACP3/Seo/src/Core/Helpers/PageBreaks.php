@@ -16,7 +16,7 @@ class PageBreaks extends Core\Helpers\PageBreaks
     /**
      * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
      */
-    protected $metaStatements;
+    private $metaStatements;
 
     public function __construct(
         Core\Http\RequestInterface $request,
@@ -32,7 +32,7 @@ class PageBreaks extends Core\Helpers\PageBreaks
     /**
      * {@inheritdoc}
      */
-    public function splitTextIntoPages($text, $baseUrlPath)
+    public function splitTextIntoPages(string $text, string $baseUrlPath): array
     {
         $pages = parent::splitTextIntoPages($text, $baseUrlPath);
 

@@ -10,22 +10,21 @@ namespace ACP3\Modules\ACP3\Newssearch\Repository;
 use ACP3\Core\Database\Connection;
 use ACP3\Core\Date;
 use ACP3\Core\Repository\AbstractRepository;
+use ACP3\Core\Repository\PublicationPeriodAwareTrait;
+use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 use ACP3\Modules\ACP3\Search\Repository\SearchResultsAwareRepositoryInterface;
 
 class SearchResultsAwareRepository extends AbstractRepository implements SearchResultsAwareRepositoryInterface
 {
-    use \ACP3\Core\Repository\PublicationPeriodAwareTrait;
+    use PublicationPeriodAwareTrait;
 
-    public const TABLE_NAME = \ACP3\Modules\ACP3\News\Repository\NewsRepository::TABLE_NAME;
+    public const TABLE_NAME = NewsRepository::TABLE_NAME;
 
     /**
      * @var Date
      */
-    protected $date;
+    private $date;
 
-    /**
-     * SearchResultsAwareRepository constructor.
-     */
     public function __construct(Connection $db, Date $date)
     {
         parent::__construct($db);

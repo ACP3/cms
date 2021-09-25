@@ -21,11 +21,8 @@ class SearchResultsAwareRepository extends \ACP3\Core\Repository\AbstractReposit
     /**
      * @var Date
      */
-    protected $date;
+    private $date;
 
-    /**
-     * SearchResultsAwareRepository constructor.
-     */
     public function __construct(
         Connection $db,
         Date $date

@@ -15,21 +15,18 @@ class SitemapAvailabilityRegistrar
     /**
      * @var SitemapAvailabilityExtensionInterface[]
      */
-    protected $availableModules = [];
+    private $availableModules = [];
     /**
      * @var Modules
      */
     private $modules;
 
-    /**
-     * SitemapAvailabilityRegistrar constructor.
-     */
     public function __construct(Modules $modules)
     {
         $this->modules = $modules;
     }
 
-    public function registerModule(SitemapAvailabilityExtensionInterface $availability)
+    public function registerModule(SitemapAvailabilityExtensionInterface $availability): void
     {
         if ($this->modules->isInstalled($availability->getModuleName())) {
             $this->availableModules[$availability->getModuleName()] = $availability;
@@ -39,7 +36,7 @@ class SitemapAvailabilityRegistrar
     /**
      * @return SitemapAvailabilityExtensionInterface[]
      */
-    public function getAvailableModules()
+    public function getAvailableModules(): array
     {
         return $this->availableModules;
     }

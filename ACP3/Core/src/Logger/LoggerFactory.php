@@ -21,9 +21,6 @@ class LoggerFactory
      */
     private $appPath;
 
-    /**
-     * LoggerFactory constructor.
-     */
     public function __construct(ApplicationPath $appPath)
     {
         $this->appPath = $appPath;

@@ -33,9 +33,6 @@ class BackendFactory
      */
     private $settings;
 
-    /**
-     * BackendFactory constructor.
-     */
     public function __construct(
         ApplicationPath $applicationPath,
         SettingsInterface $settings,

@@ -15,7 +15,7 @@ class CustomOptionEvent extends Event
     /**
      * @var \ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
      */
-    protected $optionRenderer;
+    private $optionRenderer;
     /**
      * @var array
      */
@@ -23,40 +23,26 @@ class CustomOptionEvent extends Event
     /**
      * @var string
      */
-    protected $identifier;
+    private $identifier;
 
-    /**
-     * CustomOptionEvent constructor.
-     *
-     * @param string $identifier
-     */
-    public function __construct(OptionRenderer $optionRenderer, array $dbResultRow, $identifier)
+    public function __construct(OptionRenderer $optionRenderer, array $dbResultRow, string $identifier)
     {
         $this->optionRenderer = $optionRenderer;
         $this->identifier = $identifier;
         $this->dbResultRow = $dbResultRow;
     }
 
-    /**
-     * @return \ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
-     */
-    public function getOptionRenderer()
+    public function getOptionRenderer(): OptionRenderer
     {
         return $this->optionRenderer;
     }
 
-    /**
-     * @return array
-     */
-    public function getDbResultRow()
+    public function getDbResultRow(): array
     {
         return $this->dbResultRow;
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }

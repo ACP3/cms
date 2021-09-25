@@ -30,8 +30,6 @@ final class ServiceContainerBuilder extends ContainerBuilder
     private $applicationPath;
 
     /**
-     * ServiceContainerBuilder constructor.
-     *
      * @throws \Exception
      */
     public function __construct(

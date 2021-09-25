@@ -12,7 +12,7 @@ class AccountNotExistsByNameValidationRule extends AbstractAccountNotExistsValid
     /**
      * {@inheritdoc}
      */
-    protected function accountExists($data, $userId)
+    protected function accountExists(string $data, int $userId): bool
     {
         return $this->userRepository->resultExistsByUserName($data, $userId) === false;
     }

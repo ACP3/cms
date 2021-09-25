@@ -21,9 +21,6 @@ class SocialSharingManager
      */
     private $shareRepository;
 
-    /**
-     * SocialSharingManager constructor.
-     */
     public function __construct(
         ShareModel $shareModel,
         ShareRepository $shareRepository
@@ -45,7 +42,7 @@ class SocialSharingManager
         return !empty($shareInfo) && $this->shareModel->delete($shareInfo['id']) !== false;
     }
 
-    protected function preparePath(string $path): string
+    private function preparePath(string $path): string
     {
         return !preg_match('/\/$/', $path) ? '/' : '';
     }

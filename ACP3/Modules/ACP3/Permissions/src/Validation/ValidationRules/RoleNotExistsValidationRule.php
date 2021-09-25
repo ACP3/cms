@@ -15,11 +15,8 @@ class RoleNotExistsValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository
      */
-    protected $roleRepository;
+    private $roleRepository;
 
-    /**
-     * RoleExistsValidationRule constructor.
-     */
     public function __construct(AclRoleRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;

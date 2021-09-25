@@ -12,13 +12,8 @@ class ExternalLinkValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Core\Validation\ValidationRules\InArrayValidationRule
      */
-    protected $inArrayValidationRule;
+    private $inArrayValidationRule;
 
-    /**
-     * ExternalLinkValidationRule constructor.
-     *
-     * @param \ACP3\Core\Validation\ValidationRules\InArrayValidationRule $inArrayValidationRule
-     */
     public function __construct(InArrayValidationRule $inArrayValidationRule)
     {
         $this->inArrayValidationRule = $inArrayValidationRule;
@@ -40,14 +35,7 @@ class ExternalLinkValidationRule extends AbstractValidationRule
         return false;
     }
 
-    /**
-     * @param string $linkTitle
-     * @param string $uri
-     * @param int    $target
-     *
-     * @return bool
-     */
-    protected function isValidLink($linkTitle, $uri, $target)
+    protected function isValidLink(string $linkTitle, string $uri, int $target): bool
     {
         if (empty($linkTitle)) {
             return true;

@@ -24,9 +24,6 @@ class CountryList
      */
     private $supportedLocales;
 
-    /**
-     * Country constructor.
-     */
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
@@ -34,10 +31,8 @@ class CountryList
 
     /**
      * Returns an array with all earth countries.
-     *
-     * @return array
      */
-    public function worldCountries()
+    public function worldCountries(): array
     {
         if ($this->countries === null) {
             $this->cacheWorldCountries();
@@ -46,7 +41,7 @@ class CountryList
         return $this->countries;
     }
 
-    private function cacheWorldCountries()
+    private function cacheWorldCountries(): void
     {
         $this->countries = [];
 
@@ -64,24 +59,16 @@ class CountryList
         asort($this->countries, SORT_STRING);
     }
 
-    /**
-     * @param string $locale
-     *
-     * @return bool
-     */
-    private function isSupportedLocale($locale)
+    private function isSupportedLocale(string $locale): bool
     {
         if ($this->supportedLocales === null) {
             $this->supportedLocales = Locale::getSupportedLocales();
         }
 
-        return \in_array($locale, $this->supportedLocales);
+        return \in_array($locale, $this->supportedLocales, true);
     }
 
-    /**
-     * @return string
-     */
-    private function getTransformedLocale()
+    private function getTransformedLocale(): string
     {
         return strtolower(str_replace('_', '-', $this->translator->getLocale()));
     }

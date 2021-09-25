@@ -14,23 +14,16 @@ class PageBreaks
     /**
      * @var \ACP3\Core\Http\RequestInterface
      */
-    protected $request;
+    private $request;
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
     /**
      * @var \ACP3\Core\Helpers\TableOfContents
      */
-    protected $tableOfContents;
+    private $tableOfContents;
 
-    /**
-     * PageBreaks constructor.
-     *
-     * @param \ACP3\Core\Http\RequestInterface   $request
-     * @param \ACP3\Core\Router\RouterInterface  $router
-     * @param \ACP3\Core\Helpers\TableOfContents $tableOfContents
-     */
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
@@ -43,13 +36,8 @@ class PageBreaks
 
     /**
      * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten.
-     *
-     * @param string $text
-     * @param string $baseUrlPath
-     *
-     * @return array
      */
-    public function splitTextIntoPages($text, $baseUrlPath)
+    public function splitTextIntoPages(string $text, string $baseUrlPath): array
     {
         $matches = [];
         preg_match_all($this->getSplitPagesRegex(), $text, $matches);
@@ -67,18 +55,12 @@ class PageBreaks
         ];
     }
 
-    /**
-     * @return string
-     */
-    protected function getSplitPagesRegex()
+    private function getSplitPagesRegex(): string
     {
         return '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
     }
 
-    /**
-     * @return int
-     */
-    private function getCurrentPage(array $pages)
+    private function getCurrentPage(array $pages): int
     {
         $currentPage = (int) $this->request->getParameters()->get('page', 1);
 

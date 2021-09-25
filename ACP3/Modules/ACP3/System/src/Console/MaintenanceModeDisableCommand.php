@@ -22,9 +22,6 @@ class MaintenanceModeDisableCommand extends Command
      */
     private $settings;
 
-    /**
-     * MaintenanceModeDisableCommand constructor.
-     */
     public function __construct(SettingsInterface $settings)
     {
         parent::__construct();

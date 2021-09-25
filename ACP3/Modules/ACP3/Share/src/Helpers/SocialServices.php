@@ -12,6 +12,9 @@ use ACP3\Modules\ACP3\Share\Installer\Schema;
 
 class SocialServices
 {
+    /**
+     * @var array<string, string|null>
+     */
     private static $servicesMap = [
         'twitter' => null,
         'facebook' => 'Facebook',
@@ -41,9 +44,6 @@ class SocialServices
      */
     private $settings;
 
-    /**
-     * AvailableServices constructor.
-     */
     public function __construct(SettingsInterface $settings)
     {
         $this->settings = $settings;
@@ -81,8 +81,8 @@ class SocialServices
         return array_values(
             array_filter(
                 $this->getAllBackendServices(),
-                function (?string $value, string $key) use ($activeServices) {
-                    return $value !== null && \in_array($key, $activeServices);
+                static function (?string $value, string $key) use ($activeServices) {
+                    return $value !== null && \in_array($key, $activeServices, true);
                 },
                 \ARRAY_FILTER_USE_BOTH
             )

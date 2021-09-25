@@ -60,11 +60,9 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getMenuIdByMenuItemId(int $menuItemId)
+    public function getMenuIdByMenuItemId(int $menuItemId): int
     {
         return (int) $this->db->fetchColumn(
             "SELECT `block_id` FROM {$this->getTableName()} WHERE id = ?",

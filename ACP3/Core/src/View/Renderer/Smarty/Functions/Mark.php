@@ -14,13 +14,8 @@ class Mark extends AbstractFunction
     /**
      * @var \ACP3\Core\Helpers\Formatter\MarkEntries
      */
-    protected $markEntries;
+    private $markEntries;
 
-    /**
-     * Mark constructor.
-     *
-     * @param \ACP3\Core\Helpers\Formatter\MarkEntries $markEntries
-     */
     public function __construct(Core\Helpers\Formatter\MarkEntries $markEntries)
     {
         $this->markEntries = $markEntries;

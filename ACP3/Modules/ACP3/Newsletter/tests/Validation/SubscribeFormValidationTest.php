@@ -37,6 +37,8 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
         $this->container->set(EmailValidationRule::class, new EmailValidationRule());
 
         $this->accountRepositoryMock = $this->createMock(AccountRepository::class);
+        $this->accountRepositoryMock->method('accountExists')
+            ->willReturn(false);
         $this->container->set(AccountNotExistsValidationRule::class, new AccountNotExistsValidationRule($this->accountRepositoryMock));
     }
 

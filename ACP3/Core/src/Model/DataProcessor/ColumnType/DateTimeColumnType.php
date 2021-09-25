@@ -14,11 +14,8 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
     /**
      * @var Date
      */
-    protected $date;
+    private $date;
 
-    /**
-     * DateTimeColumnType constructor.
-     */
     public function __construct(Date $date)
     {
         $this->date = $date;
@@ -28,6 +25,8 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
      * @param string $value
      *
      * @return string
+     *
+     * @throws \Exception
      */
     public function doEscape($value)
     {
@@ -44,6 +43,8 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
 
     /**
      * @return string|int
+     *
+     * @throws \Exception
      */
     public function getDefaultValue()
     {

@@ -15,11 +15,8 @@ class RolesExistValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Core\ACL
      */
-    protected $acl;
+    private $acl;
 
-    /**
-     * RolesExistValidationRule constructor.
-     */
     public function __construct(ACL $acl)
     {
         $this->acl = $acl;
@@ -34,13 +31,10 @@ class RolesExistValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return \is_array($data) ? $this->aclRolesExist($data) : false;
+        return \is_array($data) && $this->aclRolesExist($data);
     }
 
-    /**
-     * @return bool
-     */
-    protected function aclRolesExist(array $roles)
+    private function aclRolesExist(array $roles): bool
     {
         $allRoles = $this->acl->getAllRoles();
         $good = [];

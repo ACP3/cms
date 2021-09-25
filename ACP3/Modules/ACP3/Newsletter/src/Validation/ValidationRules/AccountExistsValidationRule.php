@@ -15,11 +15,8 @@ class AccountExistsValidationRule extends AbstractValidationRule
     /**
      * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository
      */
-    protected $accountRepository;
+    private $accountRepository;
 
-    /**
-     * AccountExistsValidationRule constructor.
-     */
     public function __construct(AccountRepository $accountRepository)
     {
         $this->accountRepository = $accountRepository;
@@ -37,12 +34,7 @@ class AccountExistsValidationRule extends AbstractValidationRule
         return $this->checkAccountExists($data);
     }
 
-    /**
-     * @param string $data
-     *
-     * @return bool
-     */
-    protected function checkAccountExists($data)
+    protected function checkAccountExists(string $data): bool
     {
         return $this->accountRepository->accountExists($data);
     }

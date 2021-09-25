@@ -14,20 +14,14 @@ class Datepicker extends AbstractFunction
     /**
      * @var \ACP3\Core\Helpers\Date
      */
-    protected $dateHelper;
+    private $dateHelper;
 
-    /**
-     * Datepicker constructor.
-     */
     public function __construct(Date $dateHelper)
     {
         $this->dateHelper = $dateHelper;
     }
 
-    /**
-     * @return string
-     */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         $params = $this->mergeParameters($params);
 
@@ -42,7 +36,7 @@ class Datepicker extends AbstractFunction
         return $smarty->smarty->fetch('asset:System/Partials/datepicker.tpl');
     }
 
-    private function mergeParameters(array $params)
+    private function mergeParameters(array $params): array
     {
         $defaults = [
             'name' => '',

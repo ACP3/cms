@@ -19,15 +19,12 @@ class Smarty implements RendererInterface
     /**
      * @var \Smarty
      */
-    protected $smarty;
+    private $smarty;
     /**
      * @var \Psr\Container\ContainerInterface
      */
     private $container;
 
-    /**
-     * Smarty constructor.
-     */
     public function __construct(\Smarty $smarty, ContainerInterface $container)
     {
         $this->smarty = $smarty;

@@ -14,13 +14,8 @@ class Uri extends AbstractFunction
     /**
      * @var \ACP3\Core\Router\RouterInterface
      */
-    protected $router;
+    private $router;
 
-    /**
-     * Uri constructor.
-     *
-     * @param \ACP3\Core\Router\RouterInterface $router
-     */
     public function __construct(Core\Router\RouterInterface $router)
     {
         $this->router = $router;
