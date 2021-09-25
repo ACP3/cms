@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\News\Installer;
 
 use ACP3\Core\Date;
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Modules\SchemaHelper;
+use ACP3\Core\Installer\SchemaHelper;
 
 class SampleData extends \ACP3\Core\Installer\AbstractSampleData
 {

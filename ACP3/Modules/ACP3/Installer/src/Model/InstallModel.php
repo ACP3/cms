@@ -10,9 +10,9 @@ namespace ACP3\Modules\ACP3\Installer\Model;
 use ACP3\Core\Database\Connection;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Installer\Exception\ModuleMigrationException;
+use ACP3\Core\Installer\SchemaHelper;
 use ACP3\Core\Installer\SchemaRegistrar;
-use ACP3\Core\Modules\Exception\ModuleMigrationException;
-use ACP3\Core\Modules\SchemaHelper;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
@@ -163,7 +163,7 @@ class InstallModel
             'INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);',
         ];
 
-        /** @var \ACP3\Core\Modules\SchemaHelper $schemaHelper */
+        /** @var \ACP3\Core\Installer\SchemaHelper $schemaHelper */
         $schemaHelper = $this->container->get(SchemaHelper::class);
 
         $schemaHelper->executeSqlQueries($queries);
@@ -176,7 +176,7 @@ class InstallModel
     {
         /** @var \Symfony\Component\DependencyInjection\ServiceLocator $sampleDataRegistrar */
         $sampleDataRegistrar = $this->container->get('core.installer.sample_data_registrar');
-        /** @var \ACP3\Core\Modules\SchemaHelper $schemaHelper */
+        /** @var \ACP3\Core\Installer\SchemaHelper $schemaHelper */
         $schemaHelper = $this->container->get(SchemaHelper::class);
 
         foreach ($sampleDataRegistrar->getProvidedServices() as $serviceId => $class) {

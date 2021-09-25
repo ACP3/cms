@@ -32,11 +32,11 @@ class Modules extends Core\Controller\AbstractWidgetAction
      */
     private $schemaLocator;
     /**
-     * @var Core\Modules\SchemaInstaller
+     * @var \ACP3\Core\Installer\SchemaInstaller
      */
     private $schemaInstaller;
     /**
-     * @var Core\Modules\AclInstaller
+     * @var \ACP3\Core\Installer\AclInstaller
      */
     private $aclInstaller;
     /**
@@ -67,8 +67,8 @@ class Modules extends Core\Controller\AbstractWidgetAction
         Core\Modules $modules,
         Installer $installerHelper,
         ContainerInterface $schemaLocator,
-        Core\Modules\SchemaInstaller $schemaInstaller,
-        Core\Modules\AclInstaller $aclInstaller,
+        Core\Installer\SchemaInstaller $schemaInstaller,
+        Core\Installer\AclInstaller $aclInstaller,
         AdminModulesViewProvider $adminModulesViewProvider,
         CacheClearService $cacheClearService
     ) {

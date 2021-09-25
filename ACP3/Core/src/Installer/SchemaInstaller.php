@@ -5,10 +5,10 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Installer;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Installer\SchemaInterface;
+use ACP3\Core\Modules\InstallerInterface;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
 use Psr\Log\LoggerInterface;

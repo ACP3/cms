@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Installer;
 
 use ACP3\Core;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -54,7 +54,7 @@ class SchemaHelper
      * Executes all given SQL queries.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \ACP3\Core\Modules\Exception\ModuleMigrationException
+     * @throws \ACP3\Core\Installer\Exception\ModuleMigrationException
      * @throws \Doctrine\DBAL\Exception
      */
     public function executeSqlQueries(array $queries, string $moduleName = ''): void
@@ -77,7 +77,7 @@ class SchemaHelper
             foreach ($queries as $query) {
                 if (\is_callable($query)) {
                     if ($query() === false) {
-                        throw new Core\Modules\Exception\ModuleMigrationException(sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
+                        throw new Exception\ModuleMigrationException(sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
                     }
                 } elseif (!empty($query)) {
                     $this->db->executeQuery(str_ireplace($search, $replace, $query));
@@ -87,7 +87,7 @@ class SchemaHelper
         } catch (\Exception $e) {
             $this->db->getConnection()->rollBack();
 
-            throw new Core\Modules\Exception\ModuleMigrationException(sprintf('An error occurred while executing a migration for module "%s"', $moduleName), 0, $e);
+            throw new Exception\ModuleMigrationException(sprintf('An error occurred while executing a migration for module "%s"', $moduleName), 0, $e);
         }
     }
 

@@ -5,14 +5,14 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Modules;
+namespace ACP3\Core\Installer;
 
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\ACL\Repository\AclPermissionRepositoryInterface;
 use ACP3\Core\ACL\Repository\RoleRepositoryInterface;
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Installer\SchemaInterface;
+use ACP3\Core\Modules\InstallerInterface;
 use ACP3\Core\Repository\AbstractRepository;
 
 class AclInstaller implements InstallerInterface
@@ -21,7 +21,7 @@ class AclInstaller implements InstallerInterface
     public const INSTALL_RESOURCES = 2;
 
     /**
-     * @var \ACP3\Core\Modules\SchemaHelper
+     * @var \ACP3\Core\Installer\SchemaHelper
      */
     private $schemaHelper;
     /**

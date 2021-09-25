@@ -5,8 +5,8 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Modules\Exception;
+namespace ACP3\Core\Installer\Exception;
 
-interface MigrationExceptionInterface extends \Throwable
+class ModuleMigrationException extends \RuntimeException implements MigrationExceptionInterface
 {
 }

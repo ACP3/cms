@@ -7,11 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Installer\Helpers;
 
+use ACP3\Core\Installer\AclInstaller;
 use ACP3\Core\Installer\SampleDataInterface;
+use ACP3\Core\Installer\SchemaHelper;
+use ACP3\Core\Installer\SchemaInstaller;
 use ACP3\Core\Installer\SchemaInterface;
-use ACP3\Core\Modules\AclInstaller;
-use ACP3\Core\Modules\SchemaHelper;
-use ACP3\Core\Modules\SchemaInstaller;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Yaml\Dumper;
 

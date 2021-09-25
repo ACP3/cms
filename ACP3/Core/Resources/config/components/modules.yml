@@ -5,11 +5,6 @@ services:
   ACP3\Core\Modules:
     public: true
 
-  ACP3\Core\Modules\AclInstaller:
-    public: true
-    arguments:
-      $resourceRepository: "@permissions.model.resourcerepository"
-
   ACP3\Core\Modules\ModuleInfo:
     arguments:
       $schemaLocator: '@ACP3\Core\Installer\SchemaRegistrar'
@@ -21,21 +16,3 @@ services:
       - "@.inner"
 
   ACP3\Core\Modules\ModuleInfoInterface: '@ACP3\Core\Modules\ModuleInfo'
-
-  ACP3\Core\Modules\SchemaHelper:
-    public: true
-    calls:
-      - ["setContainer", ["@service_container"]]
-
-  core.modules.installer_logger:
-    class: Psr\Log\LoggerInterface
-    factory: ["@core.logger.logger_factory", "create"]
-    arguments:
-      - "installer"
-
-  ACP3\Core\Modules\SchemaInstaller:
-    public: true
-    arguments:
-      $logger: "@core.modules.installer_logger"
-    calls:
-      - ["setContainer", ["@service_container"]]

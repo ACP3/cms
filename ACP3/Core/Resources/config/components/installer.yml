@@ -16,5 +16,28 @@ services:
     public: true
     tags: ["container.service_locator"]
 
+  core.installer.logger:
+    class: Psr\Log\LoggerInterface
+    factory: ["@core.logger.logger_factory", "create"]
+    arguments:
+      - "installer"
+
   ACP3\Core\Installer\SchemaRegistrar:
     public: true
+
+  ACP3\Core\Installer\AclInstaller:
+    public: true
+    arguments:
+      $resourceRepository: "@permissions.model.resourcerepository"
+
+  ACP3\Core\Installer\SchemaHelper:
+    public: true
+    calls:
+      - ["setContainer", ["@service_container"]]
+
+  ACP3\Core\Installer\SchemaInstaller:
+    public: true
+    arguments:
+      $logger: "@core.installer.logger"
+    calls:
+      - ["setContainer", ["@service_container"]]

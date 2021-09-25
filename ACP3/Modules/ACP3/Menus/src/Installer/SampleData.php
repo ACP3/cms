@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Installer;
 
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Modules\SchemaHelper;
+use ACP3\Core\Installer\SchemaHelper;
 
 class SampleData extends \ACP3\Core\Installer\AbstractSampleData
 {

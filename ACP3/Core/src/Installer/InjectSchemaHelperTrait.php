@@ -7,12 +7,10 @@
 
 namespace ACP3\Core\Installer;
 
-use ACP3\Core\Modules\SchemaHelper;
-
 trait InjectSchemaHelperTrait
 {
     /**
-     * @var \ACP3\Core\Modules\SchemaHelper
+     * @var \ACP3\Core\Installer\SchemaHelper
      */
     protected $schemaHelper;
 
