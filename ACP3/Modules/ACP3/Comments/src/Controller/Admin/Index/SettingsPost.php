@@ -9,8 +9,8 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Core\Helpers\Secure;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Comments;
 use ACP3\Modules\ACP3\Comments\Validation\AdminSettingsFormValidation;
 
@@ -25,13 +25,13 @@ class SettingsPost extends AbstractWidgetAction
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         Secure $secureHelper,
         AdminSettingsFormValidation $adminSettingsFormValidation
     ) {

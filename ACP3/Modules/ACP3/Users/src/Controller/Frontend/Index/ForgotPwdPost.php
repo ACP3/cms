@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Modules\ACP3\Users;
 
@@ -43,13 +43,13 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
      */
     private $sendPasswordChangeEmail;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         Core\Validation\Validator $validator,
         Core\Helpers\Alerts $alertsHelper,
         Core\Helpers\Secure $secureHelper,

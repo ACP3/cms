@@ -9,13 +9,13 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel;
 
 class Delete extends AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
     /**
@@ -25,7 +25,7 @@ class Delete extends AbstractWidgetAction
 
     public function __construct(
         WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         CommentByModuleModel $commentByModuleModel
     ) {
         parent::__construct($context);

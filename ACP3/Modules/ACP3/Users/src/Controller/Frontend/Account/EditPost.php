@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Account;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Users;
 
 class EditPost extends AbstractAction
@@ -27,13 +27,13 @@ class EditPost extends AbstractAction
      */
     private $user;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         UserModelInterface $user,
         Users\Model\UsersModel $usersModel,
         Users\Validation\AccountFormValidation $accountFormValidation

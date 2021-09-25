@@ -19,6 +19,6 @@ services:
   ACP3\Core\Helpers\Formatter\DateRange: ~
   ACP3\Core\Helpers\Formatter\MarkEntries: ~
   ACP3\Core\Helpers\Formatter\RewriteInternalUri: ~
-  ACP3\Core\Modules\Helper\Action: ~
+  ACP3\Core\Helpers\FormAction: ~
 
   Cocur\Slugify\Slugify: ~

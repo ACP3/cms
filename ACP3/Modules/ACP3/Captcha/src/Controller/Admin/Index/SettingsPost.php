@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
 use ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation;
 
@@ -20,13 +20,13 @@ class SettingsPost extends AbstractWidgetAction
      */
     private $formValidation;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         AdminSettingsFormValidation $formValidation
     ) {
         parent::__construct($context);

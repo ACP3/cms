@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Share\Model\ShareModel;
 use ACP3\Modules\ACP3\Share\Validation\AdminFormValidation;
 
@@ -23,13 +23,13 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
      */
     private $shareModel;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         ShareModel $shareModel,
         AdminFormValidation $adminFormValidation
     ) {

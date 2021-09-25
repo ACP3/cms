@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,13 +27,13 @@ class LoginPost extends Core\Controller\AbstractWidgetAction
      */
     private $redirectResponse;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         Core\Http\RedirectResponse $redirectResponse,
         Core\Helpers\Secure $secureHelper,
         Users\Model\AuthenticationModel $authenticationModel

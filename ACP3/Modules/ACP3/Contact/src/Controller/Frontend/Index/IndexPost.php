@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Contact;
 
 class IndexPost extends Core\Controller\AbstractWidgetAction
@@ -35,13 +35,13 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
      */
     private $router;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         Core\Router\RouterInterface $router,
         Core\Helpers\Alerts $alertsHelper,
         Contact\Validation\FormValidation $formValidation,

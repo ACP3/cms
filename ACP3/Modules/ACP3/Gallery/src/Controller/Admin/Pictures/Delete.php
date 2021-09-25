@@ -8,13 +8,13 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Gallery;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
     /**
@@ -24,7 +24,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         Gallery\Model\PictureModel $pictureModel
     ) {
         parent::__construct($context);

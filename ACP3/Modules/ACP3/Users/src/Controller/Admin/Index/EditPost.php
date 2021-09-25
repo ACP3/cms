@@ -10,8 +10,8 @@ namespace ACP3\Modules\ACP3\Users\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Core\Helpers\RedirectMessages;
-use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions\Helpers;
 use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
@@ -42,7 +42,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
      */
     private $user;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
     /**
@@ -52,7 +52,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         UserModelInterface $user,
         AuthenticationModel $authenticationModel,
         UsersModel $usersModel,

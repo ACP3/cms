@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Share;
 
 class SettingsPost extends Core\Controller\AbstractWidgetAction
@@ -22,13 +22,13 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
      */
     private $secure;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         Core\Helpers\Secure $secure,
         Share\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {

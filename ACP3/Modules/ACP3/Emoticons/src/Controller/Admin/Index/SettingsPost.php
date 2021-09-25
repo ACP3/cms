@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Emoticons;
 use ACP3\Modules\ACP3\Emoticons\Validation\AdminSettingsFormValidation;
 
@@ -20,13 +20,13 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
      */
     private $adminSettingsFormValidation;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);

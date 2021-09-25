@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Newsletter;
 
 class Activate extends Core\Controller\AbstractWidgetAction
@@ -18,13 +18,13 @@ class Activate extends Core\Controller\AbstractWidgetAction
      */
     private $accountStatusHelper;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         Newsletter\Helper\AccountStatus $accountStatusHelper
     ) {
         parent::__construct($context);

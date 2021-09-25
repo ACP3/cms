@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Permissions;
 
 class EditPost extends Core\Controller\AbstractWidgetAction
@@ -22,7 +22,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
      */
     private $rolesModel;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
     /**
@@ -32,7 +32,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         Permissions\Model\AclRoleModel $rolesModel,
         Permissions\Model\AclPermissionModel $aclPermissionModel,
         Permissions\Validation\RoleFormValidation $roleFormValidation

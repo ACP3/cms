@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Gallery;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -27,13 +27,13 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
      */
     private $secureHelper;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         CacheItemPoolInterface $galleryCachePool,
         Core\Helpers\Secure $secureHelper,
         Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation

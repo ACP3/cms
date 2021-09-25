@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
 use ACP3\Core;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Permissions;
 
 class Delete extends Core\Controller\AbstractWidgetAction
@@ -18,14 +18,14 @@ class Delete extends Core\Controller\AbstractWidgetAction
      */
     private $resourcesModel;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
-        Permissions\Model\AclResourceModel $resourcesModel
+        FormAction                            $actionHelper,
+        Permissions\Model\AclResourceModel    $resourcesModel
     ) {
         parent::__construct($context);
 

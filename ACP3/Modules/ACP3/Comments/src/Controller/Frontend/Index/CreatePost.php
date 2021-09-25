@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
-use ACP3\Core\Modules\Helper\Action;
+use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Comments;
 
 class CreatePost extends Core\Controller\AbstractWidgetAction
@@ -31,13 +31,13 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
      */
     private $user;
     /**
-     * @var \ACP3\Core\Modules\Helper\Action
+     * @var \ACP3\Core\Helpers\FormAction
      */
     private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Action $actionHelper,
+        FormAction $actionHelper,
         Core\Modules $modules,
         UserModelInterface $user,
         Comments\Model\CommentsModel $commentsModel,

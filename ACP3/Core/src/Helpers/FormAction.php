@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Modules\Helper;
+namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
 use Doctrine\DBAL\ConnectionException;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class Action
+class FormAction
 {
     /**
      * @var \ACP3\Core\I18n\Translator
