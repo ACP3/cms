@@ -13,6 +13,9 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     public const MODULE_NAME = 'categories';
 
+    /**
+     * {@inheritDoc}
+     */
     public function createTables(): array
     {
         return [
@@ -34,11 +37,17 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function removeTables(): array
     {
         return ['DROP TABLE IF EXISTS `{pre}categories`;'];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function settings(): array
     {
         return [
@@ -48,6 +57,9 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function specialResources(): array
     {
         return [
@@ -64,6 +76,9 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getModuleName(): string
     {
         return static::MODULE_NAME;

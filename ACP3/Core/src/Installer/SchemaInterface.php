@@ -31,9 +31,14 @@ interface SchemaInterface
     public function settings(): array;
 
     /**
+     * Returns a nested map of resources which need some kind of protection.
+     *
      * @return array<string, array<string, array<string, int>>>
      */
     public function specialResources(): array;
 
+    /**
+     * Returns the name of the module.
+     */
     public function getModuleName(): string;
 }
