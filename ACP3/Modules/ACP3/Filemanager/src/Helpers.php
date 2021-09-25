@@ -16,22 +16,14 @@ class Helpers
     /**
      * @var \ACP3\Core\Environment\ApplicationPath
      */
-    protected $appPath;
+    private $appPath;
 
-    /**
-     * Helpers constructor.
-     *
-     * @param \ACP3\Core\Environment\ApplicationPath $appPath
-     */
     public function __construct(Core\Environment\ApplicationPath $appPath)
     {
         $this->appPath = $appPath;
     }
 
-    /**
-     * @return string
-     */
-    public function getFilemanagerPath()
+    public function getFilemanagerPath(): string
     {
         $path = ComponentRegistry::getPathByName(Schema::MODULE_NAME);
 
