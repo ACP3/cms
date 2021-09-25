@@ -10,12 +10,11 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 use ACP3\Core\ACL;
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 use ACP3\Modules\ACP3\Menus\ViewProviders\MenuItemsDataGridViewProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class Index extends AbstractWidgetAction implements InvokableActionInterface
+class Index extends AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\ACL

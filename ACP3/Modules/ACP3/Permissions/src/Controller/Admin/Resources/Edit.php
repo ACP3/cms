@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Permissions;
 
-class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Edit extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Permissions\Model\AclResourceModel

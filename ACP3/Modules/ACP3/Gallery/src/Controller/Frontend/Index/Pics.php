@@ -47,7 +47,7 @@ class Pics extends Core\Controller\AbstractWidgetAction
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id): Response
+    public function __invoke(int $id): Response
     {
         if ($this->galleryRepository->galleryExists($id, $this->date->getCurrentDateTime()) === true) {
             $response = $this->renderTemplate(null, ($this->galleryPictureListViewProvider)($id));

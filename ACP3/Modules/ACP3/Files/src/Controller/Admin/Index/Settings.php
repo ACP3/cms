@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Files;
 
-class Settings extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Settings extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Files\ViewProviders\AdminSettingsViewProvider

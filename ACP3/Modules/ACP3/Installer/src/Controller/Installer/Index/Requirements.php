@@ -28,7 +28,7 @@ class Requirements extends AbstractAction
         $this->requirementsHelpers = $requirementsHelpers;
     }
 
-    public function execute(): array
+    public function __invoke(): array
     {
         [$requirements, $stopInstall] = $this->requirementsHelpers->checkMandatoryRequirements();
         [$requiredFilesAndDirs, $checkAgain] = $this->requirementsHelpers->checkFolderAndFilePermissions();

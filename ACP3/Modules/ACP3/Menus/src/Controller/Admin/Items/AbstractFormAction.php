@@ -8,9 +8,8 @@
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\InvokableActionInterface;
 
-abstract class AbstractFormAction extends AbstractWidgetAction implements InvokableActionInterface
+abstract class AbstractFormAction extends AbstractWidgetAction
 {
     protected function fetchMenuItemUriForSave(array $formData): string
     {

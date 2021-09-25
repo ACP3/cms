@@ -36,7 +36,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $cat = 0): Response
+    public function __invoke(int $cat = 0): Response
     {
         try {
             $response = $this->renderTemplate(null, ($this->newsListViewProvider)($cat));

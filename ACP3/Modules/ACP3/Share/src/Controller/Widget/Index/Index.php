@@ -34,7 +34,7 @@ class Index extends AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(string $path, string $template = ''): Response
+    public function __invoke(string $path, string $template = ''): Response
     {
         $response = $this->renderTemplate($template, ($this->shareWidgetViewProvider)($path));
         $this->setCacheResponseCacheable($response, 3600);

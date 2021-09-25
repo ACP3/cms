@@ -90,7 +90,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
      *
      * @throws DBALException
      */
-    public function execute(?string $action = null, ?string $dir = null)
+    public function __invoke(?string $action = null, ?string $dir = null)
     {
         switch ($action) {
             case 'install':

@@ -38,7 +38,7 @@ class Index extends AbstractWidgetAction
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id)
+    public function __invoke(int $id)
     {
         $gallery = $this->galleryModel->getOneById($id);
 

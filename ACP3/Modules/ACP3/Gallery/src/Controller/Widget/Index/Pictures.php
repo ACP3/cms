@@ -36,7 +36,7 @@ class Pictures extends AbstractWidgetAction
      * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    public function execute(int $id, string $template = ''): Response
+    public function __invoke(int $id, string $template = ''): Response
     {
         $response = $this->renderTemplate(urldecode($template), ($this->galleryPictureListWidgetViewProvider)($id));
         $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);

@@ -31,15 +31,13 @@ class Index extends AbstractInstallerAction
     /**
      * @param string $action
      *
-     * @return array
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function execute(?string $action = null): ?array
+    public function __invoke(?string $action = null): ?array
     {
         if ($action === 'confirmed') {
-            return $this->executePost();
+            return $this->doUpdate();
         }
 
         return null;
@@ -50,7 +48,7 @@ class Index extends AbstractInstallerAction
      * @throws \MJS\TopSort\ElementNotFoundException
      * @throws \Exception
      */
-    private function executePost(): array
+    private function doUpdate(): array
     {
         $results = $this->migrator->updateModules();
 

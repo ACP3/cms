@@ -27,7 +27,7 @@ class Index extends AbstractWidgetAction
         $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
-    public function execute()
+    public function __invoke()
     {
         return ($this->dataGridViewProvider)();
     }

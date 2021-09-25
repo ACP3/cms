@@ -36,7 +36,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(string $module, int $entryId): Response
+    public function __invoke(string $module, int $entryId): Response
     {
         try {
             $response = $this->renderTemplate(null, ($this->commentListViewProvider)($module, $entryId));

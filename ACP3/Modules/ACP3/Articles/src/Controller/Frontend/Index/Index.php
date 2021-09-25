@@ -37,7 +37,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(): Response
+    public function __invoke(): Response
     {
         try {
             $viewData = ($this->articleListViewProvider)();

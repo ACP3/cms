@@ -40,7 +40,7 @@ class Sitemap extends AbstractWidgetAction
      *
      * @throws \ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException
      */
-    public function execute()
+    public function __invoke()
     {
         $result = false;
         $phrase = 'sitemap_error';

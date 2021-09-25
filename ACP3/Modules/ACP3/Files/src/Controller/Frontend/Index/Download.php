@@ -52,7 +52,7 @@ class Download extends Core\Controller\AbstractWidgetAction
      * @throws Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id)
+    public function __invoke(int $id)
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $file = $this->filesRepository->getOneById($id);

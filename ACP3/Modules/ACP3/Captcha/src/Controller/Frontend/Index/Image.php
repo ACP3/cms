@@ -30,7 +30,7 @@ class Image extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Exception
      */
-    public function execute(string $token): Response
+    public function __invoke(string $token): Response
     {
         $response = new Response();
         $response->headers->set('Content-type', 'text/plain');

@@ -40,7 +40,7 @@ class Duplicate extends AbstractWidgetAction
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id)
+    public function __invoke(int $id)
     {
         return $this->actionHelper->handleDuplicateAction(function () use ($id) {
             return $this->newsModel->duplicate($id);

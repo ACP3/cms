@@ -49,7 +49,7 @@ class Send extends Core\Controller\AbstractWidgetAction
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id)
+    public function __invoke(int $id)
     {
         if ($this->newsletterRepository->newsletterExists($id) === true) {
             $accounts = $this->accountRepository->getAllActiveAccounts();

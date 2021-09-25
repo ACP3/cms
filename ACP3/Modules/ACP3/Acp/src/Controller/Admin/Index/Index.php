@@ -25,7 +25,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->modulesListViewProvider = $modulesListViewProvider;
     }
 
-    public function execute(): array
+    public function __invoke(): array
     {
         return ($this->modulesListViewProvider)();
     }

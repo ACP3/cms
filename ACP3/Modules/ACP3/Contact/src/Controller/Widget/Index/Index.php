@@ -31,7 +31,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->contactDetailsViewProvider = $contactDetailsViewProvider;
     }
 
-    public function execute(): Response
+    public function __invoke(): Response
     {
         $response = $this->renderTemplate(null, ($this->contactDetailsViewProvider)());
         $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);

@@ -12,7 +12,7 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class Login extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Login extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\Http\RedirectResponse

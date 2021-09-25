@@ -52,10 +52,10 @@ class Designs extends AbstractWidgetAction
     /**
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(?string $dir = null)
+    public function __invoke(?string $dir = null)
     {
         if (!empty($dir)) {
-            return $this->executePost($dir);
+            return $this->doUpdateTheme($dir);
         }
 
         return ($this->adminThemesViewProvider)();
@@ -64,7 +64,7 @@ class Designs extends AbstractWidgetAction
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executePost(string $design)
+    private function doUpdateTheme(string $design)
     {
         $result = false;
 

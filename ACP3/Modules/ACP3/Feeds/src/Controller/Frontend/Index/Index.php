@@ -45,7 +45,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute(string $feed): Response
+    public function __invoke(string $feed): Response
     {
         if ($this->acl->hasPermission('frontend/' . $feed) === true) {
             try {

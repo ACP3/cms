@@ -12,7 +12,7 @@ use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Gallery;
 use Psr\Cache\CacheItemPoolInterface;
 
-class SettingsPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class SettingsPost extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation

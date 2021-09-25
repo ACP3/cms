@@ -12,7 +12,7 @@ use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 
-abstract class AbstractFormAction extends AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+abstract class AbstractFormAction extends AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Categories\Helpers

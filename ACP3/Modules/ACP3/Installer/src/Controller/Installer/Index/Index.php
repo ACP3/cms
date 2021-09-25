@@ -7,9 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
-use ACP3\Core\Controller\InvokableActionInterface;
-
-class Index extends AbstractAction implements InvokableActionInterface
+class Index extends AbstractAction
 {
     public function __invoke(): void
     {

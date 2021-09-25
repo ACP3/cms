@@ -41,7 +41,7 @@ class Files extends Core\Controller\AbstractWidgetAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $cat): Response
+    public function __invoke(int $cat): Response
     {
         if ($this->categoryRepository->resultExists($cat) === true) {
             $response = $this->renderTemplate(null, ($this->filesByCategoryIdViewProvider)($cat));

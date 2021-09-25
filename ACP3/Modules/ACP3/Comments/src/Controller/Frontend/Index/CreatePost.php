@@ -12,7 +12,7 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Comments;
 
-class CreatePost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class CreatePost extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation

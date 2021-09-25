@@ -40,7 +40,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
      *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute(?string $action)
+    public function __invoke(?string $action)
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

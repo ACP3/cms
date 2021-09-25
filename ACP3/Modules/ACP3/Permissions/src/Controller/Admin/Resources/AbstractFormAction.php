@@ -9,10 +9,9 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Modules;
 
-abstract class AbstractFormAction extends AbstractWidgetAction implements InvokableActionInterface
+abstract class AbstractFormAction extends AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\Modules
@@ -28,11 +27,6 @@ abstract class AbstractFormAction extends AbstractWidgetAction implements Invoka
         $this->modules = $modules;
     }
 
-    /**
-     * @param string $moduleName
-     *
-     * @return int
-     */
     protected function fetchModuleId(string $moduleName): int
     {
         $moduleInfo = $this->modules->getModuleInfo($moduleName);

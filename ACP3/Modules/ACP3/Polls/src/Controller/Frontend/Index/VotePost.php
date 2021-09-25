@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Polls;
 
-class VotePost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class VotePost extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Core\Date

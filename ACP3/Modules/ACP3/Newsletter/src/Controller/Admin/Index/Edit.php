@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
 
-class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Edit extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Newsletter\Model\NewsletterModel

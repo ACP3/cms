@@ -47,7 +47,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(): array
+    public function __invoke(): array
     {
         $poll = $this->pollRepository->getLatestPoll($this->date->getCurrentDateTime());
 

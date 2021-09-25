@@ -42,7 +42,7 @@ class Activate extends Core\Controller\AbstractWidgetAction
      * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
-    public function execute(string $hash): string
+    public function __invoke(string $hash): string
     {
         try {
             $this->activateAccountFormValidation->validate(['hash' => $hash]);

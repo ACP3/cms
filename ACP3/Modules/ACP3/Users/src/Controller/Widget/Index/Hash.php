@@ -27,7 +27,7 @@ class Hash extends AbstractWidgetAction
         $this->hashGenerator = $hashGenerator;
     }
 
-    public function execute(): Response
+    public function __invoke(): Response
     {
         $response = new Response();
         $accept = AcceptHeader::fromString($this->request->getSymfonyRequest()->headers->get('Accept'));

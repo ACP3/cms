@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Details;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Comments;
 
-class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Edit extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Comments\Model\CommentsModel

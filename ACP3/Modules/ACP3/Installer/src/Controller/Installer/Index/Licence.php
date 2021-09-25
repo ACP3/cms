@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
 class Licence extends AbstractAction
 {
-    public function execute(): void
+    public function __invoke(): void
     {
     }
 }

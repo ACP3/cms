@@ -29,7 +29,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     /**
      * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function execute(int $id)
+    public function __invoke(int $id)
     {
         return ($this->dataGridByModuleViewProvider)($id);
     }

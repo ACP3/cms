@@ -10,7 +10,6 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Application\Event\ControllerActionAfterDispatchEvent;
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
 use ACP3\Core\Application\Event\ControllerActionRequestEvent;
-use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\Exception\ControllerActionNotFoundException;
 use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Http\RequestInterface;
@@ -22,8 +21,6 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 class ControllerActionDispatcher
 {
     private const ACTION_METHOD_INVOKABLE = '__invoke';
-    private const ACTION_METHOD_DEFAULT = 'execute';
-    private const ACTION_METHOD_POST = 'executePost';
     private const POST_SERVICE_ID_SUFFIX = '_post';
 
     /**
@@ -95,7 +92,7 @@ class ControllerActionDispatcher
                 ControllerActionBeforeDispatchEvent::NAME
             );
 
-            /** @var \ACP3\Core\Controller\ActionInterface $controller */
+            /** @var \ACP3\Core\Controller\InvokableActionInterface $controller */
             $controller = $this->serviceLocator->get($serviceId);
             $controller->preDispatch();
 
@@ -152,7 +149,7 @@ class ControllerActionDispatcher
      * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
      * @throws \ReflectionException
      */
-    private function executeControllerAction(ActionInterface $controller, array $arguments)
+    private function executeControllerAction(InvokableActionInterface $controller, array $arguments)
     {
         $callable = $this->getCallable($controller);
 
@@ -168,39 +165,14 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @throws \ReflectionException
      * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
      */
-    private function getCallable(ActionInterface $controller): array
+    private function getCallable(InvokableActionInterface $controller): array
     {
-        if ($controller instanceof InvokableActionInterface && method_exists($controller, self::ACTION_METHOD_INVOKABLE) === true) {
+        if (method_exists($controller, self::ACTION_METHOD_INVOKABLE) === true) {
             return [$controller, self::ACTION_METHOD_INVOKABLE];
         }
 
-        if ($this->isValidPostRequest($controller)) {
-            $reflection = new \ReflectionMethod($controller, self::ACTION_METHOD_POST);
-
-            if ($reflection->isPublic()) {
-                return [$controller, self::ACTION_METHOD_POST];
-            }
-        }
-
-        if (method_exists($controller, self::ACTION_METHOD_DEFAULT) === true) {
-            return [$controller, self::ACTION_METHOD_DEFAULT];
-        }
-
-        throw new ControllerActionNotFoundException(sprintf('Could not find method <%s> in controller <%s>', self::ACTION_METHOD_DEFAULT, \get_class($controller)));
-    }
-
-    private function isValidPostRequest(ActionInterface $controller): bool
-    {
-        if (method_exists($controller, self::ACTION_METHOD_POST)
-            && $this->request->getSymfonyRequest()->isMethod('POST')) {
-            return $this->request->getPost()->has('submit')
-                || $this->request->getPost()->has('continue')
-                || method_exists($controller, self::ACTION_METHOD_DEFAULT) === false;
-        }
-
-        return false;
+        throw new ControllerActionNotFoundException(sprintf('Could not find method <%s> in controller <%s>', self::ACTION_METHOD_INVOKABLE, \get_class($controller)));
     }
 }

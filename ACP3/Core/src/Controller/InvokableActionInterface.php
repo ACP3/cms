@@ -12,6 +12,19 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @method array|string|Response|void|null __invoke(...$params = null)
  */
-interface InvokableActionInterface extends ActionInterface
+interface InvokableActionInterface
 {
+    public function preDispatch(): void;
+
+    /**
+     * Gets a class from the service container.
+     *
+     * @return mixed
+     */
+    public function get(string $serviceId);
+
+    /**
+     * @param Response|string|array $actionResult
+     */
+    public function display($actionResult): Response;
 }

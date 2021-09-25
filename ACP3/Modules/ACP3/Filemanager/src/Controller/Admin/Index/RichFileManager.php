@@ -31,7 +31,7 @@ class RichFileManager extends AbstractWidgetAction
     /**
      * @throws \Exception
      */
-    public function execute(): void
+    public function __invoke(): void
     {
         $app = new Application();
 

@@ -12,7 +12,7 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Gallery;
 
-class EditPost extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class EditPost extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Gallery\Validation\GalleryFormValidation

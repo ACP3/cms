@@ -40,7 +40,7 @@ class ViewProfile extends Core\Controller\AbstractWidgetAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id): Response
+    public function __invoke(int $id): Response
     {
         if ($this->userRepository->resultExists($id) === true) {
             $response = $this->renderTemplate(null, ($this->userProfileViewProvider)($id));

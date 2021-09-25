@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Emoticons;
 
-class Create extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Create extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminEmoticonEditViewProvider

@@ -46,7 +46,7 @@ class Details extends Core\Controller\AbstractWidgetAction
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id): Response
+    public function __invoke(int $id): Response
     {
         if ($this->newsRepository->resultExists($id, $this->date->getCurrentDateTime()) == 1) {
             $response = $this->renderTemplate(null, ($this->newsDetailsViewProvider)($id));

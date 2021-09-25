@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Http\RequestInterface;
 
-abstract class AbstractWidgetAction implements ActionInterface
+abstract class AbstractWidgetAction implements InvokableActionInterface
 {
     use DisplayActionTrait;
 

@@ -40,7 +40,7 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
     /**
      * Displays the user menu, if the user is logged in.
      */
-    public function execute(): Response
+    public function __invoke(): Response
     {
         if ($this->user->isAuthenticated() === true) {
             $response = $this->renderTemplate(null, ($this->userMenuViewProvider)());

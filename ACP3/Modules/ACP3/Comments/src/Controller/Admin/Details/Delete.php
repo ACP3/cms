@@ -44,7 +44,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id, ?string $action = null)
+    public function __invoke(int $id, ?string $action = null)
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,

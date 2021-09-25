@@ -28,7 +28,7 @@ class NotFound extends Core\Controller\AbstractWidgetAction
         $this->breadcrumb = $breadcrumb;
     }
 
-    public function execute(): Response
+    public function __invoke(): Response
     {
         $this->breadcrumb->append(
             $this->translator->t('errors', 'frontend_index_not_found'),

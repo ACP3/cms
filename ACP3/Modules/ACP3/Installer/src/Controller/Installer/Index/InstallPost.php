@@ -7,7 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
-use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\Helpers\Alerts;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
@@ -18,7 +17,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class InstallPost extends AbstractAction implements InvokableActionInterface
+class InstallPost extends AbstractAction
 {
     /**
      * @var InstallModel

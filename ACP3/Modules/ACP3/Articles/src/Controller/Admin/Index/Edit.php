@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
 use ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider;
 
-class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Edit extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Articles\Model\ArticlesModel

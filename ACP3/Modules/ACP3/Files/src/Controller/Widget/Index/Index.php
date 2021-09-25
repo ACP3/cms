@@ -33,7 +33,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(?int $limit = null, ?int $categoryId = null, string $template = ''): Response
+    public function __invoke(?int $limit = null, ?int $categoryId = null, string $template = ''): Response
     {
         $response = $this->renderTemplate(urldecode($template), ($this->filesWidgetViewProvider)($categoryId, $limit));
         $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);

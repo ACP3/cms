@@ -29,7 +29,7 @@ class Latest extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $categoryId = 0): array
+    public function __invoke(int $categoryId = 0): array
     {
         return ($this->latestNewsWidgetViewProvider)($categoryId);
     }

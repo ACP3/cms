@@ -39,7 +39,7 @@ class Cache extends Core\Controller\AbstractWidgetAction
     /**
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(?string $action = null)
+    public function __invoke(?string $action = null)
     {
         if ($action !== null) {
             return $this->executePurge($action);

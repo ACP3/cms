@@ -30,7 +30,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->searchWidgetViewProvider = $searchWidgetViewProvider;
     }
 
-    public function execute(): Response
+    public function __invoke(): Response
     {
         $response = $this->renderTemplate(null, ($this->searchWidgetViewProvider)());
         $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);

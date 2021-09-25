@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Modules\ACP3\Users;
 
-class Register extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Register extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Core\Helpers\Alerts

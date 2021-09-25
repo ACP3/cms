@@ -36,7 +36,7 @@ class Activate extends Core\Controller\AbstractWidgetAction
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(int $id)
+    public function __invoke(int $id)
     {
         $bool = $this->accountStatusHelper->changeAccountStatus(
             Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,

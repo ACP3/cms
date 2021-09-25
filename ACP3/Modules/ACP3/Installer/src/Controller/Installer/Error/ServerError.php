@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ServerError extends AbstractInstallerAction
 {
-    public function execute(): Response
+    public function __invoke(): Response
     {
         return new Response(
             $this->view->fetchTemplate('Installer/Installer/error.server_error.tpl'),

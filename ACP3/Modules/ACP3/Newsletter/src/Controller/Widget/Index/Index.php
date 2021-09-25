@@ -26,7 +26,7 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->newsletterSubscribeWidgetViewProvider = $newsletterSubscribeWidgetViewProvider;
     }
 
-    public function execute(string $template = ''): array
+    public function __invoke(string $template = ''): array
     {
         $this->setTemplate($template);
 

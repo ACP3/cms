@@ -47,7 +47,7 @@ class Details extends Core\Controller\AbstractWidgetAction
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id): Response
+    public function __invoke(int $id): Response
     {
         if ($this->pictureRepository->pictureExists($id, $this->date->getCurrentDateTime()) === true) {
             $response = $this->renderTemplate(null, ($this->galleryPictureDetailsViewProvider)($id));

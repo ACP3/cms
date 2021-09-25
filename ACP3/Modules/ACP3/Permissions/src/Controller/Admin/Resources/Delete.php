@@ -38,7 +38,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
      *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function execute(?string $action = null)
+    public function __invoke(?string $action = null)
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

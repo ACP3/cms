@@ -26,7 +26,7 @@ class Suggest extends AbstractWidgetAction
         $this->stringFormatter = $stringFormatter;
     }
 
-    public function execute(): JsonResponse
+    public function __invoke(): JsonResponse
     {
         $response = [];
         if ($this->request->getPost()->count() > 0) {

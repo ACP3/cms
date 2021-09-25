@@ -27,7 +27,7 @@ class Table extends AbstractWidgetAction
         $this->dataGridByTableViewProvider = $dataGridByTableViewProvider;
     }
 
-    public function execute(string $table)
+    public function __invoke(string $table)
     {
         return ($this->dataGridByTableViewProvider)($table);
     }

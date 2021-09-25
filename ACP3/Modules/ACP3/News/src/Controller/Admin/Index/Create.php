@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\News;
 
-class Create extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Create extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\News\ViewProviders\AdminNewsEditViewProvider

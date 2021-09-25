@@ -50,7 +50,7 @@ class Logout extends Core\Controller\AbstractWidgetAction
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute()
+    public function __invoke()
     {
         if (!$this->user->isAuthenticated()) {
             return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());

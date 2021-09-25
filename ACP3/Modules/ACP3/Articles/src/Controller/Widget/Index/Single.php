@@ -45,7 +45,7 @@ class Single extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id): ?Response
+    public function __invoke(int $id): ?Response
     {
         if ($this->articleRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $response = $this->renderTemplate(null, ($this->articleFullViewProvider)($id));

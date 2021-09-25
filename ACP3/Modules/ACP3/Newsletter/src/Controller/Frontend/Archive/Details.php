@@ -39,7 +39,7 @@ class Details extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id): Response
+    public function __invoke(int $id): Response
     {
         $newsletter = $this->newsletterRepository->getOneByIdAndStatus($id, 1);
 

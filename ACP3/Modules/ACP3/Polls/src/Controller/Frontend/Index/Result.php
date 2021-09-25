@@ -45,7 +45,7 @@ class Result extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id): Response
+    public function __invoke(int $id): Response
     {
         if ($this->pollRepository->pollExists($id, $this->date->getCurrentDateTime()) === true) {
             $response = $this->renderTemplate(null, ($this->pollResultViewProvider)($id));

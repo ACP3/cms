@@ -28,7 +28,7 @@ class Index extends AbstractWidgetAction
         $this->shariffBackend = $shariffBackend;
     }
 
-    public function execute(): JsonResponse
+    public function __invoke(): JsonResponse
     {
         return new JsonResponse(
             $this->shariffBackend->get(

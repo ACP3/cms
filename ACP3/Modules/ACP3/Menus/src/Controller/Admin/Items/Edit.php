@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Menus;
 
-class Edit extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Edit extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Menus\Model\MenuItemsModel

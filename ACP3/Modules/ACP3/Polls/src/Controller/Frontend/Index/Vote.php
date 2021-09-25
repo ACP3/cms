@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Polls\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Modules\ACP3\Polls;
 
-class Vote extends Core\Controller\AbstractWidgetAction implements Core\Controller\InvokableActionInterface
+class Vote extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var Core\Date

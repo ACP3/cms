@@ -36,7 +36,7 @@ class Index extends Core\Controller\AbstractWidgetAction
      * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
-    public function execute(): Response
+    public function __invoke(): Response
     {
         try {
             $response = $this->renderTemplate(null, ($this->guestbookListViewProvider)());

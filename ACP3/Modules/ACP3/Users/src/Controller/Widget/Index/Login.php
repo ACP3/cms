@@ -41,7 +41,7 @@ class Login extends Core\Controller\AbstractWidgetAction
     /**
      * Displays the login mask, if the user is not already logged in.
      */
-    public function execute(): Response
+    public function __invoke(): Response
     {
         if ($this->user->isAuthenticated() === false) {
             $response = $this->renderTemplate(null, ($this->loginViewProvider)());

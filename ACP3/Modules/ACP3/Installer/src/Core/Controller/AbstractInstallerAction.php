@@ -7,12 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Installer\Core\Controller;
 
-use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\DisplayActionTrait;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
 
-abstract class AbstractInstallerAction implements ActionInterface
+abstract class AbstractInstallerAction
 {
     use DisplayActionTrait;
 

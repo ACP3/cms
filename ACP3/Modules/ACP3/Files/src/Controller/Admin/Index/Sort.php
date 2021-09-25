@@ -46,7 +46,7 @@ class Sort extends AbstractWidgetAction
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(int $id, string $action)
+    public function __invoke(int $id, string $action)
     {
         if (($action === 'up' || $action === 'down') && $this->filesRepository->resultExists($id) === true) {
             if ($action === 'up') {
