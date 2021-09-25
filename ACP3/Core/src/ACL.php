@@ -27,27 +27,27 @@ class ACL
      * @var \ACP3\Core\ACL\Repository\UserRoleRepositoryInterface
      */
     private $userRoleRepository;
+    /**
+     * @var ControllerActionExists
+     */
+    private $controllerActionExists;
 
     /**
      * Array mit den dem Benutzer zugewiesenen Rollen.
      *
-     * @var array
+     * @var array<int, int[]>
      */
     private $userRoles = [];
     /**
      * Array mit allen registrierten Ressourcen.
      *
-     * @var array
+     * @var array<string, array<string, array<string, int>>>
      */
     private $resources = [];
     /**
      * @var int[]
      */
     private $permissions = [];
-    /**
-     * @var ControllerActionExists
-     */
-    private $controllerActionExists;
 
     public function __construct(
         ControllerActionExists $controllerActionExists,
@@ -84,6 +84,8 @@ class ACL
 
     /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
+     *
+     * @return string[]
      */
     public function getUserRoleNames(int $userId): array
     {
@@ -95,14 +97,12 @@ class ACL
         return $roles;
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getAllRoles(): array
     {
         return $this->permissionService->getRoles();
-    }
-
-    public function userHasRole(int $roleId): bool
-    {
-        return \in_array($roleId, $this->getUserRoleIds($this->user->getUserId()), true);
     }
 
     /**
@@ -156,6 +156,8 @@ class ACL
 
     /**
      * Gibt alle in der Datenbank vorhandenen Ressourcen zurück.
+     *
+     * @return array<string, array<string, array<string, int>>>
      */
     private function getResources(): array
     {

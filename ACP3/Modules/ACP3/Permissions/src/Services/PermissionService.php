@@ -40,6 +40,8 @@ class PermissionService implements PermissionServiceInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getResources(): array
     {
@@ -54,7 +56,7 @@ class PermissionService implements PermissionServiceInterface
             $path = $resource['module_name'] . '/' . $resource['controller'] . '/' . $resource['page'] . '/';
             $path .= !empty($resource['params']) ? $resource['params'] . '/' : '';
             $data[$area][$path] = [
-                'resource_id' => $resource['resource_id'],
+                'resource_id' => (int) $resource['resource_id'],
             ];
         }
 

@@ -230,14 +230,4 @@ class ACLTest extends TestCase
 
         self::assertTrue($this->acl->hasPermission($resource));
     }
-
-    public function testUserHasRole(): void
-    {
-        $userId = 1;
-
-        $this->setUpUserMockExpectations($userId);
-        $this->setUpUserRoleExpectations($userId);
-
-        self::assertTrue($this->acl->userHasRole(2));
-    }
 }

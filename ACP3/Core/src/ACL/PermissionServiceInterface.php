@@ -12,9 +12,14 @@ interface PermissionServiceInterface
     /**
      * Returns the cache of all the registered resources.
      * This will also only return the resources of the currently installed and active modules.
+     *
+     * @return array<string, array<string, array<string, int>>>
      */
     public function getResources(): array;
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getRoles(): array;
 
     /**
