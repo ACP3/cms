@@ -8,24 +8,17 @@
 namespace ACP3\Modules\ACP3\Articles\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     public const MODULE_NAME = 'articles';
 
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return static::MODULE_NAME;
     }
 
-    /**
-     * @return array
-     */
-    public function specialResources()
+    public function specialResources(): array
     {
         return [
             'admin' => [
@@ -52,10 +45,7 @@ class Schema implements Modules\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function createTables()
+    public function createTables(): array
     {
         return [
             'CREATE TABLE `{pre}articles` (
@@ -78,18 +68,12 @@ class Schema implements Modules\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function removeTables()
+    public function removeTables(): array
     {
         return ['DROP TABLE IF EXISTS `{pre}articles`;'];
     }
 
-    /**
-     * @return array
-     */
-    public function settings()
+    public function settings(): array
     {
         return [];
     }

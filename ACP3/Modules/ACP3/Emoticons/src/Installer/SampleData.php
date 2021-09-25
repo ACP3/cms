@@ -7,14 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\Installer;
 
-use ACP3\Core\Modules\Installer\AbstractSampleData;
-
-class SampleData extends AbstractSampleData
+class SampleData extends \ACP3\Core\Installer\AbstractSampleData
 {
     /**
-     * @return array
+     * {@inheritDoc}
      */
-    public function sampleData()
+    public function sampleData(): array
     {
         return [
             "INSERT INTO `{pre}emoticons` VALUES (1, ':D', 'Very Happy', '1.gif');",

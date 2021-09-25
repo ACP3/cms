@@ -8,16 +8,12 @@
 namespace ACP3\Modules\ACP3\Seo\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     public const MODULE_NAME = 'seo';
 
-    /**
-     * @return array
-     */
-    public function specialResources()
+    public function specialResources(): array
     {
         return [
             'admin' => [
@@ -34,18 +30,12 @@ class Schema implements Modules\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return static::MODULE_NAME;
     }
 
-    /**
-     * @return array
-     */
-    public function createTables()
+    public function createTables(): array
     {
         return [
             'CREATE TABLE IF NOT EXISTS `{pre}seo` (
@@ -61,20 +51,14 @@ class Schema implements Modules\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function removeTables()
+    public function removeTables(): array
     {
         return [
             'DROP TABLE IF EXISTS `{pre}seo`;',
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function settings()
+    public function settings(): array
     {
         return [
             'meta_description' => '',

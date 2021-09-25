@@ -11,7 +11,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ModuleRegistration
 {
-    public function build(ContainerBuilder $containerBuilder)
+    /**
+     * Allows modifying/extending the dependency injection container.
+     */
+    public function build(ContainerBuilder $containerBuilder): void
     {
     }
 }

@@ -7,10 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Installer\Helpers;
 
-use ACP3\Core;
+use ACP3\Core\Installer\SampleDataInterface;
+use ACP3\Core\Installer\SchemaInterface;
 use ACP3\Core\Modules\AclInstaller;
-use ACP3\Core\Modules\Installer\SampleDataInterface;
-use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Modules\SchemaHelper;
 use ACP3\Core\Modules\SchemaInstaller;
 use Psr\Container\ContainerInterface;
@@ -35,25 +34,16 @@ class Install
         return false;
     }
 
-    /**
-     * @param Core\Modules\Installer\SchemaInterface $schema
-     */
     public function installModule(SchemaInterface $schema, ContainerInterface $container): bool
     {
         return $this->install($schema, $container, SchemaInstaller::class);
     }
 
-    /**
-     * @param Core\Modules\Installer\SchemaInterface $schema
-     */
     public function installResources(SchemaInterface $schema, ContainerInterface $container): bool
     {
         return $this->install($schema, $container, AclInstaller::class);
     }
 
-    /**
-     * @param Core\Modules\Installer\SchemaInterface $schema
-     */
     private function install(
         SchemaInterface $schema,
         ContainerInterface $container,

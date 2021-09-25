@@ -15,7 +15,7 @@ class ModuleRegistration extends \ACP3\Core\Modules\ModuleRegistration
     /**
      * {@inheritdoc}
      */
-    public function build(ContainerBuilder $containerBuilder)
+    public function build(ContainerBuilder $containerBuilder): void
     {
         $containerBuilder->addCompilerPass(new CaptchaCompilerPass());
     }

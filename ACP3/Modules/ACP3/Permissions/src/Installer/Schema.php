@@ -8,9 +8,8 @@
 namespace ACP3\Modules\ACP3\Permissions\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     public const MODULE_NAME = 'permissions';
 

@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Installer;
 
-use ACP3\Core\Modules\Installer\SchemaInterface;
 use Psr\Container\ContainerInterface;
 
 class SchemaRegistrar implements ContainerInterface
@@ -39,7 +38,7 @@ class SchemaRegistrar implements ContainerInterface
     }
 
     /**
-     * @return \ACP3\Core\Modules\Installer\SchemaInterface
+     * @return \ACP3\Core\Installer\SchemaInterface
      */
     public function get(string $moduleName)
     {

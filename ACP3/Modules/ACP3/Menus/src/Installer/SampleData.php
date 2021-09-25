@@ -8,10 +8,9 @@
 namespace ACP3\Modules\ACP3\Menus\Installer;
 
 use ACP3\Core\I18n\Translator;
-use ACP3\Core\Modules\Installer\AbstractSampleData;
 use ACP3\Core\Modules\SchemaHelper;
 
-class SampleData extends AbstractSampleData
+class SampleData extends \ACP3\Core\Installer\AbstractSampleData
 {
     /**
      * @var \ACP3\Core\I18n\Translator
@@ -28,9 +27,9 @@ class SampleData extends AbstractSampleData
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
-    public function sampleData()
+    public function sampleData(): array
     {
         $translator = $this->translator;
 

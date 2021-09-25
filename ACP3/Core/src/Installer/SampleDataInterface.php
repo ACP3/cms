@@ -5,12 +5,12 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Modules\Installer;
+namespace ACP3\Core\Installer;
 
 interface SampleDataInterface
 {
     /**
-     * @return array
+     * @return callable[]|string[]
      */
-    public function sampleData();
+    public function sampleData(): array;
 }

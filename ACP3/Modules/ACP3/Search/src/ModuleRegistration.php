@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ModuleRegistration extends \ACP3\Core\Modules\ModuleRegistration
 {
-    public function build(ContainerBuilder $containerBuilder)
+    public function build(ContainerBuilder $containerBuilder): void
     {
         $containerBuilder->addCompilerPass(new SearchAvailabilityCompilerPass());
     }

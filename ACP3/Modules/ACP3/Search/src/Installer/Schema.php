@@ -8,16 +8,12 @@
 namespace ACP3\Modules\ACP3\Search\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     public const MODULE_NAME = 'search';
 
-    /**
-     * @return array
-     */
-    public function specialResources()
+    public function specialResources(): array
     {
         return [
             'frontend' => [
@@ -33,34 +29,22 @@ class Schema implements Modules\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return static::MODULE_NAME;
     }
 
-    /**
-     * @return array
-     */
-    public function createTables()
+    public function createTables(): array
     {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function removeTables()
+    public function removeTables(): array
     {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function settings()
+    public function settings(): array
     {
         return [];
     }

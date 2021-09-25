@@ -9,8 +9,8 @@ namespace ACP3\Modules\ACP3\Permissions\Core\Modules;
 
 use ACP3\Core\ACL\Repository\AclPermissionRepositoryInterface;
 use ACP3\Core\ACL\Repository\RoleRepositoryInterface;
+use ACP3\Core\Installer\SchemaInterface;
 use ACP3\Core\Modules\AclInstaller;
-use ACP3\Core\Modules\Installer\SchemaInterface;
 use ACP3\Core\Modules\SchemaHelper;
 use ACP3\Core\Repository\AbstractRepository;
 use Psr\Cache\CacheItemPoolInterface;

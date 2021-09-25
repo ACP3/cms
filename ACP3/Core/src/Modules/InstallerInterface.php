@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Modules;
 
-use ACP3\Core\Modules\Installer\SchemaInterface;
+use ACP3\Core\Installer\SchemaInterface;
 
 interface InstallerInterface
 {

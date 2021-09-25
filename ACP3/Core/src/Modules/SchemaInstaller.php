@@ -8,7 +8,7 @@
 namespace ACP3\Core\Modules;
 
 use ACP3\Core\Database\Connection;
-use ACP3\Core\Modules\Installer\SchemaInterface;
+use ACP3\Core\Installer\SchemaInterface;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
 use Psr\Log\LoggerInterface;

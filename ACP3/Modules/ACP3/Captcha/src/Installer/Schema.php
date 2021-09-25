@@ -8,32 +8,22 @@
 namespace ACP3\Modules\ACP3\Captcha\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
-use ACP3\Core\Modules;
 
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     public const MODULE_NAME = 'captcha';
 
-    /**
-     * @return array
-     */
-    public function createTables()
+    public function createTables(): array
     {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function removeTables()
+    public function removeTables(): array
     {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function settings()
+    public function settings(): array
     {
         return [
             'captcha' => 'captcha.extension.native_captcha_extension',
@@ -42,10 +32,7 @@ class Schema implements Modules\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function specialResources()
+    public function specialResources(): array
     {
         return [
             'admin' => [
@@ -62,10 +49,7 @@ class Schema implements Modules\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return static::MODULE_NAME;
     }

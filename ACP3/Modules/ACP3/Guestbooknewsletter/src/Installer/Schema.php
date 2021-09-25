@@ -7,48 +7,31 @@
 
 namespace ACP3\Modules\ACP3\Guestbooknewsletter\Installer;
 
-use ACP3\Core\Modules;
-
-class Schema implements Modules\Installer\SchemaInterface
+class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     public const MODULE_NAME = 'guestbooknewsletter';
 
-    /**
-     * @return array
-     */
-    public function specialResources()
+    public function specialResources(): array
     {
         return [];
     }
 
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return static::MODULE_NAME;
     }
 
-    /**
-     * @return array
-     */
-    public function createTables()
+    public function createTables(): array
     {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function removeTables()
+    public function removeTables(): array
     {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function settings()
+    public function settings(): array
     {
         return [
             'newsletter_integration' => 0,

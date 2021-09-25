@@ -12,7 +12,7 @@ use ACP3\Core\ACL\PrivilegeEnum;
 use ACP3\Core\ACL\Repository\AclPermissionRepositoryInterface;
 use ACP3\Core\ACL\Repository\RoleRepositoryInterface;
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Modules\Installer\SchemaInterface;
+use ACP3\Core\Installer\SchemaInterface;
 use ACP3\Core\Repository\AbstractRepository;
 
 class AclInstaller implements InstallerInterface
