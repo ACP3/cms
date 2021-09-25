@@ -11,7 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Modules\Helper\Action;
 use ACP3\Modules\ACP3\Permissions;
 
-class EditPost extends AbstractFormAction
+class EditPost extends Core\Controller\AbstractWidgetAction
 {
     /**
      * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
@@ -25,6 +25,10 @@ class EditPost extends AbstractFormAction
      * @var \ACP3\Core\Modules\Helper\Action
      */
     private $actionHelper;
+    /**
+     * @var Core\Modules
+     */
+    private $modules;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
@@ -33,11 +37,12 @@ class EditPost extends AbstractFormAction
         Permissions\Model\AclResourceModel $resourcesModel,
         Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
-        parent::__construct($context, $modules);
+        parent::__construct($context);
 
         $this->resourceFormValidation = $resourceFormValidation;
         $this->resourcesModel = $resourcesModel;
         $this->actionHelper = $actionHelper;
+        $this->modules = $modules;
     }
 
     /**
@@ -53,7 +58,7 @@ class EditPost extends AbstractFormAction
 
             $this->resourceFormValidation->validate($formData);
 
-            $formData['module_id'] = $this->fetchModuleId($formData['modules']);
+            $formData['module_id'] = $this->modules->getModuleInfo($formData['modules'])['id'] ?? 0;
 
             return $this->resourcesModel->save($formData, $id);
         });
