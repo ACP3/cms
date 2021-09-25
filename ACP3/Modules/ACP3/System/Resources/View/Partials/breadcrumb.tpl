@@ -1,5 +1,5 @@
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+<nav class="border rounded p-2 mb-3" aria-label="breadcrumb">
+    <ol class="breadcrumb mb-0" itemscope itemtype="http://schema.org/BreadcrumbList">
         <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
             <a itemprop="item" href="{uri args=""}" title="{lang t="system|home"}">
                 <span itemprop="name">{site_title}</span>
