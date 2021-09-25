@@ -27,7 +27,7 @@ abstract class AbstractAction extends AbstractInstallerAction
         $this->navigation = $navigation;
     }
 
-    public function preDispatch()
+    public function preDispatch(): void
     {
         parent::preDispatch();
 

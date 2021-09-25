@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Controller;
 
+use ACP3\Core\View;
 use Symfony\Component\HttpFoundation\Response;
 
 trait DisplayActionTrait
@@ -48,10 +49,7 @@ trait DisplayActionTrait
 
     abstract protected function applyTemplateAutomatically(): string;
 
-    /**
-     * @return \ACP3\Core\View
-     */
-    abstract protected function getView();
+    abstract protected function getView(): View;
 
     /**
      * Gibt den auszugebenden Seiteninhalt zurück.

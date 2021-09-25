@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Installer\Core\Controller;
 
 use ACP3\Core\Controller\ActionInterface;
 use ACP3\Core\Controller\DisplayActionTrait;
+use ACP3\Core\View;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
 
 abstract class AbstractInstallerAction implements ActionInterface
@@ -43,14 +44,11 @@ abstract class AbstractInstallerAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function preDispatch()
+    public function preDispatch(): void
     {
     }
 
-    /**
-     * @return \ACP3\Core\View
-     */
-    protected function getView()
+    protected function getView(): View
     {
         return $this->view;
     }
@@ -58,7 +56,7 @@ abstract class AbstractInstallerAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function get($serviceId)
+    public function get(string $serviceId)
     {
         return $this->container->get($serviceId);
     }

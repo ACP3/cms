@@ -17,15 +17,9 @@ trait CacheResponseTrait
 {
     abstract protected function getRequest(): RequestInterface;
 
-    /**
-     * @return string
-     */
-    abstract protected function getApplicationMode();
+    abstract protected function getApplicationMode(): string;
 
-    /**
-     * @return SettingsInterface
-     */
-    abstract protected function getSettings();
+    abstract protected function getSettings(): SettingsInterface;
 
     /**
      * @param int $lifetime Cache TTL in seconds

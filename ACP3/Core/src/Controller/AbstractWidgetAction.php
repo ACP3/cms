@@ -50,17 +50,14 @@ abstract class AbstractWidgetAction implements ActionInterface
         $this->appPath = $context->getAppPath();
     }
 
-    /**
-     * @return void
-     */
-    public function preDispatch()
+    public function preDispatch(): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function get($serviceId)
+    public function get(string $serviceId)
     {
         return $this->container->get($serviceId);
     }
@@ -76,26 +73,17 @@ abstract class AbstractWidgetAction implements ActionInterface
             . '.' . $this->request->getAction() . '.tpl';
     }
 
-    /**
-     * @return \ACP3\Core\View
-     */
-    protected function getView()
+    protected function getView(): Core\View
     {
         return $this->view;
     }
 
-    /**
-     * @return Core\Settings\SettingsInterface
-     */
-    protected function getSettings()
+    protected function getSettings(): Core\Settings\SettingsInterface
     {
         return $this->config;
     }
 
-    /**
-     * @return string
-     */
-    protected function getApplicationMode()
+    protected function getApplicationMode(): string
     {
         return $this->container->getParameter('core.environment');
     }

@@ -29,7 +29,7 @@ abstract class AbstractAction extends AbstractWidgetAction implements InvokableA
         $this->user = $user;
     }
 
-    public function preDispatch()
+    public function preDispatch(): void
     {
         parent::preDispatch();
 

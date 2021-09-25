@@ -11,19 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface ActionInterface
 {
-    /**
-     * @return void
-     */
-    public function preDispatch();
+    public function preDispatch(): void;
 
     /**
      * Gets a class from the service container.
      *
-     * @param string $serviceId
-     *
      * @return mixed
      */
-    public function get($serviceId);
+    public function get(string $serviceId);
 
     /**
      * @param Response|string|array $actionResult
