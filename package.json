@@ -78,7 +78,7 @@
     "bootstrap-sass": "^3.4.1",
     "ckeditor-codemirror-plugin": "^1.17.3",
     "core-js": "^3.15.2",
-    "datatables.net": "^1.10.25",
+    "datatables.net": "^1.11.3",
     "datatables.net-bs": "^1.10.25",
     "flatpickr": "^4.6.9",
     "jquery": "^3.6.0",
