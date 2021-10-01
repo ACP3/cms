@@ -20,7 +20,6 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 
 class ControllerActionDispatcher
 {
-    private const ACTION_METHOD_INVOKABLE = '__invoke';
     private const POST_SERVICE_ID_SUFFIX = '_post';
 
     /**
@@ -149,30 +148,16 @@ class ControllerActionDispatcher
      * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
      * @throws \ReflectionException
      */
-    private function executeControllerAction(InvokableActionInterface $controller, array $arguments)
+    private function executeControllerAction(InvokableActionInterface $action, array $arguments)
     {
-        $callable = $this->getCallable($controller);
-
         if (empty($arguments)) {
             try {
-                $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $callable);
+                $arguments = $this->argumentResolver->getArguments($this->request->getSymfonyRequest(), $action);
             } catch (\RuntimeException $e) {
                 throw new ControllerActionNotFoundException($e->getMessage(), $e);
             }
         }
 
-        return \call_user_func_array($callable, $arguments);
-    }
-
-    /**
-     * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
-     */
-    private function getCallable(InvokableActionInterface $controller): array
-    {
-        if (method_exists($controller, self::ACTION_METHOD_INVOKABLE) === true) {
-            return [$controller, self::ACTION_METHOD_INVOKABLE];
-        }
-
-        throw new ControllerActionNotFoundException(sprintf('Could not find method <%s> in controller <%s>', self::ACTION_METHOD_INVOKABLE, \get_class($controller)));
+        return \call_user_func_array($action, $arguments);
     }
 }
