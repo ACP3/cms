@@ -143,7 +143,7 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @return mixed
+     * @return array|Response|string|void|null
      *
      * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
      * @throws \ReflectionException
@@ -158,6 +158,6 @@ class ControllerActionDispatcher
             }
         }
 
-        return \call_user_func_array($action, $arguments);
+        return $action(...$arguments);
     }
 }
