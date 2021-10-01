@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "869145d33128583b6fc9b51086543023",
+    "content-hash": "af3b22931576da5ee168b09b690d7dd3",
     "packages": [
         {
             "name": "acp3/composer-installer",
@@ -1521,34 +1521,39 @@
         },
         {
             "name": "heise/shariff",
-            "version": "9.0.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/heiseonline/shariff-backend-php.git",
-                "reference": "a29416c430b03c4f41c8b9a524631c414dd4c972"
+                "url": "https://github.com/tinogo/shariff-backend-php.git",
+                "reference": "5aca1b119c6f6a52c15a02c7d0506a080c64eaca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heiseonline/shariff-backend-php/zipball/a29416c430b03c4f41c8b9a524631c414dd4c972",
-                "reference": "a29416c430b03c4f41c8b9a524631c414dd4c972",
+                "url": "https://api.github.com/repos/tinogo/shariff-backend-php/zipball/5aca1b119c6f6a52c15a02c7d0506a080c64eaca",
+                "reference": "5aca1b119c6f6a52c15a02c7d0506a080c64eaca",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.1",
-                "laminas/laminas-cache": "^2.7",
-                "php": "^7.2",
+                "laminas/laminas-cache": "^2.13",
+                "php": "^7.3 || ^8.0",
                 "psr/log": "^1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Heise\\Shariff\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Heise\\Tests\\Shariff\\": "tests"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -1566,10 +1571,9 @@
                 "social buttons"
             ],
             "support": {
-                "issues": "https://github.com/heiseonline/shariff-backend-php/issues",
-                "source": "https://github.com/heiseonline/shariff-backend-php/tree/master"
+                "source": "https://github.com/tinogo/shariff-backend-php/tree/master"
             },
-            "time": "2020-02-28T15:37:37+00:00"
+            "time": "2021-10-01T19:59:40+00:00"
         },
         {
             "name": "illuminate/config",
@@ -10389,6 +10393,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "servocoder/richfilemanager-php": 20,
+        "heise/shariff": 20,
         "ckeditor/ckeditor": 20
     },
     "prefer-stable": true,
