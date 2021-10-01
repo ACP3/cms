@@ -75,13 +75,6 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
             'LANG_DIRECTION' => $this->translator->getDirection(),
             'LANG' => $this->translator->getShortIsoCode(),
             'LAYOUT' => $this->request->isXmlHttpRequest() ? 'layout.ajax.tpl' : 'layout.tpl',
-            'PAGE_TITLE' => $this->translator->t('installer', 'acp3_installation'),
-            'TITLE' => $this->translator->t(
-                $this->request->getModule(),
-                $this->request->getArea()
-                . '_' . $this->request->getController()
-                . '_' . $this->request->getAction()
-            ),
         ]);
     }
 

@@ -2,7 +2,7 @@
 <html lang="{$LANG}" dir="{$LANG_DIRECTION}">
 <head>
     <meta charset="UTF-8">
-    <title>{$TITLE} | {$PAGE_TITLE}</title>
+    <title>{site_and_page_title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- STYLESHEETS -->
     {include_stylesheet module="system" file="style"}
@@ -42,7 +42,7 @@
         </div>
     </nav>
     <main id="content">
-        <h2>{$TITLE}</h2>
+        <h2>{page_title}</h2>
         {block CONTENT}{/block}
     </main>
     <footer id="footer" class="footer">

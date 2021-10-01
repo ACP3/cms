@@ -1,3 +1,3 @@
-<!-- JAVASCRIPTS -->
-<h1 class="h2">{$TITLE}</h1>
+<h2>{page_title}</h2>
 {block CONTENT}{/block}
+<!-- JAVASCRIPTS -->

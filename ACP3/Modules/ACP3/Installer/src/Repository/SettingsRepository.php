@@ -94,6 +94,11 @@ class SettingsRepository extends AbstractRepository implements SettingsAwareRepo
                 'name' => 'site_subtitle',
                 'value' => '',
             ],
+            [
+                'module_name' => 'system',
+                'name' => 'site_subtitle_mode',
+                'value' => 3,
+            ],
         ];
     }
 

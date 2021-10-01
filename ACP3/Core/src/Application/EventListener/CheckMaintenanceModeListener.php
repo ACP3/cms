@@ -8,7 +8,6 @@
 namespace ACP3\Core\Application\EventListener;
 
 use ACP3\Core\Application\Event\ControllerActionRequestEvent;
-use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
@@ -31,21 +30,15 @@ class CheckMaintenanceModeListener implements EventSubscriberInterface
      * @var \ACP3\Core\View
      */
     private $view;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
 
     public function __construct(
         ApplicationPath $appPath,
         SettingsInterface $settings,
-        Title $title,
         View $view)
     {
         $this->appPath = $appPath;
         $this->settings = $settings;
         $this->view = $view;
-        $this->title = $title;
     }
 
     public function __invoke(ControllerActionRequestEvent $event)
@@ -70,7 +63,6 @@ class CheckMaintenanceModeListener implements EventSubscriberInterface
     private function renderMaintenanceMessage(ControllerActionRequestEvent $event): void
     {
         $this->view->assign([
-            'PAGE_TITLE' => $this->title->getSiteTitle(),
             'ROOT_DIR' => $this->appPath->getWebRoot(),
             'CONTENT' => $this->settings->getSettings('system')['maintenance_message'],
         ]);
