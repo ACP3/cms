@@ -28,10 +28,7 @@ class DisplayActionTraitImpl
         return 'Foo/Frontend/index.index.tpl';
     }
 
-    /**
-     * @return \ACP3\Core\View
-     */
-    protected function getView()
+    protected function getView(): View
     {
         return $this->view;
     }

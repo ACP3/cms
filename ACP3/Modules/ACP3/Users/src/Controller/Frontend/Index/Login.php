@@ -43,12 +43,12 @@ class Login extends Core\Controller\AbstractWidgetAction
     /**
      * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function __invoke()
+    public function __invoke(?string $redirect = null)
     {
         if ($this->user->isAuthenticated() === true) {
             return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
         }
 
-        return ($this->loginViewProvider)();
+        return ($this->loginViewProvider)($redirect);
     }
 }
