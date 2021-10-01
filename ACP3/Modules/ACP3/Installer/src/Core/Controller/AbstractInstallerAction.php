@@ -8,10 +8,11 @@
 namespace ACP3\Modules\ACP3\Installer\Core\Controller;
 
 use ACP3\Core\Controller\DisplayActionTrait;
+use ACP3\Core\Controller\InvokableActionInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
 
-abstract class AbstractInstallerAction
+abstract class AbstractInstallerAction implements InvokableActionInterface
 {
     use DisplayActionTrait;
 

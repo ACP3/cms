@@ -84,6 +84,16 @@ class SettingsRepository extends AbstractRepository implements SettingsAwareRepo
                 'name' => 'date_time_zone',
                 'value' => date_default_timezone_get(),
             ],
+            [
+                'module_name' => 'system',
+                'name' => 'site_title',
+                'value' => 'ACP3 Installer',
+            ],
+            [
+                'module_name' => 'system',
+                'name' => 'site_subtitle',
+                'value' => '',
+            ],
         ];
     }
 
