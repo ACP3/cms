@@ -5,21 +5,19 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\View\Renderer\Smarty\Functions;
+namespace ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core;
+use ACP3\Core\Helpers\View\CheckAccess as CheckAccessViewHelper;
+use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 
 class CheckAccess extends AbstractFunction
 {
     /**
-     * @var \ACP3\Core\Helpers\View\CheckAccess
+     * @var CheckAccessViewHelper
      */
-    protected $checkAccess;
+    private $checkAccess;
 
-    /**
-     * @param \ACP3\Core\Helpers\View\CheckAccess $checkAccess
-     */
-    public function __construct(Core\Helpers\View\CheckAccess $checkAccess)
+    public function __construct(CheckAccessViewHelper $checkAccess)
     {
         $this->checkAccess = $checkAccess;
     }

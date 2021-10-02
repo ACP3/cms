@@ -7,7 +7,8 @@
 
 namespace ACP3\Core\Installer;
 
-use ACP3\Core;
+use ACP3\Core\Database\Connection;
+use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -16,20 +17,20 @@ class SchemaHelper
     use ContainerAwareTrait;
 
     /**
-     * @var \ACP3\Core\Database\Connection
+     * @var Connection
      */
     private $db;
     /**
-     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
+     * @var ModuleAwareRepositoryInterface
      */
-    private $systemModuleRepository;
+    private $moduleAwareRepository;
 
     public function __construct(
-        Core\Database\Connection $db,
-        Core\Repository\ModuleAwareRepositoryInterface $systemModuleRepository
+        Connection $db,
+        ModuleAwareRepositoryInterface $moduleAwareRepository
     ) {
         $this->db = $db;
-        $this->systemModuleRepository = $systemModuleRepository;
+        $this->moduleAwareRepository = $moduleAwareRepository;
     }
 
     public function getContainer(): ContainerInterface
@@ -37,17 +38,14 @@ class SchemaHelper
         return $this->container;
     }
 
-    /**
-     * @return \ACP3\Core\Database\Connection
-     */
-    public function getDb(): Core\Database\Connection
+    public function getDb(): Connection
     {
         return $this->db;
     }
 
-    public function getSystemModuleRepository(): Core\Repository\ModuleAwareRepositoryInterface
+    public function getModuleAwareRepository(): ModuleAwareRepositoryInterface
     {
-        return $this->systemModuleRepository;
+        return $this->moduleAwareRepository;
     }
 
     /**
@@ -66,7 +64,7 @@ class SchemaHelper
         $search = ['{pre}', '{engine}', '{charset}'];
         $replace = [$this->db->getPrefix(), 'ENGINE=InnoDB', 'CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`'];
 
-        if ($this->systemModuleRepository->coreTablesExist()) {
+        if ($this->moduleAwareRepository->coreTablesExist()) {
             $search[] = '{moduleId}';
             $replace[] = $this->getModuleId($moduleName);
         }
@@ -96,11 +94,11 @@ class SchemaHelper
      */
     public function getModuleId(string $moduleName): int
     {
-        return $this->systemModuleRepository->getModuleId($moduleName) ?: 0;
+        return $this->moduleAwareRepository->getModuleId($moduleName) ?: 0;
     }
 
     public function moduleIsInstalled(string $moduleName): bool
     {
-        return $this->systemModuleRepository->moduleExists($moduleName);
+        return $this->moduleAwareRepository->moduleExists($moduleName);
     }
 }

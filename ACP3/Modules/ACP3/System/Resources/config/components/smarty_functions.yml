@@ -1,0 +1,23 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Functions\Breadcrumb:
+    tags:
+      - { name: smarty.plugin.function, pluginName: breadcrumb }
+
+  ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Functions\CheckAccess:
+    tags:
+      - { name: smarty.plugin.function, pluginName: check_access }
+
+  ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Functions\Datepicker:
+    tags:
+      - { name: smarty.plugin.function, pluginName: datepicker }
+
+  ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Functions\RedirectMessage:
+    tags:
+      - { name: smarty.plugin.function, pluginName: redirect_message }
+
+  ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Functions\WYSIWYG:
+    tags:
+      - { name: smarty.plugin.function, pluginName: wysiwyg }

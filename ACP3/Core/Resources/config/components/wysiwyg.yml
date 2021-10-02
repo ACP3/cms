@@ -9,8 +9,7 @@ services:
     public: true
     tags: ["container.service_locator"]
 
-  core.wysiwyg.wysiwyg_factory:
-    class: ACP3\Core\WYSIWYG\WysiwygFactory
+  ACP3\Core\WYSIWYG\WysiwygFactory:
     arguments:
       $editorLocator: "@core.wysiwyg.wysiwyg_editor_registrar"
 

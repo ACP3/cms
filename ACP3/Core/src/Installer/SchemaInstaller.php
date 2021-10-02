@@ -58,7 +58,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     private function moduleNeedsInstallation(SchemaInterface $schema): bool
     {
-        return !$this->getSystemModuleRepository()->moduleExists($schema->getModuleName());
+        return !$this->getModuleAwareRepository()->moduleExists($schema->getModuleName());
     }
 
     /**
@@ -70,7 +70,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             'name' => $moduleName,
         ];
 
-        return (bool) $this->getSystemModuleRepository()->insert($insertValues);
+        return (bool) $this->getModuleAwareRepository()->insert($insertValues);
     }
 
     /**
@@ -126,6 +126,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     private function removeFromModulesTable(string $moduleName): bool
     {
-        return $this->getSystemModuleRepository()->delete($this->getModuleId($moduleName)) !== false;
+        return $this->getModuleAwareRepository()->delete($this->getModuleId($moduleName)) !== false;
     }
 }

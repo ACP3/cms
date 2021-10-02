@@ -5,20 +5,18 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\View\Renderer\Smarty\Functions;
+namespace ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
+use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 
 class RedirectMessage extends AbstractFunction
 {
     /**
      * @var \ACP3\Core\Helpers\RedirectMessages
      */
-    protected $redirectMessages;
+    private $redirectMessages;
 
-    /**
-     * @param \ACP3\Core\Helpers\RedirectMessages $redirectMessages
-     */
     public function __construct(Core\Helpers\RedirectMessages $redirectMessages)
     {
         $this->redirectMessages = $redirectMessages;

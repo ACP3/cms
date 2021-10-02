@@ -2,21 +2,9 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Core\View\Renderer\Smarty\Functions\Breadcrumb:
-    tags:
-      - { name: smarty.plugin.function, pluginName: breadcrumb }
-
-  ACP3\Core\View\Renderer\Smarty\Functions\CheckAccess:
-    tags:
-      - { name: smarty.plugin.function, pluginName: check_access }
-
   ACP3\Core\View\Renderer\Smarty\Functions\DateFormat:
     tags:
       - { name: smarty.plugin.function, pluginName: date_format }
-
-  ACP3\Core\View\Renderer\Smarty\Functions\Datepicker:
-    tags:
-      - { name: smarty.plugin.function, pluginName: datepicker }
 
   ACP3\Core\View\Renderer\Smarty\Functions\DateRange:
     tags:
@@ -25,10 +13,6 @@ services:
   ACP3\Core\View\Renderer\Smarty\Functions\Event:
     tags:
       - { name: smarty.plugin.function, pluginName: event }
-
-  ACP3\Core\View\Renderer\Smarty\Functions\RedirectMessage:
-    tags:
-      - { name: smarty.plugin.function, pluginName: redirect_message }
 
   ACP3\Core\View\Renderer\Smarty\Functions\HasPermission:
     tags:
@@ -95,9 +79,3 @@ services:
   ACP3\Core\View\Renderer\Smarty\Functions\Uri:
     tags:
       - { name: smarty.plugin.function, pluginName: uri }
-
-  ACP3\Core\View\Renderer\Smarty\Functions\WYSIWYG:
-    arguments:
-      $wysiwygFactory: "@core.wysiwyg.wysiwyg_factory"
-    tags:
-      - { name: smarty.plugin.function, pluginName: wysiwyg }

@@ -5,9 +5,10 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\View\Renderer\Smarty\Functions;
+namespace ACP3\Modules\ACP3\System\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core;
+use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class WYSIWYG extends AbstractFunction
@@ -15,11 +16,11 @@ class WYSIWYG extends AbstractFunction
     /**
      * @var \ACP3\Core\WYSIWYG\WysiwygFactory
      */
-    protected $wysiwygFactory;
+    private $wysiwygFactory;
     /**
      * @var \ACP3\Core\Settings\SettingsInterface
      */
-    protected $config;
+    private $config;
 
     public function __construct(
         Core\WYSIWYG\WysiwygFactory $wysiwygFactory,
