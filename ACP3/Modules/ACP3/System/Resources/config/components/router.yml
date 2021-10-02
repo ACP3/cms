@@ -1,0 +1,6 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\System\Core\Router\Router: ~
+  ACP3\Core\Router\RouterInterface: '@ACP3\Modules\ACP3\System\Core\Router\Router'

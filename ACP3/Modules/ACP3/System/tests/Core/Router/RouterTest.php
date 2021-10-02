@@ -5,17 +5,16 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core;
+namespace ACP3\Modules\ACP3\System\Core\Router;
 
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\Request;
-use ACP3\Core\Router\Router;
 use ACP3\Core\Settings\SettingsInterface;
 
 class RouterTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \ACP3\Core\Router\Router
+     * @var \ACP3\Modules\ACP3\System\Core\Router\Router
      */
     protected $router;
     /**

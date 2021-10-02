@@ -11,8 +11,8 @@ services:
   ACP3\Core\Http\RequestFactory:
     class: ACP3\Modules\ACP3\Seo\Core\Http\RequestFactory
 
-  ACP3\Core\Router\Router:
-    class: ACP3\Modules\ACP3\Seo\Core\Router\Router
-
   ACP3\Core\SEO\MetaStatementsService:
     class: ACP3\Modules\ACP3\Seo\Core\SEO\MetaStatementsService
+
+  ACP3\Modules\ACP3\System\Core\Router\Router:
+    class: ACP3\Modules\ACP3\Seo\Core\Router\Router

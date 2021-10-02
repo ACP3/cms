@@ -11,7 +11,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
 
-class Router extends \ACP3\Core\Router\Router
+class Router extends \ACP3\Modules\ACP3\System\Core\Router\Router
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
