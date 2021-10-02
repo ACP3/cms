@@ -11,8 +11,8 @@ use ACP3\Core\Assets;
 use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Modules;
-use ACP3\Core\Settings\SettingsInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use tubalmartin\CssMin\Minifier;
 
@@ -36,11 +36,11 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
         Assets\Libraries $libraries,
         ApplicationPath $appPath,
         CacheItemPoolInterface $coreCachePool,
-        SettingsInterface $config,
         Modules $modules,
-        FileResolver $fileResolver
+        FileResolver $fileResolver,
+        ThemePathInterface $themePath
     ) {
-        parent::__construct($assets, $libraries, $appPath, $coreCachePool, $config, $modules, $fileResolver);
+        parent::__construct($assets, $libraries, $appPath, $coreCachePool, $modules, $fileResolver, $themePath);
 
         $this->minifier = $minifier;
     }

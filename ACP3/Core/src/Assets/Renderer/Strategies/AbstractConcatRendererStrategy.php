@@ -10,9 +10,8 @@ namespace ACP3\Core\Assets\Renderer\Strategies;
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Modules;
-use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 use Psr\Cache\CacheItemPoolInterface;
 
 abstract class AbstractConcatRendererStrategy implements RendererStrategyInterface
@@ -42,26 +41,26 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
      */
     private $appPath;
     /**
-     * @var SettingsInterface
+     * @var ThemePathInterface
      */
-    private $config;
+    private $themePath;
 
     public function __construct(
         Assets $assets,
         Assets\Libraries $libraries,
         ApplicationPath $appPath,
         CacheItemPoolInterface $coreCachePool,
-        SettingsInterface $config,
         Modules $modules,
-        FileResolver $fileResolver
+        FileResolver $fileResolver,
+        ThemePathInterface $themePath
     ) {
         $this->assets = $assets;
         $this->appPath = $appPath;
         $this->coreCachePool = $coreCachePool;
-        $this->config = $config;
         $this->modules = $modules;
         $this->fileResolver = $fileResolver;
         $this->libraries = $libraries;
+        $this->themePath = $themePath;
     }
 
     abstract protected function getAssetGroup(): string;
@@ -83,7 +82,7 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
 
     private function generateFilenameHash(): string
     {
-        $filename = $this->config->getSettings(Schema::MODULE_NAME)['design'];
+        $filename = $this->themePath->getCurrentTheme();
         $filename .= '_' . $this->getEnabledLibrariesAsString();
         $filename .= '_' . $this->getAssetGroup();
 

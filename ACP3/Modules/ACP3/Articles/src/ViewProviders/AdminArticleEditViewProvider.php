@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Articles\ViewProviders;
 
 use ACP3\Core\Breadcrumb\Title;
-use ACP3\Core\Environment\Theme;
+use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
@@ -30,7 +30,7 @@ class AdminArticleEditViewProvider
      */
     private $title;
     /**
-     * @var \ACP3\Core\Environment\Theme
+     * @var ThemePathInterface
      */
     private $theme;
     /**
@@ -46,7 +46,7 @@ class AdminArticleEditViewProvider
         Forms $formsHelper,
         FormToken $formTokenHelper,
         RequestInterface $request,
-        Theme $theme,
+        ThemePathInterface $theme,
         Title $title,
         Translator $translator
     ) {
@@ -58,9 +58,6 @@ class AdminArticleEditViewProvider
         $this->translator = $translator;
     }
 
-    /**
-     * @throws \MJS\TopSort\ElementNotFoundException
-     */
     public function __invoke(array $article): array
     {
         $this->title->setPageTitlePrefix($article['title']);
@@ -81,8 +78,6 @@ class AdminArticleEditViewProvider
 
     /**
      * @return string[]
-     *
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     protected function getAvailableLayouts(): array
     {
@@ -105,8 +100,6 @@ class AdminArticleEditViewProvider
 
         $layouts = array_combine($layouts, $layouts);
 
-        $layouts = array_merge(['' => $this->translator->t('articles', 'default_layout')], $layouts);
-
-        return $layouts;
+        return array_merge(['' => $this->translator->t('articles', 'default_layout')], $layouts);
     }
 }
