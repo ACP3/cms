@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Application\EventListener;
+namespace ACP3\Modules\ACP3\System\EventListener;
 
 use ACP3\Core\Application\Event\ControllerActionRequestEvent;
 use ACP3\Core\Controller\AreaEnum;
