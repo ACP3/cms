@@ -74,7 +74,6 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
             'IS_AJAX' => $this->request->isXmlHttpRequest(),
             'LANG_DIRECTION' => $this->translator->getDirection(),
             'LANG' => $this->translator->getShortIsoCode(),
-            'LAYOUT' => $this->request->isXmlHttpRequest() ? 'System/layout.ajax.tpl' : 'System/layout.tpl',
         ]);
     }
 

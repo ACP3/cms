@@ -53,7 +53,7 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
         $this->theme = $theme;
     }
 
-    public function __invoke(ControllerActionBeforeDispatchEvent $event)
+    public function __invoke()
     {
         $this->view->assign([
             'DESIGN_PATH' => $this->theme->getDesignPathWeb(),
@@ -71,46 +71,6 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
             'UA_IS_MOBILE' => $this->request->getUserAgent()->isMobileBrowser(),
             'UPLOADS_DIR' => $this->appPath->getWebRoot() . 'uploads/',
         ]);
-
-        if ($this->request->getArea() !== AreaEnum::AREA_WIDGET) {
-            $this->fetchLayoutViaInheritance();
-        }
-    }
-
-    protected function fetchLayoutViaInheritance(): void
-    {
-        if ($this->request->isXmlHttpRequest()) {
-            $paths = $this->fetchLayoutPaths('layout.ajax', 'System/layout.ajax.tpl');
-        } else {
-            $paths = $this->fetchLayoutPaths('layout', 'System/layout.tpl');
-        }
-
-        $this->iterateOverLayoutPaths($paths);
-    }
-
-    private function fetchLayoutPaths(string $layoutFileName, string $defaultLayoutName): array
-    {
-        return [
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl',
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.tpl',
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.tpl',
-            $this->request->getModule() . '/' . $layoutFileName . '.tpl',
-            $defaultLayoutName,
-        ];
-    }
-
-    /**
-     * @param string[] $paths
-     */
-    private function iterateOverLayoutPaths(array $paths): void
-    {
-        foreach ($paths as $path) {
-            if ($this->view->templateExists($path)) {
-                $this->view->setLayout($path);
-
-                break;
-            }
-        }
     }
 
     /**

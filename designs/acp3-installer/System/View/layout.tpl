@@ -66,7 +66,7 @@
                     </button>
                 </form>
                 {javascripts}
-                    {include_js file="language-switcher"}
+                    {include_js file="language-switcher" module="system"}
                 {/javascripts}
             </div>
         </div>
