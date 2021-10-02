@@ -123,15 +123,15 @@ class FileResolver
             $this->cacheItem = $cacheItem;
         }
 
-        $systemAssetPath = $moduleName . '-' . $resourceDirectory . '-' . $file;
-        if (!isset($this->cachedPaths[$systemAssetPath])) {
-            $this->cachedPaths[$systemAssetPath] = $this->resolveAssetPath($moduleName, $resourceDirectory, $file);
+        $cacheKey = $moduleName . '-' . $resourceDirectory . '-' . $file;
+        if (!isset($this->cachedPaths[$cacheKey])) {
+            $this->cachedPaths[$cacheKey] = $this->resolveAssetPath($moduleName, $resourceDirectory, $file);
 
             $this->cacheItem->set($this->cachedPaths);
             $this->assetsCachePool->saveDeferred($this->cacheItem);
         }
 
-        return $this->cachedPaths[$systemAssetPath] ?: '';
+        return $this->cachedPaths[$cacheKey] ?: '';
     }
 
     private function resolveAssetPath(string $moduleName, string $resourceDirectory, string $file): ?string
@@ -146,11 +146,9 @@ class FileResolver
             $file
         );
 
-        return $assetPath ?: $this->findAssetInModules(
-            $moduleName,
-            '/Resources/' . $resourceDirectory,
-            $file
-        );
+        $finalPath = $assetPath ?: $this->findAssetInModules($moduleName, '/Resources/' . $resourceDirectory, $file);
+
+        return $finalPath !== null ? realpath($finalPath) : null;
     }
 
     private function findAssetInInheritedThemes(string $moduleName, string $resourceDirectory, string $file): ?string

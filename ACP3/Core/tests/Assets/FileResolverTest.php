@@ -82,6 +82,19 @@ class FileResolverTest extends TestCase
         $this->assertSamePath($expected, $actual);
     }
 
+    public function testThrowsExceptionIfNoModuleNameProvidedInPath(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->setUpThemeMockExpectations(
+            'acp3-inherit',
+            [['acp3-inherit', 'acp3'], ['acp3']],
+            [ACP3_ROOT_DIR . '/tests/designs/acp3-inherit', ACP3_ROOT_DIR . '/tests/designs/acp3', ACP3_ROOT_DIR . '/tests/designs/acp3-inherit']
+        );
+
+        $this->fileResolver->resolveTemplatePath('layout.tpl');
+    }
+
     public function testResolveTemplatePathWithMultipleInheritance(): void
     {
         $this->setUpThemeMockExpectations(
@@ -90,8 +103,8 @@ class FileResolverTest extends TestCase
             [ACP3_ROOT_DIR . '/tests/designs/acp3-inherit', ACP3_ROOT_DIR . '/tests/designs/acp3', ACP3_ROOT_DIR . '/tests/designs/acp3-inherit']
         );
 
-        $expected = ACP3_ROOT_DIR . '/tests/designs/acp3/layout.tpl';
-        $actual = $this->fileResolver->resolveTemplatePath('layout.tpl');
+        $expected = ACP3_ROOT_DIR . '/tests/designs/acp3/System/View/layout.tpl';
+        $actual = $this->fileResolver->resolveTemplatePath('System/layout.tpl');
         $this->assertSamePath($expected, $actual);
     }
 
