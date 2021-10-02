@@ -58,14 +58,14 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function processLibraries(string $layout): array
+    protected function processLibraries(): array
     {
-        $cacheId = $this->buildCacheId($layout);
+        $cacheId = $this->buildCacheId();
         $cacheItem = $this->coreCachePool->getItem($cacheId);
 
         if (!$cacheItem->isHit()) {
             $this->fetchLibraries();
-            $this->fetchThemeJavaScript($layout);
+            $this->fetchThemeJavaScript();
 
             $cacheItem->set($this->javascript);
             $this->coreCachePool->saveDeferred($cacheItem);
@@ -96,22 +96,22 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
     /**
      * Fetches the theme javascript files.
      */
-    protected function fetchThemeJavaScript(string $layout): void
+    protected function fetchThemeJavaScript(): void
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
             $this->javascript[] = $this->fileResolver->getStaticAssetPath('', static::ASSETS_PATH_JS, $file);
         }
 
         // Include general js file of the layout
-        $this->javascript[] = $this->fileResolver->getStaticAssetPath('', static::ASSETS_PATH_JS, $layout . '.js');
+        $this->javascript[] = $this->fileResolver->getStaticAssetPath('', static::ASSETS_PATH_JS, 'layout.js');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function renderHtmlElement(string $layout = 'layout'): string
+    public function renderHtmlElement(): string
     {
-        return "<script defer src=\"{$this->getURI($layout)}\"></script>\n";
+        return "<script defer src=\"{$this->getURI()}\"></script>\n";
     }
 
     protected function compress(string $assetContent): string

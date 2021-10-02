@@ -64,14 +64,14 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     /**
      * Fetches the theme javascript files.
      */
-    protected function fetchThemeJavaScript(string $layout): void
+    protected function fetchThemeJavaScript(): void
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
             $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath('System', static::ASSETS_PATH_JS, $file);
         }
 
         // Include the general js file of the layout
-        $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath('System', static::ASSETS_PATH_JS, $layout . '.js');
+        $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath('System', static::ASSETS_PATH_JS, 'layout.js');
     }
 
     /**
@@ -80,10 +80,10 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function renderHtmlElement(string $layout = 'layout'): string
+    public function renderHtmlElement(): string
     {
         if ($this->javascripts === null) {
-            $this->initialize($layout);
+            $this->initialize();
         }
 
         $currentTimestamp = time();
@@ -101,13 +101,13 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function initialize(string $layout): void
+    private function initialize(): void
     {
         $this->assets->initializeTheme();
 
         $this->javascripts = [];
 
         $this->fetchLibraries();
-        $this->fetchThemeJavaScript($layout);
+        $this->fetchThemeJavaScript();
     }
 }

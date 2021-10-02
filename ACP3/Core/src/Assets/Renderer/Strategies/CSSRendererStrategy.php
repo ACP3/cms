@@ -71,7 +71,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     /**
      * Fetches the theme stylesheets.
      */
-    private function fetchThemeStylesheets(string $layout): void
+    private function fetchThemeStylesheets(): void
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
             $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
@@ -84,7 +84,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
             'System',
             static::ASSETS_PATH_CSS,
-            $layout . '.css'
+            'layout.css'
         );
     }
 
@@ -121,10 +121,10 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function renderHtmlElement(string $layout = 'layout'): string
+    public function renderHtmlElement(): string
     {
         if ($this->stylesheets === null) {
-            $this->initialize($layout);
+            $this->initialize();
         }
 
         $currentTimestamp = time();
@@ -138,7 +138,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function initialize(string $layout): void
+    private function initialize(): void
     {
         $this->assets->initializeTheme();
 
@@ -146,6 +146,6 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
 
         $this->fetchLibraries();
         $this->fetchModuleStylesheets();
-        $this->fetchThemeStylesheets($layout);
+        $this->fetchThemeStylesheets();
     }
 }

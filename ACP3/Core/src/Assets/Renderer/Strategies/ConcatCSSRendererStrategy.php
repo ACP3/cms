@@ -85,14 +85,14 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function processLibraries(string $layout): array
+    protected function processLibraries(): array
     {
-        $cacheId = $this->buildCacheId($layout);
+        $cacheId = $this->buildCacheId();
         $cacheItem = $this->coreCachePool->getItem($cacheId);
 
         if (!$cacheItem->isHit()) {
             $this->fetchLibraries();
-            $this->fetchThemeStylesheets($layout);
+            $this->fetchThemeStylesheets();
             $this->fetchModuleStylesheets();
 
             $cacheItem->set($this->stylesheets);
@@ -124,7 +124,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     /**
      * Fetches the theme stylesheets.
      */
-    private function fetchThemeStylesheets(string $layout): void
+    private function fetchThemeStylesheets(): void
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
             $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
@@ -137,7 +137,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
         $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
             '',
             static::ASSETS_PATH_CSS,
-            $layout . '.css'
+            'layout.css'
         );
     }
 
@@ -174,9 +174,9 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function renderHtmlElement(string $layout = 'layout'): string
+    public function renderHtmlElement(): string
     {
-        return '<link rel="stylesheet" type="text/css" href="' . $this->getURI($layout) . '">' . "\n";
+        return '<link rel="stylesheet" type="text/css" href="' . $this->getURI() . '">' . "\n";
     }
 
     protected function compress(string $assetContent): string

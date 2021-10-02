@@ -12,5 +12,5 @@ interface RendererInterface
     /**
      * Returns the completely rendered HTML element of the to be rendered assets.
      */
-    public function renderHtmlElement(string $layout = 'layout'): string;
+    public function renderHtmlElement(): string;
 }

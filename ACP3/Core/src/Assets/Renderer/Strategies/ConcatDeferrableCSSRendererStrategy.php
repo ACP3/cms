@@ -46,9 +46,9 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function processLibraries(string $layout): array
+    protected function processLibraries(): array
     {
-        $cacheId = $this->buildCacheId($layout);
+        $cacheId = $this->buildCacheId();
         $cacheItem = $this->coreCachePool->getItem($cacheId);
 
         if (!$cacheItem->isHit()) {
@@ -80,9 +80,9 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
         }
     }
 
-    public function renderHtmlElement(string $layout = 'layout'): string
+    public function renderHtmlElement(): string
     {
-        $deferrableCssUri = $this->getURI($layout);
+        $deferrableCssUri = $this->getURI();
 
         return '<link rel="stylesheet" href="' . $deferrableCssUri . '" media="print" onload="this.media=\'all\'; this.onload=null;">' . "\n"
             . '<noscript><link rel="stylesheet" href="' . $deferrableCssUri . '"></noscript>' . "\n";

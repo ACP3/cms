@@ -68,7 +68,7 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
 
     abstract protected function getFileExtension(): string;
 
-    abstract protected function processLibraries(string $layout): array;
+    abstract protected function processLibraries(): array;
 
     /**
      * This methods returns the currently enabled asset libraries as a comma-separated string.
@@ -76,29 +76,28 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
      */
     abstract protected function getEnabledLibrariesAsString(): string;
 
-    protected function buildCacheId(string $layout): string
+    protected function buildCacheId(): string
     {
-        return 'assets_' . $this->generateFilenameHash($layout);
+        return 'assets_' . $this->generateFilenameHash();
     }
 
-    private function generateFilenameHash(string $layout): string
+    private function generateFilenameHash(): string
     {
         $filename = $this->config->getSettings(Schema::MODULE_NAME)['design'];
-        $filename .= '_' . $layout;
         $filename .= '_' . $this->getEnabledLibrariesAsString();
         $filename .= '_' . $this->getAssetGroup();
 
         return md5($filename);
     }
 
-    public function getURI(string $layout = 'layout'): string
+    public function getURI(): string
     {
         // We have to initialize the theme here,
         // i.e. enabling the required libraries of the theme + adding theme specific stylesheets and javascript files.
         // It has to be called before the "generateFilenameHash" method, otherwise we would get incorrect results!
         $this->assets->initializeTheme();
 
-        $filenameHash = $this->generateFilenameHash($layout);
+        $filenameHash = $this->generateFilenameHash();
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         $cacheItem = $this->coreCachePool->getItem($cacheId);
@@ -113,7 +112,7 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         if (is_file($this->appPath->getUploadsDir() . $path) === false) {
             // Get the enabled libraries and filter out empty entries
             $files = array_filter(
-                $this->processLibraries($layout),
+                $this->processLibraries(),
                 static function ($var) {
                     return !empty($var);
                 }

@@ -68,7 +68,7 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function renderHtmlElement(string $layout = 'layout'): string
+    public function renderHtmlElement(): string
     {
         if ($this->stylesheets === null) {
             $this->initialize();
