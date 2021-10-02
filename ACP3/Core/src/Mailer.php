@@ -9,8 +9,6 @@ namespace ACP3\Core;
 
 use ACP3\Core\Helpers\StringFormatter;
 use ACP3\Core\Mailer\MailerMessage;
-use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 use InlineStyle\InlineStyle;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -23,31 +21,27 @@ class Mailer
      */
     private $logger;
     /**
-     * @var \ACP3\Core\View
+     * @var View
      */
     private $view;
     /**
-     * @var SettingsInterface
-     */
-    private $config;
-    /**
-     * @var \ACP3\Core\Helpers\StringFormatter
+     * @var StringFormatter
      */
     private $stringFormatter;
     /**
-     * @var PHPMailer|null
+     * @var PHPMailer
      */
     private $phpMailer;
 
     public function __construct(
+        PHPMailer $phpMailer,
         LoggerInterface $logger,
         View $view,
-        SettingsInterface $config,
         StringFormatter $stringFormatter
     ) {
+        $this->phpMailer = $phpMailer;
         $this->logger = $logger;
         $this->view = $view;
-        $this->config = $config;
         $this->stringFormatter = $stringFormatter;
     }
 
@@ -57,8 +51,6 @@ class Mailer
     public function send(MailerMessage $message): bool
     {
         try {
-            $this->configure();
-
             $this->phpMailer->Subject = $this->generateSubject($message);
 
             $this->addReplyTo($message);
@@ -76,7 +68,7 @@ class Mailer
             if (!empty($message->getRecipients())) {
                 return $message->isBcc() === true ? $this->sendBcc($message) : $this->sendTo($message);
             }
-        } catch (PHPMailerException|\Exception $e) {
+        } catch (PHPMailerException|\Throwable $e) {
             $this->logger->error($e);
         }
 
@@ -89,7 +81,7 @@ class Mailer
     }
 
     /**
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws PHPMailerException
      */
     private function addReplyTo(MailerMessage $message): void
     {
@@ -103,7 +95,7 @@ class Mailer
     }
 
     /**
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws PHPMailerException
      */
     private function addFrom(MailerMessage $message): void
     {
@@ -124,11 +116,9 @@ class Mailer
     /**
      * Generates the E-mail body.
      *
-     * @return $this
-     *
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws PHPMailerException
      */
-    private function generateBody(MailerMessage $message): self
+    private function generateBody(MailerMessage $message): void
     {
         if (!empty($message->getTemplate())) {
             $mail = [
@@ -158,8 +148,6 @@ class Mailer
         } else {
             $this->phpMailer->Body = $this->decodeHtmlEntities($message->getBody() . $this->getTextSignature($message));
         }
-
-        return $this;
     }
 
     private function getHtmlSignature(MailerMessage $message): string
@@ -192,7 +180,7 @@ class Mailer
     /**
      * Special sending logic for bcc only E-mails.
      *
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws PHPMailerException
      */
     private function sendBcc(MailerMessage $message): bool
     {
@@ -213,13 +201,10 @@ class Mailer
      * Adds multiple recipients to the to be send email.
      *
      * @param string|array $recipients
-     * @param bool         $bcc
      *
-     * @return $this
-     *
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws PHPMailerException
      */
-    private function addRecipients($recipients, $bcc = false): self
+    private function addRecipients($recipients, bool $bcc = false): void
     {
         if (\is_array($recipients) === true) {
             if (isset($recipients['email'], $recipients['name']) === true) {
@@ -236,32 +221,26 @@ class Mailer
         } else {
             $this->addRecipient($recipients, '', $bcc);
         }
-
-        return $this;
     }
 
     /**
      * Adds a single recipient to the to be send email.
      *
-     * @return $this
-     *
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws PHPMailerException
      */
-    private function addRecipient(string $email, string $name = '', bool $bcc = false): self
+    private function addRecipient(string $email, string $name = '', bool $bcc = false): void
     {
         if ($bcc === true) {
             $this->phpMailer->addBCC($email, $name);
         } else {
             $this->phpMailer->addAddress($email, $name);
         }
-
-        return $this;
     }
 
     /**
      * Special sending logic for E-mails without bcc addresses.
      *
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws PHPMailerException
      */
     private function sendTo(MailerMessage $message): bool
     {
@@ -292,36 +271,5 @@ class Mailer
         }
 
         return $this;
-    }
-
-    /**
-     * Initializes PHPMailer and sets the basic configuration parameters.
-     */
-    private function configure(): void
-    {
-        if ($this->phpMailer === null) {
-            $this->phpMailer = new PHPMailer(true);
-
-            $settings = $this->config->getSettings(Schema::MODULE_NAME);
-
-            if (strtolower($settings['mailer_type']) === 'smtp') {
-                $this->phpMailer->set('Mailer', 'smtp');
-                $this->phpMailer->Host = $settings['mailer_smtp_host'];
-                $this->phpMailer->Port = $settings['mailer_smtp_port'];
-                $this->phpMailer->SMTPSecure = \in_array($settings['mailer_smtp_security'], ['ssl', 'tls'])
-                    ? $settings['mailer_smtp_security']
-                    : '';
-                if ((bool) $settings['mailer_smtp_auth'] === true) {
-                    $this->phpMailer->SMTPAuth = true;
-                    $this->phpMailer->Username = $settings['mailer_smtp_user'];
-                    $this->phpMailer->Password = $settings['mailer_smtp_password'];
-                }
-            } else {
-                $this->phpMailer->set('Mailer', 'mail');
-            }
-            $this->phpMailer->CharSet = 'UTF-8';
-            $this->phpMailer->Encoding = 'quoted-printable';
-            $this->phpMailer->WordWrap = PHPMailer::STD_LINE_LENGTH;
-        }
     }
 }

@@ -11,3 +11,7 @@ services:
     factory: ["@core.logger.logger_factory", "create"]
     arguments:
       - "mailer"
+
+  PHPMailer\PHPMailer\PHPMailer:
+    arguments:
+      $exceptions: true

@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+
+  PHPMailer\PHPMailer\PHPMailer:
+    arguments:
+      $exceptions: true
+    configurator: ['@ACP3\Modules\ACP3\System\Core\Mailer\MailerConfigurator', "configure"]
+
+  ACP3\Modules\ACP3\System\Core\Mailer\MailerConfigurator: ~
