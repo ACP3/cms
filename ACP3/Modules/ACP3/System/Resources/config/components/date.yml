@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Core\Date:
+    configurator: ['@ACP3\Modules\ACP3\System\Core\Date\DateConfigurator', "configure"]
+
+  ACP3\Modules\ACP3\System\Core\Date\DateConfigurator: ~

@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Date;
+namespace ACP3\Modules\ACP3\System\Core\Date;
 
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
@@ -23,7 +23,7 @@ class DateConfigurator
         $this->settings = $settings;
     }
 
-    public function configure(Date $date)
+    public function configure(Date $date): void
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
