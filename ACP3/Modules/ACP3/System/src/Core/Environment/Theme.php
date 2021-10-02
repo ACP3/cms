@@ -5,10 +5,12 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Environment;
+namespace ACP3\Modules\ACP3\System\Core\Environment;
 
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
+use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\XML;
 use ACP3\Modules\ACP3\System\Installer\Schema;

@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Core\Http\Request:
+    public: true
+    factory: ['@ACP3\Modules\ACP3\System\Core\Http\RequestFactory', create]
+
+  ACP3\Modules\ACP3\System\Core\Http\RequestFactory: ~

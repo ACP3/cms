@@ -17,6 +17,10 @@ class Translator
      */
     private $dictionary;
     /**
+     * @var \ACP3\Core\Settings\SettingsInterface
+     */
+    private $settings;
+    /**
      * @var string|null
      */
     private $locale;
@@ -28,10 +32,6 @@ class Translator
      * @var array
      */
     private $buffer = [];
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
 
     public function __construct(
         DictionaryInterface $dictionary,

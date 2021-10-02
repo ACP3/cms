@@ -6,10 +6,8 @@ services:
 
   ACP3\Core\Http\Request:
     public: true
-    factory: ['@ACP3\Core\Http\RequestFactory', create]
-  ACP3\Core\Http\RequestInterface: '@ACP3\Core\Http\Request'
 
-  ACP3\Core\Http\RequestFactory: ~
+  ACP3\Core\Http\RequestInterface: '@ACP3\Core\Http\Request'
 
   Symfony\Component\HttpFoundation\RequestStack:
     public: true

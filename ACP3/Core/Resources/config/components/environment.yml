@@ -7,6 +7,3 @@ services:
     synthetic: true
 
   ACP3\Core\Environment\ApplicationPath: "@core.environment.application_path"
-
-  ACP3\Core\Environment\Theme: ~
-  ACP3\Core\Environment\ThemePathInterface: '@ACP3\Core\Environment\Theme'

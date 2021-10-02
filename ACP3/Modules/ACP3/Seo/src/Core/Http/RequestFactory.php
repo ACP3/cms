@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class RequestFactory extends \ACP3\Core\Http\RequestFactory
+class RequestFactory extends \ACP3\Modules\ACP3\System\Core\Http\RequestFactory
 {
     /**
      * @var \ACP3\Modules\ACP3\Seo\Repository\SeoRepository

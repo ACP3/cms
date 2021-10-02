@@ -8,7 +8,7 @@ services:
   ACP3\Core\Pagination:
     class: ACP3\Modules\ACP3\Seo\Core\Pagination
 
-  ACP3\Core\Http\RequestFactory:
+  ACP3\Modules\ACP3\System\Core\Http\RequestFactory:
     class: ACP3\Modules\ACP3\Seo\Core\Http\RequestFactory
 
   ACP3\Core\SEO\MetaStatementsService:

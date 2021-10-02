@@ -5,8 +5,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Http;
+namespace ACP3\Modules\ACP3\System\Core\Http;
 
+use ACP3\Core\Http\Request;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -14,13 +15,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class RequestFactory
 {
     /**
-     * @var SettingsInterface
-     */
-    protected $config;
-    /**
      * @var \Symfony\Component\HttpFoundation\RequestStack
      */
     protected $requestStack;
+    /**
+     * @var SettingsInterface
+     */
+    private $config;
 
     public function __construct(SettingsInterface $config, RequestStack $requestStack)
     {
