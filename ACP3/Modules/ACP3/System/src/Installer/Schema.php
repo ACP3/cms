@@ -117,7 +117,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             'maintenance_mode' => 0,
             'maintenance_message' => '',
             'mod_rewrite' => 0,
-            'page_cache_is_enabled' => 0,
             'page_cache_is_valid' => 1,
             'page_cache_purge_mode' => 1,
             'security_secret' => uniqid((string) mt_rand(), true),

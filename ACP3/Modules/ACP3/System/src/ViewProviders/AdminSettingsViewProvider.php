@@ -110,10 +110,6 @@ class AdminSettingsViewProvider
                 'maintenance_mode',
                 $systemSettings['maintenance_mode']
             ),
-            'page_cache' => $this->formsHelper->yesNoCheckboxGenerator(
-                'page_cache_is_enabled',
-                $systemSettings['page_cache_is_enabled']
-            ),
             'page_cache_purge_mode' => $this->formsHelper->checkboxGenerator(
                 'page_cache_purge_mode',
                 $pageCachePurgeMode,

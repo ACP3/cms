@@ -9,8 +9,6 @@ namespace ACP3\Core\Cache;
 
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
 trait CacheResponseTrait
@@ -18,8 +16,6 @@ trait CacheResponseTrait
     abstract protected function getRequest(): RequestInterface;
 
     abstract protected function getApplicationMode(): string;
-
-    abstract protected function getSettings(): SettingsInterface;
 
     /**
      * @param int $lifetime Cache TTL in seconds
@@ -43,9 +39,6 @@ trait CacheResponseTrait
 
     protected function canUsePageCache(): bool
     {
-        $systemSettings = $this->getSettings()->getSettings(Schema::MODULE_NAME);
-
-        return $this->getApplicationMode() !== ApplicationMode::DEVELOPMENT
-            && $systemSettings['page_cache_is_enabled'] == 1;
+        return $this->getApplicationMode() !== ApplicationMode::DEVELOPMENT;
     }
 }

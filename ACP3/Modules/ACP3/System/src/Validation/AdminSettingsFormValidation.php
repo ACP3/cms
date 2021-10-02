@@ -29,7 +29,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
         $this->validator->validate();
     }
 
-    protected function validateGeneralSettings(array $formData)
+    private function validateGeneralSettings(array $formData): void
     {
         $this->validator
             ->addConstraint(
@@ -85,7 +85,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    protected function validateSiteSitleSettings(array $formData)
+    private function validateSiteSitleSettings(array $formData): void
     {
         $this->validator
             ->addConstraint(
@@ -120,7 +120,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    protected function validateDateSettings(array $formData)
+    private function validateDateSettings(array $formData): void
     {
         $this->validator
             ->addConstraint(
@@ -149,7 +149,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    protected function validateMaintenanceSettings(array $formData)
+    private function validateMaintenanceSettings(array $formData): void
     {
         $this->validator
             ->addConstraint(
@@ -173,20 +173,9 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    protected function validatePerformanceSettings(array $formData)
+    private function validatePerformanceSettings(array $formData): void
     {
         $this->validator
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'page_cache_is_enabled',
-                    'message' => $this->translator->t('system', 'select_enable_page_cache'),
-                    'extra' => [
-                        'haystack' => [0, 1],
-                    ],
-                ]
-            )
             ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
@@ -219,7 +208,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    protected function validateMailerSettings(array $formData)
+    private function validateMailerSettings(array $formData): void
     {
         $this->validator
             ->addConstraint(

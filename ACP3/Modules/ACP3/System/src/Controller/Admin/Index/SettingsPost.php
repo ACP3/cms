@@ -73,7 +73,6 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
                     'mailer_type' => $formData['mailer_type'],
                     'maintenance_message' => $formData['maintenance_message'],
                     'maintenance_mode' => (int) $formData['maintenance_mode'],
-                    'page_cache_is_enabled' => (int) $formData['page_cache_is_enabled'],
                     'page_cache_purge_mode' => (int) $formData['page_cache_purge_mode'],
                     'site_title' => $this->secure->strEncode($formData['site_title']),
                     'site_subtitle' => $this->secure->strEncode($formData['site_subtitle']),

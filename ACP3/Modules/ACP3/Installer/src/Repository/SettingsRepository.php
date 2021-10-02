@@ -36,11 +36,6 @@ class SettingsRepository extends AbstractRepository implements SettingsAwareRepo
         return [
             [
                 'module_name' => 'system',
-                'name' => 'page_cache_is_enabled',
-                'value' => 0,
-            ],
-            [
-                'module_name' => 'system',
                 'name' => 'page_cache_purge_mode',
                 'value' => 1,
             ],

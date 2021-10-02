@@ -78,11 +78,6 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
         return $this->view;
     }
 
-    protected function getSettings(): Core\Settings\SettingsInterface
-    {
-        return $this->config;
-    }
-
     protected function getApplicationMode(): string
     {
         return $this->container->getParameter('core.environment');

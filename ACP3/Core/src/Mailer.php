@@ -189,12 +189,16 @@ class Mailer
         }
 
         foreach ($message->getRecipients() as $recipient) {
-            set_time_limit(10);
-
             $this->addRecipients($recipient, true);
         }
 
-        return $this->phpMailer->send();
+        set_time_limit(10);
+
+        $result = $this->phpMailer->send();
+
+        $this->phpMailer->clearAllRecipients();
+
+        return $result;
     }
 
     /**
@@ -265,10 +269,8 @@ class Mailer
      */
     public function reset(): self
     {
-        if ($this->phpMailer) {
-            $this->phpMailer->clearAllRecipients();
-            $this->phpMailer->clearAttachments();
-        }
+        $this->phpMailer->clearAllRecipients();
+        $this->phpMailer->clearAttachments();
 
         return $this;
     }
