@@ -12,13 +12,13 @@
 <div id="wrapper" class="container">
     <h1 id="logo" class="d-none d-lg-block">
         {if $IS_HOMEPAGE}
-            <img src="{image file="logo.png"}"
-                 srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
+            <img src="{image file="logo.png" module="system"}"
+                 srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
                  alt="{site_title}">
         {else}
             <a href="{uri args=""}">
-                <img src="{image file="logo.png"}"
-                     srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
+                <img src="{image file="logo.png" module="system"}"
+                     srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
                      alt="{site_title}">
             </a>
         {/if}
@@ -26,8 +26,8 @@
     <nav id="main-navigation" class="navbar navbar-expand-lg navbar-light bg-light mb-3">
         <div class="container-fluid">
             <a class="navbar-brand d-lg-none" href="{$ROOT_DIR}">
-                <img src="{image file="logo.png"}"
-                     srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
+                <img src="{image file="logo.png" module="system"}"
+                     srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
                      alt="{site_title}">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation-content" aria-controls="main-navigation-content" aria-expanded="false" aria-label="{lang t="system|toggle_navigation"}">

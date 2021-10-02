@@ -67,11 +67,11 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     protected function fetchThemeJavaScript(string $layout): void
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
-            $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath('', static::ASSETS_PATH_JS, $file);
+            $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath('System', static::ASSETS_PATH_JS, $file);
         }
 
         // Include the general js file of the layout
-        $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath('', static::ASSETS_PATH_JS, $layout . '.js');
+        $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath('System', static::ASSETS_PATH_JS, $layout . '.js');
     }
 
     /**

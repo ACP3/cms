@@ -9,8 +9,8 @@
 <div class="container text-center">
     <h1 id="logo">
         <a href="{uri args=""}">
-            <img src="{image file="logo.png"}"
-                 srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
+            <img src="{image file="logo.png" module="system"}"
+                 srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
                  alt="{site_title}">
         </a>
     </h1>

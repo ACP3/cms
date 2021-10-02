@@ -76,7 +76,7 @@
             <tr>
                 <td class="text-center logo">
                     {block EMAIL_HEADER}
-                        <img src="{image file="logo.png" absolute=true}" alt="{site_title}">
+                        <img src="{image file="logo.png" module="system" absolute=true}" alt="{site_title}">
                     {/block}
                 </td>
             </tr>

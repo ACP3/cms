@@ -82,7 +82,7 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
         if ($this->request->isXmlHttpRequest()) {
             $paths = $this->fetchLayoutPaths('layout.ajax', 'System/layout.ajax.tpl');
         } else {
-            $paths = $this->fetchLayoutPaths('layout', 'layout.tpl');
+            $paths = $this->fetchLayoutPaths('layout', 'System/layout.tpl');
         }
 
         $this->iterateOverLayoutPaths($paths);

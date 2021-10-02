@@ -75,14 +75,14 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
             $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
-                '',
+                'System',
                 static::ASSETS_PATH_CSS,
                 trim($file)
             );
         }
 
         $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
-            '',
+            'System',
             static::ASSETS_PATH_CSS,
             $layout . '.css'
         );

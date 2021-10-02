@@ -73,7 +73,7 @@ class FileResolver
     {
         // A path without any slash was given -> has to be a layout file of the current design
         if (strpos($templatePath, '/') === false) {
-            return $this->getStaticAssetPath('', '', $templatePath);
+            throw new \InvalidArgumentException(sprintf('The provided template path "%s" is missing the module name!', $templatePath));
         }
 
         // Split the template path in its components

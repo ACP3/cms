@@ -12,15 +12,15 @@
 <body>
 <div class="container">
     <h1 id="logo" class="d-none d-lg-block">
-        <img src="{image file="logo.png"}"
-             srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
+        <img src="{image file="logo.png" module="system"}"
+             srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
              alt="{site_title}">
     </h1>
     <nav id="main-navigation" class="navbar navbar-expand-lg navbar-light bg-light py-lg-0 mb-3{if empty($navbar)} d-none{/if}">
         <div class="container-fluid">
             <a class="navbar-brand d-lg-none" href="{$ROOT_DIR}">
-                <img src="{image file="logo.png"}"
-                     srcset="{image file="logo.png"} 1x, {image file="logo@2x.png"} 2x"
+                <img src="{image file="logo.png" module="system"}"
+                     srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
                      alt="{site_title}">
             </a>
             {if !empty($navbar)}
