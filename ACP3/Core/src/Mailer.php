@@ -296,10 +296,8 @@ class Mailer
 
     /**
      * Initializes PHPMailer and sets the basic configuration parameters.
-     *
-     * @return $this
      */
-    private function configure(): self
+    private function configure(): void
     {
         if ($this->phpMailer === null) {
             $this->phpMailer = new PHPMailer(true);
@@ -325,7 +323,5 @@ class Mailer
             $this->phpMailer->Encoding = 'quoted-printable';
             $this->phpMailer->WordWrap = PHPMailer::STD_LINE_LENGTH;
         }
-
-        return $this;
     }
 }
