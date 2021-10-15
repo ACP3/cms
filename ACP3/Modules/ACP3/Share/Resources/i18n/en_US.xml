@@ -26,6 +26,7 @@
         <item key="select_customize_services">Please select whether you want to customize the available social networks of this resultset or not.</item>
         <item key="select_ratings_active">Please select whether users should be able to rate this resultset or not.</item>
         <item key="select_services">Please select which services you want to activate. At least one service has to be active.</item>
+        <item key="select_sharing_active">Please select whether users should be able to share this resultset or not.</item>
         <item key="service_addthis">AddThis</item>
         <item key="service_diaspora">diaspora</item>
         <item key="service_facebook">Facebook</item>

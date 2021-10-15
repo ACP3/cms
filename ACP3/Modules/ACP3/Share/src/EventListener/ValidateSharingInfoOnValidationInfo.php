@@ -42,30 +42,32 @@ class ValidateSharingInfoOnValidationInfo implements EventSubscriberInterface
     public function __invoke(FormValidationEvent $event)
     {
         if ($this->acl->hasPermission('admin/share/index/create')) {
-            $event
-                ->getValidator()
-                ->addConstraint(
-                    InArrayValidationRule::class,
-                    [
-                        'data' => $event->getFormData(),
-                        'field' => 'share_active',
-                        'message' => $this->translator->t('share', 'select_sharing_active'),
-                        'extra' => [
-                            'haystack' => [0, 1],
-                        ],
-                    ]
-                )
-                ->addConstraint(
-                    InArrayValidationRule::class,
-                    [
-                        'data' => $event->getFormData(),
-                        'field' => 'share_customize_services',
-                        'message' => $this->translator->t('share', 'select_customize_services'),
-                        'extra' => [
-                            'haystack' => [0, 1],
-                        ],
-                    ]
-                );
+            if (isset($event->getFormData()['share_active'], $event->getFormData()['share_customize_services'])) {
+                $event
+                    ->getValidator()
+                    ->addConstraint(
+                        InArrayValidationRule::class,
+                        [
+                            'data' => $event->getFormData(),
+                            'field' => 'share_active',
+                            'message' => $this->translator->t('share', 'select_sharing_active'),
+                            'extra' => [
+                                'haystack' => [0, 1],
+                            ],
+                        ]
+                    )
+                    ->addConstraint(
+                        InArrayValidationRule::class,
+                        [
+                            'data' => $event->getFormData(),
+                            'field' => 'share_customize_services',
+                            'message' => $this->translator->t('share', 'select_customize_services'),
+                            'extra' => [
+                                'haystack' => [0, 1],
+                            ],
+                        ]
+                    );
+            }
 
             if (isset($event->getFormData()['share_customize_services'])
                 && $event->getFormData()['share_customize_services'] == 1) {

@@ -23,9 +23,10 @@
         <item key="rate_with_x_stars">Mit %stars% Sternen bewerten</item>
         <item key="ratings_count">Anzahl Bewertungen</item>
         <item key="select_active">Bitte wählen aus, ob dieser Datensatz bei sozialen Netzwerken geteilt werden können soll oder nicht.</item>
-        <item key="select_customize_services">Bitte wählen aus ob Sie die verfügbaren sozialen Netzwerke für diesen Datensatz anpassen möchten oder nicht.</item>
-        <item key="select_ratings_active">Bitte wählen aus, ob dieser Datensatz von Benutzern bewertet werden können soll oder nicht.</item>
-        <item key="select_services">Bitte wählen aus, welche Dienste aktiviert werden sollen. Es muss mindestens ein Dienst aktiv sein.</item>
+        <item key="select_customize_services">Bitte wählen Sie aus, ob Sie die verfügbaren sozialen Netzwerke für diesen Datensatz anpassen möchten oder nicht.</item>
+        <item key="select_ratings_active">Bitte wählen Sie aus, ob dieser Datensatz von Benutzern bewertet werden können soll oder nicht.</item>
+        <item key="select_services">Bitte wählen Sie aus, welche Dienste aktiviert werden sollen. Es muss mindestens ein Dienst aktiv sein.</item>
+        <item key="select_sharing_active">Bitte wählen Sie aus, ob dieser Datensatz von Benutzern geteilt werden können soll oder nicht.</item>
         <item key="service_addthis">AddThis</item>
         <item key="service_diaspora">diaspora</item>
         <item key="service_facebook">Facebook</item>
