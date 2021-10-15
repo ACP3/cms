@@ -141,7 +141,7 @@ export class FormValidator {
     document.getElementById("error-box")?.remove();
 
     // Place the error messages inside the modal body for a better styling
-    if (modalBody) {
+    if (targetElement.closest(".modal") && modalBody) {
       modalBody.insertAdjacentHTML("afterbegin", errorMessagesHtml);
     } else {
       targetElement.insertAdjacentHTML("afterbegin", errorMessagesHtml);
@@ -162,7 +162,7 @@ export class FormValidator {
     errorBox.querySelectorAll("li").forEach((errorMessageLine) => {
       let errorClass = errorMessageLine.dataset.element;
 
-      if (errorClass.length > 0) {
+      if (errorClass?.length > 0) {
         let elem = document.getElementById(errorClass) || formElement.querySelector('[id|="' + errorClass + '"]');
 
         if (elem) {
