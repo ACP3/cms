@@ -65,9 +65,6 @@ final class Input
         $this->columns = new ColumnPriorityQueue();
     }
 
-    /**
-     * @return $this
-     */
     public function setRepository(AbstractDataGridRepository $repository): self
     {
         $this->repository = $repository;
@@ -75,9 +72,6 @@ final class Input
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setResults(array $results): self
     {
         $this->results = $results;
@@ -85,9 +79,6 @@ final class Input
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setResourcePathEdit(?string $resourcePathEdit): self
     {
         $this->resourcePathEdit = $resourcePathEdit;
@@ -95,9 +86,6 @@ final class Input
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setResourcePathDelete(?string $resourcePathDelete): self
     {
         $this->resourcePathDelete = $resourcePathDelete;
@@ -105,9 +93,6 @@ final class Input
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setRecordsPerPage(int $recordsPerPage): self
     {
         $this->recordsPerPage = $recordsPerPage;
@@ -115,9 +100,6 @@ final class Input
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setUseAjax(bool $useAjax): self
     {
         $this->useAjax = $useAjax;
@@ -125,9 +107,6 @@ final class Input
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setEnableMassAction(bool $enableMassAction): self
     {
         $this->enableMassAction = $enableMassAction;
@@ -135,9 +114,6 @@ final class Input
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setEnableOptions(bool $enableOptions): self
     {
         $this->enableOptions = $enableOptions;
@@ -145,9 +121,6 @@ final class Input
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setIdentifier(string $identifier): self
     {
         $this->identifier = $identifier;
@@ -155,9 +128,6 @@ final class Input
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function addColumn(array $columnData, int $priority): self
     {
         $columnData = array_merge(
@@ -235,17 +205,11 @@ final class Input
         return $this->enableOptions;
     }
 
-    /**
-     * @return \ACP3\Core\DataGrid\ColumnPriorityQueue
-     */
     public function getColumns(): ColumnPriorityQueue
     {
         return $this->columns;
     }
 
-    /**
-     * @return $this
-     */
     public function setPrimaryKey(string $primaryKey): self
     {
         $this->primaryKey = $primaryKey;
@@ -276,11 +240,6 @@ final class Input
         return $this->queryOptions;
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
-     *
-     * @return \ACP3\Core\DataGrid\Input
-     */
     public function setQueryOptions(QueryOption ...$queryOptions): self
     {
         $this->queryOptions = $queryOptions;

@@ -159,7 +159,7 @@ class Requirements
                 continue;
             }
 
-            $composerJsoData = json_decode(file_get_contents($composerJsonPath), true);
+            $composerJsoData = json_decode(file_get_contents($composerJsonPath), true, 512, JSON_THROW_ON_ERROR);
 
             if (!isset($composerJsoData['require']) || !\array_key_exists('php', $composerJsoData['require'])) {
                 continue;
@@ -193,7 +193,7 @@ class Requirements
                 continue;
             }
 
-            $composerJsoData = json_decode(file_get_contents($composerJsonPath), true);
+            $composerJsoData = json_decode(file_get_contents($composerJsonPath), true, 512, JSON_THROW_ON_ERROR);
 
             if (!isset($composerJsoData['require'])) {
                 continue;

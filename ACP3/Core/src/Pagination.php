@@ -297,7 +297,7 @@ class Pagination
             'page' => $pageNumber,
             'uri' => $this->router->route($uri) . $this->urlFragment,
             'title' => $title,
-            'selected' => (bool) $selected,
+            'selected' => $selected,
             'selector' => $selector,
         ];
     }

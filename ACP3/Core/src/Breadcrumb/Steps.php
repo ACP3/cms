@@ -178,14 +178,11 @@ class Steps
 
     /**
      * Ersetzt die aktuell letzte Brotkrume mit neuen Werten.
-     *
-     * @return $this
      */
     public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): self
     {
         if ($dbSteps === false) {
-            end($this->steps);
-            $this->steps[(int) key($this->steps)] = $this->buildStepItem($title, $path);
+            $this->steps[(int) array_key_last($this->steps)] = $this->buildStepItem($title, $path);
         }
 
         return $this;
@@ -201,8 +198,6 @@ class Steps
 
     /**
      * Zuweisung einer neuen Stufe zur Brotkrümelspur.
-     *
-     * @return $this
      */
     public function append(string $title, string $path = ''): self
     {
@@ -215,8 +210,6 @@ class Steps
 
     /**
      * Fügt Brotkrumen an den Anfang an.
-     *
-     * @return $this
      */
     public function prepend(string $title, string $path): self
     {
@@ -228,9 +221,6 @@ class Steps
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function removeByPath(string $path): self
     {
         $path = $this->router->route($path, true);

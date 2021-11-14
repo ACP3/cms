@@ -71,9 +71,6 @@ class Translator
         return substr($this->getLocale(), 0, strpos($this->getLocale(), '_'));
     }
 
-    /**
-     * @return $this
-     */
     public function setLocale(string $locale): self
     {
         if ($this->languagePackExists($locale) === true) {

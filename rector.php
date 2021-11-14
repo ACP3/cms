@@ -21,6 +21,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // Define what rule sets will be applied
     $containerConfigurator->import(SetList::DEAD_CODE);
+    $containerConfigurator->import(SetList::PHP_73);
 
     // get services (needed for register a single rule)
     // $services = $containerConfigurator->services();

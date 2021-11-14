@@ -27,9 +27,6 @@ class ConfigProcessor
         $this->request = $request;
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\Input $options
-     */
     public function generateDataTableConfig(Input $options): array
     {
         $config = [
@@ -47,7 +44,7 @@ class ConfigProcessor
 
         return [
             'identifier' => $options->getIdentifier(),
-            'config' => json_encode($config),
+            'config' => json_encode($config, JSON_THROW_ON_ERROR),
         ];
     }
 

@@ -29,10 +29,6 @@ class PageCssClasses
      */
     protected $details;
 
-    /**
-     * @param \ACP3\Core\Breadcrumb\Title      $title
-     * @param \ACP3\Core\Http\RequestInterface $request
-     */
     public function __construct(
         Core\Helpers\StringFormatter $stringFormatter,
         Core\Breadcrumb\Title $title,

@@ -43,9 +43,6 @@ class Options
         return $this->identifier;
     }
 
-    /**
-     * @return Options
-     */
     public function setIdentifier(string $identifier): self
     {
         $this->identifier = $identifier;
@@ -58,9 +55,6 @@ class Options
         return $this->recordsPerPage;
     }
 
-    /**
-     * @return Options
-     */
     public function setRecordsPerPage(int $recordsPerPage): self
     {
         $this->recordsPerPage = $recordsPerPage;
@@ -73,9 +67,6 @@ class Options
         return $this->enableOptions;
     }
 
-    /**
-     * @return Options
-     */
     public function setEnableOptions(bool $enableOptions): self
     {
         $this->enableOptions = $enableOptions;
@@ -88,9 +79,6 @@ class Options
         return $this->useAjax;
     }
 
-    /**
-     * @return Options
-     */
     public function setUseAjax(bool $useAjax): self
     {
         $this->useAjax = $useAjax;
@@ -103,9 +91,6 @@ class Options
         return $this->resourcePathEdit;
     }
 
-    /**
-     * @return Options
-     */
     public function setResourcePathEdit(string $resourcePathEdit): self
     {
         $this->resourcePathEdit = $resourcePathEdit;
@@ -118,9 +103,6 @@ class Options
         return $this->resourcePathDelete;
     }
 
-    /**
-     * @return Options
-     */
     public function setResourcePathDelete(string $resourcePathDelete): self
     {
         $this->resourcePathDelete = $resourcePathDelete;
@@ -133,9 +115,6 @@ class Options
         return $this->enableMassAction;
     }
 
-    /**
-     * @return Options
-     */
     public function setEnableMassAction(bool $enableMassAction): self
     {
         $this->enableMassAction = $enableMassAction;

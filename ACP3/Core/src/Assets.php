@@ -75,9 +75,6 @@ class Assets
         }
     }
 
-    /**
-     * @return $this
-     */
     private function addCssFile(string $file): self
     {
         $this->additionalThemeCssFiles[] = $file;
@@ -94,9 +91,6 @@ class Assets
         return $this->additionalThemeJsFiles;
     }
 
-    /**
-     * @return $this
-     */
     private function addJsFile(string $file): self
     {
         $this->additionalThemeJsFiles[] = $file;

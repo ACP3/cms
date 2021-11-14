@@ -75,7 +75,7 @@ final class Migration78 implements MigrationInterface
 
             $migrationsToMarkAsExecuted = array_filter($migrations, function (MigrationInterface $migration) use ($namespacePrefixes, $result) {
                 foreach ($namespacePrefixes as $namespacePrefix) {
-                    if ($this->getSchemaVersion($migration) <= (int) $result['version'] && strpos(\get_class($migration), $namespacePrefix) === 0) {
+                    if ($this->getSchemaVersion($migration) <= (int) $result['version'] && strpos(\get_class($migration), (string) $namespacePrefix) === 0) {
                         return true;
                     }
                 }

@@ -62,8 +62,6 @@ class Libraries
 
     /**
      * @param string|\ACP3\Core\Assets\Entity\LibraryEntity $library
-     *
-     * @return $this
      */
     public function addLibrary($library, ?array $options = null): self
     {
@@ -91,8 +89,6 @@ class Libraries
 
     /**
      * Activates frontend libraries.
-     *
-     * @return $this
      */
     public function enableLibraries(array $libraries): self
     {

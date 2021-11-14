@@ -264,8 +264,6 @@ class Mailer
 
     /**
      * Resets the currently set mailer values back to their default values.
-     *
-     * @return $this
      */
     public function reset(): self
     {

@@ -14,8 +14,6 @@ use Doctrine\DBAL\Query\QueryBuilder;
 abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\AbstractRepository
 {
     /**
-     * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
-     *
      * @return array
      *
      * @throws \Doctrine\DBAL\Exception
@@ -37,8 +35,6 @@ abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\Abstract
     }
 
     /**
-     * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\Exception
@@ -90,9 +86,6 @@ abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\Abstract
     {
     }
 
-    /**
-     * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
-     */
     protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)
     {
         foreach ($queryOptions as $option) {
@@ -122,8 +115,6 @@ abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\Abstract
     }
 
     /**
-     * @param \ACP3\Core\DataGrid\QueryOption ...$queryOptions
-     *
      * @return array
      */
     protected function getParameters(QueryOption ...$queryOptions)

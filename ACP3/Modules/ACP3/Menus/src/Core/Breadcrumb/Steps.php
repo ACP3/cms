@@ -44,8 +44,7 @@ class Steps extends Core\Breadcrumb\Steps
     public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): Core\Breadcrumb\Steps
     {
         if ($dbSteps === true) {
-            end($this->stepsFromDb);
-            $this->stepsFromDb[(int) key($this->stepsFromDb)] = $this->buildStepItem($title, $path);
+            $this->stepsFromDb[(int) array_key_last($this->stepsFromDb)] = $this->buildStepItem($title, $path);
         }
 
         return parent::replaceAncestor($title, $path, $dbSteps);

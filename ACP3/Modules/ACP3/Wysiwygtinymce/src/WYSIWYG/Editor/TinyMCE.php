@@ -133,7 +133,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
             $this->configurePlugins(),
             $this->configureToolbar(),
             $this->configureAdvancedImages()
-        ));
+        ), JSON_THROW_ON_ERROR);
     }
 
     private function configurePlugins(): array

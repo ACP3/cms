@@ -55,9 +55,6 @@ class Input
         return $this->enableCache;
     }
 
-    /**
-     * @return $this
-     */
     public function setEnableCache(bool $enableCache): self
     {
         $this->enableCache = $enableCache;
@@ -70,9 +67,6 @@ class Input
         return $this->cacheDir;
     }
 
-    /**
-     * @return $this
-     */
     public function setCacheDir(string $cacheDir): self
     {
         $this->cacheDir = $cacheDir;
@@ -85,9 +79,6 @@ class Input
         return $this->cachePrefix;
     }
 
-    /**
-     * @return $this
-     */
     public function setCachePrefix(string $cachePrefix): self
     {
         $this->cachePrefix = $cachePrefix;
@@ -100,9 +91,6 @@ class Input
         return $this->maxWidth;
     }
 
-    /**
-     * @return $this
-     */
     public function setMaxWidth(int $maxWidth): self
     {
         $this->maxWidth = $maxWidth;
@@ -115,9 +103,6 @@ class Input
         return $this->maxHeight;
     }
 
-    /**
-     * @return $this
-     */
     public function setMaxHeight(int $maxHeight): self
     {
         $this->maxHeight = $maxHeight;
@@ -130,9 +115,6 @@ class Input
         return $this->jpgQuality;
     }
 
-    /**
-     * @return $this
-     */
     public function setJpgQuality(int $jpgQuality): self
     {
         $this->jpgQuality = $jpgQuality;
@@ -145,9 +127,6 @@ class Input
         return $this->preferWidth;
     }
 
-    /**
-     * @return $this
-     */
     public function setPreferWidth(bool $preferWidth): self
     {
         $this->preferWidth = $preferWidth;
@@ -161,9 +140,6 @@ class Input
         return $this->preferHeight;
     }
 
-    /**
-     * @return $this
-     */
     public function setPreferHeight(bool $preferHeight): self
     {
         $this->preferHeight = $preferHeight;
@@ -177,9 +153,6 @@ class Input
         return $this->file;
     }
 
-    /**
-     * @return $this
-     */
     public function setFile(string $file): self
     {
         $this->file = $file;
@@ -192,9 +165,6 @@ class Input
         return $this->forceResample;
     }
 
-    /**
-     * @return $this
-     */
     public function setForceResample(bool $forceResample): self
     {
         $this->forceResample = $forceResample;

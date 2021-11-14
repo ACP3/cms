@@ -94,9 +94,8 @@ class Request extends AbstractRequest
     public function getModuleAndController()
     {
         $path = ($this->getArea() === AreaEnum::AREA_ADMIN) ? 'acp/' : '';
-        $path .= $this->getModuleAndControllerWithoutArea();
 
-        return $path;
+        return $path . $this->getModuleAndControllerWithoutArea();
     }
 
     /**

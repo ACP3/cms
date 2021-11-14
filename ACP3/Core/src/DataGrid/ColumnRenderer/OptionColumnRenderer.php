@@ -94,9 +94,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
         $this->optionRenderer->clearOptions();
 
-        $value .= '</div>';
-
-        return $value;
+        return $value . '</div>';
     }
 
     private function getEditRoute(array $dbResultRow, string $resourcePathEdit): string

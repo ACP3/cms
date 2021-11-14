@@ -148,7 +148,7 @@ class CKEditor extends Textarea
             $this->configureBasicToolbar();
         }
 
-        return json_encode($this->config);
+        return json_encode($this->config, JSON_THROW_ON_ERROR);
     }
 
     /**

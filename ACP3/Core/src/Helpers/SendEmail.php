@@ -17,9 +17,6 @@ class SendEmail
      */
     private $mailer;
 
-    /**
-     * @param \ACP3\Core\Mailer $mailer
-     */
     public function __construct(Core\Mailer $mailer)
     {
         $this->mailer = $mailer;

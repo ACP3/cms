@@ -31,7 +31,7 @@ class MoveToHead extends AbstractMoveElementFilter
 
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
-        if (strpos($tplOutput, static::PLACEHOLDER) !== false) {
+        if (strpos($tplOutput, (string) static::PLACEHOLDER) !== false) {
             $tplOutput = str_replace(
                 static::PLACEHOLDER,
                 $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),

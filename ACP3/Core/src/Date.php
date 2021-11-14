@@ -44,9 +44,6 @@ class Date
         return $this->dateFormatLong;
     }
 
-    /**
-     * @return $this
-     */
     public function setDateFormatLong(string $dateFormatLong): self
     {
         $this->dateFormatLong = $dateFormatLong;
@@ -59,9 +56,6 @@ class Date
         return $this->dateFormatShort;
     }
 
-    /**
-     * @return $this
-     */
     public function setDateFormatShort(string $dateFormatShort): self
     {
         $this->dateFormatShort = $dateFormatShort;
@@ -69,9 +63,6 @@ class Date
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setDateTimeZone(\DateTimeZone $dateTimeZone): self
     {
         $this->dateTimeZone = $dateTimeZone;
