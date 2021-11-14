@@ -20,7 +20,9 @@ class DateValidationRule extends AbstractValidationRule
                 $end = next($field);
 
                 return $this->checkIsValidDate($data[$start], $data[$end]);
-            } elseif (!empty($field)) {
+            }
+
+            if (!empty($field)) {
                 return $this->isValid($data[$field], $field, $extra);
             }
 
@@ -30,13 +32,7 @@ class DateValidationRule extends AbstractValidationRule
         return $this->checkIsValidDate($data);
     }
 
-    /**
-     * @param string      $start
-     * @param string|null $end
-     *
-     * @return bool
-     */
-    protected function checkIsValidDate($start, $end = null)
+    protected function checkIsValidDate(string $start, ?string $end = null): bool
     {
         if ($this->matchIsDate($start)) {
             // Check date range
@@ -50,18 +46,10 @@ class DateValidationRule extends AbstractValidationRule
         return false;
     }
 
-    /**
-     * @param string $date
-     *
-     * @return bool
-     */
-    protected function matchIsDate($date)
+    protected function matchIsDate(string $date): bool
     {
-        $pattern = '/^(\d{4})-(\d{2})-(\d{2})( ([01][0-9]|2[0-3])(:([0-5][0-9])){1,2}){0,1}$/';
-        if (preg_match($pattern, $date, $matches) && checkdate($matches[2], $matches[3], $matches[1])) {
-            return true;
-        }
+        $pattern = '/^(\d{4})-(\d{2})-(\d{2})(( |T)([01]\d|2[0-3])(:([0-5]\d)){1,2})?$/';
 
-        return false;
+        return preg_match($pattern, $date, $matches) && checkdate($matches[2], $matches[3], $matches[1]);
     }
 }
