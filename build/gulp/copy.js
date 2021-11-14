@@ -21,7 +21,6 @@ module.exports = (gulp) => {
             nodeBasePath + "/bootstrap/dist/js/bootstrap.bundle.min.js",
             nodeBasePath + "/datatables.net/js/jquery.dataTables.min.js",
             nodeBasePath + "/datatables.net-bs5/js/dataTables.bootstrap5.js",
-            nodeBasePath + "/flatpickr/dist/flatpickr.min.js",
             nodeBasePath + "/js-cookie/dist/js.cookie.min.js",
           ],
           dest: systemBasePath + "/js",
@@ -53,7 +52,6 @@ module.exports = (gulp) => {
         {
           src: [
             nodeBasePath + "/@fancyapps/fancybox/dist/jquery.fancybox.css",
-            nodeBasePath + "/flatpickr/dist/flatpickr.min.css",
             nodeBasePath + "/@fortawesome/fontawesome-free/css/all.css",
             nodeBasePath + "/datatables.net-bs5/css/dataTables.bootstrap5.css",
           ],
