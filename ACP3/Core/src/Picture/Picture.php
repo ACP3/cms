@@ -22,10 +22,7 @@ class Picture
      */
     private $appPath;
 
-    /**
-     * @var resource
-     */
-    private $image;
+    private ?\GdImage $image;
 
     public function __construct(
         FastImageSize $fastImageSize,
@@ -166,14 +163,9 @@ class Picture
 
                 break;
         }
-
-        $this->freeMemory();
     }
 
-    /**
-     * @param resource $srcImage
-     */
-    private function scalePicture(Output $output, $srcImage): void
+    private function scalePicture(Output $output, \GdImage $srcImage): void
     {
         imagecopyresampled(
             $this->image,
@@ -187,12 +179,5 @@ class Picture
             $output->getSrcWidth(),
             $output->getSrcHeight()
         );
-    }
-
-    private function freeMemory(): void
-    {
-        if (\is_resource($this->image) === true) {
-            imagedestroy($this->image);
-        }
     }
 }
