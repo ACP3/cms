@@ -77,7 +77,7 @@ class UserMenuViewProvider
     private function getSystemActions(): array
     {
         $navSystem = [];
-        foreach (static::$systemActions as $action) {
+        foreach (self::$systemActions as $action) {
             $permissions = 'admin/system/' . $action['controller'] . '/' . $action['action'];
             if ($this->acl->hasPermission($permissions) === true) {
                 $path = 'system/' . $action['controller'] . '/' . $action['action'];

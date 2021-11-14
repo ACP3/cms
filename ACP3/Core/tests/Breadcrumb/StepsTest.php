@@ -43,6 +43,8 @@ class StepsTest extends \PHPUnit\Framework\TestCase
 
     protected function setup(): void
     {
+        parent::setup();
+
         $this->initializeMockObjects();
 
         $this->steps = new Steps(

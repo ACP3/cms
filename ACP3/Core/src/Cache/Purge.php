@@ -28,7 +28,7 @@ class Purge
     private static function handleMultipleDirectories(array $directories, string $cacheIdPrefix): bool
     {
         foreach ($directories as $directory) {
-            static::doPurge($directory, $cacheIdPrefix);
+            self::doPurge($directory, $cacheIdPrefix);
         }
 
         return true;
@@ -37,13 +37,13 @@ class Purge
     private static function purgeCurrentDirectory(string $fileOrDirectory, string $cacheIdPrefix): void
     {
         if (is_link($fileOrDirectory)) {
-            static::purgeCurrentDirectory(readlink($fileOrDirectory), $cacheIdPrefix);
+            self::purgeCurrentDirectory(readlink($fileOrDirectory), $cacheIdPrefix);
         } elseif (is_dir($fileOrDirectory)) {
             foreach (Filesystem::scandir($fileOrDirectory) as $dirContent) {
                 $path = "$fileOrDirectory/$dirContent";
 
                 if (is_dir($path)) {
-                    static::purgeCurrentDirectory($path, $cacheIdPrefix);
+                    self::purgeCurrentDirectory($path, $cacheIdPrefix);
                     if (empty($cacheIdPrefix)) {
                         @rmdir($path);
                     }

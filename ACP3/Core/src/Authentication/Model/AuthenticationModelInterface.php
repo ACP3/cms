@@ -20,28 +20,16 @@ interface AuthenticationModelInterface
 
     /**
      * Logs out the current user.
-     *
-     * @param int $userId
      */
-    public function logout($userId = 0);
+    public function logout(int $userId = 0): void;
 
     /**
      * Setzt den internen Authentifizierungscookie.
-     *
-     * @param int      $userId
-     * @param string   $token
-     * @param int|null $expiry
-     *
-     * @return Cookie
      */
-    public function setRememberMeCookie($userId, $token, $expiry = null);
+    public function setRememberMeCookie(int $userId, string $token, ?int $expiry = null): Cookie;
 
     /**
      * Loggt einen User ein.
-     *
-     * @param string $username
-     * @param string $password
-     * @param bool   $rememberMe
      */
-    public function login($username, $password, $rememberMe);
+    public function login(string $username, string $password, bool $rememberMe): void;
 }

@@ -11,6 +11,8 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
 {
     protected function setup(): void
     {
+        parent::setup();
+
         $this->columnRenderer = new ReplaceValueColumnRenderer();
 
         $this->columnData = array_merge(

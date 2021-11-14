@@ -89,7 +89,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
                 $this->includeJsAssets = false;
             }
 
-            return $this->view->fetchTemplate(static::TEMPLATE);
+            return $this->view->fetchTemplate(self::TEMPLATE);
         }
 
         return '';

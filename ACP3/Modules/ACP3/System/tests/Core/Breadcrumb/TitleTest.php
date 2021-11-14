@@ -31,6 +31,8 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
 
     protected function setup(): void
     {
+        parent::setup();
+
         $this->initializeMockObjects();
         $this->setUpTitleConfigurator();
 

@@ -18,6 +18,8 @@ class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
 
     protected function setup(): void
     {
+        parent::setup();
+
         $this->initializeMockObjects();
 
         $this->pageBreaks = new PageBreaks(

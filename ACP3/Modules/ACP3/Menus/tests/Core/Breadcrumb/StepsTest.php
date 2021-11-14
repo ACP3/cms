@@ -19,6 +19,8 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
 
     protected function setup(): void
     {
+        parent::setup();
+
         $this->initializeMockObjects();
 
         $this->steps = new Steps(

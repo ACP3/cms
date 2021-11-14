@@ -16,6 +16,8 @@ class RouterTest extends \ACP3\Modules\ACP3\System\Core\Router\RouterTest
 
     protected function setup(): void
     {
+        parent::setup();
+
         $this->initializeMockObjects();
 
         $this->router = new Router(

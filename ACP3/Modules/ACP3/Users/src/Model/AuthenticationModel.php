@@ -81,12 +81,10 @@ class AuthenticationModel implements AuthenticationModelInterface
     /**
      * Logs out the current user.
      *
-     * @param int $userId
-     *
      * @throws \Doctrine\DBAL\Exception
      * @throws \Exception
      */
-    public function logout($userId = 0): void
+    public function logout(int $userId = 0): void
     {
         if ($userId === 0) {
             $userId = $this->userModel->getUserId();
@@ -99,18 +97,12 @@ class AuthenticationModel implements AuthenticationModelInterface
     /**
      * Setzt den internen Authentifizierungscookie.
      *
-     * @param int      $userId
-     * @param string   $token
-     * @param int|null $expiry
-     *
-     * @return Cookie
-     *
      * @throws \Exception
      */
-    public function setRememberMeCookie($userId, $token, $expiry = null)
+    public function setRememberMeCookie(int $userId, string $token, ?int $expiry = null): Cookie
     {
         if ($expiry === null) {
-            $expiry = static::REMEMBER_ME_COOKIE_LIFETIME;
+            $expiry = self::REMEMBER_ME_COOKIE_LIFETIME;
         }
 
         return Cookie::create(
@@ -126,16 +118,12 @@ class AuthenticationModel implements AuthenticationModelInterface
     /**
      * Loggt einen User ein.
      *
-     * @param string $username
-     * @param string $password
-     * @param bool   $rememberMe
-     *
      * @throws Users\Exception\LoginFailedException
      * @throws Users\Exception\UserAccountLockedException
      * @throws \Doctrine\DBAL\Exception
      * @throws \Exception
      */
-    public function login($username, $password, $rememberMe)
+    public function login(string $username, string $password, bool $rememberMe): void
     {
         $user = $this->userRepository->getOneByNickname($username);
 
@@ -210,27 +198,19 @@ class AuthenticationModel implements AuthenticationModelInterface
     }
 
     /**
-     * @param int    $userId
-     * @param string $token
-     *
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    private function saveRememberMeToken($userId, $token)
+    private function saveRememberMeToken(int $userId, string $token): void
     {
-        return $this->userRepository->update(['remember_me_token' => $token], $userId);
+        $this->userRepository->update(['remember_me_token' => $token], $userId);
     }
 
     /**
      * Migrates the old sha1 based password hash to sha512 hashes and returns the updated user information.
      *
-     * @param int    $userId
-     * @param string $password
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    private function migratePasswordHashToSha512($userId, $password): array
+    private function migratePasswordHashToSha512(int $userId, string $password): array
     {
         $salt = $this->secureHelper->salt(self::SALT_LENGTH);
         $updateValues = [
@@ -243,10 +223,7 @@ class AuthenticationModel implements AuthenticationModelInterface
         return $this->userRepository->getOneById($userId);
     }
 
-    /**
-     * @param string $password
-     */
-    protected function userHasOldPassword($password, array $user): bool
+    protected function userHasOldPassword(string $password, array $user): bool
     {
         return \strlen($user['pwd']) === 40
         && $user['pwd'] === $this->secureHelper->generateSaltedPassword($user['pwd_salt'], $password);

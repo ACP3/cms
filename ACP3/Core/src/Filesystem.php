@@ -21,7 +21,7 @@ class Filesystem
         if ($scannedDirectory !== false) {
             $filesAndDirectories = array_diff(
                 $scannedDirectory,
-                array_merge(static::$excluded, $excluded)
+                array_merge(self::$excluded, $excluded)
             );
 
             return array_values($filesAndDirectories);

@@ -65,13 +65,13 @@ class UpdateCheck
 
     private function canRequestUpdateURI(int $lastUpdateTimestamp): bool
     {
-        return $this->date->timestamp() - $lastUpdateTimestamp >= static::UPDATE_CHECK_DATE_OFFSET;
+        return $this->date->timestamp() - $lastUpdateTimestamp >= self::UPDATE_CHECK_DATE_OFFSET;
     }
 
     private function doUpdateCheck(): array
     {
         try {
-            $data = $this->updateFileParser->parseUpdateFile(static::UPDATE_CHECK_FILE);
+            $data = $this->updateFileParser->parseUpdateFile(self::UPDATE_CHECK_FILE);
 
             $update = [
                 'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),

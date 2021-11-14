@@ -88,7 +88,7 @@ class Settings implements SettingsInterface
             $result = $this->systemSettingsRepository->update($updateValues, $where);
         }
 
-        $result2 = $this->coreCachePool->deleteItem(static::CACHE_ID);
+        $result2 = $this->coreCachePool->deleteItem(self::CACHE_ID);
 
         return $result !== false && $result2 !== false;
     }
@@ -99,7 +99,7 @@ class Settings implements SettingsInterface
     public function getSettings(string $module): array
     {
         if ($this->settings === []) {
-            $cacheItem = $this->coreCachePool->getItem(static::CACHE_ID);
+            $cacheItem = $this->coreCachePool->getItem(self::CACHE_ID);
 
             if (!$cacheItem->isHit()) {
                 $settings = $this->systemSettingsRepository->getAllSettings();

@@ -26,6 +26,8 @@ class TitleTest extends \PHPUnit\Framework\TestCase
 
     protected function setup(): void
     {
+        parent::setup();
+
         $this->initializeMockObjects();
 
         $this->title = new Title(

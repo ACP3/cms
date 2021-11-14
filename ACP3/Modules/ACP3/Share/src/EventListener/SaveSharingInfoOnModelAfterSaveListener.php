@@ -44,7 +44,7 @@ class SaveSharingInfoOnModelAfterSaveListener implements EventSubscriberInterfac
                 $this->socialSharingManager->saveSharingInfo(
                     sprintf($formData['share_uri_pattern'], $event->getEntryId()),
                     $formData['share_active'] ?? false,
-                    (isset($formData['share_customize_services']) && (int)$formData['share_customize_services'] === 1) ? $formData['share_services'] : [],
+                    (isset($formData['share_customize_services']) && (int) $formData['share_customize_services'] === 1) ? $formData['share_services'] : [],
                     $formData['share_ratings_active']
                 );
             }
