@@ -29,11 +29,6 @@ class Helpers
      */
     protected $availableModulesRegistrar;
 
-    /**
-     * @param \ACP3\Core\ACL           $acl
-     * @param \ACP3\Core\Modules       $modules
-     * @param \ACP3\Core\Helpers\Forms $formsHelper
-     */
     public function __construct(
         Core\ACL $acl,
         Core\Modules $modules,

@@ -16,9 +16,6 @@ class Translate extends AbstractFunction
      */
     protected $translator;
 
-    /**
-     * @param \ACP3\Core\I18n\Translator $translator
-     */
     public function __construct(Core\I18n\Translator $translator)
     {
         $this->translator = $translator;

@@ -16,9 +16,6 @@ class PageCssClasses extends AbstractFunction
      */
     protected $pageCssClasses;
 
-    /**
-     * @param \ACP3\Core\Assets\PageCssClasses $pageCssClasses
-     */
     public function __construct(Assets\PageCssClasses $pageCssClasses)
     {
         $this->pageCssClasses = $pageCssClasses;

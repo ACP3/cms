@@ -65,7 +65,7 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
             foreach ($this->prepareEntryIds($event) as $entryId) {
                 $this->auditLogRepository->insert([
                     'date' => $this->date->toSQL(),
-                    'module_id' => (int) $moduleId,
+                    'module_id' => $moduleId,
                     'table_name' => $event->getTableName(),
                     'entry_id' => (int) $entryId,
                     'action' => $this->getAction($event),

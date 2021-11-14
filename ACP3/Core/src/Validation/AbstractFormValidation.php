@@ -20,10 +20,6 @@ abstract class AbstractFormValidation
      */
     protected $validator;
 
-    /**
-     * @param \ACP3\Core\I18n\Translator      $translator
-     * @param \ACP3\Core\Validation\Validator $validator
-     */
     public function __construct(
         Core\I18n\Translator $translator,
         Core\Validation\Validator $validator

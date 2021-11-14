@@ -24,8 +24,6 @@ class Installer
     /**
      * Überprüft die Modulabhängigkeiten beim Installieren eines Moduls.
      *
-     * @param \ACP3\Core\Installer\SchemaInterface $schema
-     *
      * @return string[]
      */
     public function checkInstallDependencies(Core\Installer\SchemaInterface $schema): array

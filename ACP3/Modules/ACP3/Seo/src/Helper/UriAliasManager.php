@@ -65,7 +65,7 @@ class UriAliasManager
             'seo_title' => $title,
             'seo_keywords' => $keywords,
             'seo_description' => $description,
-            'seo_robots' => (int) $robots,
+            'seo_robots' => $robots,
         ];
 
         $seo = $this->seoRepository->getOneByUri($path);

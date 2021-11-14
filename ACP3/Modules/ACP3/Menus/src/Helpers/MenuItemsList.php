@@ -45,17 +45,15 @@ class MenuItemsList
 
         $output = [];
 
-        if (\count($this->menuItems) > 0) {
-            foreach ($this->menuItems as $row) {
-                if (!($row['left_id'] >= $leftId && $row['right_id'] <= $rightId)) {
-                    $row['selected'] = $this->formsHelper->selectEntry('parent_id', $row['id'], $parentId);
-                    $row['spaces'] = str_repeat('&nbsp;&nbsp;', $row['level']);
+        foreach ($this->menuItems as $row) {
+            if (!($row['left_id'] >= $leftId && $row['right_id'] <= $rightId)) {
+                $row['selected'] = $this->formsHelper->selectEntry('parent_id', $row['id'], $parentId);
+                $row['spaces'] = str_repeat('&nbsp;&nbsp;', $row['level']);
 
-                    // Titel für den aktuellen Block setzen
-                    $output[$row['block_name']]['title'] = $row['block_title'];
-                    $output[$row['block_name']]['menu_id'] = $row['block_id'];
-                    $output[$row['block_name']]['items'][] = $row;
-                }
+                // Titel für den aktuellen Block setzen
+                $output[$row['block_name']]['title'] = $row['block_title'];
+                $output[$row['block_name']]['menu_id'] = $row['block_id'];
+                $output[$row['block_name']]['items'][] = $row;
             }
         }
 

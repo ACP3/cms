@@ -16,9 +16,6 @@ class HasPermission extends AbstractFunction
      */
     protected $acl;
 
-    /**
-     * @param \ACP3\Core\ACL $acl
-     */
     public function __construct(Core\ACL $acl)
     {
         $this->acl = $acl;

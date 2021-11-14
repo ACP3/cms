@@ -265,9 +265,8 @@ class Navbar extends AbstractFunction
         if (isset($items[$currentIndex + 1]['level'])) {
             $diff -= $items[$currentIndex + 1]['level'];
         }
-        $diff *= 2;
 
-        return $diff;
+        return $diff * 2;
     }
 
     private function getMenuItemSelector(array $item, MenuConfiguration $menuConfig): string
@@ -280,9 +279,8 @@ class Navbar extends AbstractFunction
         $bootstrapSelector = $menuConfig->isUseBootstrap() === true ? ' navbar-nav' : '';
         $navigationSelectors = !empty($menuConfig->getSelector()) ? ' ' . $menuConfig->getSelector() : $bootstrapSelector;
         $attributes = ' class="navigation-' . $menu . $navigationSelectors . '"';
-        $attributes .= !empty($menuConfig->getInlineStyle()) ? ' style="' . $menuConfig->getInlineStyle() . '"' : '';
 
-        return $attributes;
+        return $attributes . (!empty($menuConfig->getInlineStyle()) ? ' style="' . $menuConfig->getInlineStyle() . '"' : '');
     }
 
     /**

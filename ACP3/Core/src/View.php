@@ -67,8 +67,6 @@ class View
      *
      * @param string|array $name
      * @param mixed        $value
-     *
-     * @return $this
      */
     public function assign($name, $value = null): self
     {

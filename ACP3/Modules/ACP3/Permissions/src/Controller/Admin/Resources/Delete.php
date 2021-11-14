@@ -34,8 +34,6 @@ class Delete extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @param string|null $action
-     *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function __invoke(?string $action = null)

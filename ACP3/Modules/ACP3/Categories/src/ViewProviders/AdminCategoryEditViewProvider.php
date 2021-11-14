@@ -114,7 +114,7 @@ class AdminCategoryEditViewProvider
         }
 
         $categories = [];
-        foreach ($this->categoryRepository->getAllByModuleId($moduleId) as $i => $category) {
+        foreach ($this->categoryRepository->getAllByModuleId($moduleId) as $category) {
             if ($category['left_id'] >= $leftId && $category['right_id'] <= $rightId) {
                 continue;
             }

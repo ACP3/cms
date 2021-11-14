@@ -1,6 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
+
+/**
+ * Copyright (c) by the ACP3 Developers.
+ * See the LICENSE file at the top-level module directory for licensing details.
+ */
 
 use Rector\Core\Configuration\Option;
 use Rector\Php74\Rector\Property\TypedPropertyRector;

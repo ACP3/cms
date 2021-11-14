@@ -26,9 +26,6 @@ class Index extends Core\Controller\AbstractWidgetAction
         $this->resourceListDataGridViewProvider = $resourceListDataGridViewProvider;
     }
 
-    /**
-     * @return array
-     */
     public function __invoke(): array
     {
         return ($this->resourceListDataGridViewProvider)();

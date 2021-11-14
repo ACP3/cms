@@ -52,15 +52,15 @@ class XML
                 /** @var \SimpleXMLElement $value */
                 if ($value->attributes()) {
                     $this->parseAttributes($value->attributes(), $path, $xpath, $key);
-                } elseif (isset($this->info[$path][$xpath][(string) $key]) && \is_array($this->info[$path][$xpath][(string) $key])) {
-                    $this->info[$path][$xpath][(string) $key][] = (string) $value;
-                } elseif (isset($this->info[$path][$xpath][(string) $key])) {
-                    $tmp = $this->info[$path][$xpath][(string) $key];
-                    $this->info[$path][$xpath][(string) $key] = [];
-                    $this->info[$path][$xpath][(string) $key][] = $tmp;
-                    $this->info[$path][$xpath][(string) $key][] = (string) $value;
+                } elseif (isset($this->info[$path][$xpath][$key]) && \is_array($this->info[$path][$xpath][$key])) {
+                    $this->info[$path][$xpath][$key][] = (string) $value;
+                } elseif (isset($this->info[$path][$xpath][$key])) {
+                    $tmp = $this->info[$path][$xpath][$key];
+                    $this->info[$path][$xpath][$key] = [];
+                    $this->info[$path][$xpath][$key][] = $tmp;
+                    $this->info[$path][$xpath][$key][] = (string) $value;
                 } else {
-                    $this->info[$path][$xpath][(string) $key] = (string) $value;
+                    $this->info[$path][$xpath][$key] = (string) $value;
                 }
             }
         }
@@ -79,7 +79,7 @@ class XML
             if ($key === 'version' && $attrKey === 'core' && (string) $attrValue === 'true') {
                 $this->info[$path][$xpath]['version'] = Bootstrap::VERSION;
             } else {
-                $this->info[$path][$xpath][(string) $key][(string) $attrKey] = (string) $attrValue;
+                $this->info[$path][$xpath][(string) $key][$attrKey] = (string) $attrValue;
             }
         }
     }

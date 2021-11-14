@@ -63,9 +63,6 @@ class Output
         return $this->srcWidth;
     }
 
-    /**
-     * @return $this
-     */
     public function setSrcWidth(?int $srcWidth): self
     {
         $this->srcWidth = $srcWidth;
@@ -78,9 +75,6 @@ class Output
         return $this->srcHeight;
     }
 
-    /**
-     * @return $this
-     */
     public function setSrcHeight(?int $srcHeight): self
     {
         $this->srcHeight = $srcHeight;
@@ -93,9 +87,6 @@ class Output
         return $this->destFile;
     }
 
-    /**
-     * @return $this
-     */
     public function setDestFile(string $destFile): self
     {
         $this->destFile = $destFile;
@@ -108,9 +99,6 @@ class Output
         return $this->destWidth;
     }
 
-    /**
-     * @return $this
-     */
     public function setDestWidth(?int $destWidth): self
     {
         $this->destWidth = $destWidth;
@@ -123,9 +111,6 @@ class Output
         return $this->destHeight;
     }
 
-    /**
-     * @return $this
-     */
     public function setDestHeight(?int $destHeight): self
     {
         $this->destHeight = $destHeight;

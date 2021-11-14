@@ -40,9 +40,6 @@ class Validator
         $this->container = $container;
     }
 
-    /**
-     * @return $this
-     */
     public function addConstraint(string $validationRule, array $params = []): self
     {
         $this->constraints[] = [
@@ -65,8 +62,6 @@ class Validator
 
     /**
      * @param string|array $field
-     *
-     * @return $this
      */
     public function addError(string $message, $field = ''): self
     {

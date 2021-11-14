@@ -28,8 +28,8 @@ class Textarea extends AbstractWYSIWYG
         $this->id = $params['id'];
         $this->name = $params['name'];
         $this->value = $params['value'];
-        $this->advanced = isset($params['advanced']) ? (bool) $params['advanced'] : false;
-        $this->required = isset($params['required']) ? (bool) $params['required'] : false;
+        $this->advanced = isset($params['advanced']) && (bool) $params['advanced'];
+        $this->required = isset($params['required']) && (bool) $params['required'];
     }
 
     /**

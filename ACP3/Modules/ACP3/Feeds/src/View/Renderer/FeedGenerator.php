@@ -51,9 +51,6 @@ class FeedGenerator
         $this->router = $router;
     }
 
-    /**
-     * @return $this
-     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -61,9 +58,6 @@ class FeedGenerator
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function setDescription(string $description): self
     {
         $this->description = $description;

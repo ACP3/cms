@@ -16,9 +16,6 @@ class TemplatePath extends AbstractFunction
      */
     protected $fileResolver;
 
-    /**
-     * @param \ACP3\Core\Assets\FileResolver $fileResolver
-     */
     public function __construct(Core\Assets\FileResolver $fileResolver)
     {
         $this->fileResolver = $fileResolver;

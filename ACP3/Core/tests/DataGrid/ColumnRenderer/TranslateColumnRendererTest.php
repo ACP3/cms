@@ -48,9 +48,4 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
         $expected = '<td>{NEWS_NEWS}</td>';
         $this->compareResults($expected);
     }
-
-    public function testDefaultValueIfNull()
-    {
-        parent::testDefaultValueIfNull();
-    }
 }

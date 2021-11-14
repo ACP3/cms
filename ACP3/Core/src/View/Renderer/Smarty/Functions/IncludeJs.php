@@ -16,9 +16,6 @@ class IncludeJs extends AbstractFunction
      */
     private $includeJs;
 
-    /**
-     * @param \ACP3\Core\Assets\IncludeJs $includeJs
-     */
     public function __construct(Core\Assets\IncludeJs $includeJs)
     {
         $this->includeJs = $includeJs;

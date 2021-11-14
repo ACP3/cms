@@ -50,9 +50,6 @@ class Navigation
             );
     }
 
-    /**
-     * @return $this
-     */
     private function addStep(string $stepName, array $options): self
     {
         if (!$this->has($stepName)) {
@@ -72,9 +69,6 @@ class Navigation
         ];
     }
 
-    /**
-     * @return $this
-     */
     public function markStepComplete(string $stepName): self
     {
         if ($this->has($stepName)) {
@@ -89,9 +83,6 @@ class Navigation
         return \array_key_exists($stepName, $this->navbar);
     }
 
-    /**
-     * @return $this
-     */
     public function markStepActive(string $stepName): self
     {
         if ($this->has($stepName)) {

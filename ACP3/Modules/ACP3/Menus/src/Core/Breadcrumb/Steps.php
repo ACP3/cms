@@ -111,7 +111,7 @@ class Steps extends Core\Breadcrumb\Steps
     private function findRestrictionInRoutes(array $items): array
     {
         rsort($items);
-        foreach ($items as $index => $item) {
+        foreach ($items as $item) {
             if (\in_array($item['uri'], $this->getPossiblyMatchingRoutes(), true)) {
                 return [
                     $item['left_id'],
@@ -125,8 +125,6 @@ class Steps extends Core\Breadcrumb\Steps
 
     /**
      * Zuweisung einer neuen Stufe zur Brotkrümelspur.
-     *
-     * @return $this
      */
     private function appendFromDB(string $title, string $path = ''): self
     {
