@@ -40,11 +40,11 @@ class SaveSharingInfoOnModelAfterSaveListener implements EventSubscriberInterfac
         if ($this->acl->hasPermission('admin/share/index/create')) {
             $formData = $event->getRawData();
 
-            if ($event->getModuleName() !== Schema::MODULE_NAME && !empty($formData['share_uri_pattern'])) {
+            if (!empty($formData['share_uri_pattern']) && $event->getModuleName() !== Schema::MODULE_NAME) {
                 $this->socialSharingManager->saveSharingInfo(
                     sprintf($formData['share_uri_pattern'], $event->getEntryId()),
-                    $formData['share_active'],
-                    $formData['share_customize_services'] == 1 ? $formData['share_services'] : [],
+                    $formData['share_active'] ?? false,
+                    (isset($formData['share_customize_services']) && (int)$formData['share_customize_services'] === 1) ? $formData['share_services'] : [],
                     $formData['share_ratings_active']
                 );
             }
