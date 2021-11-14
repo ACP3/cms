@@ -7,65 +7,10 @@
 
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
-class MenuConfiguration
+class MenuConfiguration implements \Stringable
 {
-    /**
-     * @var bool
-     */
-    private $useBootstrap;
-    /**
-     * @var string
-     */
-    private $selector;
-    /**
-     * @var string
-     */
-    private $dropdownItemSelector;
-    /**
-     * @var string
-     */
-    private $tag;
-    /**
-     * @var string
-     */
-    private $itemTag;
-    /**
-     * @var string
-     */
-    private $dropdownWrapperTag;
-    /**
-     * @var string
-     */
-    private $linkSelector;
-    /**
-     * @var string
-     */
-    private $inlineStyle;
-    /**
-     * @var string
-     */
-    private $itemSelectors;
-
-    public function __construct(
-        bool $useBootstrap = true,
-        string $class = '',
-        string $dropdownItemSelector = '',
-        string $tag = 'ul',
-        string $itemTag = 'li',
-        string $itemSelectors = '',
-        string $dropdownWrapperTag = 'li',
-        string $linkSelectors = '',
-        string $inlineStyle = ''
-    ) {
-        $this->useBootstrap = $useBootstrap;
-        $this->selector = $class;
-        $this->dropdownItemSelector = $dropdownItemSelector;
-        $this->tag = $tag;
-        $this->itemTag = $itemTag;
-        $this->dropdownWrapperTag = $dropdownWrapperTag;
-        $this->linkSelector = $linkSelectors;
-        $this->inlineStyle = $inlineStyle;
-        $this->itemSelectors = $itemSelectors;
+    public function __construct(private bool $useBootstrap = true, private string $selector = '', private string $dropdownItemSelector = '', private string $tag = 'ul', private string $itemTag = 'li', private string $itemSelectors = '', private string $dropdownWrapperTag = 'li', private string $linkSelector = '', private string $inlineStyle = '')
+    {
     }
 
     public function isUseBootstrap(): bool

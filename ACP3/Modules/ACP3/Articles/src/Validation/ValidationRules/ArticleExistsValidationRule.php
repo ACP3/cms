@@ -12,14 +12,8 @@ use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class ArticleExistsValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Repository\ArticleRepository
-     */
-    private $articleRepository;
-
-    public function __construct(ArticleRepository $articleRepository)
+    public function __construct(private ArticleRepository $articleRepository)
     {
-        $this->articleRepository = $articleRepository;
     }
 
     /**

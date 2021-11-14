@@ -11,14 +11,8 @@ use ACP3\Core\Assets\Libraries;
 
 class JsLibraries extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Assets\Libraries
-     */
-    private $libraries;
-
-    public function __construct(Libraries $libraries)
+    public function __construct(private Libraries $libraries)
     {
-        $this->libraries = $libraries;
     }
 
     /**

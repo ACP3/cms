@@ -15,38 +15,19 @@ use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class Sort extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Repository\FilesRepository
-     */
-    private $filesRepository;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Model\FilesModel
-     */
-    private $filesModel;
-
     public function __construct(
         WidgetContext $context,
-        Core\Http\RedirectResponse $redirectResponse,
-        FilesRepository $filesRepository,
-        FilesModel $filesModel
+        private Core\Http\RedirectResponse $redirectResponse,
+        private FilesRepository $filesRepository,
+        private FilesModel $filesModel
     ) {
         parent::__construct($context);
-
-        $this->filesRepository = $filesRepository;
-        $this->redirectResponse = $redirectResponse;
-        $this->filesModel = $filesModel;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id, string $action)
+    public function __invoke(int $id, string $action): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if (($action === 'up' || $action === 'down') && $this->filesRepository->resultExists($id) === true) {
             if ($action === 'up') {

@@ -15,18 +15,12 @@ class OutputPageExceptionEvent extends Event
     public const NAME = 'core.output_page_exception';
 
     /**
-     * @var \Throwable
-     */
-    private $throwable;
-
-    /**
      * @var \Symfony\Component\HttpFoundation\Response
      */
     private $response;
 
-    public function __construct(\Throwable $throwable)
+    public function __construct(private \Throwable $throwable)
     {
-        $this->throwable = $throwable;
     }
 
     public function getThrowable(): \Throwable

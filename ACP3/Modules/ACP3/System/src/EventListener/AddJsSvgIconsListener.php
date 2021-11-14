@@ -13,14 +13,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddJsSvgIconsListener implements EventSubscriberInterface
 {
-    /**
-     * @var Icon
-     */
-    private $iconViewHelper;
-
-    public function __construct(Icon $iconViewHelper)
+    public function __construct(private Icon $iconViewHelper)
     {
-        $this->iconViewHelper = $iconViewHelper;
     }
 
     public function __invoke(JsSvgIconEvent $event): void

@@ -14,11 +14,13 @@ use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\Model\SortingAwareTrait;
 use ACP3\Core\Model\UpdatedAtAwareModelInterface;
-use ACP3\Core\Repository\AbstractRepository;
 use ACP3\Modules\ACP3\Files\Installer\Schema;
 use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @property FilesRepository $repository
+ */
 class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, SortingAwareInterface
 {
     use DuplicationAwareTrait;
@@ -26,30 +28,19 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
 
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * @var FilesRepository
-     */
-    protected $repository;
-    /**
-     * @var \ACP3\Core\Helpers\Sort
-     */
-    private $sort;
-
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
-        AbstractRepository $repository,
-        Sort $sort)
+        FilesRepository $repository,
+        private Sort $sort)
     {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
-
-        $this->sort = $sort;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, $entryId = null): int
     {
         $rawData = array_merge($rawData, [
             'category_id' => $rawData['cat'] ?? $rawData['category_id'],

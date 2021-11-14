@@ -14,33 +14,8 @@ use ACP3\Modules\ACP3\Search\Helpers;
 
 class SearchViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Search\Helpers
-     */
-    private $searchHelpers;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        Forms $formsHelper,
-        Helpers $searchHelpers,
-        RequestInterface $request,
-        Translator $translator
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->searchHelpers = $searchHelpers;
-        $this->request = $request;
-        $this->translator = $translator;
+    public function __construct(private Forms $formsHelper, private Helpers $searchHelpers, private RequestInterface $request, private Translator $translator)
+    {
     }
 
     public function __invoke(): array

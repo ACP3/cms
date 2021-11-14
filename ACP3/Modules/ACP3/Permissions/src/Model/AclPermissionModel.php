@@ -21,20 +21,13 @@ class AclPermissionModel extends AbstractModel
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $permissionsCachePool;
-
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         AclPermissionRepository $repository,
-        CacheItemPoolInterface $permissionsCachePool
+        private CacheItemPoolInterface $permissionsCachePool
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
-
-        $this->permissionsCachePool = $permissionsCachePool;
     }
 
     /**

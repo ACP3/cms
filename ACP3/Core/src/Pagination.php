@@ -17,22 +17,6 @@ use ACP3\Core\Router\RouterInterface;
 class Pagination
 {
     /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    protected $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    protected $router;
-    /**
      * @var int
      */
     private $resultsPerPage = 0;
@@ -69,16 +53,8 @@ class Pagination
      */
     private $pagination = [];
 
-    public function __construct(
-        Title $title,
-        Translator $translator,
-        RequestInterface $request,
-        RouterInterface $router
-    ) {
-        $this->title = $title;
-        $this->translator = $translator;
-        $this->request = $request;
-        $this->router = $router;
+    public function __construct(protected Title $title, protected Translator $translator, protected RequestInterface $request, protected RouterInterface $router)
+    {
     }
 
     /**
@@ -267,12 +243,10 @@ class Pagination
     }
 
     /**
-     * @param int|string $pageNumber
-     *
      * @return $this
      */
     private function addPageNumber(
-        $pageNumber,
+        int|string $pageNumber,
         string $uri,
         string $title = '',
         bool $selected = false,
@@ -283,11 +257,8 @@ class Pagination
         return $this;
     }
 
-    /**
-     * @param int|string $pageNumber
-     */
     private function buildPageNumber(
-        $pageNumber,
+        int|string $pageNumber,
         string $uri,
         string $title = '',
         bool $selected = false,

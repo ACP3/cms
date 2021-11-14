@@ -16,33 +16,8 @@ use Heise\Shariff\Backend;
 
 class BackendFactory
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialServices
-     */
-    private $socialServices;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $applicationPath;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        ApplicationPath $applicationPath,
-        SettingsInterface $settings,
-        RequestInterface $request,
-        SocialServices $socialServices)
+    public function __construct(private ApplicationPath $applicationPath, private SettingsInterface $settings, private RequestInterface $request, private SocialServices $socialServices)
     {
-        $this->request = $request;
-        $this->socialServices = $socialServices;
-        $this->applicationPath = $applicationPath;
-        $this->settings = $settings;
     }
 
     public function create(): Backend

@@ -15,33 +15,8 @@ use ACP3\Modules\ACP3\Feeds\Installer\Schema as FeedsSchema;
 
 class AdminSettingsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        RequestInterface $request,
-        SettingsInterface $settings
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->settings = $settings;
+    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings)
+    {
     }
 
     public function __invoke(): array

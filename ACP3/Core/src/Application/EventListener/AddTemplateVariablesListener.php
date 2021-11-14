@@ -18,39 +18,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddTemplateVariablesListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Environment\ThemePathInterface
-     */
-    private $theme;
-
-    public function __construct(
-        ApplicationPath $appPath,
-        RequestInterface $request,
-        ThemePathInterface $theme,
-        View $view,
-        Translator $translator
-    ) {
-        $this->appPath = $appPath;
-        $this->request = $request;
-        $this->view = $view;
-        $this->translator = $translator;
-        $this->theme = $theme;
+    public function __construct(private ApplicationPath $appPath, private RequestInterface $request, private ThemePathInterface $theme, private View $view, private Translator $translator)
+    {
     }
 
     public function __invoke()

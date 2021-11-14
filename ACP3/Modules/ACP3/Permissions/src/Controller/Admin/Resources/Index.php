@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Permissions;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\ResourceListDataGridViewProvider
-     */
-    private $resourceListDataGridViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Permissions\ViewProviders\ResourceListDataGridViewProvider $resourceListDataGridViewProvider
+        private Permissions\ViewProviders\ResourceListDataGridViewProvider $resourceListDataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->resourceListDataGridViewProvider = $resourceListDataGridViewProvider;
     }
 
     public function __invoke(): array

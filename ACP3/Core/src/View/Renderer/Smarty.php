@@ -16,19 +16,8 @@ use Psr\Container\ContainerInterface;
  */
 class Smarty implements RendererInterface
 {
-    /**
-     * @var \Smarty
-     */
-    private $smarty;
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $container;
-
-    public function __construct(\Smarty $smarty, ContainerInterface $container)
+    public function __construct(private \Smarty $smarty, private ContainerInterface $container)
     {
-        $this->smarty = $smarty;
-        $this->container = $container;
     }
 
     /**
@@ -39,9 +28,7 @@ class Smarty implements RendererInterface
         $this->smarty->registerPlugin(
             PluginTypeEnum::BLOCK,
             $blockName,
-            function (array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat) use ($serviceId) {
-                return $this->container->get($serviceId)($params, $content, $smarty, $repeat);
-            }
+            fn (array $params, ?string $content, \Smarty_Internal_Template $smarty, bool & $repeat) => $this->container->get($serviceId)($params, $content, $smarty, $repeat)
         );
     }
 
@@ -52,9 +39,7 @@ class Smarty implements RendererInterface
     {
         $this->smarty->registerFilter(
             $filterName,
-            function ($tplOutput, \Smarty_Internal_Template $smarty) use ($serviceId) {
-                return $this->container->get($serviceId)($tplOutput, $smarty);
-            },
+            fn ($tplOutput, \Smarty_Internal_Template $smarty) => $this->container->get($serviceId)($tplOutput, $smarty),
             $serviceId
         );
     }
@@ -67,9 +52,7 @@ class Smarty implements RendererInterface
         $this->smarty->registerPlugin(
             PluginTypeEnum::FUNCTION,
             $pluginName,
-            function (array $params, \Smarty_Internal_Template $smarty) use ($serviceId) {
-                return $this->container->get($serviceId)($params, $smarty);
-            }
+            fn (array $params, \Smarty_Internal_Template $smarty) => $this->container->get($serviceId)($params, $smarty)
         );
     }
 
@@ -81,9 +64,7 @@ class Smarty implements RendererInterface
         $this->smarty->registerPlugin(
             PluginTypeEnum::MODIFIER,
             $pluginName,
-            function (...$value) use ($serviceId) {
-                return $this->container->get($serviceId)(...$value);
-            }
+            fn (...$value) => $this->container->get($serviceId)(...$value)
         );
     }
 

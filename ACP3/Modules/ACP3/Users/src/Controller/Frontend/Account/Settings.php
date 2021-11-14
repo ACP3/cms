@@ -13,19 +13,12 @@ use ACP3\Modules\ACP3\Users;
 
 class Settings extends AbstractAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\AccountSettingsViewProvider
-     */
-    private $accountSettingsViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         UserModelInterface $user,
-        Users\ViewProviders\AccountSettingsViewProvider $accountSettingsViewProvider
+        private Users\ViewProviders\AccountSettingsViewProvider $accountSettingsViewProvider
     ) {
         parent::__construct($context, $user);
-
-        $this->accountSettingsViewProvider = $accountSettingsViewProvider;
     }
 
     /**

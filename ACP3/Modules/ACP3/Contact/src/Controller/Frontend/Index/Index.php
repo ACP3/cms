@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Contact;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Contact\ViewProviders\ContactFormViewProvider
-     */
-    private $contactFormViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        Contact\ViewProviders\ContactFormViewProvider $contactFormViewProvider
+        private Contact\ViewProviders\ContactFormViewProvider $contactFormViewProvider
     ) {
         parent::__construct($context);
-
-        $this->contactFormViewProvider = $contactFormViewProvider;
     }
 
     public function __invoke(): array

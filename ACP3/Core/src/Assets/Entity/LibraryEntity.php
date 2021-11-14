@@ -10,17 +10,9 @@ namespace ACP3\Core\Assets\Entity;
 final class LibraryEntity
 {
     /**
-     * @var string
-     */
-    private $libraryIdentifier;
-    /**
      * @var bool
      */
     private $enabled = false;
-    /**
-     * @var bool
-     */
-    private $enabledForAjax;
     /**
      * @var array
      */
@@ -37,31 +29,23 @@ final class LibraryEntity
      * @var string
      */
     private $moduleName;
-    /**
-     * @var bool
-     */
-    private $deferrableCss;
 
     public function __construct(
-        string $libraryIdentifier,
-        bool $enabledForAjax = true,
+        private string $libraryIdentifier,
+        private bool $enabledForAjax = true,
         array $dependencies = [],
         array $css = [],
         array $js = [],
         string $moduleName = '',
-        bool $deferrableCss = false
+        private bool $deferrableCss = false
     ) {
         if (!$moduleName) {
             throw new \InvalidArgumentException('The argument `moduleName` is required!');
         }
-
-        $this->libraryIdentifier = $libraryIdentifier;
-        $this->enabledForAjax = $enabledForAjax;
         $this->dependencies = $dependencies;
         $this->css = $css;
         $this->js = $js;
         $this->moduleName = $moduleName;
-        $this->deferrableCss = $deferrableCss;
     }
 
     public function getLibraryIdentifier(): string

@@ -20,45 +20,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddSocialSharingListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialServices
-     */
-    private $socialServices;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
-     */
-    private $shareRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository
-     */
-    private $shareRatingsRepository;
-
-    public function __construct(
-        Modules $modules,
-        RequestInterface $request,
-        View $view,
-        SocialServices $socialServices,
-        ShareRepository $shareRepository,
-        ShareRatingsRepository $shareRatingsRepository)
+    public function __construct(private Modules $modules, private RequestInterface $request, private View $view, private SocialServices $socialServices, private ShareRepository $shareRepository, private ShareRatingsRepository $shareRatingsRepository)
     {
-        $this->request = $request;
-        $this->view = $view;
-        $this->socialServices = $socialServices;
-        $this->shareRepository = $shareRepository;
-        $this->shareRatingsRepository = $shareRatingsRepository;
-        $this->modules = $modules;
     }
 
     /**

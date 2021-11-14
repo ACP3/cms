@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Newsletter;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterSubscribeViewProvider
-     */
-    private $newsletterSubscribeViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Newsletter\ViewProviders\NewsletterSubscribeViewProvider $newsletterSubscribeViewProvider
+        private Newsletter\ViewProviders\NewsletterSubscribeViewProvider $newsletterSubscribeViewProvider
     ) {
         parent::__construct($context);
-
-        $this->newsletterSubscribeViewProvider = $newsletterSubscribeViewProvider;
     }
 
     public function __invoke(): array

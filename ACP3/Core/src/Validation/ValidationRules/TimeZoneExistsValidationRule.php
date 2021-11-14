@@ -22,7 +22,7 @@ class TimeZoneExistsValidationRule extends AbstractValidationRule
 
         try {
             new \DateTimeZone($data);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $bool = false;
         }
 

@@ -13,27 +13,8 @@ use ACP3\Core\Router\RouterInterface;
 
 class SortColumnRenderer extends AbstractColumnRenderer
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    protected $router;
-    /**
-     * @var Icon
-     */
-    private $icon;
-
-    public function __construct(
-        Translator $translator,
-        RouterInterface $router,
-        Icon $icon
-    ) {
-        $this->translator = $translator;
-        $this->router = $router;
-        $this->icon = $icon;
+    public function __construct(private Translator $translator, protected RouterInterface $router, private Icon $icon)
+    {
     }
 
     /**

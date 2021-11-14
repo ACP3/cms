@@ -18,51 +18,8 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class AdminSettingsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Date
-     */
-    private $dateHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \Symfony\Component\DependencyInjection\ServiceLocator
-     */
-    private $editorLocator;
-
-    public function __construct(
-        Date $dateHelper,
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        RequestInterface $request,
-        SettingsInterface $settings,
-        Translator $translator,
-        ServiceLocator $editorLocator
-    ) {
-        $this->dateHelper = $dateHelper;
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->settings = $settings;
-        $this->translator = $translator;
-        $this->editorLocator = $editorLocator;
+    public function __construct(private Date $dateHelper, private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings, private Translator $translator, private ServiceLocator $editorLocator)
+    {
     }
 
     public function __invoke(): array

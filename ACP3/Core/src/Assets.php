@@ -20,19 +20,9 @@ class Assets
      * @var array|null
      */
     private $additionalThemeJsFiles;
-    /**
-     * @var Libraries
-     */
-    private $libraries;
-    /**
-     * @var \ACP3\Core\Environment\ThemePathInterface
-     */
-    private $theme;
 
-    public function __construct(ThemePathInterface $theme, Libraries $libraries)
+    public function __construct(private ThemePathInterface $theme, private Libraries $libraries)
     {
-        $this->theme = $theme;
-        $this->libraries = $libraries;
     }
 
     public function fetchAdditionalThemeCssFiles(): array

@@ -13,7 +13,6 @@ use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\Permissions\Helpers;
-use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
 use ACP3\Modules\ACP3\Users\Model\UsersModel;
 use ACP3\Modules\ACP3\Users\Validation\AdminFormValidation;
@@ -21,63 +20,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EditPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Helpers
-     */
-    private $permissionsHelpers;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Model\AuthenticationModel
-     */
-    private $authenticationModel;
-    /**
-     * @var Users\Model\UsersModel
-     */
-    private $usersModel;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-    /**
-     * @var \ACP3\Core\Helpers\RedirectMessages
-     */
-    private $redirectMessages;
-
     public function __construct(
         WidgetContext $context,
-        FormAction $actionHelper,
-        UserModelInterface $user,
-        AuthenticationModel $authenticationModel,
-        UsersModel $usersModel,
-        AdminFormValidation $adminFormValidation,
-        Helpers $permissionsHelpers,
-        RedirectMessages $redirectMessages
+        private FormAction $actionHelper,
+        private UserModelInterface $user,
+        private AuthenticationModel $authenticationModel,
+        private UsersModel $usersModel,
+        private AdminFormValidation $adminFormValidation,
+        private Helpers $permissionsHelpers,
+        private RedirectMessages $redirectMessages
     ) {
         parent::__construct($context);
-
-        $this->authenticationModel = $authenticationModel;
-        $this->adminFormValidation = $adminFormValidation;
-        $this->permissionsHelpers = $permissionsHelpers;
-        $this->usersModel = $usersModel;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
-        $this->redirectMessages = $redirectMessages;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|Response
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -95,8 +55,8 @@ class EditPost extends Core\Controller\AbstractWidgetAction
             $result = $this->usersModel->save($formData, $id);
 
             $response = $this->redirectMessages->setMessage(
-                $result,
-                $this->translator->t('system', 'save' . ($result !== false ? '_success' : '_error'))
+                (bool) $result,
+                $this->translator->t('system', 'save' . ($result ? '_success' : '_error'))
             );
 
             $this->updateCurrentlyLoggedInUserCookie($id, $response);

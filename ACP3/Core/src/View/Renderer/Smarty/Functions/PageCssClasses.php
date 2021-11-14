@@ -11,14 +11,8 @@ use ACP3\Core\Assets;
 
 class PageCssClasses extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Assets\PageCssClasses
-     */
-    protected $pageCssClasses;
-
-    public function __construct(Assets\PageCssClasses $pageCssClasses)
+    public function __construct(protected Assets\PageCssClasses $pageCssClasses)
     {
-        $this->pageCssClasses = $pageCssClasses;
     }
 
     /**

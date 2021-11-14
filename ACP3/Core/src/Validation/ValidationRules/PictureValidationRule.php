@@ -11,14 +11,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PictureValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Validation\ValidationRules\FileUploadValidationRule
-     */
-    private $fileUploadValidationRule;
-
-    public function __construct(FileUploadValidationRule $fileUploadValidationRule)
+    public function __construct(private FileUploadValidationRule $fileUploadValidationRule)
     {
-        $this->fileUploadValidationRule = $fileUploadValidationRule;
     }
 
     /**

@@ -11,14 +11,8 @@ use ACP3\Core\Breadcrumb\Title;
 
 class SiteTitle extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    protected $title;
-
-    public function __construct(Title $title)
+    public function __construct(protected Title $title)
     {
-        $this->title = $title;
     }
 
     /**

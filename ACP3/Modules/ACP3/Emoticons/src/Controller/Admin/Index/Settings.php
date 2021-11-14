@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminSettingsViewProvider;
 
 class Settings extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminSettingsViewProvider
-     */
-    private $adminSettingsViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        AdminSettingsViewProvider $adminSettingsViewProvider
+        private AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function __invoke(): array

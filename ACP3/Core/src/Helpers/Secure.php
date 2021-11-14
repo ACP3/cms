@@ -29,7 +29,7 @@ class Secure
         $cChars = \strlen($chars) - 1;
         while (\strlen($salt) < $length) {
             $char = $chars[random_int(0, $cChars)];
-            if (strpos($salt, $char) === false) {
+            if (!str_contains($salt, $char)) {
                 $salt .= $char;
             }
         }

@@ -19,57 +19,8 @@ use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class NewsDetailsViewProvider
 {
-    /**
-     * @var NewsRepository
-     */
-    private $newsRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    private $categoryRepository;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-
-    public function __construct(
-        NewsRepository $newsRepository,
-        CategoryRepository $categoryRepository,
-        RequestInterface $request,
-        SettingsInterface $settings,
-        Steps $breadcrumb,
-        Title $title,
-        Translator $translator,
-        View $view
-    ) {
-        $this->newsRepository = $newsRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->request = $request;
-        $this->settings = $settings;
-        $this->breadcrumb = $breadcrumb;
-        $this->title = $title;
-        $this->translator = $translator;
-        $this->view = $view;
+    public function __construct(private NewsRepository $newsRepository, private CategoryRepository $categoryRepository, private RequestInterface $request, private SettingsInterface $settings, private Steps $breadcrumb, private Title $title, private Translator $translator, private View $view)
+    {
     }
 
     /**

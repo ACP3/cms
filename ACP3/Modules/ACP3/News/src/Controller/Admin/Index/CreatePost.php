@@ -15,46 +15,22 @@ use ACP3\Modules\ACP3\News;
 
 class CreatePost extends AbstractFormAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\News\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var News\Model\NewsModel
-     */
-    private $newsModel;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        UserModelInterface $user,
-        News\Model\NewsModel $newsModel,
-        News\Validation\AdminFormValidation $adminFormValidation,
+        private FormAction $actionHelper,
+        private UserModelInterface $user,
+        private News\Model\NewsModel $newsModel,
+        private News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context, $categoriesHelpers);
-
-        $this->newsModel = $newsModel;
-        $this->adminFormValidation = $adminFormValidation;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleSaveAction(function () {
             $formData = $this->request->getPost()->all();

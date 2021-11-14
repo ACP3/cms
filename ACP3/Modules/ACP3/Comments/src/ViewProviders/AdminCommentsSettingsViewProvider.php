@@ -14,24 +14,8 @@ use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
 
 class AdminCommentsSettingsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Date
-     */
-    private $dateHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(Date $dateHelper, FormToken $formTokenHelper, SettingsInterface $settings)
+    public function __construct(private Date $dateHelper, private FormToken $formTokenHelper, private SettingsInterface $settings)
     {
-        $this->dateHelper = $dateHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->settings = $settings;
     }
 
     public function __invoke(): array

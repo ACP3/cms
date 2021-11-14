@@ -11,14 +11,8 @@ use ACP3\Core;
 
 class Installer
 {
-    /**
-     * @var Core\Modules
-     */
-    private $modules;
-
-    public function __construct(Core\Modules $modules)
+    public function __construct(private Core\Modules $modules)
     {
-        $this->modules = $modules;
     }
 
     /**

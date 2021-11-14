@@ -12,14 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearMenusCacheListener implements EventSubscriberInterface
 {
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $menusCachePool;
-
-    public function __construct(CacheItemPoolInterface $menusCachePool)
+    public function __construct(private CacheItemPoolInterface $menusCachePool)
     {
-        $this->menusCachePool = $menusCachePool;
     }
 
     public function __invoke()

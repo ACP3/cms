@@ -16,30 +16,13 @@ class Result extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\PollRepository
-     */
-    private $pollRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\PollResultViewProvider
-     */
-    private $pollResultViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        Polls\Repository\PollRepository $pollRepository,
-        Polls\ViewProviders\PollResultViewProvider $pollResultViewProvider
+        private Core\Date $date,
+        private Polls\Repository\PollRepository $pollRepository,
+        private Polls\ViewProviders\PollResultViewProvider $pollResultViewProvider
     ) {
         parent::__construct($context);
-
-        $this->date = $date;
-        $this->pollRepository = $pollRepository;
-        $this->pollResultViewProvider = $pollResultViewProvider;
     }
 
     /**

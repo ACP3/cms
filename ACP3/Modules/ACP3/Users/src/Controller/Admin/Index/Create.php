@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Users;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider
-     */
-    private $adminUserEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider
+        private Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminUserEditViewProvider = $adminUserEditViewProvider;
     }
 
     public function __invoke(): array

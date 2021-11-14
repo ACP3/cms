@@ -16,38 +16,19 @@ use ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository;
 
 class OrderPost extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository
-     */
-    private $roleRepository;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Model\AclRoleModel
-     */
-    private $rolesModel;
-
     public function __construct(
         WidgetContext $context,
-        RedirectResponse $redirectResponse,
-        AclRoleRepository $roleRepository,
-        AclRoleModel $rolesModel
+        private RedirectResponse $redirectResponse,
+        private AclRoleRepository $roleRepository,
+        private AclRoleModel $rolesModel
     ) {
         parent::__construct($context);
-
-        $this->roleRepository = $roleRepository;
-        $this->redirectResponse = $redirectResponse;
-        $this->rolesModel = $rolesModel;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id, string $action)
+    public function __invoke(int $id, string $action): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if (($action === 'up' || $action === 'down') && $this->roleRepository->roleExists($id) === true) {
             if ($action === 'up') {

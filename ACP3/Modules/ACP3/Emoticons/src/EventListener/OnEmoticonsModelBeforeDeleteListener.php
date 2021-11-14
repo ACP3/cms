@@ -14,21 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnEmoticonsModelBeforeDeleteListener implements EventSubscriberInterface
 {
-    /**
-     * @var EmoticonRepository
-     */
-    protected $emoticonRepository;
-    /**
-     * @var \ACP3\Core\Helpers\Upload
-     */
-    private $emoticonsUploadHelper;
-
-    public function __construct(
-        Upload $emoticonsUploadHelper,
-        EmoticonRepository $emoticonRepository
-    ) {
-        $this->emoticonRepository = $emoticonRepository;
-        $this->emoticonsUploadHelper = $emoticonsUploadHelper;
+    public function __construct(private Upload $emoticonsUploadHelper, protected EmoticonRepository $emoticonRepository)
+    {
     }
 
     public function __invoke(ModelSaveEvent $event)

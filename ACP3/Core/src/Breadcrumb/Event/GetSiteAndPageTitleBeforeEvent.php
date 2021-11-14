@@ -14,14 +14,8 @@ class GetSiteAndPageTitleBeforeEvent extends Event
 {
     public const NAME = 'core.breadcrumb.title.get_site_and_page_title_before';
 
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-
-    public function __construct(Title $title)
+    public function __construct(private Title $title)
     {
-        $this->title = $title;
     }
 
     public function getTitle(): Title

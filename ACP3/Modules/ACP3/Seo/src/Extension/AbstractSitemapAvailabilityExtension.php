@@ -14,24 +14,12 @@ use Thepixeldeveloper\Sitemap\Url;
 abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabilityExtensionInterface
 {
     /**
-     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
-     */
-    private $metaStatements;
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-    /**
      * @var Url[]
      */
     private $urls = [];
 
-    public function __construct(
-        RouterInterface $router,
-        MetaStatementsServiceInterface $metaStatements
-    ) {
-        $this->router = $router;
-        $this->metaStatements = $metaStatements;
+    public function __construct(private RouterInterface $router, private MetaStatementsServiceInterface $metaStatements)
+    {
     }
 
     /**

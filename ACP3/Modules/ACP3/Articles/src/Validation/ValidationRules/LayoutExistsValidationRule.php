@@ -12,14 +12,8 @@ use ACP3\Core\View;
 
 class LayoutExistsValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-
-    public function __construct(View $view)
+    public function __construct(private View $view)
     {
-        $this->view = $view;
     }
 
     /**

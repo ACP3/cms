@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\News;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var News\Model\NewsModel
-     */
-    private $newsModel;
-    /**
-     * @var \ACP3\Modules\ACP3\News\ViewProviders\AdminNewsEditViewProvider
-     */
-    private $adminNewsEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        News\Model\NewsModel $newsModel,
-        News\ViewProviders\AdminNewsEditViewProvider $adminNewsEditViewProvider
+        private News\Model\NewsModel $newsModel,
+        private News\ViewProviders\AdminNewsEditViewProvider $adminNewsEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->newsModel = $newsModel;
-        $this->adminNewsEditViewProvider = $adminNewsEditViewProvider;
     }
 
     /**

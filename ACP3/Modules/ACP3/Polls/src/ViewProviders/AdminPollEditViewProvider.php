@@ -16,45 +16,8 @@ use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
 
 class AdminPollEditViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
-     */
-    private $answerRepository;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        AnswerRepository $answerRepository,
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        RequestInterface $request,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->answerRepository = $answerRepository;
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->title = $title;
-        $this->translator = $translator;
+    public function __construct(private AnswerRepository $answerRepository, private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private Title $title, private Translator $translator)
+    {
     }
 
     /**

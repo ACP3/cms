@@ -12,21 +12,8 @@ use ACP3\Core\Helpers\Formatter\DateRange;
 
 class DateColumnRenderer extends AbstractColumnRenderer
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Core\Helpers\Formatter\DateRange
-     */
-    protected $dateRangeHelper;
-
-    public function __construct(
-        Date $date,
-        DateRange $dateRangeHelper
-    ) {
-        $this->date = $date;
-        $this->dateRangeHelper = $dateRangeHelper;
+    public function __construct(protected Date $date, protected DateRange $dateRangeHelper)
+    {
     }
 
     /**

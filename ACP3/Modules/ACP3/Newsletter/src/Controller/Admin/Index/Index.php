@@ -12,24 +12,17 @@ use ACP3\Modules\ACP3\Newsletter;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\DataGridViewProvider
-     */
-    private $dataGridViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Newsletter\ViewProviders\DataGridViewProvider $dataGridViewProvider
+        private Newsletter\ViewProviders\DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
     /**
      * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function __invoke()
+    public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse
     {
         return ($this->dataGridViewProvider)();
     }

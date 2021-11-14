@@ -16,30 +16,13 @@ class Single extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Repository\ArticleRepository
-     */
-    private $articleRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\ArticleFullViewProvider
-     */
-    private $articleFullViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        Articles\Repository\ArticleRepository $articleRepository,
-        Articles\ViewProviders\ArticleFullViewProvider $articleFullViewProvider
+        private Core\Date $date,
+        private Articles\Repository\ArticleRepository $articleRepository,
+        private Articles\ViewProviders\ArticleFullViewProvider $articleFullViewProvider
     ) {
         parent::__construct($context);
-
-        $this->date = $date;
-        $this->articleRepository = $articleRepository;
-        $this->articleFullViewProvider = $articleFullViewProvider;
     }
 
     /**

@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Polls;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Polls\Model\PollsModel
-     */
-    private $pollsModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\AdminPollEditViewProvider
-     */
-    private $adminPollEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Polls\Model\PollsModel $pollsModel,
-        Polls\ViewProviders\AdminPollEditViewProvider $adminPollEditViewProvider
+        private Polls\Model\PollsModel $pollsModel,
+        private Polls\ViewProviders\AdminPollEditViewProvider $adminPollEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->pollsModel = $pollsModel;
-        $this->adminPollEditViewProvider = $adminPollEditViewProvider;
     }
 
     /**

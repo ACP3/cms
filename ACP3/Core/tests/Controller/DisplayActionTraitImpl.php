@@ -13,14 +13,8 @@ class DisplayActionTraitImpl
 {
     use DisplayActionTrait;
 
-    /**
-     * @var View
-     */
-    private $view;
-
-    public function __construct(View $view)
+    public function __construct(private View $view)
     {
-        $this->view = $view;
     }
 
     protected function applyTemplateAutomatically(): string

@@ -13,32 +13,18 @@ use ACP3\Modules\ACP3\Permissions;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Permissions\Model\AclRoleModel
-     */
-    private $rolesModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Permissions\Model\AclRoleModel $rolesModel
+        private FormAction $actionHelper,
+        private Permissions\Model\AclRoleModel $rolesModel
     ) {
         parent::__construct($context);
-
-        $this->rolesModel = $rolesModel;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,

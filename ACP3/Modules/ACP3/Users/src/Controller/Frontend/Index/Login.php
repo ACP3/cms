@@ -14,36 +14,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Login extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\LoginViewProvider
-     */
-    private $loginViewProvider;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        UserModelInterface $user,
-        Core\Http\RedirectResponse $redirectResponse,
-        Users\ViewProviders\LoginViewProvider $loginViewProvider
+        private UserModelInterface $user,
+        private Core\Http\RedirectResponse $redirectResponse,
+        private Users\ViewProviders\LoginViewProvider $loginViewProvider
     ) {
         parent::__construct($context);
-
-        $this->redirectResponse = $redirectResponse;
-        $this->loginViewProvider = $loginViewProvider;
-        $this->user = $user;
     }
 
-    /**
-     * @return array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $redirect = null)
+    public function __invoke(?string $redirect = null): array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if ($this->user->isAuthenticated() === true) {
             return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());

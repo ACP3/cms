@@ -14,24 +14,8 @@ use ACP3\Modules\ACP3\Users\Repository\UserRepository;
 
 class UserListViewProvider
 {
-    /**
-     * @var \ACP3\Core\Pagination
-     */
-    private $pagination;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
-     */
-    private $userRepository;
-
-    public function __construct(Pagination $pagination, ResultsPerPage $resultsPerPage, UserRepository $userRepository)
+    public function __construct(private Pagination $pagination, private ResultsPerPage $resultsPerPage, private UserRepository $userRepository)
     {
-        $this->pagination = $pagination;
-        $this->resultsPerPage = $resultsPerPage;
-        $this->userRepository = $userRepository;
     }
 
     /**

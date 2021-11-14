@@ -18,45 +18,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInterface
 {
-    /**
-     * @var ACL
-     */
-    private $acl;
-    /**
-     * @var View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
-     */
-    private $menuItemRepository;
-    /**
-     * @var MenuItemFormFields
-     */
-    private $menuItemFormFields;
-    /**
-     * @var Translator
-     */
-    private $translator;
-    /**
-     * @var Forms
-     */
-    private $forms;
-
-    public function __construct(
-        ACL $acl,
-        Translator $translator,
-        View $view,
-        Forms $forms,
-        MenuItemFormFields $menuItemFormFields,
-        MenuItemRepository $menuItemRepository
-    ) {
-        $this->acl = $acl;
-        $this->view = $view;
-        $this->menuItemFormFields = $menuItemFormFields;
-        $this->menuItemRepository = $menuItemRepository;
-        $this->translator = $translator;
-        $this->forms = $forms;
+    public function __construct(private ACL $acl, private Translator $translator, private View $view, private Forms $forms, private MenuItemFormFields $menuItemFormFields, private MenuItemRepository $menuItemRepository)
+    {
     }
 
     /**

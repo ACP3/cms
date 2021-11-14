@@ -14,36 +14,21 @@ class ComponentDataDto
     /**
      * @var string
      */
-    private $componentType;
-    /**
-     * @var string
-     */
     private $name;
-    /**
-     * @var string
-     */
-    private $path;
     /**
      * @var array
      */
     private $dependencies;
-    /**
-     * @var \ACP3\Core\Modules\ModuleRegistration|null
-     */
-    private $moduleRegistration;
 
     public function __construct(
-        string $componentType,
+        private string $componentType,
         string $componentName,
-        string $componentPath,
+        private string $path,
         array $dependencies,
-        ?ModuleRegistration $moduleRegistration = null)
+        private ?ModuleRegistration $moduleRegistration = null)
     {
-        $this->componentType = $componentType;
         $this->name = strtolower($componentName);
-        $this->path = $componentPath;
         $this->dependencies = $dependencies;
-        $this->moduleRegistration = $moduleRegistration;
     }
 
     public function getComponentType(): string

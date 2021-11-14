@@ -12,14 +12,8 @@ use ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository;
 
 class AccountExistsByHashValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository
-     */
-    private $accountRepository;
-
-    public function __construct(AccountRepository $accountRepository)
+    public function __construct(private AccountRepository $accountRepository)
     {
-        $this->accountRepository = $accountRepository;
     }
 
     /**

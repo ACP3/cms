@@ -12,31 +12,12 @@ use ACP3\Core;
 class PageCssClasses
 {
     /**
-     * @var Core\Helpers\StringFormatter
-     */
-    protected $stringFormatter;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    protected $title;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-
-    /**
      * @var string
      */
     protected $details;
 
-    public function __construct(
-        Core\Helpers\StringFormatter $stringFormatter,
-        Core\Breadcrumb\Title $title,
-        Core\Http\RequestInterface $request
-    ) {
-        $this->title = $title;
-        $this->request = $request;
-        $this->stringFormatter = $stringFormatter;
+    public function __construct(protected Core\Helpers\StringFormatter $stringFormatter, protected Core\Breadcrumb\Title $title, protected Core\Http\RequestInterface $request)
+    {
     }
 
     /**

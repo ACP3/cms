@@ -13,24 +13,12 @@ use ACP3\Modules\ACP3\Emoticons;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Emoticons\Model\EmoticonsModel
-     */
-    private $emoticonsModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminEmoticonEditViewProvider
-     */
-    private $adminEmoticonEditViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        Emoticons\Model\EmoticonsModel $emoticonsModel,
-        Emoticons\ViewProviders\AdminEmoticonEditViewProvider $adminEmoticonEditViewProvider
+        private Emoticons\Model\EmoticonsModel $emoticonsModel,
+        private Emoticons\ViewProviders\AdminEmoticonEditViewProvider $adminEmoticonEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->emoticonsModel = $emoticonsModel;
-        $this->adminEmoticonEditViewProvider = $adminEmoticonEditViewProvider;
     }
 
     /**

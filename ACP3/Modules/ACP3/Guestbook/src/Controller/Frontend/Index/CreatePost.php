@@ -14,45 +14,21 @@ use ACP3\Modules\ACP3\Guestbook;
 
 class CreatePost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Validation\FormValidation
-     */
-    private $formValidation;
-    /**
-     * @var Guestbook\Model\GuestbookModel
-     */
-    private $guestbookModel;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        UserModelInterface $user,
-        Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\Validation\FormValidation $formValidation
+        private FormAction $actionHelper,
+        private UserModelInterface $user,
+        private Guestbook\Model\GuestbookModel $guestbookModel,
+        private Guestbook\Validation\FormValidation $formValidation
     ) {
         parent::__construct($context);
-
-        $this->formValidation = $formValidation;
-        $this->guestbookModel = $guestbookModel;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handlePostAction(
             function () {
@@ -70,11 +46,11 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
                 $formData['user_id'] = $this->user->isAuthenticated() ? $this->user->getUserId() : null;
                 $formData['active'] = $guestbookSettings['notify'] == 2 ? 0 : 1;
 
-                $lastId = $this->guestbookModel->save($formData);
+                $result = $this->guestbookModel->save($formData);
 
                 return $this->actionHelper->setRedirectMessage(
-                    $lastId,
-                    $this->translator->t('system', $lastId !== false ? 'create_success' : 'create_error')
+                    $result,
+                    $this->translator->t('system', $result ? 'create_success' : 'create_error')
                 );
             }
         );

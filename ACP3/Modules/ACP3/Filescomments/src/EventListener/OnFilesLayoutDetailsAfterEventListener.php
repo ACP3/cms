@@ -17,24 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnFilesLayoutDetailsAfterEventListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    public function __construct(Modules $modules, View $view, SettingsInterface $settings)
+    public function __construct(private Modules $modules, private View $view, private SettingsInterface $settings)
     {
-        $this->view = $view;
-        $this->settings = $settings;
-        $this->modules = $modules;
     }
 
     public function __invoke(TemplateEvent $event): void

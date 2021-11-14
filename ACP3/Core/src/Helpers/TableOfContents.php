@@ -11,45 +11,8 @@ use ACP3\Core;
 
 class TableOfContents
 {
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Core\Validation\ValidationRules\IntegerValidationRule
-     */
-    private $integerValidationRule;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-
-    public function __construct(
-        Core\Breadcrumb\Title $title,
-        Core\I18n\Translator $translator,
-        Core\Http\RequestInterface $request,
-        Core\Router\RouterInterface $router,
-        Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule,
-        Core\View $view
-    ) {
-        $this->title = $title;
-        $this->translator = $translator;
-        $this->request = $request;
-        $this->router = $router;
-        $this->integerValidationRule = $integerValidationRule;
-        $this->view = $view;
+    public function __construct(private Core\Breadcrumb\Title $title, private Core\I18n\Translator $translator, private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule, private Core\View $view)
+    {
     }
 
     /**
@@ -100,10 +63,7 @@ class TableOfContents
         return $return;
     }
 
-    /**
-     * @param array|string $page
-     */
-    private function isCurrentPage(bool $customUris, $page, int $pageNumber, int $currentIndex): bool
+    private function isCurrentPage(bool $customUris, array|string $page, int $pageNumber, int $currentIndex): bool
     {
         if ($customUris === true) {
             if ((\is_array($page) === true && $page['uri'] === $this->router->route($this->request->getQuery()))
@@ -120,10 +80,7 @@ class TableOfContents
         return false;
     }
 
-    /**
-     * @param array|string $page
-     */
-    private function fetchTocPageTitle($page, int $pageNumber, bool $titlesFromDb): string
+    private function fetchTocPageTitle(array|string $page, int $pageNumber, bool $titlesFromDb): string
     {
         if ($titlesFromDb === false && \is_array($page) === false) {
             $page = $this->getHtmlAttributes($page);
@@ -134,10 +91,7 @@ class TableOfContents
         return !empty($page['title']) ? $page['title'] : $transPageNumber;
     }
 
-    /**
-     * @param array|string $page
-     */
-    private function fetchTocPageUri(bool $customUris, $page, int $pageNumber, string $requestQuery): string
+    private function fetchTocPageUri(bool $customUris, array|string $page, int $pageNumber, string $requestQuery): string
     {
         if ($customUris === true && \is_array($page) === true) {
             return $page['uri'];

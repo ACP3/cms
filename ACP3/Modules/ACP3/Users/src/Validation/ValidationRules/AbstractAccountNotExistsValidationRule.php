@@ -12,14 +12,8 @@ use ACP3\Modules\ACP3\Users\Repository\UserRepository;
 
 abstract class AbstractAccountNotExistsValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
-     */
-    protected $userRepository;
-
-    public function __construct(UserRepository $userRepository)
+    public function __construct(protected UserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
 
     /**

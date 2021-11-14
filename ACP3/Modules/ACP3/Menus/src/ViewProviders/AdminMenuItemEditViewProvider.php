@@ -17,51 +17,8 @@ use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
 
 class AdminMenuItemEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields
-     */
-    private $menuItemFormFieldsHelper;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        MenuItemFormFields $menuItemFormFieldsHelper,
-        Modules $modules,
-        RequestInterface $request,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->menuItemFormFieldsHelper = $menuItemFormFieldsHelper;
-        $this->modules = $modules;
-        $this->request = $request;
-        $this->title = $title;
-        $this->translator = $translator;
+    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private MenuItemFormFields $menuItemFormFieldsHelper, private Modules $modules, private RequestInterface $request, private Title $title, private Translator $translator)
+    {
     }
 
     /**
@@ -107,9 +64,7 @@ class AdminMenuItemEditViewProvider
             $modules[$info['name']] = $this->translator->t($info['name'], $info['name']);
         }
 
-        uasort($modules, static function ($a, $b) {
-            return $a <=> $b;
-        });
+        uasort($modules, static fn ($a, $b) => $a <=> $b);
 
         return $this->formsHelper->choicesGenerator('module', $modules, !empty($menuItem) && $menuItem['mode'] == 1 ? $menuItem['uri'] : '');
     }

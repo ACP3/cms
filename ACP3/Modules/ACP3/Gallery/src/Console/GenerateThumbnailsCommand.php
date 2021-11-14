@@ -22,35 +22,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GenerateThumbnailsCommand extends Command
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
-     */
-    private $galleryRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
-     */
-    private $galleryPicturesRepository;
-    /**
-     * @var ThumbnailGenerator
-     */
-    private $thumbnailGenerator;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-
     public function __construct(
-        ApplicationPath $appPath,
-        ThumbnailGenerator $thumbnailGenerator,
-        GalleryRepository $galleryRepository,
-        PictureRepository $galleryPicturesRepository
+        private ApplicationPath $appPath,
+        private ThumbnailGenerator $thumbnailGenerator,
+        private GalleryRepository $galleryRepository,
+        private PictureRepository $galleryPicturesRepository
     ) {
         parent::__construct();
-
-        $this->galleryRepository = $galleryRepository;
-        $this->galleryPicturesRepository = $galleryPicturesRepository;
-        $this->thumbnailGenerator = $thumbnailGenerator;
-        $this->appPath = $appPath;
     }
 
     /**

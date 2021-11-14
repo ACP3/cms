@@ -9,14 +9,8 @@ namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
 class ContentDecorator extends AbstractModifier
 {
-    /**
-     * @var \ACP3\Core\Helpers\ContentDecorator
-     */
-    private $contentDecorator;
-
-    public function __construct(\ACP3\Core\Helpers\ContentDecorator $contentDecorator)
+    public function __construct(private \ACP3\Core\Helpers\ContentDecorator $contentDecorator)
     {
-        $this->contentDecorator = $contentDecorator;
     }
 
     /**

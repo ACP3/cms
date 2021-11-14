@@ -12,18 +12,12 @@ use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 class SeoInformationService
 {
     /**
-     * @var SeoRepository
-     */
-    private $seoRepository;
-
-    /**
      * @var array<string, array<string, mixed>>|null
      */
     private $cache;
 
-    public function __construct(SeoRepository $seoRepository)
+    public function __construct(private SeoRepository $seoRepository)
     {
-        $this->seoRepository = $seoRepository;
     }
 
     /**

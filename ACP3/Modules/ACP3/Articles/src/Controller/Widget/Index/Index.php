@@ -16,18 +16,11 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\LatestArticlesViewProvider
-     */
-    private $latestArticlesViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Articles\ViewProviders\LatestArticlesViewProvider $latestArticlesViewProvider
+        private Articles\ViewProviders\LatestArticlesViewProvider $latestArticlesViewProvider
     ) {
         parent::__construct($context);
-
-        $this->latestArticlesViewProvider = $latestArticlesViewProvider;
     }
 
     /**

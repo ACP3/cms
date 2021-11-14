@@ -14,14 +14,8 @@ class MoveToHead extends AbstractMoveElementFilter
     public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';
     protected const PLACEHOLDER = '<!-- STYLESHEETS -->';
 
-    /**
-     * @var \ACP3\Core\Assets\Renderer\CSSRenderer
-     */
-    private $CSSRenderer;
-
-    public function __construct(CSSRenderer $CSSRenderer)
+    public function __construct(private CSSRenderer $CSSRenderer)
     {
-        $this->CSSRenderer = $CSSRenderer;
     }
 
     protected function addElementFromMinifier(): string
@@ -31,7 +25,7 @@ class MoveToHead extends AbstractMoveElementFilter
 
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
-        if (strpos($tplOutput, (string) static::PLACEHOLDER) !== false) {
+        if (str_contains($tplOutput, (string) static::PLACEHOLDER)) {
             $tplOutput = str_replace(
                 static::PLACEHOLDER,
                 $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),

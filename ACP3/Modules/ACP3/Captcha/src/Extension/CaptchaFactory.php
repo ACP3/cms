@@ -13,19 +13,8 @@ use Psr\Container\ContainerInterface;
 
 class CaptchaFactory
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $captchaLocator;
-
-    public function __construct(SettingsInterface $settings, ContainerInterface $captchaLocator)
+    public function __construct(private SettingsInterface $settings, private ContainerInterface $captchaLocator)
     {
-        $this->settings = $settings;
-        $this->captchaLocator = $captchaLocator;
     }
 
     /**

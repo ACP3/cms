@@ -13,19 +13,12 @@ use ACP3\Modules\ACP3\Installer\Helpers\Requirements as RequirementsHelper;
 
 class Requirements extends AbstractAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Installer\Helpers\Requirements
-     */
-    private $requirementsHelpers;
-
     public function __construct(
         InstallerContext $context,
         Navigation $navigation,
-        RequirementsHelper $requirementsHelpers
+        private RequirementsHelper $requirementsHelpers
     ) {
         parent::__construct($context, $navigation);
-
-        $this->requirementsHelpers = $requirementsHelpers;
     }
 
     public function __invoke(): array

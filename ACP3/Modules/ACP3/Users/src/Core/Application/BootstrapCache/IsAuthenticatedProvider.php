@@ -16,24 +16,8 @@ use FOS\HttpCache\UserContext\UserContext;
 
 class IsAuthenticatedProvider implements ContextProvider
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $userModel;
-    /**
-     * @var ACL
-     */
-    private $acl;
-
-    public function __construct(SettingsInterface $settings, ACL $acl, UserModelInterface $userModel)
+    public function __construct(private SettingsInterface $settings, private ACL $acl, private UserModelInterface $userModel)
     {
-        $this->settings = $settings;
-        $this->userModel = $userModel;
-        $this->acl = $acl;
     }
 
     /**

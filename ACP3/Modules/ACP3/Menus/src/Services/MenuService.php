@@ -13,27 +13,8 @@ use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 
 class MenuService implements MenuServiceInterface
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-    /**
-     * @var MenuRepository
-     */
-    private $menuRepository;
-    /**
-     * @var MenuItemRepository
-     */
-    private $menuItemRepository;
-
-    public function __construct(
-        Translator $translator,
-        MenuRepository $menuRepository,
-        MenuItemRepository $menuItemRepository
-    ) {
-        $this->translator = $translator;
-        $this->menuRepository = $menuRepository;
-        $this->menuItemRepository = $menuItemRepository;
+    public function __construct(private Translator $translator, private MenuRepository $menuRepository, private MenuItemRepository $menuItemRepository)
+    {
     }
 
     /**

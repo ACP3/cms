@@ -108,10 +108,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $this->render($column, $this->getValue($column, $dbResultRow));
     }
 
-    /**
-     * @return string|array
-     */
-    protected function render(array $column, ?string $value = '')
+    protected function render(array $column, ?string $value = ''): array|string
     {
         if ($this->getUseAjax()) {
             return $this->renderAjax($column, $value);
@@ -125,10 +122,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return "<{$type}{$attribute}{$class}{$style}>{$value}</{$type}>";
     }
 
-    /**
-     * @return string|array
-     */
-    private function renderAjax(array $column, string $value = '')
+    private function renderAjax(array $column, string $value = ''): array|string
     {
         if (\is_array($column['attribute']) && \count($column['attribute'])) {
             $column['attribute']['_'] = $value;
@@ -139,10 +133,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $value;
     }
 
-    /**
-     * @param string|array $attributeName
-     */
-    protected function addHtmlAttribute($attributeName, ?string $attributeData = null): string
+    protected function addHtmlAttribute(array|string $attributeName, ?string $attributeData = null): string
     {
         if (\is_array($attributeName)) {
             $data = '';

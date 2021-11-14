@@ -18,33 +18,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class IsUserAuthenticatedListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var RedirectMessages
-     */
-    private $redirectMessages;
-    /**
-     * @var Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-
-    public function __construct(
-        RequestInterface $request,
-        RedirectMessages $redirectMessages,
-        Translator $translator,
-        UserModelInterface $user
-    ) {
-        $this->user = $user;
-        $this->redirectMessages = $redirectMessages;
-        $this->translator = $translator;
-        $this->request = $request;
+    public function __construct(private RequestInterface $request, private RedirectMessages $redirectMessages, private Translator $translator, private UserModelInterface $user)
+    {
     }
 
     /**

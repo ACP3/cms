@@ -15,21 +15,8 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 class OnLanguageChangeListener implements EventSubscriberInterface
 {
-    /**
-     * @var RedirectResponse
-     */
-    private $redirect;
-    /**
-     * @var \ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath
-     */
-    private $applicationPath;
-
-    public function __construct(
-        ApplicationPath $applicationPath,
-        RedirectResponse $redirect
-    ) {
-        $this->redirect = $redirect;
-        $this->applicationPath = $applicationPath;
+    public function __construct(private ApplicationPath $applicationPath, private RedirectResponse $redirect)
+    {
     }
 
     /**

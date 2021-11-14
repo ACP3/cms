@@ -17,28 +17,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Title extends \ACP3\Core\Breadcrumb\Title
 {
     /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var RequestInterface
-     */
-    private $request;
-    /**
      * @var array
      */
     private $systemSettings = [];
 
     public function __construct(
-        RequestInterface $request,
+        private RequestInterface $request,
         Steps $steps,
         EventDispatcherInterface $eventDispatcher,
-        SettingsInterface $settings
+        private SettingsInterface $settings
     ) {
         parent::__construct($steps, $eventDispatcher);
-
-        $this->settings = $settings;
-        $this->request = $request;
     }
 
     private function getSettings(): array

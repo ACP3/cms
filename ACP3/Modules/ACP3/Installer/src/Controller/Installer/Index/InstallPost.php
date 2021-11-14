@@ -19,37 +19,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InstallPost extends AbstractAction
 {
-    /**
-     * @var InstallModel
-     */
-    private $installModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Installer\Validation\FormValidation
-     */
-    private $formValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Alerts
-     */
-    private $alertsHelper;
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
-
     public function __construct(
         InstallerContext $context,
-        LoggerInterface $logger,
-        Alerts $alertsHelper,
+        private LoggerInterface $logger,
+        private Alerts $alertsHelper,
         Navigation $navigation,
-        InstallModel $installModel,
-        FormValidation $formValidation
+        private InstallModel $installModel,
+        private FormValidation $formValidation
     ) {
         parent::__construct($context, $navigation);
-
-        $this->installModel = $installModel;
-        $this->formValidation = $formValidation;
-        $this->alertsHelper = $alertsHelper;
-        $this->logger = $logger;
     }
 
     /**
@@ -91,10 +69,7 @@ class InstallPost extends AbstractAction
         return null;
     }
 
-    /**
-     * @return array|Response
-     */
-    private function renderErrorBoxOnFailedFormValidation(\Exception $exception)
+    private function renderErrorBoxOnFailedFormValidation(\Exception $exception): array|Response
     {
         $errors = $this->alertsHelper->errorBox($exception->getMessage());
         if ($this->request->isXmlHttpRequest()) {

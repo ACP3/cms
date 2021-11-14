@@ -13,22 +13,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 class CustomOptionEvent extends Event
 {
     /**
-     * @var \ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
-     */
-    private $optionRenderer;
-    /**
      * @var array
      */
     private $dbResultRow;
-    /**
-     * @var string
-     */
-    private $identifier;
 
-    public function __construct(OptionRenderer $optionRenderer, array $dbResultRow, string $identifier)
+    public function __construct(private OptionRenderer $optionRenderer, array $dbResultRow, private string $identifier)
     {
-        $this->optionRenderer = $optionRenderer;
-        $this->identifier = $identifier;
         $this->dbResultRow = $dbResultRow;
     }
 

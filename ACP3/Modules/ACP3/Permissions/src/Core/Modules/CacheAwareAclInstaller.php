@@ -16,16 +16,9 @@ use Psr\Cache\CacheItemPoolInterface;
 
 class CacheAwareAclInstaller extends \ACP3\Core\Installer\AclInstaller
 {
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $permissionsCachePool;
-
-    public function __construct(CacheItemPoolInterface $permissionsCachePool, SchemaHelper $schemaHelper, RoleRepositoryInterface $roleRepository, AbstractRepository $resourceRepository, AclPermissionRepositoryInterface $permissionRepository)
+    public function __construct(private CacheItemPoolInterface $permissionsCachePool, SchemaHelper $schemaHelper, RoleRepositoryInterface $roleRepository, AbstractRepository $resourceRepository, AclPermissionRepositoryInterface $permissionRepository)
     {
         parent::__construct($schemaHelper, $roleRepository, $resourceRepository, $permissionRepository);
-
-        $this->permissionsCachePool = $permissionsCachePool;
     }
 
     public function install(SchemaInterface $schema, int $mode = self::INSTALL_RESOURCES_AND_RULES)

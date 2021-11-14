@@ -17,24 +17,12 @@ class Files extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    private $categoryRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Files\ViewProviders\FilesByCategoryIdViewProvider
-     */
-    private $filesByCategoryIdViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Categories\Repository\CategoryRepository $categoryRepository,
-        FilesByCategoryIdViewProvider $filesByCategoryIdViewProvider
+        private Categories\Repository\CategoryRepository $categoryRepository,
+        private FilesByCategoryIdViewProvider $filesByCategoryIdViewProvider
     ) {
         parent::__construct($context);
-
-        $this->categoryRepository = $categoryRepository;
-        $this->filesByCategoryIdViewProvider = $filesByCategoryIdViewProvider;
     }
 
     /**

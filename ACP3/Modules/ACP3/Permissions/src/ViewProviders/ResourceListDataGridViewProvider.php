@@ -14,33 +14,8 @@ use ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository;
 
 class ResourceListDataGridViewProvider
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository
-     */
-    private $resourceRepository;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        ACL $acl,
-        Modules $modules,
-        AclResourceRepository $resourceRepository,
-        Translator $translator
-    ) {
-        $this->acl = $acl;
-        $this->modules = $modules;
-        $this->resourceRepository = $resourceRepository;
-        $this->translator = $translator;
+    public function __construct(private ACL $acl, private Modules $modules, private AclResourceRepository $resourceRepository, private Translator $translator)
+    {
     }
 
     public function __invoke(): array

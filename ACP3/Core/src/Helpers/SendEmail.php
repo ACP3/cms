@@ -12,14 +12,8 @@ use ACP3\Core\Mailer\MailerMessage;
 
 class SendEmail
 {
-    /**
-     * @var \ACP3\Core\Mailer
-     */
-    private $mailer;
-
-    public function __construct(Core\Mailer $mailer)
+    public function __construct(private Core\Mailer $mailer)
     {
-        $this->mailer = $mailer;
     }
 
     /**

@@ -13,14 +13,6 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Translator
 {
     /**
-     * @var DictionaryInterface
-     */
-    private $dictionary;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
      * @var string|null
      */
     private $locale;
@@ -33,12 +25,8 @@ class Translator
      */
     private $buffer = [];
 
-    public function __construct(
-        DictionaryInterface $dictionary,
-        SettingsInterface $settings
-    ) {
-        $this->dictionary = $dictionary;
-        $this->settings = $settings;
+    public function __construct(private DictionaryInterface $dictionary, private SettingsInterface $settings)
+    {
     }
 
     /**

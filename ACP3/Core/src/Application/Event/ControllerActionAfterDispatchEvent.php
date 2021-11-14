@@ -14,21 +14,9 @@ class ControllerActionAfterDispatchEvent extends ControllerActionBeforeDispatchE
 {
     public const NAME = 'core.application.controller_action_dispatcher.after_dispatch';
 
-    /**
-     * @var Response
-     */
-    private $response;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-
-    public function __construct(string $serviceId, RequestInterface $request, Response $response)
+    public function __construct(string $serviceId, private RequestInterface $request, private Response $response)
     {
         parent::__construct($serviceId);
-
-        $this->response = $response;
-        $this->request = $request;
     }
 
     public function getResponse(): Response

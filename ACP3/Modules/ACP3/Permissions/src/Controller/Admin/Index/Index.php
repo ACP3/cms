@@ -13,24 +13,17 @@ use ACP3\Modules\ACP3\Permissions\ViewProviders\DataGridViewProvider;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\DataGridViewProvider
-     */
-    private $dataGridViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        DataGridViewProvider $dataGridViewProvider
+        private DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
     /**
      * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function __invoke()
+    public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse
     {
         return ($this->dataGridViewProvider)();
     }

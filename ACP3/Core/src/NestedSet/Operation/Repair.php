@@ -7,6 +7,12 @@
 
 namespace ACP3\Core\NestedSet\Operation;
 
+use ACP3\Core\NestedSet\Repository\BlockAwareNestedSetRepositoryInterface;
+use ACP3\Core\NestedSet\Repository\NestedSetRepository;
+
+/**
+ * @property NestedSetRepository & BlockAwareNestedSetRepositoryInterface $nestedSetRepository
+ */
 class Repair extends AbstractOperation
 {
     /**

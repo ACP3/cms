@@ -18,27 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckMaintenanceModeListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-
-    public function __construct(
-        ApplicationPath $appPath,
-        SettingsInterface $settings,
-        View $view)
+    public function __construct(private ApplicationPath $appPath, private SettingsInterface $settings, private View $view)
     {
-        $this->appPath = $appPath;
-        $this->settings = $settings;
-        $this->view = $view;
     }
 
     public function __invoke(ControllerActionRequestEvent $event)
@@ -57,7 +38,7 @@ class CheckMaintenanceModeListener implements EventSubscriberInterface
     {
         return (bool) $this->settings->getSettings('system')['maintenance_mode'] === true &&
             \in_array($request->getArea(), [AreaEnum::AREA_ADMIN, AreaEnum::AREA_WIDGET], true) === false &&
-            strpos($request->getQuery(), 'users/index/login/') !== 0;
+            !str_starts_with($request->getQuery(), 'users/index/login/');
     }
 
     private function renderMaintenanceMessage(ControllerActionRequestEvent $event): void

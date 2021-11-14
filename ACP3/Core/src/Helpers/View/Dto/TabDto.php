@@ -9,19 +9,8 @@ namespace ACP3\Core\Helpers\View\Dto;
 
 class TabDto
 {
-    /**
-     * @var string
-     */
-    private $title;
-    /**
-     * @var string
-     */
-    private $content;
-
-    public function __construct(string $title, string $content)
+    public function __construct(private string $title, private string $content)
     {
-        $this->title = $title;
-        $this->content = $content;
     }
 
     public function getTitle(): string

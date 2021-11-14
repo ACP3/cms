@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Categories;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Categories\Model\CategoriesModel
-     */
-    private $categoriesModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategoryEditViewProvider
-     */
-    private $adminCategoryEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Categories\Model\CategoriesModel $categoriesModel,
-        Categories\ViewProviders\AdminCategoryEditViewProvider $adminCategoryEditViewProvider
+        private Categories\Model\CategoriesModel $categoriesModel,
+        private Categories\ViewProviders\AdminCategoryEditViewProvider $adminCategoryEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->categoriesModel = $categoriesModel;
-        $this->adminCategoryEditViewProvider = $adminCategoryEditViewProvider;
     }
 
     /**

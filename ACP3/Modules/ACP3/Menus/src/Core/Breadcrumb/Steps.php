@@ -17,10 +17,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Steps extends Core\Breadcrumb\Steps
 {
     /**
-     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
-     */
-    protected $menuItemRepository;
-    /**
      * @var array
      */
     protected $stepsFromDb = [];
@@ -31,11 +27,9 @@ class Steps extends Core\Breadcrumb\Steps
         RequestInterface $request,
         Core\Router\RouterInterface $router,
         EventDispatcherInterface $eventDispatcher,
-        Menus\Repository\MenuItemRepository $menuItemRepository
+        protected Menus\Repository\MenuItemRepository $menuItemRepository
     ) {
         parent::__construct($container, $translator, $request, $router, $eventDispatcher);
-
-        $this->menuItemRepository = $menuItemRepository;
     }
 
     /**
@@ -167,9 +161,7 @@ class Steps extends Core\Breadcrumb\Steps
 
         $this->stepsFromDb = array_filter(
             $this->stepsFromDb,
-            static function (array $step) use ($path) {
-                return $step['uri'] !== $path;
-            }
+            static fn (array $step) => $step['uri'] !== $path
         );
 
         return $this;

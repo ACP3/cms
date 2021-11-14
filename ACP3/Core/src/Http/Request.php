@@ -114,17 +114,17 @@ class Request extends AbstractRequest
         $this->query = $this->pathInfo;
 
         // It's an request for the admin panel page
-        if (strpos($this->query, self::ADMIN_PANEL_PATTERN) === 0) {
+        if (str_starts_with($this->query, self::ADMIN_PANEL_PATTERN)) {
             $this->getSymfonyRequest()->attributes->set('_area', AreaEnum::AREA_ADMIN);
             // strip "acp/"
             $this->query = substr($this->query, \strlen(self::ADMIN_PANEL_PATTERN));
-        } elseif (strpos($this->query, self::WIDGET_PATTERN) === 0) {
+        } elseif (str_starts_with($this->query, self::WIDGET_PATTERN)) {
             $this->getSymfonyRequest()->attributes->set('_area', AreaEnum::AREA_WIDGET);
 
             // strip "widget/"
             $this->query = substr($this->query, \strlen(self::WIDGET_PATTERN));
         } else {
-            if (strpos($this->query, self::FRONTEND_PATTERN) === 0) {
+            if (str_starts_with($this->query, self::FRONTEND_PATTERN)) {
                 $this->query = substr($this->query, \strlen(self::FRONTEND_PATTERN));
             }
 

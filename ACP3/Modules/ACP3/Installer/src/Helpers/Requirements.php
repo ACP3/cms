@@ -14,24 +14,8 @@ use Composer\Semver\VersionParser;
 
 class Requirements
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \Composer\Semver\VersionParser
-     */
-    private $versionParser;
-
-    public function __construct(Modules $modules, Translator $translator, VersionParser $versionParser)
+    public function __construct(private Modules $modules, private Translator $translator, private VersionParser $versionParser)
     {
-        $this->translator = $translator;
-        $this->modules = $modules;
-        $this->versionParser = $versionParser;
     }
 
     /**
@@ -124,16 +108,11 @@ class Requirements
         $result['path'] = $fileOrDirectory;
         $result['writable'] = is_writable($path) === true;
 
-        switch ($type) {
-            case 'file':
-                $result['exists'] = is_file($path) === true;
-                break;
-            case 'directory':
-                $result['exists'] = is_dir($path) === true;
-                break;
-            default:
-                $result['exists'] = false;
-        }
+        $result['exists'] = match ($type) {
+            'file' => is_file($path) === true,
+            'directory' => is_dir($path) === true,
+            default => false,
+        };
 
         return $result;
     }
@@ -199,11 +178,9 @@ class Requirements
                 continue;
             }
 
-            $componentExtensions = array_filter(array_keys($composerJsoData['require']), static function ($packages) {
-                return strpos($packages, 'ext-') === 0;
-            });
+            $componentExtensions = array_filter(array_keys($composerJsoData['require']), static fn ($packages) => str_starts_with($packages, 'ext-'));
 
-            $extensions = array_merge($extensions, $componentExtensions);
+            $extensions = [...$extensions, ...$componentExtensions];
         }
 
         sort($extensions);

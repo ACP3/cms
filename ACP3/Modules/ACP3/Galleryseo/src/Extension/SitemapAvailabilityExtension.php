@@ -19,37 +19,15 @@ use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
-    /**
-     * @var Date
-     */
-    protected $date;
-    /**
-     * @var GalleryRepository
-     */
-    protected $galleryRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
-     */
-    protected $pictureRepository;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
     public function __construct(
-        Date $date,
+        protected Date $date,
         RouterInterface $router,
-        SettingsInterface $settings,
-        GalleryRepository $galleryRepository,
-        PictureRepository $pictureRepository,
+        private SettingsInterface $settings,
+        protected GalleryRepository $galleryRepository,
+        protected PictureRepository $pictureRepository,
         MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($router, $metaStatements);
-
-        $this->date = $date;
-        $this->galleryRepository = $galleryRepository;
-        $this->pictureRepository = $pictureRepository;
-        $this->settings = $settings;
     }
 
     /**

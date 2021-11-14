@@ -14,14 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnCaptchaValidationAdminSettingsCustomFieldsListener implements EventSubscriberInterface
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-
-    public function __construct(Translator $translator)
+    public function __construct(private Translator $translator)
     {
-        $this->translator = $translator;
     }
 
     public function __invoke(FormValidationEvent $event)

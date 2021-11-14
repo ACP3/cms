@@ -36,11 +36,9 @@ class MenuRepository extends Core\Repository\AbstractRepository
     }
 
     /**
-     * @return bool|string
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getMenuNameById(int $menuId)
+    public function getMenuNameById(int $menuId): bool|string
     {
         return $this->db->fetchColumn(
             "SELECT `index_name` FROM {$this->getTableName()} WHERE id = ?",

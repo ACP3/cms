@@ -10,11 +10,9 @@ namespace ACP3\Core\NestedSet\Operation;
 class Insert extends AbstractOperation
 {
     /**
-     * @return int|false
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(array $insertValues, int $parentId = 0)
+    public function execute(array $insertValues, int $parentId = 0): int|false
     {
         // No parent item has been assigned
         if ($this->nestedSetRepository->nodeExists($parentId) === false) {

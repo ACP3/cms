@@ -15,39 +15,8 @@ use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
 class MetaFormFields
 {
-    /**
-     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
-     */
-    private $metaStatements;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
-     */
-    private $aliases;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-
-    public function __construct(
-        MetaStatementsServiceInterface $metaStatements,
-        Translator $translator,
-        RequestInterface $request,
-        Aliases $aliases,
-        Forms $formsHelper
-    ) {
-        $this->metaStatements = $metaStatements;
-        $this->translator = $translator;
-        $this->request = $request;
-        $this->aliases = $aliases;
-        $this->formsHelper = $formsHelper;
+    public function __construct(private MetaStatementsServiceInterface $metaStatements, private Translator $translator, private RequestInterface $request, private Aliases $aliases, private Forms $formsHelper)
+    {
     }
 
     /**

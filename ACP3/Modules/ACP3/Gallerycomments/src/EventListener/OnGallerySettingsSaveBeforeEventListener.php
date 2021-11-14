@@ -17,24 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnGallerySettingsSaveBeforeEventListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    public function __construct(Modules $modules, RequestInterface $request, SettingsInterface $settings)
+    public function __construct(private Modules $modules, private RequestInterface $request, private SettingsInterface $settings)
     {
-        $this->request = $request;
-        $this->settings = $settings;
-        $this->modules = $modules;
     }
 
     public function __invoke(SettingsSaveEvent $event): void

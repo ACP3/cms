@@ -126,8 +126,6 @@ class Edit extends AbstractOperation
      */
     private function adjustNodeSiblings(int $blockId, array $nodes, int $diff, int $rootId): bool
     {
-        $result = false;
-
         foreach ($nodes as $node) {
             $node['left_id'] += $diff;
             $node['right_id'] += $diff;
@@ -137,7 +135,7 @@ class Edit extends AbstractOperation
                 $node['right_id']
             );
             if ($this->isBlockAware() === true) {
-                $result = $this->nestedSetRepository->update([
+                $this->nestedSetRepository->update([
                     $this->nestedSetRepository::BLOCK_COLUMN_NAME => $blockId,
                     'root_id' => $rootId,
                     'parent_id' => $parentId,
@@ -145,20 +143,16 @@ class Edit extends AbstractOperation
                     'right_id' => $node['right_id'],
                 ], $node['id']);
             } else {
-                $result = $this->nestedSetRepository->update([
+                $this->nestedSetRepository->update([
                     'root_id' => $rootId,
                     'parent_id' => $parentId,
                     'left_id' => $node['left_id'],
                     'right_id' => $node['right_id'],
                 ], $node['id']);
             }
-
-            if ($result === false) {
-                break;
-            }
         }
 
-        return $result;
+        return true;
     }
 
     protected function calcDiffBetweenNodes(int $leftId, int $rightId): int

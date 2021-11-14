@@ -13,45 +13,22 @@ use ACP3\Modules\ACP3\Permissions;
 
 class CreatePost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation
-     */
-    private $resourceFormValidation;
-    /**
-     * @var Permissions\Model\AclResourceModel
-     */
-    private $resourcesModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-    /**
-     * @var Core\Modules
-     */
-    private $modules;
-
     public function __construct(
         Core\Controller\Context\WidgetContext         $context,
-        FormAction                                    $actionHelper,
-        Core\Modules                                  $modules,
-        Permissions\Model\AclResourceModel            $resourcesModel,
-        Permissions\Validation\ResourceFormValidation $resourceFormValidation
+        private FormAction                                    $actionHelper,
+        private Core\Modules                                  $modules,
+        private Permissions\Model\AclResourceModel            $resourcesModel,
+        private Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
         parent::__construct($context);
-
-        $this->resourceFormValidation = $resourceFormValidation;
-        $this->resourcesModel = $resourcesModel;
-        $this->actionHelper = $actionHelper;
-        $this->modules = $modules;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handleSaveAction(function () {
             $formData = $this->request->getPost()->all();

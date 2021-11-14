@@ -18,19 +18,6 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Theme implements ThemePathInterface
 {
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\XML
-     */
-    private $xml;
-
-    /**
      * @var array
      */
     private $availableThemes = [];
@@ -39,14 +26,8 @@ class Theme implements ThemePathInterface
      */
     private $sortedThemeDependencies = [];
 
-    public function __construct(
-        ApplicationPath $appPath,
-        SettingsInterface $settings,
-        XML $xml
-    ) {
-        $this->appPath = $appPath;
-        $this->settings = $settings;
-        $this->xml = $xml;
+    public function __construct(private ApplicationPath $appPath, private SettingsInterface $settings, private XML $xml)
+    {
     }
 
     public function getAvailableThemes(): array

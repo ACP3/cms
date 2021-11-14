@@ -17,30 +17,13 @@ class Details extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Repository\ArticleRepository
-     */
-    private $articleRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\ArticlePaginatedViewProvider
-     */
-    private $articlePaginatedViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        Articles\ViewProviders\ArticlePaginatedViewProvider $articlePaginatedViewProvider,
-        Core\Date $date,
-        Articles\Repository\ArticleRepository $articleRepository
+        private Articles\ViewProviders\ArticlePaginatedViewProvider $articlePaginatedViewProvider,
+        private Core\Date $date,
+        private Articles\Repository\ArticleRepository $articleRepository
     ) {
         parent::__construct($context);
-
-        $this->date = $date;
-        $this->articleRepository = $articleRepository;
-        $this->articlePaginatedViewProvider = $articlePaginatedViewProvider;
     }
 
     /**

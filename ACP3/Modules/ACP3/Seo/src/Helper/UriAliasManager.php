@@ -12,21 +12,8 @@ use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 
 class UriAliasManager
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Repository\SeoRepository
-     */
-    private $seoRepository;
-    /**
-     * @var SeoModel
-     */
-    private $seoModel;
-
-    public function __construct(
-        SeoModel $seoModel,
-        SeoRepository $seoRepository
-    ) {
-        $this->seoRepository = $seoRepository;
-        $this->seoModel = $seoModel;
+    public function __construct(private SeoModel $seoModel, private SeoRepository $seoRepository)
+    {
     }
 
     /**

@@ -12,21 +12,8 @@ use ACP3\Modules\ACP3\Search\Repository\SearchResultsAwareRepositoryInterface;
 
 abstract class AbstractSearchAvailabilityExtension implements SearchAvailabilityExtensionInterface
 {
-    /**
-     * @var RouterInterface
-     */
-    protected $router;
-    /**
-     * @var \ACP3\Modules\ACP3\Search\Repository\SearchResultsAwareRepositoryInterface
-     */
-    protected $repository;
-
-    public function __construct(
-        RouterInterface $router,
-        SearchResultsAwareRepositoryInterface $repository
-    ) {
-        $this->router = $router;
-        $this->repository = $repository;
+    public function __construct(protected RouterInterface $router, protected SearchResultsAwareRepositoryInterface $repository)
+    {
     }
 
     /**

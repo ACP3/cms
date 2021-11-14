@@ -20,33 +20,8 @@ class AclInstaller implements InstallerInterface
     public const INSTALL_RESOURCES_AND_RULES = 1;
     public const INSTALL_RESOURCES = 2;
 
-    /**
-     * @var \ACP3\Core\Installer\SchemaHelper
-     */
-    private $schemaHelper;
-    /**
-     * @var \ACP3\Core\Repository\AbstractRepository
-     */
-    private $resourceRepository;
-    /**
-     * @var RoleRepositoryInterface
-     */
-    private $roleRepository;
-    /**
-     * @var AclPermissionRepositoryInterface
-     */
-    private $permissionRepository;
-
-    public function __construct(
-        SchemaHelper $schemaHelper,
-        RoleRepositoryInterface $roleRepository,
-        AbstractRepository $resourceRepository,
-        AclPermissionRepositoryInterface $permissionRepository
-    ) {
-        $this->schemaHelper = $schemaHelper;
-        $this->resourceRepository = $resourceRepository;
-        $this->roleRepository = $roleRepository;
-        $this->permissionRepository = $permissionRepository;
+    public function __construct(private SchemaHelper $schemaHelper, private RoleRepositoryInterface $roleRepository, private AbstractRepository $resourceRepository, private AclPermissionRepositoryInterface $permissionRepository)
+    {
     }
 
     /**

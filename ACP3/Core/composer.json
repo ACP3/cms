@@ -14,7 +14,7 @@
     "issues": "https://gitlab.com/ACP3/cms/issues"
   },
   "require": {
-    "php": "^7.3.0 || ^8.0",
+    "php": "^8.0",
     "ext-pdo": "*",
     "ext-pdo_mysql": "*",
     "doctrine/dbal": "^3.0",

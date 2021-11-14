@@ -119,13 +119,13 @@ class HttpCacheWarmupCommand extends Command
     {
         try {
             return file_get_contents($url) !== false;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return false;
         }
     }
 
     private function getSleepTime(InputInterface $input): int
     {
-        return 1000000 * (int) $input->getOption('sleep');
+        return 1_000_000 * (int) $input->getOption('sleep');
     }
 }

@@ -11,14 +11,8 @@ use ACP3\Core\Router\RouterInterface;
 
 class PictureColumnRenderer extends AbstractColumnRenderer
 {
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-
-    public function __construct(RouterInterface $router)
+    public function __construct(private RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     /**

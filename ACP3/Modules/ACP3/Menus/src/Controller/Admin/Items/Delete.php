@@ -13,36 +13,19 @@ use ACP3\Modules\ACP3\Menus;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Menus\Model\MenuItemsModel
-     */
-    private $menuItemsModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Menus\Model\MenuItemsModel $menuItemsModel
+        private FormAction $actionHelper,
+        private Menus\Model\MenuItemsModel $menuItemsModel
     ) {
         parent::__construct($context);
-
-        $this->menuItemsModel = $menuItemsModel;
-        $this->actionHelper = $actionHelper;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
-            function (array $items) {
-                return $this->menuItemsModel->delete($items);
-            },
+            fn (array $items) => $this->menuItemsModel->delete($items),
             null,
             'acp/menus'
         );

@@ -14,18 +14,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends AbstractWidgetAction
 {
-    /**
-     * @var \Heise\Shariff\Backend
-     */
-    private $shariffBackend;
-
     public function __construct(
         WidgetContext $context,
-        Backend $shariffBackend
+        private Backend $shariffBackend
     ) {
         parent::__construct($context);
-
-        $this->shariffBackend = $shariffBackend;
     }
 
     public function __invoke(): JsonResponse

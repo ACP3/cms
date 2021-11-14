@@ -21,25 +21,13 @@ use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 final class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var ApplicationPath
-     */
-    private $applicationPath;
-
-    /**
      * @throws \Exception
      */
     public function __construct(
-        LoggerInterface $logger,
-        ApplicationPath $applicationPath
+        private LoggerInterface $logger,
+        private ApplicationPath $applicationPath
     ) {
         parent::__construct();
-
-        $this->logger = $logger;
-        $this->applicationPath = $applicationPath;
 
         $this->setUpContainer();
     }

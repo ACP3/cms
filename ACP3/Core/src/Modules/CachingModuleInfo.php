@@ -13,19 +13,8 @@ class CachingModuleInfo implements ModuleInfoInterface
 {
     private const CACHE_ID_MODULES_INFO = 'modules_info';
 
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $coreCachePool;
-    /**
-     * @var ModuleInfo
-     */
-    private $moduleInfo;
-
-    public function __construct(CacheItemPoolInterface $coreCachePool, ModuleInfo $moduleInfo)
+    public function __construct(private CacheItemPoolInterface $coreCachePool, private ModuleInfo $moduleInfo)
     {
-        $this->coreCachePool = $coreCachePool;
-        $this->moduleInfo = $moduleInfo;
     }
 
     public function getModulesInfo(): array

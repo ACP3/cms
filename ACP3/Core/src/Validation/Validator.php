@@ -17,15 +17,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Validator
 {
     /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * @var array
      */
     private $errors = [];
@@ -34,10 +25,8 @@ class Validator
      */
     private $constraints = [];
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, ContainerInterface $container)
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private ContainerInterface $container)
     {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->container = $container;
     }
 
     public function addConstraint(string $validationRule, array $params = []): self
@@ -60,10 +49,7 @@ class Validator
         ];
     }
 
-    /**
-     * @param string|array $field
-     */
-    public function addError(string $message, $field = ''): self
+    public function addError(string $message, array|string|null $field = ''): self
     {
         if (!empty($field)) {
             $fieldName = $this->mapField($field);
@@ -75,10 +61,7 @@ class Validator
         return $this;
     }
 
-    /**
-     * @param string|array $field
-     */
-    private function mapField($field): string
+    private function mapField(array|string $field): string
     {
         if (\is_array($field)) {
             $field = reset($field);

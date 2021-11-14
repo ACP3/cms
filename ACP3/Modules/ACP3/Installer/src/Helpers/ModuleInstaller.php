@@ -17,27 +17,8 @@ use Psr\Container\ContainerInterface;
 
 class ModuleInstaller
 {
-    /**
-     * @var Install
-     */
-    private $installHelper;
-    /**
-     * @var MigrationServiceLocator
-     */
-    private $migrationServiceLocator;
-    /**
-     * @var MigrationRepositoryInterface
-     */
-    private $migrationRepository;
-
-    public function __construct(
-        Install $installHelper,
-        MigrationServiceLocator $migrationServiceLocator,
-        MigrationRepositoryInterface $migrationRepository
-    ) {
-        $this->installHelper = $installHelper;
-        $this->migrationServiceLocator = $migrationServiceLocator;
-        $this->migrationRepository = $migrationRepository;
+    public function __construct(private Install $installHelper, private MigrationServiceLocator $migrationServiceLocator, private MigrationRepositoryInterface $migrationRepository)
+    {
     }
 
     /**
@@ -68,9 +49,7 @@ class ModuleInstaller
 
         $installableModules = array_filter(
             ComponentRegistry::excludeByType(ComponentRegistry::allTopSorted(), [ComponentTypeEnum::THEME]),
-            static function ($module) use ($schemaRegistrar) {
-                return $schemaRegistrar->has($module->getName());
-            }
+            static fn ($module) => $schemaRegistrar->has($module->getName())
         );
 
         $installedModules = [];

@@ -13,27 +13,8 @@ use ACP3\Core\Http\RequestInterface;
 
 class AdminMenuEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-
-    public function __construct(
-        FormToken $formTokenHelper,
-        RequestInterface $request,
-        Title $title
-    ) {
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->title = $title;
+    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private Title $title)
+    {
     }
 
     public function __invoke(array $menu): array

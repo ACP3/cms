@@ -11,21 +11,8 @@ use ACP3\Core;
 
 abstract class AbstractFormValidation
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-    /**
-     * @var \ACP3\Core\Validation\Validator
-     */
-    protected $validator;
-
-    public function __construct(
-        Core\I18n\Translator $translator,
-        Core\Validation\Validator $validator
-    ) {
-        $this->translator = $translator;
-        $this->validator = $validator;
+    public function __construct(protected Core\I18n\Translator $translator, protected Core\Validation\Validator $validator)
+    {
     }
 
     /**

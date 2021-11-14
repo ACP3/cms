@@ -11,14 +11,8 @@ use Symfony\Component\HttpFoundation\ServerBag;
 
 class UserAgent
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\ServerBag
-     */
-    protected $server;
-
-    public function __construct(ServerBag $server)
+    public function __construct(protected ServerBag $server)
     {
-        $this->server = $server;
     }
 
     /**

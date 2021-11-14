@@ -13,43 +13,16 @@ use ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository;
 
 class SendNewsletter
 {
-    /**
-     * @var \ACP3\Core\Mailer
-     */
-    private $mailer;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository
-     */
-    private $newsletterRepository;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $config;
-
-    public function __construct(
-        Core\Mailer $mailer,
-        Core\Router\RouterInterface $router,
-        Core\Settings\SettingsInterface $config,
-        NewsletterRepository $newsletterRepository
-    ) {
-        $this->mailer = $mailer;
-        $this->router = $router;
-        $this->config = $config;
-        $this->newsletterRepository = $newsletterRepository;
+    public function __construct(private Core\Mailer $mailer, private Core\Router\RouterInterface $router, private Core\Settings\SettingsInterface $config, private NewsletterRepository $newsletterRepository)
+    {
     }
 
     /**
      * Versendet einen Newsletter.
      *
-     * @param string|array $recipients
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function sendNewsletter(int $newsletterId, $recipients, bool $bcc = false): bool
+    public function sendNewsletter(int $newsletterId, array|string $recipients, bool $bcc = false): bool
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 

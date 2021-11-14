@@ -17,18 +17,11 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Contact\ViewProviders\ContactDetailsViewProvider
-     */
-    private $contactDetailsViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        ContactDetailsViewProvider $contactDetailsViewProvider
+        private ContactDetailsViewProvider $contactDetailsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->contactDetailsViewProvider = $contactDetailsViewProvider;
     }
 
     public function __invoke(): Response

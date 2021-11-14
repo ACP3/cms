@@ -19,26 +19,19 @@ class NewsletterModel extends AbstractModel implements UpdatedAtAwareModelInterf
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * @var SettingsInterface
-     */
-    protected $config;
-
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
-        SettingsInterface $config,
+        protected SettingsInterface $config,
         NewsletterRepository $newsletterRepository
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $newsletterRepository);
-
-        $this->config = $config;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, $entryId = null): int
     {
         if ($entryId === null) {
             $settings = $this->config->getSettings(Schema::MODULE_NAME);

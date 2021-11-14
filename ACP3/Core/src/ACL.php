@@ -16,23 +16,6 @@ use ACP3\Core\Controller\Helper\ControllerActionExists;
 class ACL
 {
     /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var PermissionServiceInterface
-     */
-    private $permissionService;
-    /**
-     * @var \ACP3\Core\ACL\Repository\UserRoleRepositoryInterface
-     */
-    private $userRoleRepository;
-    /**
-     * @var ControllerActionExists
-     */
-    private $controllerActionExists;
-
-    /**
      * Array mit den dem Benutzer zugewiesenen Rollen.
      *
      * @var array<int, int[]>
@@ -49,16 +32,8 @@ class ACL
      */
     private $permissions = [];
 
-    public function __construct(
-        ControllerActionExists $controllerActionExists,
-        UserModelInterface $user,
-        UserRoleRepositoryInterface $userRoleRepository,
-        PermissionServiceInterface $permissionService
-    ) {
-        $this->user = $user;
-        $this->userRoleRepository = $userRoleRepository;
-        $this->permissionService = $permissionService;
-        $this->controllerActionExists = $controllerActionExists;
+    public function __construct(private ControllerActionExists $controllerActionExists, private UserModelInterface $user, private UserRoleRepositoryInterface $userRoleRepository, private PermissionServiceInterface $permissionService)
+    {
     }
 
     /**

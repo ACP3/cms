@@ -13,17 +13,12 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class ResultsPerPage
 {
     /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
      * @var array
      */
     private $resultsPerPage = [];
 
-    public function __construct(SettingsInterface $settings)
+    public function __construct(private SettingsInterface $settings)
     {
-        $this->settings = $settings;
     }
 
     public function getResultsPerPage(string $moduleName): int

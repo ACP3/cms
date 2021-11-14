@@ -12,27 +12,8 @@ use ACP3\Core\Migration\Repository\MigrationRepositoryInterface;
 
 class Migrator
 {
-    /**
-     * @var Connection
-     */
-    private $db;
-    /**
-     * @var MigrationServiceLocator
-     */
-    private $migrationServiceLocator;
-    /**
-     * @var MigrationRepositoryInterface
-     */
-    private $migrationRepository;
-
-    public function __construct(
-        Connection $db,
-        MigrationServiceLocator $migrationServiceLocator,
-        MigrationRepositoryInterface $migrationRepository
-    ) {
-        $this->db = $db;
-        $this->migrationServiceLocator = $migrationServiceLocator;
-        $this->migrationRepository = $migrationRepository;
+    public function __construct(private Connection $db, private MigrationServiceLocator $migrationServiceLocator, private MigrationRepositoryInterface $migrationRepository)
+    {
     }
 
     /**
@@ -97,6 +78,6 @@ class Migrator
 
     private function markMigrationAsExecuted(MigrationInterface $migration): void
     {
-        $this->migrationRepository->insert(['name' => \get_class($migration)]);
+        $this->migrationRepository->insert(['name' => $migration::class]);
     }
 }

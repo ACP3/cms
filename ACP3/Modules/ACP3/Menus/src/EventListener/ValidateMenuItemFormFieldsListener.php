@@ -19,19 +19,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ValidateMenuItemFormFieldsListener implements EventSubscriberInterface
 {
-    /**
-     * @var ACL
-     */
-    private $acl;
-    /**
-     * @var Translator
-     */
-    private $translator;
-
-    public function __construct(ACL $acl, Translator $translator)
+    public function __construct(private ACL $acl, private Translator $translator)
     {
-        $this->acl = $acl;
-        $this->translator = $translator;
     }
 
     public function __invoke(FormValidationEvent $event)

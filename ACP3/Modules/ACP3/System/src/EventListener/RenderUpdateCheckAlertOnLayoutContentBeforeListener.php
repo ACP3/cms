@@ -17,33 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RenderUpdateCheckAlertOnLayoutContentBeforeListener implements EventSubscriberInterface
 {
-    /**
-     * @var UpdateCheck
-     */
-    private $updateCheck;
-    /**
-     * @var View
-     */
-    private $view;
-    /**
-     * @var RequestInterface
-     */
-    private $request;
-    /**
-     * @var ACL
-     */
-    private $acl;
-
-    public function __construct(
-        ACL $acl,
-        RequestInterface $request,
-        View $view,
-        UpdateCheck $updateCheck
-    ) {
-        $this->updateCheck = $updateCheck;
-        $this->view = $view;
-        $this->request = $request;
-        $this->acl = $acl;
+    public function __construct(private ACL $acl, private RequestInterface $request, private View $view, private UpdateCheck $updateCheck)
+    {
     }
 
     public function __invoke(TemplateEvent $event): void

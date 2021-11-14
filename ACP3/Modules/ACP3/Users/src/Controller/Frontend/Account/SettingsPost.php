@@ -15,50 +15,27 @@ use ACP3\Modules\ACP3\Users;
 class SettingsPost extends AbstractAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Users\Validation\AccountSettingsFormValidation
-     */
-    private $accountSettingsFormValidation;
-    /**
-     * @var Users\Model\UsersModel
-     */
-    private $usersModel;
-    /**
-     * @var Users\Model\AuthenticationModel
-     */
-    private $authenticationModel;
-    /**
      * @var \ACP3\Core\Authentication\Model\UserModelInterface
      */
     private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
 
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
+        private FormAction $actionHelper,
         UserModelInterface $user,
-        Users\Model\AuthenticationModel $authenticationModel,
-        Users\Model\UsersModel $usersModel,
-        Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
+        private Users\Model\AuthenticationModel $authenticationModel,
+        private Users\Model\UsersModel $usersModel,
+        private Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
     ) {
         parent::__construct($context, $user);
-
-        $this->accountSettingsFormValidation = $accountSettingsFormValidation;
-        $this->usersModel = $usersModel;
-        $this->authenticationModel = $authenticationModel;
         $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handlePostAction(
             function () {
@@ -70,7 +47,7 @@ class SettingsPost extends AbstractAction
                     $formData['pwd'] = $formData['new_pwd'];
                 }
 
-                $bool = $this->usersModel->save($formData, $this->user->getUserId());
+                $result = $this->usersModel->save($formData, $this->user->getUserId());
 
                 $user = $this->usersModel->getOneById($this->user->getUserId());
                 $cookie = $this->authenticationModel->setRememberMeCookie(
@@ -79,8 +56,8 @@ class SettingsPost extends AbstractAction
                 );
 
                 $response = $this->actionHelper->setRedirectMessage(
-                    $bool,
-                    $this->translator->t('system', $bool !== false ? 'settings_success' : 'settings_error')
+                    $result,
+                    $this->translator->t('system', $result ? 'settings_success' : 'settings_error')
                 );
 
                 $response->headers->setCookie($cookie);

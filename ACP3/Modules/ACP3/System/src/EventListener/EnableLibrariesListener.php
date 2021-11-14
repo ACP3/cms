@@ -12,14 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class EnableLibrariesListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Assets\Libraries
-     */
-    private $libraries;
-
-    public function __construct(Libraries $libraries)
+    public function __construct(private Libraries $libraries)
     {
-        $this->libraries = $libraries;
     }
 
     public function __invoke(): void

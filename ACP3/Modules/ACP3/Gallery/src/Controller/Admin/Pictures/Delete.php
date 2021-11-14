@@ -13,36 +13,19 @@ use ACP3\Modules\ACP3\Gallery;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureModel
-     */
-    private $pictureModel;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Gallery\Model\PictureModel $pictureModel
+        private FormAction $actionHelper,
+        private Gallery\Model\PictureModel $pictureModel
     ) {
         parent::__construct($context);
-
-        $this->actionHelper = $actionHelper;
-        $this->pictureModel = $pictureModel;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(int $id, ?string $action = null)
+    public function __invoke(int $id, ?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
-            function (array $items) {
-                return (bool) $this->pictureModel->delete($items);
-            },
+            fn (array $items) => (bool) $this->pictureModel->delete($items),
             'acp/gallery/pictures/delete/id_' . $id,
             'acp/gallery/pictures/index/id_' . $id
         );

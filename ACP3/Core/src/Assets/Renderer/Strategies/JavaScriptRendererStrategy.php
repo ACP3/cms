@@ -18,24 +18,9 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
      * @var array|null
      */
     private $javascripts;
-    /**
-     * @var \ACP3\Core\Assets
-     */
-    private $assets;
-    /**
-     * @var \ACP3\Core\Assets\FileResolver
-     */
-    private $fileResolver;
-    /**
-     * @var \ACP3\Core\Assets\Libraries
-     */
-    private $libraries;
 
-    public function __construct(Assets $assets, Assets\FileResolver $fileResolver, Libraries $libraries)
+    public function __construct(private Assets $assets, private Assets\FileResolver $fileResolver, private Libraries $libraries)
     {
-        $this->assets = $assets;
-        $this->fileResolver = $fileResolver;
-        $this->libraries = $libraries;
     }
 
     /**

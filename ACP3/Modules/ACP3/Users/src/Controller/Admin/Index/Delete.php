@@ -13,30 +13,15 @@ use ACP3\Modules\ACP3\Users;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UsersModel
-     */
-    private $usersModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Users\Model\UsersModel $usersModel
+        private FormAction $actionHelper,
+        private Users\Model\UsersModel $usersModel
     ) {
         parent::__construct($context);
-
-        $this->usersModel = $usersModel;
-        $this->actionHelper = $actionHelper;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,
@@ -44,7 +29,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
                 try {
                     $result = $this->usersModel->delete($items);
                     $text = $this->translator->t('system', $result ? 'delete_success' : 'delete_error');
-                } catch (Users\Exception\SuperUserNotDeletableException $e) {
+                } catch (Users\Exception\SuperUserNotDeletableException) {
                     $result = false;
                     $text = $this->translator->t('users', 'admin_user_undeletable');
                 }

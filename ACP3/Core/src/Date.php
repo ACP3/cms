@@ -28,15 +28,8 @@ class Date
      */
     private $dateTimeZone;
 
-    /**
-     * @var \ACP3\Core\Date\DateTranslator
-     */
-    private $dateTranslator;
-
-    public function __construct(
-        DateTranslator $dateTranslator
-    ) {
-        $this->dateTranslator = $dateTranslator;
+    public function __construct(private DateTranslator $dateTranslator)
+    {
     }
 
     public function getDateFormatLong(): string
@@ -146,11 +139,9 @@ class Date
     }
 
     /**
-     * @param string|int $time
-     *
      * @throws \Exception
      */
-    public function toDateTime($time = 'now'): \DateTime
+    public function toDateTime(int|string $time = 'now'): \DateTime
     {
         if (is_numeric($time)) {
             $time = date('c', $time);

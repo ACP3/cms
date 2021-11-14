@@ -13,24 +13,8 @@ use ACP3\Core\Http\RequestInterface;
 
 class CommentCreateViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-
-    public function __construct(FormToken $formTokenHelper, RequestInterface $request, UserModelInterface $user)
+    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private UserModelInterface $user)
     {
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->user = $user;
     }
 
     public function __invoke(string $module, int $entryId, string $redirectUrl): array

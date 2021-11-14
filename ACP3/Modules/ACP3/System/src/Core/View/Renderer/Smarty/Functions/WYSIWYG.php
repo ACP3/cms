@@ -13,21 +13,8 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class WYSIWYG extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\WYSIWYG\WysiwygFactory
-     */
-    private $wysiwygFactory;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $config;
-
-    public function __construct(
-        Core\WYSIWYG\WysiwygFactory $wysiwygFactory,
-        Core\Settings\SettingsInterface $config
-    ) {
-        $this->wysiwygFactory = $wysiwygFactory;
-        $this->config = $config;
+    public function __construct(private Core\WYSIWYG\WysiwygFactory $wysiwygFactory, private Core\Settings\SettingsInterface $config)
+    {
     }
 
     /**

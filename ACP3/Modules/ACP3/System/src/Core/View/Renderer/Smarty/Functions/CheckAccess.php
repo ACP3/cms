@@ -12,14 +12,8 @@ use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 
 class CheckAccess extends AbstractFunction
 {
-    /**
-     * @var CheckAccessViewHelper
-     */
-    private $checkAccess;
-
-    public function __construct(CheckAccessViewHelper $checkAccess)
+    public function __construct(private CheckAccessViewHelper $checkAccess)
     {
-        $this->checkAccess = $checkAccess;
     }
 
     /**

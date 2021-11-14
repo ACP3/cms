@@ -12,14 +12,8 @@ use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class GalleryExistsValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
-     */
-    private $galleryRepository;
-
-    public function __construct(GalleryRepository $galleryRepository)
+    public function __construct(private GalleryRepository $galleryRepository)
     {
-        $this->galleryRepository = $galleryRepository;
     }
 
     /**

@@ -16,16 +16,9 @@ class SettingsRepository extends AbstractRepository implements SettingsAwareRepo
 {
     public const TABLE_NAME = 'settings';
 
-    /**
-     * @var string
-     */
-    private $environment;
-
-    public function __construct(Connection $db, string $environment)
+    public function __construct(Connection $db, private string $environment)
     {
         parent::__construct($db);
-
-        $this->environment = $environment;
     }
 
     /**

@@ -13,63 +13,24 @@ use ACP3\Modules\ACP3\Search;
 
 class IndexPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Search\Helpers
-     */
-    private $searchHelpers;
-    /**
-     * @var \ACP3\Modules\ACP3\Search\Validation\FormValidation
-     */
-    private $searchValidator;
-    /**
-     * @var Search\Utility\SearchAvailabilityRegistrar
-     */
-    private $availableModulesRegistrar;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secureHelper;
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Modules\ACP3\Search\ViewProviders\SearchResultsViewProvider
-     */
-    private $searchResultsViewProvider;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Core\ACL $acl,
-        Core\Helpers\Secure $secureHelper,
-        Search\Helpers $searchHelpers,
-        Search\Validation\FormValidation $searchValidator,
-        Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar,
-        Search\ViewProviders\SearchResultsViewProvider $searchResultsViewProvider
+        private FormAction $actionHelper,
+        private Core\ACL $acl,
+        private Core\Helpers\Secure $secureHelper,
+        private Search\Helpers $searchHelpers,
+        private Search\Validation\FormValidation $searchValidator,
+        private Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar,
+        private Search\ViewProviders\SearchResultsViewProvider $searchResultsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->searchHelpers = $searchHelpers;
-        $this->searchValidator = $searchValidator;
-        $this->availableModulesRegistrar = $availableModulesRegistrar;
-        $this->secureHelper = $secureHelper;
-        $this->acl = $acl;
-        $this->searchResultsViewProvider = $searchResultsViewProvider;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(?string $searchTerm = '')
+    public function __invoke(?string $searchTerm = ''): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handlePostAction(
             function () use ($searchTerm) {

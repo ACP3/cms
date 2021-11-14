@@ -18,18 +18,11 @@ class Pictures extends AbstractWidgetAction
 {
     use CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListWidgetViewProvider
-     */
-    private $galleryPictureListWidgetViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        GalleryPictureListWidgetViewProvider $galleryPictureListWidgetViewProvider
+        private GalleryPictureListWidgetViewProvider $galleryPictureListWidgetViewProvider
     ) {
         parent::__construct($context);
-
-        $this->galleryPictureListWidgetViewProvider = $galleryPictureListWidgetViewProvider;
     }
 
     /**

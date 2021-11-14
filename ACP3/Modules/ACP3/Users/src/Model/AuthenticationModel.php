@@ -22,47 +22,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class AuthenticationModel implements AuthenticationModelInterface
 {
     private const SALT_LENGTH = 16;
-    private const REMEMBER_ME_COOKIE_LIFETIME = 31104000;
+    private const REMEMBER_ME_COOKIE_LIFETIME = 31_104_000;
 
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\Session
-     */
-    private $sessionHandler;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
-     */
-    private $userRepository;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secureHelper;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $userModel;
-
-    public function __construct(
-        RequestInterface $request,
-        ApplicationPath $appPath,
-        Session $sessionHandler,
-        Secure $secureHelper,
-        UserModelInterface $userModel,
-        UserRepository $userRepository
-    ) {
-        $this->request = $request;
-        $this->appPath = $appPath;
-        $this->sessionHandler = $sessionHandler;
-        $this->secureHelper = $secureHelper;
-        $this->userModel = $userModel;
-        $this->userRepository = $userRepository;
+    public function __construct(private RequestInterface $request, private ApplicationPath $appPath, private Session $sessionHandler, private Secure $secureHelper, private UserModelInterface $userModel, private UserRepository $userRepository)
+    {
     }
 
     /**
@@ -185,7 +148,7 @@ class AuthenticationModel implements AuthenticationModelInterface
 
     protected function getCookieDomain(): string
     {
-        if (strpos($this->request->getServer()->get('HTTP_HOST'), '.') !== false) {
+        if (str_contains($this->request->getServer()->get('HTTP_HOST'), '.')) {
             return $this->request->getServer()->get('HTTP_HOST', '');
         }
 

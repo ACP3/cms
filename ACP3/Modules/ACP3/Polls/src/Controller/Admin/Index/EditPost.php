@@ -14,45 +14,21 @@ use ACP3\Modules\ACP3\Polls;
 
 class EditPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
-     */
-    private $pollsValidator;
-    /**
-     * @var Polls\Model\PollsModel
-     */
-    private $pollsModel;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        UserModelInterface $user,
-        Polls\Model\PollsModel $pollsModel,
-        Polls\Validation\AdminFormValidation $pollsValidator
+        private FormAction $actionHelper,
+        private UserModelInterface $user,
+        private Polls\Model\PollsModel $pollsModel,
+        private Polls\Validation\AdminFormValidation $pollsValidator
     ) {
         parent::__construct($context);
-
-        $this->pollsModel = $pollsModel;
-        $this->pollsValidator = $pollsValidator;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -60,15 +36,15 @@ class EditPost extends Core\Controller\AbstractWidgetAction
             $this->pollsValidator->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();
-            $bool = $this->pollsModel->save($formData, $id);
+            $result = $this->pollsModel->save($formData, $id);
 
             if (!empty($formData['reset'])) {
                 $this->pollsModel->resetVotesByPollId($id);
             }
 
-            $bool2 = $this->pollsModel->saveAnswers($formData['answers'], $id);
+            $result2 = $this->pollsModel->saveAnswers($formData['answers'], $id);
 
-            return $bool !== false && $bool2 !== false;
+            return $result && $result2;
         });
     }
 }

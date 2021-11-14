@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Guestbook;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\GuestbookCreateViewProvider
-     */
-    private $guestbookCreateViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Guestbook\ViewProviders\GuestbookCreateViewProvider $guestbookCreateViewProvider
+        private Guestbook\ViewProviders\GuestbookCreateViewProvider $guestbookCreateViewProvider
     ) {
         parent::__construct($context);
-
-        $this->guestbookCreateViewProvider = $guestbookCreateViewProvider;
     }
 
     public function __invoke(): array

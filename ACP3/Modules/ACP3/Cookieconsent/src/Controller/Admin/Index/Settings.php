@@ -13,16 +13,9 @@ use ACP3\Modules\ACP3\Cookieconsent\ViewProviders\AdminSettingsViewProvider;
 
 class Settings extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Cookieconsent\ViewProviders\AdminSettingsViewProvider
-     */
-    private $adminSettingsViewProvider;
-
-    public function __construct(WidgetContext $context, AdminSettingsViewProvider $adminSettingsViewProvider)
+    public function __construct(WidgetContext $context, private AdminSettingsViewProvider $adminSettingsViewProvider)
     {
         parent::__construct($context);
-
-        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function __invoke(): array

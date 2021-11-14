@@ -16,18 +16,11 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Search\ViewProviders\SearchWidgetViewProvider
-     */
-    private $searchWidgetViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Search\ViewProviders\SearchWidgetViewProvider $searchWidgetViewProvider
+        private Search\ViewProviders\SearchWidgetViewProvider $searchWidgetViewProvider
     ) {
         parent::__construct($context);
-
-        $this->searchWidgetViewProvider = $searchWidgetViewProvider;
     }
 
     public function __invoke(): Response

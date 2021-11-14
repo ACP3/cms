@@ -12,14 +12,8 @@ use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class CategoryExistsValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(private CategoryRepository $categoryRepository)
     {
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**

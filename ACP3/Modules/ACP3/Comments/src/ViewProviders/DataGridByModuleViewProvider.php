@@ -25,51 +25,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGridByModuleViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Repository\CommentsDataGridRepository
-     */
-    private $dataGridRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\DataGrid\DataGrid
-     */
-    private $dataGrid;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
-     */
-    private $systemModuleRepository;
-
-    public function __construct(
-        CommentsDataGridRepository $dataGridRepository,
-        DataGrid $dataGrid,
-        ModuleAwareRepositoryInterface $systemModuleRepository,
-        RequestInterface $request,
-        ResultsPerPage $resultsPerPage,
-        Steps $breadcrumb,
-        Translator $translator
-    ) {
-        $this->dataGridRepository = $dataGridRepository;
-        $this->resultsPerPage = $resultsPerPage;
-        $this->translator = $translator;
-        $this->dataGrid = $dataGrid;
-        $this->request = $request;
-        $this->breadcrumb = $breadcrumb;
-        $this->systemModuleRepository = $systemModuleRepository;
+    public function __construct(private CommentsDataGridRepository $dataGridRepository, private DataGrid $dataGrid, private ModuleAwareRepositoryInterface $systemModuleRepository, private RequestInterface $request, private ResultsPerPage $resultsPerPage, private Steps $breadcrumb, private Translator $translator)
+    {
     }
 
     public function __invoke(int $moduleId)

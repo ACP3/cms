@@ -14,36 +14,19 @@ use ACP3\Modules\ACP3\Articles;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Articles\Model\ArticlesModel
-     */
-    protected $articlesModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         WidgetContext $context,
-        FormAction $actionHelper,
-        Articles\Model\ArticlesModel $articlesModel
+        private FormAction $actionHelper,
+        protected Articles\Model\ArticlesModel $articlesModel
     ) {
         parent::__construct($context);
-
-        $this->articlesModel = $articlesModel;
-        $this->actionHelper = $actionHelper;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
-            function (array $items) {
-                return $this->articlesModel->delete($items);
-            }
+            fn (array $items) => $this->articlesModel->delete($items)
         );
     }
 }

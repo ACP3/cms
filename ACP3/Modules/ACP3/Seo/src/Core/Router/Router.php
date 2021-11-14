@@ -13,20 +13,13 @@ use ACP3\Core\Settings\SettingsInterface;
 
 class Router extends \ACP3\Modules\ACP3\System\Core\Router\Router
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
-     */
-    private $aliases;
-
     public function __construct(
-        Aliases $aliases,
+        private Aliases $aliases,
         RequestInterface $request,
         ApplicationPath $appPath,
         SettingsInterface $config
     ) {
         parent::__construct($request, $appPath, $config);
-
-        $this->aliases = $aliases;
     }
 
     protected function preparePath(string $path): string

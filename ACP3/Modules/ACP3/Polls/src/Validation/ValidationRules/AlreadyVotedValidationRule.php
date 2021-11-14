@@ -13,21 +13,8 @@ use ACP3\Modules\ACP3\Polls\Repository\VoteRepository;
 
 class AlreadyVotedValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    protected $userModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\VoteRepository
-     */
-    protected $voteRepository;
-
-    public function __construct(
-        UserModelInterface $userModel,
-        VoteRepository $voteRepository
-    ) {
-        $this->userModel = $userModel;
-        $this->voteRepository = $voteRepository;
+    public function __construct(protected UserModelInterface $userModel, protected VoteRepository $voteRepository)
+    {
     }
 
     /**

@@ -16,21 +16,8 @@ class SchemaHelper
 {
     use ContainerAwareTrait;
 
-    /**
-     * @var Connection
-     */
-    private $db;
-    /**
-     * @var ModuleAwareRepositoryInterface
-     */
-    private $moduleAwareRepository;
-
-    public function __construct(
-        Connection $db,
-        ModuleAwareRepositoryInterface $moduleAwareRepository
-    ) {
-        $this->db = $db;
-        $this->moduleAwareRepository = $moduleAwareRepository;
+    public function __construct(private Connection $db, private ModuleAwareRepositoryInterface $moduleAwareRepository)
+    {
     }
 
     public function getContainer(): ContainerInterface

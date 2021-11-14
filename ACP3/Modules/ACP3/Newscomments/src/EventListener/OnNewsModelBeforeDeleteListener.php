@@ -16,21 +16,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnNewsModelBeforeDeleteListener implements EventSubscriberInterface
 {
-    /**
-     * @var Modules
-     */
-    private $modules;
-    /**
-     * @var CommentsHelpers
-     */
-    private $commentsHelpers;
-
-    public function __construct(
-        Modules $modules,
-        CommentsHelpers $commentsHelpers
-    ) {
-        $this->modules = $modules;
-        $this->commentsHelpers = $commentsHelpers;
+    public function __construct(private Modules $modules, private CommentsHelpers $commentsHelpers)
+    {
     }
 
     public function __invoke(ModelSaveEvent $event): void

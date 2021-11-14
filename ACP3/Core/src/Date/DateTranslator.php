@@ -12,10 +12,6 @@ use ACP3\Core\I18n\Translator;
 class DateTranslator
 {
     /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
      * @var array<string, array<string, string>>
      */
     private $cache = [];
@@ -49,9 +45,8 @@ class DateTranslator
         'December',
     ];
 
-    public function __construct(Translator $translator)
+    public function __construct(private Translator $translator)
     {
-        $this->translator = $translator;
     }
 
     /**
@@ -61,16 +56,16 @@ class DateTranslator
     {
         $replace = [];
         // Localize days
-        if (strpos($dateFormat, 'D') !== false) {
+        if (str_contains($dateFormat, 'D')) {
             $replace = $this->localizeDaysAbbr();
-        } elseif (strpos($dateFormat, 'l') !== false) {
+        } elseif (str_contains($dateFormat, 'l')) {
             $replace = $this->localizeDays();
         }
 
         // Localize months
-        if (strpos($dateFormat, 'M') !== false) {
+        if (str_contains($dateFormat, 'M')) {
             $replace = array_merge($replace, $this->localizeMonthsAbbr());
-        } elseif (strpos($dateFormat, 'F') !== false) {
+        } elseif (str_contains($dateFormat, 'F')) {
             $replace = array_merge($replace, $this->localizeMonths());
         }
 

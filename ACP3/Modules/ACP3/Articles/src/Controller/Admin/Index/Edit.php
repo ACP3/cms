@@ -9,30 +9,17 @@ namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
 use ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Articles\Model\ArticlesModel
-     */
-    private $articlesModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider
-     */
-    private $adminArticleEditViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        AdminArticleEditViewProvider $adminArticleEditViewProvider,
-        ArticlesModel $articlesModel
+        private AdminArticleEditViewProvider $adminArticleEditViewProvider,
+        private ArticlesModel $articlesModel
     ) {
         parent::__construct($context);
-
-        $this->articlesModel = $articlesModel;
-        $this->adminArticleEditViewProvider = $adminArticleEditViewProvider;
     }
 
     /**

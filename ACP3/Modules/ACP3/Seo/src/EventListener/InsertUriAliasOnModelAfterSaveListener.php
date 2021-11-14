@@ -15,21 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class InsertUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
 {
-    /**
-     * @var UriAliasManager
-     */
-    private $uriAliasManager;
-    /**
-     * @var ACL
-     */
-    private $acl;
-
-    public function __construct(
-        ACL $acl,
-        UriAliasManager $uriAliasManager
-    ) {
-        $this->uriAliasManager = $uriAliasManager;
-        $this->acl = $acl;
+    public function __construct(private ACL $acl, private UriAliasManager $uriAliasManager)
+    {
     }
 
     public function __invoke(ModelSaveEvent $event)

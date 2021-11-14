@@ -15,16 +15,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class AssetsClearCommand extends Command
 {
-    /**
-     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
-     */
-    private $cacheClearService;
-
-    public function __construct(CacheClearService $cacheClearService)
+    public function __construct(private CacheClearService $cacheClearService)
     {
         parent::__construct();
-
-        $this->cacheClearService = $cacheClearService;
     }
 
     /**

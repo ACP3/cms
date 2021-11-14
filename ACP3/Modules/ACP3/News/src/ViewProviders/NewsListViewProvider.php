@@ -24,87 +24,8 @@ use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class NewsListViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Helpers
-     */
-    private $categoriesHelpers;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    private $categoryRepository;
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
-     */
-    private $metaStatements;
-    /**
-     * @var \ACP3\Modules\ACP3\News\Repository\NewsRepository
-     */
-    private $newsRepository;
-    /**
-     * @var \ACP3\Core\Pagination
-     */
-    private $pagination;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Core\Helpers\StringFormatter
-     */
-    private $stringFormatter;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        CategoriesHelper $categoriesHelpers,
-        CategoryRepository $categoryRepository,
-        Date $date,
-        MetaStatementsServiceInterface $metaStatements,
-        NewsRepository $newsRepository,
-        Pagination $pagination,
-        ResultsPerPage $resultsPerPage,
-        RouterInterface $router,
-        SettingsInterface $settings,
-        StringFormatter $stringFormatter,
-        Steps $breadcrumb,
-        Translator $translator,
-        View $view
-    ) {
-        $this->categoriesHelpers = $categoriesHelpers;
-        $this->categoryRepository = $categoryRepository;
-        $this->date = $date;
-        $this->metaStatements = $metaStatements;
-        $this->newsRepository = $newsRepository;
-        $this->pagination = $pagination;
-        $this->resultsPerPage = $resultsPerPage;
-        $this->settings = $settings;
-        $this->breadcrumb = $breadcrumb;
-        $this->view = $view;
-        $this->router = $router;
-        $this->stringFormatter = $stringFormatter;
-        $this->translator = $translator;
+    public function __construct(private CategoriesHelper $categoriesHelpers, private CategoryRepository $categoryRepository, private Date $date, private MetaStatementsServiceInterface $metaStatements, private NewsRepository $newsRepository, private Pagination $pagination, private ResultsPerPage $resultsPerPage, private RouterInterface $router, private SettingsInterface $settings, private StringFormatter $stringFormatter, private Steps $breadcrumb, private Translator $translator, private View $view)
+    {
     }
 
     /**

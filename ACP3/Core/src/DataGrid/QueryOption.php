@@ -9,33 +9,8 @@ namespace ACP3\Core\DataGrid;
 
 class QueryOption
 {
-    /**
-     * @var string
-     */
-    private $tableAlias;
-    /**
-     * @var string
-     */
-    private $columnName;
-    /**
-     * @var string
-     */
-    private $value;
-    /**
-     * @var string
-     */
-    private $operator;
-
-    public function __construct(
-        string $columnName,
-        string $value,
-        string $tableAlias = 'main',
-        string $operator = '='
-    ) {
-        $this->tableAlias = $tableAlias;
-        $this->value = $value;
-        $this->columnName = $columnName;
-        $this->operator = $operator;
+    public function __construct(private string $columnName, private string $value, private string $tableAlias = 'main', private string $operator = '=')
+    {
     }
 
     public function getTableAlias(): string

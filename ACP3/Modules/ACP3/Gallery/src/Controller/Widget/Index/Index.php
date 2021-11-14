@@ -16,18 +16,11 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryListWidgetViewProvider
-     */
-    private $galleryListWidgetViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Gallery\ViewProviders\GalleryListWidgetViewProvider $galleryListWidgetViewProvider
+        private Gallery\ViewProviders\GalleryListWidgetViewProvider $galleryListWidgetViewProvider
     ) {
         parent::__construct($context);
-
-        $this->galleryListWidgetViewProvider = $galleryListWidgetViewProvider;
     }
 
     /**

@@ -27,63 +27,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PictureDataGridViewProvider
 {
-    /**
-     * @var \ACP3\Core\DataGrid\DataGrid
-     */
-    private $dataGrid;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryPicturesDataGridRepository
-     */
-    private $dataGridRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
-     */
-    private $thumbnailGenerator;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-
-    public function __construct(
-        ACL $acl,
-        DataGrid $dataGrid,
-        GalleryPicturesDataGridRepository $dataGridRepository,
-        ResultsPerPage $resultsPerPage,
-        Steps $breadcrumb,
-        ThumbnailGenerator $thumbnailGenerator,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->dataGrid = $dataGrid;
-        $this->dataGridRepository = $dataGridRepository;
-        $this->resultsPerPage = $resultsPerPage;
-        $this->breadcrumb = $breadcrumb;
-        $this->thumbnailGenerator = $thumbnailGenerator;
-        $this->title = $title;
-        $this->translator = $translator;
-        $this->acl = $acl;
+    public function __construct(private ACL $acl, private DataGrid $dataGrid, private GalleryPicturesDataGridRepository $dataGridRepository, private ResultsPerPage $resultsPerPage, private Steps $breadcrumb, private ThumbnailGenerator $thumbnailGenerator, private Title $title, private Translator $translator)
+    {
     }
 
     /**
      * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function __invoke(int $id, array $gallery)
+    public function __invoke(int $id, array $gallery): array|JsonResponse
     {
         $dataGrid = $this->dataGrid->render($this->configureDataGrid($id));
         if ($dataGrid instanceof JsonResponse) {
@@ -111,9 +62,7 @@ class PictureDataGridViewProvider
                 'type' => PictureColumnRenderer::class,
                 'fields' => ['file'],
                 'custom' => [
-                    'callback' => function (string $fileName) {
-                        return $this->thumbnailGenerator->generateThumbnail($fileName, 'thumb')->getFileWeb();
-                    },
+                    'callback' => fn (string $fileName) => $this->thumbnailGenerator->generateThumbnail($fileName, 'thumb')->getFileWeb(),
                 ],
             ], 40)
             ->addColumn([

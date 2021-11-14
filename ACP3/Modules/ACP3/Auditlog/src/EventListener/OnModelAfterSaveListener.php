@@ -18,39 +18,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnModelAfterSaveListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $userModel;
-    /**
-     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
-     */
-    private $moduleAwareRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Auditlog\Repository\AuditLogRepository
-     */
-    private $auditLogRepository;
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
-
-    public function __construct(
-        LoggerInterface $logger,
-        Date $date,
-        UserModelInterface $userModel,
-        ModuleAwareRepositoryInterface $moduleAwareRepository,
-        AuditLogRepository $auditLogRepository)
+    public function __construct(private LoggerInterface $logger, private Date $date, private UserModelInterface $userModel, private ModuleAwareRepositoryInterface $moduleAwareRepository, private AuditLogRepository $auditLogRepository)
     {
-        $this->date = $date;
-        $this->userModel = $userModel;
-        $this->moduleAwareRepository = $moduleAwareRepository;
-        $this->auditLogRepository = $auditLogRepository;
-        $this->logger = $logger;
     }
 
     public function __invoke(ModelSaveEvent $event): void

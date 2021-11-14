@@ -16,27 +16,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class Native implements AuthenticationInterface
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\Session
-     */
-    private $sessionHandler;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
-     */
-    private $userRepository;
-
-    public function __construct(
-        RequestInterface $request,
-        Session $sessionHandler,
-        UserRepository $userRepository
-    ) {
-        $this->request = $request;
-        $this->sessionHandler = $sessionHandler;
-        $this->userRepository = $userRepository;
+    public function __construct(private RequestInterface $request, private Session $sessionHandler, private UserRepository $userRepository)
+    {
     }
 
     /**

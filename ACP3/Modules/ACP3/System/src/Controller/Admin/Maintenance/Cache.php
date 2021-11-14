@@ -16,30 +16,15 @@ use ACP3\Modules\ACP3\System\Exception\InvalidCacheTypeException;
 
 class Cache extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\RedirectMessages
-     */
-    private $redirectMessages;
-    /**
-     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
-     */
-    private $cacheClearService;
-
     public function __construct(
         WidgetContext $context,
-        RedirectMessages $redirectMessages,
-        System\Services\CacheClearService $cacheClearService
+        private RedirectMessages $redirectMessages,
+        private System\Services\CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
-
-        $this->redirectMessages = $redirectMessages;
-        $this->cacheClearService = $cacheClearService;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if ($action !== null) {
             return $this->executePurge($action);
@@ -50,10 +35,7 @@ class Cache extends Core\Controller\AbstractWidgetAction
         ];
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    private function executePurge(string $action)
+    private function executePurge(string $action): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         $result = false;
 
@@ -62,9 +44,9 @@ class Cache extends Core\Controller\AbstractWidgetAction
 
             $result = true;
             $text = $this->translator->t('system', 'cache_type_' . $action . '_delete_success');
-        } catch (InvalidCacheTypeException $exception) {
+        } catch (InvalidCacheTypeException) {
             $text = $this->translator->t('system', 'cache_type_not_found');
-        } catch (CacheClearException $exception) {
+        } catch (CacheClearException) {
             $text = $this->translator->t('system', 'cache_type_' . $action . '_delete_error');
         }
 

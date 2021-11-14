@@ -12,21 +12,8 @@ use ACP3\Core\I18n\Translator;
 
 class Forms
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-
-    public function __construct(
-        Translator $translator,
-        RequestInterface $request
-    ) {
-        $this->translator = $translator;
-        $this->request = $request;
+    public function __construct(private Translator $translator, private RequestInterface $request)
+    {
     }
 
     /**
@@ -50,13 +37,12 @@ class Forms
     /**
      * Selektion eines Eintrages in einem Dropdown-Menü
      *
-     * @param mixed            $defaultValue
-     * @param string|int|array $currentValue
+     * @param mixed $defaultValue
      */
     public function selectEntry(
         string $formFieldName,
         $defaultValue,
-        $currentValue = '',
+        array|int|string|null $currentValue = '',
         string $htmlAttribute = ''
     ): string {
         $htmlAttribute = $this->buildHtmlAttribute($htmlAttribute);

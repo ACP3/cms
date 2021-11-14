@@ -21,38 +21,21 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * @var Secure
-     */
-    protected $secure;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
-     */
-    protected $answerRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\VoteRepository
-     */
-    protected $voteRepository;
-
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
-        Secure $secure,
+        protected Secure $secure,
         PollRepository $pollRepository,
-        AnswerRepository $answerRepository,
-        VoteRepository $voteRepository
+        protected AnswerRepository $answerRepository,
+        protected VoteRepository $voteRepository
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $pollRepository);
-
-        $this->secure = $secure;
-        $this->answerRepository = $answerRepository;
-        $this->voteRepository = $voteRepository;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, $entryId = null): int
     {
         $rawData['updated_at'] = 'now';
 
@@ -60,13 +43,11 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     }
 
     /**
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function saveAnswers(array $answers, int $pollId)
+    public function saveAnswers(array $answers, int $pollId): int
     {
-        $bool = false;
+        $result = 0;
         foreach ($answers as $row) {
             if (empty($row['id'])) {
                 if (!empty($row['text']) && !isset($row['delete'])) {
@@ -74,7 +55,7 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
                         'text' => $this->secure->strEncode($row['text']),
                         'poll_id' => $pollId,
                     ];
-                    $bool = $this->answerRepository->insert($data);
+                    $result = $this->answerRepository->insert($data);
                 }
             } elseif (isset($row['delete'])) {
                 $this->answerRepository->delete((int) $row['id']);
@@ -82,19 +63,17 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
                 $data = [
                     'text' => $this->secure->strEncode($row['text']),
                 ];
-                $bool = $this->answerRepository->update($data, (int) $row['id']);
+                $result = $this->answerRepository->update($data, (int) $row['id']);
             }
         }
 
-        return $bool;
+        return $result;
     }
 
     /**
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function resetVotesByPollId(int $pollId)
+    public function resetVotesByPollId(int $pollId): bool|int
     {
         return $this->voteRepository->delete($pollId, 'poll_id');
     }

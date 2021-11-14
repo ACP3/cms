@@ -11,14 +11,8 @@ use ACP3\Core\Modules;
 
 class ModuleIsInstalledValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    public function __construct(Modules $modules)
+    public function __construct(private Modules $modules)
     {
-        $this->modules = $modules;
     }
 
     /**

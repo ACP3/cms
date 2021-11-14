@@ -20,21 +20,13 @@ interface RepositoryInterface
 
     /**
      * Executes the SQL delete statement.
-     *
-     * @param int|array $entryId
-     *
-     * @return bool|int
      */
-    public function delete($entryId, ?string $columnName = null);
+    public function delete(array|int $entryId, ?string $columnName = null): int;
 
     /**
      * Executes the SQL update statement.
-     *
-     * @param int|array $entryId
-     *
-     * @return bool|int
      */
-    public function update(array $data, $entryId);
+    public function update(array $data, array|int $entryId): bool|int;
 
     /**
      * Returns a single full result set by the value of its primary key.

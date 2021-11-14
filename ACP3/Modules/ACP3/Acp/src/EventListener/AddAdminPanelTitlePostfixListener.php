@@ -16,21 +16,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddAdminPanelTitlePostfixListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        RequestInterface $request,
-        Translator $translator
-    ) {
-        $this->request = $request;
-        $this->translator = $translator;
+    public function __construct(private RequestInterface $request, private Translator $translator)
+    {
     }
 
     public function __invoke(GetSiteAndPageTitleBeforeEvent $event): void

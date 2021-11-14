@@ -12,30 +12,13 @@ use ACP3\Modules\ACP3\Polls;
 
 class Vote extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\PollRepository
-     */
-    private $pollRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\PollVoteViewProvider
-     */
-    private $pollVoteViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        Polls\Repository\PollRepository $pollRepository,
-        Polls\ViewProviders\PollVoteViewProvider $pollVoteViewProvider
+        private Core\Date $date,
+        private Polls\Repository\PollRepository $pollRepository,
+        private Polls\ViewProviders\PollVoteViewProvider $pollVoteViewProvider
     ) {
         parent::__construct($context);
-
-        $this->date = $date;
-        $this->pollRepository = $pollRepository;
-        $this->pollVoteViewProvider = $pollVoteViewProvider;
     }
 
     /**

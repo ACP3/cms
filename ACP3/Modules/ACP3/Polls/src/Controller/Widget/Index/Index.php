@@ -12,36 +12,14 @@ use ACP3\Modules\ACP3\Polls;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\PollRepository
-     */
-    private $pollRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\PollWidgetViewProvider
-     */
-    private $pollWidgetViewProvider;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Helpers
-     */
-    private $pollHelpers;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        Polls\Repository\PollRepository $pollRepository,
-        Polls\ViewProviders\PollWidgetViewProvider $pollWidgetViewProvider,
-        Polls\Helpers $pollHelpers
+        private Core\Date $date,
+        private Polls\Repository\PollRepository $pollRepository,
+        private Polls\ViewProviders\PollWidgetViewProvider $pollWidgetViewProvider,
+        private Polls\Helpers $pollHelpers
     ) {
         parent::__construct($context);
-
-        $this->date = $date;
-        $this->pollRepository = $pollRepository;
-        $this->pollWidgetViewProvider = $pollWidgetViewProvider;
-        $this->pollHelpers = $pollHelpers;
     }
 
     /**

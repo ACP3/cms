@@ -11,14 +11,8 @@ use ACP3\Core\Helpers\FormToken;
 
 class NewsletterSubscribeWidgetViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-
-    public function __construct(FormToken $formTokenHelper)
+    public function __construct(private FormToken $formTokenHelper)
     {
-        $this->formTokenHelper = $formTokenHelper;
     }
 
     public function __invoke(): array

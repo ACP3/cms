@@ -12,21 +12,8 @@ use ACP3\Modules\ACP3\Polls\Repository\PollRepository;
 
 class PollResultViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\PollRepository
-     */
-    private $pollRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
-     */
-    private $answerRepository;
-
-    public function __construct(
-        PollRepository $pollRepository,
-        AnswerRepository $answerRepository
-    ) {
-        $this->pollRepository = $pollRepository;
-        $this->answerRepository = $answerRepository;
+    public function __construct(private PollRepository $pollRepository, private AnswerRepository $answerRepository)
+    {
     }
 
     /**

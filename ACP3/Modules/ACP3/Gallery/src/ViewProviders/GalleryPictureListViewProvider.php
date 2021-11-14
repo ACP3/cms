@@ -17,45 +17,8 @@ use ACP3\Modules\ACP3\Gallery\Services\GalleryServiceInterface;
 
 class GalleryPictureListViewProvider
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var GalleryServiceInterface
-     */
-    private $galleryService;
-
-    public function __construct(
-        GalleryServiceInterface $galleryService,
-        RequestInterface $request,
-        SettingsInterface $settings,
-        Steps $breadcrumb,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->request = $request;
-        $this->settings = $settings;
-        $this->breadcrumb = $breadcrumb;
-        $this->title = $title;
-        $this->translator = $translator;
-        $this->galleryService = $galleryService;
+    public function __construct(private GalleryServiceInterface $galleryService, private RequestInterface $request, private SettingsInterface $settings, private Steps $breadcrumb, private Title $title, private Translator $translator)
+    {
     }
 
     /**

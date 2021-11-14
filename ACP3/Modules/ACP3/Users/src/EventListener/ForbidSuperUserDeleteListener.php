@@ -14,14 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ForbidSuperUserDeleteListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $userModel;
-
-    public function __construct(UserModelInterface $userModel)
+    public function __construct(private UserModelInterface $userModel)
     {
-        $this->userModel = $userModel;
     }
 
     /**

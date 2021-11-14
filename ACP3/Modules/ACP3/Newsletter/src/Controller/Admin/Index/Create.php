@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Newsletter;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\AdminNewsletterEditViewProvider
-     */
-    private $adminNewsletterEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Newsletter\ViewProviders\AdminNewsletterEditViewProvider $adminNewsletterEditViewProvider
+        private Newsletter\ViewProviders\AdminNewsletterEditViewProvider $adminNewsletterEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminNewsletterEditViewProvider = $adminNewsletterEditViewProvider;
     }
 
     public function __invoke(): array

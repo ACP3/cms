@@ -13,21 +13,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestFactory
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        RequestStack $requestStack,
-        SettingsInterface $settings)
+    public function __construct(private RequestStack $requestStack, private SettingsInterface $settings)
     {
-        $this->requestStack = $requestStack;
-        $this->settings = $settings;
     }
 
     public function create(): RequestInterface

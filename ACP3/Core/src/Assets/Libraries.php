@@ -18,21 +18,9 @@ class Libraries
      * @var Array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
      */
     private $libraries = [];
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
-    /**
-     * @var \ACP3\Core\Assets\LibrariesCache
-     */
-    private $librariesCache;
 
-    public function __construct(
-        RequestStack $requestStack,
-        LibrariesCache $librariesCache
-    ) {
-        $this->requestStack = $requestStack;
-        $this->librariesCache = $librariesCache;
+    public function __construct(private RequestStack $requestStack, private LibrariesCache $librariesCache)
+    {
     }
 
     /**
@@ -60,10 +48,7 @@ class Libraries
         return $librariesTopSorted;
     }
 
-    /**
-     * @param string|\ACP3\Core\Assets\Entity\LibraryEntity $library
-     */
-    public function addLibrary($library, ?array $options = null): self
+    public function addLibrary(LibraryEntity|string $library, ?array $options = null): self
     {
         if (\is_string($library)) {
             if ($options === null || empty($options)) {

@@ -28,14 +28,11 @@ class SearchAvailabilityExtension extends AbstractSearchAvailabilityExtension
      */
     protected function mapSearchAreasToFields($areas)
     {
-        switch ($areas) {
-            case 'title':
-                return 'title';
-            case 'content':
-                return 'text';
-            default:
-                return 'title, text';
-        }
+        return match ($areas) {
+            'title' => 'title',
+            'content' => 'text',
+            default => 'title, text',
+        };
     }
 
     /**

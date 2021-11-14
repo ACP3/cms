@@ -17,36 +17,14 @@ class AccountStatus
     public const ACCOUNT_STATUS_CONFIRMED = 1;
     public const ACCOUNT_STATUS_DISABLED = 2;
 
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository
-     */
-    protected $accountRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountHistoryRepository
-     */
-    protected $accountHistoryRepository;
-
-    public function __construct(
-        Date $date,
-        AccountRepository $accountRepository,
-        AccountHistoryRepository $accountHistoryRepository
-    ) {
-        $this->date = $date;
-        $this->accountRepository = $accountRepository;
-        $this->accountHistoryRepository = $accountHistoryRepository;
+    public function __construct(protected Date $date, protected AccountRepository $accountRepository, protected AccountHistoryRepository $accountHistoryRepository)
+    {
     }
 
     /**
-     * @param int       $status
-     * @param int|array $entryId
-     *
-     * @return bool|int
+     * @param int $status
      */
-    public function changeAccountStatus($status, $entryId)
+    public function changeAccountStatus($status, array|int $entryId): bool|int
     {
         $result = $this->accountRepository->update(['status' => $status], $entryId);
 
@@ -64,10 +42,8 @@ class AccountStatus
     /**
      * @param int $status
      * @param int $accountId
-     *
-     * @return bool|int
      */
-    protected function addAccountHistory($status, $accountId)
+    protected function addAccountHistory($status, $accountId): bool|int
     {
         $historyInsertValues = [
             'newsletter_account_id' => $accountId,

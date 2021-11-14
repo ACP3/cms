@@ -15,54 +15,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FormAction
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Core\Helpers\Alerts
-     */
-    private $alerts;
-    /**
-     * @var \ACP3\Core\Helpers\RedirectMessages
-     */
-    private $redirectMessages;
-    /**
-     * @var \ACP3\Core\Database\Connection
-     */
-    private $db;
-
-    public function __construct(
-        Core\Database\Connection $db,
-        Core\I18n\Translator $translator,
-        Core\Http\RequestInterface $request,
-        Core\Router\RouterInterface $router,
-        Core\Helpers\Alerts $alerts,
-        Core\Helpers\RedirectMessages $redirectMessages
-    ) {
-        $this->translator = $translator;
-        $this->request = $request;
-        $this->router = $router;
-        $this->alerts = $alerts;
-        $this->redirectMessages = $redirectMessages;
-        $this->db = $db;
+    public function __construct(private Core\Database\Connection $db, private Core\I18n\Translator $translator, private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Core\Helpers\Alerts $alerts, private Core\Helpers\RedirectMessages $redirectMessages)
+    {
     }
 
     /**
-     * @return string|array|JsonResponse|RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handlePostAction(callable $callback, ?string $path = null)
+    public function handlePostAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
     {
         try {
             $this->db->getConnection()->beginTransaction();
@@ -99,8 +60,6 @@ class FormAction
     }
 
     /**
-     * @return array|JsonResponse|RedirectResponse
-     *
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      */
     public function handleDeleteAction(
@@ -108,7 +67,7 @@ class FormAction
         callable $callback,
         ?string $moduleConfirmUrl = null,
         ?string $moduleIndexUrl = null
-    ) {
+    ): array|JsonResponse|RedirectResponse {
         return $this->handleCustomDeleteAction(
             $action,
             function (array $items) use ($callback, $moduleIndexUrl) {
@@ -121,15 +80,12 @@ class FormAction
         );
     }
 
-    /**
-     * @return array|JsonResponse|RedirectResponse|Response
-     */
     public function handleCustomDeleteAction(
         ?string $action,
         callable $callback,
         ?string $moduleConfirmUrl = null,
         ?string $moduleIndexUrl = null
-    ) {
+    ): array|JsonResponse|RedirectResponse|Response {
         [$moduleConfirmUrl, $moduleIndexUrl] = $this->generateDefaultConfirmationBoxUris(
             $moduleConfirmUrl,
             $moduleIndexUrl
@@ -148,12 +104,10 @@ class FormAction
     }
 
     /**
-     * @return string|array|JsonResponse|RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleDuplicateAction(callable $callback, ?string $path = null)
+    public function handleDuplicateAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -163,12 +117,10 @@ class FormAction
     }
 
     /**
-     * @return string|array|JsonResponse|RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleSettingsPostAction(callable $callback, ?string $path = null)
+    public function handleSettingsPostAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -178,12 +130,10 @@ class FormAction
     }
 
     /**
-     * @return array|string|JsonResponse|RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleSaveAction(callable $callback, ?string $path = null)
+    public function handleSaveAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -192,12 +142,7 @@ class FormAction
         });
     }
 
-    /**
-     * @param bool|int|Response $response
-     *
-     * @return JsonResponse|RedirectResponse|Response
-     */
-    private function prepareRedirectMessageAfterPost($response, string $phrase, ?string $path = null)
+    private function prepareRedirectMessageAfterPost(bool|int|Response $response, string $phrase, ?string $path = null): JsonResponse|RedirectResponse|Response
     {
         if ($response instanceof Response) {
             return $response;
@@ -210,12 +155,7 @@ class FormAction
         );
     }
 
-    /**
-     * @param bool|int $result
-     *
-     * @return JsonResponse|RedirectResponse
-     */
-    public function setRedirectMessage($result, string $translatedText, ?string $path = null)
+    public function setRedirectMessage(bool|int $result, string $translatedText, ?string $path = null): JsonResponse|RedirectResponse
     {
         return $this->redirectMessages->setMessage(
             $result,
@@ -239,10 +179,8 @@ class FormAction
 
     /**
      * helper function for deleting a result set.
-     *
-     * @return array|Response|JsonResponse|RedirectResponse
      */
-    private function deleteItem(?string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null)
+    private function deleteItem(?string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null): array|JsonResponse|RedirectResponse|Response
     {
         $entries = $this->prepareRequestData();
 

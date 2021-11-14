@@ -11,14 +11,8 @@ use ACP3\Core;
 
 class TemplatePath extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Assets\FileResolver
-     */
-    protected $fileResolver;
-
-    public function __construct(Core\Assets\FileResolver $fileResolver)
+    public function __construct(protected Core\Assets\FileResolver $fileResolver)
     {
-        $this->fileResolver = $fileResolver;
     }
 
     /**

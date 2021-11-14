@@ -14,45 +14,21 @@ use ACP3\Modules\ACP3\Emoticons;
 
 class EditPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var Emoticons\Model\EmoticonsModel
-     */
-    private $emoticonsModel;
-    /**
-     * @var \ACP3\Core\Helpers\Upload
-     */
-    private $emoticonsUploadHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         WidgetContext $context,
-        FormAction $actionHelper,
-        Emoticons\Model\EmoticonsModel $emoticonsModel,
-        Emoticons\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\Upload $emoticonsUploadHelper
+        private FormAction $actionHelper,
+        private Emoticons\Model\EmoticonsModel $emoticonsModel,
+        private Emoticons\Validation\AdminFormValidation $adminFormValidation,
+        private Core\Helpers\Upload $emoticonsUploadHelper
     ) {
         parent::__construct($context);
-
-        $this->adminFormValidation = $adminFormValidation;
-        $this->emoticonsModel = $emoticonsModel;
-        $this->emoticonsUploadHelper = $emoticonsUploadHelper;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

@@ -11,15 +11,8 @@ use ACP3\Modules\ACP3\Gallery\Services\GalleryServiceInterface;
 
 class GalleryPictureListWidgetViewProvider
 {
-    /**
-     * @var GalleryServiceInterface
-     */
-    private $galleryService;
-
-    public function __construct(
-        GalleryServiceInterface $galleryService
-    ) {
-        $this->galleryService = $galleryService;
+    public function __construct(private GalleryServiceInterface $galleryService)
+    {
     }
 
     /**

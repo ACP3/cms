@@ -13,14 +13,8 @@ use ACP3\Modules\ACP3\Filemanager\Installer\Schema;
 
 class Helpers
 {
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-
-    public function __construct(Core\Environment\ApplicationPath $appPath)
+    public function __construct(private Core\Environment\ApplicationPath $appPath)
     {
-        $this->appPath = $appPath;
     }
 
     public function getFilemanagerPath(): string

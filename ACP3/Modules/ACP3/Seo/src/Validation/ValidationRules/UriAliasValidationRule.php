@@ -13,27 +13,8 @@ use ACP3\Modules\ACP3\Seo;
 
 class UriAliasValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule
-     */
-    protected $internalUriValidationRule;
-    /**
-     * @var \ACP3\Core\Validation\ValidationRules\UriSafeValidationRule
-     */
-    protected $uriSafeValidationRule;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Repository\SeoRepository
-     */
-    protected $seoRepository;
-
-    public function __construct(
-        Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule,
-        Core\Validation\ValidationRules\UriSafeValidationRule $uriSafeValidationRule,
-        Seo\Repository\SeoRepository $seoRepository
-    ) {
-        $this->internalUriValidationRule = $internalUriValidationRule;
-        $this->uriSafeValidationRule = $uriSafeValidationRule;
-        $this->seoRepository = $seoRepository;
+    public function __construct(protected Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule, protected Core\Validation\ValidationRules\UriSafeValidationRule $uriSafeValidationRule, protected Seo\Repository\SeoRepository $seoRepository)
+    {
     }
 
     /**

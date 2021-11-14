@@ -148,40 +148,30 @@ class MailerMessage
         return $this;
     }
 
-    /**
-     * @return array|string
-     */
-    public function getFrom()
+    public function getFrom(): array|string
     {
         return $this->from;
     }
 
     /**
-     * @param array|string $from
-     *
      * @return $this
      */
-    public function setFrom($from)
+    public function setFrom(array|string $from)
     {
         $this->from = $from;
 
         return $this;
     }
 
-    /**
-     * @return array|string
-     */
-    public function getReplyTo()
+    public function getReplyTo(): array|string
     {
         return $this->replyTo;
     }
 
     /**
-     * @param array|string $replyTo
-     *
      * @return $this
      */
-    public function setReplyTo($replyTo)
+    public function setReplyTo(array|string $replyTo)
     {
         $this->replyTo = $replyTo;
 
@@ -208,20 +198,15 @@ class MailerMessage
         return $this;
     }
 
-    /**
-     * @return array|string
-     */
-    public function getRecipients()
+    public function getRecipients(): array|string
     {
         return $this->recipients;
     }
 
     /**
-     * @param array|string $recipients
-     *
      * @return $this
      */
-    public function setRecipients($recipients)
+    public function setRecipients(array|string $recipients)
     {
         $this->recipients = $recipients;
 

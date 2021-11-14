@@ -9,14 +9,8 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 class DateRange extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Helpers\Formatter\DateRange
-     */
-    protected $dateRangeFormatter;
-
-    public function __construct(\ACP3\Core\Helpers\Formatter\DateRange $dateRangeFormatter)
+    public function __construct(protected \ACP3\Core\Helpers\Formatter\DateRange $dateRangeFormatter)
     {
-        $this->dateRangeFormatter = $dateRangeFormatter;
     }
 
     /**

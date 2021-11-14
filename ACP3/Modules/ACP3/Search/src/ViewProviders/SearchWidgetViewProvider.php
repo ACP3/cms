@@ -11,14 +11,8 @@ use ACP3\Modules\ACP3\Search\Helpers as SearchHelpers;
 
 class SearchWidgetViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Search\Helpers
-     */
-    private $searchHelpers;
-
-    public function __construct(SearchHelpers $searchHelpers)
+    public function __construct(private SearchHelpers $searchHelpers)
     {
-        $this->searchHelpers = $searchHelpers;
     }
 
     public function __invoke(): array

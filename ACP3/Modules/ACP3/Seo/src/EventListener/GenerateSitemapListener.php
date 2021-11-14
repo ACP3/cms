@@ -23,48 +23,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class GenerateSitemapListener implements EventSubscriberInterface
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var SitemapAvailabilityRegistrar
-     */
-    private $sitemapRegistrar;
-    /**
-     * @var SitemapGenerationModel
-     */
-    private $sitemapGenerationModel;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
-    /**
      * @var bool
      */
     private $scheduleSitemapRebuild = false;
 
-    public function __construct(
-        LoggerInterface $logger,
-        Modules $modules,
-        SettingsInterface $settings,
-        SitemapAvailabilityRegistrar $sitemapRegistrar,
-        SitemapGenerationModel $sitemapGenerationModel,
-        RequestStack $requestStack
-    ) {
-        $this->logger = $logger;
-        $this->settings = $settings;
-        $this->sitemapRegistrar = $sitemapRegistrar;
-        $this->sitemapGenerationModel = $sitemapGenerationModel;
-        $this->modules = $modules;
-        $this->requestStack = $requestStack;
+    public function __construct(private LoggerInterface $logger, private Modules $modules, private SettingsInterface $settings, private SitemapAvailabilityRegistrar $sitemapRegistrar, private SitemapGenerationModel $sitemapGenerationModel, private RequestStack $requestStack)
+    {
     }
 
     public function onModelAfterSave(ModelSaveEvent $event): void

@@ -13,16 +13,9 @@ use ACP3\Modules\ACP3\Acp\ViewProviders\ModuleListViewProvider;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Acp\ViewProviders\ModuleListViewProvider
-     */
-    private $modulesListViewProvider;
-
-    public function __construct(WidgetContext $context, ModuleListViewProvider $modulesListViewProvider)
+    public function __construct(WidgetContext $context, private ModuleListViewProvider $modulesListViewProvider)
     {
         parent::__construct($context);
-
-        $this->modulesListViewProvider = $modulesListViewProvider;
     }
 
     public function __invoke(): array

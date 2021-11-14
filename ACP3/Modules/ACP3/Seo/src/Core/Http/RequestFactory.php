@@ -15,25 +15,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestFactory extends \ACP3\Modules\ACP3\System\Core\Http\RequestFactory
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Repository\SeoRepository
-     */
-    private $seoRepository;
-    /**
-     * @var Modules
-     */
-    private $modules;
-
     public function __construct(
         SettingsInterface $config,
-        Modules $modules,
+        private Modules $modules,
         RequestStack $requestStack,
-        SeoRepository $seoRepository
+        private SeoRepository $seoRepository
     ) {
         parent::__construct($config, $requestStack);
-
-        $this->seoRepository = $seoRepository;
-        $this->modules = $modules;
     }
 
     /**

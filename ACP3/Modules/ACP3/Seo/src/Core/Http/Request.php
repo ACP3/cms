@@ -13,18 +13,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class Request extends \ACP3\Core\Http\Request
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Repository\SeoRepository
-     */
-    private $seoRepository;
-
     public function __construct(
         RequestStack $requestStack,
-        SeoRepository $seoRepository
+        private SeoRepository $seoRepository
     ) {
         parent::__construct($requestStack);
-
-        $this->seoRepository = $seoRepository;
     }
 
     protected function parseURI()
@@ -70,7 +63,7 @@ class Request extends \ACP3\Core\Http\Request
 
             $length = 0;
             foreach ($query as $row) {
-                if (strpos($row, '_') !== false) {
+                if (str_contains($row, '_')) {
                     break;
                 }
 

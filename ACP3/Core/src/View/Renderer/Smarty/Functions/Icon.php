@@ -11,14 +11,8 @@ use ACP3\Core\Helpers\View\Icon as IconViewHelper;
 
 class Icon extends AbstractFunction
 {
-    /**
-     * @var IconViewHelper
-     */
-    private $iconHelper;
-
-    public function __construct(IconViewHelper $iconHelper)
+    public function __construct(private IconViewHelper $iconHelper)
     {
-        $this->iconHelper = $iconHelper;
     }
 
     /**

@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentsSettingsViewProvider;
 
 class Settings extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentsSettingsViewProvider
-     */
-    private $adminCommentsSettingsViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        AdminCommentsSettingsViewProvider $adminCommentsSettingsViewProvider
+        private AdminCommentsSettingsViewProvider $adminCommentsSettingsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminCommentsSettingsViewProvider = $adminCommentsSettingsViewProvider;
     }
 
     public function __invoke(): array

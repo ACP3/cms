@@ -11,14 +11,8 @@ use ACP3\Core\I18n\Translator;
 
 class TranslateColumnRenderer extends AbstractColumnRenderer
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(Translator $translator)
+    public function __construct(private Translator $translator)
     {
-        $this->translator = $translator;
     }
 
     /**

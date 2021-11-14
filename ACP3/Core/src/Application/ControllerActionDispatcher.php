@@ -22,33 +22,8 @@ class ControllerActionDispatcher
 {
     private const POST_SERVICE_ID_SUFFIX = '_post';
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $serviceLocator;
-    /**
-     * @var ArgumentResolverInterface
-     */
-    private $argumentResolver;
-
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        RequestInterface $request,
-        ContainerInterface $serviceLocator,
-        ArgumentResolverInterface $argumentResolver
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->request = $request;
-        $this->serviceLocator = $serviceLocator;
-        $this->argumentResolver = $argumentResolver;
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private RequestInterface $request, private ContainerInterface $serviceLocator, private ArgumentResolverInterface $argumentResolver)
+    {
     }
 
     /**

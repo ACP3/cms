@@ -12,21 +12,8 @@ use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 
 class ManageMenuItem
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
-     */
-    protected $menuItemRepository;
-    /**
-     * @var MenuItemsModel
-     */
-    protected $menuItemsModel;
-
-    public function __construct(
-        MenuItemsModel $menuItemsModel,
-        MenuItemRepository $menuItemRepository
-    ) {
-        $this->menuItemRepository = $menuItemRepository;
-        $this->menuItemsModel = $menuItemsModel;
+    public function __construct(protected MenuItemsModel $menuItemsModel, protected MenuItemRepository $menuItemRepository)
+    {
     }
 
     /**

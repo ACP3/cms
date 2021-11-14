@@ -14,18 +14,11 @@ use ACP3\Modules\ACP3\Files;
 
 abstract class AbstractFormAction extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Helpers
-     */
-    private $categoriesHelpers;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Categories\Helpers $categoriesHelpers
+        private Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context);
-
-        $this->categoriesHelpers = $categoriesHelpers;
     }
 
     /**

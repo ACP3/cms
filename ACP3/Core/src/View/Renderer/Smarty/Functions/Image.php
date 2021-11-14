@@ -13,19 +13,8 @@ use ACP3\Core\Http\RequestInterface;
 
 class Image extends AbstractFunction
 {
-    /**
-     * @var FileResolver
-     */
-    private $fileResolver;
-    /**
-     * @var RequestInterface
-     */
-    private $request;
-
-    public function __construct(RequestInterface $request, FileResolver $fileResolver)
+    public function __construct(private RequestInterface $request, private FileResolver $fileResolver)
     {
-        $this->fileResolver = $fileResolver;
-        $this->request = $request;
     }
 
     /**

@@ -13,24 +13,12 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Search\ViewProviders\SearchViewProvider
-     */
-    private $searchViewProvider;
-    /**
-     * @var ServiceLocator
-     */
-    private $controllerActionServiceLocator;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Search\ViewProviders\SearchViewProvider $searchViewProvider,
-        ServiceLocator $controllerActionServiceLocator
+        private Search\ViewProviders\SearchViewProvider $searchViewProvider,
+        private ServiceLocator $controllerActionServiceLocator
     ) {
         parent::__construct($context);
-
-        $this->searchViewProvider = $searchViewProvider;
-        $this->controllerActionServiceLocator = $controllerActionServiceLocator;
     }
 
     /**

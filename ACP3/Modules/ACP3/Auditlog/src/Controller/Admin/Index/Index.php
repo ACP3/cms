@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridViewProvider;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridViewProvider
-     */
-    private $dataGridViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        DataGridViewProvider $dataGridViewProvider
+        private DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
     public function __invoke()

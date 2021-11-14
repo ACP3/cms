@@ -17,27 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SubscribeToNewsletterOnModelAfterSaveListener implements EventSubscriberInterface
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helper\Subscribe
-     */
-    private $subscribe;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    public function __construct(
-        Modules $modules,
-        SettingsInterface $settings,
-        Subscribe $subscribe
-    ) {
-        $this->settings = $settings;
-        $this->subscribe = $subscribe;
-        $this->modules = $modules;
+    public function __construct(private Modules $modules, private SettingsInterface $settings, private Subscribe $subscribe)
+    {
     }
 
     /**

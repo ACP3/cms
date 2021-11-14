@@ -22,17 +22,14 @@ class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterfac
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, $entryId = null): int
     {
         $rawData['updated_at'] = 'now';
 
         return parent::save($rawData, $entryId);
     }
 
-    /**
-     * @return array
-     */
-    protected function getDefaultDataForDuplication()
+    protected function getDefaultDataForDuplication(): array
     {
         return [
             'active' => 0,
@@ -41,10 +38,7 @@ class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterfac
         ];
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,

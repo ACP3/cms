@@ -11,21 +11,8 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class CSSRendererFactory
 {
-    /**
-     * @var \Symfony\Component\DependencyInjection\ServiceLocator
-     */
-    private $assetRendererStrategyServiceLocator;
-    /**
-     * @var string
-     */
-    private $applicationMode;
-
-    public function __construct(
-        ServiceLocator $assetRendererStrategyServiceLocator,
-        string $applicationMode
-    ) {
-        $this->assetRendererStrategyServiceLocator = $assetRendererStrategyServiceLocator;
-        $this->applicationMode = $applicationMode;
+    public function __construct(private ServiceLocator $assetRendererStrategyServiceLocator, private string $applicationMode)
+    {
     }
 
     public function __invoke(): CSSRenderer

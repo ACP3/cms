@@ -18,26 +18,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Steps
 {
     /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    protected $container;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    protected $router;
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-    /**
      * @var array
      */
     protected $steps = [];
@@ -46,18 +26,8 @@ class Steps
      */
     protected $breadcrumbCache = [];
 
-    public function __construct(
-        ContainerInterface $container,
-        Translator $translator,
-        RequestInterface $request,
-        RouterInterface $router,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->container = $container;
-        $this->translator = $translator;
-        $this->request = $request;
-        $this->router = $router;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(protected ContainerInterface $container, protected Translator $translator, protected RequestInterface $request, protected RouterInterface $router, protected EventDispatcherInterface $eventDispatcher)
+    {
     }
 
     /**

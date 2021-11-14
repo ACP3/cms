@@ -12,14 +12,8 @@ use ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository;
 
 class RoleNotExistsValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository
-     */
-    private $roleRepository;
-
-    public function __construct(AclRoleRepository $roleRepository)
+    public function __construct(private AclRoleRepository $roleRepository)
     {
-        $this->roleRepository = $roleRepository;
     }
 
     /**

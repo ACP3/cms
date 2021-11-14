@@ -14,24 +14,8 @@ use ACP3\Modules\ACP3\Categories\Installer\Schema;
 
 class AdminCategorySettingsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(FormToken $formTokenHelper, RequestInterface $request, SettingsInterface $settings)
+    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings)
     {
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->settings = $settings;
     }
 
     public function __invoke()

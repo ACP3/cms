@@ -13,14 +13,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearPermissionCacheListener implements EventSubscriberInterface
 {
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $permissionsCachePool;
-
-    public function __construct(CacheItemPoolInterface $permissionsCachePool)
+    public function __construct(private CacheItemPoolInterface $permissionsCachePool)
     {
-        $this->permissionsCachePool = $permissionsCachePool;
     }
 
     public function __invoke()

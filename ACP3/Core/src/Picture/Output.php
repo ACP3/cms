@@ -14,18 +14,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class Output
 {
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var int
-     */
-    private $type;
-    /**
-     * @var string
-     */
-    private $srcFile;
-    /**
      * @var int|null
      */
     private $srcWidth;
@@ -46,11 +34,8 @@ class Output
      */
     private $destHeight;
 
-    public function __construct(ApplicationPath $appPath, string $srcFile, int $type)
+    public function __construct(private ApplicationPath $appPath, private string $srcFile, private int $type)
     {
-        $this->appPath = $appPath;
-        $this->srcFile = $srcFile;
-        $this->type = $type;
     }
 
     public function getSrcFile(): string
@@ -163,16 +148,12 @@ class Output
      */
     private function getMimeType(int $pictureType)
     {
-        switch ($pictureType) {
-            case IMAGETYPE_GIF:
-                return 'image/gif';
-            case IMAGETYPE_JPEG:
-                return 'image/jpeg';
-            case IMAGETYPE_PNG:
-                return 'image/png';
-        }
-
-        throw new PictureResponseException(sprintf('Unsupported picture type: %s', $pictureType));
+        return match ($pictureType) {
+            IMAGETYPE_GIF => 'image/gif',
+            IMAGETYPE_JPEG => 'image/jpeg',
+            IMAGETYPE_PNG => 'image/png',
+            default => throw new PictureResponseException(sprintf('Unsupported picture type: %s', $pictureType)),
+        };
     }
 
     private function setHeaders(BinaryFileResponse $response, string $mimeType)

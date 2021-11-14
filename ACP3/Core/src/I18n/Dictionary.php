@@ -15,14 +15,8 @@ use Fisharebest\Localization\Locale;
 
 class Dictionary implements DictionaryInterface
 {
-    /**
-     * @var \ACP3\Core\Environment\ThemePathInterface
-     */
-    private $theme;
-
-    public function __construct(ThemePathInterface $theme)
+    public function __construct(private ThemePathInterface $theme)
     {
-        $this->theme = $theme;
     }
 
     /**
@@ -120,7 +114,7 @@ class Dictionary implements DictionaryInterface
 
                 try {
                     $languagePacks[$isoCode] = $this->getLanguagePack($isoCode);
-                } catch (DomainException $e) {
+                } catch (DomainException) {
                     // Intentionally omitted
                 }
             }

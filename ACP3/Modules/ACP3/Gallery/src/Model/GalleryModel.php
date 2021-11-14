@@ -19,7 +19,7 @@ class GalleryModel extends AbstractModel implements UpdatedAtAwareModelInterface
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, $entryId = null): int
     {
         $rawData['updated_at'] = 'now';
 

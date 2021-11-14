@@ -14,21 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener implements EventSubscriberInterface
 {
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-    /**
-     * @var \ACP3\Core\Helpers\Upload
-     */
-    private $categoriesUploadHelper;
-
-    public function __construct(
-        Upload $categoriesUploadHelper,
-        CategoryRepository $categoryRepository
-    ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->categoriesUploadHelper = $categoriesUploadHelper;
+    public function __construct(private Upload $categoriesUploadHelper, private CategoryRepository $categoryRepository)
+    {
     }
 
     public function __invoke(ModelSaveEvent $event)

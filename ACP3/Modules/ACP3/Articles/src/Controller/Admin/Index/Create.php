@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider
-     */
-    private $adminArticleEditViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        AdminArticleEditViewProvider $adminArticleEditViewProvider
+        private AdminArticleEditViewProvider $adminArticleEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminArticleEditViewProvider = $adminArticleEditViewProvider;
     }
 
     /**

@@ -13,23 +13,10 @@ use FastImageSize\FastImageSize;
 
 class Picture
 {
-    /**
-     * @var FastImageSize
-     */
-    private $fastImageSize;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-
     private ?\GdImage $image = null;
 
-    public function __construct(
-        FastImageSize $fastImageSize,
-        ApplicationPath $appPath
-    ) {
-        $this->fastImageSize = $fastImageSize;
-        $this->appPath = $appPath;
+    public function __construct(private FastImageSize $fastImageSize, private ApplicationPath $appPath)
+    {
     }
 
     /**

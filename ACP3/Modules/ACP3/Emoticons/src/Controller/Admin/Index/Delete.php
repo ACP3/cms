@@ -14,36 +14,19 @@ use ACP3\Modules\ACP3\Emoticons;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Emoticons\Model\EmoticonsModel
-     */
-    private $emoticonsModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         WidgetContext $context,
-        FormAction $actionHelper,
-        Emoticons\Model\EmoticonsModel $emoticonsModel
+        private FormAction $actionHelper,
+        private Emoticons\Model\EmoticonsModel $emoticonsModel
     ) {
         parent::__construct($context);
-
-        $this->emoticonsModel = $emoticonsModel;
-        $this->actionHelper = $actionHelper;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
-            function (array $items) {
-                return $this->emoticonsModel->delete($items);
-            }
+            fn (array $items) => $this->emoticonsModel->delete($items)
         );
     }
 }

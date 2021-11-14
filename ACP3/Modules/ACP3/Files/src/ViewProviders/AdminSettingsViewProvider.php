@@ -16,39 +16,8 @@ use ACP3\Modules\ACP3\Files\Installer\Schema as FilesSchema;
 
 class AdminSettingsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Helpers\Date
-     */
-    private $dateHelper;
-
-    public function __construct(
-        Date $dateHelper,
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        SettingsInterface $settings,
-        Translator $translator
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->settings = $settings;
-        $this->translator = $translator;
-        $this->dateHelper = $dateHelper;
+    public function __construct(private Date $dateHelper, private Forms $formsHelper, private FormToken $formTokenHelper, private SettingsInterface $settings, private Translator $translator)
+    {
     }
 
     public function __invoke(): array

@@ -14,44 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LoginPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Users\Model\AuthenticationModel
-     */
-    private $authenticationModel;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secureHelper;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Core\Http\RedirectResponse $redirectResponse,
-        Core\Helpers\Secure $secureHelper,
-        Users\Model\AuthenticationModel $authenticationModel
+        private FormAction $actionHelper,
+        private Core\Http\RedirectResponse $redirectResponse,
+        private Core\Helpers\Secure $secureHelper,
+        private Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
-
-        $this->authenticationModel = $authenticationModel;
-        $this->secureHelper = $secureHelper;
-        $this->redirectResponse = $redirectResponse;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return Response|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): Response|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $this->authenticationModel->login(
@@ -67,9 +43,9 @@ class LoginPost extends Core\Controller\AbstractWidgetAction
             }
 
             return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
-        } catch (Users\Exception\LoginFailedException $e) {
+        } catch (Users\Exception\LoginFailedException) {
             $phrase = $this->translator->t('users', 'nickname_or_password_wrong');
-        } catch (Users\Exception\UserAccountLockedException $e) {
+        } catch (Users\Exception\UserAccountLockedException) {
             $phrase = $this->translator->t('users', 'account_locked');
         }
 

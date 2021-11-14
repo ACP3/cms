@@ -13,19 +13,12 @@ use ACP3\Modules\ACP3\Users;
 
 class Edit extends AbstractAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\AccountEditViewProvider
-     */
-    private $accountEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         UserModelInterface $user,
-        Users\ViewProviders\AccountEditViewProvider $accountEditViewProvider
+        private Users\ViewProviders\AccountEditViewProvider $accountEditViewProvider
     ) {
         parent::__construct($context, $user);
-
-        $this->accountEditViewProvider = $accountEditViewProvider;
     }
 
     /**

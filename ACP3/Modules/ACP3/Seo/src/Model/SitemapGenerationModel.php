@@ -17,14 +17,6 @@ use Thepixeldeveloper\Sitemap\Urlset;
 class SitemapGenerationModel
 {
     /**
-     * @var SitemapAvailabilityRegistrar
-     */
-    private $sitemapRegistrar;
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
      * @var array
      */
     private $filenameMap = [
@@ -36,19 +28,9 @@ class SitemapGenerationModel
             ['filename' => 'sitemap_http.xml', 'secure' => false],
         ],
     ];
-    /**
-     * @var DriverInterface
-     */
-    private $xmlSitemapDriver;
 
-    public function __construct(
-        SettingsInterface $settings,
-        SitemapAvailabilityRegistrar $sitemapRegistrar,
-        DriverInterface $xmlSitemapDriver
-    ) {
-        $this->sitemapRegistrar = $sitemapRegistrar;
-        $this->settings = $settings;
-        $this->xmlSitemapDriver = $xmlSitemapDriver;
+    public function __construct(private SettingsInterface $settings, private SitemapAvailabilityRegistrar $sitemapRegistrar, private DriverInterface $xmlSitemapDriver)
+    {
     }
 
     /**

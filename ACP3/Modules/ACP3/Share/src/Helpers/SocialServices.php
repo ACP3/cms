@@ -39,14 +39,8 @@ class SocialServices
         'info' => null,
     ];
 
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(SettingsInterface $settings)
+    public function __construct(private SettingsInterface $settings)
     {
-        $this->settings = $settings;
     }
 
     public function getAllServices(): array
@@ -81,9 +75,7 @@ class SocialServices
         return array_values(
             array_filter(
                 $this->getAllBackendServices(),
-                static function (?string $value, string $key) use ($activeServices) {
-                    return $value !== null && \in_array($key, $activeServices, true);
-                },
+                static fn (?string $value, string $key) => $value !== null && \in_array($key, $activeServices, true),
                 \ARRAY_FILTER_USE_BOTH
             )
         );

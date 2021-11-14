@@ -17,51 +17,8 @@ use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class AdminGalleryPictureEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
-     */
-    private $galleryRepository;
-
-    public function __construct(
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        GalleryRepository $galleryRepository,
-        RequestInterface $request,
-        Steps $breadcrumb,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->breadcrumb = $breadcrumb;
-        $this->title = $title;
-        $this->translator = $translator;
-        $this->galleryRepository = $galleryRepository;
+    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private GalleryRepository $galleryRepository, private RequestInterface $request, private Steps $breadcrumb, private Title $title, private Translator $translator)
+    {
     }
 
     /**

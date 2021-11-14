@@ -12,15 +12,8 @@ use ACP3\Core\NestedSet\Repository\NestedSetRepository;
 
 abstract class AbstractOperation
 {
-    /**
-     * @var \ACP3\Core\NestedSet\Repository\NestedSetRepository|BlockAwareNestedSetRepositoryInterface
-     */
-    protected $nestedSetRepository;
-
-    public function __construct(
-        NestedSetRepository $nestedSetRepository
-    ) {
-        $this->nestedSetRepository = $nestedSetRepository;
+    public function __construct(protected NestedSetRepository $nestedSetRepository)
+    {
     }
 
     /**

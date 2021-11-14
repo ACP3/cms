@@ -12,19 +12,8 @@ use ACP3\Core\Http\RequestInterface;
 
 class AdminEmoticonEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-
-    public function __construct(FormToken $formTokenHelper, RequestInterface $request)
+    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request)
     {
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
     }
 
     public function __invoke(array $emoticon): array

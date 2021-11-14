@@ -12,20 +12,13 @@ use Symfony\Contracts\EventDispatcher\Event;
 class ControllerActionBeforeDispatchEvent extends Event
 {
     public const NAME = 'core.application.controller_action_dispatcher.before_dispatch';
-
-    /**
-     * @var string
-     */
-    private $controllerServiceId;
     /**
      * @var string[]
      */
     private $serviceIdParts = [];
 
-    public function __construct(string $controllerServiceId)
+    public function __construct(private string $controllerServiceId)
     {
-        $this->controllerServiceId = $controllerServiceId;
-
         $this->splitServiceIdIntoParts();
     }
 

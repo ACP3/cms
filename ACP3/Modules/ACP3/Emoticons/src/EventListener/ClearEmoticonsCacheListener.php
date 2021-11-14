@@ -12,14 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearEmoticonsCacheListener implements EventSubscriberInterface
 {
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $emoticonCachePool;
-
-    public function __construct(CacheItemPoolInterface $emoticonCachePool)
+    public function __construct(private CacheItemPoolInterface $emoticonCachePool)
     {
-        $this->emoticonCachePool = $emoticonCachePool;
     }
 
     public function __invoke()

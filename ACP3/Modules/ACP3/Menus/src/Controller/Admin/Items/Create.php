@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Menus;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuItemEditViewProvider
-     */
-    private $adminMenuItemEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Menus\ViewProviders\AdminMenuItemEditViewProvider $adminMenuItemEditViewProvider
+        private Menus\ViewProviders\AdminMenuItemEditViewProvider $adminMenuItemEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminMenuItemEditViewProvider = $adminMenuItemEditViewProvider;
     }
 
     /**

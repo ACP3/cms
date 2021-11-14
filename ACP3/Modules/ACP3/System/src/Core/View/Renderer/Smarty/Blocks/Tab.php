@@ -13,14 +13,8 @@ use ACP3\Modules\ACP3\System\Helper\View\Tabset as TabsetViewHelper;
 
 class Tab extends AbstractBlock
 {
-    /**
-     * @var \ACP3\Modules\ACP3\System\Helper\View\Tabset
-     */
-    private $tabset;
-
-    public function __construct(TabsetViewHelper $tabset)
+    public function __construct(private TabsetViewHelper $tabset)
     {
-        $this->tabset = $tabset;
     }
 
     /**
@@ -33,9 +27,7 @@ class Tab extends AbstractBlock
                 throw new \InvalidArgumentException('It is currently not possible to nest tabs!');
             }
 
-            $tagStack = array_filter($smarty->smarty->_tag_stack, static function ($tag) {
-                return $tag[0] === 'tabset';
-            });
+            $tagStack = array_filter($smarty->smarty->_tag_stack, static fn ($tag) => $tag[0] === 'tabset');
 
             if (\count($tagStack) === 0) {
                 throw new \InvalidArgumentException('The {tab} block function needs to be called from within a {tabset} block function!');

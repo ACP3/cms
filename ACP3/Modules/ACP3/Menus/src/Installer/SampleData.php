@@ -12,18 +12,11 @@ use ACP3\Core\Installer\SchemaHelper;
 
 class SampleData extends \ACP3\Core\Installer\AbstractSampleData
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
     public function __construct(
         SchemaHelper $schemaHelper,
-        Translator $translator
+        private Translator $translator
     ) {
         parent::__construct($schemaHelper);
-
-        $this->translator = $translator;
     }
 
     /**

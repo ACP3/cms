@@ -12,14 +12,8 @@ use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 
 abstract class AbstractAnswerValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule
-     */
-    private $notEmptyValidationRule;
-
-    public function __construct(NotEmptyValidationRule $notEmptyValidationRule)
+    public function __construct(private NotEmptyValidationRule $notEmptyValidationRule)
     {
-        $this->notEmptyValidationRule = $notEmptyValidationRule;
     }
 
     protected function validateAnswers(array $answers): array

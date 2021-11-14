@@ -15,39 +15,8 @@ use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class ShareFormFields
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
-     */
-    private $shareRepository;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialServices
-     */
-    private $socialServices;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        SettingsInterface $settings,
-        Translator $translator,
-        Forms $formsHelper,
-        SocialServices $socialServices,
-        ShareRepository $shareRepository)
+    public function __construct(private SettingsInterface $settings, private Translator $translator, private Forms $formsHelper, private SocialServices $socialServices, private ShareRepository $shareRepository)
     {
-        $this->formsHelper = $formsHelper;
-        $this->shareRepository = $shareRepository;
-        $this->translator = $translator;
-        $this->socialServices = $socialServices;
-        $this->settings = $settings;
     }
 
     /**

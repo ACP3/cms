@@ -26,8 +26,6 @@ class MigrationRepository extends AbstractRepository implements MigrationReposit
             return [];
         }
 
-        return array_map(static function ($result) {
-            return $result['name'];
-        }, $this->db->fetchAll("SELECT `name` FROM {$this->getTableName()}"));
+        return array_map(static fn ($result) => $result['name'], $this->db->fetchAll("SELECT `name` FROM {$this->getTableName()}"));
     }
 }

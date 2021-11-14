@@ -12,19 +12,8 @@ use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 
 class Upload
 {
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var string
-     */
-    private $directory;
-
-    public function __construct(ApplicationPath $appPath, string $directory)
+    public function __construct(private ApplicationPath $appPath, private string $directory)
     {
-        $this->appPath = $appPath;
-        $this->directory = $directory;
     }
 
     /**
@@ -82,7 +71,7 @@ class Upload
      *
      * @return string Die Dateigröße als Fließkommazahl mit der dazugehörigen Einheit
      */
-    public function calcFilesize($value): string
+    public function calcFilesize(float|int $value): string
     {
         $units = [
             0 => 'Byte',

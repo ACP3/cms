@@ -15,14 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CheckPermissionListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-
-    public function __construct(ACL $acl)
+    public function __construct(private ACL $acl)
     {
-        $this->acl = $acl;
     }
 
     /**

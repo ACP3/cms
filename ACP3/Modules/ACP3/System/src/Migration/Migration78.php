@@ -15,19 +15,8 @@ use ACP3\Core\Migration\MigrationServiceLocator;
 
 final class Migration78 implements MigrationInterface
 {
-    /**
-     * @var Connection
-     */
-    private $db;
-    /**
-     * @var MigrationServiceLocator
-     */
-    private $migrationServiceLocator;
-
-    public function __construct(Connection $db, MigrationServiceLocator $migrationServiceLocator)
+    public function __construct(private Connection $db, private MigrationServiceLocator $migrationServiceLocator)
     {
-        $this->db = $db;
-        $this->migrationServiceLocator = $migrationServiceLocator;
     }
 
     /**
@@ -75,7 +64,7 @@ final class Migration78 implements MigrationInterface
 
             $migrationsToMarkAsExecuted = array_filter($migrations, function (MigrationInterface $migration) use ($namespacePrefixes, $result) {
                 foreach ($namespacePrefixes as $namespacePrefix) {
-                    if ($this->getSchemaVersion($migration) <= (int) $result['version'] && strpos(\get_class($migration), (string) $namespacePrefix) === 0) {
+                    if ($this->getSchemaVersion($migration) <= (int) $result['version'] && str_starts_with($migration::class, (string) $namespacePrefix)) {
                         return true;
                     }
                 }
@@ -86,7 +75,7 @@ final class Migration78 implements MigrationInterface
             foreach ($migrationsToMarkAsExecuted as $migration) {
                 $this->db->executeQuery(
                     "INSERT INTO {$this->db->getPrefix()}migration (`name`) VALUES (:migration)",
-                    ['migration' => \get_class($migration)]
+                    ['migration' => $migration::class]
                 );
             }
         }

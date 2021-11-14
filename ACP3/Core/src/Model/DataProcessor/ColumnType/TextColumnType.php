@@ -11,14 +11,8 @@ use ACP3\Core\Helpers\Secure;
 
 class TextColumnType implements ColumnTypeStrategyInterface
 {
-    /**
-     * @var Secure
-     */
-    protected $secure;
-
-    public function __construct(Secure $secure)
+    public function __construct(protected Secure $secure)
     {
-        $this->secure = $secure;
     }
 
     /**
@@ -39,10 +33,7 @@ class TextColumnType implements ColumnTypeStrategyInterface
         return html_entity_decode($value, ENT_QUOTES, 'UTF-8');
     }
 
-    /**
-     * @return string|int
-     */
-    public function getDefaultValue()
+    public function getDefaultValue(): int|string
     {
         return '';
     }

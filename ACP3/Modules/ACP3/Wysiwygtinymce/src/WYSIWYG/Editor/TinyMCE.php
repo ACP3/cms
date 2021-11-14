@@ -16,31 +16,12 @@ use ACP3\Modules\ACP3\Filemanager\Helpers;
 class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
     /**
-     * @var \ACP3\Modules\ACP3\Filemanager\Helpers|null
-     */
-    private $filemanagerHelpers;
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-
-    /**
      * @var bool
      */
     private $initialized = false;
 
-    public function __construct(
-        Core\ACL $acl,
-        Core\View $view,
-        ?Helpers $filemanagerHelpers = null
-    ) {
-        $this->filemanagerHelpers = $filemanagerHelpers;
-        $this->acl = $acl;
-        $this->view = $view;
+    public function __construct(private Core\ACL $acl, private Core\View $view, private ?Helpers $filemanagerHelpers = null)
+    {
     }
 
     /**

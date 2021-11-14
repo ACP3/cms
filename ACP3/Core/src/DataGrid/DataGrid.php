@@ -19,45 +19,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGrid
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\DataGrid\ConfigProcessor
-     */
-    private $configProcessor;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $serviceLocator;
-
-    public function __construct(
-        ContainerInterface $serviceLocator,
-        RequestInterface $request,
-        ConfigProcessor $configProcessor,
-        ACL $acl,
-        Translator $translator
-    ) {
-        $this->acl = $acl;
-        $this->translator = $translator;
-        $this->configProcessor = $configProcessor;
-        $this->request = $request;
-        $this->serviceLocator = $serviceLocator;
+    public function __construct(private ContainerInterface $serviceLocator, private RequestInterface $request, private ConfigProcessor $configProcessor, private ACL $acl, private Translator $translator)
+    {
     }
 
-    /**
-     * @return array|JsonResponse
-     */
-    public function render(Input $input)
+    public function render(Input $input): array|JsonResponse
     {
         $canDelete = $this->acl->hasPermission($input->getResourcePathDelete());
         $canEdit = $this->acl->hasPermission($input->getResourcePathEdit());

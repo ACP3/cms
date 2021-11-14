@@ -14,33 +14,11 @@ use ACP3\Core\Router\RouterInterface;
 
 class CheckAccess
 {
-    /**
-     * @var ACL
-     */
-    private $acl;
-    /**
-     * @var Translator
-     */
-    private $translator;
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    public function __construct(
-        ACL $acl,
-        Translator $translator,
-        RouterInterface $router
-    ) {
-        $this->translator = $translator;
-        $this->acl = $acl;
-        $this->router = $router;
+    public function __construct(private ACL $acl, private Translator $translator, private RouterInterface $router)
+    {
     }
 
-    /**
-     * @return string|array
-     */
-    public function outputLinkOrButton(array $params)
+    public function outputLinkOrButton(array $params): array|string
     {
         if (isset($params['mode'], $params['path'])) {
             $action = $this->completeControllerAction($params['path']);

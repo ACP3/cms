@@ -13,14 +13,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class MailerConfigurator
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(SettingsInterface $settings)
+    public function __construct(private SettingsInterface $settings)
     {
-        $this->settings = $settings;
     }
 
     public function configure(PHPMailer $phpMailer): void

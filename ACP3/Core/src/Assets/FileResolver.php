@@ -16,19 +16,6 @@ use Psr\Cache\CacheItemPoolInterface;
 class FileResolver
 {
     private const CACHE_KEY = 'resources';
-
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $assetsCachePool;
-    /**
-     * @var \ACP3\Core\Environment\ThemePathInterface
-     */
-    private $theme;
     /**
      * @var \ACP3\Core\Assets\FileResolver\FileCheckerStrategyInterface[]
      */
@@ -52,14 +39,10 @@ class FileResolver
     private $currentTheme;
 
     public function __construct(
-        CacheItemPoolInterface $coreCachePool,
-        Core\Environment\ApplicationPath $appPath,
-        Core\Environment\ThemePathInterface $theme
+        private CacheItemPoolInterface $coreCachePool,
+        private Core\Environment\ApplicationPath $appPath,
+        private Core\Environment\ThemePathInterface $theme
     ) {
-        $this->assetsCachePool = $coreCachePool;
-        $this->appPath = $appPath;
-        $this->theme = $theme;
-
         $this->addStrategy(new Core\Assets\FileResolver\MinifiedAwareFileCheckerStrategy());
         $this->addStrategy(new Core\Assets\FileResolver\StraightFileCheckerStrategy());
     }
@@ -72,7 +55,7 @@ class FileResolver
     public function resolveTemplatePath(string $templatePath): string
     {
         // A path without any slash was given -> has to be a layout file of the current design
-        if (strpos($templatePath, '/') === false) {
+        if (!str_contains($templatePath, '/')) {
             throw new \InvalidArgumentException(sprintf('The provided template path "%s" is missing the module name!', $templatePath));
         }
 
@@ -113,7 +96,7 @@ class FileResolver
         }
 
         if ($this->cachedPaths === null) {
-            $cacheItem = $this->assetsCachePool->getItem(self::CACHE_KEY);
+            $cacheItem = $this->coreCachePool->getItem(self::CACHE_KEY);
 
             if (!$cacheItem->isHit()) {
                 $cacheItem->set([]);
@@ -128,7 +111,7 @@ class FileResolver
             $this->cachedPaths[$cacheKey] = $this->resolveAssetPath($moduleName, $resourceDirectory, $file);
 
             $this->cacheItem->set($this->cachedPaths);
-            $this->assetsCachePool->saveDeferred($this->cacheItem);
+            $this->coreCachePool->saveDeferred($this->cacheItem);
         }
 
         return $this->cachedPaths[$cacheKey] ?: '';
@@ -204,7 +187,7 @@ class FileResolver
             if (null !== ($resourcePath = $this->findAssetInStrategies($moduleAssetPath))) {
                 return $resourcePath;
             }
-        } catch (Core\Component\Exception\ComponentNotFoundException $e) {
+        } catch (Core\Component\Exception\ComponentNotFoundException) {
             // Intentionally omitted
         }
 

@@ -18,44 +18,13 @@ use ReCaptcha\ReCaptcha;
 class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 {
     private const TEMPLATE = 'Captcha/Partials/captcha_recaptcha.tpl';
-
-    /**
-     * @var Translator
-     */
-    private $translator;
-    /**
-     * @var View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var RequestInterface
-     */
-    private $request;
     /**
      * @var bool
      */
     private $includeJsAssets = true;
 
-    public function __construct(
-        Translator $translator,
-        RequestInterface $request,
-        SettingsInterface $settings,
-        View $view,
-        UserModelInterface $user
-    ) {
-        $this->translator = $translator;
-        $this->view = $view;
-        $this->user = $user;
-        $this->settings = $settings;
-        $this->request = $request;
+    public function __construct(private Translator $translator, private RequestInterface $request, private SettingsInterface $settings, private View $view, private UserModelInterface $user)
+    {
     }
 
     /**

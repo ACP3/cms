@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Seo;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Seo\Model\SeoModel
-     */
-    private $seoModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider
-     */
-    private $adminSeoEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Seo\Model\SeoModel $seoModel,
-        Seo\ViewProviders\AdminSeoEditViewProvider $adminSeoEditViewProvider
+        private Seo\Model\SeoModel $seoModel,
+        private Seo\ViewProviders\AdminSeoEditViewProvider $adminSeoEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->seoModel = $seoModel;
-        $this->adminSeoEditViewProvider = $adminSeoEditViewProvider;
     }
 
     /**

@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Installer\Helpers\Navigation;
 
 abstract class AbstractAction extends AbstractInstallerAction
 {
-    /**
-     * @var Navigation
-     */
-    protected $navigation;
-
     public function __construct(
         InstallerContext $context,
-        Navigation $navigation)
+        protected Navigation $navigation)
     {
         parent::__construct($context);
-
-        $this->navigation = $navigation;
     }
 
     public function preDispatch(): void

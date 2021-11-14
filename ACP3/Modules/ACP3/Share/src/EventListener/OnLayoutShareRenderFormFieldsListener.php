@@ -15,27 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnLayoutShareRenderFormFieldsListener implements EventSubscriberInterface
 {
-    /**
-     * @var View
-     */
-    private $view;
-    /**
-     * @var ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\ShareFormFields
-     */
-    private $shareFormFields;
-
-    public function __construct(
-        ACL $acl,
-        View $view,
-        ShareFormFields $shareFormFields
-    ) {
-        $this->acl = $acl;
-        $this->view = $view;
-        $this->shareFormFields = $shareFormFields;
+    public function __construct(private ACL $acl, private View $view, private ShareFormFields $shareFormFields)
+    {
     }
 
     /**

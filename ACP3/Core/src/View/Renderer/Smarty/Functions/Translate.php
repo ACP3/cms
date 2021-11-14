@@ -11,14 +11,8 @@ use ACP3\Core;
 
 class Translate extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-
-    public function __construct(Core\I18n\Translator $translator)
+    public function __construct(protected Core\I18n\Translator $translator)
     {
-        $this->translator = $translator;
     }
 
     /**

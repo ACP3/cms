@@ -16,37 +16,15 @@ use ACP3\Modules\ACP3\Installer\Helpers\Navigation;
 
 class Install extends AbstractAction
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Core\Helpers\Date
-     */
-    private $dateHelper;
-    /**
-     * @var Forms
-     */
-    private $forms;
-    /**
-     * @var \ACP3\Core\Environment\ThemePathInterface
-     */
-    private $theme;
-
     public function __construct(
         InstallerContext $context,
-        ThemePathInterface $theme,
+        private ThemePathInterface $theme,
         Navigation $navigation,
-        Date $date,
-        DateHelper $dateHelper,
-        Forms $forms
+        private Date $date,
+        private DateHelper $dateHelper,
+        private Forms $forms
     ) {
         parent::__construct($context, $navigation);
-
-        $this->date = $date;
-        $this->dateHelper = $dateHelper;
-        $this->forms = $forms;
-        $this->theme = $theme;
     }
 
     public function __invoke(): array

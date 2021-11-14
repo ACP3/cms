@@ -25,10 +25,7 @@ class InArrayValidationRule extends AbstractValidationRule
         return $this->checkInArray($data, $field, $extra['haystack']);
     }
 
-    /**
-     * @param string|array $data
-     */
-    protected function checkInArray($data, string $field, array $haystack): bool
+    protected function checkInArray(array|string $data, string $field, array $haystack): bool
     {
         if (isset($data[$field]) && \is_array($data[$field])) {
             foreach ($data[$field] as $row) {

@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Guestbook;
 
 class Settings extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminSettingsViewProvider
-     */
-    private $adminSettingsViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Guestbook\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
+        private Guestbook\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function __invoke(): array

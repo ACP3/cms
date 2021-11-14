@@ -18,35 +18,18 @@ use ACP3\Modules\ACP3\Seo\Services\SeoInformationService;
 class MetaStatementsService extends CoreMetaStatementsService
 {
     /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $config;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    /**
      * @var array|null
      */
     private $aliasesCache;
-    /**
-     * @var SeoInformationService
-     */
-    private $seoInformationService;
 
     public function __construct(
         RequestInterface $request,
         RouterInterface $router,
-        Modules $modules,
-        SeoInformationService $seoInformationService,
-        SettingsInterface $config
+        private Modules $modules,
+        private SeoInformationService $seoInformationService,
+        private SettingsInterface $config
     ) {
         parent::__construct($request, $router);
-
-        $this->config = $config;
-        $this->modules = $modules;
-        $this->seoInformationService = $seoInformationService;
     }
 
     protected function getSettings(): array

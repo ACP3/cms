@@ -12,14 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearGalleryPictureCacheListener implements EventSubscriberInterface
 {
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $galleryCachePool;
-
-    public function __construct(CacheItemPoolInterface $galleryCachePool)
+    public function __construct(private CacheItemPoolInterface $galleryCachePool)
     {
-        $this->galleryCachePool = $galleryCachePool;
     }
 
     public function __invoke(): void

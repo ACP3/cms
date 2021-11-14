@@ -17,24 +17,12 @@ class UserMenu extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\UserMenuViewProvider
-     */
-    private $userMenuViewProvider;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        UserModelInterface $user,
-        UserMenuViewProvider $userMenuViewProvider
+        private UserModelInterface $user,
+        private UserMenuViewProvider $userMenuViewProvider
     ) {
         parent::__construct($context);
-
-        $this->userMenuViewProvider = $userMenuViewProvider;
-        $this->user = $user;
     }
 
     /**

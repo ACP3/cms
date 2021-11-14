@@ -19,55 +19,12 @@ use ACP3\Modules\ACP3\Filemanager\Helpers;
 class CKEditor extends Textarea
 {
     /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository|null
-     */
-    private $emoticonRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Filemanager\Helpers|null
-     */
-    private $filemanagerHelpers;
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\Assets\IncludeJs
-     */
-    private $includeJs;
-
-    /**
      * @var bool
      */
     private $isInitialized = false;
 
-    public function __construct(
-        Core\ACL $acl,
-        Core\Assets\IncludeJs $includeJs,
-        Core\Modules $modules,
-        Core\I18n\Translator $translator,
-        Core\Environment\ApplicationPath $appPath,
-        ?EmoticonRepository $emoticonRepository = null,
-        ?Helpers $filemanagerHelpers = null
-    ) {
-        $this->modules = $modules;
-        $this->translator = $translator;
-        $this->appPath = $appPath;
-        $this->emoticonRepository = $emoticonRepository;
-        $this->filemanagerHelpers = $filemanagerHelpers;
-        $this->acl = $acl;
-        $this->includeJs = $includeJs;
+    public function __construct(private Core\ACL $acl, private Core\Assets\IncludeJs $includeJs, private Core\Modules $modules, private Core\I18n\Translator $translator, private Core\Environment\ApplicationPath $appPath, private ?EmoticonRepository $emoticonRepository = null, private ?Helpers $filemanagerHelpers = null)
+    {
     }
 
     /**
@@ -174,7 +131,7 @@ class CKEditor extends Textarea
         $out = '';
 
         // Skip relative paths...
-        if (strpos($basePath, '..') !== 0) {
+        if (!str_starts_with($basePath, '..')) {
             $out .= $this->script("window.CKEDITOR_BASEPATH='" . $basePath . "';");
         }
 

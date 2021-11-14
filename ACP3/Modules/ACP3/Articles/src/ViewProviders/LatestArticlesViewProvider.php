@@ -12,19 +12,8 @@ use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class LatestArticlesViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Repository\ArticleRepository
-     */
-    private $articleRepository;
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-
-    public function __construct(ArticleRepository $articleRepository, Date $date)
+    public function __construct(private ArticleRepository $articleRepository, private Date $date)
     {
-        $this->articleRepository = $articleRepository;
-        $this->date = $date;
     }
 
     /**

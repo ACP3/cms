@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Permissions;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\AdminResourceEditViewProvider
-     */
-    private $adminResourceEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
+        private Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminResourceEditViewProvider = $adminResourceEditViewProvider;
     }
 
     /**

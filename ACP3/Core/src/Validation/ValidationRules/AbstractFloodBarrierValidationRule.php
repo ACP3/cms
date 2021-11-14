@@ -12,21 +12,8 @@ use ACP3\Core\Repository\FloodBarrierAwareRepositoryInterface;
 
 abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Core\Repository\FloodBarrierAwareRepositoryInterface
-     */
-    protected $repository;
-
-    public function __construct(
-        Date $date,
-        FloodBarrierAwareRepositoryInterface $repository
-    ) {
-        $this->date = $date;
-        $this->repository = $repository;
+    public function __construct(protected Date $date, protected FloodBarrierAwareRepositoryInterface $repository)
+    {
     }
 
     /**

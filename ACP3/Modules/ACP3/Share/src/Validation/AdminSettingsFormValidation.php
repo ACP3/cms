@@ -15,19 +15,12 @@ use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialServices
-     */
-    private $availableServices;
-
     public function __construct(
         Translator $translator,
         Validator $validator,
-        SocialServices $availableServices)
+        private SocialServices $availableServices)
     {
         parent::__construct($translator, $validator);
-
-        $this->availableServices = $availableServices;
     }
 
     /**

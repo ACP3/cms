@@ -13,27 +13,8 @@ use ACP3\Modules\ACP3\Polls\Repository\VoteRepository;
 
 class VoteModel
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\VoteRepository
-     */
-    protected $voteRepository;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    protected $userModel;
-    /**
-     * @var Core\Validation\Validator
-     */
-    protected $validator;
-
-    public function __construct(
-        Core\Validation\Validator $validator,
-        Core\Authentication\Model\UserModelInterface $userModel,
-        VoteRepository $voteRepository
-    ) {
-        $this->validator = $validator;
-        $this->userModel = $userModel;
-        $this->voteRepository = $voteRepository;
+    public function __construct(protected Core\Validation\Validator $validator, protected Core\Authentication\Model\UserModelInterface $userModel, protected VoteRepository $voteRepository)
+    {
     }
 
     /**

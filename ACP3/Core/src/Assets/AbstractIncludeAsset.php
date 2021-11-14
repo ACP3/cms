@@ -12,24 +12,12 @@ use ACP3\Core\Application\BootstrapInterface;
 abstract class AbstractIncludeAsset
 {
     /**
-     * @var \ACP3\Core\Assets\Libraries
-     */
-    private $libraries;
-    /**
-     * @var \ACP3\Core\Assets\FileResolver
-     */
-    private $fileResolver;
-    /**
      * @var array
      */
     private $alreadyIncluded = [];
 
-    public function __construct(
-        Libraries $libraries,
-        FileResolver $fileResolver
-    ) {
-        $this->libraries = $libraries;
-        $this->fileResolver = $fileResolver;
+    public function __construct(private Libraries $libraries, private FileResolver $fileResolver)
+    {
     }
 
     /**

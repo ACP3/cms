@@ -14,21 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnDataGridCustomOptionBeforeListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        ACL $acl,
-        Translator $translator
-    ) {
-        $this->acl = $acl;
-        $this->translator = $translator;
+    public function __construct(private ACL $acl, private Translator $translator)
+    {
     }
 
     public function __invoke(CustomOptionEvent $customOptionEvent)

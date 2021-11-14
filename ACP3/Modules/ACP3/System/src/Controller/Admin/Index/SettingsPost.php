@@ -13,39 +13,20 @@ use ACP3\Modules\ACP3\System;
 
 class SettingsPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\System\Validation\AdminSettingsFormValidation
-     */
-    private $systemValidator;
-    /**
-     * @var Core\Helpers\Secure
-     */
-    private $secure;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Core\Helpers\Secure $secure,
-        System\Validation\AdminSettingsFormValidation $systemValidator
+        private FormAction $actionHelper,
+        private Core\Helpers\Secure $secure,
+        private System\Validation\AdminSettingsFormValidation $systemValidator
     ) {
         parent::__construct($context);
-
-        $this->systemValidator = $systemValidator;
-        $this->secure = $secure;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleSettingsPostAction(
             function () {

@@ -17,39 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class InvalidatePageCacheOnSettingsSaveBeforeListener implements EventSubscriberInterface
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface
-     */
-    private $settingsRepository;
-    /**
-     * @var Modules
-     */
-    private $modules;
-    /**
-     * @var CanUsePageCache
-     */
-    private $canUsePageCache;
-    /**
-     * @var \ACP3\Modules\ACP3\System\Services\CacheClearService
-     */
-    private $cacheClearService;
-
-    public function __construct(
-        SettingsInterface $settings,
-        Modules $modules,
-        SettingsAwareRepositoryInterface $settingsRepository,
-        CanUsePageCache $canUsePageCache,
-        CacheClearService $cacheClearService
-    ) {
-        $this->settings = $settings;
-        $this->modules = $modules;
-        $this->settingsRepository = $settingsRepository;
-        $this->canUsePageCache = $canUsePageCache;
-        $this->cacheClearService = $cacheClearService;
+    public function __construct(private SettingsInterface $settings, private Modules $modules, private SettingsAwareRepositoryInterface $settingsRepository, private CanUsePageCache $canUsePageCache, private CacheClearService $cacheClearService)
+    {
     }
 
     public function __invoke()

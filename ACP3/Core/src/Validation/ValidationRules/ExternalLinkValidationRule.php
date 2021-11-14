@@ -9,14 +9,8 @@ namespace ACP3\Core\Validation\ValidationRules;
 
 class ExternalLinkValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Validation\ValidationRules\InArrayValidationRule
-     */
-    private $inArrayValidationRule;
-
-    public function __construct(InArrayValidationRule $inArrayValidationRule)
+    public function __construct(private InArrayValidationRule $inArrayValidationRule)
     {
-        $this->inArrayValidationRule = $inArrayValidationRule;
     }
 
     /**

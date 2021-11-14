@@ -14,18 +14,11 @@ use ACP3\Modules\ACP3\News;
 
 abstract class AbstractFormAction extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Helpers
-     */
-    protected $categoriesHelpers;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Categories\Helpers $categoriesHelpers
+        protected Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context);
-
-        $this->categoriesHelpers = $categoriesHelpers;
     }
 
     /**

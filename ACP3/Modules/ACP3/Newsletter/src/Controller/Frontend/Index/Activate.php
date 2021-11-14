@@ -12,30 +12,13 @@ use ACP3\Modules\ACP3\Newsletter;
 
 class Activate extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus
-     */
-    private $accountStatusHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Validation\ActivateAccountFormValidation
-     */
-    private $activateAccountFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Alerts
-     */
-    private $alertsHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Helpers\Alerts $alertsHelper,
-        Newsletter\Helper\AccountStatus $accountStatusHelper,
-        Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation
+        private Core\Helpers\Alerts $alertsHelper,
+        private Newsletter\Helper\AccountStatus $accountStatusHelper,
+        private Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation
     ) {
         parent::__construct($context);
-
-        $this->accountStatusHelper = $accountStatusHelper;
-        $this->activateAccountFormValidation = $activateAccountFormValidation;
-        $this->alertsHelper = $alertsHelper;
     }
 
     /**

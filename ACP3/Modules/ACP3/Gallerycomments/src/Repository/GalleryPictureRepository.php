@@ -25,8 +25,6 @@ class GalleryPictureRepository extends \ACP3\Core\Repository\AbstractRepository
             [$galleryId]
         );
 
-        return array_map(static function (array $galleryPicture) {
-            return (int) $galleryPicture['id'];
-        }, $galleryPictures);
+        return array_map(static fn (array $galleryPicture) => (int) $galleryPicture['id'], $galleryPictures);
     }
 }

@@ -24,45 +24,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class InstallModel
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-    /**
-     * @var Install
-     */
-    protected $installHelper;
-    /**
-     * @var ApplicationPath
-     */
-    protected $appPath;
-    /**
-     * @var Translator
-     */
-    protected $translator;
-    /**
-     * @var ModuleInstaller
-     */
-    protected $moduleInstaller;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secure;
-
-    public function __construct(
-        ContainerInterface $container,
-        ApplicationPath $appPath,
-        Secure $secure,
-        Translator $translator,
-        Install $installHelper,
-        ModuleInstaller $moduleInstaller
-    ) {
-        $this->container = $container;
-        $this->appPath = $appPath;
-        $this->secure = $secure;
-        $this->translator = $translator;
-        $this->installHelper = $installHelper;
-        $this->moduleInstaller = $moduleInstaller;
+    public function __construct(protected ContainerInterface $container, protected ApplicationPath $appPath, private Secure $secure, protected Translator $translator, protected Install $installHelper, protected ModuleInstaller $moduleInstaller)
+    {
     }
 
     public function writeConfigFile(string $configFilePath, array $formData): void

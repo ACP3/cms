@@ -53,10 +53,8 @@ trait DisplayActionTrait
 
     /**
      * Gibt den auszugebenden Seiteninhalt zurück.
-     *
-     * @return string|false
      */
-    public function getContent()
+    public function getContent(): string|false
     {
         return $this->content;
     }
@@ -64,11 +62,9 @@ trait DisplayActionTrait
     /**
      * Weist dem Template den auszugebenden Inhalt zu.
      *
-     * @param string|false $data
-     *
      * @return $this
      */
-    public function setContent($data): self
+    public function setContent(string|false $data): self
     {
         $this->content = $data;
 

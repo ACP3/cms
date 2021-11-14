@@ -14,19 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnDisplayCaptchaListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var CaptchaExtensionInterface
-     */
-    private $captchaExtension;
-
-    public function __construct(ACL $acl, CaptchaExtensionInterface $captchaExtension = null)
+    public function __construct(private ACL $acl, private CaptchaExtensionInterface $captchaExtension)
     {
-        $this->acl = $acl;
-        $this->captchaExtension = $captchaExtension;
     }
 
     public function __invoke(TemplateEvent $templateEvent)

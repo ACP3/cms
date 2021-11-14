@@ -12,11 +12,6 @@ use ACP3\Core\View\Renderer\RendererInterface;
 class View
 {
     /**
-     * @var RendererInterface
-     */
-    private $renderer;
-
-    /**
      * Gets the renderer.
      */
     public function getRenderer(): RendererInterface
@@ -24,9 +19,8 @@ class View
         return $this->renderer;
     }
 
-    public function __construct(RendererInterface $renderer)
+    public function __construct(private RendererInterface $renderer)
     {
-        $this->renderer = $renderer;
     }
 
     /**
@@ -49,7 +43,7 @@ class View
     {
         try {
             return $this->renderer->fetch('string:' . $template);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return $template; // fail silently when invalid statements have been given in the string template
         }
     }
@@ -65,10 +59,9 @@ class View
     /**
      * Assigns a new template variable.
      *
-     * @param string|array $name
-     * @param mixed        $value
+     * @param mixed $value
      */
-    public function assign($name, $value = null): self
+    public function assign(array|string $name, $value = null): self
     {
         $this->renderer->assign($name, $value);
 

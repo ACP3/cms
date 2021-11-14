@@ -12,14 +12,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Event extends AbstractFunction
 {
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): string

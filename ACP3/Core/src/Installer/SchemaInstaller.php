@@ -15,25 +15,13 @@ use Psr\Log\LoggerInterface;
 
 class SchemaInstaller extends SchemaHelper implements InstallerInterface
 {
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var \ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface
-     */
-    private $systemSettingsRepository;
-
     public function __construct(
-        LoggerInterface $logger,
+        private LoggerInterface $logger,
         Connection $db,
         ModuleAwareRepositoryInterface $systemModuleRepository,
-        SettingsAwareRepositoryInterface $systemSettingsRepository
+        private SettingsAwareRepositoryInterface $systemSettingsRepository
     ) {
         parent::__construct($db, $systemModuleRepository);
-
-        $this->logger = $logger;
-        $this->systemSettingsRepository = $systemSettingsRepository;
     }
 
     /**
@@ -114,7 +102,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     {
         try {
             $this->executeSqlQueries($schema->removeTables(), $schema->getModuleName());
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             return false;
         }
 

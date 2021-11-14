@@ -16,51 +16,8 @@ use Psr\Cache\CacheItemPoolInterface;
 
 abstract class AbstractConcatRendererStrategy implements RendererStrategyInterface
 {
-    /**
-     * @var \ACP3\Core\Assets
-     */
-    protected $assets;
-    /**
-     * @var CacheItemPoolInterface
-     */
-    protected $coreCachePool;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-    /**
-     * @var \ACP3\Core\Assets\FileResolver
-     */
-    protected $fileResolver;
-    /**
-     * @var \ACP3\Core\Assets\Libraries
-     */
-    protected $libraries;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var ThemePathInterface
-     */
-    private $themePath;
-
-    public function __construct(
-        Assets $assets,
-        Assets\Libraries $libraries,
-        ApplicationPath $appPath,
-        CacheItemPoolInterface $coreCachePool,
-        Modules $modules,
-        FileResolver $fileResolver,
-        ThemePathInterface $themePath
-    ) {
-        $this->assets = $assets;
-        $this->appPath = $appPath;
-        $this->coreCachePool = $coreCachePool;
-        $this->modules = $modules;
-        $this->fileResolver = $fileResolver;
-        $this->libraries = $libraries;
-        $this->themePath = $themePath;
+    public function __construct(protected Assets $assets, protected Assets\Libraries $libraries, private ApplicationPath $appPath, protected CacheItemPoolInterface $coreCachePool, protected Modules $modules, protected FileResolver $fileResolver, private ThemePathInterface $themePath)
+    {
     }
 
     abstract protected function getAssetGroup(): string;

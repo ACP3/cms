@@ -13,10 +13,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 class FormValidationEvent extends Event
 {
     /**
-     * @var Validator
-     */
-    private $validator;
-    /**
      * @var array
      */
     private $formData;
@@ -26,11 +22,10 @@ class FormValidationEvent extends Event
     private $extra;
 
     public function __construct(
-        Validator $validator,
+        private Validator $validator,
         array $formData,
         array $extra = []
     ) {
-        $this->validator = $validator;
         $this->formData = $formData;
         $this->extra = $extra;
     }

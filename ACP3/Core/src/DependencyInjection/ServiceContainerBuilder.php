@@ -33,19 +33,12 @@ use Symfony\Component\Mime\DependencyInjection\AddMimeTypeGuesserPass;
 final class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
-     * @var ApplicationPath
-     */
-    private $applicationPath;
-
-    /**
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function __construct(ApplicationPath $applicationPath)
+    public function __construct(private ApplicationPath $applicationPath)
     {
         parent::__construct();
-
-        $this->applicationPath = $applicationPath;
 
         $this->setUpContainer();
     }

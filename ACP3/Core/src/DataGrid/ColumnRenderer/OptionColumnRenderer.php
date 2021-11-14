@@ -14,27 +14,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class OptionColumnRenderer extends AbstractColumnRenderer
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcher
-     */
-    protected $eventDispatcher;
-    /**
-     * @var \ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer
-     */
-    protected $optionRenderer;
-
-    public function __construct(
-        Translator $translator,
-        OptionRenderer $optionRenderer,
-        EventDispatcher $eventDispatcher
-    ) {
-        $this->translator = $translator;
-        $this->optionRenderer = $optionRenderer;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(protected Translator $translator, protected OptionRenderer $optionRenderer, protected EventDispatcher $eventDispatcher)
+    {
     }
 
     /**
@@ -99,7 +80,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
     private function getEditRoute(array $dbResultRow, string $resourcePathEdit): string
     {
-        if (strpos($resourcePathEdit, '%s') === false) {
+        if (!str_contains($resourcePathEdit, '%s')) {
             return $resourcePathEdit . 'id_' . $dbResultRow[$this->getPrimaryKey()];
         }
 

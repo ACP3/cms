@@ -16,39 +16,8 @@ use ACP3\Modules\ACP3\News\Installer\Schema as NewsSchema;
 
 class AdminSettingsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Date
-     */
-    private $dateHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        Date $dateHelper,
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        RequestInterface $request,
-        SettingsInterface $settings
-    ) {
-        $this->dateHelper = $dateHelper;
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->settings = $settings;
+    public function __construct(private Date $dateHelper, private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings)
+    {
     }
 
     public function __invoke(): array

@@ -16,27 +16,8 @@ abstract class AbstractModel
 {
     public const EVENT_PREFIX = '';
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-    /**
-     * @var AbstractRepository
-     */
-    protected $repository;
-    /**
-     * @var DataProcessor
-     */
-    private $dataProcessor;
-
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        DataProcessor $dataProcessor,
-        AbstractRepository $repository
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->repository = $repository;
-        $this->dataProcessor = $dataProcessor;
+    public function __construct(protected EventDispatcherInterface $eventDispatcher, private DataProcessor $dataProcessor, protected AbstractRepository $repository)
+    {
     }
 
     protected function getDataProcessor(): DataProcessor
@@ -47,11 +28,9 @@ abstract class AbstractModel
     /**
      * @param int|null $entryId
      *
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, $entryId = null): int
     {
         $currentData = $this->loadCurrentData($entryId);
         $filteredNewData = $this->prepareData($rawData, $currentData);
@@ -217,13 +196,11 @@ abstract class AbstractModel
     }
 
     /**
-     * @param int|array $entryId
-     *
      * @return int
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function delete($entryId)
+    public function delete(array|int $entryId)
     {
         $repository = $this->repository;
 

@@ -22,45 +22,14 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class MenuItemsDataGridViewProvider
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\DataGrid\DataGrid
-     */
-    private $dataGrid;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemDataGridRepository
-     */
-    private $dataGridRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        ACL $acl,
-        DataGrid $dataGrid,
-        MenuItemDataGridRepository $dataGridRepository,
-        ResultsPerPage $resultsPerPage,
-        Translator $translator
-    ) {
-        $this->acl = $acl;
-        $this->dataGrid = $dataGrid;
-        $this->dataGridRepository = $dataGridRepository;
-        $this->resultsPerPage = $resultsPerPage;
-        $this->translator = $translator;
+    public function __construct(private ACL $acl, private DataGrid $dataGrid, private MenuItemDataGridRepository $dataGridRepository, private ResultsPerPage $resultsPerPage, private Translator $translator)
+    {
     }
 
     /**
      * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function __invoke(int $menuId)
+    public function __invoke(int $menuId): array|\Symfony\Component\HttpFoundation\JsonResponse
     {
         return $this->dataGrid->render($this->configureDataGrid($menuId));
     }

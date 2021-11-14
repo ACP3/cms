@@ -13,27 +13,8 @@ use ACP3\Modules\ACP3\Polls\Repository\PollRepository;
 
 class PollVoteViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\PollRepository
-     */
-    private $pollRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
-     */
-    private $answerRepository;
-    /**
-     * @var Forms
-     */
-    private $formsHelper;
-
-    public function __construct(
-        PollRepository $pollRepository,
-        AnswerRepository $answerRepository,
-        Forms $formsHelper
-    ) {
-        $this->pollRepository = $pollRepository;
-        $this->answerRepository = $answerRepository;
-        $this->formsHelper = $formsHelper;
+    public function __construct(private PollRepository $pollRepository, private AnswerRepository $answerRepository, private Forms $formsHelper)
+    {
     }
 
     /**

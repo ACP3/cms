@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Gallery;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
-     */
-    private $galleryRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider
-     */
-    private $adminGalleryPictureCreateViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Gallery\Repository\GalleryRepository $galleryRepository,
-        Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider $adminGalleryPictureCreateViewProvider
+        private Gallery\Repository\GalleryRepository $galleryRepository,
+        private Gallery\ViewProviders\AdminGalleryPictureCreateViewProvider $adminGalleryPictureCreateViewProvider
     ) {
         parent::__construct($context);
-
-        $this->galleryRepository = $galleryRepository;
-        $this->adminGalleryPictureCreateViewProvider = $adminGalleryPictureCreateViewProvider;
     }
 
     /**

@@ -12,44 +12,20 @@ use ACP3\Modules\ACP3\Newsletter;
 
 class Send extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository
-     */
-    private $newsletterRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
-     */
-    private $newsletterHelpers;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository
-     */
-    private $accountRepository;
-    /**
-     * @var \ACP3\Core\Helpers\RedirectMessages
-     */
-    private $redirectMessages;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Helpers\RedirectMessages $redirectMessages,
-        Newsletter\Repository\NewsletterRepository $newsletterRepository,
-        Newsletter\Repository\AccountRepository $accountRepository,
-        Newsletter\Helper\SendNewsletter $newsletterHelpers
+        private Core\Helpers\RedirectMessages $redirectMessages,
+        private Newsletter\Repository\NewsletterRepository $newsletterRepository,
+        private Newsletter\Repository\AccountRepository $accountRepository,
+        private Newsletter\Helper\SendNewsletter $newsletterHelpers
     ) {
         parent::__construct($context);
-
-        $this->newsletterRepository = $newsletterRepository;
-        $this->accountRepository = $accountRepository;
-        $this->newsletterHelpers = $newsletterHelpers;
-        $this->redirectMessages = $redirectMessages;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if ($this->newsletterRepository->newsletterExists($id) === true) {
             $accounts = $this->accountRepository->getAllActiveAccounts();

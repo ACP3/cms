@@ -14,33 +14,8 @@ use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 
 class AdminSeoEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\MetaFormFields
-     */
-    private $metaFormFieldsHelper;
-    /**
-     * @var \ACP3\Core\Http\Request
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-
-    public function __construct(
-        FormToken $formTokenHelper,
-        MetaFormFields $metaFormFieldsHelper,
-        Request $request,
-        Title $title
-    ) {
-        $this->formTokenHelper = $formTokenHelper;
-        $this->metaFormFieldsHelper = $metaFormFieldsHelper;
-        $this->request = $request;
-        $this->title = $title;
+    public function __construct(private FormToken $formTokenHelper, private MetaFormFields $metaFormFieldsHelper, private Request $request, private Title $title)
+    {
     }
 
     public function __invoke(array $seo): array

@@ -17,15 +17,9 @@ class Navigation
      * @var \ACP3\Modules\ACP3\Installer\Helpers\Navigation\NavigationStep[]
      */
     private $navbar = [];
-    /**
-     * @var Translator
-     */
-    private $translator;
 
-    public function __construct(Translator $translator)
+    public function __construct(private Translator $translator)
     {
-        $this->translator = $translator;
-
         $this->initializeNavigation();
     }
 

@@ -13,19 +13,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RenewCachesListener implements EventSubscriberInterface
 {
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $coreCachePool;
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $i18nCachePool;
-
-    public function __construct(CacheItemPoolInterface $coreCachePool, CacheItemPoolInterface $i18nCachePool)
+    public function __construct(private CacheItemPoolInterface $coreCachePool, private CacheItemPoolInterface $i18nCachePool)
     {
-        $this->coreCachePool = $coreCachePool;
-        $this->i18nCachePool = $i18nCachePool;
     }
 
     public function __invoke(): void

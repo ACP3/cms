@@ -13,10 +13,6 @@ use MJS\TopSort\Implementations\StringSort;
 class Modules
 {
     /**
-     * @var ModuleInfoInterface
-     */
-    private $moduleInfo;
-    /**
      * @var array
      */
     private $modulesInfo = [];
@@ -25,10 +21,8 @@ class Modules
      */
     private $allModulesTopSorted = [];
 
-    public function __construct(
-        ModuleInfoInterface $moduleInfo
-    ) {
-        $this->moduleInfo = $moduleInfo;
+    public function __construct(private ModuleInfoInterface $moduleInfo)
+    {
     }
 
     /**

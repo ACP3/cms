@@ -23,83 +23,31 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Modules extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Installer
-     */
-    private $installerHelper;
-    /**
-     * @var ContainerInterface
-     */
-    private $schemaLocator;
-    /**
-     * @var \ACP3\Core\Installer\SchemaInstaller
-     */
-    private $schemaInstaller;
-    /**
-     * @var \ACP3\Core\Installer\AclInstaller
-     */
-    private $aclInstaller;
-    /**
-     * @var Core\Modules
-     */
-    private $modules;
-    /**
-     * @var AdminModulesViewProvider
-     */
-    private $adminModulesViewProvider;
-    /**
-     * @var RedirectMessages
-     */
-    private $redirectMessages;
-    /**
-     * @var CacheClearService
-     */
-    private $cacheClearService;
-    /**
-     * @var EventDispatcher
-     */
-    private $eventDispatcher;
-
     public function __construct(
         WidgetContext $context,
-        EventDispatcher $eventDispatcher,
-        RedirectMessages $redirectMessages,
-        Core\Modules $modules,
-        Installer $installerHelper,
-        ContainerInterface $schemaLocator,
-        Core\Installer\SchemaInstaller $schemaInstaller,
-        Core\Installer\AclInstaller $aclInstaller,
-        AdminModulesViewProvider $adminModulesViewProvider,
-        CacheClearService $cacheClearService
+        private EventDispatcher $eventDispatcher,
+        private RedirectMessages $redirectMessages,
+        private Core\Modules $modules,
+        private Installer $installerHelper,
+        private ContainerInterface $schemaLocator,
+        private Core\Installer\SchemaInstaller $schemaInstaller,
+        private Core\Installer\AclInstaller $aclInstaller,
+        private AdminModulesViewProvider $adminModulesViewProvider,
+        private CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
-
-        $this->installerHelper = $installerHelper;
-        $this->schemaLocator = $schemaLocator;
-        $this->schemaInstaller = $schemaInstaller;
-        $this->aclInstaller = $aclInstaller;
-        $this->modules = $modules;
-        $this->adminModulesViewProvider = $adminModulesViewProvider;
-        $this->redirectMessages = $redirectMessages;
-        $this->cacheClearService = $cacheClearService;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
-     * @return array|RedirectResponse
-     *
      * @throws DBALException
      */
-    public function __invoke(?string $action = null, ?string $dir = null)
+    public function __invoke(?string $action = null, ?string $dir = null): array|RedirectResponse
     {
-        switch ($action) {
-            case 'install':
-                return $this->installModule($dir);
-            case 'uninstall':
-                return $this->uninstallModule($dir);
-            default:
-                return $this->outputPage();
-        }
+        return match ($action) {
+            'install' => $this->installModule($dir),
+            'uninstall' => $this->uninstallModule($dir),
+            default => $this->outputPage(),
+        };
     }
 
     /**
@@ -143,11 +91,9 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return JsonResponse|RedirectResponse
-     *
      * @throws DBALException
      */
-    private function installModule(string $moduleDirectory)
+    private function installModule(string $moduleDirectory): JsonResponse|RedirectResponse
     {
         $result = false;
 
@@ -179,10 +125,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
         return $this->redirectMessages->setMessage($result, $text, $this->request->getFullPath());
     }
 
-    /**
-     * @return JsonResponse|RedirectResponse
-     */
-    private function uninstallModule(string $moduleDirectory)
+    private function uninstallModule(string $moduleDirectory): JsonResponse|RedirectResponse
     {
         $result = false;
 

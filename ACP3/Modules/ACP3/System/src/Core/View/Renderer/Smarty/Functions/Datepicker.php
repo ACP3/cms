@@ -16,29 +16,8 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Datepicker extends AbstractFunction
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var RequestInterface
-     */
-    private $request;
-    /**
-     * @var Date
-     */
-    private $date;
-    /**
-     * @var DateValidationRule
-     */
-    private $dateValidationRule;
-
-    public function __construct(SettingsInterface $settings, RequestInterface $request, Date $date, DateValidationRule $dateValidationRule)
+    public function __construct(private SettingsInterface $settings, private RequestInterface $request, private Date $date, private DateValidationRule $dateValidationRule)
     {
-        $this->settings = $settings;
-        $this->request = $request;
-        $this->date = $date;
-        $this->dateValidationRule = $dateValidationRule;
     }
 
     /**
@@ -76,14 +55,11 @@ class Datepicker extends AbstractFunction
     /**
      * Displays an input field with an associated datepicker.
      *
-     * @param string|array $name
-     * @param string|array $value
-     *
      * @throws \Exception
      */
     public function getDatepickerConfig(
-        $name,
-        $value = '',
+        array|string $name,
+        array|string $value = '',
         bool $showTime = true,
         bool $inputFieldOnly = false
     ): array {
@@ -185,10 +161,7 @@ class Datepicker extends AbstractFunction
         return $this->settings->getSettings(Schema::MODULE_NAME)[$showTime ? 'date_format_long' : 'date_format_short'];
     }
 
-    /**
-     * @param string|array $name
-     */
-    private function isRange($name): bool
+    private function isRange(array|string $name): bool
     {
         return \is_array($name) === true;
     }

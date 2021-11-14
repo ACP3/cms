@@ -16,21 +16,8 @@ use Psr\Container\ContainerInterface;
 
 class ModuleInfo implements ModuleInfoInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $schemaLocator;
-    /**
-     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
-     */
-    private $systemModuleRepository;
-
-    public function __construct(
-        ContainerInterface $schemaLocator,
-        ModuleAwareRepositoryInterface $systemModuleRepository
-    ) {
-        $this->systemModuleRepository = $systemModuleRepository;
-        $this->schemaLocator = $schemaLocator;
+    public function __construct(private ContainerInterface $schemaLocator, private ModuleAwareRepositoryInterface $systemModuleRepository)
+    {
     }
 
     /**

@@ -16,19 +16,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnGalleryPictureModelBeforeDeleteListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Helper\UriAliasManager
-     */
-    private $uriAliasManager;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    public function __construct(Modules $modules, UriAliasManager $uriAliasManager)
+    public function __construct(private Modules $modules, private UriAliasManager $uriAliasManager)
     {
-        $this->uriAliasManager = $uriAliasManager;
-        $this->modules = $modules;
     }
 
     /**

@@ -11,16 +11,9 @@ use ACP3\Core\Database\Connection;
 
 class ModulesRepository extends \ACP3\Modules\ACP3\System\Repository\ModulesRepository
 {
-    /**
-     * @var bool
-     */
-    private $installationIsInProgress;
-
-    public function __construct(Connection $db, bool $installationIsInProgress)
+    public function __construct(Connection $db, private bool $installationIsInProgress)
     {
         parent::__construct($db);
-
-        $this->installationIsInProgress = $installationIsInProgress;
     }
 
     /**

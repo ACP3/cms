@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Categories;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategoryEditViewProvider
-     */
-    private $adminCategoryEditViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        Categories\ViewProviders\AdminCategoryEditViewProvider $adminCategoryEditViewProvider
+        private Categories\ViewProviders\AdminCategoryEditViewProvider $adminCategoryEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminCategoryEditViewProvider = $adminCategoryEditViewProvider;
     }
 
     /**

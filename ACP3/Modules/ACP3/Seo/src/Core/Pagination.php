@@ -19,27 +19,15 @@ use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
 class Pagination extends \ACP3\Core\Pagination
 {
-    /**
-     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
-     */
-    private $metaStatements;
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-
     public function __construct(
         Title $title,
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router,
-        MetaStatementsServiceInterface $metaStatements,
-        SettingsInterface $settings
+        private MetaStatementsServiceInterface $metaStatements,
+        private SettingsInterface $settings
     ) {
         parent::__construct($title, $translator, $request, $router);
-
-        $this->metaStatements = $metaStatements;
-        $this->settings = $settings;
     }
 
     /**

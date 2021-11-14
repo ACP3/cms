@@ -21,16 +21,11 @@ class Aliases
      * @var bool
      */
     private $isActive;
-    /**
-     * @var SeoInformationService
-     */
-    private $seoInformationService;
 
     public function __construct(
         Core\Modules $modules,
-        SeoInformationService $seoInformationService
+        private SeoInformationService $seoInformationService
     ) {
-        $this->seoInformationService = $seoInformationService;
         $this->isActive = $modules->isInstalled(Seo\Installer\Schema::MODULE_NAME);
     }
 

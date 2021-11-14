@@ -14,51 +14,22 @@ use ACP3\Modules\ACP3\Comments;
 
 class CreatePost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Validation\FormValidation
-     */
-    private $formValidation;
-    /**
-     * @var Comments\Model\CommentsModel
-     */
-    private $commentsModel;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Core\Modules $modules,
-        UserModelInterface $user,
-        Comments\Model\CommentsModel $commentsModel,
-        Comments\Validation\FormValidation $formValidation
+        private FormAction $actionHelper,
+        private Core\Modules $modules,
+        private UserModelInterface $user,
+        private Comments\Model\CommentsModel $commentsModel,
+        private Comments\Validation\FormValidation $formValidation
     ) {
         parent::__construct($context);
-
-        $this->formValidation = $formValidation;
-        $this->commentsModel = $commentsModel;
-        $this->modules = $modules;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(string $module, int $entryId, string $redirectUrl)
+    public function __invoke(string $module, int $entryId, string $redirectUrl): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handlePostAction(
             function () use ($module, $entryId, $redirectUrl) {
@@ -75,11 +46,11 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
                 $formData['module_id'] = $this->modules->getModuleId($module);
                 $formData['entry_id'] = $entryId;
 
-                $bool = $this->commentsModel->save($formData);
+                $result = $this->commentsModel->save($formData);
 
                 return $this->actionHelper->setRedirectMessage(
-                    $bool,
-                    $this->translator->t('system', $bool !== false ? 'create_success' : 'create_error'),
+                    $result,
+                    $this->translator->t('system', $result ? 'create_success' : 'create_error'),
                     base64_decode(urldecode($redirectUrl))
                 );
             }

@@ -13,15 +13,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Title
 {
     /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    protected $steps;
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
      * @var string
      */
     protected $pageTitle = '';
@@ -54,10 +45,8 @@ class Title
      */
     private $siteSubtitle;
 
-    public function __construct(Steps $steps, EventDispatcherInterface $eventDispatcher)
+    public function __construct(protected Steps $steps, protected EventDispatcherInterface $eventDispatcher)
     {
-        $this->steps = $steps;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

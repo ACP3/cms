@@ -17,39 +17,8 @@ use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
 
 class AdminSettingsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        RequestInterface $request,
-        SettingsInterface $settings,
-        Translator $translator
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->settings = $settings;
-        $this->translator = $translator;
+    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings, private Translator $translator)
+    {
     }
 
     public function __invoke(): array

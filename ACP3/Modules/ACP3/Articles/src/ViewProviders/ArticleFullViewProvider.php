@@ -11,14 +11,8 @@ use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class ArticleFullViewProvider
 {
-    /**
-     * @var ArticleRepository
-     */
-    private $articleRepository;
-
-    public function __construct(ArticleRepository $articleRepository)
+    public function __construct(private ArticleRepository $articleRepository)
     {
-        $this->articleRepository = $articleRepository;
     }
 
     public function __invoke(int $articleId): array

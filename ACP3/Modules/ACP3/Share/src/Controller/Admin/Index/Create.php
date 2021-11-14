@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider
-     */
-    private $adminShareEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        AdminShareEditViewProvider $adminShareEditViewProvider
+        private AdminShareEditViewProvider $adminShareEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminShareEditViewProvider = $adminShareEditViewProvider;
     }
 
     /**

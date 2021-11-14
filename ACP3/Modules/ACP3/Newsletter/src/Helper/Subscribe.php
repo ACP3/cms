@@ -13,57 +13,8 @@ use ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository;
 
 class Subscribe
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Mailer
-     */
-    private $mailer;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Core\Helpers\StringFormatter
-     */
-    private $stringFormatter;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secureHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository
-     */
-    private $accountRepository;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $config;
-
-    public function __construct(
-        Core\I18n\Translator $translator,
-        Core\Mailer $mailer,
-        Core\Http\RequestInterface $request,
-        Core\Router\RouterInterface $router,
-        Core\Helpers\StringFormatter $stringFormatter,
-        Core\Helpers\Secure $secureHelper,
-        Core\Settings\SettingsInterface $config,
-        AccountRepository $accountRepository
-    ) {
-        $this->translator = $translator;
-        $this->mailer = $mailer;
-        $this->request = $request;
-        $this->router = $router;
-        $this->stringFormatter = $stringFormatter;
-        $this->secureHelper = $secureHelper;
-        $this->config = $config;
-        $this->accountRepository = $accountRepository;
+    public function __construct(private Core\I18n\Translator $translator, private Core\Mailer $mailer, private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Core\Helpers\StringFormatter $stringFormatter, private Core\Helpers\Secure $secureHelper, private Core\Settings\SettingsInterface $config, private AccountRepository $accountRepository)
+    {
     }
 
     /**
@@ -82,11 +33,9 @@ class Subscribe
     }
 
     /**
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function addNewsletterAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
+    protected function addNewsletterAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash): bool|int
     {
         $newsletterAccount = $this->accountRepository->getOneByEmail($emailAddress);
 
@@ -163,11 +112,9 @@ class Subscribe
     }
 
     /**
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function insertNewAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash)
+    protected function insertNewAccount(string $emailAddress, int $salutation, string $firstName, string $lastName, string $hash): bool|int
     {
         $insertValues = [
             'mail' => $emailAddress,

@@ -16,33 +16,8 @@ use Psr\Log\LoggerInterface;
 
 class Mailer
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
-     * @var View
-     */
-    private $view;
-    /**
-     * @var StringFormatter
-     */
-    private $stringFormatter;
-    /**
-     * @var PHPMailer
-     */
-    private $phpMailer;
-
-    public function __construct(
-        PHPMailer $phpMailer,
-        LoggerInterface $logger,
-        View $view,
-        StringFormatter $stringFormatter
-    ) {
-        $this->phpMailer = $phpMailer;
-        $this->logger = $logger;
-        $this->view = $view;
-        $this->stringFormatter = $stringFormatter;
+    public function __construct(private PHPMailer $phpMailer, private LoggerInterface $logger, private View $view, private StringFormatter $stringFormatter)
+    {
     }
 
     /**
@@ -204,11 +179,9 @@ class Mailer
     /**
      * Adds multiple recipients to the to be send email.
      *
-     * @param string|array $recipients
-     *
      * @throws PHPMailerException
      */
-    private function addRecipients($recipients, bool $bcc = false): void
+    private function addRecipients(array|string $recipients, bool $bcc = false): void
     {
         if (\is_array($recipients) === true) {
             if (isset($recipients['email'], $recipients['name']) === true) {

@@ -14,36 +14,20 @@ use ACP3\Modules\ACP3\News\Model\NewsModel;
 
 class Duplicate extends AbstractWidgetAction
 {
-    /**
-     * @var NewsModel
-     */
-    private $newsModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         WidgetContext $context,
-        FormAction $actionHelper,
-        NewsModel $newsModel
+        private FormAction $actionHelper,
+        private NewsModel $newsModel
     ) {
         parent::__construct($context);
-
-        $this->newsModel = $newsModel;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
-        return $this->actionHelper->handleDuplicateAction(function () use ($id) {
-            return $this->newsModel->duplicate($id);
-        });
+        return $this->actionHelper->handleDuplicateAction(fn () => $this->newsModel->duplicate($id));
     }
 }

@@ -13,14 +13,8 @@ use ACP3\Modules\ACP3\System\Migration\Migration78;
 
 final class Migration38 implements MigrationInterface
 {
-    /**
-     * @var Connection
-     */
-    private $db;
-
-    public function __construct(Connection $db)
+    public function __construct(private Connection $db)
     {
-        $this->db = $db;
     }
 
     public function up(): void

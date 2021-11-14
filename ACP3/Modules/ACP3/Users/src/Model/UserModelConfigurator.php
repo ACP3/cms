@@ -12,14 +12,8 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 
 class UserModelConfigurator
 {
-    /**
-     * @var \ACP3\Core\Authentication\AuthenticationInterface
-     */
-    private $authentication;
-
-    public function __construct(AuthenticationInterface $authentication)
+    public function __construct(private AuthenticationInterface $authentication)
     {
-        $this->authentication = $authentication;
     }
 
     public function configure(UserModelInterface $userModel): void

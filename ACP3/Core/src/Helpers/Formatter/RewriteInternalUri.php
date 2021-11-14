@@ -11,39 +11,8 @@ use ACP3\Core;
 
 class RewriteInternalUri
 {
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var \ACP3\Core\Controller\Helper\ControllerActionExists
-     */
-    private $controllerActionExists;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var Core\Validation\ValidationRules\InternalUriValidationRule
-     */
-    private $internalUriValidationRule;
-
-    public function __construct(
-        Core\Environment\ApplicationPath $appPath,
-        Core\Controller\Helper\ControllerActionExists $controllerActionExists,
-        Core\Http\RequestInterface $request,
-        Core\Router\RouterInterface $router,
-        Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule
-    ) {
-        $this->appPath = $appPath;
-        $this->controllerActionExists = $controllerActionExists;
-        $this->request = $request;
-        $this->router = $router;
-        $this->internalUriValidationRule = $internalUriValidationRule;
+    public function __construct(private Core\Environment\ApplicationPath $appPath, private Core\Controller\Helper\ControllerActionExists $controllerActionExists, private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule)
+    {
     }
 
     public function rewriteInternalUri(string $text): string

@@ -14,33 +14,8 @@ use ACP3\Core\I18n\Translator;
 
 class NewsletterDetailsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        RequestInterface $request,
-        Steps $breadcrumb,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->request = $request;
-        $this->breadcrumb = $breadcrumb;
-        $this->title = $title;
-        $this->translator = $translator;
+    public function __construct(private RequestInterface $request, private Steps $breadcrumb, private Title $title, private Translator $translator)
+    {
     }
 
     public function __invoke(array $newsletter): array

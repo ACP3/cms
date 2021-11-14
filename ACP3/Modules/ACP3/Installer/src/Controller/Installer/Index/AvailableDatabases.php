@@ -48,7 +48,7 @@ class AvailableDatabases extends AbstractInstallerAction
             ];
 
             return DriverManager::getConnection($connectionParams, $config);
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             return null;
         }
     }
@@ -59,7 +59,7 @@ class AvailableDatabases extends AbstractInstallerAction
 
         try {
             $databases = $conn->fetchAllAssociative('SHOW DATABASES');
-        } catch (DBALException $e) {
+        } catch (DBALException) {
             $databases = [];
         }
 

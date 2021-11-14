@@ -10,12 +10,11 @@ namespace ACP3\Core\View\Renderer;
 interface RendererInterface
 {
     /**
-     * @param string|array $name
-     * @param null         $value
+     * @param null $value
      *
      * @return $this
      */
-    public function assign($name, $value = null);
+    public function assign(array|string $name, $value = null);
 
     /**
      * @param string|null $variableName

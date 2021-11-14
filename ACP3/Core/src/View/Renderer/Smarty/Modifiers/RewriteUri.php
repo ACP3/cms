@@ -11,14 +11,8 @@ use ACP3\Core\Helpers\Formatter\RewriteInternalUri;
 
 class RewriteUri extends AbstractModifier
 {
-    /**
-     * @var \ACP3\Core\Helpers\Formatter\RewriteInternalUri
-     */
-    protected $rewriteInternalUri;
-
-    public function __construct(RewriteInternalUri $rewriteInternalUri)
+    public function __construct(protected RewriteInternalUri $rewriteInternalUri)
     {
-        $this->rewriteInternalUri = $rewriteInternalUri;
     }
 
     /**

@@ -20,33 +20,8 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class DataGridByTableViewProvider
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\DataGrid\DataGrid
-     */
-    private $dataGrid;
-    /**
-     * @var \ACP3\Modules\ACP3\Auditlog\Repository\AuditLogByTableDataGridRepository
-     */
-    private $dataGridRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-
-    public function __construct(
-        DataGrid $dataGrid,
-        AuditLogByTableDataGridRepository $dataGridRepository,
-        ResultsPerPage $resultsPerPage,
-        Translator $translator
-    ) {
-        $this->translator = $translator;
-        $this->dataGrid = $dataGrid;
-        $this->dataGridRepository = $dataGridRepository;
-        $this->resultsPerPage = $resultsPerPage;
+    public function __construct(private DataGrid $dataGrid, private AuditLogByTableDataGridRepository $dataGridRepository, private ResultsPerPage $resultsPerPage, private Translator $translator)
+    {
     }
 
     public function __invoke(string $tableName)

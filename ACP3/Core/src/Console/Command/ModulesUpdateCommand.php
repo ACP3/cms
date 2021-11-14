@@ -15,16 +15,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ModulesUpdateCommand extends Command
 {
-    /**
-     * @var Migrator
-     */
-    private $migrator;
-
-    public function __construct(Migrator $migrator)
+    public function __construct(private Migrator $migrator)
     {
         parent::__construct();
-
-        $this->migrator = $migrator;
     }
 
     /**

@@ -14,15 +14,6 @@ use ACP3\Core\Router\RouterInterface;
 class MetaStatementsService implements MetaStatementsServiceInterface
 {
     /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
      * @var string
      */
     private $nextPage = '';
@@ -50,12 +41,8 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         4 => MetaStatementsServiceInterface::NOINDEX_NOFOLLOW,
     ];
 
-    public function __construct(
-        RequestInterface $request,
-        RouterInterface $router
-    ) {
-        $this->request = $request;
-        $this->router = $router;
+    public function __construct(private RequestInterface $request, private RouterInterface $router)
+    {
     }
 
     /**
@@ -93,7 +80,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         if (!empty($this->canonicalUrl)) {
             return;
         }
-        if (strpos($this->request->getQuery(), 'errors/') === 0) {
+        if (str_starts_with($this->request->getQuery(), 'errors/')) {
             return;
         }
 

@@ -13,44 +13,20 @@ use ACP3\Modules\ACP3\Users;
 
 class Logout extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Users\Model\AuthenticationModel
-     */
-    private $authenticationModel;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\LogoutViewProvider
-     */
-    private $logoutViewProvider;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        UserModelInterface $user,
-        Core\Http\RedirectResponse $redirectResponse,
-        Users\ViewProviders\LogoutViewProvider $logoutViewProvider,
-        Users\Model\AuthenticationModel $authenticationModel
+        private UserModelInterface $user,
+        private Core\Http\RedirectResponse $redirectResponse,
+        private Users\ViewProviders\LogoutViewProvider $logoutViewProvider,
+        private Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
-
-        $this->authenticationModel = $authenticationModel;
-        $this->redirectResponse = $redirectResponse;
-        $this->logoutViewProvider = $logoutViewProvider;
-        $this->user = $user;
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if (!$this->user->isAuthenticated()) {
             return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());

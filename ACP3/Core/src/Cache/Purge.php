@@ -11,10 +11,7 @@ use ACP3\Core\Filesystem;
 
 class Purge
 {
-    /**
-     * @param string|array $directory
-     */
-    public static function doPurge($directory, string $cacheIdPrefix = ''): bool
+    public static function doPurge(array|string $directory, string $cacheIdPrefix = ''): bool
     {
         if (\is_array($directory)) {
             return self::handleMultipleDirectories($directory, $cacheIdPrefix);
@@ -47,7 +44,7 @@ class Purge
                     if (empty($cacheIdPrefix)) {
                         @rmdir($path);
                     }
-                } elseif (empty($cacheIdPrefix) || strpos($dirContent, $cacheIdPrefix) === 0) {
+                } elseif (empty($cacheIdPrefix) || str_starts_with($dirContent, $cacheIdPrefix)) {
                     @unlink($path);
                 }
             }

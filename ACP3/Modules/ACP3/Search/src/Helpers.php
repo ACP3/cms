@@ -12,33 +12,8 @@ use ACP3\Modules\ACP3\Search\Utility\SearchAvailabilityRegistrar;
 
 class Helpers
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    protected $acl;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelper;
-    /**
-     * @var SearchAvailabilityRegistrar
-     */
-    protected $availableModulesRegistrar;
-
-    public function __construct(
-        Core\ACL $acl,
-        Core\Modules $modules,
-        Core\Helpers\Forms $formsHelper,
-        SearchAvailabilityRegistrar $availableModulesRegistrar
-    ) {
-        $this->acl = $acl;
-        $this->modules = $modules;
-        $this->formsHelper = $formsHelper;
-        $this->availableModulesRegistrar = $availableModulesRegistrar;
+    public function __construct(protected Core\ACL $acl, protected Core\Modules $modules, protected Core\Helpers\Forms $formsHelper, protected SearchAvailabilityRegistrar $availableModulesRegistrar)
+    {
     }
 
     /**

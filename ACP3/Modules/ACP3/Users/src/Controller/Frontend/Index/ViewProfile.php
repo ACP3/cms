@@ -16,24 +16,12 @@ class ViewProfile extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
-     */
-    private $userRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\UserProfileViewProvider
-     */
-    private $userProfileViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Users\ViewProviders\UserProfileViewProvider $userProfileViewProvider,
-        Users\Repository\UserRepository $userRepository
+        private Users\ViewProviders\UserProfileViewProvider $userProfileViewProvider,
+        private Users\Repository\UserRepository $userRepository
     ) {
         parent::__construct($context);
-
-        $this->userRepository = $userRepository;
-        $this->userProfileViewProvider = $userProfileViewProvider;
     }
 
     /**

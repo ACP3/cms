@@ -11,14 +11,8 @@ use ACP3\Core\Date;
 
 class DateFormat extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-
-    public function __construct(Date $date)
+    public function __construct(protected Date $date)
     {
-        $this->date = $date;
     }
 
     /**

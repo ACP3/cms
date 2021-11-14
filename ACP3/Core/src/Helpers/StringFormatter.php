@@ -11,14 +11,8 @@ use Cocur\Slugify\Slugify;
 
 class StringFormatter
 {
-    /**
-     * @var Slugify
-     */
-    private $slugify;
-
-    public function __construct(Slugify $slugify)
+    public function __construct(private Slugify $slugify)
     {
-        $this->slugify = $slugify;
     }
 
     public function makeStringUrlSafe(string $var): string

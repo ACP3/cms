@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Permissions;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Permissions\Model\AclRoleModel
-     */
-    private $rolesModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\AdminRoleEditViewProvider
-     */
-    private $adminRoleEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Permissions\Model\AclRoleModel $rolesModel,
-        Permissions\ViewProviders\AdminRoleEditViewProvider $adminRoleEditViewProvider
+        private Permissions\Model\AclRoleModel $rolesModel,
+        private Permissions\ViewProviders\AdminRoleEditViewProvider $adminRoleEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->rolesModel = $rolesModel;
-        $this->adminRoleEditViewProvider = $adminRoleEditViewProvider;
     }
 
     /**

@@ -18,14 +18,6 @@ use FeedWriter\ATOM;
 class FeedGenerator
 {
     /**
-     * @var SettingsInterface
-     */
-    private $config;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
      * @var \FeedWriter\Feed|null
      */
     private $renderer;
@@ -43,12 +35,8 @@ class FeedGenerator
      */
     private $description;
 
-    public function __construct(
-        SettingsInterface $config,
-        RouterInterface $router
-    ) {
-        $this->config = $config;
-        $this->router = $router;
+    public function __construct(private SettingsInterface $config, private RouterInterface $router)
+    {
     }
 
     public function setTitle(string $title): self
@@ -73,18 +61,11 @@ class FeedGenerator
 
         $this->settings = $this->config->getSettings(Schema::MODULE_NAME);
 
-        switch ($this->settings['feed_type']) {
-            case 'ATOM':
-                $feedType = 'ATOM';
-
-                break;
-            case 'RSS 1.0':
-                $feedType = 'RSS1';
-
-                break;
-            default:
-                $feedType = 'RSS2';
-        }
+        $feedType = match ($this->settings['feed_type']) {
+            'ATOM' => 'ATOM',
+            'RSS 1.0' => 'RSS1',
+            default => 'RSS2',
+        };
         $className = '\\FeedWriter\\' . $feedType;
         $this->renderer = new $className();
     }

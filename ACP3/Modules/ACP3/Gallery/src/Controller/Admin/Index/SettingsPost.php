@@ -14,45 +14,21 @@ use Psr\Cache\CacheItemPoolInterface;
 
 class SettingsPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validation\AdminSettingsFormValidation
-     */
-    private $adminSettingsFormValidation;
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $galleryCachePool;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secureHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        CacheItemPoolInterface $galleryCachePool,
-        Core\Helpers\Secure $secureHelper,
-        Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        private FormAction $actionHelper,
+        private CacheItemPoolInterface $galleryCachePool,
+        private Core\Helpers\Secure $secureHelper,
+        private Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
-
-        $this->adminSettingsFormValidation = $adminSettingsFormValidation;
-        $this->galleryCachePool = $galleryCachePool;
-        $this->secureHelper = $secureHelper;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleSettingsPostAction(function () {
             $formData = $this->request->getPost()->all();

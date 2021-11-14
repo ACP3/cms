@@ -16,38 +16,19 @@ use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class OrderPost extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    private $categoriesRepository;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\CategoriesModel
-     */
-    private $categoriesModel;
-
     public function __construct(
         WidgetContext $context,
-        RedirectResponse $redirectResponse,
-        CategoryRepository $categoriesRepository,
-        CategoriesModel $categoriesModel
+        private RedirectResponse $redirectResponse,
+        private CategoryRepository $categoriesRepository,
+        private CategoriesModel $categoriesModel
     ) {
         parent::__construct($context);
-
-        $this->categoriesRepository = $categoriesRepository;
-        $this->redirectResponse = $redirectResponse;
-        $this->categoriesModel = $categoriesModel;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id, string $action)
+    public function __invoke(int $id, string $action): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if (($action === 'up' || $action === 'down') && $this->categoriesRepository->resultExists($id) === true) {
             if ($action === 'up') {

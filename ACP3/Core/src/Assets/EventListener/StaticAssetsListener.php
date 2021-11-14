@@ -27,43 +27,12 @@ class StaticAssetsListener implements EventSubscriberInterface
     private const PLACEHOLDER_JS = '<!-- JAVASCRIPTS -->';
 
     /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
-    /**
-     * @var \ACP3\Core\Assets\LibrariesCache
-     */
-    private $librariesCache;
-    /**
-     * @var \ACP3\Core\Assets\Libraries
-     */
-    private $libraries;
-
-    /**
      * @var Request[]
      */
     private $tracedRequests = [];
-    /**
-     * @var \ACP3\Core\Assets\Renderer\CSSRenderer
-     */
-    private $cssRenderer;
-    /**
-     * @var \ACP3\Core\Assets\Renderer\JavaScriptRenderer
-     */
-    private $javaScriptRenderer;
 
-    public function __construct(
-        CSSRenderer $cssRenderer,
-        JavaScriptRenderer $javaScriptRenderer,
-        RequestStack $requestStack,
-        Libraries $libraries,
-        LibrariesCache $librariesCache
-    ) {
-        $this->requestStack = $requestStack;
-        $this->libraries = $libraries;
-        $this->librariesCache = $librariesCache;
-        $this->cssRenderer = $cssRenderer;
-        $this->javaScriptRenderer = $javaScriptRenderer;
+    public function __construct(private CSSRenderer $cssRenderer, private JavaScriptRenderer $javaScriptRenderer, private RequestStack $requestStack, private Libraries $libraries, private LibrariesCache $librariesCache)
+    {
     }
 
     /**
@@ -133,7 +102,7 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        if (strpos($content, self::PLACEHOLDER_CSS) !== false) {
+        if (str_contains($content, self::PLACEHOLDER_CSS)) {
             $this->requestStack->push($event->getRequest());
 
             $content = str_replace(
@@ -159,7 +128,7 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        if (strpos($content, self::PLACEHOLDER_JS) !== false) {
+        if (str_contains($content, self::PLACEHOLDER_JS)) {
             $this->requestStack->push($event->getRequest());
 
             $content = str_replace(

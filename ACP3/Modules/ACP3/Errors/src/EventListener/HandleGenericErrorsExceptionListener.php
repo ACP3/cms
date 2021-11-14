@@ -14,24 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class HandleGenericErrorsExceptionListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Application\ControllerActionDispatcher
-     */
-    private $controllerActionDispatcher;
-    /**
-     * @var string
-     */
-    private $applicationMode;
-    /**
-     * @var string|null
-     */
-    private $serviceId;
-
-    public function __construct(ControllerActionDispatcher $controllerActionDispatcher, string $applicationMode, ?string $serviceId = null)
+    public function __construct(private ControllerActionDispatcher $controllerActionDispatcher, private string $applicationMode, private ?string $serviceId = null)
     {
-        $this->controllerActionDispatcher = $controllerActionDispatcher;
-        $this->applicationMode = $applicationMode;
-        $this->serviceId = $serviceId;
     }
 
     public function __invoke(OutputPageExceptionEvent $event): void

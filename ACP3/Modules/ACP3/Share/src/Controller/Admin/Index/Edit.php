@@ -13,24 +13,12 @@ use ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Model\ShareModel
-     */
-    private $shareModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\ViewProviders\AdminShareEditViewProvider
-     */
-    private $adminShareEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        ShareModel $shareModel,
-        AdminShareEditViewProvider $adminShareEditViewProvider
+        private ShareModel $shareModel,
+        private AdminShareEditViewProvider $adminShareEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->shareModel = $shareModel;
-        $this->adminShareEditViewProvider = $adminShareEditViewProvider;
     }
 
     /**

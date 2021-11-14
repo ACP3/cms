@@ -15,27 +15,8 @@ use ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository;
 
 class NewsletterArchiveViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository
-     */
-    private $newsletterRepository;
-    /**
-     * @var \ACP3\Core\Pagination
-     */
-    private $pagination;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-
-    public function __construct(
-        NewsletterRepository $newsletterRepository,
-        Pagination $pagination,
-        ResultsPerPage $resultsPerPage
-    ) {
-        $this->newsletterRepository = $newsletterRepository;
-        $this->pagination = $pagination;
-        $this->resultsPerPage = $resultsPerPage;
+    public function __construct(private NewsletterRepository $newsletterRepository, private Pagination $pagination, private ResultsPerPage $resultsPerPage)
+    {
     }
 
     /**

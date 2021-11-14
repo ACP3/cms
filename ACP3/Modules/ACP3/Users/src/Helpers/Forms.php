@@ -13,33 +13,8 @@ use ACP3\Core\I18n\Translator;
 
 class Forms
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    protected $formsHelpers;
-    /**
-     * @var CountryList
-     */
-    private $country;
-
-    public function __construct(
-        Translator $translator,
-        CountryList $countryList,
-        RequestInterface $request,
-        \ACP3\Core\Helpers\Forms $formsHelpers
-    ) {
-        $this->translator = $translator;
-        $this->request = $request;
-        $this->formsHelpers = $formsHelpers;
-        $this->country = $countryList;
+    public function __construct(protected Translator $translator, private CountryList $country, protected RequestInterface $request, protected \ACP3\Core\Helpers\Forms $formsHelpers)
+    {
     }
 
     /**

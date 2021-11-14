@@ -13,24 +13,12 @@ use ACP3\Modules\ACP3\Contact\Model\ContactsModel;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Contact\Model\ContactsModel
-     */
-    private $contactsModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        ContactsModel $contactsModel
+        private FormAction $actionHelper,
+        private ContactsModel $contactsModel
     ) {
         parent::__construct($context);
-
-        $this->contactsModel = $contactsModel;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
@@ -44,9 +32,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
-            function (array $items) {
-                return $this->contactsModel->delete($items);
-            }
+            fn (array $items) => $this->contactsModel->delete($items)
         );
     }
 }

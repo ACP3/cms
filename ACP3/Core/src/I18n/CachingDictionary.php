@@ -13,19 +13,8 @@ class CachingDictionary implements DictionaryInterface
 {
     private const CACHE_ID_LANG_PACKS = 'language_packs';
 
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $i18nCachePool;
-    /**
-     * @var Dictionary
-     */
-    private $dictionary;
-
-    public function __construct(CacheItemPoolInterface $i18nCachePool, Dictionary $dictionary)
+    public function __construct(private CacheItemPoolInterface $i18nCachePool, private Dictionary $dictionary)
     {
-        $this->i18nCachePool = $i18nCachePool;
-        $this->dictionary = $dictionary;
     }
 
     public function getDictionary(string $language): array

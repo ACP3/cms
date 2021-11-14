@@ -12,10 +12,6 @@ use Psr\Log\LoggerInterface;
 class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
      * Executed SQL queries.
      *
      * @var array
@@ -34,9 +30,8 @@ class SQLLogger implements \Doctrine\DBAL\Logging\SQLLogger
      */
     private $requestPath;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(private LoggerInterface $logger)
     {
-        $this->logger = $logger;
         $this->requestPath = $_SERVER['REQUEST_URI'];
     }
 

@@ -14,45 +14,21 @@ use ACP3\Modules\ACP3\Polls;
 
 class CreatePost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Validation\AdminFormValidation
-     */
-    private $pollsValidator;
-    /**
-     * @var Polls\Model\PollsModel
-     */
-    private $pollsModel;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        UserModelInterface $user,
-        Polls\Model\PollsModel $pollsModel,
-        Polls\Validation\AdminFormValidation $pollsValidator
+        private FormAction $actionHelper,
+        private UserModelInterface $user,
+        private Polls\Model\PollsModel $pollsModel,
+        private Polls\Validation\AdminFormValidation $pollsValidator
     ) {
         parent::__construct($context);
-
-        $this->pollsModel = $pollsModel;
-        $this->pollsValidator = $pollsValidator;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handleSaveAction(function () {
             $formData = $this->request->getPost()->all();
@@ -62,12 +38,12 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
             $formData['user_id'] = $this->user->getUserId();
             $pollId = $this->pollsModel->save($formData);
 
-            $bool2 = false;
-            if ($pollId !== false) {
-                $bool2 = $this->pollsModel->saveAnswers($formData['answers'], $pollId);
+            $affectedRowsAnswers = false;
+            if ($pollId !== 0) {
+                $affectedRowsAnswers = $this->pollsModel->saveAnswers($formData['answers'], $pollId);
             }
 
-            return $pollId !== false && $bool2 !== false;
+            return $pollId && $affectedRowsAnswers;
         });
     }
 }

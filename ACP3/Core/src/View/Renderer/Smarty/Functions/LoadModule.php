@@ -14,33 +14,8 @@ use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 class LoadModule extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-    /**
-     * @var string
-     */
-    private $applicationMode;
-    /**
-     * @var \Symfony\Component\HttpKernel\Fragment\FragmentHandler
-     */
-    private $fragmentHandler;
-
-    public function __construct(
-        ACL $acl,
-        RouterInterface $router,
-        FragmentHandler $fragmentHandler,
-        string $applicationMode
-    ) {
-        $this->acl = $acl;
-        $this->router = $router;
-        $this->applicationMode = $applicationMode;
-        $this->fragmentHandler = $fragmentHandler;
+    public function __construct(private ACL $acl, private RouterInterface $router, private FragmentHandler $fragmentHandler, private string $applicationMode)
+    {
     }
 
     /**
@@ -87,9 +62,7 @@ class LoadModule extends AbstractFunction
     private function urlEncodeArguments(array $arguments): array
     {
         return array_map(
-            static function ($item) {
-                return urlencode($item);
-            },
+            static fn ($item) => urlencode($item),
             $arguments
         );
     }

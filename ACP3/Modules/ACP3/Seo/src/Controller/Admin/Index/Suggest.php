@@ -14,16 +14,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Suggest extends AbstractWidgetAction
 {
-    /**
-     * @var StringFormatter
-     */
-    private $stringFormatter;
-
-    public function __construct(WidgetContext $context, StringFormatter $stringFormatter)
+    public function __construct(WidgetContext $context, private StringFormatter $stringFormatter)
     {
         parent::__construct($context);
-
-        $this->stringFormatter = $stringFormatter;
     }
 
     public function __invoke(): JsonResponse

@@ -16,38 +16,19 @@ use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 
 class OrderPost extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
-     */
-    private $menuItemRepository;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Model\MenuItemsModel
-     */
-    private $menuItemsModel;
-
     public function __construct(
         WidgetContext $context,
-        RedirectResponse $redirectResponse,
-        MenuItemRepository $menuItemRepository,
-        MenuItemsModel $menuItemsModel
+        private RedirectResponse $redirectResponse,
+        private MenuItemRepository $menuItemRepository,
+        private MenuItemsModel $menuItemsModel
     ) {
         parent::__construct($context);
-
-        $this->menuItemRepository = $menuItemRepository;
-        $this->redirectResponse = $redirectResponse;
-        $this->menuItemsModel = $menuItemsModel;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id, string $action)
+    public function __invoke(int $id, string $action): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if (($action === 'up' || $action === 'down') && $this->menuItemRepository->menuItemExists($id) === true) {
             if ($action === 'up') {

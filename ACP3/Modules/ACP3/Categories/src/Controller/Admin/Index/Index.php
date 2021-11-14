@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Categories;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\ViewProviders\DataGridViewProvider
-     */
-    private $dataGridViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Categories\ViewProviders\DataGridViewProvider $dataGridViewProvider
+        private Categories\ViewProviders\DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
     public function __invoke()

@@ -16,33 +16,8 @@ use ACP3\Modules\ACP3\Contact\Installer\Schema;
 
 class ContactFormModel
 {
-    /**
-     * @var Secure
-     */
-    protected $secure;
-    /**
-     * @var Translator
-     */
-    protected $translator;
-    /**
-     * @var SettingsInterface
-     */
-    protected $config;
-    /**
-     * @var SendEmail
-     */
-    protected $sendEmail;
-
-    public function __construct(
-        SettingsInterface $config,
-        Translator $translator,
-        Secure $secure,
-        SendEmail $sendEmail
-    ) {
-        $this->config = $config;
-        $this->translator = $translator;
-        $this->secure = $secure;
-        $this->sendEmail = $sendEmail;
+    public function __construct(protected SettingsInterface $config, protected Translator $translator, protected Secure $secure, protected SendEmail $sendEmail)
+    {
     }
 
     public function sendContactFormEmail(array $formData): bool

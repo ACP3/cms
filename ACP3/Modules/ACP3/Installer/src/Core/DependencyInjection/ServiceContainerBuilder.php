@@ -27,25 +27,13 @@ use Symfony\Component\HttpKernel\DependencyInjection\FragmentRendererPass;
 final class ServiceContainerBuilder extends ContainerBuilder
 {
     /**
-     * @var ApplicationPath
-     */
-    private $applicationPath;
-    /**
-     * @var bool
-     */
-    private $installationIsInProgress;
-
-    /**
      * @throws \Exception
      */
     public function __construct(
-        ApplicationPath $applicationPath,
-        bool $installationIsInProgress = false
+        private ApplicationPath $applicationPath,
+        private bool $installationIsInProgress = false
     ) {
         parent::__construct();
-
-        $this->applicationPath = $applicationPath;
-        $this->installationIsInProgress = $installationIsInProgress;
 
         $this->setUpContainer();
     }

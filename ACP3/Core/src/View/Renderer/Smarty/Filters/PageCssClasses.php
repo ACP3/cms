@@ -12,24 +12,12 @@ use ACP3\Core;
 class PageCssClasses extends AbstractFilter
 {
     /**
-     * @var \ACP3\Core\Assets\PageCssClasses
-     */
-    private $pageCssClasses;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
      * @var string
      */
     private $cssClassCache = '';
 
-    public function __construct(
-        Core\Assets\PageCssClasses $pageCssClasses,
-        Core\Http\RequestInterface $request
-    ) {
-        $this->pageCssClasses = $pageCssClasses;
-        $this->request = $request;
+    public function __construct(private Core\Assets\PageCssClasses $pageCssClasses, private Core\Http\RequestInterface $request)
+    {
     }
 
     /**
@@ -37,7 +25,7 @@ class PageCssClasses extends AbstractFilter
      */
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
-        if (strpos($tplOutput, '<body') !== false) {
+        if (str_contains($tplOutput, '<body')) {
             if ($this->cssClassCache === '') {
                 $this->cssClassCache = 'class="' . implode(' ', $this->buildPageCssClasses()) . '"';
             }

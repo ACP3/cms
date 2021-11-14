@@ -13,24 +13,8 @@ use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 
 class GalleryService implements GalleryServiceInterface
 {
-    /**
-     * @var PictureRepository
-     */
-    private $pictureRepository;
-    /**
-     * @var ThumbnailGenerator
-     */
-    private $thumbnailGenerator;
-    /**
-     * @var GalleryRepository
-     */
-    private $galleryRepository;
-
-    public function __construct(GalleryRepository $galleryRepository, PictureRepository $pictureRepository, ThumbnailGenerator $thumbnailGenerator)
+    public function __construct(private GalleryRepository $galleryRepository, private PictureRepository $pictureRepository, private ThumbnailGenerator $thumbnailGenerator)
     {
-        $this->pictureRepository = $pictureRepository;
-        $this->thumbnailGenerator = $thumbnailGenerator;
-        $this->galleryRepository = $galleryRepository;
     }
 
     /**

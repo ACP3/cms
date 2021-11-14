@@ -12,19 +12,8 @@ use ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository;
 
 class EmoticonService implements EmoticonServiceInterface
 {
-    /**
-     * @var EmoticonRepository
-     */
-    private $emoticonRepository;
-    /**
-     * @var ApplicationPath
-     */
-    private $applicationPath;
-
-    public function __construct(ApplicationPath $applicationPath, EmoticonRepository $emoticonRepository)
+    public function __construct(private ApplicationPath $applicationPath, private EmoticonRepository $emoticonRepository)
     {
-        $this->emoticonRepository = $emoticonRepository;
-        $this->applicationPath = $applicationPath;
     }
 
     /**

@@ -13,27 +13,8 @@ use ACP3\Core\I18n\Translator;
 
 class SearchResultsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        RequestInterface $request,
-        Steps $breadcrumb,
-        Translator $translator
-    ) {
-        $this->request = $request;
-        $this->breadcrumb = $breadcrumb;
-        $this->translator = $translator;
+    public function __construct(private RequestInterface $request, private Steps $breadcrumb, private Translator $translator)
+    {
     }
 
     public function __invoke(

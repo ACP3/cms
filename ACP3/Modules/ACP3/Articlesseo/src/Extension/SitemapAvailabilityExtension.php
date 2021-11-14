@@ -17,25 +17,13 @@ use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
-    /**
-     * @var Date
-     */
-    protected $date;
-    /**
-     * @var ArticleRepository
-     */
-    protected $articleRepository;
-
     public function __construct(
-        Date $date,
+        protected Date $date,
         RouterInterface $router,
-        ArticleRepository $articleRepository,
+        protected ArticleRepository $articleRepository,
         MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($router, $metaStatements);
-
-        $this->date = $date;
-        $this->articleRepository = $articleRepository;
     }
 
     /**

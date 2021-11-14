@@ -18,18 +18,11 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\ViewProviders\CommentListViewProvider
-     */
-    private $commentListViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Comments\ViewProviders\CommentListViewProvider $commentListViewProvider
+        private Comments\ViewProviders\CommentListViewProvider $commentListViewProvider
     ) {
         parent::__construct($context);
-
-        $this->commentListViewProvider = $commentListViewProvider;
     }
 
     /**
@@ -43,7 +36,7 @@ class Index extends Core\Controller\AbstractWidgetAction
             $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             return $response;
-        } catch (InvalidPageException $e) {
+        } catch (InvalidPageException) {
             throw new ResultNotExistsException();
         }
     }

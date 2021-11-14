@@ -15,27 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnLayoutSeoRenderFormFieldsListener implements EventSubscriberInterface
 {
-    /**
-     * @var View
-     */
-    private $view;
-    /**
-     * @var MetaFormFields
-     */
-    private $metaFormFields;
-    /**
-     * @var ACL
-     */
-    private $acl;
-
-    public function __construct(
-        ACL $acl,
-        View $view,
-        MetaFormFields $metaFormFields
-    ) {
-        $this->acl = $acl;
-        $this->view = $view;
-        $this->metaFormFields = $metaFormFields;
+    public function __construct(private ACL $acl, private View $view, private MetaFormFields $metaFormFields)
+    {
     }
 
     public function __invoke(TemplateEvent $event)

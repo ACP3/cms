@@ -20,29 +20,9 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      * @var array|null
      */
     private $stylesheets;
-    /**
-     * @var \ACP3\Core\Assets
-     */
-    private $assets;
-    /**
-     * @var \ACP3\Core\Assets\Libraries
-     */
-    private $libraries;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\Assets\FileResolver
-     */
-    private $fileResolver;
 
-    public function __construct(Assets $assets, Libraries $libraries, Modules $modules, FileResolver $fileResolver)
+    public function __construct(private Assets $assets, private Libraries $libraries, private Modules $modules, private FileResolver $fileResolver)
     {
-        $this->assets = $assets;
-        $this->libraries = $libraries;
-        $this->modules = $modules;
-        $this->fileResolver = $fileResolver;
     }
 
     /**

@@ -13,20 +13,13 @@ use ACP3\Core\SEO\MetaStatementsServiceInterface;
 
 class PageBreaks extends Core\Helpers\PageBreaks
 {
-    /**
-     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
-     */
-    private $metaStatements;
-
     public function __construct(
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         TableOfContents $tableOfContents,
-        MetaStatementsServiceInterface $metaStatements
+        private MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($request, $router, $tableOfContents);
-
-        $this->metaStatements = $metaStatements;
     }
 
     /**

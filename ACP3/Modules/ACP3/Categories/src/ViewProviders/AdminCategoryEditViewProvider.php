@@ -17,51 +17,8 @@ use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class AdminCategoryEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    private $categoryRepository;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        Modules $modules,
-        RequestInterface $request,
-        Title $title,
-        Translator $translator,
-        CategoryRepository $categoryRepository
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->title = $title;
-        $this->categoryRepository = $categoryRepository;
-        $this->modules = $modules;
-        $this->translator = $translator;
+    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private Modules $modules, private RequestInterface $request, private Title $title, private Translator $translator, private CategoryRepository $categoryRepository)
+    {
     }
 
     /**
@@ -93,9 +50,7 @@ class AdminCategoryEditViewProvider
             }
         }
 
-        uasort($modules, static function ($a, $b) {
-            return $a <=> $b;
-        });
+        uasort($modules, static fn ($a, $b) => $a <=> $b);
 
         return $this->formsHelper->choicesGenerator('module_id', $modules);
     }

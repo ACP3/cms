@@ -15,25 +15,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class PictureDeleteListener implements EventSubscriberInterface
 {
     /**
-     * @var ThumbnailGenerator
-     */
-    private $thumbnailGenerator;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
-     */
-    private $pictureRepository;
-
-    /**
      * @var Array<int, array|null>
      */
     private $picturesToDelete = [];
 
-    public function __construct(
-        ThumbnailGenerator $thumbnailGenerator,
-        PictureRepository $pictureRepository
-    ) {
-        $this->pictureRepository = $pictureRepository;
-        $this->thumbnailGenerator = $thumbnailGenerator;
+    public function __construct(private ThumbnailGenerator $thumbnailGenerator, private PictureRepository $pictureRepository)
+    {
     }
 
     /**

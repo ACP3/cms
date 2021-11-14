@@ -13,21 +13,8 @@ use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
 
 class CaptchaValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var CaptchaExtensionInterface
-     */
-    private $captcha;
-
-    public function __construct(
-        UserModelInterface $user,
-        CaptchaExtensionInterface $captcha = null
-    ) {
-        $this->user = $user;
-        $this->captcha = $captcha;
+    public function __construct(private UserModelInterface $user, private CaptchaExtensionInterface $captcha)
+    {
     }
 
     /**

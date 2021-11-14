@@ -14,14 +14,8 @@ abstract class AbstractRepository implements RepositoryInterface
     public const TABLE_NAME = '';
     public const PRIMARY_KEY_COLUMN = 'id';
 
-    /**
-     * @var \ACP3\Core\Database\Connection
-     */
-    protected $db;
-
-    public function __construct(Connection $db)
+    public function __construct(protected Connection $db)
     {
-        $this->db = $db;
     }
 
     /**
@@ -49,11 +43,9 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @param int|string|array $entryId
      *
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function delete($entryId, ?string $columnName = null)
+    public function delete($entryId, ?string $columnName = null): int
     {
         return $this->db->getConnection()->delete(
             $this->getTableName(),
@@ -61,10 +53,7 @@ abstract class AbstractRepository implements RepositoryInterface
         );
     }
 
-    /**
-     * @param int|string|array $entryId
-     */
-    private function getIdentifier($entryId, ?string $columnName = null): array
+    private function getIdentifier(array|int|string $entryId, ?string $columnName = null): array
     {
         return \is_array($entryId) === true ? $entryId : [$columnName ?? static::PRIMARY_KEY_COLUMN => (int) $entryId];
     }
@@ -74,11 +63,9 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @param int|string|array $entryId
      *
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function update(array $data, $entryId)
+    public function update(array $data, $entryId): int
     {
         return $this->db->getConnection()->update(
             $this->getTableName(),

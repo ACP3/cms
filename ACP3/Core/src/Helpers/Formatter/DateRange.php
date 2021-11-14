@@ -12,21 +12,8 @@ use ACP3\Core\I18n\Translator;
 
 class DateRange
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    protected $date;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-
-    public function __construct(
-        Date $date,
-        Translator $translator
-    ) {
-        $this->date = $date;
-        $this->translator = $translator;
+    public function __construct(protected Date $date, protected Translator $translator)
+    {
     }
 
     /**

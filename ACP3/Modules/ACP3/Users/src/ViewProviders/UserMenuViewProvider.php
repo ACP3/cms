@@ -36,29 +36,8 @@ class UserMenuViewProvider
         ],
     ];
 
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(RequestInterface $request, ACL $acl, Modules $modules, Translator $translator)
+    public function __construct(private RequestInterface $request, private ACL $acl, private Modules $modules, private Translator $translator)
     {
-        $this->request = $request;
-        $this->acl = $acl;
-        $this->modules = $modules;
-        $this->translator = $translator;
     }
 
     public function __invoke(): array
@@ -84,7 +63,7 @@ class UserMenuViewProvider
                 $navSystem[] = [
                     'path' => $path,
                     'name' => $this->translator->t('system', $action['phrase']),
-                    'is_active' => strpos($this->request->getQuery(), $path) === 0,
+                    'is_active' => str_starts_with($this->request->getQuery(), $path),
                 ];
             }
         }

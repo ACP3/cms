@@ -16,30 +16,13 @@ class Pics extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
-     */
-    private $galleryRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListViewProvider
-     */
-    private $galleryPictureListViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        Gallery\Repository\GalleryRepository $galleryRepository,
-        Gallery\ViewProviders\GalleryPictureListViewProvider $galleryPictureListViewProvider
+        private Core\Date $date,
+        private Gallery\Repository\GalleryRepository $galleryRepository,
+        private Gallery\ViewProviders\GalleryPictureListViewProvider $galleryPictureListViewProvider
     ) {
         parent::__construct($context);
-
-        $this->date = $date;
-        $this->galleryRepository = $galleryRepository;
-        $this->galleryPictureListViewProvider = $galleryPictureListViewProvider;
     }
 
     /**

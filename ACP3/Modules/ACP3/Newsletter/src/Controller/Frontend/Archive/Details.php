@@ -16,24 +16,12 @@ class Details extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository
-     */
-    private $newsletterRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterDetailsViewProvider
-     */
-    private $newsletterDetailsViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Newsletter\Repository\NewsletterRepository $newsletterRepository,
-        Newsletter\ViewProviders\NewsletterDetailsViewProvider $newsletterDetailsViewProvider
+        private Newsletter\Repository\NewsletterRepository $newsletterRepository,
+        private Newsletter\ViewProviders\NewsletterDetailsViewProvider $newsletterDetailsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->newsletterRepository = $newsletterRepository;
-        $this->newsletterDetailsViewProvider = $newsletterDetailsViewProvider;
     }
 
     /**

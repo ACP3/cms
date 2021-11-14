@@ -18,33 +18,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SendNotificationEmailOnGuestbookModelAfterSaveListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Core\Helpers\SendEmail
-     */
-    private $sendEmail;
-
-    public function __construct(
-        RouterInterface $router,
-        SendEmail $sendEmail,
-        SettingsInterface $settings,
-        Translator $translator)
+    public function __construct(private RouterInterface $router, private SendEmail $sendEmail, private SettingsInterface $settings, private Translator $translator)
     {
-        $this->settings = $settings;
-        $this->translator = $translator;
-        $this->router = $router;
-        $this->sendEmail = $sendEmail;
     }
 
     public function __invoke(ModelSaveEvent $event)

@@ -15,33 +15,8 @@ use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class FilesWidgetViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    private $categoryRepository;
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Repository\FilesRepository
-     */
-    private $filesRepository;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        CategoryRepository $categoryRepository,
-        Date $date,
-        FilesRepository $filesRepository,
-        SettingsInterface $settings
-    ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->date = $date;
-        $this->filesRepository = $filesRepository;
-        $this->settings = $settings;
+    public function __construct(private CategoryRepository $categoryRepository, private Date $date, private FilesRepository $filesRepository, private SettingsInterface $settings)
+    {
     }
 
     /**

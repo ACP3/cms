@@ -14,11 +14,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 abstract class AbstractRequest implements RequestInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var string
      */
     protected $homepage = '';
@@ -27,10 +22,8 @@ abstract class AbstractRequest implements RequestInterface
      */
     protected $userAgent;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(private RequestStack $requestStack)
     {
-        $this->requestStack = $requestStack;
-
         $this->fillParameterBags();
     }
 

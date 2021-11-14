@@ -18,45 +18,8 @@ use ACP3\Modules\ACP3\Comments\Repository\CommentRepository;
 
 class CommentListViewProvider
 {
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\Pagination
-     */
-    private $pagination;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Repository\CommentRepository
-     */
-    private $commentRepository;
-
-    public function __construct(
-        Modules $modules,
-        Pagination $pagination,
-        ResultsPerPage $resultsPerPage,
-        SettingsInterface $settings,
-        Translator $translator,
-        CommentRepository $commentRepository
-    ) {
-        $this->modules = $modules;
-        $this->pagination = $pagination;
-        $this->resultsPerPage = $resultsPerPage;
-        $this->settings = $settings;
-        $this->translator = $translator;
-        $this->commentRepository = $commentRepository;
+    public function __construct(private Modules $modules, private Pagination $pagination, private ResultsPerPage $resultsPerPage, private SettingsInterface $settings, private Translator $translator, private CommentRepository $commentRepository)
+    {
     }
 
     /**

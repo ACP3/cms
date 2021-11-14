@@ -12,14 +12,8 @@ use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Psr6StoreFactory
 {
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $applicationPath;
-
-    public function __construct(ApplicationPath $applicationPath)
+    public function __construct(private ApplicationPath $applicationPath)
     {
-        $this->applicationPath = $applicationPath;
     }
 
     public function __invoke(): Psr6Store

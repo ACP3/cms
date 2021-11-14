@@ -17,10 +17,6 @@ use Symfony\Component\ErrorHandler\ErrorHandler;
 class Application
 {
     /**
-     * @var string
-     */
-    private $environment;
-    /**
      * @var ApplicationPath
      */
     private $appPath;
@@ -36,10 +32,8 @@ class Application
     /**
      * @throws \Exception
      */
-    public function __construct(string $environment)
+    public function __construct(private string $environment)
     {
-        $this->environment = $environment;
-
         $this->initializeApplicationPath();
         $this->logger = (new LoggerFactory($this->appPath))->create('console');
     }

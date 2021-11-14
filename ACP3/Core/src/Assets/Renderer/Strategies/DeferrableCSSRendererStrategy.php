@@ -19,24 +19,9 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
      * @var array|null
      */
     private $stylesheets;
-    /**
-     * @var \ACP3\Core\Assets
-     */
-    private $assets;
-    /**
-     * @var \ACP3\Core\Assets\Libraries
-     */
-    private $libraries;
-    /**
-     * @var \ACP3\Core\Assets\FileResolver
-     */
-    private $fileResolver;
 
-    public function __construct(Assets $assets, Libraries $libraries, FileResolver $fileResolver)
+    public function __construct(private Assets $assets, private Libraries $libraries, private FileResolver $fileResolver)
     {
-        $this->assets = $assets;
-        $this->libraries = $libraries;
-        $this->fileResolver = $fileResolver;
     }
 
     /**

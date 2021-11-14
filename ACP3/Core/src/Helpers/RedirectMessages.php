@@ -12,27 +12,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class RedirectMessages
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirect;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\Session
-     */
-    private $sessionHandler;
-
-    public function __construct(
-        Core\Http\RedirectResponse $redirect,
-        Core\Http\RequestInterface $request,
-        Session $sessionHandler
-    ) {
-        $this->redirect = $redirect;
-        $this->request = $request;
-        $this->sessionHandler = $sessionHandler;
+    public function __construct(private Core\Http\RedirectResponse $redirect, private Core\Http\RequestInterface $request, private Session $sessionHandler)
+    {
     }
 
     /**
@@ -47,10 +28,8 @@ class RedirectMessages
 
     /**
      * Sets a redirect messages and redirects to the given internal path.
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function setMessage(bool $isSuccess, string $text, ?string $path = null)
+    public function setMessage(bool $isSuccess, string $text, ?string $path = null): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         $this->sessionHandler->getFlashBag()
             ->set($isSuccess ? 'success' : 'error', $text);

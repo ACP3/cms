@@ -16,30 +16,13 @@ class Details extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\News\Repository\NewsRepository
-     */
-    private $newsRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\News\ViewProviders\NewsDetailsViewProvider
-     */
-    private $newsDetailsViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        News\Repository\NewsRepository $newsRepository,
-        News\ViewProviders\NewsDetailsViewProvider $newsDetailsViewProvider
+        private Core\Date $date,
+        private News\Repository\NewsRepository $newsRepository,
+        private News\ViewProviders\NewsDetailsViewProvider $newsDetailsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->date = $date;
-        $this->newsRepository = $newsRepository;
-        $this->newsDetailsViewProvider = $newsDetailsViewProvider;
     }
 
     /**

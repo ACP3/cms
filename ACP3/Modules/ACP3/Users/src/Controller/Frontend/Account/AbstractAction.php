@@ -14,18 +14,11 @@ use ACP3\Core\Controller\Context;
 
 abstract class AbstractAction extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-
     public function __construct(
         Context\WidgetContext $context,
-        UserModelInterface $user
+        private UserModelInterface $user
     ) {
         parent::__construct($context);
-
-        $this->user = $user;
     }
 
     public function preDispatch(): void

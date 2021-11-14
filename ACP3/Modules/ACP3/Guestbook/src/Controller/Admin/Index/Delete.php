@@ -13,36 +13,19 @@ use ACP3\Modules\ACP3\Guestbook;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Guestbook\Model\GuestbookModel
-     */
-    private $guestbookModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Guestbook\Model\GuestbookModel $guestbookModel
+        private FormAction $actionHelper,
+        private Guestbook\Model\GuestbookModel $guestbookModel
     ) {
         parent::__construct($context);
-
-        $this->guestbookModel = $guestbookModel;
-        $this->actionHelper = $actionHelper;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
-            function (array $items) {
-                return $this->guestbookModel->delete($items);
-            }
+            fn (array $items) => $this->guestbookModel->delete($items)
         );
     }
 }

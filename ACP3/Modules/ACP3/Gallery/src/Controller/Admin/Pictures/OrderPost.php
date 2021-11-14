@@ -16,38 +16,19 @@ use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 
 class OrderPost extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
-     */
-    private $pictureRepository;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Model\PictureModel
-     */
-    private $pictureModel;
-
     public function __construct(
         WidgetContext $context,
-        RedirectResponse $redirectResponse,
-        PictureRepository $pictureRepository,
-        PictureModel $pictureModel
+        private RedirectResponse $redirectResponse,
+        private PictureRepository $pictureRepository,
+        private PictureModel $pictureModel
     ) {
         parent::__construct($context);
-
-        $this->pictureRepository = $pictureRepository;
-        $this->redirectResponse = $redirectResponse;
-        $this->pictureModel = $pictureModel;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id, string $action)
+    public function __invoke(int $id, string $action): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if (($action === 'up' || $action === 'down') && $this->pictureRepository->pictureExists($id) === true) {
             if ($action === 'up') {

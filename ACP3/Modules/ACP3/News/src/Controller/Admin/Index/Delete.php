@@ -13,36 +13,19 @@ use ACP3\Modules\ACP3\News;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var News\Model\NewsModel
-     */
-    private $newsModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        News\Model\NewsModel $newsModel
+        private FormAction $actionHelper,
+        private News\Model\NewsModel $newsModel
     ) {
         parent::__construct($context);
-
-        $this->newsModel = $newsModel;
-        $this->actionHelper = $actionHelper;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
-            function (array $items) {
-                return $this->newsModel->delete($items);
-            }
+            fn (array $items) => $this->newsModel->delete($items)
         );
     }
 }

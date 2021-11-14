@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Feeds;
 
 class Settings extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Feeds\ViewProviders\AdminSettingsViewProvider
-     */
-    private $adminSettingsViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Feeds\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
+        private Feeds\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function __invoke(): array

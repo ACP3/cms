@@ -17,16 +17,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MaintenanceModeEnableCommand extends Command
 {
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(SettingsInterface $settings)
+    public function __construct(private SettingsInterface $settings)
     {
         parent::__construct();
-
-        $this->settings = $settings;
     }
 
     /**

@@ -13,16 +13,9 @@ use ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter;
 
 class AbstractFormAction extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter
-     */
-    private $newsletterHelpers;
-
-    public function __construct(WidgetContext $context, SendNewsletter $newsletterHelpers)
+    public function __construct(WidgetContext $context, private SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context);
-
-        $this->newsletterHelpers = $newsletterHelpers;
     }
 
     /**

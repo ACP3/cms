@@ -25,45 +25,8 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class DataGridViewProvider
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\DataGrid\DataGrid
-     */
-    private $dataGrid;
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Repository\DataGridRepository
-     */
-    private $dataGridRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        ACL $acl,
-        DataGrid $dataGrid,
-        DataGridRepository $dataGridRepository,
-        ResultsPerPage $resultsPerPage,
-        SettingsInterface $settings,
-        Translator $translator
-    ) {
-        $this->acl = $acl;
-        $this->dataGrid = $dataGrid;
-        $this->dataGridRepository = $dataGridRepository;
-        $this->resultsPerPage = $resultsPerPage;
-        $this->translator = $translator;
-        $this->settings = $settings;
+    public function __construct(private ACL $acl, private DataGrid $dataGrid, private DataGridRepository $dataGridRepository, private ResultsPerPage $resultsPerPage, private SettingsInterface $settings, private Translator $translator)
+    {
     }
 
     public function __invoke()

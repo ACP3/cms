@@ -14,19 +14,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestFactory
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    protected $requestStack;
-    /**
-     * @var SettingsInterface
-     */
-    private $config;
-
-    public function __construct(SettingsInterface $config, RequestStack $requestStack)
+    public function __construct(private SettingsInterface $config, protected RequestStack $requestStack)
     {
-        $this->config = $config;
-        $this->requestStack = $requestStack;
     }
 
     /**

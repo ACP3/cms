@@ -30,7 +30,7 @@ class AbstractStubRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function delete($entryId, ?string $columnName = null)
+    public function delete($entryId, ?string $columnName = null): int
     {
         return 0;
     }
@@ -38,7 +38,7 @@ class AbstractStubRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function update(array $data, $entryId)
+    public function update(array $data, $entryId): int
     {
         return 0;
     }

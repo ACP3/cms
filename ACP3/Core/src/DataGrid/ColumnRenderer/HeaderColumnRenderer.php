@@ -13,14 +13,8 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
 {
     public const CELL_TYPE = 'th';
 
-    /**
-     * @var \ACP3\Core\Helpers\Formatter\MarkEntries
-     */
-    private $markEntriesHelper;
-
-    public function __construct(MarkEntries $markEntriesHelper)
+    public function __construct(private MarkEntries $markEntriesHelper)
     {
-        $this->markEntriesHelper = $markEntriesHelper;
     }
 
     /**

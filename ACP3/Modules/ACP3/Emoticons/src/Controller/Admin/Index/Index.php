@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Emoticons\ViewProviders\DataGridViewProvider;
 
 class Index extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Emoticons\ViewProviders\DataGridViewProvider
-     */
-    private $dataGridViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        DataGridViewProvider $dataGridViewProvider
+        private DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
     public function __invoke()

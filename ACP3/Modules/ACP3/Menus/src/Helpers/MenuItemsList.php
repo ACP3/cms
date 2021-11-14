@@ -16,21 +16,9 @@ class MenuItemsList
      * @var array
      */
     private $menuItems = [];
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var MenuServiceInterface
-     */
-    private $menuService;
 
-    public function __construct(
-        Core\Helpers\Forms $formsHelper,
-        MenuServiceInterface $menuService
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->menuService = $menuService;
+    public function __construct(private Core\Helpers\Forms $formsHelper, private MenuServiceInterface $menuService)
+    {
     }
 
     /**

@@ -12,24 +12,17 @@ use ACP3\Modules\ACP3\Gallery;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\DataGridViewProvider
-     */
-    private $dataGridViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Gallery\ViewProviders\DataGridViewProvider $dataGridViewProvider
+        private Gallery\ViewProviders\DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
     /**
      * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function __invoke()
+    public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse
     {
         return ($this->dataGridViewProvider)();
     }

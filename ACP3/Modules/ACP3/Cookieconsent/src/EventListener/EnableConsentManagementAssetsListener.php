@@ -15,24 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class EnableConsentManagementAssetsListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Assets\Libraries
-     */
-    private $libraries;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    public function __construct(Modules $modules, Libraries $libraries, SettingsInterface $settings)
+    public function __construct(private Modules $modules, private Libraries $libraries, private SettingsInterface $settings)
     {
-        $this->settings = $settings;
-        $this->libraries = $libraries;
-        $this->modules = $modules;
     }
 
     public function __invoke(): void

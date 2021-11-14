@@ -11,14 +11,8 @@ use ACP3\Core;
 
 class IncludeStylesheet extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Assets\IncludeStylesheet
-     */
-    private $includeStylesheet;
-
-    public function __construct(Core\Assets\IncludeStylesheet $includeStylesheet)
+    public function __construct(private Core\Assets\IncludeStylesheet $includeStylesheet)
     {
-        $this->includeStylesheet = $includeStylesheet;
     }
 
     /**

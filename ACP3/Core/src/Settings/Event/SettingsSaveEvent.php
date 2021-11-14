@@ -12,18 +12,13 @@ use Symfony\Contracts\EventDispatcher\Event;
 class SettingsSaveEvent extends Event
 {
     /**
-     * @var string
-     */
-    private $module;
-    /**
      * @var array
      */
     private $data;
 
-    public function __construct(string $module, array $data)
+    public function __construct(private string $module, array $data)
     {
         $this->data = $data;
-        $this->module = $module;
     }
 
     public function getModule(): string

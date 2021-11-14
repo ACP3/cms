@@ -16,39 +16,8 @@ use ACP3\Core\Modules;
 
 class AdminResourceEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        Modules $modules,
-        RequestInterface $request,
-        Translator $translator
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->modules = $modules;
-        $this->request = $request;
-        $this->translator = $translator;
+    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private Modules $modules, private RequestInterface $request, private Translator $translator)
+    {
     }
 
     /**
@@ -77,9 +46,7 @@ class AdminResourceEditViewProvider
             $modules[$info['name']] = $this->translator->t($info['name'], $info['name']);
         }
 
-        uasort($modules, static function ($a, $b) {
-            return $a <=> $b;
-        });
+        uasort($modules, static fn ($a, $b) => $a <=> $b);
 
         return $this->formsHelper->choicesGenerator('modules', $modules, $currentModule);
     }

@@ -16,27 +16,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnWysiwygTextareaBeforeListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var View
-     */
-    private $view;
-    /**
-     * @var EmoticonServiceInterface
-     */
-    private $emoticonService;
-
-    public function __construct(
-        Modules $modules,
-        View $view,
-        EmoticonServiceInterface $emoticonService
-    ) {
-        $this->modules = $modules;
-        $this->view = $view;
-        $this->emoticonService = $emoticonService;
+    public function __construct(private Modules $modules, private View $view, private EmoticonServiceInterface $emoticonService)
+    {
     }
 
     public function __invoke(TemplateEvent $templateEvent)

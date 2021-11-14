@@ -15,21 +15,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormTokenValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\Session
-     */
-    protected $sessionHandler;
-
-    public function __construct(
-        RequestInterface $request,
-        Session $sessionHandler
-    ) {
-        $this->request = $request;
-        $this->sessionHandler = $sessionHandler;
+    public function __construct(protected RequestInterface $request, protected Session $sessionHandler)
+    {
     }
 
     /**

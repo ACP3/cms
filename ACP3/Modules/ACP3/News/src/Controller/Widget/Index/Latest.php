@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\News;
 
 class Latest extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\News\ViewProviders\LatestNewsWidgetViewProvider
-     */
-    private $latestNewsWidgetViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        News\ViewProviders\LatestNewsWidgetViewProvider $latestNewsWidgetViewProvider
+        private News\ViewProviders\LatestNewsWidgetViewProvider $latestNewsWidgetViewProvider
     ) {
         parent::__construct($context);
-
-        $this->latestNewsWidgetViewProvider = $latestNewsWidgetViewProvider;
     }
 
     /**

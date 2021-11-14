@@ -11,14 +11,8 @@ use ACP3\Core\Environment\ApplicationMode;
 
 class CanUsePageCache
 {
-    /**
-     * @var string
-     */
-    private $environment;
-
-    public function __construct(string $environment)
+    public function __construct(private string $environment)
     {
-        $this->environment = $environment;
     }
 
     public function canUsePageCache(): bool

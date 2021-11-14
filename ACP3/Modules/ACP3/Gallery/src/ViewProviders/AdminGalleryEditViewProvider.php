@@ -15,33 +15,8 @@ use ACP3\Modules\ACP3\Gallery\Helpers as GalleryHelpers;
 
 class AdminGalleryEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-
-    public function __construct(
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        RequestInterface $request,
-        Title $title
-    ) {
-        $this->formTokenHelper = $formTokenHelper;
-        $this->request = $request;
-        $this->title = $title;
-        $this->formsHelper = $formsHelper;
+    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private Title $title)
+    {
     }
 
     public function __invoke(array $gallery): array

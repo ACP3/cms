@@ -11,14 +11,8 @@ use ACP3\Core\Date;
 
 class DateColumnType implements ColumnTypeStrategyInterface
 {
-    /**
-     * @var Date
-     */
-    private $date;
-
-    public function __construct(Date $date)
+    public function __construct(private Date $date)
     {
-        $this->date = $date;
     }
 
     /**
@@ -39,10 +33,7 @@ class DateColumnType implements ColumnTypeStrategyInterface
         return $value;
     }
 
-    /**
-     * @return string|int
-     */
-    public function getDefaultValue()
+    public function getDefaultValue(): int|string
     {
         return $this->doEscape('now');
     }

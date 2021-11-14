@@ -15,16 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Hash extends AbstractWidgetAction
 {
-    /**
-     * @var DefaultHashGenerator
-     */
-    private $hashGenerator;
-
-    public function __construct(WidgetContext $context, DefaultHashGenerator $hashGenerator)
+    public function __construct(WidgetContext $context, private DefaultHashGenerator $hashGenerator)
     {
         parent::__construct($context);
-
-        $this->hashGenerator = $hashGenerator;
     }
 
     public function __invoke(): Response

@@ -15,39 +15,8 @@ use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class AdminGalleryPictureCreateViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
-     */
-    private $galleryRepository;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        FormToken $formTokenHelper,
-        GalleryRepository $galleryRepository,
-        RequestInterface $request,
-        Steps $breadcrumb,
-        Translator $translator
-    ) {
-        $this->formTokenHelper = $formTokenHelper;
-        $this->galleryRepository = $galleryRepository;
-        $this->request = $request;
-        $this->breadcrumb = $breadcrumb;
-        $this->translator = $translator;
+    public function __construct(private FormToken $formTokenHelper, private GalleryRepository $galleryRepository, private RequestInterface $request, private Steps $breadcrumb, private Translator $translator)
+    {
     }
 
     /**

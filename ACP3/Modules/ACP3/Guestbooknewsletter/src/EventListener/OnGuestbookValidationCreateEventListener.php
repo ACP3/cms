@@ -18,24 +18,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnGuestbookValidationCreateEventListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(Modules $modules, SettingsInterface $settings, Translator $translator)
+    public function __construct(private Modules $modules, private SettingsInterface $settings, private Translator $translator)
     {
-        $this->translator = $translator;
-        $this->modules = $modules;
-        $this->settings = $settings;
     }
 
     public function __invoke(FormValidationEvent $event)

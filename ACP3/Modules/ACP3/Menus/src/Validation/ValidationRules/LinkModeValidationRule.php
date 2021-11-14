@@ -13,21 +13,8 @@ use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 
 class LinkModeValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    protected $modules;
-    /**
-     * @var \ACP3\Core\Validation\ValidationRules\InternalUriValidationRule
-     */
-    protected $internalUriValidationRule;
-
-    public function __construct(
-        Modules $modules,
-        InternalUriValidationRule $internalUriValidationRule
-    ) {
-        $this->modules = $modules;
-        $this->internalUriValidationRule = $internalUriValidationRule;
+    public function __construct(protected Modules $modules, protected InternalUriValidationRule $internalUriValidationRule)
+    {
     }
 
     /**
@@ -51,15 +38,11 @@ class LinkModeValidationRule extends AbstractValidationRule
      */
     protected function isValidLink(int $mode, string $moduleName, string $uri)
     {
-        switch ($mode) {
-            case 1:
-                return $this->modules->isInstalled($moduleName);
-            case 2:
-                return $this->internalUriValidationRule->isValid($uri);
-            case 3:
-                return !empty($uri);
-        }
-
-        return false;
+        return match ($mode) {
+            1 => $this->modules->isInstalled($moduleName),
+            2 => $this->internalUriValidationRule->isValid($uri),
+            3 => !empty($uri),
+            default => false,
+        };
     }
 }

@@ -12,14 +12,8 @@ use Psr\Container\ContainerInterface;
 
 class CaptchaTypeValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $captchaLocator;
-
-    public function __construct(ContainerInterface $captchaLocator)
+    public function __construct(private ContainerInterface $captchaLocator)
     {
-        $this->captchaLocator = $captchaLocator;
     }
 
     /**

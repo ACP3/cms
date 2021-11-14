@@ -12,11 +12,9 @@ use ACP3\Core\Repository\AbstractRepository;
 trait DuplicationAwareTrait
 {
     /**
-     * @return bool|int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function duplicate(int $entryId)
+    public function duplicate(int $entryId): bool|int
     {
         $resultSet = $this->getRepository()->getOneById($entryId);
 
@@ -43,10 +41,8 @@ trait DuplicationAwareTrait
 
     /**
      * @param int|null $entryId
-     *
-     * @return int|bool
      */
-    abstract public function save(array $rawData, $entryId = null);
+    abstract public function save(array $rawData, $entryId = null): int;
 
     /**
      * @return array

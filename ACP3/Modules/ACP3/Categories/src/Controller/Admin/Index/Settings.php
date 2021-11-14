@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Categories;
 
 class Settings extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\ViewProviders\AdminCategorySettingsViewProvider
-     */
-    private $adminCategorySettingsViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Categories\ViewProviders\AdminCategorySettingsViewProvider $adminCategorySettingsViewProvider
+        private Categories\ViewProviders\AdminCategorySettingsViewProvider $adminCategorySettingsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminCategorySettingsViewProvider = $adminCategorySettingsViewProvider;
     }
 
     public function __invoke(): array

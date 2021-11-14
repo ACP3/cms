@@ -25,26 +25,19 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
 
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * @var \ACP3\Core\Helpers\Sort
-     */
-    private $sortHelper;
-
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         PictureRepository $pictureRepository,
-        Sort $sortHelper
+        private Sort $sortHelper
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $pictureRepository);
-
-        $this->sortHelper = $sortHelper;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null)
+    public function save(array $rawData, $entryId = null): int
     {
         if ($entryId === null) {
             $rawData[$this->getSortingField()] = $this->getPictureSortIndex($rawData['gallery_id']);

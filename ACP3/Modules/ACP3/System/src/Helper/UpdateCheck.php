@@ -20,29 +20,8 @@ class UpdateCheck
     private const UPDATE_CHECK_FILE = 'https://acp3.gitlab.io/update-check/update.txt';
     private const UPDATE_CHECK_DATE_OFFSET = 86400;
 
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var Date
-     */
-    private $date;
-    /**
-     * @var UpdateFileParser
-     */
-    private $updateFileParser;
-    /**
-     * @var \Composer\Semver\VersionParser
-     */
-    private $versionParser;
-
-    public function __construct(Date $date, SettingsInterface $settings, UpdateFileParser $updateFileParser, VersionParser $versionParser)
+    public function __construct(private Date $date, private SettingsInterface $settings, private UpdateFileParser $updateFileParser, private VersionParser $versionParser)
     {
-        $this->settings = $settings;
-        $this->date = $date;
-        $this->updateFileParser = $updateFileParser;
-        $this->versionParser = $versionParser;
     }
 
     public function checkForNewVersion(): array
@@ -81,7 +60,7 @@ class UpdateCheck
             ];
 
             $this->saveUpdateSettings($update);
-        } catch (\RuntimeException $e) {
+        } catch (\RuntimeException) {
             $update = [];
         }
 

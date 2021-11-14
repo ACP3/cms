@@ -12,21 +12,8 @@ use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class SocialSharingManager
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Model\ShareModel
-     */
-    private $shareModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
-     */
-    private $shareRepository;
-
-    public function __construct(
-        ShareModel $shareModel,
-        ShareRepository $shareRepository
-    ) {
-        $this->shareModel = $shareModel;
-        $this->shareRepository = $shareRepository;
+    public function __construct(private ShareModel $shareModel, private ShareRepository $shareRepository)
+    {
     }
 
     /**

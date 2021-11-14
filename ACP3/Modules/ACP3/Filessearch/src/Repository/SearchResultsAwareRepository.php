@@ -18,18 +18,11 @@ class SearchResultsAwareRepository extends \ACP3\Core\Repository\AbstractReposit
 
     public const TABLE_NAME = FilesRepository::TABLE_NAME;
 
-    /**
-     * @var Date
-     */
-    private $date;
-
     public function __construct(
         Connection $db,
-        Date $date
+        private Date $date
     ) {
         parent::__construct($db);
-
-        $this->date = $date;
     }
 
     /**

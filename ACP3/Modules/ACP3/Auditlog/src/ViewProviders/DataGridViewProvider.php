@@ -18,39 +18,14 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class DataGridViewProvider
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\DataGrid\DataGrid
-     */
-    private $dataGrid;
-    /**
-     * @var \ACP3\Modules\ACP3\Auditlog\Repository\AuditLogDataGridRepository
-     */
-    private $dataGridRepository;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-
-    public function __construct(
-        DataGrid $dataGrid,
-        AuditLogDataGridRepository $dataGridRepository,
-        ResultsPerPage $resultsPerPage,
-        Translator $translator
-    ) {
-        $this->translator = $translator;
-        $this->dataGrid = $dataGrid;
-        $this->dataGridRepository = $dataGridRepository;
-        $this->resultsPerPage = $resultsPerPage;
+    public function __construct(private DataGrid $dataGrid, private AuditLogDataGridRepository $dataGridRepository, private ResultsPerPage $resultsPerPage, private Translator $translator)
+    {
     }
 
     /**
      * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function __invoke()
+    public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse
     {
         return $this->dataGrid->render($this->configureDataGrid());
     }

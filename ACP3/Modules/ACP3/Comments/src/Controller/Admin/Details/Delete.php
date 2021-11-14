@@ -13,38 +13,19 @@ use ACP3\Modules\ACP3\Comments;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Repository\CommentRepository
-     */
-    private $commentRepository;
-    /**
-     * @var Comments\Model\CommentsModel
-     */
-    private $commentsModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Comments\Model\CommentsModel $commentsModel,
-        Comments\Repository\CommentRepository $commentRepository
+        private FormAction $actionHelper,
+        private Comments\Model\CommentsModel $commentsModel,
+        private Comments\Repository\CommentRepository $commentRepository
     ) {
         parent::__construct($context);
-
-        $this->commentRepository = $commentRepository;
-        $this->commentsModel = $commentsModel;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id, ?string $action = null)
+    public function __invoke(int $id, ?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,

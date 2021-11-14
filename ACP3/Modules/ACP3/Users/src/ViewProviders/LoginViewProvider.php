@@ -16,33 +16,8 @@ use ACP3\Modules\ACP3\Users\Installer\Schema;
 
 class LoginViewProvider
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $forms;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        Forms $forms,
-        RequestInterface $request,
-        SettingsInterface $settings,
-        Translator $translator
-    ) {
-        $this->request = $request;
-        $this->settings = $settings;
-        $this->forms = $forms;
-        $this->translator = $translator;
+    public function __construct(private Forms $forms, private RequestInterface $request, private SettingsInterface $settings, private Translator $translator)
+    {
     }
 
     public function __invoke(?string $redirect = null): array

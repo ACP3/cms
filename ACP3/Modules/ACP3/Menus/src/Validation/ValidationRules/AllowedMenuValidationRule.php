@@ -12,14 +12,8 @@ use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 
 class AllowedMenuValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
-     */
-    private $menuItemRepository;
-
-    public function __construct(MenuItemRepository $menuItemRepository)
+    public function __construct(private MenuItemRepository $menuItemRepository)
     {
-        $this->menuItemRepository = $menuItemRepository;
     }
 
     /**

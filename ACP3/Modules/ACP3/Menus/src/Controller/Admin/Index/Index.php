@@ -16,30 +16,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuRepository
-     */
-    private $menuRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\ViewProviders\MenuItemsDataGridViewProvider
-     */
-    private $menuItemsDataGridViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        ACL $acl,
-        MenuRepository $menuRepository,
-        MenuItemsDataGridViewProvider $menuItemsDataGridViewProvider
+        private ACL $acl,
+        private MenuRepository $menuRepository,
+        private MenuItemsDataGridViewProvider $menuItemsDataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->acl = $acl;
-        $this->menuRepository = $menuRepository;
-        $this->menuItemsDataGridViewProvider = $menuItemsDataGridViewProvider;
     }
 
     /**

@@ -14,14 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class HashPasswordOnUserModelPrepareData implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secure;
-
-    public function __construct(Secure $secure)
+    public function __construct(private Secure $secure)
     {
-        $this->secure = $secure;
     }
 
     public function __invoke(ModelSavePrepareDataEvent $event): void

@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Files;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Files\ViewProviders\AdminFileEditViewProvider
-     */
-    private $adminFileEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Files\ViewProviders\AdminFileEditViewProvider $adminFileEditViewProvider
+        private Files\ViewProviders\AdminFileEditViewProvider $adminFileEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminFileEditViewProvider = $adminFileEditViewProvider;
     }
 
     /**

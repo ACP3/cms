@@ -14,45 +14,21 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CreatePost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Validation\PictureFormValidation
-     */
-    private $pictureFormValidation;
-    /**
-     * @var Gallery\Model\PictureModel
-     */
-    private $pictureModel;
-    /**
-     * @var \ACP3\Core\Helpers\Upload
-     */
-    private $galleryUploadHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Gallery\Model\PictureModel $pictureModel,
-        Gallery\Validation\PictureFormValidation $pictureFormValidation,
-        Core\Helpers\Upload $galleryUploadHelper
+        private FormAction $actionHelper,
+        private Gallery\Model\PictureModel $pictureModel,
+        private Gallery\Validation\PictureFormValidation $pictureFormValidation,
+        private Core\Helpers\Upload $galleryUploadHelper
     ) {
         parent::__construct($context);
-
-        $this->pictureFormValidation = $pictureFormValidation;
-        $this->pictureModel = $pictureModel;
-        $this->galleryUploadHelper = $galleryUploadHelper;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handleSaveAction(
             function () use ($id) {

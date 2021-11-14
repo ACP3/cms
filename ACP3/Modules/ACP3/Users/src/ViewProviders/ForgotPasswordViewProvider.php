@@ -12,19 +12,8 @@ use ACP3\Core\Http\RequestInterface;
 
 class ForgotPasswordViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formToken;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-
-    public function __construct(FormToken $formToken, RequestInterface $request)
+    public function __construct(private FormToken $formToken, private RequestInterface $request)
     {
-        $this->formToken = $formToken;
-        $this->request = $request;
     }
 
     public function __invoke(): array

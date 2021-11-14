@@ -12,27 +12,8 @@ use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 
 class MenuItemFormFields
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuRepository
-     */
-    private $menuRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Helpers\MenuItemsList
-     */
-    private $menusHelper;
-
-    public function __construct(
-        Core\Helpers\Forms $formsHelper,
-        MenuItemsList $menusHelper,
-        MenuRepository $menuRepository
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->menusHelper = $menusHelper;
-        $this->menuRepository = $menuRepository;
+    public function __construct(private Core\Helpers\Forms $formsHelper, private MenuItemsList $menusHelper, private MenuRepository $menuRepository)
+    {
     }
 
     /**

@@ -36,7 +36,7 @@ abstract class AbstractValidationRuleTest extends TestCase
             ->setConstructorArgs([$eventDispatcherMock, $container])
             ->getMock();
 
-        $container->set(\get_class($this->validationRule), $this->validationRule);
+        $container->set($this->validationRule::class, $this->validationRule);
     }
 
     /**
@@ -47,12 +47,11 @@ abstract class AbstractValidationRuleTest extends TestCase
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param mixed        $data
-     * @param array|string $field
-     * @param array        $extra
-     * @param bool         $expected
+     * @param mixed $data
+     * @param array $extra
+     * @param bool  $expected
      */
-    public function testValidationRule($data, $field, $extra, $expected)
+    public function testValidationRule($data, array|string|null $field, $extra, $expected)
     {
         self::assertEquals($expected, $this->validationRule->isValid($data, $field, $extra));
     }
@@ -60,12 +59,11 @@ abstract class AbstractValidationRuleTest extends TestCase
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param mixed        $data
-     * @param array|string $field
-     * @param array        $extra
-     * @param bool         $expected
+     * @param mixed $data
+     * @param array $extra
+     * @param bool  $expected
      */
-    public function testValidate($data, $field, $extra, $expected)
+    public function testValidate($data, array|string|null $field, $extra, $expected)
     {
         if ($expected === true) {
             $this->validator->expects(self::never())

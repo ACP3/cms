@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Guestbook;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Guestbook\Model\GuestbookModel
-     */
-    private $guestbookModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Guestbook\ViewProviders\AdminGuestbookEditViewProvider
-     */
-    private $adminGuestbookEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\ViewProviders\AdminGuestbookEditViewProvider $adminGuestbookEditViewProvider
+        private Guestbook\Model\GuestbookModel $guestbookModel,
+        private Guestbook\ViewProviders\AdminGuestbookEditViewProvider $adminGuestbookEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->guestbookModel = $guestbookModel;
-        $this->adminGuestbookEditViewProvider = $adminGuestbookEditViewProvider;
     }
 
     /**

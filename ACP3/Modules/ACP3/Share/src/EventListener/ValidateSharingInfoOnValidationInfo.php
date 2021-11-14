@@ -16,27 +16,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ValidateSharingInfoOnValidationInfo implements EventSubscriberInterface
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-    /**
-     * @var ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Helpers\SocialServices
-     */
-    private $socialServices;
-
-    public function __construct(
-        ACL $acl,
-        Translator $translator,
-        SocialServices $socialServices
-    ) {
-        $this->translator = $translator;
-        $this->acl = $acl;
-        $this->socialServices = $socialServices;
+    public function __construct(private ACL $acl, private Translator $translator, private SocialServices $socialServices)
+    {
     }
 
     public function __invoke(FormValidationEvent $event)

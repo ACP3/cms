@@ -14,19 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener implements EventSubscriberInterface
 {
-    /**
-     * @var RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
-     */
-    private $metaStatements;
-
-    public function __construct(RequestInterface $request, MetaStatementsServiceInterface $metaStatements)
+    public function __construct(private RequestInterface $request, private MetaStatementsServiceInterface $metaStatements)
     {
-        $this->request = $request;
-        $this->metaStatements = $metaStatements;
     }
 
     /**

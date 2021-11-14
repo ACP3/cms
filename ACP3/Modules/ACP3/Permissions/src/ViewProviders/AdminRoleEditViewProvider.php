@@ -20,63 +20,8 @@ use ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository;
 
 class AdminRoleEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var PermissionServiceInterface
-     */
-    private $permissionService;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var AclResourceRepository
-     */
-    private $resourceRepository;
-
-    public function __construct(
-        ACL $acl,
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        Modules $modules,
-        PermissionServiceInterface $permissionService,
-        AclResourceRepository $resourceRepository,
-        RequestInterface $request,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->acl = $acl;
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->modules = $modules;
-        $this->permissionService = $permissionService;
-        $this->request = $request;
-        $this->title = $title;
-        $this->translator = $translator;
-        $this->resourceRepository = $resourceRepository;
+    public function __construct(private ACL $acl, private Forms $formsHelper, private FormToken $formTokenHelper, private Modules $modules, private PermissionServiceInterface $permissionService, private AclResourceRepository $resourceRepository, private RequestInterface $request, private Title $title, private Translator $translator)
+    {
     }
 
     /**
@@ -117,15 +62,11 @@ class AdminRoleEditViewProvider
     {
         $permissions = $this->permissionService->getPermissions([$roleId]);
         $inheritedPermissions = $this->permissionService->getPermissionsWithInheritance([$parentRoleId]);
-        $modules = array_filter($this->modules->getInstalledModules(), function ($module) {
-            return $this->modules->isInstallable($module['name']);
-        });
+        $modules = array_filter($this->modules->getInstalledModules(), fn ($module) => $this->modules->isInstallable($module['name']));
         $allResources = $this->resourceRepository->getAllResources();
 
         foreach ($modules as $moduleName => $moduleInfo) {
-            $moduleResources = array_filter($allResources, static function ($resource) use ($moduleInfo) {
-                return (int) $resource['module_id'] === $moduleInfo['id'];
-            });
+            $moduleResources = array_filter($allResources, static fn ($resource) => (int) $resource['module_id'] === $moduleInfo['id']);
             foreach ($moduleResources as &$resource) {
                 $resource['select'] = $this->generatePermissionCheckboxes(
                     $showInheritedPermissions,

@@ -14,27 +14,8 @@ use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class GalleryListWidgetViewProvider
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
-     */
-    private $galleryRepository;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        Date $date,
-        GalleryRepository $galleryRepository,
-        SettingsInterface $settings
-    ) {
-        $this->date = $date;
-        $this->galleryRepository = $galleryRepository;
-        $this->settings = $settings;
+    public function __construct(private Date $date, private GalleryRepository $galleryRepository, private SettingsInterface $settings)
+    {
     }
 
     /**

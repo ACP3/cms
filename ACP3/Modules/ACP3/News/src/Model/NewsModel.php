@@ -22,26 +22,19 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
 
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * @var SettingsInterface
-     */
-    protected $config;
-
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
-        SettingsInterface $config,
+        protected SettingsInterface $config,
         NewsRepository $newsRepository
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $newsRepository);
-
-        $this->config = $config;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $newsId = null)
+    public function save(array $rawData, $entryId = null): int
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
@@ -51,7 +44,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
             'category_id' => $rawData['cat'] ?? $rawData['category_id'],
         ]);
 
-        return parent::save($rawData, $newsId);
+        return parent::save($rawData, $entryId);
     }
 
     protected function useReadMore(array $formData, array $settings): int

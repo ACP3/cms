@@ -15,33 +15,8 @@ use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class ArticleListViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Repository\ArticleRepository
-     */
-    private $articleRepository;
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Core\Pagination
-     */
-    private $pagination;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-
-    public function __construct(
-        ArticleRepository $articleRepository,
-        Date $date,
-        Pagination $pagination,
-        ResultsPerPage $resultsPerPage
-    ) {
-        $this->articleRepository = $articleRepository;
-        $this->date = $date;
-        $this->pagination = $pagination;
-        $this->resultsPerPage = $resultsPerPage;
+    public function __construct(private ArticleRepository $articleRepository, private Date $date, private Pagination $pagination, private ResultsPerPage $resultsPerPage)
+    {
     }
 
     /**

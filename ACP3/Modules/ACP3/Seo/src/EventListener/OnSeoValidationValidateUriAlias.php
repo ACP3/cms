@@ -15,21 +15,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnSeoValidationValidateUriAlias implements EventSubscriberInterface
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-    /**
-     * @var ACL
-     */
-    private $acl;
-
-    public function __construct(
-        ACL $acl,
-        Translator $translator
-    ) {
-        $this->translator = $translator;
-        $this->acl = $acl;
+    public function __construct(private ACL $acl, private Translator $translator)
+    {
     }
 
     public function __invoke(FormValidationEvent $event)

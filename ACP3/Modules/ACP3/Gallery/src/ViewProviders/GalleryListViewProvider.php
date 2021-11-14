@@ -17,45 +17,8 @@ use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class GalleryListViewProvider
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository
-     */
-    private $galleryRepository;
-    /**
-     * @var \ACP3\Core\Pagination
-     */
-    private $pagination;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
-     */
-    private $thumbnailGenerator;
-
-    public function __construct(
-        Date $date,
-        GalleryRepository $galleryRepository,
-        Pagination $pagination,
-        ResultsPerPage $resultsPerPage,
-        SettingsInterface $settings,
-        ThumbnailGenerator $thumbnailGenerator
-    ) {
-        $this->date = $date;
-        $this->galleryRepository = $galleryRepository;
-        $this->pagination = $pagination;
-        $this->resultsPerPage = $resultsPerPage;
-        $this->settings = $settings;
-        $this->thumbnailGenerator = $thumbnailGenerator;
+    public function __construct(private Date $date, private GalleryRepository $galleryRepository, private Pagination $pagination, private ResultsPerPage $resultsPerPage, private SettingsInterface $settings, private ThumbnailGenerator $thumbnailGenerator)
+    {
     }
 
     /**

@@ -12,21 +12,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormToken
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\Session
-     */
-    protected $sessionHandler;
-
-    public function __construct(
-        Core\Http\RequestInterface $request,
-        Session $sessionHandler
-    ) {
-        $this->request = $request;
-        $this->sessionHandler = $sessionHandler;
+    public function __construct(protected Core\Http\RequestInterface $request, protected Session $sessionHandler)
+    {
     }
 
     /**

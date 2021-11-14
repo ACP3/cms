@@ -12,14 +12,8 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
 class RolesExistValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-
-    public function __construct(ACL $acl)
+    public function __construct(private ACL $acl)
     {
-        $this->acl = $acl;
     }
 
     /**

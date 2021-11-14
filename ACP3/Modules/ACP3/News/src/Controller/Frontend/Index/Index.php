@@ -18,18 +18,11 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\News\ViewProviders\NewsListViewProvider
-     */
-    private $newsListViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        News\ViewProviders\NewsListViewProvider $newsListViewProvider
+        private News\ViewProviders\NewsListViewProvider $newsListViewProvider
     ) {
         parent::__construct($context);
-
-        $this->newsListViewProvider = $newsListViewProvider;
     }
 
     /**
@@ -43,7 +36,7 @@ class Index extends Core\Controller\AbstractWidgetAction
             $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
             return $response;
-        } catch (InvalidPageException $e) {
+        } catch (InvalidPageException) {
             throw new ResultNotExistsException();
         }
     }

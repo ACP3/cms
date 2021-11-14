@@ -17,18 +17,11 @@ class Index extends AbstractWidgetAction
 {
     use CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Share\ViewProviders\ShareWidgetViewProvider
-     */
-    private $shareWidgetViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        ShareWidgetViewProvider $shareWidgetViewProvider
+        private ShareWidgetViewProvider $shareWidgetViewProvider
     ) {
         parent::__construct($context);
-
-        $this->shareWidgetViewProvider = $shareWidgetViewProvider;
     }
 
     /**

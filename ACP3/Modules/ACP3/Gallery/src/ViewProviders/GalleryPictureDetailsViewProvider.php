@@ -21,63 +21,8 @@ use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 
 class GalleryPictureDetailsViewProvider
 {
-    /**
-     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
-     */
-    private $metaStatements;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
-     */
-    private $pictureRepository;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
-     */
-    private $thumbnailGenerator;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        MetaStatementsServiceInterface $metaStatements,
-        PictureRepository $pictureRepository,
-        RequestInterface $request,
-        RouterInterface $router,
-        SettingsInterface $settings,
-        Steps $breadcrumb,
-        ThumbnailGenerator $thumbnailGenerator,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->metaStatements = $metaStatements;
-        $this->pictureRepository = $pictureRepository;
-        $this->request = $request;
-        $this->router = $router;
-        $this->breadcrumb = $breadcrumb;
-        $this->settings = $settings;
-        $this->thumbnailGenerator = $thumbnailGenerator;
-        $this->title = $title;
-        $this->translator = $translator;
+    public function __construct(private MetaStatementsServiceInterface $metaStatements, private PictureRepository $pictureRepository, private RequestInterface $request, private RouterInterface $router, private SettingsInterface $settings, private Steps $breadcrumb, private ThumbnailGenerator $thumbnailGenerator, private Title $title, private Translator $translator)
+    {
     }
 
     /**

@@ -17,45 +17,8 @@ use ACP3\Modules\ACP3\Articles\Helpers;
 
 class AdminArticleEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var ThemePathInterface
-     */
-    private $theme;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        RequestInterface $request,
-        ThemePathInterface $theme,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->request = $request;
-        $this->title = $title;
-        $this->theme = $theme;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->translator = $translator;
+    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private ThemePathInterface $theme, private Title $title, private Translator $translator)
+    {
     }
 
     public function __invoke(array $article): array
@@ -94,9 +57,7 @@ class AdminArticleEditViewProvider
             $layouts = array_merge($layouts, glob($path));
         }
 
-        $layouts = array_map(function ($value) {
-            return str_replace([$this->theme->getDesignPathInternal() . '/', '/View/'], ['', '/'], $value);
-        }, $layouts);
+        $layouts = array_map(fn ($value) => str_replace([$this->theme->getDesignPathInternal() . '/', '/View/'], ['', '/'], $value), $layouts);
 
         $layouts = array_combine($layouts, $layouts);
 

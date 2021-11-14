@@ -13,18 +13,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class Image extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\Session
-     */
-    protected $sessionHandler;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Session $sessionHandler
+        protected Session $sessionHandler
     ) {
         parent::__construct($context);
-
-        $this->sessionHandler = $sessionHandler;
     }
 
     /**

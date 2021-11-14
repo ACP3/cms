@@ -16,39 +16,8 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class AdminSettingsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formToken;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $forms;
-    /**
-     * @var \Symfony\Component\DependencyInjection\ServiceLocator
-     */
-    private $captchaLocator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        FormToken $formToken,
-        Forms $forms,
-        ServiceLocator $captchaLocator,
-        RequestInterface $request,
-        SettingsInterface $settings
-    ) {
-        $this->formToken = $formToken;
-        $this->forms = $forms;
-        $this->captchaLocator = $captchaLocator;
-        $this->request = $request;
-        $this->settings = $settings;
+    public function __construct(private FormToken $formToken, private Forms $forms, private ServiceLocator $captchaLocator, private RequestInterface $request, private SettingsInterface $settings)
+    {
     }
 
     public function __invoke(): array

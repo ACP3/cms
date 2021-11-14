@@ -14,19 +14,13 @@ use Symfony\Contracts\EventDispatcher\Event;
 class ControllerActionRequestEvent extends Event
 {
     public const NAME = 'core.application.controller_action_dispatcher.request';
-
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
     /**
      * @var \Symfony\Component\HttpFoundation\Response
      */
     private $response;
 
-    public function __construct(RequestInterface $request)
+    public function __construct(private RequestInterface $request)
     {
-        $this->request = $request;
     }
 
     public function getRequest(): RequestInterface

@@ -12,21 +12,8 @@ use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
 
 class PollWidgetViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\Repository\AnswerRepository
-     */
-    private $answerRepository;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        AnswerRepository $answerRepository,
-        Translator $translator
-    ) {
-        $this->answerRepository = $answerRepository;
-        $this->translator = $translator;
+    public function __construct(private AnswerRepository $answerRepository, private Translator $translator)
+    {
     }
 
     /**

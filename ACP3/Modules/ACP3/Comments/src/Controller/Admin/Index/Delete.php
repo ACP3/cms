@@ -14,36 +14,19 @@ use ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel;
 
 class Delete extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel
-     */
-    private $commentByModuleModel;
-
     public function __construct(
         WidgetContext $context,
-        FormAction $actionHelper,
-        CommentByModuleModel $commentByModuleModel
+        private FormAction $actionHelper,
+        private CommentByModuleModel $commentByModuleModel
     ) {
         parent::__construct($context);
-
-        $this->actionHelper = $actionHelper;
-        $this->commentByModuleModel = $commentByModuleModel;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleDeleteAction(
             $action,
-            function (array $items) {
-                return (bool) $this->commentByModuleModel->delete($items);
-            }
+            fn (array $items) => (bool) $this->commentByModuleModel->delete($items)
         );
     }
 }

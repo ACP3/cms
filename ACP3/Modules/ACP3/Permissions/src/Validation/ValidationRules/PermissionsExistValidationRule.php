@@ -13,14 +13,8 @@ use ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository;
 
 class PermissionsExistValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var AclResourceRepository
-     */
-    private $resourceRepository;
-
-    public function __construct(AclResourceRepository $resourceRepository)
+    public function __construct(private AclResourceRepository $resourceRepository)
     {
-        $this->resourceRepository = $resourceRepository;
     }
 
     /**
@@ -40,9 +34,7 @@ class PermissionsExistValidationRule extends AbstractValidationRule
      */
     public function permissionsExist(array $resourcesWithPermissions): bool
     {
-        $resourceIds = array_map(static function ($resource) {
-            return (int) $resource['resource_id'];
-        }, $this->resourceRepository->getAllResources());
+        $resourceIds = array_map(static fn ($resource) => (int) $resource['resource_id'], $this->resourceRepository->getAllResources());
 
         $permissions = [
             PermissionEnum::PERMIT_ACCESS,

@@ -19,45 +19,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnLayoutMetaListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\SEO\MetaStatementsServiceInterface
-     */
-    private $metaStatements;
-    /**
-     * @var View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $applicationPath;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
-     */
-    private $aliases;
-
-    public function __construct(
-        View $view,
-        MetaStatementsServiceInterface $metaStatements,
-        ApplicationPath $applicationPath,
-        RequestInterface $request,
-        RouterInterface $router,
-        Aliases $aliases
-    ) {
-        $this->view = $view;
-        $this->metaStatements = $metaStatements;
-        $this->applicationPath = $applicationPath;
-        $this->request = $request;
-        $this->router = $router;
-        $this->aliases = $aliases;
+    public function __construct(private View $view, private MetaStatementsServiceInterface $metaStatements, private ApplicationPath $applicationPath, private RequestInterface $request, private RouterInterface $router, private Aliases $aliases)
+    {
     }
 
     public function __invoke(TemplateEvent $event): void

@@ -13,57 +13,8 @@ use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class Helpers
 {
-    /**
-     * @var Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    private $categoryRepository;
-    /**
-     * @var Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secureHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Model\CategoriesModel
-     */
-    private $categoriesModel;
-
-    public function __construct(
-        Core\ACL $acl,
-        Core\I18n\Translator $translator,
-        Core\Modules $modules,
-        Core\Http\RequestInterface $request,
-        Core\Helpers\Forms $formsHelper,
-        Core\Helpers\Secure $secureHelper,
-        CategoriesModel $categoriesModel,
-        CategoryRepository $categoryRepository
-    ) {
-        $this->acl = $acl;
-        $this->translator = $translator;
-        $this->modules = $modules;
-        $this->request = $request;
-        $this->formsHelper = $formsHelper;
-        $this->secureHelper = $secureHelper;
-        $this->categoryRepository = $categoryRepository;
-        $this->categoriesModel = $categoriesModel;
+    public function __construct(private Core\ACL $acl, private Core\I18n\Translator $translator, private Core\Modules $modules, private Core\Http\RequestInterface $request, private Core\Helpers\Forms $formsHelper, private Core\Helpers\Secure $secureHelper, private CategoriesModel $categoriesModel, private CategoryRepository $categoryRepository)
+    {
     }
 
     /**

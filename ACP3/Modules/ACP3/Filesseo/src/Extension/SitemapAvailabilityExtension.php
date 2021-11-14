@@ -18,31 +18,14 @@ use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
-    /**
-     * @var Date
-     */
-    private $date;
-    /**
-     * @var FilesRepository
-     */
-    private $filesRepository;
-    /**
-     * @var CategoryRepository
-     */
-    private $categoryRepository;
-
     public function __construct(
-        Date $date,
+        private Date $date,
         RouterInterface $router,
-        FilesRepository $filesRepository,
-        CategoryRepository $categoryRepository,
+        private FilesRepository $filesRepository,
+        private CategoryRepository $categoryRepository,
         MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($router, $metaStatements);
-
-        $this->date = $date;
-        $this->filesRepository = $filesRepository;
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**

@@ -12,24 +12,17 @@ use ACP3\Modules\ACP3\Comments;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\ViewProviders\DataGridByModuleViewProvider
-     */
-    private $dataGridByModuleViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Comments\ViewProviders\DataGridByModuleViewProvider $dataGridByModuleViewProvider
+        private Comments\ViewProviders\DataGridByModuleViewProvider $dataGridByModuleViewProvider
     ) {
         parent::__construct($context);
-
-        $this->dataGridByModuleViewProvider = $dataGridByModuleViewProvider;
     }
 
     /**
      * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): array|\Symfony\Component\HttpFoundation\JsonResponse
     {
         return ($this->dataGridByModuleViewProvider)($id);
     }

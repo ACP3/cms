@@ -16,14 +16,8 @@ use Psr\Log\LogLevel;
 
 class LoggerFactory
 {
-    /**
-     * @var ApplicationPath
-     */
-    private $appPath;
-
-    public function __construct(ApplicationPath $appPath)
+    public function __construct(private ApplicationPath $appPath)
     {
-        $this->appPath = $appPath;
     }
 
     /**

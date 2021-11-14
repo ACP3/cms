@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Contact;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Contact\ViewProviders\DataGridViewProvider
-     */
-    private $dataGridViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Contact\ViewProviders\DataGridViewProvider $dataGridViewProvider
+        private Contact\ViewProviders\DataGridViewProvider $dataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->dataGridViewProvider = $dataGridViewProvider;
     }
 
     public function __invoke()

@@ -18,7 +18,7 @@ class MigrationServiceLocator
 
     public function addMigration(MigrationInterface $migration): void
     {
-        $this->migrations[\get_class($migration)] = $migration;
+        $this->migrations[$migration::class] = $migration;
     }
 
     /**

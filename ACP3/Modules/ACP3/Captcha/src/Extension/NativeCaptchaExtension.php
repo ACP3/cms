@@ -14,45 +14,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class NativeCaptchaExtension implements CaptchaExtensionInterface
 {
-    /**
-     * @var Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secureHelper;
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\Session
-     */
-    private $sessionHandler;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var Core\ACL
-     */
-    private $acl;
-
-    public function __construct(
-        Core\ACL $acl,
-        Translator $translator,
-        Session $sessionHandler,
-        Core\View $view,
-        Core\Helpers\Secure $secureHelper,
-        UserModelInterface $user
-    ) {
-        $this->translator = $translator;
-        $this->sessionHandler = $sessionHandler;
-        $this->view = $view;
-        $this->secureHelper = $secureHelper;
-        $this->user = $user;
-        $this->acl = $acl;
+    public function __construct(private Core\ACL $acl, private Translator $translator, private Session $sessionHandler, private Core\View $view, private Core\Helpers\Secure $secureHelper, private UserModelInterface $user)
+    {
     }
 
     public function getCaptchaName(): string

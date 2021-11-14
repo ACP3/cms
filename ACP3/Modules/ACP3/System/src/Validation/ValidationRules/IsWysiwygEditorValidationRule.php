@@ -12,14 +12,8 @@ use Psr\Container\ContainerInterface;
 
 class IsWysiwygEditorValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $editorLocator;
-
-    public function __construct(ContainerInterface $editorLocator)
+    public function __construct(private ContainerInterface $editorLocator)
     {
-        $this->editorLocator = $editorLocator;
     }
 
     /**

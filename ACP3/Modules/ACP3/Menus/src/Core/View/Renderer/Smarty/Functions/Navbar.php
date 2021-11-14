@@ -18,33 +18,9 @@ class Navbar extends AbstractFunction
      * @var array
      */
     private $menus = [];
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository
-     */
-    private $menuItemRepository;
-    /**
-     * @var Menus\Services\MenuServiceInterface
-     */
-    private $menuService;
 
-    public function __construct(
-        Core\Http\RequestInterface $request,
-        Core\Router\RouterInterface $router,
-        Menus\Repository\MenuItemRepository $menuItemRepository,
-        Menus\Services\MenuServiceInterface $menuService
-    ) {
-        $this->request = $request;
-        $this->router = $router;
-        $this->menuItemRepository = $menuItemRepository;
-        $this->menuService = $menuService;
+    public function __construct(private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Menus\Repository\MenuItemRepository $menuItemRepository, private Menus\Services\MenuServiceInterface $menuService)
+    {
     }
 
     /**

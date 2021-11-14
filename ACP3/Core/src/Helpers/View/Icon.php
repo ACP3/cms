@@ -11,14 +11,8 @@ use ACP3\Core\Assets\FileResolver;
 
 class Icon
 {
-    /**
-     * @var FileResolver
-     */
-    private $fileResolver;
-
-    public function __construct(FileResolver $fileResolver)
+    public function __construct(private FileResolver $fileResolver)
     {
-        $this->fileResolver = $fileResolver;
     }
 
     public function __invoke(string $iconSet, string $icon, array $options = []): string

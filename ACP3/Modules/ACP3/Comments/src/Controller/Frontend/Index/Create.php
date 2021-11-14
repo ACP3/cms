@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Comments;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\ViewProviders\CommentCreateViewProvider
-     */
-    private $commentCreateViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Comments\ViewProviders\CommentCreateViewProvider $commentCreateViewProvider
+        private Comments\ViewProviders\CommentCreateViewProvider $commentCreateViewProvider
     ) {
         parent::__construct($context);
-
-        $this->commentCreateViewProvider = $commentCreateViewProvider;
     }
 
     public function __invoke(string $module, int $entryId, string $redirectUrl, bool $embed = false): array

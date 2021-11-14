@@ -12,19 +12,8 @@ use ACP3\Core\Modules;
 
 class AdminModulesViewProvider
 {
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(Modules $modules, Translator $translator)
+    public function __construct(private Modules $modules, private Translator $translator)
     {
-        $this->modules = $modules;
-        $this->translator = $translator;
     }
 
     public function __invoke(): array

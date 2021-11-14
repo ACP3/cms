@@ -13,39 +13,20 @@ use ACP3\Modules\ACP3\Guestbook;
 
 class EditPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var Guestbook\Model\GuestbookModel
-     */
-    private $guestbookModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Guestbook\Model\GuestbookModel $guestbookModel,
-        Guestbook\Validation\AdminFormValidation $adminFormValidation
+        private FormAction $actionHelper,
+        private Guestbook\Model\GuestbookModel $guestbookModel,
+        private Guestbook\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
-
-        $this->adminFormValidation = $adminFormValidation;
-        $this->guestbookModel = $guestbookModel;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

@@ -14,27 +14,8 @@ use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class LatestNewsWidgetViewProvider
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Modules\ACP3\News\Repository\NewsRepository
-     */
-    private $newsRepository;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        Date $date,
-        NewsRepository $newsRepository,
-        SettingsInterface $settings)
+    public function __construct(private Date $date, private NewsRepository $newsRepository, private SettingsInterface $settings)
     {
-        $this->date = $date;
-        $this->newsRepository = $newsRepository;
-        $this->settings = $settings;
     }
 
     /**

@@ -16,33 +16,17 @@ use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 class Rate extends AbstractWidgetAction
 {
     /**
-     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
-     */
-    private $shareRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository
-     */
-    private $shareRatingsRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Model\ShareRatingModel
-     */
-    private $shareRatingModel;
-    /**
      * @var bool|null
      */
     private $alreadyRated;
 
     public function __construct(
         WidgetContext $context,
-        ShareRepository $shareRepository,
-        ShareRatingsRepository $shareRatingsRepository,
-        ShareRatingModel $shareRatingModel
+        private ShareRepository $shareRepository,
+        private ShareRatingsRepository $shareRatingsRepository,
+        private ShareRatingModel $shareRatingModel
     ) {
         parent::__construct($context);
-
-        $this->shareRepository = $shareRepository;
-        $this->shareRatingsRepository = $shareRatingsRepository;
-        $this->shareRatingModel = $shareRatingModel;
     }
 
     /**

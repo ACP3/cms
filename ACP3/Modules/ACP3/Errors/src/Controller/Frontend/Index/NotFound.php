@@ -14,18 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NotFound extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-
     public function __construct(
         WidgetContext $context,
-        Steps $breadcrumb
+        private Steps $breadcrumb
     ) {
         parent::__construct($context);
-
-        $this->breadcrumb = $breadcrumb;
     }
 
     public function __invoke(): Response

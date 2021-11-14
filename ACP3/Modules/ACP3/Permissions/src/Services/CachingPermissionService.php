@@ -15,19 +15,8 @@ class CachingPermissionService implements PermissionServiceInterface
     private const CACHE_ID_RESOURCES = 'acl_resources';
     private const CACHE_ID_ROLES = 'acl_roles';
 
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $permissionsCachePool;
-    /**
-     * @var PermissionService
-     */
-    private $permissionService;
-
-    public function __construct(CacheItemPoolInterface $permissionsCachePool, PermissionService $permissionService)
+    public function __construct(private CacheItemPoolInterface $permissionsCachePool, private PermissionService $permissionService)
     {
-        $this->permissionsCachePool = $permissionsCachePool;
-        $this->permissionService = $permissionService;
     }
 
     public function getResources(): array

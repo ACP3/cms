@@ -12,14 +12,8 @@ use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class ParentIdValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    private $categoriesRepository;
-
-    public function __construct(CategoryRepository $categoriesRepository)
+    public function __construct(private CategoryRepository $categoriesRepository)
     {
-        $this->categoriesRepository = $categoriesRepository;
     }
 
     /**

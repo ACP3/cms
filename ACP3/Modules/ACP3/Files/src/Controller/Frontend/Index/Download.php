@@ -14,45 +14,21 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class Download extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\Date
-     */
-    private $date;
-    /**
-     * @var \ACP3\Core\Helpers\StringFormatter
-     */
-    private $stringFormatter;
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Repository\FilesRepository
-     */
-    private $filesRepository;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\Date $date,
-        Core\Http\RedirectResponse $redirectResponse,
-        Core\Helpers\StringFormatter $stringFormatter,
-        Files\Repository\FilesRepository $filesRepository
+        private Core\Date $date,
+        private Core\Http\RedirectResponse $redirectResponse,
+        private Core\Helpers\StringFormatter $stringFormatter,
+        private Files\Repository\FilesRepository $filesRepository
     ) {
         parent::__construct($context);
-
-        $this->date = $date;
-        $this->stringFormatter = $stringFormatter;
-        $this->filesRepository = $filesRepository;
-        $this->redirectResponse = $redirectResponse;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $file = $this->filesRepository->getOneById($id);

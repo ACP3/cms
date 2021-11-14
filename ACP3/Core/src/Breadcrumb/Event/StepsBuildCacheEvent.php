@@ -12,14 +12,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class StepsBuildCacheEvent extends Event
 {
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $steps;
-
-    public function __construct(Steps $steps)
+    public function __construct(private Steps $steps)
     {
-        $this->steps = $steps;
     }
 
     public function getSteps(): Steps

@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Comments;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Comments\Model\CommentsModel
-     */
-    private $commentsModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentEditViewProvider
-     */
-    private $adminCommentEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Comments\Model\CommentsModel $commentsModel,
-        Comments\ViewProviders\AdminCommentEditViewProvider $adminCommentEditViewProvider
+        private Comments\Model\CommentsModel $commentsModel,
+        private Comments\ViewProviders\AdminCommentEditViewProvider $adminCommentEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->commentsModel = $commentsModel;
-        $this->adminCommentEditViewProvider = $adminCommentEditViewProvider;
     }
 
     /**

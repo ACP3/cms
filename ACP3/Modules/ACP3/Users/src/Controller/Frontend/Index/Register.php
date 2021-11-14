@@ -13,36 +13,14 @@ use ACP3\Modules\ACP3\Users;
 
 class Register extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\Alerts
-     */
-    private $alertsHelper;
-    /**
-     * @var \ACP3\Core\Http\RedirectResponse
-     */
-    private $redirectResponse;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\RegistrationViewProvider
-     */
-    private $registrationViewProvider;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        UserModelInterface $user,
-        Core\Http\RedirectResponse $redirectResponse,
-        Core\Helpers\Alerts $alertsHelper,
-        Users\ViewProviders\RegistrationViewProvider $registrationViewProvider
+        private UserModelInterface $user,
+        private Core\Http\RedirectResponse $redirectResponse,
+        private Core\Helpers\Alerts $alertsHelper,
+        private Users\ViewProviders\RegistrationViewProvider $registrationViewProvider
     ) {
         parent::__construct($context);
-
-        $this->alertsHelper = $alertsHelper;
-        $this->redirectResponse = $redirectResponse;
-        $this->registrationViewProvider = $registrationViewProvider;
-        $this->user = $user;
     }
 
     public function __invoke()

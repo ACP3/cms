@@ -16,16 +16,9 @@ use RFM\Repository\Local\Storage;
 
 class RichFileManager extends AbstractWidgetAction
 {
-    /**
-     * @var string
-     */
-    private $applicationMode;
-
-    public function __construct(WidgetContext $context, string $applicationMode)
+    public function __construct(WidgetContext $context, private string $applicationMode)
     {
         parent::__construct($context);
-
-        $this->applicationMode = $applicationMode;
     }
 
     /**

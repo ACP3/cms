@@ -19,33 +19,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnNewsLayoutItemIndexAfterEventListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Modules\ACP3\Comments\Helpers
-     */
-    private $commentsHelpers;
-
-    public function __construct(
-        Modules $modules,
-        View $view,
-        SettingsInterface $settings,
-        Helpers $commentsHelpers)
+    public function __construct(private Modules $modules, private View $view, private SettingsInterface $settings, private Helpers $commentsHelpers)
     {
-        $this->view = $view;
-        $this->settings = $settings;
-        $this->modules = $modules;
-        $this->commentsHelpers = $commentsHelpers;
     }
 
     public function __invoke(TemplateEvent $event): void

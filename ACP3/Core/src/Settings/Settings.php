@@ -19,38 +19,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Settings implements SettingsInterface
 {
     private const CACHE_ID = 'settings';
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-    /**
-     * @var \ACP3\Core\Repository\ModuleAwareRepositoryInterface
-     */
-    private $systemModuleRepository;
-    /**
-     * @var \ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface
-     */
-    private $systemSettingsRepository;
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $coreCachePool;
     /**
      * @var array
      */
     private $settings = [];
 
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        CacheItemPoolInterface $coreCachePool,
-        ModuleAwareRepositoryInterface $systemModuleRepository,
-        SettingsAwareRepositoryInterface $systemSettingsRepository
-    ) {
-        $this->coreCachePool = $coreCachePool;
-        $this->systemModuleRepository = $systemModuleRepository;
-        $this->systemSettingsRepository = $systemSettingsRepository;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(private EventDispatcherInterface $eventDispatcher, private CacheItemPoolInterface $coreCachePool, private ModuleAwareRepositoryInterface $systemModuleRepository, private SettingsAwareRepositoryInterface $systemSettingsRepository)
+    {
     }
 
     /**

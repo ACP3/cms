@@ -12,14 +12,8 @@ use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
 
 class UserNameValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Validation\ValidationRules\IntegerValidationRule
-     */
-    private $integerValidationRule;
-
-    public function __construct(IntegerValidationRule $integerValidationRule)
+    public function __construct(private IntegerValidationRule $integerValidationRule)
     {
-        $this->integerValidationRule = $integerValidationRule;
     }
 
     /**

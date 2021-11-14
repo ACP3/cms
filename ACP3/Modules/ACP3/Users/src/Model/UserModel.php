@@ -31,21 +31,9 @@ class UserModel implements UserModelInterface
      * @var array
      */
     protected $userInfo = [];
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
-     */
-    protected $userRepository;
-    /**
-     * @var CountryList
-     */
-    private $countryList;
 
-    public function __construct(
-        CountryList $countryList,
-        Users\Repository\UserRepository $userRepository
-    ) {
-        $this->userRepository = $userRepository;
-        $this->countryList = $countryList;
+    public function __construct(private CountryList $countryList, protected Users\Repository\UserRepository $userRepository)
+    {
     }
 
     /**

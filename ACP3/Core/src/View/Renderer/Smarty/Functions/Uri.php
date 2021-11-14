@@ -11,14 +11,8 @@ use ACP3\Core;
 
 class Uri extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-
-    public function __construct(Core\Router\RouterInterface $router)
+    public function __construct(private Core\Router\RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     /**

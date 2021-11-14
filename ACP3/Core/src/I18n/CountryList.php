@@ -12,10 +12,6 @@ use Giggsey\Locale\Locale;
 class CountryList
 {
     /**
-     * @var Translator
-     */
-    private $translator;
-    /**
      * @var array|null
      */
     private $countries;
@@ -24,9 +20,8 @@ class CountryList
      */
     private $supportedLocales;
 
-    public function __construct(Translator $translator)
+    public function __construct(private Translator $translator)
     {
-        $this->translator = $translator;
     }
 
     /**

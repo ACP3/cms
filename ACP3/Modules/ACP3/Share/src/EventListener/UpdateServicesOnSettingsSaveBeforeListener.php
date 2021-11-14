@@ -16,27 +16,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UpdateServicesOnSettingsSaveBeforeListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Model\ShareModel
-     */
-    private $shareModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Share\Repository\ShareRepository
-     */
-    private $shareRepository;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        SettingsInterface $settings,
-        ShareModel $shareModel,
-        ShareRepository $shareRepository)
+    public function __construct(private SettingsInterface $settings, private ShareModel $shareModel, private ShareRepository $shareRepository)
     {
-        $this->shareModel = $shareModel;
-        $this->shareRepository = $shareRepository;
-        $this->settings = $settings;
     }
 
     /**

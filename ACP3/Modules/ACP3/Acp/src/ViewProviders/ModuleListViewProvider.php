@@ -13,27 +13,8 @@ use ACP3\Core\Modules;
 
 class ModuleListViewProvider
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        ACL $acl,
-        Modules $modules,
-        Translator $translator
-    ) {
-        $this->acl = $acl;
-        $this->modules = $modules;
-        $this->translator = $translator;
+    public function __construct(private ACL $acl, private Modules $modules, private Translator $translator)
+    {
     }
 
     public function __invoke(): array

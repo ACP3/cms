@@ -15,33 +15,8 @@ use ACP3\Modules\ACP3\Guestbook\Repository\GuestbookRepository;
 
 class GuestbookListViewProvider
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Guestbook\Repository\GuestbookRepository
-     */
-    private $guestbookRepository;
-    /**
-     * @var \ACP3\Core\Pagination
-     */
-    private $pagination;
-    /**
-     * @var \ACP3\Core\Helpers\ResultsPerPage
-     */
-    private $resultsPerPage;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-
-    public function __construct(
-        GuestbookRepository $guestbookRepository,
-        Pagination $pagination,
-        ResultsPerPage $resultsPerPage,
-        SettingsInterface $settings
-    ) {
-        $this->guestbookRepository = $guestbookRepository;
-        $this->pagination = $pagination;
-        $this->resultsPerPage = $resultsPerPage;
-        $this->settings = $settings;
+    public function __construct(private GuestbookRepository $guestbookRepository, private Pagination $pagination, private ResultsPerPage $resultsPerPage, private SettingsInterface $settings)
+    {
     }
 
     /**

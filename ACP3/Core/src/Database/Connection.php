@@ -17,36 +17,12 @@ use Psr\Log\LoggerInterface;
 class Connection
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-    /**
      * @var \Doctrine\DBAL\Connection
      */
     private $connection;
-    /**
-     * @var string
-     */
-    private $appMode;
-    /**
-     * @var array
-     */
-    private $connectionParams;
-    /**
-     * @var string
-     */
-    private $prefix;
 
-    public function __construct(
-        LoggerInterface $logger,
-        string $appMode,
-        array $connectionParams,
-        string $tablePrefix
-    ) {
-        $this->logger = $logger;
-        $this->appMode = $appMode;
-        $this->connectionParams = $connectionParams;
-        $this->prefix = $tablePrefix;
+    public function __construct(private LoggerInterface $logger, private string $appMode, private array $connectionParams, private string $tablePrefix)
+    {
     }
 
     /**
@@ -106,12 +82,12 @@ class Connection
 
     public function getPrefix(): string
     {
-        return $this->prefix;
+        return $this->tablePrefix;
     }
 
     public function getPrefixedTableName(string $tableName): string
     {
-        return $this->prefix . $tableName;
+        return $this->tablePrefix . $tableName;
     }
 
     /**
@@ -149,11 +125,9 @@ class Connection
     /**
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
      *
-     * @return bool|string
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function fetchColumn(string $statement, array $params = [], array $types = [])
+    public function fetchColumn(string $statement, array $params = [], array $types = []): bool|string
     {
         return $this->executeQuery($statement, $params, $types)->fetchOne();
     }

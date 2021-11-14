@@ -55,7 +55,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
 
         try {
             $this->validator->validate();
-        } catch (ValidationFailedException $e) {
+        } catch (ValidationFailedException) {
             $this->fail();
         }
     }

@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Seo;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Seo\ViewProviders\AdminSeoEditViewProvider
-     */
-    private $adminSeoEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Seo\ViewProviders\AdminSeoEditViewProvider $adminSeoEditViewProvider
+        private Seo\ViewProviders\AdminSeoEditViewProvider $adminSeoEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminSeoEditViewProvider = $adminSeoEditViewProvider;
     }
 
     public function __invoke(): array

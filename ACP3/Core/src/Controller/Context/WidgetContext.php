@@ -16,45 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class WidgetContext
 {
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    private $container;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var SettingsInterface
-     */
-    private $config;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    private $appPath;
-
-    public function __construct(
-        ContainerInterface $container,
-        Translator $translator,
-        RequestInterface $request,
-        View $view,
-        SettingsInterface $config,
-        ApplicationPath $appPath
-    ) {
-        $this->container = $container;
-        $this->translator = $translator;
-        $this->request = $request;
-        $this->view = $view;
-        $this->config = $config;
-        $this->appPath = $appPath;
+    public function __construct(private ContainerInterface $container, private Translator $translator, private RequestInterface $request, private View $view, private SettingsInterface $config, private ApplicationPath $appPath)
+    {
     }
 
     public function getContainer(): ContainerInterface

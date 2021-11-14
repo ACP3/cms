@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Contact;
 
 class Settings extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Contact\ViewProviders\AdminSettingsViewProvider
-     */
-    private $adminSettingsViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        Contact\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
+        private Contact\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function __invoke(): array

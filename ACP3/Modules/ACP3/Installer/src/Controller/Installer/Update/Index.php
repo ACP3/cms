@@ -14,18 +14,11 @@ use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
 
 class Index extends AbstractInstallerAction
 {
-    /**
-     * @var Migrator
-     */
-    private $migrator;
-
     public function __construct(
         InstallerContext $context,
-        Migrator $migrator
+        private Migrator $migrator
     ) {
         parent::__construct($context);
-
-        $this->migrator = $migrator;
     }
 
     /**

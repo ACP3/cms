@@ -16,14 +16,9 @@ class SitemapAvailabilityRegistrar
      * @var SitemapAvailabilityExtensionInterface[]
      */
     private $availableModules = [];
-    /**
-     * @var Modules
-     */
-    private $modules;
 
-    public function __construct(Modules $modules)
+    public function __construct(private Modules $modules)
     {
-        $this->modules = $modules;
     }
 
     public function registerModule(SitemapAvailabilityExtensionInterface $availability): void

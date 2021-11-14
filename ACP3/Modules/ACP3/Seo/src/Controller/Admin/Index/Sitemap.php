@@ -15,32 +15,18 @@ use ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel;
 
 class Sitemap extends AbstractWidgetAction
 {
-    /**
-     * @var SitemapGenerationModel
-     */
-    private $sitemapGenerationModel;
-    /**
-     * @var \ACP3\Core\Helpers\RedirectMessages
-     */
-    private $redirectMessages;
-
     public function __construct(
         WidgetContext $context,
-        RedirectMessages $redirectMessages,
-        SitemapGenerationModel $sitemapGenerationModel
+        private RedirectMessages $redirectMessages,
+        private SitemapGenerationModel $sitemapGenerationModel
     ) {
         parent::__construct($context);
-
-        $this->sitemapGenerationModel = $sitemapGenerationModel;
-        $this->redirectMessages = $redirectMessages;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException
      */
-    public function __invoke()
+    public function __invoke(): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         $result = false;
         $phrase = 'sitemap_error';

@@ -16,45 +16,8 @@ use ACP3\Modules\ACP3\Users\Helpers\Forms as UserFormsHelper;
 
 class AdminUserEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
-     */
-    private $userFormsHelpers;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelpers;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-
-    public function __construct(
-        ACL $acl,
-        FormToken $formTokenHelper,
-        Forms $formsHelper,
-        UserFormsHelper $userFormsHelpers,
-        RequestInterface $request,
-        Title $title
-    ) {
-        $this->acl = $acl;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->userFormsHelpers = $userFormsHelpers;
-        $this->request = $request;
-        $this->formsHelpers = $formsHelper;
-        $this->title = $title;
+    public function __construct(private ACL $acl, private FormToken $formTokenHelper, private Forms $formsHelpers, private UserFormsHelper $userFormsHelpers, private RequestInterface $request, private Title $title)
+    {
     }
 
     public function __invoke(array $userInfo): array

@@ -12,14 +12,8 @@ use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 
 class Breadcrumb extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-
-    public function __construct(Steps $breadcrumb)
+    public function __construct(private Steps $breadcrumb)
     {
-        $this->breadcrumb = $breadcrumb;
     }
 
     public function __invoke(array $params, \Smarty_Internal_Template $smarty)

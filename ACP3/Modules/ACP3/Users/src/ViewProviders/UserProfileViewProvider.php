@@ -12,19 +12,8 @@ use ACP3\Core\I18n\Translator;
 
 class UserProfileViewProvider
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $userModel;
-
-    public function __construct(Translator $translator, UserModelInterface $userModel)
+    public function __construct(private Translator $translator, private UserModelInterface $userModel)
     {
-        $this->translator = $translator;
-        $this->userModel = $userModel;
     }
 
     public function __invoke(int $userId): array

@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Users;
 
 class Settings extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminSettingsViewProvider
-     */
-    private $adminSettingsViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Users\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
+        private Users\ViewProviders\AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminSettingsViewProvider = $adminSettingsViewProvider;
     }
 
     public function __invoke(): array

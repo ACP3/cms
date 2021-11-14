@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridByTableViewProvider;
 
 class Table extends AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Auditlog\ViewProviders\DataGridByTableViewProvider
-     */
-    private $dataGridByTableViewProvider;
-
     public function __construct(
         WidgetContext $context,
-        DataGridByTableViewProvider $dataGridByTableViewProvider
+        private DataGridByTableViewProvider $dataGridByTableViewProvider
     ) {
         parent::__construct($context);
-
-        $this->dataGridByTableViewProvider = $dataGridByTableViewProvider;
     }
 
     public function __invoke(string $table)

@@ -17,27 +17,8 @@ class Router implements RouterInterface
 {
     private const ADMIN_PANEL_PATTERN = '=^(acp|admin)/=';
 
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
-     * @var SettingsInterface
-     */
-    protected $config;
-
-    public function __construct(
-        RequestInterface $request,
-        ApplicationPath $appPath,
-        SettingsInterface $config
-    ) {
-        $this->request = $request;
-        $this->appPath = $appPath;
-        $this->config = $config;
+    public function __construct(protected RequestInterface $request, protected ApplicationPath $appPath, protected SettingsInterface $config)
+    {
     }
 
     /**
@@ -68,7 +49,7 @@ class Router implements RouterInterface
         }
 
         $prefix = 'admin/';
-        if (strpos($path, $prefix) === 0) {
+        if (str_starts_with($path, $prefix)) {
             $path = 'acp/' . substr($path, \strlen($prefix));
         }
 

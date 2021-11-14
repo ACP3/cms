@@ -16,18 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 class LibrariesCache
 {
     /**
-     * @var CacheItemPoolInterface
-     */
-    private $librariesCachePool;
-
-    /**
      * @var Array<string, string[]>
      */
     private $librariesCache = [];
 
-    public function __construct(CacheItemPoolInterface $librariesCachePool)
+    public function __construct(private CacheItemPoolInterface $librariesCachePool)
     {
-        $this->librariesCachePool = $librariesCachePool;
     }
 
     public function scheduleStoreEnabledLibraryInCache(Request $request, string $library): void

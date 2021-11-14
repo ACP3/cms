@@ -11,14 +11,8 @@ use Psr\Container\ContainerInterface;
 
 class DataProcessor
 {
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $columnTypeStrategyLocator;
-
-    public function __construct(ContainerInterface $columnTypeStrategyLocator)
+    public function __construct(private ContainerInterface $columnTypeStrategyLocator)
     {
-        $this->columnTypeStrategyLocator = $columnTypeStrategyLocator;
     }
 
     public function escape(array $columnData, array $columnConstraints): array

@@ -20,39 +20,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnGuestbookLayoutCreateEventListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        Modules $modules,
-        SettingsInterface $settings,
-        Translator $translator,
-        View $view,
-        Forms $formsHelper)
+    public function __construct(private Modules $modules, private SettingsInterface $settings, private Translator $translator, private View $view, private Forms $formsHelper)
     {
-        $this->view = $view;
-        $this->formsHelper = $formsHelper;
-        $this->settings = $settings;
-        $this->modules = $modules;
-        $this->translator = $translator;
     }
 
     public function __invoke(TemplateEvent $event): void

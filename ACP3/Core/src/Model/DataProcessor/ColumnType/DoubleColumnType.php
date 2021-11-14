@@ -27,10 +27,7 @@ class DoubleColumnType implements ColumnTypeStrategyInterface
         return $value;
     }
 
-    /**
-     * @return string|int
-     */
-    public function getDefaultValue()
+    public function getDefaultValue(): int|string
     {
         return 0;
     }

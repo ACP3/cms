@@ -27,10 +27,7 @@ class SerializableColumnType implements ColumnTypeStrategyInterface
         return unserialize($value);
     }
 
-    /**
-     * @return string|int
-     */
-    public function getDefaultValue()
+    public function getDefaultValue(): int|string
     {
         return serialize('');
     }

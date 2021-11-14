@@ -14,69 +14,25 @@ use ACP3\Modules\ACP3\Users;
 
 class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Core\Helpers\Secure
-     */
-    private $secureHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Repository\UserRepository
-     */
-    private $userRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Validation\AccountForgotPasswordFormValidation
-     */
-    private $accountForgotPasswordFormValidation;
-    /**
-     * @var \ACP3\Core\Helpers\Alerts
-     */
-    private $alertsHelper;
-    /**
-     * @var \ACP3\Core\Validation\Validator
-     */
-    private $validator;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UsersModel
-     */
-    private $usersModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Helpers\SendPasswordChangeEmail
-     */
-    private $sendPasswordChangeEmail;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Core\Validation\Validator $validator,
-        Core\Helpers\Alerts $alertsHelper,
-        Core\Helpers\Secure $secureHelper,
-        Users\Model\UsersModel $usersModel,
-        Users\Repository\UserRepository $userRepository,
-        Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
-        Users\Helpers\SendPasswordChangeEmail $sendPasswordChangeEmail
+        private FormAction $actionHelper,
+        private Core\Validation\Validator $validator,
+        private Core\Helpers\Alerts $alertsHelper,
+        private Core\Helpers\Secure $secureHelper,
+        private Users\Model\UsersModel $usersModel,
+        private Users\Repository\UserRepository $userRepository,
+        private Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
+        private Users\Helpers\SendPasswordChangeEmail $sendPasswordChangeEmail
     ) {
         parent::__construct($context);
-
-        $this->secureHelper = $secureHelper;
-        $this->userRepository = $userRepository;
-        $this->accountForgotPasswordFormValidation = $accountForgotPasswordFormValidation;
-        $this->alertsHelper = $alertsHelper;
-        $this->validator = $validator;
-        $this->usersModel = $usersModel;
-        $this->sendPasswordChangeEmail = $sendPasswordChangeEmail;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handlePostAction(
             function () {

@@ -77,7 +77,7 @@ class NewsRepository extends Core\Repository\AbstractRepository
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAllByCategoryId(
-        $categoryId,
+        array|int $categoryId,
         string $time = '',
         ?int $limitStart = null,
         ?int $resultsPerPage = null

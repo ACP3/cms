@@ -22,11 +22,9 @@ class FileUploadValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param string|array|UploadedFile $data
-     *
      * @return bool
      */
-    protected function isFileUpload($data)
+    protected function isFileUpload(array|string|UploadedFile $data)
     {
         if ($data instanceof UploadedFile) {
             return $data->isValid() && $data->getSize() > 0;

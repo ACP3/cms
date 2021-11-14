@@ -14,46 +14,22 @@ use ACP3\Modules\ACP3\Newsletter;
 
 class CreatePost extends AbstractFormAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var Newsletter\Model\NewsletterModel
-     */
-    private $newsletterModel;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        UserModelInterface $user,
-        Newsletter\Model\NewsletterModel $newsletterModel,
-        Newsletter\Validation\AdminFormValidation $adminFormValidation,
+        private FormAction $actionHelper,
+        private UserModelInterface $user,
+        private Newsletter\Model\NewsletterModel $newsletterModel,
+        private Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers
     ) {
         parent::__construct($context, $newsletterHelpers);
-
-        $this->newsletterModel = $newsletterModel;
-        $this->adminFormValidation = $adminFormValidation;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handlePostAction(function () {
             $formData = $this->request->getPost()->all();
@@ -68,7 +44,7 @@ class CreatePost extends AbstractFormAction
             [$text, $result] = $this->sendTestNewsletter(
                 $formData['test'] == 1,
                 $newsletterId,
-                $newsletterId,
+                (bool) $newsletterId,
                 $settings['mail']
             );
 

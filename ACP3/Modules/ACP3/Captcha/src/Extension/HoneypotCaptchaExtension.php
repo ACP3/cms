@@ -13,24 +13,8 @@ use ACP3\Core\View;
 
 class HoneypotCaptchaExtension implements CaptchaExtensionInterface
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $userModel;
-
-    public function __construct(Translator $translator, View $view, UserModelInterface $userModel)
+    public function __construct(private Translator $translator, private View $view, private UserModelInterface $userModel)
     {
-        $this->translator = $translator;
-        $this->view = $view;
-        $this->userModel = $userModel;
     }
 
     public function getCaptchaName(): string

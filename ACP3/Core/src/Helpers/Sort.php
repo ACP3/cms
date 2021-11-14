@@ -12,14 +12,8 @@ use Doctrine\DBAL\Exception;
 
 class Sort
 {
-    /**
-     * @var \ACP3\Core\Database\Connection
-     */
-    private $db;
-
-    public function __construct(Connection $db)
+    public function __construct(private Connection $db)
     {
-        $this->db = $db;
     }
 
     /**

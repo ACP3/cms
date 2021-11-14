@@ -13,24 +13,12 @@ use ACP3\Modules\ACP3\Users;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\ViewProviders\AdminUserEditViewProvider
-     */
-    private $adminUserEditViewProvider;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        UserModelInterface $user,
-        Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider
+        private UserModelInterface $user,
+        private Users\ViewProviders\AdminUserEditViewProvider $adminUserEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminUserEditViewProvider = $adminUserEditViewProvider;
-        $this->user = $user;
     }
 
     /**

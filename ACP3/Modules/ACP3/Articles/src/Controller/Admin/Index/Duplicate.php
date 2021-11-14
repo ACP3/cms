@@ -14,35 +14,19 @@ use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
 
 class Duplicate extends AbstractWidgetAction
 {
-    /**
-     * @var ArticlesModel
-     */
-    private $articlesModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         WidgetContext $context,
-        FormAction $actionHelper,
-        ArticlesModel $articlesModel
+        private FormAction $actionHelper,
+        private ArticlesModel $articlesModel
     ) {
         parent::__construct($context);
-
-        $this->articlesModel = $articlesModel;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
-        return $this->actionHelper->handleDuplicateAction(function () use ($id) {
-            return $this->articlesModel->duplicate($id);
-        });
+        return $this->actionHelper->handleDuplicateAction(fn () => $this->articlesModel->duplicate($id));
     }
 }

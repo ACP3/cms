@@ -16,19 +16,8 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class Psr6CacheItemPoolFactory
 {
-    /**
-     * @var ApplicationPath
-     */
-    private $applicationPath;
-    /**
-     * @var string
-     */
-    private $environment;
-
-    public function __construct(ApplicationPath $applicationPath, string $environment)
+    public function __construct(private ApplicationPath $applicationPath, private string $environment)
     {
-        $this->applicationPath = $applicationPath;
-        $this->environment = $environment;
     }
 
     public function __invoke(string $namespace): CacheItemPoolInterface

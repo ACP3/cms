@@ -11,14 +11,8 @@ use ACP3\Core\Helpers\StringFormatter;
 
 class Nl2pColumnRenderer extends AbstractColumnRenderer
 {
-    /**
-     * @var \ACP3\Core\Helpers\StringFormatter
-     */
-    private $stringFormatter;
-
-    public function __construct(StringFormatter $stringFormatter)
+    public function __construct(private StringFormatter $stringFormatter)
     {
-        $this->stringFormatter = $stringFormatter;
     }
 
     /**

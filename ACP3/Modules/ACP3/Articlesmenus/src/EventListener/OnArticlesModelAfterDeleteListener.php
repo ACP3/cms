@@ -16,19 +16,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnArticlesModelAfterDeleteListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem
-     */
-    private $manageMenuItem;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    public function __construct(Modules $modules, ManageMenuItem $manageMenuItem)
+    public function __construct(private Modules $modules, private ManageMenuItem $manageMenuItem)
     {
-        $this->manageMenuItem = $manageMenuItem;
-        $this->modules = $modules;
     }
 
     /**

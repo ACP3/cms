@@ -13,42 +13,17 @@ use ACP3\Modules\ACP3\Gallery;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
-     */
-    private $pictureRepository;
-    /**
-     * @var Gallery\Model\GalleryModel
-     */
-    private $galleryModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-    /**
-     * @var Gallery\Helper\ThumbnailGenerator
-     */
-    private $thumbnailGenerator;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
-        Gallery\Model\GalleryModel $galleryModel,
-        Gallery\Repository\PictureRepository $pictureRepository
+        private FormAction $actionHelper,
+        private Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
+        private Gallery\Model\GalleryModel $galleryModel,
+        private Gallery\Repository\PictureRepository $pictureRepository
     ) {
         parent::__construct($context);
-
-        $this->pictureRepository = $pictureRepository;
-        $this->galleryModel = $galleryModel;
-        $this->actionHelper = $actionHelper;
-        $this->thumbnailGenerator = $thumbnailGenerator;
     }
 
-    /**
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function __invoke(?string $action = null)
+    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

@@ -11,30 +11,15 @@ use ACP3\Core;
 
 class Alerts
 {
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-
-    public function __construct(
-        Core\Http\RequestInterface $request,
-        Core\View $view
-    ) {
-        $this->request = $request;
-        $this->view = $view;
+    public function __construct(private Core\Http\RequestInterface $request, private Core\View $view)
+    {
     }
 
     /**
      * Allows to display a confirmation box.
      * The method's return value is the rendered confirmation box.
-     *
-     * @param string|array $forward
      */
-    public function confirmBox(string $text, $forward = '', string $backward = '', bool $overlay = false): string
+    public function confirmBox(string $text, array|string $forward = '', string $backward = '', bool $overlay = false): string
     {
         if (!empty($text)) {
             $confirm = [
@@ -80,20 +65,15 @@ class Alerts
 
     /**
      * Returns the pretty printed form errors.
-     *
-     * @param string|array $errors
      */
-    public function errorBox($errors): string
+    public function errorBox(array|string $errors): string
     {
         $this->setErrorBoxData($errors);
 
         return $this->view->fetchTemplate('System/Alerts/error_box.tpl');
     }
 
-    /**
-     * @param string|array $errors
-     */
-    protected function setErrorBoxData($errors): void
+    protected function setErrorBoxData(array|string $errors): void
     {
         $hasNonIntegerKeys = false;
 
@@ -120,10 +100,7 @@ class Alerts
         }
     }
 
-    /**
-     * @param string|array $errors
-     */
-    protected function prepareErrorBoxData($errors): array
+    protected function prepareErrorBoxData(array|string $errors): array
     {
         if (\is_string($errors) && ($data = @unserialize($errors, ['allowed_classes' => true])) !== false) {
             $errors = $data;

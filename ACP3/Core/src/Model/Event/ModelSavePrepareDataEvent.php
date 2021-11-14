@@ -19,16 +19,11 @@ class ModelSavePrepareDataEvent extends Event
      * @var array
      */
     private $rawData;
-    /**
-     * @var array|null
-     */
-    private $currentData;
 
-    public function __construct(array $rawData, ?array $currentData, array $allowedColumns)
+    public function __construct(array $rawData, private ?array $currentData, array $allowedColumns)
     {
         $this->rawData = $rawData;
         $this->allowedColumns = $allowedColumns;
-        $this->currentData = $currentData;
     }
 
     public function getRawData(): array

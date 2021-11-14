@@ -11,14 +11,8 @@ use ACP3\Core\Helpers\StringFormatter;
 
 class Nl2p extends AbstractModifier
 {
-    /**
-     * @var \ACP3\Core\Helpers\StringFormatter
-     */
-    protected $stringFormatter;
-
-    public function __construct(StringFormatter $stringFormatter)
+    public function __construct(protected StringFormatter $stringFormatter)
     {
-        $this->stringFormatter = $stringFormatter;
     }
 
     /**

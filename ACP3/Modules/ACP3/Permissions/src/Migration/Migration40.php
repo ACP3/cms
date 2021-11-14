@@ -12,14 +12,8 @@ use ACP3\Core\Migration\MigrationInterface;
 
 final class Migration40 implements MigrationInterface
 {
-    /**
-     * @var Connection
-     */
-    private $db;
-
-    public function __construct(Connection $db)
+    public function __construct(private Connection $db)
     {
-        $this->db = $db;
     }
 
     public function up(): void

@@ -14,33 +14,8 @@ use ACP3\Modules\ACP3\Users\Helpers\Forms as UserFormsHelper;
 
 class AccountSettingsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $userModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Helpers\Forms
-     */
-    private $userFormsHelper;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-
-    public function __construct(
-        FormToken $formTokenHelper,
-        RequestInterface $request,
-        UserModelInterface $userModel,
-        UserFormsHelper $userFormsHelper)
+    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private UserModelInterface $userModel, private UserFormsHelper $userFormsHelper)
     {
-        $this->formTokenHelper = $formTokenHelper;
-        $this->userModel = $userModel;
-        $this->userFormsHelper = $userFormsHelper;
-        $this->request = $request;
     }
 
     /**

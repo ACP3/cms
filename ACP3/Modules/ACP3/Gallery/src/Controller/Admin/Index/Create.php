@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Gallery;
 
 class Create extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryEditViewProvider
-     */
-    private $adminGalleryEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
+        private Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->adminGalleryEditViewProvider = $adminGalleryEditViewProvider;
     }
 
     public function __invoke(): array

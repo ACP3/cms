@@ -16,18 +16,11 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Polls\ViewProviders\PollListViewProvider
-     */
-    private $pollListViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Polls\ViewProviders\PollListViewProvider $pollListViewProvider
+        private Polls\ViewProviders\PollListViewProvider $pollListViewProvider
     ) {
         parent::__construct($context);
-
-        $this->pollListViewProvider = $pollListViewProvider;
     }
 
     /**

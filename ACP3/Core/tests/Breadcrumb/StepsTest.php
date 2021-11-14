@@ -132,18 +132,14 @@ class StepsTest extends \PHPUnit\Framework\TestCase
     {
         $this->routerMock->expects(self::atLeastOnce())
             ->method('route')
-            ->willReturnCallback(function ($path) {
-                return '/' . $path . (!preg_match('=/$=', $path) ? '/' : '');
-            });
+            ->willReturnCallback(fn ($path) => '/' . $path . (!preg_match('=/$=', $path) ? '/' : ''));
     }
 
     protected function setUpTranslatorMockExpectations(int $callCount = 1)
     {
         $this->translatorMock->expects(self::atLeast($callCount))
             ->method('t')
-            ->willReturnCallback(function ($module, $phrase) {
-                return strtoupper('{' . $module . '_' . $phrase . '}');
-            });
+            ->willReturnCallback(fn ($module, $phrase) => strtoupper('{' . $module . '_' . $phrase . '}'));
     }
 
     public function testGetBreadcrumbForAdmin()

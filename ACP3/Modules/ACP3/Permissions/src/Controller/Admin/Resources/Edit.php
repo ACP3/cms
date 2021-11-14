@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Permissions;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Permissions\Model\AclResourceModel
-     */
-    private $resourcesModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\ViewProviders\AdminResourceEditViewProvider
-     */
-    private $adminResourceEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Permissions\Model\AclResourceModel $resourcesModel,
-        Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
+        private Permissions\Model\AclResourceModel $resourcesModel,
+        private Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->resourcesModel = $resourcesModel;
-        $this->adminResourceEditViewProvider = $adminResourceEditViewProvider;
     }
 
     /**

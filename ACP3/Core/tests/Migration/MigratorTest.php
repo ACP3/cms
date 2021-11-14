@@ -75,13 +75,13 @@ class MigratorTest extends TestCase
         $this->migrationRepositoryMock
             ->method('findAllAlreadyExecutedMigrations')
             ->willReturn([
-                \get_class($migration1Mock),
+                $migration1Mock::class,
             ]);
         $this->migrationServiceLocatorMock->expects(self::once())
             ->method('getMigrations')
             ->willReturn([
-                \get_class($migration1Mock) => $migration1Mock,
-                \get_class($migration2Mock) => $migration2Mock,
+                $migration1Mock::class => $migration1Mock,
+                $migration2Mock::class => $migration2Mock,
             ]);
 
         $this->dbMock->expects(self::once())
@@ -95,7 +95,7 @@ class MigratorTest extends TestCase
             ->method('up');
         $this->migrationRepositoryMock->expects(self::once())
             ->method('insert')
-            ->with(['name' => \get_class($migration2Mock)]);
+            ->with(['name' => $migration2Mock::class]);
 
         $this->migrator->updateModules();
     }
@@ -111,7 +111,7 @@ class MigratorTest extends TestCase
         $this->migrationServiceLocatorMock->expects(self::once())
             ->method('getMigrations')
             ->willReturn([
-                \get_class($migration2Mock) => $migration2Mock,
+                $migration2Mock::class => $migration2Mock,
             ]);
 
         $this->dbMock->expects(self::once())
@@ -129,7 +129,7 @@ class MigratorTest extends TestCase
         $this->migrationRepositoryMock->expects(self::never())
             ->method('insert');
 
-        self::assertSame([\get_class($migration2Mock) => [$exception]], $this->migrator->updateModules());
+        self::assertSame([$migration2Mock::class => [$exception]], $this->migrator->updateModules());
     }
 
     public function testUpdateModulesWithErrorInDowngrade(): void
@@ -143,7 +143,7 @@ class MigratorTest extends TestCase
         $this->migrationServiceLocatorMock->expects(self::once())
             ->method('getMigrations')
             ->willReturn([
-                \get_class($migration2Mock) => $migration2Mock,
+                $migration2Mock::class => $migration2Mock,
             ]);
 
         $this->dbMock->expects(self::once())
@@ -165,7 +165,7 @@ class MigratorTest extends TestCase
             ->method('insert');
 
         self::assertSame([
-            \get_class($migration2Mock) => [
+            $migration2Mock::class => [
                 $exceptionUp,
                 $exceptionDown,
             ],

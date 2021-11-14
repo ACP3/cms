@@ -16,30 +16,13 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     use Core\Cache\CacheResponseTrait;
 
-    /**
-     * @var \ACP3\Modules\ACP3\Feeds\View\Renderer\FeedGenerator
-     */
-    private $feedGenerator;
-    /**
-     * @var Feeds\Utility\FeedAvailabilityRegistrar
-     */
-    private $availableFeedsRegistrar;
-    /**
-     * @var \ACP3\Core\ACL
-     */
-    private $acl;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Core\ACL $acl,
-        Feeds\View\Renderer\FeedGenerator $feedGenerator,
-        Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
+        private Core\ACL $acl,
+        private Feeds\View\Renderer\FeedGenerator $feedGenerator,
+        private Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
     ) {
         parent::__construct($context);
-
-        $this->feedGenerator = $feedGenerator;
-        $this->availableFeedsRegistrar = $availableFeedsRegistrar;
-        $this->acl = $acl;
     }
 
     /**
@@ -64,7 +47,7 @@ class Index extends Core\Controller\AbstractWidgetAction
                 $this->setCacheResponseCacheable($response, $this->config->getSettings(Schema::MODULE_NAME)['cache_lifetime']);
 
                 return $response;
-            } catch (\InvalidArgumentException $e) {
+            } catch (\InvalidArgumentException) {
             }
         }
 

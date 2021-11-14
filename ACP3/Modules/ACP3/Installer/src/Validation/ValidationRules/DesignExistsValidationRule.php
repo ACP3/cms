@@ -12,14 +12,8 @@ use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 
 class DesignExistsValidationRule extends AbstractValidationRule
 {
-    /**
-     * @var \ACP3\Core\Environment\ThemePathInterface
-     */
-    private $theme;
-
-    public function __construct(ThemePathInterface $theme)
+    public function __construct(private ThemePathInterface $theme)
     {
-        $this->theme = $theme;
     }
 
     /**

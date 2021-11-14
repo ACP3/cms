@@ -17,19 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnFilesValidationAdminSettingsEventListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\Modules
-     */
-    private $modules;
-
-    public function __construct(Modules $modules, Translator $translator)
+    public function __construct(private Modules $modules, private Translator $translator)
     {
-        $this->translator = $translator;
-        $this->modules = $modules;
     }
 
     public function __invoke(FormValidationEvent $event)

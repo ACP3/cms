@@ -13,24 +13,12 @@ use ACP3\Modules\ACP3\Gallery;
 
 class Index extends AbstractWidgetAction
 {
-    /**
-     * @var Gallery\Model\GalleryModel
-     */
-    private $galleryModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\PictureDataGridViewProvider
-     */
-    private $pictureDataGridViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Gallery\Model\GalleryModel $galleryModel,
-        Gallery\ViewProviders\PictureDataGridViewProvider $pictureDataGridViewProvider
+        private Gallery\Model\GalleryModel $galleryModel,
+        private Gallery\ViewProviders\PictureDataGridViewProvider $pictureDataGridViewProvider
     ) {
         parent::__construct($context);
-
-        $this->galleryModel = $galleryModel;
-        $this->pictureDataGridViewProvider = $pictureDataGridViewProvider;
     }
 
     /**
@@ -38,7 +26,7 @@ class Index extends AbstractWidgetAction
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): array|\Symfony\Component\HttpFoundation\JsonResponse
     {
         $gallery = $this->galleryModel->getOneById($id);
 

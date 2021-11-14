@@ -21,17 +21,12 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     protected const ASSETS_PATH_CSS = 'Assets/css';
 
     /**
-     * @var \tubalmartin\CssMin\Minifier
-     */
-    private $minifier;
-
-    /**
      * @var array
      */
     protected $stylesheets = [];
 
     public function __construct(
-        Minifier $minifier,
+        private Minifier $minifier,
         Assets $assets,
         Assets\Libraries $libraries,
         ApplicationPath $appPath,
@@ -41,8 +36,6 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
         ThemePathInterface $themePath
     ) {
         parent::__construct($assets, $libraries, $appPath, $coreCachePool, $modules, $fileResolver, $themePath);
-
-        $this->minifier = $minifier;
     }
 
     protected function getAssetGroup(): string

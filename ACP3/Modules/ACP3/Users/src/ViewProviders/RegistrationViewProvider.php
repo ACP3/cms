@@ -12,19 +12,8 @@ use ACP3\Core\Http\RequestInterface;
 
 class RegistrationViewProvider
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formToken;
-
-    public function __construct(FormToken $formToken, RequestInterface $request)
+    public function __construct(private FormToken $formToken, private RequestInterface $request)
     {
-        $this->request = $request;
-        $this->formToken = $formToken;
     }
 
     public function __invoke(): array

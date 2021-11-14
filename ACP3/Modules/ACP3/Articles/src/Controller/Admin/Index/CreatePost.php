@@ -15,45 +15,21 @@ use ACP3\Modules\ACP3\Articles;
 
 class CreatePost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Articles\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var Articles\Model\ArticlesModel
-     */
-    private $articlesModel;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         WidgetContext $context,
-        FormAction $actionHelper,
-        UserModelInterface $user,
-        Articles\Model\ArticlesModel $articlesModel,
-        Articles\Validation\AdminFormValidation $adminFormValidation
+        private FormAction $actionHelper,
+        private UserModelInterface $user,
+        private Articles\Model\ArticlesModel $articlesModel,
+        private Articles\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
-
-        $this->articlesModel = $articlesModel;
-        $this->adminFormValidation = $adminFormValidation;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handleSaveAction(function () {
             $formData = $this->request->getPost()->all();

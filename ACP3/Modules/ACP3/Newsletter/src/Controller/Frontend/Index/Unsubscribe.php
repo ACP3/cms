@@ -12,18 +12,11 @@ use ACP3\Modules\ACP3\Newsletter;
 
 class Unsubscribe extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterUnsubscribeViewProvider
-     */
-    private $newsletterUnsubscribeViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Newsletter\ViewProviders\NewsletterUnsubscribeViewProvider $newsletterUnsubscribeViewProvider
+        private Newsletter\ViewProviders\NewsletterUnsubscribeViewProvider $newsletterUnsubscribeViewProvider
     ) {
         parent::__construct($context);
-
-        $this->newsletterUnsubscribeViewProvider = $newsletterUnsubscribeViewProvider;
     }
 
     public function __invoke(): array

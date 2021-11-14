@@ -14,51 +14,22 @@ use ACP3\Modules\ACP3\Users;
 
 class RegisterPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Validation\RegistrationFormValidation
-     */
-    private $registrationFormValidation;
-    /**
-     * @var \ACP3\Modules\ACP3\Permissions\Helpers
-     */
-    private $permissionsHelpers;
-    /**
-     * @var \ACP3\Core\Helpers\Alerts
-     */
-    private $alertsHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Users\Model\UsersModel
-     */
-    private $usersModel;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        Core\Helpers\Alerts $alertsHelper,
-        Users\Model\UsersModel $usersModel,
-        Users\Validation\RegistrationFormValidation $registrationFormValidation,
-        Permissions\Helpers $permissionsHelpers
+        private FormAction $actionHelper,
+        private Core\Helpers\Alerts $alertsHelper,
+        private Users\Model\UsersModel $usersModel,
+        private Users\Validation\RegistrationFormValidation $registrationFormValidation,
+        private Permissions\Helpers $permissionsHelpers
     ) {
         parent::__construct($context);
-
-        $this->registrationFormValidation = $registrationFormValidation;
-        $this->permissionsHelpers = $permissionsHelpers;
-        $this->alertsHelper = $alertsHelper;
-        $this->usersModel = $usersModel;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
     {
         return $this->actionHelper->handlePostAction(
             function () {

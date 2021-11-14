@@ -19,57 +19,8 @@ use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class FileDetailsViewProvider
 {
-    /**
-     * @var \ACP3\Core\Breadcrumb\Steps
-     */
-    private $breadcrumb;
-    /**
-     * @var FilesRepository
-     */
-    private $filesRepository;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-    /**
-     * @var \ACP3\Core\View
-     */
-    private $view;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    private $categoryRepository;
-
-    public function __construct(
-        Steps $breadcrumb,
-        FilesRepository $filesRepository,
-        CategoryRepository $categoryRepository,
-        RequestInterface $request,
-        SettingsInterface $settings,
-        Title $title,
-        Translator $translator,
-        View $view
-    ) {
-        $this->breadcrumb = $breadcrumb;
-        $this->filesRepository = $filesRepository;
-        $this->request = $request;
-        $this->settings = $settings;
-        $this->title = $title;
-        $this->translator = $translator;
-        $this->view = $view;
-        $this->categoryRepository = $categoryRepository;
+    public function __construct(private Steps $breadcrumb, private FilesRepository $filesRepository, private CategoryRepository $categoryRepository, private RequestInterface $request, private SettingsInterface $settings, private Title $title, private Translator $translator, private View $view)
+    {
     }
 
     /**

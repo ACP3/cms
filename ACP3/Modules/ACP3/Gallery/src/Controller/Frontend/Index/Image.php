@@ -13,24 +13,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Image extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Repository\PictureRepository
-     */
-    private $pictureRepository;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator
-     */
-    private $thumbnailGenerator;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Gallery\Repository\PictureRepository $pictureRepository,
-        Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
+        private Gallery\Repository\PictureRepository $pictureRepository,
+        private Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
     ) {
         parent::__construct($context);
-
-        $this->pictureRepository = $pictureRepository;
-        $this->thumbnailGenerator = $thumbnailGenerator;
     }
 
     /**

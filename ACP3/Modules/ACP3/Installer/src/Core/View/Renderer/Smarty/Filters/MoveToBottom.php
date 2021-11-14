@@ -14,14 +14,8 @@ class MoveToBottom extends AbstractMoveElementFilter
     public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
     protected const PLACEHOLDER = '<!-- JAVASCRIPTS -->';
 
-    /**
-     * @var \ACP3\Core\Assets\Renderer\JavaScriptRenderer
-     */
-    private $javaScriptRenderer;
-
-    public function __construct(JavaScriptRenderer $javaScriptRenderer)
+    public function __construct(private JavaScriptRenderer $javaScriptRenderer)
     {
-        $this->javaScriptRenderer = $javaScriptRenderer;
     }
 
     /**
@@ -37,7 +31,7 @@ class MoveToBottom extends AbstractMoveElementFilter
      */
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
-        if (strpos($tplOutput, (string) static::PLACEHOLDER) !== false) {
+        if (str_contains($tplOutput, (string) static::PLACEHOLDER)) {
             return str_replace(
                 static::PLACEHOLDER,
                 $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),

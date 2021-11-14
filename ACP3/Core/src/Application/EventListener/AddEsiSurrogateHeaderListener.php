@@ -13,14 +13,8 @@ use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 
 class AddEsiSurrogateHeaderListener implements EventSubscriberInterface
 {
-    /**
-     * @var \Symfony\Component\HttpKernel\HttpCache\SurrogateInterface
-     */
-    private $surrogate;
-
-    public function __construct(SurrogateInterface $surrogate)
+    public function __construct(private SurrogateInterface $surrogate)
     {
-        $this->surrogate = $surrogate;
     }
 
     public function __invoke(ControllerActionAfterDispatchEvent $event)

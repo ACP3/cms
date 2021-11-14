@@ -14,57 +14,23 @@ use ACP3\Modules\ACP3\Contact;
 
 class IndexPost extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Contact\Validation\FormValidation
-     */
-    private $formValidation;
-    /**
-     * @var Contact\Model\ContactFormModel
-     */
-    private $contactFormModel;
-    /**
-     * @var Contact\Model\ContactsModel
-     */
-    private $contactsModel;
-    /**
-     * @var \ACP3\Core\Helpers\Alerts
-     */
-    private $alertsHelper;
-    /**
-     * @var \ACP3\Core\Router\RouterInterface
-     */
-    private $router;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         WidgetContext $context,
-        FormAction $actionHelper,
-        Core\Router\RouterInterface $router,
-        Core\Helpers\Alerts $alertsHelper,
-        Contact\Validation\FormValidation $formValidation,
-        Contact\Model\ContactsModel $contactsModel,
-        Contact\Model\ContactFormModel $contactFormModel
+        private FormAction $actionHelper,
+        private Core\Router\RouterInterface $router,
+        private Core\Helpers\Alerts $alertsHelper,
+        private Contact\Validation\FormValidation $formValidation,
+        private Contact\Model\ContactsModel $contactsModel,
+        private Contact\Model\ContactFormModel $contactFormModel
     ) {
         parent::__construct($context);
-
-        $this->formValidation = $formValidation;
-        $this->contactFormModel = $contactFormModel;
-        $this->contactsModel = $contactsModel;
-        $this->alertsHelper = $alertsHelper;
-        $this->router = $router;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handlePostAction(
             function () {

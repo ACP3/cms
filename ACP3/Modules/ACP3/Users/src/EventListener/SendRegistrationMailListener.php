@@ -19,33 +19,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SendRegistrationMailListener implements EventSubscriberInterface
 {
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Helpers\SendEmail
-     */
-    private $sendEmail;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    private $settings;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        RequestInterface $request,
-        SendEmail $sendEmail,
-        SettingsInterface $settings,
-        Translator $translator
-    ) {
-        $this->request = $request;
-        $this->sendEmail = $sendEmail;
-        $this->settings = $settings;
-        $this->translator = $translator;
+    public function __construct(private RequestInterface $request, private SendEmail $sendEmail, private SettingsInterface $settings, private Translator $translator)
+    {
     }
 
     public function __invoke(ModelSaveEvent $event): void

@@ -12,14 +12,8 @@ use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 
 class RedirectMessage extends AbstractFunction
 {
-    /**
-     * @var \ACP3\Core\Helpers\RedirectMessages
-     */
-    private $redirectMessages;
-
-    public function __construct(Core\Helpers\RedirectMessages $redirectMessages)
+    public function __construct(private Core\Helpers\RedirectMessages $redirectMessages)
     {
-        $this->redirectMessages = $redirectMessages;
     }
 
     /**

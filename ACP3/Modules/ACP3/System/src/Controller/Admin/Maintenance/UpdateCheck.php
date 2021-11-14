@@ -13,18 +13,11 @@ use ACP3\Modules\ACP3\System;
 
 class UpdateCheck extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var System\Helper\UpdateCheck
-     */
-    private $updateCheck;
-
     public function __construct(
         Context\WidgetContext $context,
-        System\Helper\UpdateCheck $updateCheck
+        private System\Helper\UpdateCheck $updateCheck
     ) {
         parent::__construct($context);
-
-        $this->updateCheck = $updateCheck;
     }
 
     public function __invoke(): array

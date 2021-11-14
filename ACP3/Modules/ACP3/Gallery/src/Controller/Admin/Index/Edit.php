@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Gallery;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Gallery\Model\GalleryModel
-     */
-    private $galleryModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Gallery\ViewProviders\AdminGalleryEditViewProvider
-     */
-    private $adminGalleryEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Gallery\Model\GalleryModel $galleryModel,
-        Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
+        private Gallery\Model\GalleryModel $galleryModel,
+        private Gallery\ViewProviders\AdminGalleryEditViewProvider $adminGalleryEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->galleryModel = $galleryModel;
-        $this->adminGalleryEditViewProvider = $adminGalleryEditViewProvider;
     }
 
     /**

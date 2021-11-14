@@ -18,45 +18,8 @@ use ACP3\Modules\ACP3\Files\Installer\Schema as FilesSchema;
 
 class AdminFileEditViewProvider
 {
-    /**
-     * @var \ACP3\Core\Helpers\Forms
-     */
-    private $formsHelper;
-    /**
-     * @var \ACP3\Core\Helpers\FormToken
-     */
-    private $formTokenHelper;
-    /**
-     * @var \ACP3\Modules\ACP3\Categories\Helpers
-     */
-    private $categoriesHelpers;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    private $request;
-    /**
-     * @var \ACP3\Core\Breadcrumb\Title
-     */
-    private $title;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    private $translator;
-
-    public function __construct(
-        Forms $formsHelper,
-        FormToken $formTokenHelper,
-        Helpers $categoriesHelpers,
-        RequestInterface $request,
-        Title $title,
-        Translator $translator
-    ) {
-        $this->formsHelper = $formsHelper;
-        $this->formTokenHelper = $formTokenHelper;
-        $this->categoriesHelpers = $categoriesHelpers;
-        $this->request = $request;
-        $this->title = $title;
-        $this->translator = $translator;
+    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private Helpers $categoriesHelpers, private RequestInterface $request, private Title $title, private Translator $translator)
+    {
     }
 
     /**

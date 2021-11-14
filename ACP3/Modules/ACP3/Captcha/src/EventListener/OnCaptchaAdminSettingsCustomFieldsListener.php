@@ -13,14 +13,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnCaptchaAdminSettingsCustomFieldsListener implements EventSubscriberInterface
 {
-    /**
-     * @var View
-     */
-    private $view;
-
-    public function __construct(View $view)
+    public function __construct(private View $view)
     {
-        $this->view = $view;
     }
 
     public function __invoke(TemplateEvent $event)

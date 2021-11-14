@@ -12,24 +12,12 @@ use ACP3\Modules\ACP3\Menus;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
-    /**
-     * @var Menus\Model\MenusModel
-     */
-    private $menusModel;
-    /**
-     * @var \ACP3\Modules\ACP3\Menus\ViewProviders\AdminMenuEditViewProvider
-     */
-    private $adminMenuEditViewProvider;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        Menus\Model\MenusModel $menusModel,
-        Menus\ViewProviders\AdminMenuEditViewProvider $adminMenuEditViewProvider
+        private Menus\Model\MenusModel $menusModel,
+        private Menus\ViewProviders\AdminMenuEditViewProvider $adminMenuEditViewProvider
     ) {
         parent::__construct($context);
-
-        $this->menusModel = $menusModel;
-        $this->adminMenuEditViewProvider = $adminMenuEditViewProvider;
     }
 
     /**

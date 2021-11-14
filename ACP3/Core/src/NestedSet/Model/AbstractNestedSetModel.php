@@ -22,38 +22,16 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 abstract class AbstractNestedSetModel extends AbstractModel implements SortingAwareInterface
 {
-    /**
-     * @var \ACP3\Core\NestedSet\Operation\Insert
-     */
-    protected $insertOperation;
-    /**
-     * @var \ACP3\Core\NestedSet\Operation\Edit
-     */
-    protected $editOperation;
-    /**
-     * @var \ACP3\Core\NestedSet\Operation\Delete
-     */
-    protected $deleteOperation;
-    /**
-     * @var \ACP3\Core\NestedSet\Operation\Sort
-     */
-    private $sortOperation;
-
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         AbstractRepository $repository,
-        Insert $insertOperation,
-        Edit $editOperation,
-        Delete $deleteOperation,
-        Sort $sortOperation
+        protected Insert $insertOperation,
+        protected Edit $editOperation,
+        protected Delete $deleteOperation,
+        private Sort $sortOperation
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
-
-        $this->insertOperation = $insertOperation;
-        $this->editOperation = $editOperation;
-        $this->deleteOperation = $deleteOperation;
-        $this->sortOperation = $sortOperation;
     }
 
     /**

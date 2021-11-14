@@ -9,24 +9,8 @@ namespace ACP3\Modules\ACP3\Installer\Helpers\Navigation;
 
 class NavigationStep
 {
-    /**
-     * @var string
-     */
-    private $title;
-    /**
-     * @var bool
-     */
-    private $isActive;
-    /**
-     * @var bool
-     */
-    private $isComplete;
-
-    public function __construct(string $title, bool $isActive, bool $isComplete)
+    public function __construct(private string $title, private bool $isActive, private bool $isComplete)
     {
-        $this->title = $title;
-        $this->isActive = $isActive;
-        $this->isComplete = $isComplete;
     }
 
     public function getTitle(): string

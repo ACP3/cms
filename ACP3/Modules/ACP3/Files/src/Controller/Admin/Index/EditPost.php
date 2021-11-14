@@ -17,52 +17,23 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class EditPost extends AbstractFormAction
 {
-    /**
-     * @var \ACP3\Modules\ACP3\Files\Validation\AdminFormValidation
-     */
-    private $adminFormValidation;
-    /**
-     * @var Files\Model\FilesModel
-     */
-    private $filesModel;
-    /**
-     * @var \ACP3\Core\Helpers\Upload
-     */
-    private $filesUploadHelper;
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-    /**
-     * @var \ACP3\Core\Helpers\FormAction
-     */
-    private $actionHelper;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
-        FormAction $actionHelper,
-        UserModelInterface $user,
-        Files\Model\FilesModel $filesModel,
-        Files\Validation\AdminFormValidation $adminFormValidation,
-        Core\Helpers\Upload $filesUploadHelper,
+        private FormAction $actionHelper,
+        private UserModelInterface $user,
+        private Files\Model\FilesModel $filesModel,
+        private Files\Validation\AdminFormValidation $adminFormValidation,
+        private Core\Helpers\Upload $filesUploadHelper,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context, $categoriesHelpers);
-
-        $this->adminFormValidation = $adminFormValidation;
-        $this->filesModel = $filesModel;
-        $this->filesUploadHelper = $filesUploadHelper;
-        $this->user = $user;
-        $this->actionHelper = $actionHelper;
     }
 
     /**
-     * @return array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id)
+    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -93,11 +64,9 @@ class EditPost extends AbstractFormAction
     }
 
     /**
-     * @param string|UploadedFile $file
-     *
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */
-    private function updateAssociatedFile($file, array $formData, string $currentFileName): array
+    private function updateAssociatedFile(string|UploadedFile $file, array $formData, string $currentFileName): array
     {
         if ($file instanceof UploadedFile) {
             $result = $this->filesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());

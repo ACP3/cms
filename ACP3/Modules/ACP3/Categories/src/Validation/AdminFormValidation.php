@@ -17,14 +17,6 @@ use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\ParentIdValidationRu
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var \ACP3\Modules\ACP3\Categories\Repository\CategoryRepository
-     */
-    protected $categoryRepository;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface|array
-     */
-    protected $settings;
-    /**
      * @var array
      */
     protected $file = [];
@@ -34,15 +26,12 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     protected $categoryId = 0;
 
     public function __construct(
-        Core\Settings\SettingsInterface $settings,
+        protected Core\Settings\SettingsInterface $settings,
         Core\I18n\Translator $translator,
         Core\Validation\Validator $validator,
-        CategoryRepository $categoryRepository
+        protected CategoryRepository $categoryRepository
     ) {
         parent::__construct($translator, $validator);
-
-        $this->categoryRepository = $categoryRepository;
-        $this->settings = $settings;
     }
 
     /**
