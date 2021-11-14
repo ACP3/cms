@@ -76,9 +76,7 @@ class Modules
      */
     public function getInstalledModules(): array
     {
-        return array_filter($this->getAllModulesAlphabeticallySorted(), static function (array $module) {
-            return $module['installed'] === true;
-        });
+        return array_filter($this->getAllModulesAlphabeticallySorted(), static fn (array $module) => $module['installed'] === true);
     }
 
     /**

@@ -50,9 +50,7 @@ class Translator
             $this->languagePacks = $this->dictionary->getLanguagePacks();
         }
 
-        $foundLanguagePack = array_filter($this->languagePacks, static function ($languagePack) use ($locale) {
-            return $languagePack['iso'] === $locale;
-        });
+        $foundLanguagePack = array_filter($this->languagePacks, static fn ($languagePack) => $languagePack['iso'] === $locale);
 
         return !empty($foundLanguagePack);
     }

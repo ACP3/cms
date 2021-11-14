@@ -227,9 +227,7 @@ class Steps
 
         $this->steps = array_filter(
             $this->steps,
-            function (array $step) use ($path) {
-                return $step['uri'] !== $path;
-            }
+            fn (array $step) => $step['uri'] !== $path
         );
 
         return $this;

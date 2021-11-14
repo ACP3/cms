@@ -84,9 +84,7 @@ class ComponentRegistry
      */
     public static function filterByType(array $components, array $componentTypes): array
     {
-        return array_filter($components, static function (ComponentDataDto $component) use ($componentTypes) {
-            return \in_array($component->getComponentType(), $componentTypes, true);
-        });
+        return array_filter($components, static fn (ComponentDataDto $component) => \in_array($component->getComponentType(), $componentTypes, true));
     }
 
     /**
@@ -97,26 +95,20 @@ class ComponentRegistry
      */
     public static function excludeByType(array $components, array $componentTypes): array
     {
-        return array_filter($components, static function (ComponentDataDto $component) use ($componentTypes) {
-            return !\in_array($component->getComponentType(), $componentTypes, true);
-        });
+        return array_filter($components, static fn (ComponentDataDto $component) => !\in_array($component->getComponentType(), $componentTypes, true));
     }
 
     private static function findByName(string $componentName): ?ComponentDataDto
     {
         $componentName = strtolower($componentName);
-        $filteredComponents = array_filter(self::$components, static function (ComponentDataDto $component) use ($componentName) {
-            return $component->getName() === $componentName;
-        });
+        $filteredComponents = array_filter(self::$components, static fn (ComponentDataDto $component) => $component->getName() === $componentName);
 
         return reset($filteredComponents) ?: null;
     }
 
     private static function findByPath(string $componentPath): ?ComponentDataDto
     {
-        $filteredComponents = array_filter(self::$components, static function (ComponentDataDto $component) use ($componentPath) {
-            return $component->getPath() === $componentPath;
-        });
+        $filteredComponents = array_filter(self::$components, static fn (ComponentDataDto $component) => $component->getPath() === $componentPath);
 
         return reset($filteredComponents) ?: null;
     }

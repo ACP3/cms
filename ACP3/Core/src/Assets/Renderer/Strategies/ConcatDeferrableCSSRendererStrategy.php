@@ -22,9 +22,7 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
      */
     protected function getEnabledLibrariesAsString(): string
     {
-        return implode(',', array_map(static function (LibraryEntity $library) {
-            return $library->getLibraryIdentifier();
-        }, $this->getEnabledLibraries()));
+        return implode(',', array_map(static fn (LibraryEntity $library) => $library->getLibraryIdentifier(), $this->getEnabledLibraries()));
     }
 
     /**
@@ -35,9 +33,7 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
      */
     private function getEnabledLibraries(): array
     {
-        return array_filter($this->libraries->getEnabledLibraries(), static function (LibraryEntity $library) {
-            return $library->getCss() && $library->isDeferrableCss();
-        });
+        return array_filter($this->libraries->getEnabledLibraries(), static fn (LibraryEntity $library) => $library->getCss() && $library->isDeferrableCss());
     }
 
     /**

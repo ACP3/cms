@@ -22,7 +22,7 @@ class Picture
      */
     private $appPath;
 
-    private ?\GdImage $image;
+    private ?\GdImage $image = null;
 
     public function __construct(
         FastImageSize $fastImageSize,

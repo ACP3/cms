@@ -182,7 +182,7 @@ class Output
             'Cache-Control' => 'public',
             'Pragma' => 'public',
             'Last-Modified' => gmdate('D, d M Y H:i:s', filemtime($this->getFile())) . ' GMT',
-            'Expires' => gmdate('D, d M Y H:i:s', time() + 31536000) . ' GMT',
+            'Expires' => gmdate('D, d M Y H:i:s', time() + 31_536_000) . ' GMT',
         ]);
     }
 }

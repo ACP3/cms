@@ -112,9 +112,7 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
             // Get the enabled libraries and filter out empty entries
             $files = array_filter(
                 $this->processLibraries(),
-                static function ($var) {
-                    return !empty($var);
-                }
+                static fn ($var) => !empty($var)
             );
 
             $this->saveMinifiedAsset($files, $this->appPath->getUploadsDir() . $path);

@@ -64,9 +64,7 @@ class Sort extends AbstractOperation
      */
     protected function fetchAffectedNodesForReorder(array $nodes): array
     {
-        return array_map(static function ($node) {
-            return (int) $node['id'];
-        }, $nodes);
+        return array_map(static fn ($node) => (int) $node['id'], $nodes);
     }
 
     /**
