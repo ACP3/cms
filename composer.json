@@ -15,20 +15,16 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "config": {
-    "platform": {
-      "php": "7.3.0"
-    }
-  },
   "require": {
-    "php": "^7.3 || ^8.0",
+    "php": "^8.0",
     "wikimedia/composer-merge-plugin": "^2.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.0.0",
     "phpstan/phpstan": "^1",
     "phpstan/phpstan-phpunit": "^1",
-    "phpstan/extension-installer": "^1.0"
+    "phpstan/extension-installer": "^1.0",
+    "rector/rector": "^0.12.3"
   },
   "replace": {
     "acp3/core": "*",
