@@ -6,7 +6,7 @@ parameters:
     - ./tests
   bootstrapFiles:
     - ./tests/bootstrap.php
-  excludes_analyse:
+  excludePaths:
     - %rootDir%/ACP3/Modules/*/*/Resources/*
   tmpDir: .phpstan-cache
   ignoreErrors:
