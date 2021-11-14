@@ -4,14 +4,14 @@
  */
 
 .loading-indicator {
+  display: none;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s, visibility 0.5s;
-  display: none;
 
   &.loading-indicator__active {
+    display: inline-block;
     visibility: visible;
     opacity: 1;
-    display: inline-block;
   }
 }
