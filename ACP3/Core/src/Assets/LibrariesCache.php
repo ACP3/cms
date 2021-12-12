@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class LibrariesCache
 {
     /**
-     * @var Array<string, string[]>
+     * @var array<string, string[]>
      */
     private $librariesCache = [];
 

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class Libraries
 {
     /**
-     * @var Array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
+     * @var array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
      */
     private $libraries = [];
 
@@ -24,7 +24,7 @@ class Libraries
     }
 
     /**
-     * @return Array<string, LibraryEntity>
+     * @return array<string, LibraryEntity>
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
@@ -99,7 +99,7 @@ class Libraries
     }
 
     /**
-     * @return Array<string, LibraryEntity>
+     * @return array<string, LibraryEntity>
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException

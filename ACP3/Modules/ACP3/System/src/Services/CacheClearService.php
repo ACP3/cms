@@ -76,7 +76,7 @@ class CacheClearService
     }
 
     /**
-     * @return Array<string, string|string[]>
+     * @return array<string, string|string[]>
      */
     public function getCacheTypes(): array
     {

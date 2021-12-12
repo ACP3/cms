@@ -12,7 +12,7 @@ use Psr\Container\ContainerInterface;
 class SchemaRegistrar implements ContainerInterface
 {
     /**
-     * @var Array<string, SchemaInterface>
+     * @var array<string, SchemaInterface>
      */
     private $schemas = [];
 
@@ -22,7 +22,7 @@ class SchemaRegistrar implements ContainerInterface
     }
 
     /**
-     * @return Array<string, SchemaInterface>
+     * @return array<string, SchemaInterface>
      */
     public function all(): array
     {
