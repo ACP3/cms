@@ -26,32 +26,44 @@
 
 /* Source Dialog Buttons */
 .searchCodeButton span,
+.replaceCodeButton span,
 .autoFormat span,
 .CommentSelectedRange span,
-.UncommentSelectedRange span {
+.UncommentSelectedRange span,
+.codemirrorAbout span {
 	width: 16px;
 	height: 16px;
 	margin-left: 6px;
 }
 
+.codemirrorAbout {
+	margin-top: 0 !important
+}
+
 .searchCodeButton span {
-	background: url("../icons/searchcode.png") no-repeat;
+	background: url("../icons/find.svg") no-repeat;
+}
+.replaceCodeButton span {
+    background: url("../icons/replace.svg") no-repeat;
 }
 .autoFormat span {
-	background: url("../icons/autoformat.png") no-repeat;
+	background: url("../icons/autoformat.svg") no-repeat;
 }
 .CommentSelectedRange span {
-	background: url("../icons/commentselectedrange.png") no-repeat;
+	background: url("../icons/commentselectedrange.svg") no-repeat;
 }
 .UncommentSelectedRange span {
-	background: url("../icons/uncommentselectedrange.png") no-repeat;
+	background: url("../icons/uncommentselectedrange.svg") no-repeat;
+}
+.codemirrorAbout span {
+    background: url("../icons/codemirror.svg") no-repeat;
 }
 
 /* Fixes for the sourceDialog */
 .cke_reset_all .CodeMirror-scroll * {
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    word-break: normal;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	word-break: normal;
 }
 
 .cke_reset_all .cm-s-cobalt *,
