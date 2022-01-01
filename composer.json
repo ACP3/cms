@@ -122,5 +122,13 @@
       "merge-extra-deep": false,
       "merge-scripts": false
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "phpstan/extension-installer": true,
+      "acp3/composer-installer": true,
+      "wikimedia/composer-merge-plugin": true
+    }
   }
 }
