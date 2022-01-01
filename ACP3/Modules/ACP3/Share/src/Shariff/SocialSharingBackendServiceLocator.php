@@ -5,16 +5,23 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
+namespace ACP3\Modules\ACP3\Share\Shariff;
 
-class ServiceFactory
+use ACP3\Modules\ACP3\Share\Shariff\Backend\ServiceInterface;
+
+class SocialSharingBackendServiceLocator
 {
     /** @var ServiceInterface[] */
     private array $serviceMap = [];
 
-    public function registerService(string $name, ServiceInterface $service): void
+    public function registerService(ServiceInterface $service): void
     {
-        $this->serviceMap[$name] = $service;
+        $this->serviceMap[strtolower($service->getName())] = $service;
+    }
+
+    public function getServices(): array
+    {
+        return $this->serviceMap;
     }
 
     /**
@@ -25,26 +32,23 @@ class ServiceFactory
         $services = [];
         foreach ($serviceNames as $serviceName) {
             try {
-                $service = $this->createService($serviceName, $config);
+                $services[$serviceName] = $this->getServiceByName($serviceName, $config);
             } catch (\InvalidArgumentException) {
                 continue;
             }
-            $services[] = $service;
         }
 
         return $services;
     }
 
-    private function createService(string $serviceName, array $config): ServiceInterface
+    private function getServiceByName(string $serviceName, array $config): ServiceInterface
     {
+        $serviceName = strtolower($serviceName);
+
         if (isset($this->serviceMap[$serviceName])) {
             $service = $this->serviceMap[$serviceName];
         } else {
-            $serviceClass = '\\ACP3\\Modules\\ACP3\\Share\\Shariff\\Backend\\' . $serviceName;
-            if (!class_exists($serviceClass)) {
-                throw new \InvalidArgumentException('Invalid service name "' . $serviceName . '".');
-            }
-            $service = new $serviceClass();
+            throw new \InvalidArgumentException('Invalid service name "' . $serviceName . '".');
         }
 
         if (isset($config[$serviceName])) {

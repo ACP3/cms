@@ -5,8 +5,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
+namespace ACP3\Modules\ACP3\Share\Shariff;
 
+use ACP3\Modules\ACP3\Share\Shariff\Backend\ServiceInterface;
 use GuzzleHttp\Exception\TransferException;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Client\ClientInterface;

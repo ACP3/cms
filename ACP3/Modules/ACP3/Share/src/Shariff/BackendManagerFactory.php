@@ -7,7 +7,6 @@
 
 namespace ACP3\Modules\ACP3\Share\Shariff;
 
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
@@ -16,40 +15,33 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Log\LoggerInterface;
 
-class BackendFactory
+class BackendManagerFactory
 {
     public function __construct(
-        private ApplicationPath $applicationPath,
-        private SettingsInterface $settings,
         private RequestInterface $request,
-        private SocialServices $socialServices,
+        private SettingsInterface $settings,
+        private LoggerInterface $logger,
         private ClientInterface $client,
         private CacheItemPoolInterface $servicesCacheItemPool,
-        private LoggerInterface $logger,
+        private SocialSharingBackendServiceLocator $serviceLocator,
+        private SocialServices $socialServices
     ) {
     }
 
-    public function create(): Backend
+    public function create(): BackendManager
     {
-        $this->checkCacheDir();
+        $config = $this->getOptions();
 
-        return new Backend($this->getOptions(), $this->client, $this->servicesCacheItemPool, $this->logger);
-    }
+        $baseCacheKey = md5(json_encode($config, JSON_THROW_ON_ERROR));
 
-    private function checkCacheDir(): void
-    {
-        if (is_dir($this->getCacheDir())) {
-            return;
-        }
-
-        if (!mkdir($concurrentDirectory = $this->getCacheDir()) && !is_dir($concurrentDirectory)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
-        }
-    }
-
-    private function getCacheDir(): string
-    {
-        return $this->applicationPath->getCacheDir() . 'shariff/';
+        return new BackendManager(
+            $baseCacheKey,
+            $this->servicesCacheItemPool,
+            $this->client,
+            $this->logger,
+            $config['domains'],
+            $this->serviceLocator->getServicesByName($config['services'], $config)
+        );
     }
 
     private function getOptions(): array
@@ -57,11 +49,6 @@ class BackendFactory
         return array_merge(
             [
                 'domains' => [$this->request->getHttpHost()],
-                'cache' => [
-                    'ttl' => 60,
-                    'cacheDir' => $this->getCacheDir(),
-                    'adapter' => 'Filesystem',
-                ],
                 'services' => $this->socialServices->getActiveBackendServices(),
             ],
             $this->getFacebookCredentials()
@@ -74,7 +61,7 @@ class BackendFactory
 
         if (!empty($settings['fb_app_id']) && !empty($settings['fb_secret'])) {
             return [
-                'Facebook' => [
+                'facebook' => [
                     'app_id' => $settings['fb_app_id'],
                     'secret' => $settings['fb_secret'],
                 ],

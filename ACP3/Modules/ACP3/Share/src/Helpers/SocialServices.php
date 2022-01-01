@@ -9,63 +9,66 @@ namespace ACP3\Modules\ACP3\Share\Helpers;
 
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
+use ACP3\Modules\ACP3\Share\Shariff\SocialSharingBackendServiceLocator;
 
 class SocialServices
 {
     /**
-     * @var array<string, string|null>
+     * @var string[]
      */
-    private static $servicesMap = [
-        'twitter' => null,
-        'facebook' => 'Facebook',
-        'linkedin' => 'LinkedIn',
-        'pinterest' => 'Pinterest',
-        'xing' => 'Xing',
-        'whatsapp' => null,
-        'addthis' => 'AddThis',
-        'tumblr' => null,
-        'flattr' => 'Flattr',
-        'diaspora' => null,
-        'reddit' => 'Reddit',
-        'stumbleupon' => 'StumbleUpon',
-        'threema' => null,
-        'weibo' => null,
-        'tencent - weibo' => null,
-        'qzone' => null,
-        'telegram' => null,
-        'vk' => 'Vk',
-        'mail' => null,
-        'print' => null,
-        'info' => null,
+    private static array $servicesMap = [
+        'twitter',
+        'facebook',
+        'linkedin',
+        'pinterest',
+        'xing',
+        'whatsapp',
+        'addthis',
+        'tumblr',
+        'flattr',
+        'diaspora',
+        'reddit',
+        'stumbleupon',
+        'threema',
+        'weibo',
+        'tencent - weibo',
+        'qzone',
+        'telegram',
+        'vk',
+        'mail',
+        'print',
+        'info',
     ];
 
-    public function __construct(private SettingsInterface $settings)
+    public function __construct(private SettingsInterface $settings, private SocialSharingBackendServiceLocator $locator)
     {
     }
 
     public function getAllServices(): array
     {
-        return array_keys(self::$servicesMap);
+        return self::$servicesMap;
     }
 
     public function getActiveServices(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        $services = unserialize($settings['services']);
-        if (\is_array($services) === false) {
-            $services = [];
+        $activeServices = unserialize($settings['services']);
+        if (\is_array($activeServices) === false) {
+            $activeServices = [];
         }
 
+        // Although we already know the active social sharing services, we are still doing the array_intersect,
+        // so that we don't end up with any invalid services.
         return array_intersect(
             $this->getAllServices(),
-            $services
+            $activeServices
         );
     }
 
     public function getAllBackendServices(): array
     {
-        return array_filter(self::$servicesMap);
+        return array_keys($this->locator->getServices());
     }
 
     public function getActiveBackendServices(): array
@@ -75,8 +78,7 @@ class SocialServices
         return array_values(
             array_filter(
                 $this->getAllBackendServices(),
-                static fn (?string $value, string $key) => $value !== null && \in_array($key, $activeServices, true),
-                \ARRAY_FILTER_USE_BOTH
+                static fn (?string $value) => \in_array($value, $activeServices, true),
             )
         );
     }

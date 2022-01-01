@@ -9,14 +9,14 @@ namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Modules\ACP3\Share\Shariff\Backend;
+use ACP3\Modules\ACP3\Share\Shariff\BackendManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends AbstractWidgetAction
 {
     public function __construct(
         WidgetContext $context,
-        private Backend $shariffBackend
+        private BackendManager $shariffBackend
     ) {
         parent::__construct($context);
     }
