@@ -19,14 +19,8 @@
     "acp3/core": "^5.19.0",
     "acp3/module-permissions": "^5.19.0",
     "acp3/module-system": "^5.19.0",
-    "heise/shariff": "dev-master"
+    "psr/http-client": "^1.0"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/tinogo/shariff-backend-php"
-    }
-  ],
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI."
   },

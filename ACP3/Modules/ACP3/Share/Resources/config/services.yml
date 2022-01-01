@@ -5,7 +5,16 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Modules\ACP3\Share\Shariff\BackendFactory: ~
+  share.shariff.cache_item_pool:
+    class: Psr\Cache\CacheItemPoolInterface
+    factory: "@Psr6CacheItemPoolFactory"
+    arguments: ["shariff"]
+    tags:
+      - { name: acp3.cache_item_pool }
+
+  ACP3\Modules\ACP3\Share\Shariff\BackendFactory:
+    arguments:
+      $servicesCacheItemPool: '@share.shariff.cache_item_pool'
 
   Heise\Shariff\Backend:
     factory: ['@ACP3\Modules\ACP3\Share\Shariff\BackendFactory', "create"]

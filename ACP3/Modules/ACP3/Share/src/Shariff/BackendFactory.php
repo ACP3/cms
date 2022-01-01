@@ -12,11 +12,11 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
-use Heise\Shariff\Backend;
+use Psr\Cache\CacheItemPoolInterface;
 
 class BackendFactory
 {
-    public function __construct(private ApplicationPath $applicationPath, private SettingsInterface $settings, private RequestInterface $request, private SocialServices $socialServices)
+    public function __construct(private ApplicationPath $applicationPath, private SettingsInterface $settings, private RequestInterface $request, private SocialServices $socialServices, private CacheItemPoolInterface $servicesCacheItemPool)
     {
     }
 
@@ -24,7 +24,7 @@ class BackendFactory
     {
         $this->checkCacheDir();
 
-        return new Backend($this->getOptions());
+        return new Backend($this->getOptions(), $this->servicesCacheItemPool);
     }
 
     private function checkCacheDir(): void
