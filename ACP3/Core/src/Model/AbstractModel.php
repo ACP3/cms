@@ -218,7 +218,7 @@ abstract class AbstractModel
 
         $affectedRows = 0;
         foreach ($entryId as $item) {
-            $affectedRows += (int) $this->repository->delete($item);
+            $affectedRows += $this->repository->delete($item);
         }
 
         $this->dispatchEvent('core.model.after_delete', $event);

@@ -7,6 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
+use Psr\Http\Message\RequestInterface;
+
 /**
  * Class Xing.
  */
@@ -15,7 +17,7 @@ class Xing extends Request implements ServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'xing';
     }
@@ -23,7 +25,7 @@ class Xing extends Request implements ServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function getRequest($url)
+    public function getRequest(string $url): RequestInterface
     {
         return new \GuzzleHttp\Psr7\Request(
             'POST',
@@ -34,7 +36,7 @@ class Xing extends Request implements ServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function extractCount(array $data)
+    public function extractCount(array $data): int
     {
         return $data['share_counter'] ?? 0;
     }

@@ -15,20 +15,15 @@ class ComponentDataDto
      * @var string
      */
     private $name;
-    /**
-     * @var array
-     */
-    private $dependencies;
 
     public function __construct(
         private string $componentType,
         string $componentName,
         private string $path,
-        array $dependencies,
+        private array $dependencies,
         private ?ModuleRegistration $moduleRegistration = null)
     {
         $this->name = strtolower($componentName);
-        $this->dependencies = $dependencies;
     }
 
     public function getComponentType(): string

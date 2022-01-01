@@ -12,18 +12,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 class TemplateEvent extends Event
 {
     /**
-     * @var array
-     */
-    private $parameters;
-
-    /**
      * @var string
      */
     private $content = '';
 
-    public function __construct(array $arguments)
+    public function __construct(private array $parameters)
     {
-        $this->parameters = $arguments;
     }
 
     public function getParameters(): array

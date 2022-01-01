@@ -65,10 +65,7 @@ class BackendManager
         }
 
         $requests = array_map(
-            static function ($service) use ($url) {
-                /* @var ServiceInterface $service */
-                return $service->getRequest($url);
-            },
+            static fn ($service) => $service->getRequest($url),
             $this->services
         );
 
@@ -84,7 +81,7 @@ class BackendManager
                 try {
                     $content = $service->filterResponse($results[$i]->getBody()->getContents());
                     $json = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
-                    $counts[$service->getName()] = \is_array($json) ? (int) $service->extractCount($json) : 0;
+                    $counts[$service->getName()] = \is_array($json) ? $service->extractCount($json) : 0;
                 } catch (\Exception $e) {
                     $this->logger?->warning($e->getMessage(), ['exception' => $e]);
                 }

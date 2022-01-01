@@ -12,34 +12,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 class ModelSaveEvent extends Event
 {
     /**
-     * @var array
-     */
-    private $filteredData;
-    /**
-     * @var array
-     */
-    private $rawData;
-    /**
-     * @var array|null
-     */
-    private $currentData;
-
-    /**
      * @param int|array|null $entryId
      */
-    public function __construct(
-        private string $moduleName,
-        array $filteredData,
-        array $rawData,
-        private $entryId,
-        private bool $isNewEntry,
-        private bool $hasDataChanges,
-        private string $tableName,
-        ?array $currentData)
+    public function __construct(private string $moduleName, private array $filteredData, private array $rawData, private $entryId, private bool $isNewEntry, private bool $hasDataChanges, private string $tableName, private ?array $currentData)
     {
-        $this->filteredData = $filteredData;
-        $this->rawData = $rawData;
-        $this->currentData = $currentData;
     }
 
     public function getModuleName(): string

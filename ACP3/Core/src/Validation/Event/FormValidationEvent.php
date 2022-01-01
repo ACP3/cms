@@ -12,22 +12,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class FormValidationEvent extends Event
 {
-    /**
-     * @var array
-     */
-    private $formData;
-    /**
-     * @var array
-     */
-    private $extra;
-
-    public function __construct(
-        private Validator $validator,
-        array $formData,
-        array $extra = []
-    ) {
-        $this->formData = $formData;
-        $this->extra = $extra;
+    public function __construct(private Validator $validator, private array $formData, private array $extra = [])
+    {
     }
 
     public function getValidator(): Validator

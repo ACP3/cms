@@ -14,18 +14,6 @@ final class LibraryEntity
      */
     private $enabled = false;
     /**
-     * @var array
-     */
-    private $dependencies;
-    /**
-     * @var array
-     */
-    private $css;
-    /**
-     * @var array
-     */
-    private $js;
-    /**
      * @var string
      */
     private $moduleName;
@@ -33,18 +21,15 @@ final class LibraryEntity
     public function __construct(
         private string $libraryIdentifier,
         private bool $enabledForAjax = true,
-        array $dependencies = [],
-        array $css = [],
-        array $js = [],
+        private array $dependencies = [],
+        private array $css = [],
+        private array $js = [],
         string $moduleName = '',
         private bool $deferrableCss = false
     ) {
         if (!$moduleName) {
             throw new \InvalidArgumentException('The argument `moduleName` is required!');
         }
-        $this->dependencies = $dependencies;
-        $this->css = $css;
-        $this->js = $js;
         $this->moduleName = $moduleName;
     }
 

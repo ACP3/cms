@@ -12,19 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UnauthorizedAccessException extends \RuntimeException implements ForwardControllerActionAwareExceptionInterface
 {
-    /**
-     * @var array
-     */
-    private $routeArguments;
-
     public function __construct(
-        array $routeArguments = [],
+        private array $routeArguments = [],
         string $message = '',
         \Throwable $previous = null)
     {
         parent::__construct($message, Response::HTTP_UNAUTHORIZED, $previous);
-
-        $this->routeArguments = $routeArguments;
     }
 
     /**

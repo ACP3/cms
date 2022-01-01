@@ -7,6 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
+use Psr\Http\Message\RequestInterface;
+
 /**
  * Class StumbleUpon.
  */
@@ -15,7 +17,7 @@ class StumbleUpon extends Request implements ServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'stumbleupon';
     }
@@ -23,7 +25,7 @@ class StumbleUpon extends Request implements ServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function getRequest($url)
+    public function getRequest(string $url): RequestInterface
     {
         return new \GuzzleHttp\Psr7\Request(
             'GET',
@@ -34,7 +36,7 @@ class StumbleUpon extends Request implements ServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function extractCount(array $data)
+    public function extractCount(array $data): int
     {
         return (isset($data['result']['views'])) ? $data['result']['views'] + 0 : 0;
     }

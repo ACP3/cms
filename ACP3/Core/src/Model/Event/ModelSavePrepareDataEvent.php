@@ -11,19 +11,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ModelSavePrepareDataEvent extends Event
 {
-    /**
-     * @var array
-     */
-    private $allowedColumns;
-    /**
-     * @var array
-     */
-    private $rawData;
-
-    public function __construct(array $rawData, private ?array $currentData, array $allowedColumns)
+    public function __construct(private array $rawData, private ?array $currentData, private array $allowedColumns)
     {
-        $this->rawData = $rawData;
-        $this->allowedColumns = $allowedColumns;
     }
 
     public function getRawData(): array

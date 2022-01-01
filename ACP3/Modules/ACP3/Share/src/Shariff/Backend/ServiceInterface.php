@@ -14,22 +14,11 @@ use Psr\Http\Message\RequestInterface;
  */
 interface ServiceInterface
 {
-    /**
-     * @param string $url
-     *
-     * @return RequestInterface
-     */
-    public function getRequest($url);
+    public function getRequest(string $url): RequestInterface;
 
-    /**
-     * @return int
-     */
-    public function extractCount(array $data);
+    public function extractCount(array $data): int;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @param string $content
@@ -38,5 +27,5 @@ interface ServiceInterface
      */
     public function filterResponse($content);
 
-    public function setConfig(array $config);
+    public function setConfig(array $config): void;
 }
