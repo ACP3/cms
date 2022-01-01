@@ -9,9 +9,6 @@ namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
 use Psr\Http\Message\RequestInterface;
 
-/**
- * Class Vk.
- */
 class Vk extends Request implements ServiceInterface
 {
     /**
@@ -36,12 +33,12 @@ class Vk extends Request implements ServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function filterResponse($content)
+    public function filterResponse(string $content): string
     {
         // 'VK.Share.count(1, x);' with x being the count
-        $strCount = mb_substr($content, 18, mb_strlen($content) - 20);
+        $strCount = mb_substr($content, 18, -2);
 
-        return $strCount ? '{"count": ' . $strCount . '}' : '';
+        return $strCount !== '' ? '{"count": ' . $strCount . '}' : '';
     }
 
     /**

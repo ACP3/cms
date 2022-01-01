@@ -7,14 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Share\Shariff;
 
+use Http\Adapter\Guzzle6\Client;
 use PHPUnit\Framework as PHPUnit;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Cache\Adapter\NullAdapter;
 
 class BackendTest extends PHPUnit\TestCase
 {
     /***
      * @var string[]
      */
-    protected $services = [
+    private array $services = [
         // "Facebook",
         // "Flattr",
         'Pinterest',
@@ -25,15 +28,20 @@ class BackendTest extends PHPUnit\TestCase
         'Vk',
     ];
 
-    public function testShariff()
+    public function testShariff(): void
     {
-        $shariff = new Backend([
-            'domains' => ['www.heise.de'],
-            'cache' => ['ttl' => 1],
-            'services' => $this->services,
-        ]);
+        $shariff = new Backend(
+            [
+                'domains' => ['www.heise.de'],
+                'cache' => ['ttl' => 1],
+                'services' => $this->services,
+            ],
+            new Client(),
+            new NullAdapter(),
+            $this->createMock(LoggerInterface::class)
+        );
 
-        $counts = $shariff->get('http://www.heise.de');
+        $counts = $shariff->get('https://www.heise.de');
 
         // $this->assertArrayHasKey('flattr', $counts);
         if (\array_key_exists('flattr', $counts)) {
@@ -78,54 +86,21 @@ class BackendTest extends PHPUnit\TestCase
         }
     }
 
-    public function testInvalidDomain()
+    public function testInvalidDomain(): void
     {
-        $shariff = new Backend([
-            'domains' => ['www.heise.de'],
-            'cache' => ['ttl' => 0],
-            'services' => $this->services,
-        ]);
-
-        $counts = $shariff->get('http://example.com');
-
-        $this->assertNull($counts);
-    }
-
-    public function testCacheOptions()
-    {
-        $this->expectException(OutOfSpaceException::class);
-        $shariff = new Backend([
-            'domains' => ['www.heise.de'],
-            'cache' => [
-                'adapter' => 'Memory',
-                'adapterOptions' => ['memoryLimit' => 10],
-                'ttl' => 0,
+        $shariff = new Backend(
+            [
+                'domains' => ['www.heise.de'],
+                'cache' => ['ttl' => 0],
+                'services' => $this->services,
             ],
-            'services' => $this->services,
-        ]);
-        $shariff->get('http://www.heise.de');
-        $this->fail('10 bytes should not be enough for the cache');
-    }
-
-    public function testClientOptions()
-    {
-        $this->markTestSkipped(
-            'Some APIs are too fast for this. We need mock APIs.'
+            new Client(),
+            new NullAdapter(),
+            $this->createMock(LoggerInterface::class)
         );
 
-        $shariff = new Backend([
-            'domains' => ['www.heise.de'],
-            'cache' => ['ttl' => 1],
-            'services' => $this->services,
-            'client' => [
-                'timeout' => 0.005,
-                'connect_timeout' => 0.005,
-            ],
-        ]);
+        $counts = $shariff->get('https://example.com');
 
-        $counts = $shariff->get('http://www.heise.de');
-
-        // expect no response in 5 ms
-        $this->assertCount(0, $counts);
+        $this->assertNull($counts);
     }
 }

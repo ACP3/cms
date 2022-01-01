@@ -9,9 +9,6 @@ namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
 use Psr\Http\Message\RequestInterface;
 
-/**
- * Class Facebook.
- */
 class Facebook extends Request implements ServiceInterface
 {
     /**
@@ -39,7 +36,7 @@ class Facebook extends Request implements ServiceInterface
     public function getRequest(string $url): RequestInterface
     {
         $accessToken = urlencode($this->config['app_id']) . '|' . urlencode($this->config['secret']);
-        $query = 'https://graph.facebook.com/v7.0/?id=' . urlencode($url) . '&fields=engagement&access_token='
+        $query = 'https://graph.facebook.com/v12.0/?id=' . urlencode($url) . '&fields=og_object%7Bengagement%7D&access_token='
             . $accessToken;
 
         return new \GuzzleHttp\Psr7\Request('GET', $query);
@@ -50,16 +47,6 @@ class Facebook extends Request implements ServiceInterface
      */
     public function extractCount(array $data): int
     {
-        if (isset(
-            $data['engagement']['reaction_count'],
-            $data['engagement']['comment_count'],
-            $data['engagement']['share_count']
-        )) {
-            return $data['engagement']['reaction_count']
-                + $data['engagement']['comment_count']
-                + $data['engagement']['share_count'];
-        }
-
-        return 0;
+        return $data['og_object']['engagement']['count'] ?? 0;
     }
 }

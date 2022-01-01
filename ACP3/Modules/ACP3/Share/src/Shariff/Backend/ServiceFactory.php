@@ -7,19 +7,10 @@
 
 namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
-use Psr\Http\Client\ClientInterface;
-
-/**
- * Class ServiceFactory.
- */
 class ServiceFactory
 {
     /** @var ServiceInterface[] */
     private array $serviceMap = [];
-
-    public function __construct(private ClientInterface $client)
-    {
-    }
 
     public function registerService(string $name, ServiceInterface $service): void
     {
@@ -53,7 +44,7 @@ class ServiceFactory
             if (!class_exists($serviceClass)) {
                 throw new \InvalidArgumentException('Invalid service name "' . $serviceName . '".');
             }
-            $service = new $serviceClass($this->client);
+            $service = new $serviceClass();
         }
 
         if (isset($config[$serviceName])) {

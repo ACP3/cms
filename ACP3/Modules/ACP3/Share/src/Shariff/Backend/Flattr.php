@@ -9,9 +9,6 @@ namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
 use Psr\Http\Message\RequestInterface;
 
-/**
- * Class Flattr.
- */
 class Flattr extends Request implements ServiceInterface
 {
     /**
@@ -38,6 +35,6 @@ class Flattr extends Request implements ServiceInterface
      */
     public function extractCount(array $data): int
     {
-        return (isset($data['flattrs'])) ? $data['flattrs'] : 0;
+        return $data['flattrs'] ?? 0;
     }
 }

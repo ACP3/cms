@@ -13,6 +13,8 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Log\LoggerInterface;
 
 class BackendFactory
 {
@@ -21,7 +23,9 @@ class BackendFactory
         private SettingsInterface $settings,
         private RequestInterface $request,
         private SocialServices $socialServices,
-        private CacheItemPoolInterface $servicesCacheItemPool
+        private ClientInterface $client,
+        private CacheItemPoolInterface $servicesCacheItemPool,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -29,7 +33,7 @@ class BackendFactory
     {
         $this->checkCacheDir();
 
-        return new Backend($this->getOptions(), $this->servicesCacheItemPool);
+        return new Backend($this->getOptions(), $this->client, $this->servicesCacheItemPool, $this->logger);
     }
 
     private function checkCacheDir(): void

@@ -9,9 +9,6 @@ namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
 use Psr\Http\Message\RequestInterface;
 
-/**
- * Interface ServiceInterface.
- */
 interface ServiceInterface
 {
     public function getRequest(string $url): RequestInterface;
@@ -20,12 +17,7 @@ interface ServiceInterface
 
     public function getName(): string;
 
-    /**
-     * @param string $content
-     *
-     * @return string
-     */
-    public function filterResponse($content);
+    public function filterResponse(string $content): string;
 
     public function setConfig(array $config): void;
 }

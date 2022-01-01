@@ -8,35 +8,24 @@
 namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
 use GuzzleHttp\Exception\TransferException;
-use GuzzleHttp\Pool;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class BackendManager.
- */
 class BackendManager
 {
-    protected LoggerInterface $logger;
-
     /**
      * @param string[]           $domains
      * @param ServiceInterface[] $services
      */
     public function __construct(
-        protected string $baseCacheKey,
-        protected CacheItemPoolInterface $cache,
-        protected ClientInterface $client,
-        protected array $domains,
-        protected array $services
+        private string $baseCacheKey,
+        private CacheItemPoolInterface $cache,
+        private ClientInterface $client,
+        private LoggerInterface $logger,
+        private array $domains,
+        private array $services
     ) {
-    }
-
-    public function setLogger(LoggerInterface $logger = null): void
-    {
-        $this->logger = $logger;
     }
 
     /**
@@ -69,21 +58,25 @@ class BackendManager
             $this->services
         );
 
-        /** @var ResponseInterface[]|TransferException[] $results */
-        $results = Pool::batch($this->client, $requests);
+        $results = [];
+        // @TODO: Make this async again!
+        foreach ($requests as $request) {
+            $results[] = $this->client->sendRequest($request);
+        }
 
         $counts = [];
         $i = 0;
         foreach ($this->services as $service) {
             if ($results[$i] instanceof TransferException) {
-                $this->logger?->warning($results[$i]->getMessage(), ['exception' => $results[$i]]);
+                $this->logger->warning($results[$i]->getMessage(), ['exception' => $results[$i]]);
             } else {
+                $content = $service->filterResponse($results[$i]->getBody()->getContents());
+
                 try {
-                    $content = $service->filterResponse($results[$i]->getBody()->getContents());
                     $json = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
                     $counts[$service->getName()] = \is_array($json) ? $service->extractCount($json) : 0;
                 } catch (\Exception $e) {
-                    $this->logger?->warning($e->getMessage(), ['exception' => $e]);
+                    $this->logger->warning($e->getMessage(), ['exception' => $e, 'content' => $content, 'uri' => $requests[$i]->getUri()]);
                 }
             }
             ++$i;

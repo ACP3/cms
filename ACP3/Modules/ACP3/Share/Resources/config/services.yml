@@ -12,9 +12,13 @@ services:
     tags:
       - { name: acp3.cache_item_pool }
 
+  Http\Adapter\Guzzle6\Client: ~
+  Psr\Http\Client\ClientInterface: '@Http\Adapter\Guzzle6\Client'
+
   ACP3\Modules\ACP3\Share\Shariff\BackendFactory:
     arguments:
       $servicesCacheItemPool: "@share.shariff.cache_item_pool"
+      $logger: "@share.logger.shariff_logger"
 
   ACP3\Modules\ACP3\Share\Shariff\Backend:
     factory: ['@ACP3\Modules\ACP3\Share\Shariff\BackendFactory', "create"]

@@ -22,7 +22,7 @@ class Backend
      *
      * @throws \JsonException
      */
-    public function __construct(array $config, ClientInterface $client, CacheItemPoolInterface $servicesCacheItemPool)
+    public function __construct(array $config, ClientInterface $client, CacheItemPoolInterface $servicesCacheItemPool, LoggerInterface $logger)
     {
         $domains = $config['domains'];
         // stay compatible to old configs
@@ -32,11 +32,12 @@ class Backend
 
         $baseCacheKey = md5(json_encode($config, JSON_THROW_ON_ERROR));
 
-        $serviceFactory = new ServiceFactory($client);
+        $serviceFactory = new ServiceFactory();
         $this->backendManager = new BackendManager(
             $baseCacheKey,
             $servicesCacheItemPool,
             $client,
+            $logger,
             $domains,
             $serviceFactory->getServicesByName($config['services'], $config)
         );
@@ -46,13 +47,8 @@ class Backend
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \JsonException
      */
-    public function get(string $url): array
+    public function get(string $url): ?array
     {
         return $this->backendManager->get($url);
-    }
-
-    public function setLogger(LoggerInterface $logger): void
-    {
-        $this->backendManager->setLogger($logger);
     }
 }

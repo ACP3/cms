@@ -9,9 +9,6 @@ namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
 use Psr\Http\Message\RequestInterface;
 
-/**
- * Class Reddit.
- */
 class Reddit extends Request implements ServiceInterface
 {
     /**

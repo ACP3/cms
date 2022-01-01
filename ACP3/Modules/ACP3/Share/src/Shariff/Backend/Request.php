@@ -7,18 +7,11 @@
 
 namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
-use GuzzleHttp\ClientInterface;
-
 abstract class Request
 {
-    /** @var array */
-    protected $config;
+    protected array $config = [];
 
-    public function __construct(protected ClientInterface $client)
-    {
-    }
-
-    public function filterResponse($content)
+    public function filterResponse(string $content): string
     {
         return $content;
     }

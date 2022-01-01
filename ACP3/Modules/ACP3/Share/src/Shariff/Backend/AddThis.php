@@ -9,9 +9,6 @@ namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
 use Psr\Http\Message\RequestInterface;
 
-/**
- * Class AddThis.
- */
 class AddThis extends Request implements ServiceInterface
 {
     /**
@@ -29,7 +26,7 @@ class AddThis extends Request implements ServiceInterface
     {
         return new \GuzzleHttp\Psr7\Request(
             'GET',
-            'http://api-public.addthis.com/url/shares.json?url=' . urlencode($url)
+            'https://api-public-oci-origin.addthis.com/url/shares.json?url=' . urlencode($url)
         );
     }
 

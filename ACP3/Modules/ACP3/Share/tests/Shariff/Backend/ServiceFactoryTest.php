@@ -7,28 +7,21 @@
 
 namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
-use GuzzleHttp\ClientInterface;
 use PHPUnit\Framework as PHPUnit;
 
-/**
- * Class ServiceFactoryTest.
- */
 class ServiceFactoryTest extends PHPUnit\TestCase
 {
-    public function testSetConfig()
+    public function testSetConfig(): void
     {
-        /** @var ServiceInterface|PHPUnit\MockObject\MockObject $mockService */
-        $mockService = $this->getMockBuilder(ServiceInterface::class)->getMock();
+        /** @var ServiceInterface & PHPUnit\MockObject\MockObject $mockService */
+        $mockService = $this->createMock(ServiceInterface::class);
 
         $mockService->expects($this->once())
             ->method('setConfig')
             ->with(['foo' => 'bar'])
         ;
 
-        /** @var ClientInterface|PHPUnit\MockObject\MockObject $mockClient */
-        $mockClient = $this->getMockBuilder(ClientInterface::class)->getMock();
-
-        $serviceFactory = new ServiceFactory($mockClient);
+        $serviceFactory = new ServiceFactory();
         $serviceFactory->registerService('MockService', $mockService);
 
         $services = $serviceFactory->getServicesByName(
@@ -38,17 +31,14 @@ class ServiceFactoryTest extends PHPUnit\TestCase
         $this->assertCount(1, $services);
     }
 
-    public function testConfigNotSet()
+    public function testConfigNotSet(): void
     {
-        /** @var ServiceInterface|PHPUnit\MockObject\MockObject $mockService */
-        $mockService = $this->getMockBuilder(ServiceInterface::class)->getMock();
+        /** @var ServiceInterface & PHPUnit\MockObject\MockObject $mockService */
+        $mockService = $this->createMock(ServiceInterface::class);
 
         $mockService->expects($this->never())->method('setConfig');
 
-        /** @var ClientInterface|PHPUnit\MockObject\MockObject $mockClient */
-        $mockClient = $this->getMockBuilder(ClientInterface::class)->getMock();
-
-        $serviceFactory = new ServiceFactory($mockClient);
+        $serviceFactory = new ServiceFactory();
         $serviceFactory->registerService('MockService', $mockService);
 
         $services = $serviceFactory->getServicesByName(

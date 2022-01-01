@@ -9,9 +9,6 @@ namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
 use Psr\Http\Message\RequestInterface;
 
-/**
- * Class Pinterest.
- */
 class Pinterest extends Request implements ServiceInterface
 {
     /**
@@ -36,9 +33,9 @@ class Pinterest extends Request implements ServiceInterface
     /**
      * {@inheritdoc}
      */
-    public function filterResponse($content)
+    public function filterResponse(string $content): string
     {
-        return mb_substr($content, 2, mb_strlen($content) - 3);
+        return mb_substr($content, 2, -1);
     }
 
     /**

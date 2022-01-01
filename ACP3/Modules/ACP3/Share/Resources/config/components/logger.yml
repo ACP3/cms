@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+
+  share.logger.shariff_logger:
+    class: Psr\Log\LoggerInterface
+    factory: ["@core.logger.logger_factory", "create"]
+    arguments:
+      - "shariff"
