@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+    bind:
+      $applicationMode: "%core.environment%"
+
+  RFM\Application:
+    configurator: '@ACP3\Modules\ACP3\Filemanager\RichFilemanager\RFMAppConfigurator'
+
+  ACP3\Modules\ACP3\Filemanager\RichFilemanager\RFMAppConfigurator: ~
+
+  RFM\Repository\StorageInterface:
+    factory: '@ACP3\Modules\ACP3\Filemanager\RichFilemanager\StorageFactory'
+
+  ACP3\Modules\ACP3\Filemanager\RichFilemanager\StorageFactory: ~
