@@ -1,0 +1,6 @@
+services:
+  _defaults:
+    autowire: true
+
+  Psr\Container\ContainerInterface: '@service_container'
+  Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
