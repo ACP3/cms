@@ -27,6 +27,7 @@
     "monolog/monolog": "^2.0.0",
     "phpmailer/phpmailer": "^6.1.1",
     "php-http/guzzle6-adapter": "^2.0",
+    "psr/http-client": "^1.0",
     "smarty/smarty": "^4.0",
     "cocur/slugify": "^4.0",
     "symfony/cache": "^5.3.0",
