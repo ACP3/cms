@@ -141,7 +141,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
 
         $this->container->set(EmailValidationRule::class, new EmailValidationRule());
 
-        /** @phpstan-ignore-next-line */
+        /* @phpstan-ignore-next-line */
         $this->validator->is('invalid_validation_rule', 'test@example.com');
     }
 
