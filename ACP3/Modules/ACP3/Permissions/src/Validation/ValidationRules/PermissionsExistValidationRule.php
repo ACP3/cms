@@ -35,7 +35,7 @@ class PermissionsExistValidationRule extends AbstractValidationRule
     /**
      * Checks, whether the given resources with its permission values exist and contain plausible values.
      *
-     * @param array<int, int> $resourcesWithPermissions
+     * @param array<int|string, int|string> $resourcesWithPermissions
      *
      * @throws \Doctrine\DBAL\Exception
      */
