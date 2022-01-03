@@ -11,11 +11,13 @@ use ACP3\Core\Cache\Purge;
 use ACP3\Core\Migration\Migrator;
 use ACP3\Modules\ACP3\Installer\Core\Controller\AbstractInstallerAction;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
+use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 
 class Index extends AbstractInstallerAction
 {
     public function __construct(
         InstallerContext $context,
+        private ApplicationPath $applicationPath,
         private Migrator $migrator
     ) {
         parent::__construct($context);
@@ -58,7 +60,7 @@ class Index extends AbstractInstallerAction
     {
         Purge::doPurge([
             ACP3_ROOT_DIR . '/cache/',
-            $this->appPath->getUploadsDir() . 'assets',
+            $this->applicationPath->getUploadsDir() . 'assets',
         ]);
     }
 

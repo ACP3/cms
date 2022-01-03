@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 use ACP3\Core\Helpers\Alerts;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
+use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Installer\Helpers\Navigation;
 use ACP3\Modules\ACP3\Installer\Model\InstallModel;
 use ACP3\Modules\ACP3\Installer\Validation\FormValidation;
@@ -21,6 +22,7 @@ class InstallPost extends AbstractAction
 {
     public function __construct(
         InstallerContext $context,
+        private ApplicationPath $applicationPath,
         private LoggerInterface $logger,
         private Alerts $alertsHelper,
         Navigation $navigation,
@@ -38,7 +40,7 @@ class InstallPost extends AbstractAction
         try {
             $formData = $this->request->getPost()->all();
 
-            $configFilePath = $this->appPath->getAppDir() . 'config.yml';
+            $configFilePath = $this->applicationPath->getAppDir() . 'config.yml';
 
             $this->formValidation
                 ->setConfigFilePath($configFilePath)
