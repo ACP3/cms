@@ -14,7 +14,7 @@ class FileUploadValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         $required = isset($extra['required']) ? (bool) $extra['required'] : true;
 

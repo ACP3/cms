@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Categories\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AllowedSuperiorCategoryValidationRule extends AbstractValidationRule
 {
@@ -21,7 +22,7 @@ class AllowedSuperiorCategoryValidationRule extends AbstractValidationRule
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         if (\is_array($data) && \is_array($field)) {
             $parentId = reset($field);

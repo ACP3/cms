@@ -16,10 +16,7 @@ class UriSafeValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
-    public function validationRuleProvider()
+    public function validationRuleProvider(): array
     {
         return [
             'valid-data-string' => ['abc/1234', '', [], true],

@@ -8,6 +8,7 @@
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Validation\Validator;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 abstract class AbstractValidationRule implements ValidationRuleInterface
 {
@@ -19,7 +20,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -27,7 +28,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setMessage($message)
+    public function setMessage(string $message): ValidationRuleInterface
     {
         $this->message = $message;
 
@@ -37,7 +38,7 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function validate(Validator $validator, $data, $field = '', array $extra = [])
+    public function validate(Validator $validator, bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): void
     {
         if (!$this->isValid($data, $field, $extra)) {
             $validator->addError($this->getMessage(), $field);

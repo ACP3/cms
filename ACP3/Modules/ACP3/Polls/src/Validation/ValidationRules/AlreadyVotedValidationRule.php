@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Polls\Validation\ValidationRules;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Polls\Repository\VoteRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AlreadyVotedValidationRule extends AbstractValidationRule
 {
@@ -17,13 +18,7 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
     {
     }
 
-    /**
-     * @param mixed  $data
-     * @param string $field
-     *
-     * @return bool
-     */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);

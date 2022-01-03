@@ -16,10 +16,7 @@ class ChangePasswordValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
-    public function validationRuleProvider()
+    public function validationRuleProvider(): array
     {
         return [
             'valid-data-array' => [['pw' => 'test1234', 'pw_confirm' => 'test1234'], ['pw', 'pw_confirm'], [], true],
@@ -28,7 +25,7 @@ class ChangePasswordValidationRuleTest extends AbstractValidationRuleTest
             'invalid-data-array' => [['pw' => 'test1234'], ['pw'], [], false],
             'invalid-data-flat-array' => [['test1234'], [], [], false],
             'invalid-data-string' => ['foobar', '', [], false],
-            'invalid-no-data' => [null, null, [], false],
+            'invalid-no-data' => [null, '', [], false],
         ];
     }
 }

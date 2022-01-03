@@ -7,12 +7,14 @@
 
 namespace ACP3\Core\Validation\ValidationRules;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class NotEmptyValidationRule extends AbstractValidationRule
 {
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         if (is_scalar($data)) {
             return !empty(trim($data));

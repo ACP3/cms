@@ -9,6 +9,7 @@ namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Date;
 use ACP3\Core\Repository\FloodBarrierAwareRepositoryInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
 {
@@ -19,7 +20,7 @@ abstract class AbstractFloodBarrierValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         $date = $this->repository->getLastDateFromIp($extra['ip']);
         $floodTime = !empty($date) ? $this->date->timestamp($date, true) + 30 : 0;

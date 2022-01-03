@@ -11,6 +11,7 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Session\SessionConstants;
 use ACP3\Core\Validation\Exceptions\InvalidFormTokenException;
 use ACP3\Core\Validation\Validator;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormTokenValidationRule extends AbstractValidationRule
@@ -22,7 +23,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function validate(Validator $validator, $data, $field = '', array $extra = [])
+    public function validate(Validator $validator, bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): void
     {
         if (!$this->isValid($data, $field, $extra)) {
             throw new InvalidFormTokenException();
@@ -32,7 +33,7 @@ class FormTokenValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         $tokenName = SessionConstants::XSRF_TOKEN_NAME;
         $sessionToken = $this->sessionHandler->get($tokenName, '');

@@ -7,12 +7,14 @@
 
 namespace ACP3\Core\Validation\ValidationRules;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class MinLengthValidationRule extends AbstractValidationRule
 {
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
@@ -21,13 +23,7 @@ class MinLengthValidationRule extends AbstractValidationRule
         return $this->checkMinLength($data, $extra['length'] ?? 1);
     }
 
-    /**
-     * @param string $value
-     * @param int    $length
-     *
-     * @return bool
-     */
-    protected function checkMinLength($value, $length)
+    private function checkMinLength(?string $value, int $length): bool
     {
         return mb_strlen(trim($value)) >= $length;
     }

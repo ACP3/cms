@@ -27,10 +27,7 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
-    public function validationRuleProvider()
+    public function validationRuleProvider(): array
     {
         return [
             'valid-data-simple' => [1, '', [], true],
@@ -45,10 +42,8 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
      *
      * @param mixed        $data
      * @param array|string $field
-     * @param array        $extra
-     * @param bool         $expected
      */
-    public function testValidationRule($data, $field, $extra, $expected)
+    public function testValidationRule($data, $field, array $extra, bool $expected): void
     {
         $this->setExpectations($expected);
 
@@ -71,10 +66,8 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
      *
      * @param mixed        $data
      * @param array|string $field
-     * @param array        $extra
-     * @param bool         $expected
      */
-    public function testValidate($data, $field, $extra, $expected)
+    public function testValidate($data, $field, array $extra, bool $expected): void
     {
         $this->setExpectations($expected);
 

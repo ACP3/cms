@@ -8,13 +8,14 @@
 namespace ACP3\Modules\ACP3\Installer\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ConfigFileValidationRule extends AbstractValidationRule
 {
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         return is_file($data) === true && is_writable($data) === true;
     }

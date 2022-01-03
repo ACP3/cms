@@ -9,10 +9,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
 
 class AccountNotExistsValidationRuleTest extends AccountExistsValidationRuleTest
 {
-    /**
-     * @return array
-     */
-    public function validationRuleProvider()
+    public function validationRuleProvider(): array
     {
         return [
             'valid-data-simple' => ['info@example.com', '', [], false],

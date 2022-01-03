@@ -16,10 +16,7 @@ class EmailValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
-    public function validationRuleProvider()
+    public function validationRuleProvider(): array
     {
         return [
             'valid-data-string' => ['test@example.com', '', [], true],
@@ -27,7 +24,7 @@ class EmailValidationRuleTest extends AbstractValidationRuleTest
             'valid-email-with-subdomain' => ['test@subdomain.example.com', '', [], true],
             'invalid-data-string' => ['foobar', '', [], false],
             'invalid-data-array' => [['foo' => 'foobar'], 'foo', [], false],
-            'invalid-no-data' => [null, null, [], false],
+            'invalid-no-data' => [null, '', [], false],
         ];
     }
 }

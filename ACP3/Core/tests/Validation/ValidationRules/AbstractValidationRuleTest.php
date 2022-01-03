@@ -15,10 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 abstract class AbstractValidationRuleTest extends TestCase
 {
-    /**
-     * @var ValidationRuleInterface
-     */
-    protected $validationRule;
+    protected ValidationRuleInterface $validationRule;
     /**
      * @var Validator & MockObject
      */
@@ -39,19 +36,14 @@ abstract class AbstractValidationRuleTest extends TestCase
         $container->set($this->validationRule::class, $this->validationRule);
     }
 
-    /**
-     * @return array
-     */
-    abstract public function validationRuleProvider();
+    abstract public function validationRuleProvider(): array;
 
     /**
      * @dataProvider validationRuleProvider
      *
      * @param mixed $data
-     * @param array $extra
-     * @param bool  $expected
      */
-    public function testValidationRule($data, array|string|null $field, $extra, $expected)
+    public function testValidationRule($data, array|string|null $field, array $extra, bool $expected): void
     {
         self::assertEquals($expected, $this->validationRule->isValid($data, $field, $extra));
     }
@@ -60,10 +52,8 @@ abstract class AbstractValidationRuleTest extends TestCase
      * @dataProvider validationRuleProvider
      *
      * @param mixed $data
-     * @param array $extra
-     * @param bool  $expected
      */
-    public function testValidate($data, array|string|null $field, $extra, $expected)
+    public function testValidate($data, array|string|null $field, array $extra, bool $expected): void
     {
         if ($expected === true) {
             $this->validator->expects(self::never())

@@ -16,10 +16,7 @@ class IntegerValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
-    public function validationRuleProvider()
+    public function validationRuleProvider(): array
     {
         return [
             'valid-data-integer' => [1, '', [], true],
@@ -30,7 +27,7 @@ class IntegerValidationRuleTest extends AbstractValidationRuleTest
             'invalid-data-float' => [0.01, '', [], false],
             'invalid-data-float-as-string' => ['0.01', '', [], false],
             'invalid-data-array' => [['foo' => 'foobar'], 'foo', [], false],
-            'invalid-no-data' => [null, null, [], false],
+            'invalid-no-data' => [null, '', [], false],
         ];
     }
 }

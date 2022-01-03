@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Captcha\Validation\ValidationRules;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Captcha\Extension\CaptchaExtensionInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CaptchaValidationRule extends AbstractValidationRule
 {
@@ -20,7 +21,7 @@ class CaptchaValidationRule extends AbstractValidationRule
     /**
      * {@inheritdoc}
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         if ($this->user->isAuthenticated() === false) {
             return $this->captcha->isCaptchaValid($data, $field, $extra);

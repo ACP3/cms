@@ -17,13 +17,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Validator
 {
     /**
-     * @var array
+     * @var array<string|int, string>
      */
-    private $errors = [];
+    private array $errors = [];
     /**
-     * @var array
+     * @var array{rule: class-string<ValidationRuleInterface>, params: array<string, mixed>}[]
      */
-    private $constraints = [];
+    private array $constraints = [];
 
     public function __construct(private EventDispatcherInterface $eventDispatcher, private ContainerInterface $container)
     {
@@ -122,7 +122,8 @@ class Validator
     }
 
     /**
-     * @param mixed $field
+     * @param class-string<ValidationRuleInterface> $validationRule
+     * @param mixed                                 $field
      *
      * @throws ValidationRuleNotFoundException
      */

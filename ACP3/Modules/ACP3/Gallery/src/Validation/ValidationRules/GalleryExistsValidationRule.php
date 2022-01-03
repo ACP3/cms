@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class GalleryExistsValidationRule extends AbstractValidationRule
 {
@@ -21,7 +22,7 @@ class GalleryExistsValidationRule extends AbstractValidationRule
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);

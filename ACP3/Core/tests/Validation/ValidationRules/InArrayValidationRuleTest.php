@@ -16,10 +16,7 @@ class InArrayValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
-    public function validationRuleProvider()
+    public function validationRuleProvider(): array
     {
         $haystack = ['haystack' => ['foo', 'bar', 'foobar']];
 
@@ -28,7 +25,7 @@ class InArrayValidationRuleTest extends AbstractValidationRuleTest
             'valid-data-array' => [['foo' => 'foobar'], 'foo', $haystack, true],
             'invalid-data-string' => ['baz', '', $haystack, false],
             'invalid-data-array' => [['foo' => 'baz'], 'foo', $haystack, false],
-            'invalid-no-data' => [null, null, [], false],
+            'invalid-no-data' => [null, '', [], false],
         ];
     }
 }

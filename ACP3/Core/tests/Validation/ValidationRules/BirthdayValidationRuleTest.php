@@ -16,10 +16,7 @@ class BirthdayValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    /**
-     * @return array
-     */
-    public function validationRuleProvider()
+    public function validationRuleProvider(): array
     {
         return [
             'valid-data-string' => ['1980-03-20', '', [], true],

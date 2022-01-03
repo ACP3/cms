@@ -8,32 +8,18 @@
 namespace ACP3\Core\Validation\ValidationRules;
 
 use ACP3\Core\Validation\Validator;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface ValidationRuleInterface
 {
-    /**
-     * @return string
-     */
-    public function getMessage();
+    public function getMessage(): string;
 
     /**
-     * @param string $message
-     *
      * @return $this
      */
-    public function setMessage($message);
+    public function setMessage(string $message): self;
 
-    /**
-     * @param mixed  $data
-     * @param string $field
-     */
-    public function validate(Validator $validator, $data, $field = '', array $extra = []);
+    public function validate(Validator $validator, bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): void;
 
-    /**
-     * @param bool|int|float|string|array $data
-     * @param string|array                $field
-     *
-     * @return bool
-     */
-    public function isValid($data, $field = '', array $extra = []);
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool;
 }

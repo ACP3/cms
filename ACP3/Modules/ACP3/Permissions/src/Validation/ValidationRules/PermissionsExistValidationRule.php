@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Permissions\Validation\ValidationRules;
 use ACP3\Core\ACL\PermissionEnum;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PermissionsExistValidationRule extends AbstractValidationRule
 {
@@ -19,8 +20,10 @@ class PermissionsExistValidationRule extends AbstractValidationRule
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function isValid($data, $field = '', array $extra = [])
+    public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         if (\is_array($data) && \array_key_exists($field, $data)) {
             return $this->isValid($data[$field], $field, $extra);
@@ -31,6 +34,10 @@ class PermissionsExistValidationRule extends AbstractValidationRule
 
     /**
      * Checks, whether the given resources with its permission values exist and contain plausible values.
+     *
+     * @param array<int, int> $resourcesWithPermissions
+     *
+     * @throws \Doctrine\DBAL\Exception
      */
     public function permissionsExist(array $resourcesWithPermissions): bool
     {
