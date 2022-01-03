@@ -18,7 +18,7 @@ class UserAgent
     /**
      * @see http://detectmobilebrowsers.com/download/php
      */
-    public function isMobileBrowser()
+    public function isMobileBrowser(): bool
     {
         $userAgent = $this->server->get('HTTP_USER_AGENT', '');
 
@@ -30,9 +30,9 @@ class UserAgent
      * Parst den ACCEPT-LANGUAGE Header des Browsers
      * und gibt die präferierten Sprachen zurück.
      *
-     * @return array
+     * @return array<string, float>
      */
-    public function parseAcceptLanguage()
+    public function parseAcceptLanguage(): array
     {
         $locales = [];
 
