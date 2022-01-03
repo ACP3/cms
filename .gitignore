@@ -4,6 +4,7 @@
 .php-cs-fixer.cache
 .phpstan-cache
 .phpunit.result.cache
+.rector-cache
 .component-paths.json
 .eslintcache
 .stylelintcache

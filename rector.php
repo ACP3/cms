@@ -34,6 +34,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         __DIR__ . '/ACP3',
     ]);
     $parameters->set(Option::PARALLEL, true);
+    $parameters->set(Option::CACHE_DIR, __DIR__ . '/.rector-cache');
 
     // Define what rule sets will be applied
     $containerConfigurator->import(SetList::DEAD_CODE);
