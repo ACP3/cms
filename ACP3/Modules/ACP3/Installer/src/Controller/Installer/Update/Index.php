@@ -8,15 +8,15 @@
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Update;
 
 use ACP3\Core\Cache\Purge;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Migration\Migrator;
-use ACP3\Modules\ACP3\Installer\Core\Controller\AbstractInstallerAction;
-use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 
-class Index extends AbstractInstallerAction
+class Index extends AbstractWidgetAction
 {
     public function __construct(
-        InstallerContext $context,
+        WidgetContext $context,
         private ApplicationPath $applicationPath,
         private Migrator $migrator
     ) {

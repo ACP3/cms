@@ -7,14 +7,14 @@
 
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
-use ACP3\Modules\ACP3\Installer\Core\Controller\AbstractInstallerAction;
-use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Modules\ACP3\Installer\Helpers\Navigation;
 
-abstract class AbstractAction extends AbstractInstallerAction
+abstract class AbstractAction extends AbstractWidgetAction
 {
     public function __construct(
-        InstallerContext $context,
+        WidgetContext $context,
         protected Navigation $navigation)
     {
         parent::__construct($context);

@@ -12,8 +12,6 @@ services:
     tags:
       - { name: core.eventSubscriber }
 
-  ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext: ~
-
   ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath: "@core.environment.application_path"
 
   ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToBottom:

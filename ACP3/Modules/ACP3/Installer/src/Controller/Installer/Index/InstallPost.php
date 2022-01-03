@@ -7,9 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Helpers\Alerts;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
-use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Installer\Helpers\Navigation;
 use ACP3\Modules\ACP3\Installer\Model\InstallModel;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class InstallPost extends AbstractAction
 {
     public function __construct(
-        InstallerContext $context,
+        WidgetContext $context,
         private ApplicationPath $applicationPath,
         private LoggerInterface $logger,
         private Alerts $alertsHelper,

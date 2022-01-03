@@ -7,10 +7,10 @@
 
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Error;
 
-use ACP3\Modules\ACP3\Installer\Core\Controller\AbstractInstallerAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use Symfony\Component\HttpFoundation\Response;
 
-class NotFound extends AbstractInstallerAction
+class NotFound extends AbstractWidgetAction
 {
     public function __invoke(): Response
     {

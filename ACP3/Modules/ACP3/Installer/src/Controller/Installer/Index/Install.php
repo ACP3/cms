@@ -7,17 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Date;
 use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Helpers\Date as DateHelper;
 use ACP3\Core\Helpers\Forms;
-use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
 use ACP3\Modules\ACP3\Installer\Helpers\Navigation;
 
 class Install extends AbstractAction
 {
     public function __construct(
-        InstallerContext $context,
+        WidgetContext $context,
         private ThemePathInterface $theme,
         Navigation $navigation,
         private Date $date,

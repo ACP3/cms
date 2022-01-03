@@ -7,14 +7,14 @@
 
 namespace ACP3\Modules\ACP3\Installer\Controller\Installer\Index;
 
-use ACP3\Modules\ACP3\Installer\Core\Controller\AbstractInstallerAction;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception as DBALException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class AvailableDatabases extends AbstractInstallerAction
+class AvailableDatabases extends AbstractWidgetAction
 {
     public function __invoke(): JsonResponse
     {
