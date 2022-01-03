@@ -15,18 +15,9 @@ class Date
     public const DEFAULT_DATE_FORMAT_FULL = 'Y-m-d H:i:s';
     public const DEFAULT_DATE_FORMAT_SHORT = 'Y-m-d';
 
-    /**
-     * @var string
-     */
-    private $dateFormatLong = '';
-    /**
-     * @var string
-     */
-    private $dateFormatShort = '';
-    /**
-     * @var \DateTimeZone
-     */
-    private $dateTimeZone;
+    private string $dateFormatLong = '';
+    private string $dateFormatShort = '';
+    private \DateTimeZone $dateTimeZone;
 
     public function __construct(private DateTranslator $dateTranslator)
     {
@@ -70,17 +61,11 @@ class Date
      */
     public function format(string $time = 'now', string $format = 'long', bool $toLocalTimeZone = true, bool $isLocalTimeZone = true): string
     {
-        switch ($format) {
-            case '':
-            case 'short':
-                $format = $this->dateFormatShort;
-
-                break;
-            case 'long':
-                $format = $this->dateFormatLong;
-
-                break;
-        }
+        $format = match ($format) {
+            '', 'short' => $this->dateFormatShort,
+            'long' => $this->dateFormatLong,
+            default => $format,
+        };
 
         if (is_numeric($time)) {
             $time = date('c', (int) $time);
