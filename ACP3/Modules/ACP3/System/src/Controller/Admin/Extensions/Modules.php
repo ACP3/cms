@@ -43,7 +43,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     /**
      * @throws DBALException
      */
-    public function __invoke(?string $action = null, ?string $dir = null): array|RedirectResponse
+    public function __invoke(?string $action = null, ?string $dir = null): array|JsonResponse|RedirectResponse
     {
         return match ($action) {
             'install' => $this->installModule($dir),
