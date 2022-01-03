@@ -9,33 +9,21 @@ namespace ACP3\Modules\ACP3\Installer\Core\Controller;
 
 use ACP3\Core\Controller\DisplayActionTrait;
 use ACP3\Core\Controller\InvokableActionInterface;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Installer\Core\Controller\Context\InstallerContext;
+use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 
 abstract class AbstractInstallerAction implements InvokableActionInterface
 {
     use DisplayActionTrait;
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-    /**
-     * @var \ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
+    protected ApplicationPath $appPath;
+    protected RequestInterface $request;
+    protected View $view;
 
     public function __construct(InstallerContext $context)
     {
-        $this->container = $context->getContainer();
         $this->request = $context->getRequest();
         $this->view = $context->getView();
         $this->appPath = $context->getAppPath();
@@ -51,14 +39,6 @@ abstract class AbstractInstallerAction implements InvokableActionInterface
     protected function getView(): View
     {
         return $this->view;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get(string $serviceId)
-    {
-        return $this->container->get($serviceId);
     }
 
     /**

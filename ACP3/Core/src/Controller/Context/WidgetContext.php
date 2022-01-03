@@ -12,17 +12,17 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class WidgetContext
 {
-    public function __construct(private ContainerInterface $container, private Translator $translator, private RequestInterface $request, private View $view, private SettingsInterface $config, private ApplicationPath $appPath)
-    {
-    }
-
-    public function getContainer(): ContainerInterface
-    {
-        return $this->container;
+    public function __construct(
+        private Translator $translator,
+        private RequestInterface $request,
+        private View $view,
+        private SettingsInterface $config,
+        private ApplicationPath $appPath,
+        private string $applicationMode
+    ) {
     }
 
     public function getTranslator(): Translator
@@ -48,5 +48,10 @@ class WidgetContext
     public function getAppPath(): ApplicationPath
     {
         return $this->appPath;
+    }
+
+    public function getApplicationMode(): string
+    {
+        return $this->applicationMode;
     }
 }

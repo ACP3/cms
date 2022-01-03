@@ -20,7 +20,7 @@ trait CacheResponseTrait
     /**
      * @param int $lifetime Cache TTL in seconds
      */
-    public function setCacheResponseCacheable(Response $response, int $lifetime = 60): void
+    protected function setCacheResponseCacheable(Response $response, int $lifetime = 60): void
     {
         if (!$this->canUsePageCache()) {
             return;
@@ -37,7 +37,7 @@ trait CacheResponseTrait
             ]);
     }
 
-    protected function canUsePageCache(): bool
+    private function canUsePageCache(): bool
     {
         return $this->getApplicationMode() !== ApplicationMode::DEVELOPMENT;
     }

@@ -7,59 +7,36 @@
 
 namespace ACP3\Core\Controller;
 
-use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\Translator;
+use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Core\View;
 
 abstract class AbstractWidgetAction implements InvokableActionInterface
 {
     use DisplayActionTrait;
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-    /**
-     * @var \ACP3\Core\I18n\Translator
-     */
-    protected $translator;
-    /**
-     * @var \ACP3\Core\Http\RequestInterface
-     */
-    protected $request;
-    /**
-     * @var \ACP3\Core\View
-     */
-    protected $view;
-    /**
-     * @var \ACP3\Core\Settings\SettingsInterface
-     */
-    protected $config;
-    /**
-     * @var \ACP3\Core\Environment\ApplicationPath
-     */
-    protected $appPath;
+    protected Translator $translator;
+    protected RequestInterface $request;
+    protected View $view;
+    protected SettingsInterface $config;
+    protected ApplicationPath $appPath;
+    private string $applicationMode;
 
     public function __construct(WidgetContext $context)
     {
-        $this->container = $context->getContainer();
         $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
         $this->view = $context->getView();
         $this->config = $context->getConfig();
         $this->appPath = $context->getAppPath();
+        $this->applicationMode = $context->getApplicationMode();
     }
 
     public function preDispatch(): void
     {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get(string $serviceId)
-    {
-        return $this->container->get($serviceId);
     }
 
     /**
@@ -73,14 +50,14 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
             . '.' . $this->request->getAction() . '.tpl';
     }
 
-    protected function getView(): Core\View
+    protected function getView(): View
     {
         return $this->view;
     }
 
     protected function getApplicationMode(): string
     {
-        return $this->container->getParameter('core.environment');
+        return $this->applicationMode;
     }
 
     protected function getRequest(): RequestInterface

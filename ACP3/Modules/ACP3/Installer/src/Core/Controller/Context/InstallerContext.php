@@ -10,17 +10,11 @@ namespace ACP3\Modules\ACP3\Installer\Core\Controller\Context;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\View;
 use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class InstallerContext
 {
-    public function __construct(private ContainerInterface $container, private RequestInterface $request, private View $view, private ApplicationPath $appPath)
+    public function __construct(private RequestInterface $request, private View $view, private ApplicationPath $appPath)
     {
-    }
-
-    public function getContainer(): ContainerInterface
-    {
-        return $this->container;
     }
 
     public function getRequest(): RequestInterface

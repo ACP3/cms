@@ -12,21 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait DisplayActionTrait
 {
-    /**
-     * @var string
-     */
-    private $template = '';
-    /**
-     * @var string|false
-     */
-    private $content = '';
+    private string $template = '';
+    private string|false $content = '';
 
     /**
      * Outputs the requested module controller action.
-     *
-     * @param string|array|null $actionResult
      */
-    public function display($actionResult): Response
+    public function display(array|string|Response|null $actionResult): Response
     {
         if (\is_string($actionResult)) {
             $this->setContent($actionResult);

@@ -16,15 +16,5 @@ interface InvokableActionInterface
 {
     public function preDispatch(): void;
 
-    /**
-     * Gets a class from the service container.
-     *
-     * @return mixed
-     */
-    public function get(string $serviceId);
-
-    /**
-     * @param Response|string|array $actionResult
-     */
-    public function display($actionResult): Response;
+    public function display(array|string|Response|null $actionResult): Response;
 }
