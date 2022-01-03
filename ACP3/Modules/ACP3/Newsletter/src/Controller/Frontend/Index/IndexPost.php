@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Newsletter;
 
@@ -15,6 +16,7 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
+        private ApplicationPath $applicationPath,
         private FormAction $actionHelper,
         private Core\Helpers\Alerts $alertsHelper,
         private Newsletter\Helper\Subscribe $subscribeHelper,
@@ -44,7 +46,7 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
 
                 return $this->alertsHelper->confirmBox(
                     $this->translator->t('newsletter', $result !== false ? 'subscribe_success' : 'subscribe_error'),
-                    $this->appPath->getWebRoot()
+                    $this->applicationPath->getWebRoot()
                 );
             }
         );

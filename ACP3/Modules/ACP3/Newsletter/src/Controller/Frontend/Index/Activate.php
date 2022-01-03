@@ -8,12 +8,14 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Newsletter;
 
 class Activate extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
+        private ApplicationPath $applicationPath,
         private Core\Helpers\Alerts $alertsHelper,
         private Newsletter\Helper\AccountStatus $accountStatusHelper,
         private Newsletter\Validation\ActivateAccountFormValidation $activateAccountFormValidation
@@ -38,7 +40,7 @@ class Activate extends Core\Controller\AbstractWidgetAction
             return $this->alertsHelper->confirmBox($this->translator->t(
                 'newsletter',
                 $bool !== false ? 'activate_success' : 'activate_error'
-            ), $this->appPath->getWebRoot());
+            ), $this->applicationPath->getWebRoot());
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
             return $this->alertsHelper->errorBox($e->getMessage());
         }

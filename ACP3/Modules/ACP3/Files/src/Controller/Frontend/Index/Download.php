@@ -8,14 +8,20 @@
 namespace ACP3\Modules\ACP3\Files\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Files;
+use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class Download extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
+        private ApplicationPath $applicationPath,
         private Core\Date $date,
         private Core\Http\RedirectResponse $redirectResponse,
         private Core\Helpers\StringFormatter $stringFormatter,
@@ -26,14 +32,14 @@ class Download extends Core\Controller\AbstractWidgetAction
 
     /**
      * @throws Core\Controller\Exception\ResultNotExistsException
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
-    public function __invoke(int $id): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+    public function __invoke(int $id): JsonResponse|RedirectResponse|Response
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $file = $this->filesRepository->getOneById($id);
 
-            $path = $this->appPath->getUploadsDir() . 'files/';
+            $path = $this->applicationPath->getUploadsDir() . 'files/';
             if (is_file($path . $file['file'])) {
                 $ext = strrchr($file['file'], '.');
                 $filename = $this->stringFormatter->makeStringUrlSafe($file['title']) . $ext;

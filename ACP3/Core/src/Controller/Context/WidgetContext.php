@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Controller\Context;
 
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
@@ -20,7 +19,6 @@ class WidgetContext
         private RequestInterface $request,
         private View $view,
         private SettingsInterface $config,
-        private ApplicationPath $appPath,
         private string $applicationMode
     ) {
     }
@@ -43,11 +41,6 @@ class WidgetContext
     public function getConfig(): SettingsInterface
     {
         return $this->config;
-    }
-
-    public function getAppPath(): ApplicationPath
-    {
-        return $this->appPath;
     }
 
     public function getApplicationMode(): string

@@ -9,12 +9,14 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Users;
 
 class Logout extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
+        private ApplicationPath $applicationPath,
         private UserModelInterface $user,
         private Core\Http\RedirectResponse $redirectResponse,
         private Users\ViewProviders\LogoutViewProvider $logoutViewProvider,
@@ -29,7 +31,7 @@ class Logout extends Core\Controller\AbstractWidgetAction
     public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
     {
         if (!$this->user->isAuthenticated()) {
-            return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
+            return $this->redirectResponse->toNewPage($this->applicationPath->getWebRoot());
         }
 
         $this->authenticationModel->logout();

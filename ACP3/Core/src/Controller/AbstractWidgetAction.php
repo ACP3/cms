@@ -8,7 +8,6 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core\Controller\Context\WidgetContext;
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
@@ -22,7 +21,6 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
     protected RequestInterface $request;
     protected View $view;
     protected SettingsInterface $config;
-    protected ApplicationPath $appPath;
     private string $applicationMode;
 
     public function __construct(WidgetContext $context)
@@ -31,7 +29,6 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
         $this->request = $context->getRequest();
         $this->view = $context->getView();
         $this->config = $context->getConfig();
-        $this->appPath = $context->getAppPath();
         $this->applicationMode = $context->getApplicationMode();
     }
 

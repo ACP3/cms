@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Modules\ACP3\Users;
@@ -16,6 +17,7 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
+        private ApplicationPath $applicationPath,
         private FormAction $actionHelper,
         private Core\Validation\Validator $validator,
         private Core\Helpers\Alerts $alertsHelper,
@@ -59,7 +61,7 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
                         'users',
                         $isMailSent === true && $result !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'
                     ),
-                    $this->appPath->getWebRoot()
+                    $this->applicationPath->getWebRoot()
                 );
             },
             $this->request->getFullPath()

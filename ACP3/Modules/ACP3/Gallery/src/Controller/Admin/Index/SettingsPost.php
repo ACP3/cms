@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 
 use ACP3\Core;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Gallery;
 use Psr\Cache\CacheItemPoolInterface;
@@ -16,6 +17,7 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
+        private ApplicationPath $applicationPath,
         private FormAction $actionHelper,
         private CacheItemPoolInterface $galleryCachePool,
         private Core\Helpers\Secure $secureHelper,
@@ -48,7 +50,7 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
             $bool = $this->config->saveSettings($data, Gallery\Installer\Schema::MODULE_NAME);
 
             if ($this->hasImageDimensionChanges($formData)) {
-                Core\Cache\Purge::doPurge($this->appPath->getUploadsDir() . 'gallery/cache', 'gallery');
+                Core\Cache\Purge::doPurge($this->applicationPath->getUploadsDir() . 'gallery/cache', 'gallery');
 
                 $this->galleryCachePool->clear();
             }

@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ class LoginPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
+        private ApplicationPath $applicationPath,
         private FormAction $actionHelper,
         private Core\Http\RedirectResponse $redirectResponse,
         private Core\Helpers\Secure $secureHelper,
@@ -42,7 +44,7 @@ class LoginPost extends Core\Controller\AbstractWidgetAction
                 );
             }
 
-            return $this->redirectResponse->toNewPage($this->appPath->getWebRoot());
+            return $this->redirectResponse->toNewPage($this->applicationPath->getWebRoot());
         } catch (Users\Exception\LoginFailedException) {
             $phrase = $this->translator->t('users', 'nickname_or_password_wrong');
         } catch (Users\Exception\UserAccountLockedException) {

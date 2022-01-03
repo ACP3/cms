@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\System\Controller\Admin\Extensions;
 
 use ACP3\Core;
 use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\System\Event\RenewCacheEvent;
 use ACP3\Modules\ACP3\System\Exception\ModuleInstallerException;
@@ -25,6 +26,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         WidgetContext $context,
+        private ApplicationPath $applicationPath,
         private EventDispatcher $eventDispatcher,
         private RedirectMessages $redirectMessages,
         private Core\Modules $modules,
@@ -73,8 +75,8 @@ class Modules extends Core\Controller\AbstractWidgetAction
     private function purgeCaches(): void
     {
         Core\Cache\Purge::doPurge([
-            $this->appPath->getCacheDir() . 'container.php',
-            $this->appPath->getCacheDir() . 'container.php.meta',
+            $this->applicationPath->getCacheDir() . 'container.php',
+            $this->applicationPath->getCacheDir() . 'container.php.meta',
         ]);
 
         $this->cacheClearService->clearCacheByType('general');

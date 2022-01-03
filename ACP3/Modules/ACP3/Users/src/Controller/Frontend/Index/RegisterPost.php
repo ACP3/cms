@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
 use ACP3\Core;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Permissions;
 use ACP3\Modules\ACP3\Users;
@@ -16,6 +17,7 @@ class RegisterPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
+        private ApplicationPath $applicationPath,
         private FormAction $actionHelper,
         private Core\Helpers\Alerts $alertsHelper,
         private Users\Model\UsersModel $usersModel,
@@ -52,7 +54,7 @@ class RegisterPost extends Core\Controller\AbstractWidgetAction
                         'users',
                         $lastId !== false && $result !== false ? 'register_success' : 'register_error'
                     ),
-                    $this->appPath->getWebRoot()
+                    $this->applicationPath->getWebRoot()
                 );
             },
             $this->request->getFullPath()
