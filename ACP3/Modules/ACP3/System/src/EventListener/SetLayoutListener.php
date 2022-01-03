@@ -65,7 +65,7 @@ class SetLayoutListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ControllerActionBeforeDispatchEvent::NAME => '__invoke',
+            ControllerActionBeforeDispatchEvent::class => '__invoke',
         ];
     }
 }

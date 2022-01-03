@@ -11,11 +11,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ControllerActionBeforeDispatchEvent extends Event
 {
-    public const NAME = 'core.application.controller_action_dispatcher.before_dispatch';
     /**
      * @var string[]
      */
-    private $serviceIdParts = [];
+    private array $serviceIdParts = [];
 
     public function __construct(private string $controllerServiceId)
     {

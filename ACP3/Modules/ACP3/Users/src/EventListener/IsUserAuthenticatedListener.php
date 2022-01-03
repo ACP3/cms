@@ -43,7 +43,7 @@ class IsUserAuthenticatedListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ControllerActionBeforeDispatchEvent::NAME => ['__invoke', 255],
+            ControllerActionBeforeDispatchEvent::class => ['__invoke', 255],
         ];
     }
 }

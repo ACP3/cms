@@ -63,7 +63,7 @@ class ControllerActionDispatcher
             }
             $this->eventDispatcher->dispatch(
                 new ControllerActionBeforeDispatchEvent($normalizedServiceId),
-                ControllerActionBeforeDispatchEvent::NAME
+                ControllerActionBeforeDispatchEvent::class
             );
 
             /** @var \ACP3\Core\Controller\InvokableActionInterface $controller */
@@ -79,7 +79,7 @@ class ControllerActionDispatcher
             $afterDispatchEvent = new ControllerActionAfterDispatchEvent($normalizedServiceId, $this->request, $response);
             $this->eventDispatcher->dispatch(
                 $afterDispatchEvent,
-                ControllerActionAfterDispatchEvent::NAME
+                ControllerActionAfterDispatchEvent::class
             );
 
             return $afterDispatchEvent->getResponse();

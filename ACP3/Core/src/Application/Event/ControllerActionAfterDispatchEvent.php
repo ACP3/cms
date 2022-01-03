@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ControllerActionAfterDispatchEvent extends ControllerActionBeforeDispatchEvent
 {
-    public const NAME = 'core.application.controller_action_dispatcher.after_dispatch';
-
     public function __construct(string $serviceId, private RequestInterface $request, private Response $response)
     {
         parent::__construct($serviceId);

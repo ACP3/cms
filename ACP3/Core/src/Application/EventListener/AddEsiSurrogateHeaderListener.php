@@ -32,7 +32,7 @@ class AddEsiSurrogateHeaderListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ControllerActionAfterDispatchEvent::NAME => '__invoke',
+            ControllerActionAfterDispatchEvent::class => '__invoke',
         ];
     }
 }
