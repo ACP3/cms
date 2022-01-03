@@ -7,15 +7,20 @@
 
 namespace ACP3\Core\Controller;
 
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\View;
 use PHPUnit\Framework\TestCase;
 
-class DisplayActionTraitTest extends TestCase
+class AbstractWidgetActionTest extends TestCase
 {
     /**
-     * @var DisplayActionTraitImpl
+     * @var AbstractWidgetActionImpl
      */
     private $displayAction;
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject & WidgetContext
+     */
+    private $widgetContextMock;
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject & View
      */
@@ -24,14 +29,17 @@ class DisplayActionTraitTest extends TestCase
     protected function setup(): void
     {
         $this->setUpMockObjects();
-        $this->displayAction = new DisplayActionTraitImpl(
-            $this->viewMock
+        $this->displayAction = new AbstractWidgetActionImpl(
+            $this->widgetContextMock
         );
     }
 
     private function setUpMockObjects(): void
     {
         $this->viewMock = $this->createMock(View::class);
+
+        $this->widgetContextMock = $this->createMock(WidgetContext::class);
+        $this->widgetContextMock->method('getView')->willReturn($this->viewMock);
     }
 
     public function testDisplayWithStringActionResult(): void
@@ -64,7 +72,7 @@ class DisplayActionTraitTest extends TestCase
             $this->viewMock->expects(self::once())
                 ->method('assign')
                 ->with($tplVars)
-                ->willReturn($this->viewMock);
+                ->willReturnSelf();
         }
     }
 
