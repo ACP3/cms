@@ -20,23 +20,23 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
      */
     private $invalidatePageCache;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & SettingsInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|SettingsInterface
      */
     private $settingsMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & CanUsePageCache
+     * @var \PHPUnit\Framework\MockObject\MockObject|CanUsePageCache
      */
     private $canUsePageCacheMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & Modules
+     * @var \PHPUnit\Framework\MockObject\MockObject|Modules
      */
     private $modulesMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & SettingsRepository
+     * @var \PHPUnit\Framework\MockObject\MockObject|SettingsRepository
      */
     private $settingsRepositoryMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & CacheClearService
+     * @var \PHPUnit\Framework\MockObject\MockObject|CacheClearService
      */
     private $cacheClearServiceMock;
 

@@ -17,11 +17,11 @@ class UriTest extends AbstractPluginTest
      */
     protected $plugin;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & RouterInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|RouterInterface
      */
     private $routerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & \Smarty_Internal_Template
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Smarty_Internal_Template
      */
     private $smartyInternalTemplateMock;
 

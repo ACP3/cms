@@ -18,11 +18,11 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
      */
     private $assets;
     /**
-     * @var \ACP3\Core\Environment\ThemePathInterface & \PHPUnit\Framework\MockObject\MockObject
+     * @var \ACP3\Core\Environment\ThemePathInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private $theme;
     /**
-     * @var \ACP3\Core\Assets\Libraries & \PHPUnit\Framework\MockObject\MockObject
+     * @var \ACP3\Core\Assets\Libraries|\PHPUnit\Framework\MockObject\MockObject
      */
     private $librariesMock;
 

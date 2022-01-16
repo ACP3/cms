@@ -23,7 +23,7 @@ class SocialSharingBackendServiceLocatorTest extends PHPUnit\TestCase
 
     public function testSetConfig(): void
     {
-        /** @var ServiceInterface & PHPUnit\MockObject\MockObject $mockService */
+        /** @var ServiceInterface|PHPUnit\MockObject\MockObject $mockService */
         $mockService = $this->createMock(ServiceInterface::class);
         $mockService->method('getName')->willReturn('mockservice');
         $mockService->expects($this->once())
@@ -41,7 +41,7 @@ class SocialSharingBackendServiceLocatorTest extends PHPUnit\TestCase
 
     public function testConfigNotSet(): void
     {
-        /** @var ServiceInterface & PHPUnit\MockObject\MockObject $mockService */
+        /** @var ServiceInterface|PHPUnit\MockObject\MockObject $mockService */
         $mockService = $this->createMock(ServiceInterface::class);
         $mockService->method('getName')->willReturn('mockservice');
         $mockService->expects($this->never())->method('setConfig');

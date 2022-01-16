@@ -15,15 +15,15 @@ use ACP3\Core\Router\RouterInterface;
 class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & Translator
+     * @var \PHPUnit\Framework\MockObject\MockObject|Translator
      */
     private $langMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & RouterInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|RouterInterface
      */
     private $routerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & Icon
+     * @var \PHPUnit\Framework\MockObject\MockObject|Icon
      */
     private $iconMock;
 

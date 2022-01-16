@@ -18,15 +18,15 @@ class PageCssClassesTest extends AbstractPluginTest
      */
     protected $plugin;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Assets\PageCssClasses
+     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Assets\PageCssClasses
      */
     private $pageCssClassesMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & Request
+     * @var \PHPUnit\Framework\MockObject\MockObject|Request
      */
     private $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & \Smarty_Internal_Template
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Smarty_Internal_Template
      */
     private $smartyInternalTemplateMock;
 

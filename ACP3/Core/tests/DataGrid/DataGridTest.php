@@ -94,7 +94,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             ->method('hasPermission')
             ->willReturn(false);
 
-        /** @var MarkEntries&\PHPUnit\Framework\MockObject\MockObject $markEntriesMock */
+        /** @var MarkEntries|\PHPUnit\Framework\MockObject\MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));
@@ -128,7 +128,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             ->method('hasPermission')
             ->willReturn(false);
 
-        /** @var MarkEntries&\PHPUnit\Framework\MockObject\MockObject $markEntriesMock */
+        /** @var MarkEntries|\PHPUnit\Framework\MockObject\MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));

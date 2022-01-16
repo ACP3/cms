@@ -18,11 +18,11 @@ class AbstractWidgetActionTest extends TestCase
      */
     private $displayAction;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & WidgetContext
+     * @var \PHPUnit\Framework\MockObject\MockObject|WidgetContext
      */
     private $widgetContextMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & View
+     * @var \PHPUnit\Framework\MockObject\MockObject|View
      */
     private $viewMock;
 

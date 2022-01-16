@@ -21,7 +21,7 @@ class FileResolverTest extends TestCase
      */
     private $fileResolver;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & CacheItemPoolInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|CacheItemPoolInterface
      */
     private $assetsCachePoolMock;
     /**
@@ -29,7 +29,7 @@ class FileResolverTest extends TestCase
      */
     private $appPath;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Environment\ThemePathInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Environment\ThemePathInterface
      */
     private $themeMock;
 

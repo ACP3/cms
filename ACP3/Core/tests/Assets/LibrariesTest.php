@@ -19,11 +19,11 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
      */
     private $libraries;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & RequestStack
+     * @var \PHPUnit\Framework\MockObject\MockObject|RequestStack
      */
     private $requestStackMock;
     /**
-     * @var \ACP3\Core\Assets\LibrariesCache & \PHPUnit\Framework\MockObject\MockObject
+     * @var \ACP3\Core\Assets\LibrariesCache|\PHPUnit\Framework\MockObject\MockObject
      */
     private $librariesCacheMock;
 

@@ -16,7 +16,7 @@ class ResultsPerPageTest extends \PHPUnit\Framework\TestCase
      */
     private $resultsPerPage;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & SettingsInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|SettingsInterface
      */
     private $settingsMock;
 

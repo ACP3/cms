@@ -17,7 +17,7 @@ abstract class AbstractValidationRuleTest extends TestCase
 {
     protected ValidationRuleInterface $validationRule;
     /**
-     * @var Validator & MockObject
+     * @var Validator|MockObject
      */
     protected $validator;
 

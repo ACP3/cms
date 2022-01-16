@@ -19,15 +19,15 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
      */
     private $updateCheck;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & Date
+     * @var \PHPUnit\Framework\MockObject\MockObject|Date
      */
     private $dateMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & SettingsInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|SettingsInterface
      */
     private $settingsMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser
+     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser
      */
     private $updateFileParserMock;
     /**

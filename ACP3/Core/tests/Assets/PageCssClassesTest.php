@@ -18,15 +18,15 @@ class PageCssClassesTest extends \PHPUnit\Framework\TestCase
      */
     private $pageCssClasses;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & \ACP3\Core\Breadcrumb\Title
+     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Breadcrumb\Title
      */
     private $titleMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & Request
+     * @var \PHPUnit\Framework\MockObject\MockObject|Request
      */
     private $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & StringFormatter
+     * @var \PHPUnit\Framework\MockObject\MockObject|StringFormatter
      */
     private $stringFormatterMock;
 

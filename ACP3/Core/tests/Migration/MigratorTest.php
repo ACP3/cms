@@ -17,15 +17,15 @@ use PHPUnit\Framework\TestCase;
 class MigratorTest extends TestCase
 {
     /**
-     * @var MockObject & Connection
+     * @var MockObject|Connection
      */
     private $dbMock;
     /**
-     * @var MockObject & MigrationServiceLocator
+     * @var MockObject|MigrationServiceLocator
      */
     private $migrationServiceLocatorMock;
     /**
-     * @var MockObject & MigrationRepositoryInterface
+     * @var MockObject|MigrationRepositoryInterface
      */
     private $migrationRepositoryMock;
     /**

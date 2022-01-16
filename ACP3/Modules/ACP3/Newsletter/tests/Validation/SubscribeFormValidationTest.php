@@ -18,7 +18,7 @@ use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsVali
 class SubscribeFormValidationTest extends AbstractFormValidationTest
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject & AccountRepository
+     * @var \PHPUnit\Framework\MockObject\MockObject|AccountRepository
      */
     private $accountRepositoryMock;
 
