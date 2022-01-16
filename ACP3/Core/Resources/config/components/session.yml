@@ -14,10 +14,12 @@ services:
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
     arguments:
-      $pdoOrDsn: !service { class: PDO, factory: ['@ACP3\Core\Database\Connection', "getWrappedConnection"] }
+      $pdoOrDsn: "mysql:host=%db_host%;dbname=%db_name%"
       $options:
         {
           db_table: "%db_table_prefix%sessions",
+          db_username: "%db_user%",
+          db_password: "%db_password%",
           db_id_col: "session_id",
           db_data_col: "session_data",
           db_lifetime_col: "session_lifetime",

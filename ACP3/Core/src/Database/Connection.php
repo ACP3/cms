@@ -58,20 +58,6 @@ class Connection
         $this->getConnection()->rollBack();
     }
 
-    /**
-     * @throws DBAL\Exception
-     */
-    public function getWrappedConnection(): ?\PDO
-    {
-        $connection = $this->getConnection()->getWrappedConnection();
-
-        if ($connection instanceof DBAL\Driver\PDO\Connection) {
-            return $connection->getWrappedConnection();
-        }
-
-        return null;
-    }
-
     public function getDatabase(): string
     {
         return $this->connectionParams['dbname'];
