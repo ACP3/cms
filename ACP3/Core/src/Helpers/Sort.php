@@ -47,7 +47,7 @@ class Sort
     private function moveOneStep(string $action, string $table, string $idField, string $sortField, int $id, string $where = ''): bool
     {
         try {
-            $this->db->getConnection()->beginTransaction();
+            $this->db->beginTransaction();
 
             $table = $this->db->getPrefixedTableName($table);
 
@@ -70,12 +70,12 @@ class Sort
                     sprintf($swapSortSql, $table, $idField, $sortField), ['id' => $id, 'otherId' => $otherId]
                 );
 
-                $this->db->getConnection()->commit();
+                $this->db->commit();
 
                 return true;
             }
         } catch (Exception $e) {
-            $this->db->getConnection()->rollBack();
+            $this->db->rollBack();
 
             throw $e;
         }

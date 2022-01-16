@@ -26,15 +26,15 @@ class FormAction
     public function handlePostAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
     {
         try {
-            $this->db->getConnection()->beginTransaction();
+            $this->db->beginTransaction();
 
             $result = $callback();
 
-            $this->db->getConnection()->commit();
+            $this->db->commit();
 
             return $result;
         } catch (Core\Validation\Exceptions\InvalidFormTokenException $e) {
-            $this->db->getConnection()->rollBack();
+            $this->db->rollBack();
 
             return $this->redirectMessages->setMessage(
                 false,
@@ -42,11 +42,11 @@ class FormAction
                 $path
             );
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
-            $this->db->getConnection()->rollBack();
+            $this->db->rollBack();
 
             return $this->renderErrorBoxOnFailedFormValidation($e);
         } catch (ConnectionException $e) {
-            $this->db->getConnection()->rollBack();
+            $this->db->rollBack();
 
             throw $e;
         }
