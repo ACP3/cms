@@ -5,6 +5,7 @@
   "main": "",
   "directories": {},
   "scripts": {
+    "build": "gulp",
     "css-lint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .stylelintcache --rd",
     "css-lint:fix": "npm run css-lint -- --fix",
     "eslint": "eslint -c .eslintrc.json --cache --cache-location=.eslintcache .",
