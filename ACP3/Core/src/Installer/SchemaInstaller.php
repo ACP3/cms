@@ -11,12 +11,10 @@ use ACP3\Core\Database\Connection;
 use ACP3\Core\Modules\InstallerInterface;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
-use Psr\Log\LoggerInterface;
 
 class SchemaInstaller extends SchemaHelper implements InstallerInterface
 {
     public function __construct(
-        private LoggerInterface $logger,
         Connection $db,
         ModuleAwareRepositoryInterface $systemModuleRepository,
         private SettingsAwareRepositoryInterface $systemSettingsRepository
@@ -70,25 +68,14 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     private function installSettings(string $moduleName, array $settings): bool
     {
         if (\count($settings) > 0) {
-            $this->getDb()->getConnection()->beginTransaction();
-
-            try {
-                $moduleId = $this->getModuleId($moduleName);
-                foreach ($settings as $key => $value) {
-                    $insertValues = [
-                        'module_id' => $moduleId,
-                        'name' => $key,
-                        'value' => $value,
-                    ];
-                    $this->systemSettingsRepository->insert($insertValues);
-                }
-                $this->getDb()->getConnection()->commit();
-            } catch (\Exception $e) {
-                $this->getDb()->getConnection()->rollBack();
-
-                $this->logger->warning($e);
-
-                return false;
+            $moduleId = $this->getModuleId($moduleName);
+            foreach ($settings as $key => $value) {
+                $insertValues = [
+                    'module_id' => $moduleId,
+                    'name' => $key,
+                    'value' => $value,
+                ];
+                $this->systemSettingsRepository->insert($insertValues);
             }
         }
 

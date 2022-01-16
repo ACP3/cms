@@ -16,10 +16,7 @@ use Psr\Log\LoggerInterface;
 
 class Connection
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    private $connection;
+    private ?DBAL\Connection $connection = null;
 
     public function __construct(private LoggerInterface $logger, private string $appMode, private array $connectionParams, private string $tablePrefix)
     {
@@ -154,36 +151,13 @@ class Connection
     }
 
     /**
-     * @return mixed
-     *
-     * @throws DBAL\ConnectionException
-     * @throws DBAL\Exception
-     */
-    public function executeTransactionalQuery(callable $callback)
-    {
-        $this->getConnection()->beginTransaction();
-
-        try {
-            $result = $callback();
-
-            $this->getConnection()->commit();
-        } catch (DBAL\Exception $e) {
-            $this->getConnection()->rollBack();
-
-            throw $e;
-        }
-
-        return $result;
-    }
-
-    /**
      * @throws \Doctrine\DBAL\Exception
      */
     protected function connect(): DBAL\Connection
     {
         $config = new DBAL\Configuration();
-        if ($this->appMode === ApplicationMode::DEVELOPMENT) {
-            $config->setSQLLogger(new SQLLogger($this->logger));
+        if ($this->appMode !== ApplicationMode::PRODUCTION) {
+            $config->setMiddlewares([new DBAL\Logging\Middleware($this->logger)]);
         }
 
         return DBAL\DriverManager::getConnection($this->connectionParams, $config);

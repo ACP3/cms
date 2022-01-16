@@ -37,7 +37,5 @@ services:
 
   ACP3\Core\Installer\SchemaInstaller:
     public: true
-    arguments:
-      $logger: "@core.installer.logger"
     calls:
       - ["setContainer", ["@service_container"]]
