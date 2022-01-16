@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Installer\Helpers;
 
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
+use ACP3\Core\Database\Connection;
 use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Migration\MigrationServiceLocator;
 use ACP3\Core\Migration\Repository\MigrationRepositoryInterface;
@@ -30,7 +31,7 @@ class ModuleInstaller
     {
         $installedModules = $this->doInstallModules($container);
 
-        $this->doMarkAllMigrationsAsExecuted();
+        $this->doMarkAllMigrationsAsExecuted($container);
 
         return $installedModules;
     }
@@ -72,10 +73,13 @@ class ModuleInstaller
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function doMarkAllMigrationsAsExecuted(): void
+    private function doMarkAllMigrationsAsExecuted(ContainerInterface $container): void
     {
+        /** @var Connection $db */
+        $db = $container->get(Connection::class);
+
         foreach ($this->migrationServiceLocator->getMigrations() as $fqcn => $migration) {
-            $this->migrationRepository->insert(['name' => $fqcn]);
+            $db->getConnection()->insert($this->migrationRepository->getTableName(), ['name' => $fqcn]);
         }
     }
 }
