@@ -39,7 +39,7 @@ class Connection
      */
     public function beginTransaction(): void
     {
-        $this->connection->beginTransaction();
+        $this->getConnection()->beginTransaction();
     }
 
     /**
@@ -47,7 +47,7 @@ class Connection
      */
     public function commit(): void
     {
-        $this->connection->commit();
+        $this->getConnection()->commit();
     }
 
     /**
@@ -55,7 +55,7 @@ class Connection
      */
     public function rollback(): void
     {
-        $this->connection->rollBack();
+        $this->getConnection()->rollBack();
     }
 
     /**

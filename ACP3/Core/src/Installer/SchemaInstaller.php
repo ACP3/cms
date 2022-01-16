@@ -101,6 +101,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     private function removeFromModulesTable(string $moduleName): bool
     {
-        return $this->getModuleAwareRepository()->delete($this->getModuleId($moduleName)) !== false;
+        return $this->getModuleAwareRepository()->delete($this->getModuleId($moduleName)) > 0;
     }
 }
