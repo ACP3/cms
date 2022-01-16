@@ -92,7 +92,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     public function getInfoByModuleNameList(array $moduleNames): array
     {
         $results = $this->db->fetchAll(
-            "SELECT `id`, `version`, `name` FROM {$this->getTableName()} WHERE `name` IN(:moduleNames)",
+            "SELECT `id`, `name` FROM {$this->getTableName()} WHERE `name` IN(:moduleNames)",
             ['moduleNames' => $moduleNames],
             ['moduleNames' => Connection::PARAM_STR_ARRAY]
         );
@@ -101,7 +101,6 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
         foreach ($results as $row) {
             $map[$row['name']] = [
                 'id' => (int) $row['id'],
-                'version' => (int) $row['version'],
             ];
         }
 
