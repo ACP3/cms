@@ -156,6 +156,8 @@ class Connection
     protected function connect(): DBAL\Connection
     {
         $config = new DBAL\Configuration();
+        $config->setAutoCommit(false);
+
         if ($this->appMode !== ApplicationMode::PRODUCTION) {
             $config->setMiddlewares([new DBAL\Logging\Middleware($this->logger)]);
         }
