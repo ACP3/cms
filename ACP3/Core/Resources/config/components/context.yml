@@ -4,4 +4,4 @@ services:
 
   ACP3\Core\Controller\Context\WidgetContext:
     arguments:
-      $applicationMode: '%core.environment%'
+      $applicationMode: "%core.environment%"
