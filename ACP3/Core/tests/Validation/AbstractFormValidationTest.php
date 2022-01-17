@@ -29,7 +29,7 @@ abstract class AbstractFormValidationTest extends TestCase
      */
     protected $formValidation;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|EventDispatcher
+     * @var MockObject|EventDispatcher
      */
     protected $eventDispatcherMock;
 
@@ -69,12 +69,9 @@ abstract class AbstractFormValidationTest extends TestCase
         );
     }
 
-    /**
-     * @return Request|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private function setUpRequestMock()
+    private function setUpRequestMock(): MockObject|Request
     {
-        /** @var Request|\PHPUnit\Framework\MockObject\MockObject $requestMock */
+        /** @var Request|MockObject $requestMock */
         $requestMock = $this->createMock(Request::class);
 
         $this->setRequestMockExpectations($requestMock);
@@ -82,12 +79,9 @@ abstract class AbstractFormValidationTest extends TestCase
         return $requestMock;
     }
 
-    /**
-     * @return Session|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private function setUpSessionMock()
+    private function setUpSessionMock(): MockObject|Session
     {
-        /** @var Session|\PHPUnit\Framework\MockObject\MockObject $sessionMock */
+        /** @var Session|MockObject $sessionMock */
         $sessionMock = $this->createMock(Session::class);
 
         $this->setSessionMockExpectations($sessionMock);
