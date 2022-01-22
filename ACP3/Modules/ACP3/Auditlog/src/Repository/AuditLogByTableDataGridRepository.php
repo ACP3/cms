@@ -15,7 +15,7 @@ class AuditLogByTableDataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = AuditLogRepository::TABLE_NAME;
 
-    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
             'main.table_name',
@@ -25,7 +25,7 @@ class AuditLogByTableDataGridRepository extends AbstractDataGridRepository
         ];
     }
 
-    protected function addGroupBy(QueryBuilder $queryBuilder)
+    protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addGroupBy('main.table_name');
         $queryBuilder->addGroupBy('main.entry_id');

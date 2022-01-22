@@ -20,6 +20,9 @@ class LoginViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(?string $redirect = null): array
     {
         $prefix = $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '';

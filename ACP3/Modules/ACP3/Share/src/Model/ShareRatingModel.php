@@ -18,7 +18,7 @@ class ShareRatingModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'stars' => ColumnTypes::COLUMN_TYPE_INT,

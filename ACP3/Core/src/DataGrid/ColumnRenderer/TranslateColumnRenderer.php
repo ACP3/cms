@@ -18,7 +18,7 @@ class TranslateColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getValue(array $column, array $dbResultRow)
+    protected function getValue(array $column, array $dbResultRow): ?string
     {
         $field = $this->getFirstDbField($column);
         $value = $this->getDbValueIfExists($dbResultRow, $field);

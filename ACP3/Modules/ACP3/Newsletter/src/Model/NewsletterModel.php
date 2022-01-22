@@ -44,10 +44,7 @@ class NewsletterModel extends AbstractModel implements UpdatedAtAwareModelInterf
         return parent::save($rawData, $entryId);
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'date' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,

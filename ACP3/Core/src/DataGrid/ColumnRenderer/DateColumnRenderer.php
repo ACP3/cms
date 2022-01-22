@@ -19,7 +19,7 @@ class DateColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         $value = $this->getValue($column, $dbResultRow);
 
@@ -39,7 +39,7 @@ class DateColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getValue(array $column, array $dbResultRow)
+    protected function getValue(array $column, array $dbResultRow): ?string
     {
         $field = $this->getFirstDbField($column);
         $value = $this->getDbValueIfExists($dbResultRow, $field);

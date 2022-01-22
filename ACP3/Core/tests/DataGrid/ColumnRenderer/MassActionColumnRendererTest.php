@@ -16,7 +16,7 @@ class MassActionColumnRendererTest extends AbstractColumnRendererTest
         parent::setUp();
     }
 
-    public function testValidField()
+    public function testValidField(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'custom' => [

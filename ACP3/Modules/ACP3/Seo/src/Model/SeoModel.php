@@ -30,10 +30,7 @@ class SeoModel extends AbstractModel
         return parent::save($rawData, $entryId);
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,

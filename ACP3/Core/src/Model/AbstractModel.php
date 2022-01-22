@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Model;
 
+use ACP3\Core\Model\DataProcessor\ColumnTypes;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Model\Event\ModelSavePrepareDataEvent;
 use ACP3\Core\Repository\AbstractRepository;
@@ -88,7 +89,7 @@ abstract class AbstractModel
     protected function dispatchBeforeSaveEvent(
         AbstractRepository $repository,
         ModelSaveEvent $event
-    ) {
+    ): void {
         $this->dispatchEvent(
             'core.model.before_save',
             $event
@@ -101,7 +102,7 @@ abstract class AbstractModel
 
     protected function dispatchEvent(
         string $eventName,
-        ModelSaveEvent $event)
+        ModelSaveEvent $event): void
     {
         $this->eventDispatcher->dispatch(
             $event,
@@ -130,11 +131,11 @@ abstract class AbstractModel
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function prepareData(array $rawData, ?array $currentData)
+    protected function prepareData(array $rawData, ?array $currentData): array
     {
         if ($currentData !== null) {
             $rawData = array_merge($currentData, $rawData);
@@ -154,14 +155,14 @@ abstract class AbstractModel
     }
 
     /**
-     * @return array
+     * @return array<string, ColumnTypes::*>
      */
-    abstract protected function getAllowedColumns();
+    abstract protected function getAllowedColumns(): array;
 
     protected function dispatchAfterSaveEvent(
         AbstractRepository $repository,
         ModelSaveEvent $event
-    ) {
+    ): void {
         $this->dispatchEvent(
             'core.model.after_save',
             $event
@@ -173,7 +174,7 @@ abstract class AbstractModel
     }
 
     /**
-     * @return array<int>
+     * @return int[]
      *
      * @throws \Doctrine\DBAL\Exception
      */
@@ -196,14 +197,10 @@ abstract class AbstractModel
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function delete(array|int $entryId)
+    public function delete(array|int $entryId): int
     {
-        $repository = $this->repository;
-
         if (!\is_array($entryId)) {
             $entryId = [$entryId];
         }
@@ -212,7 +209,7 @@ abstract class AbstractModel
 
         $this->dispatchEvent('core.model.before_delete', $event);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete',
+            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.before_delete',
             $event
         );
 
@@ -223,7 +220,7 @@ abstract class AbstractModel
 
         $this->dispatchEvent('core.model.after_delete', $event);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete',
+            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.after_delete',
             $event
         );
 
@@ -231,19 +228,16 @@ abstract class AbstractModel
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getOneById(int $entryId)
+    public function getOneById(int $entryId): array
     {
         return $this->repository->getOneById($entryId);
     }
 
-    /**
-     * @return \ACP3\Core\Repository\AbstractRepository
-     */
-    protected function getRepository()
+    protected function getRepository(): AbstractRepository
     {
         return $this->repository;
     }

@@ -8,6 +8,7 @@
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 class Request extends AbstractRequest
 {
@@ -15,19 +16,14 @@ class Request extends AbstractRequest
     private const WIDGET_PATTERN = 'widget/';
     private const FRONTEND_PATTERN = 'frontend/';
 
-    /**
-     * @var string
-     */
-    protected $query = '';
-    /**
-     * @var string
-     */
-    protected $pathInfo = '';
+    protected string $query = '';
+
+    protected string $pathInfo = '';
 
     /**
      * {@inheritdoc}
      */
-    public function getQuery()
+    public function getQuery(): string
     {
         return $this->query;
     }
@@ -35,7 +31,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getPathInfo()
+    public function getPathInfo(): string
     {
         return $this->pathInfo;
     }
@@ -43,7 +39,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getArea()
+    public function getArea(): string
     {
         return $this->getSymfonyRequest()->attributes->get('_area');
     }
@@ -51,7 +47,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->getSymfonyRequest()->attributes->get('_module');
     }
@@ -59,7 +55,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getController()
+    public function getController(): string
     {
         return $this->getSymfonyRequest()->attributes->get('_controller');
     }
@@ -67,7 +63,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->getSymfonyRequest()->attributes->get('_controllerAction');
     }
@@ -75,7 +71,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getFullPath()
+    public function getFullPath(): string
     {
         return $this->getModuleAndController() . $this->getAction() . '/';
     }
@@ -83,7 +79,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getFullPathWithoutArea()
+    public function getFullPathWithoutArea(): string
     {
         return $this->getModuleAndControllerWithoutArea() . $this->getAction() . '/';
     }
@@ -91,7 +87,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getModuleAndController()
+    public function getModuleAndController(): string
     {
         $path = ($this->getArea() === AreaEnum::AREA_ADMIN) ? 'acp/' : '';
 
@@ -101,7 +97,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getModuleAndControllerWithoutArea()
+    public function getModuleAndControllerWithoutArea(): string
     {
         return $this->getModule() . '/' . $this->getController() . '/';
     }
@@ -109,7 +105,7 @@ class Request extends AbstractRequest
     /**
      * Processes the URL of the current request.
      */
-    public function processQuery()
+    public function processQuery(): void
     {
         $this->query = $this->pathInfo;
 
@@ -142,7 +138,7 @@ class Request extends AbstractRequest
     /**
      * Setzt alle in URI::query enthaltenen Parameter.
      */
-    protected function parseURI()
+    protected function parseURI(): void
     {
         $query = preg_split('=/=', $this->query, -1, PREG_SPLIT_NO_EMPTY);
 
@@ -171,7 +167,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function isHomepage()
+    public function isHomepage(): bool
     {
         return ($this->query === $this->homepage) && $this->getArea() === AreaEnum::AREA_FRONTEND;
     }
@@ -179,7 +175,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getParameters()
+    public function getParameters(): ParameterBag
     {
         return $this->getSymfonyRequest()->attributes;
     }
@@ -187,7 +183,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getUriWithoutPages()
+    public function getUriWithoutPages(): string
     {
         return preg_replace('/\/page_(\d+)\//', '/', $this->query);
     }
@@ -206,7 +202,10 @@ class Request extends AbstractRequest
         $this->pathInfo .= !preg_match('/\/$/', $this->pathInfo) ? '/' : '';
     }
 
-    protected function setRequestParameters(array $query)
+    /**
+     * @param string[] $query
+     */
+    protected function setRequestParameters(array $query): void
     {
         if (isset($query[3])) {
             $cQuery = \count($query);
@@ -233,7 +232,10 @@ class Request extends AbstractRequest
         );
     }
 
-    protected function completeQuery(array $query)
+    /**
+     * @param string[] $query
+     */
+    protected function completeQuery(array $query): void
     {
         if (!isset($query[0])) {
             $this->query = $this->getModule() . '/';

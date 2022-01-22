@@ -20,7 +20,7 @@ class Request extends \ACP3\Core\Http\Request
         parent::__construct($requestStack);
     }
 
-    protected function parseURI()
+    protected function parseURI(): void
     {
         if ($this->getArea() === AreaEnum::AREA_FRONTEND) {
             $this->checkForUriAlias();
@@ -32,7 +32,7 @@ class Request extends \ACP3\Core\Http\Request
     /**
      * Checks, whether the current request may equals an uri alias.
      */
-    protected function checkForUriAlias()
+    protected function checkForUriAlias(): void
     {
         [$params, $probableQuery] = $this->checkUriAliasForAdditionalParameters();
 
@@ -48,7 +48,7 @@ class Request extends \ACP3\Core\Http\Request
      *
      * @return string[]
      */
-    protected function checkUriAliasForAdditionalParameters()
+    protected function checkUriAliasForAdditionalParameters(): array
     {
         $params = '';
         $probableQuery = $this->query;

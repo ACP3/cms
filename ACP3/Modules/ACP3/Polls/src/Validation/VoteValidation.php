@@ -50,7 +50,7 @@ class VoteValidation extends AbstractFormValidation
      * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */
-    public function validate(array $formData)
+    public function validate(array $formData): void
     {
         $this->validator
             ->addConstraint(NotEmptyValidationRule::class, [

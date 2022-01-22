@@ -34,7 +34,7 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
             ->willReturn($langValue);
     }
 
-    public function testValidField()
+    public function testValidField(): void
     {
         $this->setUpLangMockExpectation('news', '{NEWS_NEWS}');
 

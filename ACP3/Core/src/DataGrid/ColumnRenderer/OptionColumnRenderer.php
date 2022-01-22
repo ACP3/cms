@@ -21,7 +21,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         $this->eventDispatcher->dispatch(
             new CustomOptionEvent($this->optionRenderer, $dbResultRow, $this->getIdentifier()),
@@ -62,16 +62,9 @@ class OptionColumnRenderer extends AbstractColumnRenderer
         return $this->render($column, $this->collectOptions());
     }
 
-    /**
-     * @return string
-     */
-    protected function collectOptions()
+    protected function collectOptions(): string
     {
-        $value = '<div class="datagrid-column__action-buttons">';
-
-        foreach ($this->optionRenderer->getOptions() as $option) {
-            $value .= $option;
-        }
+        $value = '<div class="datagrid-column__action-buttons">' . implode('', $this->optionRenderer->getOptions());
 
         $this->optionRenderer->clearOptions();
 

@@ -15,6 +15,15 @@ class DataProcessor
     {
     }
 
+    /**
+     * @param array<string, mixed>  $columnData
+     * @param array<string, string> $columnConstraints
+     *
+     * @return array<string, mixed>
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function escape(array $columnData, array $columnConstraints): array
     {
         $data = [];
@@ -31,6 +40,15 @@ class DataProcessor
         return $data;
     }
 
+    /**
+     * @param array<string, mixed>  $columnData
+     * @param array<string, string> $columnConstraints
+     *
+     * @return array<string, mixed>
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function unescape(array $columnData, array $columnConstraints): array
     {
         $data = [];
@@ -47,6 +65,15 @@ class DataProcessor
         return $data;
     }
 
+    /**
+     * @param array<string, mixed>  $columnData
+     * @param array<string, string> $columnConstraints
+     *
+     * @return string[]
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     private function findMissingColumns(array $columnData, array $columnConstraints): array
     {
         return array_diff(

@@ -23,7 +23,7 @@ class IsAuthenticatedProvider implements ContextProvider
     /**
      * {@inheritdoc}
      */
-    public function updateUserContext(UserContext $context)
+    public function updateUserContext(UserContext $context): void
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 

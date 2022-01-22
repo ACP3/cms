@@ -23,6 +23,11 @@ class DataGrid
     {
     }
 
+    /**
+     * @return array<string, array<string, mixed>>|JsonResponse
+     *
+     * @throws \JsonException
+     */
     public function render(Input $input): array|JsonResponse
     {
         $canDelete = $this->acl->hasPermission($input->getResourcePathDelete());

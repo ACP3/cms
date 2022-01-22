@@ -52,10 +52,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
         return $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0;
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
@@ -76,7 +73,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     /**
      * {@inheritdoc}
      */
-    protected function getDefaultDataForDuplication()
+    protected function getDefaultDataForDuplication(): array
     {
         return [
             'active' => 0,

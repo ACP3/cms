@@ -17,7 +17,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
-    public function validate(array $formData)
+    public function validate(array $formData): void
     {
         $this->validator->addConstraint(FormTokenValidationRule::class);
 

@@ -14,11 +14,11 @@ use Doctrine\DBAL\Query\QueryBuilder;
 abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\AbstractRepository
 {
     /**
-     * @return array
+     * @return array<string, mixed>[]
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
+    public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions): array
     {
         $queryBuilder = $this->db->getConnection()->createQueryBuilder();
         $queryBuilder
@@ -35,11 +35,9 @@ abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\Abstract
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function countAll(QueryOption ...$queryOptions)
+    public function countAll(QueryOption ...$queryOptions): int
     {
         $queryBuilder = $this->db->getConnection()->createQueryBuilder();
         $queryBuilder
@@ -54,9 +52,9 @@ abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\Abstract
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         $columnsToSelect = [];
         foreach (clone $gridColumns as $column) {
@@ -74,19 +72,16 @@ abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\Abstract
         return $columnsToSelect;
     }
 
-    /**
-     * @return string
-     */
-    protected function getFrom()
+    protected function getFrom(): string
     {
         return $this->getTableName();
     }
 
-    protected function addJoin(QueryBuilder $queryBuilder)
+    protected function addJoin(QueryBuilder $queryBuilder): void
     {
     }
 
-    protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)
+    protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions): void
     {
         foreach ($queryOptions as $option) {
             $queryBuilder->where(
@@ -95,11 +90,11 @@ abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\Abstract
         }
     }
 
-    protected function addGroupBy(QueryBuilder $queryBuilder)
+    protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
     }
 
-    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
+    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         foreach (clone $gridColumns as $gridColumn) {
             if ($gridColumn['default_sort'] === true) {
@@ -115,9 +110,9 @@ abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\Abstract
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
-    protected function getParameters(QueryOption ...$queryOptions)
+    protected function getParameters(QueryOption ...$queryOptions): array
     {
         $bindings = [];
         foreach ($queryOptions as $option) {

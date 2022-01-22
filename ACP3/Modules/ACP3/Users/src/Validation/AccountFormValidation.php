@@ -11,16 +11,14 @@ use ACP3\Core;
 
 class AccountFormValidation extends AbstractUserFormValidation
 {
-    protected $userId = 0;
+    protected int $userId = 0;
 
     /**
-     * @param int $userId
-     *
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): self
     {
-        $this->userId = (int) $userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -28,7 +26,7 @@ class AccountFormValidation extends AbstractUserFormValidation
     /**
      * {@inheritdoc}
      */
-    public function validate(array $formData)
+    public function validate(array $formData): void
     {
         $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);
 

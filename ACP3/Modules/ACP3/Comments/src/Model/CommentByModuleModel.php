@@ -21,7 +21,7 @@ class CommentByModuleModel extends AbstractModel
     /**
      * {@inheritDoc}
      */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'ip' => ColumnTypes::COLUMN_TYPE_RAW,

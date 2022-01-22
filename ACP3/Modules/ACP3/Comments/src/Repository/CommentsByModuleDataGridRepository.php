@@ -18,7 +18,7 @@ class CommentsByModuleDataGridRepository extends \ACP3\Core\DataGrid\Repository\
     /**
      * {@inheritdoc}
      */
-    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
             'main.module_id',
@@ -30,7 +30,7 @@ class CommentsByModuleDataGridRepository extends \ACP3\Core\DataGrid\Repository\
     /**
      * {@inheritdoc}
      */
-    protected function addJoin(QueryBuilder $queryBuilder)
+    protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->leftJoin(
             'main',
@@ -43,7 +43,7 @@ class CommentsByModuleDataGridRepository extends \ACP3\Core\DataGrid\Repository\
     /**
      * {@inheritdoc}
      */
-    protected function addGroupBy(QueryBuilder $queryBuilder)
+    protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addGroupBy(['main.module_id', 'm.name']);
     }

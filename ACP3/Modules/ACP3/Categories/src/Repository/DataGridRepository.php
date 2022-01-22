@@ -16,7 +16,7 @@ class DataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = CategoryRepository::TABLE_NAME;
 
-    public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
+    public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions): array
     {
         $results = parent::getAll($columns, ...$queryOptions);
 
@@ -68,7 +68,7 @@ class DataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
             'c.*',
@@ -81,7 +81,7 @@ class DataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function addJoin(QueryBuilder $queryBuilder)
+    protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->join('main', $this->getTableName(), 'c');
         $queryBuilder->leftJoin(
@@ -92,12 +92,12 @@ class DataGridRepository extends AbstractDataGridRepository
         );
     }
 
-    protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)
+    protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions): void
     {
         $queryBuilder->where('c.left_id BETWEEN main.left_id AND main.right_id');
     }
 
-    protected function addGroupBy(QueryBuilder $queryBuilder)
+    protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder
             ->addGroupBy('c.left_id')
@@ -115,7 +115,7 @@ class DataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
+    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         $queryBuilder
             ->addOrderBy('module', 'ASC')

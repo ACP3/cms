@@ -17,6 +17,9 @@ class LogoutViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $redirectUrl = $this->applicationPath->getWebRoot();

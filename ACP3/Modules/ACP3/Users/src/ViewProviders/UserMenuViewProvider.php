@@ -16,9 +16,9 @@ use ACP3\Core\Modules;
 class UserMenuViewProvider
 {
     /**
-     * @var array
+     * @var array<string, string>[]
      */
-    private static $systemActions = [
+    private static array $systemActions = [
         [
             'controller' => 'index',
             'action' => 'settings',
@@ -40,6 +40,9 @@ class UserMenuViewProvider
     {
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function __invoke(): array
     {
         $prefix = $this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '';
@@ -53,6 +56,9 @@ class UserMenuViewProvider
         ];
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     private function getSystemActions(): array
     {
         $navSystem = [];
@@ -71,6 +77,9 @@ class UserMenuViewProvider
         return $navSystem;
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     private function getModules(): array
     {
         $activeModules = $this->modules->getInstalledModules();

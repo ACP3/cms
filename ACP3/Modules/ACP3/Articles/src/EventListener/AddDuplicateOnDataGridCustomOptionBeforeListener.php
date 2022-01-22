@@ -15,7 +15,7 @@ class AddDuplicateOnDataGridCustomOptionBeforeListener extends AbstractAddDuplic
     /**
      * {@inheritdoc}
      */
-    protected function getDataGridIdentifier()
+    protected function getDataGridIdentifier(): string
     {
         return '#articles-data-grid';
     }
@@ -23,7 +23,7 @@ class AddDuplicateOnDataGridCustomOptionBeforeListener extends AbstractAddDuplic
     /**
      * {@inheritdoc}
      */
-    protected function getResource()
+    protected function getResource(): string
     {
         return 'admin/articles/index/duplicate';
     }
@@ -31,7 +31,7 @@ class AddDuplicateOnDataGridCustomOptionBeforeListener extends AbstractAddDuplic
     /**
      * {@inheritdoc}
      */
-    protected function getRoute(array $dbResultRow)
+    protected function getRoute(array $dbResultRow): string
     {
         return 'acp/articles/index/duplicate/id_' . $dbResultRow['id'];
     }

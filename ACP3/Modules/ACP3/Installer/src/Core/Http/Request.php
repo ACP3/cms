@@ -14,7 +14,7 @@ class Request extends Core\Http\Request
     /**
      * {@inheritdoc}
      */
-    public function processQuery()
+    public function processQuery(): void
     {
         parent::processQuery();
 

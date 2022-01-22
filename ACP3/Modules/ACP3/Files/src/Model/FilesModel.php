@@ -61,7 +61,7 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
     /**
      * {@inheritdoc}
      */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
@@ -81,7 +81,7 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
     /**
      * {@inheritdoc}
      */
-    protected function getDefaultDataForDuplication()
+    protected function getDefaultDataForDuplication(): array
     {
         return [
             'active' => 0,

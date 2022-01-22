@@ -17,7 +17,7 @@ class DataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGrid
     /**
      * {@inheritdoc}
      */
-    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
             'main.*',
@@ -28,7 +28,7 @@ class DataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGrid
     /**
      * {@inheritdoc}
      */
-    protected function addJoin(QueryBuilder $queryBuilder)
+    protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->leftJoin(
             'main',
@@ -41,7 +41,7 @@ class DataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGrid
     /**
      * {@inheritdoc}
      */
-    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
+    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         $queryBuilder
             ->addOrderBy('main.start', 'DESC')

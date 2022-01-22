@@ -11,22 +11,13 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
 {
     public const CELL_TYPE = 'td';
 
-    /**
-     * @var string
-     */
-    private $identifier = '';
-    /**
-     * @var string|null
-     */
-    private $primaryKey;
-    /**
-     * @var bool
-     */
-    private $useAjax = false;
-    /**
-     * @var int|null
-     */
-    private $totalResults;
+    private string $identifier = '';
+
+    private ?string $primaryKey = null;
+
+    private bool $useAjax = false;
+
+    private ?int $totalResults = null;
 
     /**
      * {@inheritdoc}
@@ -39,7 +30,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function setIdentifier(string $identifier): self
+    public function setIdentifier(string $identifier): ColumnRendererInterface
     {
         $this->identifier = $identifier;
 
@@ -57,7 +48,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function setPrimaryKey(?string $primaryKey): self
+    public function setPrimaryKey(?string $primaryKey): ColumnRendererInterface
     {
         $this->primaryKey = $primaryKey;
 
@@ -75,7 +66,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function setUseAjax(bool $useAjax): self
+    public function setUseAjax(bool $useAjax): ColumnRendererInterface
     {
         $this->useAjax = $useAjax;
 
@@ -93,7 +84,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function setTotalResults(int $totalResults)
+    public function setTotalResults(int $totalResults): ColumnRendererInterface
     {
         $this->totalResults = $totalResults;
 
@@ -103,11 +94,16 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         return $this->render($column, $this->getValue($column, $dbResultRow));
     }
 
+    /**
+     * @param array<string, mixed> $column
+     *
+     * @return array<string, mixed>|string
+     */
     protected function render(array $column, ?string $value = ''): array|string
     {
         if ($this->getUseAjax()) {
@@ -122,6 +118,11 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return "<{$type}{$attribute}{$class}{$style}>{$value}</{$type}>";
     }
 
+    /**
+     * @param array<string, mixed> $column
+     *
+     * @return array<string, mixed>|string
+     */
     private function renderAjax(array $column, string $value = ''): array|string
     {
         if (\is_array($column['attribute']) && \count($column['attribute'])) {
@@ -155,6 +156,9 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return '';
     }
 
+    /**
+     * @param array<string, mixed> $column
+     */
     protected function getFirstDbField(array $column): string
     {
         $fields = $this->getDbFields($column);
@@ -163,9 +167,10 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @return string
+     * @param array<string, mixed> $column
+     * @param array<string, mixed> $dbResultRow
      */
-    protected function getValue(array $column, array $dbResultRow)
+    protected function getValue(array $column, array $dbResultRow): ?string
     {
         $field = $this->getFirstDbField($column);
         $value = $this->getDbValueIfExists($dbResultRow, $field);
@@ -178,20 +183,26 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     }
 
     /**
-     * @param string $field
-     *
-     * @return string|null
+     * @param array<string, mixed> $dbResultRow
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field)
+    protected function getDbValueIfExists(array $dbResultRow, string $field): ?string
     {
         return $dbResultRow[$field] ?? null;
     }
 
+    /**
+     * @param array<string, mixed> $column
+     */
     protected function getDefaultValue(array $column): string
     {
         return $column['custom']['default_value'] ?? '';
     }
 
+    /**
+     * @param array<string, mixed> $column
+     *
+     * @return string[]
+     */
     protected function getDbFields(array $column): array
     {
         return $column['fields'];

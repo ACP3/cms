@@ -16,10 +16,9 @@ use ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule;
 abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @param string $passwordField
-     * @param string $passwordConfirmationField
+     * @param array<string, mixed> $formData
      */
-    protected function validateNewPassword(array $formData, $passwordField, $passwordConfirmationField)
+    protected function validateNewPassword(array $formData, string $passwordField, string $passwordConfirmationField): void
     {
         $this->validator->addConstraint(
             Core\Validation\ValidationRules\ChangePasswordValidationRule::class,
@@ -32,10 +31,9 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
     }
 
     /**
-     * @param string $passwordField
-     * @param string $passwordConfirmationField
+     * @param array<string, mixed> $formData
      */
-    protected function validatePassword(array $formData, $passwordField, $passwordConfirmationField)
+    protected function validatePassword(array $formData, string $passwordField, string $passwordConfirmationField): void
     {
         $this->validator->addConstraint(
             Core\Validation\ValidationRules\PasswordValidationRule::class,
@@ -48,9 +46,9 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
     }
 
     /**
-     * @param int $userId
+     * @param array<string, mixed> $formData
      */
-    protected function validateAccountCoreData(array $formData, $userId)
+    protected function validateAccountCoreData(array $formData, int $userId): void
     {
         $this->validator
             ->addConstraint(
@@ -120,7 +118,10 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
             );
     }
 
-    protected function validateUserSettings(array $formData)
+    /**
+     * @param array<string, mixed> $formData
+     */
+    protected function validateUserSettings(array $formData): void
     {
         $this->validator
             ->addConstraint(

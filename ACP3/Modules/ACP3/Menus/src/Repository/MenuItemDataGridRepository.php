@@ -16,7 +16,7 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = MenuItemRepository::TABLE_NAME;
 
-    public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions)
+    public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions): array
     {
         $results = parent::getAll($columns, ...$queryOptions);
 
@@ -64,7 +64,7 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
             'r.*',
@@ -76,19 +76,19 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function addJoin(QueryBuilder $queryBuilder)
+    protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->join('main', $this->getTableName(), 'r');
     }
 
-    protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions)
+    protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions): void
     {
         parent::addWhere($queryBuilder, ...$queryOptions);
 
         $queryBuilder->andWhere('r.left_id BETWEEN main.left_id AND main.right_id');
     }
 
-    protected function addGroupBy(QueryBuilder $queryBuilder)
+    protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder
             ->addGroupBy('r.left_id')
@@ -108,7 +108,7 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
+    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addOrderBy('r.left_id', 'ASC');
     }

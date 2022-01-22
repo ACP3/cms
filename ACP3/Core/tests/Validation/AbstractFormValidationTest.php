@@ -50,7 +50,7 @@ abstract class AbstractFormValidationTest extends TestCase
         $this->registerValidationRules();
     }
 
-    abstract protected function initializeFormValidation();
+    abstract protected function initializeFormValidation(): void;
 
     protected function initializeFormValidationDependencies(): void
     {
@@ -89,17 +89,17 @@ abstract class AbstractFormValidationTest extends TestCase
         return $sessionMock;
     }
 
-    abstract protected function registerValidationRules();
+    abstract protected function registerValidationRules(): void;
 
     /**
-     * @return array
+     * @return array<string, mixed>[]
      */
-    abstract public function validFormDataProvider();
+    abstract public function validFormDataProvider(): array;
 
     /**
-     * @return array
+     * @return array<string, mixed>[]
      */
-    abstract public function invalidFormDataProvider();
+    abstract public function invalidFormDataProvider(): array;
 
     public function testValidFormData(): void
     {

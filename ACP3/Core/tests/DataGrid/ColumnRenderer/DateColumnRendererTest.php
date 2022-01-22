@@ -57,7 +57,7 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
         parent::setUp();
     }
 
-    public function testValidField()
+    public function testValidField(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['date'],

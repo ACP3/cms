@@ -17,7 +17,7 @@ class AccountForgotPasswordFormValidation extends AbstractFormValidation
     /**
      * {@inheritdoc}
      */
-    public function validate(array $formData)
+    public function validate(array $formData): void
     {
         if ($this->validator->is(Core\Validation\ValidationRules\EmailValidationRule::class, $formData['nick_mail'])) {
             $ruleName = AccountExistsByEmailValidationRule::class;

@@ -12,23 +12,15 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
     /**
      * @var \ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer
      */
-    protected $columnRenderer;
-    /**
-     * @var array
-     */
-    protected $columnData = [];
-    /**
-     * @var array
-     */
-    protected $dbData = [];
-    /**
-     * @var string
-     */
-    protected $identifier = '';
-    /**
-     * @var string
-     */
-    protected $primaryKey = '';
+    protected ?AbstractColumnRenderer $columnRenderer = null;
+
+    protected array $columnData = [];
+
+    protected array $dbData = [];
+
+    protected string $identifier = '';
+
+    protected string $primaryKey = '';
 
     protected function setup(): void
     {
@@ -36,9 +28,9 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
-    protected function getColumnDefaults()
+    protected function getColumnDefaults(): array
     {
         return [
             'label' => '',
@@ -55,7 +47,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
         ];
     }
 
-    public function testSingleCustomHtmlAttribute()
+    public function testSingleCustomHtmlAttribute(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'attribute' => [
@@ -67,7 +59,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
         $this->compareResults($expected);
     }
 
-    public function testMultipleCustomHtmlAttributes()
+    public function testMultipleCustomHtmlAttributes(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'attribute' => [
@@ -80,7 +72,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
         $this->compareResults($expected);
     }
 
-    public function testAddStyle()
+    public function testAddStyle(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'style' => 'width:50%',
@@ -90,7 +82,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
         $this->compareResults($expected);
     }
 
-    public function testAddCssClass()
+    public function testAddCssClass(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'class' => 'foobar',
@@ -100,7 +92,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
         $this->compareResults($expected);
     }
 
-    public function testInvalidField()
+    public function testInvalidField(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['test'],
@@ -113,7 +105,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
         $this->compareResults($expected);
     }
 
-    public function testValidField()
+    public function testValidField(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
@@ -126,7 +118,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
         $this->compareResults($expected);
     }
 
-    public function testDefaultValueIfNull()
+    public function testDefaultValueIfNull(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
@@ -142,7 +134,7 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
         $this->compareResults($expected);
     }
 
-    public function testDefaultValueIfNotFound()
+    public function testDefaultValueIfNotFound(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['test'],

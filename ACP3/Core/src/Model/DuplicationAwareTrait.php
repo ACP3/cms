@@ -27,17 +27,11 @@ trait DuplicationAwareTrait
         return false;
     }
 
-    /**
-     * @return AbstractRepository
-     */
-    abstract protected function getRepository();
+    abstract protected function getRepository(): AbstractRepository;
 
     abstract protected function getDataProcessor(): DataProcessor;
 
-    /**
-     * @return array
-     */
-    abstract protected function getAllowedColumns();
+    abstract protected function getAllowedColumns(): array;
 
     /**
      * @param int|null $entryId
@@ -45,9 +39,9 @@ trait DuplicationAwareTrait
     abstract public function save(array $rawData, $entryId = null): int;
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
-    protected function getDefaultDataForDuplication()
+    protected function getDefaultDataForDuplication(): array
     {
         return [];
     }

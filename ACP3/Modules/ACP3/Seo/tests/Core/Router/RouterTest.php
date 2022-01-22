@@ -28,7 +28,7 @@ class RouterTest extends \ACP3\Modules\ACP3\System\Core\Router\RouterTest
         );
     }
 
-    protected function initializeMockObjects()
+    protected function initializeMockObjects(): void
     {
         $this->aliasesMock = $this->createMock(Aliases::class);
 
@@ -69,70 +69,70 @@ class RouterTest extends \ACP3\Modules\ACP3\System\Core\Router\RouterTest
             ->willReturn($returnValue);
     }
 
-    public function testRouteUseNoModRewrite()
+    public function testRouteUseNoModRewrite(): void
     {
         $this->setUpAliasesMockExpectations(1, 'news/index/index/');
 
         parent::testRouteUseNoModRewrite();
     }
 
-    public function testRouteUseModRewrite()
+    public function testRouteUseModRewrite(): void
     {
         $this->setUpAliasesMockExpectations(1, 'news/index/index/');
 
         parent::testRouteUseModRewrite();
     }
 
-    public function testRouteAddTrailingSlash()
+    public function testRouteAddTrailingSlash(): void
     {
         $this->setUpAliasesMockExpectations(1, 'news/index/index/');
 
         parent::testRouteAddTrailingSlash();
     }
 
-    public function testRouteWithAdminUrl()
+    public function testRouteWithAdminUrl(): void
     {
         $this->setUpAliasesMockExpectations(0, 'acp/index/index/');
 
         parent::testRouteWithAdminUrl();
     }
 
-    public function testRouteWithAclResourcePath()
+    public function testRouteWithAclResourcePath(): void
     {
         $this->setUpAliasesMockExpectations(0, 'admin/news/index/index/');
 
         parent::testRouteWithAclResourcePath();
     }
 
-    public function testRouteWithAdminUrlModRewriteEnabled()
+    public function testRouteWithAdminUrlModRewriteEnabled(): void
     {
         $this->setUpAliasesMockExpectations(0, 'acp/news/index/index/');
 
         parent::testRouteWithAdminUrlModRewriteEnabled();
     }
 
-    public function testAbsoluteRoute()
+    public function testAbsoluteRoute(): void
     {
         $this->setUpAliasesMockExpectations(1, 'news/index/index/');
 
         parent::testAbsoluteRoute();
     }
 
-    public function testSecureRoute()
+    public function testSecureRoute(): void
     {
         $this->setUpAliasesMockExpectations(1, 'news/index/index/');
 
         parent::testSecureRoute();
     }
 
-    public function testRouteAppendControllerAndControllerAction()
+    public function testRouteAppendControllerAndControllerAction(): void
     {
         $this->setUpAliasesMockExpectations(1, 'news/index/index/');
 
         parent::testRouteAppendControllerAndControllerAction();
     }
 
-    public function testRouteCompleteDefaultAdminPanelUrl()
+    public function testRouteCompleteDefaultAdminPanelUrl(): void
     {
         $this->setUpAliasesMockExpectations(0, 'acp/acp/index/index/');
 

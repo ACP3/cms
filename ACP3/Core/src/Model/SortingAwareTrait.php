@@ -13,10 +13,7 @@ use ACP3\Core\Repository\AbstractRepository;
 
 trait SortingAwareTrait
 {
-    /**
-     * @return \ACP3\Core\Repository\AbstractRepository
-     */
-    abstract protected function getRepository();
+    abstract protected function getRepository(): AbstractRepository;
 
     abstract protected function getSortHelper(): Sort;
 
@@ -81,9 +78,9 @@ trait SortingAwareTrait
         ));
     }
 
-    abstract protected function dispatchBeforeSaveEvent(AbstractRepository $repository, ModelSaveEvent $event);
+    abstract protected function dispatchBeforeSaveEvent(AbstractRepository $repository, ModelSaveEvent $event): void;
 
-    abstract protected function dispatchAfterSaveEvent(AbstractRepository $repository, ModelSaveEvent $event);
+    abstract protected function dispatchAfterSaveEvent(AbstractRepository $repository, ModelSaveEvent $event): void;
 
     abstract protected function createModelSaveEvent(
         $entryId,

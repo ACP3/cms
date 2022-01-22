@@ -26,10 +26,7 @@ class GalleryModel extends AbstractModel implements UpdatedAtAwareModelInterface
         return parent::save($rawData, $entryId);
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,

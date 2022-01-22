@@ -17,11 +17,11 @@ class AclResourceRepository extends Core\Repository\AbstractRepository
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getOneById($resourceId): array
+    public function getOneById(int|string $entryId): array
     {
         return $this->db->fetchAssoc(
             'SELECT r.page, r.area, r.controller, m.name AS module_name FROM ' . $this->getTableName() . ' AS r JOIN ' . $this->getTableName(ModulesRepository::TABLE_NAME) . ' AS m ON(m.id = r.module_id) WHERE r.id = ?',
-            [$resourceId]
+            [$entryId]
         );
     }
 

@@ -18,19 +18,14 @@ class Forms
     }
 
     /**
-     * @param string $defaultMail
-     * @param string $defaultWebsite
-     * @param string $defaultIcqNumber
-     * @param string $defaultSkypeName
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
     public function fetchContactDetails(
-        $defaultMail = '',
-        $defaultWebsite = '',
-        $defaultIcqNumber = '',
-        $defaultSkypeName = ''
-    ) {
+        string $defaultMail = '',
+        string $defaultWebsite = '',
+        string $defaultIcqNumber = '',
+        string $defaultSkypeName = ''
+    ): array {
         return [
             [
                 'name' => 'mail',
@@ -60,11 +55,9 @@ class Forms
     }
 
     /**
-     * @param string $defaultValue
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
-    public function generateWorldCountriesSelect($defaultValue = '')
+    public function generateWorldCountriesSelect(string $defaultValue = ''): array
     {
         return $this->formsHelpers->choicesGenerator(
             'country',
@@ -74,19 +67,14 @@ class Forms
     }
 
     /**
-     * @param int $displayAddress
-     * @param int $displayBirthday
-     * @param int $displayCountry
-     * @param int $displayMail
-     *
-     * @return array
+     * @return array<string, array<string, mixed>[]>
      */
     public function fetchUserSettingsFormFields(
-        $displayAddress = 0,
-        $displayBirthday = 0,
-        $displayCountry = 0,
-        $displayMail = 0
-    ) {
+        int $displayAddress = 0,
+        int $displayBirthday = 0,
+        int $displayCountry = 0,
+        int $displayMail = 0
+    ): array {
         return [
             'address_display' => $this->displayAddress($displayAddress),
             'birthday_display' => $this->displayBirthday($displayBirthday),
@@ -96,21 +84,17 @@ class Forms
     }
 
     /**
-     * @param int $value
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
-    protected function displayAddress($value)
+    protected function displayAddress(int $value): array
     {
         return $this->formsHelpers->yesNoCheckboxGenerator('address_display', $value);
     }
 
     /**
-     * @param int $value
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
-    protected function displayBirthday($value)
+    protected function displayBirthday(int $value): array
     {
         $displayBirthday = [
             0 => $this->translator->t('users', 'birthday_hide'),
@@ -122,33 +106,25 @@ class Forms
     }
 
     /**
-     * @param int $value
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
-    protected function displayCountry($value)
+    protected function displayCountry(int $value): array
     {
         return $this->formsHelpers->yesNoCheckboxGenerator('country_display', $value);
     }
 
     /**
-     * @param int $value
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
-    protected function displayMail($value)
+    protected function displayMail(int $value): array
     {
         return $this->formsHelpers->yesNoCheckboxGenerator('mail_display', $value);
     }
 
     /**
-     * @param string $birthday
-     * @param string $country
-     * @param int    $gender
-     *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function fetchUserProfileFormFields($birthday = '', $country = '', $gender = 1)
+    public function fetchUserProfileFormFields(string $birthday = '', string $country = '', int $gender = 1): array
     {
         return [
             'birthday' => $birthday,
@@ -158,11 +134,9 @@ class Forms
     }
 
     /**
-     * @param int $currentGender
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
-    protected function fetchGenderField($currentGender)
+    protected function fetchGenderField(int $currentGender): array
     {
         $genders = [
             1 => $this->translator->t('users', 'gender_not_specified'),

@@ -38,6 +38,9 @@ class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterfac
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getAllowedColumns(): array
     {
         return [

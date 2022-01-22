@@ -25,10 +25,7 @@ class MenuItemsModel extends AbstractNestedSetModel
         return parent::save($rawData, $entryId);
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'mode' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,

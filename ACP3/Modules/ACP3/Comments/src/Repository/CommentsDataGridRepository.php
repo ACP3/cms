@@ -19,7 +19,7 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
             'IF(main.user_id IS NULL, main.name, u.nickname) AS `name`',
@@ -34,7 +34,7 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function addJoin(QueryBuilder $queryBuilder)
+    protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->leftJoin(
             'main',
@@ -47,7 +47,7 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder)
+    protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addOrderBy('main.entry_id', 'ASC');
 

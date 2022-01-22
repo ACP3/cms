@@ -41,14 +41,14 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    protected function initializeMockObjects()
+    protected function initializeMockObjects(): void
     {
         $this->requestMock = $this->createMock(Request::class);
         $this->appPathMock = $this->createMock(ApplicationPath::class);
         $this->configMock = $this->createMock(SettingsInterface::class);
     }
 
-    public function testRouteUseNoModRewrite()
+    public function testRouteUseNoModRewrite(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -60,7 +60,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path));
     }
 
-    protected function setUpRequestMockExpectations()
+    protected function setUpRequestMockExpectations(): void
     {
         $this->requestMock->expects(self::any())
             ->method('getScheme')
@@ -70,7 +70,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
             ->willReturn('example.com');
     }
 
-    protected function setAppPathMockExpectations(int $callCountWebRoot, int $callCountPhpSelf)
+    protected function setAppPathMockExpectations(int $callCountWebRoot, int $callCountPhpSelf): void
     {
         $this->appPathMock->expects(self::exactly($callCountWebRoot))
             ->method('getWebRoot')
@@ -80,7 +80,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
             ->willReturn('/index.php');
     }
 
-    protected function setUpConfigMockExpectations(bool $useModRewrite = false)
+    protected function setUpConfigMockExpectations(bool $useModRewrite = false): void
     {
         $this->configMock->expects(self::atLeastOnce())
             ->method('getSettings')
@@ -88,7 +88,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
             ->willReturn(['mod_rewrite' => $useModRewrite, 'homepage' => 'foo/bar/baz/']);
     }
 
-    public function testRouteUseModRewrite()
+    public function testRouteUseModRewrite(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(1, 0);
@@ -100,7 +100,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path));
     }
 
-    public function testRouteAddTrailingSlash()
+    public function testRouteAddTrailingSlash(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -112,7 +112,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path));
     }
 
-    public function testRouteWithAdminUrl()
+    public function testRouteWithAdminUrl(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -124,7 +124,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path));
     }
 
-    public function testRouteWithAclResourcePath()
+    public function testRouteWithAclResourcePath(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -136,7 +136,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path));
     }
 
-    public function testRouteWithAdminUrlModRewriteEnabled()
+    public function testRouteWithAdminUrlModRewriteEnabled(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -148,7 +148,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path));
     }
 
-    public function testAbsoluteRoute()
+    public function testAbsoluteRoute(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -160,7 +160,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path, true));
     }
 
-    public function testSecureRoute()
+    public function testSecureRoute(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -172,7 +172,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path, false, true));
     }
 
-    public function testRouteAppendControllerAndControllerAction()
+    public function testRouteAppendControllerAndControllerAction(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -184,7 +184,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path));
     }
 
-    public function testRouteCompleteDefaultAdminPanelUrl()
+    public function testRouteCompleteDefaultAdminPanelUrl(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);
@@ -199,7 +199,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider homepageRouteDataProvider()
      */
-    public function testRouteIsHomepage(string $path, bool $absolute, ?bool $isSecure, string $expected)
+    public function testRouteIsHomepage(string $path, bool $absolute, ?bool $isSecure, string $expected): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(1, 0);
@@ -208,6 +208,9 @@ class RouterTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->router->route($path, $absolute, $isSecure));
     }
 
+    /**
+     * @return mixed[]
+     */
     public function homepageRouteDataProvider(): array
     {
         return [

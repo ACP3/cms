@@ -34,7 +34,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
         return true;
     }
 
-    protected function initializeApplicationPath()
+    protected function initializeApplicationPath(): void
     {
         $this->appPath = new ApplicationPath($this->appMode);
     }

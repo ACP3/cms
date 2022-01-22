@@ -15,7 +15,7 @@ class ActivateAccountFormValidation extends AbstractFormValidation
     /**
      * {@inheritdoc}
      */
-    public function validate(array $formData)
+    public function validate(array $formData): void
     {
         $this->validator
             ->addConstraint(

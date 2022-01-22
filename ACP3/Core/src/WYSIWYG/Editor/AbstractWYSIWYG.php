@@ -14,60 +14,47 @@ abstract class AbstractWYSIWYG
 {
     /**
      * ID des WYSIWYG-Editors.
-     *
-     * @var string
      */
-    protected $id;
+    protected string $id;
     /**
      * Name des Formularfeldes, in welchem der WYSIWYG-Editor platziert werden soll.
-     *
-     * @var string
      */
-    protected $name;
+    protected string $name;
     /**
      * Seitenumbrüche aktivieren/deaktivieren.
-     *
-     * @var bool
      */
-    protected $advanced;
-    /**
-     * @var bool
-     */
-    protected $required;
+    protected bool $advanced;
+
+    protected bool $required;
 
     /**
      * Default value of the WYSIWYG editor.
-     *
-     * @var string
      */
-    protected $value;
+    protected string $value;
     /**
      * Config-Array des WYSIWYG-Editors.
-     *
-     * @var array
      */
-    protected $config = [];
+    protected array $config = [];
 
-    abstract public function setParameters(array $params = []);
+    /**
+     * @param array<string, mixed> $params
+     */
+    abstract public function setParameters(array $params = []): void;
 
     /**
      * Configures the given WYSIWYG-Editor.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    abstract public function getData();
+    abstract public function getData(): array;
 
     /**
      * Returns the name of the WYSIWYG Editor.
-     *
-     * @return string
      */
-    abstract public function getFriendlyName();
+    abstract public function getFriendlyName(): string;
 
     /**
      * Returns whether the WYSIWYG-Editor can be used (eg. if it a installed and active).
-     *
-     * @return bool
      */
-    abstract public function isValid();
+    abstract public function isValid(): bool;
 }

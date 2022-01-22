@@ -15,10 +15,7 @@ class EmoticonsModel extends AbstractModel
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'code' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,

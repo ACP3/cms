@@ -49,7 +49,7 @@ class ShareModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,

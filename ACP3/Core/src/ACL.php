@@ -20,17 +20,17 @@ class ACL
      *
      * @var array<int, int[]>
      */
-    private $userRoles = [];
+    private array $userRoles = [];
     /**
      * Array mit allen registrierten Ressourcen.
      *
      * @var array<string, array<string, array<string, int>>>
      */
-    private $resources = [];
+    private array $resources = [];
     /**
      * @var int[]
      */
-    private $permissions = [];
+    private array $permissions = [];
 
     public function __construct(private ControllerActionExists $controllerActionExists, private UserModelInterface $user, private UserRoleRepositoryInterface $userRoleRepository, private PermissionServiceInterface $permissionService)
     {

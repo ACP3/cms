@@ -26,7 +26,7 @@ class AllowedMenuValidationRule extends AbstractValidationRule
             $parentId = reset($field);
             $blockId = next($field);
 
-            return $this->checkIsAllowedMenu($data[$parentId], $data[$blockId]);
+            return $this->checkIsAllowedMenu((int) $data[$parentId], (int) $data[$blockId]);
         }
 
         return false;

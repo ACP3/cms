@@ -20,6 +20,11 @@ class AdminUserEditViewProvider
     {
     }
 
+    /**
+     * @param array<string, mixed> $userInfo
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(array $userInfo): array
     {
         $this->title->setPageTitlePrefix($userInfo['nickname']);
@@ -54,6 +59,11 @@ class AdminUserEditViewProvider
         );
     }
 
+    /**
+     * @param array<string, mixed> $userInfo
+     *
+     * @return array<string, mixed>[]
+     */
     private function fetchUserRoles(array $userInfo): array
     {
         $currentUserRoles = isset($userInfo['id']) ? $this->acl->getUserRoleIds($userInfo['id']) : [];

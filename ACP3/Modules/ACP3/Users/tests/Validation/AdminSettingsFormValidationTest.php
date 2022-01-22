@@ -18,14 +18,14 @@ use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
  */
 class AdminSettingsFormValidationTest extends AbstractFormValidationTest
 {
-    protected function registerValidationRules()
+    protected function registerValidationRules(): void
     {
         $this->container->set(FormTokenValidationRule::class, $this->setUpFormTokenRule());
         $this->container->set(InArrayValidationRule::class, new InArrayValidationRule());
         $this->container->set(EmailValidationRule::class, new EmailValidationRule());
     }
 
-    protected function initializeFormValidation()
+    protected function initializeFormValidation(): void
     {
         $this->formValidation = new AdminSettingsFormValidation(
             $this->translatorMock,
@@ -34,9 +34,9 @@ class AdminSettingsFormValidationTest extends AbstractFormValidationTest
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
-    public function validFormDataProvider()
+    public function validFormDataProvider(): array
     {
         return [
             [
@@ -53,9 +53,9 @@ class AdminSettingsFormValidationTest extends AbstractFormValidationTest
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
-    public function invalidFormDataProvider()
+    public function invalidFormDataProvider(): array
     {
         return [
             [

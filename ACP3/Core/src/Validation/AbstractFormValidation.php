@@ -16,9 +16,11 @@ abstract class AbstractFormValidation
     }
 
     /**
+     * @param array<string, mixed> $formData
+     *
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */
-    abstract public function validate(array $formData);
+    abstract public function validate(array $formData): void;
 }

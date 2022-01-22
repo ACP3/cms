@@ -15,10 +15,7 @@ use ACP3\Modules\ACP3\Filemanager\Helpers;
  */
 class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
-    /**
-     * @var bool
-     */
-    private $initialized = false;
+    private bool $initialized = false;
 
     public function __construct(private Core\ACL $acl, private Core\View $view, private ?Helpers $filemanagerHelpers = null)
     {
@@ -27,7 +24,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     /**
      * {@inheritdoc}
      */
-    public function getFriendlyName()
+    public function getFriendlyName(): string
     {
         return 'TinyMCE';
     }
@@ -35,7 +32,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     /**
      * {@inheritdoc}
      */
-    public function setParameters(array $params = [])
+    public function setParameters(array $params = []): void
     {
         parent::setParameters($params);
 
@@ -46,7 +43,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): array
     {
         $wysiwyg = [
             'friendly_name' => $this->getFriendlyName(),
@@ -117,6 +114,9 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         ), JSON_THROW_ON_ERROR);
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     private function configurePlugins(): array
     {
         if ($this->isSimpleEditor()) {
@@ -137,6 +137,9 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         return ['plugins' => $plugins];
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function configureToolbar(): array
     {
         if ($this->isSimpleEditor()) {
@@ -148,6 +151,9 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         return ['toolbar' => $toolbar];
     }
 
+    /**
+     * @return array<string, bool>
+     */
     private function configureAdvancedImages(): array
     {
         return [

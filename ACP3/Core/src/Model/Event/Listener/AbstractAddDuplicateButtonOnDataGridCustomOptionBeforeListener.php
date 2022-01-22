@@ -17,7 +17,7 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
     {
     }
 
-    public function __invoke(CustomOptionEvent $customOptionEvent)
+    public function __invoke(CustomOptionEvent $customOptionEvent): void
     {
         if ($customOptionEvent->getIdentifier() === $this->getDataGridIdentifier() &&
             $this->acl->hasPermission($this->getResource()) === true
@@ -34,18 +34,12 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
         }
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getDataGridIdentifier();
+    abstract protected function getDataGridIdentifier(): string;
+
+    abstract protected function getResource(): string;
 
     /**
-     * @return string
+     * @param array<string, mixed> $dbResultRow
      */
-    abstract protected function getResource();
-
-    /**
-     * @return string
-     */
-    abstract protected function getRoute(array $dbResultRow);
+    abstract protected function getRoute(array $dbResultRow): string;
 }

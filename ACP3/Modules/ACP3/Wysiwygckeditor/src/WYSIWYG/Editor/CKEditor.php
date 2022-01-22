@@ -18,10 +18,7 @@ use ACP3\Modules\ACP3\Filemanager\Helpers;
  */
 class CKEditor extends Textarea
 {
-    /**
-     * @var bool
-     */
-    private $isInitialized = false;
+    private bool $isInitialized = false;
 
     public function __construct(private Core\ACL $acl, private Core\Assets\IncludeJs $includeJs, private Core\Modules $modules, private Core\I18n\Translator $translator, private Core\Environment\ApplicationPath $appPath, private ?EmoticonRepository $emoticonRepository = null, private ?Helpers $filemanagerHelpers = null)
     {
@@ -30,7 +27,7 @@ class CKEditor extends Textarea
     /**
      * {@inheritdoc}
      */
-    public function getFriendlyName()
+    public function getFriendlyName(): string
     {
         return 'CKEditor';
     }
@@ -38,7 +35,7 @@ class CKEditor extends Textarea
     /**
      * {@inheritdoc}
      */
-    public function setParameters(array $params = [])
+    public function setParameters(array $params = []): void
     {
         parent::setParameters($params);
 
@@ -49,7 +46,7 @@ class CKEditor extends Textarea
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): array
     {
         $wysiwyg = [
             'friendly_name' => $this->getFriendlyName(),

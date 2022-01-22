@@ -12,7 +12,7 @@ class IntegerColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritDoc}
      */
-    protected function getDbValueIfExists(array $dbResultRow, $field): ?string
+    protected function getDbValueIfExists(array $dbResultRow, string $field): ?string
     {
         return \array_key_exists($field, $dbResultRow) && $dbResultRow[$field] !== null ? (string) (int) $dbResultRow[$field] : null;
     }

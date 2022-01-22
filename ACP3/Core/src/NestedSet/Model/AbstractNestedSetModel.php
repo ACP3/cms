@@ -63,16 +63,10 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     }
 
     /**
-     * @param int|array $entryId
-     *
-     * @return int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function delete($entryId)
+    public function delete(array|int $entryId): int
     {
-        $repository = $this->repository;
-
         if (!\is_array($entryId)) {
             $entryId = [$entryId];
         }
@@ -81,7 +75,8 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
 
         $this->dispatchEvent('core.model.before_delete', $event);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_delete', $event
+            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.before_delete',
+            $event
         );
 
         $affectedRows = 0;
@@ -91,7 +86,8 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
 
         $this->dispatchEvent('core.model.before_delete', $event);
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_delete', $event
+            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.after_delete',
+            $event
         );
 
         return $affectedRows;

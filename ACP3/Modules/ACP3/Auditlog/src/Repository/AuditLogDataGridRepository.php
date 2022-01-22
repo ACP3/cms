@@ -14,7 +14,7 @@ class AuditLogDataGridRepository extends \ACP3\Core\DataGrid\Repository\Abstract
 {
     public const TABLE_NAME = AuditLogRepository::TABLE_NAME;
 
-    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
             'main.module_id',
@@ -24,12 +24,12 @@ class AuditLogDataGridRepository extends \ACP3\Core\DataGrid\Repository\Abstract
         ];
     }
 
-    protected function addJoin(QueryBuilder $queryBuilder)
+    protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->join('main', $this->getTableName(\ACP3\Modules\ACP3\System\Repository\ModulesRepository::TABLE_NAME), 'm', 'm.id = main.module_id');
     }
 
-    protected function addGroupBy(QueryBuilder $queryBuilder)
+    protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addGroupBy(['main.table_name', 'main.module_id', 'm.name']);
     }

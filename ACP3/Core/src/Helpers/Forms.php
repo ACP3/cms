@@ -36,12 +36,10 @@ class Forms
 
     /**
      * Selektion eines Eintrages in einem Dropdown-Menü
-     *
-     * @param mixed $defaultValue
      */
     public function selectEntry(
         string $formFieldName,
-        $defaultValue,
+        mixed $defaultValue,
         array|int|string|null $currentValue = '',
         string $htmlAttribute = ''
     ): string {
@@ -68,12 +66,12 @@ class Forms
     }
 
     /**
-     * @param string|int|array|null $currentValue
+     * @return array<string, mixed>[]
      */
     public function choicesGenerator(
         string $formFieldName,
         array $values,
-        $currentValue = '',
+        array|int|string|null $currentValue = '',
         string $htmlAttribute = 'selected'
     ): array {
         $choices = [];
@@ -91,6 +89,9 @@ class Forms
         return $choices;
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     public function linkTargetChoicesGenerator(
         string $formFieldName,
         ?int $currentValue = null,
@@ -104,6 +105,9 @@ class Forms
         return $this->choicesGenerator($formFieldName, $linkTargets, $currentValue, $htmlAttribute);
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     public function yesNoChoicesGenerator(
         string $formFieldName,
         ?int $currentValue = null,
@@ -118,13 +122,16 @@ class Forms
     }
 
     /**
-     * @param string|int|array|null $currentValue
+     * @return array<string, mixed>[]
      */
-    public function checkboxGenerator(string $formFieldName, array $values, $currentValue = ''): array
+    public function checkboxGenerator(string $formFieldName, array $values, array|int|string|null $currentValue = ''): array
     {
         return $this->choicesGenerator($formFieldName, $values, $currentValue, 'checked');
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     public function yesNoCheckboxGenerator(string $formFieldName, ?int $currentValue = null): array
     {
         $values = [

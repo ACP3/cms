@@ -62,10 +62,7 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
         return $picNum + 1;
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'gallery_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,

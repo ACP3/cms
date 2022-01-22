@@ -30,10 +30,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
      */
     protected $appPath;
 
-    /**
-     * @var bool
-     */
-    private $booted = false;
+    private bool $booted = false;
 
     /**
      * @throws \Exception
@@ -43,7 +40,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
         $this->initializeApplicationPath();
     }
 
-    protected function initializeApplicationPath()
+    protected function initializeApplicationPath(): void
     {
         $this->appPath = new ApplicationPath($this->appMode);
     }
@@ -53,7 +50,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
      *
      * @throws \Throwable
      */
-    public function handle(SymfonyRequest $request, $type = self::MASTER_REQUEST, $catch = true)
+    public function handle(SymfonyRequest $request, $type = self::MAIN_REQUEST, $catch = true): Response
     {
         if (!$this->booted) {
             $this->boot();
@@ -154,7 +151,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
         return is_file($path) === true && filesize($path) !== 0;
     }
 
-    public function terminate(SymfonyRequest $request, Response $response)
+    public function terminate(SymfonyRequest $request, Response $response): void
     {
         if (!$this->booted) {
             return;

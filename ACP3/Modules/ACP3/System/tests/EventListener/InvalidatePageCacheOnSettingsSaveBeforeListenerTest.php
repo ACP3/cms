@@ -70,14 +70,14 @@ class InvalidatePageCacheOnSettingsSaveBeforeListenerTest extends \PHPUnit\Frame
         ($this->invalidatePageCache)();
     }
 
-    private function setUpCanUsePageCacheMockExpectations($cacheEnabled = true): void
+    private function setUpCanUsePageCacheMockExpectations(bool $cacheEnabled = true): void
     {
         $this->canUsePageCacheMock->expects(self::once())
             ->method('canUsePageCache')
             ->willReturn($cacheEnabled);
     }
 
-    private function setUpSettingsMockExpectations($methodCalls = 0, $purgeMode = 1): void
+    private function setUpSettingsMockExpectations(int $methodCalls = 0, int $purgeMode = 1): void
     {
         $this->settingsMock->expects(self::exactly($methodCalls))
             ->method('getSettings')

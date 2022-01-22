@@ -67,7 +67,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function validate(array $formData)
+    public function validate(array $formData): void
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 

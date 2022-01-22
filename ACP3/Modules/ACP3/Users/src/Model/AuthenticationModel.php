@@ -30,6 +30,8 @@ class AuthenticationModel implements AuthenticationModelInterface
 
     /**
      * Authenticates the user.
+     *
+     * @param array<string, mixed>|null $userData
      */
     public function authenticate(?array $userData): void
     {
@@ -136,6 +138,8 @@ class AuthenticationModel implements AuthenticationModelInterface
     }
 
     /**
+     * @param array<string, mixed> $userData
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function saveFailedLoginAttempts(array $userData): int
@@ -155,6 +159,9 @@ class AuthenticationModel implements AuthenticationModelInterface
         return '';
     }
 
+    /**
+     * @param array<string, mixed> $user
+     */
     protected function generateRememberMeToken(array $user): string
     {
         return hash('sha512', $user['id'] . ':' . $user['pwd_salt'] . ':' . uniqid((string) mt_rand(), true));
@@ -171,6 +178,8 @@ class AuthenticationModel implements AuthenticationModelInterface
     /**
      * Migrates the old sha1 based password hash to sha512 hashes and returns the updated user information.
      *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function migratePasswordHashToSha512(int $userId, string $password): array
@@ -186,6 +195,9 @@ class AuthenticationModel implements AuthenticationModelInterface
         return $this->userRepository->getOneById($userId);
     }
 
+    /**
+     * @param array<string, mixed> $user
+     */
     protected function userHasOldPassword(string $password, array $user): bool
     {
         return \strlen($user['pwd']) === 40

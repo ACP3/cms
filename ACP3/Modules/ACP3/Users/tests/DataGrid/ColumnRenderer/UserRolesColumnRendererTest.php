@@ -12,6 +12,9 @@ use ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRendererTest;
 
 class UserRolesColumnRendererTest extends AbstractColumnRendererTest
 {
+    /**
+     * @var ACL|\PHPUnit\Framework\MockObject\MockObject
+     */
     protected $aclMock;
 
     protected function setup(): void
@@ -23,7 +26,7 @@ class UserRolesColumnRendererTest extends AbstractColumnRendererTest
         parent::setUp();
     }
 
-    public function testValidField()
+    public function testValidField(): void
     {
         $this->aclMock->expects(self::once())
             ->method('getUserRoleNames')

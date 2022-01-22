@@ -39,13 +39,11 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * Executes the SQL delete statement.
-     *
-     * @param int|string|array $entryId
+     * {@inheritDoc}
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function delete($entryId, ?string $columnName = null): int
+    public function delete(array|int|string $entryId, ?string $columnName = null): int
     {
         return $this->db->getConnection()->delete(
             $this->getTableName(),
@@ -53,19 +51,20 @@ abstract class AbstractRepository implements RepositoryInterface
         );
     }
 
+    /**
+     * @param array<string, int|string>|int|string $entryId
+     */
     private function getIdentifier(array|int|string $entryId, ?string $columnName = null): array
     {
         return \is_array($entryId) === true ? $entryId : [$columnName ?? static::PRIMARY_KEY_COLUMN => (int) $entryId];
     }
 
     /**
-     * Executes the SQL update statement.
-     *
-     * @param int|string|array $entryId
+     * {@inheritDoc}
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function update(array $data, $entryId): int
+    public function update(array $data, array|int|string $entryId): int
     {
         return $this->db->getConnection()->update(
             $this->getTableName(),
@@ -91,13 +90,11 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @param int|string $entryId
-     *
-     * @return array<string, mixed>
+     * {@inheritDoc}
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getOneById($entryId)
+    public function getOneById(int|string $entryId): array
     {
         return $this->db->fetchAssoc("SELECT * FROM {$this->getTableName()} WHERE id = ?", [$entryId]);
     }

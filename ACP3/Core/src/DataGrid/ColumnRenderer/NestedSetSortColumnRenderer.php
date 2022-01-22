@@ -12,7 +12,7 @@ class NestedSetSortColumnRenderer extends SortColumnRenderer
     /**
      * {@inheritdoc}
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow)
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         $value = '';
         if ($dbResultRow['first'] === true && $dbResultRow['last'] === true) {

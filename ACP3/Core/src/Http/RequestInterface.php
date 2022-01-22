@@ -7,166 +7,113 @@
 
 namespace ACP3\Core\Http;
 
+use ACP3\Core\Http\Request\UserAgent;
+use Symfony\Component\HttpFoundation\FileBag;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\ServerBag;
 
 interface RequestInterface
 {
-    /**
-     * @return SymfonyRequest
-     */
-    public function getSymfonyRequest();
+    public function getSymfonyRequest(): SymfonyRequest;
 
     /**
      * Returns the used protocol of the current request.
-     *
-     * @return string
      */
-    public function getScheme();
+    public function getScheme(): string;
 
     /**
      * Returns the hostname of the current request.
-     *
-     * @return string
      */
-    public function getHost();
+    public function getHost(): string;
 
     /**
      * Returns the HTTP host being requested.
      *
      * The port name will be appended to the host if it's non-standard.
-     *
-     * @return string
      */
-    public function getHttpHost();
+    public function getHttpHost(): string;
 
-    /**
-     * @return string
-     */
-    public function getQuery();
+    public function getQuery(): string;
 
     /**
      * Returns the original requested query.
-     *
-     * @return string
      */
-    public function getPathInfo();
+    public function getPathInfo(): string;
 
-    /**
-     * @return string
-     */
-    public function getArea();
+    public function getArea(): string;
 
-    /**
-     * @return string
-     */
-    public function getModule();
+    public function getModule(): string;
 
-    /**
-     * @return string
-     */
-    public function getController();
+    public function getController(): string;
 
-    /**
-     * @return string
-     */
-    public function getAction();
+    public function getAction(): string;
 
     /**
      * Returns the currently requested module, controller and controller action.
-     *
-     * @return string
      */
-    public function getFullPath();
+    public function getFullPath(): string;
 
     /**
      * Returns the currently requested module, controller and controller action without the area prefix.
-     *
-     * @return string
      */
-    public function getFullPathWithoutArea();
+    public function getFullPathWithoutArea(): string;
 
     /**
      * Returns the currently requested module and controller.
-     *
-     * @return string
      */
-    public function getModuleAndController();
+    public function getModuleAndController(): string;
 
     /**
      * Returns the currently requested module and controller without the area prefix.
-     *
-     * @return string
      */
-    public function getModuleAndControllerWithoutArea();
+    public function getModuleAndControllerWithoutArea(): string;
 
-    /**
-     * @return bool
-     */
-    public function isHomepage();
+    public function isHomepage(): bool;
 
     /**
      * Gibt die URI-Parameter aus.
-     *
-     * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
-    public function getParameters();
+    public function getParameters(): ParameterBag;
 
     /**
      * Gibt die bereinigte URI-Query aus, d.h. ohne die anzuzeigende Seite.
-     *
-     * @return string
      */
-    public function getUriWithoutPages();
+    public function getUriWithoutPages(): string;
 
-    /**
-     * @return bool
-     */
-    public function isXmlHttpRequest();
+    public function isXmlHttpRequest(): bool;
 
     /**
      * Returns the parameter bag of the $_COOKIE superglobal.
-     *
-     * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
-    public function getCookies();
+    public function getCookies(): ParameterBag;
 
     /**
      * Returns the parameter bag of the uploaded files ($_FILES superglobal).
-     *
-     * @return \Symfony\Component\HttpFoundation\FileBag
      */
-    public function getFiles();
+    public function getFiles(): FileBag;
 
     /**
      * Returns the parameter bag of the $_POST superglobal.
-     *
-     * @return \Symfony\Component\HttpFoundation\ParameterBag
      */
-    public function getPost();
+    public function getPost(): ParameterBag;
 
     /**
      * Returns the parameter bag of the $_SERVER superglobal.
-     *
-     * @return \Symfony\Component\HttpFoundation\ServerBag
      */
-    public function getServer();
+    public function getServer(): ServerBag;
 
-    /**
-     * @return \ACP3\Core\Http\Request\UserAgent
-     */
-    public function getUserAgent();
+    public function getUserAgent(): UserAgent;
 
     /**
      * Processes the request.
      */
-    public function processQuery();
+    public function processQuery(): void;
 
     /**
-     * @param string $homepage
-     *
-     * @return $this
+     * @return static
      */
-    public function setHomepage($homepage);
+    public function setHomepage(string $homepage): self;
 
     public function setPathInfo(?string $pathInfo = null): void;
 }

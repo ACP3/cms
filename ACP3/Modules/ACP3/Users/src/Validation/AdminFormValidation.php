@@ -12,19 +12,14 @@ use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RolesExistValidatio
 
 class AdminFormValidation extends AbstractUserFormValidation
 {
-    /**
-     * @var int
-     */
-    protected $userId = 0;
+    private int $userId = 0;
 
     /**
-     * @param int $userId
-     *
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): self
     {
-        $this->userId = (int) $userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -32,7 +27,7 @@ class AdminFormValidation extends AbstractUserFormValidation
     /**
      * {@inheritdoc}
      */
-    public function validate(array $formData)
+    public function validate(array $formData): void
     {
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)

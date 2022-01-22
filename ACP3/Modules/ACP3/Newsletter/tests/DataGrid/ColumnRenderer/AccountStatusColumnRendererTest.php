@@ -42,7 +42,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
         parent::setUp();
     }
 
-    public function testValidField()
+    public function testValidField(): void
     {
         $this->iconMock->expects(self::atLeastOnce())
             ->method('__invoke')
@@ -92,7 +92,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
         $this->compareResults($expected);
     }
 
-    public function testDefaultValueIfNull()
+    public function testDefaultValueIfNull(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
@@ -108,7 +108,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
         $this->compareResults($expected);
     }
 
-    public function testDefaultValueIfNotFound()
+    public function testDefaultValueIfNotFound(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['test'],

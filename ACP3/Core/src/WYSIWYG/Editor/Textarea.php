@@ -15,7 +15,7 @@ class Textarea extends AbstractWYSIWYG
     /**
      * {@inheritdoc}
      */
-    public function getFriendlyName()
+    public function getFriendlyName(): string
     {
         return 'Textarea';
     }
@@ -23,19 +23,19 @@ class Textarea extends AbstractWYSIWYG
     /**
      * {@inheritdoc}
      */
-    public function setParameters(array $params = [])
+    public function setParameters(array $params = []): void
     {
         $this->id = $params['id'];
         $this->name = $params['name'];
         $this->value = $params['value'];
-        $this->advanced = isset($params['advanced']) && (bool) $params['advanced'];
-        $this->required = isset($params['required']) && (bool) $params['required'];
+        $this->advanced = isset($params['advanced']) && $params['advanced'];
+        $this->required = isset($params['required']) && $params['required'];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): array
     {
         return [
             'wysiwyg' => [
@@ -53,7 +53,7 @@ class Textarea extends AbstractWYSIWYG
     /**
      * {@inheritdoc}
      */
-    public function isValid()
+    public function isValid(): bool
     {
         return true;
     }

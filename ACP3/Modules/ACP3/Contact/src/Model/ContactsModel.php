@@ -28,7 +28,7 @@ class ContactsModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'date' => ColumnTypes::COLUMN_TYPE_DATETIME,

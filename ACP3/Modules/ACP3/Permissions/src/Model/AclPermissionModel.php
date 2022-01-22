@@ -15,7 +15,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @method AclPermissionRepository getRepository()
+ * @method AclPermissionRepository getRepository():\ACP3\Core\Repository\AbstractRepository
  */
 class AclPermissionModel extends AbstractModel
 {

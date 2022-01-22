@@ -14,31 +14,34 @@ interface ColumnRendererInterface
     /**
      * @return $this
      */
-    public function setIdentifier(string $identifier);
+    public function setIdentifier(string $identifier): self;
 
     public function getPrimaryKey(): ?string;
 
     /**
      * @return $this
      */
-    public function setPrimaryKey(?string $primaryKey);
+    public function setPrimaryKey(?string $primaryKey): self;
 
     public function getUseAjax(): bool;
 
     /**
      * @return $this
      */
-    public function setUseAjax(bool $useAjax);
+    public function setUseAjax(bool $useAjax): self;
 
     public function getTotalResults(): ?int;
 
     /**
      * @return $this
      */
-    public function setTotalResults(int $totalResults);
+    public function setTotalResults(int $totalResults): self;
 
     /**
-     * @return string
+     * @param array<string, mixed> $column
+     * @param array<string, mixed> $dbResultRow
+     *
+     * @return string|array<string, mixed>
      */
-    public function fetchDataAndRenderColumn(array $column, array $dbResultRow);
+    public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array;
 }

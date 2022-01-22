@@ -16,6 +16,9 @@ class UserProfileViewProvider
     {
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function __invoke(int $userId): array
     {
         $user = $this->userModel->getUserInfo($userId);

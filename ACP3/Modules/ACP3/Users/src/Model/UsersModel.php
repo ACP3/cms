@@ -16,9 +16,9 @@ class UsersModel extends AbstractModel
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'super_user' => ColumnTypes::COLUMN_TYPE_INT,

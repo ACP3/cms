@@ -20,7 +20,7 @@ class RouteColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getValue(array $column, array $dbResultRow)
+    protected function getValue(array $column, array $dbResultRow): ?string
     {
         $value = parent::getValue($column, $dbResultRow);
 

@@ -78,10 +78,7 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
         return $this->voteRepository->delete($pollId, 'poll_id');
     }
 
-    /**
-     * @return array
-     */
-    protected function getAllowedColumns()
+    protected function getAllowedColumns(): array
     {
         return [
             'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,

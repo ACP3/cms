@@ -24,12 +24,7 @@ class IcqNumberValidationRule extends AbstractValidationRule
         return !empty($data) ? $this->isIcqNumber($data) : true;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return bool
-     */
-    protected function isIcqNumber($value)
+    protected function isIcqNumber(string $value): bool
     {
         return (bool) preg_match('/^(\d{6,9})$/', $value);
     }

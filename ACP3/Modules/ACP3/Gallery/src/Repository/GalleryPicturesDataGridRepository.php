@@ -17,7 +17,7 @@ class GalleryPicturesDataGridRepository extends AbstractDataGridRepository
     /**
      * {@inheritdoc}
      */
-    protected function getColumns(ColumnPriorityQueue $gridColumns)
+    protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return array_merge(
             parent::getColumns($gridColumns),

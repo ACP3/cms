@@ -13,6 +13,8 @@ interface RepositoryInterface
      * Executes the SQL insert statement.
      *
      * The method will return the last inserted ID.
+     *
+     * @param array<string, mixed> $data
      */
     public function insert(array $data): int;
 
@@ -20,16 +22,22 @@ interface RepositoryInterface
 
     /**
      * Executes the SQL delete statement.
+     *
+     * @param int|string|array<string, int|string> $entryId
      */
-    public function delete(array|int $entryId, ?string $columnName = null): int;
+    public function delete(array|int|string $entryId, ?string $columnName = null): int;
 
     /**
      * Executes the SQL update statement.
+     *
+     * @param array<string, mixed> $data
      */
-    public function update(array $data, array|int $entryId): bool|int;
+    public function update(array $data, array|int|string $entryId): int;
 
     /**
      * Returns a single full result set by the value of its primary key.
+     *
+     * @return array<string, mixed>
      */
-    public function getOneById(int $entryId);
+    public function getOneById(int|string $entryId): array;
 }

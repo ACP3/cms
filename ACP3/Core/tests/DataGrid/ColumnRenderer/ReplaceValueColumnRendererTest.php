@@ -26,7 +26,7 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
         );
     }
 
-    public function testValidField()
+    public function testValidField(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
@@ -43,7 +43,7 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
         $this->compareResults($expected);
     }
 
-    public function testDefaultValueIfNull()
+    public function testDefaultValueIfNull(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],
@@ -61,7 +61,7 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
         $this->compareResults($expected);
     }
 
-    public function testDefaultValueIfNotFound()
+    public function testDefaultValueIfNotFound(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['test'],

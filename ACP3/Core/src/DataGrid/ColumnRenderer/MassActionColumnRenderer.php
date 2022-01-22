@@ -12,7 +12,7 @@ class MassActionColumnRenderer extends AbstractColumnRenderer
     /**
      * {@inheritdoc}
      */
-    protected function getValue(array $column, array $dbResultRow)
+    protected function getValue(array $column, array $dbResultRow): ?string
     {
         $value = null;
         if (isset($column['custom']['can_delete']) && $column['custom']['can_delete'] === true) {

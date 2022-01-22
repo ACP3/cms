@@ -19,7 +19,17 @@ interface ValidationRuleInterface
      */
     public function setMessage(string $message): self;
 
+    /**
+     * @param bool|int|float|string|mixed[]|UploadedFile|null $data
+     * @param string|string[]                                 $field
+     * @param mixed[]                                         $extra
+     */
     public function validate(Validator $validator, bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): void;
 
+    /**
+     * @param bool|int|float|string|mixed[]|UploadedFile|null $data
+     * @param string|string[]                                 $field
+     * @param mixed[]                                         $extra
+     */
     public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool;
 }
