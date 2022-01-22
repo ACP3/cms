@@ -7,7 +7,7 @@ module.exports = (gulp) => {
   "use strict";
 
   const componentPaths = require("./component-paths");
-  const gulpStylelint = require("gulp-stylelint");
+  const gulpStylelint = require("@ronilaukkarinen/gulp-stylelint");
   const plumber = require("gulp-plumber");
 
   return () => {
