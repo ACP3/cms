@@ -12,13 +12,13 @@ use Giggsey\Locale\Locale;
 class CountryList
 {
     /**
-     * @var array|null
+     * @var string[]|null
      */
-    private $countries;
+    private ?array $countries = null;
     /**
-     * @var array|null
+     * @var string[]|null
      */
-    private $supportedLocales;
+    private ?array $supportedLocales = null;
 
     public function __construct(private Translator $translator)
     {
@@ -26,6 +26,8 @@ class CountryList
 
     /**
      * Returns an array with all earth countries.
+     *
+     * @return string[]
      */
     public function worldCountries(): array
     {

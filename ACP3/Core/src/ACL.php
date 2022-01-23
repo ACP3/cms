@@ -39,7 +39,7 @@ class ACL
     /**
      * Gibt die dem jeweiligen Benutzer zugewiesenen Rollen zurück.
      *
-     * @returns int[]
+     * @return int[]
      */
     public function getUserRoleIds(int $userId): array
     {
@@ -121,6 +121,9 @@ class ACL
         return true;
     }
 
+    /**
+     * @return string[]
+     */
     private function convertResourcePathToArray(string $resource): array
     {
         return array_replace(

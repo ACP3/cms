@@ -33,9 +33,9 @@ class InstallPost extends AbstractAction
     }
 
     /**
-     * @return array|JsonResponse|null
+     * @return array<string, mixed>|JsonResponse|null
      */
-    public function __invoke()
+    public function __invoke(): array|JsonResponse|null
     {
         try {
             $formData = $this->request->getPost()->all();
@@ -71,6 +71,9 @@ class InstallPost extends AbstractAction
         return null;
     }
 
+    /**
+     * @return array<string, mixed>|Response
+     */
     private function renderErrorBoxOnFailedFormValidation(\Exception $exception): array|Response
     {
         $errors = $this->alertsHelper->errorBox($exception->getMessage());

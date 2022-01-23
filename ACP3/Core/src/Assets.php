@@ -13,18 +13,21 @@ use ACP3\Core\Environment\ThemePathInterface;
 class Assets
 {
     /**
-     * @var array|null
+     * @var string[]|null
      */
-    private $additionalThemeCssFiles;
+    private ?array $additionalThemeCssFiles = null;
     /**
-     * @var array|null
+     * @var string[]|null
      */
-    private $additionalThemeJsFiles;
+    private ?array $additionalThemeJsFiles = null;
 
     public function __construct(private ThemePathInterface $theme, private Libraries $libraries)
     {
     }
 
+    /**
+     * @return string[]
+     */
     public function fetchAdditionalThemeCssFiles(): array
     {
         if ($this->additionalThemeCssFiles === null) {
@@ -72,6 +75,9 @@ class Assets
         return $this;
     }
 
+    /**
+     * @return string[]
+     */
     public function fetchAdditionalThemeJsFiles(): array
     {
         if ($this->additionalThemeJsFiles === null) {

@@ -19,6 +19,8 @@ class Forms
     /**
      * Liefert ein Array zur Ausgabe als Dropdown-Menü
      * für die Anzahl der anzuzeigenden Datensätze je Seite.
+     *
+     * @return array<string, mixed>[]
      */
     public function recordsPerPage(
         ?int $currentValue,
@@ -36,6 +38,8 @@ class Forms
 
     /**
      * Selektion eines Eintrages in einem Dropdown-Menü
+     *
+     * @param mixed[]|int|string|null $currentValue
      */
     public function selectEntry(
         string $formFieldName,
@@ -66,6 +70,9 @@ class Forms
     }
 
     /**
+     * @param array<mixed, string|int> $values
+     * @param mixed[]|int|string|null  $currentValue
+     *
      * @return array<string, mixed>[]
      */
     public function choicesGenerator(
@@ -122,6 +129,9 @@ class Forms
     }
 
     /**
+     * @param array<mixed, string|int> $values
+     * @param mixed[]|int|string|null  $currentValue
+     *
      * @return array<string, mixed>[]
      */
     public function checkboxGenerator(string $formFieldName, array $values, array|int|string|null $currentValue = ''): array

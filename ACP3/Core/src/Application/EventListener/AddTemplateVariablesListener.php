@@ -22,7 +22,7 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
         $this->view->assign([
             'DESIGN_PATH' => $this->theme->getDesignPathWeb(),

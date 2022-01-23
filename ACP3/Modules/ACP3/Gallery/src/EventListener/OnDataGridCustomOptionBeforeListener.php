@@ -18,7 +18,7 @@ class OnDataGridCustomOptionBeforeListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(CustomOptionEvent $customOptionEvent)
+    public function __invoke(CustomOptionEvent $customOptionEvent): void
     {
         if ($customOptionEvent->getIdentifier() === '#gallery-data-grid' &&
             $this->acl->hasPermission('admin/gallery/pictures/index') === true

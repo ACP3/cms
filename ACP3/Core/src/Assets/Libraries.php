@@ -8,6 +8,8 @@
 namespace ACP3\Core\Assets;
 
 use ACP3\Core\Assets\Entity\LibraryEntity;
+use MJS\TopSort\CircularDependencyException;
+use MJS\TopSort\ElementNotFoundException;
 use MJS\TopSort\Implementations\StringSort;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -15,9 +17,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class Libraries
 {
     /**
-     * @var array<string, \ACP3\Core\Assets\Entity\LibraryEntity>
+     * @var array<string, LibraryEntity>
      */
-    private $libraries = [];
+    private array $libraries = [];
 
     public function __construct(private RequestStack $requestStack, private LibrariesCache $librariesCache)
     {
@@ -26,8 +28,8 @@ class Libraries
     /**
      * @return array<string, LibraryEntity>
      *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
      */
     public function getLibraries(): array
     {
@@ -48,10 +50,15 @@ class Libraries
         return $librariesTopSorted;
     }
 
+    /**
+     * @param array<string, mixed>|null $options
+     *
+     * @return $this
+     */
     public function addLibrary(LibraryEntity|string $library, ?array $options = null): self
     {
         if (\is_string($library)) {
-            if ($options === null || empty($options)) {
+            if (empty($options)) {
                 throw new \InvalidArgumentException(sprintf('You need to pass a valid options array for this asset library %s', $library));
             }
 
@@ -74,6 +81,8 @@ class Libraries
 
     /**
      * Activates frontend libraries.
+     *
+     * @param string[] $libraries
      */
     public function enableLibraries(array $libraries): self
     {
@@ -101,8 +110,8 @@ class Libraries
     /**
      * @return array<string, LibraryEntity>
      *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
      */
     public function getEnabledLibraries(): array
     {
@@ -122,22 +131,22 @@ class Libraries
     }
 
     /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
      */
     public function getEnabledLibrariesAsString(): string
     {
         return implode(',', array_keys($this->getEnabledLibraries()));
     }
 
-    private function getMasterRequest(): Request
+    private function getMainRequest(): Request
     {
-        return $this->requestStack->getMasterRequest();
+        return $this->requestStack->getMainRequest();
     }
 
     private function includeInXmlHttpRequest(LibraryEntity $library): bool
     {
-        return $this->getMasterRequest()->isXmlHttpRequest()
+        return $this->getMainRequest()->isXmlHttpRequest()
             && $library->isEnabledForAjax() === false;
     }
 }

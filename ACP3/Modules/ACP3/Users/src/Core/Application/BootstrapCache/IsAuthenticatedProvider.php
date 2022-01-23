@@ -22,6 +22,8 @@ class IsAuthenticatedProvider implements ContextProvider
 
     /**
      * {@inheritdoc}
+     *
+     * @param UserContext<int, array<string, mixed>> $context
      */
     public function updateUserContext(UserContext $context): void
     {

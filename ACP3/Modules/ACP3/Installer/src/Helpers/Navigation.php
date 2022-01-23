@@ -16,7 +16,7 @@ class Navigation
     /**
      * @var \ACP3\Modules\ACP3\Installer\Helpers\Navigation\NavigationStep[]
      */
-    private $navbar = [];
+    private array $navbar = [];
 
     public function __construct(private Translator $translator)
     {
@@ -44,6 +44,9 @@ class Navigation
             );
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function addStep(string $stepName, array $options): self
     {
         if (!$this->has($stepName)) {
@@ -54,6 +57,9 @@ class Navigation
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getDefaultOptions(): array
     {
         return [
@@ -86,6 +92,9 @@ class Navigation
         return $this;
     }
 
+    /**
+     * @return NavigationStep[]
+     */
     public function all(): array
     {
         return $this->navbar;

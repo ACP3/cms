@@ -38,6 +38,8 @@ class SchemaHelper
     /**
      * Executes all given SQL queries.
      *
+     * @param array<string|callable> $queries
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      * @throws \ACP3\Core\Installer\Exception\ModuleMigrationException
      * @throws \Doctrine\DBAL\Exception

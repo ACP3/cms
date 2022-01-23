@@ -32,7 +32,9 @@ class PictureDataGridViewProvider
     }
 
     /**
-     * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
+     * @param array<string, mixed> $gallery
+     *
+     * @return array<string, array<string, mixed>>|JsonResponse
      */
     public function __invoke(int $id, array $gallery): array|JsonResponse
     {

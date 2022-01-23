@@ -16,6 +16,11 @@ class ConfigProcessor
     {
     }
 
+    /**
+     * @return array{identifier: string, config: string}
+     *
+     * @throws \JsonException
+     */
     public function generateDataTableConfig(Input $options): array
     {
         $config = [
@@ -37,6 +42,9 @@ class ConfigProcessor
         ];
     }
 
+    /**
+     * @return array<int, array<int|string>>
+     */
     private function getLengthMenu(): array
     {
         return [
@@ -45,6 +53,9 @@ class ConfigProcessor
         ];
     }
 
+    /**
+     * @return array<int, int|string>
+     */
     private function getLengthMap(): array
     {
         return [
@@ -57,6 +68,9 @@ class ConfigProcessor
         ];
     }
 
+    /**
+     * @return array<string, string|string[]>
+     */
     private function getLanguage(): array
     {
         return [
@@ -75,6 +89,9 @@ class ConfigProcessor
         ];
     }
 
+    /**
+     * @return array<array{int, string}>
+     */
     protected function getDefaultSorting(ColumnPriorityQueue $columns): array
     {
         $i = 0;
@@ -99,6 +116,9 @@ class ConfigProcessor
         return [];
     }
 
+    /**
+     * @return array<array<string, mixed>>
+     */
     private function getColumnDefinitions(ColumnPriorityQueue $columns, bool $useAjax): array
     {
         $columnDefinitions = [];

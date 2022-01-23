@@ -19,8 +19,14 @@ class MailerMessage
 
     private string $mailSignature = '';
 
+    /**
+     * @var array<array{email: string, name: string}>|string[]|string|null
+     */
     private string|array|null $from = null;
 
+    /**
+     * @var array<array{email: string, name: string}>|string[]|string|null
+     */
     private string|array|null $replyTo = null;
 
     private string $sender = '';
@@ -113,12 +119,17 @@ class MailerMessage
         return $this;
     }
 
+    /**
+     * @return array<array{email: string, name: string}>|string[]|string|null
+     */
     public function getFrom(): array|string|null
     {
         return $this->from;
     }
 
     /**
+     * @param array<array{email: string, name: string}>|string[]|string $from
+     *
      * @return static
      */
     public function setFrom(array|string $from): self
@@ -128,12 +139,17 @@ class MailerMessage
         return $this;
     }
 
+    /**
+     * @return array<array{email: string, name: string}>|string[]|string|null
+     */
     public function getReplyTo(): array|string|null
     {
         return $this->replyTo;
     }
 
     /**
+     * @param array<array{email: string, name: string}>|string[]|string $replyTo
+     *
      * @return static
      */
     public function setReplyTo(array|string $replyTo): self
@@ -202,6 +218,8 @@ class MailerMessage
     }
 
     /**
+     * @param string[] $attachments
+     *
      * @return static
      */
     public function setAttachments(array $attachments): self

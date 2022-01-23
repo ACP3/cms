@@ -22,7 +22,7 @@ class CheckPermissionListener implements EventSubscriberInterface
     /**
      * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
      */
-    public function __invoke(ControllerActionBeforeDispatchEvent $event)
+    public function __invoke(ControllerActionBeforeDispatchEvent $event): void
     {
         if ($event->getArea() === AreaEnum::AREA_INSTALL) {
             return;

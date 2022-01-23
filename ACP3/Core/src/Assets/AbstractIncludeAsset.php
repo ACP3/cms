@@ -12,9 +12,9 @@ use ACP3\Core\Application\BootstrapInterface;
 abstract class AbstractIncludeAsset
 {
     /**
-     * @var array
+     * @var string[]
      */
-    private $alreadyIncluded = [];
+    private array $alreadyIncluded = [];
 
     public function __construct(private Libraries $libraries, private FileResolver $fileResolver)
     {

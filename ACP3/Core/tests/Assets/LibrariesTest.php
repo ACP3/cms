@@ -40,7 +40,7 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
         $requestMock = $this->createMock(Request::class);
 
         $this->requestStackMock->expects(self::atLeastOnce())
-            ->method('getMasterRequest')
+            ->method('getMainRequest')
             ->willReturn($requestMock);
         $this->requestStackMock->expects(self::atLeastOnce())
             ->method('getCurrentRequest')

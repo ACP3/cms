@@ -62,8 +62,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     /**
      * Installs all module settings.
      *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @param array<string, string|int|bool|float|null> $settings
      */
     private function installSettings(string $moduleName, array $settings): bool
     {

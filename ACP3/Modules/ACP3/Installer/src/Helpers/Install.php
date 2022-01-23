@@ -19,6 +19,8 @@ class Install
 {
     /**
      * Writes the system config file.
+     *
+     * @param array<string, mixed> $data
      */
     public function writeConfigFile(string $configFilePath, array $data): bool
     {

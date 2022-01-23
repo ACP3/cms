@@ -11,6 +11,10 @@ use ACP3\Core;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Modules\ACP3\Guestbook;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SettingsPost extends Core\Controller\AbstractWidgetAction
 {
@@ -24,10 +28,12 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse
+     *
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(): array|string|JsonResponse|RedirectResponse
     {
         return $this->actionHelper->handleSettingsPostAction(function () {
             $formData = $this->request->getPost()->all();

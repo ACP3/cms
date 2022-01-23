@@ -16,27 +16,22 @@ use Psr\Cache\CacheItemPoolInterface;
 class FileResolver
 {
     private const CACHE_KEY = 'resources';
-    /**
-     * @var \ACP3\Core\Assets\FileResolver\FileCheckerStrategyInterface[]
-     */
-    private $strategies = [];
 
     /**
-     * @var array
+     * @var FileCheckerStrategyInterface[]
      */
-    private $cachedPaths;
+    private array $strategies = [];
+
     /**
-     * @var CacheItemInterface
+     * @var string[]
      */
-    private $cacheItem;
-    /**
-     * @var string
-     */
-    private $designAssetsPath;
-    /**
-     * @var string
-     */
-    private $currentTheme;
+    private ?array $cachedPaths = null;
+
+    private ?CacheItemInterface $cacheItem = null;
+
+    private ?string $designAssetsPath = null;
+
+    private ?string $currentTheme = null;
 
     public function __construct(
         private CacheItemPoolInterface $coreCachePool,

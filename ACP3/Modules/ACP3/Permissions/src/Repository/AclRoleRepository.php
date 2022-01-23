@@ -31,7 +31,7 @@ class AclRoleRepository extends Core\NestedSet\Repository\NestedSetRepository im
     }
 
     /**
-     * @return array<string, mixed>[]
+     * {@inheritDoc}
      *
      * @throws \Doctrine\DBAL\Exception
      */

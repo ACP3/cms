@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterColumnTypesCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $columnTypeStrategyLocatorDefinition = $container->findDefinition('core.model.column_type_strategy_locator');
 

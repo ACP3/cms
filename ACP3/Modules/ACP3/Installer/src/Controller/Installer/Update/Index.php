@@ -24,7 +24,7 @@ class Index extends AbstractWidgetAction
     }
 
     /**
-     * @param string $action
+     * @return array<string, mixed>|null
      *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
@@ -39,6 +39,8 @@ class Index extends AbstractWidgetAction
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      * @throws \Exception

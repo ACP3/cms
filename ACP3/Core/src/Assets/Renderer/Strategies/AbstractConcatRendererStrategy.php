@@ -24,10 +24,13 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
 
     abstract protected function getFileExtension(): string;
 
+    /**
+     * @return string[]
+     */
     abstract protected function processLibraries(): array;
 
     /**
-     * This methods returns the currently enabled asset libraries as a comma-separated string.
+     * This method returns the currently enabled asset libraries as a comma-separated string.
      * It must only contain the libraries names which are eligible according to the asset group.
      */
     abstract protected function getEnabledLibrariesAsString(): string;
@@ -82,6 +85,9 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         return $this->appPath->getWebRoot() . 'uploads/' . $path;
     }
 
+    /**
+     * @param string[] $files
+     */
     private function saveMinifiedAsset(array $files, string $path): void
     {
         $content = [];

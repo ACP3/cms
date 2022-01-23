@@ -15,9 +15,9 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     protected const ASSETS_PATH_JS = 'Assets/js';
 
     /**
-     * @var array|null
+     * @var string[]|null
      */
-    private $javascripts;
+    private ?array $javascripts = null;
 
     public function __construct(private Assets $assets, private Assets\FileResolver $fileResolver, private Libraries $libraries)
     {

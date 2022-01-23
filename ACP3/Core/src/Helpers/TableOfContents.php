@@ -17,6 +17,8 @@ class TableOfContents
 
     /**
      * Generates the table of contents.
+     *
+     * @param string[] $pages
      */
     public function generateTOC(array $pages, string $baseUrlPath = '', bool $titlesFromDb = false, bool $customUris = false): string
     {
@@ -46,6 +48,8 @@ class TableOfContents
     /**
      * Liest aus einem String alle vorhandenen HTML-Attribute ein und
      * liefert diese als assoziatives Array zurück.
+     *
+     * @return array<string, string>
      */
     private function getHtmlAttributes(string $string): array
     {
@@ -63,6 +67,9 @@ class TableOfContents
         return $return;
     }
 
+    /**
+     * @param string[]|string $page
+     */
     private function isCurrentPage(bool $customUris, array|string $page, int $pageNumber, int $currentIndex): bool
     {
         if ($customUris === true) {
@@ -80,6 +87,9 @@ class TableOfContents
         return false;
     }
 
+    /**
+     * @param string[]|string $page
+     */
     private function fetchTocPageTitle(array|string $page, int $pageNumber, bool $titlesFromDb): string
     {
         if ($titlesFromDb === false && \is_array($page) === false) {
@@ -91,6 +101,9 @@ class TableOfContents
         return !empty($page['title']) ? $page['title'] : $transPageNumber;
     }
 
+    /**
+     * @param string[]|string $page
+     */
     private function fetchTocPageUri(bool $customUris, array|string $page, int $pageNumber, string $requestQuery): string
     {
         if ($customUris === true && \is_array($page) === true) {

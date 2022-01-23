@@ -21,20 +21,12 @@ class MoveToBottom extends AbstractMoveElementFilter
     /**
      * {@inheritdoc}
      */
-    protected function addElementFromMinifier()
-    {
-        return $this->javaScriptRenderer->renderHtmlElement();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
-        if (str_contains($tplOutput, (string) static::PLACEHOLDER)) {
+        if (str_contains($tplOutput, static::PLACEHOLDER)) {
             return str_replace(
                 static::PLACEHOLDER,
-                $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),
+                $this->javaScriptRenderer->renderHtmlElement() . $this->addElementsFromTemplates($tplOutput),
                 $this->getCleanedUpTemplateOutput($tplOutput)
             );
         }

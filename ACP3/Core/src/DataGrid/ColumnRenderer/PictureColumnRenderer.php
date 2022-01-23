@@ -34,6 +34,9 @@ class PictureColumnRenderer extends AbstractColumnRenderer
         return $value;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function getUrl(array $data, string $value): string
     {
         $url = sprintf($data['pattern'], $value);

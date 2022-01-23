@@ -22,6 +22,8 @@ class Upload
      * @param string $tmpFilename Temporäre Datei
      * @param string $filename    Dateiname
      *
+     * @return array<string, mixed>
+     *
      * @throws ValidationFailedException
      */
     public function moveFile(string $tmpFilename, string $filename, bool $retainFilename = false): array

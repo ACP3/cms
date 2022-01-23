@@ -8,15 +8,17 @@
 namespace ACP3\Modules\ACP3\Gallery\Repository;
 
 use ACP3\Core\Repository\AbstractRepository;
+use ACP3\Core\Repository\PublicationPeriodAwareTrait;
+use Doctrine\DBAL\Exception;
 
 class GalleryRepository extends AbstractRepository
 {
-    use \ACP3\Core\Repository\PublicationPeriodAwareTrait;
+    use PublicationPeriodAwareTrait;
 
     public const TABLE_NAME = 'gallery';
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function galleryExists(int $galleryId, string $time = ''): bool
     {
@@ -29,7 +31,7 @@ class GalleryRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function getGalleryTitle(int $galleryId): string
     {
@@ -40,7 +42,7 @@ class GalleryRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function countAll(string $time): int
     {
@@ -53,7 +55,9 @@ class GalleryRepository extends AbstractRepository
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<array<string, mixed>>
+     *
+     * @throws Exception
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {

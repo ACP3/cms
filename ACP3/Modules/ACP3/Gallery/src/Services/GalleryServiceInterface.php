@@ -9,6 +9,9 @@ namespace ACP3\Modules\ACP3\Gallery\Services;
 
 interface GalleryServiceInterface
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function getGallery(int $galleryId): array;
 
     /**

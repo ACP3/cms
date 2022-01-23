@@ -14,9 +14,9 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
     protected const ASSETS_PATH_JS = 'Assets/js';
 
     /**
-     * @var array
+     * @var string[]
      */
-    protected $javascript = [];
+    protected array $javascript = [];
 
     protected function getAssetGroup(): string
     {

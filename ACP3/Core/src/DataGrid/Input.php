@@ -8,57 +8,37 @@
 namespace ACP3\Core\DataGrid;
 
 use ACP3\Core\DataGrid\Repository\AbstractDataGridRepository;
+use Doctrine\DBAL\Exception as DBALException;
 
 final class Input
 {
+    private ?AbstractDataGridRepository $repository = null;
     /**
-     * @var \ACP3\Core\DataGrid\Repository\AbstractDataGridRepository|null
+     * @var array<array<string, mixed>>
      */
-    private $repository;
-    /**
-     * @var array
-     */
-    private $results = [];
-    /**
-     * @var string
-     */
-    private $resourcePathEdit = '';
-    /**
-     * @var string
-     */
-    private $resourcePathDelete = '';
-    /**
-     * @var string|null
-     */
-    private $identifier;
-    /**
-     * @var int
-     */
-    private $recordsPerPage = 10;
-    /**
-     * @var bool
-     */
-    private $useAjax = false;
-    /**
-     * @var bool
-     */
-    private $enableMassAction = true;
-    /**
-     * @var bool
-     */
-    private $enableOptions = true;
-    /**
-     * @var \ACP3\Core\DataGrid\ColumnPriorityQueue
-     */
-    private $columns;
-    /**
-     * @var string|null
-     */
-    private $primaryKey;
+    private array $results = [];
+
+    private string $resourcePathEdit = '';
+
+    private string $resourcePathDelete = '';
+
+    private ?string $identifier = null;
+
+    private int $recordsPerPage = 10;
+
+    private bool $useAjax = false;
+
+    private bool $enableMassAction = true;
+
+    private bool $enableOptions = true;
+
+    private ColumnPriorityQueue $columns;
+
+    private ?string $primaryKey = null;
     /**
      * @var QueryOption[]
      */
-    private $queryOptions = [];
+    private array $queryOptions = [];
 
     public function __construct()
     {
@@ -72,6 +52,9 @@ final class Input
         return $this;
     }
 
+    /**
+     * @param array<array<string, mixed>> $results
+     */
     public function setResults(array $results): self
     {
         $this->results = $results;
@@ -128,6 +111,9 @@ final class Input
         return $this;
     }
 
+    /**
+     * @param array<string, mixed> $columnData
+     */
     public function addColumn(array $columnData, int $priority): self
     {
         $columnData = array_merge(
@@ -152,6 +138,11 @@ final class Input
         return $this;
     }
 
+    /**
+     * @return array<array<string, mixed>>
+     *
+     * @throws DBALException
+     */
     public function getResults(): array
     {
         if (empty($this->results) && $this->repository instanceof AbstractDataGridRepository) {
@@ -161,6 +152,9 @@ final class Input
         return $this->results;
     }
 
+    /**
+     * @throws DBALException
+     */
     public function getResultsCount(): int
     {
         if ($this->repository instanceof AbstractDataGridRepository) {
@@ -233,7 +227,7 @@ final class Input
     }
 
     /**
-     * @return \ACP3\Core\DataGrid\QueryOption[]
+     * @return QueryOption[]
      */
     public function getQueryOptions(): array
     {

@@ -18,6 +18,8 @@ class Alerts
     /**
      * Allows to display a confirmation box.
      * The method's return value is the rendered confirmation box.
+     *
+     * @param array{url: string, lang: string}|string $forward
      */
     public function confirmBox(string $text, array|string $forward = '', string $backward = '', bool $overlay = false): string
     {
@@ -42,6 +44,8 @@ class Alerts
     /**
      * Allows to display a confirmation box, where the forward button triggers a form submit using POST.
      * The method's return value is the rendered confirmation box.
+     *
+     * @param array<mixed, mixed> $data
      */
     public function confirmBoxPost(string $text, array $data, string $forward, string $backward = ''): string
     {
@@ -65,6 +69,8 @@ class Alerts
 
     /**
      * Returns the pretty printed form errors.
+     *
+     * @param array<string, string>|string $errors
      */
     public function errorBox(array|string $errors): string
     {
@@ -73,6 +79,9 @@ class Alerts
         return $this->view->fetchTemplate('System/Alerts/error_box.tpl');
     }
 
+    /**
+     * @param array<string, string>|string $errors
+     */
     protected function setErrorBoxData(array|string $errors): void
     {
         $hasNonIntegerKeys = false;
@@ -100,6 +109,11 @@ class Alerts
         }
     }
 
+    /**
+     * @param array<string, string>|string $errors
+     *
+     * @return array<string, string>
+     */
     protected function prepareErrorBoxData(array|string $errors): array
     {
         if (\is_string($errors) && ($data = @unserialize($errors, ['allowed_classes' => true])) !== false) {
@@ -107,7 +121,7 @@ class Alerts
         }
 
         if (\is_array($errors) === false) {
-            $errors = (array) $errors;
+            $errors = [$errors];
         }
 
         return $errors;

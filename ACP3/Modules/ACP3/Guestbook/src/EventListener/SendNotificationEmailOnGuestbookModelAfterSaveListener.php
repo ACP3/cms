@@ -22,7 +22,7 @@ class SendNotificationEmailOnGuestbookModelAfterSaveListener implements EventSub
     {
     }
 
-    public function __invoke(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event): void
     {
         if (!$event->isIsNewEntry()) {
             return;

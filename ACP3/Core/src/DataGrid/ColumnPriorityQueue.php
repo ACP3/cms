@@ -7,12 +7,10 @@
 
 namespace ACP3\Core\DataGrid;
 
+/** @extends \SplPriorityQueue<mixed, array<string, mixed>> */
 class ColumnPriorityQueue extends \SplPriorityQueue
 {
-    /**
-     * @var int
-     */
-    protected $serial = PHP_INT_MAX;
+    private int $serial = PHP_INT_MAX;
 
     /**
      * {@inheritdoc}
@@ -22,5 +20,15 @@ class ColumnPriorityQueue extends \SplPriorityQueue
     public function insert($value, $priority): bool
     {
         return parent::insert($value, [$priority, $this->serial--]);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return array<string, mixed>
+     */
+    public function current(): array
+    {
+        return parent::current();
     }
 }

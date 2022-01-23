@@ -10,6 +10,8 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Gallery;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
@@ -23,7 +25,10 @@ class Delete extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
-    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    /**
+     * @return array<string, mixed>|JsonResponse|RedirectResponse
+     */
+    public function __invoke(?string $action = null): array|JsonResponse|RedirectResponse
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

@@ -22,6 +22,10 @@ class AdminGalleryPictureEditViewProvider
     }
 
     /**
+     * @param array<string, mixed> $picture
+     *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $picture): array
@@ -53,6 +57,8 @@ class AdminGalleryPictureEditViewProvider
     }
 
     /**
+     * @return array<string, string>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function getGalleries(): array

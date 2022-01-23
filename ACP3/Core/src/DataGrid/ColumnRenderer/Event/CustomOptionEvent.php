@@ -12,6 +12,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CustomOptionEvent extends Event
 {
+    /**
+     * @param array<string, mixed> $dbResultRow
+     */
     public function __construct(private OptionRenderer $optionRenderer, private array $dbResultRow, private string $identifier)
     {
     }
@@ -21,6 +24,9 @@ class CustomOptionEvent extends Event
         return $this->optionRenderer;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getDbResultRow(): array
     {
         return $this->dbResultRow;

@@ -106,6 +106,8 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
 
     /**
      * Renders the given template with its variables and returns it as a Response object.
+     *
+     * @param array<string, mixed> $templateVariables
      */
     protected function renderTemplate(?string $template, array $templateVariables): Response
     {

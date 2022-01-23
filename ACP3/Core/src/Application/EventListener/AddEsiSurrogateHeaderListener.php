@@ -17,7 +17,7 @@ class AddEsiSurrogateHeaderListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(ControllerActionAfterDispatchEvent $event)
+    public function __invoke(ControllerActionAfterDispatchEvent $event): void
     {
         $response = $event->getResponse();
 

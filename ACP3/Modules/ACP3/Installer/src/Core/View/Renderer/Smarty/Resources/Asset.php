@@ -25,7 +25,7 @@ class Asset extends AbstractResource
      * @param string $source template source
      * @param int    $mtime  template modification timestamp (epoch)
      */
-    protected function fetch($name, &$source, &$mtime)
+    protected function fetch($name, &$source, &$mtime): void
     {
         $asset = $this->fileResolver->resolveTemplatePath($name);
 
@@ -45,7 +45,7 @@ class Asset extends AbstractResource
      *
      * @throws \Exception
      */
-    public function process(\Smarty_Internal_Template $_smarty_tpl)
+    public function process(\Smarty_Internal_Template $_smarty_tpl): void
     {
         $compiled = &$_smarty_tpl->compiled;
         $compiled->file_dependency = [];
@@ -79,7 +79,7 @@ class Asset extends AbstractResource
      * @param \Smarty_Template_Compiled $compiled  compiled object
      * @param \Smarty_Internal_Template $_template template object
      */
-    public function populateCompiledFilepath(\Smarty_Template_Compiled $compiled, \Smarty_Internal_Template $_template)
+    public function populateCompiledFilepath(\Smarty_Template_Compiled $compiled, \Smarty_Internal_Template $_template): void
     {
         /* @phpstan-ignore-next-line */
         $compiled->filepath = false;
@@ -89,10 +89,8 @@ class Asset extends AbstractResource
 
     /**
      * Disable timestamp checks for recompiled resource.
-     *
-     * @return bool
      */
-    public function checkTimestamps()
+    public function checkTimestamps(): bool
     {
         return false;
     }

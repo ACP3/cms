@@ -13,9 +13,9 @@ use ACP3\Core\Router\RouterInterface;
 class OptionRenderer
 {
     /**
-     * @var array
+     * @var string[]
      */
-    private $options = [];
+    private array $options = [];
 
     public function __construct(private RouterInterface $router, private Icon $icon)
     {
@@ -37,6 +37,9 @@ class OptionRenderer
         $this->options[] = $value;
     }
 
+    /**
+     * @return string[]
+     */
     public function getOptions(): array
     {
         return $this->options;

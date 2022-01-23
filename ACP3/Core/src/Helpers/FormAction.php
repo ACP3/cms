@@ -20,7 +20,9 @@ class FormAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|string
+     *
+     * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
     public function handlePostAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
@@ -60,7 +62,7 @@ class FormAction
     }
 
     /**
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array<string, mixed>|JsonResponse|RedirectResponse
      */
     public function handleDeleteAction(
         ?string $action,
@@ -80,6 +82,9 @@ class FormAction
         );
     }
 
+    /**
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
+     */
     public function handleCustomDeleteAction(
         ?string $action,
         callable $callback,
@@ -104,7 +109,9 @@ class FormAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|string
+     *
+     * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
     public function handleDuplicateAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
@@ -117,7 +124,9 @@ class FormAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|string
+     *
+     * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
     public function handleSettingsPostAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
@@ -130,7 +139,9 @@ class FormAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|string
+     *
+     * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
     public function handleSaveAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
@@ -164,6 +175,9 @@ class FormAction
         );
     }
 
+    /**
+     * @return string[]
+     */
     private function generateDefaultConfirmationBoxUris(?string $moduleConfirmUrl, ?string $moduleIndexUrl): array
     {
         if ($moduleConfirmUrl === null) {
@@ -178,7 +192,7 @@ class FormAction
     }
 
     /**
-     * helper function for deleting a result set.
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
      */
     private function deleteItem(?string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null): array|JsonResponse|RedirectResponse|Response
     {
@@ -227,6 +241,9 @@ class FormAction
         return [];
     }
 
+    /**
+     * @param array<string|int> $entries
+     */
     private function prepareConfirmationBoxText(array $entries): string
     {
         $entriesCount = \count($entries);

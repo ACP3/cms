@@ -13,9 +13,9 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class ResultsPerPage
 {
     /**
-     * @var array
+     * @var array<string, int>
      */
-    private $resultsPerPage = [];
+    private array $resultsPerPage = [];
 
     public function __construct(private SettingsInterface $settings)
     {

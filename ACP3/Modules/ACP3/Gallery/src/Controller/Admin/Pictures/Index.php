@@ -10,6 +10,8 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 use ACP3\Core;
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Modules\ACP3\Gallery;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends AbstractWidgetAction
 {
@@ -22,11 +24,11 @@ class Index extends AbstractWidgetAction
     }
 
     /**
-     * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return array<string, array<string, mixed>>|JsonResponse
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
-    public function __invoke(int $id): array|\Symfony\Component\HttpFoundation\JsonResponse
+    public function __invoke(int $id): array|JsonResponse
     {
         $gallery = $this->galleryModel->getOneById($id);
 

@@ -11,11 +11,11 @@ use ACP3\Core\Modules\ModuleRegistration;
 
 class ComponentDataDto
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
+    /**
+     * @param string[] $dependencies
+     */
     public function __construct(
         private string $componentType,
         string $componentName,
@@ -44,6 +44,9 @@ class ComponentDataDto
         return $this->path;
     }
 
+    /**
+     * @return string[]
+     */
     public function getDependencies(): array
     {
         return $this->dependencies;

@@ -71,6 +71,9 @@ class OptionColumnRenderer extends AbstractColumnRenderer
         return $value . '</div>';
     }
 
+    /**
+     * @param array<string, mixed> $dbResultRow
+     */
     private function getEditRoute(array $dbResultRow, string $resourcePathEdit): string
     {
         if (!str_contains($resourcePathEdit, '%s')) {

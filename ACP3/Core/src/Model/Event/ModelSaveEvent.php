@@ -12,9 +12,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 class ModelSaveEvent extends Event
 {
     /**
-     * @param int|array|null $entryId
+     * @param array<string, mixed>               $filteredData
+     * @param array<string, mixed>               $rawData
+     * @param int|array<string, string|int>|null $entryId
+     * @param array<string, mixed>|null          $currentData
      */
-    public function __construct(private string $moduleName, private array $filteredData, private array $rawData, private $entryId, private bool $isNewEntry, private bool $hasDataChanges, private string $tableName, private ?array $currentData)
+    public function __construct(private string $moduleName, private array $filteredData, private array $rawData, private array|int|null $entryId, private bool $isNewEntry, private bool $hasDataChanges, private string $tableName, private ?array $currentData)
     {
     }
 
@@ -23,25 +26,34 @@ class ModelSaveEvent extends Event
         return $this->moduleName;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getData(): array
     {
         return $this->filteredData;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getRawData(): array
     {
         return $this->rawData;
     }
 
-    public function getCurrentData(): array
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function getCurrentData(): ?array
     {
         return $this->currentData;
     }
 
     /**
-     * @return int|array|null
+     * @return int|array<string, string|int>|null
      */
-    public function getEntryId()
+    public function getEntryId(): int|array|null
     {
         return $this->entryId;
     }

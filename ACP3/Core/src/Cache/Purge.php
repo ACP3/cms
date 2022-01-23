@@ -11,6 +11,9 @@ use ACP3\Core\Filesystem;
 
 class Purge
 {
+    /**
+     * @param string[]|string $directory
+     */
     public static function doPurge(array|string $directory, string $cacheIdPrefix = ''): bool
     {
         if (\is_array($directory)) {
@@ -22,6 +25,9 @@ class Purge
         return true;
     }
 
+    /**
+     * @param string[] $directories
+     */
     private static function handleMultipleDirectories(array $directories, string $cacheIdPrefix): bool
     {
         foreach ($directories as $directory) {

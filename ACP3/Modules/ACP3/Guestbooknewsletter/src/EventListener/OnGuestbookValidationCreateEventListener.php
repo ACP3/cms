@@ -22,7 +22,7 @@ class OnGuestbookValidationCreateEventListener implements EventSubscriberInterfa
     {
     }
 
-    public function __invoke(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event): void
     {
         if (!$this->modules->isInstalled(NewsletterSchema::MODULE_NAME) || !$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;

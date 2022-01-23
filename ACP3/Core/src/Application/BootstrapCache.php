@@ -25,6 +25,8 @@ class BootstrapCache extends HttpCache implements CacheInvalidation
 
     /**
      * {@inheritdoc}
+     *
+     * @param array<string, mixed> $options
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,

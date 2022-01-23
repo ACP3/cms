@@ -18,6 +18,12 @@ class Connection
 {
     private ?DBAL\Connection $connection = null;
 
+    /**
+     * @param LoggerInterface      $logger
+     * @param string               $appMode
+     * @param array<string, mixed> $connectionParams
+     * @param string               $tablePrefix
+     */
     public function __construct(private LoggerInterface $logger, private string $appMode, private array $connectionParams, private string $tablePrefix)
     {
     }
@@ -74,7 +80,10 @@ class Connection
     }
 
     /**
+     * @param mixed[]                                                              $params
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     *
+     * @return array<array<string, mixed>>
      *
      * @throws \Doctrine\DBAL\Exception
      */
@@ -94,7 +103,10 @@ class Connection
     }
 
     /**
+     * @param mixed[]                                                              $params
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     *
+     * @return array<string, mixed>
      *
      * @throws \Doctrine\DBAL\Exception
      */
@@ -106,6 +118,7 @@ class Connection
     }
 
     /**
+     * @param mixed[]                                                              $params
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
      *
      * @throws \Doctrine\DBAL\Exception
@@ -116,6 +129,7 @@ class Connection
     }
 
     /**
+     * @param mixed[]                                                              $params
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
      *
      * @throws \Doctrine\DBAL\Exception

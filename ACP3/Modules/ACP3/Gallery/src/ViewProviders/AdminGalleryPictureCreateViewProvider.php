@@ -20,6 +20,8 @@ class AdminGalleryPictureCreateViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $galleryId): array

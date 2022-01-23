@@ -22,6 +22,8 @@ class GalleryListViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */
@@ -42,8 +44,10 @@ class GalleryListViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>
+     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws \Doctrine\DBAL\Exception
      */
     private function getGalleries(string $time, int $resultsPerPage): array
     {

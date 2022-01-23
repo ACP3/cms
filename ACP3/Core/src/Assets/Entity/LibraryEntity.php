@@ -9,15 +9,15 @@ namespace ACP3\Core\Assets\Entity;
 
 final class LibraryEntity
 {
-    /**
-     * @var bool
-     */
-    private $enabled = false;
-    /**
-     * @var string
-     */
-    private $moduleName;
+    private bool $enabled = false;
 
+    private string $moduleName;
+
+    /**
+     * @param string[] $dependencies
+     * @param string[] $css
+     * @param string[] $js
+     */
     public function __construct(
         private string $libraryIdentifier,
         private bool $enabledForAjax = true,
@@ -56,16 +56,25 @@ final class LibraryEntity
         return $this->enabledForAjax;
     }
 
+    /**
+     * @return string[]
+     */
     public function getDependencies(): array
     {
         return $this->dependencies;
     }
 
+    /**
+     * @return string[]
+     */
     public function getCss(): array
     {
         return $this->css;
     }
 
+    /**
+     * @return string[]
+     */
     public function getJs(): array
     {
         return $this->js;

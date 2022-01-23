@@ -13,14 +13,16 @@ use ACP3\Core\Validation\AbstractFormValidation;
 class AdminFormValidation extends AbstractFormValidation
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $settings = [];
+    protected array $settings = [];
 
     /**
-     * @return $this
+     * @param array<string, mixed> $settings
+     *
+     * @return static
      */
-    public function setSettings(array $settings)
+    public function setSettings(array $settings): self
     {
         $this->settings = $settings;
 

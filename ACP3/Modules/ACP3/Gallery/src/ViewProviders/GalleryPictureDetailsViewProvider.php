@@ -26,6 +26,8 @@ class GalleryPictureDetailsViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */

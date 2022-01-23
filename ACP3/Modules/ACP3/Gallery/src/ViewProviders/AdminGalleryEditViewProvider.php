@@ -19,6 +19,11 @@ class AdminGalleryEditViewProvider
     {
     }
 
+    /**
+     * @param array<string, mixed> $gallery
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(array $gallery): array
     {
         $this->title->setPageTitlePrefix($gallery['title']);

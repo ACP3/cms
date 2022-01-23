@@ -62,6 +62,8 @@ class PictureRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getPicturesByGalleryId(int $galleryId): array

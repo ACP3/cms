@@ -21,6 +21,9 @@ class AdminSettingsViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $settings = $this->settings->getSettings(GuestbookSchema::MODULE_NAME);

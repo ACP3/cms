@@ -10,10 +10,15 @@ namespace ACP3\Core;
 class Filesystem
 {
     /**
-     * @var array
+     * @var string[]
      */
-    private static $excluded = ['.', '..', '.git', '.gitignore', '.svn', '.htaccess', '.htpasswd'];
+    private static array $excluded = ['.', '..', '.git', '.gitignore', '.svn', '.htaccess', '.htpasswd'];
 
+    /**
+     * @param string[] $excluded
+     *
+     * @return string[]
+     */
     public static function scandir(string $directory, array $excluded = []): array
     {
         $scannedDirectory = @scandir($directory);

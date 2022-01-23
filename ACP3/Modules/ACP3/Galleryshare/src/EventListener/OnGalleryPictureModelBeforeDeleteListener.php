@@ -23,7 +23,7 @@ class OnGalleryPictureModelBeforeDeleteListener implements EventSubscriberInterf
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event): void
     {
         if (!$this->modules->isInstalled(ShareSchema::MODULE_NAME)) {
             return;

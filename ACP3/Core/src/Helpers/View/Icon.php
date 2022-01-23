@@ -15,6 +15,9 @@ class Icon
     {
     }
 
+    /**
+     * @param array{pathOnly?: bool, cssSelectors?: string, title?: string} $options
+     */
     public function __invoke(string $iconSet, string $icon, array $options = []): string
     {
         $path = $this->fileResolver->getWebStaticAssetPath('system', 'Assets/sprites', $iconSet . '.svg');

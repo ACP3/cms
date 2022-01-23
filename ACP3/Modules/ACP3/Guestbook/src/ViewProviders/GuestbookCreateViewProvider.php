@@ -17,6 +17,9 @@ class GuestbookCreateViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         return [
@@ -25,6 +28,9 @@ class GuestbookCreateViewProvider
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function fetchFormDefaults(): array
     {
         $defaults = [

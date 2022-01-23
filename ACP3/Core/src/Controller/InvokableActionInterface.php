@@ -16,5 +16,8 @@ interface InvokableActionInterface
 {
     public function preDispatch(): void;
 
+    /**
+     * @param array<string, mixed>|string|Response|null $actionResult
+     */
     public function display(array|string|Response|null $actionResult): Response;
 }

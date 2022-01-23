@@ -28,6 +28,9 @@ class RewriteInternalUri
         );
     }
 
+    /**
+     * @param string[] $matches
+     */
     private function rewriteInternalUriCallback(array $matches): string
     {
         if ($this->internalUriValidationRule->isValid($matches[8]) === true) {
@@ -45,6 +48,9 @@ class RewriteInternalUri
         return $matches[0];
     }
 
+    /**
+     * @param string[] $resourceParts
+     */
     private function getResourcePath(array $resourceParts): string
     {
         $path = 'frontend/' . $resourceParts[0];

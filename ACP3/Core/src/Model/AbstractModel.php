@@ -53,6 +53,13 @@ abstract class AbstractModel
         return $result;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     *
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     protected function loadCurrentData(?int $entryId): ?array
     {
         if ($entryId === null) {
@@ -65,7 +72,8 @@ abstract class AbstractModel
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @param array<string, mixed>      $filteredData
+     * @param array<string, mixed>|null $currentData
      */
     protected function hasDataChanges(array $filteredData, ?array $currentData): bool
     {
@@ -110,8 +118,14 @@ abstract class AbstractModel
         );
     }
 
+    /**
+     * @param array<string, string|int>|int|null $entryId
+     * @param array<string, mixed>               $filteredData
+     * @param array<string, mixed>               $rawData
+     * @param array<string, mixed>|null          $currentData
+     */
     protected function createModelSaveEvent(
-        $entryId,
+        array|int|null $entryId,
         bool $isNewEntry,
         bool $hasDataChanges,
         array $filteredData = [],
@@ -131,6 +145,9 @@ abstract class AbstractModel
     }
 
     /**
+     * @param array<string, mixed>      $rawData
+     * @param array<string, mixed>|null $currentData
+     *
      * @return array<string, mixed>
      *
      * @throws \Doctrine\DBAL\Exception
@@ -174,6 +191,8 @@ abstract class AbstractModel
     }
 
     /**
+     * @param array<string, mixed> $filteredNewData
+     *
      * @return int[]
      *
      * @throws \Doctrine\DBAL\Exception

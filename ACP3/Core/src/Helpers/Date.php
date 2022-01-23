@@ -17,6 +17,8 @@ class Date
 
     /**
      * Liefert ein Array mit allen Zeitzonen dieser Welt aus.
+     *
+     * @return array<string, array<string, mixed>>
      */
     public function getTimeZones(?string $currentValue = ''): array
     {
@@ -34,13 +36,13 @@ class Date
             'UTC' => \DateTimeZone::listIdentifiers(\DateTimeZone::UTC),
         ];
 
-        foreach ($timeZones as $key => $values) {
+        foreach ($timeZones as $key => $timeZoneIdentifiers) {
             $i = 0;
-            foreach ($values as $row) {
+            foreach ($timeZoneIdentifiers as $timeZoneIdentifier) {
                 unset($timeZones[$key][$i]);
-                $timeZones[$key][$row]['selected'] = $this->formsHelper->selectEntry(
+                $timeZones[$key][$timeZoneIdentifier]['selected'] = $this->formsHelper->selectEntry(
                     'date_time_zone',
-                    $row,
+                    $timeZoneIdentifier,
                     $currentValue
                 );
                 ++$i;
@@ -53,6 +55,8 @@ class Date
     /**
      * Gibt ein Array mit den möglichen Datumsformaten zurück,
      * um diese als Dropdown-Menü darstellen zu können.
+     *
+     * @return array<string, mixed>[]
      */
     public function dateFormatDropdown(string $currentDateFormat = ''): array
     {

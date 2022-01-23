@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
  */
 class Bootstrap extends AbstractBootstrap
 {
-    private $containerName = 'ACP3ServiceContainer';
+    private string $containerName = 'ACP3ServiceContainer';
 
     /**
      * {@inheritdoc}

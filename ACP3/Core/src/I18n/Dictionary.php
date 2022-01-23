@@ -73,6 +73,9 @@ class Dictionary implements DictionaryInterface
         return $data;
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function parseI18nFile(string $i18nFile, string $moduleName): array
     {
         $data = [];
@@ -124,6 +127,8 @@ class Dictionary implements DictionaryInterface
     }
 
     /**
+     * @return array{iso: string, name: string}
+     *
      * @throws DomainException
      */
     private function getLanguagePack(string $languageIsoCode): array

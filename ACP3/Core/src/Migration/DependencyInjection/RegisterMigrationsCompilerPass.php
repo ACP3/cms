@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterMigrationsCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $migrationLocator = $container->findDefinition(MigrationServiceLocator::class);
 

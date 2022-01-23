@@ -16,9 +16,9 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
     protected const ASSETS_PATH_CSS = 'Assets/css';
 
     /**
-     * @var array|null
+     * @var string[]|null
      */
-    private $stylesheets;
+    private ?array $stylesheets;
 
     public function __construct(private Assets $assets, private Libraries $libraries, private FileResolver $fileResolver)
     {

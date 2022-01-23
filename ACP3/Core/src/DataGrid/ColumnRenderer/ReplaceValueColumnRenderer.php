@@ -10,13 +10,13 @@ namespace ACP3\Core\DataGrid\ColumnRenderer;
 class ReplaceValueColumnRenderer extends AbstractColumnRenderer
 {
     /**
-     * @var array
+     * @var string[]
      */
-    private $search = [];
+    private array $search = [];
     /**
-     * @var array
+     * @var string[]
      */
-    private $replace = [];
+    private array $replace = [];
 
     /**
      * {@inheritdoc}

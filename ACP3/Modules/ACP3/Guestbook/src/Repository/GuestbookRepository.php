@@ -35,6 +35,8 @@ class GuestbookRepository extends Core\Repository\AbstractRepository implements 
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(?int $notify = null, ?int $limitStart = null, ?int $resultsPerPage = null): array

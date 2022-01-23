@@ -23,6 +23,8 @@ class ModuleInstaller
     }
 
     /**
+     * @return array<string, bool>
+     *
      * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
@@ -37,7 +39,7 @@ class ModuleInstaller
     }
 
     /**
-     * @return array<string, boolean>
+     * @return array<string, bool>
      *
      * @throws ModuleInstallerException
      * @throws \MJS\TopSort\CircularDependencyException

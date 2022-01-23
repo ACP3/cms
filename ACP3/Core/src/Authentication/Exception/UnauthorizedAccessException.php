@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UnauthorizedAccessException extends \RuntimeException implements ForwardControllerActionAwareExceptionInterface
 {
+    /**
+     * @param array<string, mixed> $routeArguments
+     */
     public function __construct(
         private array $routeArguments = [],
         string $message = '',
@@ -28,6 +31,9 @@ class UnauthorizedAccessException extends \RuntimeException implements ForwardCo
         return 'users.controller.frontend.index.login';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function routeParams(): array
     {
         return $this->routeArguments;

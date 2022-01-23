@@ -12,11 +12,13 @@ use ReflectionClass;
 class BaseEnum
 {
     /**
-     * @var array|null
+     * @var array<string, string[]>|null
      */
-    private static $constCacheArray;
+    private static ?array $constCacheArray = null;
 
     /**
+     * @return string[]
+     *
      * @throws \ReflectionException
      */
     protected static function getConstants(): array
@@ -50,11 +52,9 @@ class BaseEnum
     }
 
     /**
-     * @param mixed $value
-     *
      * @throws \ReflectionException
      */
-    public static function isValidValue($value, bool $strict = true): bool
+    public static function isValidValue(mixed $value, bool $strict = true): bool
     {
         $values = array_values(self::getConstants());
 

@@ -28,6 +28,9 @@ class InstallModel
     {
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     public function writeConfigFile(string $configFilePath, array $formData): void
     {
         $configParams = [
@@ -81,6 +84,8 @@ class InstallModel
 
     /**
      * Set the module settings.
+     *
+     * @param array<string, mixed> $formData
      */
     public function configureModules(array $formData): void
     {
@@ -108,6 +113,8 @@ class InstallModel
     }
 
     /**
+     * @param array<string, mixed> $formData
+     *
      * @throws \Exception
      */
     public function createSuperUser(array $formData): void

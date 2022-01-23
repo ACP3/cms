@@ -21,9 +21,9 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     protected const ASSETS_PATH_CSS = 'Assets/css';
 
     /**
-     * @var array
+     * @var string[]
      */
-    protected $stylesheets = [];
+    protected array $stylesheets = [];
 
     public function __construct(
         private Minifier $minifier,

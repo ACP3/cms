@@ -22,8 +22,7 @@ class GalleryPictureListViewProvider
     }
 
     /**
-     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>
      */
     public function __invoke(int $galleryId): array
     {

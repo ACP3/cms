@@ -27,6 +27,9 @@ class Install extends AbstractAction
         parent::__construct($context, $navigation);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         return [
@@ -36,6 +39,9 @@ class Install extends AbstractAction
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getFormDefaults(): array
     {
         return [
@@ -51,6 +57,9 @@ class Install extends AbstractAction
         ];
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     protected function getThemeFormOptions(): array
     {
         $themes = $this->theme->getAvailableThemes();

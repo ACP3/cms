@@ -27,6 +27,8 @@ class ControllerActionDispatcher
     }
 
     /**
+     * @param array<string, mixed> $arguments
+     *
      * @throws ControllerActionNotFoundException
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ReflectionException
@@ -97,6 +99,9 @@ class ControllerActionDispatcher
             . '.' . $this->request->getAction();
     }
 
+    /**
+     * @param array<string, mixed> $arguments
+     */
     private function modifyRequest(string $serviceId, array $arguments): void
     {
         [$module, , , $controller, $action] = explode('.', $serviceId);
@@ -118,12 +123,14 @@ class ControllerActionDispatcher
     }
 
     /**
-     * @return array|Response|string|void|null
+     * @param array<string, mixed> $arguments
+     *
+     * @return array<string, mixed>|Response|string|null
      *
      * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
      * @throws \ReflectionException
      */
-    private function executeControllerAction(InvokableActionInterface $action, array $arguments)
+    private function executeControllerAction(InvokableActionInterface $action, array $arguments): array|Response|string|null
     {
         if (empty($arguments)) {
             try {

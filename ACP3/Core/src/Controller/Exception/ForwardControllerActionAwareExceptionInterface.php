@@ -14,5 +14,8 @@ interface ForwardControllerActionAwareExceptionInterface extends \Throwable
      */
     public function getServiceId(): string;
 
+    /**
+     * @return array<string, string>
+     */
     public function routeParams(): array;
 }

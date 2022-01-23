@@ -82,11 +82,18 @@ trait SortingAwareTrait
 
     abstract protected function dispatchAfterSaveEvent(AbstractRepository $repository, ModelSaveEvent $event): void;
 
+    /**
+     * @param array<string, string|int>|int|null $entryId
+     * @param array<string, mixed>               $filteredData
+     * @param array<string, mixed>               $rawData
+     * @param array<string, mixed>|null          $currentData
+     */
     abstract protected function createModelSaveEvent(
-        $entryId,
+        array|int|null $entryId,
         bool $isNewEntry,
         bool $hasDataChanges,
         array $filteredData = [],
-        array $rawData = []
+        array $rawData = [],
+        ?array $currentData = null
     ): ModelSaveEvent;
 }

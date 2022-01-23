@@ -65,6 +65,13 @@ class DataGrid
             && $this->request->getParameters()->get('ajax', '') === substr($input->getIdentifier(), 1);
     }
 
+    /**
+     * @return array<array<string|array<string, mixed>>>
+     *
+     * @throws \Doctrine\DBAL\Exception
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     private function mapTableColumnsToDbFieldsAjax(Input $input): array
     {
         $renderedResults = [];

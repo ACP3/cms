@@ -22,7 +22,7 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
         $this->setLanguage();
 
@@ -63,6 +63,8 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
 
     /**
      * Generiert das Dropdown-Menü mit den zur Verfügung stehenden Installersprachen.
+     *
+     * @return array<string, mixed>[]
      */
     private function languagesDropdown(string $selectedLanguage): array
     {

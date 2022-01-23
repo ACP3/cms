@@ -17,6 +17,8 @@ class AreaEnum extends BaseEnum
     public const AREA_WIDGET = 'widget';
 
     /**
+     * @return string[]
+     *
      * @throws \ReflectionException
      */
     public static function getAreas(): array

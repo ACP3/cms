@@ -16,7 +16,7 @@ class RegisterColumnRendererPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $serviceLocator = $container->findDefinition('core.data_grid.column_renderer_locator');
 

@@ -12,18 +12,15 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Translator
 {
+    private ?string $locale = null;
     /**
-     * @var string|null
+     * @var array<string, array{iso: string, name: string}>|null
      */
-    private $locale;
+    private ?array $languagePacks = null;
     /**
-     * @var array
+     * @var array{info: array<string, string>, keys: array<string, string>}|null
      */
-    private $languagePacks = [];
-    /**
-     * @var array
-     */
-    private $buffer = [];
+    private ?array $buffer = null;
 
     public function __construct(private DictionaryInterface $dictionary, private SettingsInterface $settings)
     {
@@ -34,7 +31,7 @@ class Translator
      */
     public function languagePackExists(string $locale): bool
     {
-        if (empty($this->languagePacks)) {
+        if ($this->languagePacks === null) {
             $this->languagePacks = $this->dictionary->getLanguagePacks();
         }
 
@@ -78,6 +75,9 @@ class Translator
         return $this->buffer[$this->getLocale()]['info']['direction'] ?? 'ltr';
     }
 
+    /**
+     * @param array<string, mixed> $arguments
+     */
     public function t(string $module, string $phrase, array $arguments = []): string
     {
         if (isset($this->buffer[$this->getLocale()]) === false) {
@@ -94,10 +94,12 @@ class Translator
 
     /**
      * Gets all currently available languages.
+     *
+     * @return array<string, array{iso: string, name: string}>
      */
     public function getLanguagePacks(): array
     {
-        if (empty($this->languagePacks)) {
+        if ($this->languagePacks === null) {
             $this->languagePacks = $this->dictionary->getLanguagePacks();
         }
 

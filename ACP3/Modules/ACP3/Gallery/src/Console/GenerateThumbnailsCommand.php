@@ -34,7 +34,7 @@ class GenerateThumbnailsCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('acp3:gallery:generate-thumbnails')
@@ -53,7 +53,7 @@ class GenerateThumbnailsCommand extends Command
      * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Generating the gallery picture thumbnails...');
@@ -94,7 +94,7 @@ class GenerateThumbnailsCommand extends Command
     /**
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
-    private function generateThumbnails(string $pictureFileName)
+    private function generateThumbnails(string $pictureFileName): void
     {
         $this->generateThumbnail($pictureFileName, 'thumb');
         $this->generateThumbnail($pictureFileName, '');

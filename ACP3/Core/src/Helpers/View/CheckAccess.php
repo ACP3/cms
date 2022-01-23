@@ -18,6 +18,11 @@ class CheckAccess
     {
     }
 
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @return array<string, mixed>|string
+     */
     public function outputLinkOrButton(array $params): array|string
     {
         if (isset($params['mode'], $params['path'])) {
@@ -40,6 +45,9 @@ class CheckAccess
         return '';
     }
 
+    /**
+     * @return string[]
+     */
     private function completeControllerAction(string $path): array
     {
         $action = [];
@@ -70,6 +78,12 @@ class CheckAccess
         return AreaEnum::AREA_FRONTEND;
     }
 
+    /**
+     * @param array<string, mixed> $params
+     * @param string[]             $action
+     *
+     * @return array<string, mixed>
+     */
     private function collectData(array $params, array $action, string $area): array
     {
         if (isset($params['lang'])) {

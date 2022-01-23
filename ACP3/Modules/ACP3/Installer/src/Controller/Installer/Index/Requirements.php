@@ -21,6 +21,12 @@ class Requirements extends AbstractAction
         parent::__construct($context, $navigation);
     }
 
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws \MJS\TopSort\CircularDependencyException
+     * @throws \MJS\TopSort\ElementNotFoundException
+     */
     public function __invoke(): array
     {
         [$requirements, $stopInstall] = $this->requirementsHelpers->checkMandatoryRequirements();

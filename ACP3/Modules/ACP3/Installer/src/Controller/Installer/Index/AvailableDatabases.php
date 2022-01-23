@@ -53,6 +53,9 @@ class AvailableDatabases extends AbstractWidgetAction
         }
     }
 
+    /**
+     * @return string[]
+     */
     private function retrieveAvailableDatabases(Connection $conn): array
     {
         $availableDatabases = [];
@@ -70,6 +73,9 @@ class AvailableDatabases extends AbstractWidgetAction
         return array_values(array_diff($availableDatabases, $this->getMySQLDefaultDatabases()));
     }
 
+    /**
+     * @return string[]
+     */
     private function getMySQLDefaultDatabases(): array
     {
         return ['information_schema', 'performance_schema', 'mysql', 'test'];

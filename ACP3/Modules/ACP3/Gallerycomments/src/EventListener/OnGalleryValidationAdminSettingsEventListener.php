@@ -21,7 +21,7 @@ class OnGalleryValidationAdminSettingsEventListener implements EventSubscriberIn
     {
     }
 
-    public function __invoke(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event): void
     {
         if (!$this->modules->isInstalled(CommentsSchema::MODULE_NAME) || !$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;

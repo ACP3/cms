@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterCacheItemPoolsPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $service = $container->findDefinition('core.cache.cache_pool_service_locator');
 

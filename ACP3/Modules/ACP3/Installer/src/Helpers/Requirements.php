@@ -21,6 +21,8 @@ class Requirements
     /**
      * Checks, whether the mandatory system requirements of the ACP3 are fulfilled.
      *
+     * @return array{array<array<string, mixed>>, bool}
+     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -69,6 +71,8 @@ class Requirements
 
     /**
      * Checks, whether all mandatory files and folders exist and have the correct permissions set.
+     *
+     * @return array{array<array<string, mixed>>, bool}
      */
     public function checkFolderAndFilePermissions(): array
     {
@@ -89,6 +93,9 @@ class Requirements
         return [$requiredFilesAndDirs, $checkAgain];
     }
 
+    /**
+     * @return array<array<string, mixed>>
+     */
     public function checkOptionalRequirements(): array
     {
         return [
@@ -100,6 +107,9 @@ class Requirements
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function requiredFileOrFolderHasPermission(string $fileOrDirectory, string $type): array
     {
         $path = ACP3_ROOT_DIR . DIRECTORY_SEPARATOR . $fileOrDirectory;
@@ -117,6 +127,9 @@ class Requirements
         return $result;
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function fetchRequiredFilesAndDirectories(): array
     {
         return [
@@ -127,6 +140,11 @@ class Requirements
         ];
     }
 
+    /**
+     * @param array<array<string, mixed>> $modules
+     *
+     * @throws \JsonException
+     */
     private function getRequiredPHPVersion(array $modules): ?string
     {
         $minimumPHPVersion = null;
@@ -161,6 +179,13 @@ class Requirements
         return $minimumPHPVersion;
     }
 
+    /**
+     * @param array<array<string, mixed>> $modules
+     *
+     * @return string[]
+     *
+     * @throws \JsonException
+     */
     private function getRequiredPHPExtensions(array $modules): array
     {
         $extensions = [];

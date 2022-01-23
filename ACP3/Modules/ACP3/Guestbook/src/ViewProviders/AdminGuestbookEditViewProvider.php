@@ -20,6 +20,11 @@ class AdminGuestbookEditViewProvider
     {
     }
 
+    /**
+     * @param array<string, mixed> $guestbookEntry
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(array $guestbookEntry): array
     {
         $settings = $this->settings->getSettings(GuestbookSchema::MODULE_NAME);

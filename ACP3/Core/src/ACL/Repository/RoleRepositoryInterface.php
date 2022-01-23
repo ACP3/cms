@@ -12,7 +12,7 @@ use ACP3\Core\Repository\RepositoryInterface;
 interface RoleRepositoryInterface extends RepositoryInterface
 {
     /**
-     * @return array
+     * @return array<array<string, mixed>>
      */
-    public function getAllRoles();
+    public function getAllRoles(): array;
 }
