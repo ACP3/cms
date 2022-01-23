@@ -34,7 +34,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 

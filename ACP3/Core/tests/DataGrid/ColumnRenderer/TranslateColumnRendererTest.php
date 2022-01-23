@@ -8,10 +8,14 @@
 namespace ACP3\Core\DataGrid\ColumnRenderer;
 
 use ACP3\Core\I18n\Translator;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class TranslateColumnRendererTest extends AbstractColumnRendererTest
 {
-    protected $langMock;
+    /**
+     * @var Translator|MockObject
+     */
+    private $langMock;
 
     protected function setup(): void
     {
@@ -22,11 +26,7 @@ class TranslateColumnRendererTest extends AbstractColumnRendererTest
         parent::setUp();
     }
 
-    /**
-     * @param string $langKey
-     * @param string $langValue
-     */
-    private function setUpLangMockExpectation($langKey, $langValue)
+    private function setUpLangMockExpectation(string $langKey, string $langValue): void
     {
         $this->langMock->expects(self::once())
             ->method('t')

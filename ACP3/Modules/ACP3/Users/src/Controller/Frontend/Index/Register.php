@@ -11,6 +11,8 @@ use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Users;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Register extends Core\Controller\AbstractWidgetAction
 {
@@ -25,7 +27,10 @@ class Register extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
-    public function __invoke()
+    /**
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse
+     */
+    public function __invoke(): array|string|JsonResponse|RedirectResponse
     {
         if ($this->user->isAuthenticated() === true) {
             return $this->redirectResponse->toNewPage($this->applicationPath->getWebRoot());

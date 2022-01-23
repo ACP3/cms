@@ -22,7 +22,7 @@ class Edit extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array<string, mixed>
      */
     public function __invoke(int $id): array
     {

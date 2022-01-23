@@ -8,13 +8,18 @@
 namespace ACP3\Core\Model;
 
 use ACP3\Core\Model\DataProcessor\ColumnType\ColumnTypeStrategyInterface;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 trait CreateRawColumnTypeMockTrait
 {
-    public function getRawColumnTypeInstance(\PHPUnit\Framework\TestCase $testCase)
+    /**
+     * @return MockObject|ColumnTypeStrategyInterface
+     */
+    public function getRawColumnTypeInstance(TestCase $testCase)
     {
         return $testCase->getMockBuilder(ColumnTypeStrategyInterface::class)
-            ->setMethods(['doEscape', 'doUnescape', 'getDefaultValue'])
+            ->onlyMethods(['doEscape', 'doUnescape', 'getDefaultValue'])
             ->getMock();
     }
 }

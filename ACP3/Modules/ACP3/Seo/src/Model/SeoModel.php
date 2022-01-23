@@ -18,7 +18,7 @@ class SeoModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData = array_merge($rawData, [
             'title' => $rawData['seo_title'],

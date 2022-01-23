@@ -8,9 +8,13 @@
 namespace ACP3\Core\Date;
 
 use ACP3\Core\I18n\Translator;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class DateTranslatorTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var Translator|MockObject
+     */
     private $translatorMock;
     /**
      * @var DateTranslator
@@ -24,7 +28,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
         $this->dateTranslator = new DateTranslator($this->translatorMock);
     }
 
-    public function testAbbreviatedDaysLocalization()
+    public function testAbbreviatedDaysLocalization(): void
     {
         $expected = [
             'Mon' => '{MON}',
@@ -41,7 +45,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->dateTranslator->localize('D'));
     }
 
-    public function testFullDaysLocalization()
+    public function testFullDaysLocalization(): void
     {
         $expected = [
             'Monday' => '{MONDAY}',
@@ -58,7 +62,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->dateTranslator->localize('l'));
     }
 
-    public function testAbbreviatedMonthLocalization()
+    public function testAbbreviatedMonthLocalization(): void
     {
         $expected = [
             'Jan' => '{JAN}',
@@ -80,7 +84,7 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->dateTranslator->localize('M'));
     }
 
-    public function testFullMonthsLocalization()
+    public function testFullMonthsLocalization(): void
     {
         $expected = [
             'January' => '{JANUARY}',
@@ -103,9 +107,9 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param int $methodCallCount
+     * @param array<string, string> $data
      */
-    private function setTranslatorExpectation(array $data, $methodCallCount)
+    private function setTranslatorExpectation(array $data, int $methodCallCount): void
     {
         $translations = [];
         foreach ($data as $translation) {

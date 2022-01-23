@@ -22,7 +22,7 @@ class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterfac
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData['updated_at'] = 'now';
 

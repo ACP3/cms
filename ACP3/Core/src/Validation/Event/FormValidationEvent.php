@@ -12,6 +12,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class FormValidationEvent extends Event
 {
+    /**
+     * @param array<string, mixed> $formData
+     * @param mixed[]              $extra
+     */
     public function __construct(private Validator $validator, private array $formData, private array $extra = [])
     {
     }
@@ -29,6 +33,9 @@ class FormValidationEvent extends Event
         return $this->formData;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getExtra(): array
     {
         return $this->extra;

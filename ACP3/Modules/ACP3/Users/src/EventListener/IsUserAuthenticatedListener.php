@@ -25,7 +25,7 @@ class IsUserAuthenticatedListener implements EventSubscriberInterface
     /**
      * @throws \ACP3\Core\Authentication\Exception\UnauthorizedAccessException
      */
-    public function __invoke(ControllerActionBeforeDispatchEvent $event)
+    public function __invoke(ControllerActionBeforeDispatchEvent $event): void
     {
         if ($event->getArea() === AreaEnum::AREA_ADMIN && $this->user->isAuthenticated() === false) {
             $this->redirectMessages->setMessage(

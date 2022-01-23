@@ -13,21 +13,32 @@ use ACP3\Core\DataGrid\ColumnRenderer\TextColumnRenderer;
 use ACP3\Core\Helpers\Formatter\MarkEntries;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 
-class DataGridTest extends \PHPUnit\Framework\TestCase
+class DataGridTest extends TestCase
 {
+    /**
+     * @var RequestInterface|MockObject
+     */
     private $requestMock;
     /**
      * @var DataGrid
      */
-    protected $dataGrid;
-
-    protected $configProcessorMock;
-
-    protected $aclMock;
-
-    protected $langMock;
+    private $dataGrid;
+    /**
+     * @var ConfigProcessor|MockObject
+     */
+    private $configProcessorMock;
+    /**
+     * @var ACL|MockObject
+     */
+    private $aclMock;
+    /**
+     * @var Translator|MockObject
+     */
+    private $langMock;
     /**
      * @var Input
      */
@@ -58,6 +69,9 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
         parent::setUp();
     }
 
+    /**
+     * @return mixed[]
+     */
     protected function getDefaultExpected(): array
     {
         return [
@@ -94,7 +108,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             ->method('hasPermission')
             ->willReturn(false);
 
-        /** @var MarkEntries|\PHPUnit\Framework\MockObject\MockObject $markEntriesMock */
+        /** @var MarkEntries|MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));
@@ -128,7 +142,7 @@ class DataGridTest extends \PHPUnit\Framework\TestCase
             ->method('hasPermission')
             ->willReturn(false);
 
-        /** @var MarkEntries|\PHPUnit\Framework\MockObject\MockObject $markEntriesMock */
+        /** @var MarkEntries|MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));

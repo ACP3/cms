@@ -25,7 +25,7 @@ class MaintenanceModeEnableCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('acp3:maintenance:enable')
@@ -35,7 +35,7 @@ class MaintenanceModeEnableCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Enabling maintenance mode...');
@@ -53,7 +53,7 @@ class MaintenanceModeEnableCommand extends Command
         return 0;
     }
 
-    private function clearCaches(OutputInterface $output)
+    private function clearCaches(OutputInterface $output): void
     {
         $command = $this->getApplication()->find('acp3:cache:clear');
         $command->run(new ArrayInput([]), $output);

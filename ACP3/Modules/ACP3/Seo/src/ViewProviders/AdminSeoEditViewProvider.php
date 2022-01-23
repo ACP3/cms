@@ -18,6 +18,11 @@ class AdminSeoEditViewProvider
     {
     }
 
+    /**
+     * @param array<string, mixed> $seo
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(array $seo): array
     {
         $this->title->setPageTitlePrefix($seo['alias']);

@@ -37,6 +37,8 @@ class SocialSharingManager
     /**
      * Inserts/Updates the given sharing info.
      *
+     * @param string[] $services
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function saveSharingInfo(
@@ -55,6 +57,6 @@ class SocialSharingManager
 
         $sharingInfo = $this->shareRepository->getOneByUri($path);
 
-        return $this->shareModel->save($data, $sharingInfo['id'] ?? null) !== false;
+        return (bool) $this->shareModel->save($data, $sharingInfo['id'] ?? null);
     }
 }

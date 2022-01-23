@@ -17,6 +17,7 @@ use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Share\Repository\DataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGridViewProvider
 {
@@ -25,9 +26,11 @@ class DataGridViewProvider
     }
 
     /**
-     * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return array<string, mixed>|JsonResponse
+     *
+     * @throws \JsonException
      */
-    public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse
+    public function __invoke(): array|JsonResponse
     {
         return $this->dataGrid->render($this->configureDataGrid());
     }

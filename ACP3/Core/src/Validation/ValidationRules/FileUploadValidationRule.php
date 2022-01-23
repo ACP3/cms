@@ -16,15 +16,15 @@ class FileUploadValidationRule extends AbstractValidationRule
      */
     public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
-        $required = isset($extra['required']) ? (bool) $extra['required'] : true;
+        $required = !isset($extra['required']) || $extra['required'];
 
         return $this->isFileUpload($data) || ($required === false && empty($data));
     }
 
     /**
-     * @return bool
+     * @param mixed[]|string|UploadedFile $data
      */
-    protected function isFileUpload(array|string|UploadedFile $data)
+    protected function isFileUpload(array|string|UploadedFile $data): bool
     {
         if ($data instanceof UploadedFile) {
             return $data->isValid() && $data->getSize() > 0;

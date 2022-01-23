@@ -29,6 +29,11 @@ class Validator
     {
     }
 
+    /**
+     * @param mixed[] $params
+     *
+     * @return static
+     */
     public function addConstraint(string $validationRule, array $params = []): self
     {
         $this->constraints[] = [
@@ -39,6 +44,9 @@ class Validator
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getDefaultConstraintParams(): array
     {
         return [
@@ -49,6 +57,11 @@ class Validator
         ];
     }
 
+    /**
+     * @param string[]|string|null $field
+     *
+     * @return static
+     */
     public function addError(string $message, array|string|null $field = ''): self
     {
         if (!empty($field)) {
@@ -61,6 +74,9 @@ class Validator
         return $this;
     }
 
+    /**
+     * @param string[]|string $field
+     */
     private function mapField(array|string $field): string
     {
         if (\is_array($field)) {
@@ -70,6 +86,10 @@ class Validator
         return str_replace('_', '-', $field);
     }
 
+    /**
+     * @param mixed[] $formData
+     * @param mixed[] $extra
+     */
     public function dispatchValidationEvent(string $eventName, array $formData, array $extra = []): void
     {
         $this->eventDispatcher->dispatch(new FormValidationEvent($this, $formData, $extra), $eventName);
@@ -123,11 +143,11 @@ class Validator
 
     /**
      * @param class-string<ValidationRuleInterface> $validationRule
-     * @param mixed                                 $field
+     * @param string[]|string                       $field
      *
      * @throws ValidationRuleNotFoundException
      */
-    public function is(string $validationRule, $field): bool
+    public function is(string $validationRule, array|string $field): bool
     {
         if ($this->container->has($validationRule)) {
             return $this->container->get($validationRule)->isValid($field);

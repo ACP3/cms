@@ -19,9 +19,9 @@ use Toflar\Psr6HttpCacheStore\Psr6Store;
 class CacheClearService
 {
     /**
-     * @var array
+     * @var array<string, array<string, string|callable>>
      */
-    private $cacheTypes;
+    private array $cacheTypes;
 
     public function __construct(
         ApplicationPath $appPath,
@@ -76,7 +76,7 @@ class CacheClearService
     }
 
     /**
-     * @return array<string, string|string[]>
+     * @return array<string, array<string, string|callable>>
      */
     public function getCacheTypes(): array
     {

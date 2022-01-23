@@ -19,7 +19,10 @@ class SecureTest extends \PHPUnit\Framework\TestCase
         $this->secureHelper = new Secure();
     }
 
-    public function stripScriptDataProvider()
+    /**
+     * @return mixed[]
+     */
+    public function stripScriptDataProvider(): array
     {
         return [
             'single_line' => [
@@ -47,16 +50,13 @@ class SecureTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider stripScriptDataProvider
-     *
-     * @param string $value
-     * @param string $expected
      */
-    public function testStrEncodeStripScriptSingleLine($value, $expected)
+    public function testStrEncodeStripScriptSingleLine(string $value, string $expected): void
     {
         self::assertEquals($expected, $this->secureHelper->strEncode($value, true));
     }
 
-    public function testSaltUniqueCharacters()
+    public function testSaltUniqueCharacters(): void
     {
         $length = 10;
         $salt = $this->secureHelper->salt($length);

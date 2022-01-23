@@ -7,7 +7,6 @@ parameters:
   kernel.debug: false
 
 services:
-  ACP3\Core\Registry: ~
   ACP3\Core\XML: ~
 
   core.event_dispatcher:

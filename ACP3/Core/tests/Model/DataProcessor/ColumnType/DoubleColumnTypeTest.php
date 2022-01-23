@@ -9,12 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class DoubleColumnTypeTest extends AbstractColumnTypeTest
 {
-    protected function instantiateClassToTest()
+    protected function instantiateClassToTest(): void
     {
         $this->columnType = new DoubleColumnType();
     }
 
-    public function testDoEscape()
+    public function testDoEscape(): void
     {
         self::assertIsFloat($this->columnType->doEscape('foo'));
         self::assertIsFloat($this->columnType->doEscape('0.00'));

@@ -13,9 +13,13 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
      * @var \ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer
      */
     protected ?AbstractColumnRenderer $columnRenderer = null;
-
+    /**
+     * @var array<string, mixed>
+     */
     protected array $columnData = [];
-
+    /**
+     * @var array<string, mixed>
+     */
     protected array $dbData = [];
 
     protected string $identifier = '';

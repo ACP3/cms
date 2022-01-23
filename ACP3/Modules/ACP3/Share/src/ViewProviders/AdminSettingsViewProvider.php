@@ -21,6 +21,9 @@ class AdminSettingsViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $shareSettings = $this->settings->getSettings(ShareSchema::MODULE_NAME);
@@ -36,6 +39,9 @@ class AdminSettingsViewProvider
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getServices(): array
     {
         $services = [];

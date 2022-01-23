@@ -26,15 +26,11 @@ class SearchResultsAwareRepository extends \ACP3\Core\Repository\AbstractReposit
     }
 
     /**
-     * @param string $fields
-     * @param string $searchTerm
-     * @param string $sortDirection
-     *
-     * @return array
+     * @{@inheritDoc}
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAllSearchResults($fields, $searchTerm, $sortDirection)
+    public function getAllSearchResults(string $fields, string $searchTerm, string $sortDirection): array
     {
         return $this->db->fetchAll(
             "SELECT `id`, `title`, `text` FROM {$this->getTableName()} WHERE MATCH ({$fields}) AGAINST ({$this->db->getConnection()->quote($searchTerm)} IN BOOLEAN MODE) AND {$this->getPublicationPeriod()} ORDER BY `start` {$sortDirection}, `end` {$sortDirection}, `id` {$sortDirection}",

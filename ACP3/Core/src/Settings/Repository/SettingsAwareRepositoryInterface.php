@@ -12,7 +12,7 @@ use ACP3\Core\Repository\RepositoryInterface;
 interface SettingsAwareRepositoryInterface extends RepositoryInterface
 {
     /**
-     * @return array
+     * @return array<string, mixed>[]
      */
-    public function getAllSettings();
+    public function getAllSettings(): array;
 }

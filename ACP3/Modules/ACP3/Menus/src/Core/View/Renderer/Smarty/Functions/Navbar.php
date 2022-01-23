@@ -28,7 +28,7 @@ class Navbar extends AbstractFunction
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         return $this->getMenuByKey(
             $params['block'],

@@ -17,9 +17,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Title extends \ACP3\Core\Breadcrumb\Title
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    private $systemSettings = [];
+    private array $systemSettings = [];
 
     public function __construct(
         private RequestInterface $request,
@@ -30,6 +30,9 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         parent::__construct($steps, $eventDispatcher);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getSettings(): array
     {
         if (empty($this->systemSettings)) {
@@ -39,7 +42,10 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         return $this->systemSettings;
     }
 
-    public function getSiteAndPageTitle()
+    /**
+     * {@inheritDoc}
+     */
+    public function getSiteAndPageTitle(): string
     {
         if ($this->request->isHomepage()) {
             return $this->renderHomepageTitle();
@@ -81,6 +87,9 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         return $this->getSettings()['site_subtitle_mode'] != 3;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function renderSiteSubTitle(): string
     {
         if ($this->allowSystemSubtitle()) {
@@ -94,6 +103,9 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         return '';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function renderSiteTitle(): string
     {
         if ($this->request->isHomepage() && !empty($this->getSiteTitle())) {

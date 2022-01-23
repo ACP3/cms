@@ -19,13 +19,19 @@ class SocialSharingBackendServiceLocator
         $this->serviceMap[strtolower($service->getName())] = $service;
     }
 
+    /**
+     * @return ServiceInterface[]
+     */
     public function getServices(): array
     {
         return $this->serviceMap;
     }
 
     /**
-     * @param string[] $serviceNames
+     * @param string[]             $serviceNames
+     * @param array<string, mixed> $config
+     *
+     * @return ServiceInterface[]
      */
     public function getServicesByName(array $serviceNames, array $config): array
     {
@@ -41,6 +47,9 @@ class SocialSharingBackendServiceLocator
         return $services;
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     private function getServiceByName(string $serviceName, array $config): ServiceInterface
     {
         $serviceName = strtolower($serviceName);

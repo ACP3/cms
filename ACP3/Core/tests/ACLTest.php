@@ -151,6 +151,9 @@ class ACLTest extends TestCase
             ->willReturn($exists);
     }
 
+    /**
+     * @param int[] $roleIds
+     */
     protected function setUpPermissionsCacheMockExpectations(
         int $callCountResourceCache,
         int $callCountPermissionsCache,

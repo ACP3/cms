@@ -11,10 +11,7 @@ use ACP3\Core\DataProvider\DataProviderInterface;
 
 class RecordsPerPageDataProvider implements DataProviderInterface
 {
-    /**
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         return [
             'nothing_selected' => [

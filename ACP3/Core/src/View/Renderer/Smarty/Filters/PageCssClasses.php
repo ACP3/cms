@@ -11,10 +11,7 @@ use ACP3\Core;
 
 class PageCssClasses extends AbstractFilter
 {
-    /**
-     * @var string
-     */
-    private $cssClassCache = '';
+    private string $cssClassCache = '';
 
     public function __construct(private Core\Assets\PageCssClasses $pageCssClasses, private Core\Http\RequestInterface $request)
     {
@@ -36,6 +33,9 @@ class PageCssClasses extends AbstractFilter
         return $tplOutput;
     }
 
+    /**
+     * @return string[]
+     */
     private function buildPageCssClasses(): array
     {
         $pieces = [

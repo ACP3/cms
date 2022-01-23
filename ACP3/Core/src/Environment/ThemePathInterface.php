@@ -11,6 +11,8 @@ interface ThemePathInterface
 {
     /**
      * Return all the currently registered themes.
+     *
+     * @return array<string, array<string, mixed>>
      */
     public function getAvailableThemes(): array;
 
@@ -26,17 +28,23 @@ interface ThemePathInterface
 
     /**
      * Returns the internal directory path of the given theme.
-     * If no theme name is supplied, it return the directory path of the current theme.
+     * If no theme name is supplied, it returns the directory path of the current theme.
      */
     public function getDesignPathInternal(?string $themeName = null): string;
 
     /**
      * Returns the "pretty" directory path of the given theme.
-     * If no theme name is supplied, it return the directory path of the current theme.
+     * If no theme name is supplied, it returns the directory path of the current theme.
      */
     public function getDesignPathWeb(?string $themeName = null): string;
 
+    /**
+     * @return string[]
+     */
     public function getThemeDependencies(string $themeName): array;
 
+    /**
+     * @return string[]
+     */
     public function getCurrentThemeDependencies(): array;
 }

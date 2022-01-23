@@ -11,12 +11,6 @@ interface RouterInterface
 {
     /**
      * Generates the internal ACP3 hyperlinks.
-     *
-     * @param string    $path
-     * @param bool      $isAbsolute
-     * @param bool|null $isSecure
-     *
-     * @return string
      */
-    public function route($path, $isAbsolute = false, $isSecure = null);
+    public function route(string $path, bool $isAbsolute = false, ?bool $isSecure = null): string;
 }

@@ -18,7 +18,7 @@ class ShareWidgetViewProvider
     }
 
     /**
-     * @return array|array[]
+     * @return array<string, mixed>
      *
      * @throws \Doctrine\DBAL\Exception
      */
@@ -36,6 +36,11 @@ class ShareWidgetViewProvider
         ];
     }
 
+    /**
+     * @param array<string, mixed> $sharingInfo
+     *
+     * @return string[]
+     */
     private function getServices(array $sharingInfo): array
     {
         $services = [];

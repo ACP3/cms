@@ -11,30 +11,31 @@ use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Users;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditPost extends AbstractAction
 {
-    /**
-     * @var \ACP3\Core\Authentication\Model\UserModelInterface
-     */
-    private $user;
-
     public function __construct(
         Core\Controller\Context\WidgetContext $context,
         private FormAction $actionHelper,
-        UserModelInterface $user,
+        private UserModelInterface $user,
         private Users\Model\UsersModel $usersModel,
         private Users\Validation\AccountFormValidation $accountFormValidation
     ) {
         parent::__construct($context, $user);
-        $this->user = $user;
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     *
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+    public function __invoke(): array|string|JsonResponse|RedirectResponse|Response
     {
         return $this->actionHelper->handlePostAction(
             function () {

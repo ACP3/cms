@@ -41,6 +41,9 @@ class UpdateServicesOnSettingsSaveBeforeListener implements EventSubscriberInter
         }
     }
 
+    /**
+     * @return string[]
+     */
     private function getRemovedServices(SettingsSaveEvent $event): array
     {
         $currentSettings = $this->settings->getSettings(Schema::MODULE_NAME);

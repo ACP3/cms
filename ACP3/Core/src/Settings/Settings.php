@@ -20,16 +20,16 @@ class Settings implements SettingsInterface
 {
     private const CACHE_ID = 'settings';
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
-    private $settings = [];
+    private array $settings = [];
 
     public function __construct(private EventDispatcherInterface $eventDispatcher, private CacheItemPoolInterface $coreCachePool, private ModuleAwareRepositoryInterface $systemModuleRepository, private SettingsAwareRepositoryInterface $systemSettingsRepository)
     {
     }
 
     /**
-     * Saves the module's settings to the database.
+     * {@inheritDoc}
      */
     public function saveSettings(array $data, string $moduleName): bool
     {
@@ -69,7 +69,7 @@ class Settings implements SettingsInterface
     }
 
     /**
-     * Returns the module's settings from the cache.
+     * {@inheritDoc}
      */
     public function getSettings(string $module): array
     {

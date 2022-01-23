@@ -9,6 +9,9 @@ namespace ACP3\Core\Validation\Exceptions;
 
 class ValidationFailedException extends \Exception
 {
+    /**
+     * @param array<string|int, string> $message
+     */
     public function __construct(array $message)
     {
         parent::__construct(serialize($message));

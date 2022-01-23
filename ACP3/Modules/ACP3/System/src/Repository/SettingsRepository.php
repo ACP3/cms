@@ -15,11 +15,11 @@ class SettingsRepository extends AbstractRepository implements SettingsAwareRepo
     public const TABLE_NAME = 'settings';
 
     /**
-     * @return array
+     * {@inheritDoc}
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAllSettings()
+    public function getAllSettings(): array
     {
         return $this->db->fetchAll(
             "SELECT m.name AS module_name, s.name, s.value FROM {$this->getTableName()} AS s JOIN {$this->getTableName(ModulesRepository::TABLE_NAME)} AS m ON(m.id = s.module_id) ORDER BY s.module_id"

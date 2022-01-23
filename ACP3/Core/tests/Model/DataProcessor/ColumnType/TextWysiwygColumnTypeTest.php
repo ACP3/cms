@@ -9,12 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class TextWysiwygColumnTypeTest extends AbstractColumnTypeTest
 {
-    protected function instantiateClassToTest()
+    protected function instantiateClassToTest(): void
     {
         $this->columnType = new TextWysiwygColumnType();
     }
 
-    public function testDoEscape()
+    public function testDoEscape(): void
     {
         self::assertIsString($this->columnType->doEscape('foo'));
     }

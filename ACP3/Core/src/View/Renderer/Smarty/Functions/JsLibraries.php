@@ -18,8 +18,10 @@ class JsLibraries extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         $this->libraries->enableLibraries(explode(',', $params['enable']));
+
+        return '';
     }
 }

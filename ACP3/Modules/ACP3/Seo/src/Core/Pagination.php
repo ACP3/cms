@@ -33,7 +33,7 @@ class Pagination extends \ACP3\Core\Pagination
     /**
      * {@inheritdoc}
      */
-    protected function setMetaStatements()
+    protected function setMetaStatements(): void
     {
         parent::setMetaStatements();
 
@@ -48,10 +48,7 @@ class Pagination extends \ACP3\Core\Pagination
         }
     }
 
-    /**
-     * @return string
-     */
-    private function getRoute()
+    private function getRoute(): string
     {
         $path = ($this->request->getArea() === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $this->request->getUriWithoutPages();
 
@@ -61,7 +58,7 @@ class Pagination extends \ACP3\Core\Pagination
     /**
      * Seitenangabe in der Seitenbeschreibung ab Seite 2 angeben.
      */
-    private function modifyMetaDescription()
+    private function modifyMetaDescription(): void
     {
         $this->metaStatements->setDescriptionPostfix(
             $this->translator->t(
@@ -72,12 +69,12 @@ class Pagination extends \ACP3\Core\Pagination
         );
     }
 
-    private function setMetaPreviousPage()
+    private function setMetaPreviousPage(): void
     {
         $this->metaStatements->setPreviousPage($this->getRoute() . 'page_' . ($this->currentPage - 1) . '/');
     }
 
-    private function preventIndexing()
+    private function preventIndexing(): void
     {
         $seoSettings = $this->settings->getSettings(Schema::MODULE_NAME);
 
@@ -86,14 +83,14 @@ class Pagination extends \ACP3\Core\Pagination
         }
     }
 
-    private function setMetaNextPage()
+    private function setMetaNextPage(): void
     {
         if ($this->currentPage + 1 <= $this->totalPages) {
             $this->metaStatements->setNextPage($this->getRoute() . 'page_' . ($this->currentPage + 1) . '/');
         }
     }
 
-    private function setMetaCanonicalUri()
+    private function setMetaCanonicalUri(): void
     {
         if ($this->request->getParameters()->get('page', 0) === 1) {
             $this->metaStatements->setCanonicalUri($this->getRoute());

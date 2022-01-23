@@ -16,77 +16,54 @@ use ACP3\Core\Router\RouterInterface;
 
 class Pagination
 {
+    private int $resultsPerPage = 0;
+
+    private int $totalResults = 0;
+
+    private string $urlFragment = '';
+
+    private int $showFirstLast = 5;
+
+    private int $showPreviousNext = 1;
+
+    private int $pagesToDisplay = 3;
+
+    protected int $totalPages = 1;
+
+    protected int $currentPage = 1;
     /**
-     * @var int
+     * @var array<string, mixed>[]
      */
-    private $resultsPerPage = 0;
-    /**
-     * @var int
-     */
-    private $totalResults = 0;
-    /**
-     * @var string
-     */
-    private $urlFragment = '';
-    /**
-     * @var int
-     */
-    private $showFirstLast = 5;
-    /**
-     * @var int
-     */
-    private $showPreviousNext = 1;
-    /**
-     * @var int
-     */
-    private $pagesToDisplay = 3;
-    /**
-     * @var int
-     */
-    protected $totalPages = 1;
-    /**
-     * @var int
-     */
-    protected $currentPage = 1;
-    /**
-     * @var array
-     */
-    private $pagination = [];
+    private array $pagination = [];
 
     public function __construct(protected Title $title, protected Translator $translator, protected RequestInterface $request, protected RouterInterface $router)
     {
     }
 
     /**
-     * @param int $results
-     *
-     * @return $this
+     * @return static
      */
-    public function setResultsPerPage($results)
+    public function setResultsPerPage(int $results): self
     {
-        $this->resultsPerPage = (int) $results;
+        $this->resultsPerPage = $results;
 
         return $this;
     }
 
     /**
-     * @param int $results
-     *
-     * @return $this
+     * @return static
      */
-    public function setTotalResults($results)
+    public function setTotalResults(int $results): self
     {
-        $this->totalResults = (int) $results;
+        $this->totalResults = $results;
 
         return $this;
     }
 
     /**
-     * @param string $fragment
-     *
-     * @return $this
+     * @return static
      */
-    public function setUrlFragment($fragment)
+    public function setUrlFragment(string $fragment): self
     {
         $this->urlFragment = $fragment;
 
@@ -94,13 +71,11 @@ class Pagination
     }
 
     /**
-     * @param int $pagesToDisplay
-     *
-     * @return $this
+     * @return static
      */
-    public function setPagesToDisplay($pagesToDisplay)
+    public function setPagesToDisplay(int $pagesToDisplay): self
     {
-        $this->pagesToDisplay = (int) $pagesToDisplay;
+        $this->pagesToDisplay = $pagesToDisplay;
 
         return $this;
     }
@@ -124,33 +99,26 @@ class Pagination
     }
 
     /**
-     * @param int $showFirstLast
-     *
-     * @return $this
+     * @return static
      */
-    public function setShowFirstLast($showFirstLast)
+    public function setShowFirstLast(int $showFirstLast): self
     {
-        $this->showFirstLast = (int) $showFirstLast;
+        $this->showFirstLast = $showFirstLast;
 
         return $this;
     }
 
     /**
-     * @param int $showPreviousNext
-     *
      * @return $this
      */
-    public function setShowPreviousNext($showPreviousNext)
+    public function setShowPreviousNext(int $showPreviousNext): self
     {
-        $this->showPreviousNext = (int) $showPreviousNext;
+        $this->showPreviousNext = $showPreviousNext;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getResultsStartOffset()
+    public function getResultsStartOffset(): int
     {
         return (int) $this->request->getParameters()->get('page') >= 1
             ? ($this->request->getParameters()->get('page') - 1) * $this->resultsPerPage
@@ -158,6 +126,8 @@ class Pagination
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \ACP3\Core\Pagination\Exception\InvalidPageException
      */
     public function render(): array
@@ -195,7 +165,7 @@ class Pagination
         return $this->pagination;
     }
 
-    protected function setMetaStatements()
+    protected function setMetaStatements(): void
     {
         if ($this->currentPage > 1) {
             $postfix = $this->translator->t('system', 'page_x', ['%page%' => $this->currentPage]);
@@ -243,7 +213,7 @@ class Pagination
     }
 
     /**
-     * @return $this
+     * @return static
      */
     private function addPageNumber(
         int|string $pageNumber,
@@ -251,12 +221,15 @@ class Pagination
         string $title = '',
         bool $selected = false,
         string $selector = ''
-    ) {
+    ): self {
         $this->pagination[] = $this->buildPageNumber($pageNumber, $uri, $title, $selected, $selector);
 
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function buildPageNumber(
         int|string $pageNumber,
         string $uri,

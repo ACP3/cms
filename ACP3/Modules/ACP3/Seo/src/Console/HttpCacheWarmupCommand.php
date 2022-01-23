@@ -16,9 +16,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class HttpCacheWarmupCommand extends Command
 {
-    private $defaultSitemapName = ACP3_ROOT_DIR . '/sitemap.xml';
+    private string $defaultSitemapName = ACP3_ROOT_DIR . '/sitemap.xml';
 
-    private $splitSitemapNames = [
+    /**
+     * @var string[]
+     */
+    private array $splitSitemapNames = [
         ACP3_ROOT_DIR . '/sitemap_http.xml',
         ACP3_ROOT_DIR . '/sitemap_https.xml',
     ];
@@ -26,7 +29,7 @@ class HttpCacheWarmupCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('acp3:http-cache:warmup')
@@ -53,7 +56,7 @@ class HttpCacheWarmupCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Warming up the HTTP cache...');

@@ -11,6 +11,8 @@ interface UserModelInterface
 {
     /**
      * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück.
+     *
+     * @return array<string, mixed>
      */
     public function getUserInfo(int $userId = 0): array;
 
@@ -20,19 +22,19 @@ interface UserModelInterface
     public function isAuthenticated(): bool;
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setIsAuthenticated(bool $isAuthenticated);
+    public function setIsAuthenticated(bool $isAuthenticated): self;
 
     /**
-     * Returns the user id of the currently logged in user.
+     * Returns the user id of the currently logged-in user.
      */
     public function getUserId(): int;
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setUserId(int $userId);
+    public function setUserId(int $userId): self;
 
     /**
      * Returns, whether the currently logged in user is a super user or not.
@@ -40,7 +42,7 @@ interface UserModelInterface
     public function isSuperUser(): bool;
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setIsSuperUser(bool $isSuperUser);
+    public function setIsSuperUser(bool $isSuperUser): self;
 }

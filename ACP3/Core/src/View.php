@@ -59,9 +59,9 @@ class View
     /**
      * Assigns a new template variable.
      *
-     * @param mixed $value
+     * @param mixed[]|string $name
      */
-    public function assign(array|string $name, $value = null): self
+    public function assign(array|string $name, mixed $value = null): self
     {
         $this->renderer->assign($name, $value);
 

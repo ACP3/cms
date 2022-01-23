@@ -13,32 +13,21 @@ use ACP3\Modules\ACP3\Search\Extension\AbstractSearchAvailabilityExtension;
 
 class SearchAvailabilityExtension extends AbstractSearchAvailabilityExtension
 {
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return Schema::MODULE_NAME;
     }
 
-    /**
-     * @param string $areas
-     *
-     * @return string
-     */
-    protected function mapSearchAreasToFields($areas)
+    protected function mapSearchAreasToFields(string $area): string
     {
-        return match ($areas) {
+        return match ($area) {
             'title' => 'title, file',
             'content' => 'text',
             default => 'title, file, text',
         };
     }
 
-    /**
-     * @return string
-     */
-    protected function getRouteName()
+    protected function getRouteName(): string
     {
         return Helpers::URL_KEY_PATTERN;
     }

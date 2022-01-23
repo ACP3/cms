@@ -40,7 +40,7 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData = array_merge($rawData, [
             'category_id' => $rawData['cat'] ?? $rawData['category_id'],

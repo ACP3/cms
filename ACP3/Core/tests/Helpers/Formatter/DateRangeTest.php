@@ -10,6 +10,7 @@ namespace ACP3\Core\Helpers\Formatter;
 use ACP3\Core\Date;
 use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\I18n\Translator;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class DateRangeTest extends \PHPUnit\Framework\TestCase
 {
@@ -21,7 +22,9 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
      * @var Date
      */
     private $date;
-
+    /**
+     * @var Translator|MockObject
+     */
     private $langMock;
     /**
      * @var DateRange
@@ -49,18 +52,17 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string $langKey
-     * @param string $langValue
+     * @param array<string, mixed> $params
      */
-    private function setUpLangMockExpectation($langKey, $langValue, array $params = [])
+    private function setUpLangMockExpectation(string $langValue, array $params = []): void
     {
         $this->langMock->expects(self::once())
             ->method('t')
-            ->with('system', $langKey, $params)
+            ->with('system', 'date_published_since', $params)
             ->willReturn($langValue);
     }
 
-    public function testSingleDateWithLongFormat()
+    public function testSingleDateWithLongFormat(): void
     {
         $dateString = '2012-12-20 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="2012-12-20 13:12">2012-12-20 13:12</time>';
@@ -68,7 +70,7 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->dateRange->formatTimeRange($dateString));
     }
 
-    public function testSingleDateWithShortFormat()
+    public function testSingleDateWithShortFormat(): void
     {
         $dateString = '2012-12-20 12:12:12';
         $expected = '<time datetime="2012-12-20T13:12:12+01:00" title="2012-12-20">2012-12-20</time>';
@@ -76,7 +78,7 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->dateRange->formatTimeRange($dateString, '', 'short'));
     }
 
-    public function testDateRangeWithLongFormat()
+    public function testDateRangeWithLongFormat(): void
     {
         $dateStart = '2012-12-20 12:12:12';
         $dateEnd = '2012-12-25 12:12:12';
@@ -85,10 +87,9 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->dateRange->formatTimeRange($dateStart, $dateEnd));
     }
 
-    public function testInvalidDateRangeWithLongFormat()
+    public function testInvalidDateRangeWithLongFormat(): void
     {
         $this->setUpLangMockExpectation(
-            'date_published_since',
             'Published since 2012-12-20 13:12',
             ['%date%' => '2012-12-20 13:12']
         );
@@ -99,10 +100,9 @@ class DateRangeTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->dateRange->formatTimeRange($dateStart, $dateEnd));
     }
 
-    public function testInvalidDateRangeWithShortFormat()
+    public function testInvalidDateRangeWithShortFormat(): void
     {
         $this->setUpLangMockExpectation(
-            'date_published_since',
             'Published since 2012-12-20',
             ['%date%' => '2012-12-20']
         );

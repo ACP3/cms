@@ -33,6 +33,8 @@ interface ModuleAwareRepositoryInterface extends RepositoryInterface
     /**
      * Returns the basic information about the given module.
      * When successful, it returns an array with the module-ID and its DB schema version.
+     *
+     * @return array<string, mixed>
      */
     public function getInfoByModuleName(string $moduleName): array;
 

@@ -30,7 +30,7 @@ class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
         );
     }
 
-    protected function initializeMockObjects()
+    protected function initializeMockObjects(): void
     {
         parent::initializeMockObjects();
 

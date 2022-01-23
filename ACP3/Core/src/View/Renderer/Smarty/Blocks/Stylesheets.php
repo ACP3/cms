@@ -12,7 +12,7 @@ class Stylesheets extends AbstractBlock
     /**
      * {@inheritdoc}
      */
-    public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat)
+    public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat): string
     {
         if (!$repeat && isset($content)) {
             return '@@@SMARTY:STYLESHEETS:BEGIN@@@' . trim($content) . '@@@SMARTY:STYLESHEETS:END@@@';

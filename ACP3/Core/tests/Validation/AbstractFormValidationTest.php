@@ -32,7 +32,9 @@ abstract class AbstractFormValidationTest extends TestCase
      * @var MockObject|EventDispatcher
      */
     protected $eventDispatcherMock;
-
+    /**
+     * @var MockObject|Translator
+     */
     protected $translatorMock;
     /**
      * @var Validator

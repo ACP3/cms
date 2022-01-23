@@ -9,6 +9,9 @@ namespace ACP3\Modules\ACP3\Share\Shariff\Backend;
 
 abstract class Request
 {
+    /**
+     * @var array<string, mixed>
+     */
     protected array $config = [];
 
     public function filterResponse(string $content): string
@@ -16,6 +19,9 @@ abstract class Request
         return $content;
     }
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public function setConfig(array $config): void
     {
         $this->config = $config;

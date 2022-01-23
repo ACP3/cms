@@ -12,7 +12,7 @@ use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 abstract class AbstractFunction implements PluginInterface
 {
     /**
-     * @return mixed
+     * @param array<string, mixed> $params
      */
-    abstract public function __invoke(array $params, \Smarty_Internal_Template $smarty);
+    abstract public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed;
 }

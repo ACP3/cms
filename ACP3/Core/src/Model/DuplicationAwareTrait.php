@@ -33,10 +33,7 @@ trait DuplicationAwareTrait
 
     abstract protected function getAllowedColumns(): array;
 
-    /**
-     * @param int|null $entryId
-     */
-    abstract public function save(array $rawData, $entryId = null): int;
+    abstract public function save(array $rawData, ?int $entryId = null): int;
 
     /**
      * @return array<string, mixed>

@@ -44,6 +44,9 @@ class BackendManagerFactory
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getOptions(): array
     {
         return array_merge(
@@ -55,6 +58,9 @@ class BackendManagerFactory
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getFacebookCredentials(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);

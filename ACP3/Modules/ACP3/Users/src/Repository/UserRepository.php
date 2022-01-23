@@ -58,6 +58,8 @@ class UserRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByNickname(string $nickname): array
@@ -66,6 +68,8 @@ class UserRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneActiveUserByNickname(string $nickname): array
@@ -77,6 +81,8 @@ class UserRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByEmail(string $email): array
@@ -96,6 +102,8 @@ class UserRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(?int $limitStart = null, ?int $resultsPerPage = null): array

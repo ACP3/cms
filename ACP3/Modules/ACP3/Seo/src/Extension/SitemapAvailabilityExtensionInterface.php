@@ -11,15 +11,10 @@ use Thepixeldeveloper\Sitemap\Url;
 
 interface SitemapAvailabilityExtensionInterface
 {
-    /**
-     * @return string
-     */
-    public function getModuleName();
+    public function getModuleName(): string;
 
     /**
-     * @param bool|null $isSecure
-     *
      * @return Url[]
      */
-    public function getUrls($isSecure = null);
+    public function getUrls(?bool $isSecure = null): array;
 }

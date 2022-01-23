@@ -32,13 +32,13 @@ class UriTest extends AbstractPluginTest
         $this->plugin = new Uri($this->routerMock);
     }
 
-    private function setUpMockObjects()
+    private function setUpMockObjects(): void
     {
         $this->routerMock = $this->createMock(RouterInterface::class);
         $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
     }
 
-    public function testUriWithRouteOnly()
+    public function testUriWithRouteOnly(): void
     {
         $params = [
             'args' => 'foo/bar/baz',
@@ -52,7 +52,7 @@ class UriTest extends AbstractPluginTest
         self::assertEquals('/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
     }
 
-    public function testUriWithForceHttp()
+    public function testUriWithForceHttp(): void
     {
         $params = [
             'args' => 'foo/bar/baz',
@@ -67,7 +67,7 @@ class UriTest extends AbstractPluginTest
         self::assertEquals('http://example.com/foo/bar/baz/', $this->plugin->__invoke($params, $this->smartyInternalTemplateMock));
     }
 
-    public function testUriWithForceHttps()
+    public function testUriWithForceHttps(): void
     {
         $params = [
             'args' => 'foo/bar/baz',

@@ -23,12 +23,12 @@ class DateTimeColumnTypeTest extends AbstractColumnTypeTest
         parent::setUp();
     }
 
-    protected function instantiateClassToTest()
+    protected function instantiateClassToTest(): void
     {
         $this->columnType = new DateTimeColumnType($this->dateMock);
     }
 
-    public function testDoEscape()
+    public function testDoEscape(): void
     {
         $this->setUpDateMockExpectations();
 
@@ -36,7 +36,7 @@ class DateTimeColumnTypeTest extends AbstractColumnTypeTest
         $this->columnType->doEscape('2016-10-20');
     }
 
-    private function setUpDateMockExpectations()
+    private function setUpDateMockExpectations(): void
     {
         $this->dateMock->expects(self::exactly(2))
             ->method('toSQL')

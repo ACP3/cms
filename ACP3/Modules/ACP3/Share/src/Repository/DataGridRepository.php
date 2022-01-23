@@ -15,6 +15,9 @@ class DataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = ShareRepository::TABLE_NAME;
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
@@ -24,6 +27,9 @@ class DataGridRepository extends AbstractDataGridRepository
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->leftJoin(
@@ -34,6 +40,9 @@ class DataGridRepository extends AbstractDataGridRepository
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addGroupBy([

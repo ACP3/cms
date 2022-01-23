@@ -18,13 +18,18 @@ class ShareModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData = array_merge($rawData, $this->mapDataFromRequest($rawData));
 
         return parent::save($rawData, $entryId);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
     private function mapDataFromRequest(array $data): array
     {
         $mappedData = [];

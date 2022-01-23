@@ -21,7 +21,7 @@ class ForbidSuperUserDeleteListener implements EventSubscriberInterface
     /**
      * @throws SuperUserNotDeletableException
      */
-    public function __invoke(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event): void
     {
         if (!$event->isDeleteStatement()) {
             return;

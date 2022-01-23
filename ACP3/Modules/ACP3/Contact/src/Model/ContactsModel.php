@@ -18,7 +18,7 @@ class ContactsModel extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData['date'] = 'now';
 

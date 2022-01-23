@@ -145,6 +145,9 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         $this->validator->is('invalid_validation_rule', 'test@example.com');
     }
 
+    /**
+     * @return mixed[]
+     */
     public function inlineValidationProvider(): array
     {
         return [

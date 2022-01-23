@@ -9,17 +9,10 @@ namespace ACP3\Modules\ACP3\Search\Extension;
 
 interface SearchAvailabilityExtensionInterface
 {
-    /**
-     * @return string
-     */
-    public function getModuleName();
+    public function getModuleName(): string;
 
     /**
-     * @param string $searchTerm
-     * @param string $areas
-     * @param string $sortDirection
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
-    public function fetchSearchResults($searchTerm, $areas, $sortDirection);
+    public function fetchSearchResults(string $searchTerm, string $areas, string $sortDirection): array;
 }

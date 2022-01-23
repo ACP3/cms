@@ -16,7 +16,7 @@ class DateRange extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         $format = $params['format'] ?? 'long';
 

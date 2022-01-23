@@ -40,10 +40,9 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param mixed        $data
      * @param array|string $field
      */
-    public function testValidationRule($data, $field, array $extra, bool $expected): void
+    public function testValidationRule(mixed $data, $field, array $extra, bool $expected): void
     {
         $this->setExpectations($expected);
 
@@ -64,10 +63,9 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param mixed        $data
      * @param array|string $field
      */
-    public function testValidate($data, $field, array $extra, bool $expected): void
+    public function testValidate(mixed $data, $field, array $extra, bool $expected): void
     {
         $this->setExpectations($expected);
 

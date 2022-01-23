@@ -21,6 +21,9 @@ class SendPasswordChangeEmail
     {
     }
 
+    /**
+     * @param array<string, mixed> $user
+     */
     public function __invoke(array $user, string $newPassword): bool
     {
         $systemSettings = $this->settings->getSettings(Schema::MODULE_NAME);

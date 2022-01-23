@@ -19,7 +19,7 @@ class AccountSettingsViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>
      */
     public function __invoke(): array
     {

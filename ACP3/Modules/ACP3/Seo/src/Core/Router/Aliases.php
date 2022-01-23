@@ -14,13 +14,11 @@ use ACP3\Modules\ACP3\Seo\Services\SeoInformationService;
 class Aliases
 {
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
-    private $aliasesCache = [];
-    /**
-     * @var bool
-     */
-    private $isActive;
+    private array $aliasesCache = [];
+
+    private bool $isActive;
 
     public function __construct(
         Core\Modules $modules,

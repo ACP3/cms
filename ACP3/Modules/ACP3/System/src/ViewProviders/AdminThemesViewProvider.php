@@ -17,6 +17,9 @@ class AdminThemesViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $currentTheme = $this->settings->getSettings(Schema::MODULE_NAME)['design'];

@@ -17,9 +17,9 @@ use Thepixeldeveloper\Sitemap\Urlset;
 class SitemapGenerationModel
 {
     /**
-     * @var array
+     * @var array<int, array<int, array<string, bool|string|null>>>
      */
-    private $filenameMap = [
+    private array $filenameMap = [
         0 => [
             ['filename' => 'sitemap.xml', 'secure' => null],
         ],

@@ -9,12 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class BooleanColumnTypeTest extends AbstractColumnTypeTest
 {
-    protected function instantiateClassToTest()
+    protected function instantiateClassToTest(): void
     {
         $this->columnType = new BooleanColumnType();
     }
 
-    public function testDoEscape()
+    public function testDoEscape(): void
     {
         self::assertIsInt($this->columnType->doEscape('foo'));
         self::assertIsInt($this->columnType->doEscape(0));

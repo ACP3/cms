@@ -18,14 +18,14 @@ class RegisterSmartyPluginsPass implements CompilerPassInterface
     /**
      * @var Reference[]
      */
-    private $locatablePlugins = [];
+    private array $locatablePlugins = [];
 
     /**
      * You can modify the container here before it is dumped to PHP code.
      *
      * @api
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $definition = $container->findDefinition(Smarty::class);
 

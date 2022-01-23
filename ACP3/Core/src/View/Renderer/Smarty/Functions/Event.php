@@ -28,6 +28,11 @@ class Event extends AbstractFunction
         throw new \InvalidArgumentException('Could have to call the {event} Smarty function with the argument "name", which specifies the name of the event');
     }
 
+    /**
+     * @param array<string, mixed> $arguments
+     *
+     * @return array<string, mixed>
+     */
     protected function parseArguments(array $arguments): array
     {
         unset($arguments['name']);

@@ -25,6 +25,8 @@ class ShareRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByUri(string $uri): array
@@ -33,6 +35,8 @@ class ShareRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(): array

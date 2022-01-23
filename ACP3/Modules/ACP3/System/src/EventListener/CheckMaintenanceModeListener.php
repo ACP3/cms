@@ -22,7 +22,7 @@ class CheckMaintenanceModeListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(ControllerActionRequestEvent $event)
+    public function __invoke(ControllerActionRequestEvent $event): void
     {
         $request = $event->getRequest();
 

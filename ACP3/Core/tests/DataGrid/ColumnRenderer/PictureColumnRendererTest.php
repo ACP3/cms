@@ -49,7 +49,7 @@ class PictureColumnRendererTest extends AbstractColumnRendererTest
         $this->compareResults($expected);
     }
 
-    public function testValidFieldWithNoInternalRoute()
+    public function testValidFieldWithNoInternalRoute(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['picture'],

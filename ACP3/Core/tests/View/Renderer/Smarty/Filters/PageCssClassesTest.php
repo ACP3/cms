@@ -40,14 +40,14 @@ class PageCssClassesTest extends AbstractPluginTest
         );
     }
 
-    private function setUpMockObjects()
+    private function setUpMockObjects(): void
     {
         $this->pageCssClassesMock = $this->createMock(\ACP3\Core\Assets\PageCssClasses::class);
         $this->requestMock = $this->createMock(Request::class);
         $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
     }
 
-    public function testProcessInFrontend()
+    public function testProcessInFrontend(): void
     {
         $this->setUpPageCssClassesMockExpectations();
         $this->setUpRequestMockExpectations();
@@ -69,10 +69,7 @@ HTML;
         );
     }
 
-    /**
-     * @param int $getDetailsCalls
-     */
-    private function setUpPageCssClassesMockExpectations($getDetailsCalls = 1)
+    private function setUpPageCssClassesMockExpectations(int $getDetailsCalls = 1): void
     {
         $this->pageCssClassesMock
             ->expects(self::once())
@@ -88,11 +85,7 @@ HTML;
             ->willReturn('foo-bar-pagetitle');
     }
 
-    /**
-     * @param bool   $isHomepage
-     * @param string $area
-     */
-    private function setUpRequestMockExpectations($isHomepage = false, $area = AreaEnum::AREA_FRONTEND)
+    private function setUpRequestMockExpectations(bool $isHomepage = false, string $area = AreaEnum::AREA_FRONTEND): void
     {
         $this->requestMock->expects($area === AreaEnum::AREA_FRONTEND ? self::once() : $this->never())
             ->method('isHomepage')
@@ -102,10 +95,7 @@ HTML;
             ->willReturn($area);
     }
 
-    /**
-     * @return string
-     */
-    private function getTemplateContent()
+    private function getTemplateContent(): string
     {
         return <<<HTML
 <html>
@@ -119,7 +109,7 @@ HTML;
 HTML;
     }
 
-    public function testProcessIsHomepage()
+    public function testProcessIsHomepage(): void
     {
         $this->setUpPageCssClassesMockExpectations(0);
         $this->setUpRequestMockExpectations(true);
@@ -141,7 +131,7 @@ HTML;
         );
     }
 
-    public function testProcessInAdmin()
+    public function testProcessInAdmin(): void
     {
         $this->setUpPageCssClassesMockExpectations(0);
         $this->setUpRequestMockExpectations(false, AreaEnum::AREA_ADMIN);
@@ -163,7 +153,7 @@ HTML;
         );
     }
 
-    public function testProcessWithNoHtmlBodyTag()
+    public function testProcessWithNoHtmlBodyTag(): void
     {
         $templateContent = <<<HTML
 <p>Baz</p>

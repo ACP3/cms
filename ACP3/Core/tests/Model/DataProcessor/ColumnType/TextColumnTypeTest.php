@@ -23,19 +23,19 @@ class TextColumnTypeTest extends AbstractColumnTypeTest
         parent::setUp();
     }
 
-    protected function instantiateClassToTest()
+    protected function instantiateClassToTest(): void
     {
         $this->columnType = new TextColumnType($this->secureMock);
     }
 
-    public function testDoEscape()
+    public function testDoEscape(): void
     {
         $this->setUpSecureMockExpectations();
 
         $this->columnType->doEscape('foo');
     }
 
-    protected function setUpSecureMockExpectations()
+    protected function setUpSecureMockExpectations(): void
     {
         $this->secureMock->expects(self::once())
             ->method('strEncode')

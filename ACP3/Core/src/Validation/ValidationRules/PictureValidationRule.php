@@ -61,6 +61,9 @@ class PictureValidationRule extends AbstractValidationRule
         return false;
     }
 
+    /**
+     * @param mixed[] $info
+     */
     private function validateOptionalParameters(string $file, array $info, int $width, int $height, int $filesize): bool
     {
         return ($width > 0 && $info[0] > $width) ||

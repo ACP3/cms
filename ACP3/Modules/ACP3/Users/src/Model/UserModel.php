@@ -15,29 +15,22 @@ class UserModel implements UserModelInterface
 {
     public const SALT_LENGTH = 16;
 
+    private ?bool $isAuthenticated = null;
+
+    private int $userId = 0;
+
+    private bool $isSuperUser = false;
     /**
-     * @var bool|null
+     * @var array<string, mixed>[]
      */
-    protected $isAuthenticated;
-    /**
-     * @var int
-     */
-    protected $userId = 0;
-    /**
-     * @var bool
-     */
-    protected $isSuperUser = false;
-    /**
-     * @var array
-     */
-    protected $userInfo = [];
+    private array $userInfo = [];
 
     public function __construct(private CountryList $countryList, protected Users\Repository\UserRepository $userRepository)
     {
     }
 
     /**
-     * Gibt ein Array mit den angeforderten Daten eines Benutzers zurück.
+     * {@inheritDoc}
      *
      * @throws \Doctrine\DBAL\Exception
      */
@@ -60,7 +53,7 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * Returns, whether the current user is an authenticated user or not.
+     * {@inheritDoc}
      */
     public function isAuthenticated(): bool
     {
@@ -68,9 +61,9 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * @return $this
+     * {@inheritDoc}
      */
-    public function setIsAuthenticated(bool $isAuthenticated)
+    public function setIsAuthenticated(bool $isAuthenticated): self
     {
         $this->isAuthenticated = $isAuthenticated;
 
@@ -78,7 +71,7 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * Returns the user id of the currently logged in user.
+     * {@inheritDoc}
      */
     public function getUserId(): int
     {
@@ -86,9 +79,9 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * @return $this
+     * {@inheritDoc}
      */
-    public function setUserId(int $userId)
+    public function setUserId(int $userId): self
     {
         $this->userId = $userId;
 
@@ -96,7 +89,7 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * Returns, whether the currently logged in user is a super user or not.
+     * {@inheritDoc}
      */
     public function isSuperUser(): bool
     {
@@ -104,9 +97,9 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * @return $this
+     * {@inheritDoc}
      */
-    public function setIsSuperUser(bool $isSuperUser)
+    public function setIsSuperUser(bool $isSuperUser): self
     {
         $this->isSuperUser = $isSuperUser;
 

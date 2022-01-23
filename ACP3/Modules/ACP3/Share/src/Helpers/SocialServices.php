@@ -44,11 +44,17 @@ class SocialServices
     {
     }
 
+    /**
+     * @return string[]
+     */
     public function getAllServices(): array
     {
         return self::$servicesMap;
     }
 
+    /**
+     * @return string[]
+     */
     public function getActiveServices(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
@@ -66,11 +72,17 @@ class SocialServices
         );
     }
 
+    /**
+     * @return string[]
+     */
     public function getAllBackendServices(): array
     {
         return array_keys($this->locator->getServices());
     }
 
+    /**
+     * @return string[]
+     */
     public function getActiveBackendServices(): array
     {
         $activeServices = $this->getActiveServices();

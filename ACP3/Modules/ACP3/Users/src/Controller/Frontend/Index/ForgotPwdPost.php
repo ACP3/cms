@@ -10,8 +10,14 @@ namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\FormAction;
+use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Modules\ACP3\Users;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
 {
@@ -31,10 +37,12 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     *
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+    public function __invoke(): array|string|JsonResponse|RedirectResponse|Response
     {
         return $this->actionHelper->handlePostAction(
             function () {
@@ -69,8 +77,10 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
-     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
+     * @return array<string, mixed>
+     *
+     * @throws Exception
+     * @throws ValidationRuleNotFoundException
      */
     protected function fetchUserByFormFieldValue(string $nickNameOrEmail): array
     {

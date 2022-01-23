@@ -25,7 +25,7 @@ class CountryListTest extends \PHPUnit\Framework\TestCase
         $this->countryList = new CountryList($this->translatorMock);
     }
 
-    public function testValidLocale()
+    public function testValidLocale(): void
     {
         $this->translatorMock->expects(self::exactly(3))
             ->method('getLocale')
@@ -37,7 +37,7 @@ class CountryListTest extends \PHPUnit\Framework\TestCase
         self::assertNotEmpty($actual);
     }
 
-    public function testInvalidLocaleByPath()
+    public function testInvalidLocaleByPath(): void
     {
         $this->translatorMock->expects(self::exactly(3))
             ->method('getLocale')
@@ -49,7 +49,7 @@ class CountryListTest extends \PHPUnit\Framework\TestCase
         self::assertEmpty($actual);
     }
 
-    public function testInvalidLocaleByCharacters()
+    public function testInvalidLocaleByCharacters(): void
     {
         $this->translatorMock->expects(self::exactly(3))
             ->method('getLocale')

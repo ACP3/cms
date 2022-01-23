@@ -9,12 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class IntegerColumnTypeTest extends AbstractColumnTypeTest
 {
-    protected function instantiateClassToTest()
+    protected function instantiateClassToTest(): void
     {
         $this->columnType = new IntegerColumnType();
     }
 
-    public function testDoEscape()
+    public function testDoEscape(): void
     {
         self::assertIsInt($this->columnType->doEscape('foo'));
         self::assertIsInt($this->columnType->doEscape('0.00'));

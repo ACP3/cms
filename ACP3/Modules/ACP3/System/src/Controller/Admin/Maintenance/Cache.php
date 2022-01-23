@@ -13,6 +13,8 @@ use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Exception\CacheClearException;
 use ACP3\Modules\ACP3\System\Exception\InvalidCacheTypeException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Cache extends Core\Controller\AbstractWidgetAction
 {
@@ -24,7 +26,10 @@ class Cache extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
-    public function __invoke(?string $action = null): array|\Symfony\Component\HttpFoundation\RedirectResponse
+    /**
+     * @return array<string, mixed>|RedirectResponse
+     */
+    public function __invoke(?string $action = null): array|RedirectResponse
     {
         if ($action !== null) {
             return $this->executePurge($action);
@@ -35,7 +40,7 @@ class Cache extends Core\Controller\AbstractWidgetAction
         ];
     }
 
-    private function executePurge(string $action): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    private function executePurge(string $action): JsonResponse|RedirectResponse
     {
         $result = false;
 

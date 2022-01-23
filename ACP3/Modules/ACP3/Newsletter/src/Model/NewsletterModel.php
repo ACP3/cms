@@ -31,7 +31,7 @@ class NewsletterModel extends AbstractModel implements UpdatedAtAwareModelInterf
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         if ($entryId === null) {
             $settings = $this->config->getSettings(Schema::MODULE_NAME);

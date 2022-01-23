@@ -10,6 +10,11 @@ namespace ACP3\Modules\ACP3\Seo\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Seo;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditPost extends Core\Controller\AbstractWidgetAction
 {
@@ -23,10 +28,12 @@ class EditPost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     *
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+    public function __invoke(int $id): array|string|JsonResponse|RedirectResponse|Response
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

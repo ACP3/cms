@@ -17,19 +17,16 @@ class XML
     /**
      * Cache for already parsed XML files.
      *
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $info = [];
+    protected array $info = [];
 
     /**
      * Parses the given XML file and returns it as an array.
      *
-     * @param string $path
-     * @param string $xpath
-     *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function parseXmlFile($path, $xpath)
+    public function parseXmlFile(string $path, string $xpath): array
     {
         if (!empty($this->info[$path][$xpath])) {
             return $this->info[$path][$xpath];
@@ -68,12 +65,7 @@ class XML
         return $this->info[$path][$xpath];
     }
 
-    /**
-     * @param string $path
-     * @param string $xpath
-     * @param string $key
-     */
-    protected function parseAttributes(\SimpleXMLElement $attributes, $path, $xpath, $key)
+    protected function parseAttributes(\SimpleXMLElement $attributes, string $path, string $xpath, string $key): void
     {
         foreach ($attributes as $attrKey => $attrValue) {
             if ($key === 'version' && $attrKey === 'core' && (string) $attrValue === 'true') {

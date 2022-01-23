@@ -19,7 +19,7 @@ class InsertUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event): void
     {
         if ($this->acl->hasPermission('admin/seo/index/create')) {
             $formData = $event->getRawData();

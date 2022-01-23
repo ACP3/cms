@@ -21,6 +21,8 @@ class Datepicker extends AbstractFunction
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @throws \SmartyException
      * @throws \Exception
      */
@@ -39,6 +41,11 @@ class Datepicker extends AbstractFunction
         return $smarty->smarty->fetch('asset:System/Partials/datepicker.tpl');
     }
 
+    /**
+     * @param array<string, mixed> $params
+     *
+     * @return array<string, mixed>
+     */
     private function mergeParameters(array $params): array
     {
         $defaults = [
@@ -54,6 +61,11 @@ class Datepicker extends AbstractFunction
 
     /**
      * Displays an input field with an associated datepicker.
+     *
+     * @param string[]|string $name
+     * @param string[]|string $value
+     *
+     * @return array<string, mixed>
      *
      * @throws \Exception
      */
@@ -112,6 +124,11 @@ class Datepicker extends AbstractFunction
     }
 
     /**
+     * @param string[] $name
+     * @param string[] $value
+     *
+     * @return array<string, string>
+     *
      * @throws \Exception
      */
     private function fetchRangeDatePickerValues(array $name, array $value, bool $showTime): array
@@ -161,6 +178,9 @@ class Datepicker extends AbstractFunction
         return $this->settings->getSettings(Schema::MODULE_NAME)[$showTime ? 'date_format_long' : 'date_format_short'];
     }
 
+    /**
+     * @param string[]|string $name
+     */
     private function isRange(array|string $name): bool
     {
         return \is_array($name) === true;

@@ -17,6 +17,11 @@ class SearchResultsViewProvider
     {
     }
 
+    /**
+     * @param array<string, array<string, mixed>[]> $searchResults
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(
         array $searchResults,
         string $searchTerm

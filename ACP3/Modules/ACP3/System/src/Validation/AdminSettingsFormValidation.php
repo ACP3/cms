@@ -13,6 +13,8 @@ use ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidatio
 class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
+     * {@inheritDoc}
+     *
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      */
     public function validate(array $formData): void
@@ -20,7 +22,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
         $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);
 
         $this->validateGeneralSettings($formData);
-        $this->validateSiteSitleSettings($formData);
+        $this->validateSiteTitleSettings($formData);
         $this->validateDateSettings($formData);
         $this->validateMaintenanceSettings($formData);
         $this->validatePerformanceSettings($formData);
@@ -29,6 +31,9 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
         $this->validator->validate();
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     private function validateGeneralSettings(array $formData): void
     {
         $this->validator
@@ -85,7 +90,10 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
-    private function validateSiteSitleSettings(array $formData): void
+    /**
+     * @param array<string, mixed> $formData
+     */
+    private function validateSiteTitleSettings(array $formData): void
     {
         $this->validator
             ->addConstraint(
@@ -120,6 +128,9 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     private function validateDateSettings(array $formData): void
     {
         $this->validator
@@ -149,6 +160,9 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     private function validateMaintenanceSettings(array $formData): void
     {
         $this->validator
@@ -173,6 +187,9 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     private function validatePerformanceSettings(array $formData): void
     {
         $this->validator
@@ -208,6 +225,9 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
             );
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     private function validateMailerSettings(array $formData): void
     {
         $this->validator

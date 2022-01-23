@@ -29,7 +29,7 @@ class IntegerColumnRendererTest extends AbstractColumnRendererTest
         $this->compareResults($expected);
     }
 
-    public function testValidFieldStringToIntegerConversion()
+    public function testValidFieldStringToIntegerConversion(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],

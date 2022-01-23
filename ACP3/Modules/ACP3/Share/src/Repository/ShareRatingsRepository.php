@@ -23,6 +23,8 @@ class ShareRatingsRepository extends \ACP3\Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getRatingStatistics(int $shareId): array

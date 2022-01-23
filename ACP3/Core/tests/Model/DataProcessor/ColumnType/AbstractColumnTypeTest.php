@@ -19,7 +19,7 @@ abstract class AbstractColumnTypeTest extends \PHPUnit\Framework\TestCase
         $this->instantiateClassToTest();
     }
 
-    abstract protected function instantiateClassToTest();
+    abstract protected function instantiateClassToTest(): void;
 
-    abstract public function testDoEscape();
+    abstract public function testDoEscape(): void;
 }

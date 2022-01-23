@@ -24,7 +24,7 @@ class Router implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function route($path, $isAbsolute = false, $isSecure = null)
+    public function route(string $path, bool $isAbsolute = false, ?bool $isSecure = null): string
     {
         if ($path !== '') {
             $path = $this->preparePath($path);
@@ -117,6 +117,9 @@ class Router implements RouterInterface
             && $this->isAdminUri($path) === false;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getSystemSettings(): array
     {
         return $this->config->getSettings(Schema::MODULE_NAME);

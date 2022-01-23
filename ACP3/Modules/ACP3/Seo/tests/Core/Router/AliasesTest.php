@@ -40,14 +40,19 @@ class AliasesTest extends TestCase
 
     /**
      * @dataProvider uriAliasDataProvider()
+     *
+     * @param array<string, array<string, string>> $expectedAliasCache
      */
-    public function testGetUriAlias(string $path, string $uriAlias, bool $emptyOnNoResult, array $expectedAliasCache)
+    public function testGetUriAlias(string $path, string $uriAlias, bool $emptyOnNoResult, array $expectedAliasCache): void
     {
         $this->setUpSeoCacheExpectations($expectedAliasCache);
 
         self::assertEquals($uriAlias, $this->aliases->getUriAlias($path, $emptyOnNoResult));
     }
 
+    /**
+     * @return mixed[]
+     */
     public function uriAliasDataProvider(): array
     {
         return [
@@ -86,7 +91,10 @@ class AliasesTest extends TestCase
         ];
     }
 
-    private function setUpSeoCacheExpectations(array $expectedReturn)
+    /**
+     * @param array<string, array<string, mixed>> $expectedReturn
+     */
+    private function setUpSeoCacheExpectations(array $expectedReturn): void
     {
         $this->seoInformationServiceMock
             ->expects(self::once())
@@ -94,7 +102,7 @@ class AliasesTest extends TestCase
             ->willReturn($expectedReturn);
     }
 
-    public function testUriAliasExistsNoAliasExists()
+    public function testUriAliasExistsNoAliasExists(): void
     {
         $this->setUpSeoCacheExpectations([]);
 
@@ -102,7 +110,7 @@ class AliasesTest extends TestCase
         self::assertFalse($this->aliases->uriAliasExists($path));
     }
 
-    public function testUriAliasExistsAliasExists()
+    public function testUriAliasExistsAliasExists(): void
     {
         $this->setUpSeoCacheExpectations([
             'foo/bar/baz/' => [

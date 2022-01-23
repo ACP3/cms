@@ -22,6 +22,9 @@ class AdminSettingsViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $systemSettings = $this->settings->getSettings(SystemSchema::MODULE_NAME);
@@ -95,6 +98,12 @@ class AdminSettingsViewProvider
         ];
     }
 
+    /**
+     * @return array<string, mixed>[]
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     private function fetchWysiwygEditors(string $currentWysiwygEditor): array
     {
         $wysiwyg = [];
@@ -110,6 +119,9 @@ class AdminSettingsViewProvider
         return $this->formsHelper->choicesGenerator('wysiwyg', $wysiwyg, $currentWysiwygEditor);
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     private function fetchLanguages(string $currentLanguage): array
     {
         $languages = [];

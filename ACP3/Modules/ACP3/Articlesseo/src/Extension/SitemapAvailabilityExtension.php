@@ -26,10 +26,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         parent::__construct($router, $metaStatements);
     }
 
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return Schema::MODULE_NAME;
     }
@@ -39,7 +36,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function fetchSitemapUrls($isSecure = null)
+    public function fetchSitemapUrls(?bool $isSecure = null): void
     {
         $this->addUrl('articles/index/index', null, $isSecure);
 

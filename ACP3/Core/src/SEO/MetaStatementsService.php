@@ -117,6 +117,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return $description . $postfix;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getSettings(): array
     {
         return [

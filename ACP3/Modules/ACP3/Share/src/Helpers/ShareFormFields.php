@@ -22,6 +22,8 @@ class ShareFormFields
     /**
      * Returns the sharing form fields.
      *
+     * @return array<string, array<string, mixed[]>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function formFields(string $path = ''): array
@@ -86,11 +88,17 @@ class ShareFormFields
         return $sharingInfo;
     }
 
+    /**
+     * @param string[] $services
+     */
     private function hasCustomizedServices(array $services): bool
     {
         return !empty($services) && $services !== $this->socialServices->getActiveServices();
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getAvailableServices(): array
     {
         $services = [];
@@ -101,6 +109,11 @@ class ShareFormFields
         return $services;
     }
 
+    /**
+     * @param string[] $services
+     *
+     * @return string[]
+     */
     private function getCurrentServices(array $services): array
     {
         return $services ?: $this->socialServices->getActiveServices();

@@ -12,87 +12,57 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Title
 {
-    /**
-     * @var string
-     */
-    protected $pageTitle = '';
-    /**
-     * @var string
-     */
-    protected $pageTitlePostfix = '';
-    /**
-     * @var string
-     */
-    protected $pageTitlePrefix = '';
-    /**
-     * @var string
-     */
-    protected $pageTitleSeparator = '-';
-    /**
-     * @var string
-     */
-    private $metaTitle = '';
-    /**
-     * @var string
-     */
-    protected $siteTitleSeparator = '|';
-    /**
-     * @var string
-     */
-    protected $siteTitle = '';
-    /**
-     * @var string|null
-     */
-    private $siteSubtitle;
+    protected string $pageTitle = '';
+
+    protected string $pageTitlePostfix = '';
+
+    protected string $pageTitlePrefix = '';
+
+    protected string $pageTitleSeparator = '-';
+
+    private string $metaTitle = '';
+
+    protected string $siteTitleSeparator = '|';
+
+    protected string $siteTitle = '';
+
+    private ?string $siteSubtitle = null;
 
     public function __construct(protected Steps $steps, protected EventDispatcherInterface $eventDispatcher)
     {
     }
 
-    /**
-     * @return string
-     */
-    public function getSiteTitle()
+    public function getSiteTitle(): string
     {
         return $this->siteTitle;
     }
 
     /**
-     * @param string $title
-     *
-     * @return $this
+     * @return static
      */
-    public function setSiteTitle($title)
+    public function setSiteTitle(string $title): self
     {
         $this->siteTitle = $title;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSiteSubtitle()
+    public function getSiteSubtitle(): ?string
     {
         return $this->siteSubtitle;
     }
 
     /**
-     * @param string $siteSubtitle
-     *
-     * @return $this
+     * @return static
      */
-    public function setSiteSubtitle($siteSubtitle)
+    public function setSiteSubtitle(string $siteSubtitle): self
     {
         $this->siteSubtitle = $siteSubtitle;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPageTitle()
+    public function getPageTitle(): string
     {
         if (empty($this->pageTitle)) {
             $steps = $this->steps->getBreadcrumb();
@@ -105,31 +75,24 @@ class Title
     }
 
     /**
-     * @param string $title
-     *
      * @return $this
      */
-    public function setPageTitle($title)
+    public function setPageTitle(string $title): self
     {
         $this->pageTitle = $title;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPageTitlePostfix()
+    public function getPageTitlePostfix(): string
     {
         return $this->pageTitlePostfix;
     }
 
     /**
-     * @param string $value
-     *
-     * @return $this
+     * @return static
      */
-    public function setPageTitlePostfix($value)
+    public function setPageTitlePostfix(string $value): self
     {
         $this->pageTitlePostfix = $value;
 
@@ -137,31 +100,24 @@ class Title
     }
 
     /**
-     * @param string $value
-     *
-     * @return $this
+     * @return static
      */
-    public function setPageTitlePrefix($value)
+    public function setPageTitlePrefix(string $value): self
     {
         $this->pageTitlePrefix = $value;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPageTitleSeparator()
+    public function getPageTitleSeparator(): string
     {
         return ' ' . $this->pageTitleSeparator . ' ';
     }
 
     /**
-     * @param string $value
-     *
-     * @return $this
+     * @return static
      */
-    public function setPageTitleSeparator($value)
+    public function setPageTitleSeparator(string $value): self
     {
         $this->pageTitleSeparator = $value;
 
@@ -174,29 +130,24 @@ class Title
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setMetaTitle(string $metaTitle)
+    public function setMetaTitle(string $metaTitle): self
     {
         $this->metaTitle = $metaTitle;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSiteTitleSeparator()
+    public function getSiteTitleSeparator(): string
     {
         return ' ' . $this->siteTitleSeparator . ' ';
     }
 
     /**
-     * @param string $value
-     *
-     * @return $this
+     * @return static
      */
-    public function setSiteTitleSeparator($value)
+    public function setSiteTitleSeparator(string $value): self
     {
         $this->siteTitleSeparator = $value;
 
@@ -205,10 +156,8 @@ class Title
 
     /**
      * Returns the title of the current page + the site title.
-     *
-     * @return string
      */
-    public function getSiteAndPageTitle()
+    public function getSiteAndPageTitle(): string
     {
         $this->eventDispatcher->dispatch(
             new GetSiteAndPageTitleBeforeEvent($this),

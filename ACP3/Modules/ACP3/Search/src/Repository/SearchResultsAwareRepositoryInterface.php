@@ -10,11 +10,7 @@ namespace ACP3\Modules\ACP3\Search\Repository;
 interface SearchResultsAwareRepositoryInterface
 {
     /**
-     * @param string $fields
-     * @param string $searchTerm
-     * @param string $sortDirection
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
-    public function getAllSearchResults($fields, $searchTerm, $sortDirection);
+    public function getAllSearchResults(string $fields, string $searchTerm, string $sortDirection): array;
 }

@@ -19,7 +19,7 @@ class InvalidatePageCacheOnModelAfterSaveListener implements EventSubscriberInte
     {
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
         if (!$this->canUsePageCache->canUsePageCache()) {
             return;

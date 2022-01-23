@@ -12,6 +12,7 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Login extends Core\Controller\AbstractWidgetAction
 {
@@ -25,7 +26,10 @@ class Login extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
-    public function __invoke(?string $redirect = null): array|JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    /**
+     * @return array<string, mixed>|JsonResponse|RedirectResponse
+     */
+    public function __invoke(?string $redirect = null): array|JsonResponse|RedirectResponse
     {
         if ($this->user->isAuthenticated() === true) {
             return $this->redirectResponse->toNewPage($this->applicationPath->getWebRoot());

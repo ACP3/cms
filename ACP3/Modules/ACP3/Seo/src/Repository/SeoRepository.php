@@ -26,11 +26,21 @@ class SeoRepository extends Core\Repository\AbstractRepository
         ) > 0;
     }
 
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function getOneByUri(string $uri): array
     {
         return $this->db->fetchAssoc('SELECT * FROM ' . $this->getTableName() . ' WHERE `uri` = ?', [$uri]);
     }
 
+    /**
+     * @return array<string, mixed>[]
+     *
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function getAllMetaTags(): array
     {
         return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE `alias` != "" OR `keywords` != "" OR `description` != "" OR `robots` != 0');

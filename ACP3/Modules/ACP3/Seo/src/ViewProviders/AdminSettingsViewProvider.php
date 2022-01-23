@@ -21,6 +21,9 @@ class AdminSettingsViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $seoSettings = $this->settings->getSettings(SeoSchema::MODULE_NAME);

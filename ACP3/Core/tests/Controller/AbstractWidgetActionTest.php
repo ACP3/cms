@@ -62,6 +62,9 @@ class AbstractWidgetActionTest extends TestCase
         self::assertEquals($templateOutput, $actual->getContent());
     }
 
+    /**
+     * @param array<string, mixed> $tplVars
+     */
     private function setUpViewMockExpectations(string $templateOutput, array $tplVars = []): void
     {
         $this->viewMock->expects(self::once())

@@ -30,6 +30,10 @@ class HashPasswordOnUserModelPrepareData implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @param array<string, mixed>      $updatedData
+     * @param array<string, mixed>|null $currentData
+     */
     private function needsNewPassword(array $updatedData, ?array $currentData): bool
     {
         if (!$currentData) {

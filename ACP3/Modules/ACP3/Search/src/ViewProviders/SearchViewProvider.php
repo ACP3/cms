@@ -18,6 +18,9 @@ class SearchViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $searchAreas = [

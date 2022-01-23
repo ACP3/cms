@@ -15,10 +15,7 @@ use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class Rate extends AbstractWidgetAction
 {
-    /**
-     * @var bool|null
-     */
-    private $alreadyRated;
+    private ?bool $alreadyRated = null;
 
     public function __construct(
         WidgetContext $context,
@@ -30,6 +27,8 @@ class Rate extends AbstractWidgetAction
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $id): array

@@ -10,6 +10,10 @@ namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
 use ACP3\Core;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Search;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class IndexPost extends Core\Controller\AbstractWidgetAction
 {
@@ -27,10 +31,12 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse
+     *
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(?string $searchTerm = ''): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(?string $searchTerm = ''): array|string|JsonResponse|RedirectResponse
     {
         return $this->actionHelper->handlePostAction(
             function () use ($searchTerm) {
@@ -55,6 +61,11 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
         );
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     *
+     * @return array<string, mixed>
+     */
     private function prepareFormData(array $formData): array
     {
         if (isset($formData['search_term']) === true) {
@@ -77,6 +88,11 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
         return $formData;
     }
 
+    /**
+     * @param string[] $modules
+     *
+     * @return array<string, array<string, mixed>[]>
+     */
     private function processSearchResults(array $modules, string $searchTerm, string $area, string $sort): array
     {
         $searchResults = [];

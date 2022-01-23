@@ -12,10 +12,7 @@ use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return Schema::MODULE_NAME;
     }
@@ -23,7 +20,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     /**
      * {@inheritdoc}
      */
-    public function fetchSitemapUrls($isSecure = null)
+    public function fetchSitemapUrls(?bool $isSecure = null): void
     {
         $routeNames = [
             'contact/index/index',

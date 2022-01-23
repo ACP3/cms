@@ -10,41 +10,17 @@ namespace ACP3\Core\View\Renderer;
 interface RendererInterface
 {
     /**
-     * @param null $value
+     * @param mixed[]|string $name
      *
-     * @return $this
+     * @return static
      */
-    public function assign(array|string $name, $value = null);
+    public function assign(array|string $name, mixed $value = null): self;
 
-    /**
-     * @param string|null $variableName
-     *
-     * @return mixed
-     */
-    public function getTemplateVars($variableName = null);
+    public function getTemplateVars(?string $variableName = null): mixed;
 
-    /**
-     * @param string      $template
-     * @param mixed       $cacheId
-     * @param mixed       $compileId
-     * @param object|null $parent
-     *
-     * @return string
-     */
-    public function fetch($template, $cacheId = null, $compileId = null, $parent = null);
+    public function fetch(string $template, ?string $cacheId = null, ?string $compileId = null, ?object $parent = null): string;
 
-    /**
-     * @param string      $template
-     * @param mixed       $cacheId
-     * @param mixed       $compileId
-     * @param object|null $parent
-     */
-    public function display($template, $cacheId = null, $compileId = null, $parent = null);
+    public function display(string $template, ?string $cacheId = null, ?string $compileId = null, ?object $parent = null): void;
 
-    /**
-     * @param string $template
-     *
-     * @return bool
-     */
-    public function templateExists($template);
+    public function templateExists(string $template): bool;
 }

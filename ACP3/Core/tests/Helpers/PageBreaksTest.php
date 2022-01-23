@@ -41,14 +41,17 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    protected function initializeMockObjects()
+    protected function initializeMockObjects(): void
     {
         $this->requestMock = $this->createMock(Request::class);
         $this->routerMock = $this->createMock(RouterInterface::class);
         $this->tocMock = $this->createMock(TableOfContents::class);
     }
 
-    public function splitTextIntoPagesDataProvider()
+    /**
+     * @return mixed[]
+     */
+    public function splitTextIntoPagesDataProvider(): array
     {
         $baseUrlPath = 'lorem/ipsum/dolor/id_1/';
 
@@ -103,7 +106,7 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->pageBreaks->splitTextIntoPages($sourceText, $baseUrlPath));
     }
 
-    private function setUpExpectations(int $currentPage, string $baseUrlPath)
+    private function setUpExpectations(int $currentPage, string $baseUrlPath): void
     {
         $this->requestMock
             ->expects(self::any())

@@ -18,13 +18,13 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 class Theme implements ThemePathInterface
 {
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
-    private $availableThemes = [];
+    private array $availableThemes = [];
     /**
-     * @var array
+     * @var array<string, string[]>
      */
-    private $sortedThemeDependencies = [];
+    private array $sortedThemeDependencies = [];
 
     public function __construct(private ApplicationPath $appPath, private SettingsInterface $settings, private XML $xml)
     {
@@ -77,11 +77,17 @@ class Theme implements ThemePathInterface
         return $this->settings->getSettings(Schema::MODULE_NAME)['design'];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getCurrentThemeDependencies(): array
     {
         return $this->getThemeDependencies($this->getCurrentTheme());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getThemeDependencies(string $themeName): array
     {
         if (!isset($this->sortedThemeDependencies[$themeName])) {

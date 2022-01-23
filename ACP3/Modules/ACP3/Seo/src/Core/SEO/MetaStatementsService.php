@@ -18,9 +18,9 @@ use ACP3\Modules\ACP3\Seo\Services\SeoInformationService;
 class MetaStatementsService extends CoreMetaStatementsService
 {
     /**
-     * @var array|null
+     * @var array<string, array<string, mixed>>|null
      */
-    private $aliasesCache;
+    private ?array $aliasesCache = null;
 
     public function __construct(
         RequestInterface $request,
@@ -32,6 +32,9 @@ class MetaStatementsService extends CoreMetaStatementsService
         parent::__construct($request, $router);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getSettings(): array
     {
         if (!$this->modules->isInstalled(Schema::MODULE_NAME)) {

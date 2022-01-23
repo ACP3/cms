@@ -21,7 +21,7 @@ class LoadModule extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         $pathArray = $this->convertPathToArray($params['module']);
         $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
@@ -34,6 +34,9 @@ class LoadModule extends AbstractFunction
         return $response;
     }
 
+    /**
+     * @return string[]
+     */
     protected function convertPathToArray(string $resource): array
     {
         $pathArray = explode('/', strtolower($resource));
@@ -48,6 +51,11 @@ class LoadModule extends AbstractFunction
         return $pathArray;
     }
 
+    /**
+     * @param array<string, mixed> $arguments
+     *
+     * @return string[]
+     */
     private function parseControllerActionArguments(array $arguments): array
     {
         if (isset($arguments['args']) && \is_array($arguments['args'])) {
@@ -59,6 +67,11 @@ class LoadModule extends AbstractFunction
         return $this->urlEncodeArguments($arguments);
     }
 
+    /**
+     * @param array<string, mixed> $arguments
+     *
+     * @return string[]
+     */
     private function urlEncodeArguments(array $arguments): array
     {
         return array_map(
@@ -67,6 +80,9 @@ class LoadModule extends AbstractFunction
         );
     }
 
+    /**
+     * @param array<string, string> $arguments
+     */
     private function esiInclude(string $path, array $arguments): string
     {
         $routeArguments = '';

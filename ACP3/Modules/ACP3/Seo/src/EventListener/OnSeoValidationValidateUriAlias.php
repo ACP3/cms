@@ -19,7 +19,7 @@ class OnSeoValidationValidateUriAlias implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event): void
     {
         if ($this->acl->hasPermission('admin/seo/index/create')) {
             $event

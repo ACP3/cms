@@ -15,10 +15,7 @@ class SiteTitle extends AbstractFunction
     {
     }
 
-    /**
-     * @return string
-     */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         return $this->title->getSiteTitle();
     }

@@ -19,7 +19,7 @@ class SetLayoutListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
         if ($this->request->getArea() === AreaEnum::AREA_WIDGET) {
             return;
@@ -34,6 +34,9 @@ class SetLayoutListener implements EventSubscriberInterface
         $this->iterateOverLayoutPaths($paths);
     }
 
+    /**
+     * @return string[]
+     */
     private function fetchLayoutPaths(string $layoutFileName, string $defaultLayoutName): array
     {
         return [

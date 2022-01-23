@@ -39,7 +39,7 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
         $this->compareResults($expected);
     }
 
-    public function testValidFieldWithMultipleLines()
+    public function testValidFieldWithMultipleLines(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['text'],

@@ -14,7 +14,7 @@ class JsSvgIconEvent extends Event
     /**
      * @var array<string, string>
      */
-    private $jsSvgIcons = [];
+    private array $jsSvgIcons = [];
 
     public function addIcon(string $iconIdentifier, string $iconPath): void
     {
@@ -23,6 +23,9 @@ class JsSvgIconEvent extends Event
         }
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getIcons(): array
     {
         return $this->jsSvgIcons;

@@ -22,7 +22,7 @@ class WYSIWYG extends AbstractFunction
      *
      * @throws \SmartyException
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         $params['id'] = !empty($params['id']) ? $params['id'] : $params['name'];
         $editorServiceId = $params['editor'] ?? null;

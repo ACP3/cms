@@ -42,15 +42,8 @@ class FormsTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider selectEntryDataProvider
-     *
-     * @param string $formFieldName
-     * @param mixed  $defaultValue
-     * @param mixed  $currentValue
-     * @param string $htmlAttribute
-     * @param mixed  $postValue
-     * @param string $expected
      */
-    public function testSelectEntry($formFieldName, $defaultValue, $currentValue, $htmlAttribute, $postValue, $expected)
+    public function testSelectEntry(string $formFieldName, mixed $defaultValue, mixed $currentValue, string $htmlAttribute, mixed $postValue, string $expected): void
     {
         $this->setUpRequestExpectations($formFieldName, $postValue);
 
@@ -60,11 +53,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @param string $formFieldName
-     * @param mixed  $postValue
-     */
-    private function setUpRequestExpectations($formFieldName, $postValue)
+    private function setUpRequestExpectations(string $formFieldName, mixed $postValue): void
     {
         $postValues = [];
         if ($postValue !== null) {
@@ -77,17 +66,19 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function selectEntryDataProvider()
+    public function selectEntryDataProvider(): array
     {
         return (new SelectEntryDataProvider())->getData();
     }
 
     /**
      * @dataProvider recordsPerPageDataProvider
+     *
+     * @param mixed[] $expected
      */
-    public function testRecordsPerPage(?int $currentValue, int $steps, int $maxValue, ?int $postValue, array $expected)
+    public function testRecordsPerPage(?int $currentValue, int $steps, int $maxValue, ?int $postValue, array $expected): void
     {
         $this->setUpRequestExpectations('entries', $postValue);
 
@@ -95,9 +86,9 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function recordsPerPageDataProvider()
+    public function recordsPerPageDataProvider(): array
     {
         return (new RecordsPerPageDataProvider())->getData();
     }
@@ -105,12 +96,9 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider choicesGeneratorDataProvider
      *
-     * @param mixed  $currentValue
-     * @param string $htmlAttribute
-     * @param mixed  $postValue
-     * @param array  $expected
+     * @param mixed[] $expected
      */
-    public function testChoicesGenerator($currentValue, $htmlAttribute, $postValue, $expected)
+    public function testChoicesGenerator(mixed $currentValue, string $htmlAttribute, mixed $postValue, array $expected): void
     {
         $this->setUpRequestExpectations('form_field', $postValue);
 
@@ -127,9 +115,9 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function choicesGeneratorDataProvider()
+    public function choicesGeneratorDataProvider(): array
     {
         return (new ChoicesGeneratorDataProvider())->getData();
     }
@@ -137,11 +125,9 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider checkboxGeneratorDataProvider
      *
-     * @param mixed $currentValue
-     * @param mixed $postValue
-     * @param array $expected
+     * @param mixed[] $expected
      */
-    public function testCheckboxGenerator($currentValue, $postValue, $expected)
+    public function testCheckboxGenerator(mixed $currentValue, mixed $postValue, array $expected): void
     {
         $this->setUpRequestExpectations('form_field', $postValue);
 
@@ -158,9 +144,9 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function checkboxGeneratorDataProvider()
+    public function checkboxGeneratorDataProvider(): array
     {
         return (new CheckboxGeneratorDataProvider())->getData();
     }

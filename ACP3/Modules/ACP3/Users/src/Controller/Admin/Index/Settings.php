@@ -19,6 +19,9 @@ class Settings extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         return ($this->adminSettingsViewProvider)();

@@ -33,7 +33,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
         );
     }
 
-    protected function initializeMockObjects()
+    protected function initializeMockObjects(): void
     {
         parent::initializeMockObjects();
 
@@ -265,35 +265,35 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbForFrontendControllerIndex()
+    public function testGetBreadcrumbForFrontendControllerIndex(): void
     {
         $this->setUpMenuItemRepositoryExpectations();
 
         parent::testGetBreadcrumbForFrontendControllerIndex();
     }
 
-    public function testGetBreadcrumbForFrontendController()
+    public function testGetBreadcrumbForFrontendController(): void
     {
         $this->setUpMenuItemRepositoryExpectations();
 
         parent::testGetBreadcrumbForFrontendController();
     }
 
-    public function testGetBreadcrumbForFrontendWithExistingSteps()
+    public function testGetBreadcrumbForFrontendWithExistingSteps(): void
     {
         $this->setUpMenuItemRepositoryExpectations();
 
         parent::testGetBreadcrumbForFrontendWithExistingSteps();
     }
 
-    public function testAddMultipleSameSteps()
+    public function testAddMultipleSameSteps(): void
     {
         $this->setUpMenuItemRepositoryExpectations();
 
         parent::testReplaceAncestor();
     }
 
-    public function testReplaceAncestor()
+    public function testReplaceAncestor(): void
     {
         $this->setUpMenuItemRepositoryExpectations();
 

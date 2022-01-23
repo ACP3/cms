@@ -21,7 +21,7 @@ class RedirectMessage extends AbstractFunction
      *
      * @throws \Exception
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         $smarty->smarty->assign('redirect', $this->redirectMessages->getMessage());
 

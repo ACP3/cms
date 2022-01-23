@@ -12,7 +12,7 @@ use ACP3\Core\View\Renderer\Smarty\PluginInterface;
 abstract class AbstractBlock implements PluginInterface
 {
     /**
-     * @return string
+     * @param array<string, mixed> $params
      */
-    abstract public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat);
+    abstract public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat): string;
 }

@@ -12,14 +12,14 @@ use ACP3\Modules\ACP3\Search\Extension\SearchAvailabilityExtensionInterface;
 class SearchAvailabilityRegistrar
 {
     /**
-     * @var SearchAvailabilityExtensionInterface[]
+     * @var array<string, SearchAvailabilityExtensionInterface>
      */
-    protected $availableModules = [];
+    protected array $availableModules = [];
 
     /**
-     * @return $this
+     * @return static
      */
-    public function registerModule(SearchAvailabilityExtensionInterface $searchAvailability)
+    public function registerModule(SearchAvailabilityExtensionInterface $searchAvailability): self
     {
         $this->availableModules[$searchAvailability->getModuleName()] = $searchAvailability;
 
@@ -27,17 +27,17 @@ class SearchAvailabilityRegistrar
     }
 
     /**
-     * @return SearchAvailabilityExtensionInterface[]
+     * @return array<string, SearchAvailabilityExtensionInterface>
      */
-    public function getAvailableModules()
+    public function getAvailableModules(): array
     {
         return $this->availableModules;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getAvailableModuleNames()
+    public function getAvailableModuleNames(): array
     {
         return array_keys($this->availableModules);
     }

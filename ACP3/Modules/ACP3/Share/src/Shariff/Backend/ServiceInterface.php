@@ -13,11 +13,17 @@ interface ServiceInterface
 {
     public function getRequest(string $url): RequestInterface;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function extractCount(array $data): int;
 
     public function getName(): string;
 
     public function filterResponse(string $content): string;
 
+    /**
+     * @param array<string, mixed> $config
+     */
     public function setConfig(array $config): void;
 }

@@ -18,7 +18,7 @@ class MenuItemsModel extends AbstractNestedSetModel
     /**
      * {@inheritdoc}
      */
-    public function save(array $rawData, $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData['target'] = $rawData['display'] == 0 ? 1 : $rawData['target'];
 

@@ -22,7 +22,7 @@ class Asset extends AbstractResource
      * @param string $source template source
      * @param int    $mtime  template modification timestamp (epoch)
      */
-    protected function fetch($name, &$source, &$mtime)
+    protected function fetch($name, &$source, &$mtime): void
     {
         $asset = $this->fileResolver->resolveTemplatePath($name);
 
@@ -42,7 +42,7 @@ class Asset extends AbstractResource
      *
      * @return int timestamp (epoch) the template was modified
      */
-    protected function fetchTimestamp($name)
+    protected function fetchTimestamp($name): int
     {
         $asset = $this->fileResolver->resolveTemplatePath($name);
 

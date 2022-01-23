@@ -56,7 +56,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    protected function initializeMockObjects()
+    protected function initializeMockObjects(): void
     {
         $this->containerMock = $this->createMock(Container::class);
         $this->translatorMock = $this->createMock(Translator::class);
@@ -65,7 +65,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
     }
 
-    public function testGetBreadcrumbForAdminControllerIndex()
+    public function testGetBreadcrumbForAdminControllerIndex(): void
     {
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_ADMIN,
@@ -128,21 +128,21 @@ class StepsTest extends \PHPUnit\Framework\TestCase
             ->willReturn($serviceExists);
     }
 
-    protected function setUpRouterMockExpectations()
+    protected function setUpRouterMockExpectations(): void
     {
         $this->routerMock->expects(self::atLeastOnce())
             ->method('route')
             ->willReturnCallback(fn ($path) => '/' . $path . (!preg_match('=/$=', $path) ? '/' : ''));
     }
 
-    protected function setUpTranslatorMockExpectations(int $callCount = 1)
+    protected function setUpTranslatorMockExpectations(int $callCount = 1): void
     {
         $this->translatorMock->expects(self::atLeast($callCount))
             ->method('t')
             ->willReturnCallback(fn ($module, $phrase) => strtoupper('{' . $module . '_' . $phrase . '}'));
     }
 
-    public function testGetBreadcrumbForAdmin()
+    public function testGetBreadcrumbForAdmin(): void
     {
         $this->setUpContainerMockExpectations(
             'foo.controller.admin.details.index',
@@ -171,7 +171,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbForAdminWithExistingSteps()
+    public function testGetBreadcrumbForAdminWithExistingSteps(): void
     {
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_ADMIN,
@@ -198,7 +198,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbForFrontendControllerIndex()
+    public function testGetBreadcrumbForFrontendControllerIndex(): void
     {
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_FRONTEND,
@@ -219,7 +219,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbForFrontendController()
+    public function testGetBreadcrumbForFrontendController(): void
     {
         $this->setUpContainerMockExpectations(
             'foo.controller.frontend.details.index',
@@ -248,7 +248,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbForFrontendWithExistingSteps()
+    public function testGetBreadcrumbForFrontendWithExistingSteps(): void
     {
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_FRONTEND,
@@ -271,7 +271,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testAddMultipleSameSteps()
+    public function testAddMultipleSameSteps(): void
     {
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_FRONTEND,
@@ -296,7 +296,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testReplaceAncestor()
+    public function testReplaceAncestor(): void
     {
         $this->setUpRequestMockExpectations(
             AreaEnum::AREA_FRONTEND,

@@ -21,6 +21,8 @@ class MetaFormFields
 
     /**
      * Returns the SEO form fields.
+     *
+     * @return array<string, mixed>
      */
     public function formFields(string $path = ''): array
     {
@@ -53,6 +55,9 @@ class MetaFormFields
         ];
     }
 
+    /**
+     * @return string[]
+     */
     protected function getRobotsChoicesGeneratorValues(): array
     {
         return [

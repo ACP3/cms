@@ -17,37 +17,24 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
     }
 
     /**
-     * @param string $searchTerm
-     * @param string $areas
-     * @param string $sortDirection
-     *
-     * @return array
+     * {@inheritDoc}
      */
-    public function fetchSearchResults($searchTerm, $areas, $sortDirection)
+    public function fetchSearchResults(string $searchTerm, string $areas, string $sortDirection): array
     {
         $results = $this->repository->getAllSearchResults(
             $this->mapSearchAreasToFields($areas),
             $searchTerm,
             $sortDirection
         );
-        $cResults = \count($results);
 
-        for ($i = 0; $i < $cResults; ++$i) {
-            $results[$i]['hyperlink'] = $this->router->route(sprintf($this->getRouteName(), $results[$i]['id']));
+        foreach ($results as $i => $iValue) {
+            $results[$i]['hyperlink'] = $this->router->route(sprintf($this->getRouteName(), $iValue['id']));
         }
 
         return $results;
     }
 
-    /**
-     * @param string $area
-     *
-     * @return string
-     */
-    abstract protected function mapSearchAreasToFields($area);
+    abstract protected function mapSearchAreasToFields(string $area): string;
 
-    /**
-     * @return string
-     */
-    abstract protected function getRouteName();
+    abstract protected function getRouteName(): string;
 }

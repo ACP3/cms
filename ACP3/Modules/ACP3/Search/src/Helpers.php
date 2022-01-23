@@ -19,9 +19,9 @@ class Helpers
     /**
      * Gibt die für die Suche verfügbaren Module zurück.
      *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
-    public function getModules()
+    public function getModules(): array
     {
         $searchModules = [];
         foreach ($this->availableModulesRegistrar->getAvailableModuleNames() as $module) {

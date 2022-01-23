@@ -19,7 +19,7 @@ class OnLayoutSeoRenderFormFieldsListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(TemplateEvent $event)
+    public function __invoke(TemplateEvent $event): void
     {
         if ($this->acl->hasPermission('admin/seo/index/create')) {
             $parameters = $event->getParameters();

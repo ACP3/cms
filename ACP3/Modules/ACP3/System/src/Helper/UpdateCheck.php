@@ -24,6 +24,9 @@ class UpdateCheck
     {
     }
 
+    /**
+     * @return array<string, string|bool>
+     */
     public function checkForNewVersion(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
@@ -47,6 +50,9 @@ class UpdateCheck
         return $this->date->timestamp() - $lastUpdateTimestamp >= self::UPDATE_CHECK_DATE_OFFSET;
     }
 
+    /**
+     * @return array<string, string|bool>
+     */
     private function doUpdateCheck(): array
     {
         try {
@@ -75,6 +81,11 @@ class UpdateCheck
         );
     }
 
+    /**
+     * @param array<string, string|bool> $update
+     *
+     * @throws \Exception
+     */
     private function saveUpdateSettings(array $update): bool
     {
         $data = [

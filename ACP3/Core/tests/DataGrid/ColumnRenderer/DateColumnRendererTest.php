@@ -14,23 +14,22 @@ use ACP3\Core\I18n\Translator;
 
 class DateColumnRendererTest extends AbstractColumnRendererTest
 {
-    protected $langMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var Translator|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $configMock;
+    private $langMock;
     /**
      * @var DateTranslator
      */
-    protected $dateTranslator;
+    private $dateTranslator;
     /**
      * @var Date
      */
-    protected $date;
+    private $date;
     /**
      * @var DateRange
      */
-    protected $dateRange;
+    private $dateRange;
 
     protected function setup(): void
     {
@@ -70,7 +69,7 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
         $this->compareResults($expected);
     }
 
-    public function testValidFieldWithDateRange()
+    public function testValidFieldWithDateRange(): void
     {
         $this->columnData = array_merge($this->columnData, [
             'fields' => ['start', 'end'],

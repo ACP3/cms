@@ -33,6 +33,8 @@ abstract class AbstractWYSIWYG
     protected string $value;
     /**
      * Config-Array des WYSIWYG-Editors.
+     *
+     * @var array<string, mixed>
      */
     protected array $config = [];
 

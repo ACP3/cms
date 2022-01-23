@@ -35,7 +35,7 @@ class RouterTest extends \ACP3\Modules\ACP3\System\Core\Router\RouterTest
         parent::initializeMockObjects();
     }
 
-    public function testRouteWithNoUriAlias()
+    public function testRouteWithNoUriAlias(): void
     {
         $path = 'news/index/index/';
 
@@ -49,7 +49,7 @@ class RouterTest extends \ACP3\Modules\ACP3\System\Core\Router\RouterTest
         self::assertEquals($expected, $this->router->route($path));
     }
 
-    public function testRouteWithExistingUriAlias()
+    public function testRouteWithExistingUriAlias(): void
     {
         $this->setUpRequestMockExpectations();
         $this->setAppPathMockExpectations(0, 1);

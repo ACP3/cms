@@ -21,7 +21,7 @@ class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener implements EventSubscri
     /**
      * If the current page has a custom meta title set, use it (instead of the default one).
      */
-    public function __invoke(GetSiteAndPageTitleBeforeEvent $event)
+    public function __invoke(GetSiteAndPageTitleBeforeEvent $event): void
     {
         $event->getTitle()->setMetaTitle($this->metaStatements->getTitle($this->request->getQuery()));
     }

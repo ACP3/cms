@@ -11,6 +11,9 @@ use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Users;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Logout extends Core\Controller\AbstractWidgetAction
 {
@@ -26,9 +29,11 @@ class Logout extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|JsonResponse|RedirectResponse
+     *
+     * @throws Exception
      */
-    public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(): array|JsonResponse|RedirectResponse
     {
         if (!$this->user->isAuthenticated()) {
             return $this->redirectResponse->toNewPage($this->applicationPath->getWebRoot());

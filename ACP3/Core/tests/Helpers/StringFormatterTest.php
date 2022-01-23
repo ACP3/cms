@@ -11,10 +11,7 @@ use Cocur\Slugify\Slugify;
 
 class StringFormatterTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var string
-     */
-    private $shortenEntryText = <<<HTML
+    private string $shortenEntryText = <<<HTML
 <p>It looks like that the installation of the ACP3 CMS was successful.<br>
 This is just a test news, you can now edit or delete in the administration area.</p>
 <div class="panel panel-default">
@@ -37,7 +34,10 @@ HTML;
         $this->stringFormatter = new StringFormatter(new Slugify());
     }
 
-    public function makeStringUrlSafeDataProvider()
+    /**
+     * @return string[][]
+     */
+    public function makeStringUrlSafeDataProvider(): array
     {
         return [
             'german_umlauts' => ['äüöumß', 'aeueoeumss'],
@@ -51,16 +51,16 @@ HTML;
 
     /**
      * @dataProvider makeStringUrlSafeDataProvider
-     *
-     * @param string $value
-     * @param string $expected
      */
-    public function testMakeStringUrlSafe($value, $expected)
+    public function testMakeStringUrlSafe(string $value, string $expected): void
     {
         self::assertEquals($expected, $this->stringFormatter->makeStringUrlSafe($value));
     }
 
-    public function nl2pDataProvider()
+    /**
+     * @return mixed[]
+     */
+    public function nl2pDataProvider(): array
     {
         return [
             'single_line' => [
@@ -93,17 +93,16 @@ HTML;
 
     /**
      * @dataProvider nl2pDataProvider
-     *
-     * @param string $value
-     * @param bool   $useLineBreaks
-     * @param string $expected
      */
-    public function testNl2p($value, $useLineBreaks, $expected)
+    public function testNl2p(string $value, bool $useLineBreaks, string $expected): void
     {
         self::assertEquals($expected, $this->stringFormatter->nl2p($value, $useLineBreaks));
     }
 
-    public function shortenEntryDataProvider()
+    /**
+     * @return mixed[]
+     */
+    public function shortenEntryDataProvider(): array
     {
         return [
             'empty' => [
@@ -138,18 +137,13 @@ This is just a test news, you ca...',
 
     /**
      * @dataProvider shortenEntryDataProvider
-     *
-     * @param string $value
-     * @param int    $offset
-     * @param string $append
-     * @param string $expected
      */
-    public function testShortenEntry($value, $offset, $append, $expected)
+    public function testShortenEntry(string $value, int $offset, string $append, string $expected): void
     {
         self::assertEquals($expected, $this->stringFormatter->shortenEntry($value, 100, $offset, $append));
     }
 
-    public function testShortenEntryInvalidArgumentException()
+    public function testShortenEntryInvalidArgumentException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The offset should not be bigger then the to be displayed characters.');

@@ -14,7 +14,7 @@ class SeoInformationService
     /**
      * @var array<string, array<string, mixed>>|null
      */
-    private $cache;
+    private ?array $cache = null;
 
     public function __construct(private SeoRepository $seoRepository)
     {
@@ -24,6 +24,8 @@ class SeoInformationService
      * Returns all the available meta information regarding a route.
      *
      * @return array<string, array<string, mixed>>
+     *
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getAllSeoInformation(): array
     {

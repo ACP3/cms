@@ -10,17 +10,15 @@ namespace ACP3\Modules\ACP3\System\Helper\UpdateCheck;
 class UpdateFileParser
 {
     /**
-     * @param string $path
-     *
-     * @return array
+     * @return array<string, string>
      *
      * @throws \RuntimeException
      */
-    public function parseUpdateFile($path)
+    public function parseUpdateFile(string $path): array
     {
         $file = @file_get_contents($path);
         if ($file !== false) {
-            list($latestVersion, $url) = explode('||', $file);
+            [$latestVersion, $url] = explode('||', $file);
 
             return [
                 'latest_version' => $latestVersion,

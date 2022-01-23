@@ -10,7 +10,7 @@ namespace ACP3\Core\DataProvider;
 interface DataProviderInterface
 {
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getData();
+    public function getData(): array;
 }

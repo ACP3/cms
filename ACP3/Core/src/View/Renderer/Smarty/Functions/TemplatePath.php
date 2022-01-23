@@ -18,7 +18,7 @@ class TemplatePath extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         return $this->fileResolver->resolveTemplatePath($params['path']);
     }

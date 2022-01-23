@@ -22,7 +22,7 @@ class SaveSharingInfoOnModelAfterSaveListener implements EventSubscriberInterfac
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event): void
     {
         if ($this->acl->hasPermission('admin/share/index/create')) {
             $formData = $event->getRawData();

@@ -9,12 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class RawColumnTypeTest extends AbstractColumnTypeTest
 {
-    protected function instantiateClassToTest()
+    protected function instantiateClassToTest(): void
     {
         $this->columnType = new RawColumnType();
     }
 
-    public function testDoEscape()
+    public function testDoEscape(): void
     {
         self::assertSame('foo', $this->columnType->doEscape('foo'));
         self::assertSame(9, $this->columnType->doEscape(9));

@@ -27,12 +27,12 @@ class ResultsPerPageTest extends \PHPUnit\Framework\TestCase
         $this->resultsPerPage = new ResultsPerPage($this->settingsMock);
     }
 
-    private function setUpMockObjects()
+    private function setUpMockObjects(): void
     {
         $this->settingsMock = $this->createMock(SettingsInterface::class);
     }
 
-    public function testGetResultsPerPageWithoutFallback()
+    public function testGetResultsPerPageWithoutFallback(): void
     {
         $this->settingsMock
             ->expects(self::once())
@@ -44,7 +44,7 @@ class ResultsPerPageTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->resultsPerPage->getResultsPerPage('news'));
     }
 
-    public function testGetResultsPerPageWithFallback()
+    public function testGetResultsPerPageWithFallback(): void
     {
         $this->settingsMock
             ->expects(self::exactly(2))

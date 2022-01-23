@@ -16,6 +16,9 @@ class AdminModulesViewProvider
     {
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function __invoke(): array
     {
         $installedModules = $newModules = [];

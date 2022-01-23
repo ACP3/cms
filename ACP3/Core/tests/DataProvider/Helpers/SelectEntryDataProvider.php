@@ -11,10 +11,7 @@ use ACP3\Core\DataProvider\DataProviderInterface;
 
 class SelectEntryDataProvider implements DataProviderInterface
 {
-    /**
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         return [
             'not_selected' => [

@@ -21,14 +21,14 @@ class PrefixUriTest extends AbstractPluginTest
         $this->plugin = new PrefixUri();
     }
 
-    public function testAddUriPrefix()
+    public function testAddUriPrefix(): void
     {
         $value = 'www.example.com';
         $expected = 'http://www.example.com';
         self::assertEquals($expected, $this->plugin->__invoke($value));
     }
 
-    public function testAddUriPrefixNotNeeded()
+    public function testAddUriPrefixNotNeeded(): void
     {
         $value = 'http://www.example.com';
         $expected = 'http://www.example.com';

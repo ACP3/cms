@@ -20,7 +20,7 @@ class ValidateSharingInfoOnValidationInfo implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event): void
     {
         if ($this->acl->hasPermission('admin/share/index/create')) {
             if (isset($event->getFormData()['share_active'], $event->getFormData()['share_customize_services'])) {

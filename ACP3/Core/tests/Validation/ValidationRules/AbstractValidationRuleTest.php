@@ -36,14 +36,18 @@ abstract class AbstractValidationRuleTest extends TestCase
         $container->set($this->validationRule::class, $this->validationRule);
     }
 
+    /**
+     * @return array<string, mixed[]>
+     */
     abstract public function validationRuleProvider(): array;
 
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param mixed $data
+     * @param string[]|string|null $field
+     * @param mixed[]              $extra
      */
-    public function testValidationRule($data, array|string|null $field, array $extra, bool $expected): void
+    public function testValidationRule(mixed $data, array|string|null $field, array $extra, bool $expected): void
     {
         self::assertEquals($expected, $this->validationRule->isValid($data, $field, $extra));
     }
@@ -51,9 +55,10 @@ abstract class AbstractValidationRuleTest extends TestCase
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param mixed $data
+     * @param string[]|string|null $field
+     * @param mixed[]              $extra
      */
-    public function testValidate($data, array|string|null $field, array $extra, bool $expected): void
+    public function testValidate(mixed $data, array|string|null $field, array $extra, bool $expected): void
     {
         if ($expected === true) {
             $this->validator->expects(self::never())

@@ -16,7 +16,7 @@ class Breadcrumb extends AbstractFunction
     {
     }
 
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty)
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         $smarty->smarty->assign('breadcrumb', $this->breadcrumb->getBreadcrumb());
 

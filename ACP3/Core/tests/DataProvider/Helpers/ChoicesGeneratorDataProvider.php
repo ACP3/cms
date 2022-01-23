@@ -11,10 +11,7 @@ use ACP3\Core\DataProvider\DataProviderInterface;
 
 class ChoicesGeneratorDataProvider implements DataProviderInterface
 {
-    /**
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         return [
             'test-not-selected' => [

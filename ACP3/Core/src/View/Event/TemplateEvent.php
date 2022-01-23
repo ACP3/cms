@@ -11,15 +11,18 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class TemplateEvent extends Event
 {
-    /**
-     * @var string
-     */
-    private $content = '';
+    private string $content = '';
 
+    /**
+     * @param mixed[] $parameters
+     */
     public function __construct(private array $parameters)
     {
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getParameters(): array
     {
         return $this->parameters;

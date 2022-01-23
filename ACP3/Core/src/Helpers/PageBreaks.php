@@ -17,6 +17,8 @@ class PageBreaks
 
     /**
      * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten.
+     *
+     * @return array<string, mixed>
      */
     public function splitTextIntoPages(string $text, string $baseUrlPath): array
     {
@@ -41,6 +43,9 @@ class PageBreaks
         return '/<hr(.+)class="page-break"(.*)(\/>|>)/iU';
     }
 
+    /**
+     * @param string[] $pages
+     */
     private function getCurrentPage(array $pages): int
     {
         $currentPage = (int) $this->request->getParameters()->get('page', 1);

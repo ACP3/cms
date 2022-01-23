@@ -12,7 +12,7 @@ class Javascripts extends AbstractBlock
     /**
      * {@inheritdoc}
      */
-    public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat)
+    public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat): string
     {
         if (!$repeat && isset($content)) {
             return '@@@SMARTY:JAVASCRIPTS:BEGIN@@@' . trim($content) . '@@@SMARTY:JAVASCRIPTS:END@@@';

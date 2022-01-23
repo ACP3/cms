@@ -22,7 +22,7 @@ class OnLayoutShareRenderFormFieldsListener implements EventSubscriberInterface
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(TemplateEvent $event)
+    public function __invoke(TemplateEvent $event): void
     {
         if ($this->acl->hasPermission('admin/share/index/create')) {
             $parameters = $event->getParameters();

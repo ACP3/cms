@@ -41,6 +41,8 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
+     * @return array<string, mixed>|JsonResponse|RedirectResponse
+     *
      * @throws DBALException
      */
     public function __invoke(?string $action = null, ?string $dir = null): array|JsonResponse|RedirectResponse
@@ -63,6 +65,8 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
+     * @param string[] $dependencies
+     *
      * @throws ModuleInstallerException
      */
     private function checkForFailedModuleDependencies(array $dependencies, string $phrase): void
@@ -160,6 +164,8 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws DBALException
      */
     private function outputPage(): array
