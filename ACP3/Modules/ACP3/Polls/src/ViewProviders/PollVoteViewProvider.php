@@ -18,6 +18,8 @@ class PollVoteViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $pollId): array
@@ -32,6 +34,8 @@ class PollVoteViewProvider
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function fetchAnswers(bool $isMultipleChoice, int $pollId): array

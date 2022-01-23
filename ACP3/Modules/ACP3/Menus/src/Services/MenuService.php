@@ -56,6 +56,9 @@ class MenuService implements MenuServiceInterface
         return $menuItems;
     }
 
+    /**
+     * @param array<array<string, mixed>> $menuItems
+     */
     private function isFirstItemInSet(int $index, array $menuItems): bool
     {
         if ($index > 0) {
@@ -71,6 +74,9 @@ class MenuService implements MenuServiceInterface
         return true;
     }
 
+    /**
+     * @param array<array<string, mixed>> $menuItems
+     */
     private function isLastItemInSet(int $index, array $menuItems): bool
     {
         $cItems = \count($menuItems);

@@ -21,6 +21,10 @@ class AdminPollEditViewProvider
     }
 
     /**
+     * @param array<string, mixed> $poll
+     *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $poll): array
@@ -36,6 +40,8 @@ class AdminPollEditViewProvider
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function getAnswers(?int $pollId): array
@@ -54,6 +60,11 @@ class AdminPollEditViewProvider
         return $this->answerRepository->getAnswersWithVotesByPollId($pollId);
     }
 
+    /**
+     * @param array<string, mixed>[] $currentAnswers
+     *
+     * @return array<string, mixed>[]
+     */
     private function addNewAnswer(array $currentAnswers): array
     {
         $answers = [];
@@ -76,6 +87,9 @@ class AdminPollEditViewProvider
         return $answers;
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     private function fetchOptions(bool $isExistingPoll, int $useMultipleChoice): array
     {
         $values = [

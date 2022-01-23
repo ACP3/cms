@@ -13,13 +13,13 @@ use MJS\TopSort\Implementations\StringSort;
 class Modules
 {
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>|null
      */
-    private $modulesInfo = [];
+    private array|null $modulesInfo = null;
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>|null
      */
-    private $allModulesTopSorted = [];
+    private array|null $allModulesTopSorted = null;
 
     public function __construct(private ModuleInfoInterface $moduleInfo)
     {
@@ -27,6 +27,8 @@ class Modules
 
     /**
      * Returns the available information about the given module.
+     *
+     * @return array<string, mixed>
      */
     public function getModuleInfo(string $moduleName): array
     {
@@ -67,6 +69,8 @@ class Modules
 
     /**
      * Returns all currently installed modules.
+     *
+     * @return array<string, array<string, mixed>>
      */
     public function getInstalledModules(): array
     {
@@ -75,6 +79,8 @@ class Modules
 
     /**
      * Returns an alphabetically sorted array of all found ACP3 modules.
+     *
+     * @return array<string, array<string, mixed>>
      */
     public function getAllModulesAlphabeticallySorted(): array
     {
@@ -85,9 +91,12 @@ class Modules
         return $allModulesAlphabeticallySorted;
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     private function getAllModules(): array
     {
-        if (empty($this->modulesInfo)) {
+        if ($this->modulesInfo === null) {
             $this->modulesInfo = $this->moduleInfo->getModulesInfo();
         }
 
@@ -97,12 +106,14 @@ class Modules
     /**
      * Returns an array with all modules which is sorted topologically.
      *
+     * @return array<string, array<string, mixed>>
+     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function getAllModulesTopSorted(): array
     {
-        if (empty($this->allModulesTopSorted)) {
+        if ($this->allModulesTopSorted === null) {
             $topSort = new StringSort();
 
             $modules = $this->getAllModules();

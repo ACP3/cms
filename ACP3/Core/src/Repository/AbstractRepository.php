@@ -53,6 +53,8 @@ abstract class AbstractRepository implements RepositoryInterface
 
     /**
      * @param array<string, int|string>|int|string $entryId
+     *
+     * @return array<string, int|string>
      */
     private function getIdentifier(array|int|string $entryId, ?string $columnName = null): array
     {

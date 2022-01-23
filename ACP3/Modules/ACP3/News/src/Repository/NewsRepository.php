@@ -30,6 +30,8 @@ class NewsRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int|string $entryId): array
@@ -58,6 +60,8 @@ class NewsRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @param int[] $categoryId
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function countAllByCategoryId(array $categoryId, string $time = ''): int
@@ -73,6 +77,8 @@ class NewsRepository extends Core\Repository\AbstractRepository
 
     /**
      * @param int[]|int $categoryId
+     *
+     * @return array<string, mixed>[]
      *
      * @throws \Doctrine\DBAL\Exception
      */
@@ -97,6 +103,8 @@ class NewsRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
@@ -111,6 +119,8 @@ class NewsRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getLatestByCategoryId(int $categoryId, string $time): array
@@ -124,6 +134,8 @@ class NewsRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getLatest(string $time): array

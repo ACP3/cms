@@ -29,16 +29,19 @@ class RolesExistValidationRule extends AbstractValidationRule
         return \is_array($data) && $this->aclRolesExist($data);
     }
 
-    private function aclRolesExist(array $roles): bool
+    /**
+     * @param int[]|string[] $roleIds
+     */
+    private function aclRolesExist(array $roleIds): bool
     {
         $allRoles = $this->acl->getAllRoles();
         $good = [];
         foreach ($allRoles as $row) {
-            $good[] = $row['id'];
+            $good[] = (int) $row['id'];
         }
 
-        foreach ($roles as $row) {
-            if (\in_array($row, $good) === false) {
+        foreach ($roleIds as $roleId) {
+            if (\in_array((int) $roleId, $good, true) === false) {
                 return false;
             }
         }

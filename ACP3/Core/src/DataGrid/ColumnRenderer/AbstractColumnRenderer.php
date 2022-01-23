@@ -208,6 +208,9 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $column['fields'];
     }
 
+    /**
+     * @return string[]
+     */
     public static function mandatoryAttributes(): array
     {
         return [];

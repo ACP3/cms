@@ -21,6 +21,10 @@ class AdminResourceEditViewProvider
     }
 
     /**
+     * @param array<string, mixed> $resource
+     *
+     * @return array<string, mixed>
+     *
      * @throws \ReflectionException
      */
     public function __invoke(array $resource): array
@@ -39,6 +43,9 @@ class AdminResourceEditViewProvider
         ];
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     private function fetchActiveModules(?string $currentModule = null): array
     {
         $modules = [];
@@ -52,6 +59,8 @@ class AdminResourceEditViewProvider
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \ReflectionException
      */
     private function fetchAreas(?string $currentArea = null): array

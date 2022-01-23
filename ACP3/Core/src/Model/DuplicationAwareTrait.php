@@ -7,14 +7,17 @@
 
 namespace ACP3\Core\Model;
 
+use ACP3\Core\Model\DataProcessor\ColumnTypes;
 use ACP3\Core\Repository\AbstractRepository;
 
 trait DuplicationAwareTrait
 {
     /**
+     * @return int The number of the affected (duplicated) rows
+     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function duplicate(int $entryId): bool|int
+    public function duplicate(int $entryId): int
     {
         $resultSet = $this->getRepository()->getOneById($entryId);
 
@@ -24,15 +27,21 @@ trait DuplicationAwareTrait
             return $this->save(array_merge($data, $this->getDefaultDataForDuplication()));
         }
 
-        return false;
+        return 0;
     }
 
     abstract protected function getRepository(): AbstractRepository;
 
     abstract protected function getDataProcessor(): DataProcessor;
 
+    /**
+     * @return array<string, ColumnTypes::*>
+     */
     abstract protected function getAllowedColumns(): array;
 
+    /**
+     * @param array<string, mixed> $rawData
+     */
     abstract public function save(array $rawData, ?int $entryId = null): int;
 
     /**

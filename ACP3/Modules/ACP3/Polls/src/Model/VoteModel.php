@@ -18,6 +18,8 @@ class VoteModel
     }
 
     /**
+     * @param array<string, mixed> $formData
+     *
      * @throws \Doctrine\DBAL\Exception
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */

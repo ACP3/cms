@@ -11,6 +11,9 @@ use ACP3\Core\Controller\AbstractWidgetAction;
 
 abstract class AbstractFormAction extends AbstractWidgetAction
 {
+    /**
+     * @param array<string, mixed> $formData
+     */
     protected function fetchMenuItemUriForSave(array $formData): string
     {
         if ((int) $formData['mode']) {

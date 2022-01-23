@@ -28,6 +28,8 @@ class PollRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneByIdWithTotalVotes(int $pollId): array
@@ -43,6 +45,8 @@ class PollRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
@@ -61,6 +65,8 @@ class PollRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getLatestPoll(string $time): array

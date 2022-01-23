@@ -12,6 +12,10 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class EditPost extends AbstractFormAction
 {
@@ -27,10 +31,12 @@ class EditPost extends AbstractFormAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse
+     *
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(int $id): array|string|JsonResponse|RedirectResponse
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

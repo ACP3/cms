@@ -16,6 +16,9 @@ class NewsletterUnsubscribeViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $defaults = [

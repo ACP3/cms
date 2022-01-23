@@ -22,6 +22,10 @@ class AdminMenuItemEditViewProvider
     }
 
     /**
+     * @param array<string, mixed> $menuItem
+     *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $menuItem): array
@@ -46,6 +50,9 @@ class AdminMenuItemEditViewProvider
         );
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     private function fetchMenuItemTypes(string $value = ''): array
     {
         $menuItemTypes = [
@@ -57,6 +64,11 @@ class AdminMenuItemEditViewProvider
         return $this->formsHelper->choicesGenerator('mode', $menuItemTypes, $value);
     }
 
+    /**
+     * @param array<string, mixed> $menuItem
+     *
+     * @return array<string, mixed>[]
+     */
     private function fetchModules(array $menuItem = []): array
     {
         $modules = [];

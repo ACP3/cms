@@ -22,9 +22,11 @@ class AccountStatus
     }
 
     /**
-     * @param int $status
+     * @param array{mail?: string, hash?: string}|int $entryId
+     *
+     * @throws \Doctrine\DBAL\Exception
      */
-    public function changeAccountStatus($status, array|int $entryId): bool|int
+    public function changeAccountStatus(int $status, array|int $entryId): int
     {
         $result = $this->accountRepository->update(['status' => $status], $entryId);
 
@@ -39,11 +41,7 @@ class AccountStatus
         return $result;
     }
 
-    /**
-     * @param int $status
-     * @param int $accountId
-     */
-    protected function addAccountHistory($status, $accountId): bool|int
+    protected function addAccountHistory(int $status, int $accountId): int
     {
         $historyInsertValues = [
             'newsletter_account_id' => $accountId,
@@ -55,18 +53,15 @@ class AccountStatus
     }
 
     /**
-     * @return int
+     * @param array{mail?: string, hash?: string} $entry
      */
-    protected function retrieveAccountId(array $entry)
+    protected function retrieveAccountId(array $entry): int
     {
-        switch (key($entry)) {
-            case 'mail':
-                $account = $this->accountRepository->getOneByEmail($entry['mail']);
-
-                break;
-            case 'hash':
-                $account = $this->accountRepository->getOneByHash($entry['hash']);
-        }
+        $account = match (key($entry)) {
+            'mail' => $this->accountRepository->getOneByEmail($entry['mail']),
+            'hash' => $this->accountRepository->getOneByHash($entry['hash']),
+            null => null,
+        };
 
         return (!empty($account)) ? $account['id'] : 0;
     }

@@ -24,9 +24,11 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @return array
+     * @param array<array<string, mixed>> $results
+     *
+     * @return array<array<string, mixed>>
      */
-    private function calculateFirstAndLastPage(array $results)
+    private function calculateFirstAndLastPage(array $results): array
     {
         foreach ($results as $index => &$result) {
             $result['first'] = $this->isFirstInSet($index, $results);
@@ -36,6 +38,9 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
         return $results;
     }
 
+    /**
+     * @param array<array<string, mixed>> $nestedSet
+     */
     private function isFirstInSet(int $index, array $nestedSet): bool
     {
         if ($index > 0) {
@@ -49,6 +54,9 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
         return true;
     }
 
+    /**
+     * @param array<array<string, mixed>> $nestedSet
+     */
     private function isLastItemInSet(int $index, array $nestedSet): bool
     {
         $cItems = \count($nestedSet);

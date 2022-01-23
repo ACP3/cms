@@ -197,6 +197,8 @@ abstract class AbstractModel
     }
 
     /**
+     * @param int[]|int $entryId
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function delete(array|int $entryId): int

@@ -9,14 +9,16 @@ namespace ACP3\Core\DataGrid\Repository;
 
 use ACP3\Core\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\DataGrid\QueryOption;
+use ACP3\Core\Repository\AbstractRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\AbstractRepository
+abstract class AbstractDataGridRepository extends AbstractRepository
 {
     /**
      * @return array<string, mixed>[]
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions): array
     {
@@ -35,7 +37,7 @@ abstract class AbstractDataGridRepository extends \ACP3\Core\Repository\Abstract
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function countAll(QueryOption ...$queryOptions): int
     {

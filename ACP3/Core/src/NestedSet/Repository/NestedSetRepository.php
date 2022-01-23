@@ -17,6 +17,8 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * Fetch the given node with all its parent nodes.
      *
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchNodeWithParents(int $nodeId): array
@@ -30,6 +32,8 @@ abstract class NestedSetRepository extends AbstractRepository
     /**
      * Die aktuelle Seite mit allen untergeordneten Seiten selektieren.
      *
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchNodeWithSiblings(int $nodeId): array
@@ -41,6 +45,8 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchNextNodeWithSiblings(int $leftId): array
@@ -52,6 +58,8 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchPrevNodeWithSiblings(int $rightId): array
@@ -97,6 +105,8 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchNodeById(int $nodeId): array
@@ -171,6 +181,8 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchAll(): array
@@ -183,7 +195,7 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function updateRootIdAndParentIdOfNode(int $rootId, int $parentId, int $nodeId): void
     {
-        $this->db->getConnection()->executeUpdate(
+        $this->db->getConnection()->executeStatement(
             "UPDATE {$this->getTableName()} SET root_id = ?, parent_id = ? WHERE id = ?",
             [
                 $rootId,
@@ -194,15 +206,17 @@ abstract class NestedSetRepository extends AbstractRepository
     }
 
     /**
+     * @param int[] $nodeIds
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function moveNodesWithinTree(int $offsetLeftId, int $offsetRightId, array $nodeIds): bool
     {
-        return $this->db->getConnection()->executeUpdate(
+        return (bool) $this->db->getConnection()->executeStatement(
             "UPDATE {$this->getTableName()} SET left_id = left_id + :offsetLeftId, right_id = right_id + :offsetRightId WHERE id IN(:nodeIds)",
             ['offsetLeftId' => $offsetLeftId, 'offsetRightId' => $offsetRightId, 'nodeIds' => $nodeIds],
             ['nodeIds' => Connection::PARAM_INT_ARRAY]
-        ) !== false;
+        );
     }
 
     /**
@@ -210,7 +224,7 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function moveSubsequentNodesOfBlock(int $offset, int $leftIdConstraint, int $blockId): void
     {
-        $this->db->getConnection()->executeUpdate(
+        $this->db->getConnection()->executeStatement(
             "UPDATE {$this->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ? AND " . static::BLOCK_COLUMN_NAME . ' = ?',
             [$offset, $offset, $leftIdConstraint, $blockId]
         );
@@ -221,7 +235,7 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function adjustParentNodesAfterSeparation(int $diff, int $leftId, int $rightId): void
     {
-        $this->db->getConnection()->executeUpdate(
+        $this->db->getConnection()->executeStatement(
             "UPDATE {$this->getTableName()} SET right_id = right_id - ? WHERE left_id < ? AND right_id > ?",
             [$diff, $leftId, $rightId]
         );
@@ -232,7 +246,7 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function adjustParentNodesAfterInsert(int $diff, int $leftId, int $rightId): void
     {
-        $this->db->getConnection()->executeUpdate(
+        $this->db->getConnection()->executeStatement(
             "UPDATE {$this->getTableName()} SET right_id = right_id + ? WHERE left_id <= ? AND right_id >= ?",
             [$diff, $leftId, $rightId]
         );
@@ -243,7 +257,7 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function adjustFollowingNodesAfterSeparation(int $diff, int $leftId): void
     {
-        $this->db->getConnection()->executeUpdate(
+        $this->db->getConnection()->executeStatement(
             "UPDATE {$this->getTableName()} SET left_id = left_id - ?, right_id = right_id - ? WHERE left_id > ?",
             [$diff, $diff, $leftId]
         );
@@ -254,7 +268,7 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function adjustFollowingNodesAfterInsert(int $diff, int $leftId): void
     {
-        $this->db->getConnection()->executeUpdate(
+        $this->db->getConnection()->executeStatement(
             "UPDATE {$this->getTableName()} SET left_id = left_id + ?, right_id = right_id + ? WHERE left_id >= ?",
             [$diff, $diff, $leftId]
         );

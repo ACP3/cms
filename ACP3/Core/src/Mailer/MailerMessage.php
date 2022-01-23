@@ -9,214 +9,176 @@ namespace ACP3\Core\Mailer;
 
 class MailerMessage
 {
-    /**
-     * @var string
-     */
-    private $subject = '';
-    /**
-     * @var string
-     */
-    private $body = '';
-    /**
-     * @var string
-     */
-    private $htmlBody = '';
-    /**
-     * @var string
-     */
-    private $urlWeb = '';
-    /**
-     * @var string
-     */
-    private $mailSignature = '';
-    /**
-     * @var string|array
-     */
-    private $from;
-    /**
-     * @var string|array
-     */
-    private $replyTo;
-    /**
-     * @var string
-     */
-    private $sender;
-    /**
-     * @var string|array
-     */
-    private $recipients;
-    /**
-     * @var bool
-     */
-    private $bcc = false;
-    /**
-     * @var array
-     */
-    private $attachments = [];
-    /**
-     * @var string
-     */
-    private $template = '';
+    private string $subject = '';
+
+    private string $body = '';
+
+    private string $htmlBody = '';
+
+    private string $urlWeb = '';
+
+    private string $mailSignature = '';
+
+    private string|array|null $from = null;
+
+    private string|array|null $replyTo = null;
+
+    private string $sender = '';
 
     /**
-     * @return string
+     * @var array<array{email: string, name: string}>|string[]|string|null
      */
-    public function getSubject()
+    private string|array|null $recipients = null;
+
+    private bool $bcc = false;
+    /**
+     * @var string[]
+     */
+    private array $attachments = [];
+
+    private string $template = '';
+
+    public function getSubject(): string
     {
         return $this->subject;
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setSubject(string $subject)
+    public function setSubject(string $subject): self
     {
         $this->subject = $subject;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setBody(string $body)
+    public function setBody(string $body): self
     {
         $this->body = $body;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getHtmlBody()
+    public function getHtmlBody(): string
     {
         return $this->htmlBody;
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setHtmlBody(string $htmlBody)
+    public function setHtmlBody(string $htmlBody): self
     {
         $this->htmlBody = $htmlBody;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrlWeb()
+    public function getUrlWeb(): string
     {
         return $this->urlWeb;
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setUrlWeb(string $urlWeb)
+    public function setUrlWeb(string $urlWeb): self
     {
         $this->urlWeb = $urlWeb;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMailSignature()
+    public function getMailSignature(): string
     {
         return $this->mailSignature;
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setMailSignature(string $mailSignature)
+    public function setMailSignature(string $mailSignature): self
     {
         $this->mailSignature = $mailSignature;
 
         return $this;
     }
 
-    public function getFrom(): array|string
+    public function getFrom(): array|string|null
     {
         return $this->from;
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setFrom(array|string $from)
+    public function setFrom(array|string $from): self
     {
         $this->from = $from;
 
         return $this;
     }
 
-    public function getReplyTo(): array|string
+    public function getReplyTo(): array|string|null
     {
         return $this->replyTo;
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setReplyTo(array|string $replyTo)
+    public function setReplyTo(array|string $replyTo): self
     {
         $this->replyTo = $replyTo;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSender()
+    public function getSender(): string
     {
         return $this->sender;
     }
 
     /**
-     * @param string $sender
-     *
-     * @return $this
+     * @return static
      */
-    public function setSender($sender)
+    public function setSender(string $sender): self
     {
         $this->sender = $sender;
 
         return $this;
     }
 
-    public function getRecipients(): array|string
+    /**
+     * @return array<array{email: string, name: string}>|string[]|string|null
+     */
+    public function getRecipients(): array|string|null
     {
         return $this->recipients;
     }
 
     /**
-     * @return $this
+     * @param array<array{email: string, name: string}>|string[]|string $recipients
+     *
+     * @return static
      */
-    public function setRecipients(array|string $recipients)
+    public function setRecipients(array|string $recipients): self
     {
         $this->recipients = $recipients;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isBcc()
+    public function isBcc(): bool
     {
         return $this->bcc;
     }
@@ -224,7 +186,7 @@ class MailerMessage
     /**
      * @return $this
      */
-    public function setBcc(bool $bcc)
+    public function setBcc(bool $bcc): self
     {
         $this->bcc = $bcc;
 
@@ -232,17 +194,17 @@ class MailerMessage
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getAttachments()
+    public function getAttachments(): array
     {
         return $this->attachments;
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setAttachments(array $attachments)
+    public function setAttachments(array $attachments): self
     {
         $this->attachments = $attachments;
 
@@ -250,27 +212,24 @@ class MailerMessage
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function addAttachment(string $attachment)
+    public function addAttachment(string $attachment): self
     {
         $this->attachments[] = $attachment;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->template;
     }
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setTemplate(string $template)
+    public function setTemplate(string $template): self
     {
         $this->template = $template;
 

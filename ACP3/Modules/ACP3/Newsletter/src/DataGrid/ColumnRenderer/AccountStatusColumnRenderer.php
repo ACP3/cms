@@ -32,11 +32,18 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
         return $this->render($column, $this->getHtmlValue($column, $dbResultRow, $dbValue));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public static function mandatoryAttributes(): array
     {
         return ['sort', '_'];
     }
 
+    /**
+     * @param array<string, mixed> $column
+     * @param array<string, mixed> $dbResultRow
+     */
     private function getHtmlValue(array $column, array $dbResultRow, ?string $dbValue): string
     {
         if ($dbValue === $this->getDefaultValue($column)) {

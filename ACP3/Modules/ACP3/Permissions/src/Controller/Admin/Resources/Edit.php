@@ -21,6 +21,8 @@ class Edit extends Core\Controller\AbstractWidgetAction
     }
 
     /**
+     * @param int $id
+     * @return array<string, mixed>
      * @throws \Doctrine\DBAL\Exception
      * @throws \ReflectionException
      */

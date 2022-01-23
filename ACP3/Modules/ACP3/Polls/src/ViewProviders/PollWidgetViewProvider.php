@@ -17,6 +17,10 @@ class PollWidgetViewProvider
     }
 
     /**
+     * @param array<string, mixed> $poll
+     *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $poll): array
@@ -29,7 +33,7 @@ class PollWidgetViewProvider
             $totalVotes = $poll['total_votes'];
 
             foreach ($answers as $i => $answer) {
-                $votes = (int) $answers[$i]['votes'];
+                $votes = (int) $answer['votes'];
                 $answers[$i]['votes'] = ($votes > 1)
                     ? $this->translator->t('polls', 'number_of_votes', ['%votes%' => $votes])
                     : $this->translator->t('polls', ($votes === 1 ? 'one_vote' : 'no_votes'));

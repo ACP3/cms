@@ -24,6 +24,10 @@ class AdminNewsEditViewProvider
     }
 
     /**
+     * @param array<string, mixed> $news
+     *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $news): array
@@ -46,6 +50,9 @@ class AdminNewsEditViewProvider
         ];
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     private function fetchOptions(int $readMoreValue): array
     {
         $settings = $this->settings->getSettings(NewsSchema::MODULE_NAME);

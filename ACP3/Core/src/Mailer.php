@@ -179,6 +179,8 @@ class Mailer
     /**
      * Adds multiple recipients to the to be send email.
      *
+     * @param array<array{email: string, name: string}>|string[]|string $recipients
+     *
      * @throws PHPMailerException
      */
     private function addRecipients(array|string $recipients, bool $bcc = false): void

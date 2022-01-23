@@ -22,7 +22,7 @@ class AbstractStubRepository implements RepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getTableName($tableName = ''): string
+    public function getTableName(string $tableName = ''): string
     {
         return $tableName;
     }

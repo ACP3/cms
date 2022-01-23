@@ -13,26 +13,15 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class Output
 {
-    /**
-     * @var int|null
-     */
-    private $srcWidth;
-    /**
-     * @var int|null
-     */
-    private $srcHeight;
-    /**
-     * @var string|null
-     */
-    private $destFile;
-    /**
-     * @var int|null
-     */
-    private $destWidth;
-    /**
-     * @var int|null
-     */
-    private $destHeight;
+    private ?int $srcWidth = null;
+
+    private ?int $srcHeight = null;
+
+    private ?string $destFile = null;
+
+    private ?int $destWidth = null;
+
+    private ?int $destHeight = null;
 
     public function __construct(private ApplicationPath $appPath, private string $srcFile, private int $type)
     {
@@ -129,11 +118,9 @@ class Output
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureResponseException
      */
-    public function sendResponse()
+    public function sendResponse(): BinaryFileResponse
     {
         $response = new BinaryFileResponse($this->getFile());
         $this->setHeaders($response, $this->getMimeType($this->getType()));
@@ -142,11 +129,9 @@ class Output
     }
 
     /**
-     * @return string
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureResponseException
      */
-    private function getMimeType(int $pictureType)
+    private function getMimeType(int $pictureType): string
     {
         return match ($pictureType) {
             IMAGETYPE_GIF => 'image/gif',
@@ -156,7 +141,7 @@ class Output
         };
     }
 
-    private function setHeaders(BinaryFileResponse $response, string $mimeType)
+    private function setHeaders(BinaryFileResponse $response, string $mimeType): void
     {
         $response->headers->add([
             'Content-type' => $mimeType,

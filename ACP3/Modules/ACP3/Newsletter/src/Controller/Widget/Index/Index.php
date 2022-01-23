@@ -19,6 +19,9 @@ class Index extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(string $template = ''): array
     {
         $this->setTemplate($template);

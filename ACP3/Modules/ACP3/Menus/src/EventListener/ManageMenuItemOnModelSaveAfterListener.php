@@ -21,7 +21,7 @@ class ManageMenuItemOnModelSaveAfterListener implements EventSubscriberInterface
     /**
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function __invoke(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event): void
     {
         if ($this->acl->hasPermission('admin/menus/items/create') === true
             && $this->hasNecessaryMenuItemFormFields($event->getRawData())) {
@@ -43,6 +43,9 @@ class ManageMenuItemOnModelSaveAfterListener implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     private function hasNecessaryMenuItemFormFields(array $formData): bool
     {
         return isset(

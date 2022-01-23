@@ -8,27 +8,36 @@
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
 use ACP3\Core;
+use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\Permissions\Model\AclResourceModel;
+use ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext         $context,
+        WidgetContext         $context,
         private FormAction                                    $actionHelper,
         private Core\Modules                                  $modules,
-        private Permissions\Model\AclResourceModel            $resourcesModel,
-        private Permissions\Validation\ResourceFormValidation $resourceFormValidation
+        private AclResourceModel            $resourcesModel,
+        private ResourceFormValidation $resourceFormValidation
     ) {
         parent::__construct($context);
     }
 
     /**
-     *
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @param int $id
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+    public function __invoke(int $id): array|string|JsonResponse|RedirectResponse|Response
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

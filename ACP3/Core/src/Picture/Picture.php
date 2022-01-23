@@ -51,6 +51,8 @@ class Picture
     }
 
     /**
+     * @return array<string, int>
+     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
     private function getPictureInfo(string $fileName): array

@@ -13,28 +13,20 @@ use ACP3\Core\Router\RouterInterface;
 
 class MetaStatementsService implements MetaStatementsServiceInterface
 {
-    /**
-     * @var string
-     */
-    private $nextPage = '';
-    /**
-     * @var string
-     */
-    private $previousPage = '';
-    /**
-     * @var string
-     */
-    private $canonicalUrl = '';
-    /**
-     * @var string
-     */
-    private $metaDescriptionPostfix = '';
-    /**
-     * @var string
-     */
-    private $metaRobots = '';
+    private string $nextPage = '';
 
-    private static $robotSettingsMaps = [
+    private string $previousPage = '';
+
+    private string $canonicalUrl = '';
+
+    private string $metaDescriptionPostfix = '';
+
+    private string $metaRobots = '';
+
+    /**
+     * @var array<int, string>
+     */
+    private static array $robotSettingsMaps = [
         1 => MetaStatementsServiceInterface::INDEX_FOLLOW,
         2 => MetaStatementsServiceInterface::INDEX_NOFOLLOW,
         3 => MetaStatementsServiceInterface::NOINDEX_FOLLOW,
@@ -48,7 +40,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     /**
      * @return $this
      */
-    public function setPageRobotsSettings(string $metaRobots)
+    public function setPageRobotsSettings(string $metaRobots): MetaStatementsServiceInterface
     {
         $this->metaRobots = $metaRobots;
 
@@ -56,7 +48,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     }
 
     /**
-     * Returns the meta tags of the current page.
+     * {@inheritDoc}
      */
     public function getMetaTags(): array
     {
@@ -212,6 +204,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return strtr($robot, $this->getRobotsMap());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getRobotsMap(): array
     {
         return self::$robotSettingsMaps;
@@ -220,9 +215,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     /**
      * Sets a SEO description postfix for te current page.
      *
-     * @return $this
+     * @return static
      */
-    public function setDescriptionPostfix(string $value)
+    public function setDescriptionPostfix(string $value): self
     {
         $this->metaDescriptionPostfix = $value;
 
@@ -232,9 +227,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     /**
      * Sets the canonical URL for the current page.
      *
-     * @return $this
+     * @return static
      */
-    public function setCanonicalUri(string $path)
+    public function setCanonicalUri(string $path): self
     {
         $this->canonicalUrl = $path;
 
@@ -244,9 +239,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     /**
      * Sets the next page (useful for pagination).
      *
-     * @return $this
+     * @return static
      */
-    public function setNextPage(string $path)
+    public function setNextPage(string $path): self
     {
         $this->nextPage = $path;
 
@@ -256,9 +251,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     /**
      * Sets the previous page (useful for pagination).
      *
-     * @return $this
+     * @return static
      */
-    public function setPreviousPage(string $path)
+    public function setPreviousPage(string $path): self
     {
         $this->previousPage = $path;
 

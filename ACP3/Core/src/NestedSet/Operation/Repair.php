@@ -35,6 +35,8 @@ class Repair extends AbstractOperation
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function getResults(): array

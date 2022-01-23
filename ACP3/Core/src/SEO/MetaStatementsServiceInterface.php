@@ -15,12 +15,14 @@ interface MetaStatementsServiceInterface
     public const NOINDEX_NOFOLLOW = 'noindex,nofollow';
 
     /**
-     * @return $this
+     * @return static
      */
-    public function setPageRobotsSettings(string $metaRobots);
+    public function setPageRobotsSettings(string $metaRobots): self;
 
     /**
      * Returns the meta tags of the current page.
+     *
+     * @return array<string, mixed>
      */
     public function getMetaTags(): array;
 
@@ -61,6 +63,9 @@ interface MetaStatementsServiceInterface
      */
     public function getRobotsSetting(string $path = ''): string;
 
+    /**
+     * @return array<int, string>
+     */
     public function getRobotsMap(): array;
 
     /**

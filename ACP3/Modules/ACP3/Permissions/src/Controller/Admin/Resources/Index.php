@@ -19,6 +19,10 @@ class Index extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
+    /**
+     * @return array<string, mixed>
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function __invoke(): array
     {
         return ($this->resourceListDataGridViewProvider)();

@@ -14,11 +14,9 @@ class NewsletterRepository extends Core\Repository\AbstractRepository
     public const TABLE_NAME = 'newsletters';
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function newsletterExists(int $newsletterId, ?int $status = null)
+    public function newsletterExists(int $newsletterId, ?int $status = null): bool
     {
         $where = $status !== null ? ' AND status = :status' : '';
 
@@ -29,11 +27,11 @@ class NewsletterRepository extends Core\Repository\AbstractRepository
     }
 
     /**
-     * @return mixed
+     * @return array<string, mixed>
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getOneByIdAndStatus(int $newsletterId, int $status)
+    public function getOneByIdAndStatus(int $newsletterId, int $status): array
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE id = :id  AND status = :status;",
@@ -42,11 +40,9 @@ class NewsletterRepository extends Core\Repository\AbstractRepository
     }
 
     /**
-     * @return int
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function countAll(?int $status = null)
+    public function countAll(?int $status = null): int
     {
         $where = $status !== null ? ' WHERE status = :status' : '';
 
@@ -57,11 +53,11 @@ class NewsletterRepository extends Core\Repository\AbstractRepository
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>[]
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAll(?int $status = null, ?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAll(?int $status = null, ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = $status !== null ? ' WHERE status = :status' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

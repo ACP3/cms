@@ -20,29 +20,25 @@ class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
     {
     }
 
-    /**
-     * @return string
-     */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return Schema::MODULE_NAME;
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
-    public function fetchFeedItems()
+    public function fetchFeedItems(): array
     {
         $items = [];
         $results = $this->newsRepository->getAll($this->date->getCurrentDateTime(), 10);
-        $cResults = \count($results);
 
-        for ($i = 0; $i < $cResults; ++$i) {
+        foreach ($results as $result) {
             $items[] = [
-                'title' => $results[$i]['title'],
-                'date' => $this->date->timestamp($results[$i]['start']),
-                'description' => $this->formatter->shortenEntry($results[$i]['text'], 300, 0),
-                'link' => $this->router->route('news/index/details/id_' . $results[$i]['id'], true),
+                'title' => $result['title'],
+                'date' => $this->date->timestamp($result['start']),
+                'description' => $this->formatter->shortenEntry($result['text'], 300, 0),
+                'link' => $this->router->route('news/index/details/id_' . $result['id'], true),
             ];
         }
 

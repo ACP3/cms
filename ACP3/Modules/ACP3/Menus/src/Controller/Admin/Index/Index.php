@@ -26,11 +26,11 @@ class Index extends AbstractWidgetAction
     }
 
     /**
-     * @returns array|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return array<string, mixed>|JsonResponse
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke()
+    public function __invoke(): array|JsonResponse
     {
         $menus = $this->menuRepository->getAllMenus();
 

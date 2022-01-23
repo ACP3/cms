@@ -17,6 +17,8 @@ class ManageMenuItem
     }
 
     /**
+     * @param array<string, mixed> $data
+     *
      * @throws \Doctrine\DBAL\ConnectionException
      */
     public function manageMenuItem(string $path, array $data = []): bool

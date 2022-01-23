@@ -36,6 +36,8 @@ class Sort extends AbstractOperation
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function sortUp(array $nodes): bool
@@ -48,6 +50,8 @@ class Sort extends AbstractOperation
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function sortDown(array $nodes): bool
@@ -60,6 +64,8 @@ class Sort extends AbstractOperation
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
      * @return int[]
      */
     protected function fetchAffectedNodesForReorder(array $nodes): array
@@ -68,6 +74,8 @@ class Sort extends AbstractOperation
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function updateNodesDown(int $diff, array $nodes): bool
@@ -76,6 +84,8 @@ class Sort extends AbstractOperation
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function moveNodesUp(int $diff, array $nodes): bool
@@ -83,6 +93,12 @@ class Sort extends AbstractOperation
         return $this->nestedSetRepository->moveNodesWithinTree($diff * -1, $diff * -1, $this->fetchAffectedNodesForReorder($nodes));
     }
 
+    /**
+     * @param array<string, mixed> $node
+     * @param array<string, mixed> $elem
+     *
+     * @return array{int, int}
+     */
     protected function calcDiffBetweenNodes(array $node, array $elem): array
     {
         return [
@@ -91,6 +107,9 @@ class Sort extends AbstractOperation
         ];
     }
 
+    /**
+     * @param array<string, mixed> $node
+     */
     protected function getBlockId(array $node): int
     {
         return $this->isBlockAware() === true ? $node[$this->nestedSetRepository::BLOCK_COLUMN_NAME] : 0;

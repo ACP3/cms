@@ -31,6 +31,8 @@ class AclPermissionModel extends AbstractModel
     }
 
     /**
+     * @param array<int, int> $resources
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function updatePermissions(array $resources, int $roleId): void
@@ -50,6 +52,9 @@ class AclPermissionModel extends AbstractModel
         $this->permissionsCachePool->clear();
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $permissions
+     */
     private function findRuleId(array $permissions, int $resourceId, int $roleId): ?int
     {
         foreach ($permissions as $permission) {
@@ -61,6 +66,9 @@ class AclPermissionModel extends AbstractModel
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getAllowedColumns(): array
     {
         return [

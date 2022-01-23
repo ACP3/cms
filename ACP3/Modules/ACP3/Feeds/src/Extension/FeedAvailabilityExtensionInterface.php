@@ -9,13 +9,10 @@ namespace ACP3\Modules\ACP3\Feeds\Extension;
 
 interface FeedAvailabilityExtensionInterface
 {
-    /**
-     * @return string
-     */
-    public function getModuleName();
+    public function getModuleName(): string;
 
     /**
-     * @return array
+     * @return array<array<string, mixed>>
      */
-    public function fetchFeedItems();
+    public function fetchFeedItems(): array;
 }

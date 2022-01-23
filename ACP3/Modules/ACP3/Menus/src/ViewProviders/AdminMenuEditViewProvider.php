@@ -17,6 +17,11 @@ class AdminMenuEditViewProvider
     {
     }
 
+    /**
+     * @param array<string, mixed> $menu
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(array $menu): array
     {
         $this->title->setPageTitlePrefix($menu['title']);

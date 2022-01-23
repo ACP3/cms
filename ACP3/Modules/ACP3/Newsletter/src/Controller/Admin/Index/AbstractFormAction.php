@@ -19,15 +19,17 @@ class AbstractFormAction extends AbstractWidgetAction
     }
 
     /**
+     * @return array{string, bool}
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function sendTestNewsletter(bool $isTest, int $id, bool $dbResult, string $testEmailAddress): array
     {
         if ($isTest === true) {
-            $bool2 = $this->newsletterHelpers->sendNewsletter($id, $testEmailAddress);
+            $result = $this->newsletterHelpers->sendNewsletter($id, $testEmailAddress);
 
             $text = $this->translator->t('newsletter', 'create_success');
-            $result = $dbResult !== false && $bool2 !== false;
+            $result = $dbResult !== false && $result !== false;
         } else {
             $text = $this->translator->t('newsletter', 'save_success');
             $result = $dbResult !== false;

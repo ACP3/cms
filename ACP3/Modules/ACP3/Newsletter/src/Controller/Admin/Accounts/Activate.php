@@ -10,6 +10,8 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Accounts;
 use ACP3\Core;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Newsletter;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class Activate extends Core\Controller\AbstractWidgetAction
 {
@@ -21,16 +23,16 @@ class Activate extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
-    public function __invoke(int $id): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(int $id): JsonResponse|RedirectResponse
     {
-        $bool = $this->accountStatusHelper->changeAccountStatus(
+        $result = $this->accountStatusHelper->changeAccountStatus(
             Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
             $id
         );
 
         return $this->actionHelper->setRedirectMessage(
-            $bool,
-            $this->translator->t('newsletter', $bool !== false ? 'activate_success' : 'activate_error')
+            $result,
+            $this->translator->t('newsletter', $result ? 'activate_success' : 'activate_error')
         );
     }
 }

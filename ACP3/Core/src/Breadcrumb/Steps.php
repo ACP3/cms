@@ -18,13 +18,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Steps
 {
     /**
-     * @var array
+     * @var array<array<string, mixed>>
      */
-    protected $steps = [];
+    protected array $steps = [];
     /**
-     * @var array
+     * @var array<array<string, mixed>>
      */
-    protected $breadcrumbCache = [];
+    protected array $breadcrumbCache = [];
 
     public function __construct(protected ContainerInterface $container, protected Translator $translator, protected RequestInterface $request, protected RouterInterface $router, protected EventDispatcherInterface $eventDispatcher)
     {
@@ -32,6 +32,8 @@ class Steps
 
     /**
      * Returns the breadcrumb.
+     *
+     * @return array<array<string, mixed>>
      */
     public function getBreadcrumb(): array
     {
@@ -158,6 +160,9 @@ class Steps
         return $this;
     }
 
+    /**
+     * @return array{title: string, uri: string}
+     */
     protected function buildStepItem(string $title, string $path): array
     {
         return [
@@ -197,7 +202,7 @@ class Steps
 
         $this->steps = array_filter(
             $this->steps,
-            fn (array $step) => $step['uri'] !== $path
+            static fn (array $step) => $step['uri'] !== $path
         );
 
         return $this;

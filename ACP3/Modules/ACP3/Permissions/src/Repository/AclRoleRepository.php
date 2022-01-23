@@ -30,6 +30,11 @@ class AclRoleRepository extends Core\NestedSet\Repository\NestedSetRepository im
         return !empty($roleName) && (int) $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `name` = ?', [$roleName]) === 1;
     }
 
+    /**
+     * @return array<string, mixed>[]
+     *
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function getAllRoles(): array
     {
         return $this->db->fetchAll(

@@ -43,6 +43,8 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     }
 
     /**
+     * @param array<string, mixed>[] $answers
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function saveAnswers(array $answers, int $pollId): int
@@ -73,11 +75,14 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function resetVotesByPollId(int $pollId): bool|int
+    public function resetVotesByPollId(int $pollId): int
     {
         return $this->voteRepository->delete($pollId, 'poll_id');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function getAllowedColumns(): array
     {
         return [

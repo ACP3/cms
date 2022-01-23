@@ -27,6 +27,10 @@ class InArrayValidationRule extends AbstractValidationRule
         return $this->checkInArray($data, $field, $extra['haystack']);
     }
 
+    /**
+     * @param array<string, mixed>|string $data
+     * @param mixed[]                     $haystack
+     */
     protected function checkInArray(array|string $data, string $field, array $haystack): bool
     {
         if (isset($data[$field]) && \is_array($data[$field])) {

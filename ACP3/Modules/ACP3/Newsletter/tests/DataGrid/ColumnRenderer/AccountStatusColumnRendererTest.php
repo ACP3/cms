@@ -62,7 +62,7 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
         $this->compareResults($expected);
     }
 
-    public function testWithDisabledStatus()
+    public function testWithDisabledStatus(): void
     {
         $this->langMock->expects(self::once())
             ->method('t')

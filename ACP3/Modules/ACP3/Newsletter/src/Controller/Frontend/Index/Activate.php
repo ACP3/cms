@@ -32,14 +32,14 @@ class Activate extends Core\Controller\AbstractWidgetAction
         try {
             $this->activateAccountFormValidation->validate(['hash' => $hash]);
 
-            $bool = $this->accountStatusHelper->changeAccountStatus(
+            $result = $this->accountStatusHelper->changeAccountStatus(
                 Newsletter\Helper\AccountStatus::ACCOUNT_STATUS_CONFIRMED,
                 ['hash' => $hash]
             );
 
             return $this->alertsHelper->confirmBox($this->translator->t(
                 'newsletter',
-                $bool !== false ? 'activate_success' : 'activate_error'
+                $result ? 'activate_success' : 'activate_error'
             ), $this->applicationPath->getWebRoot());
         } catch (Core\Validation\Exceptions\ValidationFailedException $e) {
             return $this->alertsHelper->errorBox($e->getMessage());

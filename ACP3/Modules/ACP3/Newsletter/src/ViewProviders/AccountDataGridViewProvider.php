@@ -19,6 +19,7 @@ use ACP3\Modules\ACP3\Newsletter\DataGrid\ColumnRenderer\AccountStatusColumnRend
 use ACP3\Modules\ACP3\Newsletter\Helper\AccountStatus;
 use ACP3\Modules\ACP3\Newsletter\Repository\AccountDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AccountDataGridViewProvider
 {
@@ -27,9 +28,9 @@ class AccountDataGridViewProvider
     }
 
     /**
-     * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return array<string, mixed>|JsonResponse
      */
-    public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse
+    public function __invoke(): array|JsonResponse
     {
         return $this->dataGrid->render($this->configureDataGrid());
     }

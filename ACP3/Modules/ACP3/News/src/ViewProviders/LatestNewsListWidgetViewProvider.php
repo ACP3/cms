@@ -19,6 +19,8 @@ class LatestNewsListWidgetViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(?int $categoryId): array
@@ -32,6 +34,10 @@ class LatestNewsListWidgetViewProvider
     }
 
     /**
+     * @param array<string, mixed> $settings
+     *
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function fetchNews(int $categoryId, array $settings): array

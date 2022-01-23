@@ -13,9 +13,9 @@ use ACP3\Modules\ACP3\Menus\Services\MenuServiceInterface;
 class MenuItemsList
 {
     /**
-     * @var array
+     * @var array<array<string, mixed>>|null
      */
-    private $menuItems = [];
+    private ?array $menuItems = null;
 
     public function __construct(private Core\Helpers\Forms $formsHelper, private MenuServiceInterface $menuService)
     {
@@ -23,11 +23,13 @@ class MenuItemsList
 
     /**
      * List all available menu items.
+     *
+     * @return array<string, array<string, mixed>>
      */
     public function menuItemsList(int $parentId = 0, int $leftId = 0, int $rightId = 0): array
     {
         // Menüpunkte einbinden
-        if (empty($this->menuItems)) {
+        if ($this->menuItems === null) {
             $this->menuItems = $this->menuService->getAllMenuItems();
         }
 

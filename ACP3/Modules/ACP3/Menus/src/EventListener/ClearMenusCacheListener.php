@@ -16,7 +16,7 @@ class ClearMenusCacheListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
         $this->menusCachePool->clear();
     }

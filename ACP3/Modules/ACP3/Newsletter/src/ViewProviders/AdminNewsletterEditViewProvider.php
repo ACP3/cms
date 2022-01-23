@@ -21,6 +21,11 @@ class AdminNewsletterEditViewProvider
     {
     }
 
+    /**
+     * @param array<string, mixed> $newsletter
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(array $newsletter): array
     {
         $this->title->setPageTitlePrefix($newsletter['title']);

@@ -24,6 +24,8 @@ class NewsDetailsViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $newsId): array
@@ -48,6 +50,8 @@ class NewsDetailsViewProvider
     }
 
     /**
+     * @param array<string, mixed> $news
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function addBreadcrumbSteps(array $news, int $categoryId, bool $showCategoriesInBreadcrumb): void

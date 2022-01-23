@@ -15,9 +15,9 @@ use ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration;
 class Navbar extends AbstractFunction
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
-    private $menus = [];
+    private array $menus = [];
 
     public function __construct(private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Menus\Repository\MenuItemRepository $menuItemRepository, private Menus\Services\MenuServiceInterface $menuService)
     {
@@ -28,7 +28,7 @@ class Navbar extends AbstractFunction
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         return $this->getMenuByKey(
             $params['block'],
@@ -203,6 +203,8 @@ class Navbar extends AbstractFunction
 
     /**
      * Close the list of child elements.
+     *
+     * @param array<array<string, mixed>> $items
      */
     private function closeOpenedMenus(MenuConfiguration $menuConfig, array $items, int $currentIndex): string
     {
@@ -235,6 +237,9 @@ class Navbar extends AbstractFunction
         return $target === 2 ? ' target="_blank"' : '';
     }
 
+    /**
+     * @param array<array<string, mixed>> $items
+     */
     private function calculateChildParentLevelDiff(array $items, int $currentIndex): int
     {
         $diff = $items[$currentIndex]['level'];
@@ -245,6 +250,9 @@ class Navbar extends AbstractFunction
         return $diff * 2;
     }
 
+    /**
+     * @param array<string, mixed> $item
+     */
     private function getMenuItemSelector(array $item, MenuConfiguration $menuConfig): string
     {
         return implode(' ', ['navi-' . $item['id'], $menuConfig->getItemSelectors()]);
@@ -261,6 +269,7 @@ class Navbar extends AbstractFunction
 
     /**
      * @param array<string, mixed> $item
+     * @param string[]             $additionalSelectors
      */
     private function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig, array $item, bool $isSelected, array $additionalSelectors = []): string
     {

@@ -14,13 +14,7 @@ class AccountRepository extends AbstractRepository
 {
     public const TABLE_NAME = 'newsletter_accounts';
 
-    /**
-     * @param string $emailAddress
-     * @param string $hash
-     *
-     * @return bool
-     */
-    public function accountExists($emailAddress, $hash = '')
+    public function accountExists(string $emailAddress, string $hash = ''): bool
     {
         $where = empty($hash) === false ? ' AND `hash` = :hash' : '';
 
@@ -30,12 +24,7 @@ class AccountRepository extends AbstractRepository
         ) > 0;
     }
 
-    /**
-     * @param string $hash
-     *
-     * @return bool
-     */
-    public function accountExistsByHash($hash)
+    public function accountExistsByHash(string $hash): bool
     {
         return $this->db->fetchColumn(
                 "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `hash` = :hash",
@@ -44,11 +33,9 @@ class AccountRepository extends AbstractRepository
     }
 
     /**
-     * @param string $email
-     *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function getOneByEmail($email)
+    public function getOneByEmail(string $email): array
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE `mail` = :mail",
@@ -57,11 +44,9 @@ class AccountRepository extends AbstractRepository
     }
 
     /**
-     * @param string $hash
-     *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function getOneByHash($hash)
+    public function getOneByHash(string $hash): array
     {
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE `hash` = :hash",
@@ -69,10 +54,7 @@ class AccountRepository extends AbstractRepository
         );
     }
 
-    /**
-     * @return int
-     */
-    public function countAllAccounts()
+    public function countAllAccounts(): int
     {
         return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `status` != :status",
@@ -80,10 +62,7 @@ class AccountRepository extends AbstractRepository
         );
     }
 
-    /**
-     * @return int
-     */
-    public function countAllActiveAccounts()
+    public function countAllActiveAccounts(): int
     {
         return (int) $this->db->fetchColumn(
             "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `status` = :status",
@@ -92,9 +71,9 @@ class AccountRepository extends AbstractRepository
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>[]
      */
-    public function getAllActiveAccounts()
+    public function getAllActiveAccounts(): array
     {
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} WHERE `status` = :status ORDER BY `id` DESC",

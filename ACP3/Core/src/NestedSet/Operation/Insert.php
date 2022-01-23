@@ -10,6 +10,8 @@ namespace ACP3\Core\NestedSet\Operation;
 class Insert extends AbstractOperation
 {
     /**
+     * @param array<string, mixed> $insertValues
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function execute(array $insertValues, int $parentId = 0): int|false

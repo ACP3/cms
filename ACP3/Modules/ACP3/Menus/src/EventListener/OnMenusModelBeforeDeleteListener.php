@@ -22,7 +22,7 @@ class OnMenusModelBeforeDeleteListener implements EventSubscriberInterface
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event): void
     {
         if (!$event->isDeleteStatement()) {
             return;

@@ -11,6 +11,11 @@ use ACP3\Core;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Newsletter;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class UnsubscribePost extends Core\Controller\AbstractWidgetAction
 {
@@ -26,10 +31,12 @@ class UnsubscribePost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     *
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+    public function __invoke(): array|string|JsonResponse|RedirectResponse|Response
     {
         return $this->actionHelper->handlePostAction(
             function () {
@@ -43,7 +50,7 @@ class UnsubscribePost extends Core\Controller\AbstractWidgetAction
                 );
 
                 return $this->alertsHelper->confirmBox(
-                    $this->translator->t('newsletter', $result !== false ? 'unsubscribe_success' : 'unsubscribe_error'),
+                    $this->translator->t('newsletter', $result ? 'unsubscribe_success' : 'unsubscribe_error'),
                     $this->applicationPath->getWebRoot()
                 );
             }

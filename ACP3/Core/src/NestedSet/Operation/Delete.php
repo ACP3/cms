@@ -29,6 +29,8 @@ class Delete extends AbstractOperation
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function moveSiblingsOneLevelUp(array $nodes): void
@@ -46,6 +48,8 @@ class Delete extends AbstractOperation
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
      * @return int[]
      */
     private function getNodeIds(array $nodes): array

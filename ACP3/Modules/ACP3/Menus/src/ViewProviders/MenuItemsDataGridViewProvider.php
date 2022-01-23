@@ -19,6 +19,7 @@ use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Menus\Repository\MenuItemDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MenuItemsDataGridViewProvider
 {
@@ -27,9 +28,9 @@ class MenuItemsDataGridViewProvider
     }
 
     /**
-     * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return array<string, mixed>|JsonResponse
      */
-    public function __invoke(int $menuId): array|\Symfony\Component\HttpFoundation\JsonResponse
+    public function __invoke(int $menuId): array|JsonResponse
     {
         return $this->dataGrid->render($this->configureDataGrid($menuId));
     }

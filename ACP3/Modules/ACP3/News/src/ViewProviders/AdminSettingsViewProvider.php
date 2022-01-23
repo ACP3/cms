@@ -20,6 +20,9 @@ class AdminSettingsViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $settings = $this->settings->getSettings(NewsSchema::MODULE_NAME);

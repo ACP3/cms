@@ -50,6 +50,8 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function fetchMenuItem(string $routeName): array
@@ -63,6 +65,9 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
         return $menuItem;
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     private function fetchCreateMenuItemOption(int $currentValue = 0): array
     {
         $createMenuItem = [
@@ -72,6 +77,11 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
         return $this->forms->checkboxGenerator('create_menu_item', $createMenuItem, $currentValue);
     }
 
+    /**
+     * @param array<string, mixed> $menuItem
+     *
+     * @return array<string, mixed>|null
+     */
     private function modifyFormValues(array $menuItem): ?array
     {
         $formData = $this->view->getRenderer()->getTemplateVars('form');
@@ -84,6 +94,10 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
     }
 
     /**
+     * @param array<string, mixed> $menuItem
+     *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function addFormFields(array $menuItem): array

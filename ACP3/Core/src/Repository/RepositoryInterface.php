@@ -30,7 +30,8 @@ interface RepositoryInterface
     /**
      * Executes the SQL update statement.
      *
-     * @param array<string, mixed> $data
+     * @param array<string, mixed>                 $data
+     * @param array<string, string|int>|int|string $entryId
      */
     public function update(array $data, array|int|string $entryId): int;
 

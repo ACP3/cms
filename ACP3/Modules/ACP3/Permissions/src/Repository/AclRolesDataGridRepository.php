@@ -16,6 +16,9 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = AclRoleRepository::TABLE_NAME;
 
+    /**
+     * {@inheritDoc}
+     */
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions): array
     {
         $results = parent::getAll($columns, ...$queryOptions);
@@ -23,6 +26,11 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
         return $this->calculateFirstAndLastPage($results);
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $results
+     *
+     * @return array<int, array<string, mixed>>
+     */
     private function calculateFirstAndLastPage(array $results): array
     {
         foreach ($results as $index => &$result) {
@@ -33,6 +41,9 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
         return $results;
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $nestedSet
+     */
     private function isFirstInSet(int $index, array $nestedSet): bool
     {
         if ($index > 0) {
@@ -46,6 +57,9 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
         return true;
     }
 
+    /**
+     * @param array<int, array<string, mixed>> $nestedSet
+     */
     private function isLastItemInSet(int $index, array $nestedSet): bool
     {
         $cItems = \count($nestedSet);
@@ -78,11 +92,17 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
         $queryBuilder->join('main', $this->getTableName(), 'r');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions): void
     {
         $queryBuilder->where('r.left_id BETWEEN main.left_id AND main.right_id');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder

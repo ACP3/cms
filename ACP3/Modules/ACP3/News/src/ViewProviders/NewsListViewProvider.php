@@ -29,6 +29,8 @@ class NewsListViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(?int $categoryId): array
@@ -75,6 +77,8 @@ class NewsListViewProvider
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function fetchNews(int $categoryId, string $time): array
@@ -97,6 +101,9 @@ class NewsListViewProvider
         return $news;
     }
 
+    /**
+     * @param array<string, mixed> $news
+     */
     private function addReadMoreLink(array $news, int $readMoreCharacters): string
     {
         $readMoreLink = '...<a href="' . $this->router->route('news/details/id_' . $news['id']) . '">[';

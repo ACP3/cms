@@ -91,6 +91,8 @@ class Subscribe
     }
 
     /**
+     * @param array<string, mixed> $newsletterAccount
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function updateExistingAccount(array $newsletterAccount, int $salutation, string $firstName, string $lastName, string $hash): int

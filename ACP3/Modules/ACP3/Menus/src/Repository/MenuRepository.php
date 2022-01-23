@@ -14,21 +14,17 @@ class MenuRepository extends Core\Repository\AbstractRepository
     public const TABLE_NAME = 'menus';
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function menuExists(int $menuId)
+    public function menuExists(int $menuId): bool
     {
         return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE id = :id", ['id' => $menuId]) > 0;
     }
 
     /**
-     * @return bool
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function menuExistsByName(string $menuName, ?int $menuId = null)
+    public function menuExistsByName(string $menuName, ?int $menuId = null): bool
     {
         $where = !empty($menuId) ? ' AND id != :id' : '';
 
@@ -47,11 +43,11 @@ class MenuRepository extends Core\Repository\AbstractRepository
     }
 
     /**
-     * @return array
+     * @return array<array<string, mixed>>
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAllMenus(?int $limitStart = null, ?int $resultsPerPage = null)
+    public function getAllMenus(?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} ORDER BY title ASC, id ASC" .

@@ -20,6 +20,8 @@ class SendNewsletter
     /**
      * Versendet einen Newsletter.
      *
+     * @param array<array{email: string, name: string}>|string[]|string $recipients
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function sendNewsletter(int $newsletterId, array|string $recipients, bool $bcc = false): bool

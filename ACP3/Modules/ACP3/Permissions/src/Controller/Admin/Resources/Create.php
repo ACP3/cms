@@ -20,6 +20,7 @@ class Create extends Core\Controller\AbstractWidgetAction
     }
 
     /**
+     * @return array<string, mixed>
      * @throws \ReflectionException
      */
     public function __invoke(): array

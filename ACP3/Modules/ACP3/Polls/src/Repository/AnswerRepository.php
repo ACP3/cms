@@ -14,6 +14,8 @@ class AnswerRepository extends Core\Repository\AbstractRepository
     public const TABLE_NAME = 'poll_answers';
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAnswersByPollId(int $pollId): array
@@ -22,6 +24,8 @@ class AnswerRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAnswersWithVotesByPollId(int $pollId): array

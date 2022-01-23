@@ -9,5 +9,8 @@ namespace ACP3\Core\Modules;
 
 interface ModuleInfoInterface
 {
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function getModulesInfo(): array;
 }

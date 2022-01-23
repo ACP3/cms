@@ -25,6 +25,10 @@ class AdminRoleEditViewProvider
     }
 
     /**
+     * @param array<string, mixed> $role
+     *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $role): array
@@ -41,6 +45,9 @@ class AdminRoleEditViewProvider
         ];
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     private function fetchRoles(int $roleParentId = 0, int $roleLeftId = 0, int $roleRightId = 0): array
     {
         $roles = [];
@@ -56,6 +63,8 @@ class AdminRoleEditViewProvider
     }
 
     /**
+     * @return array<string, array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function fetchModulePermissions(int $roleId, int $parentRoleId, bool $showInheritedPermissions): array
@@ -83,6 +92,9 @@ class AdminRoleEditViewProvider
         return $modules;
     }
 
+    /**
+     * @return array<PermissionEnum::*, array<string, mixed>>
+     */
     private function generatePermissionCheckboxes(bool $showInheritedPermissions, int $resourceId, int $defaultValue): array
     {
         $permissions = [

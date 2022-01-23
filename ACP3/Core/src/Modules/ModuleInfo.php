@@ -21,6 +21,8 @@ class ModuleInfo implements ModuleInfoInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @throws \JsonException
      */
     public function getModulesInfo(): array
@@ -48,6 +50,10 @@ class ModuleInfo implements ModuleInfoInterface
     }
 
     /**
+     * @param array<string, mixed> $moduleInfoDb
+     *
+     * @return array<string, mixed>
+     *
      * @throws \JsonException
      */
     private function fetchModuleInfo(ComponentDataDto $moduleCoreData, array $moduleInfoDb): array
@@ -70,6 +76,9 @@ class ModuleInfo implements ModuleInfoInterface
         ];
     }
 
+    /**
+     * @param array<string, mixed> $composerData
+     */
     private function getAuthors(array $composerData): string
     {
         $authors = [];

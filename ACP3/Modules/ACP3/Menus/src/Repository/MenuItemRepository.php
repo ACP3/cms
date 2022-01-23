@@ -27,6 +27,8 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneMenuItemByUri(string $uri): array
@@ -38,6 +40,8 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAllItemsByBlockId(int $menuId): array
@@ -82,6 +86,8 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAllMenuItems(): array
@@ -92,6 +98,8 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getVisibleMenuItemsByBlockName(string $blockName): array
@@ -103,6 +111,8 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
+     * @param string[] $uris
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getLeftIdByUris(string $menuName, array $uris): int
@@ -115,6 +125,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
+     * @param string[] $uris
+     *
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getMenuItemsByUri(array $uris): array

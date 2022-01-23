@@ -17,9 +17,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Steps extends Core\Breadcrumb\Steps
 {
     /**
-     * @var array
+     * @var array<array<string, mixed>>
      */
-    protected $stepsFromDb = [];
+    protected array $stepsFromDb = [];
 
     public function __construct(
         ContainerInterface $container,
@@ -35,13 +35,15 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * {@inheritdoc}
      */
-    public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): Core\Breadcrumb\Steps
+    public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): self
     {
         if ($dbSteps === true) {
             $this->stepsFromDb[(int) array_key_last($this->stepsFromDb)] = $this->buildStepItem($title, $path);
         }
 
-        return parent::replaceAncestor($title, $path, $dbSteps);
+        parent::replaceAncestor($title, $path, $dbSteps);
+
+        return $this;
     }
 
     /**
@@ -90,6 +92,9 @@ class Steps extends Core\Breadcrumb\Steps
         }
     }
 
+    /**
+     * @return string[]
+     */
     private function getPossiblyMatchingRoutes(): array
     {
         return [
@@ -101,6 +106,11 @@ class Steps extends Core\Breadcrumb\Steps
         ];
     }
 
+    /**
+     * @param array<array<string, mixed>> $items
+     *
+     * @return int[]
+     */
     private function findRestrictionInRoutes(array $items): array
     {
         rsort($items);
@@ -118,6 +128,8 @@ class Steps extends Core\Breadcrumb\Steps
 
     /**
      * Zuweisung einer neuen Stufe zur Brotkrümelspur.
+     *
+     * @return static
      */
     private function appendFromDB(string $title, string $path = ''): self
     {
@@ -153,7 +165,7 @@ class Steps extends Core\Breadcrumb\Steps
     /**
      * {@inheritdoc}
      */
-    public function removeByPath(string $path): Core\Breadcrumb\Steps
+    public function removeByPath(string $path): self
     {
         parent::removeByPath($path);
 

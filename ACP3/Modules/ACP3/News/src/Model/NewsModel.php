@@ -25,7 +25,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
-        protected SettingsInterface $config,
+        private SettingsInterface $config,
         NewsRepository $newsRepository
     ) {
         parent::__construct($eventDispatcher, $dataProcessor, $newsRepository);
@@ -47,6 +47,10 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
         return parent::save($rawData, $entryId);
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     * @param array<string, mixed> $settings
+     */
     protected function useReadMore(array $formData, array $settings): int
     {
         return $settings['readmore'] == 1 && isset($formData['readmore']) ? 1 : 0;
@@ -71,7 +75,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function getDefaultDataForDuplication(): array
     {

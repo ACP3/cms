@@ -11,6 +11,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class SettingsSaveEvent extends Event
 {
+    /**
+     * @param string               $module
+     * @param array<string, mixed> $data
+     */
     public function __construct(private string $module, private array $data)
     {
     }
@@ -20,12 +24,15 @@ class SettingsSaveEvent extends Event
         return $this->module;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    public function addData(string $key, $values): void
+    public function addData(string $key, mixed $values): void
     {
         if (!\array_key_exists($key, $this->data)) {
             $this->data[$key] = $values;

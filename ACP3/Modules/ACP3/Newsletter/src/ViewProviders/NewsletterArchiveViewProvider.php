@@ -20,6 +20,8 @@ class NewsletterArchiveViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(): array

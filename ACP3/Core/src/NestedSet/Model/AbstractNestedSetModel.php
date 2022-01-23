@@ -35,7 +35,9 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     }
 
     /**
-     * @return array<int>
+     * @param array<string, mixed> $filteredNewData
+     *
+     * @return int[]
      *
      * @throws \Doctrine\DBAL\Exception
      */
@@ -63,6 +65,8 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function delete(array|int $entryId): int

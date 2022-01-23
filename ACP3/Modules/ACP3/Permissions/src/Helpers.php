@@ -16,6 +16,8 @@ class Helpers
     }
 
     /**
+     * @param int[] $roles
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function updateUserRoles(array $roles, int $userId): bool
@@ -27,6 +29,6 @@ class Helpers
             $result2 = $this->userRoleRepository->insert(['user_id' => $userId, 'role_id' => $role]);
         }
 
-        return $result !== false && $result2 !== false;
+        return $result && $result2;
     }
 }

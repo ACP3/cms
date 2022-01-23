@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Newsletter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
@@ -20,9 +21,9 @@ class Index extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array|array[]|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return array<string, mixed>|JsonResponse
      */
-    public function __invoke(): array|\Symfony\Component\HttpFoundation\JsonResponse
+    public function __invoke(): array|JsonResponse
     {
         return ($this->dataGridViewProvider)();
     }

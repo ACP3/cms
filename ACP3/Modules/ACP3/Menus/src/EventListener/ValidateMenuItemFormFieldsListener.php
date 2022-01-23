@@ -23,7 +23,7 @@ class ValidateMenuItemFormFieldsListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event): void
     {
         $formData = $event->getFormData();
 

@@ -12,6 +12,8 @@ class Edit extends AbstractOperation
     /**
      * Methode zum Bearbeiten eines Knotens.
      *
+     * @param array<string, mixed> $updateValues
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function execute(int $resultId, int $parentId, int $blockId, array $updateValues): bool
@@ -50,16 +52,22 @@ class Edit extends AbstractOperation
     }
 
     /**
+     * @param array<string, mixed> $node
+     *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function nodeIsRootItemAndNoChangeNeed(int $parentId, int $blockId, array $items): bool
+    protected function nodeIsRootItemAndNoChangeNeed(int $parentId, int $blockId, array $node): bool
     {
         return empty($parentId) &&
-            ($this->isBlockAware() === false || ($this->isBlockAware() === true && $blockId === (int) $items[$this->nestedSetRepository::BLOCK_COLUMN_NAME])) &&
-            $this->nestedSetRepository->nodeIsRootItem($items['left_id'], $items['right_id']) === true;
+            ($this->isBlockAware() === false || ($this->isBlockAware() === true && $blockId === (int) $node[$this->nestedSetRepository::BLOCK_COLUMN_NAME])) &&
+            $this->nestedSetRepository->nodeIsRootItem($node['left_id'], $node['right_id']) === true;
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
+     * @return array{int, int}
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function nodeBecomesRootNode(int $id, int $blockId, array $nodes): array
@@ -83,6 +91,8 @@ class Edit extends AbstractOperation
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function nodeBecomesRootNodeInNewBlock(int $blockId, array $nodes, int $itemDiff): int
@@ -108,6 +118,8 @@ class Edit extends AbstractOperation
     }
 
     /**
+     * @param array<string, mixed> $node
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function nodeBecomesRootNodeInSameBlock(array $node, int $itemDiff): int
@@ -122,6 +134,8 @@ class Edit extends AbstractOperation
     }
 
     /**
+     * @param array<array<string, mixed>> $nodes
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function adjustNodeSiblings(int $blockId, array $nodes, int $diff, int $rootId): bool
@@ -161,6 +175,11 @@ class Edit extends AbstractOperation
     }
 
     /**
+     * @param array<string, mixed>        $newParent
+     * @param array<array<string, mixed>> $nodes
+     *
+     * @return array{int, int}
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function moveNodeToNewParent(array $newParent, array $nodes): array

@@ -16,6 +16,11 @@ abstract class AbstractAnswerValidationRule extends AbstractValidationRule
     {
     }
 
+    /**
+     * @param array<string, mixed> $answers
+     *
+     * @return int[]
+     */
     protected function validateAnswers(array $answers): array
     {
         $markedAnswers = 0;

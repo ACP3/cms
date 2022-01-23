@@ -22,6 +22,8 @@ abstract class AbstractFormAction extends AbstractWidgetAction
     }
 
     /**
+     * @param array<string, mixed> $formData
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function fetchCategoryIdForSave(array $formData): int

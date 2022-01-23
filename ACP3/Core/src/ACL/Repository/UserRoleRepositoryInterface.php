@@ -12,9 +12,7 @@ use ACP3\Core\Repository\RepositoryInterface;
 interface UserRoleRepositoryInterface extends RepositoryInterface
 {
     /**
-     * @param int $userId
-     *
-     * @return array
+     * @return array<string, mixed>[]
      */
-    public function getRolesByUserId($userId);
+    public function getRolesByUserId(int $userId): array;
 }

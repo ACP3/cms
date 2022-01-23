@@ -40,7 +40,10 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
         $this->menuItemRepositoryMock = $this->createMock(MenuItemRepository::class);
     }
 
-    protected function setUpMenuItemRepositoryExpectations(array $dbSteps = [])
+    /**
+     * @param array<array<string, mixed>> $dbSteps
+     */
+    protected function setUpMenuItemRepositoryExpectations(array $dbSteps = []): void
     {
         $this->menuItemRepositoryMock->expects(self::once())
             ->method('getMenuItemsByUri')
@@ -48,7 +51,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
             ->willReturn($dbSteps);
     }
 
-    public function testGetBreadcrumbWithSingleDbStep()
+    public function testGetBreadcrumbWithSingleDbStep(): void
     {
         $this->setUpMenuItemRepositoryExpectations([
             [
@@ -77,7 +80,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbWithMultipleDbSteps()
+    public function testGetBreadcrumbWithMultipleDbSteps(): void
     {
         $this->setUpMenuItemRepositoryExpectations([
             [
@@ -116,7 +119,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbWithMultipleDbStepsAndDefaultSteps()
+    public function testGetBreadcrumbWithMultipleDbStepsAndDefaultSteps(): void
     {
         $this->setUpMenuItemRepositoryExpectations([
             [
@@ -159,7 +162,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbWithMultipleDbStepsAndCustomSteps()
+    public function testGetBreadcrumbWithMultipleDbStepsAndCustomSteps(): void
     {
         $this->setUpMenuItemRepositoryExpectations([
             [
@@ -201,7 +204,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbLastDbStepTitleShouldTakePrecedence()
+    public function testGetBreadcrumbLastDbStepTitleShouldTakePrecedence(): void
     {
         $this->setUpMenuItemRepositoryExpectations([
             [
@@ -233,7 +236,7 @@ class StepsTest extends \ACP3\Core\Breadcrumb\StepsTest
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    public function testGetBreadcrumbLastDbStepTitleShouldTakePrecedenceWithEmptyUri()
+    public function testGetBreadcrumbLastDbStepTitleShouldTakePrecedenceWithEmptyUri(): void
     {
         $this->setUpMenuItemRepositoryExpectations([
             [

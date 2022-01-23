@@ -8,9 +8,11 @@
 namespace ACP3\Modules\ACP3\News\Repository;
 
 use ACP3\Core\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\Repository\AbstractDataGridRepository;
+use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class DataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGridRepository
+class DataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = NewsRepository::TABLE_NAME;
 
@@ -32,7 +34,7 @@ class DataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGrid
     {
         $queryBuilder->leftJoin(
             'main',
-            $this->getTableName(\ACP3\Modules\ACP3\Categories\Repository\CategoryRepository::TABLE_NAME),
+            $this->getTableName(CategoryRepository::TABLE_NAME),
             'c',
             'main.category_id = c.id'
         );
