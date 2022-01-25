@@ -13,13 +13,14 @@ use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\AllowedSuperiorCategoryValidationRule;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\DuplicateCategoryValidationRule;
 use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\ParentIdValidationRule;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var array<string, mixed>
+     * @var UploadedFile|null
      */
-    protected array $file = [];
+    protected ?UploadedFile $file = null;
 
     protected int $categoryId = 0;
 
@@ -33,11 +34,11 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param array<string, mixed> $file
+     * @param UploadedFile|null $file
      *
-     * @return static
+     * @return $this
      */
-    public function setFile(array $file): self
+    public function setFile(?UploadedFile $file): self
     {
         $this->file = $file;
 

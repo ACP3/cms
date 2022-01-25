@@ -8,13 +8,14 @@
 namespace ACP3\Modules\ACP3\Emoticons\Validation;
 
 use ACP3\Core;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var array<string, mixed>|null
+     * @var UploadedFile|null
      */
-    private array|null $file = null;
+    private ?UploadedFile $file = null;
     /**
      * @var array<string, mixed>
      */
@@ -23,11 +24,11 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     private bool $fileRequired = false;
 
     /**
-     * @param array<string, mixed>|null $file
+     * @param UploadedFile|null $file
      *
      * @return $this
      */
-    public function setFile(?array $file): self
+    public function setFile(?UploadedFile $file): self
     {
         $this->file = $file;
 

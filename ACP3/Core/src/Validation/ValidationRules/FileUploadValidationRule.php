@@ -18,7 +18,7 @@ class FileUploadValidationRule extends AbstractValidationRule
     {
         $required = !isset($extra['required']) || $extra['required'];
 
-        return $this->isFileUpload($data) || ($required === false && empty($data));
+        return ($required === false && empty($data)) || $this->isFileUpload($data);
     }
 
     /**
