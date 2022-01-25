@@ -44,6 +44,7 @@ class Connection
     public function beginTransaction(): void
     {
         $this->getConnection()->beginTransaction();
+        $this->getConnection()->setAutoCommit(false);
     }
 
     /**
@@ -154,12 +155,20 @@ class Connection
     private function connect(): DBAL\Connection
     {
         $config = new DBAL\Configuration();
-        $config->setAutoCommit(false);
 
         if ($this->appMode !== ApplicationMode::PRODUCTION) {
             $config->setMiddlewares([new DBAL\Logging\Middleware($this->logger)]);
         }
 
         return DBAL\DriverManager::getConnection($this->connectionParams, $config);
+    }
+
+    /**
+     * @return object|resource
+     * @throws DBALException
+     */
+    public function getNativeConnection()
+    {
+        return $this->getConnection()->getNativeConnection();
     }
 }
