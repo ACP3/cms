@@ -23,6 +23,10 @@ class AdminFileEditViewProvider
     }
 
     /**
+     * @param array<string, mixed> $file
+     *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $file): array
@@ -57,6 +61,9 @@ class AdminFileEditViewProvider
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getUnits(): array
     {
         return [

@@ -19,6 +19,9 @@ class AdminSettingsViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $cookieConsentSettings = $this->settings->getSettings(Schema::MODULE_NAME);

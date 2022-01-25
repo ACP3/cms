@@ -26,7 +26,7 @@ interface CaptchaExtensionInterface
     /**
      * Checks, whether the typed in captcha is valid.
      *
-     * @param mixed $formData
+     * @param array<string, mixed> $extra
      */
-    public function isCaptchaValid($formData, string $formFieldName, array $extra = []): bool;
+    public function isCaptchaValid(mixed $formData, string $formFieldName, array $extra = []): bool;
 }

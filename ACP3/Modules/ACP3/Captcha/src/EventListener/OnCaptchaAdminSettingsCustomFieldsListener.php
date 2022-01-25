@@ -17,7 +17,7 @@ class OnCaptchaAdminSettingsCustomFieldsListener implements EventSubscriberInter
     {
     }
 
-    public function __invoke(TemplateEvent $event)
+    public function __invoke(TemplateEvent $event): void
     {
         $params = $event->getParameters();
         $this->view->assign('form', $params['form']);

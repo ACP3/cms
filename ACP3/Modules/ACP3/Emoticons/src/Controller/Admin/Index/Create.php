@@ -20,6 +20,9 @@ class Create extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $defaultData = ['code' => '', 'description' => ''];

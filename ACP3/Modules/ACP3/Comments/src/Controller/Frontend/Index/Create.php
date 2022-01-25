@@ -19,6 +19,9 @@ class Create extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(string $module, int $entryId, string $redirectUrl, bool $embed = false): array
     {
         if ($embed === true) {

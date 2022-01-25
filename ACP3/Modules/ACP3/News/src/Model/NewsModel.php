@@ -76,6 +76,8 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @return array<string, mixed>
      */
     protected function getDefaultDataForDuplication(): array
     {

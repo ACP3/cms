@@ -21,7 +21,7 @@ class Create extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @return array<string, mixed>
      */
     public function __invoke(): array
     {

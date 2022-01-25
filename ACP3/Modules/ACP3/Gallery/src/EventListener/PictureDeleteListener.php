@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class PictureDeleteListener implements EventSubscriberInterface
 {
     /**
-     * @var array<int, array|null>
+     * @var array<array<string, mixed>>
      */
     private array $picturesToDelete = [];
 

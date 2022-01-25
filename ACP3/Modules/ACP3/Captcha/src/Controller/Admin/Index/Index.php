@@ -11,7 +11,7 @@ use ACP3\Core\Controller\AbstractWidgetAction;
 
 class Index extends AbstractWidgetAction
 {
-    public function __invoke()
+    public function __invoke(): void
     {
     }
 }

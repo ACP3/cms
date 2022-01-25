@@ -26,6 +26,9 @@ class StorageFactory
         return $local;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getFileManagerConfig(): array
     {
         return [

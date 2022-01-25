@@ -18,7 +18,7 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener implements EventSubsc
     {
     }
 
-    public function __invoke(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event): void
     {
         $formData = $event->getFormData();
 
@@ -37,6 +37,9 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener implements EventSubsc
         }
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     private function isRecaptcha(array $formData): bool
     {
         return !empty($formData['captcha']) && $formData['captcha'] === 'captcha.extension.recaptcha_captcha_extension';

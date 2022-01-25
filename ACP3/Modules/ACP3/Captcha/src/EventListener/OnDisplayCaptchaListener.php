@@ -18,7 +18,7 @@ class OnDisplayCaptchaListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(TemplateEvent $templateEvent)
+    public function __invoke(TemplateEvent $templateEvent): void
     {
         if ($this->captchaExtension instanceof CaptchaExtensionInterface && $this->acl->hasPermission('frontend/captcha/index/image') === true) {
             $arguments = $templateEvent->getParameters();

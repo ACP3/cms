@@ -22,6 +22,10 @@ class AdminCategoryEditViewProvider
     }
 
     /**
+     * @param array<string, mixed> $category
+     *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $category): array
@@ -41,6 +45,9 @@ class AdminCategoryEditViewProvider
         ];
     }
 
+    /**
+     * @return array<string, mixed>[]
+     */
     private function fetchModules(): array
     {
         $modules = [];
@@ -56,6 +63,8 @@ class AdminCategoryEditViewProvider
     }
 
     /**
+     * @return array<string, mixed>[]
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function fetchCategoryTree(

@@ -45,7 +45,7 @@ class HoneypotCaptchaExtension implements CaptchaExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function isCaptchaValid($formData, string $formFieldName, array $extra = []): bool
+    public function isCaptchaValid(mixed $formData, string $formFieldName, array $extra = []): bool
     {
         return empty($formData[$formFieldName]);
     }

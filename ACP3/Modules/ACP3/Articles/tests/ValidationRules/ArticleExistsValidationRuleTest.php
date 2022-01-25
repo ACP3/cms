@@ -27,6 +27,9 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
+    /**
+     * @return mixed[]
+     */
     public function validationRuleProvider(): array
     {
         return [
@@ -40,19 +43,16 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param array|string $field
+     * {@inheritDoc}
      */
-    public function testValidationRule(mixed $data, $field, array $extra, bool $expected): void
+    public function testValidationRule(mixed $data, array|string|null $field, array $extra, bool $expected): void
     {
         $this->setExpectations($expected);
 
         parent::testValidationRule($data, $field, $extra, $expected);
     }
 
-    /**
-     * @param bool $expected
-     */
-    private function setExpectations($expected)
+    private function setExpectations(bool $expected): void
     {
         $this->articlesRepositoryMock
             ->expects(self::once())
@@ -63,9 +63,9 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
     /**
      * @dataProvider validationRuleProvider
      *
-     * @param array|string $field
+     * {@inheritDoc}
      */
-    public function testValidate(mixed $data, $field, array $extra, bool $expected): void
+    public function testValidate(mixed $data, array|string|null $field, array $extra, bool $expected): void
     {
         $this->setExpectations($expected);
 

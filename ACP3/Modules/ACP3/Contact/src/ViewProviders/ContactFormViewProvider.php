@@ -19,6 +19,9 @@ class ContactFormViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         return [
@@ -28,6 +31,9 @@ class ContactFormViewProvider
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getFormDefaults(): array
     {
         $defaults = [

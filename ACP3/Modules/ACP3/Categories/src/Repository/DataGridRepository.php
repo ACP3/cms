@@ -10,12 +10,16 @@ namespace ACP3\Modules\ACP3\Categories\Repository;
 use ACP3\Core\DataGrid\ColumnPriorityQueue;
 use ACP3\Core\DataGrid\QueryOption;
 use ACP3\Core\DataGrid\Repository\AbstractDataGridRepository;
+use ACP3\Modules\ACP3\System\Repository\ModulesRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 class DataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = CategoryRepository::TABLE_NAME;
 
+    /**
+     * {@inheritDoc}
+     */
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions): array
     {
         $results = parent::getAll($columns, ...$queryOptions);
@@ -24,9 +28,11 @@ class DataGridRepository extends AbstractDataGridRepository
     }
 
     /**
-     * @return array
+     * @param array<array<string, mixed>> $results
+     *
+     * @return array<array<string, mixed>>
      */
-    private function calculateFirstAndLastPage(array $results)
+    private function calculateFirstAndLastPage(array $results): array
     {
         foreach ($results as $index => &$result) {
             $result['first'] = $this->isFirstInSet($index, $results);
@@ -36,12 +42,15 @@ class DataGridRepository extends AbstractDataGridRepository
         return $results;
     }
 
+    /**
+     * @param array<array<string, mixed>> $nestedSet
+     */
     private function isFirstInSet(int $index, array $nestedSet): bool
     {
         if ($index > 0) {
             for ($j = $index - 1; $j >= 0; --$j) {
-                if ($nestedSet[$j]['parent_id'] == $nestedSet[$index]['parent_id']
-                    && $nestedSet[$j]['module_id'] == $nestedSet[$index]['module_id']
+                if ($nestedSet[$j]['parent_id'] === $nestedSet[$index]['parent_id']
+                    && $nestedSet[$j]['module_id'] === $nestedSet[$index]['module_id']
                 ) {
                     return false;
                 }
@@ -51,12 +60,15 @@ class DataGridRepository extends AbstractDataGridRepository
         return true;
     }
 
+    /**
+     * @param array<array<string, mixed>> $nestedSet
+     */
     private function isLastItemInSet(int $index, array $nestedSet): bool
     {
         $cItems = \count($nestedSet);
         for ($j = $index + 1; $j < $cItems; ++$j) {
-            if ($nestedSet[$index]['parent_id'] == $nestedSet[$j]['parent_id']
-                && $nestedSet[$j]['module_id'] == $nestedSet[$index]['module_id']
+            if ($nestedSet[$index]['parent_id'] === $nestedSet[$j]['parent_id']
+                && $nestedSet[$j]['module_id'] === $nestedSet[$index]['module_id']
             ) {
                 return false;
             }
@@ -86,7 +98,7 @@ class DataGridRepository extends AbstractDataGridRepository
         $queryBuilder->join('main', $this->getTableName(), 'c');
         $queryBuilder->leftJoin(
             'main',
-            $this->getTableName(\ACP3\Modules\ACP3\System\Repository\ModulesRepository::TABLE_NAME),
+            $this->getTableName(ModulesRepository::TABLE_NAME),
             'm',
             'main.module_id = m.id'
         );

@@ -21,6 +21,11 @@ class AdminArticleEditViewProvider
     {
     }
 
+    /**
+     * @param array<string, mixed> $article
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(array $article): array
     {
         $this->title->setPageTitlePrefix($article['title']);

@@ -29,6 +29,11 @@ class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterfac
         return parent::save($rawData, $entryId);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return array<string, mixed>
+     */
     protected function getDefaultDataForDuplication(): array
     {
         return [

@@ -18,10 +18,8 @@ use ReCaptcha\ReCaptcha;
 class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 {
     private const TEMPLATE = 'Captcha/Partials/captcha_recaptcha.tpl';
-    /**
-     * @var bool
-     */
-    private $includeJsAssets = true;
+
+    private bool $includeJsAssets = true;
 
     public function __construct(private Translator $translator, private RequestInterface $request, private SettingsInterface $settings, private View $view, private UserModelInterface $user)
     {
@@ -67,7 +65,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function isCaptchaValid($formData, string $formFieldName, array $extra = []): bool
+    public function isCaptchaValid(mixed $formData, string $formFieldName, array $extra = []): bool
     {
         if (empty($formData['g-recaptcha-response'])) {
             return false;

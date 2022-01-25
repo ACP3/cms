@@ -29,7 +29,10 @@ class DataGridByModuleViewProvider
     {
     }
 
-    public function __invoke(int $moduleId)
+    /**
+     * @return array<string, array<string, mixed>>|JsonResponse
+     */
+    public function __invoke(int $moduleId): array|JsonResponse
     {
         $dataGrid = $this->dataGrid->render($this->configureDataGrid($moduleId));
 

@@ -22,6 +22,7 @@ use ACP3\Modules\ACP3\Files\Helpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema as FilesSchema;
 use ACP3\Modules\ACP3\Files\Repository\DataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGridViewProvider
 {
@@ -29,7 +30,12 @@ class DataGridViewProvider
     {
     }
 
-    public function __invoke()
+    /**
+     * @return array<string, array<string, mixed>>|JsonResponse
+     *
+     * @throws \JsonException
+     */
+    public function __invoke(): array|JsonResponse
     {
         return $this->dataGrid->render($this->configureDataGrid());
     }

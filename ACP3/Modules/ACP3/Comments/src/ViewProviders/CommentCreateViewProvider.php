@@ -17,6 +17,9 @@ class CommentCreateViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(string $module, int $entryId, string $redirectUrl): array
     {
         return [
@@ -28,6 +31,9 @@ class CommentCreateViewProvider
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function fetchFormDefaults(): array
     {
         $defaults = [

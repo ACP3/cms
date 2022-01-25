@@ -17,13 +17,11 @@ use ACP3\Modules\ACP3\Categories\Validation\ValidationRules\ParentIdValidationRu
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $file = [];
-    /**
-     * @var int
-     */
-    protected $categoryId = 0;
+    protected array $file = [];
+
+    protected int $categoryId = 0;
 
     public function __construct(
         protected Core\Settings\SettingsInterface $settings,
@@ -35,11 +33,11 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param array $file
+     * @param array<string, mixed> $file
      *
-     * @return AdminFormValidation
+     * @return static
      */
-    public function setFile($file)
+    public function setFile(array $file): self
     {
         $this->file = $file;
 
@@ -47,11 +45,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param int $categoryId
-     *
-     * @return AdminFormValidation
+     * @return static
      */
-    public function setCategoryId($categoryId)
+    public function setCategoryId(int $categoryId): self
     {
         $this->categoryId = $categoryId;
 

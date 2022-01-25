@@ -23,8 +23,9 @@ class Edit extends Core\Controller\AbstractWidgetAction
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
-     * @throws \MJS\TopSort\ElementNotFoundException
      */
     public function __invoke(int $id): array
     {

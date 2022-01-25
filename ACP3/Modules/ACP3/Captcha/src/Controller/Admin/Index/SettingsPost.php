@@ -12,6 +12,11 @@ use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Captcha\Installer\Schema;
 use ACP3\Modules\ACP3\Captcha\Validation\AdminSettingsFormValidation;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class SettingsPost extends AbstractWidgetAction
 {
@@ -24,10 +29,12 @@ class SettingsPost extends AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     *
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+    public function __invoke(): array|string|JsonResponse|RedirectResponse|Response
     {
         return $this->actionHelper->handleSettingsPostAction(function () {
             $formData = $this->request->getPost()->all();

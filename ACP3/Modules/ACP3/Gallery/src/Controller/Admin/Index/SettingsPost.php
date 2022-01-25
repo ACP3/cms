@@ -65,6 +65,9 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
         });
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     private function hasImageDimensionChanges(array $formData): bool
     {
         $settings = $this->config->getSettings(Gallery\Installer\Schema::MODULE_NAME);

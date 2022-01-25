@@ -18,7 +18,7 @@ class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener implements Ev
     {
     }
 
-    public function __invoke(ModelSaveEvent $event)
+    public function __invoke(ModelSaveEvent $event): void
     {
         if (!$event->isDeleteStatement()) {
             return;

@@ -50,6 +50,8 @@ class CommentRepository extends \ACP3\Core\Repository\AbstractRepository impleme
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int|string $entryId): array
@@ -74,6 +76,8 @@ class CommentRepository extends \ACP3\Core\Repository\AbstractRepository impleme
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAllByModule(int $moduleId, int $resultId, ?int $limitStart = null, ?int $resultsPerPage = null): array

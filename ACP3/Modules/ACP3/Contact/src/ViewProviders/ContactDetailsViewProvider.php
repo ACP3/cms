@@ -19,6 +19,9 @@ class ContactDetailsViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $this->breadcrumb->append(

@@ -20,11 +20,17 @@ class ContactFormModel
     {
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     public function sendContactFormEmail(array $formData): bool
     {
         return $this->sendEmail($formData);
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     protected function sendEmail(array $formData): bool
     {
         $systemSettings = $this->getSystemSettings();
@@ -50,11 +56,17 @@ class ContactFormModel
         return $this->sendEmail->execute($data);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getSystemSettings(): array
     {
         return $this->config->getSettings(\ACP3\Modules\ACP3\System\Installer\Schema::MODULE_NAME);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getContactSettings(): array
     {
         return $this->config->getSettings(Schema::MODULE_NAME);
@@ -65,6 +77,9 @@ class ContactFormModel
         return $this->translator->t('contact', $phrase, ['%title%' => $siteTitle]);
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     protected function buildEmailBody(array $formData, string $phrase): string
     {
         return $this->translator->t(
@@ -78,6 +93,9 @@ class ContactFormModel
         );
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     protected function sendEmailCopy(array $formData): bool
     {
         $systemSettings = $this->getSystemSettings();
@@ -102,6 +120,9 @@ class ContactFormModel
         return $this->sendEmail->execute($data);
     }
 
+    /**
+     * @param array<string, mixed> $formData
+     */
     public function sendContactFormEmailCopy(array $formData): bool
     {
         return $this->sendEmailCopy($formData);

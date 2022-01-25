@@ -16,7 +16,7 @@ class CaptchaCompilerPass implements CompilerPassInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $captchaLocatorDefinition = $container->findDefinition('captcha.utility.captcha_registrar');
 

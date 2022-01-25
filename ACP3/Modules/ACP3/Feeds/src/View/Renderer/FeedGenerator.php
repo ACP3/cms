@@ -11,29 +11,21 @@ use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Feeds\Installer\Schema;
 use FeedWriter\ATOM;
+use FeedWriter\Feed;
 
 /**
  * Renderer for the output of RSS and ATOM News feeds.
  */
 class FeedGenerator
 {
-    /**
-     * @var \FeedWriter\Feed|null
-     */
-    private $renderer;
+    private ?Feed $renderer = null;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    private $settings = [];
-    /**
-     * @var string
-     */
-    private $title;
-    /**
-     * @var string
-     */
-    private $description;
+    private array $settings = [];
+    private ?string $title = null;
+    private ?string $description = null;
 
     public function __construct(private SettingsInterface $config, private RouterInterface $router)
     {
@@ -92,6 +84,9 @@ class FeedGenerator
         }
     }
 
+    /**
+     * @param array<int|string, mixed> $items
+     */
     public function assign(array $items): void
     {
         $this->configure();

@@ -24,6 +24,8 @@ class FileDetailsViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $fileId): array
@@ -42,6 +44,8 @@ class FileDetailsViewProvider
     }
 
     /**
+     * @param array<string, mixed> $file
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function addBreadcrumbSteps(array $file, int $categoryId): void

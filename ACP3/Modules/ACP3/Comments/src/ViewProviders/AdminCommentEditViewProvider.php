@@ -19,6 +19,11 @@ class AdminCommentEditViewProvider
     {
     }
 
+    /**
+     * @param array<string, mixed> $comment
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(array $comment): array
     {
         $this->breadcrumb

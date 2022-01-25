@@ -12,24 +12,22 @@ use ACP3\Core;
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @var array|null
+     * @var array<string, mixed>|null
      */
-    protected $file;
+    private array|null $file = null;
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $settings = [];
-    /**
-     * @var bool
-     */
-    protected $fileRequired = false;
+    private array $settings = [];
+
+    private bool $fileRequired = false;
 
     /**
-     * @param array|null $file
+     * @param array<string, mixed>|null $file
      *
      * @return $this
      */
-    public function setFile($file)
+    public function setFile(?array $file): self
     {
         $this->file = $file;
 
@@ -37,9 +35,11 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
+     * @param array<string, mixed> $settings
+     *
      * @return $this
      */
-    public function setSettings(array $settings)
+    public function setSettings(array $settings): self
     {
         $this->settings = $settings;
 
@@ -47,13 +47,11 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param bool $fileRequired
-     *
      * @return $this
      */
-    public function setFileRequired($fileRequired)
+    public function setFileRequired(bool $fileRequired): self
     {
-        $this->fileRequired = (bool) $fileRequired;
+        $this->fileRequired = $fileRequired;
 
         return $this;
     }

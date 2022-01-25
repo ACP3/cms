@@ -15,6 +15,11 @@ class ArticleFullViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function __invoke(int $articleId): array
     {
         return [

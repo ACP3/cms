@@ -13,21 +13,16 @@ use ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationR
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
+    private string $uriAlias = '';
     /**
-     * @var string
+     * @var array<string, mixed>|string|null
      */
-    protected $uriAlias = '';
-    /**
-     * @var array|null
-     */
-    protected $file;
+    private array|string|null $file = null;
 
     /**
-     * @param string $uriAlias
-     *
-     * @return $this
+     * @return static
      */
-    public function setUriAlias($uriAlias)
+    public function setUriAlias(string $uriAlias): self
     {
         $this->uriAlias = $uriAlias;
 
@@ -35,11 +30,11 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param array|null $file
+     * @param array<string, mixed>|string|null $file
      *
-     * @return $this
+     * @return static
      */
-    public function setFile($file)
+    public function setFile(array|string|null $file): self
     {
         $this->file = $file;
 

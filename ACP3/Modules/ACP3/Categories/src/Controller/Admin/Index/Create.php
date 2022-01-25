@@ -21,6 +21,8 @@ class Create extends Core\Controller\AbstractWidgetAction
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(): array
@@ -28,6 +30,9 @@ class Create extends Core\Controller\AbstractWidgetAction
         return ($this->adminCategoryEditViewProvider)($this->getDefaultFormData());
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getDefaultFormData(): array
     {
         return [

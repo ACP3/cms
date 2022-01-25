@@ -17,7 +17,7 @@ class FeedAvailabilityCompilerPass implements CompilerPassInterface
     /**
      * You can modify the container here before it is dumped to PHP code.
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $definition = $container->findDefinition(FeedAvailabilityRegistrar::class);
         $plugins = $container->findTaggedServiceIds('feeds.extension.feed_availability');

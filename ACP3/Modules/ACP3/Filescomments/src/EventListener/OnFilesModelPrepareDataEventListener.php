@@ -21,7 +21,7 @@ class OnFilesModelPrepareDataEventListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(ModelSavePrepareDataEvent $event)
+    public function __invoke(ModelSavePrepareDataEvent $event): void
     {
         if (!$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;

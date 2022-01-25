@@ -42,6 +42,8 @@ class ArticleRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
@@ -56,6 +58,8 @@ class ArticleRepository extends Core\Repository\AbstractRepository
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getLatest(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array

@@ -20,7 +20,7 @@ class OnWysiwygTextareaBeforeListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(TemplateEvent $templateEvent)
+    public function __invoke(TemplateEvent $templateEvent): void
     {
         $arguments = $templateEvent->getParameters();
         if (!empty($arguments['id']) && $this->modules->isInstalled(Schema::MODULE_NAME)) {

@@ -14,12 +14,12 @@ class FeedAvailabilityRegistrar
     /**
      * @var FeedAvailabilityExtensionInterface[]
      */
-    protected $availableModules = [];
+    private array $availableModules = [];
 
     /**
-     * @return $this
+     * @return static
      */
-    public function registerModule(FeedAvailabilityExtensionInterface $searchAvailability)
+    public function registerModule(FeedAvailabilityExtensionInterface $searchAvailability): self
     {
         $this->availableModules[$searchAvailability->getModuleName()] = $searchAvailability;
 
@@ -27,19 +27,14 @@ class FeedAvailabilityRegistrar
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getAvailableModuleNames()
+    public function getAvailableModuleNames(): array
     {
         return array_keys($this->availableModules);
     }
 
-    /**
-     * @param string $moduleName
-     *
-     * @return FeedAvailabilityExtensionInterface
-     */
-    public function getFeedItemsByModuleName($moduleName)
+    public function getFeedItemsByModuleName(string $moduleName): FeedAvailabilityExtensionInterface
     {
         if (isset($this->availableModules[$moduleName])) {
             return $this->availableModules[$moduleName];

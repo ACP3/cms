@@ -80,6 +80,8 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
 
     /**
      * {@inheritdoc}
+     *
+     * @return array<string, mixed>
      */
     protected function getDefaultDataForDuplication(): array
     {

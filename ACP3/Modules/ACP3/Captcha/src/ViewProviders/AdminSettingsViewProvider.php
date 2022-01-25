@@ -20,6 +20,12 @@ class AdminSettingsViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function __invoke(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);

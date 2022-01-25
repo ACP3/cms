@@ -16,7 +16,7 @@ class ClearEmoticonsCacheListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
         $this->emoticonCachePool->clear();
     }

@@ -18,7 +18,7 @@ class OnCaptchaValidationValidateCaptchaListener implements EventSubscriberInter
     {
     }
 
-    public function __invoke(FormValidationEvent $event)
+    public function __invoke(FormValidationEvent $event): void
     {
         $event
             ->getValidator()

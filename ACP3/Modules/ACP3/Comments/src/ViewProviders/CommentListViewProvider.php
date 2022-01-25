@@ -11,7 +11,6 @@ use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
 use ACP3\Core\Pagination;
-use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
 use ACP3\Modules\ACP3\Comments\Repository\CommentRepository;
@@ -23,8 +22,9 @@ class CommentListViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
-     * @throws InvalidPageException
      */
     public function __invoke(string $moduleName, int $entryId): array
     {

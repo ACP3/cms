@@ -41,6 +41,8 @@ class Helpers
     /**
      * Listet alle Kategorien eines Moduls auf.
      *
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function categoriesList(
@@ -68,6 +70,9 @@ class Helpers
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function addCreateCategoryFormFields(bool $categoryCreate, string $formFieldName): array
     {
         $formFields = [];

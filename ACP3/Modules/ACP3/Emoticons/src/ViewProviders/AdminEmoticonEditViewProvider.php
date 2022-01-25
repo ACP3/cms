@@ -16,6 +16,11 @@ class AdminEmoticonEditViewProvider
     {
     }
 
+    /**
+     * @param array<string, mixed> $emoticon
+     *
+     * @return array<string, mixed>
+     */
     public function __invoke(array $emoticon): array
     {
         return [

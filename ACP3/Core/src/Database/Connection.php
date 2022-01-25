@@ -10,6 +10,7 @@ namespace ACP3\Core\Database;
 use ACP3\Core\Environment\ApplicationMode;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Types\Type;
 use Psr\Log\LoggerInterface;
@@ -19,17 +20,14 @@ class Connection
     private ?DBAL\Connection $connection = null;
 
     /**
-     * @param LoggerInterface      $logger
-     * @param string               $appMode
      * @param array<string, mixed> $connectionParams
-     * @param string               $tablePrefix
      */
     public function __construct(private LoggerInterface $logger, private string $appMode, private array $connectionParams, private string $tablePrefix)
     {
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
     public function getConnection(): DBAL\Connection
     {
@@ -80,12 +78,12 @@ class Connection
     }
 
     /**
-     * @param mixed[]                                                              $params
+     * @param list<mixed>|array<string, mixed>                                     $params
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
      *
      * @return array<array<string, mixed>>
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
     public function fetchAll(
         string $statement,
@@ -103,12 +101,12 @@ class Connection
     }
 
     /**
-     * @param mixed[]                                                              $params
+     * @param list<mixed>|array<string, mixed>                                     $params
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
      *
      * @return array<string, mixed>
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
     public function fetchAssoc(string $statement, array $params = [], array $types = []): array
     {
@@ -118,21 +116,21 @@ class Connection
     }
 
     /**
-     * @param mixed[]                                                              $params
+     * @param list<mixed>|array<string, mixed>                                     $params
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
-    public function fetchColumn(string $statement, array $params = [], array $types = []): bool|string
+    public function fetchColumn(string $statement, array $params = [], array $types = []): mixed
     {
         return $this->executeQuery($statement, $params, $types)->fetchOne();
     }
 
     /**
-     * @param mixed[]                                                              $params
+     * @param list<mixed>|array<string, mixed>                                     $params
      * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
     public function executeQuery(
         string $query,
@@ -151,9 +149,9 @@ class Connection
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
      */
-    protected function connect(): DBAL\Connection
+    private function connect(): DBAL\Connection
     {
         $config = new DBAL\Configuration();
         $config->setAutoCommit(false);

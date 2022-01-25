@@ -18,7 +18,10 @@ class AdminCategorySettingsViewProvider
     {
     }
 
-    public function __invoke()
+    /**
+     * @return array<string, mixed>
+     */
+    public function __invoke(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 

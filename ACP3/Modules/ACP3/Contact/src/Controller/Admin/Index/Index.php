@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Contact\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Modules\ACP3\Contact;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
@@ -19,7 +20,10 @@ class Index extends Core\Controller\AbstractWidgetAction
         parent::__construct($context);
     }
 
-    public function __invoke()
+    /**
+     * @return array<string, array<string, mixed>>|JsonResponse
+     */
+    public function __invoke(): array|JsonResponse
     {
         return ($this->dataGridViewProvider)();
     }

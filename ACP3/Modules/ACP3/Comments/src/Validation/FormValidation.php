@@ -12,14 +12,12 @@ use ACP3\Modules\ACP3\Comments\Validation\ValidationRules\FloodBarrierValidation
 
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
-    protected $ipAddress = '';
+    private string $ipAddress = '';
 
     /**
-     * @param string $ipAddress
-     *
-     * @return $this
+     * @return static
      */
-    public function setIpAddress($ipAddress)
+    public function setIpAddress(string $ipAddress): self
     {
         $this->ipAddress = $ipAddress;
 

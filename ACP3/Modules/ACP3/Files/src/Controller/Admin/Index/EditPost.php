@@ -10,10 +10,15 @@ namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Helpers\FormAction;
+use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files;
 use ACP3\Modules\ACP3\Files\Helpers;
+use Doctrine\DBAL\ConnectionException;
+use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class EditPost extends AbstractFormAction
 {
@@ -30,10 +35,12 @@ class EditPost extends AbstractFormAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @return array<string, mixed>|string|JsonResponse|RedirectResponse
+     *
+     * @throws ConnectionException
+     * @throws Exception
      */
-    public function __invoke(int $id): array|string|\Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(int $id): array|string|JsonResponse|RedirectResponse
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();
@@ -64,7 +71,11 @@ class EditPost extends AbstractFormAction
     }
 
     /**
-     * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
+     * @param array<string, mixed> $formData
+     *
+     * @return array<string, mixed>
+     *
+     * @throws ValidationFailedException
      */
     private function updateAssociatedFile(string|UploadedFile $file, array $formData, string $currentFileName): array
     {

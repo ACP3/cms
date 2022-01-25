@@ -20,8 +20,9 @@ class ArticleListViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
-     * @throws \ACP3\Core\Pagination\Exception\InvalidPageException
      */
     public function __invoke(): array
     {

@@ -17,6 +17,9 @@ class ModuleListViewProvider
     {
     }
 
+    /**
+     * @return array<string, array<string, string>>
+     */
     public function __invoke(): array
     {
         return [
@@ -24,6 +27,9 @@ class ModuleListViewProvider
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function getAllowedModules(): array
     {
         $allowedModules = [];

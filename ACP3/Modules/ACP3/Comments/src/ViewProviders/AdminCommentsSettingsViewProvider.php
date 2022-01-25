@@ -18,6 +18,9 @@ class AdminCommentsSettingsViewProvider
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         $settings = $this->settings->getSettings(CommentsSchema::MODULE_NAME);

@@ -20,6 +20,8 @@ class FilesWidgetViewProvider
     }
 
     /**
+     * @return array<string, mixed>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(?int $categoryId, ?int $limit): array
@@ -31,6 +33,8 @@ class FilesWidgetViewProvider
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function fetchFiles(?int $categoryId, ?int $limit): array

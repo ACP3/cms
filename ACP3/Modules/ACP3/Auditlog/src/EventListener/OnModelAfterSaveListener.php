@@ -47,6 +47,9 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @return int[]|array<string, string|int>
+     */
     private function prepareEntryIds(ModelSaveEvent $event): array
     {
         return (array) $event->getEntryId();

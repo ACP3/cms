@@ -20,6 +20,9 @@ class Settings extends AbstractWidgetAction
         parent::__construct($context);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function __invoke(): array
     {
         return ($this->adminCommentsSettingsViewProvider)();

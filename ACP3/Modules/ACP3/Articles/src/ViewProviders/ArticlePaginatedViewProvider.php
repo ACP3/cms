@@ -16,15 +16,17 @@ use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class ArticlePaginatedViewProvider
 {
-    /**
-     * @var string|null
-     */
-    private $layout;
+    private ?string $layout = null;
 
     public function __construct(private ArticleRepository $articleRepository, private PageBreaks $pageBreaksHelper, private RequestInterface $request, private Steps $breadcrumb, private Title $title, private View $view)
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function __invoke(int $articleId): array
     {
         $article = $this->articleRepository->getOneById($articleId);

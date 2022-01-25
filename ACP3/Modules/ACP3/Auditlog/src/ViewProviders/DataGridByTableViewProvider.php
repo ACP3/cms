@@ -17,6 +17,7 @@ use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Auditlog\Repository\AuditLogByTableDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGridByTableViewProvider
 {
@@ -24,7 +25,10 @@ class DataGridByTableViewProvider
     {
     }
 
-    public function __invoke(string $tableName)
+    /**
+     * @return array<string, array<string, mixed>>|JsonResponse
+     */
+    public function __invoke(string $tableName): array|JsonResponse
     {
         return $this->dataGrid->render($this->configureDataGrid($tableName));
     }
