@@ -13,19 +13,14 @@ use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\MenuNameValidationRule;
 
 class MenuFormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * @var int
-     */
-    protected $menuId = 0;
+    private int $menuId = 0;
 
     /**
-     * @param int $menuId
-     *
      * @return $this
      */
-    public function setMenuId($menuId)
+    public function setMenuId(int $menuId): self
     {
-        $this->menuId = (int) $menuId;
+        $this->menuId = $menuId;
 
         return $this;
     }

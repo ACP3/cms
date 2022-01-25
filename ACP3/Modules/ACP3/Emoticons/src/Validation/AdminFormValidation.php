@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * @var UploadedFile|null
-     */
     private ?UploadedFile $file = null;
     /**
      * @var array<string, mixed>
@@ -24,8 +21,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     private bool $fileRequired = false;
 
     /**
-     * @param UploadedFile|null $file
-     *
      * @return $this
      */
     public function setFile(?UploadedFile $file): self

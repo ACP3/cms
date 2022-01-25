@@ -165,6 +165,7 @@ class Connection
 
     /**
      * @return object|resource
+     *
      * @throws DBALException
      */
     public function getNativeConnection()

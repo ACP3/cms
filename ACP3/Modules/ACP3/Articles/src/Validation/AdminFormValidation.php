@@ -12,10 +12,7 @@ use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\LayoutExistsValidation
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * @var string
-     */
-    private $uriAlias = '';
+    private string $uriAlias = '';
 
     public function setUriAlias(string $uriAlias): self
     {

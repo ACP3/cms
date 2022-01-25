@@ -13,33 +13,24 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PictureFormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * @var bool
-     */
-    protected $fileRequired = false;
-    /**
-     * @var UploadedFile|null
-     */
-    protected $file;
+    private bool $fileRequired = false;
+
+    private ?UploadedFile $file = null;
 
     /**
-     * @param bool $fileRequired
-     *
      * @return $this
      */
-    public function setFileRequired($fileRequired)
+    public function setFileRequired(bool $fileRequired): self
     {
-        $this->fileRequired = (bool) $fileRequired;
+        $this->fileRequired = $fileRequired;
 
         return $this;
     }
 
     /**
-     * @param UploadedFile|null $file
-     *
      * @return $this
      */
-    public function setFile($file)
+    public function setFile(?UploadedFile $file): self
     {
         $this->file = $file;
 

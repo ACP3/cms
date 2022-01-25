@@ -17,9 +17,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * @var UploadedFile|null
-     */
     protected ?UploadedFile $file = null;
 
     protected int $categoryId = 0;
@@ -34,8 +31,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @param UploadedFile|null $file
-     *
      * @return $this
      */
     public function setFile(?UploadedFile $file): self

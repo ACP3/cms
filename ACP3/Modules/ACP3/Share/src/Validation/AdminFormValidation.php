@@ -11,15 +11,12 @@ use ACP3\Core;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * @var string
-     */
-    protected $uriAlias = '';
+    private string $uriAlias = '';
 
     /**
      * @return $this
      */
-    public function setUriAlias(string $uriAlias)
+    public function setUriAlias(string $uriAlias): self
     {
         $this->uriAlias = $uriAlias;
 

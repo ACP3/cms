@@ -14,17 +14,12 @@ use ACP3\Modules\ACP3\Installer\Validation\ValidationRules\DesignExistsValidatio
 
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * @var string
-     */
-    protected $configFilePath = '';
+    private string $configFilePath = '';
 
     /**
-     * @param string $configFilePath
-     *
      * @return $this
      */
-    public function setConfigFilePath($configFilePath)
+    public function setConfigFilePath(string $configFilePath): self
     {
         $this->configFilePath = $configFilePath;
 

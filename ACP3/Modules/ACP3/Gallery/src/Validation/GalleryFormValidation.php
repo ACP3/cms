@@ -11,17 +11,12 @@ use ACP3\Core;
 
 class GalleryFormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * @var string
-     */
-    protected $uriAlias = '';
+    private string $uriAlias = '';
 
     /**
-     * @param string $uriAlias
-     *
      * @return $this
      */
-    public function setUriAlias($uriAlias)
+    public function setUriAlias(string $uriAlias): self
     {
         $this->uriAlias = $uriAlias;
 
