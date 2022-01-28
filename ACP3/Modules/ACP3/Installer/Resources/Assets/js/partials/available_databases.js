@@ -7,6 +7,7 @@
   const dbName = document.getElementById("db-name");
   const formFields = document.querySelectorAll("#db-host, #db-user, #db-password");
   const ajaxUrl = dbName.dataset.availableDatabasesUrl;
+  let formIsPrefilled = false;
 
   formFields.forEach((formField) => {
     formField.addEventListener("change", async () => {
@@ -55,5 +56,11 @@
         dbName.disabled = false;
       }
     });
+
+    if (formField.value && !formIsPrefilled) {
+      formField.dispatchEvent(new InputEvent('change'));
+
+      formIsPrefilled = true;
+    }
   });
 })(document);
