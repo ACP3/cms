@@ -10,7 +10,7 @@ services:
 
   ACP3\Modules\ACP3\Installer\EventListener\OnLanguageChangeListener:
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
 
   ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath: "@core.environment.application_path"
 

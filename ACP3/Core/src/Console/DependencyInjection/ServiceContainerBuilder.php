@@ -41,13 +41,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
         $this->set('core.environment.application_path', $this->applicationPath);
 
         $this
-            ->addCompilerPass(
-                new RegisterListenersPass(
-                    'core.event_dispatcher',
-                    'core.eventListener',
-                    'core.eventSubscriber'
-                )
-            )
+            ->addCompilerPass(new RegisterListenersPass())
             ->addCompilerPass(new RegisterInstallersCompilerPass())
             ->addCompilerPass(new RegisterMigrationsCompilerPass())
             ->addCompilerPass(new RegisterCommandsCompilerPass())

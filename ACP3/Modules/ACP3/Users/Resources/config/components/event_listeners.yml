@@ -5,11 +5,11 @@ services:
   ACP3\Modules\ACP3\Users\EventListener\:
     resource: "../../../src/EventListener/"
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
 
   ACP3\Modules\ACP3\Users\EventListener\UserContextListener:
     arguments:
       - user_hash_uri: "/widget/users/index/hash/"
         session_name_prefix: !php/const ACP3\Core\Session\SessionConstants::SESSION_NAME
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }

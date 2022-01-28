@@ -14,7 +14,7 @@ services:
 
   ACP3\Core\Http\EventListener\ResetRequestListener:
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
 
   Http\Adapter\Guzzle6\Client: ~
   Psr\Http\Client\ClientInterface: '@Http\Adapter\Guzzle6\Client'

@@ -2,7 +2,7 @@ services:
   _defaults:
     autowire: true
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
 
   ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener:
     arguments:

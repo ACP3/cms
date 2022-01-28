@@ -7,7 +7,7 @@ services:
 
   Symfony\Component\Console\Application:
     calls:
-      - ["setDispatcher", ["@core.event_dispatcher"]]
+      - ["setDispatcher", ["@event_dispatcher"]]
     public: true
 
   ACP3\Core\Console\Command\:

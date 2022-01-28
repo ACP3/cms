@@ -129,7 +129,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
     private function handleException(\Throwable $exception): ?Response
     {
         /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
-        $eventDispatcher = $this->container->get('core.event_dispatcher');
+        $eventDispatcher = $this->container->get('event_dispatcher');
 
         $outputPageExceptionEvent = new OutputPageExceptionEvent($exception);
         $eventDispatcher->dispatch($outputPageExceptionEvent, OutputPageExceptionEvent::NAME);
@@ -158,7 +158,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
         }
 
         /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
-        $eventDispatcher = $this->container->get('core.event_dispatcher');
+        $eventDispatcher = $this->container->get('event_dispatcher');
 
         $eventDispatcher->dispatch(new TerminateEvent($this, $request, $response), KernelEvents::TERMINATE);
     }

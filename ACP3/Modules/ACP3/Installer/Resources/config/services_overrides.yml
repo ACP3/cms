@@ -7,7 +7,7 @@ services:
   ACP3\Core\Application\EventListener\AddTemplateVariablesListener:
     class: ACP3\Modules\ACP3\Installer\EventListener\AddTemplateVariablesListener
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
 
   ACP3\Core\Assets\Renderer\CSSRendererFactory:
     arguments:
@@ -26,7 +26,7 @@ services:
     arguments:
       $forwardControllerActionExceptionErrorListener: "@.inner"
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
 
   ACP3\Core\Http\Request:
     class: ACP3\Modules\ACP3\Installer\Core\Http\Request
@@ -54,4 +54,4 @@ services:
       $applicationMode: "%core.environment%"
       $serviceId: "installer.controller.installer.error.server_error"
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }

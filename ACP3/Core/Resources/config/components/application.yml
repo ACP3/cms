@@ -24,17 +24,17 @@ services:
 
   Symfony\Component\HttpKernel\EventListener\SurrogateListener:
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
 
   Symfony\Component\HttpKernel\EventListener\FragmentListener:
     arguments:
       $fragmentPath: "%fragment_path%"
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
 
   Symfony\Component\HttpKernel\EventListener\StreamedResponseListener:
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
 
   fragment.handler:
     class: Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler

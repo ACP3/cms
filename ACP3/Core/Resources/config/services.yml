@@ -9,10 +9,10 @@ parameters:
 services:
   ACP3\Core\XML: ~
 
-  core.event_dispatcher:
+  event_dispatcher:
     class: Symfony\Component\EventDispatcher\EventDispatcher
     public: true
 
-  Symfony\Component\EventDispatcher\EventDispatcher: "@core.event_dispatcher"
-  Symfony\Component\EventDispatcher\EventDispatcherInterface: "@core.event_dispatcher"
-  Psr\EventDispatcher\EventDispatcherInterface: "@core.event_dispatcher"
+  Symfony\Component\EventDispatcher\EventDispatcher: "@event_dispatcher"
+  Symfony\Component\EventDispatcher\EventDispatcherInterface: "@event_dispatcher"
+  Psr\EventDispatcher\EventDispatcherInterface: "@event_dispatcher"

@@ -14,4 +14,4 @@ services:
 
   ACP3\Core\Controller\EventListener\ForwardControllerActionExceptionErrorListener:
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }

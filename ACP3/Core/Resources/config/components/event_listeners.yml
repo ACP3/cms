@@ -5,4 +5,4 @@ services:
   ACP3\Core\Application\EventListener\:
     resource: "../../../src/Application/EventListener/"
     tags:
-      - { name: core.eventSubscriber }
+      - { name: kernel.event_subscriber }
