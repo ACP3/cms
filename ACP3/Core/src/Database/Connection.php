@@ -44,7 +44,6 @@ class Connection
     public function beginTransaction(): void
     {
         $this->getConnection()->beginTransaction();
-        $this->getConnection()->setAutoCommit(false);
     }
 
     /**
