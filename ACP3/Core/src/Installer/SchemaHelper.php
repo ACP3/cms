@@ -58,8 +58,6 @@ class SchemaHelper
             $replace[] = $this->getModuleId($moduleName);
         }
 
-        $this->db->beginTransaction();
-
         try {
             foreach ($queries as $query) {
                 if (\is_callable($query)) {
@@ -70,10 +68,7 @@ class SchemaHelper
                     $this->db->executeStatement(str_ireplace($search, $replace, $query));
                 }
             }
-            $this->db->commit();
         } catch (\Exception $e) {
-            $this->db->rollBack();
-
             throw new Exception\ModuleMigrationException(sprintf('An error occurred while executing a migration for module "%s"', $moduleName), 0, $e);
         }
     }
