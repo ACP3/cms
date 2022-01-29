@@ -29,7 +29,7 @@ class Migrator
 
         $result = [];
         foreach ($migrations as $fqcn => $migration) {
-            // We need to update the already executed migrations as migration are (theoretically)
+            // We need to update the already executed migrations as migrations are (theoretically)
             // allowed to update/modify the data within the "migration" table, too.
             if (\in_array($fqcn, $this->migrationRepository->findAllAlreadyExecutedMigrations(), true)) {
                 continue;
