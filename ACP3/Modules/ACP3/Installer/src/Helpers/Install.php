@@ -46,6 +46,12 @@ class Install
         return $this->install($schema, $container, AclInstaller::class);
     }
 
+    /**
+     * @param class-string $installerServiceId
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     private function install(
         SchemaInterface $schema,
         ContainerInterface $container,
