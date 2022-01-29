@@ -18,7 +18,7 @@ use Psr\Container\ContainerInterface;
 
 class ModuleInstaller
 {
-    public function __construct(private Install $installHelper, private MigrationServiceLocator $migrationServiceLocator, private MigrationRepositoryInterface $migrationRepository)
+    public function __construct(private Install $installHelper, private MigrationServiceLocator $migrationServiceLocator)
     {
     }
 
@@ -79,9 +79,11 @@ class ModuleInstaller
     {
         /** @var Connection $db */
         $db = $container->get(Connection::class);
+        /** @var MigrationRepositoryInterface $migrationRepository */
+        $migrationRepository = $container->get(MigrationRepositoryInterface::class);
 
         foreach ($this->migrationServiceLocator->getMigrations() as $fqcn => $migration) {
-            $db->getConnection()->insert($this->migrationRepository->getTableName(), ['name' => $fqcn]);
+            $db->getConnection()->insert($migrationRepository->getTableName(), ['name' => $fqcn]);
         }
     }
 }
