@@ -58,7 +58,7 @@
     });
 
     if (formField.value && !formIsPrefilled) {
-      formField.dispatchEvent(new InputEvent('change'));
+      formField.dispatchEvent(new InputEvent("change"));
 
       formIsPrefilled = true;
     }
