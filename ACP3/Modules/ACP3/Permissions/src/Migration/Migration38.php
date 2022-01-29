@@ -19,7 +19,7 @@ final class Migration38 implements MigrationInterface
 
     public function up(): void
     {
-        $this->db->executeQuery(
+        $this->db->executeStatement(
             "CREATE TABLE `{$this->db->getPrefix()}acl_permission` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
                 `role_id` int(10) unsigned NOT NULL,

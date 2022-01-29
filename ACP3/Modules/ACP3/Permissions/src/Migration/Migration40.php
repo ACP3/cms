@@ -18,10 +18,10 @@ final class Migration40 implements MigrationInterface
 
     public function up(): void
     {
-        $this->db->executeQuery("ALTER TABLE {$this->db->getPrefix()}acl_resources DROP FOREIGN KEY {$this->db->getPrefix()}acl_resources_ibfk_1;");
-        $this->db->executeQuery("ALTER TABLE {$this->db->getPrefix()}acl_resources DROP COLUMN privilege_id;");
-        $this->db->executeQuery("DROP TABLE {$this->db->getPrefix()}acl_rules;");
-        $this->db->executeQuery("DROP TABLE {$this->db->getPrefix()}acl_privileges;");
+        $this->db->executeStatement("ALTER TABLE {$this->db->getPrefix()}acl_resources DROP FOREIGN KEY {$this->db->getPrefix()}acl_resources_ibfk_1;");
+        $this->db->executeStatement("ALTER TABLE {$this->db->getPrefix()}acl_resources DROP COLUMN privilege_id;");
+        $this->db->executeStatement("DROP TABLE {$this->db->getPrefix()}acl_rules;");
+        $this->db->executeStatement("DROP TABLE {$this->db->getPrefix()}acl_privileges;");
     }
 
     public function down(): void

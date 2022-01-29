@@ -67,7 +67,7 @@ class SchemaHelper
                         throw new Exception\ModuleMigrationException(sprintf('An error occurred while executing a migration inside a closure for module "%s"', $moduleName));
                     }
                 } elseif (!empty($query)) {
-                    $this->db->executeQuery(str_ireplace($search, $replace, $query));
+                    $this->db->executeStatement(str_ireplace($search, $replace, $query));
                 }
             }
             $this->db->commit();

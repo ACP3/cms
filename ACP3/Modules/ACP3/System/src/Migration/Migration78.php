@@ -29,7 +29,7 @@ final class Migration78 implements MigrationInterface
     {
         $this->markMigrationsAsExecuted();
 
-        $this->db->executeQuery("ALTER TABLE `{$this->db->getPrefix()}modules` DROP COLUMN `version`;");
+        $this->db->executeStatement("ALTER TABLE `{$this->db->getPrefix()}modules` DROP COLUMN `version`;");
     }
 
     public function down(): void
@@ -73,7 +73,7 @@ final class Migration78 implements MigrationInterface
             });
 
             foreach ($migrationsToMarkAsExecuted as $migration) {
-                $this->db->executeQuery(
+                $this->db->executeStatement(
                     "INSERT INTO {$this->db->getPrefix()}migration (`name`) VALUES (:migration)",
                     ['migration' => $migration::class]
                 );

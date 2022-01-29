@@ -24,7 +24,7 @@ final class Migration79 implements MigrationInterface
      */
     public function up(): void
     {
-        $this->db->executeQuery("DELETE FROM `{$this->db->getPrefix()}settings` WHERE `name` = 'page_cache_is_enabled' AND `module_id` = (SELECT `id` FROM `{$this->db->getPrefix()}modules` WHERE `name` = 'system');");
+        $this->db->executeStatement("DELETE FROM `{$this->db->getPrefix()}settings` WHERE `name` = 'page_cache_is_enabled' AND `module_id` = (SELECT `id` FROM `{$this->db->getPrefix()}modules` WHERE `name` = 'system');");
     }
 
     public function down(): void

@@ -18,7 +18,7 @@ final class Migration39 implements MigrationInterface
 
     public function up(): void
     {
-        $this->db->executeQuery(
+        $this->db->executeStatement(
             "insert into `{$this->db->getPrefix()}acl_permission` (`role_id`, `resource_id`, `permission`)
 select aru.role_id, are.id, IF(aru.permission = 0, 2, aru.permission)
 from `{$this->db->getPrefix()}acl_resources` are

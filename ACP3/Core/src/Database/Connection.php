@@ -150,6 +150,24 @@ class Connection
     }
 
     /**
+     * @param list<mixed>|array<string, mixed>                                     $params
+     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     *
+     * @throws DBALException
+     */
+    public function executeStatement(
+        string $query,
+        array $params = [],
+        array $types = [],
+    ): int {
+        return $this->getConnection()->executeStatement(
+            $query,
+            $params,
+            $types,
+        );
+    }
+
+    /**
      * @throws DBALException
      */
     private function connect(): DBAL\Connection
