@@ -18,6 +18,12 @@
   "config": {
     "platform": {
       "php": "7.3.0"
+    },
+    "allow-plugins": {
+      "acp3/composer-installer": true,
+      "phpstan/extension-installer": true,
+      "wikimedia/composer-merge-plugin": true,
+      "composer/package-versions-deprecated": true
     }
   },
   "require": {
