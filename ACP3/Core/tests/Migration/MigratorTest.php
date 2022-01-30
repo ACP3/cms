@@ -8,6 +8,7 @@
 namespace ACP3\Core\Migration;
 
 use ACP3\Core\Migration\Providers\Migration1;
+use ACP3\Core\Migration\Providers\Migration123;
 use ACP3\Core\Migration\Providers\Migration2;
 use ACP3\Core\Migration\Repository\MigrationRepositoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -110,6 +111,31 @@ class MigratorTest extends TestCase
             ->method('insert');
 
         self::assertSame([$migration2Mock::class => [$exception]], $this->migrator->updateModules());
+    }
+
+    public function testShouldSkipAMigrationsWithAMissingDependencies(): void
+    {
+        $migration123Mock = $this->createPartialMock(Migration123::class, ['up', 'down']);
+
+        $this->migrationRepositoryMock
+            ->method('findAllAlreadyExecutedMigrations')
+            ->willReturn([
+                Migration1::class,
+            ]);
+        $this->migrationServiceLocatorMock->expects(self::once())
+            ->method('getMigrations')
+            ->willReturn([
+                $migration123Mock::class => $migration123Mock,
+            ]);
+
+        $migration123Mock->expects(self::never())
+            ->method('up');
+        $migration123Mock->expects(self::never())
+            ->method('down');
+        $this->migrationRepositoryMock->expects(self::never())
+            ->method('insert');
+
+        self::assertSame([], $this->migrator->updateModules());
     }
 
     public function testUpdateModulesWithErrorInDowngrade(): void

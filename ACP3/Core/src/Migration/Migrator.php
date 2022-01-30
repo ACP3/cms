@@ -28,9 +28,17 @@ class Migrator
 
         $result = [];
         foreach ($migrations as $fqcn => $migration) {
+            $alreadyExecutedMigrations = $this->migrationRepository->findAllAlreadyExecutedMigrations();
+
             // We need to update the already executed migrations as migrations are (theoretically)
             // allowed to update/modify the data within the "migration" table, too.
-            if (\in_array($fqcn, $this->migrationRepository->findAllAlreadyExecutedMigrations(), true)) {
+            if (\in_array($fqcn, $alreadyExecutedMigrations, true)) {
+                continue;
+            }
+
+            // We need to ensure, that the other migrations a certain migration requires, have already been executed.
+            // Otherwise, this can result unforeseeable errors.
+            if ($migration->dependencies() !== null && \count(array_intersect($migration->dependencies(), $alreadyExecutedMigrations)) !== \count($migration->dependencies())) {
                 continue;
             }
 
