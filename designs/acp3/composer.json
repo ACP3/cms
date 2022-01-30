@@ -23,5 +23,8 @@
     "files": [
       "registration.php"
     ]
+  },
+  "extra": {
+    "libraries": ["bootstrap"]
   }
 }

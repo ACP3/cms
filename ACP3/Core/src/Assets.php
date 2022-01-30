@@ -43,36 +43,28 @@ class Assets
             return;
         }
 
-        $themeConfig = simplexml_load_string(file_get_contents($this->theme->getDesignPathInternal() . DIRECTORY_SEPARATOR . 'info.xml'));
+        $themeConfig = $this->theme->getCurrentThemeInfo();
 
-        if (isset($themeConfig->libraries)) {
-            foreach ($themeConfig->libraries->item as $libraryName) {
-                $this->libraries->enableLibraries([(string) $libraryName]);
-            }
+        foreach ($themeConfig['libraries'] as $libraryName) {
+            $this->libraries->enableLibraries([$libraryName]);
         }
 
         $this->additionalThemeCssFiles = [];
 
-        if (isset($themeConfig->css)) {
-            foreach ($themeConfig->css->item as $file) {
-                $this->addCssFile($file);
-            }
+        foreach ($themeConfig['css'] as $file) {
+            $this->addCssFile($file);
         }
 
         $this->additionalThemeJsFiles = [];
 
-        if (isset($themeConfig->js)) {
-            foreach ($themeConfig->js->item as $file) {
-                $this->addJsFile($file);
-            }
+        foreach ($themeConfig['js'] as $file) {
+            $this->addJsFile($file);
         }
     }
 
-    private function addCssFile(string $file): self
+    private function addCssFile(string $file): void
     {
         $this->additionalThemeCssFiles[] = $file;
-
-        return $this;
     }
 
     /**
@@ -87,10 +79,8 @@ class Assets
         return $this->additionalThemeJsFiles;
     }
 
-    private function addJsFile(string $file): self
+    private function addJsFile(string $file): void
     {
         $this->additionalThemeJsFiles[] = $file;
-
-        return $this;
     }
 }

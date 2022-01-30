@@ -1,0 +1,17 @@
+{
+  "name": "acp3/phpunit-theme",
+  "description": "PHPUnit Theme Description",
+  "type": "acp3-component",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Tino Goratsch",
+      "email": "mail@acp3-cms.net"
+    }
+  ],
+  "extra": {
+    "libraries": ["bootstrap"],
+    "css": ["additional-style.css"],
+    "js": ["additional-script.js"]
+  }
+}

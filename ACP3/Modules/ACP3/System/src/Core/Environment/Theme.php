@@ -12,8 +12,8 @@ use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Core\XML;
 use ACP3\Modules\ACP3\System\Installer\Schema;
+use Composer\InstalledVersions;
 
 class Theme implements ThemePathInterface
 {
@@ -26,10 +26,13 @@ class Theme implements ThemePathInterface
      */
     private array $sortedThemeDependencies = [];
 
-    public function __construct(private ApplicationPath $appPath, private SettingsInterface $settings, private XML $xml)
+    public function __construct(private ApplicationPath $appPath, private SettingsInterface $settings)
     {
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function getAvailableThemes(): array
     {
         if (empty($this->availableThemes)) {
@@ -39,6 +42,9 @@ class Theme implements ThemePathInterface
         return $this->availableThemes;
     }
 
+    /**
+     * @throws \JsonException
+     */
     private function setAvailableThemes(): void
     {
         $registeredThemes = ComponentRegistry::filterByType(ComponentRegistry::all(), [ComponentTypeEnum::THEME]);
@@ -48,25 +54,48 @@ class Theme implements ThemePathInterface
         }
     }
 
+    /**
+     * @throws \JsonException
+     */
     private function addTheme(string $themePath, string $themeName): void
     {
         if (\array_key_exists($themeName, $this->availableThemes)) {
             return;
         }
 
-        $designInfo = $this->xml->parseXmlFile($themePath . DIRECTORY_SEPARATOR . 'info.xml', '/design');
-        if (!empty($designInfo)) {
-            $this->availableThemes[$themeName] = array_merge(
-                $designInfo,
-                [
-                    'internal_name' => $themeName,
-                    'path' => $themePath,
-                    'web_path' => $this->appPath->getWebRoot() . str_replace([ACP3_ROOT_DIR, '\\'], ['', '/'], $themeName),
-                ]
-            );
-        }
+        $composerData = json_decode(file_get_contents($themePath . DIRECTORY_SEPARATOR . 'composer.json'), true, 512, JSON_THROW_ON_ERROR);
+        $this->availableThemes[$themeName] = [
+            'author' => $this->getAuthors($composerData),
+            'css' => $composerData['extra']['css'] ?? [],
+            'description' => $composerData['description'],
+            'internal_name' => $themeName,
+            'js' => $composerData['extra']['js'] ?? [],
+            'name' => $composerData['name'],
+            'libraries' => $composerData['extra']['libraries'] ?? [],
+            'parent' => $composerData['extra']['parent'] ?? null,
+            'path' => $themePath,
+            'version' => InstalledVersions::getPrettyVersion($composerData['name']) ?: InstalledVersions::getRootPackage()['pretty_version'],
+            'web_path' => $this->appPath->getWebRoot() . str_replace([ACP3_ROOT_DIR, '\\'], ['', '/'], $themeName),
+        ];
     }
 
+    /**
+     * @param array<string, mixed> $composerData
+     */
+    private function getAuthors(array $composerData): string
+    {
+        $authors = [];
+
+        foreach ($composerData['authors'] ?? [] as $author) {
+            $authors[] = $author['name'];
+        }
+
+        return implode(', ', $authors);
+    }
+
+    /**
+     * @throws \JsonException
+     */
     public function has(string $themeName): bool
     {
         return \array_key_exists($themeName, $this->getAvailableThemes());
@@ -79,6 +108,8 @@ class Theme implements ThemePathInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @throws \JsonException
      */
     public function getCurrentThemeDependencies(): array
     {
@@ -87,6 +118,8 @@ class Theme implements ThemePathInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @throws \JsonException
      */
     public function getThemeDependencies(string $themeName): array
     {
@@ -97,6 +130,9 @@ class Theme implements ThemePathInterface
         return $this->sortedThemeDependencies[$themeName];
     }
 
+    /**
+     * @throws \JsonException
+     */
     private function setThemeDependencies(string $themeName): void
     {
         $availableThemes = $this->getAvailableThemes();
@@ -120,6 +156,8 @@ class Theme implements ThemePathInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @throws \JsonException
      */
     public function getDesignPathInternal(?string $themeName = null): string
     {
@@ -128,9 +166,19 @@ class Theme implements ThemePathInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @throws \JsonException
      */
     public function getDesignPathWeb(?string $themeName = null): string
     {
         return $this->getAvailableThemes()[$themeName ?? $this->getCurrentTheme()]['web_path'];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getCurrentThemeInfo(): array
+    {
+        return $this->availableThemes[$this->getCurrentTheme()];
     }
 }

@@ -47,4 +47,9 @@ interface ThemePathInterface
      * @return string[]
      */
     public function getCurrentThemeDependencies(): array;
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getCurrentThemeInfo(): array;
 }

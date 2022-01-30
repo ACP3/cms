@@ -44,8 +44,8 @@ class AssetsTest extends \PHPUnit\Framework\TestCase
     private function configureThemeMock(): void
     {
         $this->theme->expects(self::once())
-            ->method('getDesignPathInternal')
-            ->willReturn(ACP3_ROOT_DIR . '/tests/designs/acp3/');
+            ->method('getCurrentThemeInfo')
+            ->willReturn(['libraries' => [], 'css' => ['additional-style.css'], 'js' => ['additional-script.js']]);
     }
 
     public function testFetchAdditionalThemeCssFiles(): void
