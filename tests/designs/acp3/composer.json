@@ -10,8 +10,14 @@
     }
   ],
   "extra": {
-    "libraries": ["bootstrap"],
-    "css": ["additional-style.css"],
-    "js": ["additional-script.js"]
+    "libraries": [
+      "bootstrap"
+    ],
+    "css": [
+      "additional-style.css"
+    ],
+    "js": [
+      "additional-script.js"
+    ]
   }
 }

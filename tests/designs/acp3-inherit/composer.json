@@ -10,7 +10,9 @@
     }
   ],
   "extra": {
-    "libraries": ["bootstrap"],
+    "libraries": [
+      "bootstrap"
+    ],
     "parent": "acp3"
   }
 }

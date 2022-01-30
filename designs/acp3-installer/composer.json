@@ -24,6 +24,9 @@
     ]
   },
   "extra": {
-    "libraries": ["bootstrap", "polyfill"]
+    "libraries": [
+      "bootstrap",
+      "polyfill"
+    ]
   }
 }

@@ -25,6 +25,8 @@
     ]
   },
   "extra": {
-    "libraries": ["bootstrap"]
+    "libraries": [
+      "bootstrap"
+    ]
   }
 }
