@@ -14,7 +14,7 @@ class SchemaRegistrar implements ContainerInterface
     /**
      * @var array<string, SchemaInterface>
      */
-    private $schemas = [];
+    private array $schemas = [];
 
     public function set(SchemaInterface $schema): void
     {
@@ -37,10 +37,7 @@ class SchemaRegistrar implements ContainerInterface
         return isset($this->schemas[$moduleName]);
     }
 
-    /**
-     * @return \ACP3\Core\Installer\SchemaInterface
-     */
-    public function get(string $moduleName)
+    public function get(string $moduleName): SchemaInterface
     {
         if ($this->has($moduleName)) {
             return $this->schemas[$moduleName];

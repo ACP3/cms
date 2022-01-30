@@ -20,7 +20,7 @@ class Image extends AbstractFunction
     /**
      * {@inheritdoc}
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         if (isset($params['file'], $params['module']) === true && (bool) preg_match('=\./=', $params['file']) === false) {
             $file = $params['file'];

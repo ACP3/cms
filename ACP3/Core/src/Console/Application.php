@@ -12,22 +12,16 @@ use ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Logger\LoggerFactory;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\ErrorHandler\ErrorHandler;
 
 class Application
 {
-    /**
-     * @var ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
+    private ?ApplicationPath $appPath = null;
+
+    private ?ContainerInterface $container = null;
+
+    private ?LoggerInterface $logger = null;
 
     /**
      * @throws \Exception
