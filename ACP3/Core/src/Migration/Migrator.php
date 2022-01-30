@@ -7,12 +7,11 @@
 
 namespace ACP3\Core\Migration;
 
-use ACP3\Core\Database\Connection;
 use ACP3\Core\Migration\Repository\MigrationRepositoryInterface;
 
 class Migrator
 {
-    public function __construct(private Connection $db, private MigrationServiceLocator $migrationServiceLocator, private MigrationRepositoryInterface $migrationRepository)
+    public function __construct(private MigrationServiceLocator $migrationServiceLocator, private MigrationRepositoryInterface $migrationRepository)
     {
     }
 
@@ -48,26 +47,18 @@ class Migrator
      */
     private function migrate(MigrationInterface $migration): ?array
     {
-        $this->db->beginTransaction();
-
         try {
             $migration->up();
 
             $this->markMigrationAsExecuted($migration);
-
-            $this->db->commit();
         } catch (\Throwable $e) {
             $collectedErrors = [$e];
 
             // Attempt to rollback the faulty migration
             try {
                 $migration->down();
-
-                $this->db->commit();
             } catch (\Throwable $rollbackException) {
                 $collectedErrors[] = $rollbackException;
-
-                $this->db->rollBack();
             }
 
             return $collectedErrors;

@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Migration;
 
-use ACP3\Core\Database\Connection;
 use ACP3\Core\Migration\Providers\Migration1;
 use ACP3\Core\Migration\Providers\Migration2;
 use ACP3\Core\Migration\Repository\MigrationRepositoryInterface;
@@ -16,10 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class MigratorTest extends TestCase
 {
-    /**
-     * @var MockObject|Connection
-     */
-    private $dbMock;
     /**
      * @var MockObject|MigrationServiceLocator
      */
@@ -37,11 +32,9 @@ class MigratorTest extends TestCase
     {
         parent::setUp();
 
-        $this->dbMock = $this->createMock(Connection::class);
         $this->migrationServiceLocatorMock = $this->createMock(MigrationServiceLocator::class);
         $this->migrationRepositoryMock = $this->createMock(MigrationRepositoryInterface::class);
         $this->migrator = new Migrator(
-            $this->dbMock,
             $this->migrationServiceLocatorMock,
             $this->migrationRepositoryMock
         );
@@ -62,9 +55,6 @@ class MigratorTest extends TestCase
                 Migration2::class => new Migration2(),
             ]);
 
-        $this->dbMock->expects(self::never())
-            ->method('beginTransaction');
-
         $this->migrator->updateModules();
     }
 
@@ -83,11 +73,6 @@ class MigratorTest extends TestCase
                 $migration1Mock::class => $migration1Mock,
                 $migration2Mock::class => $migration2Mock,
             ]);
-
-        $this->dbMock->expects(self::once())
-            ->method('beginTransaction');
-        $this->dbMock->expects(self::once())
-            ->method('commit');
 
         $migration1Mock->expects(self::never())
             ->method('up');
@@ -113,11 +98,6 @@ class MigratorTest extends TestCase
             ->willReturn([
                 $migration2Mock::class => $migration2Mock,
             ]);
-
-        $this->dbMock->expects(self::once())
-            ->method('beginTransaction');
-        $this->dbMock->expects(self::once())
-            ->method('commit');
 
         $exception = new \Exception('Something\'s wrong here!');
 
@@ -145,13 +125,6 @@ class MigratorTest extends TestCase
             ->willReturn([
                 $migration2Mock::class => $migration2Mock,
             ]);
-
-        $this->dbMock->expects(self::once())
-            ->method('beginTransaction');
-        $this->dbMock->expects(self::never())
-            ->method('commit');
-        $this->dbMock->expects(self::once())
-            ->method('rollback');
 
         $exceptionUp = new \Exception('Something\'s wrong here!');
         $exceptionDown = new \Exception('Something\'s wrong here, too!');
