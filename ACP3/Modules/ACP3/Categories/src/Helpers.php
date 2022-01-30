@@ -78,7 +78,7 @@ class Helpers
         $formFields = [];
         if ($categoryCreate === true && $this->acl->hasPermission('admin/categories/index/create') === true) {
             $formFields['name'] = $formFieldName . '_create';
-            $formFields['value'] = $this->request->getPost()->get('create', ['name' => ''])['name'];
+            $formFields['value'] = $this->request->getPost()->all('create')['name'] ?? '';
         }
 
         return $formFields;

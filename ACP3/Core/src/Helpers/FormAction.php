@@ -230,8 +230,9 @@ class FormAction
      */
     private function prepareRequestData(): array
     {
-        if (\is_array($this->request->getPost()->get('entries')) === true) {
-            return $this->request->getPost()->get('entries');
+        $entries = $this->request->getPost()->all()['entries'] ?? null;
+        if (\is_array($entries) === true) {
+            return $entries;
         }
 
         if ((bool) preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {

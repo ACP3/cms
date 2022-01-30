@@ -120,7 +120,7 @@ class AdminRoleEditViewProvider
     private function resourceIsChecked(int $resourceId, int $value, int $defaultValue): string
     {
         if (($this->request->getPost()->count() === 0 && $defaultValue === $value) ||
-            ($this->request->getPost()->count() !== 0 && (int) $this->request->getPost()->get('resources')[$resourceId] === $value)
+            ($this->request->getPost()->count() !== 0 && (int) $this->request->getPost()->all('resources')[$resourceId] === $value)
         ) {
             return ' checked="checked"';
         }

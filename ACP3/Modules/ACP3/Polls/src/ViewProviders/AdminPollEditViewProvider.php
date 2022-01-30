@@ -47,7 +47,7 @@ class AdminPollEditViewProvider
     private function getAnswers(?int $pollId): array
     {
         if ($this->request->getPost()->has('add_answer')) {
-            return $this->addNewAnswer($this->request->getPost()->get('answers', []));
+            return $this->addNewAnswer($this->request->getPost()->all('answers') ?: []);
         }
 
         if ($pollId === null) {
