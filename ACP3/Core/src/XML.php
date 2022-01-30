@@ -7,8 +7,6 @@
 
 namespace ACP3\Core;
 
-use ACP3\Core\Application\Bootstrap;
-
 /**
  * Parses XML files.
  */
@@ -19,7 +17,7 @@ class XML
      *
      * @var array<string, mixed>
      */
-    protected array $info = [];
+    private array $info = [];
 
     /**
      * Parses the given XML file and returns it as an array.
@@ -68,11 +66,7 @@ class XML
     protected function parseAttributes(\SimpleXMLElement $attributes, string $path, string $xpath, string $key): void
     {
         foreach ($attributes as $attrKey => $attrValue) {
-            if ($key === 'version' && $attrKey === 'core' && (string) $attrValue === 'true') {
-                $this->info[$path][$xpath]['version'] = Bootstrap::VERSION;
-            } else {
-                $this->info[$path][$xpath][(string) $key][$attrKey] = (string) $attrValue;
-            }
+            $this->info[$path][$xpath][$key][$attrKey] = (string) $attrValue;
         }
     }
 }
