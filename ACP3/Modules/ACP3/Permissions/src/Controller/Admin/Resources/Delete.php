@@ -12,6 +12,7 @@ use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Permissions;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
@@ -24,10 +25,9 @@ class Delete extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @param string|null $action
-     * @return array<string, mixed>|JsonResponse|RedirectResponse
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
      */
-    public function __invoke(?string $action = null): array|JsonResponse|RedirectResponse
+    public function __invoke(?string $action = null): array|JsonResponse|RedirectResponse|Response
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

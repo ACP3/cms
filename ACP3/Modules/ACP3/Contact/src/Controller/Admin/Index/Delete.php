@@ -10,6 +10,9 @@ namespace ACP3\Modules\ACP3\Contact\Controller\Admin\Index;
 use ACP3\Core;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Contact\Model\ContactsModel;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
@@ -22,13 +25,9 @@ class Delete extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @param string $action
-     *
-     * @return mixed
-     *
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
      */
-    public function __invoke(?string $action)
+    public function __invoke(?string $action): array|RedirectResponse|JsonResponse|Response
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

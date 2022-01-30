@@ -62,14 +62,14 @@ class FormAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
      */
     public function handleDeleteAction(
         ?string $action,
         callable $callback,
         ?string $moduleConfirmUrl = null,
         ?string $moduleIndexUrl = null
-    ): array|JsonResponse|RedirectResponse {
+    ): array|JsonResponse|RedirectResponse|Response {
         return $this->handleCustomDeleteAction(
             $action,
             function (array $items) use ($callback, $moduleIndexUrl) {

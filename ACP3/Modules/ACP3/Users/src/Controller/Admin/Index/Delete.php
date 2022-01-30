@@ -12,6 +12,7 @@ use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Users;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class Delete extends Core\Controller\AbstractWidgetAction
 {
@@ -24,11 +25,11 @@ class Delete extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse
+     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(?string $action = null): array|JsonResponse|RedirectResponse
+    public function __invoke(?string $action = null): array|JsonResponse|RedirectResponse|Response
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,
