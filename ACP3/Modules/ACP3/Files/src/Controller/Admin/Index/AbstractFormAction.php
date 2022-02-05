@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Files;
 abstract class AbstractFormAction extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context);

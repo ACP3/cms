@@ -8,13 +8,13 @@
 namespace ACP3\Modules\ACP3\Contact\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Contact;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private Contact\ViewProviders\ContactFormViewProvider $contactFormViewProvider
     ) {
         parent::__construct($context);

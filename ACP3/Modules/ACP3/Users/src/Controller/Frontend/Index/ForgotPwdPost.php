@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private ApplicationPath $applicationPath,
         private FormAction $actionHelper,
         private Core\Validation\Validator $validator,

@@ -12,7 +12,7 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 
-class WidgetContext
+class Context
 {
     public function __construct(
         private Translator $translator,

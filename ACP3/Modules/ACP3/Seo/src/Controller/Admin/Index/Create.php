@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Seo;
 class Create extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Seo\ViewProviders\AdminSeoEditViewProvider $adminSeoEditViewProvider
     ) {
         parent::__construct($context);

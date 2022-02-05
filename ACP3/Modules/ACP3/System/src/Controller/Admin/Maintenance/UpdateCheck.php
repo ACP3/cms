@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\System;
 class UpdateCheck extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Context\WidgetContext $context,
+        Context\Context $context,
         private System\Helper\UpdateCheck $updateCheck
     ) {
         parent::__construct($context);

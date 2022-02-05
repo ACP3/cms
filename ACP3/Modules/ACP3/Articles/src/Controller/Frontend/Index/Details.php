@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Articles;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ class Details extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private Articles\ViewProviders\ArticlePaginatedViewProvider $articlePaginatedViewProvider,
         private Core\Date $date,
         private Articles\Repository\ArticleRepository $articleRepository

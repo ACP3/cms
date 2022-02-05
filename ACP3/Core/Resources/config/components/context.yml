@@ -2,6 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Core\Controller\Context\WidgetContext:
+  ACP3\Core\Controller\Context\Context:
     arguments:
       $applicationMode: "%core.environment%"

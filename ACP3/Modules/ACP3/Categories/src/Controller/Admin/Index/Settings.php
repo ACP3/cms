@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Categories;
 class Settings extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Categories\ViewProviders\AdminCategorySettingsViewProvider $adminCategorySettingsViewProvider
     ) {
         parent::__construct($context);

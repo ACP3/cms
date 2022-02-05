@@ -8,14 +8,14 @@
 namespace ACP3\Modules\ACP3\Users\Controller\Widget\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use FOS\HttpCache\UserContext\DefaultHashGenerator;
 use Symfony\Component\HttpFoundation\AcceptHeader;
 use Symfony\Component\HttpFoundation\Response;
 
 class Hash extends AbstractWidgetAction
 {
-    public function __construct(WidgetContext $context, private DefaultHashGenerator $hashGenerator)
+    public function __construct(Context $context, private DefaultHashGenerator $hashGenerator)
     {
         parent::__construct($context);
     }

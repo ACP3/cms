@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class Index extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Gallery\Model\GalleryModel $galleryModel,
         private Gallery\ViewProviders\PictureDataGridViewProvider $pictureDataGridViewProvider
     ) {

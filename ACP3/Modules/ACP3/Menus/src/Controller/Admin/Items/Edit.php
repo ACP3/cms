@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Menus;
 class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Menus\Model\MenuItemsModel $menuItemsModel,
         private Menus\ViewProviders\AdminMenuItemEditViewProvider $adminMenuItemEditViewProvider
     ) {

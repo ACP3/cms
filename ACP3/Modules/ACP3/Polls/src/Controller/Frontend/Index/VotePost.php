@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class VotePost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private FormAction $actionHelper,
         private Core\Date $date,
         private Polls\Validation\VoteValidation $voteValidation,

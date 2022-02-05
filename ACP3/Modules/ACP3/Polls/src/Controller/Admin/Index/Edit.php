@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Polls;
 class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Polls\Model\PollsModel $pollsModel,
         private Polls\ViewProviders\AdminPollEditViewProvider $adminPollEditViewProvider
     ) {

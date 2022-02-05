@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter;
 class Send extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Core\Helpers\RedirectMessages $redirectMessages,
         private Newsletter\Repository\NewsletterRepository $newsletterRepository,
         private Newsletter\Repository\AccountRepository $accountRepository,

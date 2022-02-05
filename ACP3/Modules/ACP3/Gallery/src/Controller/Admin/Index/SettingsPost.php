@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SettingsPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private ApplicationPath $applicationPath,
         private FormAction $actionHelper,
         private CacheItemPoolInterface $galleryCachePool,

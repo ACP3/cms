@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CreatePost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private FormAction $actionHelper,
         private Core\Modules $modules,
         private UserModelInterface $user,

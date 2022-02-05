@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Comments;
 class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Comments\Model\CommentsModel $commentsModel,
         private Comments\ViewProviders\AdminCommentEditViewProvider $adminCommentEditViewProvider
     ) {

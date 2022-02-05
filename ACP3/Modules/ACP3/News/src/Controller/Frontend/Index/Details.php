@@ -17,7 +17,7 @@ class Details extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Core\Date $date,
         private News\Repository\NewsRepository $newsRepository,
         private News\ViewProviders\NewsDetailsViewProvider $newsDetailsViewProvider

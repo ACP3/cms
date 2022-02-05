@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class Image extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         protected Session $sessionHandler
     ) {
         parent::__construct($context);

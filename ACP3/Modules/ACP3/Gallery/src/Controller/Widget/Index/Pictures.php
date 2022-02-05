@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Gallery\Controller\Widget\Index;
 
 use ACP3\Core\Cache\CacheResponseTrait;
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Gallery\ViewProviders\GalleryPictureListWidgetViewProvider;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ class Pictures extends AbstractWidgetAction
     use CacheResponseTrait;
 
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private GalleryPictureListWidgetViewProvider $galleryPictureListWidgetViewProvider
     ) {
         parent::__construct($context);

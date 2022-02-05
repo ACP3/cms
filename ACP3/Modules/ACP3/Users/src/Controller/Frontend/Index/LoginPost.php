@@ -7,21 +7,26 @@
 
 namespace ACP3\Modules\ACP3\Users\Controller\Frontend\Index;
 
-use ACP3\Core;
+use ACP3\Core\Authentication\Exception\AuthenticationException;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\FormAction;
+use ACP3\Core\Helpers\Secure;
+use ACP3\Core\Http\RedirectResponse;
 use ACP3\Modules\ACP3\Users;
+use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
 use Symfony\Component\HttpFoundation\Response;
 
-class LoginPost extends Core\Controller\AbstractWidgetAction
+class LoginPost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Context $context,
         private ApplicationPath $applicationPath,
         private FormAction $actionHelper,
-        private Core\Http\RedirectResponse $redirectResponse,
-        private Core\Helpers\Secure $secureHelper,
-        private Users\Model\AuthenticationModel $authenticationModel
+        private RedirectResponse $redirectResponse,
+        private Secure $secureHelper,
+        private AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
     }
@@ -29,7 +34,7 @@ class LoginPost extends Core\Controller\AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(): Response|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(): Response
     {
         try {
             $this->authenticationModel->login(
@@ -51,7 +56,7 @@ class LoginPost extends Core\Controller\AbstractWidgetAction
             $phrase = $this->translator->t('users', 'account_locked');
         }
 
-        $localizedException = new Core\Authentication\Exception\AuthenticationException($phrase);
+        $localizedException = new AuthenticationException($phrase);
 
         return $this->actionHelper->renderErrorBoxOnFailedFormValidation($localizedException);
     }

@@ -8,14 +8,14 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
 use ACP3\Modules\ACP3\Articles\ViewProviders\AdminArticleEditViewProvider;
 
 class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private AdminArticleEditViewProvider $adminArticleEditViewProvider,
         private ArticlesModel $articlesModel
     ) {

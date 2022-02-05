@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Controller;
 
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
@@ -25,7 +25,7 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
     private string $template = '';
     private string|false $content = '';
 
-    public function __construct(WidgetContext $context)
+    public function __construct(Context $context)
     {
         $this->translator = $context->getTranslator();
         $this->request = $context->getRequest();
@@ -41,7 +41,7 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
     /**
      * Outputs the requested module controller action.
      */
-    public function display(array|string|Response|null $actionResult): Response
+    public function display(array|string|null $actionResult): Response
     {
         if (\is_string($actionResult)) {
             $this->setContent($actionResult);

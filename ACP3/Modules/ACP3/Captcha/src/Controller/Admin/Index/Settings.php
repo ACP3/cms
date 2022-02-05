@@ -8,13 +8,13 @@
 namespace ACP3\Modules\ACP3\Captcha\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Captcha\ViewProviders\AdminSettingsViewProvider;
 
 class Settings extends AbstractWidgetAction
 {
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);

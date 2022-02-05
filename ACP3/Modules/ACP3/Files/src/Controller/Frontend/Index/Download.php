@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class Download extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private ApplicationPath $applicationPath,
         private Core\Date $date,
         private Core\Http\RedirectResponse $redirectResponse,

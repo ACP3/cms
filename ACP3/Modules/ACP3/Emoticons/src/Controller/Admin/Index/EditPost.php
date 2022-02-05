@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Emoticons;
 use Doctrine\DBAL\ConnectionException;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class EditPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private FormAction $actionHelper,
         private Emoticons\Model\EmoticonsModel $emoticonsModel,
         private Emoticons\Validation\AdminFormValidation $adminFormValidation,

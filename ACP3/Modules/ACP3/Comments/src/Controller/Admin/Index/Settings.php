@@ -8,13 +8,13 @@
 namespace ACP3\Modules\ACP3\Comments\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Comments\ViewProviders\AdminCommentsSettingsViewProvider;
 
 class Settings extends AbstractWidgetAction
 {
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private AdminCommentsSettingsViewProvider $adminCommentsSettingsViewProvider
     ) {
         parent::__construct($context);

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class EditPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private FormAction $actionHelper,
         private Seo\Model\SeoModel $seoModel,
         private Seo\Validation\AdminFormValidation $adminFormValidation

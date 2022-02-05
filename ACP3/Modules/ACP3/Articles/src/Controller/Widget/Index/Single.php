@@ -17,7 +17,7 @@ class Single extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Core\Date $date,
         private Articles\Repository\ArticleRepository $articleRepository,
         private Articles\ViewProviders\ArticleFullViewProvider $articleFullViewProvider

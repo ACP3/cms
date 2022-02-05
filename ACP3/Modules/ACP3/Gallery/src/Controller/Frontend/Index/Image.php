@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class Image extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Gallery\Repository\PictureRepository $pictureRepository,
         private Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
     ) {

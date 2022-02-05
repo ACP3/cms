@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class EditPost extends AbstractAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private FormAction $actionHelper,
         private UserModelInterface $user,
         private Users\Model\UsersModel $usersModel,

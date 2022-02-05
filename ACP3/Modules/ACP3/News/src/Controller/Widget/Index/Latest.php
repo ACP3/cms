@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\News;
 class Latest extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private News\ViewProviders\LatestNewsWidgetViewProvider $latestNewsWidgetViewProvider
     ) {
         parent::__construct($context);

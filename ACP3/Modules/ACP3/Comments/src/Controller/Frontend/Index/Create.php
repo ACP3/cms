@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Comments;
 class Create extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Comments\ViewProviders\CommentCreateViewProvider $commentCreateViewProvider
     ) {
         parent::__construct($context);

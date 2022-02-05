@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CreatePost extends AbstractFormAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private FormAction $actionHelper,
         private UserModelInterface $user,
         private Files\Model\FilesModel $filesModel,

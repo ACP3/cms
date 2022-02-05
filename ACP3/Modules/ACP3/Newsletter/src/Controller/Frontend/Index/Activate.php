@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Newsletter;
 class Activate extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private ApplicationPath $applicationPath,
         private Core\Helpers\Alerts $alertsHelper,
         private Newsletter\Helper\AccountStatus $accountStatusHelper,

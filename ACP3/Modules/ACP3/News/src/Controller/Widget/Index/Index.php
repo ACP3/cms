@@ -17,7 +17,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private News\ViewProviders\LatestNewsListWidgetViewProvider $latestNewsListWidgetViewProvider
     ) {
         parent::__construct($context);

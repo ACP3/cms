@@ -15,7 +15,7 @@ use ACP3\Core\Controller\Context;
 abstract class AbstractAction extends AbstractWidgetAction
 {
     public function __construct(
-        Context\WidgetContext $context,
+        Context\Context $context,
         private UserModelInterface $user
     ) {
         parent::__construct($context);

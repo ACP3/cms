@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 class Index extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Search\ViewProviders\SearchViewProvider $searchViewProvider,
         private ServiceLocator $controllerActionServiceLocator
     ) {

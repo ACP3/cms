@@ -8,12 +8,12 @@
 namespace ACP3\Modules\ACP3\Filemanager\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use RFM\Application;
 
 class RichFileManager extends AbstractWidgetAction
 {
-    public function __construct(WidgetContext $context, private Application $rfmApp)
+    public function __construct(Context $context, private Application $rfmApp)
     {
         parent::__construct($context);
     }

@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Users;
 class Settings extends AbstractAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         UserModelInterface $user,
         private Users\ViewProviders\AccountSettingsViewProvider $accountSettingsViewProvider
     ) {

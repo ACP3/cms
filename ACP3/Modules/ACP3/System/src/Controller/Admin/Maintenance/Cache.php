@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\System\Controller\Admin\Maintenance;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\System;
 use ACP3\Modules\ACP3\System\Exception\CacheClearException;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Cache extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private RedirectMessages $redirectMessages,
         private System\Services\CacheClearService $cacheClearService
     ) {

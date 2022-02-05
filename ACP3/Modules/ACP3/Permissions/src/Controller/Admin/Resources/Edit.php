@@ -13,8 +13,8 @@ use ACP3\Modules\ACP3\Permissions;
 class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
-        private Permissions\Model\AclResourceModel $resourcesModel,
+        Core\Controller\Context\Context                                 $context,
+        private Permissions\Model\AclResourceModel                      $resourcesModel,
         private Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
     ) {
         parent::__construct($context);

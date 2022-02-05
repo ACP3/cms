@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 class Delete extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
-        private FormAction                            $actionHelper,
-        private Permissions\Model\AclResourceModel    $resourcesModel
+        Core\Controller\Context\Context            $context,
+        private FormAction                         $actionHelper,
+        private Permissions\Model\AclResourceModel $resourcesModel
     ) {
         parent::__construct($context);
     }

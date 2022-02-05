@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Gallery;
 class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Gallery\Model\PictureModel $pictureModel,
         private Gallery\ViewProviders\AdminGalleryPictureEditViewProvider $adminGalleryPictureEditViewProvider
     ) {

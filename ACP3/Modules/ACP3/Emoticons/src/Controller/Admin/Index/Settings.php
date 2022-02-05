@@ -8,13 +8,13 @@
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Emoticons\ViewProviders\AdminSettingsViewProvider;
 
 class Settings extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private AdminSettingsViewProvider $adminSettingsViewProvider
     ) {
         parent::__construct($context);

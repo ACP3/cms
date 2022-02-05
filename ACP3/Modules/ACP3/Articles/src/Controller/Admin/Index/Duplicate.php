@@ -8,14 +8,14 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
 
 class Duplicate extends AbstractWidgetAction
 {
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private FormAction $actionHelper,
         private ArticlesModel $articlesModel
     ) {

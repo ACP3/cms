@@ -54,7 +54,7 @@ class FormAction
         }
     }
 
-    public function renderErrorBoxOnFailedFormValidation(\Exception $exception): Response
+    public function renderErrorBoxOnFailedFormValidation(\Throwable $exception): Response
     {
         $errors = $this->alerts->errorBox($exception->getMessage());
 

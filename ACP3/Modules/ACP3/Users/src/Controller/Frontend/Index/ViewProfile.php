@@ -17,7 +17,7 @@ class ViewProfile extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Users\ViewProviders\UserProfileViewProvider $userProfileViewProvider,
         private Users\Repository\UserRepository $userRepository
     ) {

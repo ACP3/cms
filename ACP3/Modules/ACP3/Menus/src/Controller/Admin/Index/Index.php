@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Index;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 use ACP3\Modules\ACP3\Menus\ViewProviders\MenuItemsDataGridViewProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class Index extends AbstractWidgetAction
 {
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private ACL $acl,
         private MenuRepository $menuRepository,
         private MenuItemsDataGridViewProvider $menuItemsDataGridViewProvider

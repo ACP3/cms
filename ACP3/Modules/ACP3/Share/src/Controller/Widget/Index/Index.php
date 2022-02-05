@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Share\Controller\Widget\Index;
 
 use ACP3\Core\Cache\CacheResponseTrait;
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Share\ViewProviders\ShareWidgetViewProvider;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +18,7 @@ class Index extends AbstractWidgetAction
     use CacheResponseTrait;
 
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private ShareWidgetViewProvider $shareWidgetViewProvider
     ) {
         parent::__construct($context);

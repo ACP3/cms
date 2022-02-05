@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\News;
 class Create extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private News\ViewProviders\AdminNewsEditViewProvider $adminNewsEditViewProvider
     ) {
         parent::__construct($context);

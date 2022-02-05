@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 
 use ACP3\Core;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Controller\Exception\ResultNotExistsException;
 use ACP3\Core\Pagination\Exception\InvalidPageException;
 use ACP3\Modules\ACP3\Articles;
@@ -20,7 +20,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     use Core\Cache\CacheResponseTrait;
 
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private Articles\ViewProviders\ArticleListViewProvider $articleListViewProvider
     ) {
         parent::__construct($context);

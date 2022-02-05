@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter\ViewProviders\NewsletterSubscribeWidgetViewProv
 class Index extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private NewsletterSubscribeWidgetViewProvider $newsletterSubscribeWidgetViewProvider
     ) {
         parent::__construct($context);

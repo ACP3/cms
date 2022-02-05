@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Files;
 class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Files\Model\FilesModel $filesModel,
         private Files\ViewProviders\AdminFileEditViewProvider $adminFileEditViewProvider
     ) {

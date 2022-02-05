@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Polls;
 class Index extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\WidgetContext $context,
+        Core\Controller\Context\Context $context,
         private Core\Date $date,
         private Polls\Repository\PollRepository $pollRepository,
         private Polls\ViewProviders\PollWidgetViewProvider $pollWidgetViewProvider,

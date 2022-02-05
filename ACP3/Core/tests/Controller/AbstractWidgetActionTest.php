@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Controller;
 
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\View;
 use PHPUnit\Framework\TestCase;
 
@@ -18,9 +18,9 @@ class AbstractWidgetActionTest extends TestCase
      */
     private $displayAction;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|WidgetContext
+     * @var \PHPUnit\Framework\MockObject\MockObject|Context
      */
-    private $widgetContextMock;
+    private $contextMock;
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|View
      */
@@ -30,7 +30,7 @@ class AbstractWidgetActionTest extends TestCase
     {
         $this->setUpMockObjects();
         $this->displayAction = new AbstractWidgetActionImpl(
-            $this->widgetContextMock
+            $this->contextMock
         );
     }
 
@@ -38,8 +38,8 @@ class AbstractWidgetActionTest extends TestCase
     {
         $this->viewMock = $this->createMock(View::class);
 
-        $this->widgetContextMock = $this->createMock(WidgetContext::class);
-        $this->widgetContextMock->method('getView')->willReturn($this->viewMock);
+        $this->contextMock = $this->createMock(Context::class);
+        $this->contextMock->method('getView')->willReturn($this->viewMock);
     }
 
     public function testDisplayWithStringActionResult(): void

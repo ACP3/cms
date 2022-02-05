@@ -8,12 +8,12 @@
 namespace ACP3\Modules\ACP3\Newsletter\Controller\Admin\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter;
 
 class AbstractFormAction extends AbstractWidgetAction
 {
-    public function __construct(WidgetContext $context, private SendNewsletter $newsletterHelpers)
+    public function __construct(Context $context, private SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context);
     }

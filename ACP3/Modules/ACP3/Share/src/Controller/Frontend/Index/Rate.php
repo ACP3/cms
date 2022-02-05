@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\Controller\Frontend\Index;
 
 use ACP3\Core\Controller\AbstractWidgetAction;
-use ACP3\Core\Controller\Context\WidgetContext;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Share\Model\ShareRatingModel;
 use ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
@@ -18,7 +18,7 @@ class Rate extends AbstractWidgetAction
     private ?bool $alreadyRated = null;
 
     public function __construct(
-        WidgetContext $context,
+        Context $context,
         private ShareRepository $shareRepository,
         private ShareRatingsRepository $shareRatingsRepository,
         private ShareRatingModel $shareRatingModel
