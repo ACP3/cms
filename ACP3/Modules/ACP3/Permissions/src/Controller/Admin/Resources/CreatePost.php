@@ -29,11 +29,11 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|string|Response
      * @throws ConnectionException
      * @throws Exception
      */
-    public function __invoke(): array|string|JsonResponse|RedirectResponse|Response
+    public function __invoke(): array|string|Response
     {
         return $this->actionHelper->handleSaveAction(function () {
             $formData = $this->request->getPost()->all();

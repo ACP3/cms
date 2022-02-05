@@ -13,8 +13,6 @@ use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Users;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class EditPost extends AbstractAction
@@ -30,12 +28,12 @@ class EditPost extends AbstractAction
     }
 
     /**
-     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|string|Response
      *
      * @throws ConnectionException
      * @throws Exception
      */
-    public function __invoke(): array|string|JsonResponse|RedirectResponse|Response
+    public function __invoke(): array|string|Response
     {
         return $this->actionHelper->handlePostAction(
             function () {

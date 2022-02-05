@@ -25,9 +25,9 @@ class Delete extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|Response
      */
-    public function __invoke(?string $action = null): array|JsonResponse|RedirectResponse|Response
+    public function __invoke(?string $action = null): array|Response
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

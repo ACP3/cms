@@ -62,14 +62,14 @@ class FormAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|Response
      */
     public function handleDeleteAction(
         ?string $action,
         callable $callback,
         ?string $moduleConfirmUrl = null,
         ?string $moduleIndexUrl = null
-    ): array|JsonResponse|RedirectResponse|Response {
+    ): array|Response {
         return $this->handleCustomDeleteAction(
             $action,
             function (array $items) use ($callback, $moduleIndexUrl) {
@@ -83,14 +83,14 @@ class FormAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|Response
      */
     public function handleCustomDeleteAction(
         ?string $action,
         callable $callback,
         ?string $moduleConfirmUrl = null,
         ?string $moduleIndexUrl = null
-    ): array|JsonResponse|RedirectResponse|Response {
+    ): array|Response {
         [$moduleConfirmUrl, $moduleIndexUrl] = $this->generateDefaultConfirmationBoxUris(
             $moduleConfirmUrl,
             $moduleIndexUrl
@@ -153,7 +153,7 @@ class FormAction
         });
     }
 
-    private function prepareRedirectMessageAfterPost(bool|int|Response $response, string $phrase, ?string $path = null): JsonResponse|RedirectResponse|Response
+    private function prepareRedirectMessageAfterPost(bool|int|Response $response, string $phrase, ?string $path = null): Response
     {
         if ($response instanceof Response) {
             return $response;
@@ -192,9 +192,9 @@ class FormAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|Response
      */
-    private function deleteItem(?string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null): array|JsonResponse|RedirectResponse|Response
+    private function deleteItem(?string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null): array|Response
     {
         $entries = $this->prepareRequestData();
 

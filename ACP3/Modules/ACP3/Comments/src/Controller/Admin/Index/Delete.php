@@ -11,8 +11,6 @@ use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\WidgetContext;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Comments\Model\CommentByModuleModel;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class Delete extends AbstractWidgetAction
@@ -26,9 +24,9 @@ class Delete extends AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|Response
      */
-    public function __invoke(?string $action = null): array|JsonResponse|RedirectResponse|Response
+    public function __invoke(?string $action = null): array|Response
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

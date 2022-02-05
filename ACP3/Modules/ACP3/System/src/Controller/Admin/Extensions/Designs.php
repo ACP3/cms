@@ -14,8 +14,7 @@ use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\System\Services\CacheClearService;
 use ACP3\Modules\ACP3\System\ViewProviders\AdminThemesViewProvider;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class Designs extends AbstractWidgetAction
 {
@@ -30,9 +29,9 @@ class Designs extends AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|RedirectResponse
+     * @return array<string, mixed>|Response
      */
-    public function __invoke(?string $dir = null): array|RedirectResponse
+    public function __invoke(?string $dir = null): array|Response
     {
         if (!empty($dir)) {
             return $this->doUpdateTheme($dir);
@@ -41,7 +40,7 @@ class Designs extends AbstractWidgetAction
         return ($this->adminThemesViewProvider)();
     }
 
-    private function doUpdateTheme(string $design): JsonResponse|RedirectResponse
+    private function doUpdateTheme(string $design): Response
     {
         $result = false;
 

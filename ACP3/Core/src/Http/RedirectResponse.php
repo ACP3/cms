@@ -36,9 +36,9 @@ class RedirectResponse
     }
 
     /**
-     * Redirect to an other URLs.
+     * Redirect to another URLs.
      */
-    protected function createRedirectResponse(string $path, int $statusCode): JsonResponse|SymfonyRedirectResponse
+    private function createRedirectResponse(string $path, int $statusCode): JsonResponse|SymfonyRedirectResponse
     {
         $path = $this->router->route($path, true);
 
@@ -51,10 +51,8 @@ class RedirectResponse
 
     /**
      * Outputs a JSON response with a redirect url.
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function createAjaxRedirectResponse(string $path)
+    private function createAjaxRedirectResponse(string $path): JsonResponse
     {
         return new JsonResponse(['redirect_url' => $path]);
     }

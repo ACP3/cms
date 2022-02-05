@@ -13,8 +13,7 @@ use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Contact;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class IndexPost extends Core\Controller\AbstractWidgetAction
 {
@@ -31,12 +30,12 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|string|JsonResponse|RedirectResponse
+     * @return array<string, mixed>|string|Response
      *
      * @throws ConnectionException
      * @throws Exception
      */
-    public function __invoke(): array|string|JsonResponse|RedirectResponse
+    public function __invoke(): array|string|Response
     {
         return $this->actionHelper->handlePostAction(
             function () {

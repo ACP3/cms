@@ -11,8 +11,7 @@ use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Users;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ForgotPwd extends Core\Controller\AbstractWidgetAction
 {
@@ -27,9 +26,9 @@ class ForgotPwd extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse
+     * @return array<string, mixed>|Response
      */
-    public function __invoke(): array|JsonResponse|RedirectResponse
+    public function __invoke(): array|Response
     {
         if ($this->user->isAuthenticated() === true) {
             return $this->redirectResponse->toNewPage($this->applicationPath->getWebRoot());

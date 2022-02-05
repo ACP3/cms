@@ -12,8 +12,6 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Modules\ACP3\Files;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
@@ -34,7 +32,7 @@ class Download extends Core\Controller\AbstractWidgetAction
      * @throws Core\Controller\Exception\ResultNotExistsException
      * @throws Exception
      */
-    public function __invoke(int $id): JsonResponse|RedirectResponse|Response
+    public function __invoke(int $id): Response
     {
         if ($this->filesRepository->resultExists($id, $this->date->getCurrentDateTime()) === true) {
             $file = $this->filesRepository->getOneById($id);

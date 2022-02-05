@@ -19,8 +19,7 @@ use ACP3\Modules\ACP3\System\ViewProviders\AdminModulesViewProvider;
 use Doctrine\DBAL\Exception as DBALException;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class Modules extends Core\Controller\AbstractWidgetAction
 {
@@ -41,11 +40,11 @@ class Modules extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse
+     * @return array<string, mixed>|Response
      *
      * @throws DBALException
      */
-    public function __invoke(?string $action = null, ?string $dir = null): array|JsonResponse|RedirectResponse
+    public function __invoke(?string $action = null, ?string $dir = null): array|Response
     {
         return match ($action) {
             'install' => $this->installModule($dir),
@@ -99,7 +98,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
     /**
      * @throws DBALException
      */
-    private function installModule(string $moduleDirectory): JsonResponse|RedirectResponse
+    private function installModule(string $moduleDirectory): Response
     {
         $result = false;
 
@@ -131,7 +130,7 @@ class Modules extends Core\Controller\AbstractWidgetAction
         return $this->redirectMessages->setMessage($result, $text, $this->request->getFullPath());
     }
 
-    private function uninstallModule(string $moduleDirectory): JsonResponse|RedirectResponse
+    private function uninstallModule(string $moduleDirectory): Response
     {
         $result = false;
 

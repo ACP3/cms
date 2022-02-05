@@ -11,8 +11,6 @@ use ACP3\Core;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Comments;
 use Doctrine\DBAL\Exception;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class Delete extends Core\Controller\AbstractWidgetAction
@@ -27,11 +25,11 @@ class Delete extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|Response
      *
      * @throws Exception
      */
-    public function __invoke(int $id, ?string $action = null): array|JsonResponse|RedirectResponse|Response
+    public function __invoke(int $id, ?string $action = null): array|Response
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,

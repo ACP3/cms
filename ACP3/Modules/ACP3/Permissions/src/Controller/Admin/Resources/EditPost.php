@@ -33,11 +33,11 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 
     /**
      * @param int $id
-     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|string|Response
      * @throws ConnectionException
      * @throws Exception
      */
-    public function __invoke(int $id): array|string|JsonResponse|RedirectResponse|Response
+    public function __invoke(int $id): array|string|Response
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

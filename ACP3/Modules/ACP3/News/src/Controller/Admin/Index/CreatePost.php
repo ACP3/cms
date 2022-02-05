@@ -14,8 +14,7 @@ use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\News;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class CreatePost extends AbstractFormAction
 {
@@ -31,12 +30,12 @@ class CreatePost extends AbstractFormAction
     }
 
     /**
-     * @return array<string, mixed>|string|JsonResponse|RedirectResponse
+     * @return array<string, mixed>|string|Response
      *
      * @throws ConnectionException
      * @throws Exception
      */
-    public function __invoke(): array|string|JsonResponse|RedirectResponse
+    public function __invoke(): array|string|Response
     {
         return $this->actionHelper->handleSaveAction(function () {
             $formData = $this->request->getPost()->all();

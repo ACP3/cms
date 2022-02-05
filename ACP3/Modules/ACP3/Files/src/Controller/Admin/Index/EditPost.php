@@ -17,8 +17,7 @@ use ACP3\Modules\ACP3\Files\Helpers;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditPost extends AbstractFormAction
 {
@@ -35,12 +34,12 @@ class EditPost extends AbstractFormAction
     }
 
     /**
-     * @return array<string, mixed>|string|JsonResponse|RedirectResponse
+     * @return array<string, mixed>|string|Response
      *
      * @throws ConnectionException
      * @throws Exception
      */
-    public function __invoke(int $id): array|string|JsonResponse|RedirectResponse
+    public function __invoke(int $id): array|string|Response
     {
         return $this->actionHelper->handleSaveAction(function () use ($id) {
             $formData = $this->request->getPost()->all();

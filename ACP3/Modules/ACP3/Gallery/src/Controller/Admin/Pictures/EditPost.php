@@ -13,8 +13,6 @@ use ACP3\Modules\ACP3\Gallery;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class EditPost extends Core\Controller\AbstractWidgetAction
@@ -31,12 +29,12 @@ class EditPost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @return array<string, mixed>|string|JsonResponse|RedirectResponse|Response
+     * @return array<string, mixed>|string|Response
      *
      * @throws ConnectionException
      * @throws Exception
      */
-    public function __invoke(int $id): array|string|JsonResponse|RedirectResponse|Response
+    public function __invoke(int $id): array|string|Response
     {
         $picture = $this->pictureModel->getOneById($id);
 
