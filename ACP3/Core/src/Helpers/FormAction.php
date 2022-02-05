@@ -169,7 +169,7 @@ class FormAction
     public function setRedirectMessage(bool|int $result, string $translatedText, ?string $path = null): Response
     {
         return $this->redirectMessages->setMessage(
-            (bool)$result,
+            (bool) $result,
             $translatedText,
             $this->request->getPost()->has('continue') ? $this->request->getPathInfo() : $path
         );

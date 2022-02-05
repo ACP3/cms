@@ -12,6 +12,7 @@ use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\Context;
 use ACP3\Modules\ACP3\Files\Model\FilesModel;
 use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 class Sort extends AbstractWidgetAction
 {
@@ -27,7 +28,7 @@ class Sort extends AbstractWidgetAction
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id, string $action): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(int $id, string $action): Response
     {
         if (($action === 'up' || $action === 'down') && $this->filesRepository->resultExists($id) === true) {
             if ($action === 'up') {

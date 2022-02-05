@@ -11,6 +11,8 @@ use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
 use ACP3\Modules\ACP3\Articles\Model\ArticlesModel;
+use Doctrine\DBAL\Exception;
+use Symfony\Component\HttpFoundation\Response;
 
 class Duplicate extends AbstractWidgetAction
 {
@@ -23,9 +25,9 @@ class Duplicate extends AbstractWidgetAction
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
-    public function __invoke(int $id): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(int $id): Response
     {
         return $this->actionHelper->handleDuplicateAction(fn () => $this->articlesModel->duplicate($id));
     }

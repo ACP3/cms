@@ -3,7 +3,7 @@ services:
     autowire: true
 
   ACP3\Core\Model\DataProcessor\ColumnType\:
-    resource: '../../../src/Model/DataProcessor/ColumnType/'
+    resource: "../../../src/Model/DataProcessor/ColumnType/"
     tags:
       - { name: core.model.column_type }
 

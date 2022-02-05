@@ -2,7 +2,7 @@
   "title": "Schema for JSON-LD",
   "$schema": "http://json-schema.org/draft-04/schema#",
 
-  "definitions":{
+  "definitions": {
     "context": {
       "additionalProperties": true,
       "properties": {
@@ -24,7 +24,7 @@
         }
       }
     },
-    "common":{
+    "common": {
       "additionalProperties": {
         "anyOf": [{ "$ref": "#/definitions/common" }]
       },
@@ -78,11 +78,7 @@
     }
   },
 
-  "allOf": [
-    { "$ref": "#/definitions/context" },
-    { "$ref": "#/definitions/graph" },
-    { "$ref": "#/definitions/common" }
-  ],
+  "allOf": [{ "$ref": "#/definitions/context" }, { "$ref": "#/definitions/graph" }, { "$ref": "#/definitions/common" }],
 
   "type": ["object", "array"],
   "additionalProperties": true

@@ -12,6 +12,7 @@ use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Model\SitemapGenerationModel;
+use Symfony\Component\HttpFoundation\Response;
 
 class Sitemap extends AbstractWidgetAction
 {
@@ -26,7 +27,7 @@ class Sitemap extends AbstractWidgetAction
     /**
      * @throws \ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException
      */
-    public function __invoke(): \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+    public function __invoke(): Response
     {
         $result = false;
         $phrase = 'sitemap_error';
