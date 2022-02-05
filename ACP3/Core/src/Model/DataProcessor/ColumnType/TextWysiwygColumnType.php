@@ -12,7 +12,7 @@ class TextWysiwygColumnType implements ColumnTypeStrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function doEscape($value): string
+    public function doEscape($value): ?string
     {
         return $value;
     }
@@ -20,7 +20,7 @@ class TextWysiwygColumnType implements ColumnTypeStrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function doUnescape($value): string
+    public function doUnescape($value): ?string
     {
         return $value;
     }
