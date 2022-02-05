@@ -12,10 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 abstract class AbstractValidationRule implements ValidationRuleInterface
 {
-    /**
-     * @var string
-     */
-    protected $message = '';
+    private string $message = '';
 
     /**
      * {@inheritdoc}

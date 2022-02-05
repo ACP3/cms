@@ -43,7 +43,8 @@ class UriAliasManager
         string $keywords = '',
         string $description = '',
         int $robots = 0,
-        string $title = ''
+        string $title = '',
+        string $structuredData = '',
     ): bool {
         $path .= $this->preparePath($path);
         $data = [
@@ -53,10 +54,11 @@ class UriAliasManager
             'seo_keywords' => $keywords,
             'seo_description' => $description,
             'seo_robots' => $robots,
+            'seo_structured_data' => $structuredData,
         ];
 
         $seo = $this->seoRepository->getOneByUri($path);
 
-        return $this->seoModel->save($data, $seo['id'] ?? null) !== false;
+        return (bool) $this->seoModel->save($data, $seo['id'] ?? null);
     }
 }

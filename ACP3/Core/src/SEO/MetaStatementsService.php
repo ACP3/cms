@@ -129,6 +129,11 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return $this->getSeoInformation($path, 'description');
     }
 
+    public function getStructuredData(string $path): string
+    {
+        return $this->getSeoInformation($path, 'structured_data');
+    }
+
     /**
      * Returns the SEO keywords of the current page.
      */
@@ -213,11 +218,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     }
 
     /**
-     * Sets a SEO description postfix for te current page.
-     *
-     * @return static
+     * {@inheritDoc}
      */
-    public function setDescriptionPostfix(string $value): self
+    public function setDescriptionPostfix(string $value): static
     {
         $this->metaDescriptionPostfix = $value;
 
@@ -225,11 +228,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     }
 
     /**
-     * Sets the canonical URL for the current page.
-     *
-     * @return static
+     * {@inheritDoc}
      */
-    public function setCanonicalUri(string $path): self
+    public function setCanonicalUri(string $path): static
     {
         $this->canonicalUrl = $path;
 
@@ -237,11 +238,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     }
 
     /**
-     * Sets the next page (useful for pagination).
-     *
-     * @return static
+     * {@inheritDoc}
      */
-    public function setNextPage(string $path): self
+    public function setNextPage(string $path): static
     {
         $this->nextPage = $path;
 
@@ -249,11 +248,9 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     }
 
     /**
-     * Sets the previous page (useful for pagination).
-     *
-     * @return static
+     * {@inheritDoc}
      */
-    public function setPreviousPage(string $path): self
+    public function setPreviousPage(string $path): static
     {
         $this->previousPage = $path;
 

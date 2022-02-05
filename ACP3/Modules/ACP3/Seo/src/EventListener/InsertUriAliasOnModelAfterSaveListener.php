@@ -31,7 +31,8 @@ class InsertUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
                     $formData['seo_keywords'],
                     $formData['seo_description'],
                     (int) $formData['seo_robots'],
-                    $formData['seo_title']
+                    $formData['seo_title'],
+                    $formData['seo_structured_data'],
                 );
             }
         }

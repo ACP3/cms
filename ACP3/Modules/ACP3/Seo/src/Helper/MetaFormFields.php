@@ -37,8 +37,9 @@ class MetaFormFields
                 $this->metaStatements->getDescription($path)
             );
             $robots = $this->metaStatements->getSeoInformation($path, 'robots', '0');
+            $structuredData = $this->request->getPost()->get('seo_structured_data', $this->metaStatements->getStructuredData($path));
         } else {
-            $alias = $title = $keywords = $description = '';
+            $alias = $title = $keywords = $description = $structuredData = '';
             $robots = 0;
         }
 
@@ -47,6 +48,7 @@ class MetaFormFields
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,
+            'structured_data' => $structuredData,
             'robots' => $this->formsHelper->choicesGenerator(
                 'seo_robots',
                 $this->getRobotsChoicesGeneratorValues(),

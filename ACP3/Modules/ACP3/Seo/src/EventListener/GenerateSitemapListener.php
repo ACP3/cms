@@ -22,10 +22,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class GenerateSitemapListener implements EventSubscriberInterface
 {
-    /**
-     * @var bool
-     */
-    private $scheduleSitemapRebuild = false;
+    private bool $scheduleSitemapRebuild = false;
 
     public function __construct(private LoggerInterface $logger, private Modules $modules, private SettingsInterface $settings, private SitemapAvailabilityRegistrar $sitemapRegistrar, private SitemapGenerationModel $sitemapGenerationModel, private RequestStack $requestStack)
     {

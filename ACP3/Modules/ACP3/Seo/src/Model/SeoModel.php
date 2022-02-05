@@ -25,6 +25,7 @@ class SeoModel extends AbstractModel
             'keywords' => $rawData['seo_keywords'],
             'description' => $rawData['seo_description'],
             'robots' => $rawData['seo_robots'],
+            'structured_data' => $rawData['seo_structured_data'],
         ]);
 
         return parent::save($rawData, $entryId);
@@ -39,6 +40,7 @@ class SeoModel extends AbstractModel
             'keywords' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
             'robots' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'structured_data' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
         ];
     }
 }

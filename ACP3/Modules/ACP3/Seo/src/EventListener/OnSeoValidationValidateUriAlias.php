@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Seo\EventListener;
 use ACP3\Core\ACL;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\Event\FormValidationEvent;
+use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\JsonStringValidationRule;
 use ACP3\Modules\ACP3\Seo\Validation\ValidationRules\UriAliasValidationRule;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -34,6 +35,16 @@ class OnSeoValidationValidateUriAlias implements EventSubscriberInterface
                     ]
                 );
         }
+
+        $event->getValidator()
+            ->addConstraint(
+                JsonStringValidationRule::class,
+                [
+                    'data' => $event->getFormData(),
+                    'field' => 'seo_structured_data',
+                    'message' => $this->translator->t('seo', 'type_in_valid_json_ld_structured_data'),
+                ]
+            );
     }
 
     /**

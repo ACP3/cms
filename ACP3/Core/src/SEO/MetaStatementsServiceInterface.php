@@ -37,6 +37,11 @@ interface MetaStatementsServiceInterface
     public function getDescription(string $path): string;
 
     /**
+     * Returns the JSON-LD structured data of the given page.
+     */
+    public function getStructuredData(string $path): string;
+
+    /**
      * Returns the SEO keywords of the current page.
      */
     public function getPageKeywords(): string;
@@ -73,26 +78,26 @@ interface MetaStatementsServiceInterface
      *
      * @return $this
      */
-    public function setDescriptionPostfix(string $value);
+    public function setDescriptionPostfix(string $value): static;
 
     /**
      * Sets the canonical URL for the current page.
      *
      * @return $this
      */
-    public function setCanonicalUri(string $path);
+    public function setCanonicalUri(string $path): static;
 
     /**
      * Sets the next page (useful for pagination).
      *
      * @return $this
      */
-    public function setNextPage(string $path);
+    public function setNextPage(string $path): static;
 
     /**
      * Sets the previous page (useful for pagination).
      *
      * @return $this
      */
-    public function setPreviousPage(string $path);
+    public function setPreviousPage(string $path): static;
 }

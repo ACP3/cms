@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface ValidationRuleInterface
 {
+    /**
+     * Return the validation error message.
+     */
     public function getMessage(): string;
 
     /**

@@ -36,10 +36,12 @@
         <item key="sitemap_save_mode_manually">Manuell</item>
         <item key="sitemap_separate">Separate Sitemaps für HTTP und HTTPS generieren</item>
         <item key="sitemap_success">Die Sitemap wurde erfolgreich aktualisiert.</item>
+        <item key="structured_data_json_ld">JSON-LD strukturierte Daten</item>
         <item key="suggest_alias">Alias vorschlagen</item>
         <item key="title">Titel</item>
         <item key="title_help"><![CDATA[Möglichkeit zur Eingabe eines separaten Seitentitels im &lt;head&gt;-Bereich der Seite.]]></item>
-        <item key="type_in_valid_resource">Bitte geben Sie einen validen Pfad zu einer ACP3 internen Ressource an.</item>
+        <item key="type_in_valid_json_ld_structured_data">Bitte geben Sie einen gültige JSON-LD strukturierte Daten ein.</item>
+        <item key="type_in_valid_resource">Bitte geben Sie einen gültigen Pfad zu einer ACP3 internen Ressource an.</item>
         <item key="uri">Pfad</item>
     </keys>
 </language>

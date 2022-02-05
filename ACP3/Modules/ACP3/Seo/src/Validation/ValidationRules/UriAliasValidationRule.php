@@ -30,13 +30,7 @@ class UriAliasValidationRule extends AbstractValidationRule
         return $this->checkUriAlias($data, $extra['path'] ?? '');
     }
 
-    /**
-     * @param string $alias
-     * @param string $path
-     *
-     * @return bool
-     */
-    protected function checkUriAlias($alias, $path)
+    private function checkUriAlias(string $alias, string $path): bool
     {
         if (empty($alias)) {
             return true;

@@ -31,14 +31,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\InternalUriValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'uri',
-                    'message' => $this->translator->t('seo', 'type_in_valid_resource'),
-                ]
-            )
-            ->addConstraint(
                 Core\Validation\ValidationRules\InArrayValidationRule::class,
                 [
                     'data' => $formData,
@@ -47,6 +39,14 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'extra' => [
                         'haystack' => [0, 1, 2, 3, 4],
                     ],
+                ]
+            )
+            ->addConstraint(
+                Core\Validation\ValidationRules\InternalUriValidationRule::class,
+                [
+                    'data' => $formData,
+                    'field' => 'uri',
+                    'message' => $this->translator->t('seo', 'type_in_valid_resource'),
                 ]
             );
 

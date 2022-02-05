@@ -20,10 +20,11 @@
         <p class="form-text">{lang t="seo|alias_description"}</p>
     </div>
 </div>
+{include file="asset:System/Partials/form_group.select.tpl" options=$seo.robots required=true label={lang t="seo|robots"}}
 {include file="asset:System/Partials/form_group.input_text.tpl" name="seo_title" value=$seo.title maxlength=255 label={lang t="seo|title"} help={lang t="seo|title_help"}}
 {include file="asset:System/Partials/form_group.input_text.tpl" name="seo_keywords" value=$seo.keywords maxlength=255 label={lang t="seo|keywords"}}
 {include file="asset:System/Partials/form_group.input_text.tpl" name="seo_description" value=$seo.description maxlength=255 label={lang t="seo|description"}}
-{include file="asset:System/Partials/form_group.select.tpl" options=$seo.robots required=true label={lang t="seo|robots"}}
+{include file="asset:System/Partials/form_group.textarea.tpl" name="seo_structured_data" value=$seo.structured_data label={lang t="seo|structured_data_json_ld"}}
 {if !empty($seo.uri_pattern)}
     <input type="hidden" name="seo_uri_pattern" value="{$seo.uri_pattern}">
 {/if}
