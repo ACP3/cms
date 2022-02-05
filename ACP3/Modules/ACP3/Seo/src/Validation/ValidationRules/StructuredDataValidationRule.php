@@ -30,6 +30,10 @@ class StructuredDataValidationRule extends AbstractValidationRule
             return false;
         }
 
+        if (empty($data)) {
+            return true;
+        }
+
         try {
             $json = json_decode($data, false, 512, JSON_THROW_ON_ERROR);
             $this->jsonSchemaValidator->validate(
