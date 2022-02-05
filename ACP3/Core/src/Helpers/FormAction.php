@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Copyright (c) by the ACP3 Developers.
  * See the LICENSE file at the top-level module directory for licensing details.
@@ -9,8 +11,6 @@ namespace ACP3\Core\Helpers;
 
 use ACP3\Core;
 use Doctrine\DBAL\ConnectionException;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class FormAction
@@ -20,12 +20,12 @@ class FormAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|string
+     * @return array<string, mixed>|Response|string
      *
      * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handlePostAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
+    public function handlePostAction(callable $callback, ?string $path = null): array|Response|string
     {
         try {
             $this->db->beginTransaction();
@@ -109,12 +109,12 @@ class FormAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|string
+     * @return array<string, mixed>|Response|string
      *
      * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleDuplicateAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
+    public function handleDuplicateAction(callable $callback, ?string $path = null): array|Response|string
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -124,12 +124,12 @@ class FormAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|string
+     * @return array<string, mixed>|Response|string
      *
      * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleSettingsPostAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
+    public function handleSettingsPostAction(callable $callback, ?string $path = null): array|Response|string
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -139,12 +139,12 @@ class FormAction
     }
 
     /**
-     * @return array<string, mixed>|JsonResponse|RedirectResponse|string
+     * @return array<string, mixed>|Response|string
      *
      * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleSaveAction(callable $callback, ?string $path = null): array|JsonResponse|RedirectResponse|string
+    public function handleSaveAction(callable $callback, ?string $path = null): array|Response|string
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -166,10 +166,10 @@ class FormAction
         );
     }
 
-    public function setRedirectMessage(bool|int $result, string $translatedText, ?string $path = null): JsonResponse|RedirectResponse
+    public function setRedirectMessage(bool|int $result, string $translatedText, ?string $path = null): Response
     {
         return $this->redirectMessages->setMessage(
-            $result,
+            (bool)$result,
             $translatedText,
             $this->request->getPost()->has('continue') ? $this->request->getPathInfo() : $path
         );

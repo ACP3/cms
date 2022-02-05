@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Copyright (c) by the ACP3 Developers.
  * See the LICENSE file at the top-level module directory for licensing details.
