@@ -10,6 +10,10 @@ namespace ACP3\Modules\ACP3\Gallery\Model;
 use ACP3\Core\Helpers\Sort;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType;
 use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\Model\SortingAwareTrait;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
@@ -65,11 +69,11 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
     protected function getAllowedColumns(): array
     {
         return [
-            'gallery_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
-            'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'pic' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'gallery_id' => IntegerColumnType::class,
+            'title' => TextColumnType::class,
+            'description' => TextWysiwygColumnType::class,
+            'file' => RawColumnType::class,
+            'pic' => IntegerColumnType::class,
         ];
     }
 

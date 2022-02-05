@@ -19,7 +19,8 @@ class RegisterColumnTypesCompilerPass implements CompilerPassInterface
 
         $locatableColumnTypeStrategies = [];
         foreach ($container->findTaggedServiceIds('core.model.column_type') as $serviceId => $tags) {
-            $locatableColumnTypeStrategies[reset($tags)['columnType']] = new Reference($serviceId);
+            $reference = new Reference($serviceId);
+            $locatableColumnTypeStrategies[$container->getDefinition($serviceId)->getClass()] = $reference;
         }
 
         $columnTypeStrategyLocatorDefinition->replaceArgument(0, $locatableColumnTypeStrategies);

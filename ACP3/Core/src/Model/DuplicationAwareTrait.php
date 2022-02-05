@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Model;
 
-use ACP3\Core\Model\DataProcessor\ColumnTypes;
 use ACP3\Core\Repository\AbstractRepository;
 
 trait DuplicationAwareTrait
@@ -35,7 +34,7 @@ trait DuplicationAwareTrait
     abstract protected function getDataProcessor(): DataProcessor;
 
     /**
-     * @return array<string, ColumnTypes::*>
+     * @return array<string, class-string>
      */
     abstract protected function getAllowedColumns(): array;
 

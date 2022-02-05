@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Model;
 
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
 use Psr\Container\ContainerInterface;
 
 class DataProcessorTest extends \PHPUnit\Framework\TestCase
@@ -37,8 +38,8 @@ class DataProcessorTest extends \PHPUnit\Framework\TestCase
         ];
 
         $columnConstraints = [
-            'foo' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'bar' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'foo' => RawColumnType::class,
+            'bar' => RawColumnType::class,
         ];
 
         $this->setUpColumnTypeStrategyFactoryExpectations();
@@ -63,7 +64,7 @@ class DataProcessorTest extends \PHPUnit\Framework\TestCase
         $this->columnTypeStrategyLocator
             ->expects(self::exactly(2))
             ->method('get')
-            ->with(DataProcessor\ColumnTypes::COLUMN_TYPE_RAW)
+            ->with(RawColumnType::class)
             ->willReturn($columnTypeMock);
     }
 }

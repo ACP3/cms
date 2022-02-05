@@ -10,6 +10,10 @@ namespace ACP3\Modules\ACP3\Polls\Model;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Modules\ACP3\Polls\Installer\Schema;
 use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
@@ -86,12 +90,12 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     protected function getAllowedColumns(): array
     {
         return [
-            'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'multiple' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'start' => DateTimeColumnType::class,
+            'end' => DateTimeColumnType::class,
+            'updated_at' => DateTimeColumnType::class,
+            'title' => TextColumnType::class,
+            'multiple' => BooleanColumnType::class,
+            'user_id' => IntegerColumnType::class,
         ];
     }
 }

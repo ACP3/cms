@@ -8,7 +8,8 @@
 namespace ACP3\Modules\ACP3\Share\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor\ColumnTypes;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
 
 class ShareRatingModel extends AbstractModel
@@ -21,9 +22,9 @@ class ShareRatingModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'stars' => ColumnTypes::COLUMN_TYPE_INT,
-            'share_id' => ColumnTypes::COLUMN_TYPE_INT,
-            'ip' => ColumnTypes::COLUMN_TYPE_RAW,
+            'stars' => IntegerColumnType::class,
+            'share_id' => IntegerColumnType::class,
+            'ip' => RawColumnType::class,
         ];
     }
 }

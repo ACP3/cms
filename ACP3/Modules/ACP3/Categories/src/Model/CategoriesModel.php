@@ -7,7 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Categories\Model;
 
-use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Core\NestedSet\Model\AbstractNestedSetModel;
 use ACP3\Modules\ACP3\Categories\Installer\Schema;
 
@@ -18,11 +20,11 @@ class CategoriesModel extends AbstractNestedSetModel
     protected function getAllowedColumns(): array
     {
         return [
-            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'picture' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'parent_id' => IntegerColumnType::class,
+            'title' => TextColumnType::class,
+            'description' => TextColumnType::class,
+            'module_id' => IntegerColumnType::class,
+            'picture' => RawColumnType::class,
         ];
     }
 }

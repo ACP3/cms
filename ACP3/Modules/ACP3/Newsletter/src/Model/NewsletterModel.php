@@ -9,6 +9,11 @@ namespace ACP3\Modules\ACP3\Newsletter\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType;
 use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Newsletter\Installer\Schema;
@@ -47,13 +52,13 @@ class NewsletterModel extends AbstractModel implements UpdatedAtAwareModelInterf
     protected function getAllowedColumns(): array
     {
         return [
-            'date' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'html' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'status' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'date' => DateTimeColumnType::class,
+            'updated_at' => DateTimeColumnType::class,
+            'title' => TextColumnType::class,
+            'text' => TextWysiwygColumnType::class,
+            'user_id' => IntegerColumnType::class,
+            'html' => BooleanColumnType::class,
+            'status' => IntegerColumnType::class,
         ];
     }
 }

@@ -18,11 +18,9 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
     /**
      * @param string $value
      *
-     * @return string
-     *
      * @throws \Exception
      */
-    public function doEscape($value)
+    public function doEscape($value): string
     {
         return $this->date->toSQL($value);
     }
@@ -30,7 +28,7 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function doUnescape($value)
+    public function doUnescape($value): string
     {
         return $value;
     }

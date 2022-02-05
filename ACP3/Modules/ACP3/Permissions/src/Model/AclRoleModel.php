@@ -7,7 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Model;
 
-use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Core\NestedSet\Model\AbstractNestedSetModel;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 
@@ -18,8 +19,8 @@ class AclRoleModel extends AbstractNestedSetModel
     protected function getAllowedColumns(): array
     {
         return [
-            'name' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'name' => TextColumnType::class,
+            'parent_id' => IntegerColumnType::class,
         ];
     }
 }

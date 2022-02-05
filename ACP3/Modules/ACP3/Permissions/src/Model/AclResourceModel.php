@@ -8,7 +8,8 @@
 namespace ACP3\Modules\ACP3\Permissions\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 
 class AclResourceModel extends AbstractModel
@@ -30,10 +31,10 @@ class AclResourceModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'module_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'area' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'controller' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'page' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'module_id' => IntegerColumnType::class,
+            'area' => RawColumnType::class,
+            'controller' => RawColumnType::class,
+            'page' => RawColumnType::class,
         ];
     }
 }

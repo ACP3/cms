@@ -9,6 +9,11 @@ namespace ACP3\Modules\ACP3\News\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType;
 use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Core\Model\UpdatedAtAwareModelInterface;
 use ACP3\Core\Settings\SettingsInterface;
@@ -59,18 +64,18 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     protected function getAllowedColumns(): array
     {
         return [
-            'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
-            'readmore' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'category_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
-            'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'link_title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'active' => BooleanColumnType::class,
+            'start' => DateTimeColumnType::class,
+            'end' => DateTimeColumnType::class,
+            'updated_at' => DateTimeColumnType::class,
+            'title' => TextColumnType::class,
+            'text' => TextWysiwygColumnType::class,
+            'readmore' => IntegerColumnType::class,
+            'category_id' => IntegerColumnType::class,
+            'uri' => TextWysiwygColumnType::class,
+            'target' => IntegerColumnType::class,
+            'link_title' => TextColumnType::class,
+            'user_id' => IntegerColumnType::class,
         ];
     }
 

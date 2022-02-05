@@ -8,7 +8,11 @@
 namespace ACP3\Modules\ACP3\Comments\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor\ColumnTypes;
+use ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerNullableColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Modules\ACP3\Comments\Installer\Schema;
 
 class CommentsModel extends AbstractModel
@@ -18,13 +22,13 @@ class CommentsModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'ip' => ColumnTypes::COLUMN_TYPE_RAW,
-            'date' => ColumnTypes::COLUMN_TYPE_DATETIME,
-            'name' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'user_id' => ColumnTypes::COLUMN_TYPE_INT_NULLABLE,
-            'message' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'module_id' => ColumnTypes::COLUMN_TYPE_INT,
-            'entry_id' => ColumnTypes::COLUMN_TYPE_INT,
+            'ip' => RawColumnType::class,
+            'date' => DateTimeColumnType::class,
+            'name' => TextColumnType::class,
+            'user_id' => IntegerNullableColumnType::class,
+            'message' => TextColumnType::class,
+            'module_id' => IntegerColumnType::class,
+            'entry_id' => IntegerColumnType::class,
         ];
     }
 }

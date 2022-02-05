@@ -8,7 +8,11 @@
 namespace ACP3\Modules\ACP3\Guestbook\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor\ColumnTypes;
+use ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerNullableColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 
 class GuestbookModel extends AbstractModel
@@ -18,14 +22,14 @@ class GuestbookModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'date' => ColumnTypes::COLUMN_TYPE_DATETIME,
-            'ip' => ColumnTypes::COLUMN_TYPE_RAW,
-            'name' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'user_id' => ColumnTypes::COLUMN_TYPE_INT_NULLABLE,
-            'message' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'website' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'mail' => ColumnTypes::COLUMN_TYPE_RAW,
-            'active' => ColumnTypes::COLUMN_TYPE_INT,
+            'date' => DateTimeColumnType::class,
+            'ip' => RawColumnType::class,
+            'name' => TextColumnType::class,
+            'user_id' => IntegerNullableColumnType::class,
+            'message' => TextColumnType::class,
+            'website' => TextColumnType::class,
+            'mail' => RawColumnType::class,
+            'active' => IntegerColumnType::class,
         ];
     }
 }

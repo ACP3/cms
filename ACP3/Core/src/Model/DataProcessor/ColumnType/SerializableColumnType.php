@@ -11,10 +11,8 @@ class SerializableColumnType implements ColumnTypeStrategyInterface
 {
     /**
      * @param mixed $value
-     *
-     * @return string
      */
-    public function doEscape($value)
+    public function doEscape($value): string
     {
         return serialize($value);
     }
@@ -22,12 +20,12 @@ class SerializableColumnType implements ColumnTypeStrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function doUnescape($value)
+    public function doUnescape($value): string
     {
         return unserialize($value);
     }
 
-    public function getDefaultValue(): int|string
+    public function getDefaultValue(): string
     {
         return serialize('');
     }

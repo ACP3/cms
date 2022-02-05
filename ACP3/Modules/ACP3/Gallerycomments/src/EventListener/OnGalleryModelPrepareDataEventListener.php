@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Gallerycomments\EventListener;
 
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Model\DataProcessor\ColumnTypes;
+use ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType;
 use ACP3\Core\Model\Event\ModelSavePrepareDataEvent;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
@@ -30,7 +30,7 @@ class OnGalleryModelPrepareDataEventListener implements EventSubscriberInterface
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         if ($settings['comments'] == 1 && $this->request->getPost()->has('comments')) {
-            $event->addAllowedColumn('comments', ColumnTypes::COLUMN_TYPE_BOOLEAN);
+            $event->addAllowedColumn('comments', BooleanColumnType::class);
             $event->addRawData('comments', $this->request->getPost()->get('comments'));
         }
     }

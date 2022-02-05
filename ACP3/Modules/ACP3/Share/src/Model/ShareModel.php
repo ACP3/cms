@@ -8,7 +8,9 @@
 namespace ACP3\Modules\ACP3\Share\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\SerializableColumnType;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
 
 class ShareModel extends AbstractModel
@@ -57,10 +59,10 @@ class ShareModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'services' => DataProcessor\ColumnTypes::COLUMN_TYPE_SERIALIZABLE,
-            'ratings_active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
+            'uri' => RawColumnType::class,
+            'active' => BooleanColumnType::class,
+            'services' => SerializableColumnType::class,
+            'ratings_active' => BooleanColumnType::class,
         ];
     }
 }

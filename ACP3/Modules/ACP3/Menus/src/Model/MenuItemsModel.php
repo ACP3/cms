@@ -7,7 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Menus\Model;
 
-use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Core\NestedSet\Model\AbstractNestedSetModel;
 use ACP3\Modules\ACP3\Menus\Installer\Schema;
 
@@ -28,13 +30,13 @@ class MenuItemsModel extends AbstractNestedSetModel
     protected function getAllowedColumns(): array
     {
         return [
-            'mode' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'block_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'parent_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'display' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'target' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'mode' => IntegerColumnType::class,
+            'block_id' => IntegerColumnType::class,
+            'parent_id' => IntegerColumnType::class,
+            'display' => IntegerColumnType::class,
+            'title' => TextColumnType::class,
+            'uri' => RawColumnType::class,
+            'target' => IntegerColumnType::class,
         ];
     }
 }

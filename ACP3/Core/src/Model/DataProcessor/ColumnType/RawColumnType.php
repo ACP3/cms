@@ -27,7 +27,7 @@ class RawColumnType implements ColumnTypeStrategyInterface
         return $value;
     }
 
-    public function getDefaultValue(): int|string
+    public function getDefaultValue(): string
     {
         return '';
     }

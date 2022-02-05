@@ -17,10 +17,8 @@ class TextColumnType implements ColumnTypeStrategyInterface
 
     /**
      * @param mixed $value
-     *
-     * @return string
      */
-    public function doEscape($value)
+    public function doEscape($value): string
     {
         return $this->secure->strEncode($value);
     }
@@ -28,12 +26,12 @@ class TextColumnType implements ColumnTypeStrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function doUnescape($value)
+    public function doUnescape($value): string
     {
         return html_entity_decode($value, ENT_QUOTES, 'UTF-8');
     }
 
-    public function getDefaultValue(): int|string
+    public function getDefaultValue(): string
     {
         return '';
     }

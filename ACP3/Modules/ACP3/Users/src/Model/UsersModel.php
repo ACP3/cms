@@ -8,7 +8,12 @@
 namespace ACP3\Modules\ACP3\Users\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor\ColumnTypes;
+use ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\DateColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Modules\ACP3\Users\Installer\Schema;
 
 class UsersModel extends AbstractModel
@@ -21,27 +26,27 @@ class UsersModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'super_user' => ColumnTypes::COLUMN_TYPE_INT,
-            'nickname' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'pwd' => ColumnTypes::COLUMN_TYPE_RAW,
-            'pwd_salt' => ColumnTypes::COLUMN_TYPE_RAW,
-            'realname' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'gender' => ColumnTypes::COLUMN_TYPE_INT,
-            'birthday' => ColumnTypes::COLUMN_TYPE_DATE,
-            'birthday_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'mail' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'mail_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'website' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'icq' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'skype' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'street' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'house_number' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'zip' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'city' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'address_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'country' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'country_display' => ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'registration_date' => ColumnTypes::COLUMN_TYPE_DATETIME,
+            'super_user' => IntegerColumnType::class,
+            'nickname' => TextColumnType::class,
+            'pwd' => RawColumnType::class,
+            'pwd_salt' => RawColumnType::class,
+            'realname' => TextColumnType::class,
+            'gender' => IntegerColumnType::class,
+            'birthday' => DateColumnType::class,
+            'birthday_display' => BooleanColumnType::class,
+            'mail' => TextColumnType::class,
+            'mail_display' => BooleanColumnType::class,
+            'website' => TextColumnType::class,
+            'icq' => TextColumnType::class,
+            'skype' => TextColumnType::class,
+            'street' => TextColumnType::class,
+            'house_number' => TextColumnType::class,
+            'zip' => TextColumnType::class,
+            'city' => TextColumnType::class,
+            'address_display' => BooleanColumnType::class,
+            'country' => TextColumnType::class,
+            'country_display' => BooleanColumnType::class,
+            'registration_date' => DateTimeColumnType::class,
         ];
     }
 }

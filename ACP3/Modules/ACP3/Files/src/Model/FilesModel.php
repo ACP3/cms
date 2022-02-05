@@ -10,6 +10,12 @@ namespace ACP3\Modules\ACP3\Files\Model;
 use ACP3\Core\Helpers\Sort;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType;
 use ACP3\Core\Model\DuplicationAwareTrait;
 use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\Model\SortingAwareTrait;
@@ -64,17 +70,17 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
     protected function getAllowedColumns(): array
     {
         return [
-            'active' => DataProcessor\ColumnTypes::COLUMN_TYPE_BOOLEAN,
-            'start' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'end' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'updated_at' => DataProcessor\ColumnTypes::COLUMN_TYPE_DATETIME,
-            'category_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'text' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
-            'user_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'file' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'size' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'sort' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'active' => BooleanColumnType::class,
+            'start' => DateTimeColumnType::class,
+            'end' => DateTimeColumnType::class,
+            'updated_at' => DateTimeColumnType::class,
+            'category_id' => IntegerColumnType::class,
+            'title' => TextColumnType::class,
+            'text' => TextWysiwygColumnType::class,
+            'user_id' => IntegerColumnType::class,
+            'file' => RawColumnType::class,
+            'size' => RawColumnType::class,
+            'sort' => IntegerColumnType::class,
         ];
     }
 

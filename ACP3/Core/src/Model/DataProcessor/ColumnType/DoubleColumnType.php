@@ -11,10 +11,8 @@ class DoubleColumnType implements ColumnTypeStrategyInterface
 {
     /**
      * @param mixed $value
-     *
-     * @return float
      */
-    public function doEscape($value)
+    public function doEscape($value): float
     {
         return (float) $value;
     }

@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Permissions\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
 use ACP3\Modules\ACP3\Permissions\Installer\Schema;
 use ACP3\Modules\ACP3\Permissions\Repository\AclPermissionRepository;
 use Psr\Cache\CacheItemPoolInterface;
@@ -72,9 +73,9 @@ class AclPermissionModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'role_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'resource_id' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'permission' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
+            'role_id' => IntegerColumnType::class,
+            'resource_id' => IntegerColumnType::class,
+            'permission' => IntegerColumnType::class,
         ];
     }
 }

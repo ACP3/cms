@@ -8,7 +8,8 @@
 namespace ACP3\Modules\ACP3\Emoticons\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
 
 class EmoticonsModel extends AbstractModel
@@ -18,9 +19,9 @@ class EmoticonsModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'code' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'img' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
+            'code' => TextColumnType::class,
+            'description' => TextColumnType::class,
+            'img' => RawColumnType::class,
         ];
     }
 }

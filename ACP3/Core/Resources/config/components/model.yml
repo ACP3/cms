@@ -2,45 +2,10 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType:
+  ACP3\Core\Model\DataProcessor\ColumnType\:
+    resource: '../../../src/Model/DataProcessor/ColumnType/'
     tags:
-      - { name: core.model.column_type, columnType: "boolean" }
-
-  ACP3\Core\Model\DataProcessor\ColumnType\DateColumnType:
-    tags:
-      - { name: core.model.column_type, columnType: "date" }
-
-  ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType:
-    tags:
-      - { name: core.model.column_type, columnType: "datetime" }
-
-  ACP3\Core\Model\DataProcessor\ColumnType\DoubleColumnType:
-    tags:
-      - { name: core.model.column_type, columnType: "double" }
-
-  ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType:
-    tags:
-      - { name: core.model.column_type, columnType: "integer" }
-
-  ACP3\Core\Model\DataProcessor\ColumnType\IntegerNullableColumnType:
-    tags:
-      - { name: core.model.column_type, columnType: "integer_nullable" }
-
-  ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType:
-    tags:
-      - { name: core.model.column_type, columnType: "raw" }
-
-  ACP3\Core\Model\DataProcessor\ColumnType\SerializableColumnType:
-    tags:
-      - { name: core.model.column_type, columnType: "serializable" }
-
-  ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType:
-    tags:
-      - { name: core.model.column_type, columnType: "text" }
-
-  ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType:
-    tags:
-      - { name: core.model.column_type, columnType: "text_wysiwyg" }
+      - { name: core.model.column_type }
 
   ACP3\Core\Model\DataProcessor:
     arguments:

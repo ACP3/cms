@@ -8,7 +8,8 @@
 namespace ACP3\Modules\ACP3\Menus\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Modules\ACP3\Menus\Installer\Schema;
 
 class MenusModel extends AbstractModel
@@ -18,8 +19,8 @@ class MenusModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'index_name' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
+            'index_name' => RawColumnType::class,
+            'title' => TextColumnType::class,
         ];
     }
 }

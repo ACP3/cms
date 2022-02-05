@@ -25,7 +25,7 @@ class BooleanColumnType implements ColumnTypeStrategyInterface
         return $value;
     }
 
-    public function getDefaultValue(): int|string
+    public function getDefaultValue(): int
     {
         return 0;
     }

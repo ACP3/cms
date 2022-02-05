@@ -8,7 +8,10 @@
 namespace ACP3\Modules\ACP3\Seo\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextWysiwygColumnType;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 
 class SeoModel extends AbstractModel
@@ -34,13 +37,13 @@ class SeoModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'uri' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'alias' => DataProcessor\ColumnTypes::COLUMN_TYPE_RAW,
-            'title' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'keywords' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'description' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT,
-            'robots' => DataProcessor\ColumnTypes::COLUMN_TYPE_INT,
-            'structured_data' => DataProcessor\ColumnTypes::COLUMN_TYPE_TEXT_WYSIWYG,
+            'uri' => RawColumnType::class,
+            'alias' => RawColumnType::class,
+            'title' => TextColumnType::class,
+            'keywords' => TextColumnType::class,
+            'description' => TextColumnType::class,
+            'robots' => IntegerColumnType::class,
+            'structured_data' => TextWysiwygColumnType::class,
         ];
     }
 }

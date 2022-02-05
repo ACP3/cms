@@ -17,10 +17,8 @@ class DateColumnType implements ColumnTypeStrategyInterface
 
     /**
      * @param string $value
-     *
-     * @return string
      */
-    public function doEscape($value)
+    public function doEscape($value): string
     {
         return $this->date->format($value, Date::DEFAULT_DATE_FORMAT_SHORT);
     }
@@ -28,7 +26,7 @@ class DateColumnType implements ColumnTypeStrategyInterface
     /**
      * {@inheritdoc}
      */
-    public function doUnescape($value)
+    public function doUnescape($value): string
     {
         return $value;
     }

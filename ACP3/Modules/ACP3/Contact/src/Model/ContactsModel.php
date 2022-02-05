@@ -8,7 +8,8 @@
 namespace ACP3\Modules\ACP3\Contact\Model;
 
 use ACP3\Core\Model\AbstractModel;
-use ACP3\Core\Model\DataProcessor\ColumnTypes;
+use ACP3\Core\Model\DataProcessor\ColumnType\DateTimeColumnType;
+use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Modules\ACP3\Contact\Installer\Schema;
 
 class ContactsModel extends AbstractModel
@@ -31,10 +32,10 @@ class ContactsModel extends AbstractModel
     protected function getAllowedColumns(): array
     {
         return [
-            'date' => ColumnTypes::COLUMN_TYPE_DATETIME,
-            'name' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'mail' => ColumnTypes::COLUMN_TYPE_TEXT,
-            'message' => ColumnTypes::COLUMN_TYPE_TEXT,
+            'date' => DateTimeColumnType::class,
+            'name' => TextColumnType::class,
+            'mail' => TextColumnType::class,
+            'message' => TextColumnType::class,
         ];
     }
 }
