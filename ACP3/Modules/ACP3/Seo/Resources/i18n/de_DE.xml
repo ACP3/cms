@@ -40,7 +40,7 @@
         <item key="suggest_alias">Alias vorschlagen</item>
         <item key="title">Titel</item>
         <item key="title_help"><![CDATA[Möglichkeit zur Eingabe eines separaten Seitentitels im &lt;head&gt;-Bereich der Seite.]]></item>
-        <item key="type_in_valid_json_ld_structured_data">Bitte geben Sie einen gültige JSON-LD strukturierte Daten ein.</item>
+        <item key="type_in_valid_json_ld_structured_data">Bitte geben Sie gültige JSON-LD strukturierte Daten ein.</item>
         <item key="type_in_valid_resource">Bitte geben Sie einen gültigen Pfad zu einer ACP3 internen Ressource an.</item>
         <item key="uri">Pfad</item>
     </keys>

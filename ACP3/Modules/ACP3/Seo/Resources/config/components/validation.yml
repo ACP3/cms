@@ -10,3 +10,5 @@ services:
   ACP3\Modules\ACP3\Seo\Validation\:
     resource: "../../../src/Validation/"
     exclude: "../../../src/Validation/ValidationRules/"
+
+  JsonSchema\Validator: ~

@@ -8,10 +8,15 @@
 namespace ACP3\Modules\ACP3\Seo\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
+use JsonSchema\Validator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class JsonStringValidationRule extends AbstractValidationRule
+class StructuredDataValidationRule extends AbstractValidationRule
 {
+    public function __construct(private Validator $jsonSchemaValidator)
+    {
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -26,9 +31,13 @@ class JsonStringValidationRule extends AbstractValidationRule
         }
 
         try {
-            json_encode($data, JSON_THROW_ON_ERROR);
+            $json = json_decode($data, false, 512, JSON_THROW_ON_ERROR);
+            $this->jsonSchemaValidator->validate(
+                $json,
+                (object) ['$ref' => 'file://' . realpath(__DIR__ . '/../../../Resources/json-schema/json-ld-schema.json')]
+            );
 
-            return true;
+            return $this->jsonSchemaValidator->isValid();
         } catch (\JsonException $e) {
             return false;
         }
