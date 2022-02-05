@@ -15,7 +15,7 @@ class SitemapAvailabilityRegistrar
     /**
      * @var SitemapAvailabilityExtensionInterface[]
      */
-    private $availableModules = [];
+    private array $availableModules = [];
 
     public function __construct(private Modules $modules)
     {

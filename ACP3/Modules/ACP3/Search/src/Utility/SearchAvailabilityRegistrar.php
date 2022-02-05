@@ -14,7 +14,7 @@ class SearchAvailabilityRegistrar
     /**
      * @var array<string, SearchAvailabilityExtensionInterface>
      */
-    protected array $availableModules = [];
+    private array $availableModules = [];
 
     /**
      * @return static
