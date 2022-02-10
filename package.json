@@ -57,7 +57,7 @@
     "gulp-tap": "^2.0.0",
     "gulplog": "^1.0.0",
     "js-yaml": "^4.1.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "postcss": "^8.3.6",
     "prettier": "^2.3.2",
     "semver": "^7.3.5",
