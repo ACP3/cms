@@ -54,7 +54,7 @@ class SetLayoutListener implements EventSubscriberInterface
     private function iterateOverLayoutPaths(array $paths): void
     {
         foreach ($paths as $path) {
-            if ($this->view->templateExists($path)) {
+            if ($path && $this->view->templateExists($path)) {
                 $this->view->setLayout($path);
 
                 break;

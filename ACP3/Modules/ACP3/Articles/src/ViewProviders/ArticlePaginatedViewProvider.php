@@ -34,7 +34,7 @@ class ArticlePaginatedViewProvider
         $this->breadcrumb->append($article['title'], $this->request->getUriWithoutPages());
         $this->title->setPageTitle($article['title']);
 
-        if ($this->view->templateExists($article['layout'])) {
+        if ($article['layout'] && $this->view->templateExists($article['layout'])) {
             $this->layout = $article['layout'];
         }
 
