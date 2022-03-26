@@ -16,7 +16,7 @@ class NotEmptyValidationRule extends AbstractValidationRule
      */
     public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
-        if (is_scalar($data)) {
+        if (\is_scalar($data)) {
             return !empty(trim($data));
         }
 
@@ -26,7 +26,7 @@ class NotEmptyValidationRule extends AbstractValidationRule
             }
 
             if (\array_key_exists($field, $data)) {
-                return !empty(is_scalar($data[$field]) ? trim($data[$field]) : $data[$field]);
+                return !empty(\is_scalar($data[$field]) ? trim($data[$field]) : $data[$field]);
             }
         }
 

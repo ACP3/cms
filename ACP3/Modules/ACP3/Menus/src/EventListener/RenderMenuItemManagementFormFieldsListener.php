@@ -84,6 +84,7 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
      */
     private function modifyFormValues(array $menuItem): ?array
     {
+        /** @var array<string, mixed>|null $formData */
         $formData = $this->view->getRenderer()->getTemplateVars('form');
 
         if (\is_array($formData) && !isset($formData['menu_item_title'])) {

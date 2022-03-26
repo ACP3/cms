@@ -43,10 +43,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services = $containerConfigurator->services();
     $services->set(RenameFunctionRector::class)->call('configure', [[
-        //the_real_type
+        // the_real_type
         // https://wiki.php.net/rfc/deprecations_php_7_4
         'is_real' => 'is_float',
-        //apache_request_headers_function
+        // apache_request_headers_function
         // https://wiki.php.net/rfc/deprecations_php_7_4
         'apache_request_headers' => 'getallheaders',
     ]]);

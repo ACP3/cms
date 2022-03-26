@@ -101,8 +101,8 @@ class Requirements
         return [
             [
                 'setting' => $this->translator->t('installer', 'maximum_uploadsize'),
-                'satisfied' => ini_get('post_max_size') > 0,
-                'value' => ini_get('post_max_size'),
+                'satisfied' => \ini_get('post_max_size') > 0,
+                'value' => \ini_get('post_max_size'),
             ],
         ];
     }
