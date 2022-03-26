@@ -3,6 +3,7 @@ sync:subtree-split:
   stage: sync
   cache:
     key: release:subtree-split
+    when: always
     paths:
       - .gitsplit-cache
   variables:
