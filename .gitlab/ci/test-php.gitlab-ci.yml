@@ -26,8 +26,8 @@ test:php-unit:
       - .gitlab-ci.yml
   parallel:
     matrix:
-      - PHP_VERSION: '8.0'
-      - PHP_VERSION: '8.1'
+      - PHP_VERSION: "8.0"
+      - PHP_VERSION: "8.1"
 
 test:php-cs-fixer:
   image: registry.gitlab.com/acp3/php-docker:8.0
