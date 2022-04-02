@@ -1,5 +1,5 @@
-test:php80-unit:
-  image: registry.gitlab.com/acp3/php-docker:8.0
+test:php-unit:
+  image: registry.gitlab.com/acp3/php-docker:${PHP_VERSION}
   stage: test
   cache:
     key: $CI_JOB_NAME
@@ -24,6 +24,10 @@ test:php80-unit:
       - composer.lock
       - tests/phpunit.dist.xml
       - .gitlab-ci.yml
+  parallel:
+    matrix:
+      - PHP_VERSION: '8.0'
+      - PHP_VERSION: '8.1'
 
 test:php-cs-fixer:
   image: registry.gitlab.com/acp3/php-docker:8.0
