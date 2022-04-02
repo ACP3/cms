@@ -18,7 +18,7 @@
                                class="btn btn-warning d-block"
                                data-ajax-form="true"
                                data-ajax-form-loading-text="{lang t="system|loading_please_wait"}">
-                                {icon iconSet="solid" icon="sync-alt"}
+                                {icon iconSet="solid" icon="rotate"}
                                 {lang t="system|refresh"}
                             </a>
                         </div>

@@ -34,7 +34,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
             $this->optionRenderer->addOption(
                 $this->getEditRoute($dbResultRow, $resourcePathEdit),
                 $this->translator->t('system', 'edit'),
-                'edit',
+                'pen',
             );
         }
 

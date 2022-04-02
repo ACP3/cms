@@ -82,7 +82,7 @@ HTML;
 
     protected function fetchSortForbiddenHtml(): string
     {
-        $html = ($this->icon)('solid', 'times-circle', ['cssSelectors' => 'text-danger', 'title' => $this->translator->t('system', 'move_impossible')]);
+        $html = ($this->icon)('solid', 'circle-xmark', ['cssSelectors' => 'text-danger', 'title' => $this->translator->t('system', 'move_impossible')]);
 
         return '<span class="btn btn-light btn-sm disabled">' . sprintf($html, $this->translator->t('system', 'move_impossible')) . '</span>';
     }

@@ -7,7 +7,7 @@
            placeholder="{lang t="search|search_term"}"
            required>
     <button type="submit" name="submit" class="btn btn-outline-primary" title="{lang t="search|submit_search"}">
-        {icon iconSet="solid" icon="search"}
+        {icon iconSet="solid" icon="magnifying-glass"}
     </button>
     {foreach $search_mods as $row}
         <input type="hidden" name="mods[]" value="{$row.name}">

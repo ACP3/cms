@@ -5,7 +5,7 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
             <a href="{uri args="users/account"}">
-                {icon iconSet="solid" icon="home"}
+                {icon iconSet="solid" icon="house"}
                 {lang t="users|home"}
             </a>
         </li>
@@ -27,7 +27,7 @@
         {if !empty($user_sidebar.system)}
             <li id="menu-system" class="list-group-item dropdown">
                 <a href="{uri args="acp/system"}" id="menu-system-label" class="dropdown-toggle" data-bs-toggle="dropdown">
-                    {icon iconSet="solid" icon="cog"}
+                    {icon iconSet="solid" icon="gear"}
                     {lang t="system|system"}
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu-system-label">

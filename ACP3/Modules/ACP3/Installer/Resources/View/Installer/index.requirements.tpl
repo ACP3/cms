@@ -82,7 +82,7 @@
                        class="btn btn-warning"
                        data-ajax-form="true"
                        data-ajax-form-loading-text="{lang t="installer|loading_please_wait"}">
-                        {icon iconSet="solid" icon="sync-alt"}
+                        {icon iconSet="solid" icon="rotate"}
                         {lang t="installer|check_again"}
                     </a>
                     {javascripts}

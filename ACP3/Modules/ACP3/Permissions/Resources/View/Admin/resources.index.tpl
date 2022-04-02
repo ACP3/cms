@@ -51,7 +51,7 @@
                                                 <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
                                                    class="btn btn-outline-secondary btn-sm"
                                                    title="{lang t="permissions|admin_resources_edit"}">
-                                                    {icon iconSet="solid" icon="edit"}
+                                                    {icon iconSet="solid" icon="pen"}
                                                 </a>
                                             {/if}
                                             {if $can_delete_resource === true}

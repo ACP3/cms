@@ -24,7 +24,7 @@
                             <td>{$row.author}</td>
                             <td class="text-center">
                                 {if $row.installable === false}
-                                    {icon iconSet="solid" icon="info-circle" cssSelectors="text-info" title={lang t="system|not_installable_module_description"}}
+                                    {icon iconSet="solid" icon="circle-info" cssSelectors="text-info" title={lang t="system|not_installable_module_description"}}
                                 {else}
                                     <a href="{uri args="acp/system/extensions/modules/dir_`$row.name`/action_uninstall"}"
                                        class="btn btn-danger btn-sm"

@@ -10,7 +10,7 @@
                    id="seo-alias-suggestion"
                    class="btn btn-outline-secondary"
                    title="{lang t="seo|suggest_alias"}">
-                    {icon iconSet="solid" icon="sync-alt"}
+                    {icon iconSet="solid" icon="rotate"}
                     <span class="d-none d-sm-inline">{lang t="seo|suggest_alias"}</span>
                 </a>
             </div>

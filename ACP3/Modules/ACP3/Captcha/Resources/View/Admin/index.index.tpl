@@ -1,7 +1,7 @@
 {extends file="asset:System/layout.header-bar.tpl"}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/captcha/index/settings" iconSet="solid" icon="cog"}
+    {check_access mode="link" path="acp/captcha/index/settings" iconSet="solid" icon="gear"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
     {redirect_message}

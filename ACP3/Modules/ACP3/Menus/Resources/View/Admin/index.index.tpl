@@ -4,7 +4,7 @@
 
 {block HEADER_BAR_OPTIONS}
     {check_access mode="link" path="acp/menus/items/create" iconSet="solid" icon="plus" class="text-success"}
-    {check_access mode="link" path="acp/menus/index/create" iconSet="solid" icon="th-list" class="text-info"}
+    {check_access mode="link" path="acp/menus/index/create" iconSet="solid" icon="table-list" class="text-info"}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if !empty($menus)}
@@ -19,7 +19,7 @@
                             <div class="col-sm-6 text-end">
                                 {if $can_edit}
                                     <a href="{uri args="acp/menus/index/edit/id_`$menu.id`"}" class="btn btn-outline-secondary">
-                                        {icon iconSet="solid" icon="edit"} {lang t="menus|admin_index_edit"}
+                                        {icon iconSet="solid" icon="pen"} {lang t="menus|admin_index_edit"}
                                     </a>
                                 {/if}
                                 {if $can_delete}

@@ -9,7 +9,7 @@
                 <input class="form-control me-2" type="text" name="nickname" id="nav-nickname" maxlength="30" aria-label="{lang t="users|nickname"}" placeholder="{lang t="users|nickname"}" required>
                 <input class="form-control me-2" type="password" name="pwd" id="nav-pwd" aria-label="{lang t="users|pwd"}" placeholder="{lang t="users|pwd"}" required>
                 <button type="submit" name="submit" class="btn btn-outline-primary" title="{lang t="users|log_in"}">
-                    {icon iconSet="solid" icon="sign-in-alt"}
+                    {icon iconSet="solid" icon="right-to-bracket"}
                 </button>
             </form>
         </div>

@@ -2,8 +2,8 @@
 
 {block HEADER_BAR_OPTIONS}
     {check_access mode="link" path="acp/system/maintenance" iconSet="solid" icon="wrench"}
-    {check_access mode="link" path="acp/system/extensions" iconSet="solid" icon="adjust"}
-    {check_access mode="link" path="acp/system/index/settings" iconSet="solid" icon="cog"}
+    {check_access mode="link" path="acp/system/extensions" iconSet="solid" icon="circle-half-stroke"}
+    {check_access mode="link" path="acp/system/index/settings" iconSet="solid" icon="gear"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
     {redirect_message}

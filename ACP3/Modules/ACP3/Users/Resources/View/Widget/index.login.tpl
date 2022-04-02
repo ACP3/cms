@@ -17,7 +17,7 @@
                 </label>
             </div>
             <button type="submit" name="submit" class="btn btn-outline-primary">
-                {icon iconSet="solid" icon="sign-in-alt"} {lang t="users|log_in"}
+                {icon iconSet="solid" icon="right-to-bracket"} {lang t="users|log_in"}
             </button>
         </form>
     </div>

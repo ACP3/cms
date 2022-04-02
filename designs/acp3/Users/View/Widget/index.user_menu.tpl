@@ -25,7 +25,7 @@
                     {if !empty($user_sidebar.system)}
                         <li class="nav-item dropdown">
                             <a href="{uri args="acp/system"}" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="menu-system" aria-expanded="false">
-                                {icon iconSet="solid" icon="cog"}
+                                {icon iconSet="solid" icon="gear"}
                                 {lang t="system|system"}
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="menu-system">
@@ -40,7 +40,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a href="{uri args="users/account"}" class="nav-link">
-                        {icon iconSet="solid" icon="home"}
+                        {icon iconSet="solid" icon="house"}
                         {lang t="users|home"}
                     </a>
                 </li>
