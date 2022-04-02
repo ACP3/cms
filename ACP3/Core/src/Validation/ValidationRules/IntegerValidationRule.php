@@ -20,15 +20,10 @@ class IntegerValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->checkAgainstPattern($data);
+        return $this->checkAgainstPattern((string) $data);
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @return bool
-     */
-    protected function checkAgainstPattern($value)
+    private function checkAgainstPattern(string $value): bool
     {
         return preg_match('/^(\d+)$/', $value) === 1;
     }

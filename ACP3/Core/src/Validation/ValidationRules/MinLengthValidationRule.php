@@ -20,10 +20,10 @@ class MinLengthValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->checkMinLength($data, $extra['length'] ?? 1);
+        return $this->checkMinLength((string) $data, $extra['length'] ?? 1);
     }
 
-    private function checkMinLength(?string $value, int $length): bool
+    private function checkMinLength(string $value, int $length): bool
     {
         return mb_strlen(trim($value)) >= $length;
     }
