@@ -283,6 +283,6 @@ class Navbar extends AbstractFunction
             $selectors[] = 'active';
         }
 
-        return !empty($selectors) ? ' class="' . implode(' ', $selectors) . '"' : '';
+        return ' class="' . implode(' ', $selectors) . '"';
     }
 }
