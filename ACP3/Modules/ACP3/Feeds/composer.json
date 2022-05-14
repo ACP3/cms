@@ -16,9 +16,9 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^5.19.0",
-    "acp3/module-permissions": "^5.19.0",
-    "acp3/module-system": "^5.19.0",
+    "acp3/core": "^6.0.0",
+    "acp3/module-permissions": "^6.0.0",
+    "acp3/module-system": "^6.0.0",
     "mibe/feedwriter": "^1.0"
   },
   "suggest": {

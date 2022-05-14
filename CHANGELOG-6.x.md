@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [6.0.0] - 2022-05-14
 
 # BC breaks
 
@@ -32,4 +32,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   [All] Fixed many bugs
 
-[unreleased]: https://gitlab.com/ACP3/cms/compare/v5.21.0...6.x
+[unreleased]: https://gitlab.com/ACP3/cms/compare/v6.0.0...6.x
+[6.0.0]: https://gitlab.com/ACP3/cms/compare/v5.21.0...v6.0.0
