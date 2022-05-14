@@ -36,7 +36,7 @@ module.exports = (gulp) => {
     const entries = globby.sync([
       ...componentPaths.js.process,
       "./designs/*/*/Assets/js/{admin,frontend,partials,widget}/!(*.min).js",
-      "./designs/*/Assets/js/!(*.min).js",
+      "./designs/*/*/Assets/js/!(*.min).js",
     ]);
 
     const streams = entries.map((file) => {
