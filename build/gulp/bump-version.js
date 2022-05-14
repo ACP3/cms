@@ -278,13 +278,17 @@ module.exports = (gulp) => {
 
       throw new Error(`Can't bump the version outside a version branch. Please switch to branch "${versionBranch}.x"!`);
     }
-    if (isMajorUpdate) {
+
+    const newMajorVersion = Number(newVersion.split(".")[0]);
+    const currentBranchPrefix = Number(nameOfCurrentBranch.split(".")[0]);
+    if (isMajorUpdate && newMajorVersion !== currentBranchPrefix) {
       const nextVersionBranch = Number(nameOfCurrentBranch.split(".")[0]) + 1;
 
       throw new Error(
         `Can't do a major version bump within branch "${nameOfCurrentBranch}". Please switch to branch "${nextVersionBranch}.x"!`
       );
     }
+
     if ((await git().status()).modified.length) {
       throw new Error(
         `The working copy is not clean. Please commit all unsaved changes before running the bump-version task!`
