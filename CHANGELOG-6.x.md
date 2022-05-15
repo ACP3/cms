@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Emoticons] Harden the EmoticonService against non-existing files
 
 ## [6.0.1] - 2022-05-15
 
