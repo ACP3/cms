@@ -55,3 +55,9 @@ services:
       $serviceId: "installer.controller.installer.error.server_error"
     tags:
       - { name: kernel.event_subscriber }
+
+  ACP3\Core\SEO\MetaStatementsService: ~
+  ACP3\Core\SEO\MetaStatementsServiceInterface: '@ACP3\Core\SEO\MetaStatementsService'
+
+  ACP3\Modules\ACP3\System\Core\Router\Router: ~
+  ACP3\Core\Router\RouterInterface: '@ACP3\Modules\ACP3\System\Core\Router\Router'
