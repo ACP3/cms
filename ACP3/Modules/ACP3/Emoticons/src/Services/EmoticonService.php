@@ -25,10 +25,14 @@ class EmoticonService implements EmoticonServiceInterface
 
         $data = [];
         foreach ($emoticons as $emoticon) {
-            $picInfos = getimagesize($this->applicationPath->getUploadsDir() . 'emoticons/' . $emoticon['img']);
-            $code = $emoticon['code'];
-            $description = $emoticon['description'];
-            $data[$code] = '<img src="' . $this->applicationPath->getWebRoot() . 'uploads/emoticons/' . $emoticon['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
+            $path = $this->applicationPath->getUploadsDir() . 'emoticons/' . $emoticon['img'];
+
+            if (is_file($path)) {
+                $picInfos = getimagesize($this->applicationPath->getUploadsDir() . 'emoticons/' . $emoticon['img']);
+                $code = $emoticon['code'];
+                $description = $emoticon['description'];
+                $data[$code] = '<img src="' . $this->applicationPath->getWebRoot() . 'uploads/emoticons/' . $emoticon['img'] . '" width="' . $picInfos[0] . '" height="' . $picInfos[1] . '" alt="' . $description . '" title="' . $description . '" />';
+            }
         }
 
         return $data;
