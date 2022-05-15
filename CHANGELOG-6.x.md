@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Installer] Fixed updating existing installation from version 5.x to 6.0.0
 
 ## [6.0.0] - 2022-05-14
 
-# BC breaks
+### BC breaks
 
 -   [All] Dropped support for PHP versions < 8.0
 -   [All] Reworked the DB-Migrations. Implement the new `ACP3\Core\Migration\MigrationInterface`
@@ -21,18 +23,18 @@ tba
 -   [System] Updated Fontawesome to version 6
 -   [System] Dropped flatpickr. The system uses native HTML5 datetime-local inputs now
 
-# Added
+### Added
 
 -   [All] Added many type declarations and made use of new language features coming with PHP version 7.4 and 8.0
 -   [Base] Added official support for PHP 8.1
 
-# Changed
+### Changed
 
 -   [All] Reworked most of the JavaScript assets to not be dependent on jQuery anymore
 -   [Base] Bumped PHPstan level from 5 to 6
 -   [Permissions] Removed the `privilege_id` concept
 
-# Fixed
+### Fixed
 
 -   [All] Fixed many bugs
 
