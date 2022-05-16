@@ -25,7 +25,7 @@ class ExternalLinkValidationRule extends AbstractValidationRule
             $uri = next($field);
             $target = next($field);
 
-            return $this->isValidLink($data[$linkTitle], $data[$uri], $data[$target]);
+            return $this->isValidLink($data[$linkTitle], $data[$uri], (int) $data[$target]);
         }
 
         return false;

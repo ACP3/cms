@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Core] Harden the `ExternalLinkValidationRule` against non-existing form values
+-   [Categories] Harden the `CategoryExistsValidationRule` against non-existing form values
 
 ## [6.0.2] - 2022-05-15
 
