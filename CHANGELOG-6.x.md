@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [System] Update the NPM dependencies
+
+### Fixed
+
+-   [Core] Fix a possible PHP error, when providing an empty path to the `ControllerActionExists::controllerActionExists`-method
 
 ## [6.0.3] - 2022-05-16
 
