@@ -20,22 +20,20 @@ class ControllerActionExists
      */
     public function controllerActionExists(string $path): bool
     {
-        $pathArray = explode('/', strtolower($path));
-
-        if (empty($pathArray[2]) === true) {
-            $pathArray[2] = 'index';
-        }
-        if (empty($pathArray[3]) === true) {
-            $pathArray[3] = 'index';
+        if (str_contains($path, '/') === false) {
+            return false;
         }
 
-        $serviceId = $pathArray[1] . '.controller.' . $pathArray[0] . '.' . $pathArray[2] . '.' . $pathArray[3];
+        $defaults = [2 => 'index', 3 => 'index'];
+        [$area, $module, $controller, $action] = explode('/', strtolower($path)) + $defaults;
+
+        $serviceId = $module . '.controller.' . $area . '.' . $controller . '.' . $action;
 
         if ($this->container->has($serviceId)) {
             return true;
         }
 
-        if (!str_ends_with($pathArray[3], '_post')) {
+        if (!str_ends_with($action, '_post')) {
             return $this->container->has($serviceId . '_post');
         }
 
