@@ -7,13 +7,11 @@
 
 namespace ACP3\Core\View\Renderer\Smarty;
 
-use ACP3\Core\Enum\BaseEnum;
-
-class PluginTypeEnum extends BaseEnum
+enum PluginTypeEnum: string
 {
-    public const BLOCK = 'block';
-    public const FILTER = 'filter';
-    public const FUNCTION = 'function';
-    public const MODIFIER = 'modifier';
-    public const RESOURCE = 'resource';
+    case BLOCK = 'block';
+    case FILTER = 'filter';
+    case FUNCTION = 'function';
+    case MODIFIER = 'modifier';
+    case RESOURCE = 'resource';
 }

@@ -26,7 +26,7 @@ class Smarty implements RendererInterface
     public function registerBlock(string $blockName, string $serviceId): void
     {
         $this->smarty->registerPlugin(
-            PluginTypeEnum::BLOCK,
+            PluginTypeEnum::BLOCK->value,
             $blockName,
             fn (array $params, ?string $content, \Smarty_Internal_Template $smarty, bool & $repeat) => $this->container->get($serviceId)($params, $content, $smarty, $repeat)
         );
@@ -50,7 +50,7 @@ class Smarty implements RendererInterface
     public function registerFunction(string $pluginName, string $serviceId): void
     {
         $this->smarty->registerPlugin(
-            PluginTypeEnum::FUNCTION,
+            PluginTypeEnum::FUNCTION->value,
             $pluginName,
             fn (array $params, \Smarty_Internal_Template $smarty) => $this->container->get($serviceId)($params, $smarty)
         );
@@ -62,7 +62,7 @@ class Smarty implements RendererInterface
     public function registerModifier(string $pluginName, string $serviceId): void
     {
         $this->smarty->registerPlugin(
-            PluginTypeEnum::MODIFIER,
+            PluginTypeEnum::MODIFIER->value,
             $pluginName,
             fn (...$value) => $this->container->get($serviceId)(...$value)
         );
