@@ -7,10 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Seo\Helper\Enum;
 
-use ACP3\Core\Enum\BaseEnum;
-
-class IndexPaginatedContentEnum extends BaseEnum
+enum IndexPaginatedContentEnum: string
 {
-    public const INDEX_ALL_PAGES = 'all';
-    public const INDEX_FIST_PAGE_ONLY = 'first';
+    case INDEX_ALL_PAGES = 'all';
+    case INDEX_FIST_PAGE_ONLY = 'first';
 }

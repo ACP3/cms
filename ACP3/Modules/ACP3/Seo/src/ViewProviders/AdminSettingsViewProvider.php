@@ -36,8 +36,8 @@ class AdminSettingsViewProvider
         ];
 
         $indexPaginatedContent = [
-            IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY => $this->translator->t('seo', 'index_first_page_only'),
-            IndexPaginatedContentEnum::INDEX_ALL_PAGES => $this->translator->t('seo', 'index_all_pages'),
+            IndexPaginatedContentEnum::INDEX_FIST_PAGE_ONLY->value => $this->translator->t('seo', 'index_first_page_only'),
+            IndexPaginatedContentEnum::INDEX_ALL_PAGES->value => $this->translator->t('seo', 'index_all_pages'),
         ];
 
         $sitemapSaveMode = [
