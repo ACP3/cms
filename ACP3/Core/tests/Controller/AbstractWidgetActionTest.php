@@ -8,6 +8,7 @@
 namespace ACP3\Core\Controller;
 
 use ACP3\Core\Controller\Context\Context;
+use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\View;
 use PHPUnit\Framework\TestCase;
 
@@ -40,6 +41,7 @@ class AbstractWidgetActionTest extends TestCase
 
         $this->contextMock = $this->createMock(Context::class);
         $this->contextMock->method('getView')->willReturn($this->viewMock);
+        $this->contextMock->method('getApplicationMode')->willReturn(ApplicationMode::DEVELOPMENT);
     }
 
     public function testDisplayWithStringActionResult(): void
