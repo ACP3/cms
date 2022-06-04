@@ -20,7 +20,11 @@ class AclInstaller implements InstallerInterface
     public const INSTALL_RESOURCES_AND_RULES = 1;
     public const INSTALL_RESOURCES = 2;
 
-    public function __construct(private SchemaHelper $schemaHelper, private RoleRepositoryInterface $roleRepository, private AbstractRepository $resourceRepository, private AclPermissionRepositoryInterface $permissionRepository)
+    public function __construct(
+        private readonly SchemaHelper $schemaHelper,
+        private readonly RoleRepositoryInterface $roleRepository,
+        private readonly AbstractRepository $resourceRepository,
+        private readonly AclPermissionRepositoryInterface $permissionRepository)
     {
     }
 
@@ -71,7 +75,7 @@ class AclInstaller implements InstallerInterface
         return strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
     }
 
-    private function getDefaultAclRulePermission(int $roleId, int $privilegeId): int
+    private function getDefaultAclRulePermission(int $roleId, PrivilegeEnum $privilegeId): int
     {
         if ($roleId === 1 &&
             ($privilegeId === PrivilegeEnum::FRONTEND_VIEW || $privilegeId === PrivilegeEnum::FRONTEND_CREATE)

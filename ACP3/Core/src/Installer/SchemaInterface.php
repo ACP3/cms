@@ -7,6 +7,8 @@
 
 namespace ACP3\Core\Installer;
 
+use ACP3\Core\ACL\PrivilegeEnum;
+
 interface SchemaInterface
 {
     /**
@@ -33,7 +35,7 @@ interface SchemaInterface
     /**
      * Returns a nested map of resources which need some kind of protection.
      *
-     * @return array<string, array<string, array<string, int>>>
+     * @return array<string, array<string, array<string, PrivilegeEnum>>>
      */
     public function specialResources(): array;
 

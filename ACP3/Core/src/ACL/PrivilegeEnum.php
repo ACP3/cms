@@ -7,15 +7,13 @@
 
 namespace ACP3\Core\ACL;
 
-use ACP3\Core\Enum\BaseEnum;
-
-class PrivilegeEnum extends BaseEnum
+enum PrivilegeEnum: int
 {
-    public const ADMIN_SETTINGS = 7;
-    public const ADMIN_DELETE = 6;
-    public const ADMIN_EDIT = 5;
-    public const ADMIN_CREATE = 4;
-    public const ADMIN_VIEW = 3;
-    public const FRONTEND_CREATE = 2;
-    public const FRONTEND_VIEW = 1;
+    case ADMIN_SETTINGS = 7;
+    case ADMIN_DELETE = 6;
+    case ADMIN_EDIT = 5;
+    case ADMIN_CREATE = 4;
+    case ADMIN_VIEW = 3;
+    case FRONTEND_CREATE = 2;
+    case FRONTEND_VIEW = 1;
 }
