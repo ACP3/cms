@@ -24,7 +24,7 @@
     "inlinestyle/inlinestyle": "^1.2",
     "marc1706/fast-image-size": "^1.1",
     "marcj/topsort": "^2.0.0",
-    "monolog/monolog": "^2.0.0",
+    "monolog/monolog": "^3.0.0",
     "phpmailer/phpmailer": "^6.1.1",
     "php-http/guzzle6-adapter": "^2.0",
     "psr/http-client": "^1.0",
