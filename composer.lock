@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7709adef981d6536b7aa553f78d3b198",
+    "content-hash": "c21df4fcb76071d3a15ef086ac6118dc",
     "packages": [
         {
             "name": "acp3/composer-installer",
@@ -9381,7 +9381,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",
         "ext-gd": "*"

@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: "./build/docker/php/"
-      dockerfile: Dockerfile-8.0
+      dockerfile: Dockerfile-8.1
     depends_on:
       - db
     networks:
