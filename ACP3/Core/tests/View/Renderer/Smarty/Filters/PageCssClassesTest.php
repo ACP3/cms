@@ -85,7 +85,7 @@ HTML;
             ->willReturn('foo-bar-pagetitle');
     }
 
-    private function setUpRequestMockExpectations(bool $isHomepage = false, string $area = AreaEnum::AREA_FRONTEND): void
+    private function setUpRequestMockExpectations(bool $isHomepage = false, AreaEnum $area = AreaEnum::AREA_FRONTEND): void
     {
         $this->requestMock->expects($area === AreaEnum::AREA_FRONTEND ? self::once() : $this->never())
             ->method('isHomepage')

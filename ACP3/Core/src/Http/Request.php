@@ -39,7 +39,7 @@ class Request extends AbstractRequest
     /**
      * {@inheritdoc}
      */
-    public function getArea(): string
+    public function getArea(): AreaEnum
     {
         return $this->getSymfonyRequest()->attributes->get('_area');
     }
@@ -109,7 +109,7 @@ class Request extends AbstractRequest
     {
         $this->query = $this->pathInfo;
 
-        // It's an request for the admin panel page
+        // It's a request for the admin panel page
         if (str_starts_with($this->query, self::ADMIN_PANEL_PATTERN)) {
             $this->getSymfonyRequest()->attributes->set('_area', AreaEnum::AREA_ADMIN);
             // strip "acp/"

@@ -111,19 +111,19 @@ class Steps
     {
         return $this->request->getModule()
         . '.controller.'
-        . $this->request->getArea() . '.'
+        . $this->request->getArea()->value . '.'
         . $this->request->getController()
         . '.index';
     }
 
     private function getControllerActionTitle(): string
     {
-        return $this->request->getArea() . '_' . $this->request->getController() . '_' . $this->request->getAction();
+        return $this->request->getArea()->value . '_' . $this->request->getController() . '_' . $this->request->getAction();
     }
 
     private function getControllerIndexActionTitle(): string
     {
-        return $this->request->getArea() . '_' . $this->request->getController() . '_index';
+        return $this->request->getArea()->value . '_' . $this->request->getController() . '_index';
     }
 
     /**

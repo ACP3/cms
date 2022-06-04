@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Http;
 
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\Request\UserAgent;
 use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -41,7 +42,7 @@ interface RequestInterface
      */
     public function getPathInfo(): string;
 
-    public function getArea(): string;
+    public function getArea(): AreaEnum;
 
     public function getModule(): string;
 

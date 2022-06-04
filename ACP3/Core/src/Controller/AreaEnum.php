@@ -7,15 +7,12 @@
 
 namespace ACP3\Core\Controller;
 
-use ACP3\Core\Enum\BaseEnum;
-
-class AreaEnum extends BaseEnum
+enum AreaEnum: string
 {
-    public const AREA_ADMIN = 'admin';
-    public const AREA_FRONTEND = 'frontend';
-    public const AREA_INSTALL = 'installer';
-    public const AREA_WIDGET = 'widget';
-
+    case AREA_ADMIN = 'admin';
+    case AREA_FRONTEND = 'frontend';
+    case AREA_INSTALL = 'installer';
+    case AREA_WIDGET = 'widget';
     /**
      * @return string[]
      *
@@ -23,6 +20,6 @@ class AreaEnum extends BaseEnum
      */
     public static function getAreas(): array
     {
-        return self::getConstants();
+        return array_column(self::cases(), 'value');
     }
 }

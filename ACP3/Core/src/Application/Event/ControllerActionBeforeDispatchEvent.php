@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Application\Event;
 
+use ACP3\Core\Controller\AreaEnum;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ControllerActionBeforeDispatchEvent extends Event
@@ -31,9 +32,9 @@ class ControllerActionBeforeDispatchEvent extends Event
         return $this->controllerServiceId;
     }
 
-    public function getArea(): string
+    public function getArea(): AreaEnum
     {
-        return $this->serviceIdParts[2] ?? '';
+        return AreaEnum::tryFrom($this->serviceIdParts[2] ?? '');
     }
 
     public function getModule(): string

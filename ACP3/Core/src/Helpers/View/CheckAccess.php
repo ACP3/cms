@@ -29,7 +29,7 @@ class CheckAccess
             $action = $this->completeControllerAction($params['path']);
             $area = $this->getArea($params['path']);
 
-            $permissionPath = $area . '/' . $action[0] . '/' . $action[1] . '/' . $action[2];
+            $permissionPath = $area->value . '/' . $action[0] . '/' . $action[1] . '/' . $action[2];
 
             if ($this->acl->hasPermission($permissionPath) === true) {
                 return $this->collectData($params, $action, $area);
@@ -67,7 +67,7 @@ class CheckAccess
         return $action;
     }
 
-    private function getArea(string $path): string
+    private function getArea(string $path): AreaEnum
     {
         $query = explode('/', strtolower($path));
 
@@ -84,14 +84,14 @@ class CheckAccess
      *
      * @return array<string, mixed>
      */
-    private function collectData(array $params, array $action, string $area): array
+    private function collectData(array $params, array $action, AreaEnum $area): array
     {
         if (isset($params['lang'])) {
             $langArray = explode('|', $params['lang']);
 
             $lang = $this->translator->t($langArray[0], $langArray[1]);
         } else {
-            $lang = $this->translator->t($action[0], $area . '_' . $action[1] . '_' . $action[2]);
+            $lang = $this->translator->t($action[0], $area->value . '_' . $action[1] . '_' . $action[2]);
         }
 
         return [

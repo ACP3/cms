@@ -68,7 +68,7 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
     protected function applyTemplateAutomatically(): string
     {
         return $this->request->getModule()
-            . '/' . ucfirst($this->request->getArea())
+            . '/' . ucfirst($this->request->getArea()->value)
             . '/' . $this->request->getController()
             . '.' . $this->request->getAction() . '.tpl';
     }

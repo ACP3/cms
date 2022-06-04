@@ -34,9 +34,9 @@ class ResourceFormValidation extends Core\Validation\AbstractFormValidation
                     'message' => $this->translator->t('permissions', 'type_in_area'),
                     'extra' => [
                         'haystack' => [
-                            Core\Controller\AreaEnum::AREA_ADMIN,
-                            Core\Controller\AreaEnum::AREA_FRONTEND,
-                            Core\Controller\AreaEnum::AREA_WIDGET,
+                            Core\Controller\AreaEnum::AREA_ADMIN->value,
+                            Core\Controller\AreaEnum::AREA_FRONTEND->value,
+                            Core\Controller\AreaEnum::AREA_WIDGET->value,
                         ],
                     ],
                 ]

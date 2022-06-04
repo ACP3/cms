@@ -96,7 +96,7 @@ class ControllerActionDispatcher
     {
         return $this->request->getModule()
             . '.controller.'
-            . $this->request->getArea()
+            . $this->request->getArea()->value
             . '.' . $this->request->getController()
             . '.' . $this->request->getAction();
     }

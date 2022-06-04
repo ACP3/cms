@@ -86,7 +86,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->steps->getBreadcrumb());
     }
 
-    protected function setUpRequestMockExpectations(string $area, string $moduleName, string $controller, string $action, string $parameters = ''): void
+    protected function setUpRequestMockExpectations(AreaEnum $area, string $moduleName, string $controller, string $action, string $parameters = ''): void
     {
         $this->requestMock->expects(self::atLeastOnce())
             ->method('getArea')
@@ -111,7 +111,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
                 ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/' . $action . '/'
             );
 
-        $parameters .= preg_match('=/$=', $parameters) ? '' : '/';
+        $parameters .= str_ends_with($parameters, '/') ? '' : '/';
         $this->requestMock->expects(self::any())
             ->method('getQuery')
             ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);

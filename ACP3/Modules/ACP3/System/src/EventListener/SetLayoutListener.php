@@ -40,9 +40,9 @@ class SetLayoutListener implements EventSubscriberInterface
     private function fetchLayoutPaths(string $layoutFileName, string $defaultLayoutName): array
     {
         return [
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl',
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.' . $this->request->getController() . '.tpl',
-            $this->request->getModule() . '/' . $this->request->getArea() . '/' . $layoutFileName . '.tpl',
+            $this->request->getModule() . '/' . $this->request->getArea()->value . '/' . $layoutFileName . '.' . $this->request->getController() . '.' . $this->request->getAction() . '.tpl',
+            $this->request->getModule() . '/' . $this->request->getArea()->value . '/' . $layoutFileName . '.' . $this->request->getController() . '.tpl',
+            $this->request->getModule() . '/' . $this->request->getArea()->value . '/' . $layoutFileName . '.tpl',
             $this->request->getModule() . '/' . $layoutFileName . '.tpl',
             $defaultLayoutName,
         ];
