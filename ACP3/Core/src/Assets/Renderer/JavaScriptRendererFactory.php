@@ -7,18 +7,19 @@
 
 namespace ACP3\Core\Assets\Renderer;
 
+use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class JavaScriptRendererFactory
 {
-    public function __construct(private ServiceLocator $assetRendererStrategyServiceLocator, private string $applicationMode)
+    public function __construct(private readonly ServiceLocator $assetRendererStrategyServiceLocator, private readonly ApplicationMode $applicationMode)
     {
     }
 
     public function __invoke(): JavaScriptRenderer
     {
         return new JavaScriptRenderer(
-            $this->assetRendererStrategyServiceLocator->get('javascript_renderer_' . $this->applicationMode)
+            $this->assetRendererStrategyServiceLocator->get('javascript_renderer_' . $this->applicationMode->value)
         );
     }
 }

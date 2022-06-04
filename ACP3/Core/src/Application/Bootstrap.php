@@ -35,6 +35,7 @@ class Bootstrap extends AbstractBootstrap
         require_once $cache->getPath();
 
         $this->container = new $this->containerName();
+        $this->container->set('core.environment', $this->appMode);
         $this->container->set('core.environment.application_path', $this->appPath);
         $this->container->set('kernel', $this);
     }

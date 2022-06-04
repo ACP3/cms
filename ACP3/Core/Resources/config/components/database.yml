@@ -6,7 +6,7 @@ services:
     public: true
     arguments:
       $logger: "@core.db.logger"
-      $appMode: "%core.environment%"
+      $appMode: "@core.environment"
       $connectionParams:
         {
           dbname: "%db_name%",

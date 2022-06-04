@@ -35,7 +35,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
     /**
      * @throws \Exception
      */
-    public function __construct(protected string $appMode)
+    public function __construct(protected ApplicationMode $appMode)
     {
         $this->initializeApplicationPath();
     }

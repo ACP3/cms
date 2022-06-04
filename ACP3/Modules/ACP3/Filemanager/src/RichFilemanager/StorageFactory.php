@@ -14,7 +14,7 @@ use RFM\Repository\StorageInterface;
 
 class StorageFactory
 {
-    public function __construct(private ApplicationPath $applicationPath, private string $applicationMode)
+    public function __construct(private ApplicationPath $applicationPath, private ApplicationMode $applicationMode)
     {
     }
 

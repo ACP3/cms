@@ -16,7 +16,7 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class Psr6CacheItemPoolFactory
 {
-    public function __construct(private ApplicationPath $applicationPath, private string $environment)
+    public function __construct(private ApplicationPath $applicationPath, private ApplicationMode $environment)
     {
     }
 

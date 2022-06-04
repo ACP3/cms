@@ -6,7 +6,7 @@ services:
 
   ACP3\Core\View\Renderer\Smarty\SmartyConfigurator:
     arguments:
-      $environment: "%core.environment%"
+      $environment: "@core.environment"
 
   smarty:
     class: Smarty

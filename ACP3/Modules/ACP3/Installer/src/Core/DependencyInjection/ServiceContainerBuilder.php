@@ -30,8 +30,8 @@ final class ServiceContainerBuilder extends ContainerBuilder
      * @throws \Exception
      */
     public function __construct(
-        private ApplicationPath $applicationPath,
-        private bool $installationIsInProgress = false
+        private readonly ApplicationPath $applicationPath,
+        private readonly bool $installationIsInProgress = false
     ) {
         parent::__construct();
 
@@ -43,6 +43,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
      */
     private function setUpContainer(): void
     {
+        $this->set('core.environment', $this->applicationPath->getApplicationMode());
         $this->set('core.environment.application_path', $this->applicationPath);
 
         $this
@@ -72,7 +73,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
             $loader->import($component->getPath() . '/Resources/config/services.yml');
         }
 
-        $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_' . $this->applicationPath->getApplicationMode() . '.yml');
+        $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_' . $this->applicationPath->getApplicationMode()->value . '.yml');
 
         $this->removeDefinition(BootstrapCache::class);
 

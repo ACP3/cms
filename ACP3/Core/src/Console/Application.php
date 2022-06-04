@@ -9,6 +9,7 @@ namespace ACP3\Core\Console;
 
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder;
+use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Logger\LoggerFactory;
 use Psr\Container\ContainerInterface;
@@ -21,12 +22,12 @@ class Application
 
     private ?ContainerInterface $container = null;
 
-    private ?LoggerInterface $logger = null;
+    private ?LoggerInterface $logger;
 
     /**
      * @throws \Exception
      */
-    public function __construct(private string $environment)
+    public function __construct(private readonly ApplicationMode $environment)
     {
         $this->initializeApplicationPath();
         $this->logger = (new LoggerFactory($this->appPath))->create('console');

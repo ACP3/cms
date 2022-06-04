@@ -6,4 +6,4 @@ services:
 
   ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener:
     arguments:
-      $applicationMode: "%core.environment%"
+      $applicationMode: "@core.environment"

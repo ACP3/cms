@@ -2,8 +2,6 @@ imports:
   - { resource: components/*.yml }
 
 parameters:
-  env(ACP3_APPLICATION_MODE): !php/const ACP3\Core\Environment\ApplicationMode::PRODUCTION
-  core.environment: "%env(ACP3_APPLICATION_MODE)%"
   kernel.debug: false
 
 services:
@@ -16,3 +14,7 @@ services:
   Symfony\Component\EventDispatcher\EventDispatcher: "@event_dispatcher"
   Symfony\Component\EventDispatcher\EventDispatcherInterface: "@event_dispatcher"
   Psr\EventDispatcher\EventDispatcherInterface: "@event_dispatcher"
+
+  core.environment:
+    class: ACP3\Core\Environment\ApplicationMode
+    synthetic: true

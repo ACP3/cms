@@ -9,42 +9,27 @@ namespace ACP3\Core\Environment;
 
 class ApplicationPath
 {
-    /**
-     * @var string
-     */
-    private $phpSelf;
-    /**
-     * @var string
-     */
-    private $webRoot;
-    /**
-     * @var string
-     */
-    private $appDir;
-    /**
-     * @var string
-     */
-    private $uploadsDir;
-    /**
-     * @var string
-     */
-    private $cacheDir;
-    /**
-     * @var string
-     */
-    private $applicationMode;
-    /**
-     * @var bool
-     */
-    private $debug;
+    private string $phpSelf;
 
-    public function __construct(string $applicationMode)
+    private string $webRoot;
+
+    private string $appDir;
+
+    private string $uploadsDir;
+
+    private string $cacheDir;
+
+    private ApplicationMode $applicationMode;
+
+    private bool $debug;
+
+    public function __construct(ApplicationMode $applicationMode)
     {
         $this->phpSelf = htmlentities($_SERVER['SCRIPT_NAME']);
         $this->webRoot = substr($this->phpSelf, 0, strrpos($this->phpSelf, '/') + 1);
         $this->appDir = ACP3_ROOT_DIR . '/ACP3/';
         $this->uploadsDir = ACP3_ROOT_DIR . '/uploads/';
-        $this->cacheDir = ACP3_ROOT_DIR . '/cache/' . $applicationMode . '/';
+        $this->cacheDir = ACP3_ROOT_DIR . '/cache/' . $applicationMode->value . '/';
         $this->applicationMode = $applicationMode;
         $this->debug = $applicationMode === ApplicationMode::DEVELOPMENT;
     }
@@ -81,7 +66,7 @@ class ApplicationPath
         return $this->cacheDir;
     }
 
-    public function getApplicationMode(): string
+    public function getApplicationMode(): ApplicationMode
     {
         return $this->applicationMode;
     }

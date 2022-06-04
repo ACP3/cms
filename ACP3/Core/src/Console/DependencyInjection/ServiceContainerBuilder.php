@@ -37,6 +37,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
      */
     private function setUpContainer(): void
     {
+        $this->set('core.environment', $this->applicationPath->getApplicationMode());
         $this->set('core.logger.system_logger', $this->logger);
         $this->set('core.environment.application_path', $this->applicationPath);
 

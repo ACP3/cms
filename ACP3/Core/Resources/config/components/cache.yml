@@ -12,7 +12,7 @@ services:
   Psr6CacheItemPoolFactory:
     class: ACP3\Core\Cache\Psr6CacheItemPoolFactory
     arguments:
-      $environment: "%core.environment%"
+      $environment: "@core.environment"
 
   core.cache.cache_pool_service_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator

@@ -1,6 +1,3 @@
-parameters:
-  env(ACP3_APPLICATION_MODE): !php/const ACP3\Core\Environment\ApplicationMode::CLI
-
 services:
   _defaults:
     autowire: true

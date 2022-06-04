@@ -13,7 +13,7 @@ use ACP3\Core\Environment\ThemePathInterface;
 
 class SmartyConfigurator
 {
-    public function __construct(private ApplicationPath $appPath, private ThemePathInterface $themePath, private string $environment)
+    public function __construct(private ApplicationPath $appPath, private ThemePathInterface $themePath, private ApplicationMode $environment)
     {
     }
 

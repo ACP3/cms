@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Controller\Context;
 
+use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
@@ -15,11 +16,11 @@ use ACP3\Core\View;
 class Context
 {
     public function __construct(
-        private Translator $translator,
-        private RequestInterface $request,
-        private View $view,
-        private SettingsInterface $config,
-        private string $applicationMode
+        private readonly Translator $translator,
+        private readonly RequestInterface $request,
+        private readonly View $view,
+        private readonly SettingsInterface $config,
+        private readonly ApplicationMode $applicationMode
     ) {
     }
 
@@ -43,7 +44,7 @@ class Context
         return $this->config;
     }
 
-    public function getApplicationMode(): string
+    public function getApplicationMode(): ApplicationMode
     {
         return $this->applicationMode;
     }

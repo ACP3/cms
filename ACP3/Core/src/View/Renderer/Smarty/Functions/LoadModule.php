@@ -14,7 +14,11 @@ use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 class LoadModule extends AbstractFunction
 {
-    public function __construct(private ACL $acl, private RouterInterface $router, private FragmentHandler $fragmentHandler, private string $applicationMode)
+    public function __construct(
+        private readonly ACL $acl,
+        private readonly RouterInterface $router,
+        private readonly FragmentHandler $fragmentHandler,
+        private readonly ApplicationMode $applicationMode)
     {
     }
 

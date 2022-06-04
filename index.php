@@ -16,7 +16,7 @@ require ACP3_ROOT_DIR . '/vendor/autoload.php';
 $request = Request::createFromGlobals();
 
 $appMode = ApplicationMode::PRODUCTION;
-if (getenv('ACP3_APPLICATION_MODE') === ApplicationMode::DEVELOPMENT) {
+if (getenv('ACP3_APPLICATION_MODE') === ApplicationMode::DEVELOPMENT->value) {
     $appMode = ApplicationMode::DEVELOPMENT;
 }
 

@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace ACP3\Core\Controller;
 
 use ACP3\Core\Controller\Context\Context;
+use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
@@ -22,7 +23,7 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
     protected RequestInterface $request;
     protected View $view;
     protected SettingsInterface $config;
-    private string $applicationMode;
+    private ApplicationMode $applicationMode;
 
     private string $template = '';
     private string|false $content = '';
@@ -72,7 +73,7 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
             . '.' . $this->request->getAction() . '.tpl';
     }
 
-    protected function getApplicationMode(): string
+    protected function getApplicationMode(): ApplicationMode
     {
         return $this->applicationMode;
     }

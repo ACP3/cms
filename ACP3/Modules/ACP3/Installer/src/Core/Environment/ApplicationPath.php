@@ -7,14 +7,13 @@
 
 namespace ACP3\Modules\ACP3\Installer\Core\Environment;
 
+use ACP3\Core\Environment\ApplicationMode;
+
 class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
 {
-    /**
-     * @var string
-     */
-    private $installerWebRoot;
+    private string $installerWebRoot;
 
-    public function __construct(string $applicationMode)
+    public function __construct(ApplicationMode $applicationMode)
     {
         parent::__construct($applicationMode);
 

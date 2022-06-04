@@ -22,7 +22,11 @@ class Connection
     /**
      * @param array<string, mixed> $connectionParams
      */
-    public function __construct(private LoggerInterface $logger, private string $appMode, private array $connectionParams, private string $tablePrefix)
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly ApplicationMode $appMode,
+        private readonly array $connectionParams,
+        private readonly string $tablePrefix)
     {
     }
 

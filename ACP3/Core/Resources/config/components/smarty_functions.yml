@@ -40,7 +40,7 @@ services:
 
   ACP3\Core\View\Renderer\Smarty\Functions\LoadModule:
     arguments:
-      $applicationMode: "%core.environment%"
+      $applicationMode: "@core.environment"
     tags:
       - { name: smarty.plugin.function, pluginName: load_module }
 

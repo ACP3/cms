@@ -3,7 +3,7 @@ services:
     autowire: true
     bind:
       $assetRendererStrategyServiceLocator: "@core.assets.renderer.strategy.service_locator"
-      $applicationMode: "%core.environment%"
+      $applicationMode: "@core.environment"
       $coreCachePool: "@core.cache_item_pool"
 
   ACP3\Core\Assets\EventListener\StaticAssetsListener:

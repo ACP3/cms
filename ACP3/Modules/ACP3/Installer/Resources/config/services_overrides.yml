@@ -11,11 +11,11 @@ services:
 
   ACP3\Core\Assets\Renderer\CSSRendererFactory:
     arguments:
-      $applicationMode: "dev"
+      $applicationMode: !php/const 'ACP3\Core\Environment\ApplicationMode::DEVELOPMENT'
 
   ACP3\Core\Assets\Renderer\JavaScriptRendererFactory:
     arguments:
-      $applicationMode: "dev"
+      $applicationMode: !php/const 'ACP3\Core\Environment\ApplicationMode::DEVELOPMENT'
 
   ACP3\Core\Breadcrumb\Steps:
     arguments:
@@ -47,11 +47,11 @@ services:
   ACP3\Modules\ACP3\System\Repository\SettingsRepository:
     class: ACP3\Modules\ACP3\Installer\Repository\SettingsRepository
     arguments:
-      $environment: "%core.environment%"
+      $environment: "@core.environment"
 
   ACP3\Modules\ACP3\Errors\EventListener\HandleGenericErrorsExceptionListener:
     arguments:
-      $applicationMode: "%core.environment%"
+      $applicationMode: "@core.environment"
       $serviceId: "installer.controller.installer.error.server_error"
     tags:
       - { name: kernel.event_subscriber }

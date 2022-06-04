@@ -4,4 +4,4 @@ services:
 
   ACP3\Core\Controller\Context\Context:
     arguments:
-      $applicationMode: "%core.environment%"
+      $applicationMode: "@core.environment"

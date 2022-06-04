@@ -36,7 +36,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function __construct(private ApplicationPath $applicationPath)
+    public function __construct(private readonly ApplicationPath $applicationPath)
     {
         parent::__construct();
 
@@ -52,6 +52,7 @@ final class ServiceContainerBuilder extends ContainerBuilder
     {
         $this->setProxyInstantiator(new RuntimeInstantiator());
 
+        $this->set('core.environment', $this->applicationPath->getApplicationMode());
         $this->set('core.environment.application_path', $this->applicationPath);
 
         $this

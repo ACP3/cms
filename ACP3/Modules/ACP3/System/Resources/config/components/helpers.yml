@@ -6,7 +6,7 @@ services:
 
   ACP3\Modules\ACP3\System\Helper\CanUsePageCache:
     arguments:
-      $environment: "%core.environment%"
+      $environment: "@core.environment"
 
   ACP3\Modules\ACP3\System\Helper\UpdateCheck:
   ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser: ~
