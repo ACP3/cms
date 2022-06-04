@@ -31,11 +31,11 @@ class ComponentPathsCommand extends Command
     {
         $paths = [];
         foreach (ComponentRegistry::all() as $component) {
-            if (\array_key_exists($component->getComponentType(), $paths) === false) {
-                $paths[$component->getComponentType()] = [];
+            if (\array_key_exists($component->getComponentType()->value, $paths) === false) {
+                $paths[$component->getComponentType()->value] = [];
             }
 
-            $paths[$component->getComponentType()][] = str_replace([ACP3_ROOT_DIR, '\\'], ['.', '/'], $component->getPath());
+            $paths[$component->getComponentType()->value][] = str_replace([ACP3_ROOT_DIR, '\\'], ['.', '/'], $component->getPath());
         }
 
         file_put_contents(

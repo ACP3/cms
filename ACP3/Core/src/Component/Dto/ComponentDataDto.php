@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Component\Dto;
 
+use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Modules\ModuleRegistration;
 
 class ComponentDataDto
@@ -17,7 +18,7 @@ class ComponentDataDto
      * @param string[] $dependencies
      */
     public function __construct(
-        private string $componentType,
+        private ComponentTypeEnum $componentType,
         string $componentName,
         private string $path,
         private array $dependencies,
@@ -26,7 +27,7 @@ class ComponentDataDto
         $this->name = strtolower($componentName);
     }
 
-    public function getComponentType(): string
+    public function getComponentType(): ComponentTypeEnum
     {
         return $this->componentType;
     }

@@ -7,12 +7,10 @@
 
 namespace ACP3\Core\Component;
 
-use ACP3\Core\Enum\BaseEnum;
-
-class ComponentTypeEnum extends BaseEnum
+enum ComponentTypeEnum: string
 {
-    public const CORE = 'core';
-    public const INSTALLER = 'installer';
-    public const MODULE = 'module';
-    public const THEME = 'theme';
+    case CORE = 'core';
+    case INSTALLER = 'installer';
+    case MODULE = 'module';
+    case THEME = 'theme';
 }

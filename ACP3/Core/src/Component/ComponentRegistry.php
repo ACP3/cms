@@ -16,12 +16,12 @@ class ComponentRegistry
     /**
      * @var ComponentDataDto[]
      */
-    private static $components = [];
+    private static array $components = [];
 
     /**
      * @var ComponentDataDto[]
      */
-    private static $componentsTopSorted;
+    private static ?array $componentsTopSorted = null;
 
     /**
      * Adds a new component with its name and its filesystem path to the component registry.
@@ -77,8 +77,8 @@ class ComponentRegistry
     }
 
     /**
-     * @param ComponentDataDto[] $components
-     * @param string[]           $componentTypes
+     * @param ComponentDataDto[]  $components
+     * @param ComponentTypeEnum[] $componentTypes
      *
      * @return ComponentDataDto[]
      */
@@ -88,8 +88,8 @@ class ComponentRegistry
     }
 
     /**
-     * @param ComponentDataDto[] $components
-     * @param string[]           $componentTypes
+     * @param ComponentDataDto[]  $components
+     * @param ComponentTypeEnum[] $componentTypes
      *
      * @return ComponentDataDto[]
      */
