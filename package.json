@@ -63,7 +63,7 @@
     "simple-git": "^3.0.3",
     "stylelint": "^14.2.0",
     "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-twbs-bootstrap": "^3.0.1",
+    "stylelint-config-twbs-bootstrap": "^4.0.0",
     "stylelint-prettier": "^2.0.0",
     "tinyify": "^3.0.0",
     "vinyl-source-stream": "^2.0.0",
