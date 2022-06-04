@@ -9,6 +9,9 @@ namespace ACP3\Core\Enum;
 
 use ReflectionClass;
 
+/**
+ * @deprecated since ACP3 version 6.1.0. To be removed with version 7.0.0. Use native PHP enums instead.
+ */
 class BaseEnum
 {
     /**
