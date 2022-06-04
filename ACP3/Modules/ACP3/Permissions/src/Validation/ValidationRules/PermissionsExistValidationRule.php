@@ -49,7 +49,7 @@ class PermissionsExistValidationRule extends AbstractValidationRule
         ];
 
         foreach ($resourcesWithPermissions as $resourceId => $permissionValue) {
-            if (!\in_array((int) $resourceId, $resourceIds, true) || !\in_array((int) $permissionValue, $permissions, true)) {
+            if (!\in_array((int) $resourceId, $resourceIds, true) || !\in_array(PermissionEnum::tryFrom((int) $permissionValue), $permissions, true)) {
                 return false;
             }
         }

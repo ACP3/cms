@@ -25,14 +25,14 @@ interface PermissionServiceInterface
     /**
      * @param int[] $roleIds
      *
-     * @return array<int, array<int, int>>
+     * @return array<int, array<int, PermissionEnum>>
      */
     public function getPermissions(array $roleIds): array;
 
     /**
      * @param int[] $roleIds
      *
-     * @return int[]
+     * @return PermissionEnum[]
      */
     public function getPermissionsWithInheritance(array $roleIds): array;
 }

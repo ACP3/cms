@@ -54,6 +54,6 @@ class AclPermissionRepository extends AbstractRepository implements AclPermissio
 ) tmp_permissions on (tmp_permissions.resource_id = are.id)
 GROUP BY are.id, tmp_permissions.permission
 ORDER BY are.id;
-", ['roleIds' => $roleIds, 'inheritedValue' => PermissionEnum::INHERIT_ACCESS], ['roleIds' => Connection::PARAM_INT_ARRAY]);
+", ['roleIds' => $roleIds, 'inheritedValue' => PermissionEnum::INHERIT_ACCESS->value], ['roleIds' => Connection::PARAM_INT_ARRAY]);
     }
 }

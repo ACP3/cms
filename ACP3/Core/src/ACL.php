@@ -28,11 +28,15 @@ class ACL
      */
     private array $resources = [];
     /**
-     * @var int[]
+     * @var PermissionEnum[]
      */
     private array $permissions = [];
 
-    public function __construct(private ControllerActionExists $controllerActionExists, private UserModelInterface $user, private UserRoleRepositoryInterface $userRoleRepository, private PermissionServiceInterface $permissionService)
+    public function __construct(
+        private readonly ControllerActionExists $controllerActionExists,
+        private readonly UserModelInterface $user,
+        private readonly UserRoleRepositoryInterface $userRoleRepository,
+        private readonly PermissionServiceInterface $permissionService)
     {
     }
 
@@ -81,7 +85,7 @@ class ACL
     }
 
     /**
-     * @return int[]
+     * @return array<int, PermissionEnum>
      */
     private function getPermissions(): array
     {

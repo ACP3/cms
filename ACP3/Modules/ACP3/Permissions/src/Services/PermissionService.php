@@ -94,7 +94,7 @@ class PermissionService implements PermissionServiceInterface
                 $permissions[(int) $permission['role_id']] = [];
             }
 
-            $permissions[(int) $permission['role_id']][(int) $permission['resource_id']] = (int) $permission['permission'];
+            $permissions[(int) $permission['role_id']][(int) $permission['resource_id']] = PermissionEnum::tryFrom((int) $permission['permission']);
         }
 
         return $permissions;
@@ -110,7 +110,7 @@ class PermissionService implements PermissionServiceInterface
         $permissions = [];
 
         foreach ($this->permissionRepository->getPermissionsByRoleIdsWithInheritance($roleIds) as $permission) {
-            $permissions[(int) $permission['resource_id']] = $permission['permission'] === null ? PermissionEnum::DENY_ACCESS : (int) $permission['permission'];
+            $permissions[(int) $permission['resource_id']] = $permission['permission'] === null ? PermissionEnum::DENY_ACCESS : PermissionEnum::tryFrom((int) $permission['permission']);
         }
 
         return $permissions;

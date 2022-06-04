@@ -20,7 +20,16 @@ use ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository;
 
 class AdminRoleEditViewProvider
 {
-    public function __construct(private ACL $acl, private Forms $formsHelper, private FormToken $formTokenHelper, private Modules $modules, private PermissionServiceInterface $permissionService, private AclResourceRepository $resourceRepository, private RequestInterface $request, private Title $title, private Translator $translator)
+    public function __construct(
+        private readonly ACL $acl,
+        private readonly Forms $formsHelper,
+        private readonly FormToken $formTokenHelper,
+        private readonly Modules $modules,
+        private readonly PermissionServiceInterface $permissionService,
+        private readonly AclResourceRepository $resourceRepository,
+        private readonly RequestInterface $request,
+        private readonly Title $title,
+        private readonly Translator $translator)
     {
     }
 
@@ -80,7 +89,7 @@ class AdminRoleEditViewProvider
                 $resource['select'] = $this->generatePermissionCheckboxes(
                     $showInheritedPermissions,
                     $resource['resource_id'],
-                    ($permissions[$roleId][(int) $resource['resource_id']] ?? PermissionEnum::INHERIT_ACCESS)
+                    ($permissions[$roleId][(int) $resource['resource_id']] ?? PermissionEnum::INHERIT_ACCESS)->value
                 );
                 $resource['calculated'] = $this->localizeInheritedPermission($inheritedPermissions[$resource['resource_id']]);
             }
@@ -93,16 +102,16 @@ class AdminRoleEditViewProvider
     }
 
     /**
-     * @return array<PermissionEnum::*, array<string, mixed>>
+     * @return array<int, array<string, mixed>>
      */
     private function generatePermissionCheckboxes(bool $showInheritedPermissions, int $resourceId, int $defaultValue): array
     {
         $permissions = [
-            PermissionEnum::PERMIT_ACCESS => 'allow_access',
+            PermissionEnum::PERMIT_ACCESS->value => 'allow_access',
         ];
 
         if ($showInheritedPermissions) {
-            $permissions[PermissionEnum::INHERIT_ACCESS] = 'inherit_access';
+            $permissions[PermissionEnum::INHERIT_ACCESS->value] = 'inherit_access';
         }
 
         $select = [];
@@ -128,7 +137,7 @@ class AdminRoleEditViewProvider
         return '';
     }
 
-    private function localizeInheritedPermission(int $permissionValue): string
+    private function localizeInheritedPermission(PermissionEnum $permissionValue): string
     {
         return sprintf(
             $this->translator->t('permissions', 'calculated_permission'),

@@ -7,11 +7,9 @@
 
 namespace ACP3\Core\ACL;
 
-use ACP3\Core\Enum\BaseEnum;
-
-class PermissionEnum extends BaseEnum
+enum PermissionEnum: int
 {
-    public const DENY_ACCESS = 0;
-    public const PERMIT_ACCESS = 1;
-    public const INHERIT_ACCESS = 2;
+    case DENY_ACCESS = 0;
+    case PERMIT_ACCESS = 1;
+    case INHERIT_ACCESS = 2;
 }

@@ -57,7 +57,7 @@ class AclInstaller implements InstallerInterface
                             $permissionData = [
                                 'role_id' => $role['id'],
                                 'resource_id' => $resourceId,
-                                'permission' => $this->getDefaultAclRulePermission($role['id'], $privilegeId),
+                                'permission' => $this->getDefaultAclRulePermission($role['id'], $privilegeId)->value,
                             ];
 
                             $this->permissionRepository->insert($permissionData);
@@ -75,7 +75,7 @@ class AclInstaller implements InstallerInterface
         return strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
     }
 
-    private function getDefaultAclRulePermission(int $roleId, PrivilegeEnum $privilegeId): int
+    private function getDefaultAclRulePermission(int $roleId, PrivilegeEnum $privilegeId): PermissionEnum
     {
         if ($roleId === 1 &&
             ($privilegeId === PrivilegeEnum::FRONTEND_VIEW || $privilegeId === PrivilegeEnum::FRONTEND_CREATE)
