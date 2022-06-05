@@ -38,7 +38,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'index_paginated_content',
                     'message' => $this->translator->t('seo', 'select_index_paginated_content'),
                     'extra' => [
-                        'haystack' => IndexPaginatedContentEnum::cases(),
+                        'haystack' => IndexPaginatedContentEnum::values(),
                     ],
                 ]
             )

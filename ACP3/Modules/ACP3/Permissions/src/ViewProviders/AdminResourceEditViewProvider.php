@@ -60,12 +60,10 @@ class AdminResourceEditViewProvider
 
     /**
      * @return array<string, mixed>[]
-     *
-     * @throws \ReflectionException
      */
     private function fetchAreas(?string $currentArea = null): array
     {
-        $areas = array_values(AreaEnum::getAreas());
+        $areas = array_values(AreaEnum::values());
 
         return $this->formsHelper->choicesGenerator('area', array_combine($areas, $areas), $currentArea);
     }

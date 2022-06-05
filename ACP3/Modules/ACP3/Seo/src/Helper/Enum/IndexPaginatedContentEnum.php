@@ -7,8 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Seo\Helper\Enum;
 
+use ACP3\Core\Enum\EnumValuesTrait;
+
 enum IndexPaginatedContentEnum: string
 {
+    use EnumValuesTrait;
+
     case INDEX_ALL_PAGES = 'all';
     case INDEX_FIST_PAGE_ONLY = 'first';
 }
