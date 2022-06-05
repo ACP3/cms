@@ -12,7 +12,7 @@ use Psr\Container\ContainerInterface;
 
 class WysiwygFactory
 {
-    public function __construct(private ContainerInterface $editorLocator)
+    public function __construct(private readonly ContainerInterface $editorLocator)
     {
     }
 

@@ -19,10 +19,10 @@ use ACP3\Modules\ACP3\Seo\Extension\AbstractSitemapAvailabilityExtension;
 class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
 {
     public function __construct(
-        private Date $date,
+        private readonly Date $date,
         RouterInterface $router,
-        private FilesRepository $filesRepository,
-        private CategoryRepository $categoryRepository,
+        private readonly FilesRepository $filesRepository,
+        private readonly CategoryRepository $categoryRepository,
         MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($router, $metaStatements);

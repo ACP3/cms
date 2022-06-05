@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class Datepicker extends AbstractFunction
 {
-    public function __construct(private SettingsInterface $settings, private RequestInterface $request, private Date $date, private DateValidationRule $dateValidationRule)
+    public function __construct(private readonly SettingsInterface $settings, private readonly RequestInterface $request, private readonly Date $date, private readonly DateValidationRule $dateValidationRule)
     {
     }
 

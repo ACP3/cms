@@ -19,7 +19,7 @@ use ACP3\Modules\ACP3\News\Installer\Schema as NewsSchema;
 
 class AdminNewsEditViewProvider
 {
-    public function __construct(private CategoriesHelpers $categoriesHelpers, private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings, private Title $title, private Translator $translator)
+    public function __construct(private readonly CategoriesHelpers $categoriesHelpers, private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Title $title, private readonly Translator $translator)
     {
     }
 

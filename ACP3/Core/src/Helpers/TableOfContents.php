@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class TableOfContents
 {
-    public function __construct(private Core\Breadcrumb\Title $title, private Core\I18n\Translator $translator, private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule, private Core\View $view)
+    public function __construct(private readonly Core\Breadcrumb\Title $title, private readonly Core\I18n\Translator $translator, private readonly Core\Http\RequestInterface $request, private readonly Core\Router\RouterInterface $router, private readonly Core\Validation\ValidationRules\IntegerValidationRule $integerValidationRule, private readonly Core\View $view)
     {
     }
 

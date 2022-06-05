@@ -19,12 +19,12 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private FormAction $actionHelper,
-        private Core\Router\RouterInterface $router,
-        private Core\Helpers\Alerts $alertsHelper,
-        private Contact\Validation\FormValidation $formValidation,
-        private Contact\Model\ContactsModel $contactsModel,
-        private Contact\Model\ContactFormModel $contactFormModel
+        private readonly FormAction $actionHelper,
+        private readonly Core\Router\RouterInterface $router,
+        private readonly Core\Helpers\Alerts $alertsHelper,
+        private readonly Contact\Validation\FormValidation $formValidation,
+        private readonly Contact\Model\ContactsModel $contactsModel,
+        private readonly Contact\Model\ContactFormModel $contactFormModel
     ) {
         parent::__construct($context);
     }

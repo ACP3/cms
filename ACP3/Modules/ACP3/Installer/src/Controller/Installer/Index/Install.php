@@ -18,11 +18,11 @@ class Install extends AbstractAction
 {
     public function __construct(
         Context $context,
-        private ThemePathInterface $theme,
+        private readonly ThemePathInterface $theme,
         Navigation $navigation,
-        private Date $date,
-        private DateHelper $dateHelper,
-        private Forms $forms
+        private readonly Date $date,
+        private readonly DateHelper $dateHelper,
+        private readonly Forms $forms
     ) {
         parent::__construct($context, $navigation);
     }

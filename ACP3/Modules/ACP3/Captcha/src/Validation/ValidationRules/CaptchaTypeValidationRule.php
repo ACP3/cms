@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CaptchaTypeValidationRule extends AbstractValidationRule
 {
-    public function __construct(private ContainerInterface $captchaLocator)
+    public function __construct(private readonly ContainerInterface $captchaLocator)
     {
     }
 

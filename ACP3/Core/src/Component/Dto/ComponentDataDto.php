@@ -12,17 +12,17 @@ use ACP3\Core\Modules\ModuleRegistration;
 
 class ComponentDataDto
 {
-    private string $name;
+    private readonly string $name;
 
     /**
      * @param string[] $dependencies
      */
     public function __construct(
-        private ComponentTypeEnum $componentType,
+        private readonly ComponentTypeEnum $componentType,
         string $componentName,
-        private string $path,
-        private array $dependencies,
-        private ?ModuleRegistration $moduleRegistration = null)
+        private readonly string $path,
+        private readonly array $dependencies,
+        private readonly ?ModuleRegistration $moduleRegistration = null)
     {
         $this->name = strtolower($componentName);
     }

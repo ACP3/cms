@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearGalleryPictureCacheListener implements EventSubscriberInterface
 {
-    public function __construct(private CacheItemPoolInterface $galleryCachePool)
+    public function __construct(private readonly CacheItemPoolInterface $galleryCachePool)
     {
     }
 

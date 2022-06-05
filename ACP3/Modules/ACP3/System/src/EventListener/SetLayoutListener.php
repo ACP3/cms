@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SetLayoutListener implements EventSubscriberInterface
 {
-    public function __construct(private RequestInterface $request, private View $view)
+    public function __construct(private readonly RequestInterface $request, private readonly View $view)
     {
     }
 

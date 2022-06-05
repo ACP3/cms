@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class Native implements AuthenticationInterface
 {
-    public function __construct(private RequestInterface $request, private Session $sessionHandler, private UserRepository $userRepository)
+    public function __construct(private readonly RequestInterface $request, private readonly Session $sessionHandler, private readonly UserRepository $userRepository)
     {
     }
 
@@ -31,7 +31,7 @@ class Native implements AuthenticationInterface
         if ($this->sessionHandler->has(AuthenticationModelInterface::AUTH_NAME)) {
             $userData = $this->sessionHandler->get(AuthenticationModelInterface::AUTH_NAME);
         } elseif ($this->request->getCookies()->has(AuthenticationModelInterface::AUTH_NAME)) {
-            [$userId, $token] = explode('|', $this->request->getCookies()->get(AuthenticationModelInterface::AUTH_NAME, ''));
+            [$userId, $token] = explode('|', (string) $this->request->getCookies()->get(AuthenticationModelInterface::AUTH_NAME, ''));
 
             $userData = $this->verifyCredentials((int) $userId, $token);
         }

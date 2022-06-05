@@ -11,7 +11,7 @@ use ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategyInterface;
 
 class JavaScriptRenderer implements RendererInterface
 {
-    public function __construct(private JavaScriptRendererStrategyInterface $javaScriptRendererStrategy)
+    public function __construct(private readonly JavaScriptRendererStrategyInterface $javaScriptRendererStrategy)
     {
     }
 

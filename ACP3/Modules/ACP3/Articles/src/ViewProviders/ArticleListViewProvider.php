@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class ArticleListViewProvider
 {
-    public function __construct(private ArticleRepository $articleRepository, private Date $date, private Pagination $pagination, private ResultsPerPage $resultsPerPage)
+    public function __construct(private readonly ArticleRepository $articleRepository, private readonly Date $date, private readonly Pagination $pagination, private readonly ResultsPerPage $resultsPerPage)
     {
     }
 

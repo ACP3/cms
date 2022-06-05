@@ -21,7 +21,7 @@ class UriSafeValidationRule extends AbstractValidationRule
         }
 
         if (\is_scalar($data)) {
-            return (bool) preg_match('/^([a-z]{1}[a-z\d\-]*(\/[a-z\d\-]+)*)$/', $data);
+            return (bool) preg_match('/^([a-z]{1}[a-z\d\-]*(\/[a-z\d\-]+)*)$/', (string) $data);
         }
 
         return false;

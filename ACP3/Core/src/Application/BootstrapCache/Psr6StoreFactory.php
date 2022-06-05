@@ -12,7 +12,7 @@ use Toflar\Psr6HttpCacheStore\Psr6Store;
 
 class Psr6StoreFactory
 {
-    public function __construct(private ApplicationPath $applicationPath)
+    public function __construct(private readonly ApplicationPath $applicationPath)
     {
     }
 

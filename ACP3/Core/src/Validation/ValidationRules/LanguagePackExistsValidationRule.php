@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class LanguagePackExistsValidationRule extends AbstractValidationRule
 {
-    public function __construct(private Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
     }
 

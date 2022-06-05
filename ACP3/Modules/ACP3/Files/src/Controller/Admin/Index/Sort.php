@@ -18,9 +18,9 @@ class Sort extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private Core\Http\RedirectResponse $redirectResponse,
-        private FilesRepository $filesRepository,
-        private FilesModel $filesModel
+        private readonly Core\Http\RedirectResponse $redirectResponse,
+        private readonly FilesRepository $filesRepository,
+        private readonly FilesModel $filesModel
     ) {
         parent::__construct($context);
     }

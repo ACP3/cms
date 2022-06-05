@@ -20,7 +20,7 @@ class LibrariesCache
      */
     private $librariesCache = [];
 
-    public function __construct(private CacheItemPoolInterface $librariesCachePool)
+    public function __construct(private readonly CacheItemPoolInterface $librariesCachePool)
     {
     }
 

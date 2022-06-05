@@ -15,8 +15,8 @@ class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private Emoticons\Model\EmoticonsModel $emoticonsModel,
-        private Emoticons\ViewProviders\AdminEmoticonEditViewProvider $adminEmoticonEditViewProvider
+        private readonly Emoticons\Model\EmoticonsModel $emoticonsModel,
+        private readonly Emoticons\ViewProviders\AdminEmoticonEditViewProvider $adminEmoticonEditViewProvider
     ) {
         parent::__construct($context);
     }

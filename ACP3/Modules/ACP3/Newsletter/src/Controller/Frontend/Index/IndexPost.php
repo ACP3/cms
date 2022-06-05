@@ -19,11 +19,11 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private FormAction $actionHelper,
-        private Core\Helpers\Alerts $alertsHelper,
-        private Newsletter\Helper\Subscribe $subscribeHelper,
-        private Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation
+        private readonly ApplicationPath $applicationPath,
+        private readonly FormAction $actionHelper,
+        private readonly Core\Helpers\Alerts $alertsHelper,
+        private readonly Newsletter\Helper\Subscribe $subscribeHelper,
+        private readonly Newsletter\Validation\SubscribeFormValidation $subscribeFormValidation
     ) {
         parent::__construct($context);
     }

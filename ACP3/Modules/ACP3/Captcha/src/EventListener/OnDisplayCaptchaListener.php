@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnDisplayCaptchaListener implements EventSubscriberInterface
 {
-    public function __construct(private ACL $acl, private CaptchaExtensionInterface $captchaExtension)
+    public function __construct(private readonly ACL $acl, private readonly CaptchaExtensionInterface $captchaExtension)
     {
     }
 

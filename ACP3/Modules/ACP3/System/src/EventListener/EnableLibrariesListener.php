@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class EnableLibrariesListener implements EventSubscriberInterface
 {
-    public function __construct(private Libraries $libraries)
+    public function __construct(private readonly Libraries $libraries)
     {
     }
 

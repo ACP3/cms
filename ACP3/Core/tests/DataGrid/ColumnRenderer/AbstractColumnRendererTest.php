@@ -53,11 +53,11 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testSingleCustomHtmlAttribute(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'attribute' => [
                 'data-foo' => 'bar',
             ],
-        ]);
+        ]];
 
         $expected = '<td data-foo="bar"></td>';
         $this->compareResults($expected);
@@ -65,12 +65,12 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testMultipleCustomHtmlAttributes(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'attribute' => [
                 'data-foo' => 'bar',
                 'data-lorem' => 'ipsum',
             ],
-        ]);
+        ]];
 
         $expected = '<td data-foo="bar" data-lorem="ipsum"></td>';
         $this->compareResults($expected);
@@ -78,9 +78,9 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testAddStyle(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'style' => 'width:50%',
-        ]);
+        ]];
 
         $expected = '<td style="width:50%"></td>';
         $this->compareResults($expected);
@@ -88,9 +88,9 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testAddCssClass(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'class' => 'foobar',
-        ]);
+        ]];
 
         $expected = '<td class="foobar"></td>';
         $this->compareResults($expected);
@@ -98,9 +98,9 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testInvalidField(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'fields' => ['test'],
-        ]);
+        ]];
         $this->dbData = [
             'text' => 'Lorem Ipsum',
         ];
@@ -111,9 +111,9 @@ abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 
     public function testValidField(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'fields' => ['text'],
-        ]);
+        ]];
         $this->dbData = [
             'text' => 'Lorem Ipsum',
         ];

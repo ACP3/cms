@@ -14,7 +14,7 @@ class CachingMenuService implements MenuServiceInterface
     private const CACHE_KEY_ALL_MENU_ITEMS = 'menu_items';
     private const CACHE_KEY_VISIBLE_MENU_ITEMS = 'menu_items_visible_%s';
 
-    public function __construct(private CacheItemPoolInterface $menusCachePool, private MenuService $menuService)
+    public function __construct(private readonly CacheItemPoolInterface $menusCachePool, private readonly MenuService $menuService)
     {
     }
 

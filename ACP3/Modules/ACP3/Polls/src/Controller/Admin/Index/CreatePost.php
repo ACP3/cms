@@ -19,10 +19,10 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private UserModelInterface $user,
-        private Polls\Model\PollsModel $pollsModel,
-        private Polls\Validation\AdminFormValidation $pollsValidator
+        private readonly FormAction $actionHelper,
+        private readonly UserModelInterface $user,
+        private readonly Polls\Model\PollsModel $pollsModel,
+        private readonly Polls\Validation\AdminFormValidation $pollsValidator
     ) {
         parent::__construct($context);
     }

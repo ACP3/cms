@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Contact\Installer\Schema as ContactSchema;
 
 class ContactDetailsViewProvider
 {
-    public function __construct(private RequestInterface $request, private SettingsInterface $settings, private Steps $breadcrumb, private Translator $translator)
+    public function __construct(private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Steps $breadcrumb, private readonly Translator $translator)
     {
     }
 

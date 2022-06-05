@@ -12,7 +12,7 @@ use ACP3\Core\Validation\ValidationRules\NotEmptyValidationRule;
 
 abstract class AbstractAnswerValidationRule extends AbstractValidationRule
 {
-    public function __construct(private NotEmptyValidationRule $notEmptyValidationRule)
+    public function __construct(private readonly NotEmptyValidationRule $notEmptyValidationRule)
     {
     }
 

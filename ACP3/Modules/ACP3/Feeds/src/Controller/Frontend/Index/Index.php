@@ -18,9 +18,9 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Core\ACL $acl,
-        private Feeds\View\Renderer\FeedGenerator $feedGenerator,
-        private Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
+        private readonly Core\ACL $acl,
+        private readonly Feeds\View\Renderer\FeedGenerator $feedGenerator,
+        private readonly Feeds\Utility\FeedAvailabilityRegistrar $availableFeedsRegistrar
     ) {
         parent::__construct($context);
     }

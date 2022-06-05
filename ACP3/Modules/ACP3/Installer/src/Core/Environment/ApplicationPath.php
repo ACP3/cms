@@ -11,7 +11,7 @@ use ACP3\Core\Environment\ApplicationMode;
 
 class ApplicationPath extends \ACP3\Core\Environment\ApplicationPath
 {
-    private string $installerWebRoot;
+    private readonly string $installerWebRoot;
 
     public function __construct(ApplicationMode $applicationMode)
     {

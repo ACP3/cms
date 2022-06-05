@@ -17,7 +17,7 @@ class ResultsPerPage
      */
     private array $resultsPerPage = [];
 
-    public function __construct(private SettingsInterface $settings)
+    public function __construct(private readonly SettingsInterface $settings)
     {
     }
 
@@ -35,6 +35,6 @@ class ResultsPerPage
             }
         }
 
-        return (int) $this->resultsPerPage[$moduleName];
+        return $this->resultsPerPage[$moduleName];
     }
 }

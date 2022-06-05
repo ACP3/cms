@@ -12,7 +12,7 @@ use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 
 class Upload
 {
-    public function __construct(private ApplicationPath $appPath, private string $directory)
+    public function __construct(private readonly ApplicationPath $appPath, private readonly string $directory)
     {
     }
 
@@ -42,7 +42,7 @@ class Upload
             $newFilename = $filename;
         } else {
             $newFilename = 1;
-            $ext = strtolower(strrchr($filename, '.'));
+            $ext = strtolower((string) strrchr($filename, '.'));
 
             // Dateiname solange ändern, wie eine Datei mit dem selben Dateinamen im aktuellen Ordner existiert
             while (is_file($path . $newFilename . $ext) === true) {

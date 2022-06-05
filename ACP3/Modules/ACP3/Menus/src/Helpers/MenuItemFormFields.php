@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 
 class MenuItemFormFields
 {
-    public function __construct(private Core\Helpers\Forms $formsHelper, private MenuItemsList $menusHelper, private MenuRepository $menuRepository)
+    public function __construct(private readonly Core\Helpers\Forms $formsHelper, private readonly MenuItemsList $menusHelper, private readonly MenuRepository $menuRepository)
     {
     }
 

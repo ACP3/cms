@@ -12,7 +12,7 @@ use Doctrine\DBAL\Exception;
 
 class Sort
 {
-    public function __construct(private Connection $db)
+    public function __construct(private readonly Connection $db)
     {
     }
 

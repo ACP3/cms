@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class DateConfigurator
 {
-    public function __construct(private SettingsInterface $settings)
+    public function __construct(private readonly SettingsInterface $settings)
     {
     }
 

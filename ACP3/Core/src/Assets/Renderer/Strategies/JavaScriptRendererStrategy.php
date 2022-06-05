@@ -19,7 +19,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
      */
     private ?array $javascripts = null;
 
-    public function __construct(private Assets $assets, private Assets\FileResolver $fileResolver, private Libraries $libraries)
+    public function __construct(private readonly Assets $assets, private readonly Assets\FileResolver $fileResolver, private readonly Libraries $libraries)
     {
     }
 

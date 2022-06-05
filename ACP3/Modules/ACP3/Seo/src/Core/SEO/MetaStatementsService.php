@@ -25,9 +25,9 @@ class MetaStatementsService extends CoreMetaStatementsService
     public function __construct(
         RequestInterface $request,
         RouterInterface $router,
-        private Modules $modules,
-        private SeoInformationService $seoInformationService,
-        private SettingsInterface $config
+        private readonly Modules $modules,
+        private readonly SeoInformationService $seoInformationService,
+        private readonly SettingsInterface $config
     ) {
         parent::__construct($request, $router);
     }

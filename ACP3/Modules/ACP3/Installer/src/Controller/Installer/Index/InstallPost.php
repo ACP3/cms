@@ -22,12 +22,12 @@ class InstallPost extends AbstractAction
 {
     public function __construct(
         Context $context,
-        private ApplicationPath $applicationPath,
-        private LoggerInterface $logger,
-        private Alerts $alertsHelper,
+        private readonly ApplicationPath $applicationPath,
+        private readonly LoggerInterface $logger,
+        private readonly Alerts $alertsHelper,
         Navigation $navigation,
-        private InstallModel $installModel,
-        private FormValidation $formValidation
+        private readonly InstallModel $installModel,
+        private readonly FormValidation $formValidation
     ) {
         parent::__construct($context, $navigation);
     }

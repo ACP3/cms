@@ -24,7 +24,7 @@ class GenerateSitemapListener implements EventSubscriberInterface
 {
     private bool $scheduleSitemapRebuild = false;
 
-    public function __construct(private LoggerInterface $logger, private Modules $modules, private SettingsInterface $settings, private SitemapAvailabilityRegistrar $sitemapRegistrar, private SitemapGenerationModel $sitemapGenerationModel, private RequestStack $requestStack)
+    public function __construct(private readonly LoggerInterface $logger, private readonly Modules $modules, private readonly SettingsInterface $settings, private readonly SitemapAvailabilityRegistrar $sitemapRegistrar, private readonly SitemapGenerationModel $sitemapGenerationModel, private readonly RequestStack $requestStack)
     {
     }
 

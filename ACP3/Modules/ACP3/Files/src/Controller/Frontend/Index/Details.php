@@ -18,9 +18,9 @@ class Details extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Core\Date $date,
-        private Files\Repository\FilesRepository $filesRepository,
-        private Files\ViewProviders\FileDetailsViewProvider $fileDetailsViewProvider
+        private readonly Core\Date $date,
+        private readonly Files\Repository\FilesRepository $filesRepository,
+        private readonly Files\ViewProviders\FileDetailsViewProvider $fileDetailsViewProvider
     ) {
         parent::__construct($context);
     }

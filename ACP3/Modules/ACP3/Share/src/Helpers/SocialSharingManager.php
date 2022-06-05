@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class SocialSharingManager
 {
-    public function __construct(private ShareModel $shareModel, private ShareRepository $shareRepository)
+    public function __construct(private readonly ShareModel $shareModel, private readonly ShareRepository $shareRepository)
     {
     }
 

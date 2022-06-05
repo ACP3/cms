@@ -14,7 +14,7 @@ class GetSiteAndPageTitleBeforeEvent extends Event
 {
     public const NAME = 'core.breadcrumb.title.get_site_and_page_title_before';
 
-    public function __construct(private Title $title)
+    public function __construct(private readonly Title $title)
     {
     }
 

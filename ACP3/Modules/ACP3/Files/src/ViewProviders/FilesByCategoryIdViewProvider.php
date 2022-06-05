@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class FilesByCategoryIdViewProvider
 {
-    public function __construct(private Steps $breadcrumb, private CategoryRepository $categoryRepository, private Date $date, private FilesRepository $filesRepository, private SettingsInterface $settings, private Translator $translator)
+    public function __construct(private readonly Steps $breadcrumb, private readonly CategoryRepository $categoryRepository, private readonly Date $date, private readonly FilesRepository $filesRepository, private readonly SettingsInterface $settings, private readonly Translator $translator)
     {
     }
 

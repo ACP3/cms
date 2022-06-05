@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MenuItemsDataGridViewProvider
 {
-    public function __construct(private ACL $acl, private DataGrid $dataGrid, private MenuItemDataGridRepository $dataGridRepository, private ResultsPerPage $resultsPerPage, private Translator $translator)
+    public function __construct(private readonly ACL $acl, private readonly DataGrid $dataGrid, private readonly MenuItemDataGridRepository $dataGridRepository, private readonly ResultsPerPage $resultsPerPage, private readonly Translator $translator)
     {
     }
 

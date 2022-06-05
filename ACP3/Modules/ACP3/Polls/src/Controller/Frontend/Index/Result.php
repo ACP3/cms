@@ -18,9 +18,9 @@ class Result extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Core\Date $date,
-        private Polls\Repository\PollRepository $pollRepository,
-        private Polls\ViewProviders\PollResultViewProvider $pollResultViewProvider
+        private readonly Core\Date $date,
+        private readonly Polls\Repository\PollRepository $pollRepository,
+        private readonly Polls\ViewProviders\PollResultViewProvider $pollResultViewProvider
     ) {
         parent::__construct($context);
     }

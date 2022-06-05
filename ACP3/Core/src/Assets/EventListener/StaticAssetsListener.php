@@ -31,7 +31,7 @@ class StaticAssetsListener implements EventSubscriberInterface
      */
     private $tracedRequests = [];
 
-    public function __construct(private CSSRenderer $cssRenderer, private JavaScriptRenderer $javaScriptRenderer, private RequestStack $requestStack, private Libraries $libraries, private LibrariesCache $librariesCache)
+    public function __construct(private readonly CSSRenderer $cssRenderer, private readonly JavaScriptRenderer $javaScriptRenderer, private readonly RequestStack $requestStack, private readonly Libraries $libraries, private readonly LibrariesCache $librariesCache)
     {
     }
 
@@ -102,7 +102,7 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        if (str_contains($content, self::PLACEHOLDER_CSS)) {
+        if (str_contains((string) $content, self::PLACEHOLDER_CSS)) {
             $this->requestStack->push($event->getRequest());
 
             $content = str_replace(
@@ -128,7 +128,7 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        if (str_contains($content, self::PLACEHOLDER_JS)) {
+        if (str_contains((string) $content, self::PLACEHOLDER_JS)) {
             $this->requestStack->push($event->getRequest());
 
             $content = str_replace(

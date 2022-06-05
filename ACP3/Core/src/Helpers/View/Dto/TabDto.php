@@ -9,7 +9,7 @@ namespace ACP3\Core\Helpers\View\Dto;
 
 class TabDto
 {
-    public function __construct(private string $title, private string $content)
+    public function __construct(private readonly string $title, private readonly string $content)
     {
     }
 

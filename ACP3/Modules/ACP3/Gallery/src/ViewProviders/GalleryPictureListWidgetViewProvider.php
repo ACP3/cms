@@ -11,7 +11,7 @@ use ACP3\Modules\ACP3\Gallery\Services\GalleryServiceInterface;
 
 class GalleryPictureListWidgetViewProvider
 {
-    public function __construct(private GalleryServiceInterface $galleryService)
+    public function __construct(private readonly GalleryServiceInterface $galleryService)
     {
     }
 

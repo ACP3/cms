@@ -16,7 +16,7 @@ use Psr\Container\ContainerInterface;
  */
 class Smarty implements RendererInterface
 {
-    public function __construct(private \Smarty $smarty, private ContainerInterface $container)
+    public function __construct(private readonly \Smarty $smarty, private readonly ContainerInterface $container)
     {
     }
 

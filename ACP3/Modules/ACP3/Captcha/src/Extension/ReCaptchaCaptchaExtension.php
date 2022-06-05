@@ -21,7 +21,7 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
 
     private bool $includeJsAssets = true;
 
-    public function __construct(private Translator $translator, private RequestInterface $request, private SettingsInterface $settings, private View $view, private UserModelInterface $user)
+    public function __construct(private readonly Translator $translator, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly View $view, private readonly UserModelInterface $user)
     {
     }
 

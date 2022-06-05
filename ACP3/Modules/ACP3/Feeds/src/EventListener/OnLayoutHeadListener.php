@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnLayoutHeadListener implements EventSubscriberInterface
 {
-    public function __construct(private View $view, private Modules $modules, private FeedAvailabilityRegistrar $availableFeedsRegistrar)
+    public function __construct(private readonly View $view, private readonly Modules $modules, private readonly FeedAvailabilityRegistrar $availableFeedsRegistrar)
     {
     }
 

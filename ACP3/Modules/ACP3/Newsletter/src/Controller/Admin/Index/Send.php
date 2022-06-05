@@ -15,10 +15,10 @@ class Send extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Core\Helpers\RedirectMessages $redirectMessages,
-        private Newsletter\Repository\NewsletterRepository $newsletterRepository,
-        private Newsletter\Repository\AccountRepository $accountRepository,
-        private Newsletter\Helper\SendNewsletter $newsletterHelpers
+        private readonly Core\Helpers\RedirectMessages $redirectMessages,
+        private readonly Newsletter\Repository\NewsletterRepository $newsletterRepository,
+        private readonly Newsletter\Repository\AccountRepository $accountRepository,
+        private readonly Newsletter\Helper\SendNewsletter $newsletterHelpers
     ) {
         parent::__construct($context);
     }

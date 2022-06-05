@@ -12,7 +12,7 @@ use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 
 class Breadcrumb extends AbstractFunction
 {
-    public function __construct(private Steps $breadcrumb)
+    public function __construct(private readonly Steps $breadcrumb)
     {
     }
 

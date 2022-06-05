@@ -17,9 +17,9 @@ class RequestFactory extends \ACP3\Modules\ACP3\System\Core\Http\RequestFactory
 {
     public function __construct(
         SettingsInterface $config,
-        private Modules $modules,
+        private readonly Modules $modules,
         RequestStack $requestStack,
-        private SeoRepository $seoRepository
+        private readonly SeoRepository $seoRepository
     ) {
         parent::__construct($config, $requestStack);
     }

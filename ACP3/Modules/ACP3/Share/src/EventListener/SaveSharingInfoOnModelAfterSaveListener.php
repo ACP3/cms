@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SaveSharingInfoOnModelAfterSaveListener implements EventSubscriberInterface
 {
-    public function __construct(private ACL $acl, private SocialSharingManager $socialSharingManager)
+    public function __construct(private readonly ACL $acl, private readonly SocialSharingManager $socialSharingManager)
     {
     }
 

@@ -17,7 +17,7 @@ class FilesRepository extends Core\Repository\AbstractRepository
 
     public const TABLE_NAME = 'files';
 
-    public function __construct(Connection $db, private Core\Settings\SettingsInterface $settings)
+    public function __construct(Connection $db, private readonly Core\Settings\SettingsInterface $settings)
     {
         parent::__construct($db);
     }

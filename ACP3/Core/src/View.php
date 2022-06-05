@@ -19,7 +19,7 @@ class View
         return $this->renderer;
     }
 
-    public function __construct(private RendererInterface $renderer)
+    public function __construct(private readonly RendererInterface $renderer)
     {
     }
 

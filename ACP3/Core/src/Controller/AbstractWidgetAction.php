@@ -23,7 +23,7 @@ abstract class AbstractWidgetAction implements InvokableActionInterface
     protected RequestInterface $request;
     protected View $view;
     protected SettingsInterface $config;
-    private ApplicationMode $applicationMode;
+    private readonly ApplicationMode $applicationMode;
 
     private string $template = '';
     private string|false $content = '';

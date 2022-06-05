@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\System\Installer\Schema;
 
 class AdminThemesViewProvider
 {
-    public function __construct(private SettingsInterface $settings, private ThemePathInterface $theme)
+    public function __construct(private readonly SettingsInterface $settings, private readonly ThemePathInterface $theme)
     {
     }
 
@@ -26,12 +26,9 @@ class AdminThemesViewProvider
 
         return [
             'designs' => array_map(
-                static fn (array $theme) => array_merge(
-                    $theme,
-                    [
-                        'selected' => $theme['internal_name'] === $currentTheme,
-                    ]
-                ),
+                static fn (array $theme) => [...$theme, ...[
+                    'selected' => $theme['internal_name'] === $currentTheme,
+                ]],
                 array_filter($this->theme->getAvailableThemes(), static fn (array $theme) => $theme['internal_name'] !== 'acp3-installer')
             ),
         ];

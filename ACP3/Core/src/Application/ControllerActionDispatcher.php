@@ -24,7 +24,7 @@ class ControllerActionDispatcher
 {
     private const POST_SERVICE_ID_SUFFIX = '_post';
 
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private RequestInterface $request, private ContainerInterface $serviceLocator, private ArgumentResolverInterface $argumentResolver)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly RequestInterface $request, private readonly ContainerInterface $serviceLocator, private readonly ArgumentResolverInterface $argumentResolver)
     {
     }
 

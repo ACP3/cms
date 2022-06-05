@@ -26,7 +26,7 @@ class Theme implements ThemePathInterface
      */
     private array $sortedThemeDependencies = [];
 
-    public function __construct(private ApplicationPath $appPath, private SettingsInterface $settings)
+    public function __construct(private readonly ApplicationPath $appPath, private readonly SettingsInterface $settings)
     {
     }
 

@@ -12,7 +12,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class StepsBuildCacheEvent extends Event
 {
-    public function __construct(private Steps $steps)
+    public function __construct(private readonly Steps $steps)
     {
     }
 

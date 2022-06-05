@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Users\Installer\Schema as UsersSchema;
 
 class AdminSettingsViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private Forms $formsHelpers, private RequestInterface $request, private SettingsInterface $settings)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly Forms $formsHelpers, private readonly RequestInterface $request, private readonly SettingsInterface $settings)
     {
     }
 

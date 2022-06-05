@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Filemanager\Installer\Schema;
 
 class Helpers
 {
-    public function __construct(private Core\Environment\ApplicationPath $appPath)
+    public function __construct(private readonly Core\Environment\ApplicationPath $appPath)
     {
     }
 

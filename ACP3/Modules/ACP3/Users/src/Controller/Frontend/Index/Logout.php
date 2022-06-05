@@ -18,11 +18,11 @@ class Logout extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private UserModelInterface $user,
-        private Core\Http\RedirectResponse $redirectResponse,
-        private Users\ViewProviders\LogoutViewProvider $logoutViewProvider,
-        private Users\Model\AuthenticationModel $authenticationModel
+        private readonly ApplicationPath $applicationPath,
+        private readonly UserModelInterface $user,
+        private readonly Core\Http\RedirectResponse $redirectResponse,
+        private readonly Users\ViewProviders\LogoutViewProvider $logoutViewProvider,
+        private readonly Users\Model\AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
     }

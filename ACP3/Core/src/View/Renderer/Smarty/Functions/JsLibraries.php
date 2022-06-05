@@ -11,7 +11,7 @@ use ACP3\Core\Assets\Libraries;
 
 class JsLibraries extends AbstractFunction
 {
-    public function __construct(private Libraries $libraries)
+    public function __construct(private readonly Libraries $libraries)
     {
     }
 
@@ -20,7 +20,7 @@ class JsLibraries extends AbstractFunction
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
-        $this->libraries->enableLibraries(explode(',', $params['enable']));
+        $this->libraries->enableLibraries(explode(',', (string) $params['enable']));
 
         return '';
     }

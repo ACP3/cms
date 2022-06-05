@@ -14,7 +14,7 @@ use Doctrine\DBAL\Exception as DBALException;
 
 class Migration202202051324 implements MigrationInterface
 {
-    public function __construct(private Connection $db)
+    public function __construct(private readonly Connection $db)
     {
     }
 

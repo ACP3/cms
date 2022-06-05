@@ -16,7 +16,7 @@ use Psr\Container\ContainerInterface;
 
 class ModuleInfo implements ModuleInfoInterface
 {
-    public function __construct(private ContainerInterface $schemaLocator, private ModuleAwareRepositoryInterface $systemModuleRepository)
+    public function __construct(private readonly ContainerInterface $schemaLocator, private readonly ModuleAwareRepositoryInterface $systemModuleRepository)
     {
     }
 

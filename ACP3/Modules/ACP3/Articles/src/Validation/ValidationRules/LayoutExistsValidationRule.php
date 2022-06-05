@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class LayoutExistsValidationRule extends AbstractValidationRule
 {
-    public function __construct(private View $view)
+    public function __construct(private readonly View $view)
     {
     }
 

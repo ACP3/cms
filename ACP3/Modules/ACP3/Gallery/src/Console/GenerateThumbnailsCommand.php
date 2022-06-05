@@ -23,10 +23,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class GenerateThumbnailsCommand extends Command
 {
     public function __construct(
-        private ApplicationPath $appPath,
-        private ThumbnailGenerator $thumbnailGenerator,
-        private GalleryRepository $galleryRepository,
-        private PictureRepository $galleryPicturesRepository
+        private readonly ApplicationPath $appPath,
+        private readonly ThumbnailGenerator $thumbnailGenerator,
+        private readonly GalleryRepository $galleryRepository,
+        private readonly PictureRepository $galleryPicturesRepository
     ) {
         parent::__construct();
     }

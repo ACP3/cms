@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Cookieconsent\Installer\Schema;
 
 class AdminSettingsViewProvider
 {
-    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings)
     {
     }
 

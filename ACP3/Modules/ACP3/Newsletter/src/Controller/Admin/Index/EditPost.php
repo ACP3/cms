@@ -19,10 +19,10 @@ class EditPost extends AbstractFormAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private UserModelInterface $user,
-        private Newsletter\Model\NewsletterModel $newsletterModel,
-        private Newsletter\Validation\AdminFormValidation $adminFormValidation,
+        private readonly FormAction $actionHelper,
+        private readonly UserModelInterface $user,
+        private readonly Newsletter\Model\NewsletterModel $newsletterModel,
+        private readonly Newsletter\Validation\AdminFormValidation $adminFormValidation,
         Newsletter\Helper\SendNewsletter $newsletterHelpers
     ) {
         parent::__construct($context, $newsletterHelpers);

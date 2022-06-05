@@ -45,7 +45,7 @@ class DateTranslator
         'December',
     ];
 
-    public function __construct(private Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
     }
 
@@ -64,9 +64,9 @@ class DateTranslator
 
         // Localize months
         if (str_contains($dateFormat, 'M')) {
-            $replace = array_merge($replace, $this->localizeMonthsAbbr());
+            $replace = [...$replace, ...$this->localizeMonthsAbbr()];
         } elseif (str_contains($dateFormat, 'F')) {
-            $replace = array_merge($replace, $this->localizeMonths());
+            $replace = [...$replace, ...$this->localizeMonths()];
         }
 
         return $replace;

@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnGuestbookLayoutCreateEventListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private SettingsInterface $settings, private Translator $translator, private View $view, private Forms $formsHelper)
+    public function __construct(private readonly Modules $modules, private readonly SettingsInterface $settings, private readonly Translator $translator, private readonly View $view, private readonly Forms $formsHelper)
     {
     }
 

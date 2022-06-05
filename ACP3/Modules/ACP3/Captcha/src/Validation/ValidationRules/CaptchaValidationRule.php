@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CaptchaValidationRule extends AbstractValidationRule
 {
-    public function __construct(private UserModelInterface $user, private CaptchaExtensionInterface $captcha)
+    public function __construct(private readonly UserModelInterface $user, private readonly CaptchaExtensionInterface $captcha)
     {
     }
 

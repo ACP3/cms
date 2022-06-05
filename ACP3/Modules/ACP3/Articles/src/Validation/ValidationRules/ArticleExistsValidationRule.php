@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ArticleExistsValidationRule extends AbstractValidationRule
 {
-    public function __construct(private ArticleRepository $articleRepository)
+    public function __construct(private readonly ArticleRepository $articleRepository)
     {
     }
 

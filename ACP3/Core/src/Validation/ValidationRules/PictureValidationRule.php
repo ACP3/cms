@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PictureValidationRule extends AbstractValidationRule
 {
-    public function __construct(private FileUploadValidationRule $fileUploadValidationRule)
+    public function __construct(private readonly FileUploadValidationRule $fileUploadValidationRule)
     {
     }
 

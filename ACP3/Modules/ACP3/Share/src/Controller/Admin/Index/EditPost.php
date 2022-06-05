@@ -19,9 +19,9 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private ShareModel $shareModel,
-        private AdminFormValidation $adminFormValidation
+        private readonly FormAction $actionHelper,
+        private readonly ShareModel $shareModel,
+        private readonly AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
     }

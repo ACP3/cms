@@ -13,7 +13,7 @@ use ACP3\Core\I18n\Translator;
 
 abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 {
-    public function __construct(private ACL $acl, private Translator $translator)
+    public function __construct(private readonly ACL $acl, private readonly Translator $translator)
     {
     }
 

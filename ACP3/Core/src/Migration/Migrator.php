@@ -11,7 +11,7 @@ use ACP3\Core\Migration\Repository\MigrationRepositoryInterface;
 
 class Migrator
 {
-    public function __construct(private MigrationServiceLocator $migrationServiceLocator, private MigrationRepositoryInterface $migrationRepository)
+    public function __construct(private readonly MigrationServiceLocator $migrationServiceLocator, private readonly MigrationRepositoryInterface $migrationRepository)
     {
     }
 

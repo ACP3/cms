@@ -16,10 +16,10 @@ class Delete extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
-        private Gallery\Model\GalleryModel $galleryModel,
-        private Gallery\Repository\PictureRepository $pictureRepository
+        private readonly FormAction $actionHelper,
+        private readonly Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
+        private readonly Gallery\Model\GalleryModel $galleryModel,
+        private readonly Gallery\Repository\PictureRepository $pictureRepository
     ) {
         parent::__construct($context);
     }

@@ -17,7 +17,7 @@ class OptionRenderer
      */
     private array $options = [];
 
-    public function __construct(private RouterInterface $router, private Icon $icon)
+    public function __construct(private readonly RouterInterface $router, private readonly Icon $icon)
     {
     }
 

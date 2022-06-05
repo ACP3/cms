@@ -12,7 +12,7 @@ use ACP3\Core\I18n\Translator;
 
 class UserProfileViewProvider
 {
-    public function __construct(private Translator $translator, private UserModelInterface $userModel)
+    public function __construct(private readonly Translator $translator, private readonly UserModelInterface $userModel)
     {
     }
 
@@ -25,7 +25,7 @@ class UserProfileViewProvider
         $user['gender'] = str_replace(
             [1, 2, 3],
             ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')],
-            $user['gender']
+            (string) $user['gender']
         );
 
         return [

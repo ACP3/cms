@@ -11,7 +11,7 @@ use ACP3\Core\Date;
 
 class DateTimeColumnType implements ColumnTypeStrategyInterface
 {
-    public function __construct(private Date $date)
+    public function __construct(private readonly Date $date)
     {
     }
 

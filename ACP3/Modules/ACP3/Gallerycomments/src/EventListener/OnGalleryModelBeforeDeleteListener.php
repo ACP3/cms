@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private GalleryPictureRepository $galleryPictureRepository, private CommentsHelpers $commentsHelpers)
+    public function __construct(private readonly Modules $modules, private readonly GalleryPictureRepository $galleryPictureRepository, private readonly CommentsHelpers $commentsHelpers)
     {
     }
 

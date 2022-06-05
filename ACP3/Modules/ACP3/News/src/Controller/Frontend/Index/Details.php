@@ -18,9 +18,9 @@ class Details extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Core\Date $date,
-        private News\Repository\NewsRepository $newsRepository,
-        private News\ViewProviders\NewsDetailsViewProvider $newsDetailsViewProvider
+        private readonly Core\Date $date,
+        private readonly News\Repository\NewsRepository $newsRepository,
+        private readonly News\ViewProviders\NewsDetailsViewProvider $newsDetailsViewProvider
     ) {
         parent::__construct($context);
     }

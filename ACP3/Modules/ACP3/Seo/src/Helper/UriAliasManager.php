@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 
 class UriAliasManager
 {
-    public function __construct(private SeoModel $seoModel, private SeoRepository $seoRepository)
+    public function __construct(private readonly SeoModel $seoModel, private readonly SeoRepository $seoRepository)
     {
     }
 

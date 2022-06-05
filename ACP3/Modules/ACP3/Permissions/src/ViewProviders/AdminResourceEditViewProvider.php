@@ -16,7 +16,7 @@ use ACP3\Core\Modules;
 
 class AdminResourceEditViewProvider
 {
-    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private Modules $modules, private RequestInterface $request, private Translator $translator)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly Modules $modules, private readonly RequestInterface $request, private readonly Translator $translator)
     {
     }
 

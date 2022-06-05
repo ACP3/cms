@@ -18,13 +18,13 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Core\ACL $acl,
-        private Core\Helpers\Secure $secureHelper,
-        private Search\Helpers $searchHelpers,
-        private Search\Validation\FormValidation $searchValidator,
-        private Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar,
-        private Search\ViewProviders\SearchResultsViewProvider $searchResultsViewProvider
+        private readonly FormAction $actionHelper,
+        private readonly Core\ACL $acl,
+        private readonly Core\Helpers\Secure $secureHelper,
+        private readonly Search\Helpers $searchHelpers,
+        private readonly Search\Validation\FormValidation $searchValidator,
+        private readonly Search\Utility\SearchAvailabilityRegistrar $availableModulesRegistrar,
+        private readonly Search\ViewProviders\SearchResultsViewProvider $searchResultsViewProvider
     ) {
         parent::__construct($context);
     }
@@ -52,7 +52,7 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
                         $formData['mods'],
                         $searchTerm,
                         $formData['area'],
-                        strtoupper($formData['sort'])
+                        strtoupper((string) $formData['sort'])
                     ),
                     $searchTerm
                 );

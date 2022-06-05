@@ -12,7 +12,7 @@ use ACP3\Core\Modules;
 
 class AdminModulesViewProvider
 {
-    public function __construct(private Modules $modules, private Translator $translator)
+    public function __construct(private readonly Modules $modules, private readonly Translator $translator)
     {
     }
 

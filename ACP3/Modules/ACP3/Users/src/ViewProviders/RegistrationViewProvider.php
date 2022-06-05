@@ -12,7 +12,7 @@ use ACP3\Core\Http\RequestInterface;
 
 class RegistrationViewProvider
 {
-    public function __construct(private FormToken $formToken, private RequestInterface $request)
+    public function __construct(private readonly FormToken $formToken, private readonly RequestInterface $request)
     {
     }
 

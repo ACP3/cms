@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter\Repository\NewsletterRepository;
 
 class SendNewsletter
 {
-    public function __construct(private Core\Mailer $mailer, private Core\Router\RouterInterface $router, private Core\Settings\SettingsInterface $config, private NewsletterRepository $newsletterRepository)
+    public function __construct(private readonly Core\Mailer $mailer, private readonly Core\Router\RouterInterface $router, private readonly Core\Settings\SettingsInterface $config, private readonly NewsletterRepository $newsletterRepository)
     {
     }
 

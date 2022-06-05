@@ -12,7 +12,7 @@ use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
 
 class CheckAccess extends AbstractFunction
 {
-    public function __construct(private CheckAccessViewHelper $checkAccess)
+    public function __construct(private readonly CheckAccessViewHelper $checkAccess)
     {
     }
 

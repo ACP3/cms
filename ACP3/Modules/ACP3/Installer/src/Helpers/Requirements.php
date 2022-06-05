@@ -14,7 +14,7 @@ use Composer\Semver\VersionParser;
 
 class Requirements
 {
-    public function __construct(private Modules $modules, private Translator $translator, private VersionParser $versionParser)
+    public function __construct(private readonly Modules $modules, private readonly Translator $translator, private readonly VersionParser $versionParser)
     {
     }
 
@@ -203,7 +203,7 @@ class Requirements
                 continue;
             }
 
-            $componentExtensions = array_filter(array_keys($composerJsoData['require']), static fn ($packages) => str_starts_with($packages, 'ext-'));
+            $componentExtensions = array_filter(array_keys($composerJsoData['require']), static fn ($packages) => str_starts_with((string) $packages, 'ext-'));
 
             $extensions = [...$extensions, ...$componentExtensions];
         }

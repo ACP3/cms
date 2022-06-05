@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RedirectResponse
 {
-    public function __construct(private RequestInterface $request, private RouterInterface $router)
+    public function __construct(private readonly RequestInterface $request, private readonly RouterInterface $router)
     {
     }
 

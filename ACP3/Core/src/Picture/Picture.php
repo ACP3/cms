@@ -15,7 +15,7 @@ class Picture
 {
     private ?\GdImage $image = null;
 
-    public function __construct(private FastImageSize $fastImageSize, private ApplicationPath $appPath)
+    public function __construct(private readonly FastImageSize $fastImageSize, private readonly ApplicationPath $appPath)
     {
     }
 

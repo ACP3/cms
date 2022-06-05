@@ -17,10 +17,10 @@ class Login extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private UserModelInterface $user,
-        private Core\Http\RedirectResponse $redirectResponse,
-        private Users\ViewProviders\LoginViewProvider $loginViewProvider
+        private readonly ApplicationPath $applicationPath,
+        private readonly UserModelInterface $user,
+        private readonly Core\Http\RedirectResponse $redirectResponse,
+        private readonly Users\ViewProviders\LoginViewProvider $loginViewProvider
     ) {
         parent::__construct($context);
     }

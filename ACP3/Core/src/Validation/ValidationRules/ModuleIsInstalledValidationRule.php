@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ModuleIsInstalledValidationRule extends AbstractValidationRule
 {
-    public function __construct(private Modules $modules)
+    public function __construct(private readonly Modules $modules)
     {
     }
 

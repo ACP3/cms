@@ -42,9 +42,8 @@ class DateRange
         }
         $dateRange = $this->generateTimeTag($start, $format);
         $dateRange .= '&ndash;';
-        $dateRange .= $this->generateTimeTag($end, $format);
 
-        return $dateRange;
+        return $dateRange . $this->generateTimeTag($end, $format);
     }
 
     /**

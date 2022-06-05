@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AccountExistsByHashValidationRule extends AbstractValidationRule
 {
-    public function __construct(private AccountRepository $accountRepository)
+    public function __construct(private readonly AccountRepository $accountRepository)
     {
     }
 

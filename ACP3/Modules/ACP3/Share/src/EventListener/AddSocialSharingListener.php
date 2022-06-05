@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddSocialSharingListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private RequestInterface $request, private View $view, private SocialServices $socialServices, private ShareRepository $shareRepository, private ShareRatingsRepository $shareRatingsRepository)
+    public function __construct(private readonly Modules $modules, private readonly RequestInterface $request, private readonly View $view, private readonly SocialServices $socialServices, private readonly ShareRepository $shareRepository, private readonly ShareRatingsRepository $shareRatingsRepository)
     {
     }
 

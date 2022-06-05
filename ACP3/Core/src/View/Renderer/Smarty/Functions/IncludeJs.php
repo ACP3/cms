@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class IncludeJs extends AbstractFunction
 {
-    public function __construct(private Core\Assets\IncludeJs $includeJs)
+    public function __construct(private readonly Core\Assets\IncludeJs $includeJs)
     {
     }
 

@@ -13,7 +13,7 @@ class PageCssClasses extends AbstractFilter
 {
     private string $cssClassCache = '';
 
-    public function __construct(private Core\Assets\PageCssClasses $pageCssClasses, private Core\Http\RequestInterface $request)
+    public function __construct(private readonly Core\Assets\PageCssClasses $pageCssClasses, private readonly Core\Http\RequestInterface $request)
     {
     }
 

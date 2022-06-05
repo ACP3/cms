@@ -22,7 +22,7 @@ class ShareModel extends AbstractModel
      */
     public function save(array $rawData, ?int $entryId = null): int
     {
-        $rawData = array_merge($rawData, $this->mapDataFromRequest($rawData));
+        $rawData = [...$rawData, ...$this->mapDataFromRequest($rawData)];
 
         return parent::save($rawData, $entryId);
     }

@@ -18,13 +18,13 @@ use Psr\Log\LoggerInterface;
 class BackendManagerFactory
 {
     public function __construct(
-        private RequestInterface $request,
-        private SettingsInterface $settings,
-        private LoggerInterface $logger,
-        private ClientInterface $client,
-        private CacheItemPoolInterface $servicesCacheItemPool,
-        private SocialSharingBackendServiceLocator $serviceLocator,
-        private SocialServices $socialServices
+        private readonly RequestInterface $request,
+        private readonly SettingsInterface $settings,
+        private readonly LoggerInterface $logger,
+        private readonly ClientInterface $client,
+        private readonly CacheItemPoolInterface $servicesCacheItemPool,
+        private readonly SocialSharingBackendServiceLocator $serviceLocator,
+        private readonly SocialServices $socialServices
     ) {
     }
 

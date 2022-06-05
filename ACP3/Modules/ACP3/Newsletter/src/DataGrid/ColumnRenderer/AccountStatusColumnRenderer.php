@@ -14,7 +14,7 @@ use ACP3\Core\Router\RouterInterface;
 
 class AccountStatusColumnRenderer extends AbstractColumnRenderer
 {
-    public function __construct(private Translator $translator, private RouterInterface $router, private Icon $icon)
+    public function __construct(private readonly Translator $translator, private readonly RouterInterface $router, private readonly Icon $icon)
     {
     }
 

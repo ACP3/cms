@@ -25,7 +25,7 @@ class Validator
      */
     private array $constraints = [];
 
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private ContainerInterface $container)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly ContainerInterface $container)
     {
     }
 
@@ -83,7 +83,7 @@ class Validator
             $field = reset($field);
         }
 
-        return str_replace('_', '-', $field);
+        return str_replace('_', '-', (string) $field);
     }
 
     /**

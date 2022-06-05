@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class PageBreaks
 {
-    public function __construct(private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private TableOfContents $tableOfContents)
+    public function __construct(private readonly Core\Http\RequestInterface $request, private readonly Core\Router\RouterInterface $router, private readonly TableOfContents $tableOfContents)
     {
     }
 

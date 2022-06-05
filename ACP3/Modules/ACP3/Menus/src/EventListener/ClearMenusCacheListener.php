@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearMenusCacheListener implements EventSubscriberInterface
 {
-    public function __construct(private CacheItemPoolInterface $menusCachePool)
+    public function __construct(private readonly CacheItemPoolInterface $menusCachePool)
     {
     }
 

@@ -17,7 +17,7 @@ class ModelSaveEvent extends Event
      * @param int|array<string, string|int>|null $entryId
      * @param array<string, mixed>|null          $currentData
      */
-    public function __construct(private string $moduleName, private array $filteredData, private array $rawData, private array|int|null $entryId, private bool $isNewEntry, private bool $hasDataChanges, private string $tableName, private ?array $currentData)
+    public function __construct(private readonly string $moduleName, private readonly array $filteredData, private readonly array $rawData, private readonly array|int|null $entryId, private readonly bool $isNewEntry, private readonly bool $hasDataChanges, private readonly string $tableName, private readonly ?array $currentData)
     {
     }
 

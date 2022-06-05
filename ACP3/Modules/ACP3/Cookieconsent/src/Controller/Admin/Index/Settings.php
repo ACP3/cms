@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Cookieconsent\ViewProviders\AdminSettingsViewProvider;
 
 class Settings extends AbstractWidgetAction
 {
-    public function __construct(Context $context, private AdminSettingsViewProvider $adminSettingsViewProvider)
+    public function __construct(Context $context, private readonly AdminSettingsViewProvider $adminSettingsViewProvider)
     {
         parent::__construct($context);
     }

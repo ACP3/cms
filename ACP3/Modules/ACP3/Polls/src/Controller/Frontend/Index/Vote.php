@@ -14,9 +14,9 @@ class Vote extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Core\Date $date,
-        private Polls\Repository\PollRepository $pollRepository,
-        private Polls\ViewProviders\PollVoteViewProvider $pollVoteViewProvider
+        private readonly Core\Date $date,
+        private readonly Polls\Repository\PollRepository $pollRepository,
+        private readonly Polls\ViewProviders\PollVoteViewProvider $pollVoteViewProvider
     ) {
         parent::__construct($context);
     }

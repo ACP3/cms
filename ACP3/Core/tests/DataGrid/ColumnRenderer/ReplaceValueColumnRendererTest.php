@@ -15,15 +15,12 @@ class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
 
         $this->columnRenderer = new ReplaceValueColumnRenderer();
 
-        $this->columnData = array_merge(
-            $this->getColumnDefaults(),
-            [
-                'custom' => [
-                    'search' => [],
-                    'replace' => [],
-                ],
-            ]
-        );
+        $this->columnData = [...$this->getColumnDefaults(), ...[
+            'custom' => [
+                'search' => [],
+                'replace' => [],
+            ],
+        ]];
     }
 
     public function testValidField(): void

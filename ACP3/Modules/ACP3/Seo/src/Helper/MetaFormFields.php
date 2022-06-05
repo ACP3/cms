@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 
 class MetaFormFields
 {
-    public function __construct(private MetaStatementsServiceInterface $metaStatements, private Translator $translator, private RequestInterface $request, private Aliases $aliases, private Forms $formsHelper)
+    public function __construct(private readonly MetaStatementsServiceInterface $metaStatements, private readonly Translator $translator, private readonly RequestInterface $request, private readonly Aliases $aliases, private readonly Forms $formsHelper)
     {
     }
 

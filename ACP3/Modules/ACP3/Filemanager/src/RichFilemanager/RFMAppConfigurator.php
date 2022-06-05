@@ -13,7 +13,7 @@ use RFM\Repository\StorageInterface;
 
 class RFMAppConfigurator
 {
-    public function __construct(private StorageInterface $storage)
+    public function __construct(private readonly StorageInterface $storage)
     {
     }
 

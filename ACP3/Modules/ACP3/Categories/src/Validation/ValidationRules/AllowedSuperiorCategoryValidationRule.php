@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AllowedSuperiorCategoryValidationRule extends AbstractValidationRule
 {
-    public function __construct(private CategoryRepository $categoriesRepository)
+    public function __construct(private readonly CategoryRepository $categoriesRepository)
     {
     }
 

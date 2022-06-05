@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserNameValidationRule extends AbstractValidationRule
 {
-    public function __construct(private IntegerValidationRule $integerValidationRule)
+    public function __construct(private readonly IntegerValidationRule $integerValidationRule)
     {
     }
 

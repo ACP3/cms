@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddJsSvgIconsListener implements EventSubscriberInterface
 {
-    public function __construct(private Icon $iconViewHelper)
+    public function __construct(private readonly Icon $iconViewHelper)
     {
     }
 

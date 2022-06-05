@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class GalleryExistsValidationRule extends AbstractValidationRule
 {
-    public function __construct(private GalleryRepository $galleryRepository)
+    public function __construct(private readonly GalleryRepository $galleryRepository)
     {
     }
 

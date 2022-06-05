@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckMaintenanceModeListener implements EventSubscriberInterface
 {
-    public function __construct(private ApplicationPath $appPath, private SettingsInterface $settings, private View $view)
+    public function __construct(private readonly ApplicationPath $appPath, private readonly SettingsInterface $settings, private readonly View $view)
     {
     }
 

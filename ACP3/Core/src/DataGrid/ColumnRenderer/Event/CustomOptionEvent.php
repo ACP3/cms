@@ -15,7 +15,7 @@ class CustomOptionEvent extends Event
     /**
      * @param array<string, mixed> $dbResultRow
      */
-    public function __construct(private OptionRenderer $optionRenderer, private array $dbResultRow, private string $identifier)
+    public function __construct(private readonly OptionRenderer $optionRenderer, private readonly array $dbResultRow, private readonly string $identifier)
     {
     }
 

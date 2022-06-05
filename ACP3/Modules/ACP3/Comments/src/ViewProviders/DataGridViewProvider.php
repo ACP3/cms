@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGridViewProvider
 {
-    public function __construct(private DataGrid $dataGrid, private CommentsByModuleDataGridRepository $dataGridRepository, private ResultsPerPage $resultsPerPage, private Translator $translator)
+    public function __construct(private readonly DataGrid $dataGrid, private readonly CommentsByModuleDataGridRepository $dataGridRepository, private readonly ResultsPerPage $resultsPerPage, private readonly Translator $translator)
     {
     }
 

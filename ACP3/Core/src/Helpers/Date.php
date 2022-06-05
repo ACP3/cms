@@ -11,7 +11,7 @@ use ACP3\Core\I18n\Translator;
 
 class Date
 {
-    public function __construct(private Translator $translator, private Forms $formsHelper)
+    public function __construct(private readonly Translator $translator, private readonly Forms $formsHelper)
     {
     }
 

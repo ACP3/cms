@@ -15,7 +15,7 @@ class Request extends \ACP3\Core\Http\Request
 {
     public function __construct(
         RequestStack $requestStack,
-        private SeoRepository $seoRepository
+        private readonly SeoRepository $seoRepository
     ) {
         parent::__construct($requestStack);
     }
@@ -63,11 +63,11 @@ class Request extends \ACP3\Core\Http\Request
 
             $length = 0;
             foreach ($query as $row) {
-                if (str_contains($row, '_')) {
+                if (str_contains((string) $row, '_')) {
                     break;
                 }
 
-                $length += \strlen($row) + 1;
+                $length += \strlen((string) $row) + 1;
             }
             $params = substr($this->query, $length);
             $probableQuery = substr($this->query, 0, $length);

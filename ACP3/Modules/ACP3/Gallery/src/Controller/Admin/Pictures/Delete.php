@@ -16,8 +16,8 @@ class Delete extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Gallery\Model\PictureModel $pictureModel
+        private readonly FormAction $actionHelper,
+        private readonly Gallery\Model\PictureModel $pictureModel
     ) {
         parent::__construct($context);
     }

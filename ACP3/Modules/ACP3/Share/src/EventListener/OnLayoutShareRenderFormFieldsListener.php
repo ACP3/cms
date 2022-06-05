@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnLayoutShareRenderFormFieldsListener implements EventSubscriberInterface
 {
-    public function __construct(private ACL $acl, private View $view, private ShareFormFields $shareFormFields)
+    public function __construct(private readonly ACL $acl, private readonly View $view, private readonly ShareFormFields $shareFormFields)
     {
     }
 
@@ -27,10 +27,7 @@ class OnLayoutShareRenderFormFieldsListener implements EventSubscriberInterface
         if ($this->acl->hasPermission('admin/share/index/create')) {
             $parameters = $event->getParameters();
 
-            $formFields = array_merge(
-                $this->shareFormFields->formFields($parameters['path'] ?? ''),
-                ['uri_pattern' => $parameters['uri_pattern'] ?? '']
-            );
+            $formFields = [...$this->shareFormFields->formFields($parameters['path'] ?? ''), ...['uri_pattern' => $parameters['uri_pattern'] ?? '']];
 
             $this->view->assign('share', $formFields);
 

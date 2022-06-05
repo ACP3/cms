@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Guestbook\Installer\Schema as GuestbookSchema;
 
 class AdminGuestbookEditViewProvider
 {
-    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings, private Title $title)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Title $title)
     {
     }
 

@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnMenusModelBeforeDeleteListener implements EventSubscriberInterface
 {
-    public function __construct(private MenuRepository $menuRepository, private MenuItemRepository $menuItemRepository, private MenuItemsModel $menuItemsModel)
+    public function __construct(private readonly MenuRepository $menuRepository, private readonly MenuItemRepository $menuItemRepository, private readonly MenuItemsModel $menuItemsModel)
     {
     }
 

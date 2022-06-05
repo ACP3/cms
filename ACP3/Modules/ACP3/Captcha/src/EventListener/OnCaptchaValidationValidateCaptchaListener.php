@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnCaptchaValidationValidateCaptchaListener implements EventSubscriberInterface
 {
-    public function __construct(private Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
     }
 

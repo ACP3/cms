@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Permissions\Repository\AclResourceRepository;
 
 class ResourceListDataGridViewProvider
 {
-    public function __construct(private ACL $acl, private Modules $modules, private AclResourceRepository $resourceRepository, private Translator $translator)
+    public function __construct(private readonly ACL $acl, private readonly Modules $modules, private readonly AclResourceRepository $resourceRepository, private readonly Translator $translator)
     {
     }
 

@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 
 class ThumbnailGenerator
 {
-    public function __construct(private ApplicationPath $appPath, private SettingsInterface $settings, private Picture $picture, private Upload $galleryUploadHelper)
+    public function __construct(private readonly ApplicationPath $appPath, private readonly SettingsInterface $settings, private readonly Picture $picture, private readonly Upload $galleryUploadHelper)
     {
     }
 

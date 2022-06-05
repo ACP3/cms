@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Comments\Repository\CommentRepository;
 
 class CommentListViewProvider
 {
-    public function __construct(private Modules $modules, private Pagination $pagination, private ResultsPerPage $resultsPerPage, private SettingsInterface $settings, private Translator $translator, private CommentRepository $commentRepository)
+    public function __construct(private readonly Modules $modules, private readonly Pagination $pagination, private readonly ResultsPerPage $resultsPerPage, private readonly SettingsInterface $settings, private readonly Translator $translator, private readonly CommentRepository $commentRepository)
     {
     }
 

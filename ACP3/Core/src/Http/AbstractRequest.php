@@ -22,7 +22,7 @@ abstract class AbstractRequest implements RequestInterface
      */
     protected ?UserAgent $userAgent = null;
 
-    public function __construct(private RequestStack $requestStack)
+    public function __construct(private readonly RequestStack $requestStack)
     {
         $this->fillParameterBags();
     }

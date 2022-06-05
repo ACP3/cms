@@ -19,7 +19,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Context $context,
-        private ContactDetailsViewProvider $contactDetailsViewProvider
+        private readonly ContactDetailsViewProvider $contactDetailsViewProvider
     ) {
         parent::__construct($context);
     }

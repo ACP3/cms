@@ -15,8 +15,8 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Search\ViewProviders\SearchViewProvider $searchViewProvider,
-        private ServiceLocator $controllerActionServiceLocator
+        private readonly Search\ViewProviders\SearchViewProvider $searchViewProvider,
+        private readonly ServiceLocator $controllerActionServiceLocator
     ) {
         parent::__construct($context);
     }

@@ -21,7 +21,7 @@ class Modules
      */
     private array|null $allModulesTopSorted = null;
 
-    public function __construct(private ModuleInfoInterface $moduleInfo)
+    public function __construct(private readonly ModuleInfoInterface $moduleInfo)
     {
     }
 
@@ -119,7 +119,7 @@ class Modules
             $modules = $this->getAllModules();
 
             foreach ($modules as $module) {
-                $topSort->add(strtolower($module['name']), $module['dependencies']);
+                $topSort->add(strtolower((string) $module['name']), $module['dependencies']);
             }
 
             foreach ($topSort->sort() as $module) {

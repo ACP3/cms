@@ -19,11 +19,11 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Core\Modules $modules,
-        private UserModelInterface $user,
-        private Comments\Model\CommentsModel $commentsModel,
-        private Comments\Validation\FormValidation $formValidation
+        private readonly FormAction $actionHelper,
+        private readonly Core\Modules $modules,
+        private readonly UserModelInterface $user,
+        private readonly Comments\Model\CommentsModel $commentsModel,
+        private readonly Comments\Validation\FormValidation $formValidation
     ) {
         parent::__construct($context);
     }

@@ -15,7 +15,7 @@ use ACP3\Core\I18n\Translator;
 
 class AdminCommentEditViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private Steps $breadcrumb, private Title $title, private Translator $translator)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly Steps $breadcrumb, private readonly Title $title, private readonly Translator $translator)
     {
     }
 

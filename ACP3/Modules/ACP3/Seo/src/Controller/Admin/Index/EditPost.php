@@ -18,9 +18,9 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Seo\Model\SeoModel $seoModel,
-        private Seo\Validation\AdminFormValidation $adminFormValidation
+        private readonly FormAction $actionHelper,
+        private readonly Seo\Model\SeoModel $seoModel,
+        private readonly Seo\Validation\AdminFormValidation $adminFormValidation
     ) {
         parent::__construct($context);
     }

@@ -20,12 +20,12 @@ class RegisterPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private FormAction $actionHelper,
-        private Core\Helpers\Alerts $alertsHelper,
-        private Users\Model\UsersModel $usersModel,
-        private Users\Validation\RegistrationFormValidation $registrationFormValidation,
-        private Permissions\Helpers $permissionsHelpers
+        private readonly ApplicationPath $applicationPath,
+        private readonly FormAction $actionHelper,
+        private readonly Core\Helpers\Alerts $alertsHelper,
+        private readonly Users\Model\UsersModel $usersModel,
+        private readonly Users\Validation\RegistrationFormValidation $registrationFormValidation,
+        private readonly Permissions\Helpers $permissionsHelpers
     ) {
         parent::__construct($context);
     }

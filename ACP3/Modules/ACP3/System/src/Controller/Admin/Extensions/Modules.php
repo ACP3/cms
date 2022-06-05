@@ -25,16 +25,16 @@ class Modules extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private ApplicationPath $applicationPath,
-        private EventDispatcher $eventDispatcher,
-        private RedirectMessages $redirectMessages,
-        private Core\Modules $modules,
-        private Installer $installerHelper,
-        private ContainerInterface $schemaLocator,
-        private Core\Installer\SchemaInstaller $schemaInstaller,
-        private Core\Installer\AclInstaller $aclInstaller,
-        private AdminModulesViewProvider $adminModulesViewProvider,
-        private CacheClearService $cacheClearService
+        private readonly ApplicationPath $applicationPath,
+        private readonly EventDispatcher $eventDispatcher,
+        private readonly RedirectMessages $redirectMessages,
+        private readonly Core\Modules $modules,
+        private readonly Installer $installerHelper,
+        private readonly ContainerInterface $schemaLocator,
+        private readonly Core\Installer\SchemaInstaller $schemaInstaller,
+        private readonly Core\Installer\AclInstaller $aclInstaller,
+        private readonly AdminModulesViewProvider $adminModulesViewProvider,
+        private readonly CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
     }

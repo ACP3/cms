@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class InvalidatePageCacheOnModelAfterSaveListener implements EventSubscriberInterface
 {
-    public function __construct(private SettingsInterface $settings, private CanUsePageCache $canUsePageCache, private CacheClearService $cacheClearService)
+    public function __construct(private readonly SettingsInterface $settings, private readonly CanUsePageCache $canUsePageCache, private readonly CacheClearService $cacheClearService)
     {
     }
 

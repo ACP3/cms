@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FormAction
 {
-    public function __construct(private Core\Database\Connection $db, private Core\I18n\Translator $translator, private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Core\Helpers\Alerts $alerts, private Core\Helpers\RedirectMessages $redirectMessages)
+    public function __construct(private readonly Core\Database\Connection $db, private readonly Core\I18n\Translator $translator, private readonly Core\Http\RequestInterface $request, private readonly Core\Router\RouterInterface $router, private readonly Core\Helpers\Alerts $alerts, private readonly Core\Helpers\RedirectMessages $redirectMessages)
     {
     }
 
@@ -235,8 +235,8 @@ class FormAction
             return $entries;
         }
 
-        if ((bool) preg_match('/^((\d+)\|)*(\d+)$/', $this->request->getParameters()->get('entries')) === true) {
-            return explode('|', $this->request->getParameters()->get('entries'));
+        if ((bool) preg_match('/^((\d+)\|)*(\d+)$/', (string) $this->request->getParameters()->get('entries')) === true) {
+            return explode('|', (string) $this->request->getParameters()->get('entries'));
         }
 
         return [];

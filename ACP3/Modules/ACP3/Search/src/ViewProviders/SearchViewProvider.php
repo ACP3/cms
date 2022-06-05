@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Search\Helpers;
 
 class SearchViewProvider
 {
-    public function __construct(private Forms $formsHelper, private Helpers $searchHelpers, private RequestInterface $request, private Translator $translator)
+    public function __construct(private readonly Forms $formsHelper, private readonly Helpers $searchHelpers, private readonly RequestInterface $request, private readonly Translator $translator)
     {
     }
 

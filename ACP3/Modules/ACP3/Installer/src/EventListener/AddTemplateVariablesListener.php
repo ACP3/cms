@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddTemplateVariablesListener implements EventSubscriberInterface
 {
-    public function __construct(private ApplicationPath $appPath, private Forms $formsHelper, private ThemePathInterface $theme, private Translator $translator, private View $view, private RequestInterface $request)
+    public function __construct(private readonly ApplicationPath $appPath, private readonly Forms $formsHelper, private readonly ThemePathInterface $theme, private readonly Translator $translator, private readonly View $view, private readonly RequestInterface $request)
     {
     }
 

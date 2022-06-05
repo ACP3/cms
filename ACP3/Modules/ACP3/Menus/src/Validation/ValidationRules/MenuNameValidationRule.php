@@ -21,6 +21,6 @@ class MenuNameValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return preg_match('/^[a-zA-Z]+\w/', $data) === 1;
+        return preg_match('/^[a-zA-Z]+\w/', (string) $data) === 1;
     }
 }

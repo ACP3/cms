@@ -24,8 +24,8 @@ final class ServiceContainerBuilder extends ContainerBuilder
      * @throws \Exception
      */
     public function __construct(
-        private LoggerInterface $logger,
-        private ApplicationPath $applicationPath
+        private readonly LoggerInterface $logger,
+        private readonly ApplicationPath $applicationPath
     ) {
         parent::__construct();
 

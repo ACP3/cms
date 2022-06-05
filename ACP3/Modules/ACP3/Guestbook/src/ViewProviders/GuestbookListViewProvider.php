@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Guestbook\Repository\GuestbookRepository;
 
 class GuestbookListViewProvider
 {
-    public function __construct(private GuestbookRepository $guestbookRepository, private Pagination $pagination, private ResultsPerPage $resultsPerPage, private SettingsInterface $settings)
+    public function __construct(private readonly GuestbookRepository $guestbookRepository, private readonly Pagination $pagination, private readonly ResultsPerPage $resultsPerPage, private readonly SettingsInterface $settings)
     {
     }
 

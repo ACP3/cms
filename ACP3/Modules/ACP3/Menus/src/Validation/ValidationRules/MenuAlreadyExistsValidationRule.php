@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MenuAlreadyExistsValidationRule extends AbstractValidationRule
 {
-    public function __construct(private MenuRepository $menuRepository)
+    public function __construct(private readonly MenuRepository $menuRepository)
     {
     }
 

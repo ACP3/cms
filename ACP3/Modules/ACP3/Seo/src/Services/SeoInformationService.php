@@ -16,7 +16,7 @@ class SeoInformationService
      */
     private ?array $cache = null;
 
-    public function __construct(private SeoRepository $seoRepository)
+    public function __construct(private readonly SeoRepository $seoRepository)
     {
     }
 

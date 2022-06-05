@@ -24,7 +24,7 @@ class AuthenticationModel implements AuthenticationModelInterface
     private const SALT_LENGTH = 16;
     private const REMEMBER_ME_COOKIE_LIFETIME = 31_104_000;
 
-    public function __construct(private RequestInterface $request, private ApplicationPath $appPath, private Session $sessionHandler, private Secure $secureHelper, private UserModelInterface $userModel, private UserRepository $userRepository)
+    public function __construct(private readonly RequestInterface $request, private readonly ApplicationPath $appPath, private readonly Session $sessionHandler, private readonly Secure $secureHelper, private readonly UserModelInterface $userModel, private readonly UserRepository $userRepository)
     {
     }
 
@@ -152,7 +152,7 @@ class AuthenticationModel implements AuthenticationModelInterface
 
     protected function getCookieDomain(): string
     {
-        if (str_contains($this->request->getServer()->get('HTTP_HOST'), '.')) {
+        if (str_contains((string) $this->request->getServer()->get('HTTP_HOST'), '.')) {
             return $this->request->getServer()->get('HTTP_HOST', '');
         }
 
@@ -200,7 +200,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      */
     protected function userHasOldPassword(string $password, array $user): bool
     {
-        return \strlen($user['pwd']) === 40
+        return \strlen((string) $user['pwd']) === 40
         && $user['pwd'] === $this->secureHelper->generateSaltedPassword($user['pwd_salt'], $password);
     }
 }

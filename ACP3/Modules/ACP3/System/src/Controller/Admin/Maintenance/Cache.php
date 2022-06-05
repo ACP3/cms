@@ -19,8 +19,8 @@ class Cache extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private RedirectMessages $redirectMessages,
-        private System\Services\CacheClearService $cacheClearService
+        private readonly RedirectMessages $redirectMessages,
+        private readonly System\Services\CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
     }

@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
 {
-    public function __construct(private Date $date, private RouterInterface $router, private StringFormatter $formatter, private NewsRepository $newsRepository)
+    public function __construct(private readonly Date $date, private readonly RouterInterface $router, private readonly StringFormatter $formatter, private readonly NewsRepository $newsRepository)
     {
     }
 

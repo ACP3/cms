@@ -19,9 +19,9 @@ class OrderPost extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private RedirectResponse $redirectResponse,
-        private CategoryRepository $categoriesRepository,
-        private CategoriesModel $categoriesModel
+        private readonly RedirectResponse $redirectResponse,
+        private readonly CategoryRepository $categoriesRepository,
+        private readonly CategoriesModel $categoriesModel
     ) {
         parent::__construct($context);
     }

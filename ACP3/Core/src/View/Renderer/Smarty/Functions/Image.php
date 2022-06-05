@@ -13,7 +13,7 @@ use ACP3\Core\Http\RequestInterface;
 
 class Image extends AbstractFunction
 {
-    public function __construct(private RequestInterface $request, private FileResolver $fileResolver)
+    public function __construct(private readonly RequestInterface $request, private readonly FileResolver $fileResolver)
     {
     }
 
@@ -22,7 +22,7 @@ class Image extends AbstractFunction
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
-        if (isset($params['file'], $params['module']) === true && (bool) preg_match('=\./=', $params['file']) === false) {
+        if (isset($params['file'], $params['module']) === true && (bool) preg_match('=\./=', (string) $params['file']) === false) {
             $file = $params['file'];
 
             $path = $this->fileResolver->getWebStaticAssetPath($params['module'], 'Assets/img', $file);

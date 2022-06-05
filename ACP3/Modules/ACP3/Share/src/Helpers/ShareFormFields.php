@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class ShareFormFields
 {
-    public function __construct(private SettingsInterface $settings, private Translator $translator, private Forms $formsHelper, private SocialServices $socialServices, private ShareRepository $shareRepository)
+    public function __construct(private readonly SettingsInterface $settings, private readonly Translator $translator, private readonly Forms $formsHelper, private readonly SocialServices $socialServices, private readonly ShareRepository $shareRepository)
     {
     }
 

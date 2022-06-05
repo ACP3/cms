@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Share\Helpers\ShareFormFields;
 
 class AdminShareEditViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private ShareFormFields $shareFormFields)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly ShareFormFields $shareFormFields)
     {
     }
 

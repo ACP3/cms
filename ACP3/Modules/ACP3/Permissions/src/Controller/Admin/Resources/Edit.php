@@ -14,14 +14,13 @@ class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context                                 $context,
-        private Permissions\Model\AclResourceModel                      $resourcesModel,
-        private Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
+        private readonly Permissions\Model\AclResourceModel                      $resourcesModel,
+        private readonly Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
     ) {
         parent::__construct($context);
     }
 
     /**
-     * @param int $id
      * @return array<string, mixed>
      * @throws \Doctrine\DBAL\Exception
      * @throws \ReflectionException

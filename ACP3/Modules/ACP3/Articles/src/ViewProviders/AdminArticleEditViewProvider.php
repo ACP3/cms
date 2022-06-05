@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Articles\Helpers;
 
 class AdminArticleEditViewProvider
 {
-    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private ThemePathInterface $theme, private Title $title, private Translator $translator)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly ThemePathInterface $theme, private readonly Title $title, private readonly Translator $translator)
     {
     }
 
@@ -62,10 +62,10 @@ class AdminArticleEditViewProvider
             $layouts = array_merge($layouts, glob($path));
         }
 
-        $layouts = array_map(fn ($value) => str_replace([$this->theme->getDesignPathInternal() . '/', '/View/'], ['', '/'], $value), $layouts);
+        $layouts = array_map(fn ($value) => str_replace([$this->theme->getDesignPathInternal() . '/', '/View/'], ['', '/'], (string) $value), $layouts);
 
         $layouts = array_combine($layouts, $layouts);
 
-        return array_merge(['' => $this->translator->t('articles', 'default_layout')], $layouts);
+        return [...['' => $this->translator->t('articles', 'default_layout')], ...$layouts];
     }
 }

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MaintenanceModeEnableCommand extends Command
 {
-    public function __construct(private SettingsInterface $settings)
+    public function __construct(private readonly SettingsInterface $settings)
     {
         parent::__construct();
     }

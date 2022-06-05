@@ -11,7 +11,7 @@ use Psr\Container\ContainerInterface;
 
 class DataProcessor
 {
-    public function __construct(private ContainerInterface $columnTypeStrategyLocator)
+    public function __construct(private readonly ContainerInterface $columnTypeStrategyLocator)
     {
     }
 

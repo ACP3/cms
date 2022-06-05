@@ -21,7 +21,7 @@ class CacheClearService
     /**
      * @var array<string, array<string, string|callable>>
      */
-    private array $cacheTypes;
+    private readonly array $cacheTypes;
 
     public function __construct(
         ApplicationPath $appPath,

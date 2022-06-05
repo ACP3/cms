@@ -20,7 +20,7 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
      */
     private ?array $stylesheets = null;
 
-    public function __construct(private Assets $assets, private Libraries $libraries, private FileResolver $fileResolver)
+    public function __construct(private readonly Assets $assets, private readonly Libraries $libraries, private readonly FileResolver $fileResolver)
     {
     }
 

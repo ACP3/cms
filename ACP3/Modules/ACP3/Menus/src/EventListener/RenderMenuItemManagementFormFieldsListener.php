@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInterface
 {
-    public function __construct(private ACL $acl, private Translator $translator, private View $view, private Forms $forms, private MenuItemFormFields $menuItemFormFields, private MenuItemRepository $menuItemRepository)
+    public function __construct(private readonly ACL $acl, private readonly Translator $translator, private readonly View $view, private readonly Forms $forms, private readonly MenuItemFormFields $menuItemFormFields, private readonly MenuItemRepository $menuItemRepository)
     {
     }
 

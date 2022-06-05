@@ -14,7 +14,7 @@ class Create extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context                                 $context,
-        private Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
+        private readonly Permissions\ViewProviders\AdminResourceEditViewProvider $adminResourceEditViewProvider
     ) {
         parent::__construct($context);
     }

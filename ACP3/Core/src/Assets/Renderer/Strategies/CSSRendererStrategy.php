@@ -21,7 +21,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      */
     private ?array $stylesheets = null;
 
-    public function __construct(private Assets $assets, private Libraries $libraries, private Modules $modules, private FileResolver $fileResolver)
+    public function __construct(private readonly Assets $assets, private readonly Libraries $libraries, private readonly Modules $modules, private readonly FileResolver $fileResolver)
     {
     }
 

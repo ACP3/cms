@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class HandleGenericErrorsExceptionListener implements EventSubscriberInterface
 {
-    public function __construct(private ControllerActionDispatcher $controllerActionDispatcher, private ApplicationMode $applicationMode, private ?string $serviceId = null)
+    public function __construct(private readonly ControllerActionDispatcher $controllerActionDispatcher, private readonly ApplicationMode $applicationMode, private readonly ?string $serviceId = null)
     {
     }
 

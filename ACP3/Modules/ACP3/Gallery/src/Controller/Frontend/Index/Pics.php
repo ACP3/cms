@@ -18,9 +18,9 @@ class Pics extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Core\Date $date,
-        private Gallery\Repository\GalleryRepository $galleryRepository,
-        private Gallery\ViewProviders\GalleryPictureListViewProvider $galleryPictureListViewProvider
+        private readonly Core\Date $date,
+        private readonly Gallery\Repository\GalleryRepository $galleryRepository,
+        private readonly Gallery\ViewProviders\GalleryPictureListViewProvider $galleryPictureListViewProvider
     ) {
         parent::__construct($context);
     }

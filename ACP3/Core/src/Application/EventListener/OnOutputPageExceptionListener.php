@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnOutputPageExceptionListener implements EventSubscriberInterface
 {
-    public function __construct(private LoggerInterface $logger)
+    public function __construct(private readonly LoggerInterface $logger)
     {
     }
 

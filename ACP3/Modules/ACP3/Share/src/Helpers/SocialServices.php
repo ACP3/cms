@@ -40,7 +40,7 @@ class SocialServices
         'info',
     ];
 
-    public function __construct(private SettingsInterface $settings, private SocialSharingBackendServiceLocator $locator)
+    public function __construct(private readonly SettingsInterface $settings, private readonly SocialSharingBackendServiceLocator $locator)
     {
     }
 

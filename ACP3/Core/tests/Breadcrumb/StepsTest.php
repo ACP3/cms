@@ -132,7 +132,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
     {
         $this->routerMock->expects(self::atLeastOnce())
             ->method('route')
-            ->willReturnCallback(fn ($path) => '/' . $path . (!preg_match('=/$=', $path) ? '/' : ''));
+            ->willReturnCallback(fn ($path) => '/' . $path . (!preg_match('=/$=', (string) $path) ? '/' : ''));
     }
 
     protected function setUpTranslatorMockExpectations(int $callCount = 1): void

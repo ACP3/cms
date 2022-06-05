@@ -11,7 +11,7 @@ use ACP3\Core\I18n\Translator;
 
 class MarkEntries
 {
-    public function __construct(private Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
     }
 

@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Emoticons\Services\EmoticonServiceInterface;
 
 class EmoticonsContentDecorator implements ContentDecoratorInterface
 {
-    public function __construct(private Modules $modules, private EmoticonServiceInterface $emoticonService)
+    public function __construct(private readonly Modules $modules, private readonly EmoticonServiceInterface $emoticonService)
     {
     }
 

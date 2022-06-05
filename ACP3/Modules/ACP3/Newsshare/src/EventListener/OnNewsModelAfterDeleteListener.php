@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnNewsModelAfterDeleteListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private SocialSharingManager $socialSharingManager)
+    public function __construct(private readonly Modules $modules, private readonly SocialSharingManager $socialSharingManager)
     {
     }
 

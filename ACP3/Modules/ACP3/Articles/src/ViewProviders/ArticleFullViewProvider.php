@@ -11,7 +11,7 @@ use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class ArticleFullViewProvider
 {
-    public function __construct(private ArticleRepository $articleRepository)
+    public function __construct(private readonly ArticleRepository $articleRepository)
     {
     }
 

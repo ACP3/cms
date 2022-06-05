@@ -13,7 +13,7 @@ use ACP3\Core\Modules;
 
 class ModuleListViewProvider
 {
-    public function __construct(private ACL $acl, private Modules $modules, private Translator $translator)
+    public function __construct(private readonly ACL $acl, private readonly Modules $modules, private readonly Translator $translator)
     {
     }
 
@@ -35,7 +35,7 @@ class ModuleListViewProvider
         $allowedModules = [];
 
         foreach ($this->modules->getInstalledModules() as $info) {
-            $moduleName = strtolower($info['name']);
+            $moduleName = strtolower((string) $info['name']);
             if ($moduleName !== 'acp' && $this->acl->hasPermission('admin/' . $moduleName) === true) {
                 $allowedModules[$this->translator->t($moduleName, $moduleName)] = $moduleName;
             }

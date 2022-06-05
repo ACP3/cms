@@ -11,7 +11,7 @@ use ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategyInterface;
 
 class CSSRenderer implements RendererInterface
 {
-    public function __construct(private CSSRendererStrategyInterface $cssRendererStrategy, private CSSRendererStrategyInterface $deferrableCssRendererStrategy)
+    public function __construct(private readonly CSSRendererStrategyInterface $cssRendererStrategy, private readonly CSSRendererStrategyInterface $deferrableCssRendererStrategy)
     {
     }
 

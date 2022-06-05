@@ -14,7 +14,7 @@ use ACP3\Core\Router\RouterInterface;
 
 class CheckAccess
 {
-    public function __construct(private ACL $acl, private Translator $translator, private RouterInterface $router)
+    public function __construct(private readonly ACL $acl, private readonly Translator $translator, private readonly RouterInterface $router)
     {
     }
 
@@ -87,7 +87,7 @@ class CheckAccess
     private function collectData(array $params, array $action, AreaEnum $area): array
     {
         if (isset($params['lang'])) {
-            $langArray = explode('|', $params['lang']);
+            $langArray = explode('|', (string) $params['lang']);
 
             $lang = $this->translator->t($langArray[0], $langArray[1]);
         } else {

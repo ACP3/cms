@@ -18,9 +18,9 @@ class Single extends Core\Controller\AbstractWidgetAction
 
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Core\Date $date,
-        private Articles\Repository\ArticleRepository $articleRepository,
-        private Articles\ViewProviders\ArticleFullViewProvider $articleFullViewProvider
+        private readonly Core\Date $date,
+        private readonly Articles\Repository\ArticleRepository $articleRepository,
+        private readonly Articles\ViewProviders\ArticleFullViewProvider $articleFullViewProvider
     ) {
         parent::__construct($context);
     }

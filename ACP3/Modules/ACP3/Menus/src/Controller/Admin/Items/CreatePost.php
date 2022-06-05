@@ -18,9 +18,9 @@ class CreatePost extends AbstractFormAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Menus\Model\MenuItemsModel $menuItemsModel,
-        private Menus\Validation\MenuItemFormValidation $menuItemFormValidation
+        private readonly FormAction $actionHelper,
+        private readonly Menus\Model\MenuItemsModel $menuItemsModel,
+        private readonly Menus\Validation\MenuItemFormValidation $menuItemFormValidation
     ) {
         parent::__construct($context);
     }

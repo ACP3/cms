@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class FilesWidgetViewProvider
 {
-    public function __construct(private CategoryRepository $categoryRepository, private Date $date, private FilesRepository $filesRepository, private SettingsInterface $settings)
+    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly Date $date, private readonly FilesRepository $filesRepository, private readonly SettingsInterface $settings)
     {
     }
 

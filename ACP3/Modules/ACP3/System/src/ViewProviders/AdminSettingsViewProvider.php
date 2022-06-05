@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class AdminSettingsViewProvider
 {
-    public function __construct(private Date $dateHelper, private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings, private Translator $translator, private ServiceLocator $editorLocator)
+    public function __construct(private readonly Date $dateHelper, private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Translator $translator, private readonly ServiceLocator $editorLocator)
     {
     }
 

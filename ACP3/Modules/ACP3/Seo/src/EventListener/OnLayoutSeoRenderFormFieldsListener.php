@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnLayoutSeoRenderFormFieldsListener implements EventSubscriberInterface
 {
-    public function __construct(private ACL $acl, private View $view, private MetaFormFields $metaFormFields)
+    public function __construct(private readonly ACL $acl, private readonly View $view, private readonly MetaFormFields $metaFormFields)
     {
     }
 
@@ -24,10 +24,7 @@ class OnLayoutSeoRenderFormFieldsListener implements EventSubscriberInterface
         if ($this->acl->hasPermission('admin/seo/index/create')) {
             $parameters = $event->getParameters();
 
-            $formFields = array_merge(
-                $this->metaFormFields->formFields($parameters['path'] ?? ''),
-                ['uri_pattern' => $parameters['uri_pattern'] ?? '']
-            );
+            $formFields = [...$this->metaFormFields->formFields($parameters['path'] ?? ''), ...['uri_pattern' => $parameters['uri_pattern'] ?? '']];
 
             $this->view->assign('seo', $formFields);
 

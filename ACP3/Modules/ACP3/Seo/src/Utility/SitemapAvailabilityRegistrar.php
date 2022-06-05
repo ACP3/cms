@@ -17,7 +17,7 @@ class SitemapAvailabilityRegistrar
      */
     private array $availableModules = [];
 
-    public function __construct(private Modules $modules)
+    public function __construct(private readonly Modules $modules)
     {
     }
 

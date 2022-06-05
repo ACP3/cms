@@ -58,9 +58,9 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'fields' => ['date'],
-        ]);
+        ]];
         $this->dbData = [
             'date' => '2015-10-20 20:20:21',
         ];
@@ -71,9 +71,9 @@ class DateColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidFieldWithDateRange(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'fields' => ['start', 'end'],
-        ]);
+        ]];
         $this->dbData = [
             'start' => '2015-10-20 20:20:21',
             'end' => '2015-10-25 20:20:21',

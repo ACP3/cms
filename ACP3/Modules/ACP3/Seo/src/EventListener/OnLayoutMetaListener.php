@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnLayoutMetaListener implements EventSubscriberInterface
 {
-    public function __construct(private View $view, private MetaStatementsServiceInterface $metaStatements, private ApplicationPath $applicationPath, private RequestInterface $request, private RouterInterface $router, private Aliases $aliases)
+    public function __construct(private readonly View $view, private readonly MetaStatementsServiceInterface $metaStatements, private readonly ApplicationPath $applicationPath, private readonly RequestInterface $request, private readonly RouterInterface $router, private readonly Aliases $aliases)
     {
     }
 

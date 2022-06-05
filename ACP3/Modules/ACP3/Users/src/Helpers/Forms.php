@@ -13,7 +13,7 @@ use ACP3\Core\I18n\Translator;
 
 class Forms
 {
-    public function __construct(protected Translator $translator, private CountryList $country, protected RequestInterface $request, protected \ACP3\Core\Helpers\Forms $formsHelpers)
+    public function __construct(protected Translator $translator, private readonly CountryList $country, protected RequestInterface $request, protected \ACP3\Core\Helpers\Forms $formsHelpers)
     {
     }
 

@@ -17,7 +17,7 @@ class ControllerActionBeforeDispatchEvent extends Event
      */
     private array $serviceIdParts = [];
 
-    public function __construct(private string $controllerServiceId)
+    public function __construct(private readonly string $controllerServiceId)
     {
         $this->splitServiceIdIntoParts();
     }

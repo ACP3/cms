@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnEmoticonsModelBeforeDeleteListener implements EventSubscriberInterface
 {
-    public function __construct(private Upload $emoticonsUploadHelper, protected EmoticonRepository $emoticonRepository)
+    public function __construct(private readonly Upload $emoticonsUploadHelper, protected EmoticonRepository $emoticonRepository)
     {
     }
 

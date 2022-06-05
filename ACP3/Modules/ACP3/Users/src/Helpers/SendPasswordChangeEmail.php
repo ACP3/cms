@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Users\Installer\Schema as UserSchema;
 
 class SendPasswordChangeEmail
 {
-    public function __construct(private RequestInterface $request, private SendEmail $sendEmail, private SettingsInterface $settings, private Translator $translator)
+    public function __construct(private readonly RequestInterface $request, private readonly SendEmail $sendEmail, private readonly SettingsInterface $settings, private readonly Translator $translator)
     {
     }
 

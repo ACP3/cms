@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Acp\ViewProviders\ModuleListViewProvider;
 
 class Index extends Core\Controller\AbstractWidgetAction
 {
-    public function __construct(Context $context, private ModuleListViewProvider $modulesListViewProvider)
+    public function __construct(Context $context, private readonly ModuleListViewProvider $modulesListViewProvider)
     {
         parent::__construct($context);
     }

@@ -12,7 +12,7 @@ use ACP3\Core\Http\RequestInterface;
 
 class NewsletterUnsubscribeViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly RequestInterface $request)
     {
     }
 

@@ -18,9 +18,9 @@ class Index extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private ACL $acl,
-        private MenuRepository $menuRepository,
-        private MenuItemsDataGridViewProvider $menuItemsDataGridViewProvider
+        private readonly ACL $acl,
+        private readonly MenuRepository $menuRepository,
+        private readonly MenuItemsDataGridViewProvider $menuItemsDataGridViewProvider
     ) {
         parent::__construct($context);
     }

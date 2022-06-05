@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PermissionsExistValidationRule extends AbstractValidationRule
 {
-    public function __construct(private AclResourceRepository $resourceRepository)
+    public function __construct(private readonly AclResourceRepository $resourceRepository)
     {
     }
 

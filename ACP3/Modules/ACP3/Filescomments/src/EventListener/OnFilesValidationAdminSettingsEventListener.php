@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnFilesValidationAdminSettingsEventListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private Translator $translator)
+    public function __construct(private readonly Modules $modules, private readonly Translator $translator)
     {
     }
 

@@ -13,7 +13,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class MailerConfigurator
 {
-    public function __construct(private SettingsInterface $settings)
+    public function __construct(private readonly SettingsInterface $settings)
     {
     }
 
@@ -21,7 +21,7 @@ class MailerConfigurator
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        if (strtolower($settings['mailer_type']) === 'smtp') {
+        if (strtolower((string) $settings['mailer_type']) === 'smtp') {
             $phpMailer->set('Mailer', 'smtp');
             $phpMailer->Host = $settings['mailer_smtp_host'];
             $phpMailer->Port = $settings['mailer_smtp_port'];

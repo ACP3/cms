@@ -17,10 +17,10 @@ class ForgotPwd extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private UserModelInterface $user,
-        private Core\Http\RedirectResponse $redirectResponse,
-        private Users\ViewProviders\ForgotPasswordViewProvider $forgotPasswordViewProvider
+        private readonly ApplicationPath $applicationPath,
+        private readonly UserModelInterface $user,
+        private readonly Core\Http\RedirectResponse $redirectResponse,
+        private readonly Users\ViewProviders\ForgotPasswordViewProvider $forgotPasswordViewProvider
     ) {
         parent::__construct($context);
     }

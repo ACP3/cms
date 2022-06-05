@@ -14,7 +14,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private NewsletterSubscribeWidgetViewProvider $newsletterSubscribeWidgetViewProvider
+        private readonly NewsletterSubscribeWidgetViewProvider $newsletterSubscribeWidgetViewProvider
     ) {
         parent::__construct($context);
     }

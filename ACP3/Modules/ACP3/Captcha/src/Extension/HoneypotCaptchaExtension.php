@@ -13,7 +13,7 @@ use ACP3\Core\View;
 
 class HoneypotCaptchaExtension implements CaptchaExtensionInterface
 {
-    public function __construct(private Translator $translator, private View $view, private UserModelInterface $userModel)
+    public function __construct(private readonly Translator $translator, private readonly View $view, private readonly UserModelInterface $userModel)
     {
     }
 

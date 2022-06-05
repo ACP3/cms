@@ -16,7 +16,7 @@ abstract class AbstractModel
 {
     public const EVENT_PREFIX = '';
 
-    public function __construct(protected EventDispatcherInterface $eventDispatcher, private DataProcessor $dataProcessor, protected AbstractRepository $repository)
+    public function __construct(protected EventDispatcherInterface $eventDispatcher, private readonly DataProcessor $dataProcessor, protected AbstractRepository $repository)
     {
     }
 
@@ -154,7 +154,7 @@ abstract class AbstractModel
     protected function prepareData(array $rawData, ?array $currentData): array
     {
         if ($currentData !== null) {
-            $rawData = array_merge($currentData, $rawData);
+            $rawData = [...$currentData, ...$rawData];
         }
 
         $modelSavePrepareDataEvent = new ModelSavePrepareDataEvent($rawData, $currentData, $this->getAllowedColumns());

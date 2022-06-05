@@ -27,7 +27,7 @@ class FeedGenerator
     private ?string $title = null;
     private ?string $description = null;
 
-    public function __construct(private SettingsInterface $config, private RouterInterface $router)
+    public function __construct(private readonly SettingsInterface $config, private readonly RouterInterface $router)
     {
     }
 

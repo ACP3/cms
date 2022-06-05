@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 class MenuConfiguration implements \Stringable
 {
-    public function __construct(private bool $useBootstrap = true, private string $selector = '', private string $dropdownItemSelector = '', private string $tag = 'ul', private string $itemTag = 'li', private string $itemSelectors = '', private string $dropdownWrapperTag = 'li', private string $linkSelector = '', private string $inlineStyle = '')
+    public function __construct(private readonly bool $useBootstrap = true, private readonly string $selector = '', private readonly string $dropdownItemSelector = '', private readonly string $tag = 'ul', private readonly string $itemTag = 'li', private readonly string $itemSelectors = '', private readonly string $dropdownWrapperTag = 'li', private readonly string $linkSelector = '', private readonly string $inlineStyle = '')
     {
     }
 

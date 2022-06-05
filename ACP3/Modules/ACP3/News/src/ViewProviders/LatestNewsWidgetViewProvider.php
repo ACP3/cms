@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class LatestNewsWidgetViewProvider
 {
-    public function __construct(private Date $date, private NewsRepository $newsRepository, private SettingsInterface $settings)
+    public function __construct(private readonly Date $date, private readonly NewsRepository $newsRepository, private readonly SettingsInterface $settings)
     {
     }
 

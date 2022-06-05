@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RoleNotExistsValidationRule extends AbstractValidationRule
 {
-    public function __construct(private AclRoleRepository $roleRepository)
+    public function __construct(private readonly AclRoleRepository $roleRepository)
     {
     }
 

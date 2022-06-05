@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Users\Repository\UserRepository;
 
 class UserListViewProvider
 {
-    public function __construct(private Pagination $pagination, private ResultsPerPage $resultsPerPage, private UserRepository $userRepository)
+    public function __construct(private readonly Pagination $pagination, private readonly ResultsPerPage $resultsPerPage, private readonly UserRepository $userRepository)
     {
     }
 

@@ -38,7 +38,7 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
         EventDispatcherInterface $eventDispatcher,
         DataProcessor $dataProcessor,
         FilesRepository $repository,
-        private Sort $sort)
+        private readonly Sort $sort)
     {
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
     }

@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Event\TerminateEvent;
 
 class CommitCacheListener implements EventSubscriberInterface
 {
-    public function __construct(private ServiceLocator $cacheItemPoolsServiceLocator)
+    public function __construct(private readonly ServiceLocator $cacheItemPoolsServiceLocator)
     {
     }
 

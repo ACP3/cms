@@ -17,8 +17,8 @@ class Index extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private ApplicationPath $applicationPath,
-        private Migrator $migrator
+        private readonly ApplicationPath $applicationPath,
+        private readonly Migrator $migrator
     ) {
         parent::__construct($context);
     }

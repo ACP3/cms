@@ -12,7 +12,7 @@ use ACP3\Core\Migration\MigrationInterface;
 
 final class Migration40 implements MigrationInterface
 {
-    public function __construct(private Connection $db)
+    public function __construct(private readonly Connection $db)
     {
     }
 

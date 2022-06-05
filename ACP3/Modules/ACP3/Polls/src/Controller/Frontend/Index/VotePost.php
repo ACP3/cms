@@ -18,10 +18,10 @@ class VotePost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Core\Date $date,
-        private Polls\Validation\VoteValidation $voteValidation,
-        private Polls\Model\VoteModel $voteModel
+        private readonly FormAction $actionHelper,
+        private readonly Core\Date $date,
+        private readonly Polls\Validation\VoteValidation $voteValidation,
+        private readonly Polls\Model\VoteModel $voteModel
     ) {
         parent::__construct($context);
     }

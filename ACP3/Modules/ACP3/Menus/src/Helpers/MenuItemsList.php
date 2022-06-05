@@ -17,7 +17,7 @@ class MenuItemsList
      */
     private ?array $menuItems = null;
 
-    public function __construct(private Core\Helpers\Forms $formsHelper, private MenuServiceInterface $menuService)
+    public function __construct(private readonly Core\Helpers\Forms $formsHelper, private readonly MenuServiceInterface $menuService)
     {
     }
 

@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Newsletter\Installer\Schema as NewsletterSchema;
 
 class AdminNewsletterEditViewProvider
 {
-    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings, private Title $title, private Translator $translator)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Title $title, private readonly Translator $translator)
     {
     }
 
@@ -39,7 +39,7 @@ class AdminNewsletterEditViewProvider
 
         return [
             'settings' => isset($newsletter['html'])
-                ? array_merge($settings, ['html' => $newsletter['html']])
+                ? [...$settings, ...['html' => $newsletter['html']]]
                 : $settings,
             'test' => $this->formsHelper->yesNoCheckboxGenerator('test', 0),
             'action' => $this->formsHelper->checkboxGenerator('action', $actions, 1),

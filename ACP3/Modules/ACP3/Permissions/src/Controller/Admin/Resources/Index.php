@@ -14,7 +14,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context                                    $context,
-        private Permissions\ViewProviders\ResourceListDataGridViewProvider $resourceListDataGridViewProvider
+        private readonly Permissions\ViewProviders\ResourceListDataGridViewProvider $resourceListDataGridViewProvider
     ) {
         parent::__construct($context);
     }

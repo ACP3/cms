@@ -32,7 +32,7 @@ final class Input
 
     private bool $enableOptions = true;
 
-    private ColumnPriorityQueue $columns;
+    private readonly ColumnPriorityQueue $columns;
 
     private ?string $primaryKey = null;
     /**

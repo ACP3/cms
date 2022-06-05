@@ -20,8 +20,8 @@ class SettingsPost extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private FormAction $actionHelper,
-        private AdminSettingsFormValidation $cookieConsentValidator
+        private readonly FormAction $actionHelper,
+        private readonly AdminSettingsFormValidation $cookieConsentValidator
     ) {
         parent::__construct($context);
     }

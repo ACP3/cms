@@ -21,15 +21,15 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private FormAction $actionHelper,
-        private Core\Validation\Validator $validator,
-        private Core\Helpers\Alerts $alertsHelper,
-        private Core\Helpers\Secure $secureHelper,
-        private Users\Model\UsersModel $usersModel,
-        private Users\Repository\UserRepository $userRepository,
-        private Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
-        private Users\Helpers\SendPasswordChangeEmail $sendPasswordChangeEmail
+        private readonly ApplicationPath $applicationPath,
+        private readonly FormAction $actionHelper,
+        private readonly Core\Validation\Validator $validator,
+        private readonly Core\Helpers\Alerts $alertsHelper,
+        private readonly Core\Helpers\Secure $secureHelper,
+        private readonly Users\Model\UsersModel $usersModel,
+        private readonly Users\Repository\UserRepository $userRepository,
+        private readonly Users\Validation\AccountForgotPasswordFormValidation $accountForgotPasswordFormValidation,
+        private readonly Users\Helpers\SendPasswordChangeEmail $sendPasswordChangeEmail
     ) {
         parent::__construct($context);
     }

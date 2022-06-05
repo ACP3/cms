@@ -15,7 +15,7 @@ use Fisharebest\Localization\Locale;
 
 class Dictionary implements DictionaryInterface
 {
-    public function __construct(private ThemePathInterface $theme)
+    public function __construct(private readonly ThemePathInterface $theme)
     {
     }
 
@@ -63,10 +63,7 @@ class Dictionary implements DictionaryInterface
             }
 
             foreach ($i18nFiles as $i18nFile) {
-                $data['keys'] = array_merge(
-                    $data['keys'],
-                    $this->parseI18nFile($i18nFile, $this->getModuleNameFromThemePath($i18nFile))
-                );
+                $data['keys'] = [...$data['keys'], ...$this->parseI18nFile($i18nFile, $this->getModuleNameFromThemePath($i18nFile))];
             }
         }
 

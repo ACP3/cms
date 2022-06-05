@@ -21,9 +21,9 @@ class AclResourceModel extends AbstractModel
      */
     public function save(array $rawData, ?int $entryId = null): int
     {
-        $rawData = array_merge($rawData, [
+        $rawData = [...$rawData, ...[
             'page' => $rawData['resource'],
-        ]);
+        ]];
 
         return parent::save($rawData, $entryId);
     }

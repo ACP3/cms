@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
 
 class PollWidgetViewProvider
 {
-    public function __construct(private AnswerRepository $answerRepository, private Translator $translator)
+    public function __construct(private readonly AnswerRepository $answerRepository, private readonly Translator $translator)
     {
     }
 

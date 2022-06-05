@@ -14,10 +14,10 @@ class Index extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Core\Date $date,
-        private Polls\Repository\PollRepository $pollRepository,
-        private Polls\ViewProviders\PollWidgetViewProvider $pollWidgetViewProvider,
-        private Polls\Helpers $pollHelpers
+        private readonly Core\Date $date,
+        private readonly Polls\Repository\PollRepository $pollRepository,
+        private readonly Polls\ViewProviders\PollWidgetViewProvider $pollWidgetViewProvider,
+        private readonly Polls\Helpers $pollHelpers
     ) {
         parent::__construct($context);
     }

@@ -36,7 +36,7 @@ class UserMenuViewProvider
         ],
     ];
 
-    public function __construct(private RequestInterface $request, private ACL $acl, private Modules $modules, private Translator $translator)
+    public function __construct(private readonly RequestInterface $request, private readonly ACL $acl, private readonly Modules $modules, private readonly Translator $translator)
     {
     }
 

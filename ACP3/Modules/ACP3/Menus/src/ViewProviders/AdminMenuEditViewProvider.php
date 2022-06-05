@@ -13,7 +13,7 @@ use ACP3\Core\Http\RequestInterface;
 
 class AdminMenuEditViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private Title $title)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly Title $title)
     {
     }
 

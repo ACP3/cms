@@ -18,8 +18,8 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        private readonly FormAction $actionHelper,
+        private readonly Users\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
     }

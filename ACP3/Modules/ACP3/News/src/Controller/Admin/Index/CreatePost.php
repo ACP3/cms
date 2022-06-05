@@ -20,10 +20,10 @@ class CreatePost extends AbstractFormAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private UserModelInterface $user,
-        private News\Model\NewsModel $newsModel,
-        private News\Validation\AdminFormValidation $adminFormValidation,
+        private readonly FormAction $actionHelper,
+        private readonly UserModelInterface $user,
+        private readonly News\Model\NewsModel $newsModel,
+        private readonly News\Validation\AdminFormValidation $adminFormValidation,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context, $categoriesHelpers);

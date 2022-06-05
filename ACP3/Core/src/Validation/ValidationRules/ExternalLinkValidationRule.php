@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ExternalLinkValidationRule extends AbstractValidationRule
 {
-    public function __construct(private InArrayValidationRule $inArrayValidationRule)
+    public function __construct(private readonly InArrayValidationRule $inArrayValidationRule)
     {
     }
 

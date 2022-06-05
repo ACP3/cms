@@ -33,7 +33,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         4 => MetaStatementsServiceInterface::NOINDEX_NOFOLLOW,
     ];
 
-    public function __construct(private RequestInterface $request, private RouterInterface $router)
+    public function __construct(private readonly RequestInterface $request, private readonly RouterInterface $router)
     {
     }
 
@@ -147,7 +147,7 @@ class MetaStatementsService implements MetaStatementsServiceInterface
             $keywords = $this->getKeywords($this->request->getModule());
         }
 
-        return strtolower(!empty($keywords) ? $keywords : $this->getSettings()['meta_keywords']);
+        return strtolower((string) (!empty($keywords) ? $keywords : $this->getSettings()['meta_keywords']));
     }
 
     /**

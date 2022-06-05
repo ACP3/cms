@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ValidateMenuItemFormFieldsListener implements EventSubscriberInterface
 {
-    public function __construct(private ACL $acl, private Translator $translator)
+    public function __construct(private readonly ACL $acl, private readonly Translator $translator)
     {
     }
 

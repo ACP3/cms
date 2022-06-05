@@ -30,7 +30,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
         if ($column['custom']['can_edit']) {
             $resourcePathEdit = $column['custom']['resource_path_edit'];
-            $resourcePathEdit .= !preg_match('=/$=', $resourcePathEdit) ? '/' : '';
+            $resourcePathEdit .= !preg_match('=/$=', (string) $resourcePathEdit) ? '/' : '';
             $this->optionRenderer->addOption(
                 $this->getEditRoute($dbResultRow, $resourcePathEdit),
                 $this->translator->t('system', 'edit'),
@@ -45,7 +45,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
         if ($column['custom']['can_delete']) {
             $resourcePathDelete = $column['custom']['resource_path_delete'];
-            $resourcePathDelete .= !preg_match('=/$=', $resourcePathDelete) ? '/' : '';
+            $resourcePathDelete .= !preg_match('=/$=', (string) $resourcePathDelete) ? '/' : '';
             $this->optionRenderer->addOption(
                 $resourcePathDelete . 'entries_' . $dbResultRow[$this->getPrimaryKey()],
                 $this->translator->t('system', 'delete'),

@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Share\Installer\Schema as ShareSchema;
 
 class AdminSettingsViewProvider
 {
-    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings, private SocialServices $socialServices, private Translator $translator)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly SocialServices $socialServices, private readonly Translator $translator)
     {
     }
 

@@ -16,7 +16,7 @@ class AccessForbidden extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private Steps $breadcrumb
+        private readonly Steps $breadcrumb
     ) {
         parent::__construct($context);
     }

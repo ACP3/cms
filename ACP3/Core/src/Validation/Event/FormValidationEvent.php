@@ -16,7 +16,7 @@ class FormValidationEvent extends Event
      * @param array<string, mixed> $formData
      * @param mixed[]              $extra
      */
-    public function __construct(private Validator $validator, private array $formData, private array $extra = [])
+    public function __construct(private readonly Validator $validator, private readonly array $formData, private readonly array $extra = [])
     {
     }
 

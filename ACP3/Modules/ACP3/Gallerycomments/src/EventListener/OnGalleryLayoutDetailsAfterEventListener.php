@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnGalleryLayoutDetailsAfterEventListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private View $view, private SettingsInterface $settings, private GalleryRepository $galleryRepository)
+    public function __construct(private readonly Modules $modules, private readonly View $view, private readonly SettingsInterface $settings, private readonly GalleryRepository $galleryRepository)
     {
     }
 

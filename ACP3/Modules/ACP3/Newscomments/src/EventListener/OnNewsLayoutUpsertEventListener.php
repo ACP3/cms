@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnNewsLayoutUpsertEventListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private View $view, private SettingsInterface $settings, private Forms $formsHelper)
+    public function __construct(private readonly Modules $modules, private readonly View $view, private readonly SettingsInterface $settings, private readonly Forms $formsHelper)
     {
     }
 

@@ -22,7 +22,7 @@ class Translator
      */
     private ?array $buffer = null;
 
-    public function __construct(private DictionaryInterface $dictionary, private SettingsInterface $settings)
+    public function __construct(private readonly DictionaryInterface $dictionary, private readonly SettingsInterface $settings)
     {
     }
 

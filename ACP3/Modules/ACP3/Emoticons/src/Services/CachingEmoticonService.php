@@ -13,7 +13,7 @@ class CachingEmoticonService implements EmoticonServiceInterface
 {
     private const CACHE_KEY = 'emoticon_list';
 
-    public function __construct(private CacheItemPoolInterface $emoticonsCachePool, private EmoticonService $emoticonService)
+    public function __construct(private readonly CacheItemPoolInterface $emoticonsCachePool, private readonly EmoticonService $emoticonService)
     {
     }
 

@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Permissions\Repository\AclRoleRepository;
 
 class PermissionService implements PermissionServiceInterface
 {
-    public function __construct(private AclRoleRepository $roleRepository, private AclResourceRepository $resourceRepository, private AclPermissionRepository $permissionRepository)
+    public function __construct(private readonly AclRoleRepository $roleRepository, private readonly AclResourceRepository $resourceRepository, private readonly AclPermissionRepository $permissionRepository)
     {
     }
 

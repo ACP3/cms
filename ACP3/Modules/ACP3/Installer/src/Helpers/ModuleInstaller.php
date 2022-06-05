@@ -18,7 +18,7 @@ use Psr\Container\ContainerInterface;
 
 class ModuleInstaller
 {
-    public function __construct(private Install $installHelper, private MigrationServiceLocator $migrationServiceLocator)
+    public function __construct(private readonly Install $installHelper, private readonly MigrationServiceLocator $migrationServiceLocator)
     {
     }
 

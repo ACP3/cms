@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGridViewProvider
 {
-    public function __construct(private ApplicationPath $applicationPath, private DataGrid $dataGrid, private DataGridRepository $dataGridRepository, private ResultsPerPage $resultsPerPage, private Translator $translator)
+    public function __construct(private readonly ApplicationPath $applicationPath, private readonly DataGrid $dataGrid, private readonly DataGridRepository $dataGridRepository, private readonly ResultsPerPage $resultsPerPage, private readonly Translator $translator)
     {
     }
 

@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGrid
 {
-    public function __construct(private ContainerInterface $serviceLocator, private RequestInterface $request, private ConfigProcessor $configProcessor, private ACL $acl, private Translator $translator)
+    public function __construct(private readonly ContainerInterface $serviceLocator, private readonly RequestInterface $request, private readonly ConfigProcessor $configProcessor, private readonly ACL $acl, private readonly Translator $translator)
     {
     }
 
@@ -46,7 +46,7 @@ class DataGrid
                 'can_edit' => $canEdit,
                 'can_delete' => $canDelete,
                 'column_count' => \count($input->getColumns()),
-                'identifier' => substr($input->getIdentifier(), 1),
+                'identifier' => substr((string) $input->getIdentifier(), 1),
                 'header' => $this->renderTableHeader($input),
                 'config' => $this->configProcessor->generateDataTableConfig($input),
                 'results' => $this->mapTableColumnsToDbFields($input),
@@ -62,7 +62,7 @@ class DataGrid
     private function isRequiredAjaxRequest(Input $input): bool
     {
         return $this->request->isXmlHttpRequest()
-            && $this->request->getParameters()->get('ajax', '') === substr($input->getIdentifier(), 1);
+            && $this->request->getParameters()->get('ajax', '') === substr((string) $input->getIdentifier(), 1);
     }
 
     /**

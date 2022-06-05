@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestFactory
 {
-    public function __construct(private SettingsInterface $config, protected RequestStack $requestStack)
+    public function __construct(private readonly SettingsInterface $config, protected RequestStack $requestStack)
     {
     }
 

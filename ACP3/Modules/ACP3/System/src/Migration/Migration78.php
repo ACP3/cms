@@ -15,7 +15,7 @@ use ACP3\Core\Migration\MigrationServiceLocator;
 
 final class Migration78 implements MigrationInterface
 {
-    public function __construct(private Connection $db, private MigrationServiceLocator $migrationServiceLocator)
+    public function __construct(private readonly Connection $db, private readonly MigrationServiceLocator $migrationServiceLocator)
     {
     }
 

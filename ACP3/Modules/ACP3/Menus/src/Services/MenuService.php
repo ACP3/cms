@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 
 class MenuService implements MenuServiceInterface
 {
-    public function __construct(private Translator $translator, private MenuRepository $menuRepository, private MenuItemRepository $menuItemRepository)
+    public function __construct(private readonly Translator $translator, private readonly MenuRepository $menuRepository, private readonly MenuItemRepository $menuItemRepository)
     {
     }
 
@@ -47,7 +47,7 @@ class MenuService implements MenuServiceInterface
             ];
 
             foreach ($menuItems as $i => $menu) {
-                $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, $menu['mode']);
+                $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, (string) $menu['mode']);
                 $menuItems[$i]['first'] = $this->isFirstItemInSet($i, $menuItems);
                 $menuItems[$i]['last'] = $this->isLastItemInSet($i, $menuItems);
             }

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DesignExistsValidationRule extends AbstractValidationRule
 {
-    public function __construct(private ThemePathInterface $theme)
+    public function __construct(private readonly ThemePathInterface $theme)
     {
     }
 

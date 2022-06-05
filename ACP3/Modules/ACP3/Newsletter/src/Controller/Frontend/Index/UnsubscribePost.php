@@ -19,11 +19,11 @@ class UnsubscribePost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private FormAction $actionHelper,
-        private Core\Helpers\Alerts $alertsHelper,
-        private Newsletter\Helper\AccountStatus $accountStatusHelper,
-        private Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
+        private readonly ApplicationPath $applicationPath,
+        private readonly FormAction $actionHelper,
+        private readonly Core\Helpers\Alerts $alertsHelper,
+        private readonly Newsletter\Helper\AccountStatus $accountStatusHelper,
+        private readonly Newsletter\Validation\UnsubscribeFormValidation $unsubscribeFormValidation
     ) {
         parent::__construct($context);
     }

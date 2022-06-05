@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository;
 
 class Subscribe
 {
-    public function __construct(private Core\I18n\Translator $translator, private Core\Mailer $mailer, private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Core\Helpers\StringFormatter $stringFormatter, private Core\Helpers\Secure $secureHelper, private Core\Settings\SettingsInterface $config, private AccountRepository $accountRepository)
+    public function __construct(private readonly Core\I18n\Translator $translator, private readonly Core\Mailer $mailer, private readonly Core\Http\RequestInterface $request, private readonly Core\Router\RouterInterface $router, private readonly Core\Helpers\StringFormatter $stringFormatter, private readonly Core\Helpers\Secure $secureHelper, private readonly Core\Settings\SettingsInterface $config, private readonly AccountRepository $accountRepository)
     {
     }
 

@@ -12,7 +12,7 @@ use ACP3\Core\I18n\Translator;
 
 class Forms
 {
-    public function __construct(private Translator $translator, private RequestInterface $request)
+    public function __construct(private readonly Translator $translator, private readonly RequestInterface $request)
     {
     }
 

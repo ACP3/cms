@@ -19,7 +19,7 @@ class PictureDeleteListener implements EventSubscriberInterface
      */
     private array $picturesToDelete = [];
 
-    public function __construct(private ThumbnailGenerator $thumbnailGenerator, private PictureRepository $pictureRepository)
+    public function __construct(private readonly ThumbnailGenerator $thumbnailGenerator, private readonly PictureRepository $pictureRepository)
     {
     }
 

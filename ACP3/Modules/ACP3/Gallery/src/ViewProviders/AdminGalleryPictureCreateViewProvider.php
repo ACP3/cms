@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class AdminGalleryPictureCreateViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private GalleryRepository $galleryRepository, private RequestInterface $request, private Steps $breadcrumb, private Translator $translator)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly GalleryRepository $galleryRepository, private readonly RequestInterface $request, private readonly Steps $breadcrumb, private readonly Translator $translator)
     {
     }
 

@@ -25,7 +25,7 @@ class UserModel implements UserModelInterface
      */
     private array $userInfo = [];
 
-    public function __construct(private CountryList $countryList, protected Users\Repository\UserRepository $userRepository)
+    public function __construct(private readonly CountryList $countryList, protected Users\Repository\UserRepository $userRepository)
     {
     }
 

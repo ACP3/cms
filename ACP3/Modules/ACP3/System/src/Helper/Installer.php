@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class Installer
 {
-    public function __construct(private Core\Modules $modules)
+    public function __construct(private readonly Core\Modules $modules)
     {
     }
 

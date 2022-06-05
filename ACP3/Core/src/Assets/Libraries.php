@@ -21,7 +21,7 @@ class Libraries
      */
     private array $libraries = [];
 
-    public function __construct(private RequestStack $requestStack, private LibrariesCache $librariesCache)
+    public function __construct(private readonly RequestStack $requestStack, private readonly LibrariesCache $librariesCache)
     {
     }
 

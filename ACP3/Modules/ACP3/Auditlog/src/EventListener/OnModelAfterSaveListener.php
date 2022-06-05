@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnModelAfterSaveListener implements EventSubscriberInterface
 {
-    public function __construct(private LoggerInterface $logger, private Date $date, private UserModelInterface $userModel, private ModuleAwareRepositoryInterface $moduleAwareRepository, private AuditLogRepository $auditLogRepository)
+    public function __construct(private readonly LoggerInterface $logger, private readonly Date $date, private readonly UserModelInterface $userModel, private readonly ModuleAwareRepositoryInterface $moduleAwareRepository, private readonly AuditLogRepository $auditLogRepository)
     {
     }
 
@@ -36,7 +36,7 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
                     'date' => $this->date->toSQL(),
                     'module_id' => $moduleId,
                     'table_name' => $event->getTableName(),
-                    'entry_id' => (int) $entryId,
+                    'entry_id' => $entryId,
                     'action' => $this->getAction($event),
                     'data' => serialize($event->getData()),
                     'user_id' => $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null,

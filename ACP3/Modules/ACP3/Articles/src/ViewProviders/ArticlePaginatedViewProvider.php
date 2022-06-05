@@ -18,7 +18,7 @@ class ArticlePaginatedViewProvider
 {
     private ?string $layout = null;
 
-    public function __construct(private ArticleRepository $articleRepository, private PageBreaks $pageBreaksHelper, private RequestInterface $request, private Steps $breadcrumb, private Title $title, private View $view)
+    public function __construct(private readonly ArticleRepository $articleRepository, private readonly PageBreaks $pageBreaksHelper, private readonly RequestInterface $request, private readonly Steps $breadcrumb, private readonly Title $title, private readonly View $view)
     {
     }
 
@@ -39,13 +39,10 @@ class ArticlePaginatedViewProvider
         }
 
         return [
-            'page' => array_merge(
-                $article,
-                $this->pageBreaksHelper->splitTextIntoPages(
-                    $this->view->fetchStringAsTemplate($article['text']),
-                    $this->request->getUriWithoutPages()
-                )
-            ),
+            'page' => [...$article, ...$this->pageBreaksHelper->splitTextIntoPages(
+                $this->view->fetchStringAsTemplate($article['text']),
+                $this->request->getUriWithoutPages()
+            )],
         ];
     }
 

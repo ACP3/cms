@@ -19,10 +19,10 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private FormAction $actionHelper,
-        private Emoticons\Model\EmoticonsModel $emoticonsModel,
-        private Emoticons\Validation\AdminFormValidation $adminFormValidation,
-        private Core\Helpers\Upload $emoticonsUploadHelper
+        private readonly FormAction $actionHelper,
+        private readonly Emoticons\Model\EmoticonsModel $emoticonsModel,
+        private readonly Emoticons\Validation\AdminFormValidation $adminFormValidation,
+        private readonly Core\Helpers\Upload $emoticonsUploadHelper
     ) {
         parent::__construct($context);
     }

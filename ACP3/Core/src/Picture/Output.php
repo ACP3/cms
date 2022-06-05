@@ -23,7 +23,7 @@ class Output
 
     private ?int $destHeight = null;
 
-    public function __construct(private ApplicationPath $appPath, private string $srcFile, private int $type)
+    public function __construct(private readonly ApplicationPath $appPath, private readonly string $srcFile, private readonly int $type)
     {
     }
 

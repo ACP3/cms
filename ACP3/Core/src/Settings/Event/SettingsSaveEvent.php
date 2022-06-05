@@ -12,10 +12,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 class SettingsSaveEvent extends Event
 {
     /**
-     * @param string               $module
      * @param array<string, mixed> $data
      */
-    public function __construct(private string $module, private array $data)
+    public function __construct(private readonly string $module, private array $data)
     {
     }
 

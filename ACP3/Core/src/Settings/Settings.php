@@ -24,7 +24,7 @@ class Settings implements SettingsInterface
      */
     private array $settings = [];
 
-    public function __construct(private EventDispatcherInterface $eventDispatcher, private CacheItemPoolInterface $coreCachePool, private ModuleAwareRepositoryInterface $systemModuleRepository, private SettingsAwareRepositoryInterface $systemSettingsRepository)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher, private readonly CacheItemPoolInterface $coreCachePool, private readonly ModuleAwareRepositoryInterface $systemModuleRepository, private readonly SettingsAwareRepositoryInterface $systemSettingsRepository)
     {
     }
 

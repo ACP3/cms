@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class StructuredDataValidationRule extends AbstractValidationRule
 {
-    public function __construct(private Validator $jsonSchemaValidator)
+    public function __construct(private readonly Validator $jsonSchemaValidator)
     {
     }
 
@@ -42,7 +42,7 @@ class StructuredDataValidationRule extends AbstractValidationRule
             );
 
             return $this->jsonSchemaValidator->isValid();
-        } catch (\JsonException $e) {
+        } catch (\JsonException) {
             return false;
         }
     }

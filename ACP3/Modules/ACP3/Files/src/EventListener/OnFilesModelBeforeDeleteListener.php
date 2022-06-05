@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnFilesModelBeforeDeleteListener implements EventSubscriberInterface
 {
-    public function __construct(private Upload $filesUploadHelper, private FilesRepository $filesRepository)
+    public function __construct(private readonly Upload $filesUploadHelper, private readonly FilesRepository $filesRepository)
     {
     }
 

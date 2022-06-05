@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 
 class GalleryListViewProvider
 {
-    public function __construct(private Date $date, private GalleryRepository $galleryRepository, private Pagination $pagination, private ResultsPerPage $resultsPerPage, private SettingsInterface $settings, private ThumbnailGenerator $thumbnailGenerator)
+    public function __construct(private readonly Date $date, private readonly GalleryRepository $galleryRepository, private readonly Pagination $pagination, private readonly ResultsPerPage $resultsPerPage, private readonly SettingsInterface $settings, private readonly ThumbnailGenerator $thumbnailGenerator)
     {
     }
 

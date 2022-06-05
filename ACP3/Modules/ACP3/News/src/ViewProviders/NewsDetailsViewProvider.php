@@ -19,7 +19,7 @@ use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class NewsDetailsViewProvider
 {
-    public function __construct(private NewsRepository $newsRepository, private CategoryRepository $categoryRepository, private RequestInterface $request, private SettingsInterface $settings, private Steps $breadcrumb, private Title $title, private Translator $translator, private View $view)
+    public function __construct(private readonly NewsRepository $newsRepository, private readonly CategoryRepository $categoryRepository, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Steps $breadcrumb, private readonly Title $title, private readonly Translator $translator, private readonly View $view)
     {
     }
 

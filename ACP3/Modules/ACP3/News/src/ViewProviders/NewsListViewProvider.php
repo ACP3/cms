@@ -24,7 +24,7 @@ use ACP3\Modules\ACP3\News\Repository\NewsRepository;
 
 class NewsListViewProvider
 {
-    public function __construct(private CategoriesHelper $categoriesHelpers, private CategoryRepository $categoryRepository, private Date $date, private MetaStatementsServiceInterface $metaStatements, private NewsRepository $newsRepository, private Pagination $pagination, private ResultsPerPage $resultsPerPage, private RouterInterface $router, private SettingsInterface $settings, private StringFormatter $stringFormatter, private Steps $breadcrumb, private Translator $translator, private View $view)
+    public function __construct(private readonly CategoriesHelper $categoriesHelpers, private readonly CategoryRepository $categoryRepository, private readonly Date $date, private readonly MetaStatementsServiceInterface $metaStatements, private readonly NewsRepository $newsRepository, private readonly Pagination $pagination, private readonly ResultsPerPage $resultsPerPage, private readonly RouterInterface $router, private readonly SettingsInterface $settings, private readonly StringFormatter $stringFormatter, private readonly Steps $breadcrumb, private readonly Translator $translator, private readonly View $view)
     {
     }
 

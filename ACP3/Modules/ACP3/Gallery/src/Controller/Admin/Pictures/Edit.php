@@ -14,8 +14,8 @@ class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Gallery\Model\PictureModel $pictureModel,
-        private Gallery\ViewProviders\AdminGalleryPictureEditViewProvider $adminGalleryPictureEditViewProvider
+        private readonly Gallery\Model\PictureModel $pictureModel,
+        private readonly Gallery\ViewProviders\AdminGalleryPictureEditViewProvider $adminGalleryPictureEditViewProvider
     ) {
         parent::__construct($context);
     }

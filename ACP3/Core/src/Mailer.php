@@ -16,7 +16,7 @@ use Psr\Log\LoggerInterface;
 
 class Mailer
 {
-    public function __construct(private PHPMailer $phpMailer, private LoggerInterface $logger, private View $view, private StringFormatter $stringFormatter)
+    public function __construct(private readonly PHPMailer $phpMailer, private readonly LoggerInterface $logger, private readonly View $view, private readonly StringFormatter $stringFormatter)
     {
     }
 

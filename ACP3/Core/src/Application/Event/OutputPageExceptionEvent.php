@@ -19,7 +19,7 @@ class OutputPageExceptionEvent extends Event
      */
     private $response;
 
-    public function __construct(private \Throwable $throwable)
+    public function __construct(private readonly \Throwable $throwable)
     {
     }
 

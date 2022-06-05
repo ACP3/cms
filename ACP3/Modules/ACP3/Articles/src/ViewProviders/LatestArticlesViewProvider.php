@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
 class LatestArticlesViewProvider
 {
-    public function __construct(private ArticleRepository $articleRepository, private Date $date)
+    public function __construct(private readonly ArticleRepository $articleRepository, private readonly Date $date)
     {
     }
 

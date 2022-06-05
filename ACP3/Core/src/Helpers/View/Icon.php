@@ -11,7 +11,7 @@ use ACP3\Core\Assets\FileResolver;
 
 class Icon
 {
-    public function __construct(private FileResolver $fileResolver)
+    public function __construct(private readonly FileResolver $fileResolver)
     {
     }
 

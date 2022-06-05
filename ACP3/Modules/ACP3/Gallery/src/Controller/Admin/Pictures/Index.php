@@ -17,8 +17,8 @@ class Index extends AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Gallery\Model\GalleryModel $galleryModel,
-        private Gallery\ViewProviders\PictureDataGridViewProvider $pictureDataGridViewProvider
+        private readonly Gallery\Model\GalleryModel $galleryModel,
+        private readonly Gallery\ViewProviders\PictureDataGridViewProvider $pictureDataGridViewProvider
     ) {
         parent::__construct($context);
     }

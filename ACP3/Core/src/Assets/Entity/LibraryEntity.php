@@ -11,7 +11,7 @@ final class LibraryEntity
 {
     private bool $enabled = false;
 
-    private string $moduleName;
+    private readonly string $moduleName;
 
     /**
      * @param string[] $dependencies
@@ -19,13 +19,13 @@ final class LibraryEntity
      * @param string[] $js
      */
     public function __construct(
-        private string $libraryIdentifier,
-        private bool $enabledForAjax = true,
-        private array $dependencies = [],
-        private array $css = [],
-        private array $js = [],
+        private readonly string $libraryIdentifier,
+        private readonly bool $enabledForAjax = true,
+        private readonly array $dependencies = [],
+        private readonly array $css = [],
+        private readonly array $js = [],
         string $moduleName = '',
-        private bool $deferrableCss = false
+        private readonly bool $deferrableCss = false
     ) {
         if (!$moduleName) {
             throw new \InvalidArgumentException('The argument `moduleName` is required!');

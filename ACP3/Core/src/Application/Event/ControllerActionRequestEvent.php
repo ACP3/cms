@@ -19,7 +19,7 @@ class ControllerActionRequestEvent extends Event
      */
     private $response;
 
-    public function __construct(private RequestInterface $request)
+    public function __construct(private readonly RequestInterface $request)
     {
     }
 

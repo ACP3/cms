@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 
 class AddEsiSurrogateHeaderListener implements EventSubscriberInterface
 {
-    public function __construct(private SurrogateInterface $surrogate)
+    public function __construct(private readonly SurrogateInterface $surrogate)
     {
     }
 

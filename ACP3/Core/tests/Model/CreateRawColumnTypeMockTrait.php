@@ -13,10 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 trait CreateRawColumnTypeMockTrait
 {
-    /**
-     * @return MockObject|ColumnTypeStrategyInterface
-     */
-    public function getRawColumnTypeInstance(TestCase $testCase)
+    public function getRawColumnTypeInstance(TestCase $testCase): MockObject|ColumnTypeStrategyInterface
     {
         return $testCase->getMockBuilder(ColumnTypeStrategyInterface::class)
             ->onlyMethods(['doEscape', 'doUnescape', 'getDefaultValue'])

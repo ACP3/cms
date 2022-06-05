@@ -34,9 +34,9 @@ class FileResolver
     private ?string $currentTheme = null;
 
     public function __construct(
-        private CacheItemPoolInterface $coreCachePool,
-        private Core\Environment\ApplicationPath $appPath,
-        private Core\Environment\ThemePathInterface $theme
+        private readonly CacheItemPoolInterface $coreCachePool,
+        private readonly Core\Environment\ApplicationPath $appPath,
+        private readonly Core\Environment\ThemePathInterface $theme
     ) {
         $this->addStrategy(new Core\Assets\FileResolver\MinifiedAwareFileCheckerStrategy());
         $this->addStrategy(new Core\Assets\FileResolver\StraightFileCheckerStrategy());

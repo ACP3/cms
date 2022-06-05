@@ -16,7 +16,7 @@ class UnauthorizedAccessException extends \RuntimeException implements ForwardCo
      * @param array<string, mixed> $routeArguments
      */
     public function __construct(
-        private array $routeArguments = [],
+        private readonly array $routeArguments = [],
         string $message = '',
         \Throwable $previous = null)
     {

@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\News\Installer\Schema as NewsSchema;
 
 class AdminSettingsViewProvider
 {
-    public function __construct(private Date $dateHelper, private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings)
+    public function __construct(private readonly Date $dateHelper, private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings)
     {
     }
 

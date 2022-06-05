@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PictureDataGridViewProvider
 {
-    public function __construct(private ACL $acl, private DataGrid $dataGrid, private GalleryPicturesDataGridRepository $dataGridRepository, private ResultsPerPage $resultsPerPage, private Steps $breadcrumb, private ThumbnailGenerator $thumbnailGenerator, private Title $title, private Translator $translator)
+    public function __construct(private readonly ACL $acl, private readonly DataGrid $dataGrid, private readonly GalleryPicturesDataGridRepository $dataGridRepository, private readonly ResultsPerPage $resultsPerPage, private readonly Steps $breadcrumb, private readonly ThumbnailGenerator $thumbnailGenerator, private readonly Title $title, private readonly Translator $translator)
     {
     }
 
@@ -46,7 +46,7 @@ class PictureDataGridViewProvider
         $this->breadcrumb->append($gallery['title'], 'acp/gallery/pictures/index/id_' . $id);
         $this->title->setPageTitlePrefix($this->translator->t('gallery', 'admin_pictures_index'));
 
-        return array_merge($dataGrid, ['gallery_id' => $id]);
+        return [...$dataGrid, ...['gallery_id' => $id]];
     }
 
     private function configureDataGrid(int $id): Input

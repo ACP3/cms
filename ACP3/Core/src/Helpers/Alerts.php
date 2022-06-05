@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class Alerts
 {
-    public function __construct(private Core\Http\RequestInterface $request, private Core\View $view)
+    public function __construct(private readonly Core\Http\RequestInterface $request, private readonly Core\View $view)
     {
     }
 

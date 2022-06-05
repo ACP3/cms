@@ -22,7 +22,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     public function __construct(
         protected Date $date,
         RouterInterface $router,
-        private SettingsInterface $settings,
+        private readonly SettingsInterface $settings,
         protected GalleryRepository $galleryRepository,
         protected PictureRepository $pictureRepository,
         MetaStatementsServiceInterface $metaStatements

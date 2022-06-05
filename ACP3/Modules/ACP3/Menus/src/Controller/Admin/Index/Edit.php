@@ -14,8 +14,8 @@ class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Menus\Model\MenusModel $menusModel,
-        private Menus\ViewProviders\AdminMenuEditViewProvider $adminMenuEditViewProvider
+        private readonly Menus\Model\MenusModel $menusModel,
+        private readonly Menus\ViewProviders\AdminMenuEditViewProvider $adminMenuEditViewProvider
     ) {
         parent::__construct($context);
     }

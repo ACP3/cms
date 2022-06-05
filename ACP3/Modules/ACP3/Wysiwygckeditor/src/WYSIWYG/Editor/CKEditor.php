@@ -20,7 +20,7 @@ class CKEditor extends Textarea
 {
     private bool $isInitialized = false;
 
-    public function __construct(private Core\ACL $acl, private Core\Assets\IncludeJs $includeJs, private Core\Modules $modules, private Core\I18n\Translator $translator, private Core\Environment\ApplicationPath $appPath, private ?EmoticonRepository $emoticonRepository = null, private ?Helpers $filemanagerHelpers = null)
+    public function __construct(private readonly Core\ACL $acl, private readonly Core\Assets\IncludeJs $includeJs, private readonly Core\Modules $modules, private readonly Core\I18n\Translator $translator, private readonly Core\Environment\ApplicationPath $appPath, private readonly ?EmoticonRepository $emoticonRepository = null, private readonly ?Helpers $filemanagerHelpers = null)
     {
     }
 
@@ -112,9 +112,8 @@ class CKEditor extends Textarea
     {
         $out = '<script type="text/javascript">';
         $out .= $js;
-        $out .= "</script>\n";
 
-        return $out;
+        return $out . "</script>\n";
     }
 
     private function init(): string
@@ -152,9 +151,8 @@ class CKEditor extends Textarea
         $js .= 'CKEDITOR.dtd.$removeEmpty[\'i\'] = false;' . "\n";
 
         $out .= $this->script($js);
-        $out .= $this->includeJs->add('Wysiwygckeditor', 'partials/ckeditor');
 
-        return $out;
+        return $out . $this->includeJs->add('Wysiwygckeditor', 'partials/ckeditor');
     }
 
     private function applyEmoticons(): void

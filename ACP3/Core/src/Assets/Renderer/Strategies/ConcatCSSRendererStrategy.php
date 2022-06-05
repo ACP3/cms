@@ -26,7 +26,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     protected array $stylesheets = [];
 
     public function __construct(
-        private Minifier $minifier,
+        private readonly Minifier $minifier,
         Assets $assets,
         Assets\Libraries $libraries,
         ApplicationPath $appPath,

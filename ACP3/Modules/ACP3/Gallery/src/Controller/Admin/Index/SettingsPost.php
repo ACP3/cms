@@ -20,11 +20,11 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private FormAction $actionHelper,
-        private CacheItemPoolInterface $galleryCachePool,
-        private Core\Helpers\Secure $secureHelper,
-        private Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
+        private readonly ApplicationPath $applicationPath,
+        private readonly FormAction $actionHelper,
+        private readonly CacheItemPoolInterface $galleryCachePool,
+        private readonly Core\Helpers\Secure $secureHelper,
+        private readonly Gallery\Validation\AdminSettingsFormValidation $adminSettingsFormValidation
     ) {
         parent::__construct($context);
     }

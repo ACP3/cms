@@ -29,7 +29,7 @@ class SitemapGenerationModel
         ],
     ];
 
-    public function __construct(private SettingsInterface $settings, private SitemapAvailabilityRegistrar $sitemapRegistrar, private DriverInterface $xmlSitemapDriver)
+    public function __construct(private readonly SettingsInterface $settings, private readonly SitemapAvailabilityRegistrar $sitemapRegistrar, private readonly DriverInterface $xmlSitemapDriver)
     {
     }
 

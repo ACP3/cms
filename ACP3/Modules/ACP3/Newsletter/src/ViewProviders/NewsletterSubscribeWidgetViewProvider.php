@@ -11,7 +11,7 @@ use ACP3\Core\Helpers\FormToken;
 
 class NewsletterSubscribeWidgetViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper)
+    public function __construct(private readonly FormToken $formTokenHelper)
     {
     }
 

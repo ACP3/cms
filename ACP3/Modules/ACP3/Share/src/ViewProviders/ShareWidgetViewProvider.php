@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
 
 class ShareWidgetViewProvider
 {
-    public function __construct(private ShareRepository $shareRepository, private SocialServices $socialServices, private Translator $translator)
+    public function __construct(private readonly ShareRepository $shareRepository, private readonly SocialServices $socialServices, private readonly Translator $translator)
     {
     }
 

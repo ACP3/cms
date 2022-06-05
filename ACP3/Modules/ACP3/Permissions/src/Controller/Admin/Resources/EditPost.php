@@ -23,16 +23,15 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Context                        $context,
-        private FormAction             $actionHelper,
-        private Core\Modules           $modules,
-        private AclResourceModel       $resourcesModel,
-        private ResourceFormValidation $resourceFormValidation
+        private readonly FormAction             $actionHelper,
+        private readonly Core\Modules           $modules,
+        private readonly AclResourceModel       $resourcesModel,
+        private readonly ResourceFormValidation $resourceFormValidation
     ) {
         parent::__construct($context);
     }
 
     /**
-     * @param int $id
      * @return array<string, mixed>|string|Response
      * @throws ConnectionException
      * @throws Exception

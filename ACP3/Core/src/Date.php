@@ -19,7 +19,7 @@ class Date
     private string $dateFormatShort = '';
     private \DateTimeZone $dateTimeZone;
 
-    public function __construct(private DateTranslator $dateTranslator)
+    public function __construct(private readonly DateTranslator $dateTranslator)
     {
     }
 

@@ -22,10 +22,10 @@ class Title extends \ACP3\Core\Breadcrumb\Title
     private array $systemSettings = [];
 
     public function __construct(
-        private RequestInterface $request,
+        private readonly RequestInterface $request,
         Steps $steps,
         EventDispatcherInterface $eventDispatcher,
-        private SettingsInterface $settings
+        private readonly SettingsInterface $settings
     ) {
         parent::__construct($steps, $eventDispatcher);
     }

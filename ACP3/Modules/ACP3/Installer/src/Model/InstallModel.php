@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class InstallModel
 {
-    public function __construct(protected ContainerInterface $container, protected ApplicationPath $appPath, private Secure $secure, protected Translator $translator, protected Install $installHelper, protected ModuleInstaller $moduleInstaller)
+    public function __construct(protected ContainerInterface $container, protected ApplicationPath $appPath, private readonly Secure $secure, protected Translator $translator, protected Install $installHelper, protected ModuleInstaller $moduleInstaller)
     {
     }
 

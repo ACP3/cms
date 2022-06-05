@@ -21,7 +21,7 @@ use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 
 class GalleryPictureDetailsViewProvider
 {
-    public function __construct(private MetaStatementsServiceInterface $metaStatements, private PictureRepository $pictureRepository, private RequestInterface $request, private RouterInterface $router, private SettingsInterface $settings, private Steps $breadcrumb, private ThumbnailGenerator $thumbnailGenerator, private Title $title, private Translator $translator)
+    public function __construct(private readonly MetaStatementsServiceInterface $metaStatements, private readonly PictureRepository $pictureRepository, private readonly RequestInterface $request, private readonly RouterInterface $router, private readonly SettingsInterface $settings, private readonly Steps $breadcrumb, private readonly ThumbnailGenerator $thumbnailGenerator, private readonly Title $title, private readonly Translator $translator)
     {
     }
 

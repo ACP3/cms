@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ManageMenuItemOnModelSaveAfterListener implements EventSubscriberInterface
 {
-    public function __construct(private ACL $acl, private ManageMenuItem $menuItemManager)
+    public function __construct(private readonly ACL $acl, private readonly ManageMenuItem $menuItemManager)
     {
     }
 

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ControllerActionAfterDispatchEvent extends ControllerActionBeforeDispatchEvent
 {
-    public function __construct(string $serviceId, private RequestInterface $request, private Response $response)
+    public function __construct(string $serviceId, private readonly RequestInterface $request, private Response $response)
     {
         parent::__construct($serviceId);
     }

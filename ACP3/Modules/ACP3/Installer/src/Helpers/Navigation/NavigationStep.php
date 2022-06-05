@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Installer\Helpers\Navigation;
 
 class NavigationStep
 {
-    public function __construct(private string $title, private bool $isActive, private bool $isComplete)
+    public function __construct(private readonly string $title, private bool $isActive, private bool $isComplete)
     {
     }
 

@@ -18,10 +18,10 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Categories\Model\CategoriesModel $categoriesModel,
-        private Categories\Validation\AdminFormValidation $adminFormValidation,
-        private Core\Helpers\Upload $categoriesUploadHelper
+        private readonly FormAction $actionHelper,
+        private readonly Categories\Model\CategoriesModel $categoriesModel,
+        private readonly Categories\Validation\AdminFormValidation $adminFormValidation,
+        private readonly Core\Helpers\Upload $categoriesUploadHelper
     ) {
         parent::__construct($context);
     }

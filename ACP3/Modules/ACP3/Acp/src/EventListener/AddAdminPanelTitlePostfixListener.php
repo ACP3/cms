@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddAdminPanelTitlePostfixListener implements EventSubscriberInterface
 {
-    public function __construct(private RequestInterface $request, private Translator $translator)
+    public function __construct(private readonly RequestInterface $request, private readonly Translator $translator)
     {
     }
 

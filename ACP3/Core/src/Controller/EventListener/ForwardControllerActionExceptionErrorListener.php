@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ForwardControllerActionExceptionErrorListener implements EventSubscriberInterface
 {
-    public function __construct(private ControllerActionDispatcher $controllerActionDispatcher)
+    public function __construct(private readonly ControllerActionDispatcher $controllerActionDispatcher)
     {
     }
 

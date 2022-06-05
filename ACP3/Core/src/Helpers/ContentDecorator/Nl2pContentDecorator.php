@@ -11,7 +11,7 @@ use ACP3\Core\Helpers\StringFormatter;
 
 class Nl2pContentDecorator implements ContentDecoratorInterface
 {
-    public function __construct(private StringFormatter $stringFormatter)
+    public function __construct(private readonly StringFormatter $stringFormatter)
     {
     }
 

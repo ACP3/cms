@@ -11,7 +11,7 @@ use Cocur\Slugify\Slugify;
 
 class StringFormatter
 {
-    public function __construct(private Slugify $slugify)
+    public function __construct(private readonly Slugify $slugify)
     {
     }
 

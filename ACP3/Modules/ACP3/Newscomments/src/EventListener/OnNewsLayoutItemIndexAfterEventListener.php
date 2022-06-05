@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnNewsLayoutItemIndexAfterEventListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private View $view, private SettingsInterface $settings, private Helpers $commentsHelpers)
+    public function __construct(private readonly Modules $modules, private readonly View $view, private readonly SettingsInterface $settings, private readonly Helpers $commentsHelpers)
     {
     }
 

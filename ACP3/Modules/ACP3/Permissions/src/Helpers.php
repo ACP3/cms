@@ -11,7 +11,7 @@ use ACP3\Modules\ACP3\Permissions\Repository\AclUserRoleRepository;
 
 class Helpers
 {
-    public function __construct(private AclUserRoleRepository $userRoleRepository)
+    public function __construct(private readonly AclUserRoleRepository $userRoleRepository)
     {
     }
 

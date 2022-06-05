@@ -14,7 +14,7 @@ use ACP3\Core\Settings\SettingsInterface;
 class Router extends \ACP3\Modules\ACP3\System\Core\Router\Router
 {
     public function __construct(
-        private Aliases $aliases,
+        private readonly Aliases $aliases,
         RequestInterface $request,
         ApplicationPath $appPath,
         SettingsInterface $config

@@ -18,7 +18,7 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
      */
     private array $urls = [];
 
-    public function __construct(private RouterInterface $router, private MetaStatementsServiceInterface $metaStatements)
+    public function __construct(private readonly RouterInterface $router, private readonly MetaStatementsServiceInterface $metaStatements)
     {
     }
 

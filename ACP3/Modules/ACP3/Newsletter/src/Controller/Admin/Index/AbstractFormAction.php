@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Newsletter\Helper\SendNewsletter;
 
 class AbstractFormAction extends AbstractWidgetAction
 {
-    public function __construct(Context $context, private SendNewsletter $newsletterHelpers)
+    public function __construct(Context $context, private readonly SendNewsletter $newsletterHelpers)
     {
         parent::__construct($context);
     }

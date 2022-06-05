@@ -12,7 +12,7 @@ use ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer;
 
 class UserRolesColumnRenderer extends AbstractColumnRenderer
 {
-    public function __construct(private ACL $acl)
+    public function __construct(private readonly ACL $acl)
     {
     }
 

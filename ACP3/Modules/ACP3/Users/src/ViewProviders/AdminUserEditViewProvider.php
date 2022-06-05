@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Users\Helpers\Forms as UserFormsHelper;
 
 class AdminUserEditViewProvider
 {
-    public function __construct(private ACL $acl, private FormToken $formTokenHelper, private Forms $formsHelpers, private UserFormsHelper $userFormsHelpers, private RequestInterface $request, private Title $title)
+    public function __construct(private readonly ACL $acl, private readonly FormToken $formTokenHelper, private readonly Forms $formsHelpers, private readonly UserFormsHelper $userFormsHelpers, private readonly RequestInterface $request, private readonly Title $title)
     {
     }
 

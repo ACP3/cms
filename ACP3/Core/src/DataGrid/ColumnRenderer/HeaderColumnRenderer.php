@@ -13,7 +13,7 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
 {
     public const CELL_TYPE = 'th';
 
-    public function __construct(private MarkEntries $markEntriesHelper)
+    public function __construct(private readonly MarkEntries $markEntriesHelper)
     {
     }
 

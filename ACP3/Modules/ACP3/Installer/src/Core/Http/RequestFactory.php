@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class RequestFactory
 {
-    public function __construct(private RequestStack $requestStack, private SettingsInterface $settings)
+    public function __construct(private readonly RequestStack $requestStack, private readonly SettingsInterface $settings)
     {
     }
 

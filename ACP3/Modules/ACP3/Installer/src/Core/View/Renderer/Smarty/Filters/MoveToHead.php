@@ -14,7 +14,7 @@ class MoveToHead extends AbstractMoveElementFilter
     public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';
     protected const PLACEHOLDER = '<!-- STYLESHEETS -->';
 
-    public function __construct(private CSSRenderer $CSSRenderer)
+    public function __construct(private readonly CSSRenderer $CSSRenderer)
     {
     }
 

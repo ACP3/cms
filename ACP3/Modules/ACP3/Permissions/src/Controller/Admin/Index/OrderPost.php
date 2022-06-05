@@ -19,9 +19,9 @@ class OrderPost extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private RedirectResponse $redirectResponse,
-        private AclRoleRepository $roleRepository,
-        private AclRoleModel $rolesModel
+        private readonly RedirectResponse $redirectResponse,
+        private readonly AclRoleRepository $roleRepository,
+        private readonly AclRoleModel $rolesModel
     ) {
         parent::__construct($context);
     }

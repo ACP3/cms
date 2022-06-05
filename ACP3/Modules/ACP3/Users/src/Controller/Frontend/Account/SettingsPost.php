@@ -19,11 +19,11 @@ class SettingsPost extends AbstractAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private UserModelInterface $user,
-        private Users\Model\AuthenticationModel $authenticationModel,
-        private Users\Model\UsersModel $usersModel,
-        private Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
+        private readonly FormAction $actionHelper,
+        private readonly UserModelInterface $user,
+        private readonly Users\Model\AuthenticationModel $authenticationModel,
+        private readonly Users\Model\UsersModel $usersModel,
+        private readonly Users\Validation\AccountSettingsFormValidation $accountSettingsFormValidation
     ) {
         parent::__construct($context, $user);
     }

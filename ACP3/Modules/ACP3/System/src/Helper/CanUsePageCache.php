@@ -11,7 +11,7 @@ use ACP3\Core\Environment\ApplicationMode;
 
 class CanUsePageCache
 {
-    public function __construct(private ApplicationMode $environment)
+    public function __construct(private readonly ApplicationMode $environment)
     {
     }
 

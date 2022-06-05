@@ -12,7 +12,7 @@ use ACP3\Core\View\Renderer\Smarty\Resources\AbstractResource;
 
 class Asset extends AbstractResource
 {
-    public function __construct(private FileResolver $fileResolver)
+    public function __construct(private readonly FileResolver $fileResolver)
     {
         $this->recompiled = true;
         $this->hasCompiledHandler = true;

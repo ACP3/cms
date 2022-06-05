@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
 {
-    public function __construct(private Date $date, private RouterInterface $router, private StringFormatter $formatter, private FilesRepository $filesRepository)
+    public function __construct(private readonly Date $date, private readonly RouterInterface $router, private readonly StringFormatter $formatter, private readonly FilesRepository $filesRepository)
     {
     }
 

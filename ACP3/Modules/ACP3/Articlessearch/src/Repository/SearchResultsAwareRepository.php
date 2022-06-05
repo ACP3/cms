@@ -18,7 +18,7 @@ class SearchResultsAwareRepository extends \ACP3\Core\Repository\AbstractReposit
     use PublicationPeriodAwareTrait;
     public const TABLE_NAME = ArticleRepository::TABLE_NAME;
 
-    public function __construct(Connection $db, private Date $date)
+    public function __construct(Connection $db, private readonly Date $date)
     {
         parent::__construct($db);
     }

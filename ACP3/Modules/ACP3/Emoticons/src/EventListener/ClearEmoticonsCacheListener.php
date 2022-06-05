@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearEmoticonsCacheListener implements EventSubscriberInterface
 {
-    public function __construct(private CacheItemPoolInterface $emoticonCachePool)
+    public function __construct(private readonly CacheItemPoolInterface $emoticonCachePool)
     {
     }
 

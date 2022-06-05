@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GeneratePictureUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private Gallery\Repository\PictureRepository $pictureRepository, private Aliases $aliases, private UriAliasManager $uriAliasManager, private MetaStatementsServiceInterface $metaStatements)
+    public function __construct(private readonly Modules $modules, private readonly Gallery\Repository\PictureRepository $pictureRepository, private readonly Aliases $aliases, private readonly UriAliasManager $uriAliasManager, private readonly MetaStatementsServiceInterface $metaStatements)
     {
     }
 

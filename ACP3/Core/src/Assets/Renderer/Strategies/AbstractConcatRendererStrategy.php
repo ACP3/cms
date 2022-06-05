@@ -16,7 +16,7 @@ use Psr\Cache\CacheItemPoolInterface;
 
 abstract class AbstractConcatRendererStrategy implements RendererStrategyInterface
 {
-    public function __construct(protected Assets $assets, protected Assets\Libraries $libraries, private ApplicationPath $appPath, protected CacheItemPoolInterface $coreCachePool, protected Modules $modules, protected FileResolver $fileResolver, private ThemePathInterface $themePath)
+    public function __construct(protected Assets $assets, protected Assets\Libraries $libraries, private readonly ApplicationPath $appPath, protected CacheItemPoolInterface $coreCachePool, protected Modules $modules, protected FileResolver $fileResolver, private readonly ThemePathInterface $themePath)
     {
     }
 

@@ -21,7 +21,7 @@ class Assets
      */
     private ?array $additionalThemeJsFiles = null;
 
-    public function __construct(private ThemePathInterface $theme, private Libraries $libraries)
+    public function __construct(private readonly ThemePathInterface $theme, private readonly Libraries $libraries)
     {
     }
 

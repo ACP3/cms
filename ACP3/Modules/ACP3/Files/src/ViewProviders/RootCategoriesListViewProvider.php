@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Files\Installer\Schema;
 
 class RootCategoriesListViewProvider
 {
-    public function __construct(private CategoryRepository $categoryRepository)
+    public function __construct(private readonly CategoryRepository $categoryRepository)
     {
     }
 

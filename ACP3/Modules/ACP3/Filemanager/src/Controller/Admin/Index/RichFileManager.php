@@ -13,7 +13,7 @@ use RFM\Application;
 
 class RichFileManager extends AbstractWidgetAction
 {
-    public function __construct(Context $context, private Application $rfmApp)
+    public function __construct(Context $context, private readonly Application $rfmApp)
     {
         parent::__construct($context);
     }

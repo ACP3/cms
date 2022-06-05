@@ -15,8 +15,8 @@ class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ShareModel $shareModel,
-        private AdminShareEditViewProvider $adminShareEditViewProvider
+        private readonly ShareModel $shareModel,
+        private readonly AdminShareEditViewProvider $adminShareEditViewProvider
     ) {
         parent::__construct($context);
     }

@@ -72,7 +72,7 @@ class AclInstaller implements InstallerInterface
 
     private function convertCamelCaseToUnderscore(string $action): string
     {
-        return strtolower(preg_replace('/\B([A-Z])/', '_$1', $action));
+        return strtolower((string) preg_replace('/\B([A-Z])/', '_$1', $action));
     }
 
     private function getDefaultAclRulePermission(int $roleId, PrivilegeEnum $privilegeId): PermissionEnum

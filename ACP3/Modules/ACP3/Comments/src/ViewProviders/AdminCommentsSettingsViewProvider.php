@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
 
 class AdminCommentsSettingsViewProvider
 {
-    public function __construct(private Date $dateHelper, private FormToken $formTokenHelper, private SettingsInterface $settings)
+    public function __construct(private readonly Date $dateHelper, private readonly FormToken $formTokenHelper, private readonly SettingsInterface $settings)
     {
     }
 

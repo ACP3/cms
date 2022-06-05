@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class Helpers
 {
-    public function __construct(private Core\ACL $acl, private Core\I18n\Translator $translator, private Core\Modules $modules, private Core\Http\RequestInterface $request, private Core\Helpers\Forms $formsHelper, private Core\Helpers\Secure $secureHelper, private CategoriesModel $categoriesModel, private CategoryRepository $categoryRepository)
+    public function __construct(private readonly Core\ACL $acl, private readonly Core\I18n\Translator $translator, private readonly Core\Modules $modules, private readonly Core\Http\RequestInterface $request, private readonly Core\Helpers\Forms $formsHelper, private readonly Core\Helpers\Secure $secureHelper, private readonly CategoriesModel $categoriesModel, private readonly CategoryRepository $categoryRepository)
     {
     }
 

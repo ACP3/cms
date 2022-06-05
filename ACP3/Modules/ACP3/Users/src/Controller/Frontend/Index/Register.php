@@ -17,11 +17,11 @@ class Register extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private UserModelInterface $user,
-        private Core\Http\RedirectResponse $redirectResponse,
-        private Core\Helpers\Alerts $alertsHelper,
-        private Users\ViewProviders\RegistrationViewProvider $registrationViewProvider
+        private readonly ApplicationPath $applicationPath,
+        private readonly UserModelInterface $user,
+        private readonly Core\Http\RedirectResponse $redirectResponse,
+        private readonly Core\Helpers\Alerts $alertsHelper,
+        private readonly Users\ViewProviders\RegistrationViewProvider $registrationViewProvider
     ) {
         parent::__construct($context);
     }

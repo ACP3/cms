@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class Mark extends AbstractFunction
 {
-    public function __construct(private Core\Helpers\Formatter\MarkEntries $markEntries)
+    public function __construct(private readonly Core\Helpers\Formatter\MarkEntries $markEntries)
     {
     }
 

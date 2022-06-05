@@ -19,7 +19,7 @@ class Navbar extends AbstractFunction
      */
     private array $menus = [];
 
-    public function __construct(private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Menus\Repository\MenuItemRepository $menuItemRepository, private Menus\Services\MenuServiceInterface $menuService)
+    public function __construct(private readonly Core\Http\RequestInterface $request, private readonly Core\Router\RouterInterface $router, private readonly Menus\Repository\MenuItemRepository $menuItemRepository, private readonly Menus\Services\MenuServiceInterface $menuService)
     {
     }
 

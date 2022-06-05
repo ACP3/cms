@@ -28,9 +28,9 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidField(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'fields' => ['text'],
-        ]);
+        ]];
         $this->dbData = [
             'text' => 'Lorem Ipsum',
         ];
@@ -41,9 +41,9 @@ class Nl2pColumnRendererTest extends AbstractColumnRendererTest
 
     public function testValidFieldWithMultipleLines(): void
     {
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'fields' => ['text'],
-        ]);
+        ]];
         $this->dbData = [
             'text' => "Lorem Ipsum\n\nDolor",
         ];

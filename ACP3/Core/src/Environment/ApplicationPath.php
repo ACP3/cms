@@ -9,19 +9,19 @@ namespace ACP3\Core\Environment;
 
 class ApplicationPath
 {
-    private string $phpSelf;
+    private readonly string $phpSelf;
 
     private string $webRoot;
 
-    private string $appDir;
+    private readonly string $appDir;
 
-    private string $uploadsDir;
+    private readonly string $uploadsDir;
 
-    private string $cacheDir;
+    private readonly string $cacheDir;
 
-    private ApplicationMode $applicationMode;
+    private readonly ApplicationMode $applicationMode;
 
-    private bool $debug;
+    private readonly bool $debug;
 
     public function __construct(ApplicationMode $applicationMode)
     {

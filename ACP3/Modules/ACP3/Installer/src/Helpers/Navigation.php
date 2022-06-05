@@ -18,7 +18,7 @@ class Navigation
      */
     private array $navbar = [];
 
-    public function __construct(private Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
         $this->initializeNavigation();
     }
@@ -50,7 +50,7 @@ class Navigation
     private function addStep(string $stepName, array $options): self
     {
         if (!$this->has($stepName)) {
-            $options = array_merge($this->getDefaultOptions(), $options);
+            $options = [...$this->getDefaultOptions(), ...$options];
             $this->navbar[$stepName] = new NavigationStep($options['lang'], $options['active'], $options['complete']);
         }
 

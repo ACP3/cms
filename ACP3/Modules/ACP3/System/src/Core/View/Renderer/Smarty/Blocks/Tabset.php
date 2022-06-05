@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\System\Helper\View\Tabset as TabsetViewHelper;
 
 class Tabset extends AbstractBlock
 {
-    public function __construct(private TabsetViewHelper $tabset)
+    public function __construct(private readonly TabsetViewHelper $tabset)
     {
     }
 

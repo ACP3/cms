@@ -22,11 +22,11 @@ class LoginPost extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private ApplicationPath $applicationPath,
-        private FormAction $actionHelper,
-        private RedirectResponse $redirectResponse,
-        private Secure $secureHelper,
-        private AuthenticationModel $authenticationModel
+        private readonly ApplicationPath $applicationPath,
+        private readonly FormAction $actionHelper,
+        private readonly RedirectResponse $redirectResponse,
+        private readonly Secure $secureHelper,
+        private readonly AuthenticationModel $authenticationModel
     ) {
         parent::__construct($context);
     }

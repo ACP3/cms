@@ -22,7 +22,7 @@ class Application
 
     private ?ContainerInterface $container = null;
 
-    private ?LoggerInterface $logger;
+    private readonly ?LoggerInterface $logger;
 
     /**
      * @throws \Exception

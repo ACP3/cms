@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClearPermissionCacheListener implements EventSubscriberInterface
 {
-    public function __construct(private CacheItemPoolInterface $permissionsCachePool)
+    public function __construct(private readonly CacheItemPoolInterface $permissionsCachePool)
     {
     }
 

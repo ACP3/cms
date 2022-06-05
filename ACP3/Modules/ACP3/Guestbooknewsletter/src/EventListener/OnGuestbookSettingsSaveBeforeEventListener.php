@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnGuestbookSettingsSaveBeforeEventListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private RequestInterface $request, private SettingsInterface $settings)
+    public function __construct(private readonly Modules $modules, private readonly RequestInterface $request, private readonly SettingsInterface $settings)
     {
     }
 

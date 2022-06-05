@@ -17,7 +17,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
     private bool $initialized = false;
 
-    public function __construct(private Core\ACL $acl, private Core\View $view, private ?Helpers $filemanagerHelpers = null)
+    public function __construct(private readonly Core\ACL $acl, private readonly Core\View $view, private readonly ?Helpers $filemanagerHelpers = null)
     {
     }
 

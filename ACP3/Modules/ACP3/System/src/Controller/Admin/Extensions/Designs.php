@@ -20,10 +20,10 @@ class Designs extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private AdminThemesViewProvider $adminThemesViewProvider,
-        private ThemePathInterface $theme,
-        private RedirectMessages $redirectMessages,
-        private CacheClearService $cacheClearService
+        private readonly AdminThemesViewProvider $adminThemesViewProvider,
+        private readonly ThemePathInterface $theme,
+        private readonly RedirectMessages $redirectMessages,
+        private readonly CacheClearService $cacheClearService
     ) {
         parent::__construct($context);
     }

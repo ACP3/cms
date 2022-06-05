@@ -20,7 +20,7 @@ class SearchResultsAwareRepository extends AbstractRepository implements SearchR
 
     public const TABLE_NAME = NewsRepository::TABLE_NAME;
 
-    public function __construct(Connection $db, private Date $date)
+    public function __construct(Connection $db, private readonly Date $date)
     {
         parent::__construct($db);
     }

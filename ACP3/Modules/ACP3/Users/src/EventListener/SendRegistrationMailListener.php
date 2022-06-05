@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SendRegistrationMailListener implements EventSubscriberInterface
 {
-    public function __construct(private RequestInterface $request, private SendEmail $sendEmail, private SettingsInterface $settings, private Translator $translator)
+    public function __construct(private readonly RequestInterface $request, private readonly SendEmail $sendEmail, private readonly SettingsInterface $settings, private readonly Translator $translator)
     {
     }
 

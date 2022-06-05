@@ -17,7 +17,7 @@ class PageBreaks extends Core\Helpers\PageBreaks
         Core\Http\RequestInterface $request,
         Core\Router\RouterInterface $router,
         TableOfContents $tableOfContents,
-        private MetaStatementsServiceInterface $metaStatements
+        private readonly MetaStatementsServiceInterface $metaStatements
     ) {
         parent::__construct($request, $router, $tableOfContents);
     }

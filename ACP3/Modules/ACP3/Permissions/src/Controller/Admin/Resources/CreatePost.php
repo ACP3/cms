@@ -20,10 +20,10 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context                       $context,
-        private FormAction                                    $actionHelper,
-        private Core\Modules                                  $modules,
-        private Permissions\Model\AclResourceModel            $resourcesModel,
-        private Permissions\Validation\ResourceFormValidation $resourceFormValidation
+        private readonly FormAction                                    $actionHelper,
+        private readonly Core\Modules                                  $modules,
+        private readonly Permissions\Model\AclResourceModel            $resourcesModel,
+        private readonly Permissions\Validation\ResourceFormValidation $resourceFormValidation
     ) {
         parent::__construct($context);
     }

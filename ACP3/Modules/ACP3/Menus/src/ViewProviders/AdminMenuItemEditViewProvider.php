@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
 
 class AdminMenuItemEditViewProvider
 {
-    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private MenuItemFormFields $menuItemFormFieldsHelper, private Modules $modules, private RequestInterface $request, private Title $title, private Translator $translator)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly MenuItemFormFields $menuItemFormFieldsHelper, private readonly Modules $modules, private readonly RequestInterface $request, private readonly Title $title, private readonly Translator $translator)
     {
     }
 

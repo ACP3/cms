@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Polls\Repository\PollRepository;
 
 class PollResultViewProvider
 {
-    public function __construct(private PollRepository $pollRepository, private AnswerRepository $answerRepository)
+    public function __construct(private readonly PollRepository $pollRepository, private readonly AnswerRepository $answerRepository)
     {
     }
 

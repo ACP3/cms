@@ -16,7 +16,7 @@ abstract class AbstractIncludeAsset
      */
     private array $alreadyIncluded = [];
 
-    public function __construct(private Libraries $libraries, private FileResolver $fileResolver)
+    public function __construct(private readonly Libraries $libraries, private readonly FileResolver $fileResolver)
     {
     }
 

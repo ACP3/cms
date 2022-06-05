@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AllowedMenuValidationRule extends AbstractValidationRule
 {
-    public function __construct(private MenuItemRepository $menuItemRepository)
+    public function __construct(private readonly MenuItemRepository $menuItemRepository)
     {
     }
 

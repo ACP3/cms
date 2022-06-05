@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Contact\Installer\Schema as ContactSchema;
 
 class ContactFormViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings, private UserModelInterface $user)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly UserModelInterface $user)
     {
     }
 

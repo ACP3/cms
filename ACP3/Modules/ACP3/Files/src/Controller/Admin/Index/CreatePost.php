@@ -21,11 +21,11 @@ class CreatePost extends AbstractFormAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private UserModelInterface $user,
-        private Files\Model\FilesModel $filesModel,
-        private Files\Validation\AdminFormValidation $adminFormValidation,
-        private Core\Helpers\Upload $filesUploadHelper,
+        private readonly FormAction $actionHelper,
+        private readonly UserModelInterface $user,
+        private readonly Files\Model\FilesModel $filesModel,
+        private readonly Files\Validation\AdminFormValidation $adminFormValidation,
+        private readonly Core\Helpers\Upload $filesUploadHelper,
         Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context, $categoriesHelpers);

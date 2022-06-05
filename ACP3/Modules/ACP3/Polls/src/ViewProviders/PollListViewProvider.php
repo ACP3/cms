@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Polls\Repository\PollRepository;
 
 class PollListViewProvider
 {
-    public function __construct(private Date $date, private PollHelpers $pollHelpers, private PollRepository $pollRepository)
+    public function __construct(private readonly Date $date, private readonly PollHelpers $pollHelpers, private readonly PollRepository $pollRepository)
     {
     }
 

@@ -18,11 +18,11 @@ class Aliases
      */
     private array $aliasesCache = [];
 
-    private bool $isActive;
+    private readonly bool $isActive;
 
     public function __construct(
         Core\Modules $modules,
-        private SeoInformationService $seoInformationService
+        private readonly SeoInformationService $seoInformationService
     ) {
         $this->isActive = $modules->isInstalled(Seo\Installer\Schema::MODULE_NAME);
     }

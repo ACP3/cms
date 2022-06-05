@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Users\Helpers\Forms as UserFormsHelper;
 
 class AccountSettingsViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private UserModelInterface $userModel, private UserFormsHelper $userFormsHelper)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly UserModelInterface $userModel, private readonly UserFormsHelper $userFormsHelper)
     {
     }
 

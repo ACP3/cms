@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Gallery\Services\GalleryServiceInterface;
 
 class GalleryPictureListViewProvider
 {
-    public function __construct(private GalleryServiceInterface $galleryService, private RequestInterface $request, private SettingsInterface $settings, private Steps $breadcrumb, private Title $title, private Translator $translator)
+    public function __construct(private readonly GalleryServiceInterface $galleryService, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Steps $breadcrumb, private readonly Title $title, private readonly Translator $translator)
     {
     }
 

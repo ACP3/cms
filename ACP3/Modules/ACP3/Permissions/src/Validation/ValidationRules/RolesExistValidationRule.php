@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RolesExistValidationRule extends AbstractValidationRule
 {
-    public function __construct(private ACL $acl)
+    public function __construct(private readonly ACL $acl)
     {
     }
 

@@ -21,14 +21,4 @@ class ColumnPriorityQueue extends \SplPriorityQueue
     {
         return parent::insert($value, [$priority, $this->serial--]);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return array<string, mixed>
-     */
-    public function current(): array
-    {
-        return parent::current();
-    }
 }

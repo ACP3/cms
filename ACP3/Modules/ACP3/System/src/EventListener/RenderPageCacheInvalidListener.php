@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RenderPageCacheInvalidListener implements EventSubscriberInterface
 {
-    public function __construct(private ACL $acl, private SettingsInterface $settings, private View $view)
+    public function __construct(private readonly ACL $acl, private readonly SettingsInterface $settings, private readonly View $view)
     {
     }
 

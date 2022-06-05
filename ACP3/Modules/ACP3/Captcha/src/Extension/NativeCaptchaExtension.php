@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class NativeCaptchaExtension implements CaptchaExtensionInterface
 {
-    public function __construct(private Core\ACL $acl, private Translator $translator, private Session $sessionHandler, private Core\View $view, private Core\Helpers\Secure $secureHelper, private UserModelInterface $user)
+    public function __construct(private readonly Core\ACL $acl, private readonly Translator $translator, private readonly Session $sessionHandler, private readonly Core\View $view, private readonly Core\Helpers\Secure $secureHelper, private readonly UserModelInterface $user)
     {
     }
 
@@ -73,7 +73,7 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         $value = $formData[$formFieldName];
         $indexName = 'captcha_' . $formData['captcha_token'];
 
-        return preg_match('/^[a-zA-Z0-9]+$/', $value)
-            && strtolower($value) === strtolower($this->sessionHandler->get($indexName, ''));
+        return preg_match('/^[a-zA-Z0-9]+$/', (string) $value)
+            && strtolower((string) $value) === strtolower((string) $this->sessionHandler->get($indexName, ''));
     }
 }

@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Users\Installer\Schema;
 
 class LoginViewProvider
 {
-    public function __construct(private Forms $forms, private RequestInterface $request, private SettingsInterface $settings, private Translator $translator)
+    public function __construct(private readonly Forms $forms, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Translator $translator)
     {
     }
 

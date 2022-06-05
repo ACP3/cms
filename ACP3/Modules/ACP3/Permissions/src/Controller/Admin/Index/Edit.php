@@ -14,8 +14,8 @@ class Edit extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Permissions\Model\AclRoleModel $rolesModel,
-        private Permissions\ViewProviders\AdminRoleEditViewProvider $adminRoleEditViewProvider
+        private readonly Permissions\Model\AclRoleModel $rolesModel,
+        private readonly Permissions\ViewProviders\AdminRoleEditViewProvider $adminRoleEditViewProvider
     ) {
         parent::__construct($context);
     }

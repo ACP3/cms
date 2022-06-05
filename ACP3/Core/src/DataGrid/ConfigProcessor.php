@@ -12,7 +12,7 @@ use ACP3\Core\I18n\Translator;
 
 class ConfigProcessor
 {
-    public function __construct(private RequestInterface $request, private Translator $translator)
+    public function __construct(private readonly RequestInterface $request, private readonly Translator $translator)
     {
     }
 
@@ -33,7 +33,7 @@ class ConfigProcessor
         ];
 
         if ($options->isUseAjax()) {
-            $config['ajax'] = $this->request->getFullPath() . 'ajax_' . substr($options->getIdentifier(), 1);
+            $config['ajax'] = $this->request->getFullPath() . 'ajax_' . substr((string) $options->getIdentifier(), 1);
         }
 
         return [

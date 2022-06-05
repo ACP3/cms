@@ -20,7 +20,7 @@ class UpdateCheck
     private const UPDATE_CHECK_FILE = 'https://acp3.gitlab.io/update-check/update.txt';
     private const UPDATE_CHECK_DATE_OFFSET = 86400;
 
-    public function __construct(private Date $date, private SettingsInterface $settings, private UpdateFileParser $updateFileParser, private VersionParser $versionParser)
+    public function __construct(private readonly Date $date, private readonly SettingsInterface $settings, private readonly UpdateFileParser $updateFileParser, private readonly VersionParser $versionParser)
     {
     }
 

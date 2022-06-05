@@ -12,7 +12,7 @@ use ACP3\Core\Mailer\MailerMessage;
 
 class SendEmail
 {
-    public function __construct(private Core\Mailer $mailer)
+    public function __construct(private readonly Core\Mailer $mailer)
     {
     }
 

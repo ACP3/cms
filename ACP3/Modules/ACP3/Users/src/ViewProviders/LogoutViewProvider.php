@@ -13,7 +13,7 @@ use ACP3\Core\Router\RouterInterface;
 
 class LogoutViewProvider
 {
-    public function __construct(private ApplicationPath $applicationPath, private RequestInterface $request, private RouterInterface $router)
+    public function __construct(private readonly ApplicationPath $applicationPath, private readonly RequestInterface $request, private readonly RouterInterface $router)
     {
     }
 

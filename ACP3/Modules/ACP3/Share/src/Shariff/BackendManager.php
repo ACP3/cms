@@ -20,12 +20,12 @@ class BackendManager
      * @param ServiceInterface[] $services
      */
     public function __construct(
-        private string $baseCacheKey,
-        private CacheItemPoolInterface $cache,
-        private ClientInterface $client,
-        private LoggerInterface $logger,
-        private array $domains,
-        private array $services
+        private readonly string $baseCacheKey,
+        private readonly CacheItemPoolInterface $cache,
+        private readonly ClientInterface $client,
+        private readonly LoggerInterface $logger,
+        private readonly array $domains,
+        private readonly array $services
     ) {
     }
 

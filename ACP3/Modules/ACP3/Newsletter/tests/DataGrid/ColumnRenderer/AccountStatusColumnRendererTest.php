@@ -48,9 +48,9 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
             ->method('__invoke')
             ->willReturn('icon-success');
 
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'fields' => ['status'],
-        ]);
+        ]];
         $this->dbData = [
             'id' => 123,
             'status' => 1,
@@ -78,9 +78,9 @@ class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
             ->method('__invoke')
             ->willReturn('icon-trash');
 
-        $this->columnData = array_merge($this->columnData, [
+        $this->columnData = [...$this->columnData, ...[
             'fields' => ['status'],
-        ]);
+        ]];
         $this->dbData = [
             'id' => 123,
             'status' => 0,

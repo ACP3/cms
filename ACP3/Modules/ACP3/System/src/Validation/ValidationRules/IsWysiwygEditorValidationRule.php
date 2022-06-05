@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class IsWysiwygEditorValidationRule extends AbstractValidationRule
 {
-    public function __construct(private ContainerInterface $editorLocator)
+    public function __construct(private readonly ContainerInterface $editorLocator)
     {
     }
 

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DuplicateCategoryValidationRule extends AbstractValidationRule
 {
-    public function __construct(private CategoryRepository $categoryRepository)
+    public function __construct(private readonly CategoryRepository $categoryRepository)
     {
     }
 

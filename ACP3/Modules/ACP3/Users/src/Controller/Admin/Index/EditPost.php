@@ -24,13 +24,13 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private FormAction $actionHelper,
-        private UserModelInterface $user,
-        private AuthenticationModel $authenticationModel,
-        private UsersModel $usersModel,
-        private AdminFormValidation $adminFormValidation,
-        private Helpers $permissionsHelpers,
-        private RedirectMessages $redirectMessages
+        private readonly FormAction $actionHelper,
+        private readonly UserModelInterface $user,
+        private readonly AuthenticationModel $authenticationModel,
+        private readonly UsersModel $usersModel,
+        private readonly AdminFormValidation $adminFormValidation,
+        private readonly Helpers $permissionsHelpers,
+        private readonly RedirectMessages $redirectMessages
     ) {
         parent::__construct($context);
     }

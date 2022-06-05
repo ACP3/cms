@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnFilesLayoutDetailsAfterEventListener implements EventSubscriberInterface
 {
-    public function __construct(private Modules $modules, private View $view, private SettingsInterface $settings)
+    public function __construct(private readonly Modules $modules, private readonly View $view, private readonly SettingsInterface $settings)
     {
     }
 

@@ -18,10 +18,10 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private FormAction $actionHelper,
-        private Permissions\Model\AclRoleModel $roleModel,
-        private Permissions\Model\AclPermissionModel $permissionModel,
-        private Permissions\Validation\RoleFormValidation $roleFormValidation
+        private readonly FormAction $actionHelper,
+        private readonly Permissions\Model\AclRoleModel $roleModel,
+        private readonly Permissions\Model\AclPermissionModel $permissionModel,
+        private readonly Permissions\Validation\RoleFormValidation $roleFormValidation
     ) {
         parent::__construct($context);
     }

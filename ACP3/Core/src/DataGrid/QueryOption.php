@@ -9,7 +9,7 @@ namespace ACP3\Core\DataGrid;
 
 class QueryOption
 {
-    public function __construct(private string $columnName, private string $value, private string $tableAlias = 'main', private string $operator = '=')
+    public function __construct(private readonly string $columnName, private readonly string $value, private readonly string $tableAlias = 'main', private readonly string $operator = '=')
     {
     }
 

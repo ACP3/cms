@@ -24,8 +24,8 @@ class Pagination extends \ACP3\Core\Pagination
         Translator $translator,
         RequestInterface $request,
         RouterInterface $router,
-        private MetaStatementsServiceInterface $metaStatements,
-        private SettingsInterface $settings
+        private readonly MetaStatementsServiceInterface $metaStatements,
+        private readonly SettingsInterface $settings
     ) {
         parent::__construct($title, $translator, $request, $router);
     }

@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataGridByModuleViewProvider
 {
-    public function __construct(private CommentsDataGridRepository $dataGridRepository, private DataGrid $dataGrid, private ModuleAwareRepositoryInterface $systemModuleRepository, private RequestInterface $request, private ResultsPerPage $resultsPerPage, private Steps $breadcrumb, private Translator $translator)
+    public function __construct(private readonly CommentsDataGridRepository $dataGridRepository, private readonly DataGrid $dataGrid, private readonly ModuleAwareRepositoryInterface $systemModuleRepository, private readonly RequestInterface $request, private readonly ResultsPerPage $resultsPerPage, private readonly Steps $breadcrumb, private readonly Translator $translator)
     {
     }
 
@@ -47,7 +47,7 @@ class DataGridByModuleViewProvider
             'acp/' . $this->request->getQuery()
         );
 
-        return array_merge($dataGrid, ['module_id' => $moduleId]);
+        return [...$dataGrid, ...['module_id' => $moduleId]];
     }
 
     private function configureDataGrid(int $moduleId): Input

@@ -16,7 +16,7 @@ use ACP3\Modules\ACP3\Polls\Repository\AnswerRepository;
 
 class AdminPollEditViewProvider
 {
-    public function __construct(private AnswerRepository $answerRepository, private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private Title $title, private Translator $translator)
+    public function __construct(private readonly AnswerRepository $answerRepository, private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly Title $title, private readonly Translator $translator)
     {
     }
 

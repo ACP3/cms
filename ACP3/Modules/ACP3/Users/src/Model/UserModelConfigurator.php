@@ -12,7 +12,7 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 
 class UserModelConfigurator
 {
-    public function __construct(private AuthenticationInterface $authentication)
+    public function __construct(private readonly AuthenticationInterface $authentication)
     {
     }
 

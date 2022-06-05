@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class AssetsClearCommand extends Command
 {
-    public function __construct(private CacheClearService $cacheClearService)
+    public function __construct(private readonly CacheClearService $cacheClearService)
     {
         parent::__construct();
     }

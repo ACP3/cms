@@ -16,7 +16,7 @@ class ModelSavePrepareDataEvent extends Event
      * @param array<string, mixed>|null $currentData
      * @param array<string, string>     $allowedColumns
      */
-    public function __construct(private array $rawData, private ?array $currentData, private array $allowedColumns)
+    public function __construct(private array $rawData, private readonly ?array $currentData, private array $allowedColumns)
     {
     }
 

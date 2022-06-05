@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 
 class AdminSeoEditViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private MetaFormFields $metaFormFieldsHelper, private Request $request, private Title $title)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly MetaFormFields $metaFormFieldsHelper, private readonly Request $request, private readonly Title $title)
     {
     }
 

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class RedirectMessages
 {
-    public function __construct(private Core\Http\RedirectResponse $redirect, private Core\Http\RequestInterface $request, private Session $sessionHandler)
+    public function __construct(private readonly Core\Http\RedirectResponse $redirect, private readonly Core\Http\RequestInterface $request, private readonly Session $sessionHandler)
     {
     }
 

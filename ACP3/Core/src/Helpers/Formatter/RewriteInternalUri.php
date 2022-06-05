@@ -11,7 +11,7 @@ use ACP3\Core;
 
 class RewriteInternalUri
 {
-    public function __construct(private Core\Environment\ApplicationPath $appPath, private Core\Controller\Helper\ControllerActionExists $controllerActionExists, private Core\Http\RequestInterface $request, private Core\Router\RouterInterface $router, private Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule)
+    public function __construct(private readonly Core\Environment\ApplicationPath $appPath, private readonly Core\Controller\Helper\ControllerActionExists $controllerActionExists, private readonly Core\Http\RequestInterface $request, private readonly Core\Router\RouterInterface $router, private readonly Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule)
     {
     }
 

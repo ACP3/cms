@@ -19,7 +19,7 @@ use ACP3\Modules\ACP3\Files\Repository\FilesRepository;
 
 class FileDetailsViewProvider
 {
-    public function __construct(private Steps $breadcrumb, private FilesRepository $filesRepository, private CategoryRepository $categoryRepository, private RequestInterface $request, private SettingsInterface $settings, private Title $title, private Translator $translator, private View $view)
+    public function __construct(private readonly Steps $breadcrumb, private readonly FilesRepository $filesRepository, private readonly CategoryRepository $categoryRepository, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Title $title, private readonly Translator $translator, private readonly View $view)
     {
     }
 

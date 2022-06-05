@@ -16,7 +16,7 @@ class SchemaHelper
 {
     use ContainerAwareTrait;
 
-    public function __construct(private Connection $db, private ModuleAwareRepositoryInterface $moduleAwareRepository)
+    public function __construct(private readonly Connection $db, private readonly ModuleAwareRepositoryInterface $moduleAwareRepository)
     {
     }
 

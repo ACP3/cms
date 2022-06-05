@@ -13,7 +13,7 @@ use ACP3\Core\Router\RouterInterface;
 
 class RouteColumnRenderer extends AbstractColumnRenderer
 {
-    public function __construct(private RouterInterface $router, private Translator $translator, private Icon $icon)
+    public function __construct(private readonly RouterInterface $router, private readonly Translator $translator, private readonly Icon $icon)
     {
     }
 

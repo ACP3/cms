@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Emoticons\Installer\Schema as EmoticonsSchema;
 
 class AdminSettingsViewProvider
 {
-    public function __construct(private FormToken $formTokenHelper, private RequestInterface $request, private SettingsInterface $settings)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings)
     {
     }
 

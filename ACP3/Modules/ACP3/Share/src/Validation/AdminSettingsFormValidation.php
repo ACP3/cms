@@ -18,7 +18,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
     public function __construct(
         Translator $translator,
         Validator $validator,
-        private SocialServices $availableServices)
+        private readonly SocialServices $availableServices)
     {
         parent::__construct($translator, $validator);
     }

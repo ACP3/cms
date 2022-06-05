@@ -17,7 +17,7 @@ use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class AdminCategoryEditViewProvider
 {
-    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private Modules $modules, private RequestInterface $request, private Title $title, private Translator $translator, private CategoryRepository $categoryRepository)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly Modules $modules, private readonly RequestInterface $request, private readonly Title $title, private readonly Translator $translator, private readonly CategoryRepository $categoryRepository)
     {
     }
 

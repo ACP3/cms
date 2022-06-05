@@ -15,7 +15,7 @@ class Helpers
 {
     public const URL_KEY_PATTERN = 'polls/index/result/id_%d/';
 
-    public function __construct(private VoteRepository $voteRepository, private RequestInterface $request, private UserModelInterface $user)
+    public function __construct(private readonly VoteRepository $voteRepository, private readonly RequestInterface $request, private readonly UserModelInterface $user)
     {
     }
 

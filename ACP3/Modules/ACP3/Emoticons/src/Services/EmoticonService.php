@@ -12,7 +12,7 @@ use ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository;
 
 class EmoticonService implements EmoticonServiceInterface
 {
-    public function __construct(private ApplicationPath $applicationPath, private EmoticonRepository $emoticonRepository)
+    public function __construct(private readonly ApplicationPath $applicationPath, private readonly EmoticonRepository $emoticonRepository)
     {
     }
 

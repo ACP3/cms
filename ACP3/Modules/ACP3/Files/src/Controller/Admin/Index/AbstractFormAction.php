@@ -16,7 +16,7 @@ abstract class AbstractFormAction extends AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Categories\Helpers $categoriesHelpers
+        private readonly Categories\Helpers $categoriesHelpers
     ) {
         parent::__construct($context);
     }

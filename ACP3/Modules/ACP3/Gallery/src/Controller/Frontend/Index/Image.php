@@ -15,8 +15,8 @@ class Image extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private Gallery\Repository\PictureRepository $pictureRepository,
-        private Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
+        private readonly Gallery\Repository\PictureRepository $pictureRepository,
+        private readonly Gallery\Helper\ThumbnailGenerator $thumbnailGenerator
     ) {
         parent::__construct($context);
     }

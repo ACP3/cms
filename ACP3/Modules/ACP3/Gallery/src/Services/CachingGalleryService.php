@@ -13,7 +13,7 @@ class CachingGalleryService implements GalleryServiceInterface
 {
     public const CACHE_ID_GALLERY_PICTURES = 'gallery_pics_%d';
 
-    public function __construct(private CacheItemPoolInterface $galleryCachePool, private GalleryService $galleryService)
+    public function __construct(private readonly CacheItemPoolInterface $galleryCachePool, private readonly GalleryService $galleryService)
     {
     }
 

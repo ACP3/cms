@@ -20,7 +20,7 @@ class CountryList
      */
     private ?array $supportedLocales = null;
 
-    public function __construct(private Translator $translator)
+    public function __construct(private readonly Translator $translator)
     {
     }
 

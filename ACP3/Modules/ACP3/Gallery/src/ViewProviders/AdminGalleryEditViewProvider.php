@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Gallery\Helpers as GalleryHelpers;
 
 class AdminGalleryEditViewProvider
 {
-    public function __construct(private Forms $formsHelper, private FormToken $formTokenHelper, private RequestInterface $request, private Title $title)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly Title $title)
     {
     }
 

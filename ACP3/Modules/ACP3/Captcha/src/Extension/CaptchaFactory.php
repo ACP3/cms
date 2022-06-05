@@ -13,7 +13,7 @@ use Psr\Container\ContainerInterface;
 
 class CaptchaFactory
 {
-    public function __construct(private SettingsInterface $settings, private ContainerInterface $captchaLocator)
+    public function __construct(private readonly SettingsInterface $settings, private readonly ContainerInterface $captchaLocator)
     {
     }
 

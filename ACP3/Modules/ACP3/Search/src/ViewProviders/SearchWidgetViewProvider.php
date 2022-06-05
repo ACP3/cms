@@ -11,7 +11,7 @@ use ACP3\Modules\ACP3\Search\Helpers as SearchHelpers;
 
 class SearchWidgetViewProvider
 {
-    public function __construct(private SearchHelpers $searchHelpers)
+    public function __construct(private readonly SearchHelpers $searchHelpers)
     {
     }
 

@@ -19,11 +19,11 @@ class Download extends Core\Controller\AbstractWidgetAction
 {
     public function __construct(
         Core\Controller\Context\Context $context,
-        private ApplicationPath $applicationPath,
-        private Core\Date $date,
-        private Core\Http\RedirectResponse $redirectResponse,
-        private Core\Helpers\StringFormatter $stringFormatter,
-        private Files\Repository\FilesRepository $filesRepository
+        private readonly ApplicationPath $applicationPath,
+        private readonly Core\Date $date,
+        private readonly Core\Http\RedirectResponse $redirectResponse,
+        private readonly Core\Helpers\StringFormatter $stringFormatter,
+        private readonly Files\Repository\FilesRepository $filesRepository
     ) {
         parent::__construct($context);
     }
@@ -52,7 +52,7 @@ class Download extends Core\Controller\AbstractWidgetAction
                 return $response;
             }
 
-            if (preg_match('/^([a-z]+):\/\//', $file['file'])) { // External file
+            if (preg_match('/^([a-z]+):\/\//', (string) $file['file'])) { // External file
                 return $this->redirectResponse->toNewPage($file['file']);
             }
         }
