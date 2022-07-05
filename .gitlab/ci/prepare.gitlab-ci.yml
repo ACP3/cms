@@ -13,10 +13,8 @@ composer:
       - vendor
   rules:
     - !reference [.gitlab-ci-changes, rules]
+    - !reference [.php-changes, rules]
     - changes:
-        - "**/*.php"
-        - composer.json
-        - composer.lock
         - tests/phpunit.dist.xml
         - phpstan.neon.dist
         - .php-cs-fixer.dist.php

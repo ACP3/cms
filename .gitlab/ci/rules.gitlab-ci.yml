@@ -2,3 +2,10 @@
   rules:
     changes:
       - ".gitlab/ci/*.yml"
+
+.php-changes:
+  rules:
+    changes:
+      - "**/*.php"
+      - composer.json
+      - composer.lock
