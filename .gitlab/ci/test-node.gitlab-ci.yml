@@ -9,8 +9,8 @@ test:csslint:
     - npm run css-lint
   needs:
     - npm
-  only:
-    changes:
+  rules:
+    - changes:
       - ".gitlab/ci/*.yml"
       - "ACP3/**/*.{css,less,scss}"
       - "design/**/*.{css,less,scss}"
@@ -28,8 +28,8 @@ test:prettier:
     - npm run prettier
   needs:
     - npm
-  only:
-    changes:
+  rules:
+    - changes:
       - ".gitlab/ci/*.yml"
       - "ACP3/**/*.{css,js,less,scss}"
       - "design/**/*.{css,js,less,scss}"
@@ -51,8 +51,8 @@ test:eslint:
     - npm run eslint
   needs:
     - npm
-  only:
-    changes:
+  rules:
+    - changes:
       - ".gitlab/ci/*.yml"
       - "ACP3/**/*.js"
       - "design/**/*.js"

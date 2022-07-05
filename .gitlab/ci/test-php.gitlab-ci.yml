@@ -16,8 +16,8 @@ test:php-unit:
     reports:
       junit: junit-report.xml
     when: always
-  only:
-    changes:
+  rules:
+    - changes:
       - ".gitlab/ci/*.yml"
       - "**/*.php"
       - composer.json
@@ -39,8 +39,8 @@ test:php-cs-fixer:
     - composer run-script lint
   needs:
     - composer
-  only:
-    changes:
+  rules:
+    - changes:
       - ".gitlab/ci/*.yml"
       - "**/*.php"
       - composer.json
@@ -59,8 +59,8 @@ test:phpstan:
     - php -d memory_limit=-1 vendor/bin/phpstan analyse --no-progress
   needs:
     - composer
-  only:
-    changes:
+  rules:
+    - changes:
       - ".gitlab/ci/*.yml"
       - "**/*.php"
       - composer.json

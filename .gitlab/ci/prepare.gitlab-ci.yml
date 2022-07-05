@@ -11,8 +11,8 @@ composer:
   artifacts:
     paths:
       - vendor
-  only:
-    changes:
+  rules:
+    - changes:
       - ".gitlab/ci/*.yml"
       - "**/*.php"
       - composer.json
@@ -36,8 +36,8 @@ npm:
   artifacts:
     paths:
       - node_modules
-  only:
-    changes:
+  rules:
+    - changes:
       - ".gitlab/ci/*.yml"
       - "ACP3/**/*.{css,js,less,scss}"
       - "design/**/*.{css,js,less,scss}"
