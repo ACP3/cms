@@ -17,6 +17,7 @@ variables:
 include:
   - template: Code-Quality.gitlab-ci.yml
   #  - template: Security/SAST.gitlab-ci.yml
+  - local: .gitlab/ci/rules.gitlab-ci.yml
   - local: .gitlab/ci/prepare.gitlab-ci.yml
   - local: .gitlab/ci/test-php.gitlab-ci.yml
   - local: .gitlab/ci/test-node.gitlab-ci.yml

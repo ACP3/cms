@@ -1,6 +1,3 @@
-include:
-  local: "rules.gitlab-ci.yml"
-
 composer:
   image: composer:2
   stage: prepare
