@@ -19,8 +19,7 @@ test:php-unit:
   rules:
     - !reference [.gitlab-ci-changes, rules]
     - !reference [.php-changes, rules]
-    - changes:
-        - tests/phpunit.dist.xml
+    - !reference [.phpunit-changes, rules]
   parallel:
     matrix:
       - PHP_VERSION: "8.1"
@@ -39,8 +38,7 @@ test:php-cs-fixer:
   rules:
     - !reference [.gitlab-ci-changes, rules]
     - !reference [.php-changes, rules]
-    - changes:
-        - .php-cs-fixer.dist.php
+    - !reference [.php-cs-fixer-changes, rules]
 
 test:phpstan:
   image: registry.gitlab.com/acp3/php-docker:8.1
@@ -56,5 +54,4 @@ test:phpstan:
   rules:
     - !reference [.gitlab-ci-changes, rules]
     - !reference [.php-changes, rules]
-    - changes:
-        - phpstan.neon.dist
+    - !reference [.phpstan-changes, rules]

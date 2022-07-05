@@ -9,3 +9,18 @@
       - "**/*.php"
       - composer.json
       - composer.lock
+
+.phpunit-changes:
+  rules:
+    changes:
+      - tests/phpunit.dist.xml
+
+.php-cs-fixer-changes:
+  rules:
+    changes:
+      - .php-cs-fixer.dist.php
+
+.phpstan-changes:
+  rules:
+    changes:
+      - phpstan.neon.dist

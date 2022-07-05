@@ -14,10 +14,9 @@ composer:
   rules:
     - !reference [.gitlab-ci-changes, rules]
     - !reference [.php-changes, rules]
-    - changes:
-        - tests/phpunit.dist.xml
-        - phpstan.neon.dist
-        - .php-cs-fixer.dist.php
+    - !reference [.phpunit-changes, rules]
+    - !reference [.php-cs-fixer-changes, rules]
+    - !reference [.phpstan-changes, rules]
 
 npm:
   image: node:lts-alpine
