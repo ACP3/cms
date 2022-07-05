@@ -19,7 +19,6 @@ test:csslint:
         - package-lock.json
         - .stylelintignore
         - .stylelintrc
-        - .gitlab-ci.yml
 
 test:prettier:
   image: node:lts-alpine
@@ -38,7 +37,6 @@ test:prettier:
         - package-lock.json
         - .prettierignore
         - .prettierrc.json
-        - .gitlab-ci.yml
 
 test:eslint:
   image: node:lts-alpine
@@ -61,4 +59,3 @@ test:eslint:
         - package-lock.json
         - .eslintignore
         - .eslintrc.json
-        - .gitlab-ci.yml

@@ -23,7 +23,6 @@ test:php-unit:
         - composer.json
         - composer.lock
         - tests/phpunit.dist.xml
-        - .gitlab-ci.yml
   parallel:
     matrix:
       - PHP_VERSION: "8.1"
@@ -46,7 +45,6 @@ test:php-cs-fixer:
         - composer.json
         - composer.lock
         - .php-cs-fixer.dist.php
-        - .gitlab-ci.yml
 
 test:phpstan:
   image: registry.gitlab.com/acp3/php-docker:8.1
@@ -66,4 +64,3 @@ test:phpstan:
         - composer.json
         - composer.lock
         - phpstan.neon.dist
-        - .gitlab-ci.yml
