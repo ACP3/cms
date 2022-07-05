@@ -34,15 +34,7 @@ npm:
       - node_modules
   rules:
     - !reference [.gitlab-ci-changes, rules]
-    - changes:
-        - "ACP3/**/*.{css,js,less,scss}"
-        - "design/**/*.{css,js,less,scss}"
-        - "installation/**/*.{css,js,less,scss}"
-        - package.json
-        - package-lock.json
-        - .eslintignore
-        - .eslintrc.json
-        - .prettierignore
-        - .prettierrc.json
-        - .stylelintignore
-        - .stylelintrc
+    - !reference [.npm-changes, rules]
+    - !reference [.prettier-changes, rules]
+    - !reference [.eslint-changes, rules]
+    - !reference [.stylelint-changes, rules]

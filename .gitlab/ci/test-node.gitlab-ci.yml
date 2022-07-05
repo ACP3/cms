@@ -11,14 +11,8 @@ test:csslint:
     - npm
   rules:
     - !reference [.gitlab-ci-changes, rules]
-    - changes:
-        - "ACP3/**/*.{css,less,scss}"
-        - "design/**/*.{css,less,scss}"
-        - "installation/**/*.{css,less,scss}"
-        - package.json
-        - package-lock.json
-        - .stylelintignore
-        - .stylelintrc
+    - !reference [.npm-changes, rules]
+    - !reference [.stylelint-changes, rules]
 
 test:prettier:
   image: node:lts-alpine
@@ -29,14 +23,8 @@ test:prettier:
     - npm
   rules:
     - !reference [.gitlab-ci-changes, rules]
-    - changes:
-        - "ACP3/**/*.{css,js,less,scss}"
-        - "design/**/*.{css,js,less,scss}"
-        - "installation/**/*.{css,js,less,scss}"
-        - package.json
-        - package-lock.json
-        - .prettierignore
-        - .prettierrc.json
+    - !reference [.npm-changes, rules]
+    - !reference [.prettier-changes, rules]
 
 test:eslint:
   image: node:lts-alpine
@@ -51,11 +39,5 @@ test:eslint:
     - npm
   rules:
     - !reference [.gitlab-ci-changes, rules]
-    - changes:
-        - "ACP3/**/*.js"
-        - "design/**/*.js"
-        - "installation/**/*.js"
-        - package.json
-        - package-lock.json
-        - .eslintignore
-        - .eslintrc.json
+    - !reference [.npm-changes, rules]
+    - !reference [.eslint-changes, rules]

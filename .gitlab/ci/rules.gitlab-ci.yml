@@ -24,3 +24,36 @@
   rules:
     changes:
       - phpstan.neon.dist
+
+.npm-changes:
+  rules:
+    changes:
+      - package.json
+      - package-lock.json
+
+.prettier-changes:
+  rules:
+    changes:
+      - "ACP3/**/*.{css,js,less,scss}"
+      - "design/**/*.{css,js,less,scss}"
+      - "installation/**/*.{css,js,less,scss}"
+      - .prettierignore
+      - .prettierrc.json
+
+.eslint-changes:
+  rules:
+    changes:
+      - "ACP3/**/*.js"
+      - "design/**/*.js"
+      - "installation/**/*.js"
+      - .eslintignore
+      - .eslintrc.json
+
+.stylelint-changes:
+  rules:
+    changes:
+      - "ACP3/**/*.{css,less,scss}"
+      - "design/**/*.{css,less,scss}"
+      - "installation/**/*.{css,less,scss}"
+      - .stylelintignore
+      - .stylelintrc
