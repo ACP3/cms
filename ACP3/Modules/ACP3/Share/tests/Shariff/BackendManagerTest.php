@@ -23,7 +23,6 @@ class BackendManagerTest extends PHPUnit\TestCase
         parent::setUp();
 
         $services = [
-            'vk' => new Vk(),
             'buffer' => new Buffer(),
         ];
 
@@ -43,9 +42,6 @@ class BackendManagerTest extends PHPUnit\TestCase
 
         $this->assertIsInt($counts['buffer']);
         $this->assertGreaterThanOrEqual(0, $counts['buffer']);
-
-        $this->assertIsInt($counts['vk']);
-        $this->assertGreaterThanOrEqual(0, $counts['vk']);
     }
 
     public function testInvalidDomain(): void
