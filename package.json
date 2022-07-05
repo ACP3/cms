@@ -11,7 +11,9 @@
     "eslint": "eslint -c .eslintrc.json --cache --cache-location=.eslintcache .",
     "eslint-fix": "npm run eslint -- --fix",
     "prettier": "prettier --check **/*.{css,js,json,md,scss,yml}",
-    "prettier:fix": "prettier --write **/*.{css,js,json,md,scss,yml}"
+    "prettier:fix": "prettier --write **/*.{css,js,json,md,scss,yml}",
+    "lint-all": "npm run prettier:fix && npm run css-lint:fix && npm run eslint-fix",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -55,6 +57,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-tap": "^2.0.0",
     "gulplog": "^2.0.0",
+    "husky": "^8.0.1",
     "js-yaml": "^4.1.0",
     "postcss": "^8.3.11",
     "prettier": "^2.4.1",
