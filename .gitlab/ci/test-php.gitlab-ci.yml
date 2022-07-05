@@ -1,3 +1,6 @@
+include:
+  local: "rules.gitlab-ci.yml"
+
 test:php-unit:
   image: registry.gitlab.com/acp3/php-docker:${PHP_VERSION}
   stage: test
@@ -17,13 +20,13 @@ test:php-unit:
       junit: junit-report.xml
     when: always
   rules:
+    - !reference [.gitlab-ci-changes, rules]
     - changes:
-      - ".gitlab/ci/*.yml"
-      - "**/*.php"
-      - composer.json
-      - composer.lock
-      - tests/phpunit.dist.xml
-      - .gitlab-ci.yml
+        - "**/*.php"
+        - composer.json
+        - composer.lock
+        - tests/phpunit.dist.xml
+        - .gitlab-ci.yml
   parallel:
     matrix:
       - PHP_VERSION: "8.1"
@@ -40,13 +43,13 @@ test:php-cs-fixer:
   needs:
     - composer
   rules:
+    - !reference [.gitlab-ci-changes, rules]
     - changes:
-      - ".gitlab/ci/*.yml"
-      - "**/*.php"
-      - composer.json
-      - composer.lock
-      - .php-cs-fixer.dist.php
-      - .gitlab-ci.yml
+        - "**/*.php"
+        - composer.json
+        - composer.lock
+        - .php-cs-fixer.dist.php
+        - .gitlab-ci.yml
 
 test:phpstan:
   image: registry.gitlab.com/acp3/php-docker:8.1
@@ -60,10 +63,10 @@ test:phpstan:
   needs:
     - composer
   rules:
+    - !reference [.gitlab-ci-changes, rules]
     - changes:
-      - ".gitlab/ci/*.yml"
-      - "**/*.php"
-      - composer.json
-      - composer.lock
-      - phpstan.neon.dist
-      - .gitlab-ci.yml
+        - "**/*.php"
+        - composer.json
+        - composer.lock
+        - phpstan.neon.dist
+        - .gitlab-ci.yml

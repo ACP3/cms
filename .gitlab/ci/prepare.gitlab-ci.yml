@@ -1,3 +1,6 @@
+include:
+  local: "rules.gitlab-ci.yml"
+
 composer:
   image: composer:2
   stage: prepare
@@ -12,15 +15,15 @@ composer:
     paths:
       - vendor
   rules:
+    - !reference [.gitlab-ci-changes, rules]
     - changes:
-      - ".gitlab/ci/*.yml"
-      - "**/*.php"
-      - composer.json
-      - composer.lock
-      - tests/phpunit.dist.xml
-      - phpstan.neon.dist
-      - .php-cs-fixer.dist.php
-      - .gitlab-ci.yml
+        - "**/*.php"
+        - composer.json
+        - composer.lock
+        - tests/phpunit.dist.xml
+        - phpstan.neon.dist
+        - .php-cs-fixer.dist.php
+        - .gitlab-ci.yml
 
 npm:
   image: node:lts-alpine
@@ -37,17 +40,17 @@ npm:
     paths:
       - node_modules
   rules:
+    - !reference [.gitlab-ci-changes, rules]
     - changes:
-      - ".gitlab/ci/*.yml"
-      - "ACP3/**/*.{css,js,less,scss}"
-      - "design/**/*.{css,js,less,scss}"
-      - "installation/**/*.{css,js,less,scss}"
-      - package.json
-      - package-lock.json
-      - .eslintignore
-      - .eslintrc.json
-      - .prettierignore
-      - .prettierrc.json
-      - .stylelintignore
-      - .stylelintrc
-      - .gitlab-ci.yml
+        - "ACP3/**/*.{css,js,less,scss}"
+        - "design/**/*.{css,js,less,scss}"
+        - "installation/**/*.{css,js,less,scss}"
+        - package.json
+        - package-lock.json
+        - .eslintignore
+        - .eslintrc.json
+        - .prettierignore
+        - .prettierrc.json
+        - .stylelintignore
+        - .stylelintrc
+        - .gitlab-ci.yml

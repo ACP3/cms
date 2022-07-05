@@ -1,3 +1,6 @@
+include:
+  local: "rules.gitlab-ci.yml"
+
 test:csslint:
   image: node:lts-alpine
   stage: test
@@ -10,16 +13,16 @@ test:csslint:
   needs:
     - npm
   rules:
+    - !reference [.gitlab-ci-changes, rules]
     - changes:
-      - ".gitlab/ci/*.yml"
-      - "ACP3/**/*.{css,less,scss}"
-      - "design/**/*.{css,less,scss}"
-      - "installation/**/*.{css,less,scss}"
-      - package.json
-      - package-lock.json
-      - .stylelintignore
-      - .stylelintrc
-      - .gitlab-ci.yml
+        - "ACP3/**/*.{css,less,scss}"
+        - "design/**/*.{css,less,scss}"
+        - "installation/**/*.{css,less,scss}"
+        - package.json
+        - package-lock.json
+        - .stylelintignore
+        - .stylelintrc
+        - .gitlab-ci.yml
 
 test:prettier:
   image: node:lts-alpine
@@ -29,16 +32,16 @@ test:prettier:
   needs:
     - npm
   rules:
+    - !reference [.gitlab-ci-changes, rules]
     - changes:
-      - ".gitlab/ci/*.yml"
-      - "ACP3/**/*.{css,js,less,scss}"
-      - "design/**/*.{css,js,less,scss}"
-      - "installation/**/*.{css,js,less,scss}"
-      - package.json
-      - package-lock.json
-      - .prettierignore
-      - .prettierrc.json
-      - .gitlab-ci.yml
+        - "ACP3/**/*.{css,js,less,scss}"
+        - "design/**/*.{css,js,less,scss}"
+        - "installation/**/*.{css,js,less,scss}"
+        - package.json
+        - package-lock.json
+        - .prettierignore
+        - .prettierrc.json
+        - .gitlab-ci.yml
 
 test:eslint:
   image: node:lts-alpine
@@ -52,13 +55,13 @@ test:eslint:
   needs:
     - npm
   rules:
+    - !reference [.gitlab-ci-changes, rules]
     - changes:
-      - ".gitlab/ci/*.yml"
-      - "ACP3/**/*.js"
-      - "design/**/*.js"
-      - "installation/**/*.js"
-      - package.json
-      - package-lock.json
-      - .eslintignore
-      - .eslintrc.json
-      - .gitlab-ci.yml
+        - "ACP3/**/*.js"
+        - "design/**/*.js"
+        - "installation/**/*.js"
+        - package.json
+        - package-lock.json
+        - .eslintignore
+        - .eslintrc.json
+        - .gitlab-ci.yml

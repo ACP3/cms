@@ -1,0 +1,4 @@
+.gitlab-ci-changes:
+  rules:
+    changes:
+      - ".gitlab/ci/*.yml"
