@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Share\Shariff;
 
 use ACP3\Modules\ACP3\Share\Shariff\Backend\Buffer;
-use ACP3\Modules\ACP3\Share\Shariff\Backend\Vk;
 use Http\Adapter\Guzzle6\Client;
 use PHPUnit\Framework as PHPUnit;
 use Psr\Log\LoggerInterface;
