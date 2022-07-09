@@ -10,9 +10,9 @@
     "css-lint:fix": "npm run css-lint -- --fix",
     "eslint": "eslint -c .eslintrc.json --cache --cache-location=.eslintcache .",
     "eslint-fix": "npm run eslint -- --fix",
-    "prettier": "prettier --check **/*.{css,js,json,md,scss,yml}",
-    "prettier:fix": "prettier --write **/*.{css,js,json,md,scss,yml}",
-    "lint-all": "npm run prettier:fix && npm run css-lint:fix && npm run eslint-fix",
+    "prettier": "prettier --check --cache **/*.{css,js,json,md,scss,yml}",
+    "prettier:fix": "prettier --write --cache **/*.{css,js,json,md,scss,yml}",
+    "lint-all": "concurrently \"npm:prettier:fix\" \"npm:css-lint:fix\" \"npm:eslint-fix\" --kill-others-on-fail --group",
     "prepare": "husky install"
   },
   "repository": {
@@ -38,6 +38,7 @@
     "babel-preset-minify": "^0.5.1",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
+    "concurrently": "^7.2.2",
     "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
