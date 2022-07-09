@@ -9,5 +9,4 @@ indent_size = 4
 trim_trailing_whitespace = true
 
 [*.{css,js,json,less,sass,scss,yml}]
-indent_style = space
 indent_size = 2
