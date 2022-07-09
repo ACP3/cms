@@ -17,6 +17,10 @@ test:csslint:
 test:prettier:
   image: node:lts-alpine
   stage: test
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - ./node_modules/.cache/prettier/.prettier-cache
   script:
     - npm run prettier
   needs:
