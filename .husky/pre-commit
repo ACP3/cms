@@ -2,4 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm run lint-all && \
-docker-compose run app sh -c "composer php-cs-fixer && composer phpstan && composer test"
+docker-compose run --no-deps app sh -c "composer php-cs-fixer && composer phpstan && composer test"
