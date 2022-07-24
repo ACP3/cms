@@ -22,13 +22,18 @@ npm:
   image: node:lts-alpine
   stage: prepare
   cache:
-    key: $CI_JOB_NAME
+    key:
+      prefix: $CI_JOB_NAME
+      files:
+        - package.json
+        - package-lock.json
     paths:
       - ${npm_config_cache}
+      - node_modules
   before_script:
     - apk update && apk add --no-cache git
   script:
-    - npm ci --no-progress
+    - if [ ! -d "node_modules" ]; then npm ci --no-progress; fi
   artifacts:
     paths:
       - node_modules
