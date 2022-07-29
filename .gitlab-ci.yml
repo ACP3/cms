@@ -13,6 +13,7 @@ variables:
   SAST_EXCLUDED_PATHS: "tests,node_modules,vendor,./**/*.min.js"
   SAST_GOSEC_LEVEL: 2
   SAST_DISABLE_BABEL: "true"
+  FF_USE_FASTZIP: 1
 
 include:
   - template: Code-Quality.gitlab-ci.yml
