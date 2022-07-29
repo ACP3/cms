@@ -17,6 +17,7 @@ enum AreaEnum: string
     case AREA_FRONTEND = 'frontend';
     case AREA_INSTALL = 'installer';
     case AREA_WIDGET = 'widget';
+
     /**
      * @return string[]
      *

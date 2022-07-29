@@ -86,9 +86,9 @@ abstract class NestedSetRepository extends AbstractRepository
         $where = ($blockId !== 0) ? ' AND ' . static::BLOCK_COLUMN_NAME . ' = ?' : '';
 
         return $this->db->fetchColumn(
-                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE right_id = ? {$where}",
-                [$rightId, $blockId]
-            ) > 0;
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE right_id = ? {$where}",
+            [$rightId, $blockId]
+        ) > 0;
     }
 
     /**
@@ -99,9 +99,9 @@ abstract class NestedSetRepository extends AbstractRepository
         $where = ($blockId !== 0) ? ' AND ' . static::BLOCK_COLUMN_NAME . ' = ?' : '';
 
         return $this->db->fetchColumn(
-                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id = ? {$where}",
-                [$rightId, $blockId]
-            ) > 0;
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id = ? {$where}",
+            [$rightId, $blockId]
+        ) > 0;
     }
 
     /**
@@ -123,9 +123,9 @@ abstract class NestedSetRepository extends AbstractRepository
     public function nodeIsRootItem(int $leftId, int $rightId): bool
     {
         return (int) $this->db->fetchColumn(
-                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id < ? AND right_id > ?",
-                [$leftId, $rightId]
-            ) === 0;
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id < ? AND right_id > ?",
+            [$leftId, $rightId]
+        ) === 0;
     }
 
     /**

@@ -25,8 +25,8 @@ class GalleryRepository extends AbstractRepository
         $period = !empty($time) ? ' AND `active` = :active AND ' . $this->getPublicationPeriod() : '';
 
         return (int) $this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
-                ['id' => $galleryId, 'active' => 1, 'time' => $time]
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id = :id' . $period,
+            ['id' => $galleryId, 'active' => 1, 'time' => $time]
         ) > 0;
     }
 

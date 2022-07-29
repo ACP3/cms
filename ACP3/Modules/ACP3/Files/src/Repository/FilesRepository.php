@@ -30,9 +30,9 @@ class FilesRepository extends Core\Repository\AbstractRepository
         $period = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
 
         return (int) $this->db->fetchColumn(
-                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $period,
-                ['id' => $fileId, 'time' => $time, 'active' => 1]
-            ) > 0;
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $period,
+            ['id' => $fileId, 'time' => $time, 'active' => 1]
+        ) > 0;
     }
 
     /**

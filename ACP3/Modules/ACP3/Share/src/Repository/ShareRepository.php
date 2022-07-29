@@ -19,9 +19,9 @@ class ShareRepository extends Core\Repository\AbstractRepository
     public function resultExistsById(int $id): bool
     {
         return $this->db->fetchColumn(
-                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id",
-                ['id' => $id]
-            ) > 0;
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id",
+            ['id' => $id]
+        ) > 0;
     }
 
     /**

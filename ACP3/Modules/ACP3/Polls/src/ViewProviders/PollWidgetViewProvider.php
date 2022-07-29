@@ -36,7 +36,7 @@ class PollWidgetViewProvider
                 $votes = (int) $answer['votes'];
                 $answers[$i]['votes'] = ($votes > 1)
                     ? $this->translator->t('polls', 'number_of_votes', ['%votes%' => $votes])
-                    : $this->translator->t('polls', ($votes === 1 ? 'one_vote' : 'no_votes'));
+                    : $this->translator->t('polls', $votes === 1 ? 'one_vote' : 'no_votes');
                 $answers[$i]['percent'] = $totalVotes > 0 ? round(100 * $votes / $totalVotes, 2) : 0;
             }
         }

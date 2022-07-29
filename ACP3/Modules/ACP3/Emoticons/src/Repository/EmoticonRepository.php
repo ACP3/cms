@@ -27,8 +27,8 @@ class EmoticonRepository extends Core\Repository\AbstractRepository
     public function resultsExist(int $emoticonId): bool
     {
         return $this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
-                [$emoticonId]
+            'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE module_id = ?',
+            [$emoticonId]
         ) > 0;
     }
 

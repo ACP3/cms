@@ -21,9 +21,9 @@ class NewsletterRepository extends Core\Repository\AbstractRepository
         $where = $status !== null ? ' AND status = :status' : '';
 
         return (int) $this->db->fetchColumn(
-                "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $where,
-                ['id' => $newsletterId, 'status' => $status]
-            ) > 0;
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE `id` = :id" . $where,
+            ['id' => $newsletterId, 'status' => $status]
+        ) > 0;
     }
 
     /**

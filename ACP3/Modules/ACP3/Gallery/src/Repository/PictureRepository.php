@@ -23,9 +23,9 @@ class PictureRepository extends Core\Repository\AbstractRepository
         $period = empty($time) === false ? ' AND `active` = :active AND ' . $this->getPublicationPeriod('g.') : '';
 
         return (int) $this->db->fetchColumn(
-                'SELECT COUNT(*) FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period,
-                ['id' => $pictureId, 'active' => 1, 'time' => $time]
-            ) > 0;
+            'SELECT COUNT(*) FROM ' . $this->getTableName(GalleryRepository::TABLE_NAME) . ' AS g, ' . $this->getTableName() . ' AS p WHERE p.id = :id AND p.gallery_id = g.id' . $period,
+            ['id' => $pictureId, 'active' => 1, 'time' => $time]
+        ) > 0;
     }
 
     /**

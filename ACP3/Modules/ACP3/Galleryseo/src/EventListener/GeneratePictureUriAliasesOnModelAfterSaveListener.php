@@ -57,13 +57,13 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener implements EventSubscrib
         $rawData = $event->getRawData();
 
         return isset(
-                $rawData['alias'],
-                $rawData['seo_title'],
-                $rawData['seo_keywords'],
-                $rawData['seo_description'],
-                $rawData['seo_robots'],
-                $rawData['seo_uri_pattern']
-            ) && $rawData['seo_uri_pattern'] === Gallery\Helpers::URL_KEY_PATTERN_GALLERY;
+            $rawData['alias'],
+            $rawData['seo_title'],
+            $rawData['seo_keywords'],
+            $rawData['seo_description'],
+            $rawData['seo_robots'],
+            $rawData['seo_uri_pattern']
+        ) && $rawData['seo_uri_pattern'] === Gallery\Helpers::URL_KEY_PATTERN_GALLERY;
     }
 
     /**

@@ -28,7 +28,7 @@ class Bootstrap extends AbstractBootstrap
     public function initializeClasses(): void
     {
         $file = $this->appPath->getCacheDir() . 'container.php';
-        $cache = new ConfigCache($file, ($this->appMode === ApplicationMode::DEVELOPMENT));
+        $cache = new ConfigCache($file, $this->appMode === ApplicationMode::DEVELOPMENT);
 
         $this->dumpContainer($cache);
 
