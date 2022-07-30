@@ -47,7 +47,7 @@ class BackendManager
         $cacheItem = $this->cache->getItem($cacheKey);
 
         if ($cacheItem->isHit()) {
-            return json_decode($cacheItem->get(), true, 512, JSON_THROW_ON_ERROR);
+            return json_decode((string) $cacheItem->get(), true, 512, JSON_THROW_ON_ERROR);
         }
 
         if (!$this->isValidDomain($url)) {

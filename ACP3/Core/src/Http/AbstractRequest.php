@@ -17,9 +17,6 @@ use Symfony\Component\HttpFoundation\ServerBag;
 abstract class AbstractRequest implements RequestInterface
 {
     protected string $homepage = '';
-    /**
-     * @var \ACP3\Core\Http\Request\UserAgent
-     */
     protected ?UserAgent $userAgent = null;
 
     public function __construct(private readonly RequestStack $requestStack)

@@ -120,6 +120,6 @@ class DateTranslatorTest extends \PHPUnit\Framework\TestCase
             ->expects(self::exactly($methodCallCount))
             ->method('t');
 
-        \call_user_func_array([$invocationMocker, 'willReturnOnConsecutiveCalls'], $translations);
+        \call_user_func_array($invocationMocker->willReturnOnConsecutiveCalls(...), $translations);
     }
 }

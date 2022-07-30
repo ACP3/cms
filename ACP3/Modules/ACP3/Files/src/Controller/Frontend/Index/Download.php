@@ -39,7 +39,7 @@ class Download extends Core\Controller\AbstractWidgetAction
 
             $path = $this->applicationPath->getUploadsDir() . 'files/';
             if (is_file($path . $file['file'])) {
-                $ext = strrchr($file['file'], '.');
+                $ext = strrchr((string) $file['file'], '.');
                 $filename = $this->stringFormatter->makeStringUrlSafe($file['title']) . $ext;
 
                 $response = new BinaryFileResponse($path . $file['file']);

@@ -41,7 +41,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
         return $this->actionHelper->handleSaveAction(
             function () use ($picture, $id) {
                 $formData = $this->request->getPost()->all();
-                /** @var UploadedFile $file */
+                /** @var UploadedFile|null $file */
                 $file = $this->request->getFiles()->get('file');
 
                 $this->pictureFormValidation

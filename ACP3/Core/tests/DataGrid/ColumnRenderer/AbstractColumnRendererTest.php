@@ -9,9 +9,6 @@ namespace ACP3\Core\DataGrid\ColumnRenderer;
 
 abstract class AbstractColumnRendererTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRenderer
-     */
     protected ?AbstractColumnRenderer $columnRenderer = null;
     /**
      * @var array<string, mixed>

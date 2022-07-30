@@ -79,7 +79,7 @@ class LoadModule extends AbstractFunction
     private function urlEncodeArguments(array $arguments): array
     {
         return array_map(
-            static fn ($item) => urlencode($item),
+            static fn ($item) => urlencode((string) $item),
             $arguments
         );
     }

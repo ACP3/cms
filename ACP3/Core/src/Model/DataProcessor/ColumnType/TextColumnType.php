@@ -28,7 +28,7 @@ class TextColumnType implements ColumnTypeStrategyInterface
      */
     public function doUnescape($value): string
     {
-        return html_entity_decode($value, ENT_QUOTES, 'UTF-8');
+        return html_entity_decode((string) $value, ENT_QUOTES, 'UTF-8');
     }
 
     public function getDefaultValue(): string

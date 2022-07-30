@@ -45,7 +45,7 @@ class AdminFileEditViewProvider
             'units' => $this->formsHelper->choicesGenerator(
                 'units',
                 $this->getUnits(),
-                trim(strrchr($file['size'], ' '))
+                trim(strrchr((string) $file['size'], ' '))
             ),
             'categories' => $this->categoriesHelpers->categoriesList(
                 FilesSchema::MODULE_NAME,

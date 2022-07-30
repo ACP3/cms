@@ -23,7 +23,7 @@ class RewriteInternalUri
 
         return preg_replace_callback(
             $pattern,
-            [$this, 'rewriteInternalUriCallback'],
+            $this->rewriteInternalUriCallback(...),
             $text
         );
     }

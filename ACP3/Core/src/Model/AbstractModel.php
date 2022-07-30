@@ -200,10 +200,7 @@ abstract class AbstractModel
     {
         if ($entryId === null) {
             $result = $this->repository->insert($filteredNewData);
-
-            if ($result !== false) {
-                $entryId = $result;
-            }
+            $entryId = $result;
         } else {
             $result = $hasDataChanges ? $this->repository->update($filteredNewData, $entryId) : 1;
         }
