@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [Core] Updated symfony components to version 6.1
+-   [Core] Deprecated the `BaseEnum`-class
+-   [Core] Converted the `PermissionEnum` into a native PHP-enum
+-   [Core] Converted the `PrivilegeEnum` into a native PHP-enum
+-   [Core] Converted the `AreaEnum` into a native PHP-enum
+-   [Core] Converted the `PluginTypeEnum` into a native PHP-enum
+-   [Core] Converted the `ApplicationModeEnum` into a native PHP-enum
+-   [SEO] Converted the `IndexPaginatedContentEnum` into a native PHP-enum
+-   [System] Updated Bootstrap to version 5.2.0
+
+### Breaking
+
+-   [Core] Dropped support for PHP 8.0.x. PHP 8.1.x. is required now.
 
 ## [6.0.4] - 2022-05-23
 
