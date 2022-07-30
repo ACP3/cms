@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [Core] Improved a type annotation in the table-of-contents generator
 
 ## [6.1.0] - 2022-07-30
 
