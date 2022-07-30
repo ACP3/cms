@@ -16,7 +16,6 @@ use Rector\Php74\Rector\FuncCall\ArrayKeyExistsOnPropertyRector;
 use Rector\Php74\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
 use Rector\Php74\Rector\FuncCall\FilterVarToAddSlashesRector;
 use Rector\Php74\Rector\FuncCall\MbStrrposEncodingArgumentPositionRector;
-use Rector\Php74\Rector\Function_\ReservedFnFunctionRector;
 use Rector\Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector;
 use Rector\Php74\Rector\MethodCall\ChangeReflectionTypeToStringToGetNameRector;
 use Rector\Php74\Rector\Property\RestoreDefaultNullToNullableTypePropertyRector;
@@ -52,7 +51,6 @@ return static function (RectorConfig $rectorConfig): void {
     $services->set(MbStrrposEncodingArgumentPositionRector::class);
     $services->set(RealToFloatTypeCastRector::class);
     $services->set(NullCoalescingOperatorRector::class);
-    $services->set(ReservedFnFunctionRector::class);
     $services->set(ClosureToArrowFunctionRector::class);
     $services->set(ArraySpreadInsteadOfArrayMergeRector::class);
     $services->set(AddLiteralSeparatorToNumberRector::class);
