@@ -16,7 +16,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^6.0.0"
+    "acp3/core": "^6.1.0"
   },
   "autoload": {
     "files": [

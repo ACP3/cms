@@ -17,8 +17,8 @@
   "prefer-stable": true,
   "require": {
     "composer/semver": "^3.2",
-    "acp3/core": "^6.0.4",
-    "acp3/module-permissions": "^6.0.0"
+    "acp3/core": "^6.1.0",
+    "acp3/module-permissions": "^6.1.0"
   },
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI."
