@@ -18,7 +18,7 @@ class TableOfContents
     /**
      * Generates the table of contents.
      *
-     * @param string[] $pages
+     * @param string[]|array<int, array<string, string>> $pages
      */
     public function generateTOC(array $pages, string $baseUrlPath = '', bool $titlesFromDb = false, bool $customUris = false): string
     {
