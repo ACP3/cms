@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Core] Fixed a minor bug in the breadcrumb generation
 
 ## [6.1.3] - 2022-07-31
 
