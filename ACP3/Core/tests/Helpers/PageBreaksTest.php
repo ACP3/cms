@@ -109,12 +109,12 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
     private function setUpExpectations(int $currentPage, string $baseUrlPath): void
     {
         $this->requestMock
-            ->expects(self::any())
+
             ->method('getParameters')
             ->willReturn(new ParameterBag(['page' => $currentPage]));
 
         $this->routerMock
-            ->expects(self::any())
+
             ->method('route')
             ->with($baseUrlPath)
             ->willReturn('/' . $baseUrlPath);

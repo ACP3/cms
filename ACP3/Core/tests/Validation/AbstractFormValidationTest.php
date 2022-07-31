@@ -123,7 +123,7 @@ abstract class AbstractFormValidationTest extends TestCase
 
     private function setRequestMockExpectations(MockObject $requestMock): void
     {
-        $requestMock->expects(self::any())
+        $requestMock
             ->method('getPost')
             ->willReturn(
                 new ParameterBag(
@@ -131,14 +131,14 @@ abstract class AbstractFormValidationTest extends TestCase
                 )
             );
 
-        $requestMock->expects(self::any())
+        $requestMock
             ->method('getQuery')
             ->willReturn(self::XSRF_QUERY_STRING);
     }
 
     private function setSessionMockExpectations(MockObject $sessionMock): void
     {
-        $sessionMock->expects(self::any())
+        $sessionMock
             ->method('get')
             ->with(SessionConstants::XSRF_TOKEN_NAME)
             ->willReturn(self::XSRF_FORM_TOKEN);

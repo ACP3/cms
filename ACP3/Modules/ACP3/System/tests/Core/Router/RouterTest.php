@@ -62,10 +62,10 @@ class RouterTest extends \PHPUnit\Framework\TestCase
 
     protected function setUpRequestMockExpectations(): void
     {
-        $this->requestMock->expects(self::any())
+        $this->requestMock
             ->method('getScheme')
             ->willReturn('http');
-        $this->requestMock->expects(self::any())
+        $this->requestMock
             ->method('getHost')
             ->willReturn('example.com');
     }
