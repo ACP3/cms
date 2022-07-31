@@ -27,6 +27,10 @@ class PictureValidationRule extends AbstractValidationRule
             'required' => true,
         ], $extra);
 
+        if ($params['required'] === false && empty($data)) {
+            return true;
+        }
+
         if ($this->fileUploadValidationRule->isValid($data)) {
             return $this->isPicture(
                 $data instanceof UploadedFile ? $data->getPathname() : $data['tmp_name'],
@@ -34,10 +38,6 @@ class PictureValidationRule extends AbstractValidationRule
                 $params['height'],
                 $params['filesize']
             );
-        }
-
-        if ($params['required'] === false && empty($data)) {
-            return true;
         }
 
         return false;
@@ -49,13 +49,7 @@ class PictureValidationRule extends AbstractValidationRule
         $isPicture = ($info[2] >= 1 && $info[2] <= 3);
 
         if ($isPicture === true) {
-            $bool = true;
-            // Optional parameters
-            if ($this->validateOptionalParameters($file, $info, $width, $height, $filesize)) {
-                $bool = false;
-            }
-
-            return $bool;
+            return $this->isInDimensionAndSizeConstraints($file, $info, $width, $height, $filesize);
         }
 
         return false;
@@ -64,10 +58,18 @@ class PictureValidationRule extends AbstractValidationRule
     /**
      * @param mixed[] $info
      */
-    private function validateOptionalParameters(string $file, array $info, int $width, int $height, int $filesize): bool
+    private function isInDimensionAndSizeConstraints(string $file, array $info, int $maxWidth, int $maxHeight, int $maxFilesize): bool
     {
-        return ($width > 0 && $info[0] > $width) ||
-        ($height > 0 && $info[1] > $height) ||
-        ($filesize > 0 && filesize($file) > $filesize);
+        if ($maxWidth > 0 && $info[0] > $maxWidth) {
+            return false;
+        }
+        if ($maxHeight > 0 && $info[1] > $maxHeight) {
+            return false;
+        }
+        if ($maxFilesize > 0 && filesize($file) > $maxFilesize) {
+            return false;
+        }
+
+        return true;
     }
 }

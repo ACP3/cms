@@ -2,3 +2,4 @@
 * text=auto
 
 /tests export-ignore
+/fixtures export-ignore
