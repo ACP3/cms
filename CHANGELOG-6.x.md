@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Core] Reverted an overly strict type annotation within the `Validator::is()`-method
 
 ## [6.1.2] - 2022-07-31
 
