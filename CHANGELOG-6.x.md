@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Core] Fixed a bug within the `PictureValidationRule`
 
 ## [6.1.1] - 2022-07-31
 
