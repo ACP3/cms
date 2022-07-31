@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Model;
 
+use ACP3\Core\Model\DataProcessor\ColumnType\ColumnTypeStrategyInterface;
 use ACP3\Core\Model\Event\ModelSaveEvent;
 use ACP3\Core\Model\Event\ModelSavePrepareDataEvent;
 use ACP3\Core\Repository\AbstractRepository;
@@ -171,7 +172,7 @@ abstract class AbstractModel
     }
 
     /**
-     * @return array<string, class-string>
+     * @return array<string, class-string<ColumnTypeStrategyInterface>>
      */
     abstract protected function getAllowedColumns(): array;
 
