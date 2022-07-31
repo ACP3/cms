@@ -102,7 +102,7 @@ class Steps
         if ($this->request->getAction() !== 'index') {
             $this->append(
                 $this->translator->t($this->request->getModule(), $this->getControllerActionTitle()),
-                $this->request->getFullPath()
+                $this->request->getPathInfo()
             );
         }
     }

@@ -91,31 +91,31 @@ class StepsTest extends \PHPUnit\Framework\TestCase
         $this->requestMock->expects(self::atLeastOnce())
             ->method('getArea')
             ->willReturn($area);
-        $this->requestMock->expects(self::any())
+        $this->requestMock
             ->method('getModule')
             ->willReturn($moduleName);
-        $this->requestMock->expects(self::any())
+        $this->requestMock
             ->method('getController')
             ->willReturn($controller);
-        $this->requestMock->expects(self::any())
+        $this->requestMock
             ->method('getAction')
             ->willReturn($action);
-        $this->requestMock->expects(self::any())
+        $this->requestMock
             ->method('getModuleAndController')
             ->willReturn(
                 ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/'
             );
-        $this->requestMock->expects(self::any())
-            ->method('getFullPath')
+        $this->requestMock
+            ->method('getPathInfo')
             ->willReturn(
-                ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/' . $action . '/'
+                ($area === AreaEnum::AREA_ADMIN ? 'acp/' : '') . $moduleName . '/' . $controller . '/' . $action . '/' . $parameters
             );
 
         $parameters .= str_ends_with($parameters, '/') ? '' : '/';
-        $this->requestMock->expects(self::any())
+        $this->requestMock
             ->method('getQuery')
             ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);
-        $this->requestMock->expects(self::any())
+        $this->requestMock
             ->method('getUriWithoutPages')
             ->willReturn($moduleName . '/' . $controller . '/' . $action . '/' . $parameters);
     }
