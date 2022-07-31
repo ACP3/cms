@@ -22,3 +22,4 @@ sync:subtree-split:
     - gitsplit --ref "${CI_COMMIT_REF_NAME}"
   dependencies: []
   needs: []
+  resource_group: subtree-split
