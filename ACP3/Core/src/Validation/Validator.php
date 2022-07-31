@@ -143,11 +143,10 @@ class Validator
 
     /**
      * @param class-string<ValidationRuleInterface> $validationRule
-     * @param string[]|string                       $field
      *
      * @throws ValidationRuleNotFoundException
      */
-    public function is(string $validationRule, array|string $field): bool
+    public function is(string $validationRule, mixed $field): bool
     {
         if ($this->container->has($validationRule)) {
             return $this->container->get($validationRule)->isValid($field);
