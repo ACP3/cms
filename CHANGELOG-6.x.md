@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+-   [Core] Fixed the `Concat*Renderer`-Strategies
 
 ## [6.1.4] - 2022-07-31
 

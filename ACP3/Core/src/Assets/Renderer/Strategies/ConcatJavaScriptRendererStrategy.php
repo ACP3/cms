@@ -95,11 +95,11 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
     protected function fetchThemeJavaScript(): void
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
-            $this->javascript[] = $this->fileResolver->getStaticAssetPath('', static::ASSETS_PATH_JS, $file);
+            $this->javascript[] = $this->fileResolver->getStaticAssetPath('System', static::ASSETS_PATH_JS, $file);
         }
 
         // Include general js file of the layout
-        $this->javascript[] = $this->fileResolver->getStaticAssetPath('', static::ASSETS_PATH_JS, 'layout.js');
+        $this->javascript[] = $this->fileResolver->getStaticAssetPath('System', static::ASSETS_PATH_JS, 'layout.js');
     }
 
     /**

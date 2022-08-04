@@ -49,7 +49,6 @@ class FileResolver
 
     public function resolveTemplatePath(string $templatePath): string
     {
-        // A path without any slash was given -> has to be a layout file of the current design
         if (!str_contains($templatePath, '/')) {
             throw new \InvalidArgumentException(sprintf('The provided template path "%s" is missing the module name!', $templatePath));
         }

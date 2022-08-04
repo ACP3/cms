@@ -117,14 +117,14 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
             $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                '',
+                'System',
                 static::ASSETS_PATH_CSS,
                 trim($file)
             );
         }
 
         $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-            '',
+            'System',
             static::ASSETS_PATH_CSS,
             'layout.css'
         );
