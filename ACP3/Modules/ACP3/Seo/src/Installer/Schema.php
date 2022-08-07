@@ -55,6 +55,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `keywords` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
                 `robots` TINYINT(1) UNSIGNED NOT NULL,
+                `structured_data` TEXT,
                 PRIMARY KEY (`id`), UNIQUE(`uri`), INDEX (`alias`)
             ) {ENGINE} {CHARSET};',
         ];
