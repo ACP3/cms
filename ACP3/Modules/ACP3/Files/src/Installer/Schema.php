@@ -74,7 +74,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `sort` INT(10) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED,
                 PRIMARY KEY (`id`),
-                FULLTEXT KEY `fulltext_index` (`title`, `file`, `text`),
                 INDEX `foreign_category_id` (`category_id`),
                 INDEX (`user_id`),
                 INDEX (`sort`),

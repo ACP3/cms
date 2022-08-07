@@ -73,7 +73,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `link_title` VARCHAR(120) NOT NULL,
                 `user_id` INT UNSIGNED,
                 PRIMARY KEY (`id`),
-                FULLTEXT KEY `index` (`title`,`text`),
                 INDEX (`active`),
                 INDEX `foreign_category_id` (`category_id`),
                 INDEX (`user_id`),

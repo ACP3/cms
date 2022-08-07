@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+
+  filessearch.installer.schema:
+    class: ACP3\Modules\ACP3\Filessearch\Installer\Schema
+    tags:
+      - { name: core.installer.schema }

@@ -69,7 +69,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `layout` VARCHAR(120) NOT NULL,
                 `user_id` INT(10) UNSIGNED,
                 PRIMARY KEY (`id`),
-                FULLTEXT KEY `index` (`title`, `text`),
                 INDEX (`active`),
                 INDEX (`user_id`),
                 FOREIGN KEY (`user_id`) REFERENCES `{pre}users` (`id`) ON DELETE SET NULL

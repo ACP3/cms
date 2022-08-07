@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+
+  articlessearch.installer.schema:
+    class: ACP3\Modules\ACP3\Articlessearch\Installer\Schema
+    tags:
+      - { name: core.installer.schema }
