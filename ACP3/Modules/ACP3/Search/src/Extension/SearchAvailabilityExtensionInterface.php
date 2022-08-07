@@ -7,6 +7,9 @@
 
 namespace ACP3\Modules\ACP3\Search\Extension;
 
+use ACP3\Modules\ACP3\Search\Enum\SearchAreaEnum;
+use ACP3\Modules\ACP3\Search\Enum\SortDirectionEnum;
+
 interface SearchAvailabilityExtensionInterface
 {
     public function getModuleName(): string;
@@ -14,5 +17,5 @@ interface SearchAvailabilityExtensionInterface
     /**
      * @return array<string, mixed>[]
      */
-    public function fetchSearchResults(string $searchTerm, string $areas, string $sortDirection): array;
+    public function fetchSearchResults(string $searchTerm, SearchAreaEnum $areas, SortDirectionEnum $sortDirection): array;
 }

@@ -7,10 +7,13 @@
 
 namespace ACP3\Modules\ACP3\Search\Repository;
 
+use ACP3\Modules\ACP3\Search\Enum\SearchAreaEnum;
+use ACP3\Modules\ACP3\Search\Enum\SortDirectionEnum;
+
 interface SearchResultsAwareRepositoryInterface
 {
     /**
      * @return array<string, mixed>[]
      */
-    public function getAllSearchResults(string $fields, string $searchTerm, string $sortDirection): array;
+    public function getAllSearchResults(SearchAreaEnum $area, string $searchTerm, SortDirectionEnum $sortDirection): array;
 }

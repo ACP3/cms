@@ -18,15 +18,6 @@ class SearchAvailabilityExtension extends AbstractSearchAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    protected function mapSearchAreasToFields(string $area): string
-    {
-        return match ($area) {
-            'title' => 'title',
-            'content' => 'text',
-            default => 'title, text',
-        };
-    }
-
     protected function getRouteName(): string
     {
         return Helpers::URL_KEY_PATTERN;

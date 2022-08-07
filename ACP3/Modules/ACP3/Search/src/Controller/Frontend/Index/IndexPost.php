@@ -51,8 +51,8 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
                     $this->processSearchResults(
                         $formData['mods'],
                         $searchTerm,
-                        $formData['area'],
-                        strtoupper((string) $formData['sort'])
+                        Search\Enum\SearchAreaEnum::tryFrom($formData['area']),
+                        Search\Enum\SortDirectionEnum::tryFrom($formData['sort'])
                     ),
                     $searchTerm
                 );
@@ -92,7 +92,7 @@ class IndexPost extends Core\Controller\AbstractWidgetAction
      *
      * @return array<string, array<string, mixed>[]>
      */
-    private function processSearchResults(array $modules, string $searchTerm, string $area, string $sort): array
+    private function processSearchResults(array $modules, string $searchTerm, Search\Enum\SearchAreaEnum $area, Search\Enum\SortDirectionEnum $sort): array
     {
         $searchResults = [];
         foreach ($this->availableModulesRegistrar->getAvailableModules() as $moduleName => $searchAvailability) {

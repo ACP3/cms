@@ -12,6 +12,8 @@ use ACP3\Core\Date;
 use ACP3\Core\Repository\AbstractRepository;
 use ACP3\Core\Repository\PublicationPeriodAwareTrait;
 use ACP3\Modules\ACP3\News\Repository\NewsRepository;
+use ACP3\Modules\ACP3\Search\Enum\SearchAreaEnum;
+use ACP3\Modules\ACP3\Search\Enum\SortDirectionEnum;
 use ACP3\Modules\ACP3\Search\Repository\SearchResultsAwareRepositoryInterface;
 
 class SearchResultsAwareRepository extends AbstractRepository implements SearchResultsAwareRepositoryInterface
@@ -28,11 +30,20 @@ class SearchResultsAwareRepository extends AbstractRepository implements SearchR
     /**
      * @{@inheritDoc}
      */
-    public function getAllSearchResults(string $fields, string $searchTerm, string $sortDirection): array
+    public function getAllSearchResults(SearchAreaEnum $area, string $searchTerm, SortDirectionEnum $sortDirection): array
     {
         return $this->db->fetchAll(
-            "SELECT `id`, `title`, `text` FROM {$this->getTableName()} WHERE MATCH ({$fields}) AGAINST ({$this->db->getConnection()->quote($searchTerm)} IN BOOLEAN MODE) AND {$this->getPublicationPeriod()} AND `active` = :active ORDER BY `start` {$sortDirection}, `end` {$sortDirection}, `id` {$sortDirection}",
+            "SELECT `id`, `title`, `text` FROM {$this->getTableName()} WHERE MATCH ({$this->mapSearchAreasToFields($area)}) AGAINST ({$this->db->getConnection()->quote($searchTerm)} IN BOOLEAN MODE) AND {$this->getPublicationPeriod()} AND `active` = :active ORDER BY `start` $sortDirection->value, `end` $sortDirection->value, `id` $sortDirection->value",
             ['time' => $this->date->getCurrentDateTime(), 'active' => 1]
         );
+    }
+
+    private function mapSearchAreasToFields(SearchAreaEnum $area): string
+    {
+        return match ($area) {
+            SearchAreaEnum::TITLE => 'title',
+            SearchAreaEnum::CONTENT => 'text',
+            default => 'title, text',
+        };
     }
 }

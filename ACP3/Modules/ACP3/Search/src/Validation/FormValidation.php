@@ -8,6 +8,8 @@
 namespace ACP3\Modules\ACP3\Search\Validation;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Search\Enum\SearchAreaEnum;
+use ACP3\Modules\ACP3\Search\Enum\SortDirectionEnum;
 
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
@@ -43,7 +45,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'area',
                     'message' => $this->translator->t('search', 'no_area_selected'),
                     'extra' => [
-                        'haystack' => ['title_content', 'title', 'content'],
+                        'haystack' => SearchAreaEnum::values(),
                     ],
                 ]
             )
@@ -54,7 +56,7 @@ class FormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'sort',
                     'message' => $this->translator->t('search', 'no_sorting_selected'),
                     'extra' => [
-                        'haystack' => ['asc', 'desc'],
+                        'haystack' => SortDirectionEnum::values(),
                     ],
                 ]
             );
