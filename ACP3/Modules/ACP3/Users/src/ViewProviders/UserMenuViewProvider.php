@@ -26,12 +26,12 @@ class UserMenuViewProvider
         ],
         [
             'controller' => 'extensions',
-            'action' => '',
+            'action' => 'index',
             'phrase' => 'extensions',
         ],
         [
             'controller' => 'maintenance',
-            'action' => '',
+            'action' => 'index',
             'phrase' => 'maintenance',
         ],
     ];
