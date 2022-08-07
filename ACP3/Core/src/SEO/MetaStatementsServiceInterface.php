@@ -42,6 +42,11 @@ interface MetaStatementsServiceInterface
     public function getStructuredData(string $path): string;
 
     /**
+     * Returns the canonical-URL of the given page.
+     */
+    public function getCanonicalUrl(string $path): string;
+
+    /**
      * Returns the SEO keywords of the current page.
      */
     public function getPageKeywords(): string;

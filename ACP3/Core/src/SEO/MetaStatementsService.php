@@ -10,6 +10,7 @@ namespace ACP3\Core\SEO;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Core\SEO\Enum\MetaRobotsEnum;
 
 class MetaStatementsService implements MetaStatementsServiceInterface
 {
@@ -76,7 +77,11 @@ class MetaStatementsService implements MetaStatementsServiceInterface
             return;
         }
 
-        $this->canonicalUrl = $this->router->route($this->request->getQuery());
+        $this->canonicalUrl = $this->router->route($this->getCanonicalUrl($this->request->getUriWithoutPages()), true);
+
+        if (!$this->canonicalUrl) {
+            $this->canonicalUrl = $this->router->route($this->request->getQuery(), true);
+        }
     }
 
     private function isInAdmin(): bool
@@ -117,13 +122,10 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return [
             'meta_description' => '',
             'meta_keywords' => '',
-            'robots' => 1,
+            'robots' => MetaRobotsEnum::INDEX_FOLLOW->value,
         ];
     }
 
-    /**
-     * Returns the SEO description of the given page.
-     */
     public function getDescription(string $path): string
     {
         return $this->getSeoInformation($path, 'description');
@@ -132,6 +134,11 @@ class MetaStatementsService implements MetaStatementsServiceInterface
     public function getStructuredData(string $path): string
     {
         return $this->getSeoInformation($path, 'structured_data');
+    }
+
+    public function getCanonicalUrl(string $path): string
+    {
+        return $this->getSeoInformation($path, 'canonical');
     }
 
     /**

@@ -8,8 +8,8 @@
 namespace ACP3\Modules\ACP3\Seo\Validation;
 
 use ACP3\Core;
+use ACP3\Core\SEO\Enum\MetaRobotsEnum;
 use ACP3\Core\Validation\AbstractFormValidation;
-use ACP3\Modules\ACP3\Seo\Enum\MetaRobotsEnum;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 
 class AdminSettingsFormValidation extends AbstractFormValidation

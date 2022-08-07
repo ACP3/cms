@@ -11,8 +11,8 @@ use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\SEO\Enum\MetaRobotsEnum;
 use ACP3\Core\Settings\SettingsInterface;
-use ACP3\Modules\ACP3\Seo\Enum\MetaRobotsEnum;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
 

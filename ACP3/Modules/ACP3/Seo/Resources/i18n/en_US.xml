@@ -9,6 +9,7 @@
         <item key="alias">Alias</item>
         <item key="alias_description">Please use only lower case letters, numbers and the hyphen.</item>
         <item key="alias_unallowed_characters_or_exists">Either you have typed in unallowed characters or there is already an URI-Alias with the given name.</item>
+        <item key="canonical">Canonical-URI</item>
         <item key="description">Description</item>
         <item key="index_all_pages">Index all pages</item>
         <item key="index_first_page_only">First page only</item>

@@ -36,10 +36,14 @@ class MetaFormFields
                 'seo_description',
                 $this->metaStatements->getDescription($path)
             );
+            $canonical = $this->request->getPost()->get(
+                'seo_canonical',
+                $this->metaStatements->getCanonicalUrl($path)
+            );
             $robots = $this->metaStatements->getSeoInformation($path, 'robots', '0');
             $structuredData = $this->request->getPost()->get('seo_structured_data', $this->metaStatements->getStructuredData($path));
         } else {
-            $alias = $title = $keywords = $description = $structuredData = '';
+            $alias = $title = $keywords = $description = $structuredData = $canonical = '';
             $robots = 0;
         }
 
@@ -48,6 +52,7 @@ class MetaFormFields
             'alias' => $alias,
             'keywords' => $keywords,
             'description' => $description,
+            'canonical' => $canonical,
             'structured_data' => $structuredData,
             'robots' => $this->formsHelper->choicesGenerator(
                 'seo_robots',

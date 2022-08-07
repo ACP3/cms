@@ -9,6 +9,7 @@
         <item key="alias">Alias</item>
         <item key="alias_description">Bitte nur Kleinbuchstaben von a-z, Ziffern und den Bindestrich verwenden.</item>
         <item key="alias_unallowed_characters_or_exists">Entweder haben Sie für den URI-Alias unerlaubte Zeichen eingegeben oder es existiert bereits einer mit diesem Namen.</item>
+        <item key="canonical">Canonical-URI</item>
         <item key="description">Beschreibung</item>
         <item key="index_all_pages">Alle Seiten indexieren</item>
         <item key="index_first_page_only">Nur erste Seite indexieren</item>

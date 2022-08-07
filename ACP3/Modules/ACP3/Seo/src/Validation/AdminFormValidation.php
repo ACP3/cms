@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Seo\Validation;
 
 use ACP3\Core;
+use ACP3\Core\SEO\Enum\MetaRobotsEnum;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
@@ -37,7 +38,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'seo_robots',
                     'message' => $this->translator->t('seo', 'select_robots'),
                     'extra' => [
-                        'haystack' => [0, 1, 2, 3, 4],
+                        'haystack' => [0, ...MetaRobotsEnum::values()],
                     ],
                 ]
             )

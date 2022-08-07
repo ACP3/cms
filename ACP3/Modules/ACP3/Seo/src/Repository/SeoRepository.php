@@ -43,7 +43,7 @@ class SeoRepository extends Core\Repository\AbstractRepository
      */
     public function getAllMetaTags(): array
     {
-        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE `alias` != "" OR `keywords` != "" OR `description` != "" OR `robots` != 0 OR `structured_data` != "" OR structured_data is not null');
+        return $this->db->fetchAll('SELECT * FROM ' . $this->getTableName() . ' WHERE `alias` != "" OR `keywords` != "" OR `description` != "" OR `canonical` != "" OR `robots` != 0 OR `structured_data` != "" OR structured_data is not null');
     }
 
     public function getUriByAlias(string $alias): ?string

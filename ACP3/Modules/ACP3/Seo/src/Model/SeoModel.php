@@ -28,6 +28,7 @@ class SeoModel extends AbstractModel
             'keywords' => $rawData['seo_keywords'],
             'description' => $rawData['seo_description'],
             'robots' => $rawData['seo_robots'],
+            'canonical' => $rawData['seo_canonical'],
             'structured_data' => $rawData['seo_structured_data'],
         ]);
 
@@ -42,6 +43,7 @@ class SeoModel extends AbstractModel
             'title' => TextColumnType::class,
             'keywords' => TextColumnType::class,
             'description' => TextColumnType::class,
+            'canonical' => TextColumnType::class,
             'robots' => IntegerColumnType::class,
             'structured_data' => TextWysiwygColumnType::class,
         ];

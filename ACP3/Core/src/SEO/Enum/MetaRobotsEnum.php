@@ -5,7 +5,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Seo\Enum;
+namespace ACP3\Core\SEO\Enum;
 
 use ACP3\Core\Enum\EnumValuesTrait;
 
