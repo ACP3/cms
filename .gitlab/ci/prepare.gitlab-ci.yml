@@ -33,7 +33,7 @@ npm:
   before_script:
     - apk update && apk add --no-cache git
   script:
-    - if [ ! -d "node_modules" ]; then npm ci --cache .npm --prefer-offline; fi
+    - if [ ! -d "node_modules" ]; then npm ci --cache .npm; fi
   artifacts:
     paths:
       - node_modules
