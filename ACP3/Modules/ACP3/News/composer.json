@@ -16,10 +16,10 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^6.1.0",
-    "acp3/module-permissions": "^6.1.0",
-    "acp3/module-system": "^6.1.0",
-    "acp3/module-users": "^6.1.0",
+    "acp3/core": "^6.2.0",
+    "acp3/module-permissions": "^6.2.0",
+    "acp3/module-system": "^6.2.0",
+    "acp3/module-users": "^6.2.0",
     "acp3/module-categories": "^6.1.0"
   },
   "suggest": {
