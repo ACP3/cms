@@ -13,6 +13,7 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
+use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuItemFormFields;
 
 class AdminMenuItemEditViewProvider
@@ -56,9 +57,9 @@ class AdminMenuItemEditViewProvider
     private function fetchMenuItemTypes(string $value = ''): array
     {
         $menuItemTypes = [
-            1 => $this->translator->t('menus', 'module'),
-            2 => $this->translator->t('menus', 'dynamic_page'),
-            3 => $this->translator->t('menus', 'hyperlink'),
+            PageTypeEnum::MODULE->value => $this->translator->t('menus', 'module'),
+            PageTypeEnum::DYNAMIC_PAGE->value => $this->translator->t('menus', 'dynamic_page'),
+            PageTypeEnum::HYPERLINK->value => $this->translator->t('menus', 'hyperlink'),
         ];
 
         return $this->formsHelper->choicesGenerator('mode', $menuItemTypes, $value);

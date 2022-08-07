@@ -16,6 +16,7 @@ use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
+use ACP3\Modules\ACP3\Seo\Enum\MetaRobotsEnum;
 use ACP3\Modules\ACP3\Seo\Repository\DataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -72,7 +73,7 @@ class DataGridViewProvider
                 'type' => ReplaceValueColumnRenderer::class,
                 'fields' => ['robots'],
                 'custom' => [
-                    'search' => [0, 1, 2, 3, 4],
+                    'search' => [0, ...MetaRobotsEnum::values()],
                     'replace' => [
                         $this->translator->t(
                             'seo',

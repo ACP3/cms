@@ -12,6 +12,7 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Modules\ACP3\Seo\Enum\MetaRobotsEnum;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
 use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
 
@@ -29,10 +30,10 @@ class AdminSettingsViewProvider
         $seoSettings = $this->settings->getSettings(SeoSchema::MODULE_NAME);
 
         $robots = [
-            1 => $this->translator->t('seo', 'robots_index_follow'),
-            2 => $this->translator->t('seo', 'robots_index_nofollow'),
-            3 => $this->translator->t('seo', 'robots_noindex_follow'),
-            4 => $this->translator->t('seo', 'robots_noindex_nofollow'),
+            MetaRobotsEnum::INDEX_FOLLOW->value => $this->translator->t('seo', 'robots_index_follow'),
+            MetaRobotsEnum::INDEX_NOFOLLOW->value => $this->translator->t('seo', 'robots_index_nofollow'),
+            MetaRobotsEnum::NOINDEX_FOLLOW->value => $this->translator->t('seo', 'robots_noindex_follow'),
+            MetaRobotsEnum::NOINDEX_NOFOLLOW->value => $this->translator->t('seo', 'robots_noindex_nofollow'),
         ];
 
         $indexPaginatedContent = [

@@ -13,6 +13,7 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Modules\ACP3\System\Enum\SiteSubtitleModeEnum;
 use ACP3\Modules\ACP3\System\Installer\Schema as SystemSchema;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
@@ -30,9 +31,9 @@ class AdminSettingsViewProvider
         $systemSettings = $this->settings->getSettings(SystemSchema::MODULE_NAME);
 
         $siteSubtitleMode = [
-            1 => $this->translator->t('system', 'site_subtitle_mode_all_pages'),
-            2 => $this->translator->t('system', 'site_subtitle_mode_homepage_only'),
-            3 => $this->translator->t('system', 'site_subtitle_mode_never'),
+            SiteSubtitleModeEnum::ALWAYS->value => $this->translator->t('system', 'site_subtitle_mode_all_pages'),
+            SiteSubtitleModeEnum::HOMEPAGE_ONLY->value => $this->translator->t('system', 'site_subtitle_mode_homepage_only'),
+            SiteSubtitleModeEnum::NEVER->value => $this->translator->t('system', 'site_subtitle_mode_never'),
         ];
 
         $pageCachePurgeMode = [

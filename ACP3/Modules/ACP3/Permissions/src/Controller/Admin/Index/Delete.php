@@ -9,7 +9,8 @@ namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
 use ACP3\Core;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\Permissions\Enum\ProtectedRolesEnum;
+use ACP3\Modules\ACP3\Permissions\Model\AclRoleModel;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +19,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
     public function __construct(
         Core\Controller\Context\Context $context,
         private readonly FormAction $actionHelper,
-        private readonly Permissions\Model\AclRoleModel $rolesModel
+        private readonly AclRoleModel $rolesModel
     ) {
         parent::__construct($context);
     }
@@ -36,7 +37,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
                 $bool = $levelNotDeletable = false;
 
                 foreach ($items as $item) {
-                    if (\in_array((int) $item, [1, 2, 4], true) === true) {
+                    if (\in_array((int) $item, ProtectedRolesEnum::values(), true) === true) {
                         $levelNotDeletable = true;
                     } else {
                         $bool = $this->rolesModel->delete($item);

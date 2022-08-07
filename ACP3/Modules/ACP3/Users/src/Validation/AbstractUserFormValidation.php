@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\BirthdayValidationRule;
+use ACP3\Modules\ACP3\Users\Enum\GenderEnum;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule;
@@ -77,7 +78,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'field' => 'gender',
                     'message' => $this->translator->t('users', 'select_gender'),
                     'extra' => [
-                        'haystack' => [1, 2, 3],
+                        'haystack' => GenderEnum::values(),
                     ],
                 ]
             )

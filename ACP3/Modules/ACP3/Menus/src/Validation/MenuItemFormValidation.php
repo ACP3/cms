@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Validation;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\LinkModeValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule;
@@ -28,7 +29,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'mode',
                     'message' => $this->translator->t('menus', 'select_page_type'),
                     'extra' => [
-                        'haystack' => [1, 2, 3],
+                        'haystack' => PageTypeEnum::values(),
                     ],
                 ]
             )

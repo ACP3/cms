@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\System\Validation;
 
 use ACP3\Core;
+use ACP3\Modules\ACP3\System\Enum\SiteSubtitleModeEnum;
 use ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule;
 
 class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
@@ -111,7 +112,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'site_subtitle_mode',
                     'message' => $this->translator->t('system', 'select_site_subtitle_mode'),
                     'extra' => [
-                        'haystack' => [1, 2, 3],
+                        'haystack' => SiteSubtitleModeEnum::values(),
                     ],
                 ]
             )

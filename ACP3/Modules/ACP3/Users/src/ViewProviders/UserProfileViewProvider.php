@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Users\ViewProviders;
 
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Modules\ACP3\Users\Enum\GenderEnum;
 
 class UserProfileViewProvider
 {
@@ -23,7 +24,7 @@ class UserProfileViewProvider
     {
         $user = $this->userModel->getUserInfo($userId);
         $user['gender'] = str_replace(
-            [1, 2, 3],
+            GenderEnum::values(),
             ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')],
             (string) $user['gender']
         );
