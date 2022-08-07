@@ -7,7 +7,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Core] [SEO] Added the possibility to specify canonical URIs via the UI
+-   [Core] Added the `MetaRobotsEnum`
+-   [Menus] Added the `PageTypeEnum`
+-   [Permissions] Added the `ProtectedRolesEnum`
+-   [System] Added the `SiteSubtitleModeEnum`
+-   [Users] Added the `GenderEnum`
+
+### Changed
+
+-   [Articles] [Files] [News] Moved the fulltext index creating into the corresponding ``*search`-modules
+-   [Core] Removed the deprecated `StreamedResponseListener` as it is not needed anymore
+
+### Fixed
+
+-   [Articlessearch] [Filessearch] [Newssearch] Fixed missing fulltext indexes when only searching for `title` or `content`
+-   [SEO] Fixed the missing `structured_data`-column after installing the ACP3
+-   [System] Fixed the missing "extensions" and "maintenance" menu items in the user menu
 
 ## [6.1.5] - 2022-08-04
 
