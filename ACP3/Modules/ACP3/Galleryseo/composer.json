@@ -17,8 +17,8 @@
   "prefer-stable": true,
   "require": {
     "acp3/core": "^6.1.0",
-    "acp3/module-gallery": "^6.1.0",
-    "acp3/module-seo": "^6.1.0",
+    "acp3/module-gallery": "^6.2.1",
+    "acp3/module-seo": "^6.2.1",
     "acp3/module-system": "^6.1.0"
   },
   "autoload": {
