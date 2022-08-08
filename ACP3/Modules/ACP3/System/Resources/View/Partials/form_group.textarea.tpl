@@ -5,7 +5,7 @@
     {if !empty($before_textarea)}
         {$before_textarea}
     {/if}
-    <textarea class="form-control"
+    <textarea class="{if (isset($readonly) && $readonly === true) || (isset($disabled) && $disabled === true)}form-control-plaintext{else}form-control{/if}"
               name="{$name}"
               id="{$name|replace:'_':'-'}"
               cols="60"

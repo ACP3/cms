@@ -2,7 +2,7 @@
 
 {block FORM_GROUP_LABEL_ID}for="{$name|replace:'_':'-'}"{/block}
 {block FORM_GROUP_FORM_FIELD}
-    <input {if isset($use_form_control) && $use_form_control === false}{else}class="form-control"{/if}
+    <input {if isset($use_form_control) && $use_form_control === false}{else}class="{if (isset($readonly) && $readonly === true) || (isset($disabled) && $disabled === true)}form-control-plaintext{else}form-control{/if}"{/if}
            type="{block FORM_GROUP_INPUT_TYPE}text{/block}"
            name="{$name}"
            id="{$name|replace:'_':'-'}"
