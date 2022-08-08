@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [SEO] Fixed saving result sets, when the SEO module integration is active
 
 ## [6.2.0] - 2022-08-07
 

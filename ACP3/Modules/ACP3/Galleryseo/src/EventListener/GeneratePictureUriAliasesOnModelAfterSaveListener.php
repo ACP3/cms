@@ -46,7 +46,9 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener implements EventSubscrib
                     $rawData['seo_keywords'],
                     $rawData['seo_description'],
                     $rawData['seo_robots'],
-                    $rawData['seo_title']
+                    $rawData['seo_title'],
+                    $rawData['seo_structured_data'],
+                    $rawData['seo_canonical'],
                 );
             }
         }
@@ -61,7 +63,9 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener implements EventSubscrib
             $rawData['seo_title'],
             $rawData['seo_keywords'],
             $rawData['seo_description'],
+            $rawData['seo_canonical'],
             $rawData['seo_robots'],
+            $rawData['seo_structured_data'],
             $rawData['seo_uri_pattern']
         ) && $rawData['seo_uri_pattern'] === Gallery\Helpers::URL_KEY_PATTERN_GALLERY;
     }

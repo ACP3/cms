@@ -45,6 +45,7 @@ class UriAliasManager
         int $robots = 0,
         string $title = '',
         string $structuredData = '',
+        string $canonical = '',
     ): bool {
         $path .= $this->preparePath($path);
         $data = [
@@ -53,6 +54,7 @@ class UriAliasManager
             'seo_title' => $title,
             'seo_keywords' => $keywords,
             'seo_description' => $description,
+            'seo_canonical' => $canonical,
             'seo_robots' => $robots,
             'seo_structured_data' => $structuredData,
         ];
