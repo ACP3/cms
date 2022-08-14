@@ -14,15 +14,7 @@
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$sitemap_save_mode required=true label={lang t="seo|sitemap_save_mode"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$sitemap_separate required=true label={lang t="seo|sitemap_separate"}}
                 {if {has_permission path="admin/seo/index/sitemap"}}
-                    <div class="row mb-3">
-                        <div class="offset-md-2 col-md-10">
-                            <a href="{uri args="acp/seo/index/sitemap"}"
-                               class="btn btn-outline-secondary"
-                               data-ajax-form="true">
-                                {lang t="seo|sitemap_refresh_now"}
-                            </a>
-                        </div>
-                    </div>
+                    {include file="asset:System/Partials/form_group.hyperlink.tpl" attributes=['class' => 'btn btn-outline-secondary', 'data-ajax-form' => 'true'] href={uri args="acp/seo/index/sitemap"} hyperlinkLabel={lang t="seo|sitemap_refresh_now"}}
                 {/if}
             </div>
         {/tab}
