@@ -10,7 +10,7 @@
                     {lang t="system|acp3_not_up_to_date" args=['%link_start%' => "<a href=\"`$update.url`\" target=\"_blank\">",'%link_end%' => '</a>']}
                 {/if}
             </h4>
-            <ul class="list-unstyled">
+            <ul class="list-unstyled mb-0">
                 <li>
                     <strong>{lang t="system|installed_version"}:</strong>
                     {$update.installed_version}
