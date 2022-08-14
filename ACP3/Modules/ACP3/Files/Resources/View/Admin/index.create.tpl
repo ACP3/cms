@@ -36,13 +36,7 @@
             </div>
             {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 data_attributes=['seo-slug-base' => 'true'] label={lang t="files|title"}}
             {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true toolbar="simple" label={lang t="system|description"}}
-            <div class="row mb-3">
-                <label for="cat" class="col-md-2 col-form-label required">{lang t="categories|category"}</label>
-
-                <div class="col-md-10">
-                    {include file="asset:Categories/Partials/create_list.tpl" categories=$categories}
-                </div>
-            </div>
+            {include file="asset:Categories/Partials/form_group.categories.tpl" name="cat" categories=$categories required=true label={lang t="categories|category"}}
             {event name="files.layout.upsert" form_data=$form}
         {/tab}
     {event name="core.layout.form_extension"  uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
