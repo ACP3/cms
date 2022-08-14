@@ -22,10 +22,12 @@
                 {/if}
             </option>
         {/if}
-        {if isset($options)}
-            {foreach $options as $row}
-                <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-            {/foreach}
-        {/if}
+        {block FORM_GROUP_FORM_FIELD_SELECT_OPTIONS}
+            {if isset($options)}
+                {foreach $options as $row}
+                    <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+                {/foreach}
+            {/if}
+        {/block}
     </select>
 {/block}
