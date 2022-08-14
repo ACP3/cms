@@ -1,4 +1,4 @@
-{extends file="asset:System/Partials/form_group.base.tpl"}
+{extends file="asset:System/Partials/form_group.select.tpl"}
 
 {block FORM_GROUP_FORM_FIELD_SELECT_OPTIONS}
     {foreach $time_zones as $continent => $countries}
