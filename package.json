@@ -87,7 +87,7 @@
     "js-cookie": "^3.0.1",
     "klaro": "^0.7.18",
     "regenerator-runtime": "^0.13.9",
-    "rich-filemanager": "git+https://github.com/tinogo/RichFilemanager.git#rework-dependencies",
+    "rich-filemanager": "https://github.com/tinogo/RichFilemanager/tarball/rework-dependencies",
     "shariff": "^3.2.1"
   },
   "browserslist": [

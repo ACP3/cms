@@ -30,8 +30,6 @@ npm:
     paths:
       - .npm
       - node_modules
-  before_script:
-    - apk update && apk add --no-cache git
   script:
     - if [ ! -d "node_modules" ]; then npm ci --cache .npm; fi
   artifacts:
