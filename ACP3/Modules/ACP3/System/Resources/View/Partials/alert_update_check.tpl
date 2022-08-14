@@ -1,4 +1,4 @@
-<div class="alert alert-sm alert-warning text-center">
+<div class="alert alert-warning p-1 text-center">
     <small>
         {if $update.is_latest}
             {lang t="system|acp3_up_to_date"}
