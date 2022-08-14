@@ -15,13 +15,7 @@
                     {include file="asset:System/Partials/form_group.input_text.tpl" name="answers[`$row@index`][text]" formFieldId="answer-`$row@index`" value=$row.text required=true maxlength=120 label={lang t="polls|answer_x" args=['%number%' => $row@index+1]}}
                 {/if}
             {/foreach}
-            <div class="row mb-3">
-                <div class="offset-md-2 col-md-10">
-                    <button type="submit" name="add_answer" class="btn btn-outline-secondary" data-hash-change="#tab-content-2">
-                        {lang t="polls|add_answer"}
-                    </button>
-                </div>
-            </div>
+            {include file="asset:System/Partials/form_group.submit.tpl" name="add_answer" submit_btn_class="btn-outline-secondary" attributes=['data-hash-change' => "#tab-content-2"] submit_label={lang t="polls|add_answer"}}
             {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
         {/tab}
     {/tabset}

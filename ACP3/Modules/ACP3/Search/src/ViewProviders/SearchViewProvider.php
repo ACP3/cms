@@ -10,6 +10,8 @@ namespace ACP3\Modules\ACP3\Search\ViewProviders;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Modules\ACP3\Search\Enum\SearchAreaEnum;
+use ACP3\Modules\ACP3\Search\Enum\SortDirectionEnum;
 use ACP3\Modules\ACP3\Search\Helpers;
 
 class SearchViewProvider
@@ -24,19 +26,24 @@ class SearchViewProvider
     public function __invoke(): array
     {
         $searchAreas = [
-            'title_content' => $this->translator->t('search', 'title_and_content'),
-            'title' => $this->translator->t('search', 'title_only'),
-            'content' => $this->translator->t('search', 'content_only'),
+            SearchAreaEnum::TITLE_AND_CONTENT->value => $this->translator->t('search', 'title_and_content'),
+            SearchAreaEnum::TITLE->value => $this->translator->t('search', 'title_only'),
+            SearchAreaEnum::CONTENT->value => $this->translator->t('search', 'content_only'),
         ];
 
         $sortDirections = [
-            'asc' => $this->translator->t('search', 'asc'),
-            'desc' => $this->translator->t('search', 'desc'),
+            SortDirectionEnum::ASC->value => $this->translator->t('search', 'asc'),
+            SortDirectionEnum::DESC->value => $this->translator->t('search', 'desc'),
         ];
+
+        $modules = [];
+        foreach ($this->searchHelpers->getModules() as $moduleName => $info) {
+            $modules[$moduleName] = $this->translator->t($moduleName, $moduleName);
+        }
 
         return [
             'form' => array_merge(['search_term' => ''], $this->request->getPost()->all()),
-            'search_mods' => $this->searchHelpers->getModules(),
+            'search_mods' => $this->formsHelper->checkboxGenerator('mods', $modules, array_keys($modules)),
             'search_areas' => $this->formsHelper->checkboxGenerator(
                 'area',
                 $searchAreas,

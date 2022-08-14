@@ -48,7 +48,13 @@ class Forms
         string $htmlAttribute = ''
     ): string {
         $htmlAttribute = $this->buildHtmlAttribute($htmlAttribute);
-        $currentValue = $this->request->getPost()->get($formFieldName, $currentValue);
+        if (\is_array($currentValue)) {
+            if ($this->request->getPost()->has($formFieldName)) {
+                $currentValue = $this->request->getPost()->all($formFieldName);
+            }
+        } else {
+            $currentValue = $this->request->getPost()->get($formFieldName, $currentValue);
+        }
 
         if (\is_array($currentValue) === false && $currentValue == $defaultValue) {
             return $htmlAttribute;

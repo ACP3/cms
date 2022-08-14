@@ -5,28 +5,9 @@
 {/block}
 {block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="search_term" value=$form.search_term required=true label={lang t="search|search_term"}}
-    <div class="row mb-3">
-        <div class="offset-md-2 col-md-10">
-            <button type="button" id="search-advanced-toggle" class="btn btn-outline-secondary">
-                {lang t="search|advanced_search"}
-            </button>
-        </div>
-    </div>
+    {include file="asset:System/Partials/form_group.submit.tpl" name="add_answer" button_type="button" submit_btn_class="btn-outline-secondary" attributes=['id' => "search-advanced-toggle"] submit_label={lang t="search|advanced_search"}}
     <div id="search-advanced-wrapper" class="d-none">
-        <div class="row mb-3">
-            <label class="col-md-2 col-form-label required">{lang t="search|search_after_modules"}</label>
-
-            <div class="col-md-10">
-                <div class="btn-group">
-                    {foreach $search_mods as $row}
-                        <input type="checkbox" class="btn-check" name="mods[]" id="mods-{$row.name}" value="{$row.name}"{$row.checked}>
-                        <label for="mods-{$row.name}" class="btn btn-outline-secondary">
-                            {lang t="`$row.name`|`$row.name`"}
-                        </label>
-                    {/foreach}
-                </div>
-            </div>
-        </div>
+        {include file="asset:System/Partials/form_group.button_group_checkbox.tpl" options=$search_mods required=true label={lang t="search|search_after_modules"}}
         {include file="asset:System/Partials/form_group.button_group.tpl" options=$search_areas required=true label={lang t="search|search_after_areas"}}
         {include file="asset:System/Partials/form_group.button_group.tpl" options=$sort_hits required=true label={lang t="search|sort_hits"}}
     </div>
