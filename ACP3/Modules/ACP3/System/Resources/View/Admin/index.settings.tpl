@@ -22,21 +22,7 @@
             {include file="asset:System/Partials/form_group.select.tpl" options=$languages required=true label={lang t="system|language"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="system|date_format_long"} help={lang t="system|php_date_function"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="system|date_format_short"} help={lang t="system|php_date_function"}}
-            <div class="row mb-3">
-                <label for="date-time-zone" class="col-md-2 col-form-label required">{lang t="system|time_zone"}</label>
-
-                <div class="col-md-10">
-                    <select class="form-select" name="date_time_zone" id="date-time-zone">
-                        {foreach $time_zones as $continent => $countries}
-                            <optgroup label="{$continent}">
-                                {foreach $countries as $country => $data}
-                                    <option value="{$country}"{$data.selected}>{$country}</option>
-                                {/foreach}
-                            </optgroup>
-                        {/foreach}
-                    </select>
-                </div>
-            </div>
+            {include file="asset:System/Partials/form_group.time_zone.tpl" name="date_time_zone" time_zones=$time_zones required=true label={lang t="system|time_zone"}}
         {/tab}
         {tab title={lang t="system|maintenance"}}
             {include file="asset:System/Partials/form_group.button_group.tpl" options=$maintenance required=true label={lang t="system|maintenance_mode"}}

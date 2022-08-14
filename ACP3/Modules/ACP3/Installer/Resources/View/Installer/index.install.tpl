@@ -20,21 +20,7 @@
             {include file="asset:System/Partials/form_group.select.tpl" options=$designs required=true label={lang t="installer|design"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="installer|date_format_long"} help={lang t="installer|php_date_function"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="installer|date_format_short"} help={lang t="installer|php_date_function"}}
-            <div class="row mb-3">
-                <label for="date-time-zone" class="col-md-2 col-form-label required">{lang t="installer|time_zone"}</label>
-
-                <div class="col-md-10">
-                    <select class="form-select" name="date_time_zone" id="date-time-zone" required>
-                        {foreach $time_zones as $key => $values}
-                            <optgroup label="{$key}">
-                                {foreach $values as $country => $value}
-                                    <option value="{$country}"{$value.selected}>{$country}</option>
-                                {/foreach}
-                            </optgroup>
-                        {/foreach}
-                    </select>
-                </div>
-            </div>
+            {include file="asset:System/Partials/form_group.time_zone.tpl" name="date_time_zone" time_zones=$time_zones required=true label={lang t="installer|time_zone"}}
         {/tab}
         {tab title={lang t="installer|advanced"}}
             {include file="asset:System/Partials/form_group.checkbox.tpl" options=[['name' => 'sample_data', 'id' => 'sample-data', 'value' => 1, 'checked' => '', 'lang' => {lang t="installer|install_sample_data"}]]}
