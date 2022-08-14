@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [System] Added some new form-group partials template and extended the existing ones with new functionality, to make them even more reusable
+
+### Changed
+
+-   [System] Display readonly and disabled form inputs as plaintext
+-   [All] Changed the default breakpoints from "sm" (576px) to "md" (768px). The default form-breakpoint can now be configured with the variable `$formBreakpoint`.
+-   [Core] Changed the repo-URI of the forked RichFileManager-NPM-package, so that it doesn't require Git to be present anymore
+-   [Base] Remove the PHP-docker-container again, when it's finished linting and testing as part of the pre-commit-hook
+
+### Fixed
+
+-   [System] Fixed the missing alert, when page cache purging is set to "manual" and the page cache is not valid.
+-   [All] Fixed various minor visual glitches
 
 ## [6.2.1] - 2022-08-08
 
