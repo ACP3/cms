@@ -8,23 +8,12 @@
         {tab title={lang t="polls|poll"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 label={lang t="polls|question"}}
             {foreach $answers as $row}
-                <div class="row mb-3">
-                    <label for="answer-{$row@index}" class="col-md-2 col-form-label">{lang t="polls|answer_x" args=['%number%' => $row@index+1]}</label>
-
-                    <div class="col-md-10">
-                        {if isset($row.id)}
-                            <div class="input-group">
-                                <input class="form-control" type="text" name="answers[{$row@index}][text]" id="answer-{$row@index}" value="{$row.text}" maxlength="120">
-                                <div class="input-group-addon">
-                                    <input type="checkbox" name="answers[{$row@index}][delete]" value="1">
-                                </div>
-                            </div>
-                            <input type="hidden" name="answers[{$row@index}][id]" value="{$row.id}">
-                        {else}
-                            <input class="form-control" type="text" name="answers[{$row@index}][text]" id="answer-{$row@index}" value="{$row.text}" maxlength="120">
-                        {/if}
-                    </div>
-                </div>
+                {if isset($row.id)}
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="answers[`$row@index`][text]" formFieldId="answer-`$row@index`" value=$row.text required=true maxlength=120 input_group_after="<input type=\"checkbox\" name=\"answers[`$row@index`][delete]\" value=\"1\">" label={lang t="polls|answer_x" args=['%number%' => $row@index+1]}}
+                    <input type="hidden" name="answers[{$row@index}][id]" value="{$row.id}">
+                {else}
+                    {include file="asset:System/Partials/form_group.input_text.tpl" name="answers[`$row@index`][text]" formFieldId="answer-`$row@index`" value=$row.text required=true maxlength=120 label={lang t="polls|answer_x" args=['%number%' => $row@index+1]}}
+                {/if}
             {/foreach}
             <div class="row mb-3">
                 <div class="offset-md-2 col-md-10">

@@ -7,7 +7,7 @@
     {/if}
     <textarea class="{if (isset($readonly) && $readonly === true) || (isset($disabled) && $disabled === true)}form-control-plaintext{else}form-control{/if}"
               name="{$name}"
-              id="{$name|replace:'_':'-'}"
+              id="{if isset($formFieldId)}{$formFieldId}{else}{$name|replace:'_':'-'}{/if}"
               cols="60"
               rows="6"
             {if (isset($required) && $required === true)} required{/if}

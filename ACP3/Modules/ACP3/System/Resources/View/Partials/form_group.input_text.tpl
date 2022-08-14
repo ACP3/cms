@@ -5,7 +5,7 @@
     <input {if isset($use_form_control) && $use_form_control === false}{else}class="{if (isset($readonly) && $readonly === true) || (isset($disabled) && $disabled === true)}form-control-plaintext{else}form-control{/if}"{/if}
            type="{block FORM_GROUP_INPUT_TYPE}text{/block}"
            name="{$name}"
-           id="{$name|replace:'_':'-'}"
+           id="{if isset($formFieldId)}{$formFieldId}{else}{$name|replace:'_':'-'}{/if}"
             {if isset($value)}value="{$value}"{/if}
             {if !empty($minlength)}minlength="{$minlength}"{/if}
             {if !empty($maxlength)}maxlength="{$maxlength}"{/if}
