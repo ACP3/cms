@@ -113,7 +113,5 @@ splits:
 
 # List of references to split (defined as regexp)
 origins:
-  - ^master$
-  - ^develop$
   - ^\d.x$
   - ^v\d+\.\d+\.\d+$
