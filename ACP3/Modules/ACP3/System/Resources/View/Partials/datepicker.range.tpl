@@ -7,8 +7,8 @@
 
 {block FORM_GROUP_LABEL_ID}for="{$datepicker.id_start}"{/block}
 {block FORM_GROUP_FORM_FIELD}
-    <div class="row mb-3" data-datepicker-range='{$datepicker.config|json_encode}'>
-        <div class="col-sm-6">
+    <div class="row" data-datepicker-range='{$datepicker.config|json_encode}'>
+        <div class="col-sm-6 mb-2 mb-sm-0">
             {if $datepicker.config.enableTime}
                 <input class="form-control"
                        type="datetime-local"
@@ -49,6 +49,8 @@
                        required>
             {/if}
         </div>
+        <div class="col-12">
+            <p class="form-text mb-0">{lang t="system|date_description"}</p>
+        </div>
     </div>
-    <span class="form-text">{lang t="system|date_description"}</span>
 {/block}

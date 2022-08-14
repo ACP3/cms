@@ -2,7 +2,7 @@
 
 {block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.input_email.tpl" name="mail" value=$form.mail required=true maxlength=120 label={lang t="system|email_address"}}
-    {include file="asset:System/Partials/form_group.select.tpl" options=$salutation columnSelector="col-sm-3" label={lang t="newsletter|salutation"}}
+    {include file="asset:System/Partials/form_group.select.tpl" options=$salutation columnSelector="col-md-3" label={lang t="newsletter|salutation"}}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="first_name" value=$form.first_name maxlength=120 label={lang t="newsletter|first_name"}}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="last_name" value=$form.last_name maxlength=120 label={lang t="newsletter|last_name"}}
     {event name="captcha.event.display_captcha"}

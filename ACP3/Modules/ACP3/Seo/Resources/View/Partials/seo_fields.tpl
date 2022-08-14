@@ -1,8 +1,8 @@
 <div class="row mb-3">
-    <label for="alias" class="col-sm-2 col-form-label">
+    <label for="alias" class="col-md-2 col-form-label">
         {lang t="seo|alias"}
     </label>
-    <div class="col-sm-10">
+    <div class="col-md-10">
         {if !isset($disable_alias_suggest)}
             <div class="input-group">
                 <input class="form-control" type="text" name="alias" id="alias" value="{$seo.alias}">
@@ -11,7 +11,7 @@
                    class="btn btn-outline-secondary"
                    title="{lang t="seo|suggest_alias"}">
                     {icon iconSet="solid" icon="rotate"}
-                    <span class="d-none d-sm-inline">{lang t="seo|suggest_alias"}</span>
+                    <span class="visually-hidden">{lang t="seo|suggest_alias"}</span>
                 </a>
             </div>
         {else}

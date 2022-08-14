@@ -1,6 +1,6 @@
-<div class="row mb-3">
+<div class="row">
     {if (!empty($categories.categories))}
-        <div class="col-sm-{if isset($categories.create)}6{else}12{/if}">
+        <div class="col-sm-{if isset($categories.create)}6{else}12{/if} mb-2 mb-sm-0">
             <select class="form-select" name="{$categories.name}" id="{$categories.name}" aria-label="{lang t="categories|categories"}">
                 <option value="">{$categories.custom_text}</option>
                 {foreach $categories.categories as $row}

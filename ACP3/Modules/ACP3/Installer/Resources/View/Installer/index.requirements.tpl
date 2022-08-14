@@ -2,7 +2,7 @@
 
 {block CONTENT}
     <div class="row">
-        <div class="col-sm-7">
+        <div class="col-md-7">
             <fieldset>
                 <legend>{lang t="installer|step_3_legend_1"}</legend>
                 <p>
@@ -54,7 +54,7 @@
                 </table>
             </fieldset>
         </div>
-        <div class="col-sm-5">
+        <div class="col-md-5">
             <fieldset>
                 <legend>{lang t="installer|step_3_legend_2"}</legend>
                 <p>

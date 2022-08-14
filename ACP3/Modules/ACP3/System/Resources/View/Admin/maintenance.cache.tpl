@@ -10,7 +10,7 @@
             {foreach $cache_types as $cache_type}
                 <div class="list-group-item bg-light">
                     <div class="row">
-                        <div class="col-sm-9 cache-type">
+                        <div class="col-sm-9 mb-2 mb-sm-0 align-self-center">
                             {lang t="system|cache_type_`$cache_type`"}
                         </div>
                         <div class="col-sm-3">

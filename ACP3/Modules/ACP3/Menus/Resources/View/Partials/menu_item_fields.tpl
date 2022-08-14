@@ -2,9 +2,9 @@
 {include file="asset:System/Partials/form_group.input_text.tpl" name=$titleFormFieldName value=$form[$titleFormFieldName] labelRequired=true maxlength=120 label={lang t="menus|title"}}
 {include file="asset:System/Partials/form_group.select.tpl" options=$blocks labelRequired=true label={lang t="menus|menu_bar"}}
 <div class="row mb-3">
-    <label for="parent-id" class="col-sm-2 col-form-label required">{lang t="menus|superior_page"}</label>
+    <label for="parent-id" class="col-md-2 col-form-label required">{lang t="menus|superior_page"}</label>
 
-    <div class="col-sm-10">
+    <div class="col-md-10">
         <select class="form-select" name="parent_id" id="parent-id">
             <option value="">{lang t="menus|no_superior_page"}</option>
             {foreach $menuItems as $blocks}

@@ -6,7 +6,7 @@
 {block CONTENT_AJAX_FORM}
     {include file="asset:System/Partials/form_group.input_text.tpl" name="search_term" value=$form.search_term required=true label={lang t="search|search_term"}}
     <div class="row mb-3">
-        <div class="offset-sm-2 col-sm-10">
+        <div class="offset-md-2 col-md-10">
             <button type="button" id="search-advanced-toggle" class="btn btn-outline-secondary">
                 {lang t="search|advanced_search"}
             </button>
@@ -14,9 +14,9 @@
     </div>
     <div id="search-advanced-wrapper" class="d-none">
         <div class="row mb-3">
-            <label class="col-sm-2 col-form-label required">{lang t="search|search_after_modules"}</label>
+            <label class="col-md-2 col-form-label required">{lang t="search|search_after_modules"}</label>
 
-            <div class="col-sm-10">
+            <div class="col-md-10">
                 <div class="btn-group">
                     {foreach $search_mods as $row}
                         <input type="checkbox" class="btn-check" name="mods[]" id="mods-{$row.name}" value="{$row.name}"{$row.checked}>

@@ -9,9 +9,9 @@
             {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=120 label={lang t="polls|question"}}
             {foreach $answers as $row}
                 <div class="row mb-3">
-                    <label for="answer-{$row@index}" class="col-sm-2 col-form-label">{lang t="polls|answer_x" args=['%number%' => $row@index+1]}</label>
+                    <label for="answer-{$row@index}" class="col-md-2 col-form-label">{lang t="polls|answer_x" args=['%number%' => $row@index+1]}</label>
 
-                    <div class="col-sm-10">
+                    <div class="col-md-10">
                         {if isset($row.id)}
                             <div class="input-group">
                                 <input class="form-control" type="text" name="answers[{$row@index}][text]" id="answer-{$row@index}" value="{$row.text}" maxlength="120">
@@ -27,7 +27,7 @@
                 </div>
             {/foreach}
             <div class="row mb-3">
-                <div class="offset-sm-2 col-sm-10">
+                <div class="offset-md-2 col-md-10">
                     <button type="submit" name="add_answer" class="btn btn-outline-secondary" data-hash-change="#tab-content-2">
                         {lang t="polls|add_answer"}
                     </button>

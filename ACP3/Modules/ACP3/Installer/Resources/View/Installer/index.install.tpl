@@ -21,9 +21,9 @@
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_long" value=$form.date_format_long required=true maxlength=20 label={lang t="installer|date_format_long"} help={lang t="installer|php_date_function"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="date_format_short" value=$form.date_format_short required=true maxlength=20 label={lang t="installer|date_format_short"} help={lang t="installer|php_date_function"}}
             <div class="row mb-3">
-                <label for="date-time-zone" class="col-sm-2 col-form-label required">{lang t="installer|time_zone"}</label>
+                <label for="date-time-zone" class="col-md-2 col-form-label required">{lang t="installer|time_zone"}</label>
 
-                <div class="col-sm-10">
+                <div class="col-md-10">
                     <select class="form-select" name="date_time_zone" id="date-time-zone" required>
                         {foreach $time_zones as $key => $values}
                             <optgroup label="{$key}">

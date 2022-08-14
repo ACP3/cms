@@ -5,8 +5,8 @@
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         <div class="row">
             {foreach $galleries as $row}
-                <div class="col-sm-3">
-                    <div class="card">
+                <div class="col-sm-4 col-lg-3 mb-3">
+                    <div class="card h-100 position-relative">
                         {if !empty($row.file)}
                             <a href="{uri args="gallery/index/pics/id_`$row.id`"}">
                                 <img src="{$row.file}" alt="{$row.title}" class="card-img-top">
@@ -17,7 +17,7 @@
                             <time datetime="{date_format date=$row.start format="c"}" class="card-subtitle d-block mb-3">
                                 {date_format date=$row.start format=$dateformat}
                             </time>
-                            <a href="{uri args="gallery/index/pics/id_`$row.id`"}" class="btn btn-primary d-block" role="button">
+                            <a href="{uri args="gallery/index/pics/id_`$row.id`"}" class="btn btn-primary d-block stretched-link" role="button">
                                 {lang t="gallery|show_pictures" args=['%pictures%' => {$row.pics}]}
                             </a>
                         </div>
