@@ -86,7 +86,7 @@ class InvalidatePageCacheOnModelAfterSaveListenerTest extends \PHPUnit\Framework
 
         $this->settingsMock->expects(self::once())
             ->method('saveSettings')
-            ->with(['page_cache_is_valid' => false], 'system');
+            ->with(['page_cache_is_valid' => 0], 'system');
 
         ($this->invalidatePageCache)();
     }

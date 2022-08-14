@@ -28,7 +28,7 @@ class InvalidatePageCacheOnModelAfterSaveListener implements EventSubscriberInte
         if ($this->settings->getSettings(Schema::MODULE_NAME)['page_cache_purge_mode'] == 1) {
             $this->cacheClearService->clearCacheByType('page');
         } else {
-            $this->settings->saveSettings(['page_cache_is_valid' => false], Schema::MODULE_NAME);
+            $this->settings->saveSettings(['page_cache_is_valid' => 0], Schema::MODULE_NAME);
         }
     }
 

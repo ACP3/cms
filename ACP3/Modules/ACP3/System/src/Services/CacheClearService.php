@@ -54,7 +54,7 @@ class CacheClearService
                 $librariesCache->deleteAll();
 
                 $settings->saveSettings(
-                    ['page_cache_is_valid' => true],
+                    ['page_cache_is_valid' => 1],
                     Schema::MODULE_NAME
                 );
             }],
