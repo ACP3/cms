@@ -86,6 +86,7 @@
     "jquery": "^3.6.0",
     "js-cookie": "^3.0.1",
     "klaro": "^0.7.18",
+    "photoswipe": "^5.3.0",
     "regenerator-runtime": "^0.13.9",
     "rich-filemanager": "https://github.com/tinogo/RichFilemanager/tarball/rework-dependencies",
     "shariff": "^3.2.1"

@@ -85,3 +85,14 @@ services:
       - ["jquery.fancybox.min.js"]
       - "system"
       - true
+
+  system.assets.photoswipe:
+    class: ACP3\Core\Assets\Entity\LibraryEntity
+    arguments:
+      - "photoswipe"
+      - false
+      - []
+      - ["photoswipe.css"]
+      - ["photoswipe.umd.min.js", "photoswipe-lightbox.umd.min.js"]
+      - "system"
+      - true
