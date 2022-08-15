@@ -47,7 +47,6 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
                 'height' => (int) $formData['height'],
                 'thumbwidth' => (int) $formData['thumbwidth'],
                 'thumbheight' => (int) $formData['thumbheight'],
-                'overlay' => $formData['overlay'],
                 'dateformat' => $this->secureHelper->strEncode($formData['dateformat']),
                 'sidebar' => (int) $formData['sidebar'],
             ];

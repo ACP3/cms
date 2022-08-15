@@ -38,17 +38,6 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                 ]
             )
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'overlay',
-                    'message' => $this->translator->t('gallery', 'select_use_overlay'),
-                    'extra' => [
-                        'haystack' => [0, 1],
-                    ],
-                ]
-            )
-            ->addConstraint(
                 Core\Validation\ValidationRules\IntegerValidationRule::class,
                 [
                     'data' => $formData,

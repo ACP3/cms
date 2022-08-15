@@ -75,10 +75,6 @@ class GalleryPictureDetailsViewProvider
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        if ((int) $settings['overlay'] === 1) {
-            $this->metaStatements->setPageRobotsSettings(MetaStatementsServiceInterface::NOINDEX_FOLLOW);
-        }
-
         if (!empty($previousPicture)) {
             $this->metaStatements->setPreviousPage(
                 $this->router->route(sprintf(GalleryHelpers::URL_KEY_PATTERN_PICTURE, $previousPicture))

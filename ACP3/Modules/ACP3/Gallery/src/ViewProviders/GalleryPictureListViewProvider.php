@@ -39,7 +39,6 @@ class GalleryPictureListViewProvider
 
         return [
             'gallery' => $galleryWithPictures,
-            'overlay' => (int) $settings['overlay'],
         ];
     }
 }

@@ -28,7 +28,6 @@ class AdminSettingsViewProvider
         $settings = $this->settings->getSettings(GallerySchema::MODULE_NAME);
 
         return [
-            'overlay' => $this->formsHelper->yesNoCheckboxGenerator('overlay', $settings['overlay']),
             'dateformat' => $this->dateHelper->dateFormatDropdown($settings['dateformat']),
             'sidebar_entries' => $this->formsHelper->recordsPerPage((int) $settings['sidebar'], 1, 10, 'sidebar'),
             'form' => array_merge($settings, $this->request->getPost()->all()),

@@ -12,7 +12,6 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
 use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
-use ACP3\Modules\ACP3\Gallery\Installer\Schema as GallerySchema;
 use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
 use ACP3\Modules\ACP3\Gallerycomments\Installer\Schema as GalleryCommentsSchema;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -32,12 +31,11 @@ class OnGalleryLayoutDetailsAfterEventListener implements EventSubscriberInterfa
             return;
         }
 
-        $gallerySettings = $this->settings->getSettings(GallerySchema::MODULE_NAME);
         $galleryCommentsSettings = $this->settings->getSettings(GalleryCommentsSchema::MODULE_NAME);
         $galleryPicture = $event->getParameters()['gallery_picture'];
         $gallery = $this->galleryRepository->getOneById($galleryPicture['gallery_id']);
 
-        if ((bool) $gallerySettings['overlay'] || !(bool) $galleryCommentsSettings['comments'] || !(bool) $gallery['comments']) {
+        if (!$galleryCommentsSettings['comments'] || !$gallery['comments']) {
             return;
         }
 

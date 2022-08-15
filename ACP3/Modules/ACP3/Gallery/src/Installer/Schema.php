@@ -114,7 +114,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             'height' => 480,
             'thumbwidth' => 160,
             'thumbheight' => 120,
-            'overlay' => 1,
             'dateformat' => 'long',
             'sidebar' => 5,
         ];

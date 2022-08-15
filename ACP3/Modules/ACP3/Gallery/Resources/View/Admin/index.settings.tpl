@@ -5,7 +5,6 @@
         {tab title={lang t="system|general_statements"}}
             {include file="asset:System/Partials/form_group.select.tpl" options=$dateformat required=true label={lang t="system|date_format"}}
             {include file="asset:System/Partials/form_group.select.tpl" options=$sidebar_entries required=true label={lang t="system|sidebar_entries_to_display"}}
-            {include file="asset:System/Partials/form_group.button_group.tpl" options=$overlay required=true label={lang t="gallery|use_overlay"}}
             {event name="gallery.layout.settings"}
         {/tab}
         {tab title={lang t="gallery|image_dimensions"}}

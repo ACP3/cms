@@ -10,7 +10,6 @@ namespace ACP3\Modules\ACP3\Galleryseo\Extension;
 use ACP3\Core\Date;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
-use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\Gallery\Installer\Schema;
 use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
@@ -22,7 +21,6 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     public function __construct(
         protected Date $date,
         RouterInterface $router,
-        private readonly SettingsInterface $settings,
         protected GalleryRepository $galleryRepository,
         protected PictureRepository $pictureRepository,
         MetaStatementsServiceInterface $metaStatements
@@ -42,8 +40,6 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
      */
     protected function fetchSitemapUrls(?bool $isSecure = null): void
     {
-        $gallerySettings = $this->settings->getSettings(Schema::MODULE_NAME);
-
         $this->addUrl('gallery/index/index', null, $isSecure);
 
         foreach ($this->galleryRepository->getAll($this->date->getCurrentDateTime()) as $result) {
@@ -53,14 +49,12 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
                 $isSecure
             );
 
-            if (((int) $gallerySettings['overlay']) === 0) {
-                foreach ($this->pictureRepository->getPicturesByGalleryId($result['id']) as $picture) {
-                    $this->addUrl(
-                        sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
-                        $this->date->toDateTime($result['updated_at']),
-                        $isSecure
-                    );
-                }
+            foreach ($this->pictureRepository->getPicturesByGalleryId($result['id']) as $picture) {
+                $this->addUrl(
+                    sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
+                    $this->date->toDateTime($result['updated_at']),
+                    $isSecure
+                );
             }
         }
     }

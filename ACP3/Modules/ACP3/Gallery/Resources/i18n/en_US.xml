@@ -40,12 +40,10 @@
         <item key="previous_image">Previous image</item>
         <item key="select_new_picture">Select a new picture</item>
         <item key="select_picture">Select picture</item>
-        <item key="select_use_overlay">Please select whether use want to use the image overlay or not.</item>
         <item key="show_pictures">Show pictures (%pictures%)</item>
         <item key="thumb_image_height">Maximum thumb image height to be displayed.</item>
         <item key="thumb_image_width">Maximum thumb image width to be displayed.</item>
         <item key="title">Title</item>
         <item key="type_in_gallery_title">The name of the gallery should not be empty.</item>
-        <item key="use_overlay">Use image overlay</item>
     </keys>
 </language>
