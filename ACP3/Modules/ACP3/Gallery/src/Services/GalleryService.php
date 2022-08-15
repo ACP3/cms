@@ -41,10 +41,12 @@ class GalleryService implements GalleryServiceInterface
             $cachedThumbnail = $this->thumbnailGenerator->generateThumbnail($picture['file'], 'thumb');
             $cachedPicture = $this->thumbnailGenerator->generateThumbnail($picture['file'], '');
 
-            $pictures[$i]['width'] = $cachedThumbnail->getWidth();
-            $pictures[$i]['height'] = $cachedThumbnail->getHeight();
+            $pictures[$i]['thumbnail_width'] = $cachedThumbnail->getWidth();
+            $pictures[$i]['thumbnail_height'] = $cachedThumbnail->getHeight();
+            $pictures[$i]['width'] = $cachedPicture->getWidth();
+            $pictures[$i]['height'] = $cachedPicture->getHeight();
 
-            $pictures[$i]['uri_thumb'] = $cachedThumbnail->getFileWeb();
+            $pictures[$i]['uri_thumbnail'] = $cachedThumbnail->getFileWeb();
             $pictures[$i]['uri_picture'] = $cachedPicture->getFileWeb();
         }
 

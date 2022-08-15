@@ -6,25 +6,33 @@
     {/if}
     {if !empty($gallery.pictures)}
         {if $overlay == 1}
-            {foreach $gallery.pictures as $row}
-                <a href="{$row.uri_picture}"
-                   class="gallery-picture-thumb"
-                   data-fancybox="gallery"
-                   data-type="image"
-                   {if !empty($row.title)}data-caption="{$row.title|strip_tags|trim}"{/if}>
-                    <img src="{$row.uri_thumb}"
-                         alt="{$row.description|strip_tags|trim}"
-                         loading="lazy"
-                         class="img-thumbnail">
-                </a>
-            {/foreach}
-            {js_libraries enable="fancybox"}
+            <div class="gallery-pictures">
+                {foreach $gallery.pictures as $row}
+                    <a href="{$row.uri_picture}"
+                       class="gallery-picture-thumb"
+                       data-pswp-width="{$row.width}"
+                       data-pswp-height="{$row.height}"
+                       {if !empty($row.title)}data-caption="{$row.title|strip_tags|trim}"{/if}>
+                        <img src="{$row.uri_thumbnail}"
+                             alt="{$row.description|strip_tags|trim}"
+                             width="{$row.thumbnail_width}"
+                             height="{$row.thumbnail_height}"
+                             loading="lazy"
+                             class="img-thumbnail">
+                    </a>
+                {/foreach}
+            </div>
+            {javascripts}
+                {include_js module="gallery" file="frontend/index.pics" depends="photoswipe"}
+            {/javascripts}
         {else}
             {foreach $gallery.pictures as $row}
                 <a href="{uri args="gallery/index/details/id_`$row.id`"}"
                    class="gallery-picture-thumb">
-                    <img src="{$row.uri_thumb}"
+                    <img src="{$row.uri_thumbnail}"
                          alt="{$row.description|strip_tags|trim}"
+                         width="{$row.thumbnail_width}"
+                         height="{$row.thumbnail_height}"
                          loading="lazy"
                          class="img-thumbnail">
                 </a>
