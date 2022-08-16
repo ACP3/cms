@@ -92,7 +92,7 @@ services:
       - "photoswipe"
       - false
       - []
-      - ["photoswipe.css"]
+      - ["photoswipe.css", "photoswipe-caption.min.css"]
       - ["photoswipe.umd.min.js", "photoswipe-lightbox.umd.min.js"]
       - "system"
       - true
