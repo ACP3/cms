@@ -76,6 +76,10 @@ services:
       - true
 
   system.assets.fancybox:
+    deprecated:
+      message: 'The service "%service_id%" is deprecated. It will be removed with ACP3 version 7.0.0. Use "system.assets.photoswipe" instead.'
+      package: "acp3/module-system"
+      version: "6.4.0"
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
       - "fancybox"
