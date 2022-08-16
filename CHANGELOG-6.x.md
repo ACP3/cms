@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [System] [Gallery] Added photoswipe as a replacement for fancybox
+
+### Changed
+
+-   [Gallery] Removed the `overlay` setting from the gallery module
+
+### Fixed
+
+-   [User] Fixed the user login form
+
+### Deprecated
+
+-   [System] Deprecated fancybox, use photoswipe instead.
 
 ## [6.3.1] - 2022-08-15
 
