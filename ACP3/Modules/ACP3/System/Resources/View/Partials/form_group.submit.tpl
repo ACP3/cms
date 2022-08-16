@@ -3,7 +3,7 @@
 {block FORM_GROUP_FORM_FIELD}
     {block FORM_GROUP_FORM_FIELD_SUBMIT}
         <button type="{if !empty($button_type)}{$button_type}{else}submit{/if}"
-                name="{if isset($name)}{$name}{else}name{/if}"
+                name="{if isset($name)}{$name}{else}submit{/if}"
                 class="btn{if !empty($submit_btn_class)} {$submit_btn_class}{else} btn-primary{/if}"
                 {if !empty($attributes) && is_array($attributes)}
                     {foreach $attributes as $attrName => $attrValue}
