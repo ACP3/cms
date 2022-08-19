@@ -1,8 +1,17 @@
 {extends file="asset:`$LAYOUT`"}
 
+{if !empty($gallery.subtitle)}
+    {block PAGE_TITLE}
+        <h2 itemprop="name">
+            {page_title}<br>
+            <small>{$gallery.subtitle}</small>
+        </h2>
+    {/block}
+{/if}
+
 {block CONTENT}
     {if !empty($gallery.description)}
-        {$gallery.description}
+        {$gallery.description|rewrite_uri}
     {/if}
     {if !empty($gallery.pictures)}
         <div class="gallery-pictures">
