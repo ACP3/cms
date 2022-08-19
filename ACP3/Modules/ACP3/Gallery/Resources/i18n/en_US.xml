@@ -40,6 +40,7 @@
         <item key="previous_image">Previous image</item>
         <item key="select_new_picture">Select a new picture</item>
         <item key="select_picture">Select picture</item>
+        <item key="subtitle">Subtitle</item>
         <item key="show_pictures">Show pictures (%pictures%)</item>
         <item key="thumb_image_height">Maximum thumb image height to be displayed.</item>
         <item key="thumb_image_width">Maximum thumb image width to be displayed.</item>

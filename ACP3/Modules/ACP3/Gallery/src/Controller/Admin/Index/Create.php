@@ -28,6 +28,7 @@ class Create extends Core\Controller\AbstractWidgetAction
             'id' => null,
             'active' => 1,
             'title' => '',
+            'subtitle' => '',
             'description' => '',
             'start' => '',
             'end' => '',

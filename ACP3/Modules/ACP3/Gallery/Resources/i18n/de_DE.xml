@@ -40,6 +40,7 @@
         <item key="previous_image">Vorheriges Bild</item>
         <item key="select_new_picture">Neues Bild auswählen</item>
         <item key="select_picture">Bild auswählen</item>
+        <item key="subtitle">Untertitel</item>
         <item key="show_pictures">Bilder anzeigen (%pictures%)</item>
         <item key="thumb_image_height">Maximal anzuzeigende Höhe der Vorschaubilder</item>
         <item key="thumb_image_width">Maximal anzuzeigende Breite der Vorschaubilder</item>

@@ -38,6 +38,7 @@ class GalleryModel extends AbstractModel implements UpdatedAtAwareModelInterface
             'end' => DateTimeColumnType::class,
             'updated_at' => DateTimeColumnType::class,
             'title' => TextColumnType::class,
+            'subtitle' => TextColumnType::class,
             'description' => TextWysiwygColumnType::class,
             'user_id' => IntegerColumnType::class,
         ];
