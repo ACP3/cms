@@ -19,7 +19,7 @@
                      class="img-thumbnail">
             {/if}
             <div class="description">
-                {$picture.description}
+                {$picture.description|rewrite_uri}
             </div>
             {event name="share.layout.add_social_sharing"}
             <footer>
