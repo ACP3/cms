@@ -7,7 +7,7 @@
         {/tab}
         {tab title={lang t="news|news"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=255 data_attributes=['seo-slug-base' => 'true'] label={lang t="news|title"}}
-            {include file="asset:System/Partials/form_group.input_text.tpl" name="subtitle" value=$form.subtitle required=true maxlength=255 label={lang t="news|subtitle"}}
+            {include file="asset:System/Partials/form_group.input_text.tpl" name="subtitle" value=$form.subtitle maxlength=255 label={lang t="news|subtitle"}}
             {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="text" value=$form.text required=true label={lang t="news|text"}}
             {include file="asset:Categories/Partials/form_group.categories.tpl" name="cat" categories=$categories required=true label={lang t="categories|category"}}
             {if !empty($options)}
