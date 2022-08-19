@@ -23,7 +23,6 @@ class Migration20220819233801 implements MigrationInterface
 
     public function up(): void
     {
-        $this->db->executeStatement("ALTER TABLE `{$this->db->getPrefixedTableName('files')}` MODIFY `title` VARCHAR(255) NOT NULL;");
         $this->db->executeStatement("ALTER TABLE `{$this->db->getPrefixedTableName('files')}` ADD COLUMN `subtitle` VARCHAR(255) NOT NULL AFTER `title`;");
     }
 
