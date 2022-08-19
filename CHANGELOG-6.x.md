@@ -7,7 +7,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Files] made it possible to add a subtitle to downloads
+-   [Files] enabled the full WYSIWYG editor when creating/editing a download
+-   [Gallery] made it possible to add a subtitle to galleries
+-   [Gallery] enabled the full WYSIWYG editor when creating/editing a gallery
+-   [News] made it possible to add a subtitle to news
+
+### Changed
+
+-   [ALL] replaced some magic numbers with the newly introduced enums `YesNoEnum`, `LinkTargetEnum` and `NewsletterSendingStatusEnum`
+-   [Files] "un-boxed" the files details page
+-   [Files] increased the maximum length of the title to 255 characters
+-   [News] "un-boxed" the news details page
+-   [News] increased the maximum length of the title to 255 characters
+
+### Fixed
+
+-   [Core] Removed the `strict_types` declaration from the `ControllerActionDispatcher` to remedy some hard to fix possible `TypeError`s
 
 ## [6.4.0] - 2022-08-16
 
