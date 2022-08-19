@@ -4,7 +4,7 @@
     {block PAGE_TITLE}
         <h2 itemprop="name">
             {page_title}<br>
-            <small>{$gallery.subtitle}</small>
+            <small class="fs-5">{$gallery.subtitle}</small>
         </h2>
     {/block}
 {/if}
