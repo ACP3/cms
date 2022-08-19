@@ -33,6 +33,7 @@
         <item key="select_display_category_in_breadcrumb">Bitte wählen Sie aus, ob der Kategoriename einer News in der
             Brotkrümelspur angezeigt werden soll.
         </item>
+        <item key="subtitle">Untertitel</item>
         <item key="target_page">Zielseite</item>
         <item key="text">Text</item>
         <item key="text_to_short">Der Text darf nicht leer sein.</item>

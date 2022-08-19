@@ -31,6 +31,7 @@
         <item key="select_display_category_in_breadcrumb">Please select whether you want to display the category name of a
             news in the breadcrumb or not.
         </item>
+        <item key="subtitle">Subtitle</item>
         <item key="target_page">Target page</item>
         <item key="text">Text</item>
         <item key="text_to_short">The news text should not be empty.</item>

@@ -32,6 +32,7 @@ class Create extends Core\Controller\AbstractWidgetAction
             'readmore' => 0,
             'id' => null,
             'title' => '',
+            'subtitle' => '',
             'target' => null,
             'text' => '',
             'uri' => '',

@@ -69,6 +69,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
             'end' => DateTimeColumnType::class,
             'updated_at' => DateTimeColumnType::class,
             'title' => TextColumnType::class,
+            'subtitle' => TextColumnType::class,
             'text' => TextWysiwygColumnType::class,
             'readmore' => IntegerColumnType::class,
             'category_id' => IntegerColumnType::class,

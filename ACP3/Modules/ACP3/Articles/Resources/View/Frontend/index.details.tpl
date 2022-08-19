@@ -2,7 +2,7 @@
 
 {if !empty($page.subtitle)}
     {block PAGE_TITLE}
-        <h2>
+        <h2 itemprop="name">
             {page_title}<br>
             <small>{$page.subtitle}</small>
         </h2>

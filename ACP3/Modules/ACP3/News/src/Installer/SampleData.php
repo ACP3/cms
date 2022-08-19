@@ -30,7 +30,7 @@ class SampleData extends \ACP3\Core\Installer\AbstractSampleData
 
         return [
             "INSERT INTO `{pre}categories` VALUES (1, 1, 0, 1, 2, '{$translator->t('news', 'sample_data_category_name')}', '', '{$translator->t('news', 'sample_data_category_description')}', '{$this->schemaHelper->getModuleId(Schema::MODULE_NAME)}');",
-            "INSERT INTO `{pre}news` (id, active, start, end, updated_at, title, text, readmore, category_id, uri, target, link_title, user_id) VALUES (1, 1, '{$currentDate}', '{$currentDate}', '{$currentDate}', '{$translator->t('news', 'sample_data_news_headline')}', '{$translator->t('news', 'sample_data_news_text')}', 1, 1, '', 1, '', 1);",
+            "INSERT INTO `{pre}news` (id, active, start, end, updated_at, title, subtitle, text, readmore, category_id, uri, target, link_title, user_id) VALUES (1, 1, '{$currentDate}', '{$currentDate}', '{$currentDate}', '{$translator->t('news', 'sample_data_news_headline')}', '', '{$translator->t('news', 'sample_data_news_text')}', 1, 1, '', 1, '', 1);",
         ];
     }
 }
