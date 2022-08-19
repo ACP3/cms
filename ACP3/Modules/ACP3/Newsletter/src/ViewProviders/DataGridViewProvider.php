@@ -15,6 +15,7 @@ use ACP3\Core\DataGrid\DataGrid;
 use ACP3\Core\DataGrid\Input;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
+use ACP3\Modules\ACP3\Newsletter\Enum\NewsletterSendingStatusEnum;
 use ACP3\Modules\ACP3\Newsletter\Repository\NewsletterDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -60,7 +61,7 @@ class DataGridViewProvider
                 'type' => ReplaceValueColumnRenderer::class,
                 'fields' => ['status'],
                 'custom' => [
-                    'search' => [0, 1],
+                    'search' => NewsletterSendingStatusEnum::values(),
                     'replace' => [
                         $this->translator->t('newsletter', 'not_yet_sent'),
                         $this->translator->t('newsletter', 'already_sent'),

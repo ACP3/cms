@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Validation\ValidationRules\BirthdayValidationRule;
 use ACP3\Modules\ACP3\Users\Enum\GenderEnum;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule;
@@ -132,7 +133,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'field' => 'mail_display',
                     'message' => $this->translator->t('users', 'select_mail_display'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             )
@@ -143,7 +144,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'field' => 'address_display',
                     'message' => $this->translator->t('users', 'select_address_display'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             )
@@ -154,7 +155,7 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'field' => 'country_display',
                     'message' => $this->translator->t('users', 'select_country_display'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             )

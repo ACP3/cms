@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\System\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Modules\ACP3\System\Enum\SiteSubtitleModeEnum;
 use ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidationRule;
 
@@ -85,7 +86,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'mod_rewrite',
                     'message' => $this->translator->t('system', 'select_mod_rewrite'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             );
@@ -123,7 +124,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'site_subtitle_homepage_mode',
                     'message' => $this->translator->t('system', 'select_site_subtitle_homepage_mode'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             );
@@ -174,7 +175,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'maintenance_mode',
                     'message' => $this->translator->t('system', 'select_online_maintenance'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             )
@@ -212,7 +213,7 @@ class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'cache_images',
                     'message' => $this->translator->t('system', 'select_cache_images'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             )

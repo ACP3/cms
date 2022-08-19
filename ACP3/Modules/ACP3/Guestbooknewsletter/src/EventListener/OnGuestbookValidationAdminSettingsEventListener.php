@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Guestbooknewsletter\EventListener;
 
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
 use ACP3\Core\Validation\Event\FormValidationEvent;
@@ -35,7 +36,7 @@ class OnGuestbookValidationAdminSettingsEventListener implements EventSubscriber
                     'field' => 'newsletter_integration',
                     'message' => $this->translator->t('guestbooknewsletter', 'select_newsletter_integration'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             );

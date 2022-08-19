@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\EventListener;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
@@ -61,7 +62,7 @@ class ValidateMenuItemFormFieldsListener implements EventSubscriberInterface
                         'field' => 'display',
                         'message' => $this->translator->t('menus', 'select_item_visibility'),
                         'extra' => [
-                            'haystack' => [0, 1],
+                            'haystack' => YesNoEnum::values(),
                         ],
                     ]
                 )

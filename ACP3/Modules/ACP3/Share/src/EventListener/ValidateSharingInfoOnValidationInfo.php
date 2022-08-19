@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\EventListener;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
@@ -33,7 +34,7 @@ class ValidateSharingInfoOnValidationInfo implements EventSubscriberInterface
                             'field' => 'share_active',
                             'message' => $this->translator->t('share', 'select_sharing_active'),
                             'extra' => [
-                                'haystack' => [0, 1],
+                                'haystack' => YesNoEnum::values(),
                             ],
                         ]
                     )
@@ -44,7 +45,7 @@ class ValidateSharingInfoOnValidationInfo implements EventSubscriberInterface
                             'field' => 'share_customize_services',
                             'message' => $this->translator->t('share', 'select_customize_services'),
                             'extra' => [
-                                'haystack' => [0, 1],
+                                'haystack' => YesNoEnum::values(),
                             ],
                         ]
                     );
@@ -76,7 +77,7 @@ class ValidateSharingInfoOnValidationInfo implements EventSubscriberInterface
                         'field' => 'share_ratings_active',
                         'message' => $this->translator->t('share', 'select_ratings_active'),
                         'extra' => [
-                            'haystack' => [0, 1],
+                            'haystack' => YesNoEnum::values(),
                         ],
                     ]
                 );

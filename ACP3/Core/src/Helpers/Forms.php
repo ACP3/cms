@@ -7,6 +7,8 @@
 
 namespace ACP3\Core\Helpers;
 
+use ACP3\Core\Helpers\Enum\LinkTargetEnum;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 
@@ -111,8 +113,8 @@ class Forms
         string $htmlAttribute = 'selected'
     ): array {
         $linkTargets = [
-            1 => $this->translator->t('system', 'window_self'),
-            2 => $this->translator->t('system', 'window_blank'),
+            LinkTargetEnum::TARGET_SELF->value => $this->translator->t('system', 'window_self'),
+            LinkTargetEnum::TARGET_BLANK->value => $this->translator->t('system', 'window_blank'),
         ];
 
         return $this->choicesGenerator($formFieldName, $linkTargets, $currentValue, $htmlAttribute);
@@ -127,8 +129,8 @@ class Forms
         string $htmlAttribute = 'selected'
     ): array {
         $values = [
-            1 => $this->translator->t('system', 'yes'),
-            0 => $this->translator->t('system', 'no'),
+            YesNoEnum::YES->value => $this->translator->t('system', 'yes'),
+            YesNoEnum::NO->value => $this->translator->t('system', 'no'),
         ];
 
         return $this->choicesGenerator($formFieldName, $values, $currentValue, $htmlAttribute);
@@ -151,8 +153,8 @@ class Forms
     public function yesNoCheckboxGenerator(string $formFieldName, ?int $currentValue = null): array
     {
         $values = [
-            1 => $this->translator->t('system', 'yes'),
-            0 => $this->translator->t('system', 'no'),
+            YesNoEnum::YES->value => $this->translator->t('system', 'yes'),
+            YesNoEnum::NO->value => $this->translator->t('system', 'no'),
         ];
 
         return $this->checkboxGenerator($formFieldName, $values, $currentValue);

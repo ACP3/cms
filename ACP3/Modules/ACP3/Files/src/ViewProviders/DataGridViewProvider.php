@@ -15,6 +15,7 @@ use ACP3\Core\DataGrid\ColumnRenderer\SortColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\TextColumnRenderer;
 use ACP3\Core\DataGrid\DataGrid;
 use ACP3\Core\DataGrid\Input;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
@@ -56,7 +57,7 @@ class DataGridViewProvider
                 'type' => ReplaceValueColumnRenderer::class,
                 'fields' => ['active'],
                 'custom' => [
-                    'search' => [0, 1],
+                    'search' => YesNoEnum::values(),
                     'replace' => [$this->translator->t('system', 'no'), $this->translator->t('system', 'yes')],
                 ],
             ], 60)

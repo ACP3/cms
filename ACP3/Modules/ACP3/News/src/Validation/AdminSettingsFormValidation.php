@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\News\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Validation\AbstractFormValidation;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
@@ -56,7 +57,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'readmore',
                     'message' => $this->translator->t('news', 'select_activate_readmore'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             )
@@ -67,7 +68,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'category_in_breadcrumb',
                     'message' => $this->translator->t('news', 'select_display_category_in_breadcrumb'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             );

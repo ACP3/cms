@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RolesExistValidationRule;
 
 class AdminFormValidation extends AbstractUserFormValidation
@@ -46,7 +47,7 @@ class AdminFormValidation extends AbstractUserFormValidation
                     'field' => 'super_user',
                     'message' => $this->translator->t('users', 'select_super_user'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             );

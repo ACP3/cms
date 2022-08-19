@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\AllowedMenuValidationRule;
 use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\LinkModeValidationRule;
@@ -72,7 +73,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'display',
                     'message' => $this->translator->t('menus', 'select_item_visibility'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             )
@@ -83,7 +84,7 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'target',
                     'message' => $this->translator->t('menus', 'type_in_uri_and_target'),
                     'extra' => [
-                        'haystack' => [1, 2],
+                        'haystack' => Core\Helpers\Enum\LinkTargetEnum::values(),
                     ],
                 ]
             )

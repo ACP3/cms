@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Seo\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\SEO\Enum\MetaRobotsEnum;
 use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Modules\ACP3\Seo\Helper\Enum\IndexPaginatedContentEnum;
@@ -50,7 +51,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'sitemap_is_enabled',
                     'message' => $this->translator->t('seo', 'select_sitemap_is_enabled'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             )
@@ -72,7 +73,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'sitemap_separate',
                     'message' => $this->translator->t('seo', 'select_sitemap_separate'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             );

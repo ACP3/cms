@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Files\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Modules\ACP3\Categories;
 use ACP3\Modules\ACP3\Files\Validation\ValidationRules\IsExternalFileValidationRule;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -52,7 +53,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'active',
                     'message' => $this->translator->t('files', 'select_active'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             )

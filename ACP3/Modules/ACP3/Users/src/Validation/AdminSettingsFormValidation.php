@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Validation\AbstractFormValidation;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
@@ -34,7 +35,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'enable_registration',
                     'message' => $this->translator->t('users', 'select_enable_registration'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             );

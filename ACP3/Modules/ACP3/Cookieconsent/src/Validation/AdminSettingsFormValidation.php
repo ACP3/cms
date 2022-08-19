@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Cookieconsent\Validation;
 
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Validation\AbstractFormValidation;
 use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
@@ -29,7 +30,7 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'field' => 'enabled',
                     'message' => $this->translator->t('cookieconsent', 'select_enable_cookie_consent'),
                     'extra' => [
-                        'haystack' => [0, 1],
+                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             );

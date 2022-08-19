@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Validation\AbstractFormValidation;
 
 class AdminFormValidation extends AbstractFormValidation
@@ -54,7 +55,7 @@ class AdminFormValidation extends AbstractFormValidation
                         'field' => 'active',
                         'message' => $this->translator->t('guestbook', 'select_activate'),
                         'extra' => [
-                            'haystack' => [0, 1],
+                            'haystack' => YesNoEnum::values(),
                         ],
                     ]
                 );
