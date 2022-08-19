@@ -1,5 +1,14 @@
 {extends file="asset:`$LAYOUT`"}
 
+{if !empty($file.subtitle)}
+    {block PAGE_TITLE}
+        <h2 itemprop="name">
+            {page_title}<br>
+            <small>{$file.subtitle}</small>
+        </h2>
+    {/block}
+{/if}
+
 {block CONTENT}
     <article>
         <section class="card mb-3">

@@ -28,6 +28,7 @@
         <item key="order_by">Reihenfolge der Datensätze</item>
         <item key="order_by_date_descending">Nach Datum (absteigend)</item>
         <item key="order_by_custom">Benutzerdefinierte Reihenfolge</item>
+        <item key="subtitle">Untertitel</item>
         <item key="title">Titel</item>
         <item key="type_in_external_resource">Bitte geben Sie den Pfad zur Datei und die Dateigröße ein.</item>
         <item key="type_in_title">Der Titel darf nicht leer sein.</item>

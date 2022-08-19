@@ -31,6 +31,7 @@ class Create extends Core\Controller\AbstractWidgetAction
             'category_id' => null,
             'active' => 1,
             'title' => '',
+            'subtitle' => '',
             'file' => '',
             'file_internal' => '',
             'file_external' => '',

@@ -70,6 +70,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `file` VARCHAR(120) NOT NULL,
                 `size` VARCHAR(20) NOT NULL,
                 `title` VARCHAR(255) NOT NULL,
+                `subtitle` VARCHAR(255) NOT NULL,
                 `text` TEXT NOT NULL,
                 `sort` INT(10) UNSIGNED NOT NULL,
                 `user_id` INT UNSIGNED,

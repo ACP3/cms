@@ -28,6 +28,7 @@
         <item key="order_by">Order of results</item>
         <item key="order_by_date_descending">By date (descending)</item>
         <item key="order_by_custom">Custom order</item>
+        <item key="subtitle">Subtitle</item>
         <item key="title">Title</item>
         <item key="type_in_external_resource">Please type in the external resource for the file.</item>
         <item key="type_in_title">The title should not be empty.</item>
