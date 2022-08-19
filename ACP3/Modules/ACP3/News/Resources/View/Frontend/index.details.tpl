@@ -2,10 +2,8 @@
 
 {if !empty($news.subtitle)}
     {block PAGE_TITLE}
-        <h2 itemprop="name">
-            {page_title}<br>
-            <small class="fs-5">{$news.subtitle}</small>
-        </h2>
+        {$smarty.block.parent}
+        <p class="fs-5 mb-2">{$news.subtitle}</p>
     {/block}
 {/if}
 
