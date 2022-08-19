@@ -7,7 +7,7 @@
         {/tab}
         {tab title={lang t="system|general_statements"}}
             {include file="asset:System/Partials/form_group.input_text.tpl" name="title" value=$form.title required=true maxlength=255 data_attributes=['seo-slug-base' => 'true'] label={lang t="gallery|title"}}
-            {include file="asset:System/Partials/form_group.input_text.tpl" name="subtitle" value=$form.subtitle required=true maxlength=255 label={lang t="gallery|subtitle"}}
+            {include file="asset:System/Partials/form_group.input_text.tpl" name="subtitle" value=$form.subtitle maxlength=255 label={lang t="gallery|subtitle"}}
             {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="description" value=$form.description label={lang t="system|description"}}
             {event name="gallery.layout.upsert" form_data=$form}
         {/tab}
