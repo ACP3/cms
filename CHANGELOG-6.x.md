@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Menus] Fixed the bug that the page-URI was missing after saving a menu item
+-   [Menus] Fixed the bug that the parent-menu-item-form-field was mandatory
 
 ## [6.5.0] - 2022-08-20
 
