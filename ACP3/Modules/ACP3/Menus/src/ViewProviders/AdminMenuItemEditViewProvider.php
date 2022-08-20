@@ -79,6 +79,10 @@ class AdminMenuItemEditViewProvider
 
         uasort($modules, static fn ($a, $b) => $a <=> $b);
 
-        return $this->formsHelper->choicesGenerator('module', $modules, !empty($menuItem) && $menuItem['mode'] == 1 ? $menuItem['uri'] : '');
+        return $this->formsHelper->choicesGenerator(
+            'module',
+            $modules,
+            !empty($menuItem) && PageTypeEnum::tryFrom((int) $menuItem['mode']) === PageTypeEnum::MODULE ? $menuItem['uri'] : ''
+        );
     }
 }

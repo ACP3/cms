@@ -17,6 +17,7 @@ use ACP3\Core\DataGrid\Input;
 use ACP3\Core\DataGrid\QueryOption;
 use ACP3\Core\Helpers\ResultsPerPage;
 use ACP3\Core\I18n\Translator;
+use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Repository\MenuItemDataGridRepository;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -64,7 +65,7 @@ class MenuItemsDataGridViewProvider
                 'fields' => ['mode'],
                 'sortable' => false,
                 'custom' => [
-                    'search' => ['1', '2', '3'],
+                    'search' => PageTypeEnum::values(),
                     'replace' => [
                         $this->translator->t('menus', 'module'),
                         $this->translator->t('menus', 'dynamic_page'),
