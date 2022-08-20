@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Menus\Services;
 
 use ACP3\Core\I18n\Translator;
+use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 
@@ -24,33 +25,29 @@ class MenuService implements MenuServiceInterface
      */
     public function getAllMenuItems(): array
     {
+        $menus = $this->menuRepository->getAllMenus();
         $menuItems = $this->menuItemRepository->getAllMenuItems();
-        $cMenuItems = \count($menuItems);
 
-        if ($cMenuItems > 0) {
-            $menus = $this->menuRepository->getAllMenus();
-
-            foreach ($menuItems as $i => $menuItem) {
-                foreach ($menus as $menu) {
-                    if ($menuItem['block_id'] === $menu['id']) {
-                        $menuItems[$i]['block_title'] = $menu['title'];
-                        $menuItems[$i]['block_name'] = $menu['index_name'];
-                    }
+        foreach ($menuItems as $menuItem) {
+            foreach ($menus as $menu) {
+                if ($menuItem['block_id'] === $menu['id']) {
+                    $menuItem['block_title'] = $menu['title'];
+                    $menuItem['block_name'] = $menu['index_name'];
                 }
             }
+        }
 
-            $modeSearch = ['1', '2', '3'];
-            $modeReplace = [
-                $this->translator->t('menus', 'module'),
-                $this->translator->t('menus', 'dynamic_page'),
-                $this->translator->t('menus', 'hyperlink'),
-            ];
+        $modeSearch = PageTypeEnum::values();
+        $modeReplace = [
+            $this->translator->t('menus', 'module'),
+            $this->translator->t('menus', 'dynamic_page'),
+            $this->translator->t('menus', 'hyperlink'),
+        ];
 
-            foreach ($menuItems as $i => $menu) {
-                $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, (string) $menu['mode']);
-                $menuItems[$i]['first'] = $this->isFirstItemInSet($i, $menuItems);
-                $menuItems[$i]['last'] = $this->isLastItemInSet($i, $menuItems);
-            }
+        foreach ($menuItems as $i => $menu) {
+            $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, (string) $menu['mode']);
+            $menuItems[$i]['first'] = $this->isFirstItemInSet($i, $menuItems);
+            $menuItems[$i]['last'] = $this->isLastItemInSet($i, $menuItems);
         }
 
         return $menuItems;
@@ -63,7 +60,7 @@ class MenuService implements MenuServiceInterface
     {
         if ($index > 0) {
             for ($j = $index - 1; $j >= 0; --$j) {
-                if ($menuItems[$j]['parent_id'] == $menuItems[$index]['parent_id']
+                if ($menuItems[$j]['parent_id'] === $menuItems[$index]['parent_id']
                     && $menuItems[$j]['block_name'] === $menuItems[$index]['block_name']
                 ) {
                     return false;
@@ -81,7 +78,7 @@ class MenuService implements MenuServiceInterface
     {
         $cItems = \count($menuItems);
         for ($j = $index + 1; $j < $cItems; ++$j) {
-            if ($menuItems[$index]['parent_id'] == $menuItems[$j]['parent_id']
+            if ($menuItems[$index]['parent_id'] === $menuItems[$j]['parent_id']
                 && $menuItems[$j]['block_name'] === $menuItems[$index]['block_name']
             ) {
                 return false;
