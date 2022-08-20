@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [6.5.1] - 2022-08-20
 
 ### Fixed
 
@@ -206,7 +206,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   [All] Fixed many bugs
 
-[unreleased]: https://gitlab.com/ACP3/cms/compare/v6.5.0...6.x
+[unreleased]: https://gitlab.com/ACP3/cms/compare/v6.5.1...6.x
+[6.5.1]: https://gitlab.com/ACP3/cms/compare/v6.5.0...v6.5.1
 [6.5.0]: https://gitlab.com/ACP3/cms/compare/v6.4.0...v6.5.0
 [6.4.0]: https://gitlab.com/ACP3/cms/compare/v6.3.1...v6.4.0
 [6.3.1]: https://gitlab.com/ACP3/cms/compare/v6.3.0...v6.3.1
