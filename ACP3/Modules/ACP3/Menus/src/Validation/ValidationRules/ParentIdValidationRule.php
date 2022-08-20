@@ -28,7 +28,7 @@ class ParentIdValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return $this->checkParentIdExists($data);
+        return $this->checkParentIdExists((int) $data);
     }
 
     /**
