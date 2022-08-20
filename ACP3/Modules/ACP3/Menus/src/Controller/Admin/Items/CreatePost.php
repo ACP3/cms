@@ -7,20 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Menus\Controller\Admin\Items;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Menus;
+use ACP3\Modules\ACP3\Menus\Services\MenuItemUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class CreatePost extends AbstractFormAction
+class CreatePost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly Menus\Model\MenuItemsModel $menuItemsModel,
-        private readonly Menus\Validation\MenuItemFormValidation $menuItemFormValidation
+        private readonly MenuItemUpsertService $menuItemUpsertService,
     ) {
         parent::__construct($context);
     }
@@ -34,15 +34,7 @@ class CreatePost extends AbstractFormAction
     public function __invoke(): array|string|Response
     {
         return $this->actionHelper->handleSaveAction(
-            function () {
-                $formData = $this->request->getPost()->all();
-
-                $this->menuItemFormValidation->validate($formData);
-
-                $formData['uri'] = $this->fetchMenuItemUriForSave($formData);
-
-                return $this->menuItemsModel->save($formData);
-            },
+            fn () => $this->menuItemUpsertService->upsert($this->request->getPost()->all()),
             'acp/menus'
         );
     }

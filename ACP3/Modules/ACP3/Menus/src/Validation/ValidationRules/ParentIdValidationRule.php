@@ -32,16 +32,14 @@ class ParentIdValidationRule extends AbstractValidationRule
     }
 
     /**
-     * @param string $value
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function checkParentIdExists($value): bool
+    private function checkParentIdExists(int $value): bool
     {
         if (empty($value)) {
             return true;
         }
 
-        return $this->menuItemRepository->menuItemExists((int) $value);
+        return $this->menuItemRepository->menuItemExists($value);
     }
 }

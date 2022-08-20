@@ -10,11 +10,12 @@ namespace ACP3\Modules\ACP3\Menus\Validation\ValidationRules;
 use ACP3\Core\Modules;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
 use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
+use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class LinkModeValidationRule extends AbstractValidationRule
 {
-    public function __construct(protected Modules $modules, protected InternalUriValidationRule $internalUriValidationRule)
+    public function __construct(private readonly Modules $modules, private readonly InternalUriValidationRule $internalUriValidationRule)
     {
     }
 
@@ -34,15 +35,12 @@ class LinkModeValidationRule extends AbstractValidationRule
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    protected function isValidLink(int $mode, string $moduleName, string $uri)
+    private function isValidLink(int $mode, string $moduleName, string $uri): bool
     {
         return match ($mode) {
-            1 => $this->modules->isInstalled($moduleName),
-            2 => $this->internalUriValidationRule->isValid($uri),
-            3 => !empty($uri),
+            PageTypeEnum::MODULE->value => $this->modules->isInstalled($moduleName),
+            PageTypeEnum::DYNAMIC_PAGE->value => $this->internalUriValidationRule->isValid($uri),
+            PageTypeEnum::HYPERLINK->value => !empty($uri),
             default => false,
         };
     }

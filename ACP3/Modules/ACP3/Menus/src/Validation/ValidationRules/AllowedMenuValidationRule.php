@@ -32,7 +32,7 @@ class AllowedMenuValidationRule extends AbstractValidationRule
         return false;
     }
 
-    protected function checkIsAllowedMenu(int $parentId, int $menuId): bool
+    private function checkIsAllowedMenu(int $parentId, int $menuId): bool
     {
         if (empty($parentId)) {
             return true;
