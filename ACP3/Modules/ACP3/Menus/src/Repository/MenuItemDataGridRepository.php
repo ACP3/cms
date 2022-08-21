@@ -45,7 +45,7 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
     {
         if ($index > 0) {
             for ($j = $index - 1; $j >= 0; --$j) {
-                if ($nestedSet[$j]['parent_id'] == $nestedSet[$index]['parent_id']) {
+                if ($nestedSet[$j]['parent_id'] === $nestedSet[$index]['parent_id']) {
                     return false;
                 }
             }
@@ -61,7 +61,7 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
     {
         $cItems = \count($nestedSet);
         for ($j = $index + 1; $j < $cItems; ++$j) {
-            if ($nestedSet[$index]['parent_id'] == $nestedSet[$j]['parent_id']) {
+            if ($nestedSet[$index]['parent_id'] === $nestedSet[$j]['parent_id']) {
                 return false;
             }
         }
