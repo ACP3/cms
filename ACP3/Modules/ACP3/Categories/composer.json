@@ -16,8 +16,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^6.3.0",
-    "acp3/module-permissions": "^6.1.0",
+    "acp3/core": "^6.6.0",
+    "acp3/module-permissions": "^6.6.0",
     "acp3/module-system": "^6.3.0"
   },
   "suggest": {
