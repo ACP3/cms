@@ -7,10 +7,15 @@
 
 namespace ACP3\Modules\ACP3\Menus\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\Helpers\Enum\LinkTargetEnum;
+use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\View\Renderer\Smarty\Functions\AbstractFunction;
-use ACP3\Modules\ACP3\Menus;
+use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Helpers\MenuConfiguration;
+use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Services\MenuServiceInterface;
 
 class Navbar extends AbstractFunction
 {
@@ -19,7 +24,7 @@ class Navbar extends AbstractFunction
      */
     private array $menus = [];
 
-    public function __construct(private readonly Core\Http\RequestInterface $request, private readonly Core\Router\RouterInterface $router, private readonly Menus\Repository\MenuItemRepository $menuItemRepository, private readonly Menus\Services\MenuServiceInterface $menuService)
+    public function __construct(private readonly RequestInterface $request, private readonly RouterInterface $router, private readonly MenuItemRepository $menuItemRepository, private readonly MenuServiceInterface $menuService)
     {
     }
 
@@ -131,7 +136,7 @@ class Navbar extends AbstractFunction
      */
     private function selectMenuItem(string $menu): int
     {
-        if ($this->request->getArea() !== Core\Controller\AreaEnum::AREA_ADMIN) {
+        if ($this->request->getArea() !== AreaEnum::AREA_ADMIN) {
             $in = [
                 $this->request->getQuery(),
                 $this->request->getUriWithoutPages(),
@@ -153,8 +158,8 @@ class Navbar extends AbstractFunction
     {
         $link = sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s</a>',
-            $this->getMenuItemHref($item['mode'], $item['uri']),
-            $this->getMenuItemHrefTarget($item['target']),
+            $this->getMenuItemHref(PageTypeEnum::tryFrom($item['mode']), $item['uri']),
+            $this->getMenuItemHrefTarget(LinkTargetEnum::tryFrom($item['target'])),
             $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected),
             $item['title']
         );
@@ -184,8 +189,8 @@ class Navbar extends AbstractFunction
 
         $link = sprintf(
             '<a href="%1$s"%2$s%3$s>%4$s</a>',
-            $this->getMenuItemHref($item['mode'], $item['uri']),
-            $this->getMenuItemHrefTarget($item['target']),
+            $this->getMenuItemHref(PageTypeEnum::tryFrom($item['mode']), $item['uri']),
+            $this->getMenuItemHrefTarget(LinkTargetEnum::tryFrom($item['target'])),
             $attributes,
             $item['title'],
         );
@@ -223,18 +228,18 @@ class Navbar extends AbstractFunction
         return $data;
     }
 
-    private function getMenuItemHref(int $mode, string $uri): string
+    private function getMenuItemHref(PageTypeEnum $mode, string $uri): string
     {
-        if ($mode === 1 || $mode === 2) {
+        if ($mode === PageTypeEnum::MODULE || $mode === PageTypeEnum::DYNAMIC_PAGE) {
             return $this->router->route($uri);
         }
 
         return $uri;
     }
 
-    private function getMenuItemHrefTarget(int $target): string
+    private function getMenuItemHrefTarget(LinkTargetEnum $target): string
     {
-        return $target === 2 ? ' target="_blank"' : '';
+        return $target === LinkTargetEnum::TARGET_BLANK ? ' target="_blank"' : '';
     }
 
     /**
