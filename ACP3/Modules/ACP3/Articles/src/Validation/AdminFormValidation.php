@@ -7,19 +7,34 @@
 
 namespace ACP3\Modules\ACP3\Articles\Validation;
 
-use ACP3\Core;
 use ACP3\Core\Helpers\Enum\YesNoEnum;
+use ACP3\Core\Validation\AbstractFormValidation;
+use ACP3\Core\Validation\ValidationRules\DateValidationRule;
+use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
+use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
+use ACP3\Core\Validation\ValidationRules\MinLengthValidationRule;
 use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\LayoutExistsValidationRule;
 
-class AdminFormValidation extends Core\Validation\AbstractFormValidation
+class AdminFormValidation extends AbstractFormValidation
 {
     private string $uriAlias = '';
 
+    /**
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withUriAlias instead.
+     */
     public function setUriAlias(string $uriAlias): self
     {
         $this->uriAlias = $uriAlias;
 
         return $this;
+    }
+
+    public function withUriAlias(string $uriAlias): static
+    {
+        $clone = clone $this;
+        $clone->uriAlias = $uriAlias;
+
+        return $clone;
     }
 
     /**
@@ -28,9 +43,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData): void
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
+            ->addConstraint(FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::class,
+                InArrayValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'active',
@@ -41,7 +56,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 ]
             )
             ->addConstraint(
-                Core\Validation\ValidationRules\DateValidationRule::class,
+                DateValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => ['start', 'end'],
@@ -49,7 +64,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 ]
             )
             ->addConstraint(
-                Core\Validation\ValidationRules\MinLengthValidationRule::class,
+                MinLengthValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'title',
@@ -60,7 +75,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                 ]
             )
             ->addConstraint(
-                Core\Validation\ValidationRules\MinLengthValidationRule::class,
+                MinLengthValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'text',
