@@ -52,8 +52,8 @@ class EditPost extends AbstractFormAction
             $dl = $this->filesModel->getOneById($id);
 
             $this->adminFormValidation
-                ->setFile($file)
-                ->setUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $id))
+                ->withFile($file)
+                ->withUriAlias(sprintf(Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryId($formData);

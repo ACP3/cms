@@ -39,7 +39,7 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
             $file = $this->request->getFiles()->get('picture');
 
             $this->adminFormValidation
-                ->setFile($file)
+                ->withFile($file)
                 ->validate($formData);
 
             if (!empty($file)) {

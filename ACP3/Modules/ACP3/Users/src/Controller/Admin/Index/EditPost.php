@@ -47,7 +47,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
             $formData = $this->request->getPost()->all();
 
             $this->adminFormValidation
-                ->setUserId($id)
+                ->withUserId($id)
                 ->validate($formData);
 
             $this->permissionsHelpers->updateUserRoles($formData['roles'], $id);

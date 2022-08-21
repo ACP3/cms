@@ -20,9 +20,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     private UploadedFile|string|null $file = null;
 
     /**
-     * @return static
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withUriAlias instead.
      */
-    public function setUriAlias(string $uriAlias): self
+    public function setUriAlias(string $uriAlias): static
     {
         $this->uriAlias = $uriAlias;
 
@@ -30,13 +30,29 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @return static
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withFile instead.
      */
-    public function setFile(UploadedFile|string|null $file): self
+    public function setFile(UploadedFile|string|null $file): static
     {
         $this->file = $file;
 
         return $this;
+    }
+
+    public function withUriAlias(string $uriAlias): static
+    {
+        $clone = clone $this;
+        $clone->uriAlias = $uriAlias;
+
+        return $clone;
+    }
+
+    public function withFile(UploadedFile|string|null $file): static
+    {
+        $clone = clone $this;
+        $clone->file = $file;
+
+        return $clone;
     }
 
     /**

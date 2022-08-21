@@ -41,7 +41,7 @@ class EditPost extends AbstractFormAction
             $formData = $this->request->getPost()->all();
 
             $this->adminFormValidation
-                ->setUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
+                ->withUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
                 ->validate($formData);
 
             $formData['cat'] = $this->fetchCategoryIdForSave($formData);

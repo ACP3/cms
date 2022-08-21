@@ -43,8 +43,7 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
                 $file = $this->request->getFiles()->get('file');
 
                 $this->pictureFormValidation
-                    ->setFileRequired(true)
-                    ->setFile($file)
+                    ->withFile($file, true)
                     ->validate($formData);
 
                 $result = $this->galleryUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());

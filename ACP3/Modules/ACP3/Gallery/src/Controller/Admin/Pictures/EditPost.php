@@ -45,8 +45,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
                 $file = $this->request->getFiles()->get('file');
 
                 $this->pictureFormValidation
-                    ->setFileRequired(false)
-                    ->setFile($file)
+                    ->withFile($file, false)
                     ->validate($formData);
 
                 if ($file !== null) {

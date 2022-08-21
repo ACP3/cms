@@ -16,13 +16,21 @@ class MenuFormValidation extends Core\Validation\AbstractFormValidation
     private int $menuId = 0;
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withMenuId instead.
      */
-    public function setMenuId(int $menuId): self
+    public function setMenuId(int $menuId): static
     {
         $this->menuId = $menuId;
 
         return $this;
+    }
+
+    public function withMenuId(int $menuId): static
+    {
+        $clone = clone $this;
+        $clone->menuId = $menuId;
+
+        return $clone;
     }
 
     /**

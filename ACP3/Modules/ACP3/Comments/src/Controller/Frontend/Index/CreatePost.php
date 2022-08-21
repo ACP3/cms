@@ -42,7 +42,7 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
                 $ipAddress = $this->request->getSymfonyRequest()->getClientIp();
 
                 $this->formValidation
-                    ->setIpAddress($ipAddress)
+                    ->withIpAddress($ipAddress)
                     ->validate($formData);
 
                 $formData['date'] = 'now';

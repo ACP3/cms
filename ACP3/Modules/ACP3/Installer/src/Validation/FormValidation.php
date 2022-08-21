@@ -17,13 +17,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     private string $configFilePath = '';
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withConfigFilePath instead.
      */
-    public function setConfigFilePath(string $configFilePath): self
+    public function setConfigFilePath(string $configFilePath): static
     {
         $this->configFilePath = $configFilePath;
 
         return $this;
+    }
+
+    public function withConfigFilePath(string $configFilePath): static
+    {
+        $clone = clone $this;
+        $clone->configFilePath = $configFilePath;
+
+        return $clone;
     }
 
     /**

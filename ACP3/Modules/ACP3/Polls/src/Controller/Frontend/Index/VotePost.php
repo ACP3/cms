@@ -41,8 +41,8 @@ class VotePost extends Core\Controller\AbstractWidgetAction
                 $time = $this->date->getCurrentDateTime();
 
                 $this->voteValidation
-                    ->setPollId($id)
-                    ->setIpAddress($ipAddress)
+                    ->withPollId($id)
+                    ->withIpAddress($ipAddress)
                     ->validate($formData);
 
                 $this->voteModel->vote($formData, $id, $ipAddress, $time);

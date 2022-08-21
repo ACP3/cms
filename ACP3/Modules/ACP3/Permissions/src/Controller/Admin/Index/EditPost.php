@@ -38,7 +38,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
             $formData = $this->request->getPost()->all();
 
             $this->roleFormValidation
-                ->setRoleId($id)
+                ->withRoleId($id)
                 ->validate($formData);
 
             $formData['parent_id'] = $id === 1 ? 0 : $formData['parent_id'];

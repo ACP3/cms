@@ -38,9 +38,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 
             $settings = $this->config->getSettings(Guestbook\Installer\Schema::MODULE_NAME);
 
-            $this->adminFormValidation
-                ->setSettings($settings)
-                ->validate($formData);
+            $this->adminFormValidation->validate($formData);
 
             $formData['active'] = $settings['notify'] == 2 ? $formData['active'] : 1;
 

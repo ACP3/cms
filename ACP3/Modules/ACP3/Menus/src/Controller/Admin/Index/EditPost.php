@@ -37,7 +37,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
             $formData = $this->request->getPost()->all();
 
             $this->menuFormValidation
-                ->setMenuId($id)
+                ->withMenuId($id)
                 ->validate($formData);
 
             return $this->menusModel->save($formData, $id);

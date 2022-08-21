@@ -18,7 +18,7 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
     private ?UploadedFile $file = null;
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withFile instead.
      */
     public function setFileRequired(bool $fileRequired): self
     {
@@ -28,13 +28,22 @@ class PictureFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withFile instead.
      */
     public function setFile(?UploadedFile $file): self
     {
         $this->file = $file;
 
         return $this;
+    }
+
+    public function withFile(?UploadedFile $file, bool $isRequired): static
+    {
+        $clone = clone $this;
+        $clone->file = $file;
+        $clone->fileRequired = $isRequired;
+
+        return $clone;
     }
 
     /**

@@ -15,13 +15,21 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     private string $ipAddress = '';
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withIpAddress instead.
      */
-    public function setIpAddress(string $ipAddress): self
+    public function setIpAddress(string $ipAddress): static
     {
         $this->ipAddress = $ipAddress;
 
         return $this;
+    }
+
+    public function withIpAddress(string $ipAddress): static
+    {
+        $clone = clone $this;
+        $clone->ipAddress = $ipAddress;
+
+        return $clone;
     }
 
     /**

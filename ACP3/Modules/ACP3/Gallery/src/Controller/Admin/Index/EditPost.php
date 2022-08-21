@@ -39,7 +39,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
             $formData = $this->request->getPost()->all();
 
             $this->galleryFormValidation
-                ->setUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
+                ->withUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $id))
                 ->validate($formData);
 
             $formData['user_id'] = $this->user->getUserId();

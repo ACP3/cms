@@ -41,8 +41,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
             $file = $this->request->getFiles()->get('picture');
 
             $this->adminFormValidation
-                ->setFile($file)
-                ->setSettings($this->config->getSettings(Emoticons\Installer\Schema::MODULE_NAME))
+                ->withFile($file, false)
                 ->validate($formData);
 
             if (empty($file) === false) {

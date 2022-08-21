@@ -40,9 +40,7 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
             $file = $this->request->getFiles()->get('picture');
 
             $this->adminFormValidation
-                ->setFile($file)
-                ->setSettings($this->config->getSettings(Emoticons\Installer\Schema::MODULE_NAME))
-                ->setFileRequired(true)
+                ->withFile($file, true)
                 ->validate($formData);
 
             $result = $this->emoticonsUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());

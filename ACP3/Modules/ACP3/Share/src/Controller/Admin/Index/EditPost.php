@@ -40,7 +40,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
             $shareInfo = $this->shareModel->getOneById($id);
 
             $this->adminFormValidation
-                ->setUriAlias($shareInfo['uri'])
+                ->withUriAlias($shareInfo['uri'])
                 ->validate($formData);
 
             return $this->shareModel->save($formData, $id);

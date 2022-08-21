@@ -15,13 +15,21 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     private string $uriAlias = '';
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withUriAlias instead.
      */
-    public function setUriAlias(string $uriAlias): self
+    public function setUriAlias(string $uriAlias): static
     {
         $this->uriAlias = $uriAlias;
 
         return $this;
+    }
+
+    public function withUriAlias(string $uriAlias): static
+    {
+        $clone = clone $this;
+        $clone->uriAlias = $uriAlias;
+
+        return $clone;
     }
 
     /**

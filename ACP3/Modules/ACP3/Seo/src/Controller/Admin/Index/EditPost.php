@@ -39,7 +39,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
             $seo = $this->seoModel->getOneById($id);
 
             $this->adminFormValidation
-                ->setUriAlias($seo['uri'])
+                ->withUriAlias($seo['uri'])
                 ->validate($formData);
 
             return $this->seoModel->save($formData, $id);

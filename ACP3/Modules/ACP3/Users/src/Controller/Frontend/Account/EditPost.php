@@ -40,7 +40,7 @@ class EditPost extends AbstractAction
                 $formData = $this->request->getPost()->all();
 
                 $this->accountFormValidation
-                    ->setUserId($this->user->getUserId())
+                    ->withUserId($this->user->getUserId())
                     ->validate($formData);
 
                 $result = $this->usersModel->save($formData, $this->user->getUserId());

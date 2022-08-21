@@ -11,16 +11,24 @@ use ACP3\Core;
 
 class AccountFormValidation extends AbstractUserFormValidation
 {
-    protected int $userId = 0;
+    private int $userId = 0;
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withUserId instead.
      */
-    public function setUserId(int $userId): self
+    public function setUserId(int $userId): static
     {
         $this->userId = $userId;
 
         return $this;
+    }
+
+    public function withUserId(int $userId): static
+    {
+        $clone = clone $this;
+        $clone->userId = $userId;
+
+        return $clone;
     }
 
     /**

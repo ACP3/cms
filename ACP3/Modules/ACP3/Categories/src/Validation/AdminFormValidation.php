@@ -17,9 +17,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
-    protected ?UploadedFile $file = null;
+    private ?UploadedFile $file = null;
 
-    protected int $categoryId = 0;
+    private int $categoryId = 0;
 
     public function __construct(
         protected Core\Settings\SettingsInterface $settings,
@@ -31,9 +31,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withFile instead.
      */
-    public function setFile(?UploadedFile $file): self
+    public function setFile(?UploadedFile $file): static
     {
         $this->file = $file;
 
@@ -41,13 +41,29 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @return static
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withCategoryId instead.
      */
-    public function setCategoryId(int $categoryId): self
+    public function setCategoryId(int $categoryId): static
     {
         $this->categoryId = $categoryId;
 
         return $this;
+    }
+
+    public function withFile(?UploadedFile $file): static
+    {
+        $clone = clone $this;
+        $clone->file = $file;
+
+        return $clone;
+    }
+
+    public function withCategoryId(int $categoryId): static
+    {
+        $clone = clone $this;
+        $clone->categoryId = $categoryId;
+
+        return $clone;
     }
 
     /**

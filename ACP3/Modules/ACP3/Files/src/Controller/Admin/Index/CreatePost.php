@@ -48,7 +48,7 @@ class CreatePost extends AbstractFormAction
             }
 
             $this->adminFormValidation
-                ->setFile($file)
+                ->withFile($file)
                 ->validate($formData);
 
             if ($file instanceof UploadedFile) {

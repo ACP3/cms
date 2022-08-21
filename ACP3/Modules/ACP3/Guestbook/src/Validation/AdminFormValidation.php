@@ -9,24 +9,26 @@ namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
 use ACP3\Core\Helpers\Enum\YesNoEnum;
+use ACP3\Core\I18n\Translator;
+use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Core\Validation\AbstractFormValidation;
+use ACP3\Core\Validation\Validator;
+use ACP3\Modules\ACP3\Guestbook\Installer\Schema;
 
 class AdminFormValidation extends AbstractFormValidation
 {
-    /**
-     * @var array<string, mixed>
-     */
-    protected array $settings = [];
+    public function __construct(Translator $translator, Validator $validator, private readonly SettingsInterface $settings)
+    {
+        parent::__construct($translator, $validator);
+    }
 
     /**
      * @param array<string, mixed> $settings
      *
-     * @return static
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0.
      */
-    public function setSettings(array $settings): self
+    public function setSettings(array $settings): static
     {
-        $this->settings = $settings;
-
         return $this;
     }
 
@@ -35,6 +37,8 @@ class AdminFormValidation extends AbstractFormValidation
      */
     public function validate(array $formData): void
     {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
@@ -46,7 +50,7 @@ class AdminFormValidation extends AbstractFormValidation
                 ]
             );
 
-        if ($this->settings['notify'] == 2) {
+        if ($settings['notify'] == 2) {
             $this->validator
                 ->addConstraint(
                     Core\Validation\ValidationRules\InArrayValidationRule::class,

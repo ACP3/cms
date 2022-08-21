@@ -13,37 +13,43 @@ use ACP3\Modules\ACP3\Polls\Validation\ValidationRules\AlreadyVotedValidationRul
 
 class VoteValidation extends AbstractFormValidation
 {
-    /**
-     * @var int
-     */
-    protected $pollId = 0;
-    /**
-     * @var string
-     */
-    protected $ipAddress = '';
+    private int $pollId = 0;
+    private string $ipAddress = '';
 
     /**
-     * @param int $pollId
-     *
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withPollId instead.
      */
-    public function setPollId($pollId)
+    public function setPollId(int $pollId): static
     {
         $this->pollId = $pollId;
 
         return $this;
     }
 
+    public function withPollId(int $pollId): static
+    {
+        $clone = clone $this;
+        $clone->pollId = $pollId;
+
+        return $clone;
+    }
+
     /**
-     * @param string $ipAddress
-     *
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withIpAddress instead.
      */
-    public function setIpAddress($ipAddress)
+    public function setIpAddress(string $ipAddress): static
     {
         $this->ipAddress = $ipAddress;
 
         return $this;
+    }
+
+    public function withIpAddress(string $ipAddress): static
+    {
+        $clone = clone $this;
+        $clone->ipAddress = $ipAddress;
+
+        return $clone;
     }
 
     /**

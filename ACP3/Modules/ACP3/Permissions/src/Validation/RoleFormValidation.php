@@ -16,13 +16,21 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
     private int $roleId = 0;
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withRoleId instead.
      */
-    public function setRoleId(int $roleId): self
+    public function setRoleId(int $roleId): static
     {
         $this->roleId = $roleId;
 
         return $this;
+    }
+
+    public function withRoleId(int $roleId): static
+    {
+        $clone = clone $this;
+        $clone->roleId = $roleId;
+
+        return $clone;
     }
 
     /**

@@ -8,22 +8,26 @@
 namespace ACP3\Modules\ACP3\Emoticons\Validation;
 
 use ACP3\Core;
+use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Core\Validation\Validator;
+use ACP3\Modules\ACP3\Emoticons\Installer\Schema;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     private ?UploadedFile $file = null;
-    /**
-     * @var array<string, mixed>
-     */
-    private array $settings = [];
 
     private bool $fileRequired = false;
 
+    public function __construct(Core\I18n\Translator $translator, Validator $validator, private readonly SettingsInterface $settings)
+    {
+        parent::__construct($translator, $validator);
+    }
+
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withFile instead.
      */
-    public function setFile(?UploadedFile $file): self
+    public function setFile(?UploadedFile $file): static
     {
         $this->file = $file;
 
@@ -33,23 +37,30 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     /**
      * @param array<string, mixed> $settings
      *
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0.
      */
-    public function setSettings(array $settings): self
+    public function setSettings(array $settings): static
     {
-        $this->settings = $settings;
-
         return $this;
     }
 
     /**
-     * @return $this
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withFile instead.
      */
-    public function setFileRequired(bool $fileRequired): self
+    public function setFileRequired(bool $fileRequired): static
     {
         $this->fileRequired = $fileRequired;
 
         return $this;
+    }
+
+    public function withFile(?UploadedFile $file, bool $isRequired): static
+    {
+        $clone = clone $this;
+        $clone->file = $file;
+        $clone->fileRequired = $isRequired;
+
+        return $clone;
     }
 
     /**
@@ -57,6 +68,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
      */
     public function validate(array $formData): void
     {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
         $this->validator
             ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
             ->addConstraint(
@@ -82,9 +95,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
                     'field' => 'picture',
                     'message' => $this->translator->t('emoticons', 'invalid_image_selected'),
                     'extra' => [
-                        'width' => $this->settings['width'],
-                        'height' => $this->settings['height'],
-                        'filesize' => $this->settings['filesize'],
+                        'width' => $settings['width'],
+                        'height' => $settings['height'],
+                        'filesize' => $settings['filesize'],
                         'required' => $this->fileRequired,
                     ],
                 ]

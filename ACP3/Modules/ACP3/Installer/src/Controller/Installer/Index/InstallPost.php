@@ -43,7 +43,7 @@ class InstallPost extends AbstractAction
             $configFilePath = $this->applicationPath->getAppDir() . 'config.yml';
 
             $this->formValidation
-                ->setConfigFilePath($configFilePath)
+                ->withConfigFilePath($configFilePath)
                 ->validate($formData);
 
             $this->installModel->writeConfigFile($configFilePath, $formData);
