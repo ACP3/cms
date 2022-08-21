@@ -53,6 +53,8 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
     }
 
     /**
+     * @deprecated since ACP3 version 6.6.0, to be removed with version 7.0.0.
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getMenuItemUriById(int $menuItemId): string

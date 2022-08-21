@@ -56,13 +56,7 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
      */
     private function fetchMenuItem(string $routeName): array
     {
-        $menuItem = $this->menuItemRepository->getOneMenuItemByUri($routeName);
-
-        if (empty($menuItem)) {
-            $menuItem = [];
-        }
-
-        return $menuItem;
+        return $this->menuItemRepository->getOneMenuItemByUri($routeName) ?: [];
     }
 
     /**
@@ -101,7 +95,7 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function addFormFields(array $menuItem): array
+    private function addFormFields(array $menuItem): array
     {
         if (!empty($menuItem)) {
             return $this->menuItemFormFields->createMenuItemFormFields(

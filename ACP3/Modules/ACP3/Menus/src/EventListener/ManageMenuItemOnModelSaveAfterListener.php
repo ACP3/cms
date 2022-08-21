@@ -8,7 +8,9 @@
 namespace ACP3\Modules\ACP3\Menus\EventListener;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Helpers\Enum\LinkTargetEnum;
 use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,12 +30,13 @@ class ManageMenuItemOnModelSaveAfterListener implements EventSubscriberInterface
             $formData = $event->getRawData();
 
             $data = [
-                'mode' => 2,
+                'mode' => PageTypeEnum::DYNAMIC_PAGE->value,
                 'block_id' => $formData['block_id'],
                 'parent_id' => (int) $formData['parent_id'],
                 'display' => $formData['display'],
                 'title' => $formData['menu_item_title'],
-                'target' => 1,
+                'target' => LinkTargetEnum::TARGET_SELF->value,
+                'module' => '',
             ];
 
             $this->menuItemManager->manageMenuItem(

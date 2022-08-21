@@ -9,10 +9,11 @@ namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
 use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
+use ACP3\Modules\ACP3\Menus\Services\MenuItemUpsertService;
 
 class ManageMenuItem
 {
-    public function __construct(protected MenuItemsModel $menuItemsModel, protected MenuItemRepository $menuItemRepository)
+    public function __construct(private readonly MenuItemUpsertService $menuItemUpsertService, private readonly MenuItemsModel $menuItemsModel, private readonly MenuItemRepository $menuItemRepository)
     {
     }
 
@@ -23,16 +24,19 @@ class ManageMenuItem
      */
     public function manageMenuItem(string $path, array $data = []): bool
     {
-        $menuItem = $this->menuItemRepository->getOneMenuItemByUri($path);
-        $result = true;
+        $menuItemId = $this->menuItemRepository->getMenuItemIdByUri($path);
 
-        if (empty($data) === false) {
+        if (!empty($data)) {
             $data['uri'] = $path;
-            $result = $this->menuItemsModel->save($data, $menuItem['id'] ?? null) !== false;
-        } elseif (!empty($menuItem)) {
-            $result = $this->menuItemsModel->delete($menuItem['id']) > 0;
+            $this->menuItemUpsertService->upsert($data, $menuItemId);
+
+            return true;
         }
 
-        return $result;
+        if (!empty($menuItemId)) {
+            return $this->menuItemsModel->delete($menuItemId) > 0;
+        }
+
+        return true;
     }
 }

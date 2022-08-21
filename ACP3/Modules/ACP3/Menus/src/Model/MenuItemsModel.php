@@ -7,6 +7,8 @@
 
 namespace ACP3\Modules\ACP3\Menus\Model;
 
+use ACP3\Core\Helpers\Enum\LinkTargetEnum;
+use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
 use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
 use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
@@ -22,7 +24,7 @@ class MenuItemsModel extends AbstractNestedSetModel
      */
     public function save(array $rawData, ?int $entryId = null): int
     {
-        $rawData['target'] = $rawData['display'] == 0 ? 1 : $rawData['target'];
+        $rawData['target'] = YesNoEnum::tryFrom($rawData['display']) === YesNoEnum::NO ? LinkTargetEnum::TARGET_SELF->value : $rawData['target'];
 
         return parent::save($rawData, $entryId);
     }
