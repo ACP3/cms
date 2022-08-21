@@ -113,10 +113,18 @@ SQL;
      */
     public function getVisibleMenuItemsByBlockName(string $blockName): array
     {
-        return $this->db->fetchAll(
-            "SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, b.title AS block_title, b.index_name AS block_name FROM {$this->getTableName()} AS p, {$this->getTableName()} AS n JOIN {$this->getTableName(MenuRepository::TABLE_NAME)} AS b ON(n.block_id = b.id) WHERE b.index_name = ? AND n.display = 1 AND n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id, n.id, n.mode, n.block_id, n.root_id, n.parent_id, n.right_id, n.display, n.title, n.uri, n.target, b.title, b.index_name ORDER BY n.left_id",
-            [$blockName]
-        );
+        $statement = <<<SQL
+SELECT n.*, COUNT(*)-1 AS level, b.title AS block_title, b.index_name AS block_name
+FROM {$this->getTableName()} AS p, {$this->getTableName()} AS n
+JOIN {$this->getTableName(MenuRepository::TABLE_NAME)} AS b ON(n.block_id = b.id)
+WHERE b.index_name = ?
+  AND NOT EXISTS(SELECT id FROM {$this->getTableName()} AS vmi WHERE vmi.left_id <= n.left_id AND vmi.right_id >= n.right_id AND display = 0)
+  AND n.left_id BETWEEN p.left_id AND p.right_id
+GROUP BY n.left_id, n.id, n.mode, n.block_id, n.root_id, n.parent_id, n.right_id, n.display, n.title, n.uri, n.target, b.title, b.index_name
+ORDER BY n.left_id
+SQL;
+
+        return $this->db->fetchAll($statement, [$blockName]);
     }
 
     /**
