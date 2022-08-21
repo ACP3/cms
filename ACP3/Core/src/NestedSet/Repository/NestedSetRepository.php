@@ -83,11 +83,11 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function nextNodeExists(int $rightId, int $blockId = 0): bool
     {
-        $where = ($blockId !== 0) ? ' AND ' . static::BLOCK_COLUMN_NAME . ' = ?' : '';
+        $where = ($blockId !== 0) ? ' AND ' . static::BLOCK_COLUMN_NAME . ' = :blockId' : '';
 
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE right_id = ? {$where}",
-            [$rightId, $blockId]
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE right_id = :rightId {$where}",
+            ['rightId' => $rightId, 'blockId' => $blockId]
         ) > 0;
     }
 
@@ -96,11 +96,11 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function previousNodeExists(int $rightId, int $blockId = 0): bool
     {
-        $where = ($blockId !== 0) ? ' AND ' . static::BLOCK_COLUMN_NAME . ' = ?' : '';
+        $where = ($blockId !== 0) ? ' AND ' . static::BLOCK_COLUMN_NAME . ' = :blockId' : '';
 
         return $this->db->fetchColumn(
-            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id = ? {$where}",
-            [$rightId, $blockId]
+            "SELECT COUNT(*) FROM {$this->getTableName()} WHERE left_id = :leftId {$where}",
+            ['leftId' => $rightId, 'blockId' => $blockId]
         ) > 0;
     }
 
