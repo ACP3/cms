@@ -5,11 +5,10 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Articles\ValidationRules;
+namespace ACP3\Modules\ACP3\Articles\Validation\ValidationRules;
 
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRuleTest;
 use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
-use ACP3\Modules\ACP3\Articles\Validation\ValidationRules\ArticleExistsValidationRule;
 
 class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
 {
