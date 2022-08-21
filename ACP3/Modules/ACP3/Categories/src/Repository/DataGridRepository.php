@@ -22,59 +22,7 @@ class DataGridRepository extends AbstractDataGridRepository
      */
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions): array
     {
-        $results = parent::getAll($columns, ...$queryOptions);
-
-        return $this->calculateFirstAndLastPage($results);
-    }
-
-    /**
-     * @param array<array<string, mixed>> $results
-     *
-     * @return array<array<string, mixed>>
-     */
-    private function calculateFirstAndLastPage(array $results): array
-    {
-        foreach ($results as $index => &$result) {
-            $result['first'] = $this->isFirstInSet($index, $results);
-            $result['last'] = $this->isLastItemInSet($index, $results);
-        }
-
-        return $results;
-    }
-
-    /**
-     * @param array<array<string, mixed>> $nestedSet
-     */
-    private function isFirstInSet(int $index, array $nestedSet): bool
-    {
-        if ($index > 0) {
-            for ($j = $index - 1; $j >= 0; --$j) {
-                if ($nestedSet[$j]['parent_id'] === $nestedSet[$index]['parent_id']
-                    && $nestedSet[$j]['module_id'] === $nestedSet[$index]['module_id']
-                ) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param array<array<string, mixed>> $nestedSet
-     */
-    private function isLastItemInSet(int $index, array $nestedSet): bool
-    {
-        $cItems = \count($nestedSet);
-        for ($j = $index + 1; $j < $cItems; ++$j) {
-            if ($nestedSet[$index]['parent_id'] === $nestedSet[$j]['parent_id']
-                && $nestedSet[$j]['module_id'] === $nestedSet[$index]['module_id']
-            ) {
-                return false;
-            }
-        }
-
-        return true;
+        return parent::getAll($columns, ...$queryOptions);
     }
 
     /**
@@ -87,6 +35,8 @@ class DataGridRepository extends AbstractDataGridRepository
             'COUNT(*) - 1 AS level',
             "CONCAT(REPEAT('&nbsp;&nbsp;', COUNT(*) - 1), c.title) AS title_nested",
             'm.name AS module',
+            "(SELECT IF(COUNT(id) = 0, 1, 0) FROM {$this->getTableName(self::TABLE_NAME)} f WHERE f.module_id = c.module_id AND f.parent_id = c.parent_id AND f.left_id < c.left_id) AS first",
+            "(SELECT IF(COUNT(id) = 0, 1, 0) FROM {$this->getTableName(self::TABLE_NAME)} l WHERE l.module_id = c.module_id AND l.parent_id = c.parent_id AND l.left_id > c.left_id) AS last",
         ];
     }
 

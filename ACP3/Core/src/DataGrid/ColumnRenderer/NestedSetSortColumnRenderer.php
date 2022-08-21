@@ -15,16 +15,16 @@ class NestedSetSortColumnRenderer extends SortColumnRenderer
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         $value = '';
-        if ($dbResultRow['first'] === true && $dbResultRow['last'] === true) {
+        if ((bool) $dbResultRow['first'] === true && (bool) $dbResultRow['last'] === true) {
             $value = $this->fetchSortForbiddenHtml();
         } else {
-            if ($dbResultRow['last'] === false) {
+            if ((bool) $dbResultRow['last'] === false) {
                 $value .= $this->fetchSortDirectionHtml(
                     $this->router->route(sprintf($column['custom']['route_sort_down'], $dbResultRow[$this->getPrimaryKey()])),
                     'down'
                 );
             }
-            if ($dbResultRow['first'] === false) {
+            if ((bool) $dbResultRow['first'] === false) {
                 $value .= $this->fetchSortDirectionHtml(
                     $this->router->route(sprintf($column['custom']['route_sort_up'], $dbResultRow[$this->getPrimaryKey()])),
                     'up'
