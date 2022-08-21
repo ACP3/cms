@@ -7,26 +7,29 @@
 
 namespace ACP3\Modules\ACP3\Share\Validation;
 
-use ACP3\Core;
+use ACP3\Core\Validation\AbstractFormValidation;
+use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
+use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
+use ACP3\Modules\ACP3\Share\Validation\Event\SharingInfoFormValidationEvent;
 
-class AdminFormValidation extends Core\Validation\AbstractFormValidation
+class AdminFormValidation extends AbstractFormValidation
 {
-    private string $uriAlias = '';
+    private string $uri = '';
 
     /**
-     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withUriAlias instead.
+     * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withUri instead.
      */
-    public function setUriAlias(string $uriAlias): static
+    public function setUriAlias(string $uri): static
     {
-        $this->uriAlias = $uriAlias;
+        $this->uri = $uri;
 
         return $this;
     }
 
-    public function withUriAlias(string $uriAlias): static
+    public function withUri(string $uri): static
     {
         $clone = clone $this;
-        $clone->uriAlias = $uriAlias;
+        $clone->uri = $uri;
 
         return $clone;
     }
@@ -37,9 +40,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     public function validate(array $formData): void
     {
         $this->validator
-            ->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class)
+            ->addConstraint(FormTokenValidationRule::class)
             ->addConstraint(
-                Core\Validation\ValidationRules\InternalUriValidationRule::class,
+                InternalUriValidationRule::class,
                 [
                     'data' => $formData,
                     'field' => 'uri',
@@ -48,9 +51,9 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
             );
 
         $this->validator->dispatchValidationEvent(
-            'share.validation.validate_sharing_info',
+            SharingInfoFormValidationEvent::class,
             $formData,
-            ['path' => $this->uriAlias]
+            ['path' => $this->uri]
         );
 
         $this->validator->validate();

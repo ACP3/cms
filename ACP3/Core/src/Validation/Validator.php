@@ -87,12 +87,17 @@ class Validator
     }
 
     /**
-     * @param mixed[] $formData
-     * @param mixed[] $extra
+     * @param string|class-string<FormValidationEvent> $eventName
+     * @param mixed[]                                  $formData
+     * @param mixed[]                                  $extra
      */
     public function dispatchValidationEvent(string $eventName, array $formData, array $extra = []): void
     {
-        $this->eventDispatcher->dispatch(new FormValidationEvent($this, $formData, $extra), $eventName);
+        if (class_exists($eventName)) {
+            $this->eventDispatcher->dispatch(new $eventName($this, $formData, $extra));
+        } else {
+            $this->eventDispatcher->dispatch(new FormValidationEvent($this, $formData, $extra), $eventName);
+        }
     }
 
     /**

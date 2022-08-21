@@ -19,7 +19,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
 {
     private ?UploadedFile $file = null;
 
-    private int $categoryId = 0;
+    private ?int $categoryId = null;
 
     public function __construct(
         protected Core\Settings\SettingsInterface $settings,
@@ -58,7 +58,7 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         return $clone;
     }
 
-    public function withCategoryId(int $categoryId): static
+    public function withCategoryId(?int $categoryId): static
     {
         $clone = clone $this;
         $clone->categoryId = $categoryId;

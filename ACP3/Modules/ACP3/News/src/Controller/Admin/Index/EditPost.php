@@ -7,26 +7,22 @@
 
 namespace ACP3\Modules\ACP3\News\Controller\Admin\Index;
 
-use ACP3\Core;
-use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\News;
+use ACP3\Modules\ACP3\News\Services\NewsUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditPost extends AbstractFormAction
+class EditPost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly UserModelInterface $user,
-        private readonly News\Model\NewsModel $newsModel,
-        private readonly News\Validation\AdminFormValidation $adminFormValidation,
-        Categories\Helpers $categoriesHelpers
+        private readonly NewsUpsertService $newsUpsertService,
     ) {
-        parent::__construct($context, $categoriesHelpers);
+        parent::__construct($context);
     }
 
     /**
@@ -37,17 +33,6 @@ class EditPost extends AbstractFormAction
      */
     public function __invoke(int $id): array|string|Response
     {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-
-            $this->adminFormValidation
-                ->withUriAlias(sprintf(News\Helpers::URL_KEY_PATTERN, $id))
-                ->validate($formData);
-
-            $formData['cat'] = $this->fetchCategoryIdForSave($formData);
-            $formData['user_id'] = $this->user->getUserId();
-
-            return $this->newsModel->save($formData, $id);
-        });
+        return $this->actionHelper->handleSaveAction(fn () => $this->newsUpsertService->upsert($this->request->getPost()->all(), $id));
     }
 }

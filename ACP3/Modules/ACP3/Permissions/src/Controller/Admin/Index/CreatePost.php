@@ -7,21 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\Permissions\Services\RoleUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class CreatePost extends Core\Controller\AbstractWidgetAction
+class CreatePost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly Permissions\Model\AclRoleModel $roleModel,
-        private readonly Permissions\Model\AclPermissionModel $permissionModel,
-        private readonly Permissions\Validation\RoleFormValidation $roleFormValidation
+        private readonly RoleUpsertService $roleUpsertService,
     ) {
         parent::__construct($context);
     }
@@ -34,15 +33,6 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
      */
     public function __invoke(): array|string|Response
     {
-        return $this->actionHelper->handleSaveAction(function () {
-            $formData = $this->request->getPost()->all();
-
-            $this->roleFormValidation->validate($formData);
-
-            $roleId = $this->roleModel->save($formData);
-            $this->permissionModel->updatePermissions($formData['resources'], $roleId);
-
-            return $roleId;
-        });
+        return $this->actionHelper->handleSaveAction(fn () => $this->roleUpsertService->upsert($this->request->getPost()->all()));
     }
 }

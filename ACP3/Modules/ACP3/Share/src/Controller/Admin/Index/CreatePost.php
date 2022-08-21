@@ -7,21 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Share\Model\ShareModel;
-use ACP3\Modules\ACP3\Share\Validation\AdminFormValidation;
+use ACP3\Modules\ACP3\Share\Services\ShareUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class CreatePost extends Core\Controller\AbstractWidgetAction
+class CreatePost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly ShareModel $shareModel,
-        private readonly AdminFormValidation $adminFormValidation
+        private readonly ShareUpsertService $shareUpsertService,
     ) {
         parent::__construct($context);
     }
@@ -34,12 +33,6 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
      */
     public function __invoke(): array|string|Response
     {
-        return $this->actionHelper->handleSaveAction(function () {
-            $formData = $this->request->getPost()->all();
-
-            $this->adminFormValidation->validate($formData);
-
-            return $this->shareModel->save($formData);
-        });
+        return $this->actionHelper->handleSaveAction(fn () => $this->shareUpsertService->upsert($this->request->getPost()->all()));
     }
 }

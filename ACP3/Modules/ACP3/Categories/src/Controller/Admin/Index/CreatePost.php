@@ -7,21 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Categories;
+use ACP3\Modules\ACP3\Categories\Services\CategoryUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class CreatePost extends Core\Controller\AbstractWidgetAction
+class CreatePost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly Categories\Model\CategoriesModel $categoriesModel,
-        private readonly Categories\Validation\AdminFormValidation $adminFormValidation,
-        private readonly Core\Helpers\Upload $categoriesUploadHelper
+        private readonly CategoryUpsertService $categoryUpsertService,
     ) {
         parent::__construct($context);
     }
@@ -34,20 +33,6 @@ class CreatePost extends Core\Controller\AbstractWidgetAction
      */
     public function __invoke(): array|string|Response
     {
-        return $this->actionHelper->handleSaveAction(function () {
-            $formData = $this->request->getPost()->all();
-            $file = $this->request->getFiles()->get('picture');
-
-            $this->adminFormValidation
-                ->withFile($file)
-                ->validate($formData);
-
-            if (!empty($file)) {
-                $result = $this->categoriesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
-                $formData['picture'] = $result['name'];
-            }
-
-            return $this->categoriesModel->save($formData);
-        });
+        return $this->actionHelper->handleSaveAction(fn () => $this->categoryUpsertService->upsert($this->request->getPost()->all(), $this->request->getFiles()->get('picture')));
     }
 }

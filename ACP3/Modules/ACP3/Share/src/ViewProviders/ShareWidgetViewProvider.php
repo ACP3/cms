@@ -45,7 +45,7 @@ class ShareWidgetViewProvider
     {
         $services = [];
         if (!empty($sharingInfo['services'])) {
-            $services = unserialize($sharingInfo['services']);
+            $services = unserialize($sharingInfo['services'], ['allowed_classes' => false]);
         }
         if (empty($services)) {
             $services = $this->socialServices->getActiveServices();

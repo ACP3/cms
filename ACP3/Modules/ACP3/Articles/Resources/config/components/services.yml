@@ -1,0 +1,6 @@
+services:
+  _defaults:
+    autowire: true
+
+  ACP3\Modules\ACP3\Articles\Services\:
+    resource: "../../../src/Services/"

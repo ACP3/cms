@@ -32,7 +32,7 @@ class AdminSettingsViewProvider
             'services' => $this->formsHelper->choicesGenerator(
                 'services',
                 $this->getServices(),
-                unserialize($shareSettings['services'])
+                unserialize($shareSettings['services'], ['allowed_classes' => false])
             ),
             'form' => array_merge($shareSettings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),

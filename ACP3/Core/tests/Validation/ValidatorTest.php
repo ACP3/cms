@@ -7,26 +7,19 @@
 
 namespace ACP3\Core\Validation;
 
+use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class ValidatorTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $eventDispatcherMock;
-    /**
-     * @var Validator
-     */
-    protected $validator;
-    /**
-     * @var Container
-     */
-    private $container;
+    private EventDispatcher&MockObject $eventDispatcherMock;
+    private Validator $validator;
+    private Container $container;
 
     protected function setup(): void
     {
@@ -154,5 +147,29 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             ['test@example.com', true],
             ['testexample.com', false],
         ];
+    }
+
+    public function testDispatchValidationEventWithEventName(): void
+    {
+        $formData = ['foo' => 'bar'];
+        $extra = ['extra' => true];
+
+        $this->eventDispatcherMock->expects(self::once())
+            ->method('dispatch')
+            ->with(new FormValidationEvent($this->validator, $formData, $extra), 'foo.form_validation_event');
+
+        $this->validator->dispatchValidationEvent('foo.form_validation_event', $formData, $extra);
+    }
+
+    public function testDispatchValidationEventWithClassStringAsEventName(): void
+    {
+        $formData = ['foo' => 'bar'];
+        $extra = ['extra' => true];
+
+        $this->eventDispatcherMock->expects(self::once())
+            ->method('dispatch')
+            ->with(new FormValidationEvent($this->validator, $formData, $extra));
+
+        $this->validator->dispatchValidationEvent(FormValidationEvent::class, $formData, $extra);
     }
 }

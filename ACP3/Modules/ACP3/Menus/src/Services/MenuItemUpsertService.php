@@ -22,31 +22,31 @@ class MenuItemUpsertService
     }
 
     /**
-     * @param array<string, mixed> $menuItem
+     * @param array<string, mixed> $updatedData
      *
      * @throws InvalidFormTokenException
      * @throws ValidationFailedException
      * @throws ValidationRuleNotFoundException
      * @throws Exception
      */
-    public function upsert(array $menuItem, ?int $menuItemId = null): int
+    public function upsert(array $updatedData, ?int $menuItemId = null): int
     {
-        $this->menuItemFormValidation->validate($menuItem);
+        $this->menuItemFormValidation->validate($updatedData);
 
-        $menuItem['uri'] = $this->fetchMenuItemUriForSave($menuItem);
+        $updatedData['uri'] = $this->fetchMenuItemUriForSave($updatedData);
 
-        return $this->menuItemsModel->save($menuItem, $menuItemId);
+        return $this->menuItemsModel->save($updatedData, $menuItemId);
     }
 
     /**
-     * @param array<string, mixed> $menuItem
+     * @param array<string, mixed> $menuItemData
      */
-    private function fetchMenuItemUriForSave(array $menuItem): string
+    private function fetchMenuItemUriForSave(array $menuItemData): string
     {
-        if (PageTypeEnum::MODULE->value === (int) $menuItem['mode']) {
-            return $menuItem['module'];
+        if (PageTypeEnum::MODULE->value === (int) $menuItemData['mode']) {
+            return $menuItemData['module'];
         }
 
-        return $menuItem['uri'];
+        return $menuItemData['uri'];
     }
 }

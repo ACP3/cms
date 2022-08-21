@@ -7,21 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Index;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Permissions;
+use ACP3\Modules\ACP3\Permissions\Services\RoleUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditPost extends Core\Controller\AbstractWidgetAction
+class EditPost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly Permissions\Model\AclRoleModel $rolesModel,
-        private readonly Permissions\Model\AclPermissionModel $aclPermissionModel,
-        private readonly Permissions\Validation\RoleFormValidation $roleFormValidation
+        private readonly RoleUpsertService $roleUpsertService,
     ) {
         parent::__construct($context);
     }
@@ -34,19 +33,6 @@ class EditPost extends Core\Controller\AbstractWidgetAction
      */
     public function __invoke(int $id): array|string|Response
     {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-
-            $this->roleFormValidation
-                ->withRoleId($id)
-                ->validate($formData);
-
-            $formData['parent_id'] = $id === 1 ? 0 : $formData['parent_id'];
-
-            $result = $this->rolesModel->save($formData, $id);
-            $this->aclPermissionModel->updatePermissions($formData['resources'], $id);
-
-            return $result;
-        });
+        return $this->actionHelper->handleSaveAction(fn () => $this->roleUpsertService->upsert($this->request->getPost()->all(), $id));
     }
 }

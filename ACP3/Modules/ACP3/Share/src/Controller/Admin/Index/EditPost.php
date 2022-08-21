@@ -7,21 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Share\Controller\Admin\Index;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Share\Model\ShareModel;
-use ACP3\Modules\ACP3\Share\Validation\AdminFormValidation;
+use ACP3\Modules\ACP3\Share\Services\ShareUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditPost extends Core\Controller\AbstractWidgetAction
+class EditPost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly ShareModel $shareModel,
-        private readonly AdminFormValidation $adminFormValidation
+        private readonly ShareUpsertService $shareUpsertService,
     ) {
         parent::__construct($context);
     }
@@ -34,16 +33,6 @@ class EditPost extends Core\Controller\AbstractWidgetAction
      */
     public function __invoke(int $id): array|string|Response
     {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-
-            $shareInfo = $this->shareModel->getOneById($id);
-
-            $this->adminFormValidation
-                ->withUriAlias($shareInfo['uri'])
-                ->validate($formData);
-
-            return $this->shareModel->save($formData, $id);
-        });
+        return $this->actionHelper->handleSaveAction(fn () => $this->shareUpsertService->upsert($this->request->getPost()->all(), $id));
     }
 }

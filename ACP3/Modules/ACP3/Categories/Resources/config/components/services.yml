@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+    bind:
+      $categoriesUploadHelper: "@categories.helpers.upload"
+
+  ACP3\Modules\ACP3\Categories\Services\:
+    resource: "../../../src/Services/"

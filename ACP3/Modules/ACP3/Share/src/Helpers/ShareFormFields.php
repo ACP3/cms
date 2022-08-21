@@ -79,7 +79,7 @@ class ShareFormFields
             $sharingInfo['services'] = $settings['services'];
         }
 
-        $sharingInfo['services'] = unserialize($sharingInfo['services']);
+        $sharingInfo['services'] = unserialize($sharingInfo['services'], ['allowed_classes' => false]);
 
         if (\is_array($sharingInfo['services']) === false) {
             $sharingInfo['services'] = [];

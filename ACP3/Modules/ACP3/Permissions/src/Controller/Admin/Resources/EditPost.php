@@ -7,26 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Permissions\Controller\Admin\Resources;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Permissions;
-use ACP3\Modules\ACP3\Permissions\Model\AclResourceModel;
-use ACP3\Modules\ACP3\Permissions\Validation\ResourceFormValidation;
+use ACP3\Modules\ACP3\Permissions\Services\ResourceUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditPost extends Core\Controller\AbstractWidgetAction
+class EditPost extends AbstractWidgetAction
 {
     public function __construct(
-        Context                        $context,
-        private readonly FormAction             $actionHelper,
-        private readonly Core\Modules           $modules,
-        private readonly AclResourceModel       $resourcesModel,
-        private readonly ResourceFormValidation $resourceFormValidation
+        Context $context,
+        private readonly FormAction $actionHelper,
+        private readonly ResourceUpsertService $resourceUpsertService,
     ) {
         parent::__construct($context);
     }
@@ -38,14 +32,6 @@ class EditPost extends Core\Controller\AbstractWidgetAction
      */
     public function __invoke(int $id): array|string|Response
     {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-
-            $this->resourceFormValidation->validate($formData);
-
-            $formData['module_id'] = $this->modules->getModuleInfo($formData['modules'])['id'] ?? 0;
-
-            return $this->resourcesModel->save($formData, $id);
-        });
+        return $this->actionHelper->handleSaveAction(fn () => $this->resourceUpsertService->upsert($this->request->getPost()->all(), $id));
     }
 }

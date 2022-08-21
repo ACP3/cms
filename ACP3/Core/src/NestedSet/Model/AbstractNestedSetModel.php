@@ -37,31 +37,22 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     /**
      * @param array<string, mixed> $filteredNewData
      *
-     * @return int[]
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function doUpsert(?int $entryId, array $filteredNewData, bool $hasDataChanges): array
+    protected function doUpsert(?int $entryId, array $filteredNewData): int
     {
         if ($entryId === null) {
-            $result = $this->insertOperation->execute($filteredNewData, $filteredNewData['parent_id'] ?: 0);
-
-            if ($result !== false) {
-                $entryId = $result;
-            }
-        } else {
-            $result = $this->editOperation->execute(
-                $entryId,
-                $filteredNewData['parent_id'],
-                $filteredNewData[$this->repository::BLOCK_COLUMN_NAME] ?? 0,
-                $filteredNewData
-            );
+            return $this->insertOperation->execute($filteredNewData, $filteredNewData['parent_id'] ?: 0);
         }
 
-        return [
+        $this->editOperation->execute(
             $entryId,
-            $result,
-        ];
+            $filteredNewData['parent_id'],
+            $filteredNewData[$this->repository::BLOCK_COLUMN_NAME] ?? 0,
+            $filteredNewData
+        );
+
+        return $entryId;
     }
 
     /**

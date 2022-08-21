@@ -28,7 +28,7 @@ class CategoryRepository extends Core\NestedSet\Repository\NestedSetRepository i
     /**
      * @throws DBALException
      */
-    public function resultIsDuplicate(string $title, int $moduleId, int $categoryId): bool
+    public function resultIsDuplicate(string $title, int $moduleId, ?int $categoryId): bool
     {
         return (int) $this->db->fetchColumn("SELECT COUNT(*) FROM {$this->getTableName()} WHERE title = ? AND module_id = ? AND id != ?", [$title, $moduleId, $categoryId]) > 0;
     }

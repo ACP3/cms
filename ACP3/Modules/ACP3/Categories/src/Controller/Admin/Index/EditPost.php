@@ -7,21 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Categories\Controller\Admin\Index;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Categories;
+use ACP3\Modules\ACP3\Categories\Services\CategoryUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditPost extends Core\Controller\AbstractWidgetAction
+class EditPost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly Categories\Model\CategoriesModel $categoriesModel,
-        private readonly Categories\Validation\AdminFormValidation $adminFormValidation,
-        private readonly Core\Helpers\Upload $categoriesUploadHelper
+        private readonly CategoryUpsertService $categoryUpsertService,
     ) {
         parent::__construct($context);
     }
@@ -34,23 +33,6 @@ class EditPost extends Core\Controller\AbstractWidgetAction
      */
     public function __invoke(int $id): array|string|Response
     {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-            $file = $this->request->getFiles()->get('picture');
-
-            $this->adminFormValidation
-                ->withFile($file)
-                ->withCategoryId($id)
-                ->validate($formData);
-
-            if (empty($file) === false) {
-                $category = $this->categoriesModel->getOneById($id);
-                $this->categoriesUploadHelper->removeUploadedFile($category['picture']);
-                $result = $this->categoriesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
-                $formData['picture'] = $result['name'];
-            }
-
-            return $this->categoriesModel->save($formData, $id);
-        });
+        return $this->actionHelper->handleSaveAction(fn () => $this->categoryUpsertService->upsert($this->request->getPost()->all(), $this->request->getFiles()->get('picture'), $id));
     }
 }

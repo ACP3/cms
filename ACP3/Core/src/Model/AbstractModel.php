@@ -42,7 +42,7 @@ abstract class AbstractModel
 
         $this->dispatchBeforeSaveEvent($this->repository, $event);
 
-        [$entryId, $result] = $this->doUpsert($entryId, $filteredNewData, $hasDataChanges);
+        $entryId = $this->doUpsert($entryId, $filteredNewData);
 
         $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredNewData, $rawData, $currentData);
         $this->dispatchAfterSaveEvent(
@@ -50,7 +50,7 @@ abstract class AbstractModel
             $event
         );
 
-        return $result;
+        return $entryId;
     }
 
     /**
@@ -193,23 +193,19 @@ abstract class AbstractModel
     /**
      * @param array<string, mixed> $filteredNewData
      *
-     * @return int[]
+     * @return int The ID of the (possibly) created result set
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function doUpsert(?int $entryId, array $filteredNewData, bool $hasDataChanges): array
+    protected function doUpsert(?int $entryId, array $filteredNewData): int
     {
         if ($entryId === null) {
-            $result = $this->repository->insert($filteredNewData);
-            $entryId = $result;
-        } else {
-            $result = $hasDataChanges ? $this->repository->update($filteredNewData, $entryId) : 1;
+            return $this->repository->insert($filteredNewData);
         }
 
-        return [
-            $entryId,
-            $result,
-        ];
+        $this->repository->update($filteredNewData, $entryId);
+
+        return $entryId;
     }
 
     /**

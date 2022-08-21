@@ -1,8 +1,6 @@
 services:
   _defaults:
     autowire: true
-    bind:
-      $categoriesUploadHelper: "@categories.helpers.upload"
     tags:
       - { name: acp3.controller.action }
 

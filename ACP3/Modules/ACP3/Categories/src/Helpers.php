@@ -7,35 +7,40 @@
 
 namespace ACP3\Modules\ACP3\Categories;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\Categories\Model\CategoriesModel;
+use ACP3\Core\ACL;
+use ACP3\Core\Helpers\Forms;
+use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\I18n\Translator;
+use ACP3\Core\Validation\Exceptions\InvalidFormTokenException;
+use ACP3\Core\Validation\Exceptions\ValidationFailedException;
+use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
+use ACP3\Modules\ACP3\Categories\Services\CategoryUpsertService;
+use Doctrine\DBAL\Exception;
+use MJS\TopSort\CircularDependencyException;
+use MJS\TopSort\ElementNotFoundException;
 
 class Helpers
 {
-    public function __construct(private readonly Core\ACL $acl, private readonly Core\I18n\Translator $translator, private readonly Core\Modules $modules, private readonly Core\Http\RequestInterface $request, private readonly Core\Helpers\Forms $formsHelper, private readonly Core\Helpers\Secure $secureHelper, private readonly CategoriesModel $categoriesModel, private readonly CategoryRepository $categoryRepository)
+    public function __construct(private readonly ACL $acl, private readonly Translator $translator, private readonly RequestInterface $request, private readonly Forms $formsHelper, private readonly CategoryUpsertService $categoryUpsertService, private readonly CategoryRepository $categoryRepository)
     {
     }
 
     /**
      * Erzeugt eine neue Kategorie und gibt ihre ID zurück.
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @deprecated since ACP3 version 6.6.0, to be removed with version 7.0.0. Use `CategoryUpsertService::createCategoryInline` instead.
+     *
+     * @throws InvalidFormTokenException
+     * @throws ValidationFailedException
+     * @throws ValidationRuleNotFoundException
+     * @throws Exception
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
      */
     public function categoriesCreate(string $categoryTitle, string $moduleName): int
     {
-        $moduleInfo = $this->modules->getModuleInfo($moduleName);
-        if ($this->categoryRepository->resultIsDuplicate($categoryTitle, $moduleInfo['id'], 0) === false) {
-            $insertValues = [
-                'title' => $this->secureHelper->strEncode($categoryTitle),
-                'module_id' => $moduleInfo['id'],
-                'parent_id' => 0,
-            ];
-
-            return $this->categoriesModel->save($insertValues);
-        }
-
-        return $this->categoryRepository->getOneByTitleAndModule($categoryTitle, $moduleName)['id'];
+        return $this->categoryUpsertService->createCategoryInline($categoryTitle, $moduleName);
     }
 
     /**

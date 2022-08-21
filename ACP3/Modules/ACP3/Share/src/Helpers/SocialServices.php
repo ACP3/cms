@@ -59,7 +59,7 @@ class SocialServices
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        $activeServices = unserialize($settings['services']);
+        $activeServices = unserialize($settings['services'], ['allowed_classes' => false]);
         if (\is_array($activeServices) === false) {
             $activeServices = [];
         }

@@ -13,7 +13,7 @@ use ACP3\Modules\ACP3\Permissions\Validation\ValidationRules\RoleNotExistsValida
 
 class RoleFormValidation extends Core\Validation\AbstractFormValidation
 {
-    private int $roleId = 0;
+    private ?int $roleId = null;
 
     /**
      * @deprecated since ACP3 version 6.6.0. Will be removed with version 7.0.0. Use ::withRoleId instead.
@@ -25,7 +25,7 @@ class RoleFormValidation extends Core\Validation\AbstractFormValidation
         return $this;
     }
 
-    public function withRoleId(int $roleId): static
+    public function withRoleId(?int $roleId): static
     {
         $clone = clone $this;
         $clone->roleId = $roleId;

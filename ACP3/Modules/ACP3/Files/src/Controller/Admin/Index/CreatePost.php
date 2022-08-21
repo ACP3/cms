@@ -7,28 +7,22 @@
 
 namespace ACP3\Modules\ACP3\Files\Controller\Admin\Index;
 
-use ACP3\Core;
-use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Categories;
-use ACP3\Modules\ACP3\Files;
+use ACP3\Modules\ACP3\Files\Services\FileUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
-class CreatePost extends AbstractFormAction
+class CreatePost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly UserModelInterface $user,
-        private readonly Files\Model\FilesModel $filesModel,
-        private readonly Files\Validation\AdminFormValidation $adminFormValidation,
-        private readonly Core\Helpers\Upload $filesUploadHelper,
-        Categories\Helpers $categoriesHelpers
+        private readonly FileUpsertService $fileUpsertService,
     ) {
-        parent::__construct($context, $categoriesHelpers);
+        parent::__construct($context);
     }
 
     /**
@@ -47,23 +41,7 @@ class CreatePost extends AbstractFormAction
                 $file = $this->request->getFiles()->get('file_internal');
             }
 
-            $this->adminFormValidation
-                ->withFile($file)
-                ->validate($formData);
-
-            if ($file instanceof UploadedFile) {
-                $result = $this->filesUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
-                $formData['file'] = $result['name'];
-                $formData['filesize'] = $result['size'];
-            } else {
-                $formData['file'] = $file;
-                $formData['filesize'] = ((float) $formData['filesize']) . ' ' . $formData['unit'];
-            }
-
-            $formData['cat'] = $this->fetchCategoryId($formData);
-            $formData['user_id'] = $this->user->getUserId();
-
-            return $this->filesModel->save($formData);
+            return $this->fileUpsertService->upsert($formData, $file);
         });
     }
 }
