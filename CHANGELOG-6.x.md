@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Deprecations
+
+-   [ALL] Deprecated the `set*`-methods in all `*FormValidation`-classes, which will be removed in ACP3 7.0.0
+
+### Changed
+
+-   [ALL] Made all `*FormValidation`-classes immutable via `with*`-methods
+-   [Categories] [Menus] [Permissions] Use an SQL-only approach for determining the first and last items in a nested set
+
+### Fixed
+
+-   [Core] Fixed an error when trying to change the sort order of a nested set item
+-   [Menus] Fixed the incorrectly displayed navbar when there is a hidden menu item with visible sub-items
 
 ## [6.5.1] - 2022-08-20
 
