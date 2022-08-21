@@ -92,9 +92,16 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      */
     public function getAllMenuItems(): array
     {
-        return $this->db->fetchAll(
-            "SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children FROM {$this->getTableName()} AS p, {$this->getTableName()} AS n WHERE n.left_id BETWEEN p.left_id AND p.right_id GROUP BY n.left_id, n.id, n.mode, n.block_id, n.root_id, n.parent_id, n.right_id, n.display, n.title, n.uri, n.target ORDER BY n.left_id"
-        );
+        $statement = <<<SQL
+SELECT n.*, COUNT(*)-1 AS level, ROUND((n.right_id - n.left_id - 1) / 2) AS children, m.title AS block_title, m.index_name AS block_name
+FROM {$this->getTableName()} AS p, {$this->getTableName()} AS n
+JOIN {$this->getTableName(MenuRepository::TABLE_NAME)} AS m ON(n.block_id = m.id)
+WHERE n.left_id BETWEEN p.left_id AND p.right_id
+GROUP BY n.left_id, n.id, n.mode, n.block_id, n.root_id, n.parent_id, n.right_id, n.display, n.title, n.uri, n.target
+ORDER BY n.left_id
+SQL;
+
+        return $this->db->fetchAll($statement);
     }
 
     /**

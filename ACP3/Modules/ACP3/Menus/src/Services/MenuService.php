@@ -10,11 +10,10 @@ namespace ACP3\Modules\ACP3\Menus\Services;
 use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
-use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
 
 class MenuService implements MenuServiceInterface
 {
-    public function __construct(private readonly Translator $translator, private readonly MenuRepository $menuRepository, private readonly MenuItemRepository $menuItemRepository)
+    public function __construct(private readonly Translator $translator, private readonly MenuItemRepository $menuItemRepository)
     {
     }
 
@@ -25,17 +24,7 @@ class MenuService implements MenuServiceInterface
      */
     public function getAllMenuItems(): array
     {
-        $menus = $this->menuRepository->getAllMenus();
         $menuItems = $this->menuItemRepository->getAllMenuItems();
-
-        foreach ($menuItems as $menuItem) {
-            foreach ($menus as $menu) {
-                if ($menuItem['block_id'] === $menu['id']) {
-                    $menuItem['block_title'] = $menu['title'];
-                    $menuItem['block_name'] = $menu['index_name'];
-                }
-            }
-        }
 
         $modeSearch = PageTypeEnum::values();
         $modeReplace = [
@@ -44,8 +33,8 @@ class MenuService implements MenuServiceInterface
             $this->translator->t('menus', 'hyperlink'),
         ];
 
-        foreach ($menuItems as $i => $menu) {
-            $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, (string) $menu['mode']);
+        foreach ($menuItems as $i => $menuItem) {
+            $menuItems[$i]['mode_formatted'] = str_replace($modeSearch, $modeReplace, (string) $menuItem['mode']);
             $menuItems[$i]['first'] = $this->isFirstItemInSet($i, $menuItems);
             $menuItems[$i]['last'] = $this->isLastItemInSet($i, $menuItems);
         }
