@@ -74,24 +74,18 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     private function fetchModuleStylesheets(): void
     {
         foreach ($this->modules->getInstalledModules() as $module) {
-            $stylesheet = $this->fileResolver->getWebStaticAssetPath(
+            $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
                 $module['name'],
                 static::ASSETS_PATH_CSS,
                 'style.css'
             );
-            if ('' !== $stylesheet) {
-                $this->stylesheets[] = $stylesheet;
-            }
 
             // Append custom styles to the default module styling
-            $appendStylesheet = $this->fileResolver->getWebStaticAssetPath(
+            $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
                 $module['name'],
                 static::ASSETS_PATH_CSS,
                 'append.css'
             );
-            if ('' !== $appendStylesheet) {
-                $this->stylesheets[] = $appendStylesheet;
-            }
         }
     }
 
@@ -109,7 +103,11 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
 
         $currentTimestamp = time();
 
-        return array_reduce($this->stylesheets, static fn ($accumulator, $stylesheet) => $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '?' . $currentTimestamp . '">' . "\n", '');
+        return array_reduce(
+            array_filter($this->stylesheets, static fn ($stylesheet) => $stylesheet !== ''),
+            static fn ($accumulator, $stylesheet) => $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '?' . $currentTimestamp . '">' . "\n",
+            ''
+        );
     }
 
     /**
@@ -122,6 +120,8 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
 
         $this->stylesheets = [];
 
+        // The sort order is important here, as module should be allowed to override the styles a library provides.
+        // Also, themes should be allowed to override the styles modules defined.
         $this->fetchLibraries();
         $this->fetchModuleStylesheets();
         $this->fetchThemeStylesheets();

@@ -136,24 +136,18 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     private function fetchModuleStylesheets(): void
     {
         foreach ($this->modules->getInstalledModules() as $module) {
-            $stylesheet = $this->fileResolver->getStaticAssetPath(
+            $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
                 $module['name'],
                 static::ASSETS_PATH_CSS,
                 'style.css'
             );
-            if ('' !== $stylesheet) {
-                $this->stylesheets[] = $stylesheet;
-            }
 
             // Append custom styles to the default module styling
-            $appendStylesheet = $this->fileResolver->getStaticAssetPath(
+            $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
                 $module['name'],
                 static::ASSETS_PATH_CSS,
                 'append.css'
             );
-            if ('' !== $appendStylesheet) {
-                $this->stylesheets[] = $appendStylesheet;
-            }
         }
     }
 
