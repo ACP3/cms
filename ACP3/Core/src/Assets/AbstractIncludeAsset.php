@@ -7,8 +7,6 @@
 
 namespace ACP3\Core\Assets;
 
-use ACP3\Core\Application\BootstrapInterface;
-
 abstract class AbstractIncludeAsset
 {
     /**
@@ -44,7 +42,7 @@ abstract class AbstractIncludeAsset
 
         return sprintf(
             $this->getHtmlTag(),
-            $this->resolvePath($moduleName, $filePath) . '?v=' . BootstrapInterface::VERSION
+            $this->resolvePath($moduleName, $filePath)
         );
     }
 

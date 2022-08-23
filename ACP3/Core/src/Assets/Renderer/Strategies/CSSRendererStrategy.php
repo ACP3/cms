@@ -101,11 +101,9 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
             $this->initialize();
         }
 
-        $currentTimestamp = time();
-
         return array_reduce(
             array_filter($this->stylesheets, static fn ($stylesheet) => $stylesheet !== ''),
-            static fn ($accumulator, $stylesheet) => $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '?' . $currentTimestamp . '">' . "\n",
+            static fn ($accumulator, $stylesheet) => $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '">' . "\n",
             ''
         );
     }

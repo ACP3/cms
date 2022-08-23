@@ -71,11 +71,9 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
             $this->initialize();
         }
 
-        $currentTimestamp = time();
-
         return array_reduce(
             array_filter($this->javascripts, static fn ($jsFile) => $jsFile !== ''),
-            static fn ($accumulator, $javascript) => $accumulator . "<script defer src=\"{$javascript}?{$currentTimestamp}\"></script>\n",
+            static fn ($accumulator, $javascript) => $accumulator . "<script defer src=\"{$javascript}\"></script>\n",
             ''
         );
     }

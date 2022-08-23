@@ -77,7 +77,9 @@ class FileResolver
             return '';
         }
 
-        return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR)));
+        $hash = hash('crc32b', file_get_contents($path));
+
+        return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))) . '?' . $hash;
     }
 
     public function getStaticAssetPath(
@@ -85,7 +87,7 @@ class FileResolver
         string $resourceDirectory = '',
         string $file = ''
     ): string {
-        if (!empty($resourceDirectory) && !preg_match('=/$=', $resourceDirectory)) {
+        if (!empty($resourceDirectory) && !str_ends_with($resourceDirectory, '/')) {
             $resourceDirectory .= '/';
         }
 
