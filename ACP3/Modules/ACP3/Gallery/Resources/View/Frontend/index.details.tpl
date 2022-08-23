@@ -2,23 +2,23 @@
 
 {block CONTENT}
     <article>
-        <section class="picture">
+        <section class="text-center mb-2">
             {if !empty($picture_next)}
                 <a href="{uri args="gallery/index/details/id_`$picture_next`"}">
                     <img src="{$picture.file}"
                          width="{$picture.width}"
                          height="{$picture.height}"
                          alt="{$picture.description|strip_tags|trim}"
-                         class="img-thumbnail">
+                         class="img-thumbnail mb-2">
                 </a>
             {else}
                 <img src="{$picture.file}"
                      width="{$picture.width}"
                      height="{$picture.height}"
                      alt="{$picture.description|strip_tags|trim}"
-                     class="img-thumbnail">
+                     class="img-thumbnail mb-2">
             {/if}
-            <div class="description">
+            <div class="w-75 mx-auto">
                 {$picture.description|rewrite_uri}
             </div>
             {event name="share.layout.add_social_sharing"}
