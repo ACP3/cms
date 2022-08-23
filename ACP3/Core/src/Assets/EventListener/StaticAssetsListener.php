@@ -29,7 +29,7 @@ class StaticAssetsListener implements EventSubscriberInterface
     /**
      * @var Request[]
      */
-    private $tracedRequests = [];
+    private array $tracedRequests = [];
 
     public function __construct(private readonly CSSRenderer $cssRenderer, private readonly JavaScriptRenderer $javaScriptRenderer, private readonly RequestStack $requestStack, private readonly Libraries $libraries, private readonly LibrariesCache $librariesCache)
     {
@@ -50,7 +50,7 @@ class StaticAssetsListener implements EventSubscriberInterface
     {
         $this->tracedRequests[] = $event->getRequest();
 
-        if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
+        if ($event->getRequestType() !== HttpKernelInterface::MAIN_REQUEST) {
             return;
         }
 
