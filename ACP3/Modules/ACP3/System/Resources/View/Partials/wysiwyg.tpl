@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div id="page-break-link" class="align-left">
+    <div id="page-break-link" class="mt-2">
         <a href="#" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#page-break-form">
             {lang t="system|insert_page_break"}
         </a>
