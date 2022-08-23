@@ -12,7 +12,7 @@
     <img src="{load_module module="frontend/captcha/index/image/" args=["token" => $captcha.token]}"
          width="{$captcha.width}"
          height="{$captcha.height}"
-         class="captcha-image"
+         class="mb-2"
          alt="">
     <input class="form-control"
            type="text"
