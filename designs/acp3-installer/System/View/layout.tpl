@@ -11,7 +11,7 @@
 
 <body>
 <div class="container">
-    <h1 id="logo" class="d-none d-lg-block">
+    <h1 class="d-none d-lg-block my-2 mx-3">
         <img src="{image file="logo.png" module="system"}"
              srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
              alt="{site_title}">
@@ -21,7 +21,8 @@
             <a class="navbar-brand d-lg-none" href="{$ROOT_DIR}">
                 <img src="{image file="logo.png" module="system"}"
                      srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
-                     alt="{site_title}">
+                     alt="{site_title}"
+                     height="30">
             </a>
             {if !empty($navbar)}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation-content" aria-controls="main-navigation-content" aria-expanded="false" aria-label="{lang t="system|toggle_navigation"}">
@@ -45,30 +46,28 @@
         <h2>{page_title}</h2>
         {block CONTENT}{/block}
     </main>
-    <footer id="footer" class="footer">
-        <div class="row align-items-center">
-            <div class="col-sm-6">
-                &copy; ACP3 CMS
-            </div>
-            <div class="col-sm-6">
-                <form action="{$REQUEST_URI}" method="post" id="languages" class="d-flex">
-                    <select name="lang"
-                            id="lang"
-                            class="form-select me-2"
-                            title="{lang t="installer|select_language"}"
-                            data-change-language-warning="{lang t="installer|form_change_warning"}">
-                        {foreach $LANGUAGES as $row}
-                            <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
-                        {/foreach}
-                    </select>
-                    <button type="submit" name="languages" class="btn btn-primary">
-                        {lang t="installer|submit"}
-                    </button>
-                </form>
-                {javascripts}
-                    {include_js file="language-switcher" module="system"}
-                {/javascripts}
-            </div>
+    <footer class="mb-2 row align-items-center">
+        <div class="col-sm mb-2 mb-sm-0 text-center text-sm-start">
+            &copy; ACP3 CMS
+        </div>
+        <div class="col-sm">
+            <form action="{$REQUEST_URI}" method="post" id="languages" class="d-flex">
+                <select name="lang"
+                        id="lang"
+                        class="form-select me-2"
+                        title="{lang t="installer|select_language"}"
+                        data-change-language-warning="{lang t="installer|form_change_warning"}">
+                    {foreach $LANGUAGES as $row}
+                        <option value="{$row.value}"{$row.selected}>{$row.lang}</option>
+                    {/foreach}
+                </select>
+                <button type="submit" name="languages" class="btn btn-primary">
+                    {lang t="installer|submit"}
+                </button>
+            </form>
+            {javascripts}
+                {include_js file="language-switcher" module="system"}
+            {/javascripts}
         </div>
     </footer>
 </div>

@@ -10,7 +10,7 @@
 {load_module module="widget/users/index/login"}
 {load_module module="widget/users/index/user_menu"}
 <div id="wrapper" class="container">
-    <h1 id="logo" class="d-none d-lg-block">
+    <h1 class="d-none d-lg-block my-2 mx-3">
         {if $IS_HOMEPAGE}
             <img src="{image file="logo.png" module="system"}"
                  srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
@@ -28,7 +28,8 @@
             <a class="navbar-brand d-lg-none" href="{$ROOT_DIR}">
                 <img src="{image file="logo.png" module="system"}"
                      srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
-                     alt="{site_title}">
+                     alt="{site_title}"
+                     height="30">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation-content" aria-controls="main-navigation-content" aria-expanded="false" aria-label="{lang t="system|toggle_navigation"}">
                 <span class="navbar-toggler-icon"></span>
@@ -65,12 +66,12 @@
             </aside>
         {/if}
     </div>
-    <footer class="row footer">
-        <div class="col-5 copyright">
+    <footer class="row mb-2">
+        <div class="col-sm mb-2 text-center text-sm-start">
             &copy; {site_title}
         </div>
-        <div class="col-7">
-            {navbar block="sidebar" class="list-inline text-end" itemSelectors="list-inline-item" use_bootstrap=false}
+        <div class="col-sm text-center text-sm-end">
+            {navbar block="sidebar" class="list-inline" itemSelectors="list-inline-item" use_bootstrap=false}
         </div>
     </footer>
 </div>

@@ -1,31 +1,16 @@
-@import "../../../../acp3/System/Assets/scss/components/variables";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins";
+
+$layout-navbar-height: $nav-link-height !default;
 
 $navbar-complete-bg-color: $success !default;
 $navbar-complete-text-color: #fff !default;
 $navbar-arrow-height: (($layout-navbar-height + $spacer) * 0.5) !default;
 $navbar-arrow-width: ($spacer * 0.5) !default;
 
-/* Layout */
-ul {
-  padding-left: $spacer;
-}
-
-#logo {
-  margin: ($spacer * 0.5) $spacer;
-}
-
 #main-navigation {
   overflow: hidden;
-
-  .navbar-brand {
-    padding-top: $layout-navbar-spacing-y;
-    padding-bottom: $layout-navbar-spacing-y;
-  }
-
-  img {
-    height: $layout-navbar-logo-height;
-  }
 
   .navbar-nav {
     > .nav-item {
@@ -77,8 +62,4 @@ ul {
       margin-left: ($grid-gutter-width * -0.5);
     }
   }
-}
-
-.footer {
-  margin-bottom: ($spacer * 0.5);
 }

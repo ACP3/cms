@@ -1,11 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {stylesheets}
-        {include_stylesheet module="installer" file="style"}
-    {/stylesheets}
-
-    <div class="card licence mx-auto mb-3">
+    <div class="card vh-100 overflow-auto mb-3">
         <div class="card-body">
             <h3>Table of Contents</h3>
             <ul>
