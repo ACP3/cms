@@ -63,6 +63,7 @@ services:
       - ["loading-indicator.min.css"]
       - ["partials/ajax-form.js"]
       - "system"
+      - true
 
   system.assets.datatables:
     class: ACP3\Core\Assets\Entity\LibraryEntity
