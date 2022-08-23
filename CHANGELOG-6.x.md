@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
--   [Core] [System] drop the SVG sprites in favour of the separate SVG icons. The SVG icons will now be included directly, which saves network-bandwidth and -requests
+-   [Core] [System] Dropped the SVG sprites in favour of the separate SVG icons. The SVG icons will now be included directly, which saves network-bandwidth and -requests
 
 ## [6.6.0] - 2022-08-21
 
