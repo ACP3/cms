@@ -1,9 +1,14 @@
 import { insertEmoticon } from "../libs/insert-emoticon";
 
-/**
- * @type {HTMLTextAreaElement}
- */
-const textarea = document.querySelector(document.querySelector(".icons").dataset.emoticonsInput);
-document.querySelectorAll(".icons a").forEach((emoticonElem) => {
-  insertEmoticon(emoticonElem, textarea);
-});
+((document) => {
+  document.querySelectorAll("[data-emoticons-input]").forEach((elem) => {
+    /**
+     * @type {HTMLTextAreaElement}
+     */
+    const textarea = document.querySelector(elem.dataset.emoticonsInput);
+
+    elem.querySelectorAll("a").forEach((emoticonElem) => {
+      insertEmoticon(emoticonElem, textarea);
+    });
+  });
+})(document);
