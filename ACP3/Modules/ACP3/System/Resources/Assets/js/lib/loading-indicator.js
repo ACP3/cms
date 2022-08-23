@@ -12,12 +12,8 @@ export class LoadingIndicator {
     if (!targetElement.querySelector(".loading-indicator")) {
       const body = document.querySelector("body");
       const jsSvgIcons = JSON.parse(body.dataset.svgIcons);
-      const loadingIndicatorHtml =
-        '<svg class="svg-icon svg-icon__spinner svg-icon--spin loading-indicator me-1" fill="currentColor"><use xlink:href="' +
-        jsSvgIcons["loadingIndicatorIcon"] +
-        '"></use></svg>';
 
-      targetElement.insertAdjacentHTML("afterbegin", loadingIndicatorHtml);
+      targetElement.insertAdjacentHTML("afterbegin", jsSvgIcons["loadingIndicatorIcon"]);
     }
   }
 

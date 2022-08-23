@@ -36,8 +36,8 @@ module.exports = (gulp) => {
           dest: systemBasePath + "/webfonts",
         },
         {
-          src: [nodeBasePath + "/@fortawesome/fontawesome-free/sprites/**/*"],
-          dest: systemBasePath + "/sprites",
+          src: [nodeBasePath + "/@fortawesome/fontawesome-free/svgs/**/*"],
+          dest: systemBasePath + "/svgs",
         },
         {
           src: nodeBasePath + "/ckeditor-codemirror-plugin/codemirror/**",

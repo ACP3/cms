@@ -19,7 +19,7 @@ class AddJsSvgIconsListener implements EventSubscriberInterface
 
     public function __invoke(JsSvgIconEvent $event): void
     {
-        $event->addIcon('loadingIndicatorIcon', ($this->iconViewHelper)('solid', 'spinner', ['pathOnly' => true]));
+        $event->addIcon('loadingIndicatorIcon', ($this->iconViewHelper)('solid', 'spinner', ['cssSelectors' => 'svg-icon--spin loading-indicator me-1']));
     }
 
     public static function getSubscribedEvents(): array
