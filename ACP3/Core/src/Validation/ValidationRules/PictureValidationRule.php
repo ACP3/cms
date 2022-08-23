@@ -46,9 +46,8 @@ class PictureValidationRule extends AbstractValidationRule
     private function isPicture(string $file, int $width = 0, int $height = 0, int $filesize = 0): bool
     {
         $info = getimagesize($file);
-        $isPicture = ($info[2] >= 1 && $info[2] <= 3);
 
-        if ($isPicture === true) {
+        if (\in_array($info[2], [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_WEBP], true)) {
             return $this->isInDimensionAndSizeConstraints($file, $info, $width, $height, $filesize);
         }
 

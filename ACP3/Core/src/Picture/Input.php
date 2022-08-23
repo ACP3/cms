@@ -7,48 +7,27 @@
 
 namespace ACP3\Core\Picture;
 
-class Input
+final class Input
 {
-    /**
-     * @var bool
-     */
-    private $enableCache = false;
-    /**
-     * @var string
-     */
-    private $cacheDir = '';
-    /**
-     * @var string
-     */
-    private $cachePrefix = '';
-    /**
-     * @var int
-     */
-    private $maxWidth = 0;
-    /**
-     * @var int
-     */
-    private $maxHeight = 0;
-    /**
-     * @var int
-     */
-    private $jpgQuality = 85;
-    /**
-     * @var bool
-     */
-    private $preferWidth = false;
-    /**
-     * @var bool
-     */
-    private $preferHeight = true;
-    /**
-     * @var string
-     */
-    private $file = '';
-    /**
-     * @var bool
-     */
-    private $forceResample = false;
+    private bool $enableCache = false;
+
+    private string $cacheDir = '';
+
+    private string $cachePrefix = '';
+
+    private int $maxWidth = 0;
+
+    private int $maxHeight = 0;
+
+    private int $jpgQuality = 85;
+
+    private bool $preferWidth = false;
+
+    private bool $preferHeight = true;
+
+    private string $file = '';
+
+    private bool $forceResample = false;
 
     public function isEnableCache(): bool
     {

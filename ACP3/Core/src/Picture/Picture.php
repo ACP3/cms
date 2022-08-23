@@ -80,7 +80,7 @@ class Picture
     private function resamplingIsNecessary(Input $input, Output $output): bool
     {
         return ($input->isForceResample() || $this->hasNecessaryResamplingDimensions($input, $output))
-            && \in_array($output->getType(), [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true);
+            && \in_array($output->getType(), [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_WEBP], true);
     }
 
     private function hasNecessaryResamplingDimensions(Input $input, Output $output): bool
@@ -145,18 +145,26 @@ class Picture
                 break;
             case IMAGETYPE_PNG:
                 imagealphablending($this->image, false);
+                imagesavealpha($this->image, true);
+
                 $origPicture = imagecreatefrompng($input->getFile());
                 $this->scalePicture($output, $origPicture);
-                imagesavealpha($this->image, true);
-                imagepng($this->image, $input->getCacheFileName(), 9);
+                imagepng($this->image, $input->getCacheFileName(), 9, PNG_ALL_FILTERS);
 
                 break;
+            case IMAGETYPE_WEBP:
+                imagealphablending($this->image, false);
+                imagesavealpha($this->image, true);
+
+                $origPicture = imagecreatefromwebp($input->getFile());
+                $this->scalePicture($output, $origPicture);
+                imagewebp($this->image, $input->getCacheFileName(), $input->getJpgQuality());
         }
     }
 
     private function scalePicture(Output $output, \GdImage $srcImage): void
     {
-        imagecopyresampled(
+        $result = imagecopyresampled(
             $this->image,
             $srcImage,
             0,
@@ -168,5 +176,9 @@ class Picture
             $output->getSrcWidth(),
             $output->getSrcHeight()
         );
+
+        if (!$result) {
+            throw new \RuntimeException(sprintf('Could not resize image %s', $output->getSrcFile()));
+        }
     }
 }
