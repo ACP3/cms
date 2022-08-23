@@ -43,7 +43,7 @@ class PictureValidationRule extends AbstractValidationRule
         return false;
     }
 
-    private function isPicture(string $file, int $width = 0, int $height = 0, int $filesize = 0): bool
+    private function isPicture(string $file, int $width, int $height, int $filesize): bool
     {
         $info = getimagesize($file);
 
