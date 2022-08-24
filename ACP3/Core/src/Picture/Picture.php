@@ -39,7 +39,7 @@ class Picture
     }
 
     /**
-     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws PictureGenerateException
      */
     public function process(Input $input): Output
     {
@@ -73,7 +73,7 @@ class Picture
     /**
      * @return array{width: int, height: int, type: int}
      *
-     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws PictureGenerateException
      */
     private function getPictureInfo(string $fileName): array
     {
@@ -132,7 +132,7 @@ class Picture
     /**
      * Creates the cache directory if it's not already present.
      *
-     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws PictureGenerateException
      */
     private function createCacheDir(Input $input): void
     {
@@ -147,6 +147,8 @@ class Picture
 
     /**
      * Resamples the picture to the given values.
+     *
+     * @throws UnsupportedPictureTypeException
      */
     private function resample(Input $input, Output $output): void
     {
