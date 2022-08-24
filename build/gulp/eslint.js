@@ -8,7 +8,7 @@ module.exports = (gulp) => {
 
   const componentPaths = require("./component-paths");
   const plumber = require("gulp-plumber");
-  const eslint = require("gulp-eslint");
+  const eslint = require("gulp-eslint-new");
 
   return () => {
     return gulp
