@@ -36,6 +36,7 @@ module.exports = (gulp) => {
       .pipe(plumber())
       .pipe(
         webpack({
+          watch: process.env.GULP_MODE === "watch",
           devtool: "source-map",
           mode: "production",
           entry: webpackEntryConfig,
