@@ -11,7 +11,7 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Picture\Exception\PictureResponseException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class Output
+final class Output
 {
     private ?int $srcWidth = null;
 
@@ -118,6 +118,8 @@ class Output
     }
 
     /**
+     * @deprecated since ACP3 version 6.7.0, to be removed with 7.0.0.
+     *
      * @throws \ACP3\Core\Picture\Exception\PictureResponseException
      */
     public function sendResponse(): BinaryFileResponse
@@ -129,6 +131,8 @@ class Output
     }
 
     /**
+     * @deprecated since ACP3 version 6.7.0, to be removed with 7.0.0.
+     *
      * @throws \ACP3\Core\Picture\Exception\PictureResponseException
      */
     private function getMimeType(int $pictureType): string
@@ -137,10 +141,14 @@ class Output
             IMAGETYPE_GIF => 'image/gif',
             IMAGETYPE_JPEG => 'image/jpeg',
             IMAGETYPE_PNG => 'image/png',
+            IMAGETYPE_WEBP => 'image/webp',
             default => throw new PictureResponseException(sprintf('Unsupported picture type: %s', $pictureType)),
         };
     }
 
+    /**
+     * @deprecated since ACP3 version 6.7.0, to be removed with 7.0.0.
+     */
     private function setHeaders(BinaryFileResponse $response, string $mimeType): void
     {
         $response->headers->add([

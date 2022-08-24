@@ -8,15 +8,34 @@
 namespace ACP3\Core\Picture;
 
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Picture\Exception\CacheDirectoryCreationException;
 use ACP3\Core\Picture\Exception\PictureGenerateException;
+use ACP3\Core\Picture\Exception\UnsupportedPictureTypeException;
+use ACP3\Core\Picture\Strategy\GifPictureResizeStrategy;
+use ACP3\Core\Picture\Strategy\JpegPictureResizeStrategy;
+use ACP3\Core\Picture\Strategy\PictureResizeStrategyInterface;
+use ACP3\Core\Picture\Strategy\PngPictureResizeStrategy;
+use ACP3\Core\Picture\Strategy\WebpPictureResizeStrategy;
 use FastImageSize\FastImageSize;
 
 class Picture
 {
-    private ?\GdImage $image = null;
+    /**
+     * @var PictureResizeStrategyInterface[]
+     */
+    private array $strategies = [];
 
     public function __construct(private readonly FastImageSize $fastImageSize, private readonly ApplicationPath $appPath)
     {
+        $this->addStrategy(new GifPictureResizeStrategy());
+        $this->addStrategy(new JpegPictureResizeStrategy());
+        $this->addStrategy(new PngPictureResizeStrategy());
+        $this->addStrategy(new WebpPictureResizeStrategy());
+    }
+
+    private function addStrategy(PictureResizeStrategyInterface $strategy): void
+    {
+        $this->strategies[$strategy->supportedImageType()] = $strategy;
     }
 
     /**
@@ -24,34 +43,35 @@ class Picture
      */
     public function process(Input $input): Output
     {
-        if (is_file($input->getFile()) === true) {
-            $cacheFile = $input->getCacheFileName();
-
-            $picInfo = $this->getPictureInfo($input->getFile());
-
-            $output = new Output($this->appPath, $input->getFile(), $picInfo['type']);
-            $output->setSrcWidth($picInfo['width']);
-            $output->setSrcHeight($picInfo['height']);
-
-            // Direct output of the picture, if it is already cached
-            if ($input->isEnableCache() === true && is_file($cacheFile) === true) {
-                $this->calcDestDimensions($input, $output);
-                $output->setDestFile($cacheFile);
-            } elseif ($this->resamplingIsNecessary($input, $output)) { // Resize the picture
-                $this->createCacheDir($input);
-                $this->resample($input, $output);
-
-                $output->setDestFile($cacheFile);
-            }
-
-            return $output;
+        if (is_file($input->getFile()) === false) {
+            throw new PictureGenerateException(sprintf('Could not find picture: %s', $input->getFile()));
         }
 
-        throw new PictureGenerateException(sprintf('Could not find picture: %s', $input->getFile()));
+        $cacheFile = $input->getCacheFileName();
+
+        $picInfo = $this->getPictureInfo($input->getFile());
+
+        $output = new Output($this->appPath, $input->getFile(), $picInfo['type']);
+        $output->setSrcWidth($picInfo['width']);
+        $output->setSrcHeight($picInfo['height']);
+
+        $this->calcDestDimensions($input, $output);
+
+        // Direct output of the picture, if it is already cached
+        if ($input->isEnableCache() === true && is_file($cacheFile) === true) {
+            $output->setDestFile($cacheFile);
+        } elseif ($this->resamplingIsNecessary($input, $output)) {
+            $this->createCacheDir($input);
+            $this->resample($input, $output);
+
+            $output->setDestFile($cacheFile);
+        }
+
+        return $output;
     }
 
     /**
-     * @return array<string, int>
+     * @return array{width: int, height: int, type: int}
      *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      */
@@ -80,12 +100,12 @@ class Picture
     private function resamplingIsNecessary(Input $input, Output $output): bool
     {
         return ($input->isForceResample() || $this->hasNecessaryResamplingDimensions($input, $output))
-            && \in_array($output->getType(), [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_WEBP], true);
+            && \array_key_exists($output->getType(), $this->strategies);
     }
 
     private function hasNecessaryResamplingDimensions(Input $input, Output $output): bool
     {
-        return $output->getSrcWidth() > $input->getMaxWidth() || $output->getSrcHeight() > $input->getMaxHeight();
+        return ($input->getMaxWidth() > 0 || $input->getMaxHeight() > 0) && ($output->getSrcWidth() > $input->getMaxWidth() || $output->getSrcHeight() > $input->getMaxHeight());
     }
 
     /**
@@ -93,16 +113,20 @@ class Picture
      */
     private function calcDestDimensions(Input $input, Output $output): void
     {
-        if ($input->isPreferHeight() === false && ($output->getSrcWidth() >= $output->getSrcHeight() || $input->isPreferWidth() === true)) {
-            $newWidth = $input->getMaxWidth();
-            $newHeight = (int) ($output->getSrcHeight() * $newWidth / $output->getSrcWidth());
-        } else {
-            $newHeight = $input->getMaxHeight();
-            $newWidth = (int) ($output->getSrcWidth() * $newHeight / $output->getSrcHeight());
+        if ($input->getMaxWidth() === 0 && $input->getMaxHeight() === 0) {
+            return;
         }
 
-        $output->setDestWidth($newWidth);
-        $output->setDestHeight($newHeight);
+        if ($input->isPreferHeight() === false && ($output->getSrcWidth() >= $output->getSrcHeight() || $input->isPreferWidth() === true)) {
+            $destWidth = $input->getMaxWidth();
+            $destHeight = (int) ($output->getSrcHeight() * $destWidth / $output->getSrcWidth());
+        } else {
+            $destHeight = $input->getMaxHeight();
+            $destWidth = (int) ($output->getSrcWidth() * $destHeight / $output->getSrcHeight());
+        }
+
+        $output->setDestWidth($destWidth);
+        $output->setDestHeight($destHeight);
     }
 
     /**
@@ -116,8 +140,8 @@ class Picture
             return;
         }
 
-        if (!mkdir($concurrentDirectory = $input->getCacheDir()) && !is_dir($concurrentDirectory)) {
-            throw new PictureGenerateException(sprintf('Could not create cache dir: %s', $input->getCacheDir()));
+        if (!@mkdir($concurrentDirectory = $input->getCacheDir()) && !is_dir($concurrentDirectory)) {
+            throw new CacheDirectoryCreationException(sprintf('Could not create cache dir: %s', $input->getCacheDir()));
         }
     }
 
@@ -126,59 +150,10 @@ class Picture
      */
     private function resample(Input $input, Output $output): void
     {
-        $this->calcDestDimensions($input, $output);
-
-        $this->image = imagecreatetruecolor($output->getDestWidth(), $output->getDestHeight());
-
-        switch ($output->getType()) {
-            case IMAGETYPE_GIF:
-                $origPicture = imagecreatefromgif($input->getFile());
-                $this->scalePicture($output, $origPicture);
-                imagegif($this->image, $input->getCacheFileName());
-
-                break;
-            case IMAGETYPE_JPEG:
-                $origPicture = imagecreatefromjpeg($input->getFile());
-                $this->scalePicture($output, $origPicture);
-                imagejpeg($this->image, $input->getCacheFileName(), $input->getJpgQuality());
-
-                break;
-            case IMAGETYPE_PNG:
-                imagealphablending($this->image, false);
-                imagesavealpha($this->image, true);
-
-                $origPicture = imagecreatefrompng($input->getFile());
-                $this->scalePicture($output, $origPicture);
-                imagepng($this->image, $input->getCacheFileName(), 9, PNG_ALL_FILTERS);
-
-                break;
-            case IMAGETYPE_WEBP:
-                imagealphablending($this->image, false);
-                imagesavealpha($this->image, true);
-
-                $origPicture = imagecreatefromwebp($input->getFile());
-                $this->scalePicture($output, $origPicture);
-                imagewebp($this->image, $input->getCacheFileName(), $input->getJpgQuality());
+        if (!\array_key_exists($output->getType(), $this->strategies)) {
+            throw new UnsupportedPictureTypeException(sprintf('Could not resize the picture %s, as it is using an unsupported file type!', $input->getFile()));
         }
-    }
 
-    private function scalePicture(Output $output, \GdImage $srcImage): void
-    {
-        $result = imagecopyresampled(
-            $this->image,
-            $srcImage,
-            0,
-            0,
-            0,
-            0,
-            $output->getDestWidth(),
-            $output->getDestHeight(),
-            $output->getSrcWidth(),
-            $output->getSrcHeight()
-        );
-
-        if (!$result) {
-            throw new \RuntimeException(sprintf('Could not resize image %s', $output->getSrcFile()));
-        }
+        $this->strategies[$output->getType()]->resize($input, $output);
     }
 }

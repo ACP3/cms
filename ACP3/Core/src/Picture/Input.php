@@ -48,7 +48,7 @@ final class Input
 
     public function setCacheDir(string $cacheDir): self
     {
-        $this->cacheDir = $cacheDir;
+        $this->cacheDir = $cacheDir . (str_ends_with($cacheDir, '/') ? '' : '/');
 
         return $this;
     }
