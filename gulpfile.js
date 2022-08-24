@@ -15,6 +15,7 @@
   gulp.task("copy", getTask("copy"));
   gulp.task("scss", getTask("scss"));
   gulp.task("babel", getTask("babel"));
+  gulp.task("webpack", getTask("webpack"));
   gulp.task("eslint", getTask("eslint"));
   gulp.task("stylelint", getTask("stylelint"));
   gulp.task("lint", gulp.parallel("stylelint", "eslint"));
