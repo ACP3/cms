@@ -18,10 +18,3 @@ $forms-required-star-text-color: inherit !default;
     }
   }
 }
-
-input,
-textarea {
-  &[placeholder] {
-    font-style: italic;
-  }
-}
