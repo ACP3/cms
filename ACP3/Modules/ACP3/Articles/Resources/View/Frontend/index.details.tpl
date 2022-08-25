@@ -8,8 +8,10 @@
 {/if}
 
 {block CONTENT}
-    {$page.toc}
-    {$page.text|rewrite_uri}
+    <div class="clearfix">
+        {$page.toc}
+        {$page.text|rewrite_uri}
+    </div>
     {event name="articles.event.article_details_after" id=$page.id title=$page.title}
     {if !empty($page.next) || !empty($page.previous)}
         {include file="asset:System/Partials/pager.tpl" pager=['next' => $page.next, 'nextLabel' => {lang t="system|next_page"}, 'previous' => $page.previous, 'previousLabel' => {lang t="system|previous_page"}]}

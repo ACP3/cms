@@ -1,4 +1,4 @@
-<nav id="toc" class="card mb-3 table-of-contents">
+<nav class="card me-3 mb-2 w-25 float-start">
     <div class="card-header">
         {lang t="system|table_of_contents"}
     </div>
