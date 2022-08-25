@@ -19,9 +19,9 @@ class UserListViewProvider
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
-     *
      * @return array<string, mixed>
+     *
+     * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(): array
     {
