@@ -9,7 +9,7 @@
     <!-- JAVASCRIPTS -->
 </head>
 
-<body>
+<body data-bs-no-jquery>
 <div class="container">
     <h1 class="d-none d-lg-block my-2 mx-3">
         <img src="{image file="logo.png" module="system"}"

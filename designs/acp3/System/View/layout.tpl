@@ -5,7 +5,7 @@
     <!-- JAVASCRIPTS -->
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage">
+<body itemscope="" itemtype="http://schema.org/WebPage" data-bs-no-jquery>
 {event name="layout.body_start"}
 {load_module module="widget/users/index/login"}
 {load_module module="widget/users/index/user_menu"}
