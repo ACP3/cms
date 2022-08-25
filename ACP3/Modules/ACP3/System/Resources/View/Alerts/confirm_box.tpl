@@ -1,7 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    <div class="modal static">
+    <div class="modal position-static d-block h-auto">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header text-center">

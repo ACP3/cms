@@ -2,18 +2,3 @@
 @import "modules/svg-icon";
 @import "modules/datagrid";
 @import "modules/forms";
-
-/* Position Bootstrap modal dialogs statically */
-.modal {
-  &.static {
-    position: static;
-    display: block;
-    margin: 0 auto;
-    overflow: auto;
-
-    .modal-footer {
-      margin-top: 0;
-      border-top: none;
-    }
-  }
-}
