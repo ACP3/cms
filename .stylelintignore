@@ -2,6 +2,7 @@
 **/vendor
 **/node_modules
 **/Assets/js/ckeditor
+**/Assets/js/tinymce
 **/Assets/rich-filemanager
 /ACP3/Modules/ACP3/Cookieconsent/Resources/Assets/css/klaro.css
 /ACP3/Modules/ACP3/System/Resources/Assets/css/*.css
