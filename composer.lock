@@ -55,54 +55,6 @@
             "time": "2022-04-02T21:47:50+00:00"
         },
         {
-            "name": "ckeditor/ckeditor",
-            "version": "dev-full/stable",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ckeditor/ckeditor4-releases.git",
-                "reference": "ab69f3a93342f32c74b9cea7d88175a2443da339"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/ab69f3a93342f32c74b9cea7d88175a2443da339",
-                "reference": "ab69f3a93342f32c74b9cea7d88175a2443da339",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+",
-                "LGPL-2.1+",
-                "MPL-1.1+"
-            ],
-            "authors": [
-                {
-                    "name": "CKSource",
-                    "homepage": "https://cksource.com"
-                }
-            ],
-            "description": "JavaScript WYSIWYG web text editor.",
-            "homepage": "https://ckeditor.com/ckeditor-4/",
-            "keywords": [
-                "CKEditor",
-                "ckeditor4",
-                "editor",
-                "fckeditor",
-                "html",
-                "javascript",
-                "richtext",
-                "text",
-                "wysiwyg"
-            ],
-            "support": {
-                "forum": "https://stackoverflow.com/tags/ckeditor",
-                "issues": "https://github.com/ckeditor/ckeditor4/issues",
-                "source": "https://github.com/ckeditor/ckeditor4",
-                "wiki": "https://ckeditor.com/docs/ckeditor4/latest/"
-            },
-            "time": "2022-07-20T11:57:36+00:00"
-        },
-        {
             "name": "clue/stream-filter",
             "version": "v1.6.0",
             "source": {
@@ -8990,8 +8942,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "servocoder/richfilemanager-php": 20,
-        "ckeditor/ckeditor": 20
+        "servocoder/richfilemanager-php": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

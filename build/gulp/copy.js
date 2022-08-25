@@ -9,10 +9,10 @@ module.exports = (gulp) => {
   return (done) => {
     const nodeBasePath = "./node_modules",
       systemBasePath = "./ACP3/Modules/ACP3/System/Resources/Assets",
-      ckeditorBasePath = "./ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets",
       fileManagerBasePath = "./ACP3/Modules/ACP3/Filemanager/Resources/Assets",
       consentManagerBasePath = "./ACP3/Modules/ACP3/Cookieconsent/Resources/Assets",
       shareBasePath = "./ACP3/Modules/ACP3/Share/Resources/Assets",
+      wysiwygCKEditorBasePath = "./ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets",
       wysiwygTinyMCEBasePath = "./ACP3/Modules/ACP3/Wysiwygtinymce/Resources/Assets",
       paths = [
         {
@@ -39,10 +39,6 @@ module.exports = (gulp) => {
         {
           src: [nodeBasePath + "/@fortawesome/fontawesome-free/svgs/**/*"],
           dest: systemBasePath + "/svgs",
-        },
-        {
-          src: nodeBasePath + "/ckeditor-codemirror-plugin/codemirror/**",
-          dest: ckeditorBasePath + "/js/ckeditor/plugins/codemirror",
         },
         {
           src: nodeBasePath + "/shariff/dist/shariff.min.css",
@@ -92,6 +88,26 @@ module.exports = (gulp) => {
         {
           src: nodeBasePath + "/klaro/dist/klaro-no-css.js",
           dest: consentManagerBasePath + "/js",
+        },
+        {
+          src: nodeBasePath + "/ckeditor4/{ckeditor.js,config.js,styles.js}",
+          dest: wysiwygCKEditorBasePath + "/js/ckeditor",
+        },
+        {
+          src: nodeBasePath + "/ckeditor4/lang/**/*",
+          dest: wysiwygCKEditorBasePath + "/js/ckeditor/lang",
+        },
+        {
+          src: nodeBasePath + "/ckeditor4/plugins/**/*",
+          dest: wysiwygCKEditorBasePath + "/js/ckeditor/plugins",
+        },
+        {
+          src: nodeBasePath + "/ckeditor4/skins/moono-lisa/*",
+          dest: wysiwygCKEditorBasePath + "/js/ckeditor/skins/moono-lisa",
+        },
+        {
+          src: nodeBasePath + "/ckeditor-codemirror-plugin/codemirror/**",
+          dest: wysiwygCKEditorBasePath + "/js/ckeditor/plugins/codemirror",
         },
         {
           src: [nodeBasePath + "/tinymce/tinymce.min.js"],

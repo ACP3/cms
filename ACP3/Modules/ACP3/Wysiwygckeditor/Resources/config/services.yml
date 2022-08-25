@@ -5,7 +5,6 @@ services:
   core.wysiwyg.ckeditor:
     class: ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor\CKEditor
     arguments:
-      $emoticonRepository: '@?ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository'
       $filemanagerHelpers: '@?ACP3\Modules\ACP3\Filemanager\Helpers'
     tags:
       - { name: core.wysiwyg.editor }

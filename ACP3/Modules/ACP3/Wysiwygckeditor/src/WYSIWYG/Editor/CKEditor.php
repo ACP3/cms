@@ -7,10 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor;
 
-use ACP3\Core;
+use ACP3\Core\ACL;
+use ACP3\Core\Assets\IncludeJs;
 use ACP3\Core\Component\ComponentRegistry;
+use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\I18n\Translator;
 use ACP3\Core\WYSIWYG\Editor\Textarea;
-use ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository;
 use ACP3\Modules\ACP3\Filemanager\Helpers;
 
 /**
@@ -20,7 +22,7 @@ class CKEditor extends Textarea
 {
     private bool $isInitialized = false;
 
-    public function __construct(private readonly Core\ACL $acl, private readonly Core\Assets\IncludeJs $includeJs, private readonly Core\Modules $modules, private readonly Core\I18n\Translator $translator, private readonly Core\Environment\ApplicationPath $appPath, private readonly ?EmoticonRepository $emoticonRepository = null, private readonly ?Helpers $filemanagerHelpers = null)
+    public function __construct(private readonly ACL $acl, private readonly IncludeJs $includeJs, private readonly Translator $translator, private readonly ApplicationPath $appPath, private readonly ?Helpers $filemanagerHelpers = null)
     {
     }
 
@@ -110,7 +112,7 @@ class CKEditor extends Textarea
      */
     private function script(string $js): string
     {
-        $out = '<script type="text/javascript">';
+        $out = '<script>';
         $out .= $js;
 
         return $out . "</script>\n";
@@ -123,7 +125,17 @@ class CKEditor extends Textarea
         }
 
         $this->isInitialized = true;
-        $basePath = $this->appPath->getWebRoot() . 'vendor/ckeditor/ckeditor/';
+
+        $path = ComponentRegistry::getPathByName('wysiwygckeditor');
+
+        $basePath = str_replace(
+            '\\',
+            '/',
+            $this->appPath->getWebRoot()
+            . substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
+            . '/Resources/Assets/js/ckeditor/'
+        );
+
         $out = '';
 
         // Skip relative paths...
@@ -131,18 +143,9 @@ class CKEditor extends Textarea
             $out .= $this->script("window.CKEDITOR_BASEPATH='" . $basePath . "';");
         }
 
-        $out .= '<script type="text/javascript" src="' . $basePath . "ckeditor.js\"></script>\n";
+        $out .= '<script src="' . $basePath . "ckeditor.js\"></script>\n";
 
-        // Add custom plugins
-        $path = ComponentRegistry::getPathByName('wysiwygckeditor');
-
-        $ckeditorPluginsDir = str_replace(
-            '\\',
-            '/',
-            $this->appPath->getWebRoot()
-            . substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
-            . '/Resources/Assets/js/ckeditor/plugins/'
-        );
+        $ckeditorPluginsDir = $basePath . 'plugins/';
 
         $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
         $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
@@ -153,22 +156,6 @@ class CKEditor extends Textarea
         $out .= $this->script($js);
 
         return $out . $this->includeJs->add('Wysiwygckeditor', 'partials/ckeditor');
-    }
-
-    private function applyEmoticons(): void
-    {
-        $this->config['smiley_path'] = $this->appPath->getWebRoot() . 'uploads/emoticons/';
-        $this->config['smiley_images'] = $this->config['smiley_descriptions'] = '';
-        $emoticons = $this->emoticonRepository->getAll();
-
-        $images = $descriptions = [];
-        foreach ($emoticons as $i => $emoticon) {
-            $images[] = $emoticons[$i]['img'];
-            $descriptions[] = $emoticons[$i]['description'];
-        }
-
-        $this->config['smiley_images'] = $images;
-        $this->config['smiley_descriptions'] = $descriptions;
     }
 
     private function addFileManager(): void
@@ -207,11 +194,6 @@ class CKEditor extends Textarea
             ['name' => 'others'],
             ['name' => 'about'],
         ];
-
-        // Include emoticons, if available
-        if ($this->modules->isInstalled('emoticons') === true) {
-            $this->applyEmoticons();
-        }
     }
 
     private function configureBasicToolbar(): void
