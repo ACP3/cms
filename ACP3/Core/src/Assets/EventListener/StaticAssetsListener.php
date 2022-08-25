@@ -56,8 +56,8 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $this->enableLibraries($event);
 
-        $this->moveCssBlocksToHead($event);
-        $this->moveJavaScriptBlocksToBodyEnd($event);
+        $this->combineCssBlocks($event);
+        $this->combineJavaScriptBlocks($event);
     }
 
     /**
@@ -92,7 +92,7 @@ class StaticAssetsListener implements EventSubscriberInterface
         $this->libraries->enableLibraries(array_unique($libraries));
     }
 
-    private function moveCssBlocksToHead(CacheEvent $event): void
+    private function combineCssBlocks(CacheEvent $event): void
     {
         $response = $event->getResponse();
 
@@ -118,7 +118,7 @@ class StaticAssetsListener implements EventSubscriberInterface
         }
     }
 
-    private function moveJavaScriptBlocksToBodyEnd(CacheEvent $event): void
+    private function combineJavaScriptBlocks(CacheEvent $event): void
     {
         $response = $event->getResponse();
 
