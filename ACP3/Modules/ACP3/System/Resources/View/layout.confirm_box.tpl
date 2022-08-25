@@ -1,4 +1,4 @@
-{extends file="asset:`$LAYOUT`"}
+{extends file="asset:$LAYOUT"}
 
 {block CONTENT}
     <div class="modal position-static d-block h-auto">

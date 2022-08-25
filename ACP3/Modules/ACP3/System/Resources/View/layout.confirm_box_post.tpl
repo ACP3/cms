@@ -1,4 +1,4 @@
-{extends file="asset:System/Alerts/confirm_box.tpl"}
+{extends file="asset:System/layout.confirm_box.tpl"}
 
 {block CONFIRM_BOX_MODAL_FOOTER}
     <form action="{$confirm.forward}" method="post">

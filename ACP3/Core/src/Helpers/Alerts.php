@@ -35,7 +35,7 @@ class Alerts
 
             $this->view->assign('confirm', $confirm);
 
-            return $this->view->fetchTemplate('System/Alerts/confirm_box.tpl');
+            return $this->view->fetchTemplate('System/layout.confirm_box.tpl');
         }
 
         throw new \InvalidArgumentException('To display the confirmation box, you must supply a text you want to display!');
@@ -61,7 +61,7 @@ class Alerts
 
             $this->view->assign('confirm', $confirm);
 
-            return $this->view->fetchTemplate('System/Alerts/confirm_box_post.tpl');
+            return $this->view->fetchTemplate('System/layout.confirm_box_post.tpl');
         }
 
         throw new \InvalidArgumentException('To display the confirmation box, you must supply a text you want to display and the data to be POSTed!');
@@ -76,7 +76,7 @@ class Alerts
     {
         $this->setErrorBoxData($errors);
 
-        return $this->view->fetchTemplate('System/Alerts/error_box.tpl');
+        return $this->view->fetchTemplate('System/layout.error_box.tpl');
     }
 
     /**
