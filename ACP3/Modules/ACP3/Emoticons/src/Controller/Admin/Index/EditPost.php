@@ -7,22 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Emoticons\Controller\Admin\Index;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Emoticons;
+use ACP3\Modules\ACP3\Emoticons\Services\EmoticonUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditPost extends Core\Controller\AbstractWidgetAction
+class EditPost extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
         private readonly FormAction $actionHelper,
-        private readonly Emoticons\Model\EmoticonsModel $emoticonsModel,
-        private readonly Emoticons\Validation\AdminFormValidation $adminFormValidation,
-        private readonly Core\Helpers\Upload $emoticonsUploadHelper
+        private readonly EmoticonUpsertService $emoticonUpsertService,
     ) {
         parent::__construct($context);
     }
@@ -35,22 +33,8 @@ class EditPost extends Core\Controller\AbstractWidgetAction
      */
     public function __invoke(int $id): array|string|Response
     {
-        return $this->actionHelper->handleSaveAction(function () use ($id) {
-            $formData = $this->request->getPost()->all();
-            $emoticon = $this->emoticonsModel->getOneById($id);
-            $file = $this->request->getFiles()->get('picture');
-
-            $this->adminFormValidation
-                ->withFile($file, false)
-                ->validate($formData);
-
-            if (empty($file) === false) {
-                $this->emoticonsUploadHelper->removeUploadedFile($emoticon['img']);
-                $result = $this->emoticonsUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
-                $formData['img'] = $result['name'];
-            }
-
-            return $this->emoticonsModel->save($formData, $id);
-        });
+        return $this->actionHelper->handleSaveAction(
+            fn () => $this->emoticonUpsertService->upsert($this->request->getPost()->all(), $this->request->getFiles()->get('picture'), $id)
+        );
     }
 }

@@ -1,6 +1,8 @@
 services:
   _defaults:
     autowire: true
+    bind:
+      $emoticonsUploadHelper: "@emoticons.helpers.upload"
 
   ACP3\Modules\ACP3\Emoticons\Services\:
     resource: "../../../src/Services/"
