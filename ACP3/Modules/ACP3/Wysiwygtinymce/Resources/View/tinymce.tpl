@@ -1,5 +1,4 @@
 {if !$tinymce.initialized}
-    <script src="{$ROOT_DIR}vendor/tinymce/tinymce/tinymce.min.js"></script>
     {if $tinymce.filemanager_path !== null}
         <script>
             const tinyMCEFileBrowserCallback = (field, url, type, win) => {
@@ -27,4 +26,5 @@
         </script>
     {/if}
 {/if}
+{include_js module="Wysiwygtinymce" file="tinymce/tinymce"}
 {include_js module="Wysiwygtinymce" file="partials/tinymce"}

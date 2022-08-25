@@ -13,6 +13,7 @@ module.exports = (gulp) => {
       fileManagerBasePath = "./ACP3/Modules/ACP3/Filemanager/Resources/Assets",
       consentManagerBasePath = "./ACP3/Modules/ACP3/Cookieconsent/Resources/Assets",
       shareBasePath = "./ACP3/Modules/ACP3/Share/Resources/Assets",
+      wysiwygTinyMCEBasePath = "./ACP3/Modules/ACP3/Wysiwygtinymce/Resources/Assets",
       paths = [
         {
           src: [
@@ -91,6 +92,22 @@ module.exports = (gulp) => {
         {
           src: nodeBasePath + "/klaro/dist/klaro-no-css.js",
           dest: consentManagerBasePath + "/js",
+        },
+        {
+          src: [nodeBasePath + "/tinymce/tinymce.min.js"],
+          dest: wysiwygTinyMCEBasePath + "/js/tinymce",
+        },
+        {
+          src: [nodeBasePath + "/tinymce/plugins/**/*"],
+          dest: wysiwygTinyMCEBasePath + "/js/tinymce/plugins",
+        },
+        {
+          src: [nodeBasePath + "/tinymce/skins/**/*"],
+          dest: wysiwygTinyMCEBasePath + "/js/tinymce/skins",
+        },
+        {
+          src: [nodeBasePath + "/tinymce/themes/**/*"],
+          dest: wysiwygTinyMCEBasePath + "/js/tinymce/themes",
         },
       ];
 
