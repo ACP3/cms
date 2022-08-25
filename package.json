@@ -83,7 +83,7 @@
     "regenerator-runtime": "^0.13.9",
     "rich-filemanager": "https://github.com/tinogo/RichFilemanager/tarball/rework-dependencies",
     "shariff": "^3.2.1",
-    "tinymce": "^4.9.11"
+    "tinymce": "^5.10.0"
   },
   "browserslist": [
     "defaults and >= 1%",
