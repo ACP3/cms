@@ -7,23 +7,22 @@
 
 namespace ACP3\Modules\ACP3\Gallery\Controller\Admin\Pictures;
 
-use ACP3\Core;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Gallery\Model\PictureModel;
+use ACP3\Modules\ACP3\Gallery\Services\GalleryPictureUpsertService;
 use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Exception;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
-class EditPost extends Core\Controller\AbstractWidgetAction
+class EditPost extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         private readonly FormAction $actionHelper,
-        private readonly Gallery\Helper\ThumbnailGenerator $thumbnailGenerator,
-        private readonly Gallery\Model\PictureModel $pictureModel,
-        private readonly Gallery\Validation\PictureFormValidation $pictureFormValidation,
-        private readonly Core\Helpers\Upload $galleryUploadHelper
+        private readonly GalleryPictureUpsertService $galleryPictureUpsertService,
+        private readonly PictureModel $pictureModel,
     ) {
         parent::__construct($context);
     }
@@ -39,25 +38,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
         $picture = $this->pictureModel->getOneById($id);
 
         return $this->actionHelper->handleSaveAction(
-            function () use ($picture, $id) {
-                $formData = $this->request->getPost()->all();
-                /** @var UploadedFile|null $file */
-                $file = $this->request->getFiles()->get('file');
-
-                $this->pictureFormValidation
-                    ->withFile($file, false)
-                    ->validate($formData);
-
-                if ($file !== null) {
-                    $result = $this->galleryUploadHelper->moveFile($file->getPathname(), $file->getClientOriginalName());
-
-                    $this->thumbnailGenerator->removePictureFromFilesystem($picture['file']);
-
-                    $formData['file'] = $result['name'];
-                }
-
-                return $this->pictureModel->save($formData, $id);
-            },
+            fn () => $this->galleryPictureUpsertService->upsert($this->request->getPost()->all(), $this->request->getFiles()->get('file'), $id),
             'acp/gallery/pictures/index/id_' . $picture['gallery_id']
         );
     }
