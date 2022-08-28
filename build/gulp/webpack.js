@@ -1,12 +1,12 @@
 module.exports = (gulp) => {
   "use strict";
 
-  const path = require("path");
   const globby = require("globby");
   const componentPaths = require("./component-paths");
   const plumber = require("gulp-plumber");
   const webpack = require("webpack-stream");
   const TerserPlugin = require("terser-webpack-plugin");
+  const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
   return () => {
     const entries = globby.sync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);
@@ -19,7 +19,9 @@ module.exports = (gulp) => {
     entryPointMap.forEach((path, entryName) => {
       webpackEntryConfig[entryName] = {
         import: path,
-        filename: "[name].min.js",
+        filename: (pathData) => {
+          return pathData.runtime.replace(".js", ".min.js");
+        },
       };
     });
 
@@ -28,6 +30,15 @@ module.exports = (gulp) => {
       devtool: "source-map",
       mode: "production",
       entry: webpackEntryConfig,
+      output: {
+        publicPath: "",
+      },
+      plugins: [
+        new WebpackManifestPlugin({
+          useEntryKeys: true,
+          filter: (fileDescriptor) => fileDescriptor.chunk,
+        }),
+      ],
       module: {
         rules: [
           {
