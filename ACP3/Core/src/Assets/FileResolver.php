@@ -44,8 +44,10 @@ class FileResolver
         private readonly ThemePathInterface $theme
     ) {
         $this->addStrategy(new TemplateFileCheckerStrategy());
-        $this->addStrategy(new MinifiedAwareFileCheckerStrategy($this->appPath));
-        $this->addStrategy(new StraightFileCheckerStrategy($this->appPath));
+
+        $straightFileCheckerStrategy = new StraightFileCheckerStrategy($this->appPath);
+        $this->addStrategy(new MinifiedAwareFileCheckerStrategy($straightFileCheckerStrategy));
+        $this->addStrategy($straightFileCheckerStrategy);
     }
 
     public function addStrategy(FileCheckerStrategyInterface $strategy): void

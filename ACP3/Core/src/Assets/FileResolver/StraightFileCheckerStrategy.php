@@ -17,15 +17,9 @@ class StraightFileCheckerStrategy implements FileCheckerStrategyInterface
 
     public function findResource(string $resourcePath): ?string
     {
-        // Test, if the production assets for this file have been created.
-        // If yes, use this path, otherwise try to fall back to the path within the theme/module itself
         $productionResourcePath = str_replace(ACP3_ROOT_DIR, $this->applicationPath->getUploadsDir() . 'assets', $resourcePath);
         if (is_file($productionResourcePath)) {
             return $productionResourcePath;
-        }
-
-        if (is_file($resourcePath)) {
-            return $resourcePath;
         }
 
         return null;
