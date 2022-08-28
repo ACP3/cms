@@ -12,14 +12,14 @@ module.exports = (gulp) => {
     const entries = globby.sync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);
     const entryPointMap = new Map();
     for (const entryPoint of entries) {
-      entryPointMap.set(path.basename(entryPoint, path.extname(entryPoint)), entryPoint);
+      entryPointMap.set(entryPoint, entryPoint);
     }
 
     const webpackEntryConfig = {};
     entryPointMap.forEach((path, entryName) => {
       webpackEntryConfig[entryName] = {
         import: path,
-        filename: path.substring(0, path.lastIndexOf("/")) + "/[name].min.js",
+        filename: "[name].min.js",
       };
     });
 
@@ -59,7 +59,7 @@ module.exports = (gulp) => {
 
     return gulp
       .src(entries, {
-        base: "./",
+        base: ".",
         allowEmpty: true,
         since: gulp.lastRun("webpack"),
       })
