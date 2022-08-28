@@ -21,7 +21,14 @@ services:
   ACP3\Core\Assets\Renderer\Strategies\ConcatDeferrableCSSRendererStrategy: ~
   ACP3\Core\Assets\Renderer\Strategies\ConcatJavaScriptRendererStrategy: ~
 
-  ACP3\Core\Assets\FileResolver: ~
+  ACP3\Core\Assets\FileResolver\:
+    resource: "../../../src/Assets/FileResolver/"
+
+  ACP3\Core\Assets\FileResolver:
+    calls:
+      - addStrategy: ['@ACP3\Core\Assets\FileResolver\TemplateFileCheckerStrategy']
+      - addStrategy: ['@ACP3\Core\Assets\FileResolver\MinifiedAwareFileCheckerStrategy']
+      - addStrategy: ['@ACP3\Core\Assets\FileResolver\StraightFileCheckerStrategy']
 
   ACP3\Core\Assets\IncludeJs: ~
   ACP3\Core\Assets\IncludeStylesheet: ~

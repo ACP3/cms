@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Assets;
 
+use ACP3\Core\Assets\FileResolver\TemplateFileCheckerStrategy;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\ThemePathInterface;
@@ -44,6 +45,7 @@ class FileResolverTest extends TestCase
             $this->appPath,
             $this->themeMock
         );
+        $this->fileResolver->addStrategy(new TemplateFileCheckerStrategy());
     }
 
     private function setUpMockObjects(): void
