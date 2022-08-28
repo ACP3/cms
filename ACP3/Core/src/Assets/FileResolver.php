@@ -10,6 +10,7 @@ namespace ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver\FileCheckerStrategyInterface;
 use ACP3\Core\Assets\FileResolver\MinifiedAwareFileCheckerStrategy;
 use ACP3\Core\Assets\FileResolver\StraightFileCheckerStrategy;
+use ACP3\Core\Assets\FileResolver\TemplateFileCheckerStrategy;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\Exception\ComponentNotFoundException;
 use ACP3\Core\Environment\ApplicationPath;
@@ -42,6 +43,7 @@ class FileResolver
         private readonly ApplicationPath $appPath,
         private readonly ThemePathInterface $theme
     ) {
+        $this->addStrategy(new TemplateFileCheckerStrategy());
         $this->addStrategy(new MinifiedAwareFileCheckerStrategy($this->appPath));
         $this->addStrategy(new StraightFileCheckerStrategy($this->appPath));
     }
