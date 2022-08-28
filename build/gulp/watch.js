@@ -3,22 +3,15 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
+const componentPaths = require("./component-paths");
 module.exports = (gulp) => {
   "use strict";
 
   const componentPaths = require("./component-paths");
 
   return (done) => {
-    gulp.watch(
-      [...componentPaths.scss, "designs/*/**/Assets/scss/**/*.scss"],
-      { cwd: "./" },
-      gulp.parallel("scss", "stylelint")
-    );
-    gulp.watch(
-      [...componentPaths.js.watch, "./designs/**/Assets/js/**/!(*.min).js"],
-      { cwd: "./" },
-      gulp.series("eslint")
-    );
+    gulp.watch(componentPaths.scss.watch, { cwd: "./" }, gulp.parallel("scss", "stylelint"));
+    gulp.watch(componentPaths.js.watch, { cwd: "./" }, gulp.series("eslint"));
 
     done();
   };

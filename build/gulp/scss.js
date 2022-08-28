@@ -16,8 +16,8 @@ module.exports = (gulp) => {
 
   return () => {
     return gulp
-      .src([...componentPaths.scss, "./designs/*/**/Assets/scss/**/*.scss"], {
-        base: "./",
+      .src(componentPaths.scss.all, {
+        base: ".",
         allowEmpty: true,
         since: gulp.lastRun("scss"),
       })
@@ -31,6 +31,6 @@ module.exports = (gulp) => {
           path.extname = ".min.css";
         })
       )
-      .pipe(gulp.dest("./"));
+      .pipe(gulp.dest("./uploads/assets"));
   };
 };

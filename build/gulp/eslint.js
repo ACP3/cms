@@ -3,6 +3,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
+const componentPaths = require("./component-paths");
 module.exports = (gulp) => {
   "use strict";
 
@@ -12,14 +13,7 @@ module.exports = (gulp) => {
 
   return () => {
     return gulp
-      .src(
-        [
-          ...componentPaths.js.watch,
-          "./designs/*/*/Assets/js/{admin,frontend,partials,widget,lib}/!(*.min).js",
-          "./designs/*/Assets/js/!(*.min).js",
-        ],
-        { base: "./", since: gulp.lastRun("eslint") }
-      )
+      .src(componentPaths.js.watch, { base: "./", since: gulp.lastRun("eslint") })
       .pipe(plumber())
       .pipe(eslint())
       .pipe(eslint.format());

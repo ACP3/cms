@@ -9,11 +9,7 @@ module.exports = (gulp) => {
   const TerserPlugin = require("terser-webpack-plugin");
 
   return () => {
-    const entries = globby.sync([
-      ...componentPaths.js.process,
-      "./designs/*/*/Assets/js/{admin,frontend,partials,widget}/!(*.min).js",
-      "./designs/*/*/Assets/js/!(*.min).js",
-    ]);
+    const entries = globby.sync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);
     const entryPointMap = new Map();
     for (const entryPoint of entries) {
       entryPointMap.set(path.basename(entryPoint, path.extname(entryPoint)), entryPoint);
@@ -27,6 +23,40 @@ module.exports = (gulp) => {
       };
     });
 
+    const webpackConfig = {
+      watch: process.env.GULP_MODE === "watch",
+      devtool: "source-map",
+      mode: "production",
+      entry: webpackEntryConfig,
+      module: {
+        rules: [
+          {
+            test: /\.m?js$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: "babel-loader",
+              options: {
+                babelrc: true,
+              },
+            },
+          },
+        ],
+      },
+      optimization: {
+        minimize: true,
+        minimizer: [
+          new TerserPlugin({
+            extractComments: false,
+            terserOptions: {
+              format: {
+                comments: false,
+              },
+            },
+          }),
+        ],
+      },
+    };
+
     return gulp
       .src(entries, {
         base: "./",
@@ -34,41 +64,7 @@ module.exports = (gulp) => {
         since: gulp.lastRun("webpack"),
       })
       .pipe(plumber())
-      .pipe(
-        webpack({
-          watch: process.env.GULP_MODE === "watch",
-          devtool: "source-map",
-          mode: "production",
-          entry: webpackEntryConfig,
-          module: {
-            rules: [
-              {
-                test: /\.m?js$/,
-                exclude: /(node_modules)/,
-                use: {
-                  loader: "babel-loader",
-                  options: {
-                    babelrc: true,
-                  },
-                },
-              },
-            ],
-          },
-          optimization: {
-            minimize: true,
-            minimizer: [
-              new TerserPlugin({
-                extractComments: false,
-                terserOptions: {
-                  format: {
-                    comments: false,
-                  },
-                },
-              }),
-            ],
-          },
-        })
-      )
-      .pipe(gulp.dest("./"));
+      .pipe(webpack(webpackConfig))
+      .pipe(gulp.dest("./uploads/assets"));
   };
 };

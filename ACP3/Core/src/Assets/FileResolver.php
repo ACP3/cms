@@ -7,9 +7,13 @@
 
 namespace ACP3\Core\Assets;
 
-use ACP3\Core;
 use ACP3\Core\Assets\FileResolver\FileCheckerStrategyInterface;
+use ACP3\Core\Assets\FileResolver\MinifiedAwareFileCheckerStrategy;
+use ACP3\Core\Assets\FileResolver\StraightFileCheckerStrategy;
 use ACP3\Core\Component\ComponentRegistry;
+use ACP3\Core\Component\Exception\ComponentNotFoundException;
+use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Environment\ThemePathInterface;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -35,11 +39,11 @@ class FileResolver
 
     public function __construct(
         private readonly CacheItemPoolInterface $coreCachePool,
-        private readonly Core\Environment\ApplicationPath $appPath,
-        private readonly Core\Environment\ThemePathInterface $theme
+        private readonly ApplicationPath $appPath,
+        private readonly ThemePathInterface $theme
     ) {
-        $this->addStrategy(new Core\Assets\FileResolver\MinifiedAwareFileCheckerStrategy());
-        $this->addStrategy(new Core\Assets\FileResolver\StraightFileCheckerStrategy());
+        $this->addStrategy(new MinifiedAwareFileCheckerStrategy($this->appPath));
+        $this->addStrategy(new StraightFileCheckerStrategy($this->appPath));
     }
 
     public function addStrategy(FileCheckerStrategyInterface $strategy): void
@@ -90,6 +94,9 @@ class FileResolver
         if (!empty($resourceDirectory) && !str_ends_with($resourceDirectory, '/')) {
             $resourceDirectory .= '/';
         }
+        if (!str_starts_with($resourceDirectory, '/Resources/')) {
+            $resourceDirectory = '/Resources/' . $resourceDirectory;
+        }
 
         if ($this->cachedPaths === null) {
             $cacheItem = $this->coreCachePool->getItem(self::CACHE_KEY);
@@ -121,11 +128,11 @@ class FileResolver
 
         $assetPath = $this->findAssetInInheritedThemes(
             ucfirst($moduleName),
-            !empty($resourceDirectory) ? '/' . $resourceDirectory : '',
+            $resourceDirectory,
             $file
         );
 
-        $finalPath = $assetPath ?: $this->findAssetInModules($moduleName, '/Resources/' . $resourceDirectory, $file);
+        $finalPath = $assetPath ?: $this->findAssetInModules($moduleName, $resourceDirectory, $file);
 
         return $finalPath !== null ? realpath($finalPath) : null;
     }
@@ -183,7 +190,7 @@ class FileResolver
             if (null !== ($resourcePath = $this->findAssetInStrategies($moduleAssetPath))) {
                 return $resourcePath;
             }
-        } catch (Core\Component\Exception\ComponentNotFoundException) {
+        } catch (ComponentNotFoundException) {
             // Intentionally omitted
         }
 

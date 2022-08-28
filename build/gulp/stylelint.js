@@ -12,8 +12,8 @@ module.exports = (gulp) => {
 
   return () => {
     return gulp
-      .src([...componentPaths.scss, "./designs/*/**/Assets/scss/**/*.scss"], {
-        base: "./",
+      .src(componentPaths.scss.watch, {
+        base: ".",
         allowEmpty: true,
         since: gulp.lastRun("stylelint"),
       })

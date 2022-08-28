@@ -25,7 +25,7 @@ class ApplicationPath
 
     public function __construct(ApplicationMode $applicationMode)
     {
-        $this->phpSelf = htmlentities((string) $_SERVER['SCRIPT_NAME']);
+        $this->phpSelf = htmlentities($_SERVER['SCRIPT_NAME']);
         $this->webRoot = substr($this->phpSelf, 0, strrpos($this->phpSelf, '/') + 1);
         $this->appDir = ACP3_ROOT_DIR . '/ACP3/';
         $this->uploadsDir = ACP3_ROOT_DIR . '/uploads/';
