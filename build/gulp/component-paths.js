@@ -20,38 +20,45 @@ if (!fs.existsSync(file)) {
  */
 const componentPaths = require(file);
 
+const globPatternScss = "/Resources/Assets/scss/**/*.scss";
 const componentPathsScss = [
   ...Object.values(componentPaths.module).map((module) => {
-    return module + "/Resources/Assets/scss/**/*.scss";
+    return module + globPatternScss;
   }),
   ...Object.values(componentPaths.theme).map((theme) => {
-    return theme + "/*/Resources/Assets/scss/**/*.scss";
+    return theme + "/*" + "/Resources/Assets/scss/**/*.scss";
   }),
 ];
+
+const globPatternJsWatch = "/Resources/Assets/js/**/!(*.min).js";
 const componentPathsJsWatch = [
   ...Object.values(componentPaths.module).map((module) => {
-    return module + "/Resources/Assets/js/**/!(*.min).js";
+    return module + globPatternJsWatch;
   }),
   ...Object.values(componentPaths.theme).map((theme) => {
-    return theme + "/*/Resources/Assets/js/**/!(*.min).js";
+    return theme + "/*" + globPatternJsWatch;
   }),
 ];
+
+const globPatternJsProcess = "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
 const componentPathsJsProcess = [
   ...Object.values(componentPaths.module).map((module) => {
-    return module + "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
+    return module + globPatternJsProcess;
   }),
   ...Object.values(componentPaths.theme).map((theme) => {
-    return theme + "/*/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
+    return theme + "/*" + globPatternJsProcess;
   }),
 ];
+
+const globPatternAssets = "/Resources/Assets/**/*";
 const assetFolders = [
   ...Object.values(componentPaths.core)
     .concat(Object.values(componentPaths.module))
     .map((component) => {
-      return component + "/Resources/Assets/**/*";
+      return component + globPatternAssets;
     }),
   ...Object.values(componentPaths.theme).map((theme) => {
-    return theme + "/*/Resources/Assets/**/*";
+    return theme + "/*" + globPatternAssets;
   }),
 ];
 
