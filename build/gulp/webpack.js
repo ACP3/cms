@@ -6,7 +6,6 @@ module.exports = (gulp) => {
   const plumber = require("gulp-plumber");
   const webpack = require("webpack-stream");
   const TerserPlugin = require("terser-webpack-plugin");
-  const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
   return () => {
     const entries = globby.sync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);
@@ -19,9 +18,7 @@ module.exports = (gulp) => {
     entryPointMap.forEach((path, entryName) => {
       webpackEntryConfig[entryName] = {
         import: path,
-        filename: (pathData) => {
-          return pathData.runtime.replace(".js", ".min.js");
-        },
+        filename: (pathData) => pathData.runtime.replace(".js", ".min.js"),
       };
     });
 
@@ -33,12 +30,6 @@ module.exports = (gulp) => {
       output: {
         publicPath: "",
       },
-      plugins: [
-        new WebpackManifestPlugin({
-          useEntryKeys: true,
-          filter: (fileDescriptor) => fileDescriptor.chunk,
-        }),
-      ],
       module: {
         rules: [
           {
