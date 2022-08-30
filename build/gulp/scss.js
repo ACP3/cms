@@ -3,16 +3,16 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
+const autoprefixer = require("autoprefixer");
+const sass = require("gulp-sass")(require("sass"));
+const componentPaths = require("./helpers/component-paths");
+const plumber = require("gulp-plumber");
+const postcss = require("gulp-postcss");
+const rename = require("gulp-rename");
+const dependents = require("gulp-dependents");
+
 module.exports = (gulp) => {
   "use strict";
-
-  const autoprefixer = require("autoprefixer");
-  const sass = require("gulp-sass")(require("sass"));
-  const componentPaths = require("./component-paths");
-  const plumber = require("gulp-plumber");
-  const postcss = require("gulp-postcss");
-  const rename = require("gulp-rename");
-  const dependents = require("gulp-dependents");
 
   return () => {
     return gulp

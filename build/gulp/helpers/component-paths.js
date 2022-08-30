@@ -6,7 +6,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const file = path.join(__dirname, "../../.component-paths.json");
+const file = path.join(__dirname, "../../../.component-paths.json");
 
 if (!fs.existsSync(file)) {
   console.error(
@@ -26,7 +26,7 @@ const componentPathsScss = [
     return module + globPatternScss;
   }),
   ...Object.values(componentPaths.theme).map((theme) => {
-    return theme + "/*" + "/Resources/Assets/scss/**/*.scss";
+    return theme + "/*" + globPatternScss;
   }),
 ];
 
@@ -69,7 +69,7 @@ function filterComposerVendorComponents(paths) {
 let pathAliases = {};
 Object.keys(componentPaths).forEach((componentType) => {
   for (const [componentName, componentPath] of Object.entries(componentPaths[componentType])) {
-    pathAliases[componentName] = path.resolve(__dirname, "../../", componentPath);
+    pathAliases[componentName] = path.resolve(__dirname, "../../../", componentPath);
   }
 });
 

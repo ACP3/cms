@@ -1,5 +1,5 @@
 const globby = require("globby");
-const componentPaths = require("./build/gulp/component-paths");
+const componentPaths = require("./build/gulp/helpers/component-paths");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const entries = globby.sync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);

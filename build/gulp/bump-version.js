@@ -3,16 +3,16 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
+const argv = require("yargs").argv;
+const git = require("simple-git");
+const semver = require("semver");
+const yaml = require("js-yaml");
+const fs = require("fs");
+const bump = require("gulp-bump");
+const change = require("gulp-change");
+
 module.exports = (gulp) => {
   "use strict";
-
-  const argv = require("yargs").argv;
-  const git = require("simple-git");
-  const semver = require("semver");
-  const yaml = require("js-yaml");
-  const fs = require("fs");
-  const bump = require("gulp-bump");
-  const change = require("gulp-change");
 
   function loadComponents() {
     const document = yaml.load(fs.readFileSync(__dirname + "/../../.gitsplit.yml", "utf8"));

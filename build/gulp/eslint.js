@@ -3,13 +3,12 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-const componentPaths = require("./component-paths");
+const componentPaths = require("./helpers/component-paths");
+const plumber = require("gulp-plumber");
+const eslint = require("gulp-eslint-new");
+
 module.exports = (gulp) => {
   "use strict";
-
-  const componentPaths = require("./component-paths");
-  const plumber = require("gulp-plumber");
-  const eslint = require("gulp-eslint-new");
 
   return () => {
     return gulp

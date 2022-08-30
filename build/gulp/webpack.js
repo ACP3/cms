@@ -1,10 +1,10 @@
+const globby = require("globby");
+const componentPaths = require("./helpers/component-paths");
+const plumber = require("gulp-plumber");
+const webpack = require("webpack-stream");
+
 module.exports = (gulp) => {
   "use strict";
-
-  const globby = require("globby");
-  const componentPaths = require("./component-paths");
-  const plumber = require("gulp-plumber");
-  const webpack = require("webpack-stream");
 
   return () => {
     return gulp
