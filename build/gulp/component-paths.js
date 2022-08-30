@@ -20,7 +20,7 @@ if (!fs.existsSync(file)) {
  */
 const componentPaths = require(file);
 
-const modulePathsScss = [
+const componentPathsScss = [
   ...Object.values(componentPaths.module).map((module) => {
     return module + "/Resources/Assets/scss/**/*.scss";
   }),
@@ -28,7 +28,7 @@ const modulePathsScss = [
     return theme + "/*/Resources/Assets/scss/**/*.scss";
   }),
 ];
-const modulePathsJsWatch = [
+const componentPathsJsWatch = [
   ...Object.values(componentPaths.module).map((module) => {
     return module + "/Resources/Assets/js/**/!(*.min).js";
   }),
@@ -36,7 +36,7 @@ const modulePathsJsWatch = [
     return theme + "/*/Resources/Assets/js/**/!(*.min).js";
   }),
 ];
-const modulePathsJsProcess = [
+const componentPathsJsProcess = [
   ...Object.values(componentPaths.module).map((module) => {
     return module + "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
   }),
@@ -68,12 +68,12 @@ Object.keys(componentPaths).forEach((componentType) => {
 
 module.exports = {
   scss: {
-    watch: filterComposerVendorComponents(modulePathsScss),
-    all: modulePathsScss,
+    watch: filterComposerVendorComponents(componentPathsScss),
+    all: componentPathsScss,
   },
   js: {
-    watch: filterComposerVendorComponents(modulePathsJsWatch),
-    all: modulePathsJsProcess, // this is only relevant for the webpack gulp task, as we want to copy all static assets into the "uploads/assets"-folder
+    watch: filterComposerVendorComponents(componentPathsJsWatch),
+    all: componentPathsJsProcess, // this is only relevant for the webpack gulp task, as we want to copy all static assets into the "uploads/assets"-folder
   },
   assets: assetFolders,
   pathAliases: pathAliases,
