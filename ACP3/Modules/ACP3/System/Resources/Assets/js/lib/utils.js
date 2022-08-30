@@ -30,7 +30,7 @@ function lowerCaseFirstLetter(string) {
 }
 
 /**
- * This function add downloads javascript code (e.g. after XHR requests) to the HTML documents <head>, so that the
+ * This function adds <script>-elements (e.g. after XHR requests) to the HTML documents <head>, so that the
  * javascript code can actually get executed.
  *
  * @param {HTMLElement} elementContainingScriptTags
