@@ -21,34 +21,36 @@ if (!fs.existsSync(file)) {
 const componentPaths = require(file);
 
 const modulePathsScss = [
-  ...componentPaths.module.map((module) => {
+  ...Object.values(componentPaths.module).map((module) => {
     return module + "/Resources/Assets/scss/**/*.scss";
   }),
-  ...componentPaths.theme.map((theme) => {
+  ...Object.values(componentPaths.theme).map((theme) => {
     return theme + "/*/Resources/Assets/scss/**/*.scss";
   }),
 ];
 const modulePathsJsWatch = [
-  ...componentPaths.module.map((module) => {
+  ...Object.values(componentPaths.module).map((module) => {
     return module + "/Resources/Assets/js/**/!(*.min).js";
   }),
-  ...componentPaths.theme.map((theme) => {
+  ...Object.values(componentPaths.theme).map((theme) => {
     return theme + "/*/Resources/Assets/js/**/!(*.min).js";
   }),
 ];
 const modulePathsJsProcess = [
-  ...componentPaths.module.map((module) => {
+  ...Object.values(componentPaths.module).map((module) => {
     return module + "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
   }),
-  ...componentPaths.theme.map((theme) => {
+  ...Object.values(componentPaths.theme).map((theme) => {
     return theme + "/*/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
   }),
 ];
 const assetFolders = [
-  ...componentPaths.core.concat(componentPaths.module).map((component) => {
-    return component + "/Resources/Assets/**/*";
-  }),
-  ...componentPaths.theme.map((theme) => {
+  ...Object.values(componentPaths.core)
+    .concat(Object.values(componentPaths.module))
+    .map((component) => {
+      return component + "/Resources/Assets/**/*";
+    }),
+  ...Object.values(componentPaths.theme).map((theme) => {
     return theme + "/*/Resources/Assets/**/*";
   }),
 ];
@@ -57,6 +59,13 @@ function filterComposerVendorComponents(paths) {
   return paths.filter((path) => !path.includes("./vendor/"));
 }
 
+let pathAliases = {};
+Object.keys(componentPaths).forEach((componentType) => {
+  for (const [componentName, componentPath] of Object.entries(componentPaths[componentType])) {
+    pathAliases[componentName] = path.resolve(__dirname, "../../", componentPath);
+  }
+});
+
 module.exports = {
   scss: {
     watch: filterComposerVendorComponents(modulePathsScss),
@@ -64,8 +73,8 @@ module.exports = {
   },
   js: {
     watch: filterComposerVendorComponents(modulePathsJsWatch),
-    process: filterComposerVendorComponents(modulePathsJsProcess),
     all: modulePathsJsProcess, // this is only relevant for the webpack gulp task, as we want to copy all static assets into the "uploads/assets"-folder
   },
   assets: assetFolders,
+  pathAliases: pathAliases,
 };

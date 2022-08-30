@@ -3,7 +3,7 @@
  * See the LICENCE file at the top-level module directory for licencing details.
  */
 
-import { delegateEvent } from "../../../../../System/Resources/Assets/js/lib/event-handler";
+import { delegateEvent } from "acp3/module-system/Resources/Assets/js/lib/event-handler";
 
 const ratingWrapper = document.getElementById("rating-wrapper");
 

@@ -26,6 +26,8 @@ class ComponentPathsCommand extends Command
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \JsonException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -35,12 +37,14 @@ class ComponentPathsCommand extends Command
                 $paths[$component->getComponentType()->value] = [];
             }
 
-            $paths[$component->getComponentType()->value][] = str_replace([ACP3_ROOT_DIR, '\\'], ['.', '/'], $component->getPath());
+            $composer = json_decode(file_get_contents($component->getPath() . '/composer.json'), true, 512, JSON_THROW_ON_ERROR);
+
+            $paths[$component->getComponentType()->value][$composer['name']] = str_replace([ACP3_ROOT_DIR, '\\'], ['.', '/'], $component->getPath());
         }
 
         file_put_contents(
             ACP3_ROOT_DIR . '/.component-paths.json',
-            json_encode($paths, JSON_UNESCAPED_SLASHES ^ JSON_PRETTY_PRINT)
+            json_encode($paths, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES ^ JSON_PRETTY_PRINT)
         );
 
         return 0;

@@ -30,6 +30,9 @@ module.exports = (gulp) => {
       output: {
         publicPath: "",
       },
+      resolve: {
+        alias: componentPaths.pathAliases,
+      },
       module: {
         rules: [
           {

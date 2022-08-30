@@ -5,7 +5,7 @@
 
 /* global bootstrap */
 
-import { addScriptsToHead } from "../../../../../System/Resources/Assets/js/lib/utils";
+import { addScriptsToHead } from "acp3/module-system/Resources/Assets/js/lib/utils";
 
 ((document) => {
   const createLinkElem = document.getElementById("js-create-link");

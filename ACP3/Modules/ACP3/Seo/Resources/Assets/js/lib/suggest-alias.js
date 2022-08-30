@@ -1,4 +1,4 @@
-import { mergeSettings } from "../../../../../System/Resources/Assets/js/lib/utils";
+import { mergeSettings } from "acp3/module-system/Resources/Assets/js/lib/utils";
 
 export class SuggestAlias {
   #element;
