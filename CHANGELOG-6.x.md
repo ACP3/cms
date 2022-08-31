@@ -7,7 +7,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Core] Added support for webp images
+-   [Base] Handle the not-existing `.component-paths.json`-file gracefully, when trying to run the gulp tasks
+-   [Articles] [Gallery] [System] Added a `pager.tpl` partial template and use it in the articles and gallery module
+
+### Changed
+
+-   [ALL] Unified the folder structure between ACP3 modules and themes. The new structure is `<my-theme>/<my-module>/Resources/{Assets,View}/**/*`
+-   [ALL] Compiled static assets will now be located in `uploads/assets/`
+-   [ALL] Replaced obsolete CSS selectors with Bootstrap utility classes
+-   [ALL] Replaced browserify with webpack
+-   [Core] Improved the cacheability of static assets
+-   [System] Made the loading-indicator CSS deferrable
+-   [theme-default] [theme-installer] force Bootstrap not to binf to jQuery's event system, even if jQuery is present
+-   [WYSIWYGTinymce] version TinyMCE's assets within the `Resources/Assets/js/`-directory
+-   [WYSIWYGCKEditor] version CKEditor's assets within the `Resources/Assets/js/`-directory
+
+### Fixed
+
+-   [Core] Do not render non-existent static assets anymore
+-   [Emoticons] Fixed inserting emoticons
 
 ## [6.7.0] - 2022-08-23
 
