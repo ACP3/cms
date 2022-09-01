@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Base] [Installer] Fixed a bug with the static assets generation
 
 ## [6.8.0] - 2022-08-31
 
