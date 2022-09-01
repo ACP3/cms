@@ -22,9 +22,11 @@ const componentPaths = require(file);
 
 const globPatternScss = "/Resources/Assets/scss/**/*.scss";
 const componentPathsScss = [
-  ...Object.values(componentPaths.module).map((module) => {
-    return module + globPatternScss;
-  }),
+  ...Object.values(componentPaths.module)
+    .concat(Object.values(componentPaths.installer))
+    .map((module) => {
+      return module + globPatternScss;
+    }),
   ...Object.values(componentPaths.theme).map((theme) => {
     return theme + "/*" + globPatternScss;
   }),
@@ -32,9 +34,11 @@ const componentPathsScss = [
 
 const globPatternJsWatch = "/Resources/Assets/js/**/!(*.min).js";
 const componentPathsJsWatch = [
-  ...Object.values(componentPaths.module).map((module) => {
-    return module + globPatternJsWatch;
-  }),
+  ...Object.values(componentPaths.module)
+    .concat(Object.values(componentPaths.installer))
+    .map((module) => {
+      return module + globPatternJsWatch;
+    }),
   ...Object.values(componentPaths.theme).map((theme) => {
     return theme + "/*" + globPatternJsWatch;
   }),
@@ -42,9 +46,11 @@ const componentPathsJsWatch = [
 
 const globPatternJsProcess = "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
 const componentPathsJsProcess = [
-  ...Object.values(componentPaths.module).map((module) => {
-    return module + globPatternJsProcess;
-  }),
+  ...Object.values(componentPaths.module)
+    .concat(Object.values(componentPaths.installer))
+    .map((module) => {
+      return module + globPatternJsProcess;
+    }),
   ...Object.values(componentPaths.theme).map((theme) => {
     return theme + "/*" + globPatternJsProcess;
   }),
@@ -53,7 +59,7 @@ const componentPathsJsProcess = [
 const globPatternAssets = "/Resources/Assets/**/*";
 const assetFolders = [
   ...Object.values(componentPaths.core)
-    .concat(Object.values(componentPaths.module))
+    .concat(Object.values(componentPaths.module), Object.values(componentPaths.installer))
     .map((component) => {
       return component + globPatternAssets;
     }),
