@@ -8,9 +8,8 @@
 namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor;
 
 use ACP3\Core\ACL;
+use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Assets\IncludeJs;
-use ACP3\Core\Component\ComponentRegistry;
-use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\WYSIWYG\Editor\Textarea;
 use ACP3\Modules\ACP3\Filemanager\Helpers;
@@ -22,7 +21,7 @@ class CKEditor extends Textarea
 {
     private bool $isInitialized = false;
 
-    public function __construct(private readonly ACL $acl, private readonly IncludeJs $includeJs, private readonly Translator $translator, private readonly ApplicationPath $appPath, private readonly ?Helpers $filemanagerHelpers = null)
+    public function __construct(private readonly ACL $acl, private readonly FileResolver $fileResolver, private readonly IncludeJs $includeJs, private readonly Translator $translator, private readonly ?Helpers $filemanagerHelpers = null)
     {
     }
 
@@ -126,15 +125,8 @@ class CKEditor extends Textarea
 
         $this->isInitialized = true;
 
-        $path = ComponentRegistry::getPathByName('wysiwygckeditor');
-
-        $basePath = str_replace(
-            '\\',
-            '/',
-            $this->appPath->getWebRoot()
-            . substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
-            . '/Resources/Assets/js/ckeditor/'
-        );
+        $ckeditorEntrypoint = $this->fileResolver->getWebStaticAssetPath('Wysiwygckeditor', 'Assets/js/ckeditor', 'ckeditor.js');
+        $basePath = substr($ckeditorEntrypoint, 0, strrpos($ckeditorEntrypoint, '/') + 1);
 
         $out = '';
 
@@ -143,7 +135,7 @@ class CKEditor extends Textarea
             $out .= $this->script("window.CKEDITOR_BASEPATH='" . $basePath . "';");
         }
 
-        $out .= '<script src="' . $basePath . "ckeditor.js\"></script>\n";
+        $out .= '<script src="' . $ckeditorEntrypoint . "\"></script>\n";
 
         $ckeditorPluginsDir = $basePath . 'plugins/';
 
