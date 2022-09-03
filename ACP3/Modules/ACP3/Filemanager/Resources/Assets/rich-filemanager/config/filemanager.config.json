@@ -49,7 +49,7 @@
     },
     "api": {
         "lang": "php",
-        "connectorUrl": "../../../../../../../index.php/acp/filemanager/index/richfilemanager/",
+        "connectorUrl": "/index.php/acp/filemanager/index/richfilemanager/",
         "requestParams": {
             "GET": {},
             "POST": {},

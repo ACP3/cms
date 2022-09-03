@@ -7,26 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Filemanager;
 
-use ACP3\Core;
-use ACP3\Core\Component\ComponentRegistry;
+use ACP3\Core\Assets\FileResolver;
 use ACP3\Modules\ACP3\Filemanager\Installer\Schema;
 
 class Helpers
 {
-    public function __construct(private readonly Core\Environment\ApplicationPath $appPath)
+    public function __construct(private readonly FileResolver $fileResolver)
     {
     }
 
     public function getFilemanagerPath(): string
     {
-        $path = ComponentRegistry::getPathByName(Schema::MODULE_NAME);
-
-        return str_replace(
-            '\\',
-            '/',
-            $this->appPath->getWebRoot()
-            . substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))
-            . '/Resources/Assets/rich-filemanager/index.html'
-        );
+        return $this->fileResolver->getWebStaticAssetPath(Schema::MODULE_NAME, 'Assets/rich-filemanager', 'index.html');
     }
 }
