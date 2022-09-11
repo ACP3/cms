@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Core] add a CLI-command `acp3:cache:warmup` which allows warming up the caches.
+
+    This CLI-task works around the shortcoming of the `acp3:http-cache:warmup`-command, i.e. it isn't doing any webserver based requests and therefore will not hurt any analytics metrics by cloudflare, etc.
+
+    `acp3:http-cache:warmup` can/should still be used AFTER running `acp3:cache:warmup`
+
+### Changed
+
+-   [Filemanager] Include the `rich-filemanager` via the FileResolver
+-   [Wysiwygckeditor] Include the `cheditor.js` via the FileResolver
 
 ## [6.8.1] - 2022-09-01
 
