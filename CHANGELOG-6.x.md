@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [unreleased]
+
+tba
+
 ## [6.10.3] - 2022-10-27
 
 -   [Core] Fixed the missing inclusion of the theme specific translation customizations - 2nd attempt...
