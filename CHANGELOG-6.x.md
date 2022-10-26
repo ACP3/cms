@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+-   [Core] Fixed the `PageCssClasses` output filter, if there is already an existing `class` attribute at the `<body>`-tag
+-   [Core] Fixed the missing inclusion of the theme specific translation customizations
 
 ## [6.10.1] - 2022-10-26
 
