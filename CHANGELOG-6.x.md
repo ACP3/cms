@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [6.10.2] - 2022-10-27
 
 -   [Core] Fixed the `PageCssClasses` output filter, if there is already an existing `class` attribute at the `<body>`-tag
 -   [Core] Fixed the missing inclusion of the theme specific translation customizations
@@ -295,7 +295,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   [All] Fixed many bugs
 
-[unreleased]: https://gitlab.com/ACP3/cms/compare/v6.10.1...6.x
+[unreleased]: https://gitlab.com/ACP3/cms/compare/v6.10.2...6.x
+[6.10.2]: https://gitlab.com/ACP3/cms/compare/v6.10.1...v6.10.2
 [6.10.1]: https://gitlab.com/ACP3/cms/compare/v6.10.0...v6.10.1
 [6.10.0]: https://gitlab.com/ACP3/cms/compare/v6.9.0...v6.10.0
 [6.9.0]: https://gitlab.com/ACP3/cms/compare/v6.8.1...v6.9.0
