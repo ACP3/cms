@@ -8,7 +8,6 @@
         <item key="admin_index_index">Übersicht</item>
         <item key="article">Artikel</item>
         <item key="articles">Artikel</item>
-        <item key="default_layout">Standard Seiten-Layout verwenden</item>
         <item key="latest_articles">Neueste Artikel</item>
         <item key="layout">Layout</item>
         <item key="page_statements">Seitenangaben</item>
@@ -20,5 +19,6 @@
         <item key="text_to_short">Der Text darf nicht leer sein.</item>
         <item key="title">Titel</item>
         <item key="title_to_short">Der Titel darf nicht leer sein.</item>
+        <item key="use_default_layout">Standard Seiten-Layout verwenden</item>
     </keys>
 </language>

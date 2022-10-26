@@ -8,16 +8,16 @@
 namespace ACP3\Modules\ACP3\Articles\ViewProviders;
 
 use ACP3\Core\Breadcrumb\Title;
-use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\View\Layout;
 use ACP3\Modules\ACP3\Articles\Helpers;
 
 class AdminArticleEditViewProvider
 {
-    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly ThemePathInterface $theme, private readonly Title $title, private readonly Translator $translator)
+    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly Title $title, private readonly Translator $translator, private readonly Layout $layout)
     {
     }
 
@@ -47,25 +47,13 @@ class AdminArticleEditViewProvider
     /**
      * @return string[]
      */
-    protected function getAvailableLayouts(): array
+    private function getAvailableLayouts(): array
     {
-        $paths = [
-            $this->theme->getDesignPathInternal() . '/*/View/*/layout.tpl',
-            $this->theme->getDesignPathInternal() . '/*/View/*/layout.*.tpl',
-            $this->theme->getDesignPathInternal() . '/*/View/layout.tpl',
-            $this->theme->getDesignPathInternal() . '/*/View/layout.*.tpl',
-            $this->theme->getDesignPathInternal() . '/layout.*.tpl',
+        $layoutFiles = $this->layout->getAvailableLayoutFiles();
+
+        return [
+            ...['' => $this->translator->t('articles', 'use_default_layout')],
+            ...array_combine($layoutFiles, $layoutFiles),
         ];
-
-        $layouts = [];
-        foreach ($paths as $path) {
-            $layouts = array_merge($layouts, glob($path));
-        }
-
-        $layouts = array_map(fn ($value) => str_replace([$this->theme->getDesignPathInternal() . '/', '/View/'], ['', '/'], (string) $value), $layouts);
-
-        $layouts = array_combine($layouts, $layouts);
-
-        return [...['' => $this->translator->t('articles', 'default_layout')], ...$layouts];
     }
 }

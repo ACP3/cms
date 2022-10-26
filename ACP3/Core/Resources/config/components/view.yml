@@ -3,6 +3,7 @@ services:
     autowire: true
 
   ACP3\Core\View: ~
+  ACP3\Core\View\Layout: ~
 
   ACP3\Core\View\Renderer\Smarty\SmartyConfigurator:
     arguments:

@@ -3,3 +3,4 @@
 
 /tests export-ignore
 /fixtures export-ignore
+.gitattributes export-ignore

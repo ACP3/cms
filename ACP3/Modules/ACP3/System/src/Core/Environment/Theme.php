@@ -175,7 +175,7 @@ class Theme implements ThemePathInterface
     }
 
     /**
-     * @return array<string, mixed>
+     * {@inheritDoc}
      */
     public function getCurrentThemeInfo(): array
     {

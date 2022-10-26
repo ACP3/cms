@@ -44,7 +44,11 @@
     "symfony/proxy-manager-bridge": "^6.1.0",
     "symfony/yaml": "^6.1.0",
     "toflar/psr6-symfony-http-cache-store": "^4.0",
-    "tubalmartin/cssmin": "^4.1.1"
+    "tubalmartin/cssmin": "^4.1.1",
+    "webmozart/glob": "^4.6.0"
+  },
+  "require-dev": {
+    "mikey179/vfsstream": "^1.6.11"
   },
   "suggest": {
     "ext-gd": "Allows image manipulations (resizing)"
