@@ -7,13 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [System] Updated the NPM- and Composer dependencies
+
+### Fixed
+
+-   [Articles] Fixed fetching the available layout files
 
 ## [6.9.0] - 2022-09-11
 
 ### Added
 
--   [Core] add a CLI-command `acp3:cache:warmup` which allows warming up the caches.
+-   [Core] Added a CLI-command `acp3:cache:warmup` which allows warming up the caches.
 
     This CLI-task works around the shortcoming of the `acp3:http-cache:warmup`-command, i.e. it isn't doing any webserver based requests and therefore will not hurt any analytics metrics by cloudflare, etc.
 
@@ -22,7 +28,7 @@ tba
 ### Changed
 
 -   [Filemanager] Include the `rich-filemanager` via the FileResolver
--   [Wysiwygckeditor] Include the `cheditor.js` via the FileResolver
+-   [Wysiwygckeditor] Include the `ckeditor.js` via the FileResolver
 
 ## [6.8.1] - 2022-09-01
 
