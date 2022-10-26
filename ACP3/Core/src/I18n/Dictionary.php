@@ -88,7 +88,7 @@ class Dictionary implements DictionaryInterface
     {
         $pathArray = explode('/', $filePath);
 
-        return $pathArray[\count($pathArray) - 3];
+        return $pathArray[\count($pathArray) - 4];
     }
 
     /**

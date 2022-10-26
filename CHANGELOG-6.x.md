@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+-   [Core] Fixed the missing inclusion of the theme specific translation customizations - 2nd attempt...
 
 ## [6.10.2] - 2022-10-27
 
