@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [CI] Fixed the CI-pipeline
 
 ## [6.10.0] - 2022-10-26
 
