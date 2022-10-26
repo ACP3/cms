@@ -56,7 +56,7 @@ class Dictionary implements DictionaryInterface
 
         $themeDependenciesReversed = array_reverse($this->theme->getCurrentThemeDependencies());
         foreach ($themeDependenciesReversed as $theme) {
-            $i18nFiles = glob($this->theme->getDesignPathInternal($theme) . "/*/i18n/{$language}.xml");
+            $i18nFiles = glob($this->theme->getDesignPathInternal($theme) . "/*/Resources/i18n/{$language}.xml");
 
             if ($i18nFiles === false) {
                 continue;
