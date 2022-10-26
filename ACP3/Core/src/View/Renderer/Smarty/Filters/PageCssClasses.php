@@ -7,13 +7,16 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
-use ACP3\Core;
+use ACP3\Core\Assets\PageCssClasses as PageCssClassesHelper;
+use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\Http\RequestInterface;
+use Masterminds\HTML5;
 
 class PageCssClasses extends AbstractFilter
 {
     private string $cssClassCache = '';
 
-    public function __construct(private readonly Core\Assets\PageCssClasses $pageCssClasses, private readonly Core\Http\RequestInterface $request)
+    public function __construct(private readonly PageCssClassesHelper $pageCssClasses, private readonly RequestInterface $request)
     {
     }
 
@@ -23,11 +26,17 @@ class PageCssClasses extends AbstractFilter
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
         if (str_contains($tplOutput, '<body')) {
-            if ($this->cssClassCache === '') {
-                $this->cssClassCache = 'class="' . implode(' ', $this->buildPageCssClasses()) . '"';
-            }
+            $html5 = new HTML5([
+            ]);
+            $dom = $html5->loadHTML($tplOutput);
+            $body = $dom->documentElement->lastElementChild;
 
-            $tplOutput = str_replace('<body', '<body ' . $this->cssClassCache, $tplOutput);
+            if ($this->cssClassCache === '') {
+                $this->cssClassCache = implode(' ', array_filter([$body->getAttribute('class'), ...$this->buildPageCssClasses()], fn ($item) => $item !== ''));
+            }
+            $body->setAttribute('class', $this->cssClassCache);
+
+            $tplOutput = $html5->saveHTML($dom);
         }
 
         return $tplOutput;
@@ -43,7 +52,7 @@ class PageCssClasses extends AbstractFilter
             $this->pageCssClasses->getControllerAction(),
         ];
 
-        if ($this->request->getArea() === Core\Controller\AreaEnum::AREA_ADMIN) {
+        if ($this->request->getArea() === AreaEnum::AREA_ADMIN) {
             $pieces[] = 'in-admin';
         } elseif ($this->request->isHomepage() === true) {
             $pieces[] = 'is-homepage';

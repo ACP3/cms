@@ -10,6 +10,7 @@ namespace ACP3\Core\View\Renderer\Smarty\Filters;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\Request;
 use ACP3\Core\View\Renderer\Smarty\AbstractPluginTest;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class PageCssClassesTest extends AbstractPluginTest
 {
@@ -17,18 +18,9 @@ class PageCssClassesTest extends AbstractPluginTest
      * @var PageCssClasses
      */
     protected $plugin;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Assets\PageCssClasses
-     */
-    private $pageCssClassesMock;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Request
-     */
-    private $requestMock;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Smarty_Internal_Template
-     */
-    private $smartyInternalTemplateMock;
+    private MockObject|\ACP3\Core\Assets\PageCssClasses $pageCssClassesMock;
+    private Request|MockObject $requestMock;
+    private \Smarty_Internal_Template|MockObject $smartyInternalTemplateMock;
 
     protected function setup(): void
     {
@@ -47,29 +39,70 @@ class PageCssClassesTest extends AbstractPluginTest
         $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
     }
 
-    public function testProcessInFrontend(): void
+    /**
+     * @dataProvider processDataProvider
+     */
+    public function testProcess(string $expected, string $templateOutput, int $detailsCalls, bool $isHomepage, AreaEnum $area): void
     {
-        $this->setUpPageCssClassesMockExpectations();
-        $this->setUpRequestMockExpectations();
+        $this->setUpPageCssClassesMockExpectations($detailsCalls);
+        $this->setUpRequestMockExpectations($isHomepage, $area);
 
-        $expected = <<<HTML
-<html>
-<head>
-<title>Foobar</title>
-</head>
-<body class="foo foo-bar-baz foo-bar-pagetitle">
-<p>Baz</p>
-</body>
-</html>
-HTML;
-
-        self::assertEquals(
+        self::assertStringContainsString(
             $expected,
-            $this->plugin->__invoke($this->getTemplateContent(), $this->smartyInternalTemplateMock)
+            $this->plugin->__invoke($templateOutput, $this->smartyInternalTemplateMock)
         );
     }
 
-    private function setUpPageCssClassesMockExpectations(int $getDetailsCalls = 1): void
+    /**
+     * @return array<string, array{string, string, int, bool, AreaEnum}>
+     */
+    public function processDataProvider(): array
+    {
+        return [
+            'in-frontend' => [
+                '<body class="foo foo-bar-baz foo-bar-pagetitle">',
+                $this->getTemplateOutput(),
+                1,
+                false,
+                AreaEnum::AREA_FRONTEND,
+            ],
+            'is-homepage' => [
+                '<body class="foo foo-bar-baz is-homepage">',
+                $this->getTemplateOutput(),
+                0,
+                true,
+                AreaEnum::AREA_FRONTEND,
+            ],
+            'in-admin' => [
+                '<body class="foo foo-bar-baz in-admin">',
+                $this->getTemplateOutput(),
+                0,
+                false,
+                AreaEnum::AREA_ADMIN,
+            ],
+            'with-existing-class-attribute' => [
+                '<body class="already-exists foo foo-bar-baz foo-bar-pagetitle">',
+                $this->getTemplateOutputWithExistingClassAttribute(),
+                1,
+                false,
+                AreaEnum::AREA_FRONTEND,
+            ],
+        ];
+    }
+
+    public function testProcessWithNoHtmlBodyTag(): void
+    {
+        $templateContent = <<<HTML
+<p>Baz</p>
+HTML;
+
+        self::assertEquals(
+            $templateContent,
+            $this->plugin->__invoke($templateContent, $this->smartyInternalTemplateMock)
+        );
+    }
+
+    private function setUpPageCssClassesMockExpectations(int $getDetailsCalls): void
     {
         $this->pageCssClassesMock
             ->expects(self::once())
@@ -85,7 +118,7 @@ HTML;
             ->willReturn('foo-bar-pagetitle');
     }
 
-    private function setUpRequestMockExpectations(bool $isHomepage = false, AreaEnum $area = AreaEnum::AREA_FRONTEND): void
+    private function setUpRequestMockExpectations(bool $isHomepage, AreaEnum $area): void
     {
         $this->requestMock->expects($area === AreaEnum::AREA_FRONTEND ? self::once() : $this->never())
             ->method('isHomepage')
@@ -95,9 +128,10 @@ HTML;
             ->willReturn($area);
     }
 
-    private function getTemplateContent(): string
+    private function getTemplateOutput(): string
     {
         return <<<HTML
+<!DOCTYPE html>
 <html>
 <head>
 <title>Foobar</title>
@@ -109,59 +143,8 @@ HTML;
 HTML;
     }
 
-    public function testProcessIsHomepage(): void
+    private function getTemplateOutputWithExistingClassAttribute(): string
     {
-        $this->setUpPageCssClassesMockExpectations(0);
-        $this->setUpRequestMockExpectations(true);
-
-        $expected = <<<HTML
-<html>
-<head>
-<title>Foobar</title>
-</head>
-<body class="foo foo-bar-baz is-homepage">
-<p>Baz</p>
-</body>
-</html>
-HTML;
-
-        self::assertEquals(
-            $expected,
-            $this->plugin->__invoke($this->getTemplateContent(), $this->smartyInternalTemplateMock)
-        );
-    }
-
-    public function testProcessInAdmin(): void
-    {
-        $this->setUpPageCssClassesMockExpectations(0);
-        $this->setUpRequestMockExpectations(false, AreaEnum::AREA_ADMIN);
-
-        $expected = <<<HTML
-<html>
-<head>
-<title>Foobar</title>
-</head>
-<body class="foo foo-bar-baz in-admin">
-<p>Baz</p>
-</body>
-</html>
-HTML;
-
-        self::assertEquals(
-            $expected,
-            $this->plugin->__invoke($this->getTemplateContent(), $this->smartyInternalTemplateMock)
-        );
-    }
-
-    public function testProcessWithNoHtmlBodyTag(): void
-    {
-        $templateContent = <<<HTML
-<p>Baz</p>
-HTML;
-
-        self::assertEquals(
-            $templateContent,
-            $this->plugin->__invoke($templateContent, $this->smartyInternalTemplateMock)
-        );
+        return str_replace($this->getTemplateOutput(), '<body>', '<body class="already-exists">');
     }
 }
