@@ -6,7 +6,7 @@ test:php-unit:
     paths:
       - tests/.phpunit.result.cache
   script:
-    - phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never --log-junit junit-report.xml
+    - composer test-with-coverage
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   needs:
     - composer

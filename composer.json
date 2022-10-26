@@ -93,7 +93,7 @@
   "scripts": {
     "test": "./vendor/bin/phpunit -c ./tests/phpunit.dist.xml",
     "test-windows": ".\\vendor\\bin\\phpunit.bat -c .\\tests\\phpunit.dist.xml",
-    "test-with-coverage": "phpdbg -qrr ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-clover ./build/logs/clover.xml",
+    "test-with-coverage": "phpdbg -qrr -d memory_limit=-1 ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never --log-junit junit-report.xml",
     "lint": "./vendor/bin/php-cs-fixer fix --dry-run --show-progress=dots -v",
     "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --dry-run --show-progress=dots -v",
     "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --show-progress=dots -v",
