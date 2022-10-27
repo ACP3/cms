@@ -57,7 +57,7 @@ class CheckMaintenanceModeListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ControllerActionRequestEvent::NAME => '__invoke',
+            ControllerActionRequestEvent::class => '__invoke',
         ];
     }
 }

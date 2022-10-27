@@ -13,11 +13,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ControllerActionRequestEvent extends Event
 {
+    // @deprecated since 6.11.0, use `ControllerActionRequestEvent::class` instead
     public const NAME = 'core.application.controller_action_dispatcher.request';
-    /**
-     * @var \Symfony\Component\HttpFoundation\Response
-     */
-    private $response;
+
+    private ?Response $response = null;
 
     public function __construct(private readonly RequestInterface $request)
     {

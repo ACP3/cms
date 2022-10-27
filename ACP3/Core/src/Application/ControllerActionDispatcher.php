@@ -40,6 +40,7 @@ class ControllerActionDispatcher
             $controllerActionRequestEvent,
             ControllerActionRequestEvent::NAME
         );
+        $this->eventDispatcher->dispatch($controllerActionRequestEvent);
 
         if ($controllerActionRequestEvent->hasResponse()) {
             return $controllerActionRequestEvent->getResponse();
