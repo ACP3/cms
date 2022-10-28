@@ -10,30 +10,21 @@ namespace ACP3\Modules\ACP3\System\Helper;
 use ACP3\Core\Application\BootstrapInterface;
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser;
 use Composer\Semver\VersionParser;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class UpdateCheckTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var UpdateCheck
-     */
-    private $updateCheck;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Date
-     */
-    private $dateMock;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|SettingsInterface
-     */
-    private $settingsMock;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser
-     */
-    private $updateFileParserMock;
-    /**
-     * @var \Composer\Semver\VersionParser
-     */
-    private $versionParser;
+    private UpdateCheck $updateCheck;
+
+    private Date|MockObject $dateMock;
+
+    private SettingsInterface|MockObject $settingsMock;
+
+    private UpdateFileParser|MockObject $updateFileParserMock;
+
+    private VersionParser $versionParser;
 
     protected function setup(): void
     {
@@ -56,31 +47,28 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
         $this->updateFileParserMock = $this->createMock(UpdateCheck\UpdateFileParser::class);
     }
 
+    private function setUpSettingsMockExpectation(string $lastCheck = '-1 hour'): void
+    {
+        $this->settingsMock->expects(self::once())
+            ->method('getSettings')
+            ->willReturn([
+                'update_last_check' => (new \DateTime())->modify($lastCheck)->format('U'),
+                'update_new_version' => BootstrapInterface::VERSION,
+                'update_new_version_url' => 'https://foo.bar/',
+            ]);
+    }
+
     public function testDoNotRequestUpdateURI(): void
     {
         $this->dateMock->expects(self::once())
             ->method('timestamp')
             ->willReturn((int) (new \DateTime())->modify('-1 hour')->format('U'));
-
-        $this->settingsMock->expects(self::once())
-            ->method('getSettings')
-            ->willReturn([
-                'update_last_check' => (new \DateTime())->modify('-1 hour')->format('U'),
-                'update_new_version' => BootstrapInterface::VERSION,
-                'update_new_version_url' => 'https://foo.bar/',
-            ]);
+        $this->setUpSettingsMockExpectation();
 
         $this->updateFileParserMock->expects(self::never())
             ->method('parseUpdateFile');
 
-        $update = [
-            'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
-            'latest_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
-            'is_latest' => true,
-            'url' => 'https://foo.bar/',
-        ];
-
-        self::assertEquals($update, $this->updateCheck->checkForNewVersion());
+        $this->updateCheck->checkForNewVersion();
     }
 
     public function testDoRequestUpdateURI(): void
@@ -89,13 +77,7 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
             ->method('timestamp')
             ->willReturn((int) (new \DateTime())->format('U'));
 
-        $this->settingsMock->expects(self::once())
-            ->method('getSettings')
-            ->willReturn([
-                'update_last_check' => (new \DateTime())->modify('-2 days')->format('U'),
-                'update_new_version' => BootstrapInterface::VERSION,
-                'update_new_version_url' => 'https://foo.bar/',
-            ]);
+        $this->setUpSettingsMockExpectation('-2 days');
 
         $this->settingsMock->expects(self::once())
             ->method('saveSettings')
@@ -108,13 +90,20 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
                 'url' => 'https://foobar.baz/',
             ]);
 
+        $this->updateCheck->checkForNewVersion();
+    }
+
+    public function testGetLatestUpdateCheckInformation(): void
+    {
+        $this->setUpSettingsMockExpectation();
+
         $update = [
             'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
             'latest_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
             'is_latest' => true,
-            'url' => 'https://foobar.baz/',
+            'url' => 'https://foo.bar/',
         ];
 
-        self::assertEquals($update, $this->updateCheck->checkForNewVersion());
+        self::assertEquals($update, $this->updateCheck->getLatestUpdateCheckInformation());
     }
 }

@@ -25,8 +25,10 @@ class UpdateCheck extends Core\Controller\AbstractWidgetAction
      */
     public function __invoke(): array
     {
+        $this->updateCheck->checkForNewVersion();
+
         return [
-            'update' => $this->updateCheck->checkForNewVersion(),
+            'update' => $this->updateCheck->getLatestUpdateCheckInformation(),
         ];
     }
 }

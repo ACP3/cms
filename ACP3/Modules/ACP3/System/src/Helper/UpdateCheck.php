@@ -25,36 +25,28 @@ class UpdateCheck
     }
 
     /**
-     * @return array<string, string|bool>
+     * @return array{installed_version: string, latest_version: string, is_latest: bool, url: string}
      */
-    public function checkForNewVersion(): array
+    public function getLatestUpdateCheckInformation(): array
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-        if ($this->canRequestUpdateURI($settings['update_last_check'])) {
-            $update = $this->doUpdateCheck();
-        } else {
-            $update = [
-                'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
-                'latest_version' => $this->versionParser->normalize($settings['update_new_version']),
-                'is_latest' => $this->isLatestVersion($settings['update_new_version']),
-                'url' => $settings['update_new_version_url'],
-            ];
+        return [
+            'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
+            'latest_version' => $this->versionParser->normalize($settings['update_new_version']),
+            'is_latest' => $this->isLatestVersion($settings['update_new_version']),
+            'url' => $settings['update_new_version_url'],
+        ];
+    }
+
+    public function checkForNewVersion(): void
+    {
+        $settings = $this->settings->getSettings(Schema::MODULE_NAME);
+
+        if (!$this->canRequestUpdateURI($settings['update_last_check'])) {
+            return;
         }
 
-        return $update;
-    }
-
-    private function canRequestUpdateURI(int $lastUpdateTimestamp): bool
-    {
-        return $this->date->timestamp() - $lastUpdateTimestamp >= self::UPDATE_CHECK_DATE_OFFSET;
-    }
-
-    /**
-     * @return array<string, string|bool>
-     */
-    private function doUpdateCheck(): array
-    {
         try {
             $data = $this->updateFileParser->parseUpdateFile(self::UPDATE_CHECK_FILE);
 
@@ -67,10 +59,12 @@ class UpdateCheck
 
             $this->saveUpdateSettings($update);
         } catch (\RuntimeException) {
-            $update = [];
         }
+    }
 
-        return $update;
+    private function canRequestUpdateURI(int $lastUpdateTimestamp): bool
+    {
+        return $this->date->timestamp() - $lastUpdateTimestamp >= self::UPDATE_CHECK_DATE_OFFSET;
     }
 
     private function isLatestVersion(string $latestVersion): bool
@@ -82,11 +76,11 @@ class UpdateCheck
     }
 
     /**
-     * @param array<string, string|bool> $update
+     * @param array{latest_version: string, url: string} $update
      *
      * @throws \Exception
      */
-    private function saveUpdateSettings(array $update): bool
+    private function saveUpdateSettings(array $update): void
     {
         $data = [
             'update_last_check' => $this->date->timestamp(),
@@ -94,6 +88,6 @@ class UpdateCheck
             'update_new_version_url' => $update['url'],
         ];
 
-        return $this->settings->saveSettings($data, Schema::MODULE_NAME);
+        $this->settings->saveSettings($data, Schema::MODULE_NAME);
     }
 }
