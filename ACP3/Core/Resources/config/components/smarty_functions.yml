@@ -39,8 +39,6 @@ services:
       - { name: smarty.plugin.function, pluginName: js_libraries }
 
   ACP3\Core\View\Renderer\Smarty\Functions\LoadModule:
-    arguments:
-      $applicationMode: "@core.environment"
     tags:
       - { name: smarty.plugin.function, pluginName: load_module }
 

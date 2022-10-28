@@ -8,7 +8,7 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
@@ -17,8 +17,7 @@ class LoadModule extends AbstractFunction
     public function __construct(
         private readonly ACL $acl,
         private readonly RouterInterface $router,
-        private readonly FragmentHandler $fragmentHandler,
-        private readonly ApplicationMode $applicationMode)
+        private readonly FragmentHandler $fragmentHandler)
     {
     }
 
@@ -27,8 +26,8 @@ class LoadModule extends AbstractFunction
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
-        $pathArray = $this->convertPathToArray($params['module']);
-        $path = $pathArray[0] . '/' . $pathArray[1] . '/' . $pathArray[2] . '/' . $pathArray[3];
+        [$area, $module, $controller, $action] = $this->convertPathToArray($params['module']);
+        $path = $area . '/' . $module . '/' . $controller . '/' . $action;
 
         $response = '';
         if ($this->acl->hasPermission($path) === true) {
@@ -89,6 +88,14 @@ class LoadModule extends AbstractFunction
      */
     private function esiInclude(string $path, array $arguments): string
     {
+        [$area, $module, $controller, $action] = explode('/', $path);
+
+        if ($area === AreaEnum::AREA_ADMIN->value) {
+            $path = 'acp/' . $module . '/' . $controller . '/' . $action;
+        } elseif ($area === AreaEnum::AREA_FRONTEND->value) {
+            $path = $module . '/' . $controller . '/' . $action;
+        }
+
         $routeArguments = '';
         foreach ($arguments as $key => $value) {
             $routeArguments .= '/' . $key . '_' . $value;
@@ -96,10 +103,7 @@ class LoadModule extends AbstractFunction
 
         return $this->fragmentHandler->render(
             $this->router->route($path . $routeArguments, true),
-            'esi',
-            [
-                'ignore_errors' => $this->applicationMode === ApplicationMode::PRODUCTION,
-            ]
+            'esi'
         );
     }
 }
