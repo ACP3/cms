@@ -103,7 +103,7 @@ class LoadModule extends AbstractFunction
 
         return $this->fragmentHandler->render(
             $this->router->route($path . $routeArguments, true),
-            'esi'
+            'esi',
         );
     }
 }

@@ -8,16 +8,19 @@
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\Environment\AreaMatcher;
+use ACP3\Core\Http\Request as BaseRequest;
 use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class Request extends \ACP3\Core\Http\Request
+class Request extends BaseRequest
 {
     public function __construct(
         RequestStack $requestStack,
+        AreaMatcher $areaMatcher,
         private readonly SeoRepository $seoRepository
     ) {
-        parent::__construct($requestStack);
+        parent::__construct($requestStack, $areaMatcher);
     }
 
     protected function parseURI(): void
@@ -30,7 +33,7 @@ class Request extends \ACP3\Core\Http\Request
     }
 
     /**
-     * Checks, whether the current request may equals an uri alias.
+     * Checks, whether the current request may equal an uri alias.
      */
     protected function checkForUriAlias(): void
     {

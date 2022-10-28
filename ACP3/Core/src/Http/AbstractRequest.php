@@ -111,7 +111,7 @@ abstract class AbstractRequest implements RequestInterface
         return $this;
     }
 
-    protected function fillParameterBags(): void
+    private function fillParameterBags(): void
     {
         $this->userAgent = new UserAgent($this->getSymfonyRequest()->server);
     }

@@ -8,17 +8,23 @@
 namespace ACP3\Core\Http;
 
 use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\Environment\AreaMatcher;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Request extends AbstractRequest
 {
     private const ADMIN_PANEL_PATTERN = 'acp/';
     private const WIDGET_PATTERN = 'widget/';
-    private const FRONTEND_PATTERN = 'frontend/';
 
     protected string $query = '';
 
     protected string $pathInfo = '';
+
+    public function __construct(RequestStack $requestStack, private readonly AreaMatcher $areaMatcher)
+    {
+        parent::__construct($requestStack);
+    }
 
     /**
      * {@inheritdoc}
@@ -41,7 +47,7 @@ class Request extends AbstractRequest
      */
     public function getArea(): AreaEnum
     {
-        return $this->getSymfonyRequest()->attributes->get('_area');
+        return $this->areaMatcher->getAreaFromRequest($this->getSymfonyRequest());
     }
 
     /**
@@ -109,27 +115,20 @@ class Request extends AbstractRequest
     {
         $this->query = $this->pathInfo;
 
-        // It's a request for the admin panel page
-        if (str_starts_with($this->query, self::ADMIN_PANEL_PATTERN)) {
-            $this->getSymfonyRequest()->attributes->set('_area', AreaEnum::AREA_ADMIN);
-            // strip "acp/"
-            $this->query = substr($this->query, \strlen(self::ADMIN_PANEL_PATTERN));
-        } elseif (str_starts_with($this->query, self::WIDGET_PATTERN)) {
-            $this->getSymfonyRequest()->attributes->set('_area', AreaEnum::AREA_WIDGET);
-
-            // strip "widget/"
-            $this->query = substr($this->query, \strlen(self::WIDGET_PATTERN));
-        } else {
-            if (str_starts_with($this->query, self::FRONTEND_PATTERN)) {
-                $this->query = substr($this->query, \strlen(self::FRONTEND_PATTERN));
-            }
-
-            $this->getSymfonyRequest()->attributes->set('_area', AreaEnum::AREA_FRONTEND);
-
-            // Set the user defined homepage of the website
-            if ($this->query === '/' && $this->homepage !== '') {
-                $this->query = $this->homepage;
-            }
+        switch ($this->getArea()) {
+            case AreaEnum::AREA_ADMIN:
+                $this->query = substr($this->query, \strlen(self::ADMIN_PANEL_PATTERN));
+                break;
+            case AreaEnum::AREA_WIDGET:
+                $this->query = substr($this->query, \strlen(self::WIDGET_PATTERN));
+                break;
+            case AreaEnum::AREA_FRONTEND:
+            case AreaEnum::AREA_INSTALL:
+                // Set the user defined homepage of the website
+                if ($this->query === '/' && $this->homepage !== '') {
+                    $this->query = $this->homepage;
+                }
+                break;
         }
 
         $this->parseURI();
@@ -216,8 +215,8 @@ class Request extends AbstractRequest
                 } elseif (preg_match('/^(id_(\d+))$/', $query[$i])) { // result ID
                     $this->getSymfonyRequest()->attributes->add(['id' => (int) substr($query[$i], 3)]);
                 } elseif (preg_match('/^(([a-zA-Z0-9\-]+)_(.+))$/', $query[$i])) { // Additional URI parameters
-                    $param = explode('_', $query[$i], 2);
-                    $this->getSymfonyRequest()->attributes->add([$param[0] => $param[1]]);
+                    [$paramName, $paramValue] = explode('_', $query[$i], 2);
+                    $this->getSymfonyRequest()->attributes->add([$paramName => $paramValue]);
                 }
             }
         }

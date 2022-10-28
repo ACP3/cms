@@ -4,6 +4,6 @@ services:
 
   ACP3\Core\Http\Request:
     public: true
-    factory: ['@ACP3\Modules\ACP3\System\Core\Http\RequestFactory', create]
+    configurator: ['@ACP3\Modules\ACP3\System\Core\Http\RequestConfigurator', configure]
 
-  ACP3\Modules\ACP3\System\Core\Http\RequestFactory: ~
+  ACP3\Modules\ACP3\System\Core\Http\RequestConfigurator: ~

@@ -29,12 +29,8 @@ services:
       - { name: kernel.event_subscriber }
 
   ACP3\Core\Http\Request:
-    class: ACP3\Modules\ACP3\Installer\Core\Http\Request
     public: true
-    factory: ["@core.request_factory", create]
-
-  core.request_factory:
-    class: ACP3\Modules\ACP3\Installer\Core\Http\RequestFactory
+    configurator: ['@ACP3\Modules\ACP3\System\Core\Http\RequestConfigurator', configure]
 
   core.session.handler:
     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\NullSessionHandler

@@ -7,32 +7,30 @@
 
 namespace ACP3\Modules\ACP3\Seo\Core\Http;
 
+use ACP3\Core\Environment\AreaMatcher;
+use ACP3\Core\Http\Request as BaseRequest;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
-use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class RequestFactory extends \ACP3\Modules\ACP3\System\Core\Http\RequestFactory
+class RequestFactory
 {
     public function __construct(
-        SettingsInterface $config,
         private readonly Modules $modules,
-        RequestStack $requestStack,
-        private readonly SeoRepository $seoRepository
+        private readonly RequestStack $requestStack,
+        private readonly SeoRepository $seoRepository,
+        private readonly AreaMatcher $areaMatcher,
     ) {
-        parent::__construct($config, $requestStack);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getRequest()
+    public function create(): RequestInterface
     {
         if ($this->modules->isInstalled(Schema::MODULE_NAME)) {
-            return new Request($this->requestStack, $this->seoRepository);
+            return new Request($this->requestStack, $this->areaMatcher, $this->seoRepository);
         }
 
-        return parent::getRequest();
+        return new BaseRequest($this->requestStack, $this->areaMatcher);
     }
 }
