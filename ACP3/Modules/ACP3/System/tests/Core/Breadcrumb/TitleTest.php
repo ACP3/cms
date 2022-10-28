@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\System\Core\Breadcrumb;
 
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
 
 class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
@@ -25,7 +25,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
      */
     private $configMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Request
+     * @var \PHPUnit\Framework\MockObject\MockObject|RequestInterface
      */
     private $requestMock;
 
@@ -48,7 +48,7 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
     {
         parent::initializeMockObjects();
 
-        $this->requestMock = $this->createMock(Request::class);
+        $this->requestMock = $this->createMock(RequestInterface::class);
         $this->configMock = $this->createMock(SettingsInterface::class);
     }
 

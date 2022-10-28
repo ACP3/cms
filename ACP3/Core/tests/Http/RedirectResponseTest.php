@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class RedirectResponseTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Http\Request
+     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Http\RequestInterface
      */
     private $requestMock;
     /**
@@ -37,7 +37,7 @@ class RedirectResponseTest extends \PHPUnit\Framework\TestCase
 
     private function setUpMockObjects(): void
     {
-        $this->requestMock = $this->createMock(Request::class);
+        $this->requestMock = $this->createMock(RequestInterface::class);
         $this->routerMock = $this->createMock(RouterInterface::class);
     }
 

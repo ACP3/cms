@@ -11,7 +11,7 @@ use ACP3\Core\DataProvider\Helpers\CheckboxGeneratorDataProvider;
 use ACP3\Core\DataProvider\Helpers\ChoicesGeneratorDataProvider;
 use ACP3\Core\DataProvider\Helpers\RecordsPerPageDataProvider;
 use ACP3\Core\DataProvider\Helpers\SelectEntryDataProvider;
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 
 class FormsTest extends \PHPUnit\Framework\TestCase
@@ -32,7 +32,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     protected function setup(): void
     {
         $this->translatorMock = $this->createMock(Translator::class);
-        $this->requestMock = $this->createMock(Request::class);
+        $this->requestMock = $this->createMock(RequestInterface::class);
 
         $this->formsHelper = new Forms(
             $this->translatorMock,

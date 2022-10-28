@@ -9,7 +9,7 @@ namespace ACP3\Core\Assets;
 
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\StringFormatter;
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 
 class PageCssClassesTest extends \PHPUnit\Framework\TestCase
 {
@@ -22,7 +22,7 @@ class PageCssClassesTest extends \PHPUnit\Framework\TestCase
      */
     private $titleMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Request
+     * @var \PHPUnit\Framework\MockObject\MockObject|RequestInterface
      */
     private $requestMock;
     /**
@@ -44,7 +44,7 @@ class PageCssClassesTest extends \PHPUnit\Framework\TestCase
     private function setUpMockObjects(): void
     {
         $this->titleMock = $this->createMock(Title::class);
-        $this->requestMock = $this->createMock(Request::class);
+        $this->requestMock = $this->createMock(RequestInterface::class);
         $this->stringFormatterMock = $this->createMock(StringFormatter::class);
     }
 

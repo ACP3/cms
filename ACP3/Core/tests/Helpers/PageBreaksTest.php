@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Helpers;
 
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
@@ -18,7 +18,7 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
      */
     protected $pageBreaks;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Request
+     * @var \PHPUnit\Framework\MockObject\MockObject|RequestInterface
      */
     protected $requestMock;
     /**
@@ -43,7 +43,7 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
 
     protected function initializeMockObjects(): void
     {
-        $this->requestMock = $this->createMock(Request::class);
+        $this->requestMock = $this->createMock(RequestInterface::class);
         $this->routerMock = $this->createMock(RouterInterface::class);
         $this->tocMock = $this->createMock(TableOfContents::class);
     }

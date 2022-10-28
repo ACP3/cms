@@ -8,7 +8,7 @@
 namespace ACP3\Core\Breadcrumb;
 
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\DependencyInjection\Container;
@@ -25,7 +25,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
      */
     protected $translatorMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Request
+     * @var \PHPUnit\Framework\MockObject\MockObject|RequestInterface
      */
     protected $requestMock;
     /**
@@ -60,7 +60,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
     {
         $this->containerMock = $this->createMock(Container::class);
         $this->translatorMock = $this->createMock(Translator::class);
-        $this->requestMock = $this->createMock(Request::class);
+        $this->requestMock = $this->createMock(RequestInterface::class);
         $this->routerMock = $this->createPartialMock(RouterInterface::class, ['route']);
         $this->eventDispatcherMock = $this->createMock(EventDispatcher::class);
     }

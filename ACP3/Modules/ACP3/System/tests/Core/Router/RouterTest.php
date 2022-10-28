@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\System\Core\Router;
 
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Settings\SettingsInterface;
 
 class RouterTest extends \PHPUnit\Framework\TestCase
@@ -18,7 +18,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
      */
     protected $router;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Request
+     * @var \PHPUnit\Framework\MockObject\MockObject|RequestInterface
      */
     protected $requestMock;
     /**
@@ -43,7 +43,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
 
     protected function initializeMockObjects(): void
     {
-        $this->requestMock = $this->createMock(Request::class);
+        $this->requestMock = $this->createMock(RequestInterface::class);
         $this->appPathMock = $this->createMock(ApplicationPath::class);
         $this->configMock = $this->createMock(SettingsInterface::class);
     }

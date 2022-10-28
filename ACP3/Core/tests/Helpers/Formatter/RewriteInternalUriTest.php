@@ -9,7 +9,7 @@ namespace ACP3\Core\Helpers\Formatter;
 
 use ACP3\Core\Controller\Helper\ControllerActionExists;
 use ACP3\Core\Environment\ApplicationPath;
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
 use PHPUnit\Framework\TestCase;
@@ -59,7 +59,7 @@ class RewriteInternalUriTest extends TestCase
     {
         $this->appPathMock = $this->createMock(ApplicationPath::class);
         $this->controllerActionExistsMock = $this->createMock(ControllerActionExists::class);
-        $this->requestMock = $this->createMock(Request::class);
+        $this->requestMock = $this->createMock(RequestInterface::class);
         $this->routerMock = $this->createMock(RouterInterface::class);
         $this->internalUriValidationRule = $this->createMock(InternalUriValidationRule::class);
     }

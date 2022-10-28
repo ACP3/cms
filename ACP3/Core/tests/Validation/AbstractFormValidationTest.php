@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Validation;
 
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Session\SessionConstants;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
@@ -71,10 +71,10 @@ abstract class AbstractFormValidationTest extends TestCase
         );
     }
 
-    private function setUpRequestMock(): MockObject|Request
+    private function setUpRequestMock(): MockObject|RequestInterface
     {
-        /** @var Request|MockObject $requestMock */
-        $requestMock = $this->createMock(Request::class);
+        /** @var RequestInterface|MockObject $requestMock */
+        $requestMock = $this->createMock(RequestInterface::class);
 
         $this->setRequestMockExpectations($requestMock);
 

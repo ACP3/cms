@@ -9,12 +9,12 @@ namespace ACP3\Modules\ACP3\Seo\ViewProviders;
 
 use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\FormToken;
-use ACP3\Core\Http\Request;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Modules\ACP3\Seo\Helper\MetaFormFields;
 
 class AdminSeoEditViewProvider
 {
-    public function __construct(private readonly FormToken $formTokenHelper, private readonly MetaFormFields $metaFormFieldsHelper, private readonly Request $request, private readonly Title $title)
+    public function __construct(private readonly FormToken $formTokenHelper, private readonly MetaFormFields $metaFormFieldsHelper, private readonly RequestInterface $request, private readonly Title $title)
     {
     }
 
