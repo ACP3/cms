@@ -26,13 +26,18 @@ class PageCssClasses extends AbstractFilter
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
         if (str_contains($tplOutput, '<body')) {
-            $html5 = new HTML5([
-            ]);
+            $html5 = new HTML5();
             $dom = $html5->loadHTML($tplOutput);
             $body = $dom->documentElement->lastElementChild;
 
             if ($this->cssClassCache === '') {
-                $this->cssClassCache = implode(' ', array_filter([$body->getAttribute('class'), ...$this->buildPageCssClasses()], fn ($item) => $item !== ''));
+                $this->cssClassCache = implode(
+                    ' ',
+                    array_filter(
+                        [$body->getAttribute('class'), ...$this->buildPageCssClasses()],
+                        static fn ($item) => $item !== ''
+                    )
+                );
             }
             $body->setAttribute('class', $this->cssClassCache);
 
