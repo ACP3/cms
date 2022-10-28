@@ -9,11 +9,7 @@
 
 {block FORM_GROUP_LABEL_ID}for="{$captcha.id}"{/block}
 {block FORM_GROUP_FORM_FIELD}
-    <img src="{load_module module="frontend/captcha/index/image/" args=["token" => $captcha.token]}"
-         width="{$captcha.width}"
-         height="{$captcha.height}"
-         class="mb-2"
-         alt="">
+    {load_module module="frontend/captcha/index/image/" args=["token" => $captcha.token, "width" => $captcha.width, "height" => $captcha.height]}
     <input class="form-control"
            type="text"
            name="captcha"

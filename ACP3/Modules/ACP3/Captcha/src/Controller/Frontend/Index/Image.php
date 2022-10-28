@@ -7,37 +7,39 @@
 
 namespace ACP3\Modules\ACP3\Captcha\Controller\Frontend\Index;
 
-use ACP3\Core;
-use Symfony\Component\HttpFoundation\Response;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class Image extends Core\Controller\AbstractWidgetAction
+class Image extends AbstractWidgetAction
 {
     public function __construct(
-        Core\Controller\Context\Context $context,
+        Context $context,
         protected Session $sessionHandler
     ) {
         parent::__construct($context);
     }
 
     /**
+     * @return array{captcha: array{src: string, width: int, height: int}}
+     *
      * @throws \Exception
      */
-    public function __invoke(string $token): Response
+    public function __invoke(string $token, ?int $width, ?int $height): array
     {
-        $response = new Response();
-        $response->headers->set('Content-type', 'text/plain');
-        $response->headers->addCacheControlDirective('no-cache', true);
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-        $response->headers->add(['Expires' => 'Mon, 26 Jul 1997 05:00:00 GMT']);
-
         if ($this->sessionHandler->has('captcha_' . $token)) {
-            $response->setContent($this->generateCaptcha($this->sessionHandler->get('captcha_' . $token)));
+            $captcha = $this->generateCaptcha($this->sessionHandler->get('captcha_' . $token));
         } else {
-            $response->setContent($this->generateCaptcha('invalid captcha!', true));
+            $captcha = $this->generateCaptcha('invalid captcha!', true);
         }
 
-        return $response;
+        return [
+            'captcha' => [
+                'src' => $captcha,
+                'width' => $width,
+                'height' => $height,
+            ],
+        ];
     }
 
     /**
