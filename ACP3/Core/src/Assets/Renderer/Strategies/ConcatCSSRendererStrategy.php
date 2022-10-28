@@ -10,8 +10,10 @@ namespace ACP3\Core\Assets\Renderer\Strategies;
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Assets\FileResolver;
+use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\ThemePathInterface;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use Psr\Cache\CacheItemPoolInterface;
 use tubalmartin\CssMin\Minifier;
@@ -26,6 +28,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     protected array $stylesheets = [];
 
     public function __construct(
+        private readonly RequestInterface $request,
         private readonly Minifier $minifier,
         Assets $assets,
         Assets\Libraries $libraries,
@@ -135,12 +138,22 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
      */
     private function fetchModuleStylesheets(): void
     {
+        $area = $this->request->getArea();
+
         foreach ($this->modules->getInstalledModules() as $module) {
             $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
                 $module['name'],
                 static::ASSETS_PATH_CSS,
                 'style.css'
             );
+
+            if ($area === AreaEnum::AREA_ADMIN) {
+                $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
+                    $module['name'],
+                    static::ASSETS_PATH_CSS,
+                    'admin.css'
+                );
+            }
 
             // Append custom styles to the default module styling
             $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(

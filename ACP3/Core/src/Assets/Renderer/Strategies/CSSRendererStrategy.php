@@ -10,6 +10,8 @@ namespace ACP3\Core\Assets\Renderer\Strategies;
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Assets\Libraries;
+use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 
 class CSSRendererStrategy implements CSSRendererStrategyInterface
@@ -21,7 +23,12 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      */
     private ?array $stylesheets = null;
 
-    public function __construct(private readonly Assets $assets, private readonly Libraries $libraries, private readonly Modules $modules, private readonly FileResolver $fileResolver)
+    public function __construct(
+        private readonly RequestInterface $request,
+        private readonly Assets $assets,
+        private readonly Libraries $libraries,
+        private readonly Modules $modules,
+        private readonly FileResolver $fileResolver)
     {
     }
 
@@ -73,12 +80,22 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      */
     private function fetchModuleStylesheets(): void
     {
+        $area = $this->request->getArea();
+
         foreach ($this->modules->getInstalledModules() as $module) {
             $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
                 $module['name'],
                 static::ASSETS_PATH_CSS,
                 'style.css'
             );
+
+            if ($area === AreaEnum::AREA_ADMIN) {
+                $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
+                    $module['name'],
+                    static::ASSETS_PATH_CSS,
+                    'admin.css'
+                );
+            }
 
             // Append custom styles to the default module styling
             $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
