@@ -18,12 +18,13 @@ class AreaMatcher
 
     public function getAreaFromRequest(Request $symfonyRequest): AreaEnum
     {
+        $pathInfo = $symfonyRequest->getPathInfo();
         $requestUri = $symfonyRequest->getRequestUri();
 
-        if (str_starts_with($requestUri, self::ADMIN_PANEL_PATTERN)) {
+        if (str_starts_with($pathInfo, self::ADMIN_PANEL_PATTERN)) {
             return AreaEnum::AREA_ADMIN;
         }
-        if (str_starts_with($requestUri, self::WIDGET_PATTERN)) {
+        if (str_starts_with($pathInfo, self::WIDGET_PATTERN)) {
             return AreaEnum::AREA_WIDGET;
         }
         if (str_starts_with($requestUri, self::INSTALLER_PATTERN)) {
