@@ -16,10 +16,10 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^6.1.0",
-    "acp3/module-articles": "^6.1.0",
-    "acp3/module-social-sharing": "^6.1.0",
-    "acp3/module-system": "^6.1.0"
+    "acp3/core": "^6.11.0",
+    "acp3/module-articles": "^6.11.0",
+    "acp3/module-social-sharing": "^6.11.0",
+    "acp3/module-system": "^6.11.0"
   },
   "autoload": {
     "psr-4": {
