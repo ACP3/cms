@@ -7,13 +7,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Deprecations
+
+-   [Core] Deprecated the `ControllerActionRequestEvent::NAME` constant, which will be removed with ACP3 version 7.0.0. Use `ControllerActionRequestEvent::class` instead.
+-   [Core] Deprecated the `ModelSaveEvent`, which will be removed with ACP3 version 7.0.0. Use or subscribe to the `BeforeModelSaveEvent`, `AfterModelSaveEvent`, `BeforeModelDeleteEvent` or `AfterModelDeleteEvent` classes instead.
+
+### Added
+
+-   [Core] Added the possibility to deliver different static assets for the frontend, admin and when the user is logged in.
+
+    Just prefix the corresponding library files with `admin-` or `logged-in-`, i.e. `admin-bootstrap.scss`, which will result (after the transpilation) to `admin-bootstrap.min.css`
+
+-   [Core] Added the possibility to have and deliver special `admin.css` files and use it for the permission and system module
+
+### Changed
+
+-   [System] Reworked the update check, so that it performs the actual update check when the response has already been sent to improve the response times.
+
+### Fixed
+
+-   [Captcha] Fixed rendering the captchas
 
 ## [6.10.3] - 2022-10-27
+
+### Fixed
 
 -   [Core] Fixed the missing inclusion of the theme specific translation customizations - 2nd attempt...
 
 ## [6.10.2] - 2022-10-27
+
+### Fixed
 
 -   [Core] Fixed the `PageCssClasses` output filter, if there is already an existing `class` attribute at the `<body>`-tag
 -   [Core] Fixed the missing inclusion of the theme specific translation customizations
