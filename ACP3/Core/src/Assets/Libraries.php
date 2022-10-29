@@ -51,7 +51,7 @@ class Libraries
     }
 
     /**
-     * @param array<string, mixed>|null $options
+     * @param array{enabled_for_ajax?: bool, dependencies?: string[], css?: string|string[], js?: string|string[], module?: string}|null $options
      *
      * @return $this
      */
