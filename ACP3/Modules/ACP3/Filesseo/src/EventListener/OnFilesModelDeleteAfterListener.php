@@ -29,7 +29,7 @@ class OnFilesModelDeleteAfterListener implements EventSubscriberInterface
             return;
         }
 
-        foreach ($event->getEntryId() as $fileId) {
+        foreach ($event->getEntryIdList() as $fileId) {
             $uri = sprintf(Helpers::URL_KEY_PATTERN, $fileId);
             $this->uriAliasManager->deleteUriAlias($uri);
         }

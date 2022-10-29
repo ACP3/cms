@@ -23,7 +23,7 @@ class OnFilesModelBeforeDeleteListener implements EventSubscriberInterface
      */
     public function __invoke(BeforeModelDeleteEvent $event): void
     {
-        foreach ($event->getEntryId() as $item) {
+        foreach ($event->getEntryIdList() as $item) {
             $this->filesUploadHelper->removeUploadedFile($this->filesRepository->getFileById($item));
         }
     }

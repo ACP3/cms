@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Seo\EventListener;
 
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException;
@@ -28,7 +28,7 @@ class GenerateSitemapListener implements EventSubscriberInterface
     {
     }
 
-    public function onModelAfterSave(ModelSaveEvent $event): void
+    public function onModelAfterSave(AfterModelSaveEvent $event): void
     {
         if (!$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;
@@ -74,7 +74,7 @@ class GenerateSitemapListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'core.model.after_save' => ['onModelAfterSave', -255],
+            AfterModelSaveEvent::class => ['onModelAfterSave', -255],
             KernelEvents::TERMINATE => 'onKernelTerminate',
         ];
     }

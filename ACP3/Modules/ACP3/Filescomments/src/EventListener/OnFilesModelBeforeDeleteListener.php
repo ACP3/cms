@@ -26,7 +26,7 @@ class OnFilesModelBeforeDeleteListener implements EventSubscriberInterface
             return;
         }
 
-        foreach ($event->getEntryId() as $item) {
+        foreach ($event->getEntryIdList() as $item) {
             $this->commentsHelpers->deleteCommentsByModuleAndResult(
                 $this->modules->getModuleId(Schema::MODULE_NAME),
                 $item

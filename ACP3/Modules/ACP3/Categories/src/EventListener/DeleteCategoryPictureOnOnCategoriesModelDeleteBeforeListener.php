@@ -20,7 +20,7 @@ class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener implements Ev
 
     public function __invoke(AfterModelDeleteEvent $event): void
     {
-        foreach ($event->getEntryId() as $entryId) {
+        foreach ($event->getEntryIdList() as $entryId) {
             $category = $this->categoryRepository->getCategoryDeleteInfosById($entryId);
 
             $this->categoriesUploadHelper->removeUploadedFile($category['picture']);

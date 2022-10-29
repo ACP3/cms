@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Seo\EventListener;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Seo\Installer\Schema;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -19,7 +19,7 @@ class InsertUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(AfterModelSaveEvent $event): void
     {
         if ($this->acl->hasPermission('admin/seo/index/create')) {
             $formData = $event->getRawData();
@@ -45,7 +45,7 @@ class InsertUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'core.model.after_save' => '__invoke',
+            AfterModelSaveEvent::class => '__invoke',
         ];
     }
 }

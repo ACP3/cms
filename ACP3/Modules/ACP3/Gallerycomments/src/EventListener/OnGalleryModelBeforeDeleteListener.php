@@ -30,7 +30,7 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
             return;
         }
 
-        foreach ($event->getEntryId() as $galleryId) {
+        foreach ($event->getEntryIdList() as $galleryId) {
             $galleryPictures = $this->galleryPictureRepository->getPictureIdsByGalleryId($galleryId);
 
             foreach ($galleryPictures as $galleryPicture) {

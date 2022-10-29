@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\EventListener;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Helpers\Enum\LinkTargetEnum;
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Helpers\ManageMenuItem;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -23,7 +23,7 @@ class ManageMenuItemOnModelSaveAfterListener implements EventSubscriberInterface
     /**
      * @throws \Doctrine\DBAL\ConnectionException
      */
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(AfterModelSaveEvent $event): void
     {
         if ($this->acl->hasPermission('admin/menus/items/create') === true
             && $this->hasNecessaryMenuItemFormFields($event->getRawData())) {
@@ -66,7 +66,7 @@ class ManageMenuItemOnModelSaveAfterListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'core.model.after_save' => '__invoke',
+            AfterModelSaveEvent::class => '__invoke',
         ];
     }
 }

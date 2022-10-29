@@ -23,7 +23,7 @@ class ForbidSuperUserDeleteListener implements EventSubscriberInterface
      */
     public function __invoke(BeforeModelDeleteEvent $event): void
     {
-        foreach ($event->getEntryId() as $item) {
+        foreach ($event->getEntryIdList() as $item) {
             $user = $this->userModel->getUserInfo($item);
             if ($user['super_user'] == 1) {
                 throw new SuperUserNotDeletableException();

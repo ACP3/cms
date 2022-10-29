@@ -11,7 +11,7 @@ use ACP3\Core\Helpers\SendEmail;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Mailer\MailerMessage;
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use ACP3\Modules\ACP3\Users\Installer\Schema as UsersSchema;
@@ -23,7 +23,7 @@ class SendRegistrationMailListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(AfterModelSaveEvent $event): void
     {
         if (!$event->isIsNewEntry()) {
             return;

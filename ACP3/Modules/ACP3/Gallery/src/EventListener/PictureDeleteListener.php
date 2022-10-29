@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Gallery\EventListener;
 
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\BeforeModelDeleteEvent;
 use ACP3\Modules\ACP3\Gallery\Helper\ThumbnailGenerator;
 use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -26,11 +26,9 @@ class PictureDeleteListener implements EventSubscriberInterface
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function beforeDelete(ModelSaveEvent $event): void
+    public function beforeDelete(BeforeModelDeleteEvent $event): void
     {
-        $entryIds = \is_array($event->getEntryId()) ? $event->getEntryId() : [$event->getEntryId()];
-
-        foreach ($entryIds as $entryId) {
+        foreach ($event->getEntryIdList() as $entryId) {
             $this->picturesToDelete[$entryId] = $this->pictureRepository->getOneById($entryId);
         }
     }

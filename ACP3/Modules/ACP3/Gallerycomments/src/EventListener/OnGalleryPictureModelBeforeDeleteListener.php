@@ -26,7 +26,7 @@ class OnGalleryPictureModelBeforeDeleteListener implements EventSubscriberInterf
             return;
         }
 
-        foreach ($event->getEntryId() as $galleryPictureId) {
+        foreach ($event->getEntryIdList() as $galleryPictureId) {
             $this->commentsHelpers->deleteCommentsByModuleAndResult(
                 $this->modules->getModuleId(Schema::MODULE_NAME),
                 $galleryPictureId

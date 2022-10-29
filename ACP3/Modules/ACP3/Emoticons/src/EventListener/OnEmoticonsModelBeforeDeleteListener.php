@@ -20,7 +20,7 @@ class OnEmoticonsModelBeforeDeleteListener implements EventSubscriberInterface
 
     public function __invoke(BeforeModelDeleteEvent $event): void
     {
-        foreach ($event->getEntryId() as $entryId) {
+        foreach ($event->getEntryIdList() as $entryId) {
             $this->emoticonsUploadHelper->removeUploadedFile($this->emoticonRepository->getOneImageById($entryId));
         }
     }

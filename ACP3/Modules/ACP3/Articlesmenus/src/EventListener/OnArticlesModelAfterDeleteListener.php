@@ -29,7 +29,7 @@ class OnArticlesModelAfterDeleteListener implements EventSubscriberInterface
             return;
         }
 
-        foreach ($event->getEntryId() as $entryId) {
+        foreach ($event->getEntryIdList() as $entryId) {
             $uri = sprintf(Helpers::URL_KEY_PATTERN, $entryId);
 
             $this->manageMenuItem->manageMenuItem($uri);

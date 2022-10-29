@@ -24,7 +24,7 @@ class OnMenusModelBeforeDeleteListener implements EventSubscriberInterface
      */
     public function __invoke(BeforeModelDeleteEvent $event): void
     {
-        foreach ($event->getEntryId() as $item) {
+        foreach ($event->getEntryIdList() as $item) {
             if (!empty($item) && $this->menuRepository->menuExists($item) === true) {
                 // Delete the assigned menu items and update the nested set tree
                 $menuItems = $this->menuItemRepository->getAllItemsByBlockId($item);

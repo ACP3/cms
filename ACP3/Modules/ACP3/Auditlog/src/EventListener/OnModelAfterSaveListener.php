@@ -53,6 +53,10 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
      */
     private function prepareEntryIds(AfterModelDeleteEvent|AfterModelSaveEvent $event): array
     {
+        if ($event instanceof AfterModelDeleteEvent) {
+            return $event->getEntryIdList();
+        }
+
         return (array) $event->getEntryId();
     }
 

@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Galleryseo\EventListener;
 
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\Gallery;
@@ -25,7 +25,7 @@ class GeneratePictureUriAliasOnModelAfterSaveListener implements EventSubscriber
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(AfterModelSaveEvent $event): void
     {
         if (!$this->modules->isInstalled(SeoSchema::MODULE_NAME)) {
             return;

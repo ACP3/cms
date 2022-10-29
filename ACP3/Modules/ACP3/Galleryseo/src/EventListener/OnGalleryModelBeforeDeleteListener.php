@@ -30,7 +30,7 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
             return;
         }
 
-        foreach ($event->getEntryId() as $item) {
+        foreach ($event->getEntryIdList() as $item) {
             $uri = sprintf(GalleryHelpers::URL_KEY_PATTERN_GALLERY, $item);
 
             $this->uriAliasManager->deleteUriAlias($uri);

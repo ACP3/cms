@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Guestbooknewsletter\EventListener;
 
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Guestbooknewsletter\Installer\Schema;
@@ -24,7 +24,7 @@ class SubscribeToNewsletterOnModelAfterSaveListener implements EventSubscriberIn
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(AfterModelSaveEvent $event): void
     {
         if (!$this->modules->isInstalled(NewsletterSchema::MODULE_NAME) || !$this->modules->isInstalled(Schema::MODULE_NAME)) {
             return;
