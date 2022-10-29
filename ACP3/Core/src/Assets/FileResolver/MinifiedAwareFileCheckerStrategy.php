@@ -32,7 +32,7 @@ class MinifiedAwareFileCheckerStrategy implements FileCheckerStrategyInterface
 
         if ($this->area === AreaEnum::AREA_ADMIN) {
             $result = $this->straightFileCheckerStrategy->findResource(
-                preg_replace('=/(.+)\.(css|js)$=', '/admin-$1.min.$2', $resourcePath)
+                preg_replace('=/([^/]+)\.(css|js)$=', '/admin-$1.min.$2', $resourcePath)
             );
 
             if ($result) {
@@ -42,7 +42,7 @@ class MinifiedAwareFileCheckerStrategy implements FileCheckerStrategyInterface
 
         if ($this->userModel->isAuthenticated()) {
             $result = $this->straightFileCheckerStrategy->findResource(
-                preg_replace('=/(.+)\.(css|js)$=', '/logged-in-$1.min.$2', $resourcePath)
+                preg_replace('=/([^/]+)\.(css|js)$=', '/logged-in-$1.min.$2', $resourcePath)
             );
 
             if ($result) {
@@ -51,7 +51,7 @@ class MinifiedAwareFileCheckerStrategy implements FileCheckerStrategyInterface
         }
 
         return $this->straightFileCheckerStrategy->findResource(
-            preg_replace('=/(.+)\.(css|js)$=', '/$1.min.$2', $resourcePath)
+            preg_replace('=/([^/]+)\.(css|js)$=', '/$1.min.$2', $resourcePath)
         );
     }
 

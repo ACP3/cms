@@ -47,10 +47,10 @@ class MinifiedAwareFileCheckerStrategyTest extends TestCase
             ->willReturn(AreaEnum::AREA_ADMIN);
         $this->straightFileStrategyMock->expects(self::once())
             ->method('findResource')
-            ->with('/admin-foo.min.css')
-            ->willReturn('/admin-foo.min.css');
+            ->with('/path/to/admin-foo.min.css')
+            ->willReturn('/path/to/admin-foo.min.css');
 
-        self::assertEquals('/admin-foo.min.css', $this->strategy->findResource('/foo.css'));
+        self::assertEquals('/path/to/admin-foo.min.css', $this->strategy->findResource('/path/to/foo.css'));
     }
 
     public function testFindResourceAuthenticated(): void
@@ -61,10 +61,10 @@ class MinifiedAwareFileCheckerStrategyTest extends TestCase
             ->willReturn(true);
         $this->straightFileStrategyMock->expects(self::once())
             ->method('findResource')
-            ->with('/logged-in-foo.min.css')
-            ->willReturn('/logged-in-foo.min.css');
+            ->with('/path/to/logged-in-foo.min.css')
+            ->willReturn('/path/to/logged-in-foo.min.css');
 
-        self::assertEquals('/logged-in-foo.min.css', $this->strategy->findResource('/foo.css'));
+        self::assertEquals('/path/to/logged-in-foo.min.css', $this->strategy->findResource('/path/to/foo.css'));
     }
 
     public function testFindResourceSimple(): void
@@ -75,10 +75,10 @@ class MinifiedAwareFileCheckerStrategyTest extends TestCase
             ->willReturn(false);
         $this->straightFileStrategyMock->expects(self::once())
             ->method('findResource')
-            ->with('/foo.min.css')
-            ->willReturn('/foo.min.css');
+            ->with('/path/to/foo.min.css')
+            ->willReturn('/path/to/foo.min.css');
 
-        self::assertEquals('/foo.min.css', $this->strategy->findResource('/foo.css'));
+        self::assertEquals('/path/to/foo.min.css', $this->strategy->findResource('/path/to/foo.css'));
     }
 
     public function testIsAllowed(): void
