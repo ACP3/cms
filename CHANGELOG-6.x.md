@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Core] Fixed the area specific static asset delivery
 
 ## [6.11.0] - 2022-10-29
 
