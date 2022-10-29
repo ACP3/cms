@@ -11,28 +11,16 @@ use ACP3\Core\Assets\FileResolver\TemplateFileCheckerStrategy;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\ThemePathInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Cache\CacheItemPoolInterface;
-use Symfony\Component\Cache\CacheItem;
 
 class FileResolverTest extends TestCase
 {
-    /**
-     * @var FileResolver
-     */
-    private $fileResolver;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|CacheItemPoolInterface
-     */
-    private $assetsCachePoolMock;
-    /**
-     * @var ApplicationPath
-     */
-    private $appPath;
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Environment\ThemePathInterface
-     */
-    private $themeMock;
+    private FileResolver $fileResolver;
+
+    private ApplicationPath $appPath;
+
+    private ThemePathInterface|MockObject $themeMock;
 
     protected function setup(): void
     {
@@ -41,7 +29,6 @@ class FileResolverTest extends TestCase
         $this->appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
 
         $this->fileResolver = new FileResolver(
-            $this->assetsCachePoolMock,
             $this->appPath,
             $this->themeMock
         );
@@ -50,12 +37,7 @@ class FileResolverTest extends TestCase
 
     private function setUpMockObjects(): void
     {
-        $this->assetsCachePoolMock = $this->createMock(CacheItemPoolInterface::class);
         $this->themeMock = $this->createMock(ThemePathInterface::class);
-
-        $this->assetsCachePoolMock
-            ->method('getItem')
-            ->willReturn(new CacheItem());
     }
 
     public function testResolveTemplatePath(): void

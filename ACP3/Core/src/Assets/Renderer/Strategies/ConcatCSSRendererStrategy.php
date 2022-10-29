@@ -10,6 +10,7 @@ namespace ACP3\Core\Assets\Renderer\Strategies;
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\Entity\LibraryEntity;
 use ACP3\Core\Assets\FileResolver;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\ThemePathInterface;
@@ -30,6 +31,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     public function __construct(
         private readonly RequestInterface $request,
         private readonly Minifier $minifier,
+        UserModelInterface $userModel,
         Assets $assets,
         Assets\Libraries $libraries,
         ApplicationPath $appPath,
@@ -38,7 +40,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
         FileResolver $fileResolver,
         ThemePathInterface $themePath
     ) {
-        parent::__construct($assets, $libraries, $appPath, $coreCachePool, $modules, $fileResolver, $themePath);
+        parent::__construct($request, $userModel, $assets, $libraries, $appPath, $coreCachePool, $modules, $fileResolver, $themePath);
     }
 
     protected function getAssetGroup(): string

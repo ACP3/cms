@@ -50,8 +50,8 @@ services:
       - "bootstrap"
       - false
       - []
-      - ["bootstrap.min.css"]
-      - ["bootstrap.bundle.min.js"]
+      - ["bootstrap.css"]
+      - ["bootstrap.bundle.js"]
       - "system"
 
   system.assets.ajax-form:
@@ -60,7 +60,7 @@ services:
       - "ajax-form"
       - false
       - ["bootstrap"]
-      - ["loading-indicator.min.css"]
+      - ["loading-indicator.css"]
       - ["partials/ajax-form.js"]
       - "system"
       - true
@@ -72,7 +72,7 @@ services:
       - false
       - ["jquery", "bootstrap"]
       - ["dataTables.bootstrap5.css"]
-      - ["jquery.dataTables.min.js", "dataTables.bootstrap5.js"]
+      - ["jquery.dataTables.js", "dataTables.bootstrap5.js"]
       - "system"
       - true
 
@@ -87,7 +87,7 @@ services:
       - false
       - ["jquery"]
       - ["jquery.fancybox.css"]
-      - ["jquery.fancybox.min.js"]
+      - ["jquery.fancybox.js"]
       - "system"
       - true
 
@@ -97,7 +97,7 @@ services:
       - "photoswipe"
       - false
       - []
-      - ["photoswipe.css", "photoswipe-caption.min.css"]
-      - ["photoswipe.umd.min.js", "photoswipe-lightbox.umd.min.js"]
+      - ["photoswipe.css", "photoswipe-caption.css"]
+      - ["photoswipe.umd.js", "photoswipe-lightbox.umd.js"]
       - "system"
       - true

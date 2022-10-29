@@ -12,13 +12,9 @@ use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\Exception\ComponentNotFoundException;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\ThemePathInterface;
-use Psr\Cache\CacheItemInterface;
-use Psr\Cache\CacheItemPoolInterface;
 
 class FileResolver
 {
-    private const CACHE_KEY = 'resources';
-
     /**
      * @var FileCheckerStrategyInterface[]
      */
@@ -29,14 +25,11 @@ class FileResolver
      */
     private ?array $cachedPaths = null;
 
-    private ?CacheItemInterface $cacheItem = null;
-
     private ?string $designAssetsPath = null;
 
     private ?string $currentTheme = null;
 
     public function __construct(
-        private readonly CacheItemPoolInterface $coreCachePool,
         private readonly ApplicationPath $appPath,
         private readonly ThemePathInterface $theme
     ) {
@@ -94,23 +87,9 @@ class FileResolver
             $resourceDirectory = '/Resources/' . $resourceDirectory;
         }
 
-        if ($this->cachedPaths === null) {
-            $cacheItem = $this->coreCachePool->getItem(self::CACHE_KEY);
-
-            if (!$cacheItem->isHit()) {
-                $cacheItem->set([]);
-            }
-
-            $this->cachedPaths = $cacheItem->get();
-            $this->cacheItem = $cacheItem;
-        }
-
         $cacheKey = $moduleName . '-' . $resourceDirectory . '-' . $file;
         if (!isset($this->cachedPaths[$cacheKey])) {
             $this->cachedPaths[$cacheKey] = $this->resolveAssetPath($moduleName, $resourceDirectory, $file);
-
-            $this->cacheItem->set($this->cachedPaths);
-            $this->coreCachePool->saveDeferred($this->cacheItem);
         }
 
         return $this->cachedPaths[$cacheKey] ?: '';

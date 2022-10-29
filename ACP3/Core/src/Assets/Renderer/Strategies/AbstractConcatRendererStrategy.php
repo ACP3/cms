@@ -9,14 +9,25 @@ namespace ACP3\Core\Assets\Renderer\Strategies;
 
 use ACP3\Core\Assets;
 use ACP3\Core\Assets\FileResolver;
+use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\ThemePathInterface;
+use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use Psr\Cache\CacheItemPoolInterface;
 
 abstract class AbstractConcatRendererStrategy implements RendererStrategyInterface
 {
-    public function __construct(protected Assets $assets, protected Assets\Libraries $libraries, private readonly ApplicationPath $appPath, protected CacheItemPoolInterface $coreCachePool, protected Modules $modules, protected FileResolver $fileResolver, private readonly ThemePathInterface $themePath)
+    public function __construct(
+        private readonly RequestInterface $request,
+        private readonly UserModelInterface $userModel,
+        protected readonly Assets $assets,
+        protected readonly Assets\Libraries $libraries,
+        private readonly ApplicationPath $appPath,
+        protected readonly CacheItemPoolInterface $coreCachePool,
+        protected readonly Modules $modules,
+        protected readonly FileResolver $fileResolver,
+        private readonly ThemePathInterface $themePath)
     {
     }
 
@@ -40,13 +51,22 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         return 'assets_' . $this->generateFilenameHash();
     }
 
+    /**
+     * The generated filename hash needs to take the area and the authentication status of the current user into account,
+     * as the filenames of the enabled can differ because of these settings.
+     */
     private function generateFilenameHash(): string
     {
-        $filename = $this->themePath->getCurrentTheme();
-        $filename .= '_' . $this->getEnabledLibrariesAsString();
-        $filename .= '_' . $this->getAssetGroup();
-
-        return md5($filename);
+        return md5(implode(
+            '_',
+            [
+                $this->request->getArea()->value,
+                $this->userModel->isAuthenticated(),
+                $this->themePath->getCurrentTheme(),
+                $this->getEnabledLibrariesAsString(),
+                $this->getAssetGroup(),
+            ]
+        ));
     }
 
     public function getURI(): string
