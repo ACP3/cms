@@ -9,7 +9,8 @@ namespace ACP3\Modules\ACP3\Auditlog\EventListener;
 
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Date;
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelDeleteEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Modules\ACP3\Auditlog\Repository\AuditLogRepository;
 use Doctrine\DBAL\Exception;
@@ -22,7 +23,7 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(AfterModelSaveEvent|AfterModelDeleteEvent $event): void
     {
         if ($event->hasDataChanges() === false) {
             return;
@@ -50,14 +51,14 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
     /**
      * @return int[]|array<string, string|int>
      */
-    private function prepareEntryIds(ModelSaveEvent $event): array
+    private function prepareEntryIds(AfterModelDeleteEvent|AfterModelSaveEvent $event): array
     {
         return (array) $event->getEntryId();
     }
 
-    private function getAction(ModelSaveEvent $event): string
+    private function getAction(AfterModelDeleteEvent|AfterModelSaveEvent $event): string
     {
-        if ($event->isDeleteStatement()) {
+        if ($event instanceof AfterModelDeleteEvent) {
             return 'deleted';
         }
         if ($event->isIsNewEntry()) {
@@ -73,8 +74,8 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'core.model.after_save' => ['__invoke', -255],
-            'core.model.after_delete' => ['__invoke', -255],
+            AfterModelSaveEvent::class => ['__invoke', -255],
+            AfterModelDeleteEvent::class => ['__invoke', -255],
         ];
     }
 }

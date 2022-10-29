@@ -8,7 +8,11 @@
 namespace ACP3\Core\Model;
 
 use ACP3\Core\Model\DataProcessor\ColumnType\ColumnTypeStrategyInterface;
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AbstractModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelDeleteEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
+use ACP3\Core\Model\Event\BeforeModelDeleteEvent;
+use ACP3\Core\Model\Event\BeforeModelSaveEvent;
 use ACP3\Core\Model\Event\ModelSavePrepareDataEvent;
 use ACP3\Core\Repository\AbstractRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -38,13 +42,13 @@ abstract class AbstractModel
 
         $isNewEntry = $entryId === null;
         $hasDataChanges = $this->hasDataChanges($filteredNewData, $currentData);
-        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredNewData, $rawData, $currentData);
+        $event = new BeforeModelSaveEvent(static::EVENT_PREFIX, $filteredNewData, $rawData, $entryId, $isNewEntry, $hasDataChanges, $this->repository::TABLE_NAME, $currentData);
 
         $this->dispatchBeforeSaveEvent($this->repository, $event);
 
         $entryId = $this->doUpsert($entryId, $filteredNewData);
 
-        $event = $this->createModelSaveEvent($entryId, $isNewEntry, $hasDataChanges, $filteredNewData, $rawData, $currentData);
+        $event = new AfterModelSaveEvent(static::EVENT_PREFIX, $filteredNewData, $rawData, $entryId, $isNewEntry, $hasDataChanges, $this->repository::TABLE_NAME, $currentData);
         $this->dispatchAfterSaveEvent(
             $this->repository,
             $event
@@ -96,21 +100,22 @@ abstract class AbstractModel
 
     protected function dispatchBeforeSaveEvent(
         AbstractRepository $repository,
-        ModelSaveEvent $event
+        AbstractModelSaveEvent $event
     ): void {
+        $this->dispatchEvent($event);
         $this->dispatchEvent(
-            'core.model.before_save',
-            $event
+            $event,
+            'core.model.before_save'
         );
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_save',
-            $event
+            $event,
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.before_save'
         );
     }
 
     protected function dispatchEvent(
-        string $eventName,
-        ModelSaveEvent $event): void
+        object $event,
+        ?string $eventName = null): void
     {
         $this->eventDispatcher->dispatch(
             $event,
@@ -119,20 +124,22 @@ abstract class AbstractModel
     }
 
     /**
-     * @param array<string, string|int>|int|null $entryId
-     * @param array<string, mixed>               $filteredData
-     * @param array<string, mixed>               $rawData
-     * @param array<string, mixed>|null          $currentData
+     * @param class-string<AbstractModelSaveEvent> $eventType
+     * @param array<string, string|int>|int|null   $entryId
+     * @param array<string, mixed>|null            $currentData
+     * @param array<string, mixed>                 $rawData
+     * @param array<string, mixed>                 $filteredData
      */
     protected function createModelSaveEvent(
+        string $eventType,
         array|int|null $entryId,
         bool $isNewEntry,
         bool $hasDataChanges,
         array $filteredData = [],
         array $rawData = [],
         ?array $currentData = null
-    ): ModelSaveEvent {
-        return new ModelSaveEvent(
+    ): AbstractModelSaveEvent {
+        return new $eventType(
             static::EVENT_PREFIX,
             $filteredData,
             $rawData,
@@ -160,7 +167,7 @@ abstract class AbstractModel
 
         $modelSavePrepareDataEvent = new ModelSavePrepareDataEvent($rawData, $currentData, $this->getAllowedColumns());
 
-        $this->eventDispatcher->dispatch(
+        $this->dispatchEvent(
             $modelSavePrepareDataEvent,
             static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.prepare_data'
         );
@@ -178,15 +185,15 @@ abstract class AbstractModel
 
     protected function dispatchAfterSaveEvent(
         AbstractRepository $repository,
-        ModelSaveEvent $event
+        AbstractModelSaveEvent $event
     ): void {
         $this->dispatchEvent(
-            'core.model.after_save',
-            $event
+            $event,
+            'core.model.after_save'
         );
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_save',
-            $event
+            $event,
+            static::EVENT_PREFIX . '.model.' . $repository::TABLE_NAME . '.after_save'
         );
     }
 
@@ -219,12 +226,14 @@ abstract class AbstractModel
             $entryId = [$entryId];
         }
 
-        $event = $this->createModelSaveEvent($entryId, false, true);
+        $beforeDeleteEvent = new BeforeModelDeleteEvent(static::EVENT_PREFIX, $this->repository::TABLE_NAME, $entryId);
+        $this->dispatchEvent($beforeDeleteEvent);
 
-        $this->dispatchEvent('core.model.before_delete', $event);
+        // @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0. Subscribe to the `BeforeModelDeleteEvent` instead.
+        $this->dispatchEvent($beforeDeleteEvent, 'core.model.before_delete');
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.before_delete',
-            $event
+            $beforeDeleteEvent,
+            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.before_delete'
         );
 
         $affectedRows = 0;
@@ -232,10 +241,14 @@ abstract class AbstractModel
             $affectedRows += $this->repository->delete($item);
         }
 
-        $this->dispatchEvent('core.model.after_delete', $event);
+        $afterDeleteEvent = new AfterModelDeleteEvent(static::EVENT_PREFIX, $this->repository::TABLE_NAME, $entryId);
+        $this->dispatchEvent($afterDeleteEvent);
+
+        // @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0. Subscribe to the `AfterModelDeleteEvent` instead.
+        $this->dispatchEvent($afterDeleteEvent, 'core.model.after_delete');
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.after_delete',
-            $event
+            $afterDeleteEvent,
+            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.after_delete'
         );
 
         return $affectedRows;

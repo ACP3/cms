@@ -8,7 +8,9 @@
 namespace ACP3\Core\Model;
 
 use ACP3\Core\Helpers\Sort;
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AbstractModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
+use ACP3\Core\Model\Event\BeforeModelSaveEvent;
 use ACP3\Core\Repository\AbstractRepository;
 
 trait SortingAwareTrait
@@ -47,11 +49,15 @@ trait SortingAwareTrait
 
     private function move(string $action, int $id): void
     {
-        $this->dispatchBeforeSaveEvent($this->getRepository(), $this->createModelSaveEvent(
-            $id,
-            false,
-            true
-        ));
+        $this->dispatchBeforeSaveEvent(
+            $this->getRepository(),
+            $this->createModelSaveEvent(
+                BeforeModelSaveEvent::class,
+                $id,
+                false,
+                true
+            )
+        );
 
         if ($action === 'up') {
             $this->getSortHelper()->up(
@@ -71,29 +77,34 @@ trait SortingAwareTrait
             );
         }
 
-        $this->dispatchAfterSaveEvent($this->getRepository(), $this->createModelSaveEvent(
-            $id,
-            false,
-            true
-        ));
+        $this->dispatchAfterSaveEvent(
+            $this->getRepository(),
+            $this->createModelSaveEvent(
+                AfterModelSaveEvent::class,
+                $id,
+                false,
+                true
+            )
+        );
     }
 
-    abstract protected function dispatchBeforeSaveEvent(AbstractRepository $repository, ModelSaveEvent $event): void;
+    abstract protected function dispatchBeforeSaveEvent(AbstractRepository $repository, AbstractModelSaveEvent $event): void;
 
-    abstract protected function dispatchAfterSaveEvent(AbstractRepository $repository, ModelSaveEvent $event): void;
+    abstract protected function dispatchAfterSaveEvent(AbstractRepository $repository, AbstractModelSaveEvent $event): void;
 
     /**
-     * @param array<string, string|int>|int|null $entryId
-     * @param array<string, mixed>               $filteredData
-     * @param array<string, mixed>               $rawData
-     * @param array<string, mixed>|null          $currentData
+     * @param class-string<AbstractModelSaveEvent> $eventType
+     * @param array<string, string|int>|int|null   $entryId
+     * @param array<string, mixed>|null            $currentData
+     * @param array<string, mixed>                 $rawData
+     * @param array<string, mixed>                 $filteredData
      */
     abstract protected function createModelSaveEvent(
-        array|int|null $entryId,
+        string $eventType, array|int|null $entryId,
         bool $isNewEntry,
         bool $hasDataChanges,
         array $filteredData = [],
         array $rawData = [],
         ?array $currentData = null
-    ): ModelSaveEvent;
+    ): AbstractModelSaveEvent;
 }

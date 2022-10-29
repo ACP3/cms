@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Emoticons\EventListener;
 
 use ACP3\Core\Helpers\Upload;
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\BeforeModelDeleteEvent;
 use ACP3\Modules\ACP3\Emoticons\Repository\EmoticonRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -18,12 +18,8 @@ class OnEmoticonsModelBeforeDeleteListener implements EventSubscriberInterface
     {
     }
 
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(BeforeModelDeleteEvent $event): void
     {
-        if (!$event->isDeleteStatement()) {
-            return;
-        }
-
         foreach ($event->getEntryId() as $entryId) {
             $this->emoticonsUploadHelper->removeUploadedFile($this->emoticonRepository->getOneImageById($entryId));
         }

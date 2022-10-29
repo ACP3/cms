@@ -9,6 +9,10 @@ namespace ACP3\Core\NestedSet\Model;
 
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor;
+use ACP3\Core\Model\Event\AfterModelDeleteEvent;
+use ACP3\Core\Model\Event\AfterModelSaveEvent;
+use ACP3\Core\Model\Event\BeforeModelDeleteEvent;
+use ACP3\Core\Model\Event\BeforeModelSaveEvent;
 use ACP3\Core\Model\SortingAwareInterface;
 use ACP3\Core\NestedSet\Operation\Delete;
 use ACP3\Core\NestedSet\Operation\Edit;
@@ -66,12 +70,14 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
             $entryId = [$entryId];
         }
 
-        $event = $this->createModelSaveEvent($entryId, false, true);
+        $beforeDeleteEvent = new BeforeModelDeleteEvent(static::EVENT_PREFIX, $this->repository::TABLE_NAME, $entryId);
+        $this->dispatchEvent($beforeDeleteEvent);
 
-        $this->dispatchEvent('core.model.before_delete', $event);
+        // @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0. Subscribe to the `BeforeModelDeleteEvent` instead.
+        $this->dispatchEvent($beforeDeleteEvent, 'core.model.before_delete');
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.before_delete',
-            $event
+            $beforeDeleteEvent,
+            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.before_delete'
         );
 
         $affectedRows = 0;
@@ -79,10 +85,14 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
             $affectedRows += (int) $this->deleteOperation->execute($item);
         }
 
-        $this->dispatchEvent('core.model.before_delete', $event);
+        $afterDeleteEvent = new AfterModelDeleteEvent(static::EVENT_PREFIX, $this->repository::TABLE_NAME, $entryId);
+        $this->dispatchEvent($afterDeleteEvent);
+
+        // @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0. Subscribe to the `AfterModelDeleteEvent` instead.
+        $this->dispatchEvent($afterDeleteEvent, 'core.model.after_delete');
         $this->dispatchEvent(
-            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.after_delete',
-            $event
+            $afterDeleteEvent,
+            static::EVENT_PREFIX . '.model.' . $this->repository::TABLE_NAME . '.after_delete'
         );
 
         return $affectedRows;
@@ -113,18 +123,26 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
      */
     private function move(int $id, string $direction): void
     {
-        $this->dispatchBeforeSaveEvent($this->getRepository(), $this->createModelSaveEvent(
-            $id,
-            false,
-            true
-        ));
+        $this->dispatchBeforeSaveEvent(
+            $this->getRepository(),
+            $this->createModelSaveEvent(
+                BeforeModelSaveEvent::class,
+                $id,
+                false,
+                true
+            ),
+        );
 
         $this->sortOperation->execute($id, $direction);
 
-        $this->dispatchAfterSaveEvent($this->getRepository(), $this->createModelSaveEvent(
-            $id,
-            false,
-            true
-        ));
+        $this->dispatchAfterSaveEvent(
+            $this->getRepository(),
+            $this->createModelSaveEvent(
+                AfterModelSaveEvent::class,
+                $id,
+                false,
+                true
+            ),
+        );
     }
 }

@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Gallerycomments\EventListener;
 
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\BeforeModelDeleteEvent;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Comments\Helpers as CommentsHelpers;
 use ACP3\Modules\ACP3\Comments\Installer\Schema as CommentsSchema;
@@ -24,13 +24,9 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(BeforeModelDeleteEvent $event): void
     {
         if (!$this->modules->isInstalled(CommentsSchema::MODULE_NAME)) {
-            return;
-        }
-
-        if (!$event->isDeleteStatement()) {
             return;
         }
 

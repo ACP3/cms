@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Categories\EventListener;
 
 use ACP3\Core\Helpers\Upload;
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelDeleteEvent;
 use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -18,12 +18,8 @@ class DeleteCategoryPictureOnOnCategoriesModelDeleteBeforeListener implements Ev
     {
     }
 
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(AfterModelDeleteEvent $event): void
     {
-        if (!$event->isDeleteStatement()) {
-            return;
-        }
-
         foreach ($event->getEntryId() as $entryId) {
             $category = $this->categoryRepository->getCategoryDeleteInfosById($entryId);
 

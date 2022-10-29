@@ -7,6 +7,7 @@
 
 namespace ACP3\Modules\ACP3\System\EventListener;
 
+use ACP3\Core\Model\Event\AfterModelDeleteEvent;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\CanUsePageCache;
 use ACP3\Modules\ACP3\System\Installer\Schema;
@@ -39,7 +40,7 @@ class InvalidatePageCacheOnModelAfterSaveListener implements EventSubscriberInte
     {
         return [
             'core.model.after_save' => '__invoke',
-            'core.model.after_delete' => '__invoke',
+            AfterModelDeleteEvent::class => '__invoke',
         ];
     }
 }

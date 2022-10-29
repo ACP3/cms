@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Articlesshare\EventListener;
 
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\AfterModelDeleteEvent;
 use ACP3\Core\Modules;
 use ACP3\Modules\ACP3\Articles\Helpers;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
@@ -23,13 +23,9 @@ class OnArticlesModelDeleteAfterListener implements EventSubscriberInterface
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(AfterModelDeleteEvent $event): void
     {
         if (!$this->modules->isInstalled(ShareSchema::MODULE_NAME)) {
-            return;
-        }
-
-        if (!$event->isDeleteStatement()) {
             return;
         }
 

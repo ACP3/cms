@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\EventListener;
 
 use ACP3\Core\Authentication\Model\UserModelInterface;
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\BeforeModelDeleteEvent;
 use ACP3\Modules\ACP3\Users\Exception\SuperUserNotDeletableException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -21,12 +21,8 @@ class ForbidSuperUserDeleteListener implements EventSubscriberInterface
     /**
      * @throws SuperUserNotDeletableException
      */
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(BeforeModelDeleteEvent $event): void
     {
-        if (!$event->isDeleteStatement()) {
-            return;
-        }
-
         foreach ($event->getEntryId() as $item) {
             $user = $this->userModel->getUserInfo($item);
             if ($user['super_user'] == 1) {

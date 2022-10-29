@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\Menus\EventListener;
 
-use ACP3\Core\Model\Event\ModelSaveEvent;
+use ACP3\Core\Model\Event\BeforeModelDeleteEvent;
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
 use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 use ACP3\Modules\ACP3\Menus\Repository\MenuRepository;
@@ -22,12 +22,8 @@ class OnMenusModelBeforeDeleteListener implements EventSubscriberInterface
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(ModelSaveEvent $event): void
+    public function __invoke(BeforeModelDeleteEvent $event): void
     {
-        if (!$event->isDeleteStatement()) {
-            return;
-        }
-
         foreach ($event->getEntryId() as $item) {
             if (!empty($item) && $this->menuRepository->menuExists($item) === true) {
                 // Delete the assigned menu items and update the nested set tree
