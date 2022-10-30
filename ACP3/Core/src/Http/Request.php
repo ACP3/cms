@@ -117,10 +117,10 @@ class Request extends AbstractRequest
 
         switch ($this->getArea()) {
             case AreaEnum::AREA_ADMIN:
-                $this->query = substr($this->query, \strlen(self::ADMIN_PANEL_PATTERN));
+                $this->query = preg_replace('=^(' . self::ADMIN_PANEL_PATTERN . ')=', '', $this->query);
                 break;
             case AreaEnum::AREA_WIDGET:
-                $this->query = substr($this->query, \strlen(self::WIDGET_PATTERN));
+                $this->query = preg_replace('=^(' . self::WIDGET_PATTERN . ')=', '', $this->query);
                 break;
             case AreaEnum::AREA_FRONTEND:
             case AreaEnum::AREA_INSTALL:
