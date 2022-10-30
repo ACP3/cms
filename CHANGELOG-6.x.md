@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Core] Fixed forwarding to other controller actions
 
 ## [6.11.1] - 2022-10-29
 
