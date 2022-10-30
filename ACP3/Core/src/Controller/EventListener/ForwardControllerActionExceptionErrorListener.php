@@ -7,14 +7,15 @@
 
 namespace ACP3\Core\Controller\EventListener;
 
-use ACP3\Core\Application\ControllerActionDispatcher;
 use ACP3\Core\Application\Event\OutputPageExceptionEvent;
 use ACP3\Core\Controller\Exception\ForwardControllerActionAwareExceptionInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class ForwardControllerActionExceptionErrorListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly ControllerActionDispatcher $controllerActionDispatcher)
+    public function __construct(private readonly HttpKernelInterface $kernel)
     {
     }
 
@@ -28,10 +29,36 @@ class ForwardControllerActionExceptionErrorListener implements EventSubscriberIn
         $throwable = $event->getThrowable();
 
         if ($throwable instanceof ForwardControllerActionAwareExceptionInterface) {
+            $subRequest = Request::create($this->convertForwardParametersToRequestUri($throwable->getServiceId(), $throwable->routeParams()));
             $event->setResponse(
-                $this->controllerActionDispatcher->dispatch($throwable->getServiceId(), $throwable->routeParams())
+                $this->kernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST),
             );
         }
+    }
+
+    /**
+     * @param array<string, string> $routeParams
+     */
+    private function convertForwardParametersToRequestUri(string $serviceId, array $routeParams): string
+    {
+        [$module, , $area, $controller, $action] = explode('.', $serviceId);
+
+        $requestUri = $this->convertAreaFromServiceId($area) . '/' . $module . '/' . $controller . '/' . $action . '/';
+
+        foreach ($routeParams as $key => $value) {
+            $requestUri .= $key . '_' . $value . '/';
+        }
+
+        return $requestUri;
+    }
+
+    private function convertAreaFromServiceId(string $serviceIdArea): string
+    {
+        return match ($serviceIdArea) {
+            'admin' => '/acp',
+            'widget' => '/widget',
+            default => '',
+        };
     }
 
     /**

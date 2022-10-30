@@ -13,5 +13,7 @@ services:
       $container: "@core.controller.controller_action_locator"
 
   ACP3\Core\Controller\EventListener\ForwardControllerActionExceptionErrorListener:
+    arguments:
+      $kernel: "@kernel"
     tags:
       - { name: kernel.event_subscriber }
