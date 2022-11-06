@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Base] Added `cssnano` to compress the CSS files a little better
 
 ## [6.11.2] - 2022-10-30
 
