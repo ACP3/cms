@@ -20,24 +20,14 @@ class BirthdayValidationRule extends AbstractValidationRule
             return $this->isValid($data[$field], $field, $extra);
         }
 
-        return !empty($data) ? $this->isBirthday($data) : true;
+        return empty($data) || $this->isBirthday($data);
     }
 
-    /**
-     * @param string $value
-     *
-     * @return bool
-     */
-    protected function isBirthday($value)
+    protected function isBirthday(string $value): bool
     {
         $regex = '/^(\d{4})-(\d{2})-(\d{2})$/';
         $matches = [];
-        if (preg_match($regex, $value, $matches)) {
-            if (checkdate($matches[2], $matches[3], $matches[1])) {
-                return true;
-            }
-        }
 
-        return false;
+        return preg_match($regex, $value, $matches) && checkdate((int) $matches[2], (int) $matches[3], (int) $matches[1]);
     }
 }

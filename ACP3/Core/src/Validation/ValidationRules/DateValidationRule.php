@@ -52,6 +52,6 @@ class DateValidationRule extends AbstractValidationRule
     {
         $pattern = '/^(\d{4})-(\d{2})-(\d{2})(( |T)([01]\d|2[0-3])(:([0-5]\d)){1,2})?$/';
 
-        return preg_match($pattern, $date, $matches) && checkdate($matches[2], $matches[3], $matches[1]);
+        return preg_match($pattern, $date, $matches) && checkdate((int) $matches[2], (int) $matches[3], (int) $matches[1]);
     }
 }

@@ -126,7 +126,7 @@ class Dictionary implements DictionaryInterface
     /**
      * @return array{iso: string, name: string}
      *
-     * @throws DomainException
+     * @throws \DomainException
      */
     private function getLanguagePack(string $languageIsoCode): array
     {

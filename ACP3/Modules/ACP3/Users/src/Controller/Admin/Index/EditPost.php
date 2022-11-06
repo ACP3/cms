@@ -17,7 +17,6 @@ use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
 use ACP3\Modules\ACP3\Users\Model\UsersModel;
 use ACP3\Modules\ACP3\Users\Validation\AdminFormValidation;
 use Doctrine\DBAL\ConnectionException;
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 class EditPost extends Core\Controller\AbstractWidgetAction
@@ -70,7 +69,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     protected function updateCurrentlyLoggedInUserCookie(int $userId, Response $response): void
     {
