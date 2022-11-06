@@ -98,8 +98,8 @@
     "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --dry-run --show-progress=dots -v",
     "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --show-progress=dots -v",
     "php-cs-fixer-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --show-progress=dots -v",
-    "phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse",
-    "phpstan-windows": ".\\vendor\\bin\\phpstan.bat analyse",
+    "phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse --xdebug",
+    "phpstan-windows": ".\\vendor\\bin\\phpstan.bat analyse --xdebug",
     "rector": "php -d memory_limit=-1 ./vendor/bin/rector process"
   },
   "extra": {
