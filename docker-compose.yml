@@ -5,8 +5,6 @@ services:
     build:
       context: "./build/docker/php/"
       dockerfile: Dockerfile-8.1
-    depends_on:
-      - db
     networks:
       - acp3-cms
     volumes:
