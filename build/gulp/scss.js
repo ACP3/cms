@@ -10,6 +10,7 @@ const plumber = require("gulp-plumber");
 const postcss = require("gulp-postcss");
 const rename = require("gulp-rename");
 const dependents = require("gulp-dependents");
+const cssnano = require("cssnano");
 
 module.exports = (gulp) => {
   "use strict";
@@ -24,7 +25,7 @@ module.exports = (gulp) => {
       .pipe(plumber())
       .pipe(dependents())
       .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
-      .pipe(postcss([autoprefixer()]))
+      .pipe(postcss([autoprefixer(), cssnano()]))
       .pipe(
         rename((path) => {
           path.dirname = path.dirname.substring(0, path.dirname.length - 4) + "css";
