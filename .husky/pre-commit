@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run lint-all && \
-docker-compose run --no-deps --rm app sh -c "composer php-cs-fixer && composer phpstan && composer test"
+npx lint-staged && \
+docker-compose run --no-deps --rm app sh -c "composer phpstan && composer test"

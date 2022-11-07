@@ -9,10 +9,10 @@
     "css-lint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .stylelintcache --rd",
     "css-lint:fix": "npm run css-lint -- --fix",
     "eslint": "eslint -c .eslintrc.json --cache --cache-location=.eslintcache .",
-    "eslint-fix": "npm run eslint -- --fix",
+    "eslint:fix": "npm run eslint -- --fix",
     "prettier": "prettier --check --cache **/*.{css,js,json,md,scss,yml}",
     "prettier:fix": "prettier --write --cache **/*.{css,js,json,md,scss,yml}",
-    "lint-all": "concurrently \"npm:prettier:fix\" \"npm:css-lint:fix\" \"npm:eslint-fix\" --kill-others-on-fail --group",
+    "lint-all": "concurrently \"npm:prettier:fix\" \"npm:css-lint:fix\" \"npm:eslint:fix\" --kill-others-on-fail --group",
     "prepare": "husky install"
   },
   "repository": {
@@ -55,6 +55,7 @@
     "gulplog": "^2.0.0",
     "husky": "^8.0.1",
     "js-yaml": "^4.1.0",
+    "lint-staged": "^13.0.3",
     "postcss": "^8.3.11",
     "prettier": "^2.4.1",
     "sass": "^1.55.0",
@@ -90,5 +91,11 @@
   "browserslist": [
     "defaults and >= 1%",
     "Firefox ESR"
-  ]
+  ],
+  "lint-staged": {
+    "*.js": "npm run eslint-fix",
+    "*.{css,scss}": "npn run css-lint:fix",
+    "*.{css,js,json,md,scss,yml}": "npm run prettier:fix",
+    "*.php": "docker-compose run --no-deps --rm app composer php-cs-fixer"
+  }
 }
