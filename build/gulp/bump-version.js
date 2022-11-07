@@ -320,6 +320,14 @@ module.exports = (gulp) => {
   }
 
   /**
+   * Pushes the commits and the created tag
+   */
+  async function push() {
+    await git().push();
+    await git().pushTags();
+  }
+
+  /**
    *
    * @param {string} nameOfCurrentBranch
    * @param {string} newVersion
@@ -363,6 +371,7 @@ module.exports = (gulp) => {
 
       await addChangelogEntryForNextRelease(nameOfCurrentBranch, newVersion);
       await commitExtendedChangelog();
+      await push();
     } catch (e) {
       console.error(e.message);
     } finally {
