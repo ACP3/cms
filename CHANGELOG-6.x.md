@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+-   [Base] Add a gulp task for optimizing PNG-images
+-   [Base] Add a gulp task for converting JPG-, GIF- and PNG-images to WEBP-images
+-   [System] Add a new partial template which creates a `<picture`>-element with support for WEBP- and PNG-images
 
 ## [6.12.0] - 2022-11-06
 
