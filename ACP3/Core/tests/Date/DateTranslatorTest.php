@@ -13,7 +13,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 class DateTranslatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Translator|MockObject
+     * @var Translator&MockObject
      */
     private $translatorMock;
     /**

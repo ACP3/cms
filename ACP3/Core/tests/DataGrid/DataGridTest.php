@@ -19,49 +19,28 @@ use Symfony\Component\DependencyInjection\Container;
 
 class DataGridTest extends TestCase
 {
-    /**
-     * @var RequestInterface|MockObject
-     */
-    private $requestMock;
-    /**
-     * @var DataGrid
-     */
-    private $dataGrid;
-    /**
-     * @var ConfigProcessor|MockObject
-     */
-    private $configProcessorMock;
-    /**
-     * @var ACL|MockObject
-     */
-    private $aclMock;
-    /**
-     * @var Translator|MockObject
-     */
-    private $langMock;
-    /**
-     * @var Input
-     */
-    private $inputOptions;
-    /**
-     * @var Container
-     */
-    private $container;
+    private DataGrid $dataGrid;
+
+    private ACL&MockObject $aclMock;
+
+    private Input $inputOptions;
+
+    private Container $container;
 
     protected function setup(): void
     {
         $this->container = new Container();
-        $this->requestMock = $this->createMock(RequestInterface::class);
-        $this->configProcessorMock = $this->createMock(ConfigProcessor::class);
+        $requestMock = $this->createMock(RequestInterface::class);
+        $configProcessorMock = $this->createMock(ConfigProcessor::class);
         $this->aclMock = $this->createMock(ACL::class);
-        $this->langMock = $this->createMock(Translator::class);
+        $langMock = $this->createMock(Translator::class);
 
         $this->dataGrid = new DataGrid(
             $this->container,
-            $this->requestMock,
-            $this->configProcessorMock,
+            $requestMock,
+            $configProcessorMock,
             $this->aclMock,
-            $this->langMock
+            $langMock
         );
         $this->inputOptions = (new Input())
             ->setIdentifier('#data-grid');
@@ -108,7 +87,7 @@ class DataGridTest extends TestCase
             ->method('hasPermission')
             ->willReturn(false);
 
-        /** @var MarkEntries|MockObject $markEntriesMock */
+        /** @var MarkEntries&MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));
@@ -142,7 +121,7 @@ class DataGridTest extends TestCase
             ->method('hasPermission')
             ->willReturn(false);
 
-        /** @var MarkEntries|MockObject $markEntriesMock */
+        /** @var MarkEntries&MockObject $markEntriesMock */
         $markEntriesMock = $this->createMock(MarkEntries::class);
 
         $this->container->set(HeaderColumnRenderer::class, new HeaderColumnRenderer($markEntriesMock));

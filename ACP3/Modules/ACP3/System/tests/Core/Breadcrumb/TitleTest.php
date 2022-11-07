@@ -21,11 +21,11 @@ class TitleTest extends \ACP3\Core\Breadcrumb\TitleTest
      */
     private $titleConfigurator;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|SettingsInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&SettingsInterface
      */
     private $configMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|RequestInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&RequestInterface
      */
     private $requestMock;
 

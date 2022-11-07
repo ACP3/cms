@@ -101,7 +101,7 @@ class CacheClearService
             throw new CacheClearException(sprintf('An error occurred while clearing the cache for type "%s".', $cacheType));
         }
 
-        if (\array_key_exists('dependency', $cacheTypeData)) {
+        if (\array_key_exists('dependency', $cacheTypeData) && \is_string($cacheTypeData['dependency'])) {
             $this->clearCacheByType($cacheTypeData['dependency']);
         }
     }

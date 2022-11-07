@@ -130,9 +130,15 @@ class ACL
      */
     private function convertResourcePathToArray(string $resource): array
     {
+        $splitResource = preg_split('=/=', $resource, -1, PREG_SPLIT_NO_EMPTY);
+
+        if ($splitResource === false) {
+            $splitResource = [];
+        }
+
         return array_replace(
             [0 => null, 1 => null, 2 => 'index', 3 => 'index'],
-            preg_split('=/=', $resource, -1, PREG_SPLIT_NO_EMPTY)
+            $splitResource,
         );
     }
 

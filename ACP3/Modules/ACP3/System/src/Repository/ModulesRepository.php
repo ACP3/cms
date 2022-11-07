@@ -99,7 +99,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
 
         $map = [];
         foreach ($results as $row) {
-            $map[$row['name']] = [
+            $map[(string) $row['name']] = [
                 'id' => (int) $row['id'],
             ];
         }

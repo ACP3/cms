@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class OnLayoutContentAfterRenderStructuredDataListenerTest extends TestCase
 {
-    private MockObject|MetaStatementsServiceInterface $metaStatementsServiceMock;
+    private MockObject&MetaStatementsServiceInterface $metaStatementsServiceMock;
     private OnLayoutContentAfterRenderStructuredDataListener $listener;
 
     protected function setUp(): void

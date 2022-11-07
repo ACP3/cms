@@ -37,16 +37,23 @@ class ComponentPathsCommand extends Command
                 $paths[$component->getComponentType()->value] = [];
             }
 
-            $composer = json_decode(file_get_contents($component->getPath() . '/composer.json'), true, 512, JSON_THROW_ON_ERROR);
+            $path = $component->getPath() . '/composer.json';
+            $content = file_get_contents($path);
+
+            if ($content === false) {
+                throw new \RuntimeException(sprintf('Could not read file "%s"!', $path));
+            }
+
+            $composer = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
             $paths[$component->getComponentType()->value][$composer['name']] = str_replace([ACP3_ROOT_DIR, '\\'], ['.', '/'], $component->getPath());
         }
 
-        file_put_contents(
+        $result = file_put_contents(
             ACP3_ROOT_DIR . '/.component-paths.json',
             json_encode($paths, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES ^ JSON_PRETTY_PRINT)
         );
 
-        return 0;
+        return $result !== false ? 0 : 1;
     }
 }

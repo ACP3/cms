@@ -70,7 +70,7 @@ class FileResolver
             return '';
         }
 
-        $hash = hash('crc32b', file_get_contents($path));
+        $hash = hash('crc32b', (string) file_get_contents($path));
 
         return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))) . '?' . $hash;
     }
@@ -109,7 +109,7 @@ class FileResolver
 
         $finalPath = $assetPath ?: $this->findAssetInModules($moduleName, $resourceDirectory, $file);
 
-        return $finalPath !== null ? realpath($finalPath) : null;
+        return $finalPath !== null ? (string) realpath($finalPath) : null;
     }
 
     private function findAssetInInheritedThemes(string $moduleName, string $resourceDirectory, string $file): ?string

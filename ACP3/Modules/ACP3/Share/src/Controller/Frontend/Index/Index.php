@@ -25,7 +25,7 @@ class Index extends AbstractWidgetAction
     {
         return new JsonResponse(
             $this->shariffBackend->get(
-                $this->request->getSymfonyRequest()->query->get('url', '')
+                (string) $this->request->getSymfonyRequest()->query->get('url', '')
             )
         );
     }

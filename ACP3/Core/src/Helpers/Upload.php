@@ -58,7 +58,7 @@ class Upload
             }
             $return = [];
             $return['name'] = $newFilename;
-            $return['size'] = $this->calcFilesize(filesize($path . $return['name']));
+            $return['size'] = $this->calcFilesize((int) filesize($path . $return['name']));
 
             return $return;
         }

@@ -62,12 +62,12 @@ class HttpCacheWarmupCommand extends Command
         $io->title('Warming up the HTTP cache...');
 
         if (is_file($this->defaultSitemapName)) {
-            $this->processSitemap($this->defaultSitemapName, $input, $output);
-        } else {
-            foreach ($this->splitSitemapNames as $sitemap) {
-                if (is_file($sitemap)) {
-                    $this->processSitemap($sitemap, $input, $output);
-                }
+            return $this->processSitemap($this->defaultSitemapName, $input, $output);
+        }
+
+        foreach ($this->splitSitemapNames as $sitemap) {
+            if (is_file($sitemap)) {
+                $this->processSitemap($sitemap, $input, $output);
             }
         }
 
@@ -77,40 +77,54 @@ class HttpCacheWarmupCommand extends Command
     /**
      * Parses the XML sitemap and crawls the URLs of it.
      */
-    private function processSitemap(string $sitemap, InputInterface $input, OutputInterface $output): void
+    private function processSitemap(string $sitemap, InputInterface $input, OutputInterface $output): int
     {
         $output->writeln("Crawling URLs of file {$sitemap}...");
 
-        $xml = simplexml_load_string(file_get_contents($sitemap));
+        $xmlSitemapContent = file_get_contents($sitemap);
 
-        $progress = new ProgressBar($output, \count($xml->url));
-        ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message%: %result%');
-        $progress->setFormat('custom');
+        if ($xmlSitemapContent === false) {
+            $output->writeln(sprintf('Could not load sitemap "%s"!', $sitemap));
 
-        $sleep = $this->getSleepTime($input);
-        $limit = (int) $input->getOption('limit');
-
-        $i = 1;
-        foreach ($xml->url as $url) {
-            $progress->setMessage($url->loc);
-            $progress->setMessage($this->crawlUrl($url->loc) ? 'Done!' : 'Error!', 'result');
-
-            $progress->advance();
-
-            if ($limit > 0 && $i === $limit) {
-                break;
-            }
-
-            ++$i;
-
-            if ($sleep > 0) {
-                usleep($sleep);
-            }
+            return 1;
         }
 
-        $progress->finish();
+        $xml = simplexml_load_string($xmlSitemapContent);
 
-        $output->writeln('');
+        if ($xml) {
+            $progress = new ProgressBar($output, \count($xml->url));
+            ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message%: %result%');
+            $progress->setFormat('custom');
+
+            $sleep = $this->getSleepTime($input);
+            $limit = (int) $input->getOption('limit');
+
+            $i = 1;
+            foreach ($xml->url as $url) {
+                $progress->setMessage($url->loc);
+                $progress->setMessage($this->crawlUrl($url->loc) ? 'Done!' : 'Error!', 'result');
+
+                $progress->advance();
+
+                if ($i === $limit) {
+                    break;
+                }
+
+                ++$i;
+
+                if ($sleep > 0) {
+                    usleep($sleep);
+                }
+            }
+
+            $progress->finish();
+
+            $output->writeln('');
+
+            return 0;
+        }
+
+        return 1;
     }
 
     /**

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class PictureValidationRuleTest extends TestCase
 {
     private PictureValidationRule $pictureValidationRule;
-    private MockObject|FileUploadValidationRule $fileUploadValidationRuleMock;
+    private MockObject&FileUploadValidationRule $fileUploadValidationRuleMock;
 
     /**
      * @return array<string, array<string, mixed>[]>

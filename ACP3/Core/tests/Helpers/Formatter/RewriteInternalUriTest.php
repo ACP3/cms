@@ -22,23 +22,23 @@ class RewriteInternalUriTest extends TestCase
      */
     private $rewriteInternalUri;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|ApplicationPath
+     * @var \PHPUnit\Framework\MockObject\MockObject&ApplicationPath
      */
     private $appPathMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|ControllerActionExists
+     * @var \PHPUnit\Framework\MockObject\MockObject&ControllerActionExists
      */
     private $controllerActionExistsMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Http\RequestInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&\ACP3\Core\Http\RequestInterface
      */
     private $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Router\RouterInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&\ACP3\Core\Router\RouterInterface
      */
     private $routerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|InternalUriValidationRule
+     * @var \PHPUnit\Framework\MockObject\MockObject&InternalUriValidationRule
      */
     private $internalUriValidationRule;
 

@@ -59,7 +59,13 @@ final class Migration78 implements MigrationInterface
                 continue;
             }
 
-            $composerConfig = json_decode(file_get_contents($path . '/composer.json'), true, 512, JSON_THROW_ON_ERROR);
+            $content = file_get_contents($path . '/composer.json');
+
+            if (!$content) {
+                continue;
+            }
+
+            $composerConfig = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
             $namespacePrefixes = array_keys($composerConfig['autoload']['psr-4']);
 
             $migrationsToMarkAsExecuted = array_filter($migrations, function (MigrationInterface $migration) use ($namespacePrefixes, $result) {

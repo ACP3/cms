@@ -12,7 +12,7 @@ use ACP3\Core\SEO\MetaStatementsServiceInterface;
 class PageBreaksTest extends \ACP3\Core\Helpers\PageBreaksTest
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|MetaStatementsServiceInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&MetaStatementsServiceInterface
      */
     protected $metaStatements;
 

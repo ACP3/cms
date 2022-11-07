@@ -163,7 +163,7 @@ class Connection
         array $params = [],
         array $types = [],
     ): int {
-        return $this->getConnection()->executeStatement(
+        return (int) $this->getConnection()->executeStatement(
             $query,
             $params,
             $types,

@@ -129,7 +129,7 @@ class Date
     public function toDateTime(int|string $time = 'now'): \DateTime
     {
         if (is_numeric($time)) {
-            $time = date('c', $time);
+            $time = date('c', (int) $time);
         }
 
         return new \DateTime($time, $this->dateTimeZone);

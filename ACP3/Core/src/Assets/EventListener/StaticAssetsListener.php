@@ -102,7 +102,7 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        if (str_contains((string) $content, self::PLACEHOLDER_CSS)) {
+        if (\is_string($content) && str_contains($content, self::PLACEHOLDER_CSS)) {
             $this->requestStack->push($event->getRequest());
 
             $content = str_replace(
@@ -128,7 +128,7 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        if (str_contains((string) $content, self::PLACEHOLDER_JS)) {
+        if (\is_string($content) && str_contains($content, self::PLACEHOLDER_JS)) {
             $this->requestStack->push($event->getRequest());
 
             $content = str_replace(

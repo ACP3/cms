@@ -37,10 +37,16 @@ class Icon
             throw new SvgIconNotFoundException(sprintf('Could not find SVG icon "%s" from iconset "%s"', $icon, $iconSet));
         }
 
+        $iconContent = file_get_contents($path);
+
+        if ($iconContent === false) {
+            throw new \RuntimeException(sprintf('An error occurred while loading file "%s"', $path));
+        }
+
         return str_replace(
             ['<svg', '<path'],
             ["<svg class=\"svg-icon svg-icon__{$icon}{$additionalCssSelectors}\" fill=\"currentColor\"", "{$title}<path"],
-            file_get_contents($path)
+            $iconContent
         );
     }
 }

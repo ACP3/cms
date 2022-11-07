@@ -18,11 +18,11 @@ class AliasesTest extends TestCase
      */
     private $aliases;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|SeoInformationService
+     * @var \PHPUnit\Framework\MockObject\MockObject&SeoInformationService
      */
     private $seoInformationServiceMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Modules
+     * @var \PHPUnit\Framework\MockObject\MockObject&Modules
      */
     private $modulesMock;
 

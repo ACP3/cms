@@ -51,7 +51,7 @@ class Translator
 
     public function getShortIsoCode(): string
     {
-        return substr($this->getLocale(), 0, strpos($this->getLocale(), '_'));
+        return substr($this->getLocale(), 0, (int) strpos($this->getLocale(), '_'));
     }
 
     public function setLocale(string $locale): self

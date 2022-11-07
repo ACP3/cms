@@ -18,11 +18,11 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
 {
     private UpdateCheck $updateCheck;
 
-    private Date|MockObject $dateMock;
+    private Date&MockObject $dateMock;
 
-    private SettingsInterface|MockObject $settingsMock;
+    private SettingsInterface&MockObject $settingsMock;
 
-    private UpdateFileParser|MockObject $updateFileParserMock;
+    private UpdateFileParser&MockObject $updateFileParserMock;
 
     private VersionParser $versionParser;
 

@@ -76,7 +76,7 @@ class Datepicker extends AbstractFunction
         bool $inputFieldOnly = false
     ): array {
         $datePicker = [
-            'range' => $this->isRange($name),
+            'range' => \is_array($name),
             'with_time' => $showTime,
             'length' => $showTime === true ? 16 : 10,
             'input_only' => $inputFieldOnly,
@@ -86,7 +86,7 @@ class Datepicker extends AbstractFunction
             ],
         ];
 
-        if ($this->isRange($name) === true) {
+        if (\is_array($name) && \is_array($value)) {
             $datePicker['name_start'] = $name[0];
             $datePicker['name_end'] = $name[1];
             $datePicker['id_start'] = $this->getInputId($name[0]);
@@ -103,7 +103,7 @@ class Datepicker extends AbstractFunction
                     'endDefaultDate' => $datePicker['value_end_r'],
                 ]
             );
-        } else { // Einfaches Inputfeld mit Datepicker
+        } elseif (\is_string($name) && \is_string($value)) { // Einfaches Inputfeld mit Datepicker
             $datePicker['name'] = $name;
             $datePicker['id'] = $this->getInputId($name);
             $datePicker['value'] = $this->fetchSimpleDatePickerValue($name, $value, $showTime);
@@ -176,14 +176,6 @@ class Datepicker extends AbstractFunction
     private function getPickerDateFormat(bool $showTime): string
     {
         return $this->settings->getSettings(Schema::MODULE_NAME)[$showTime ? 'date_format_long' : 'date_format_short'];
-    }
-
-    /**
-     * @param string[]|string $name
-     */
-    private function isRange(array|string $name): bool
-    {
-        return \is_array($name) === true;
     }
 
     private function getDateFormat(bool $showTime): string

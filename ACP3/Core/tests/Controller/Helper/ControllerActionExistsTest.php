@@ -13,7 +13,7 @@ use Psr\Container\ContainerInterface;
 
 class ControllerActionExistsTest extends TestCase
 {
-    private MockObject|ContainerInterface $container;
+    private MockObject&ContainerInterface $container;
     private ControllerActionExists $controllerActionExists;
 
     protected function setUp(): void

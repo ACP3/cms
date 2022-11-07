@@ -16,11 +16,11 @@ class TitleTest extends \PHPUnit\Framework\TestCase
      */
     protected $title;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Breadcrumb\Steps
+     * @var \PHPUnit\Framework\MockObject\MockObject&\ACP3\Core\Breadcrumb\Steps
      */
     protected $stepsMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|EventDispatcher
+     * @var \PHPUnit\Framework\MockObject\MockObject&EventDispatcher
      */
     protected $eventDispatcherMock;
 

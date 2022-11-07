@@ -63,7 +63,14 @@ class Theme implements ThemePathInterface
             return;
         }
 
-        $composerData = json_decode(file_get_contents($themePath . DIRECTORY_SEPARATOR . 'composer.json'), true, 512, JSON_THROW_ON_ERROR);
+        $path = $themePath . DIRECTORY_SEPARATOR . 'composer.json';
+        $content = file_get_contents($path);
+
+        if (!$content) {
+            throw new \RuntimeException(sprintf('Could not load file "%s"!', $path));
+        }
+
+        $composerData = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
         $this->availableThemes[$themeName] = [
             'author' => $this->getAuthors($composerData),
             'css' => $composerData['extra']['css'] ?? [],

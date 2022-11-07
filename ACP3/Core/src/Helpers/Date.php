@@ -22,6 +22,7 @@ class Date
      */
     public function getTimeZones(?string $currentValue = ''): array
     {
+        /** @var array<string, string[]> $timeZones */
         $timeZones = [
             'Africa' => \DateTimeZone::listIdentifiers(\DateTimeZone::AFRICA),
             'America' => \DateTimeZone::listIdentifiers(\DateTimeZone::AMERICA),
@@ -36,20 +37,19 @@ class Date
             'UTC' => \DateTimeZone::listIdentifiers(\DateTimeZone::UTC),
         ];
 
+        $result = [];
         foreach ($timeZones as $key => $timeZoneIdentifiers) {
-            $i = 0;
+            $result[$key] = [];
             foreach ($timeZoneIdentifiers as $timeZoneIdentifier) {
-                unset($timeZones[$key][$i]);
-                $timeZones[$key][$timeZoneIdentifier]['selected'] = $this->formsHelper->selectEntry(
+                $result[$key][$timeZoneIdentifier]['selected'] = $this->formsHelper->selectEntry(
                     'date_time_zone',
                     $timeZoneIdentifier,
                     $currentValue
                 );
-                ++$i;
             }
         }
 
-        return $timeZones;
+        return $result;
     }
 
     /**

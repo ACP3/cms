@@ -17,23 +17,23 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 class StepsTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Container
+     * @var \PHPUnit\Framework\MockObject\MockObject&Container
      */
     protected $containerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Translator
+     * @var \PHPUnit\Framework\MockObject\MockObject&Translator
      */
     protected $translatorMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|RequestInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&RequestInterface
      */
     protected $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|RouterInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&RouterInterface
      */
     protected $routerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|EventDispatcher
+     * @var \PHPUnit\Framework\MockObject\MockObject&EventDispatcher
      */
     protected $eventDispatcherMock;
     /**

@@ -35,7 +35,7 @@ class SeoInformationService
                 $tmpAlias = $alias;
                 unset($tmpAlias['uri']);
 
-                $this->cache[$alias['uri']] = $tmpAlias;
+                $this->cache[(string) $alias['uri']] = $tmpAlias;
             }
         }
 

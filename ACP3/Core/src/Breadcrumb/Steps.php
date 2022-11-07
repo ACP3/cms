@@ -18,11 +18,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Steps
 {
     /**
-     * @var array<array<string, mixed>>
+     * @var array{uri: string, title: string, last?: bool}[]
      */
     protected array $steps = [];
     /**
-     * @var array<array<string, mixed>>
+     * @var array{uri: string, title: string, last?: bool}[]
      */
     protected array $breadcrumbCache = [];
 
@@ -33,7 +33,7 @@ class Steps
     /**
      * Returns the breadcrumb.
      *
-     * @return array<array<string, mixed>>
+     * @return array{uri: string, title: string, last?: bool}[]
      */
     public function getBreadcrumb(): array
     {

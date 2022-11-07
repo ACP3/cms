@@ -13,7 +13,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 class TranslateColumnRendererTest extends AbstractColumnRendererTest
 {
     /**
-     * @var Translator|MockObject
+     * @var Translator&MockObject
      */
     private $langMock;
 

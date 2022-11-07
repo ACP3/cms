@@ -18,15 +18,15 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
      */
     protected $pageBreaks;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|RequestInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&RequestInterface
      */
     protected $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Router\RouterInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&\ACP3\Core\Router\RouterInterface
      */
     protected $routerMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\Helpers\TableOfContents
+     * @var \PHPUnit\Framework\MockObject\MockObject&\ACP3\Core\Helpers\TableOfContents
      */
     protected $tocMock;
 

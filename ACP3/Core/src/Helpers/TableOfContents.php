@@ -60,7 +60,7 @@ class TableOfContents
         if (!empty($matches)) {
             $cMatches = \count($matches[1]);
             for ($i = 0; $i < $cMatches; ++$i) {
-                $return[$matches[1][$i]] = $matches[2][$i];
+                $return[(string) $matches[1][$i]] = (string) $matches[2][$i];
             }
         }
 

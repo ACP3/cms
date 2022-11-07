@@ -68,7 +68,9 @@ class Title
             $steps = $this->steps->getBreadcrumb();
             $lastCrumb = end($steps);
 
-            $this->pageTitle = $lastCrumb['title'];
+            if ($lastCrumb !== false) {
+                $this->pageTitle = $lastCrumb['title'];
+            }
         }
 
         return $this->pageTitle;

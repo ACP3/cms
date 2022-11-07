@@ -18,9 +18,9 @@ class PageCssClassesTest extends AbstractPluginTest
      * @var PageCssClasses
      */
     protected $plugin;
-    private MockObject|\ACP3\Core\Assets\PageCssClasses $pageCssClassesMock;
-    private RequestInterface|MockObject $requestMock;
-    private \Smarty_Internal_Template|MockObject $smartyInternalTemplateMock;
+    private MockObject&\ACP3\Core\Assets\PageCssClasses $pageCssClassesMock;
+    private RequestInterface&MockObject $requestMock;
+    private \Smarty_Internal_Template&MockObject $smartyInternalTemplateMock;
 
     protected function setup(): void
     {

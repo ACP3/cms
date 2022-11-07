@@ -48,7 +48,7 @@ class DateColumnRenderer extends AbstractColumnRenderer
             $value = $this->getDefaultValue($column);
         } else {
             $fields = $this->getDbFields($column);
-            $value = $this->dateRangeHelper->formatTimeRange($value, $this->getDbValueIfExists($dbResultRow, next($fields)));
+            $value = $this->dateRangeHelper->formatTimeRange($value, $this->getDbValueIfExists($dbResultRow, (string) next($fields)));
         }
 
         return $value;

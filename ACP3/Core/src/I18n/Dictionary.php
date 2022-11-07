@@ -76,9 +76,18 @@ class Dictionary implements DictionaryInterface
     private function parseI18nFile(string $i18nFile, string $moduleName): array
     {
         $data = [];
-        $xml = simplexml_load_string(file_get_contents($i18nFile));
-        foreach ($xml->keys->item as $item) {
-            $data[strtolower($moduleName . $item['key'])] = trim((string) $item);
+        $fileContent = file_get_contents($i18nFile);
+
+        if ($fileContent === false) {
+            throw new \RuntimeException(sprintf('An error occurred while loading file "%s"!', $i18nFile));
+        }
+
+        $xml = simplexml_load_string($fileContent);
+
+        if ($xml) {
+            foreach ($xml->keys->item as $item) {
+                $data[strtolower($moduleName . $item['key'])] = trim((string) $item);
+            }
         }
 
         return $data;

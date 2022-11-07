@@ -18,13 +18,17 @@ class PageBreaks
     /**
      * Parst einen Text und zerlegt diesen bei Bedarf mehrere Seiten.
      *
-     * @return array<string, mixed>
+     * @return array{toc: string, text: string, next: string, previous: string}
      */
     public function splitTextIntoPages(string $text, string $baseUrlPath): array
     {
         $matches = [];
         preg_match_all($this->getSplitPagesRegex(), $text, $matches);
         $pages = preg_split($this->getSplitPagesRegex(), $text, -1, PREG_SPLIT_NO_EMPTY);
+
+        if ($pages === false) {
+            throw new \RuntimeException('An error occurred, while paginating the text.');
+        }
 
         $currentPage = $this->getCurrentPage($pages);
         $nextPage = !empty($pages[$currentPage]) ? $this->router->route($baseUrlPath) . 'page_' . ($currentPage + 1) . '/' : '';

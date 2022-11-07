@@ -21,19 +21,19 @@ class ACLTest extends TestCase
      */
     private $acl;
     /**
-     * @var MockObject|ControllerActionExists
+     * @var MockObject&ControllerActionExists
      */
     private $controllerActionExistsMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|UserModelInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&UserModelInterface
      */
     private $userMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\ACL\Repository\UserRoleRepositoryInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&\ACP3\Core\ACL\Repository\UserRoleRepositoryInterface
      */
     private $userRoleRepositoryMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\ACP3\Core\ACL\PermissionServiceInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&\ACP3\Core\ACL\PermissionServiceInterface
      */
     private $permissionServiceMock;
 

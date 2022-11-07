@@ -20,7 +20,7 @@ class FileResolverTest extends TestCase
 
     private ApplicationPath $appPath;
 
-    private ThemePathInterface|MockObject $themeMock;
+    private ThemePathInterface&MockObject $themeMock;
 
     protected function setup(): void
     {

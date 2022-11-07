@@ -18,15 +18,15 @@ class RouterTest extends \PHPUnit\Framework\TestCase
      */
     protected $router;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|RequestInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&RequestInterface
      */
     protected $requestMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|ApplicationPath
+     * @var \PHPUnit\Framework\MockObject\MockObject&ApplicationPath
      */
     protected $appPathMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|SettingsInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject&SettingsInterface
      */
     protected $configMock;
 

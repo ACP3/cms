@@ -10,7 +10,7 @@ namespace ACP3\Core\Assets;
 abstract class AbstractIncludeAsset
 {
     /**
-     * @var string[]
+     * @var array<string, true>
      */
     private array $alreadyIncluded = [];
 

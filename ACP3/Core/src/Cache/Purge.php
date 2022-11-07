@@ -40,7 +40,9 @@ class Purge
     private static function purgeCurrentDirectory(string $fileOrDirectory, string $cacheIdPrefix): void
     {
         if (is_link($fileOrDirectory)) {
-            self::purgeCurrentDirectory(readlink($fileOrDirectory), $cacheIdPrefix);
+            if (false !== ($link = readlink($fileOrDirectory))) {
+                self::purgeCurrentDirectory($link, $cacheIdPrefix);
+            }
         } elseif (is_dir($fileOrDirectory)) {
             foreach (Filesystem::scandir($fileOrDirectory) as $dirContent) {
                 $path = "$fileOrDirectory/$dirContent";
