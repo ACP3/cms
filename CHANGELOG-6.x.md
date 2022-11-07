@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [unreleased]
+
+tba
+
 ## [6.13.0] - 2022-11-07
 
 -   [Base] Add a gulp task for optimizing PNG-images
