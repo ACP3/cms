@@ -12,24 +12,17 @@
 <div id="wrapper" class="container">
     <h1 class="d-none d-lg-block my-2 mx-3">
         {if $IS_HOMEPAGE}
-            <img src="{image file="logo.png" module="system"}"
-                 srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
-                 alt="{site_title}">
+            {include file="asset:System/Partials/picture.tpl" picture=['filename' => 'logo', 'module' => 'system', 'alt' => {site_title}]}
         {else}
             <a href="{uri args=""}">
-                <img src="{image file="logo.png" module="system"}"
-                     srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
-                     alt="{site_title}">
+                {include file="asset:System/Partials/picture.tpl" picture=['filename' => 'logo', 'module' => 'system', 'alt' => {site_title}]}
             </a>
         {/if}
     </h1>
     <nav id="main-navigation" class="navbar navbar-expand-lg navbar-light bg-light mb-3">
         <div class="container-fluid">
             <a class="navbar-brand d-lg-none" href="{$ROOT_DIR}">
-                <img src="{image file="logo.png" module="system"}"
-                     srcset="{image file="logo.png" module="system"} 1x, {image file="logo@2x.png" module="system"} 2x"
-                     alt="{site_title}"
-                     height="30">
+                {include file="asset:System/Partials/picture.tpl" picture=['filename' => 'logo', 'module' => 'system', 'alt' => {site_title}, 'height' => 30]}
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navigation-content" aria-controls="main-navigation-content" aria-expanded="false" aria-label="{lang t="system|toggle_navigation"}">
                 <span class="navbar-toggler-icon"></span>
