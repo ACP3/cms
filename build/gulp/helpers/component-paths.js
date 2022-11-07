@@ -56,6 +56,30 @@ const componentPathsJsProcess = [
   }),
 ];
 
+const globPatternWebp = "/Resources/Assets/img/**/*.{gif,png,jpg}";
+const componentPathsForWebpConversion = [
+  ...Object.values(componentPaths.module)
+    .concat(Object.values(componentPaths.installer))
+    .map((module) => {
+      return module + globPatternWebp;
+    }),
+  ...Object.values(componentPaths.theme).map((theme) => {
+    return theme + "/*" + globPatternWebp;
+  }),
+];
+
+const globPatternPng = "/Resources/Assets/img/**/*.png";
+const componentPathsForPngOptimization = [
+  ...Object.values(componentPaths.module)
+    .concat(Object.values(componentPaths.installer))
+    .map((module) => {
+      return module + globPatternPng;
+    }),
+  ...Object.values(componentPaths.theme).map((theme) => {
+    return theme + "/*" + globPatternPng;
+  }),
+];
+
 const globPatternAssets = "/Resources/Assets/**/*";
 const assetFolders = [
   ...Object.values(componentPaths.core)
@@ -88,6 +112,8 @@ module.exports = {
     watch: filterComposerVendorComponents(componentPathsJsWatch),
     all: componentPathsJsProcess, // this is only relevant for the webpack gulp task, as we want to copy all static assets into the "uploads/assets"-folder
   },
+  webp: componentPathsForWebpConversion,
+  png: componentPathsForPngOptimization,
   assets: assetFolders,
   pathAliases: pathAliases,
 };
