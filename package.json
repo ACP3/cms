@@ -93,7 +93,7 @@
     "Firefox ESR"
   ],
   "lint-staged": {
-    "*.js": "npm run eslint-fix",
+    "*.js": "npm run eslint:fix",
     "*.{css,scss}": "npn run css-lint:fix",
     "*.{css,js,json,md,scss,yml}": "npm run prettier:fix",
     "*.php": "docker-compose run --no-deps --rm app composer php-cs-fixer"

@@ -7,27 +7,31 @@
 
 namespace ACP3\Modules\ACP3\Articles\Controller\Frontend\Index;
 
-use ACP3\Core;
+use ACP3\Core\Cache\CacheResponseTrait;
+use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\Context;
-use ACP3\Modules\ACP3\Articles;
+use ACP3\Core\Controller\Exception\ResultNotExistsException;
+use ACP3\Core\Date;
+use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
+use ACP3\Modules\ACP3\Articles\ViewProviders\ArticlePaginatedViewProvider;
 use ACP3\Modules\ACP3\System\Installer\Schema;
 use Symfony\Component\HttpFoundation\Response;
 
-class Details extends Core\Controller\AbstractWidgetAction
+class Details extends AbstractWidgetAction
 {
-    use Core\Cache\CacheResponseTrait;
+    use CacheResponseTrait;
 
     public function __construct(
         Context $context,
-        private readonly Articles\ViewProviders\ArticlePaginatedViewProvider $articlePaginatedViewProvider,
-        private readonly Core\Date $date,
-        private readonly Articles\Repository\ArticleRepository $articleRepository
+        private readonly ArticlePaginatedViewProvider $articlePaginatedViewProvider,
+        private readonly Date $date,
+        private readonly ArticleRepository $articleRepository
     ) {
         parent::__construct($context);
     }
 
     /**
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $id): Response
@@ -45,6 +49,6 @@ class Details extends Core\Controller\AbstractWidgetAction
             return $response;
         }
 
-        throw new Core\Controller\Exception\ResultNotExistsException();
+        throw new ResultNotExistsException();
     }
 }
