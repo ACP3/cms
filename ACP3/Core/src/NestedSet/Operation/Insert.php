@@ -14,7 +14,7 @@ class Insert extends AbstractOperation
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function execute(array $insertValues, int $parentId = 0): int|false
+    public function execute(array $insertValues, int $parentId = 0): int
     {
         // No parent item has been assigned
         if ($this->nestedSetRepository->nodeExists($parentId) === false) {

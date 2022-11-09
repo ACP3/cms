@@ -155,7 +155,7 @@ final class Output
             'Content-type' => $mimeType,
             'Cache-Control' => 'public',
             'Pragma' => 'public',
-            'Last-Modified' => gmdate('D, d M Y H:i:s', filemtime($this->getFile())) . ' GMT',
+            'Last-Modified' => gmdate('D, d M Y H:i:s', (int) filemtime($this->getFile())) . ' GMT',
             'Expires' => gmdate('D, d M Y H:i:s', time() + 31_536_000) . ' GMT',
         ]);
     }

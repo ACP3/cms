@@ -58,7 +58,13 @@ class ModuleInfo implements ModuleInfoInterface
      */
     private function fetchModuleInfo(ComponentDataDto $moduleCoreData, array $moduleInfoDb): array
     {
-        $composerData = json_decode(file_get_contents($moduleCoreData->getPath() . '/composer.json'), true, 512, JSON_THROW_ON_ERROR);
+        $path = $moduleCoreData->getPath() . '/composer.json';
+        $fileContents = file_get_contents($path);
+
+        if ($fileContents === false) {
+            throw new \RuntimeException(sprintf('An error occurred while reading file "%s"!', $path));
+        }
+        $composerData = json_decode($fileContents, true, 512, JSON_THROW_ON_ERROR);
 
         $needsInstallation = $this->schemaLocator->has($moduleCoreData->getName());
 

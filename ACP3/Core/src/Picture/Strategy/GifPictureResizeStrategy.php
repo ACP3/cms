@@ -20,8 +20,16 @@ class GifPictureResizeStrategy extends AbstractPictureResizeStrategy
     public function resize(Input $input, Output $output): void
     {
         $destPicture = imagecreatetruecolor($output->getDestWidth(), $output->getDestHeight());
+        if ($destPicture === false) {
+            throw new \RuntimeException(sprintf('An error occurred while creating the target picture for file "%s"!', $input->getFile()));
+        }
 
-        $this->doResize($output, imagecreatefromgif($input->getFile()), $destPicture);
+        $srcPicture = imagecreatefromgif($input->getFile());
+        if ($srcPicture === false) {
+            throw new \RuntimeException(sprintf('An error occurred while creating the source picture for file "%s"!', $input->getFile()));
+        }
+
+        $this->doResize($output, $srcPicture, $destPicture);
         imagegif($destPicture, $input->getCacheFileName());
     }
 }

@@ -20,8 +20,16 @@ class JpegPictureResizeStrategy extends AbstractPictureResizeStrategy
     public function resize(Input $input, Output $output): void
     {
         $destPicture = imagecreatetruecolor($output->getDestWidth(), $output->getDestHeight());
+        if ($destPicture === false) {
+            throw new \RuntimeException(sprintf('An error occurred while creating the target picture for file "%s"!', $input->getFile()));
+        }
 
-        $this->doResize($output, imagecreatefromjpeg($input->getFile()), $destPicture);
+        $srcPicture = imagecreatefromjpeg($input->getFile());
+        if ($srcPicture === false) {
+            throw new \RuntimeException(sprintf('An error occurred while creating the source picture for file "%s"!', $input->getFile()));
+        }
+
+        $this->doResize($output, $srcPicture, $destPicture);
         imagejpeg($destPicture, $input->getCacheFileName(), $input->getJpgQuality());
     }
 }

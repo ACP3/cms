@@ -20,11 +20,19 @@ class PngPictureResizeStrategy extends AbstractPictureResizeStrategy
     public function resize(Input $input, Output $output): void
     {
         $destPicture = imagecreatetruecolor($output->getDestWidth(), $output->getDestHeight());
+        if ($destPicture === false) {
+            throw new \RuntimeException(sprintf('An error occurred while creating the target picture for file "%s"!', $input->getFile()));
+        }
 
         imagealphablending($destPicture, false);
         imagesavealpha($destPicture, true);
 
-        $this->doResize($output, imagecreatefrompng($input->getFile()), $destPicture);
+        $srcPicture = imagecreatefrompng($input->getFile());
+        if ($srcPicture === false) {
+            throw new \RuntimeException(sprintf('An error occurred while creating the source picture for file "%s"!', $input->getFile()));
+        }
+
+        $this->doResize($output, $srcPicture, $destPicture);
         imagepng($destPicture, $input->getCacheFileName(), 9, PNG_ALL_FILTERS);
     }
 }

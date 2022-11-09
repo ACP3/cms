@@ -77,6 +77,7 @@ class Picture
      */
     private function getPictureInfo(string $fileName): array
     {
+        /** @var array{width: int, height: int, type: int}|false $picInfo */
         $picInfo = $this->fastImageSize->getImageSize($fileName);
 
         // If fastImageSize fails, try it with PHP's standard getimagesize() function

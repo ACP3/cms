@@ -51,12 +51,13 @@ class Libraries
     }
 
     /**
-     * @param array{enabled_for_ajax?: bool, dependencies?: string[], css?: string|string[], js?: string|string[], module?: string}|null $options
+     * @param array{enabled_for_ajax?: bool, dependencies?: string[], css?: string[], js?: string[], module?: string}|null $options
      *
      * @return $this
      */
     public function addLibrary(LibraryEntity|string $library, ?array $options = null): self
     {
+        // @deprecated since ACP3 version 6.14.0, to be removed with version 7.0.0.
         if (\is_string($library)) {
             if (empty($options)) {
                 throw new \InvalidArgumentException(sprintf('You need to pass a valid options array for this asset library %s', $library));
@@ -66,8 +67,8 @@ class Libraries
                 $library,
                 $options['enabled_for_ajax'] ?? false,
                 $options['dependencies'] ?? [],
-                \array_key_exists('css', $options) && \is_string($options['css']) ? [$options['css']] : $options['css'] ?? [],
-                \array_key_exists('js', $options) && \is_string($options['js']) ? [$options['js']] : $options['js'] ?? [],
+                $options['css'] ?? [],
+                $options['js'] ?? [],
                 $options['module'] ?? null
             );
         }
