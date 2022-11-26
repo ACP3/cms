@@ -1,4 +1,4 @@
-import globby from "globby";
+import { globbySync } from "globby";
 import { componentPaths } from "./helpers/component-paths.mjs";
 import gulpPlumber from "gulp-plumber";
 import webpackStream from "webpack-stream";
@@ -7,7 +7,7 @@ import webpackConfig from "../../webpack.config.mjs";
 export default function webpack(gulp) {
     return () => {
         return gulp
-            .src(globby.sync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]), {
+            .src(globbySync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]), {
                 base: ".",
                 allowEmpty: true,
                 since: gulp.lastRun("webpack"),

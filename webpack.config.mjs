@@ -1,8 +1,8 @@
-import globby from "globby";
+import { globbySync } from "globby";
 import { componentPaths } from "./build/gulp/helpers/component-paths.mjs";
 import TerserPlugin from "terser-webpack-plugin";
 
-const entries = globby.sync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);
+const entries = globbySync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);
 const entryPointMap = new Map();
 for (const entryPoint of entries) {
     entryPointMap.set(entryPoint, entryPoint);

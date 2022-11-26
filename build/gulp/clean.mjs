@@ -1,7 +1,7 @@
-import del from "del";
+import { deleteAsync } from "del";
 
 export default function clean() {
     return () => {
-        return del(["./uploads/assets/*", "!./uploads/assets/{.gitignore,.gitkeep}"]);
+        return deleteAsync(["./uploads/assets/*", "!./uploads/assets/{.gitignore,.gitkeep}"]);
     };
 }
