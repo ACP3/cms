@@ -1,8 +1,8 @@
-import { componentPaths } from "./helpers/component-paths.mjs";
+import componentPaths from "./helpers/component-paths.mjs";
 import gulpPlumber from "gulp-plumber";
 import gulpSharpResponsive from "gulp-sharp-responsive";
 
-export default function png(gulp) {
+export default (gulp) => {
     return () => {
         return gulp
             .src(componentPaths.png, {
@@ -26,4 +26,4 @@ export default function png(gulp) {
             )
             .pipe(gulp.dest("./uploads/assets"));
     };
-}
+};

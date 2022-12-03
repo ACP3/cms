@@ -27,6 +27,7 @@ const require = createRequire(import.meta.url);
 const componentPathsJson = require(file);
 
 const globPatternScss = "/Resources/Assets/scss/**/*.scss";
+/** @type {string[]} */
 const componentPathsScss = [
     ...Object.values(componentPathsJson.module)
         .concat(Object.values(componentPathsJson.installer))
@@ -39,6 +40,7 @@ const componentPathsScss = [
 ];
 
 const globPatternJsWatch = "/Resources/Assets/js/**/!(*.min).js";
+/** @type {string[]} */
 const componentPathsJsWatch = [
     ...Object.values(componentPathsJson.module)
         .concat(Object.values(componentPathsJson.installer))
@@ -51,6 +53,7 @@ const componentPathsJsWatch = [
 ];
 
 const globPatternJsProcess = "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
+/** @type {string[]} */
 const componentPathsJsProcess = [
     ...Object.values(componentPathsJson.module)
         .concat(Object.values(componentPathsJson.installer))
@@ -63,6 +66,7 @@ const componentPathsJsProcess = [
 ];
 
 const globPatternWebp = "/Resources/Assets/img/**/*.{gif,png,jpg}";
+/** @type {string[]} */
 const componentPathsForWebpConversion = [
     ...Object.values(componentPathsJson.module)
         .concat(Object.values(componentPathsJson.installer))
@@ -75,6 +79,7 @@ const componentPathsForWebpConversion = [
 ];
 
 const globPatternPng = "/Resources/Assets/img/**/*.png";
+/** @type {string[]} */
 const componentPathsForPngOptimization = [
     ...Object.values(componentPathsJson.module)
         .concat(Object.values(componentPathsJson.installer))
@@ -87,6 +92,7 @@ const componentPathsForPngOptimization = [
 ];
 
 const globPatternAssets = "/Resources/Assets/**/*";
+/** @type {string[]} */
 const assetFolders = [
     ...Object.values(componentPathsJson.core)
         .concat(Object.values(componentPathsJson.module), Object.values(componentPathsJson.installer))
@@ -98,6 +104,11 @@ const assetFolders = [
     }),
 ];
 
+/**
+ *
+ * @param {string[]} paths
+ * @returns {string[]}
+ */
 function filterComposerVendorComponents(paths) {
     return paths.filter((path) => !path.includes("./vendor/"));
 }
@@ -109,7 +120,7 @@ Object.keys(componentPathsJson).forEach((componentType) => {
     }
 });
 
-export const componentPaths = {
+export default {
     scss: {
         watch: filterComposerVendorComponents(componentPathsScss),
         all: componentPathsScss,

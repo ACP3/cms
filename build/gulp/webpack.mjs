@@ -1,10 +1,10 @@
 import { globbySync } from "globby";
-import { componentPaths } from "./helpers/component-paths.mjs";
+import componentPaths from "./helpers/component-paths.mjs";
 import gulpPlumber from "gulp-plumber";
 import webpackStream from "webpack-stream";
 import webpackConfig from "../../webpack.config.mjs";
 
-export default function webpack(gulp) {
+export default (gulp) => {
     return () => {
         return gulp
             .src(globbySync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]), {
@@ -16,4 +16,4 @@ export default function webpack(gulp) {
             .pipe(webpackStream(webpackConfig))
             .pipe(gulp.dest("./uploads/assets"));
     };
-}
+};

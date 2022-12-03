@@ -1,5 +1,5 @@
 import { globbySync } from "globby";
-import { componentPaths } from "./build/gulp/helpers/component-paths.mjs";
+import componentPaths from "./build/gulp/helpers/component-paths.mjs";
 import TerserPlugin from "terser-webpack-plugin";
 
 const entries = globbySync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);

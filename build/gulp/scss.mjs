@@ -6,7 +6,7 @@
 import autoprefixer from "autoprefixer";
 import dartSass from "sass";
 import gulpSass from "gulp-sass";
-import { componentPaths } from "./helpers/component-paths.mjs";
+import componentPaths from "./helpers/component-paths.mjs";
 import gulpPlumber from "gulp-plumber";
 import gulpPostcss from "gulp-postcss";
 import gulpRename from "gulp-rename";
@@ -15,7 +15,7 @@ import cssnano from "cssnano";
 
 const sass = gulpSass(dartSass);
 
-export default function scss(gulp) {
+export default (gulp) => {
     return () => {
         return gulp
             .src(componentPaths.scss.all, {
@@ -35,4 +35,4 @@ export default function scss(gulp) {
             )
             .pipe(gulp.dest("./uploads/assets"));
     };
-}
+};

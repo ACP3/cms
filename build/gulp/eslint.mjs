@@ -3,11 +3,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-import { componentPaths } from "./helpers/component-paths.mjs";
+import componentPaths from "./helpers/component-paths.mjs";
 import gulpPlumber from "gulp-plumber";
 import gulpEslint from "gulp-eslint-new";
 
-export default function eslint(gulp) {
+export default (gulp) => {
     return () => {
         return gulp
             .src(componentPaths.js.watch, { base: "./", since: gulp.lastRun("eslint") })
@@ -15,4 +15,4 @@ export default function eslint(gulp) {
             .pipe(gulpEslint())
             .pipe(gulpEslint.format());
     };
-}
+};

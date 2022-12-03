@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-export default function versionNpmLibraries(gulp) {
+export default (gulp) => {
     return (done) => {
         const nodeBasePath = "./node_modules",
             systemBasePath = "./ACP3/Modules/ACP3/System/Resources/Assets",
@@ -131,4 +131,4 @@ export default function versionNpmLibraries(gulp) {
 
         return done();
     };
-}
+};

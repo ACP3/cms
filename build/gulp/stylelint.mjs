@@ -3,11 +3,11 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-import { componentPaths } from "./helpers/component-paths.mjs";
+import componentPaths from "./helpers/component-paths.mjs";
 import gulpStylelint from "@ronilaukkarinen/gulp-stylelint";
 import gulpPlumber from "gulp-plumber";
 
-export default function stylelint(gulp) {
+export default (gulp) => {
     return () => {
         return gulp
             .src(componentPaths.scss.watch, {
@@ -22,4 +22,4 @@ export default function stylelint(gulp) {
                 })
             );
     };
-}
+};

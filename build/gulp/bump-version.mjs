@@ -16,7 +16,7 @@ const argv = args.argv;
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
-export default function bumpVersion(gulp) {
+export default (gulp) => {
     function loadComponents() {
         const document = yaml.load(readFileSync(__dirname + "/../../.gitsplit.yml", "utf8"));
 
@@ -386,4 +386,4 @@ export default function bumpVersion(gulp) {
             done();
         }
     };
-}
+};
