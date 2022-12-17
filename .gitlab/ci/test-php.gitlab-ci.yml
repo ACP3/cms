@@ -23,6 +23,7 @@ test:php-unit:
   parallel:
     matrix:
       - PHP_VERSION: "8.1"
+      - PHP_VERSION: "8.2"
 
 test:php-cs-fixer:
   image: registry.gitlab.com/acp3/php-docker:8.1
