@@ -61,7 +61,7 @@
     "prettier": "^2.4.1",
     "sass": "^1.56.1",
     "semver": "^7.3.5",
-    "simple-git": "^3.0.3",
+    "simple-git": "^3.16.0",
     "stylelint": "^14.2.0",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-twbs-bootstrap": "^7.0.0",
