@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [CI] Force to use Composer 2.4 in the CI pipeline for now, as running it with Composer 2.5 did break it
 
 ## [6.14.0] - 2023-02-03
 
