@@ -1,5 +1,5 @@
 composer:
-  image: composer:2
+  image: composer:2.4
   stage: prepare
   cache:
     key: $CI_JOB_NAME
