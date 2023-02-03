@@ -3,7 +3,8 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-import args from "yargs";
+import yargs from "yargs/yargs";
+import { hideBin } from "yargs/helpers";
 import git from "simple-git";
 import semver from "semver";
 import yaml from "js-yaml";
@@ -12,9 +13,12 @@ import gulpBump from "gulp-bump";
 import gulpChange from "gulp-change";
 import * as url from "url";
 
-const argv = args.argv;
+const argv = yargs(hideBin(process.argv)).argv;
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 
 export default (gulp) => {
     function loadComponents() {
