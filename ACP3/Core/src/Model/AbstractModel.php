@@ -187,6 +187,7 @@ abstract class AbstractModel
         AbstractRepository $repository,
         AbstractModelSaveEvent $event
     ): void {
+        $this->dispatchEvent($event);
         $this->dispatchEvent(
             $event,
             'core.model.after_save'
