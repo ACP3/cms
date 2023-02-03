@@ -21,21 +21,23 @@ class InsertUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
 
     public function __invoke(AfterModelSaveEvent $event): void
     {
-        if ($this->acl->hasPermission('admin/seo/index/create')) {
-            $formData = $event->getRawData();
+        if (!$this->acl->hasPermission('admin/seo/index/create')) {
+            return;
+        }
 
-            if ($event->getModuleName() !== Schema::MODULE_NAME && !empty($formData['seo_uri_pattern'])) {
-                $this->uriAliasManager->insertUriAlias(
-                    sprintf($formData['seo_uri_pattern'], $event->getEntryId()),
-                    $formData['alias'],
-                    $formData['seo_keywords'],
-                    $formData['seo_description'],
-                    (int) $formData['seo_robots'],
-                    $formData['seo_title'],
-                    $formData['seo_structured_data'],
-                    $formData['seo_canonical'],
-                );
-            }
+        $formData = $event->getRawData();
+
+        if ($event->getModuleName() !== Schema::MODULE_NAME && !empty($formData['seo_uri_pattern'])) {
+            $this->uriAliasManager->insertUriAlias(
+                sprintf($formData['seo_uri_pattern'], $event->getEntryId()),
+                $formData['alias'],
+                $formData['seo_keywords'],
+                $formData['seo_description'],
+                (int) $formData['seo_robots'],
+                $formData['seo_title'],
+                $formData['seo_structured_data'],
+                $formData['seo_canonical'],
+            );
         }
     }
 
