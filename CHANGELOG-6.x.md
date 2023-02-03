@@ -7,9 +7,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Core] Added official support for PHP 8.2
+-   [Core] Added a `json_encode`-modifier for Smarty to fix a deprecation notice with Smarty version ^4.3.0
+
+### Changed
+
+-   [ALL] Fixed some PHPStan level 7 errors, but there is still some way to go before we can enable this level by default
+-   [Core] ESMified the scripts related to gulp and webpack
+
+### Fixed
+
+-   [Core] Fixed not throwing the `AfterModelSaveEvent` by itself
 
 ## [6.13.0] - 2022-11-07
+
+### Added
 
 -   [Base] Add a gulp task for optimizing PNG-images
 -   [Base] Add a gulp task for converting JPG-, GIF- and PNG-images to WEBP-images
