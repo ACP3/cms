@@ -8,11 +8,11 @@ import gulpPlumber from "gulp-plumber";
 import gulpEslint from "gulp-eslint-new";
 
 export default (gulp) => {
-    return () => {
-        return gulp
-            .src(componentPaths.js.watch, { base: "./", since: gulp.lastRun("eslint") })
-            .pipe(gulpPlumber())
-            .pipe(gulpEslint())
-            .pipe(gulpEslint.format());
-    };
+  return () => {
+    return gulp
+      .src(componentPaths.js.watch, { base: "./", since: gulp.lastRun("eslint") })
+      .pipe(gulpPlumber())
+      .pipe(gulpEslint())
+      .pipe(gulpEslint.format());
+  };
 };

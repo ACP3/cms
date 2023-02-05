@@ -6,10 +6,10 @@
 import componentPaths from "./helpers/component-paths.mjs";
 
 export default (gulp) => {
-    return (done) => {
-        gulp.watch(componentPaths.scss.watch, { cwd: "./" }, gulp.series("stylelint", "scss"));
-        gulp.watch(componentPaths.js.watch, { cwd: "./" }, gulp.series("eslint"));
+  return (done) => {
+    gulp.watch(componentPaths.scss.watch, { cwd: "./" }, gulp.series("stylelint", "scss"));
+    gulp.watch(componentPaths.js.watch, { cwd: "./" }, gulp.series("eslint"));
 
-        done();
-    };
+    done();
+  };
 };

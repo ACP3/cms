@@ -8,18 +8,18 @@ import gulpStylelint from "@ronilaukkarinen/gulp-stylelint";
 import gulpPlumber from "gulp-plumber";
 
 export default (gulp) => {
-    return () => {
-        return gulp
-            .src(componentPaths.scss.watch, {
-                base: ".",
-                allowEmpty: true,
-                since: gulp.lastRun("stylelint"),
-            })
-            .pipe(gulpPlumber())
-            .pipe(
-                gulpStylelint({
-                    reporters: [{ formatter: "string", console: true }],
-                })
-            );
-    };
+  return () => {
+    return gulp
+      .src(componentPaths.scss.watch, {
+        base: ".",
+        allowEmpty: true,
+        since: gulp.lastRun("stylelint"),
+      })
+      .pipe(gulpPlumber())
+      .pipe(
+        gulpStylelint({
+          reporters: [{ formatter: "string", console: true }],
+        })
+      );
+  };
 };

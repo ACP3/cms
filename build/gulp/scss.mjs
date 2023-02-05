@@ -16,23 +16,23 @@ import cssnano from "cssnano";
 const sass = gulpSass(dartSass);
 
 export default (gulp) => {
-    return () => {
-        return gulp
-            .src(componentPaths.scss.all, {
-                base: ".",
-                allowEmpty: true,
-                since: gulp.lastRun("scss"),
-            })
-            .pipe(gulpPlumber())
-            .pipe(gulpDependents())
-            .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
-            .pipe(gulpPostcss([autoprefixer(), cssnano()]))
-            .pipe(
-                gulpRename((path) => {
-                    path.dirname = path.dirname.substring(0, path.dirname.length - 4) + "css";
-                    path.extname = ".min.css";
-                })
-            )
-            .pipe(gulp.dest("./uploads/assets"));
-    };
+  return () => {
+    return gulp
+      .src(componentPaths.scss.all, {
+        base: ".",
+        allowEmpty: true,
+        since: gulp.lastRun("scss"),
+      })
+      .pipe(gulpPlumber())
+      .pipe(gulpDependents())
+      .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
+      .pipe(gulpPostcss([autoprefixer(), cssnano()]))
+      .pipe(
+        gulpRename((path) => {
+          path.dirname = path.dirname.substring(0, path.dirname.length - 4) + "css";
+          path.extname = ".min.css";
+        })
+      )
+      .pipe(gulp.dest("./uploads/assets"));
+  };
 };
