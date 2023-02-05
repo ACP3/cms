@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [ALL] Indent `*.mjs`-file with 2 spaces, too
 
 ## [6.14.1] - 2023-02-04
 
