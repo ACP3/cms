@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   [ALL] Indent `*.mjs`-file with 2 spaces, too
 
+### Fixed
+
+-   [Core] Fix self-referencing canonical URIs
+
 ## [6.14.1] - 2023-02-04
 
 ### Fixed

@@ -22,7 +22,7 @@ interface MetaStatementsServiceInterface
     /**
      * Returns the meta tags of the current page.
      *
-     * @return array<string, mixed>
+     * @return array{description: string, keywords: string, robots: string, previous_page: string, next_page: string, canonical: string}
      */
     public function getMetaTags(): array;
 

@@ -77,11 +77,8 @@ class MetaStatementsService implements MetaStatementsServiceInterface
             return;
         }
 
-        $this->canonicalUrl = $this->router->route($this->getCanonicalUrl($this->request->getUriWithoutPages()), true);
-
-        if (!$this->canonicalUrl) {
-            $this->canonicalUrl = $this->router->route($this->request->getQuery(), true);
-        }
+        $canonicalUrl = $this->getCanonicalUrl($this->request->getUriWithoutPages());
+        $this->canonicalUrl = $this->router->route($canonicalUrl ?: $this->request->getQuery(), true);
     }
 
     private function isInAdmin(): bool
