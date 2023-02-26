@@ -38,13 +38,13 @@ class MetaStatementsServiceTest extends TestCase
      */
     public function testCanonical(string $expected, AreaEnum $area, string $route): void
     {
-        $this->requestMock->expects($this->atLeastOnce())
+        $this->requestMock->expects(self::atLeastOnce())
             ->method('getArea')
             ->willReturn($area);
-        $this->requestMock
+        $this->requestMock->expects(self::any())
             ->method('getQuery')
             ->willReturn($route);
-        $this->routerMock
+        $this->routerMock->expects(self::any())
             ->method('route')
             ->willReturn('https://localhost/' . $route);
 
