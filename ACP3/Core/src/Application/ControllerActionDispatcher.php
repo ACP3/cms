@@ -141,6 +141,15 @@ class ControllerActionDispatcher
             }
         }
 
-        return $action(...$arguments);
+        // As the ACP3 currently has no real pre-configured routes,
+        // the ArgumentResolver also doesn't know about the expected route argument types. Therefore, it can occur that
+        // PHP throws a TypeError when the list of resolved arguments gets passed to the typed controller action arguments.
+        // Therefore, we handle these TypeErrors here for now,
+        // although it would be much better to handle this at Router-Level itself.
+        try {
+            return $action(...$arguments);
+        } catch (\TypeError $e) {
+            throw new ControllerActionNotFoundException($e->getMessage(), $e);
+        }
     }
 }
