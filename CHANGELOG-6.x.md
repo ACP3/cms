@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [Base] Bumped the minimally required Node.js version to 18.14
+-   [Core] Display the 404 page, when an invalid controller action argument has been given in the request
+-   [System] Updated the NPM dependencies
 
 ## [6.14.2] - 2023-02-22
 
