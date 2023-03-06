@@ -30,6 +30,7 @@ class UsersModel extends AbstractModel
             'nickname' => TextColumnType::class,
             'pwd' => RawColumnType::class,
             'pwd_salt' => RawColumnType::class,
+            'login_errors' => IntegerColumnType::class,
             'realname' => TextColumnType::class,
             'gender' => IntegerColumnType::class,
             'birthday' => DateColumnType::class,

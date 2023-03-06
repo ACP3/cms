@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Users] fix not being able to log in with the new password, when a user account has been locked by too many failed login-attempts
 
 ## [6.15.0] - 2023-02-26
 
