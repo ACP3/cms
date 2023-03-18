@@ -18,6 +18,7 @@ composer:
     - !reference [.php-cs-fixer-changes, rules]
     - !reference [.phpstan-changes, rules]
 
+
 npm:
   image: node:18.14-alpine
   stage: prepare
