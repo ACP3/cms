@@ -16,7 +16,7 @@
   "require": {
     "acp3/composer-installer": "^1.2.2",
     "dms/phpunit-arraysubset-asserts": "^0.4.0",
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^9.6"
   },
   "extra": {
     "installer-name": "tests"
