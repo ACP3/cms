@@ -2,9 +2,10 @@ composer:
   image: composer:2.5
   stage: prepare
   cache:
-    key: ${CI_JOB_NAME}-2.5-3
+    key: ${CI_JOB_NAME}-2.5-4
     paths:
       - ${COMPOSER_HOME}
+      - vendor
   script:
     - composer install -n --prefer-dist --ignore-platform-reqs
   artifacts:
@@ -16,7 +17,6 @@ composer:
     - !reference [.phpunit-changes, rules]
     - !reference [.php-cs-fixer-changes, rules]
     - !reference [.phpstan-changes, rules]
-
 
 npm:
   image: node:18.14-alpine
