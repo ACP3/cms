@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Wysiwygckeditor] Added the missing h4-h6 format tags
+
+### Changed
+
+-   [ALL] Updated the 3rd party composer and NPM dependencies
 
 ## [6.15.1] - 2023-03-06
 
