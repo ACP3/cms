@@ -18,7 +18,7 @@
   "require": {
     "acp3/core": "^6.15.0",
     "acp3/module-permissions": "^6.8.0",
-    "acp3/module-system": "^6.15.0"
+    "acp3/module-system": "^6.16.0"
   },
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI."
