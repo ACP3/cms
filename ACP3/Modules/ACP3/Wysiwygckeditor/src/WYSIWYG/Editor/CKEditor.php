@@ -77,6 +77,7 @@ class CKEditor extends Textarea
         $this->config['allowedContent'] = true;
         $this->config['embed_provider'] = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}';
         $this->config['language'] = $this->translator->getShortIsoCode();
+        $this->config['format_tags'] = 'h1;h2;h3;h4;h5;h6;pre;p;div;address';
         $this->config['codemirror'] = [
             'theme' => 'default',
             'lineNumbers' => true,
