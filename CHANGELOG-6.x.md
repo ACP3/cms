@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Menus] Made it possible to add "headlines" as menu items
 
 ## [6.16.0] - 2023-04-02
 

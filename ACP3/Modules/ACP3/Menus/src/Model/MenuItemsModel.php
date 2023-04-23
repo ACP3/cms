@@ -13,6 +13,7 @@ use ACP3\Core\Model\DataProcessor\ColumnType\IntegerColumnType;
 use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
 use ACP3\Core\Model\DataProcessor\ColumnType\TextColumnType;
 use ACP3\Core\NestedSet\Model\AbstractNestedSetModel;
+use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Installer\Schema;
 
 class MenuItemsModel extends AbstractNestedSetModel
@@ -25,6 +26,10 @@ class MenuItemsModel extends AbstractNestedSetModel
     public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData['target'] = YesNoEnum::tryFrom($rawData['display']) === YesNoEnum::NO ? LinkTargetEnum::TARGET_SELF->value : $rawData['target'];
+
+        if (PageTypeEnum::tryFrom($rawData['mode']) === PageTypeEnum::HEADLINE) {
+            $rawData['uri'] = '';
+        }
 
         return parent::save($rawData, $entryId);
     }

@@ -14,11 +14,12 @@
         <item key="display_item">Menüpunkt anzeigen</item>
         <item key="dynamic_page">Dynamische Seite</item>
         <item key="dynamic_page_hints">Bitte in der Form &quot;modul/controller/datei/weitere_parameter/&quot; eintragen, also bspw. news/details/id_1/.</item>
+        <item key="headline">Überschrift</item>
         <item key="hyperlink">Hyperlink</item>
         <item key="index_name">Index Name</item>
         <item key="index_name2">Index Name:</item>
         <item key="index_name_description">Dies beschreibt den Namen des Platzhalters in den Templates.</item>
-        <item key="index_name_unique">Der Name des Template Platzhalters muss einzigartig sein.</item>
+        <item key="index_name_unique">Der Name des Template-Platzhalters muss einzigartig sein.</item>
         <item key="menus">Navigationsleisten</item>
         <item key="menu_bar">Navigationsleiste</item>
         <item key="menu_bar_title">Name der Navigationsleiste</item>

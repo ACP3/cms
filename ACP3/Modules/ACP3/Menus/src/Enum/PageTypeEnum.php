@@ -16,4 +16,5 @@ enum PageTypeEnum: int
     case MODULE = 1;
     case DYNAMIC_PAGE = 2;
     case HYPERLINK = 3;
+    case HEADLINE = 4;
 }

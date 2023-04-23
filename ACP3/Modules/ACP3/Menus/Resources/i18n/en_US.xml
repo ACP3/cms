@@ -16,6 +16,7 @@
         <item key="dynamic_page_hints">Please use the format &quot;module/file/optional_parameters/&quot;, e.g.
             news/details/id_1/.
         </item>
+        <item key="headline">Headline</item>
         <item key="hyperlink">Hyperlink</item>
         <item key="index_name">Index name</item>
         <item key="index_name2">Index name:</item>

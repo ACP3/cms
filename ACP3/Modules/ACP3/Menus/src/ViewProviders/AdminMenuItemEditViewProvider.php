@@ -60,6 +60,7 @@ class AdminMenuItemEditViewProvider
             PageTypeEnum::MODULE->value => $this->translator->t('menus', 'module'),
             PageTypeEnum::DYNAMIC_PAGE->value => $this->translator->t('menus', 'dynamic_page'),
             PageTypeEnum::HYPERLINK->value => $this->translator->t('menus', 'hyperlink'),
+            PageTypeEnum::HEADLINE->value => $this->translator->t('menus', 'headline'),
         ];
 
         return $this->formsHelper->choicesGenerator('mode', $menuItemTypes, $value);

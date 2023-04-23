@@ -55,7 +55,7 @@ class NavbarTest extends TestCase
                         'id' => 2,
                         'block_id' => 10,
                         'left_id' => 2,
-                        'right_id' => 5,
+                        'right_id' => 7,
                         'parent_id' => 1,
                         'root_id' => 1,
                         'level' => 1,
@@ -77,6 +77,22 @@ class NavbarTest extends TestCase
                         'level' => 2,
                         'block_name' => 'foo-block',
                         'block_title' => 'Foo-Block',
+                        'title' => 'Sub-Sub-Headline',
+                        'mode' => PageTypeEnum::HEADLINE->value,
+                        'uri' => '',
+                        'target' => LinkTargetEnum::TARGET_SELF->value,
+                        'display' => YesNoEnum::YES->value,
+                    ],
+                    [
+                        'id' => 4,
+                        'block_id' => 10,
+                        'left_id' => 5,
+                        'right_id' => 6,
+                        'parent_id' => 2,
+                        'root_id' => 1,
+                        'level' => 2,
+                        'block_name' => 'foo-block',
+                        'block_title' => 'Foo-Block',
                         'title' => 'Sub-Sub-Foo',
                         'mode' => PageTypeEnum::DYNAMIC_PAGE->value,
                         'uri' => 'sub/foo/index/',
@@ -86,8 +102,8 @@ class NavbarTest extends TestCase
                     [
                         'id' => 4,
                         'block_id' => 10,
-                        'left_id' => 7,
-                        'right_id' => 8,
+                        'left_id' => 9,
+                        'right_id' => 10,
                         'parent_id' => 0,
                         'root_id' => 4,
                         'level' => 0,
@@ -109,6 +125,9 @@ class NavbarTest extends TestCase
         <a href="" class="dropdown-item" data-bs-toggle="dropdown" aria-expanded="false" role="button">Sub-Foo</a>
         <ul class="dropdown-menu navigation-foo-block-subnav-2">
           <li class="navi-3 nav-item">
+            <span class="dropdown-header">Sub-Sub-Headline</span>
+          </li>
+          <li class="navi-4 nav-item">
             <a href="" class="dropdown-item">Sub-Sub-Foo</a>
           </li>
         </ul>

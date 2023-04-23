@@ -76,26 +76,30 @@ class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
                         'haystack' => YesNoEnum::values(),
                     ],
                 ]
-            )
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'target',
-                    'message' => $this->translator->t('menus', 'type_in_uri_and_target'),
-                    'extra' => [
-                        'haystack' => Core\Helpers\Enum\LinkTargetEnum::values(),
-                    ],
-                ]
-            )
-            ->addConstraint(
-                LinkModeValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => ['mode', 'module', 'uri'],
-                    'message' => $this->translator->t('menus', 'type_in_uri_and_target'),
-                ]
             );
+
+        if (PageTypeEnum::tryFrom($formData['mode']) !== PageTypeEnum::HEADLINE) {
+            $this->validator
+                ->addConstraint(
+                    Core\Validation\ValidationRules\InArrayValidationRule::class,
+                    [
+                        'data' => $formData,
+                        'field' => 'target',
+                        'message' => $this->translator->t('menus', 'type_in_uri_and_target'),
+                        'extra' => [
+                            'haystack' => Core\Helpers\Enum\LinkTargetEnum::values(),
+                        ],
+                    ]
+                )
+                ->addConstraint(
+                    LinkModeValidationRule::class,
+                    [
+                        'data' => $formData,
+                        'field' => ['mode', 'module', 'uri'],
+                        'message' => $this->translator->t('menus', 'type_in_uri_and_target'),
+                    ]
+                );
+        }
 
         $this->validator->validate();
     }

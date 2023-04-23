@@ -70,6 +70,7 @@ class MenuItemsDataGridViewProvider
                         $this->translator->t('menus', 'module'),
                         $this->translator->t('menus', 'dynamic_page'),
                         $this->translator->t('menus', 'hyperlink'),
+                        $this->translator->t('menus', 'headline'),
                     ],
                 ],
             ], 30)

@@ -4,6 +4,10 @@
   const hints = linkContainer.querySelector(".form-text");
   const targetContainer = document.getElementById("target-container");
 
+  const PAGE_TYPE_MODULE = 1;
+  const PAGE_TYPE_DYNAMIC_PAGE = 2;
+  const PAGE_TYPE_HEADLINE = 4;
+
   // Wenn Menüpunkt nicht angezeigt werden soll, Linkziel verstecken
   document.querySelectorAll('[name="display"]').forEach((elem) => {
     elem.addEventListener("change", () => {
@@ -18,20 +22,21 @@
     });
   });
 
-  const modeFormField = document.getElementById("mode");
-  let currentMode = modeFormField.value;
+  const pageTypeFormField = document.getElementById("mode");
+  let currentPageType = pageTypeFormField.value;
 
   // Seitentyp
-  modeFormField.addEventListener("change", () => {
-    const mode = Number(modeFormField.value);
+  pageTypeFormField.addEventListener("change", () => {
+    const pageType = Number(pageTypeFormField.value);
 
-    if (mode === 1) {
-      moduleContainer.classList.remove("d-none");
-      hints.classList.add("d-none");
-      linkContainer.classList.add("d-none");
+    moduleContainer.classList.toggle("d-none", pageType !== PAGE_TYPE_MODULE);
+    hints.classList.toggle("d-none", pageType !== PAGE_TYPE_DYNAMIC_PAGE);
+    linkContainer.classList.toggle("d-none", pageType === PAGE_TYPE_MODULE || pageType === PAGE_TYPE_HEADLINE);
+    targetContainer.classList.toggle("d-none", pageType === PAGE_TYPE_HEADLINE);
 
+    if (pageType === PAGE_TYPE_MODULE) {
       // Modul im Dropdown-Menü selektieren, falls zuvor als Modus eine dynamische Seite aktiv war
-      if (currentMode === 2) {
+      if (currentPageType === PAGE_TYPE_DYNAMIC_PAGE) {
         const uriFormField = document.getElementById("uri");
         const match = uriFormField.value.match(/^([a-z\d_-]+)\/([a-z\d_-]+\/)+$/);
 
@@ -42,18 +47,10 @@
           document.getElementById("link-module").value = match[1];
         }
       }
-    } else if (mode === 2) {
-      moduleContainer.classList.add("d-none");
-      hints.classList.remove("d-none");
-      linkContainer.classList.remove("d-none");
-    } else if (mode === 3) {
-      moduleContainer.classList.add("d-none");
-      hints.classList.add("d-none");
-      linkContainer.classList.remove("d-none");
     }
 
-    currentMode = mode;
+    currentPageType = pageType;
   });
 
-  modeFormField.dispatchEvent(new InputEvent("change"));
+  pageTypeFormField.dispatchEvent(new InputEvent("change"));
 })(document);

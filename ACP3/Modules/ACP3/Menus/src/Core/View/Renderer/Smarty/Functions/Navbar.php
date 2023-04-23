@@ -24,8 +24,12 @@ class Navbar extends AbstractFunction
      */
     private array $menus = [];
 
-    public function __construct(private readonly RequestInterface $request, private readonly RouterInterface $router, private readonly MenuItemRepository $menuItemRepository, private readonly MenuServiceInterface $menuService)
-    {
+    public function __construct(
+        private readonly RequestInterface $request,
+        private readonly RouterInterface $router,
+        private readonly MenuItemRepository $menuItemRepository,
+        private readonly MenuServiceInterface $menuService
+    ) {
     }
 
     /**
@@ -35,32 +39,18 @@ class Navbar extends AbstractFunction
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
-        return $this->getMenuByKey(
-            $params['block'],
-            new MenuConfiguration(
-                $params['use_bootstrap'] ?? true,
-                $params['class'] ?? '',
-                $params['dropdownItemClass'] ?? '',
-                $params['tag'] ?? 'ul',
-                $params['itemTag'] ?? 'li',
-                $params['itemSelectors'] ?? '',
-                $params['dropdownWrapperTag'] ?? 'li',
-                $params['classLink'] ?? '',
-                $params['inlineStyles'] ?? ''
-            )
+        $menu = $params['block'];
+        $menuConfig = new MenuConfiguration(
+            $params['use_bootstrap'] ?? true,
+            $params['class'] ?? '',
+            $params['dropdownItemClass'] ?? '',
+            $params['tag'] ?? 'ul',
+            $params['itemTag'] ?? 'li',
+            $params['itemSelectors'] ?? '',
+            $params['dropdownWrapperTag'] ?? 'li',
+            $params['classLink'] ?? '',
+            $params['inlineStyles'] ?? ''
         );
-    }
-
-    /**
-     * Verarbeitet die Navigationsleiste und selektiert die aktuelle Seite,
-     * falls diese sich ebenfalls in der Navigationsleiste befindet.
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    private function getMenuByKey(
-        string $menu,
-        MenuConfiguration $menuConfig
-    ): string {
         $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
 
         return $this->menus[$cacheKey] ?? $this->generateMenu($menu, $menuConfig);
@@ -156,19 +146,31 @@ class Navbar extends AbstractFunction
      */
     private function processMenuItemWithoutChildren(MenuConfiguration $menuConfig, array $item, string $cssSelectors, bool $isSelected): string
     {
-        $link = sprintf(
-            '<a href="%1$s"%2$s%3$s>%4$s</a>',
-            $this->getMenuItemHref(PageTypeEnum::tryFrom($item['mode']), $item['uri']),
-            $this->getMenuItemHrefTarget(LinkTargetEnum::tryFrom($item['target'])),
-            $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected),
-            $item['title']
-        );
+        if ($item['mode'] === PageTypeEnum::HEADLINE->value) {
+            $elem = sprintf(
+                '<span%1$s>%2$s</span>',
+                $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected),
+                $item['title']
+            );
 
-        if ($menuConfig->getItemTag() === '') {
-            return $link;
+            if ($menuConfig->getItemTag() === '') {
+                return $elem;
+            }
+        } else {
+            $elem = sprintf(
+                '<a href="%1$s"%2$s%3$s>%4$s</a>',
+                $this->getMenuItemHref(PageTypeEnum::tryFrom($item['mode']), $item['uri']),
+                $this->getMenuItemHrefTarget(LinkTargetEnum::tryFrom($item['target'])),
+                $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected),
+                $item['title']
+            );
+
+            if ($menuConfig->getItemTag() === '') {
+                return $elem;
+            }
         }
 
-        return sprintf('<%1$s class="%2$s">%3$s</%1$s>', $menuConfig->getItemTag(), $cssSelectors, $link);
+        return sprintf('<%1$s class="%2$s">%3$s</%1$s>', $menuConfig->getItemTag(), $cssSelectors, $elem);
     }
 
     /**
@@ -278,7 +280,9 @@ class Navbar extends AbstractFunction
      */
     private function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig, array $item, bool $isSelected, array $additionalSelectors = []): string
     {
-        if ($item['level'] > 0 && $menuConfig->isUseBootstrap()) {
+        if ($item['mode'] === PageTypeEnum::HEADLINE->value) {
+            $selectors = ['dropdown-header'];
+        } elseif ($item['level'] > 0 && $menuConfig->isUseBootstrap()) {
             $selectors = ['dropdown-item'];
         } else {
             $selectors = array_merge([$menuConfig->getLinkSelector()], $additionalSelectors);
