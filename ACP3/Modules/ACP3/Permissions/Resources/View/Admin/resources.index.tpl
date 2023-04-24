@@ -46,22 +46,27 @@
                                 <td>{$row.resource_id}</td>
                                 {if $can_edit_resource === true || $can_delete_resource === true}
                                     <td class="datagrid-column__actions">
-                                        <div class="datagrid-column__action-buttons">
+                                        <button type="button" class="btn btn-sm btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {icon iconSet="solid" icon="ellipsis-vertical"}
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
                                             {if $can_edit_resource === true}
-                                                <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
-                                                   class="btn btn-outline-secondary btn-sm"
-                                                   title="{lang t="permissions|admin_resources_edit"}">
-                                                    {icon iconSet="solid" icon="pen"}
-                                                </a>
+                                                <li>
+                                                    <a href="{uri args="acp/permissions/resources/edit/id_`$row.resource_id`"}"
+                                                       class="dropdown-item">
+                                                        {icon iconSet="solid" icon="pen"}<span class="ms-2">{lang t="permissions|admin_resources_edit"}</span>
+                                                    </a>
+                                                </li>
                                             {/if}
                                             {if $can_delete_resource === true}
-                                                <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
-                                                   class="btn btn-danger btn-sm"
-                                                   title="{lang t="permissions|admin_resources_delete"}">
-                                                    {icon iconSet="solid" icon="trash"}
-                                                </a>
+                                                <li>
+                                                    <a href="{uri args="acp/permissions/resources/delete/entries_`$row.resource_id`"}"
+                                                       class="dropdown-item">
+                                                        {icon iconSet="solid" icon="trash"}<span class="ms-2">{lang t="permissions|admin_resources_delete"}</span>
+                                                    </a>
+                                                </li>
                                             {/if}
-                                        </div>
+                                        </ul>
                                     </td>
                                 {/if}
                             </tr>

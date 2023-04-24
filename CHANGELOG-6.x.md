@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   [Menus] Made it possible to add "headlines" as menu items
 
+### Changed
+
+-   [Core] Improved the discoverability of the data grid actions
+
 ## [6.16.0] - 2023-04-02
 
 ### Added

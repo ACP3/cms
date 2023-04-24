@@ -9,12 +9,13 @@ namespace ACP3\Core\DataGrid\ColumnRenderer;
 
 use ACP3\Core\DataGrid\ColumnRenderer\Event\CustomOptionEvent;
 use ACP3\Core\DataGrid\ColumnRenderer\OptionColumnRenderer\OptionRenderer;
+use ACP3\Core\Helpers\View\Icon;
 use ACP3\Core\I18n\Translator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class OptionColumnRenderer extends AbstractColumnRenderer
 {
-    public function __construct(protected Translator $translator, protected OptionRenderer $optionRenderer, protected EventDispatcher $eventDispatcher)
+    public function __construct(private readonly Translator $translator, private readonly OptionRenderer $optionRenderer, private readonly EventDispatcher $eventDispatcher, private readonly Icon $icon)
     {
     }
 
@@ -50,7 +51,7 @@ class OptionColumnRenderer extends AbstractColumnRenderer
                 $resourcePathDelete . 'entries_' . $dbResultRow[$this->getPrimaryKey()],
                 $this->translator->t('system', 'delete'),
                 'trash',
-                'btn-danger'
+                'text-danger'
             );
         }
 
@@ -64,11 +65,20 @@ class OptionColumnRenderer extends AbstractColumnRenderer
 
     protected function collectOptions(): string
     {
-        $value = '<div class="datagrid-column__action-buttons">' . implode('', $this->optionRenderer->getOptions());
+        $icon = ($this->icon)('solid', 'ellipsis-vertical');
+        $options = implode('', $this->optionRenderer->getOptions());
+        $value = <<<HTML
+<button type="button" class="btn btn-sm btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+  {$icon}
+</button>
+<ul class="dropdown-menu dropdown-menu-end">
+  {$options}
+</ul>
+HTML;
 
         $this->optionRenderer->clearOptions();
 
-        return $value . '</div>';
+        return $value;
     }
 
     /**

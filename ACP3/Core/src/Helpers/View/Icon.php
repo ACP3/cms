@@ -22,7 +22,7 @@ class Icon
     public function __invoke(string $iconSet, string $icon, array $options = []): string
     {
         $additionalCssSelectors = '';
-        if (\array_key_exists('cssSelectors', $options)) {
+        if (!empty($options['cssSelectors'])) {
             $additionalCssSelectors = ' ' . $options['cssSelectors'];
         }
 

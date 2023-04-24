@@ -25,14 +25,14 @@ class OptionRenderer
         string $route,
         string $translationPhrase,
         string $icon,
-        string $buttonClass = 'btn-outline-secondary',
+        string $iconSelector = '',
         bool $useAjax = false
     ): void {
         $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
-        $value = ' <a href="' . $this->router->route($route) . '" class="btn btn-sm ' . $buttonClass . '"' . $ajax . ' title="' . $translationPhrase . '">';
-        $value .= ($this->icon)('solid', str_starts_with($icon, 'fa-') ? substr($icon, 3) : $icon);
-        $value .= '<span class="visually-hidden">' . $translationPhrase . '</span>';
-        $value .= '</a>';
+        $value = '<li><a href="' . $this->router->route($route) . '" class="dropdown-item"' . $ajax . '>';
+        $value .= ($this->icon)('solid', str_starts_with($icon, 'fa-') ? substr($icon, 3) : $icon, ['cssSelectors' => $iconSelector]);
+        $value .= '<span class="ms-2">' . $translationPhrase . '</span>';
+        $value .= '</a></li>';
 
         $this->options[] = $value;
     }
