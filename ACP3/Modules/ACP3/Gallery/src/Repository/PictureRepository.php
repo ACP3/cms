@@ -121,7 +121,7 @@ class PictureRepository extends Core\Repository\AbstractRepository
      */
     public function updatePicturesNumbers(int $pictureNumber, int $galleryId): int
     {
-        return $this->db->getConnection()->executeUpdate(
+        return $this->db->getConnection()->executeStatement(
             'UPDATE ' . $this->getTableName() . ' SET pic = pic - 1 WHERE pic > ? AND gallery_id = ?',
             [$pictureNumber, $galleryId]
         );

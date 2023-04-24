@@ -66,7 +66,7 @@ class Sort
             if ($otherId !== null) {
                 $swapSortSql = 'UPDATE %1$s t1 INNER JOIN %1$s t2 ON (t1.%2$s, t2.%2$s) IN ((:id, :otherId),(:otherId,:id)) SET t1.%3$s = t2.%3$s';
 
-                $this->db->getConnection()->executeUpdate(
+                $this->db->getConnection()->executeStatement(
                     sprintf($swapSortSql, $table, $idField, $sortField), ['id' => $id, 'otherId' => $otherId]
                 );
 

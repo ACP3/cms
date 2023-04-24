@@ -9,7 +9,7 @@ namespace ACP3\Modules\ACP3\System\Repository;
 
 use ACP3\Core\Repository\AbstractRepository;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
 
 class ModulesRepository extends AbstractRepository implements ModuleAwareRepositoryInterface
 {
@@ -53,7 +53,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
                 'requiredTables' => [$this->getTableName(), $this->getTableName(SettingsRepository::TABLE_NAME)],
             ],
             [
-                'requiredTables' => Connection::PARAM_STR_ARRAY,
+                'requiredTables' => ArrayParameterType::STRING,
             ]
         )) === 2;
     }
@@ -94,7 +94,7 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
         $results = $this->db->fetchAll(
             "SELECT `id`, `name` FROM {$this->getTableName()} WHERE `name` IN(:moduleNames)",
             ['moduleNames' => $moduleNames],
-            ['moduleNames' => Connection::PARAM_STR_ARRAY]
+            ['moduleNames' => ArrayParameterType::STRING]
         );
 
         $map = [];

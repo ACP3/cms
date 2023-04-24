@@ -8,7 +8,7 @@
 namespace ACP3\Core\NestedSet\Repository;
 
 use ACP3\Core\Repository\AbstractRepository;
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
 
 abstract class NestedSetRepository extends AbstractRepository
 {
@@ -215,7 +215,7 @@ abstract class NestedSetRepository extends AbstractRepository
         return (bool) $this->db->getConnection()->executeStatement(
             "UPDATE {$this->getTableName()} SET left_id = left_id + :offsetLeftId, right_id = right_id + :offsetRightId WHERE id IN(:nodeIds)",
             ['offsetLeftId' => $offsetLeftId, 'offsetRightId' => $offsetRightId, 'nodeIds' => $nodeIds],
-            ['nodeIds' => Connection::PARAM_INT_ARRAY]
+            ['nodeIds' => ArrayParameterType::INTEGER]
         );
     }
 

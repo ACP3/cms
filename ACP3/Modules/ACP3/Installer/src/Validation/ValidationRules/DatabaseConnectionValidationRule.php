@@ -37,7 +37,7 @@ class DatabaseConnectionValidationRule extends AbstractValidationRule
                     'charset' => 'utf8',
                 ];
                 $db = DriverManager::getConnection($connectionParams, $config);
-                $db->query('USE `' . $data[$dbName] . '`');
+                $db->executeQuery('USE `' . $data[$dbName] . '`');
 
                 return true;
             } catch (\Exception $e) {

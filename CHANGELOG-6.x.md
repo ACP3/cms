@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 -   [Core] Improved the discoverability of the data grid actions
+-   [ALL] Updated some code which was deprecated by recent Doctrine DBAL updates
 
 ## [6.16.0] - 2023-04-02
 
