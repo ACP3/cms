@@ -40,7 +40,10 @@ class DateTimeColumnTypeTest extends AbstractColumnTypeTest
     {
         $this->dateMock->expects(self::exactly(2))
             ->method('toSQL')
-            ->withConsecutive([''], ['2016-10-20'])
-            ->willReturnOnConsecutiveCalls('2016-10-22 13:37:00', '2016-10-20 00:00:00');
+            ->willReturnCallback(fn (string $value) => match ([$value]) {
+                [''] => '2016-10-22 13:37:00',
+                ['2016-10-20'] => '2016-10-20 00:00:00',
+                default => throw new \InvalidArgumentException(),
+            });
     }
 }

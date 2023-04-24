@@ -49,8 +49,11 @@ class ResultsPerPageTest extends \PHPUnit\Framework\TestCase
         $this->settingsMock
             ->expects(self::exactly(2))
             ->method('getSettings')
-            ->withConsecutive(['news'], ['system'])
-            ->willReturnOnConsecutiveCalls([], ['entries' => 20]);
+            ->willReturnCallback(fn (string $module) => match ([$module]) {
+                ['news'] => [],
+                ['system'] => ['entries' => 20],
+                default => throw new \InvalidArgumentException(),
+            });
 
         $expected = 20;
         self::assertEquals($expected, $this->resultsPerPage->getResultsPerPage('news'));

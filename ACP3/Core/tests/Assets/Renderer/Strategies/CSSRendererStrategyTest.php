@@ -62,8 +62,11 @@ class CSSRendererStrategyTest extends TestCase
             ->willReturn([new LibraryEntity('foo', false, [], ['foo.css'], [], 'system')]);
 
         $this->fileResolverMock->method('getWebStaticAssetPath')
-            ->withConsecutive(['system', 'Assets/css', 'foo.css'], ['System', 'Assets/css', 'layout.css'])
-            ->willReturnOnConsecutiveCalls('/ACP3/Modules/ACP3/System/Resources/Assets/css/foo.css', '');
+            ->willReturnCallback(fn (string $moduleName, string $resourceDirectory, string $file) => match ([$moduleName, $resourceDirectory, $file]) {
+                ['system', 'Assets/css', 'foo.css'] => '/ACP3/Modules/ACP3/System/Resources/Assets/css/foo.css',
+                ['System', 'Assets/css', 'layout.css'] => '',
+                default => throw new \InvalidArgumentException(),
+            });
 
         self::assertStringContainsString('<link rel="stylesheet" type="text/css" href="/ACP3/Modules/ACP3/System/Resources/Assets/css/foo.css', $this->CSSRendererStrategy->renderHtmlElement());
     }
