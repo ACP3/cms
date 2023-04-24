@@ -9,8 +9,18 @@ namespace ACP3\Modules\ACP3\Menus\Helpers;
 
 class MenuConfiguration implements \Stringable
 {
-    public function __construct(private readonly bool $useBootstrap = true, private readonly string $selector = '', private readonly string $dropdownItemSelector = '', private readonly string $tag = 'ul', private readonly string $itemTag = 'li', private readonly string $itemSelectors = '', private readonly string $dropdownWrapperTag = 'li', private readonly string $linkSelector = '', private readonly string $inlineStyle = '')
-    {
+    public function __construct(
+        private readonly bool $useBootstrap = true,
+        private readonly string $selector = '',
+        private readonly string $dropdownItemSelector = '',
+        private readonly string $tag = 'ul',
+        private readonly string $itemTag = 'li',
+        private readonly string $itemSelectors = '',
+        private readonly string $dropdownWrapperTag = 'li',
+        private readonly string $linkSelector = '',
+        private readonly string $inlineStyle = '',
+        private readonly string $headlineSelector = ''
+    ) {
     }
 
     public function isUseBootstrap(): bool
@@ -61,5 +71,10 @@ class MenuConfiguration implements \Stringable
     public function __toString(): string
     {
         return implode(':', get_object_vars($this));
+    }
+
+    public function getHeadlineSelector(): string
+    {
+        return $this->headlineSelector;
     }
 }

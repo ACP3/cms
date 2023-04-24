@@ -49,7 +49,8 @@ class Navbar extends AbstractFunction
             $params['itemSelectors'] ?? '',
             $params['dropdownWrapperTag'] ?? 'li',
             $params['classLink'] ?? '',
-            $params['inlineStyles'] ?? ''
+            $params['inlineStyles'] ?? '',
+            $params['headlineSelector'] ?? '',
         );
         $cacheKey = $this->buildMenuCacheKey($menu, $menuConfig);
 
@@ -281,7 +282,7 @@ class Navbar extends AbstractFunction
     private function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig, array $item, bool $isSelected, array $additionalSelectors = []): string
     {
         if ($item['mode'] === PageTypeEnum::HEADLINE->value) {
-            $selectors = ['dropdown-header'];
+            $selectors = $menuConfig->isUseBootstrap() ? ['dropdown-header'] : [$menuConfig->getHeadlineSelector()];
         } elseif ($item['level'] > 0 && $menuConfig->isUseBootstrap()) {
             $selectors = ['dropdown-item'];
         } else {
