@@ -281,12 +281,13 @@ class Navbar extends AbstractFunction
      */
     private function prepareMenuItemHtmlAttributes(MenuConfiguration $menuConfig, array $item, bool $isSelected, array $additionalSelectors = []): string
     {
-        if ($item['mode'] === PageTypeEnum::HEADLINE->value) {
-            $selectors = $menuConfig->isUseBootstrap() ? ['dropdown-header'] : [$menuConfig->getHeadlineSelector()];
-        } elseif ($item['level'] > 0 && $menuConfig->isUseBootstrap()) {
-            $selectors = ['dropdown-item'];
+        if ($item['level'] > 0 && $menuConfig->isUseBootstrap()) {
+            $selectors = $item['mode'] === PageTypeEnum::HEADLINE->value ? ['dropdown-header'] : ['dropdown-item'];
         } else {
-            $selectors = array_merge([$menuConfig->getLinkSelector()], $additionalSelectors);
+            $selectors = array_merge(
+                $item['mode'] === PageTypeEnum::HEADLINE->value ? [$menuConfig->getHeadlineSelector()] : [$menuConfig->getLinkSelector()],
+                $additionalSelectors
+            );
         }
 
         if ($isSelected) {
