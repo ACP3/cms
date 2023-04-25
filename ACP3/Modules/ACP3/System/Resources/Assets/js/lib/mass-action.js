@@ -7,7 +7,7 @@
 
 import { delegateEvent } from "./event-handler";
 
-const selectedRowCssClassName = "table-info";
+const selectedRowCssClassName = "table-active";
 
 /**
  * Marks all visible results
@@ -38,7 +38,12 @@ export function highlightTableRow(markAllRowsCheckboxElem, massActionBarElem) {
     const action = event.detail;
 
     if (event.target.type !== "checkbox") {
-      if (event.target.nodeName === "A" || event.target.closest("a")) {
+      if (
+        event.target.nodeName === "A" ||
+        event.target.nodeName === "BUTTON" ||
+        event.target.closest("a") ||
+        event.target.closest("button")
+      ) {
         return;
       }
 
