@@ -18,18 +18,14 @@ class FileResolverTest extends TestCase
 {
     private FileResolver $fileResolver;
 
-    private ApplicationPath $appPath;
-
     private ThemePathInterface&MockObject $themeMock;
 
     protected function setup(): void
     {
         $this->setUpMockObjects();
 
-        $this->appPath = new ApplicationPath(ApplicationMode::DEVELOPMENT);
-
         $this->fileResolver = new FileResolver(
-            $this->appPath,
+            new ApplicationPath(ApplicationMode::DEVELOPMENT),
             $this->themeMock
         );
         $this->fileResolver->addStrategy(new TemplateFileCheckerStrategy());
@@ -42,7 +38,16 @@ class FileResolverTest extends TestCase
 
     public function testResolveTemplatePath(): void
     {
-        $this->setUpThemeMockExpectations(['acp3'], [['acp3']], [['acp3']], [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3']);
+        $this->setUpThemeMockExpectations(
+            ['acp3'],
+            [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3']
+        );
+        $this->themeMock
+            ->method('getThemeDependencies')
+            ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
+                ['acp3'] => ['acp3'],
+                default => throw new \InvalidArgumentException(),
+            });
 
         $expected = ACP3_ROOT_DIR . '/ACP3/Modules/ACP3/System/Resources/View/Partials/breadcrumb.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/breadcrumb.tpl');
@@ -59,7 +64,16 @@ class FileResolverTest extends TestCase
 
     public function testResolveTemplatePathWithInheritance(): void
     {
-        $this->setUpThemeMockExpectations(['acp3'], [['acp3']], [['acp3']], [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3']);
+        $this->setUpThemeMockExpectations(
+            ['acp3'],
+            [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3']
+        );
+        $this->themeMock
+            ->method('getThemeDependencies')
+            ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
+                ['acp3'] => ['acp3'],
+                default => throw new \InvalidArgumentException(),
+            });
 
         $expected = ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3/System/Resources/View/Partials/mark.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/mark.tpl');
@@ -72,10 +86,14 @@ class FileResolverTest extends TestCase
 
         $this->setUpThemeMockExpectations(
             ['acp3-inherit'],
-            [['acp3-inherit']],
-            [['acp3-inherit', 'acp3']],
             [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit']
         );
+        $this->themeMock
+            ->method('getThemeDependencies')
+            ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
+                ['acp3-inherit'] => ['acp3-inherit', 'acp3'],
+                default => throw new \InvalidArgumentException(),
+            });
 
         $this->fileResolver->resolveTemplatePath('layout.tpl');
     }
@@ -84,10 +102,15 @@ class FileResolverTest extends TestCase
     {
         $this->setUpThemeMockExpectations(
             ['acp3-inherit', 'acp3'],
-            [['acp3-inherit'], ['acp3']],
-            [['acp3-inherit', 'acp3'], ['acp3']],
             [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit']
         );
+        $this->themeMock
+            ->method('getThemeDependencies')
+            ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
+                ['acp3-inherit'] => ['acp3-inherit', 'acp3'],
+                ['acp3'] => ['acp3'],
+                default => throw new \InvalidArgumentException(),
+            });
 
         $expected = ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3/System/Resources/View/layout.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/layout.tpl');
@@ -95,12 +118,10 @@ class FileResolverTest extends TestCase
     }
 
     /**
-     * @param string[]   $currentThemeCalls
-     * @param string[][] $themeDependenciesWithCalls
-     * @param string[][] $themeDependenciesReturnValues
-     * @param string[]   $designPathInternalCalls
+     * @param string[] $currentThemeCalls
+     * @param string[] $designPathInternalCalls
      */
-    private function setUpThemeMockExpectations(array $currentThemeCalls, array $themeDependenciesWithCalls, array $themeDependenciesReturnValues, array $designPathInternalCalls): void
+    private function setUpThemeMockExpectations(array $currentThemeCalls, array $designPathInternalCalls): void
     {
         $this->themeMock
             ->method('getCurrentTheme')
@@ -108,20 +129,20 @@ class FileResolverTest extends TestCase
         $this->themeMock
             ->method('getDesignPathInternal')
             ->willReturnOnConsecutiveCalls(...$designPathInternalCalls);
-        $this->themeMock
-            ->method('getThemeDependencies')
-            ->withConsecutive(...$themeDependenciesWithCalls)
-            ->willReturnOnConsecutiveCalls(...$themeDependenciesReturnValues);
     }
 
     public function testResolveTemplatePathWithDeeplyNestedFolderStructure(): void
     {
         $this->setUpThemeMockExpectations(
             ['acp3-inherit'],
-            [['acp3-inherit']],
-            [['acp3-inherit', 'acp3']],
             [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3']
         );
+        $this->themeMock
+            ->method('getThemeDependencies')
+            ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
+                ['acp3-inherit'] => ['acp3-inherit', 'acp3'],
+                default => throw new \InvalidArgumentException(),
+            });
 
         $expected = ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit/System/Resources/View/Partials/Foo/bar/baz.tpl';
         $actual = $this->fileResolver->resolveTemplatePath('System/Partials/Foo/bar/baz.tpl');
