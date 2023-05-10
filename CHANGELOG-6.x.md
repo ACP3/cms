@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [System] Fixed the data-grid styling
 
 ## [6.17.0] - 2023-05-10
 

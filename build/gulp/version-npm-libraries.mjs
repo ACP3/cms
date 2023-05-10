@@ -17,8 +17,6 @@ export default (gulp) => {
           src: [
             nodeBasePath + "/@fancyapps/fancybox/dist/jquery.fancybox.min.js",
             nodeBasePath + "/jquery/dist/jquery.min.js",
-            nodeBasePath + "/datatables.net/js/jquery.dataTables.min.js",
-            nodeBasePath + "/datatables.net-bs5/js/dataTables.bootstrap5.js",
             nodeBasePath + "/js-cookie/dist/js.cookie.min.js",
             nodeBasePath + "/photoswipe/dist/umd/photoswipe.umd.min.js",
             nodeBasePath + "/photoswipe/dist/umd/photoswipe-lightbox.umd.min.js",
