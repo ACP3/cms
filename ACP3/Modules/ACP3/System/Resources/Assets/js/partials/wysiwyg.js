@@ -1,9 +1,10 @@
 /* global wysiwygCallback */
-/* global bootstrap */
+
+import Modal from "bootstrap/js/dist/modal";
 
 ((document) => {
   const pageBreakFormEl = document.getElementById("page-break-form");
-  const modal = bootstrap.Modal.getOrCreateInstance(pageBreakFormEl);
+  const modal = new Modal(pageBreakFormEl);
 
   document
     .getElementById("page-break-form")

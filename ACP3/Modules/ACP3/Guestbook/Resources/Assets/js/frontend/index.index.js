@@ -3,14 +3,13 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-/* global bootstrap */
-
+import Modal from "bootstrap/js/dist/modal";
 import { addScriptsToHead } from "acp3/module-system/Resources/Assets/js/lib/utils";
 
 ((document) => {
   const createLinkElem = document.getElementById("js-create-link");
   const modalElem = document.getElementById("js-modal-create");
-  const modal = new bootstrap.Modal(modalElem);
+  const modal = new Modal(modalElem);
 
   createLinkElem.addEventListener("click", async (e) => {
     e.preventDefault();

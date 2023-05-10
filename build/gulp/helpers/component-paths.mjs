@@ -53,12 +53,18 @@ const componentPathsJsWatch = [
 ];
 
 const globPatternJsProcess = "/Resources/Assets/js/{admin,frontend,partials,widget}/!(*.min).js";
+const globPatternRootJsProcess = "/Resources/Assets/js/!(*.min).js";
 /** @type {string[]} */
 const componentPathsJsProcess = [
   ...Object.values(componentPathsJson.module)
     .concat(Object.values(componentPathsJson.installer))
     .map((module) => {
       return module + globPatternJsProcess;
+    }),
+  ...Object.values(componentPathsJson.module)
+    .concat(Object.values(componentPathsJson.installer))
+    .map((module) => {
+      return module + globPatternRootJsProcess;
     }),
   ...Object.values(componentPathsJson.theme).map((theme) => {
     return theme + "/*" + globPatternJsProcess;

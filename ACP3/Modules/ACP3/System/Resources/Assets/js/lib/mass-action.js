@@ -3,8 +3,7 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-/* global bootstrap */
-
+import Modal from "bootstrap/js/dist/modal";
 import { delegateEvent } from "./event-handler";
 
 const selectedRowCssClassName = "table-active";
@@ -107,7 +106,7 @@ export function deleteMarkedResults(massDeleteButtonElem, options) {
       .querySelectorAll('input[name="' + settings.checkBoxName + '[]"]:checked');
 
     const modalElem = massDeleteButtonElem.closest("form").querySelector(".js-mass-delete-modal");
-    const modal = bootstrap.Modal.getOrCreateInstance(modalElem);
+    const modal = Modal.getOrCreateInstance(modalElem);
 
     modalElem.querySelector(".modal-body").innerHTML =
       selectedMassActionCheckboxes.length === 1
