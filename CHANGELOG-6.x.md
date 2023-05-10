@@ -9,12 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+-   [Core] Allowed webpack to optimize/bundle some more JS-files
 -   [Menus] Made it possible to add "headlines" as menu items
 
 ### Changed
 
 -   [Core] Improved the discoverability of the data grid actions
 -   [ALL] Updated some code which was deprecated by recent Doctrine DBAL updates
+
+### Fixed
+
+-   [Guestboot] [System] Fixed a JS error, when bootstrap's JS-file has been customized
 
 ## [6.16.0] - 2023-04-02
 
