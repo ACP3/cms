@@ -16,8 +16,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^6.11.0",
-    "acp3/module-system": "^6.11.0",
+    "acp3/core": "^6.17.0",
+    "acp3/module-system": "^6.17.0",
     "acp3/module-users": "^6.11.0",
     "acp3/theme-installer": "^6.8.0",
     "composer/semver": "^3.2"
