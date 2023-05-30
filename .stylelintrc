@@ -1,7 +1,6 @@
 {
     "extends": [
-        "stylelint-config-twbs-bootstrap",
-        "stylelint-config-prettier"
+        "stylelint-config-twbs-bootstrap"
     ],
     "rules": {
         "function-disallowed-list": [

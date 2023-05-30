@@ -2,7 +2,7 @@ $system-datagrid-data-range-column-width: 22% !default;
 
 .datagrid {
   .datagrid-column__mass-action {
-    width: 0.1%;
+    width: .1%;
     white-space: nowrap;
   }
 
@@ -15,7 +15,7 @@ $system-datagrid-data-range-column-width: 22% !default;
   }
 
   .datagrid-column__actions {
-    width: 0.1%;
+    width: .1%;
     white-space: nowrap;
   }
 }

@@ -6,8 +6,8 @@ $layout-navbar-height: $nav-link-height !default;
 
 $navbar-complete-bg-color: $success !default;
 $navbar-complete-text-color: #fff !default;
-$navbar-arrow-height: (($layout-navbar-height + $spacer) * 0.5) !default;
-$navbar-arrow-width: ($spacer * 0.5) !default;
+$navbar-arrow-height: (($layout-navbar-height + $spacer) * .5) !default;
+$navbar-arrow-width: ($spacer * .5) !default;
 
 #main-navigation {
   overflow: hidden;
@@ -52,14 +52,14 @@ $navbar-arrow-width: ($spacer * 0.5) !default;
       @include media-breakpoint-up("lg", $grid-breakpoints) {
         &.complete + :not(.complete) {
           .nav-link {
-            padding-left: $navbar-arrow-width + ($spacer * 0.5);
+            padding-left: $navbar-arrow-width + ($spacer * .5);
           }
         }
       }
     }
 
     @include media-breakpoint-up("lg", $grid-breakpoints) {
-      margin-left: ($grid-gutter-width * -0.5);
+      margin-left: ($grid-gutter-width * -.5);
     }
   }
 }
