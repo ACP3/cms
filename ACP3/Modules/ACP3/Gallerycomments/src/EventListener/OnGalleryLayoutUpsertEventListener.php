@@ -47,9 +47,6 @@ class OnGalleryLayoutUpsertEventListener implements EventSubscriberInterface
         $event->addContent($this->view->fetchTemplate('Gallerycomments/Partials/gallery_layout_upsert.tpl'));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

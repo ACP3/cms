@@ -19,8 +19,6 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function insert(array $data): int
@@ -39,11 +37,9 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function delete(array|int|string $entryId, ?string $columnName = null): int
+    public function delete(array|int|string $entryId, string $columnName = null): int
     {
         return $this->db->getConnection()->delete(
             $this->getTableName(),
@@ -56,14 +52,12 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return array<string, int|string>
      */
-    private function getIdentifier(array|int|string $entryId, ?string $columnName = null): array
+    private function getIdentifier(array|int|string $entryId, string $columnName = null): array
     {
         return \is_array($entryId) === true ? $entryId : [$columnName ?? static::PRIMARY_KEY_COLUMN => (int) $entryId];
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function update(array $data, array|int|string $entryId): int
@@ -78,7 +72,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * Build the SQL limit.
      */
-    protected function buildLimitStmt(?int $limitStart = null, ?int $resultsPerPage = null): string
+    protected function buildLimitStmt(int $limitStart = null, int $resultsPerPage = null): string
     {
         if ($limitStart !== null && $resultsPerPage !== null) {
             return " LIMIT {$limitStart},{$resultsPerPage}";
@@ -92,8 +86,6 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int|string $entryId): array

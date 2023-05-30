@@ -13,9 +13,6 @@ use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameVal
 
 class RegistrationFormValidation extends AbstractUserFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

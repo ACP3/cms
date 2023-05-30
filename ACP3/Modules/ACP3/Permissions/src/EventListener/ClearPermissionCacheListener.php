@@ -22,9 +22,6 @@ class ClearPermissionCacheListener implements EventSubscriberInterface
         $this->permissionsCachePool->clear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

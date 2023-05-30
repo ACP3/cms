@@ -34,9 +34,6 @@ class EnableConsentManagementAssetsListener implements EventSubscriberInterface
         $this->libraries->enableLibraries(['consentManager']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

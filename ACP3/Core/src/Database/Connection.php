@@ -95,7 +95,7 @@ class Connection
         array $types = [],
         bool $cache = false,
         int $lifetime = 0,
-        ?string $cacheKey = null
+        string $cacheKey = null
     ): array {
         $stmt = $this->executeQuery($statement, $params, $types, $cache, $lifetime, $cacheKey);
         $data = $stmt->fetchAllAssociative();
@@ -142,7 +142,7 @@ class Connection
         array $types = [],
         bool $cache = false,
         int $lifetime = 0,
-        ?string $cacheKey = null
+        string $cacheKey = null
     ): Result {
         return $this->getConnection()->executeQuery(
             $query,

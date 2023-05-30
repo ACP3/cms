@@ -29,7 +29,7 @@ class Index extends AbstractWidgetAction
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function __invoke(?string $action = null): ?array
+    public function __invoke(string $action = null): ?array
     {
         if ($action === 'confirmed') {
             return $this->doUpdate();

@@ -42,9 +42,6 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         return $this->systemSettings;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getSiteAndPageTitle(): string
     {
         if ($this->request->isHomepage()) {
@@ -87,9 +84,6 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         return $this->getSettings()['site_subtitle_mode'] != 3;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function renderSiteSubTitle(): string
     {
         if ($this->allowSystemSubtitle()) {
@@ -103,9 +97,6 @@ class Title extends \ACP3\Core\Breadcrumb\Title
         return '';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function renderSiteTitle(): string
     {
         if ($this->request->isHomepage() && !empty($this->getSiteTitle())) {

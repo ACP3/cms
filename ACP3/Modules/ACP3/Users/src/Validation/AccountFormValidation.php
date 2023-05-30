@@ -31,9 +31,6 @@ class AccountFormValidation extends AbstractUserFormValidation
         return $clone;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);

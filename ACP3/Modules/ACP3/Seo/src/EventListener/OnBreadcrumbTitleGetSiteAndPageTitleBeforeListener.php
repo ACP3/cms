@@ -26,9 +26,6 @@ class OnBreadcrumbTitleGetSiteAndPageTitleBeforeListener implements EventSubscri
         $event->getTitle()->setMetaTitle($this->metaStatements->getTitle($this->request->getQuery()));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

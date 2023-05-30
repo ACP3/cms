@@ -28,9 +28,6 @@ class OnFilesModelBeforeDeleteListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

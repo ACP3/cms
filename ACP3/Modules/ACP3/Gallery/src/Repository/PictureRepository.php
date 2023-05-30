@@ -29,8 +29,6 @@ class PictureRepository extends Core\Repository\AbstractRepository
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getOneById(int|string $entryId): array

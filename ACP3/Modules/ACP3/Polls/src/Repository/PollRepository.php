@@ -49,7 +49,7 @@ class PollRepository extends Core\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
+    public function getAll(string $time = '', int $limitStart = null, int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' WHERE p.start <= :time' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

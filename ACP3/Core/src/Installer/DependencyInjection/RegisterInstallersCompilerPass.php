@@ -14,9 +14,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterInstallersCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $this->registerSchemaInstallers($container);

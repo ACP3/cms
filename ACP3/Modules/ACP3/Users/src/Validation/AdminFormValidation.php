@@ -33,9 +33,6 @@ class AdminFormValidation extends AbstractUserFormValidation
         return $clone;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

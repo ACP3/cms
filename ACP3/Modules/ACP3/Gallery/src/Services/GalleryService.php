@@ -18,8 +18,6 @@ class GalleryService implements GalleryServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getGallery(int $galleryId): array
@@ -28,8 +26,6 @@ class GalleryService implements GalleryServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */
@@ -54,8 +50,6 @@ class GalleryService implements GalleryServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */

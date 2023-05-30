@@ -20,8 +20,6 @@ class Dictionary implements DictionaryInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -100,9 +98,6 @@ class Dictionary implements DictionaryInterface
         return $pathArray[\count($pathArray) - 4];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getLanguagePacks(): array
     {
         $languagePacks = [];

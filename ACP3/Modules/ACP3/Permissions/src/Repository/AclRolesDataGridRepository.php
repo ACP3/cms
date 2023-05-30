@@ -16,17 +16,11 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = AclRoleRepository::TABLE_NAME;
 
-    /**
-     * {@inheritDoc}
-     */
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions): array
     {
         return parent::getAll($columns, ...$queryOptions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
@@ -38,25 +32,16 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->join('main', $this->getTableName(), 'r');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function addWhere(QueryBuilder $queryBuilder, QueryOption ...$queryOptions): void
     {
         $queryBuilder->where('r.left_id BETWEEN main.left_id AND main.right_id');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder
@@ -69,9 +54,6 @@ class AclRolesDataGridRepository extends AbstractDataGridRepository
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addOrderBy('r.left_id', 'ASC');

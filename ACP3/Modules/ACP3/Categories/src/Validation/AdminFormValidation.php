@@ -67,8 +67,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \Doctrine\DBAL\Exception

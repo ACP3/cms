@@ -38,9 +38,6 @@ class OnGalleryLayoutSettingsEventListener implements EventSubscriberInterface
         $event->addContent($this->view->fetchTemplate('Gallerycomments/Partials/gallery_layout_settings.tpl'));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -13,9 +13,6 @@ use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsValidat
 
 class UnsubscribeFormValidation extends AbstractFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

@@ -36,10 +36,7 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
         parent::__construct($eventDispatcher, $dataProcessor, $pollRepository);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function save(array $rawData, ?int $entryId = null): int
+    public function save(array $rawData, int $entryId = null): int
     {
         $rawData['updated_at'] = 'now';
 
@@ -84,9 +81,6 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
         return $this->voteRepository->delete($pollId, 'poll_id');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getAllowedColumns(): array
     {
         return [

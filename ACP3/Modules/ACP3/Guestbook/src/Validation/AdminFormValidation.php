@@ -32,9 +32,6 @@ class AdminFormValidation extends AbstractFormValidation
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);

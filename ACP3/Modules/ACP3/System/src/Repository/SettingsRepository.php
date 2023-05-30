@@ -15,8 +15,6 @@ class SettingsRepository extends AbstractRepository implements SettingsAwareRepo
     public const TABLE_NAME = 'settings';
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAllSettings(): array

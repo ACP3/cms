@@ -7,11 +7,15 @@
 
 namespace ACP3\Core\Assets\Renderer;
 
+use ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategyInterface;
 use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class JavaScriptRendererFactory
 {
+    /**
+     * @param ServiceLocator<JavaScriptRendererStrategyInterface> $assetRendererStrategyServiceLocator
+     */
     public function __construct(private readonly ServiceLocator $assetRendererStrategyServiceLocator, private readonly ApplicationMode $applicationMode)
     {
     }

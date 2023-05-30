@@ -17,9 +17,6 @@ class StructuredDataValidationRule extends AbstractValidationRule
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isValid(float|int|bool|array|string|UploadedFile|null $data, array|string $field = '', array $extra = []): bool
     {
         if (\is_array($data) && \array_key_exists($field, $data)) {

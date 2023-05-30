@@ -25,17 +25,11 @@ class CKEditor extends Textarea
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFriendlyName(): string
     {
         return 'CKEditor';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setParameters(array $params = []): void
     {
         parent::setParameters($params);
@@ -44,9 +38,6 @@ class CKEditor extends Textarea
         $this->config['height'] = ($params['height'] ?? 250) . 'px';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): array
     {
         $wysiwyg = [

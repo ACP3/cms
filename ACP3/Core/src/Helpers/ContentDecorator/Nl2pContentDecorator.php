@@ -15,9 +15,6 @@ class Nl2pContentDecorator implements ContentDecoratorInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function decorate(string $content): string
     {
         return $this->stringFormatter->nl2p($content);

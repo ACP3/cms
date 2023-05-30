@@ -36,9 +36,9 @@ class CheckMaintenanceModeListener implements EventSubscriberInterface
      */
     private function canShowMaintenanceMessage(RequestInterface $request): bool
     {
-        return (bool) $this->settings->getSettings('system')['maintenance_mode'] === true &&
-            \in_array($request->getArea(), [AreaEnum::AREA_ADMIN, AreaEnum::AREA_WIDGET], true) === false &&
-            !str_starts_with($request->getQuery(), 'users/index/login/');
+        return (bool) $this->settings->getSettings('system')['maintenance_mode'] === true
+            && \in_array($request->getArea(), [AreaEnum::AREA_ADMIN, AreaEnum::AREA_WIDGET], true) === false
+            && !str_starts_with($request->getQuery(), 'users/index/login/');
     }
 
     private function renderMaintenanceMessage(ControllerActionRequestEvent $event): void
@@ -51,9 +51,6 @@ class CheckMaintenanceModeListener implements EventSubscriberInterface
         $event->setResponse(new Response($this->view->fetchTemplate('System/layout.maintenance.tpl'), Response::HTTP_SERVICE_UNAVAILABLE));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

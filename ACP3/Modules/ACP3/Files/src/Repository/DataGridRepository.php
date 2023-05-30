@@ -15,9 +15,6 @@ class DataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGrid
 {
     public const TABLE_NAME = FilesRepository::TABLE_NAME;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
@@ -28,9 +25,6 @@ class DataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGrid
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->leftJoin(
@@ -41,9 +35,6 @@ class DataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGrid
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         $queryBuilder

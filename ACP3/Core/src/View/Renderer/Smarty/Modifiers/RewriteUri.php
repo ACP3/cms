@@ -15,9 +15,6 @@ class RewriteUri extends AbstractModifier
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(string $value): string
     {
         return $this->rewriteInternalUri->rewriteInternalUri($value);

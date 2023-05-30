@@ -158,8 +158,6 @@ SQL;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchAllSortedByBlock(): array

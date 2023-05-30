@@ -34,9 +34,6 @@ class DecoratingForwardControllerActionExceptionErrorListener implements EventSu
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

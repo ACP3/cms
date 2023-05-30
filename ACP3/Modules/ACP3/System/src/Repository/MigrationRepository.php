@@ -16,8 +16,6 @@ class MigrationRepository extends AbstractRepository implements MigrationReposit
     public const PRIMARY_KEY_COLUMN = 'name';
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function findAllAlreadyExecutedMigrations(): array

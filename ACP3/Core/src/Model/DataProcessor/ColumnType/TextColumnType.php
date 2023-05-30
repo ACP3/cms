@@ -15,18 +15,12 @@ class TextColumnType implements ColumnTypeStrategyInterface
     {
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function doEscape($value): string
+    public function doEscape(mixed $value): string
     {
         return $this->secure->strEncode($value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doUnescape($value): string
+    public function doUnescape(mixed $value): mixed
     {
         return html_entity_decode((string) $value, ENT_QUOTES, 'UTF-8');
     }

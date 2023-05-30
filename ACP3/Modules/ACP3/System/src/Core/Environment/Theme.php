@@ -114,8 +114,6 @@ class Theme implements ThemePathInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \JsonException
      */
     public function getCurrentThemeDependencies(): array
@@ -124,8 +122,6 @@ class Theme implements ThemePathInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \JsonException
      */
     public function getThemeDependencies(string $themeName): array
@@ -162,28 +158,21 @@ class Theme implements ThemePathInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \JsonException
      */
-    public function getDesignPathInternal(?string $themeName = null): string
+    public function getDesignPathInternal(string $themeName = null): string
     {
         return $this->getAvailableThemes()[$themeName ?? $this->getCurrentTheme()]['path'];
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \JsonException
      */
-    public function getDesignPathWeb(?string $themeName = null): string
+    public function getDesignPathWeb(string $themeName = null): string
     {
         return $this->getAvailableThemes()[$themeName ?? $this->getCurrentTheme()]['web_path'];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getCurrentThemeInfo(): array
     {
         return $this->availableThemes[$this->getCurrentTheme()];

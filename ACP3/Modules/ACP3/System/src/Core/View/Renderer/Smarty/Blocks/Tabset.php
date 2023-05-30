@@ -17,8 +17,6 @@ class Tabset extends AbstractBlock
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \SmartyException
      */
     public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat): string

@@ -33,9 +33,6 @@ class OnGallerySettingsSaveBeforeEventListener implements EventSubscriberInterfa
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -62,9 +62,6 @@ class SetLayoutListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

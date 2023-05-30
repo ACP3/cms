@@ -16,17 +16,11 @@ class ResultNotExistsException extends \RuntimeException implements ForwardContr
         parent::__construct($message, Response::HTTP_NOT_FOUND, $previous);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getServiceId(): string
     {
         return 'errors.controller.frontend.index.not_found';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function routeParams(): array
     {
         return [];

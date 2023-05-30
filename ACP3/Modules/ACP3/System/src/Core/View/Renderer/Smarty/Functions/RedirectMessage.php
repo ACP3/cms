@@ -17,8 +17,6 @@ class RedirectMessage extends AbstractFunction
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Exception
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed

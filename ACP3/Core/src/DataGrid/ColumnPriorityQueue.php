@@ -13,8 +13,6 @@ class ColumnPriorityQueue extends \SplPriorityQueue
     private int $serial = PHP_INT_MAX;
 
     /**
-     * {@inheritdoc}
-     *
      * @see http://php.net/manual/en/splpriorityqueue.compare.php#93999
      */
     public function insert($value, $priority): bool

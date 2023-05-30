@@ -7,15 +7,20 @@
 
 namespace ACP3\Modules\ACP3\Search\Controller\Frontend\Index;
 
-use ACP3\Core;
-use ACP3\Modules\ACP3\Search;
+use ACP3\Core\Controller\AbstractWidgetAction;
+use ACP3\Core\Controller\Context\Context;
+use ACP3\Core\Controller\InvokableActionInterface;
+use ACP3\Modules\ACP3\Search\ViewProviders\SearchViewProvider;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
-class Index extends Core\Controller\AbstractWidgetAction
+class Index extends AbstractWidgetAction
 {
+    /**
+     * @param ServiceLocator<InvokableActionInterface> $controllerActionServiceLocator
+     */
     public function __construct(
-        Core\Controller\Context\Context $context,
-        private readonly Search\ViewProviders\SearchViewProvider $searchViewProvider,
+        Context $context,
+        private readonly SearchViewProvider $searchViewProvider,
         private readonly ServiceLocator $controllerActionServiceLocator
     ) {
         parent::__construct($context);

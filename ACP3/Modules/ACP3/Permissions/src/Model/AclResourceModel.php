@@ -16,10 +16,7 @@ class AclResourceModel extends AbstractModel
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function save(array $rawData, ?int $entryId = null): int
+    public function save(array $rawData, int $entryId = null): int
     {
         $rawData = [...$rawData, ...[
             'page' => $rawData['resource'],

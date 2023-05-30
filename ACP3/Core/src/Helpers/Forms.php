@@ -109,7 +109,7 @@ class Forms
      */
     public function linkTargetChoicesGenerator(
         string $formFieldName,
-        ?int $currentValue = null,
+        int $currentValue = null,
         string $htmlAttribute = 'selected'
     ): array {
         $linkTargets = [
@@ -125,7 +125,7 @@ class Forms
      */
     public function yesNoChoicesGenerator(
         string $formFieldName,
-        ?int $currentValue = null,
+        int $currentValue = null,
         string $htmlAttribute = 'selected'
     ): array {
         $values = [
@@ -150,7 +150,7 @@ class Forms
     /**
      * @return array<string, mixed>[]
      */
-    public function yesNoCheckboxGenerator(string $formFieldName, ?int $currentValue = null): array
+    public function yesNoCheckboxGenerator(string $formFieldName, int $currentValue = null): array
     {
         $values = [
             YesNoEnum::YES->value => $this->translator->t('system', 'yes'),

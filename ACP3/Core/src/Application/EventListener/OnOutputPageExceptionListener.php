@@ -22,9 +22,6 @@ class OnOutputPageExceptionListener implements EventSubscriberInterface
         $this->logger->error($event->getThrowable());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

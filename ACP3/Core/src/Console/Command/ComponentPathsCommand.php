@@ -14,9 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ComponentPathsCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -25,8 +22,6 @@ class ComponentPathsCommand extends Command
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \JsonException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

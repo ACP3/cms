@@ -116,5 +116,5 @@ interface RequestInterface
      */
     public function setHomepage(string $homepage): self;
 
-    public function setPathInfo(?string $pathInfo = null): void;
+    public function setPathInfo(string $pathInfo = null): void;
 }

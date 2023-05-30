@@ -14,9 +14,6 @@ use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountExistsByNameValida
 
 class AccountForgotPasswordFormValidation extends AbstractFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         if ($this->validator->is(Core\Validation\ValidationRules\EmailValidationRule::class, $formData['nick_mail'])) {

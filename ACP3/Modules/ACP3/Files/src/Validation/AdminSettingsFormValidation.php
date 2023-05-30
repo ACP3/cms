@@ -12,9 +12,6 @@ use ACP3\Core\Validation\AbstractFormValidation;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

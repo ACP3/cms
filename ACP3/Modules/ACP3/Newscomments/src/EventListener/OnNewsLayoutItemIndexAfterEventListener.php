@@ -43,9 +43,6 @@ class OnNewsLayoutItemIndexAfterEventListener implements EventSubscriberInterfac
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

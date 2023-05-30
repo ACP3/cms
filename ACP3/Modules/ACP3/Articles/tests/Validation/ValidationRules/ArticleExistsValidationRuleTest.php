@@ -41,8 +41,6 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
 
     /**
      * @dataProvider validationRuleProvider
-     *
-     * {@inheritDoc}
      */
     public function testValidationRule(mixed $data, array|string|null $field, array $extra, bool $expected): void
     {
@@ -61,8 +59,6 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
 
     /**
      * @dataProvider validationRuleProvider
-     *
-     * {@inheritDoc}
      */
     public function testValidate(mixed $data, array|string|null $field, array $extra, bool $expected): void
     {

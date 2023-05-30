@@ -11,17 +11,11 @@ use Psr\Http\Message\RequestInterface;
 
 class Facebook extends Request implements ServiceInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'facebook';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfig(array $config): void
     {
         if (empty($config['app_id']) || empty($config['secret'])) {
@@ -30,9 +24,6 @@ class Facebook extends Request implements ServiceInterface
         parent::setConfig($config);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRequest(string $url): RequestInterface
     {
         $accessToken = urlencode((string) $this->config['app_id']) . '|' . urlencode((string) $this->config['secret']);
@@ -42,9 +33,6 @@ class Facebook extends Request implements ServiceInterface
         return new \GuzzleHttp\Psr7\Request('GET', $query);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function extractCount(array $data): int
     {
         return $data['og_object']['engagement']['count'] ?? 0;

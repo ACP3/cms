@@ -30,9 +30,6 @@ class Pagination extends \ACP3\Core\Pagination
         parent::__construct($title, $translator, $request, $router);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setMetaStatements(): void
     {
         parent::setMetaStatements();

@@ -27,8 +27,8 @@ class PollListViewProvider
         $polls = $this->pollRepository->getAll($this->date->getCurrentDateTime());
 
         foreach ($polls as $i => $poll) {
-            if ($this->pollHelpers->hasAlreadyVoted($poll['id']) ||
-                ($poll['start'] !== $poll['end'] && $this->date->timestamp($poll['end']) <= $this->date->timestamp())
+            if ($this->pollHelpers->hasAlreadyVoted($poll['id'])
+                || ($poll['start'] !== $poll['end'] && $this->date->timestamp($poll['end']) <= $this->date->timestamp())
             ) {
                 $polls[$i]['link'] = 'result';
             } else {

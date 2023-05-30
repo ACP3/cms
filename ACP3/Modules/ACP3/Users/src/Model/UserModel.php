@@ -30,8 +30,6 @@ class UserModel implements UserModelInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getUserInfo(int $userId = 0): array
@@ -52,17 +50,11 @@ class UserModel implements UserModelInterface
         return $this->userInfo[$userId] ?? [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isAuthenticated(): bool
     {
         return $this->isAuthenticated === true && $this->getUserId() !== 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setIsAuthenticated(bool $isAuthenticated): self
     {
         $this->isAuthenticated = $isAuthenticated;
@@ -70,17 +62,11 @@ class UserModel implements UserModelInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setUserId(int $userId): self
     {
         $this->userId = $userId;
@@ -88,17 +74,11 @@ class UserModel implements UserModelInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function isSuperUser(): bool
     {
         return $this->isSuperUser;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setIsSuperUser(bool $isSuperUser): self
     {
         $this->isSuperUser = $isSuperUser;

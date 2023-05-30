@@ -22,9 +22,6 @@ class HoneypotCaptchaExtension implements CaptchaExtensionInterface
         return $this->translator->t('captcha', 'honeypot');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
@@ -42,9 +39,6 @@ class HoneypotCaptchaExtension implements CaptchaExtensionInterface
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCaptchaValid(mixed $formData, string $formFieldName, array $extra = []): bool
     {
         return empty($formData[$formFieldName]);

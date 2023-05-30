@@ -35,9 +35,6 @@ class OnFilesModelPrepareDataEventListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

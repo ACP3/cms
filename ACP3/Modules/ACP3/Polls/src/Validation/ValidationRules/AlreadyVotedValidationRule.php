@@ -27,13 +27,7 @@ class AlreadyVotedValidationRule extends AbstractValidationRule
         return $this->getVotes($extra['poll_id'], $extra['ip_address']) == 0;
     }
 
-    /**
-     * @param int    $pollId
-     * @param string $ipAddress
-     *
-     * @return mixed
-     */
-    protected function getVotes($pollId, $ipAddress)
+    protected function getVotes(int $pollId, string $ipAddress): int
     {
         // Check, whether the logged user has already voted
         if ($this->userModel->isAuthenticated() === true) {

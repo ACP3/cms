@@ -9,18 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class SerializableColumnType implements ColumnTypeStrategyInterface
 {
-    /**
-     * @param mixed $value
-     */
-    public function doEscape($value): string
+    public function doEscape(mixed $value): string
     {
         return serialize($value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doUnescape($value): string
+    public function doUnescape(mixed $value): mixed
     {
         return unserialize($value);
     }

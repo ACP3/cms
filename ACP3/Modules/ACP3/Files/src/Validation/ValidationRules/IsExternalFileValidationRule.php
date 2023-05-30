@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class IsExternalFileValidationRule extends AbstractValidationRule
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         if (\is_array($data) && \is_array($field)) {

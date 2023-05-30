@@ -20,9 +20,6 @@ class FormTokenValidationRule extends AbstractValidationRule
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(Validator $validator, bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): void
     {
         if (!$this->isValid($data, $field, $extra)) {
@@ -30,9 +27,6 @@ class FormTokenValidationRule extends AbstractValidationRule
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         $tokenName = SessionConstants::XSRF_TOKEN_NAME;

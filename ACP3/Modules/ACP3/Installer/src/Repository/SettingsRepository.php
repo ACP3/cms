@@ -21,9 +21,6 @@ class SettingsRepository extends AbstractRepository implements SettingsAwareRepo
         parent::__construct($db);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAllSettings(): array
     {
         return [

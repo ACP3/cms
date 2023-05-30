@@ -48,9 +48,6 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getMetaTags(): array
     {
         $this->addSelfReferencingCanonical();
@@ -213,17 +210,11 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return strtr($robot, $this->getRobotsMap());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getRobotsMap(): array
     {
         return self::$robotSettingsMaps;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setDescriptionPostfix(string $value): static
     {
         $this->metaDescriptionPostfix = $value;
@@ -231,9 +222,6 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setCanonicalUri(string $path): static
     {
         $this->canonicalUrl = $path;
@@ -241,9 +229,6 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setNextPage(string $path): static
     {
         $this->nextPage = $path;
@@ -251,9 +236,6 @@ class MetaStatementsService implements MetaStatementsServiceInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function setPreviousPage(string $path): static
     {
         $this->previousPage = $path;

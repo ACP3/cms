@@ -53,9 +53,6 @@ class AddSocialSharingListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

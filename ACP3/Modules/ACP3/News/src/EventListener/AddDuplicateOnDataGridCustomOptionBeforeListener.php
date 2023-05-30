@@ -12,33 +12,21 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddDuplicateOnDataGridCustomOptionBeforeListener extends AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener implements EventSubscriberInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function getDataGridIdentifier(): string
     {
         return '#news-data-grid';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getResource(): string
     {
         return 'admin/news/index/duplicate';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getRoute(array $dbResultRow): string
     {
         return 'acp/news/index/duplicate/id_' . $dbResultRow['id'];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

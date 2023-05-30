@@ -29,9 +29,6 @@ class SchemaRegistrar implements ContainerInterface
         return $this->schemas;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function has(string $moduleName): bool
     {
         return isset($this->schemas[$moduleName]);

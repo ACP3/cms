@@ -9,18 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class BooleanColumnType implements ColumnTypeStrategyInterface
 {
-    /**
-     * @param mixed $value
-     */
-    public function doEscape($value): int
+    public function doEscape(mixed $value): int
     {
         return (int) ((bool) $value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doUnescape($value)
+    public function doUnescape(mixed $value): mixed
     {
         return $value;
     }

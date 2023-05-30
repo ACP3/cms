@@ -70,9 +70,6 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener implements EventSubscrib
         ) && $rawData['seo_uri_pattern'] === Gallery\Helpers::URL_KEY_PATTERN_GALLERY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

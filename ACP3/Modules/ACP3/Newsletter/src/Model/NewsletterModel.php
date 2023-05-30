@@ -33,10 +33,7 @@ class NewsletterModel extends AbstractModel implements UpdatedAtAwareModelInterf
         parent::__construct($eventDispatcher, $dataProcessor, $newsletterRepository);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function save(array $rawData, ?int $entryId = null): int
+    public function save(array $rawData, int $entryId = null): int
     {
         if ($entryId === null) {
             $settings = $this->config->getSettings(Schema::MODULE_NAME);

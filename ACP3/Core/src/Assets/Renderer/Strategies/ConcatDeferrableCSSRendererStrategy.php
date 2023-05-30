@@ -37,8 +37,6 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */

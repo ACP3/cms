@@ -48,9 +48,6 @@ class UpdateCheckListener implements EventSubscriberInterface
         $this->updateCheck->checkForNewVersion();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -9,9 +9,6 @@ namespace ACP3\Modules\ACP3\Emoticons\Installer;
 
 class SampleData extends \ACP3\Core\Installer\AbstractSampleData
 {
-    /**
-     * {@inheritDoc}
-     */
     public function sampleData(): array
     {
         return [

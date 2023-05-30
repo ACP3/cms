@@ -20,8 +20,8 @@ class OnDataGridCustomOptionBeforeListener implements EventSubscriberInterface
 
     public function __invoke(CustomOptionEvent $customOptionEvent): void
     {
-        if ($customOptionEvent->getIdentifier() === '#newsletter-data-grid' &&
-            $this->acl->hasPermission('admin/newsletter/index/send') === true
+        if ($customOptionEvent->getIdentifier() === '#newsletter-data-grid'
+            && $this->acl->hasPermission('admin/newsletter/index/send') === true
         ) {
             $dbResultRow = $customOptionEvent->getDbResultRow();
 
@@ -37,9 +37,6 @@ class OnDataGridCustomOptionBeforeListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -45,9 +45,6 @@ class OnCaptchaValidationAdminSettingsCustomFieldsListener implements EventSubsc
         return !empty($formData['captcha']) && $formData['captcha'] === 'captcha.extension.recaptcha_captcha_extension';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

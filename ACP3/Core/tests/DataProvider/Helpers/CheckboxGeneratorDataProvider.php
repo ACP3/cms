@@ -11,9 +11,6 @@ use ACP3\Core\DataProvider\DataProviderInterface;
 
 class CheckboxGeneratorDataProvider implements DataProviderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function getData(): array
     {
         return [

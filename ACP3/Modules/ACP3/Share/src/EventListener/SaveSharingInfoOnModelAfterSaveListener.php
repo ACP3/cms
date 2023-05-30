@@ -40,9 +40,6 @@ class SaveSharingInfoOnModelAfterSaveListener implements EventSubscriberInterfac
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

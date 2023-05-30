@@ -26,73 +26,46 @@ class Request extends AbstractRequest
         parent::__construct($requestStack);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getQuery(): string
     {
         return $this->query;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPathInfo(): string
     {
         return $this->pathInfo;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getArea(): AreaEnum
     {
         return $this->areaMatcher->getAreaFromRequest($this->getSymfonyRequest());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getModule(): string
     {
         return $this->getSymfonyRequest()->attributes->get('_module');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getController(): string
     {
         return $this->getSymfonyRequest()->attributes->get('_controller');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAction(): string
     {
         return $this->getSymfonyRequest()->attributes->get('_controllerAction');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFullPath(): string
     {
         return $this->getModuleAndController() . $this->getAction() . '/';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFullPathWithoutArea(): string
     {
         return $this->getModuleAndControllerWithoutArea() . $this->getAction() . '/';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getModuleAndController(): string
     {
         $path = ($this->getArea() === AreaEnum::AREA_ADMIN) ? 'acp/' : '';
@@ -100,9 +73,6 @@ class Request extends AbstractRequest
         return $path . $this->getModuleAndControllerWithoutArea();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getModuleAndControllerWithoutArea(): string
     {
         return $this->getModule() . '/' . $this->getController() . '/';
@@ -163,34 +133,22 @@ class Request extends AbstractRequest
         $this->setRequestParameters($query);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isHomepage(): bool
     {
         return ($this->query === $this->homepage) && $this->getArea() === AreaEnum::AREA_FRONTEND;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParameters(): ParameterBag
     {
         return $this->getSymfonyRequest()->attributes;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUriWithoutPages(): string
     {
         return preg_replace('/\/page_(\d+)\//', '/', $this->query);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setPathInfo(?string $pathInfo = null): void
+    public function setPathInfo(string $pathInfo = null): void
     {
         if ($pathInfo !== null) {
             $this->pathInfo = $pathInfo;

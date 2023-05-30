@@ -26,9 +26,6 @@ class UpdateUserNameOnUserModelPrepareDataListener implements EventSubscriberInt
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

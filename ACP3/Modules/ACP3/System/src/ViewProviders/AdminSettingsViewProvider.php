@@ -13,12 +13,16 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Settings\SettingsInterface;
+use ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG;
 use ACP3\Modules\ACP3\System\Enum\SiteSubtitleModeEnum;
 use ACP3\Modules\ACP3\System\Installer\Schema as SystemSchema;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class AdminSettingsViewProvider
 {
+    /**
+     * @param ServiceLocator<AbstractWYSIWYG> $editorLocator
+     */
     public function __construct(private readonly Date $dateHelper, private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings, private readonly Translator $translator, private readonly ServiceLocator $editorLocator)
     {
     }
@@ -109,7 +113,7 @@ class AdminSettingsViewProvider
     {
         $wysiwyg = [];
         foreach ($this->editorLocator->getProvidedServices() as $serviceId => $class) {
-            /** @var \ACP3\Core\WYSIWYG\Editor\AbstractWYSIWYG $editorInstance */
+            /** @var AbstractWYSIWYG $editorInstance */
             $editorInstance = $this->editorLocator->get($serviceId);
 
             if ($editorInstance->isValid()) {

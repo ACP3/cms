@@ -20,9 +20,6 @@ class CacheClearCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -31,9 +28,6 @@ class CacheClearCommand extends Command
             ->setHelp('This command allows you to clear all the locally stored caches. This applies for the PhpFileCache only');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

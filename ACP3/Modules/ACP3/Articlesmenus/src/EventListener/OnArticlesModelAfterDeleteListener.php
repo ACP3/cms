@@ -36,9 +36,6 @@ class OnArticlesModelAfterDeleteListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

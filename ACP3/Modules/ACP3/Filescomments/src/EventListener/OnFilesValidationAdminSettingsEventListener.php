@@ -42,9 +42,6 @@ class OnFilesValidationAdminSettingsEventListener implements EventSubscriberInte
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

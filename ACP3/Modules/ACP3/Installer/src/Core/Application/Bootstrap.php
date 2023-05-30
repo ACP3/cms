@@ -19,9 +19,6 @@ class Bootstrap extends Core\Application\AbstractBootstrap
      */
     protected $appPath;
 
-    /**
-     * {@inheritdoc}
-     */
     public function isInstalled(): bool
     {
         // Standardzeitzone festlegen
@@ -40,8 +37,6 @@ class Bootstrap extends Core\Application\AbstractBootstrap
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Exception
      */
     public function initializeClasses(): void

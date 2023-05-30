@@ -21,8 +21,6 @@ class Datepicker extends AbstractFunction
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \SmartyException
      * @throws \Exception
      */

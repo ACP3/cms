@@ -21,8 +21,6 @@ class ModuleInfo implements ModuleInfoInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \JsonException
      */
     public function getModulesInfo(): array

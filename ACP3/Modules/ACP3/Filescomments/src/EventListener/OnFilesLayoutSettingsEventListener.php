@@ -38,9 +38,6 @@ class OnFilesLayoutSettingsEventListener implements EventSubscriberInterface
         $event->addContent($this->view->fetchTemplate('Filescomments/Partials/files_layout_settings.tpl'));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

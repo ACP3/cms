@@ -33,8 +33,6 @@ class Navbar extends AbstractFunction
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
@@ -217,8 +215,8 @@ class Navbar extends AbstractFunction
     private function closeOpenedMenus(MenuConfiguration $menuConfig, array $items, int $currentIndex): string
     {
         $data = '';
-        if ((isset($items[$currentIndex + 1]) && $items[$currentIndex + 1]['level'] < $items[$currentIndex]['level']) ||
-            (!isset($items[$currentIndex + 1]) && (int) $items[$currentIndex]['level'] !== 0)
+        if ((isset($items[$currentIndex + 1]) && $items[$currentIndex + 1]['level'] < $items[$currentIndex]['level'])
+            || (!isset($items[$currentIndex + 1]) && (int) $items[$currentIndex]['level'] !== 0)
         ) {
             // Calculate, how many levels between the current and the next element are
             $diff = $this->calculateChildParentLevelDiff($items, $currentIndex);

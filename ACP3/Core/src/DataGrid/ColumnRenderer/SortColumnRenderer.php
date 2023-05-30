@@ -17,9 +17,6 @@ class SortColumnRenderer extends AbstractColumnRenderer
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         $dbValue = $this->getValue($column, $dbResultRow);

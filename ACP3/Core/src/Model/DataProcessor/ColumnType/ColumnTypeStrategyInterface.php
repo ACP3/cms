@@ -9,21 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 interface ColumnTypeStrategyInterface
 {
-    /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    public function doEscape($value);
+    public function doEscape(mixed $value);
 
     /**
      * This method is the counterpart of the ::doEscape() method.
-     *
-     * @param mixed $value
-     *
-     * @return mixed
      */
-    public function doUnescape($value);
+    public function doUnescape(mixed $value): mixed;
 
     /**
      * @return string|int|null

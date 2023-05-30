@@ -14,9 +14,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class SitemapAvailabilityCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $definition = $container->findDefinition(SitemapAvailabilityRegistrar::class);

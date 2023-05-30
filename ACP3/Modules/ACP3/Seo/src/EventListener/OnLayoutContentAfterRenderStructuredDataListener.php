@@ -27,9 +27,6 @@ class OnLayoutContentAfterRenderStructuredDataListener implements EventSubscribe
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

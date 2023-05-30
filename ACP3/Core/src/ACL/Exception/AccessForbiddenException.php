@@ -17,17 +17,11 @@ class AccessForbiddenException extends \RuntimeException implements ForwardContr
         parent::__construct($message, Response::HTTP_FORBIDDEN, $previous);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getServiceId(): string
     {
         return 'errors.controller.frontend.index.access_forbidden';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function routeParams(): array
     {
         return [];

@@ -11,17 +11,11 @@ use Psr\Http\Message\RequestInterface;
 
 class Flattr extends Request implements ServiceInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'flattr';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRequest(string $url): RequestInterface
     {
         return new \GuzzleHttp\Psr7\Request(
@@ -30,9 +24,6 @@ class Flattr extends Request implements ServiceInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function extractCount(array $data): int
     {
         return $data['flattrs'] ?? 0;

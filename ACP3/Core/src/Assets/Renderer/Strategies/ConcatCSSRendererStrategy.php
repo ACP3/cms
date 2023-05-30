@@ -74,8 +74,6 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -167,8 +165,6 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */

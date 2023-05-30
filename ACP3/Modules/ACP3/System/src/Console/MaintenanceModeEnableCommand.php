@@ -22,9 +22,6 @@ class MaintenanceModeEnableCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -32,9 +29,6 @@ class MaintenanceModeEnableCommand extends Command
             ->setDescription('Enables the maintenance mode of the ACP3.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

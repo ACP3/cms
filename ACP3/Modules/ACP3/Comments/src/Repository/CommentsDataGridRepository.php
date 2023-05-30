@@ -16,9 +16,6 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = CommentRepository::TABLE_NAME;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
@@ -31,9 +28,6 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->leftJoin(
@@ -44,9 +38,6 @@ class CommentsDataGridRepository extends AbstractDataGridRepository
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addOrderBy('main.entry_id', 'ASC');

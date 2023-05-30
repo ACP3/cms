@@ -18,9 +18,6 @@ class EmoticonsContentDecorator implements ContentDecoratorInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function decorate(string $content): string
     {
         if (!$this->modules->isInstalled(Schema::MODULE_NAME)) {

@@ -13,25 +13,12 @@ class VoteRepository extends Core\Repository\AbstractRepository
 {
     public const TABLE_NAME = 'poll_votes';
 
-    /**
-     * @param int    $pollId
-     * @param int    $userId
-     * @param string $ipAddress
-     *
-     * @return int
-     */
-    public function getVotesByUserId($pollId, $userId, $ipAddress)
+    public function getVotesByUserId(int $pollId, int $userId, string $ipAddress): int
     {
         return (int) $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND (user_id = ? OR ip = ?)', [$pollId, $userId, $ipAddress]);
     }
 
-    /**
-     * @param int    $pollId
-     * @param string $ipAddress
-     *
-     * @return int
-     */
-    public function getVotesByIpAddress($pollId, $ipAddress)
+    public function getVotesByIpAddress(int $pollId, string $ipAddress): int
     {
         return (int) $this->db->fetchColumn('SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE poll_id = ? AND ip = ?', [$pollId, $ipAddress]);
     }

@@ -19,8 +19,6 @@ class CachingMenuService implements MenuServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAllMenuItems(): array
@@ -36,8 +34,6 @@ class CachingMenuService implements MenuServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getVisibleMenuItemsByMenu(string $menuIdentifier): array

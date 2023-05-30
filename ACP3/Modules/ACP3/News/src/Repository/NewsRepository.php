@@ -45,7 +45,7 @@ class NewsRepository extends Core\Repository\AbstractRepository
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function countAll(string $time = '', ?int $categoryId = null): int
+    public function countAll(string $time = '', int $categoryId = null): int
     {
         if ($categoryId !== null) {
             return $this->countAllByCategoryId([$categoryId], $time);
@@ -85,8 +85,8 @@ class NewsRepository extends Core\Repository\AbstractRepository
     public function getAllByCategoryId(
         array|int $categoryId,
         string $time = '',
-        ?int $limitStart = null,
-        ?int $resultsPerPage = null
+        int $limitStart = null,
+        int $resultsPerPage = null
     ): array {
         if (false === \is_array($categoryId)) {
             $categoryId = [$categoryId];
@@ -107,7 +107,7 @@ class NewsRepository extends Core\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
+    public function getAll(string $time = '', int $limitStart = null, int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

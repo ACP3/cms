@@ -14,9 +14,6 @@ class GalleryPicturesDataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = PictureRepository::TABLE_NAME;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return array_merge(

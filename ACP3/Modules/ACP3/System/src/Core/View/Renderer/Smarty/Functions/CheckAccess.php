@@ -16,9 +16,6 @@ class CheckAccess extends AbstractFunction
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         $return = $this->checkAccess->outputLinkOrButton($params);

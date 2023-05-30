@@ -15,9 +15,6 @@ class CSSRenderer implements RendererInterface
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function renderHtmlElement(): string
     {
         return $this->cssRendererStrategy->renderHtmlElement() . $this->deferrableCssRendererStrategy->renderHtmlElement();

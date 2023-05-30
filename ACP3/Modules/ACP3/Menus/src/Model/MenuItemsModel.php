@@ -20,10 +20,7 @@ class MenuItemsModel extends AbstractNestedSetModel
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function save(array $rawData, ?int $entryId = null): int
+    public function save(array $rawData, int $entryId = null): int
     {
         $rawData['target'] = YesNoEnum::tryFrom($rawData['display']) === YesNoEnum::NO ? LinkTargetEnum::TARGET_SELF->value : $rawData['target'];
 

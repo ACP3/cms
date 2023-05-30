@@ -25,17 +25,11 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCaptchaName(): string
     {
         return $this->translator->t('captcha', 'recaptcha');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
@@ -62,9 +56,6 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCaptchaValid(mixed $formData, string $formFieldName, array $extra = []): bool
     {
         if (empty($formData['g-recaptcha-response'])) {

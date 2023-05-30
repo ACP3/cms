@@ -11,9 +11,6 @@ use ACP3\Core;
 
 class AccountSettingsFormValidation extends AbstractUserFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator->addConstraint(Core\Validation\ValidationRules\FormTokenValidationRule::class);

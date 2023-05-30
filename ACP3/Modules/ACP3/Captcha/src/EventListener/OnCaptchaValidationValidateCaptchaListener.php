@@ -32,9 +32,6 @@ class OnCaptchaValidationValidateCaptchaListener implements EventSubscriberInter
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

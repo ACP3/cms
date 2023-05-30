@@ -12,9 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ModuleRegistration extends \ACP3\Core\Modules\ModuleRegistration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function build(ContainerBuilder $containerBuilder): void
     {
         $containerBuilder->addCompilerPass(new RegisterSocialSharingBackendsPass());

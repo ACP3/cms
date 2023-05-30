@@ -15,9 +15,6 @@ class JavaScriptRenderer implements RendererInterface
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function renderHtmlElement(): string
     {
         return $this->javaScriptRendererStrategy->renderHtmlElement();

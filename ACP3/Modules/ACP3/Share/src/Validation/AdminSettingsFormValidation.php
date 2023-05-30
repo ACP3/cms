@@ -23,9 +23,6 @@ class AdminSettingsFormValidation extends AbstractFormValidation
         parent::__construct($translator, $validator);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

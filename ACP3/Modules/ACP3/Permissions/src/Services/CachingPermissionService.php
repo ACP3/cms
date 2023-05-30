@@ -19,9 +19,6 @@ class CachingPermissionService implements PermissionServiceInterface
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getResources(): array
     {
         $cacheItem = $this->permissionsCachePool->getItem(self::CACHE_ID_RESOURCES);
@@ -34,9 +31,6 @@ class CachingPermissionService implements PermissionServiceInterface
         return $cacheItem->get();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getRoles(): array
     {
         $cacheItem = $this->permissionsCachePool->getItem(self::CACHE_ID_ROLES);
@@ -49,17 +43,11 @@ class CachingPermissionService implements PermissionServiceInterface
         return $cacheItem->get();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getPermissions(array $roleIds): array
     {
         return $this->permissionService->getPermissions($roleIds);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getPermissionsWithInheritance(array $roleIds): array
     {
         return $this->permissionService->getPermissionsWithInheritance($roleIds);

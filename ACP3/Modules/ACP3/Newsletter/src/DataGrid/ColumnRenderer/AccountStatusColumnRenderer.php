@@ -18,9 +18,6 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         $dbValue = $this->getValue($column, $dbResultRow);
@@ -32,9 +29,6 @@ class AccountStatusColumnRenderer extends AbstractColumnRenderer
         return $this->render($column, $this->getHtmlValue($column, $dbResultRow, $dbValue));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function mandatoryAttributes(): array
     {
         return ['sort', '_'];

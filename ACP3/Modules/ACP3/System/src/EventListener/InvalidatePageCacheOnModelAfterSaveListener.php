@@ -33,9 +33,6 @@ class InvalidatePageCacheOnModelAfterSaveListener implements EventSubscriberInte
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

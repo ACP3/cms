@@ -16,8 +16,6 @@ class MenuService implements MenuServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAllMenuItems(): array
@@ -26,8 +24,6 @@ class MenuService implements MenuServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getVisibleMenuItemsByMenu(string $menuIdentifier): array

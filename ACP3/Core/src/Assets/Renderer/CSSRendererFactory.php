@@ -7,11 +7,15 @@
 
 namespace ACP3\Core\Assets\Renderer;
 
+use ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategyInterface;
 use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class CSSRendererFactory
 {
+    /**
+     * @param ServiceLocator<CSSRendererStrategyInterface> $assetRendererStrategyServiceLocator
+     */
     public function __construct(private readonly ServiceLocator $assetRendererStrategyServiceLocator, readonly private ApplicationMode $applicationMode)
     {
     }

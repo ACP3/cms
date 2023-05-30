@@ -16,9 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DumpContainerCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -27,8 +24,6 @@ class DumpContainerCommand extends Command
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \JsonException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

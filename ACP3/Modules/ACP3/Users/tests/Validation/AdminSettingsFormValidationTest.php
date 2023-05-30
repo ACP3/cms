@@ -33,9 +33,6 @@ class AdminSettingsFormValidationTest extends AbstractFormValidationTest
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function validFormDataProvider(): array
     {
         return [
@@ -52,9 +49,6 @@ class AdminSettingsFormValidationTest extends AbstractFormValidationTest
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function invalidFormDataProvider(): array
     {
         return [

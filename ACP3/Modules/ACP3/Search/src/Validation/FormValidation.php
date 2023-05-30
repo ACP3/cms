@@ -13,9 +13,6 @@ use ACP3\Modules\ACP3\Search\Enum\SortDirectionEnum;
 
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

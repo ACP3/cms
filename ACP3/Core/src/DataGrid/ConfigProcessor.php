@@ -97,8 +97,8 @@ class ConfigProcessor
         $i = 0;
 
         foreach (clone $columns as $column) {
-            if ($column['default_sort'] === true &&
-                \in_array($column['default_sort_direction'], ['asc', 'desc'])
+            if ($column['default_sort'] === true
+                && \in_array($column['default_sort_direction'], ['asc', 'desc'])
             ) {
                 return [
                     [

@@ -22,9 +22,6 @@ class CommentByModuleModel extends AbstractModel
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getAllowedColumns(): array
     {
         return [

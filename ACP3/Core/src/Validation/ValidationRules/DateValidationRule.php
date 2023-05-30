@@ -11,9 +11,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DateValidationRule extends AbstractValidationRule
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         if (\is_array($data)) {
@@ -34,7 +31,7 @@ class DateValidationRule extends AbstractValidationRule
         return $this->checkIsValidDate($data);
     }
 
-    protected function checkIsValidDate(string $start, ?string $end = null): bool
+    protected function checkIsValidDate(string $start, string $end = null): bool
     {
         if ($this->matchIsDate($start)) {
             // Check date range

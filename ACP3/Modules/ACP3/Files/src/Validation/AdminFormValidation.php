@@ -55,9 +55,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         return $clone;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

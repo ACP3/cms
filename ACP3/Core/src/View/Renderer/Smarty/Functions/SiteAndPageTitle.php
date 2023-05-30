@@ -9,9 +9,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 class SiteAndPageTitle extends SiteTitle
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         return $this->title->getSiteAndPageTitle();

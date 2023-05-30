@@ -32,9 +32,6 @@ class Steps extends Core\Breadcrumb\Steps
         parent::__construct($container, $translator, $request, $router, $eventDispatcher);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function replaceAncestor(string $title, string $path = '', bool $dbSteps = false): self
     {
         if ($dbSteps === true) {
@@ -47,8 +44,6 @@ class Steps extends Core\Breadcrumb\Steps
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function buildBreadcrumbCacheForFrontend(): void
@@ -162,9 +157,6 @@ class Steps extends Core\Breadcrumb\Steps
         return $matched === true || $uri === $this->router->route($this->request->getQuery(), true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function removeByPath(string $path): self
     {
         parent::removeByPath($path);

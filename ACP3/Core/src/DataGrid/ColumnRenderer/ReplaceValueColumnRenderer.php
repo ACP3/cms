@@ -18,9 +18,6 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
      */
     private array $replace = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         $this->search = $column['custom']['search'];
@@ -29,9 +26,6 @@ class ReplaceValueColumnRenderer extends AbstractColumnRenderer
         return $this->render($column, $this->getValue($column, $dbResultRow));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getDbValueIfExists(array $dbResultRow, string $field): ?string
     {
         return isset($dbResultRow[$field]) ? str_replace($this->search, $this->replace, (string) $dbResultRow[$field]) : null;

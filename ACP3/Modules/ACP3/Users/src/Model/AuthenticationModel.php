@@ -64,7 +64,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      *
      * @throws \Exception
      */
-    public function setRememberMeCookie(int $userId, string $token, ?int $expiry = null): Cookie
+    public function setRememberMeCookie(int $userId, string $token, int $expiry = null): Cookie
     {
         if ($expiry === null) {
             $expiry = self::REMEMBER_ME_COOKIE_LIFETIME;

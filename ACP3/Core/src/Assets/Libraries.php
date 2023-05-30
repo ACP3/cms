@@ -55,7 +55,7 @@ class Libraries
      *
      * @return $this
      */
-    public function addLibrary(LibraryEntity|string $library, ?array $options = null): self
+    public function addLibrary(LibraryEntity|string $library, array $options = null): self
     {
         // @deprecated since ACP3 version 6.14.0, to be removed with version 7.0.0.
         if (\is_string($library)) {

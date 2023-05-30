@@ -17,17 +17,11 @@ class DataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = CategoryRepository::TABLE_NAME;
 
-    /**
-     * {@inheritDoc}
-     */
     public function getAll(ColumnPriorityQueue $columns, QueryOption ...$queryOptions): array
     {
         return parent::getAll($columns, ...$queryOptions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
@@ -40,9 +34,6 @@ class DataGridRepository extends AbstractDataGridRepository
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->join('main', $this->getTableName(), 'c');
@@ -74,9 +65,6 @@ class DataGridRepository extends AbstractDataGridRepository
             ->addGroupBy('m.name');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         $queryBuilder

@@ -14,9 +14,6 @@ class GalleryDataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractD
 {
     public const TABLE_NAME = GalleryRepository::TABLE_NAME;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
@@ -29,9 +26,6 @@ class GalleryDataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractD
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->leftJoin(
@@ -42,9 +36,6 @@ class GalleryDataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractD
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addGroupBy([

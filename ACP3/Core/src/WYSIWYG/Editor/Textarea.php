@@ -12,17 +12,11 @@ namespace ACP3\Core\WYSIWYG\Editor;
  */
 class Textarea extends AbstractWYSIWYG
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getFriendlyName(): string
     {
         return 'Textarea';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setParameters(array $params = []): void
     {
         $this->id = $params['id'];
@@ -32,9 +26,6 @@ class Textarea extends AbstractWYSIWYG
         $this->required = isset($params['required']) && $params['required'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): array
     {
         return [
@@ -50,9 +41,6 @@ class Textarea extends AbstractWYSIWYG
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(): bool
     {
         return true;

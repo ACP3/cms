@@ -30,7 +30,7 @@ class NewsUpsertService
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function upsert(array $updatedData, ?int $newsId = null): int
+    public function upsert(array $updatedData, int $newsId = null): int
     {
         $this->adminFormValidation
             ->withUriAlias($newsId !== null ? sprintf(Helpers::URL_KEY_PATTERN, $newsId) : '')

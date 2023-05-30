@@ -82,8 +82,8 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
      */
     protected function fetchUserByFormFieldValue(string $nickNameOrEmail): array
     {
-        if ($this->validator->is(EmailValidationRule::class, $nickNameOrEmail) === true &&
-            $this->userRepository->resultExistsByEmail($nickNameOrEmail) === true
+        if ($this->validator->is(EmailValidationRule::class, $nickNameOrEmail) === true
+            && $this->userRepository->resultExistsByEmail($nickNameOrEmail) === true
         ) {
             $user = $this->userRepository->getOneByEmail($nickNameOrEmail);
         } else {

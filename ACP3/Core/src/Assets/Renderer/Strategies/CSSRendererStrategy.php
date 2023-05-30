@@ -107,8 +107,6 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */

@@ -28,7 +28,7 @@ class Login extends Core\Controller\AbstractWidgetAction
     /**
      * @return array<string, mixed>|Response
      */
-    public function __invoke(?string $redirect = null): array|Response
+    public function __invoke(string $redirect = null): array|Response
     {
         if ($this->user->isAuthenticated() === true) {
             return $this->redirectResponse->toNewPage($this->applicationPath->getWebRoot());

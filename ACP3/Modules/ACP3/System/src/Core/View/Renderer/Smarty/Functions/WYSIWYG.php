@@ -18,8 +18,6 @@ class WYSIWYG extends AbstractFunction
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \SmartyException
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed

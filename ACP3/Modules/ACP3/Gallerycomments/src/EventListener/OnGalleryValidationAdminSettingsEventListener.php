@@ -42,9 +42,6 @@ class OnGalleryValidationAdminSettingsEventListener implements EventSubscriberIn
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

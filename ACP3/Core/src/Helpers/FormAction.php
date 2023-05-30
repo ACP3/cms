@@ -25,7 +25,7 @@ class FormAction
      * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handlePostAction(callable $callback, ?string $path = null): array|Response|string
+    public function handlePostAction(callable $callback, string $path = null): array|Response|string
     {
         try {
             $this->db->beginTransaction();
@@ -67,8 +67,8 @@ class FormAction
     public function handleDeleteAction(
         ?string $action,
         callable $callback,
-        ?string $moduleConfirmUrl = null,
-        ?string $moduleIndexUrl = null
+        string $moduleConfirmUrl = null,
+        string $moduleIndexUrl = null
     ): array|Response {
         return $this->handleCustomDeleteAction(
             $action,
@@ -88,8 +88,8 @@ class FormAction
     public function handleCustomDeleteAction(
         ?string $action,
         callable $callback,
-        ?string $moduleConfirmUrl = null,
-        ?string $moduleIndexUrl = null
+        string $moduleConfirmUrl = null,
+        string $moduleIndexUrl = null
     ): array|Response {
         [$moduleConfirmUrl, $moduleIndexUrl] = $this->generateDefaultConfirmationBoxUris(
             $moduleConfirmUrl,
@@ -114,7 +114,7 @@ class FormAction
      * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleDuplicateAction(callable $callback, ?string $path = null): array|Response|string
+    public function handleDuplicateAction(callable $callback, string $path = null): array|Response|string
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -129,7 +129,7 @@ class FormAction
      * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleSettingsPostAction(callable $callback, ?string $path = null): array|Response|string
+    public function handleSettingsPostAction(callable $callback, string $path = null): array|Response|string
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -144,7 +144,7 @@ class FormAction
      * @throws ConnectionException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function handleSaveAction(callable $callback, ?string $path = null): array|Response|string
+    public function handleSaveAction(callable $callback, string $path = null): array|Response|string
     {
         return $this->handlePostAction(function () use ($callback, $path) {
             $result = $callback();
@@ -153,7 +153,7 @@ class FormAction
         });
     }
 
-    private function prepareRedirectMessageAfterPost(bool|int|Response $response, string $phrase, ?string $path = null): Response
+    private function prepareRedirectMessageAfterPost(bool|int|Response $response, string $phrase, string $path = null): Response
     {
         if ($response instanceof Response) {
             return $response;
@@ -166,7 +166,7 @@ class FormAction
         );
     }
 
-    public function setRedirectMessage(bool|int $result, string $translatedText, ?string $path = null): Response
+    public function setRedirectMessage(bool|int $result, string $translatedText, string $path = null): Response
     {
         return $this->redirectMessages->setMessage(
             (bool) $result,
@@ -194,7 +194,7 @@ class FormAction
     /**
      * @return array<string, mixed>|Response
      */
-    private function deleteItem(?string $action, ?string $moduleConfirmUrl = null, ?string $moduleIndexUrl = null): array|Response
+    private function deleteItem(?string $action, string $moduleConfirmUrl = null, string $moduleIndexUrl = null): array|Response
     {
         $entries = $this->prepareRequestData();
 

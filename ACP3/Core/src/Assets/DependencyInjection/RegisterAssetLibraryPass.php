@@ -14,9 +14,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterAssetLibraryPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $libraries = $container->findDefinition(Libraries::class);

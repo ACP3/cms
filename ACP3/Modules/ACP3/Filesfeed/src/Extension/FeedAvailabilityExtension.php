@@ -26,8 +26,6 @@ class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function fetchFeedItems(): array

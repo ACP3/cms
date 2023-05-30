@@ -33,7 +33,7 @@ class FileUpsertService
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function upsert(array $updatedData, UploadedFile|string|null $file, ?int $downloadId = null): int
+    public function upsert(array $updatedData, UploadedFile|string|null $file, int $downloadId = null): int
     {
         $this->adminFormValidation
             ->withFile($file)

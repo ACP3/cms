@@ -20,9 +20,6 @@ class PageCssClasses extends AbstractFilter
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
         if (str_contains($tplOutput, '<body')) {

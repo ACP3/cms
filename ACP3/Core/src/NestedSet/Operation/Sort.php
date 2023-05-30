@@ -17,13 +17,13 @@ class Sort extends AbstractOperation
         if ($this->nestedSetRepository->nodeExists($resultId) === true) {
             $nodes = $this->nestedSetRepository->fetchNodeWithSiblings($resultId);
 
-            if ($mode === 'up' &&
-                $this->nestedSetRepository->nextNodeExists($nodes[0]['left_id'] - 1, $this->getBlockId($nodes[0])) === true) {
+            if ($mode === 'up'
+                && $this->nestedSetRepository->nextNodeExists($nodes[0]['left_id'] - 1, $this->getBlockId($nodes[0])) === true) {
                 return $this->sortUp($nodes);
             }
 
-            if ($mode === 'down' &&
-                $this->nestedSetRepository->previousNodeExists(
+            if ($mode === 'down'
+                && $this->nestedSetRepository->previousNodeExists(
                     $nodes[0]['right_id'] + 1,
                     $this->getBlockId($nodes[0])
                 ) === true

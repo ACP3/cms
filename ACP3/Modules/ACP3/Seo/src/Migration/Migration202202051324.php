@@ -18,9 +18,6 @@ class Migration202202051324 implements MigrationInterface
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function dependencies(): ?array
     {
         return [

@@ -36,10 +36,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
         parent::__construct($eventDispatcher, $dataProcessor, $newsRepository);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function save(array $rawData, ?int $entryId = null): int
+    public function save(array $rawData, int $entryId = null): int
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 
@@ -81,8 +78,6 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return array<string, mixed>
      */
     protected function getDefaultDataForDuplication(): array

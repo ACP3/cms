@@ -54,9 +54,6 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

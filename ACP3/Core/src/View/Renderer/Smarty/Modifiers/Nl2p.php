@@ -15,9 +15,6 @@ class Nl2p extends AbstractModifier
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(string $value): string
     {
         return $this->stringFormatter->nl2p($value);

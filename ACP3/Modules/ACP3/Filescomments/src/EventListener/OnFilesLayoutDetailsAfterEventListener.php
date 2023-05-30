@@ -37,9 +37,6 @@ class OnFilesLayoutDetailsAfterEventListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

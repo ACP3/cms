@@ -16,9 +16,6 @@ class Image extends AbstractFunction
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         if (isset($params['file'], $params['module']) === true && (bool) preg_match('=\./=', (string) $params['file']) === false) {

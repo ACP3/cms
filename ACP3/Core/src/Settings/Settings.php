@@ -28,9 +28,6 @@ class Settings implements SettingsInterface
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function saveSettings(array $data, string $moduleName): bool
     {
         $moduleId = $this->systemModuleRepository->getModuleId($moduleName);
@@ -68,9 +65,6 @@ class Settings implements SettingsInterface
         return $result !== false && $result2 !== false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getSettings(string $module): array
     {
         if ($this->settings === []) {

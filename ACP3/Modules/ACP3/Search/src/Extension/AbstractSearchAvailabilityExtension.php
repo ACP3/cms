@@ -19,9 +19,6 @@ abstract class AbstractSearchAvailabilityExtension implements SearchAvailability
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function fetchSearchResults(string $searchTerm, SearchAreaEnum $areas, SortDirectionEnum $sortDirection): array
     {
         $results = $this->repository->getAllSearchResults(

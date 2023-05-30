@@ -13,9 +13,6 @@ class AclUserRoleRepository extends Core\Repository\AbstractRepository implement
 {
     public const TABLE_NAME = 'acl_user_roles';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRolesByUserId(int $userId): array
     {
         return $this->db->fetchAll(

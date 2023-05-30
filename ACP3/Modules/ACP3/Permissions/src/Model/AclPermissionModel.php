@@ -67,9 +67,6 @@ class AclPermissionModel extends AbstractModel
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getAllowedColumns(): array
     {
         return [

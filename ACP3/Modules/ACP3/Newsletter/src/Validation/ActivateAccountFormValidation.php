@@ -12,9 +12,6 @@ use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountExistsByHashV
 
 class ActivateAccountFormValidation extends AbstractFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

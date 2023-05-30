@@ -25,7 +25,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
     /**
      * @return array<string, mixed>|Response
      */
-    public function __invoke(int $id, ?string $action = null): array|Response
+    public function __invoke(int $id, string $action = null): array|Response
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

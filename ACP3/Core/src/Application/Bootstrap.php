@@ -20,8 +20,6 @@ class Bootstrap extends AbstractBootstrap
     private string $containerName = 'ACP3ServiceContainer';
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -62,9 +60,6 @@ class Bootstrap extends AbstractBootstrap
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isInstalled(): bool
     {
         date_default_timezone_set('UTC');

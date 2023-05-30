@@ -110,9 +110,6 @@ class RenderMenuItemManagementFormFieldsListener implements EventSubscriberInter
         return $this->menuItemFormFields->createMenuItemFormFields();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

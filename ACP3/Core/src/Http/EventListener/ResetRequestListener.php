@@ -19,9 +19,6 @@ class ResetRequestListener implements EventSubscriberInterface
         $request->processQuery();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

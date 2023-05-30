@@ -19,17 +19,11 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
 
     private ?int $totalResults = null;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setIdentifier(string $identifier): ColumnRendererInterface
     {
         $this->identifier = $identifier;
@@ -37,17 +31,11 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPrimaryKey(): string
     {
         return $this->primaryKey;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPrimaryKey(?string $primaryKey): ColumnRendererInterface
     {
         $this->primaryKey = $primaryKey;
@@ -55,17 +43,11 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUseAjax(): bool
     {
         return $this->useAjax;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUseAjax(bool $useAjax): ColumnRendererInterface
     {
         $this->useAjax = $useAjax;
@@ -73,17 +55,11 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTotalResults(): ?int
     {
         return $this->totalResults;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setTotalResults(int $totalResults): ColumnRendererInterface
     {
         $this->totalResults = $totalResults;
@@ -91,9 +67,6 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         return $this->render($column, $this->getValue($column, $dbResultRow));
@@ -137,7 +110,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * @param array<string, string>|string $attributeName
      */
-    protected function addHtmlAttribute(array|string $attributeName, ?string $attributeData = null): string
+    protected function addHtmlAttribute(array|string $attributeName, string $attributeData = null): string
     {
         if (\is_array($attributeName)) {
             $data = '';

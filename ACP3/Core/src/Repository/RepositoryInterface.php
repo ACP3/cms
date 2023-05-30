@@ -25,7 +25,7 @@ interface RepositoryInterface
      *
      * @param int|string|array<string, int|string> $entryId
      */
-    public function delete(array|int|string $entryId, ?string $columnName = null): int;
+    public function delete(array|int|string $entryId, string $columnName = null): int;
 
     /**
      * Executes the SQL update statement.

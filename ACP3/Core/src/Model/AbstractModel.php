@@ -35,7 +35,7 @@ abstract class AbstractModel
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function save(array $rawData, ?int $entryId = null): int
+    public function save(array $rawData, int $entryId = null): int
     {
         $currentData = $this->loadCurrentData($entryId);
         $filteredNewData = $this->prepareData($rawData, $currentData);
@@ -115,7 +115,7 @@ abstract class AbstractModel
 
     protected function dispatchEvent(
         object $event,
-        ?string $eventName = null): void
+        string $eventName = null): void
     {
         $this->eventDispatcher->dispatch(
             $event,
@@ -137,7 +137,7 @@ abstract class AbstractModel
         bool $hasDataChanges,
         array $filteredData = [],
         array $rawData = [],
-        ?array $currentData = null
+        array $currentData = null
     ): AbstractModelSaveEvent {
         return new $eventType(
             static::EVENT_PREFIX,

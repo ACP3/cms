@@ -21,9 +21,6 @@ class EnableLibrariesListener implements EventSubscriberInterface
         $this->libraries->enableLibraries(['polyfill']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

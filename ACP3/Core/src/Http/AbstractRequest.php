@@ -29,81 +29,51 @@ abstract class AbstractRequest implements RequestInterface
         return $this->requestStack->getCurrentRequest();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getScheme(): string
     {
         return $this->getSymfonyRequest()->getScheme();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHost(): string
     {
         return $this->getSymfonyRequest()->getHost();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHttpHost(): string
     {
         return $this->getSymfonyRequest()->getHttpHost();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isXmlHttpRequest(): bool
     {
         return $this->getSymfonyRequest()->isXmlHttpRequest();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCookies(): ParameterBag
     {
         return $this->getSymfonyRequest()->cookies;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFiles(): FileBag
     {
         return $this->getSymfonyRequest()->files;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPost(): ParameterBag
     {
         return $this->getSymfonyRequest()->request;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getServer(): ServerBag
     {
         return $this->getSymfonyRequest()->server;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUserAgent(): UserAgent
     {
         return $this->userAgent;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setHomepage(string $homepage): RequestInterface
     {
         $this->homepage = $homepage;

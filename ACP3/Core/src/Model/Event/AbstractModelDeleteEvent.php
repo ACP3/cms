@@ -36,8 +36,6 @@ abstract class AbstractModelDeleteEvent extends ModelSaveEvent
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0.
      */
     public function getCurrentData(): ?array
@@ -46,8 +44,6 @@ abstract class AbstractModelDeleteEvent extends ModelSaveEvent
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0.
      */
     public function getData(): array
@@ -56,8 +52,6 @@ abstract class AbstractModelDeleteEvent extends ModelSaveEvent
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0.
      */
     public function getEntryId(): int|array|null
@@ -66,8 +60,6 @@ abstract class AbstractModelDeleteEvent extends ModelSaveEvent
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0.
      */
     public function getRawData(): array
@@ -76,8 +68,6 @@ abstract class AbstractModelDeleteEvent extends ModelSaveEvent
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0.
      */
     public function hasDataChanges(): bool
@@ -86,8 +76,6 @@ abstract class AbstractModelDeleteEvent extends ModelSaveEvent
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0.
      */
     public function isDeleteStatement(): bool
@@ -96,8 +84,6 @@ abstract class AbstractModelDeleteEvent extends ModelSaveEvent
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @deprecated since ACP3 version 6.11.0, to be removed with version 7.0.0.
      */
     public function isIsNewEntry(): bool

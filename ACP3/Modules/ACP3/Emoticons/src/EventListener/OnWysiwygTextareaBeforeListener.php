@@ -36,9 +36,6 @@ class OnWysiwygTextareaBeforeListener implements EventSubscriberInterface
         return $this->view->fetchTemplate('Emoticons/Partials/emoticons.tpl');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

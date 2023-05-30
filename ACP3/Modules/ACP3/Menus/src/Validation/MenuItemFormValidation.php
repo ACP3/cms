@@ -16,9 +16,6 @@ use ACP3\Modules\ACP3\Menus\Validation\ValidationRules\ParentIdValidationRule;
 
 class MenuItemFormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

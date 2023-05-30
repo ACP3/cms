@@ -21,9 +21,6 @@ class ClearMenusCacheListener implements EventSubscriberInterface
         $this->menusCachePool->clear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

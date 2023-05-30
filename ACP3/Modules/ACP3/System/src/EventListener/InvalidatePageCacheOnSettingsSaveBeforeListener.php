@@ -38,9 +38,6 @@ class InvalidatePageCacheOnSettingsSaveBeforeListener implements EventSubscriber
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

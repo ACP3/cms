@@ -63,9 +63,6 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
         return $clone;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);

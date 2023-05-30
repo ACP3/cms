@@ -15,9 +15,6 @@ class Icon extends AbstractFunction
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         if (isset($params['iconSet'], $params['icon'])) {

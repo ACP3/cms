@@ -15,9 +15,6 @@ class JsonEncode extends AbstractModifier
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(mixed $value): string
     {
         return json_encode($value, JSON_THROW_ON_ERROR);

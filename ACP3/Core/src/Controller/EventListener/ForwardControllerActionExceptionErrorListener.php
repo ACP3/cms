@@ -61,9 +61,6 @@ class ForwardControllerActionExceptionErrorListener implements EventSubscriberIn
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -9,18 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class DoubleColumnType implements ColumnTypeStrategyInterface
 {
-    /**
-     * @param mixed $value
-     */
-    public function doEscape($value): float
+    public function doEscape(mixed $value): float
     {
         return (float) $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doUnescape($value)
+    public function doUnescape(mixed $value): mixed
     {
         return $value;
     }

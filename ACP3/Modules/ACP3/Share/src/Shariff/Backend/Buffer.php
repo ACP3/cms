@@ -11,17 +11,11 @@ use Psr\Http\Message\RequestInterface;
 
 class Buffer extends Request implements ServiceInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'buffer';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRequest(string $url): RequestInterface
     {
         return new \GuzzleHttp\Psr7\Request(
@@ -30,9 +24,6 @@ class Buffer extends Request implements ServiceInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function extractCount(array $data): int
     {
         return $data['shares'] ?? 0;

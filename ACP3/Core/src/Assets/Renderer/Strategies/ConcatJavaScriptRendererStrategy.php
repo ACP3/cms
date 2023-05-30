@@ -49,8 +49,6 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -102,9 +100,6 @@ class ConcatJavaScriptRendererStrategy extends AbstractConcatRendererStrategy im
         $this->javascript[] = $this->fileResolver->getStaticAssetPath('System', static::ASSETS_PATH_JS, 'layout.js');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function renderHtmlElement(): string
     {
         return "<script defer src=\"{$this->getURI()}\"></script>\n";

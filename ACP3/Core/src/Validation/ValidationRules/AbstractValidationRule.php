@@ -14,17 +14,11 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
 {
     private string $message = '';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMessage(): string
     {
         return $this->message;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setMessage(string $message): ValidationRuleInterface
     {
         $this->message = $message;
@@ -32,9 +26,6 @@ abstract class AbstractValidationRule implements ValidationRuleInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validate(Validator $validator, bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): void
     {
         if (!$this->isValid($data, $field, $extra)) {

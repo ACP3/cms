@@ -108,8 +108,6 @@ class CategoryRepository extends Core\NestedSet\Repository\NestedSetRepository i
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws DBALException
      */
     public function fetchAllSortedByBlock(): array

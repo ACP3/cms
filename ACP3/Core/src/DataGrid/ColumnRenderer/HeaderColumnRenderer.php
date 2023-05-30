@@ -17,9 +17,6 @@ class HeaderColumnRenderer extends AbstractColumnRenderer
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         if ($column['type'] === MassActionColumnRenderer::class) {

@@ -9,9 +9,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
 class PrefixUri extends AbstractModifier
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(string $value): string
     {
         if (!empty($value) && (bool) preg_match('=^http(s)?://=', $value) === false) {

@@ -77,8 +77,8 @@ class AclInstaller implements InstallerInterface
 
     private function getDefaultAclRulePermission(int $roleId, PrivilegeEnum $privilegeId): PermissionEnum
     {
-        if ($roleId === 1 &&
-            ($privilegeId === PrivilegeEnum::FRONTEND_VIEW || $privilegeId === PrivilegeEnum::FRONTEND_CREATE)
+        if ($roleId === 1
+            && ($privilegeId === PrivilegeEnum::FRONTEND_VIEW || $privilegeId === PrivilegeEnum::FRONTEND_CREATE)
         ) {
             return PermissionEnum::PERMIT_ACCESS;
         }

@@ -58,9 +58,9 @@ class Edit extends AbstractOperation
      */
     protected function nodeIsRootItemAndNoChangeNeed(int $parentId, int $blockId, array $node): bool
     {
-        return empty($parentId) &&
-            ($this->isBlockAware() === false || ($this->isBlockAware() === true && $blockId === (int) $node[$this->nestedSetRepository::BLOCK_COLUMN_NAME])) &&
-            $this->nestedSetRepository->nodeIsRootItem($node['left_id'], $node['right_id']) === true;
+        return empty($parentId)
+            && ($this->isBlockAware() === false || ($this->isBlockAware() === true && $blockId === (int) $node[$this->nestedSetRepository::BLOCK_COLUMN_NAME]))
+            && $this->nestedSetRepository->nodeIsRootItem($node['left_id'], $node['right_id']) === true;
     }
 
     /**

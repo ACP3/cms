@@ -25,9 +25,6 @@ class OnEmoticonsModelBeforeDeleteListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

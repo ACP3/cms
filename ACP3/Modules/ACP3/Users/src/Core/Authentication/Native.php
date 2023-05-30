@@ -21,8 +21,6 @@ class Native implements AuthenticationInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function authenticate(UserModelInterface $userModel): void

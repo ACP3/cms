@@ -16,8 +16,6 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     public const TABLE_NAME = 'modules';
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getModuleId(string $moduleName): int
@@ -29,8 +27,6 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getModuleSchemaVersion(string $moduleName): int
@@ -59,8 +55,6 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function moduleExists(string $moduleName): bool
@@ -72,8 +66,6 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getInfoByModuleName(string $moduleName): array
@@ -85,8 +77,6 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getInfoByModuleNameList(array $moduleNames): array
@@ -108,8 +98,6 @@ class ModulesRepository extends AbstractRepository implements ModuleAwareReposit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getModuleNameById(int $moduleId): string

@@ -11,9 +11,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploadValidationRule extends AbstractValidationRule
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         $required = !isset($extra['required']) || $extra['required'];

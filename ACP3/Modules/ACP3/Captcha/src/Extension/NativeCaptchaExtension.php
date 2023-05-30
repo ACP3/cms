@@ -24,8 +24,6 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Exception
      */
     public function getCaptcha(
@@ -57,9 +55,6 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
         return $this->acl->hasPermission('frontend/captcha/index/image') === true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isCaptchaValid(mixed $formData, string $formFieldName, array $extra = []): bool
     {
         if (!$this->hasCaptchaAccess()) {

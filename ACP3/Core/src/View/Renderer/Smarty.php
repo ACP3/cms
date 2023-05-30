@@ -73,9 +73,6 @@ class Smarty implements RendererInterface
         $this->smarty->registerResource($resourceName, $resource);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function assign($name, mixed $value = null): RendererInterface
     {
         $this->smarty->assign($name, $value);
@@ -83,37 +80,28 @@ class Smarty implements RendererInterface
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTemplateVars(?string $variableName = null): mixed
+    public function getTemplateVars(string $variableName = null): mixed
     {
         return $this->smarty->getTemplateVars($variableName);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \SmartyException
      */
-    public function fetch(string $template, ?string $cacheId = null, ?string $compileId = null, ?object $parent = null): string
+    public function fetch(string $template, string $cacheId = null, string $compileId = null, object $parent = null): string
     {
         return $this->smarty->fetch($template, $cacheId, $compileId, $parent);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \SmartyException
      */
-    public function display(string $template, ?string $cacheId = null, ?string $compileId = null, ?object $parent = null): void
+    public function display(string $template, string $cacheId = null, string $compileId = null, object $parent = null): void
     {
         $this->smarty->display($template, $cacheId, $compileId, $parent);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \SmartyException
      */
     public function templateExists(string $template): bool

@@ -21,9 +21,6 @@ class ClearEmoticonsCacheListener implements EventSubscriberInterface
         $this->emoticonCachePool->clear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

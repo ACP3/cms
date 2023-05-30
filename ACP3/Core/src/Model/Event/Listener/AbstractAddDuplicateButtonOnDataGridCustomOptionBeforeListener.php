@@ -19,8 +19,8 @@ abstract class AbstractAddDuplicateButtonOnDataGridCustomOptionBeforeListener
 
     public function __invoke(CustomOptionEvent $customOptionEvent): void
     {
-        if ($customOptionEvent->getIdentifier() === $this->getDataGridIdentifier() &&
-            $this->acl->hasPermission($this->getResource()) === true
+        if ($customOptionEvent->getIdentifier() === $this->getDataGridIdentifier()
+            && $this->acl->hasPermission($this->getResource()) === true
         ) {
             $dbResultRow = $customOptionEvent->getDbResultRow();
 

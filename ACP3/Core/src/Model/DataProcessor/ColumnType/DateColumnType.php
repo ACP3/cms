@@ -15,18 +15,12 @@ class DateColumnType implements ColumnTypeStrategyInterface
     {
     }
 
-    /**
-     * @param string $value
-     */
-    public function doEscape($value): string
+    public function doEscape(mixed $value): string
     {
         return $this->date->format($value, Date::DEFAULT_DATE_FORMAT_SHORT);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doUnescape($value): string
+    public function doUnescape(mixed $value): mixed
     {
         return $value;
     }

@@ -25,9 +25,6 @@ class FeedAvailabilityExtension implements FeedAvailabilityExtensionInterface
         return Schema::MODULE_NAME;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function fetchFeedItems(): array
     {
         $items = [];

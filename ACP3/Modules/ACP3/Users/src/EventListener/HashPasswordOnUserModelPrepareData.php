@@ -51,9 +51,6 @@ class HashPasswordOnUserModelPrepareData implements EventSubscriberInterface
         return $this->secure->generateSaltedPassword($salt, $plaintextPassword, 'sha512');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

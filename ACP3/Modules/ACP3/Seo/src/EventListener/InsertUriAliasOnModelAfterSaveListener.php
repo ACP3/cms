@@ -41,9 +41,6 @@ class InsertUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

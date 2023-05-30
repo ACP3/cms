@@ -20,8 +20,6 @@ class PermissionService implements PermissionServiceInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getResources(): array
@@ -44,9 +42,6 @@ class PermissionService implements PermissionServiceInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRoles(): array
     {
         $roles = $this->roleRepository->getAllRoles();
@@ -81,8 +76,6 @@ class PermissionService implements PermissionServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getPermissions(array $roleIds): array
@@ -101,8 +94,6 @@ class PermissionService implements PermissionServiceInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getPermissionsWithInheritance(array $roleIds): array

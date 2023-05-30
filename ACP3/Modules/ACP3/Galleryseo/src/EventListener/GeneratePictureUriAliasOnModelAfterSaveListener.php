@@ -63,9 +63,6 @@ class GeneratePictureUriAliasOnModelAfterSaveListener implements EventSubscriber
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

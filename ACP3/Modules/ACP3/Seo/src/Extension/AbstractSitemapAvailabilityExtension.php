@@ -25,7 +25,7 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
     /**
      * @return static
      */
-    protected function addUrl(string $routeName, ?\DateTimeInterface $lastModificationDate = null, ?bool $isSecure = null): self
+    protected function addUrl(string $routeName, \DateTimeInterface $lastModificationDate = null, bool $isSecure = null): self
     {
         if ($this->pageIsIndexable($routeName)) {
             $url = new Url($this->router->route($routeName, true, $isSecure));
@@ -44,10 +44,7 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
         return \in_array($this->metaStatements->getRobotsSetting($routeName), [MetaStatementsServiceInterface::INDEX_FOLLOW, MetaStatementsServiceInterface::INDEX_NOFOLLOW], true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getUrls(?bool $isSecure = null): array
+    public function getUrls(bool $isSecure = null): array
     {
         $this->urls = [];
 
@@ -56,5 +53,5 @@ abstract class AbstractSitemapAvailabilityExtension implements SitemapAvailabili
         return $this->urls;
     }
 
-    abstract protected function fetchSitemapUrls(?bool $isSecure = null): void;
+    abstract protected function fetchSitemapUrls(bool $isSecure = null): void;
 }

@@ -15,9 +15,6 @@ class PictureValidationRule extends AbstractValidationRule
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
     {
         $params = array_merge([

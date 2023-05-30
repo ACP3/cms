@@ -22,9 +22,6 @@ class AddAdminPanelLinkToBreadcrumbListener implements EventSubscriberInterface
         $event->getSteps()->prepend($this->translator->t('acp', 'acp'), 'acp/acp');
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

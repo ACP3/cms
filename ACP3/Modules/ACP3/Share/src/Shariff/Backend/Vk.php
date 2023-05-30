@@ -11,17 +11,11 @@ use Psr\Http\Message\RequestInterface;
 
 class Vk extends Request implements ServiceInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'vk';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRequest(string $url): RequestInterface
     {
         return new \GuzzleHttp\Psr7\Request(
@@ -30,9 +24,6 @@ class Vk extends Request implements ServiceInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function filterResponse(string $content): string
     {
         // 'VK.Share.count(1, x);' with x being the count
@@ -41,9 +32,6 @@ class Vk extends Request implements ServiceInterface
         return $strCount !== '' ? '{"count": ' . $strCount . '}' : '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function extractCount(array $data): int
     {
         return $data['count'] ?? 0;

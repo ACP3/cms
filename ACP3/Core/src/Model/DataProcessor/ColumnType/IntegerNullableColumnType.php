@@ -9,10 +9,7 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class IntegerNullableColumnType implements ColumnTypeStrategyInterface
 {
-    /**
-     * @param mixed $value
-     */
-    public function doEscape($value): ?int
+    public function doEscape(mixed $value): ?int
     {
         if ($value !== null) {
             $value = (int) $value;
@@ -21,10 +18,7 @@ class IntegerNullableColumnType implements ColumnTypeStrategyInterface
         return $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function doUnescape($value)
+    public function doUnescape(mixed $value): mixed
     {
         return $value;
     }

@@ -35,9 +35,6 @@ class OnGalleryModelPrepareDataEventListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

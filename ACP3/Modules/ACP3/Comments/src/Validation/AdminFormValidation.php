@@ -13,9 +13,6 @@ use ACP3\Modules\ACP3\Comments\Validation\ValidationRules\UserNameValidationRule
 
 class AdminFormValidation extends AbstractFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

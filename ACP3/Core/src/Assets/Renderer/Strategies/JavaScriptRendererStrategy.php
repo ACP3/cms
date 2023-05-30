@@ -60,8 +60,6 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */

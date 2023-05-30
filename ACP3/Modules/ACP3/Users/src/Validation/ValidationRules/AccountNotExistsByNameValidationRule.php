@@ -9,9 +9,6 @@ namespace ACP3\Modules\ACP3\Users\Validation\ValidationRules;
 
 class AccountNotExistsByNameValidationRule extends AbstractAccountNotExistsValidationRule
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function accountExists(string $data, int $userId): bool
     {
         return $this->userRepository->resultExistsByUserName($data, $userId) === false;

@@ -42,9 +42,6 @@ class OnNewsValidationAdminSettingsEventListener implements EventSubscriberInter
             );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -76,9 +76,6 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
         return $this->formsHelper->choicesGenerator('languages', $languages, $selectedLanguage);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

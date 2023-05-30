@@ -68,9 +68,6 @@ class GenerateSitemapListener implements EventSubscriberInterface
         $this->requestStack->pop();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

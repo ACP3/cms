@@ -9,9 +9,6 @@ namespace ACP3\Core\View\Renderer\Smarty\Blocks;
 
 class Stylesheets extends AbstractBlock
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat): string
     {
         if (!$repeat && isset($content)) {

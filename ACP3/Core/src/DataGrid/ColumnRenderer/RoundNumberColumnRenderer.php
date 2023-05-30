@@ -14,9 +14,6 @@ class RoundNumberColumnRenderer extends AbstractColumnRenderer
      */
     private $precision = 0;
 
-    /**
-     * {@inheritdoc}
-     */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         $this->precision = $column['custom']['precision'];
@@ -24,9 +21,6 @@ class RoundNumberColumnRenderer extends AbstractColumnRenderer
         return $this->render($column, $this->getValue($column, $dbResultRow));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getDbValueIfExists(array $dbResultRow, string $field): ?string
     {
         return !empty($dbResultRow[$field]) ? (string) round($dbResultRow[$field], $this->precision) : null;

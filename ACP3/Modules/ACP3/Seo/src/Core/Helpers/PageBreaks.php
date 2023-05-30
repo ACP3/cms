@@ -22,9 +22,6 @@ class PageBreaks extends Core\Helpers\PageBreaks
         parent::__construct($request, $router, $tableOfContents);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function splitTextIntoPages(string $text, string $baseUrlPath): array
     {
         $pages = parent::splitTextIntoPages($text, $baseUrlPath);

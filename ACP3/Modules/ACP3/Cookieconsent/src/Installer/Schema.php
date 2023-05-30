@@ -13,9 +13,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
 {
     public const MODULE_NAME = 'cookieconsent';
 
-    /**
-     * {@inheritDoc}
-     */
     public function specialResources(): array
     {
         return [
@@ -28,33 +25,21 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getModuleName(): string
     {
         return static::MODULE_NAME;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function createTables(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function removeTables(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function settings(): array
     {
         return [

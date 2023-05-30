@@ -26,7 +26,7 @@ class GalleryUpsertService
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function upsert(array $updatedData, ?int $galleryId = null): int
+    public function upsert(array $updatedData, int $galleryId = null): int
     {
         $this->galleryFormValidation
             ->withUriAlias($galleryId === null ? '' : sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $galleryId))

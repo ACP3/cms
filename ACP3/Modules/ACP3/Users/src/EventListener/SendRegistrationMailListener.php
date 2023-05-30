@@ -64,9 +64,6 @@ class SendRegistrationMailListener implements EventSubscriberInterface
         $this->sendEmail->execute($data);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

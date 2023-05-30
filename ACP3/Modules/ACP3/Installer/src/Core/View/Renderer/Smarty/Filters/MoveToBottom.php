@@ -18,9 +18,6 @@ class MoveToBottom extends AbstractMoveElementFilter
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
         if (str_contains($tplOutput, (string) static::PLACEHOLDER)) {

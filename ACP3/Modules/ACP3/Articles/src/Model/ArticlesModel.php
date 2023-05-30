@@ -23,10 +23,7 @@ class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterfac
 
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function save(array $rawData, ?int $entryId = null): int
+    public function save(array $rawData, int $entryId = null): int
     {
         $rawData['updated_at'] = 'now';
 
@@ -34,8 +31,6 @@ class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterfac
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return array<string, mixed>
      */
     protected function getDefaultDataForDuplication(): array
@@ -47,9 +42,6 @@ class ArticlesModel extends AbstractModel implements UpdatedAtAwareModelInterfac
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getAllowedColumns(): array
     {
         return [

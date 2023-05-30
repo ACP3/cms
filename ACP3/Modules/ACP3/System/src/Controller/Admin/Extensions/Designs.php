@@ -31,7 +31,7 @@ class Designs extends AbstractWidgetAction
     /**
      * @return array<string, mixed>|Response
      */
-    public function __invoke(?string $dir = null): array|Response
+    public function __invoke(string $dir = null): array|Response
     {
         if (!empty($dir)) {
             return $this->doUpdateTheme($dir);

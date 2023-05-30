@@ -11,17 +11,11 @@ use Psr\Http\Message\RequestInterface;
 
 class Pinterest extends Request implements ServiceInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'pinterest';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRequest(string $url): RequestInterface
     {
         return new \GuzzleHttp\Psr7\Request(
@@ -30,17 +24,11 @@ class Pinterest extends Request implements ServiceInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function filterResponse(string $content): string
     {
         return mb_substr($content, 2, -1);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function extractCount(array $data): int
     {
         return $data['count'] ?? 0;

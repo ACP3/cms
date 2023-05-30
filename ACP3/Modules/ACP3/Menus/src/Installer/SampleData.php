@@ -19,9 +19,6 @@ class SampleData extends \ACP3\Core\Installer\AbstractSampleData
         parent::__construct($schemaHelper);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function sampleData(): array
     {
         $translator = $this->translator;

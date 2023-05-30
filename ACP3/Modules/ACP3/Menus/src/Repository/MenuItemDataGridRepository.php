@@ -21,9 +21,6 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
         return parent::getAll($columns, ...$queryOptions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
@@ -35,9 +32,6 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->join('main', $this->getTableName(), 'r');
@@ -67,9 +61,6 @@ class MenuItemDataGridRepository extends AbstractDataGridRepository
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setOrderBy(ColumnPriorityQueue $gridColumns, QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addOrderBy('r.left_id', 'ASC');

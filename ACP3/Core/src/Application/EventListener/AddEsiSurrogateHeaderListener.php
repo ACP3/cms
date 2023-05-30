@@ -26,9 +26,6 @@ class AddEsiSurrogateHeaderListener implements EventSubscriberInterface
         $event->setResponse($response);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

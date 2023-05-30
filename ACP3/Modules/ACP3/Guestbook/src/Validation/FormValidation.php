@@ -33,8 +33,6 @@ class FormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function validate(array $formData): void

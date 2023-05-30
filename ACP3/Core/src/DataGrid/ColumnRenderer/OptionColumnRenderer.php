@@ -19,9 +19,6 @@ class OptionColumnRenderer extends AbstractColumnRenderer
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fetchDataAndRenderColumn(array $column, array $dbResultRow): string|array
     {
         $this->eventDispatcher->dispatch(

@@ -16,19 +16,14 @@ class DateTimeColumnType implements ColumnTypeStrategyInterface
     }
 
     /**
-     * @param string $value
-     *
      * @throws \Exception
      */
-    public function doEscape($value): string
+    public function doEscape(mixed $value): string
     {
         return $this->date->toSQL($value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doUnescape($value): string
+    public function doUnescape(mixed $value): mixed
     {
         return $value;
     }

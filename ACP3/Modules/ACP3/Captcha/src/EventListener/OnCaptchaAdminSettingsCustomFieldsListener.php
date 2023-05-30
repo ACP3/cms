@@ -25,9 +25,6 @@ class OnCaptchaAdminSettingsCustomFieldsListener implements EventSubscriberInter
         $event->addContent($this->view->fetchTemplate('Captcha/Partials/captcha_recaptcha.admin_settings.tpl'));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

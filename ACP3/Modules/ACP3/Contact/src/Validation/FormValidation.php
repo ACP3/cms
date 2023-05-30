@@ -11,9 +11,6 @@ use ACP3\Core;
 
 class FormValidation extends Core\Validation\AbstractFormValidation
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate(array $formData): void
     {
         $this->validator

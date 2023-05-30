@@ -43,10 +43,7 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
         parent::__construct($eventDispatcher, $dataProcessor, $repository);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function save(array $rawData, ?int $entryId = null): int
+    public function save(array $rawData, int $entryId = null): int
     {
         $rawData = array_merge($rawData, [
             'category_id' => $rawData['cat'] ?? $rawData['category_id'],
@@ -64,9 +61,6 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
         return parent::save($rawData, $entryId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getAllowedColumns(): array
     {
         return [
@@ -86,8 +80,6 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return array<string, mixed>
      */
     protected function getDefaultDataForDuplication(): array
@@ -104,17 +96,11 @@ class FilesModel extends AbstractModel implements UpdatedAtAwareModelInterface, 
         return $this->sort;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getPrimaryKeyField(): string
     {
         return 'id';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getSortingField(): string
     {
         return 'sort';

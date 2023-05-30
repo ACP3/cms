@@ -47,9 +47,6 @@ class SendNotificationEmailOnGuestbookModelAfterSaveListener implements EventSub
         $this->sendEmail->execute($message);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

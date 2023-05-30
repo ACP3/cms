@@ -45,9 +45,6 @@ class OnFilesLayoutUpsertEventListener implements EventSubscriberInterface
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

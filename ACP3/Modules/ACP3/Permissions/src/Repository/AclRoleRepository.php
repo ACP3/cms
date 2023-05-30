@@ -31,8 +31,6 @@ class AclRoleRepository extends Core\NestedSet\Repository\NestedSetRepository im
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function getAllRoles(): array

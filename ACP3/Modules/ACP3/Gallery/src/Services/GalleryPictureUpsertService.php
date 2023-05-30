@@ -22,7 +22,7 @@ class GalleryPictureUpsertService
     /**
      * @param array<string, mixed> $updatedData
      */
-    public function upsert(array $updatedData, ?UploadedFile $file, ?int $galleryPictureId = null): int
+    public function upsert(array $updatedData, ?UploadedFile $file, int $galleryPictureId = null): int
     {
         $this->pictureFormValidation
             ->withFile($file, $galleryPictureId === null)

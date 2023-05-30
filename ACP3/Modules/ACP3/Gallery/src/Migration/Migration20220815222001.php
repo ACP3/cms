@@ -15,9 +15,6 @@ class Migration20220815222001 implements \ACP3\Core\Migration\MigrationInterface
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function dependencies(): ?array
     {
         return null;

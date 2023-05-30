@@ -21,17 +21,11 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFriendlyName(): string
     {
         return 'TinyMCE';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setParameters(array $params = []): void
     {
         parent::setParameters($params);
@@ -40,9 +34,6 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         $this->config['height'] = ($params['height'] ?? 250) . 'px';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): array
     {
         $wysiwyg = [

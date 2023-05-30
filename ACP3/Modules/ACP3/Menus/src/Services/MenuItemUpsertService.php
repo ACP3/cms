@@ -29,7 +29,7 @@ class MenuItemUpsertService
      * @throws ValidationRuleNotFoundException
      * @throws Exception
      */
-    public function upsert(array $updatedData, ?int $menuItemId = null): int
+    public function upsert(array $updatedData, int $menuItemId = null): int
     {
         $this->menuItemFormValidation->validate($updatedData);
 

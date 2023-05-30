@@ -33,7 +33,7 @@ class CategoryUpsertService
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    public function upsert(array $updatedData, ?UploadedFile $file = null, ?int $categoryId = null): int
+    public function upsert(array $updatedData, UploadedFile $file = null, int $categoryId = null): int
     {
         $this->adminFormValidation
             ->withFile($file)

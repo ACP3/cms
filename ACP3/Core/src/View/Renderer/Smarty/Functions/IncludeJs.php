@@ -16,8 +16,6 @@ class IncludeJs extends AbstractFunction
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \InvalidArgumentException
      */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed

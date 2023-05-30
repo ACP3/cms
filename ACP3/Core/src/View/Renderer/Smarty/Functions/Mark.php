@@ -15,9 +15,6 @@ class Mark extends AbstractFunction
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         $markAllId = !empty($params['mark_all_id']) ? $params['mark_all_id'] : 'mark-all';

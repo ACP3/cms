@@ -11,6 +11,7 @@ use ACP3\Core\Database\Connection;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Installer\Exception\ModuleMigrationException;
+use ACP3\Core\Installer\SampleDataInterface;
 use ACP3\Core\Installer\SchemaHelper;
 use ACP3\Core\Installer\SchemaRegistrar;
 use ACP3\Core\Settings\SettingsInterface;
@@ -144,7 +145,7 @@ class InstallModel
      */
     public function installSampleData(): void
     {
-        /** @var \Symfony\Component\DependencyInjection\ServiceLocator $sampleDataRegistrar */
+        /** @var \Symfony\Component\DependencyInjection\ServiceLocator<SampleDataInterface> $sampleDataRegistrar */
         $sampleDataRegistrar = $this->container->get('core.installer.sample_data_registrar');
         /** @var \ACP3\Core\Installer\SchemaHelper $schemaHelper */
         $schemaHelper = $this->container->get(SchemaHelper::class);

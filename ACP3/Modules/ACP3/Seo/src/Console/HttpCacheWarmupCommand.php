@@ -26,9 +26,6 @@ class HttpCacheWarmupCommand extends Command
         ACP3_ROOT_DIR . '/sitemap_https.xml',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -53,9 +50,6 @@ class HttpCacheWarmupCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

@@ -9,25 +9,16 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class TextWysiwygColumnType implements ColumnTypeStrategyInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function doEscape($value): ?string
+    public function doEscape(mixed $value): ?string
     {
         return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doUnescape($value): ?string
+    public function doUnescape(mixed $value): mixed
     {
         return $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getDefaultValue(): string
     {
         return '';

@@ -16,9 +16,6 @@ class EmoticonService implements EmoticonServiceInterface
     {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getEmoticonList(): array
     {
         $emoticons = $this->emoticonRepository->getAll();

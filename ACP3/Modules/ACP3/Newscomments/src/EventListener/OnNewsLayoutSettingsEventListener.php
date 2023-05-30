@@ -38,9 +38,6 @@ class OnNewsLayoutSettingsEventListener implements EventSubscriberInterface
         $event->addContent($this->view->fetchTemplate('Newscomments/Partials/news_layout_settings.tpl'));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

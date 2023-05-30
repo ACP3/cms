@@ -15,9 +15,6 @@ class CommentsByModuleDataGridRepository extends \ACP3\Core\DataGrid\Repository\
 {
     public const TABLE_NAME = CommentRepository::TABLE_NAME;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getColumns(ColumnPriorityQueue $gridColumns): array
     {
         return [
@@ -27,9 +24,6 @@ class CommentsByModuleDataGridRepository extends \ACP3\Core\DataGrid\Repository\
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function addJoin(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->leftJoin(
@@ -40,9 +34,6 @@ class CommentsByModuleDataGridRepository extends \ACP3\Core\DataGrid\Repository\
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
         $queryBuilder->addGroupBy(['main.module_id', 'm.name']);

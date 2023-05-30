@@ -21,9 +21,6 @@ class LoadModule extends AbstractFunction
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
     {
         [$area, $module, $controller, $action] = $this->convertPathToArray($params['module']);

@@ -16,25 +16,16 @@ class ModulesRepository extends \ACP3\Modules\ACP3\System\Repository\ModulesRepo
         parent::__construct($db);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getModuleId(string $moduleName): int
     {
         return !$this->installationIsInProgress ? 0 : parent::getModuleId($moduleName);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getModuleSchemaVersion(string $moduleName): int
     {
         return !$this->installationIsInProgress ? 0 : parent::getModuleSchemaVersion($moduleName);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function moduleExists(string $moduleName): bool
     {
         if ($this->installationIsInProgress) {
@@ -44,9 +35,6 @@ class ModulesRepository extends \ACP3\Modules\ACP3\System\Repository\ModulesRepo
         return parent::moduleExists($moduleName);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function coreTablesExist(): bool
     {
         if ($this->installationIsInProgress) {
@@ -56,25 +44,16 @@ class ModulesRepository extends \ACP3\Modules\ACP3\System\Repository\ModulesRepo
         return parent::coreTablesExist();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getInfoByModuleName(string $moduleName): array
     {
         return !$this->installationIsInProgress ? [] : parent::getInfoByModuleName($moduleName);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getInfoByModuleNameList(array $moduleNames): array
     {
         return !$this->installationIsInProgress ? [] : parent::getInfoByModuleNameList($moduleNames);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getModuleNameById(int $moduleId): string
     {
         return !$this->installationIsInProgress ? '' : parent::getModuleNameById($moduleId);

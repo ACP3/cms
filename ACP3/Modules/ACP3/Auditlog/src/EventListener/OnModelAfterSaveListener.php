@@ -72,9 +72,6 @@ class OnModelAfterSaveListener implements EventSubscriberInterface
         return 'updated';
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

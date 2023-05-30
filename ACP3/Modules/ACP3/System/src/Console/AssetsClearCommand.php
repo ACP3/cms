@@ -20,9 +20,6 @@ class AssetsClearCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -31,9 +28,6 @@ class AssetsClearCommand extends Command
             ->setHelp('This command allows you to clear all the locally stored assets.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

@@ -38,9 +38,6 @@ class OnGuestbookLayoutSettingsEventListener implements EventSubscriberInterface
         $event->addContent($this->view->fetchTemplate('Guestbooknewsletter/Partials/guestbook_layout_settings.tpl'));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -9,20 +9,12 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 class RawColumnType implements ColumnTypeStrategyInterface
 {
-    /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    public function doEscape($value)
+    public function doEscape(mixed $value)
     {
         return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function doUnescape($value)
+    public function doUnescape(mixed $value): mixed
     {
         return $value;
     }

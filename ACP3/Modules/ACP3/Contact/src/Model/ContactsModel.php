@@ -16,19 +16,13 @@ class ContactsModel extends AbstractModel
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function save(array $rawData, ?int $entryId = null): int
+    public function save(array $rawData, int $entryId = null): int
     {
         $rawData['date'] = 'now';
 
         return parent::save($rawData, $entryId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getAllowedColumns(): array
     {
         return [

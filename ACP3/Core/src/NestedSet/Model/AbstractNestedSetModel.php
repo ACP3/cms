@@ -60,8 +60,6 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function delete(array|int $entryId): int
@@ -99,8 +97,6 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function moveUp(int $id): void
@@ -109,8 +105,6 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function moveDown(int $id): void

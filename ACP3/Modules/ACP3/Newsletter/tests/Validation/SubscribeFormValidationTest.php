@@ -42,9 +42,6 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
         $this->container->set(AccountNotExistsValidationRule::class, new AccountNotExistsValidationRule($this->accountRepositoryMock));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function validFormDataProvider(): array
     {
         return [
@@ -73,9 +70,6 @@ class SubscribeFormValidationTest extends AbstractFormValidationTest
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function invalidFormDataProvider(): array
     {
         return [

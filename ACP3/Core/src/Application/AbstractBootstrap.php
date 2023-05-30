@@ -46,8 +46,6 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Throwable
      */
     public function handle(SymfonyRequest $request, $type = self::MAIN_REQUEST, $catch = true): Response
@@ -99,8 +97,6 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \Throwable
      */
     public function outputPage(Request $request, bool $catch): Response
