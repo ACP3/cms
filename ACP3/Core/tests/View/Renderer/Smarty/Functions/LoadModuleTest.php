@@ -9,6 +9,7 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Core\Smarty_Internal_Template_Fixture;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
@@ -21,9 +22,7 @@ class LoadModuleTest extends TestCase
      */
     public function testInvoke(string $expected, array $params): void
     {
-        $smartyInternalTemplateMock = $this->getMockBuilder(\Smarty_Internal_Template::class)
-            ->setConstructorArgs(['template_resource' => 'foo.tpl', 'smarty' => $this->createMock(\Smarty::class)])
-            ->getMock();
+        $smartyInternalTemplateMock = $this->createMock(Smarty_Internal_Template_Fixture::class);
         $aclMock = $this->createMock(ACL::class);
         $routerMock = $this->createMock(RouterInterface::class);
         $fragmentHandlerMock = $this->createMock(FragmentHandler::class);

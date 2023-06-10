@@ -8,6 +8,7 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Core\Smarty_Internal_Template_Fixture;
 use ACP3\Core\View\Renderer\Smarty\AbstractPluginTestCase;
 
 class UriTest extends AbstractPluginTestCase
@@ -35,9 +36,7 @@ class UriTest extends AbstractPluginTestCase
     private function setUpMockObjects(): void
     {
         $this->routerMock = $this->createMock(RouterInterface::class);
-        $this->smartyInternalTemplateMock = $this->getMockBuilder(\Smarty_Internal_Template::class)
-            ->setConstructorArgs(['template_resource' => 'foo.tpl', 'smarty' => $this->createMock(\Smarty::class)])
-            ->getMock();
+        $this->smartyInternalTemplateMock = $this->createMock(Smarty_Internal_Template_Fixture::class);
     }
 
     public function testUriWithRouteOnly(): void

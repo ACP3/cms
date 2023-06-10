@@ -12,6 +12,7 @@ use ACP3\Core\Helpers\Enum\LinkTargetEnum;
 use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Core\Smarty_Internal_Template_Fixture;
 use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 use ACP3\Modules\ACP3\Menus\Services\MenuServiceInterface;
@@ -191,7 +192,7 @@ HTML
 
         self::assertEquals(str_replace(['  ', "\n"], '', $expectedRenderedMenu), ($this->navbar)(
             ['block' => 'foo-block', 'class' => 'navbar-nav me-auto mb-2 mb-lg-0', 'classLink' => 'nav-link', 'itemSelectors' => 'nav-item'],
-            $this->createMock(\Smarty_Internal_Template::class))
+            $this->createMock(Smarty_Internal_Template_Fixture::class))
         );
     }
 
@@ -257,7 +258,7 @@ HTML
 
         self::assertEquals(str_replace(['  ', "\n"], '', $expectedRenderedMenu), ($this->navbar)(
             ['block' => 'foo-block', 'class' => 'navbar-nav me-auto mb-2 mb-lg-0', 'classLink' => 'nav-link', 'itemSelectors' => 'nav-item'],
-            $this->createMock(\Smarty_Internal_Template::class))
+            $this->createMock(Smarty_Internal_Template_Fixture::class))
         );
     }
 }

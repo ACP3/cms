@@ -9,6 +9,7 @@ namespace ACP3\Core\View\Renderer\Smarty\Filters;
 
 use ACP3\Core\Controller\AreaEnum;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Smarty_Internal_Template_Fixture;
 use ACP3\Core\View\Renderer\Smarty\AbstractPluginTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -36,9 +37,7 @@ class PageCssClassesTest extends AbstractPluginTestCase
     {
         $this->pageCssClassesMock = $this->createMock(\ACP3\Core\Assets\PageCssClasses::class);
         $this->requestMock = $this->createMock(RequestInterface::class);
-        $this->smartyInternalTemplateMock = $this->getMockBuilder(\Smarty_Internal_Template::class)
-            ->setConstructorArgs(['template_resource' => 'foo.tpl', 'smarty' => $this->createMock(\Smarty::class)])
-            ->getMock();
+        $this->smartyInternalTemplateMock = $this->createMock(Smarty_Internal_Template_Fixture::class);
     }
 
     /**
