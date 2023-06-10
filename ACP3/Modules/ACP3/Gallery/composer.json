@@ -17,7 +17,7 @@
   "prefer-stable": true,
   "require": {
     "ext-gd": "*",
-    "acp3/core": "^6.18.0",
+    "acp3/core": "^6.18.1",
     "acp3/module-permissions": "^6.18.0",
     "acp3/module-system": "^6.18.0",
     "acp3/module-users": "^6.18.0"
