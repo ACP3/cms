@@ -17,9 +17,6 @@ enum TestBackendEnum: int
     case bar = 1;
 }
 
-/**
- * @covers \EnumValuesTrait::*
- */
 class EnumValuesTraitTest extends TestCase
 {
     public function testValues(): void

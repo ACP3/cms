@@ -7,7 +7,7 @@
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerWarnings="true">
-  <coverage/>
+  <coverage includeUncoveredFiles="true"/>
   <testsuites>
     <testsuite name="ACP3-CMS Test Suite">
       <directory suffix="Test.php">./../ACP3/</directory>
