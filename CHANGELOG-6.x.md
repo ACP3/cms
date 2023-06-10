@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [ALL] Updated the Symfony components to version 6.3.0
+-   [ALL] Updated the PHPUnit to version 10.2
+-   [System] Updated bootstrap to version 5.3.0
 
 ## [6.17.1] - 2023-05-10
 
