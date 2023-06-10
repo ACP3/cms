@@ -8,14 +8,14 @@
 namespace ACP3\Modules\ACP3\Newsletter\Validation;
 
 use ACP3\Core\Session\SessionConstants;
-use ACP3\Core\Validation\AbstractFormValidationTest;
+use ACP3\Core\Validation\AbstractFormValidationTestCase;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
 use ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository;
 use ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules\AccountNotExistsValidationRule;
 
-class SubscribeFormValidationTest extends AbstractFormValidationTest
+class SubscribeFormValidationTest extends AbstractFormValidationTestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject&AccountRepository

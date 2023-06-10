@@ -7,9 +7,9 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
-use ACP3\Core\View\Renderer\Smarty\AbstractPluginTest;
+use ACP3\Core\View\Renderer\Smarty\AbstractPluginTestCase;
 
-class PrefixUriTest extends AbstractPluginTest
+class PrefixUriTest extends AbstractPluginTestCase
 {
     /**
      * @var PrefixUri

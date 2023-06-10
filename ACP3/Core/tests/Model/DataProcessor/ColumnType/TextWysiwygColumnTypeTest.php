@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-class TextWysiwygColumnTypeTest extends AbstractColumnTypeTest
+class TextWysiwygColumnTypeTest extends AbstractColumnTypeTestCase
 {
     protected function instantiateClassToTest(): void
     {

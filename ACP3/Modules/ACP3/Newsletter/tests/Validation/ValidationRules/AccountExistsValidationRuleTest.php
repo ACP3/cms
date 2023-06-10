@@ -7,10 +7,10 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\Validation\ValidationRules;
 
-use ACP3\Core\Validation\ValidationRules\AbstractValidationRuleTest;
+use ACP3\Core\Validation\ValidationRules\AbstractValidationRuleTestCase;
 use ACP3\Modules\ACP3\Newsletter\Repository\AccountRepository;
 
-class AccountExistsValidationRuleTest extends AbstractValidationRuleTest
+class AccountExistsValidationRuleTest extends AbstractValidationRuleTestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject
@@ -29,7 +29,7 @@ class AccountExistsValidationRuleTest extends AbstractValidationRuleTest
     /**
      * @return mixed[]
      */
-    public function validationRuleProvider(): array
+    public static function validationRuleProvider(): array
     {
         return [
             'valid-data-simple' => ['info@example.com', '', [], true],

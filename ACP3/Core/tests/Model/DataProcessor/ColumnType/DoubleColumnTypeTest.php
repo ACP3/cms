@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-class DoubleColumnTypeTest extends AbstractColumnTypeTest
+class DoubleColumnTypeTest extends AbstractColumnTypeTestCase
 {
     protected function instantiateClassToTest(): void
     {

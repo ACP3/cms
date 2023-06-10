@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\DataGrid\ColumnRenderer;
 
-class ReplaceValueColumnRendererTest extends AbstractColumnRendererTest
+class ReplaceValueColumnRendererTest extends AbstractColumnRendererTestCase
 {
     protected function setup(): void
     {

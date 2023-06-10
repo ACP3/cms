@@ -68,7 +68,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     /**
      * @return mixed[]
      */
-    public function selectEntryDataProvider(): array
+    public static function selectEntryDataProvider(): array
     {
         return (new SelectEntryDataProvider())->getData();
     }
@@ -88,7 +88,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     /**
      * @return mixed[]
      */
-    public function recordsPerPageDataProvider(): array
+    public static function recordsPerPageDataProvider(): array
     {
         return (new RecordsPerPageDataProvider())->getData();
     }
@@ -117,7 +117,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     /**
      * @return mixed[]
      */
-    public function choicesGeneratorDataProvider(): array
+    public static function choicesGeneratorDataProvider(): array
     {
         return (new ChoicesGeneratorDataProvider())->getData();
     }
@@ -146,7 +146,7 @@ class FormsTest extends \PHPUnit\Framework\TestCase
     /**
      * @return mixed[]
      */
-    public function checkboxGeneratorDataProvider(): array
+    public static function checkboxGeneratorDataProvider(): array
     {
         return (new CheckboxGeneratorDataProvider())->getData();
     }

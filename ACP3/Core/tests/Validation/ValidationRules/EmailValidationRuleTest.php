@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Validation\ValidationRules;
 
-class EmailValidationRuleTest extends AbstractValidationRuleTest
+class EmailValidationRuleTest extends AbstractValidationRuleTestCase
 {
     protected function setup(): void
     {
@@ -16,7 +16,7 @@ class EmailValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    public function validationRuleProvider(): array
+    public static function validationRuleProvider(): array
     {
         return [
             'valid-data-string' => ['test@example.com', '', [], true],

@@ -141,7 +141,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
     /**
      * @return mixed[]
      */
-    public function inlineValidationProvider(): array
+    public static function inlineValidationProvider(): array
     {
         return [
             ['test@example.com', true],

@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Validation\ValidationRules;
 
-class BirthdayValidationRuleTest extends AbstractValidationRuleTest
+class BirthdayValidationRuleTest extends AbstractValidationRuleTestCase
 {
     protected function setup(): void
     {
@@ -16,7 +16,7 @@ class BirthdayValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    public function validationRuleProvider(): array
+    public static function validationRuleProvider(): array
     {
         return [
             'valid-data-string' => ['1980-03-20', '', [], true],

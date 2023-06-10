@@ -8,9 +8,9 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\Router\RouterInterface;
-use ACP3\Core\View\Renderer\Smarty\AbstractPluginTest;
+use ACP3\Core\View\Renderer\Smarty\AbstractPluginTestCase;
 
-class UriTest extends AbstractPluginTest
+class UriTest extends AbstractPluginTestCase
 {
     /**
      * @var Uri

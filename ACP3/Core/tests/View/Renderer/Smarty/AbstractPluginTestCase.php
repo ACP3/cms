@@ -9,7 +9,7 @@ namespace ACP3\Core\View\Renderer\Smarty;
 
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractPluginTest extends TestCase
+abstract class AbstractPluginTestCase extends TestCase
 {
     /**
      * @var PluginInterface

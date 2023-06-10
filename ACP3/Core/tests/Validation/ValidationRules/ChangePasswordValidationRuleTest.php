@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Validation\ValidationRules;
 
-class ChangePasswordValidationRuleTest extends AbstractValidationRuleTest
+class ChangePasswordValidationRuleTest extends AbstractValidationRuleTestCase
 {
     protected function setup(): void
     {
@@ -16,7 +16,7 @@ class ChangePasswordValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    public function validationRuleProvider(): array
+    public static function validationRuleProvider(): array
     {
         return [
             'valid-data-array' => [['pw' => 'test1234', 'pw_confirm' => 'test1234'], ['pw', 'pw_confirm'], [], true],

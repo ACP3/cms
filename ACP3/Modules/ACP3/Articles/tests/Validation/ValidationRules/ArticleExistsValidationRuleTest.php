@@ -7,10 +7,10 @@
 
 namespace ACP3\Modules\ACP3\Articles\Validation\ValidationRules;
 
-use ACP3\Core\Validation\ValidationRules\AbstractValidationRuleTest;
+use ACP3\Core\Validation\ValidationRules\AbstractValidationRuleTestCase;
 use ACP3\Modules\ACP3\Articles\Repository\ArticleRepository;
 
-class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
+class ArticleExistsValidationRuleTest extends AbstractValidationRuleTestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject
@@ -29,7 +29,7 @@ class ArticleExistsValidationRuleTest extends AbstractValidationRuleTest
     /**
      * @return mixed[]
      */
-    public function validationRuleProvider(): array
+    public static function validationRuleProvider(): array
     {
         return [
             'valid-data-simple' => [1, '', [], true],

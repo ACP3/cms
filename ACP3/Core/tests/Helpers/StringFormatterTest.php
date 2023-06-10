@@ -11,7 +11,7 @@ use Cocur\Slugify\Slugify;
 
 class StringFormatterTest extends \PHPUnit\Framework\TestCase
 {
-    private string $shortenEntryText = <<<HTML
+    private static string $shortenEntryText = <<<HTML
 <p>It looks like that the installation of the ACP3 CMS was successful.<br>
 This is just a test news, you can now edit or delete in the administration area.</p>
 <div class="panel panel-default">
@@ -24,10 +24,7 @@ This is just a test news, you can now edit or delete in the administration area.
 </div>
 HTML;
 
-    /**
-     * @var StringFormatter
-     */
-    protected $stringFormatter;
+    protected StringFormatter $stringFormatter;
 
     protected function setup(): void
     {
@@ -37,7 +34,7 @@ HTML;
     /**
      * @return string[][]
      */
-    public function makeStringUrlSafeDataProvider(): array
+    public static function makeStringUrlSafeDataProvider(): array
     {
         return [
             'german_umlauts' => ['äüöumß', 'aeueoeumss'],
@@ -60,7 +57,7 @@ HTML;
     /**
      * @return mixed[]
      */
-    public function nl2pDataProvider(): array
+    public static function nl2pDataProvider(): array
     {
         return [
             'single_line' => [
@@ -102,7 +99,7 @@ HTML;
     /**
      * @return mixed[]
      */
-    public function shortenEntryDataProvider(): array
+    public static function shortenEntryDataProvider(): array
     {
         return [
             'empty' => [
@@ -112,21 +109,21 @@ HTML;
                 '',
             ],
             'shorten_text_without_offset' => [
-                $this->shortenEntryText,
+                self::$shortenEntryText,
                 0,
                 '',
                 'It looks like that the installation of the ACP3 CMS was successful.
 This is just a test news, you ca',
             ],
             'shorten_text_with_offset' => [
-                $this->shortenEntryText,
+                self::$shortenEntryText,
                 10,
                 '',
                 'It looks like that the installation of the ACP3 CMS was successful.
 This is just a test ne',
             ],
             'append_text' => [
-                $this->shortenEntryText,
+                self::$shortenEntryText,
                 0,
                 '...',
                 'It looks like that the installation of the ACP3 CMS was successful.
@@ -148,6 +145,6 @@ This is just a test news, you ca...',
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The offset should not be bigger then the to be displayed characters.');
 
-        $this->stringFormatter->shortenEntry($this->shortenEntryText, 50, 100);
+        $this->stringFormatter->shortenEntry(self::$shortenEntryText, 50, 100);
     }
 }

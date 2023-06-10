@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Validation\ValidationRules;
 
-class MinLengthValidationRuleTest extends AbstractValidationRuleTest
+class MinLengthValidationRuleTest extends AbstractValidationRuleTestCase
 {
     protected function setup(): void
     {
@@ -16,7 +16,7 @@ class MinLengthValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    public function validationRuleProvider(): array
+    public static function validationRuleProvider(): array
     {
         return [
             'valid-data-string' => ['foobar', '', ['length' => 3], true],

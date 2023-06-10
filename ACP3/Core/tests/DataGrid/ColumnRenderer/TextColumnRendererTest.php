@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\DataGrid\ColumnRenderer;
 
-class TextColumnRendererTest extends AbstractColumnRendererTest
+class TextColumnRendererTest extends AbstractColumnRendererTestCase
 {
     protected function setup(): void
     {

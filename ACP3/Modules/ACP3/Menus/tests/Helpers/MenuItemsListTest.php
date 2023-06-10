@@ -23,7 +23,7 @@ class MenuItemsListTest extends TestCase
     /**
      * @return array<string, array<mixed>>
      */
-    public function menuItemsListProvider(): array
+    public static function menuItemsListProvider(): array
     {
         $menuItemList = [
             [

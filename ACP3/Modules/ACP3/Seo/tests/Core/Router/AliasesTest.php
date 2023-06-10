@@ -53,7 +53,7 @@ class AliasesTest extends TestCase
     /**
      * @return mixed[]
      */
-    public function uriAliasDataProvider(): array
+    public static function uriAliasDataProvider(): array
     {
         return [
             'empty_aliases_cache' => [

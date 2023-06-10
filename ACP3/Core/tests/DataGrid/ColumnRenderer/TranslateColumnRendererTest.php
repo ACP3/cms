@@ -10,7 +10,7 @@ namespace ACP3\Core\DataGrid\ColumnRenderer;
 use ACP3\Core\I18n\Translator;
 use PHPUnit\Framework\MockObject\MockObject;
 
-class TranslateColumnRendererTest extends AbstractColumnRendererTest
+class TranslateColumnRendererTest extends AbstractColumnRendererTestCase
 {
     /**
      * @var Translator&MockObject

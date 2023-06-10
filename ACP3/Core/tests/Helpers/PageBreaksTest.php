@@ -51,7 +51,7 @@ class PageBreaksTest extends \PHPUnit\Framework\TestCase
     /**
      * @return mixed[]
      */
-    public function splitTextIntoPagesDataProvider(): array
+    public static function splitTextIntoPagesDataProvider(): array
     {
         $baseUrlPath = 'lorem/ipsum/dolor/id_1/';
 

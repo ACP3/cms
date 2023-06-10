@@ -47,7 +47,7 @@ class LoadModuleTest extends TestCase
     /**
      * @return array<string, array{string, array{module: string, args?: array<string, mixed>}}>
      */
-    public function loadModuleDataProvider(): array
+    public static function loadModuleDataProvider(): array
     {
         return [
             'with-admin-route' => [

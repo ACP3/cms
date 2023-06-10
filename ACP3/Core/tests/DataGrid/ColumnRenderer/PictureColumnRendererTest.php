@@ -9,7 +9,7 @@ namespace ACP3\Core\DataGrid\ColumnRenderer;
 
 use ACP3\Core\Router\RouterInterface;
 
-class PictureColumnRendererTest extends AbstractColumnRendererTest
+class PictureColumnRendererTest extends AbstractColumnRendererTestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject

@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Validation\ValidationRules;
 
-class InternalUriValidationRuleTest extends AbstractValidationRuleTest
+class InternalUriValidationRuleTest extends AbstractValidationRuleTestCase
 {
     protected function setup(): void
     {
@@ -16,7 +16,7 @@ class InternalUriValidationRuleTest extends AbstractValidationRuleTest
         parent::setUp();
     }
 
-    public function validationRuleProvider(): array
+    public static function validationRuleProvider(): array
     {
         return [
             'valid-data-string' => ['abc/1234/test/', '', [], true],

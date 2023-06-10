@@ -30,11 +30,11 @@ class NavbarTest extends TestCase
     /**
      * @return mixed[]
      */
-    public function menuRenderWithoutSelectedMenuItemsProvider(): array
+    public static function menuRenderWithoutSelectedMenuItemsProvider(): array
     {
         return [
             [
-                $this->getMenuStructureForDataProvider(),
+                self::getMenuStructureForDataProvider(),
                 <<<HTML
 <ul class="navigation-foo-block navbar-nav me-auto mb-2 mb-lg-0">
   <li class="navi-1 nav-item dropdown navigation-foo-block-subnav-1-dropdown">
@@ -65,7 +65,7 @@ HTML
     /**
      * @return mixed[]
      */
-    public function getMenuStructureForDataProvider(): array
+    public static function getMenuStructureForDataProvider(): array
     {
         return [
             [
@@ -198,11 +198,11 @@ HTML
     /**
      * @return mixed[]
      */
-    public function menuRenderWithSelectedMenuItemsProvider(): array
+    public static function menuRenderWithSelectedMenuItemsProvider(): array
     {
         return [
             [
-                $this->getMenuStructureForDataProvider(),
+                self::getMenuStructureForDataProvider(),
                 <<<HTML
 <ul class="navigation-foo-block navbar-nav me-auto mb-2 mb-lg-0">
   <li class="navi-1 nav-item dropdown navigation-foo-block-subnav-1-dropdown">

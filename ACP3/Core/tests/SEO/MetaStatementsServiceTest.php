@@ -54,7 +54,7 @@ class MetaStatementsServiceTest extends TestCase
     /**
      * @return array<string, mixed[]>
      */
-    public function canonicalDataProvider(): array
+    public static function canonicalDataProvider(): array
     {
         return [
             'empty-for-admin' => ['', AreaEnum::AREA_ADMIN, 'acp/foo/bar/baz/'],

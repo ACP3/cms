@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Users\Validation;
 
 use ACP3\Core\Session\SessionConstants;
-use ACP3\Core\Validation\AbstractFormValidationTest;
+use ACP3\Core\Validation\AbstractFormValidationTestCase;
 use ACP3\Core\Validation\ValidationRules\EmailValidationRule;
 use ACP3\Core\Validation\ValidationRules\FormTokenValidationRule;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
@@ -16,7 +16,7 @@ use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
 /**
  * Class AdminSettingsFormValidationTest.
  */
-class AdminSettingsFormValidationTest extends AbstractFormValidationTest
+class AdminSettingsFormValidationTest extends AbstractFormValidationTestCase
 {
     protected function registerValidationRules(): void
     {

@@ -9,7 +9,7 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 use ACP3\Core\Helpers\Secure;
 
-class TextColumnTypeTest extends AbstractColumnTypeTest
+class TextColumnTypeTest extends AbstractColumnTypeTestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject&Secure

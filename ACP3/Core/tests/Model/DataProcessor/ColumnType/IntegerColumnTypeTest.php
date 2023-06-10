@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-class IntegerColumnTypeTest extends AbstractColumnTypeTest
+class IntegerColumnTypeTest extends AbstractColumnTypeTestCase
 {
     protected function instantiateClassToTest(): void
     {

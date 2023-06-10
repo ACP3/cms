@@ -19,7 +19,7 @@ class PictureValidationRuleTest extends TestCase
     /**
      * @return array<string, array<string, mixed>[]>
      */
-    public function providerDimensionConstraints(): array
+    public static function providerDimensionConstraints(): array
     {
         return [
             'width-out-of-bounds' => [

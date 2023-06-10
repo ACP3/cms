@@ -22,7 +22,7 @@ class SecureTest extends \PHPUnit\Framework\TestCase
     /**
      * @return mixed[]
      */
-    public function stripScriptDataProvider(): array
+    public static function stripScriptDataProvider(): array
     {
         return [
             'single_line' => [

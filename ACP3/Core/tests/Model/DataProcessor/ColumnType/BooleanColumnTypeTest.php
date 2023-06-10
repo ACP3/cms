@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-class BooleanColumnTypeTest extends AbstractColumnTypeTest
+class BooleanColumnTypeTest extends AbstractColumnTypeTestCase
 {
     protected function instantiateClassToTest(): void
     {

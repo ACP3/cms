@@ -9,7 +9,7 @@ namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
 use ACP3\Core\Date;
 
-class DateTimeColumnTypeTest extends AbstractColumnTypeTest
+class DateTimeColumnTypeTest extends AbstractColumnTypeTestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject&Date

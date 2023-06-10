@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" bootstrap="./bootstrap.php">
-  <coverage processUncoveredFiles="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd" bootstrap="./bootstrap.php" cacheDirectory=".phpunit.cache">
+  <coverage/>
+  <testsuites>
+    <testsuite name="ACP3-CMS Test Suite">
+      <directory suffix="Test.php">./../ACP3/</directory>
+    </testsuite>
+  </testsuites>
+  <source>
     <include>
       <directory suffix=".php">./../ACP3/</directory>
     </include>
     <exclude>
       <directory suffix="Test.php">./../ACP3/</directory>
     </exclude>
-  </coverage>
-  <testsuites>
-    <testsuite name="ACP3-CMS Test Suite">
-      <directory suffix="Test.php">./../ACP3/</directory>
-    </testsuite>
-  </testsuites>
+  </source>
 </phpunit>

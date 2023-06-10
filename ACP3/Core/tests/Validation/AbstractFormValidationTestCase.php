@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-abstract class AbstractFormValidationTest extends TestCase
+abstract class AbstractFormValidationTestCase extends TestCase
 {
     public const XSRF_FORM_TOKEN = 'foo-bar-baz';
     public const XSRF_QUERY_STRING = 'module/controller/action/';

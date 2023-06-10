@@ -12,7 +12,7 @@ use ACP3\Core\Date\DateTranslator;
 use ACP3\Core\Helpers\Formatter\DateRange;
 use ACP3\Core\I18n\Translator;
 
-class DateColumnRendererTest extends AbstractColumnRendererTest
+class DateColumnRendererTest extends AbstractColumnRendererTestCase
 {
     /**
      * @var Translator&\PHPUnit\Framework\MockObject\MockObject

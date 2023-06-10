@@ -7,12 +7,12 @@
 
 namespace ACP3\Modules\ACP3\Newsletter\DataGrid\ColumnRenderer;
 
-use ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRendererTest;
+use ACP3\Core\DataGrid\ColumnRenderer\AbstractColumnRendererTestCase;
 use ACP3\Core\Helpers\View\Icon;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 
-class AccountStatusColumnRendererTest extends AbstractColumnRendererTest
+class AccountStatusColumnRendererTest extends AbstractColumnRendererTestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject&Translator

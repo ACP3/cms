@@ -10,7 +10,7 @@ namespace ACP3\Core\DataGrid\ColumnRenderer;
 use ACP3\Core\Helpers\StringFormatter;
 use Cocur\Slugify\Slugify;
 
-class Nl2pColumnRendererTest extends AbstractColumnRendererTest
+class Nl2pColumnRendererTest extends AbstractColumnRendererTestCase
 {
     /**
      * @var StringFormatter

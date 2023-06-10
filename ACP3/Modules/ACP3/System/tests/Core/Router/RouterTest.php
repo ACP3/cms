@@ -211,7 +211,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
     /**
      * @return mixed[]
      */
-    public function homepageRouteDataProvider(): array
+    public static function homepageRouteDataProvider(): array
     {
         return [
             ['foo/bar/baz', false, null, '/'],

@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Model\DataProcessor\ColumnType;
 
-abstract class AbstractColumnTypeTest extends \PHPUnit\Framework\TestCase
+abstract class AbstractColumnTypeTestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var ColumnTypeStrategyInterface

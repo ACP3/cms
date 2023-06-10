@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-abstract class AbstractValidationRuleTest extends TestCase
+abstract class AbstractValidationRuleTestCase extends TestCase
 {
     protected ValidationRuleInterface $validationRule;
     /**
@@ -39,7 +39,7 @@ abstract class AbstractValidationRuleTest extends TestCase
     /**
      * @return array<string, mixed[]>
      */
-    abstract public function validationRuleProvider(): array;
+    abstract public static function validationRuleProvider(): array;
 
     /**
      * @dataProvider validationRuleProvider

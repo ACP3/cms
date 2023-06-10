@@ -42,7 +42,7 @@ class ControllerActionExistsTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function provider(): array
+    public static function provider(): array
     {
         return [
             ['', false, '', false],
