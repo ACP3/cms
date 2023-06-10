@@ -36,7 +36,9 @@ class PageCssClassesTest extends AbstractPluginTestCase
     {
         $this->pageCssClassesMock = $this->createMock(\ACP3\Core\Assets\PageCssClasses::class);
         $this->requestMock = $this->createMock(RequestInterface::class);
-        $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
+        $this->smartyInternalTemplateMock = $this->getMockBuilder(\Smarty_Internal_Template::class)
+            ->setConstructorArgs(['template_resource' => 'foo.tpl', 'smarty' => $this->createMock(\Smarty::class)])
+            ->getMock();
     }
 
     /**

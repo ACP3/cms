@@ -21,7 +21,9 @@ class LoadModuleTest extends TestCase
      */
     public function testInvoke(string $expected, array $params): void
     {
-        $smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
+        $smartyInternalTemplateMock = $this->getMockBuilder(\Smarty_Internal_Template::class)
+            ->setConstructorArgs(['template_resource' => 'foo.tpl', 'smarty' => $this->createMock(\Smarty::class)])
+            ->getMock();
         $aclMock = $this->createMock(ACL::class);
         $routerMock = $this->createMock(RouterInterface::class);
         $fragmentHandlerMock = $this->createMock(FragmentHandler::class);

@@ -35,7 +35,9 @@ class UriTest extends AbstractPluginTestCase
     private function setUpMockObjects(): void
     {
         $this->routerMock = $this->createMock(RouterInterface::class);
-        $this->smartyInternalTemplateMock = $this->createMock(\Smarty_Internal_Template::class);
+        $this->smartyInternalTemplateMock = $this->getMockBuilder(\Smarty_Internal_Template::class)
+            ->setConstructorArgs(['template_resource' => 'foo.tpl', 'smarty' => $this->createMock(\Smarty::class)])
+            ->getMock();
     }
 
     public function testUriWithRouteOnly(): void
