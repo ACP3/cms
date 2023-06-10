@@ -143,7 +143,7 @@ This is just a test news, you ca...',
     public function testShortenEntryInvalidArgumentException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The offset should not be bigger then the to be displayed characters.');
+        $this->expectExceptionMessage('The offset should not be bigger than the to be displayed characters.');
 
         $this->stringFormatter->shortenEntry(self::$shortenEntryText, 50, 100);
     }

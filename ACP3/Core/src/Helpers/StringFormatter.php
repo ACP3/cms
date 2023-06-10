@@ -51,12 +51,12 @@ class StringFormatter
     public function shortenEntry(string $data, int $chars = 300, int $offset = 50, string $append = ''): string
     {
         if ($chars <= $offset) {
-            throw new \InvalidArgumentException('The offset should not be bigger then the to be displayed characters.');
+            throw new \InvalidArgumentException('The offset should not be bigger than the to be displayed characters.');
         }
 
-        $shortened = utf8_decode(html_entity_decode(strip_tags($data), ENT_QUOTES, 'UTF-8'));
-        if (\strlen($shortened) > $chars && \strlen($shortened) - $chars >= $offset) {
-            return utf8_encode(substr($shortened, 0, $chars - $offset)) . $append;
+        $shortened = strip_tags($data);
+        if (mb_strlen($shortened) > $chars && mb_strlen($shortened) - $chars >= $offset) {
+            return mb_substr($shortened, 0, $chars - $offset) . $append;
         }
 
         return $data;
