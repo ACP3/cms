@@ -33,8 +33,13 @@ class CreatePost extends AbstractWidgetAction
      */
     public function __invoke(int $id): array|string|Response
     {
+        $formData = array_merge(
+            $this->request->getPost()->all(),
+            ['gallery_id' => $id],
+        );
+
         return $this->actionHelper->handleSaveAction(
-            fn () => $this->galleryPictureUpsertService->upsert($this->request->getPost()->all(), $this->request->getFiles()->get('file')),
+            fn () => $this->galleryPictureUpsertService->upsert($formData, $this->request->getFiles()->get('file')),
             'acp/gallery/pictures/index/id_' . $id
         );
     }
