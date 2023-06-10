@@ -7,10 +7,10 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Modifiers;
 
-class JsonEncode extends AbstractModifier
+class Trim extends AbstractModifier
 {
     public function __invoke(mixed $value): string
     {
-        return json_encode($value, JSON_THROW_ON_ERROR);
+        return trim($value);
     }
 }

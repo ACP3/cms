@@ -21,3 +21,7 @@ services:
   ACP3\Core\View\Renderer\Smarty\Modifiers\RewriteUri:
     tags:
       - { name: smarty.plugin.modifier, pluginName: rewrite_uri }
+
+  ACP3\Core\View\Renderer\Smarty\Modifiers\Trim:
+    tags:
+      - { name: smarty.plugin.modifier, pluginName: trim }
