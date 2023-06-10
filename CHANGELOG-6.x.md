@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Core] Added a "trim" Smarty-modifier to fix deprecation warnings
+
+### Fixed
+
+-   [Gallery] Fixed adding new gallery images
+-   [Menus] Fixed creating menu items
 
 ## [6.18.0] - 2023-06-10
 
