@@ -45,7 +45,7 @@ abstract class AbstractNestedSetModel extends AbstractModel implements SortingAw
      */
     protected function doUpsert(?int $entryId, array $filteredNewData): int
     {
-        if ($entryId === null) {
+        if (empty($entryId)) {
             return $this->insertOperation->execute($filteredNewData, $filteredNewData['parent_id'] ?: 0);
         }
 

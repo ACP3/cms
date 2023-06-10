@@ -33,6 +33,10 @@ class MenuItemRepository extends NestedSetRepository implements BlockAwareNested
      */
     public function getOneMenuItemByUri(string $uri): array
     {
+        if (empty($uri)) {
+            return [];
+        }
+
         return $this->db->fetchAssoc(
             "SELECT * FROM {$this->getTableName()} WHERE uri = ?",
             [$uri]
