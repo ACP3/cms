@@ -4,7 +4,7 @@
  */
 
 import autoprefixer from "autoprefixer";
-import dartSass from "sass";
+import * as dartSass from "sass";
 import gulpSass from "gulp-sass";
 import componentPaths from "./helpers/component-paths.mjs";
 import gulpPlumber from "gulp-plumber";
