@@ -13,7 +13,7 @@ const file = join(__dirname, "../../../.component-paths.json");
 
 if (!existsSync(file)) {
   console.error(
-    `Could not find file ".component-paths.json" within the project's root directory.\nPlease run "php bin/console.php acp3:components:paths" first!`
+    `Could not find file ".component-paths.json" within the project's root directory.\nPlease run "php bin/console.php acp3:components:paths" first!`,
   );
   process.exit(1);
 }

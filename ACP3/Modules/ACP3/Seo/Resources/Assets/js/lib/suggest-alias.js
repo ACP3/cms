@@ -12,7 +12,7 @@ export class SuggestAlias {
         slugBaseElement: null,
         aliasElement: null,
       },
-      options
+      options,
     );
 
     this.#init();

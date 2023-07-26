@@ -40,7 +40,7 @@
           for (let i = 0; i < responseData.length; ++i) {
             dbName.insertAdjacentHTML(
               "beforeend",
-              '<option value="' + responseData[i] + '">' + responseData[i] + "</option>"
+              '<option value="' + responseData[i] + '">' + responseData[i] + "</option>",
             );
           }
 

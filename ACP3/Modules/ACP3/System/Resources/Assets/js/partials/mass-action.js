@@ -6,13 +6,13 @@ document.querySelectorAll("[data-mark-all-id]").forEach((markAllElem) => {
   const massActionBar = document.getElementById(`${tableIdentifier}-mass-delete-bar`);
 
   markAllElem.addEventListener("click", () =>
-    highlightAllTableRows(markAllElem, markAllElem.checked ? "add" : "remove")
+    highlightAllTableRows(markAllElem, markAllElem.checked ? "add" : "remove"),
   );
 
   highlightTableRow(markAllElem, massActionBar);
 
   deleteMarkedResults(
     document.getElementById(`${tableIdentifier}-mass-delete`),
-    JSON.parse(markAllElem.dataset.deleteOptions)
+    JSON.parse(markAllElem.dataset.deleteOptions),
   );
 });

@@ -70,7 +70,7 @@ function setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName, massActi
   const tbodyElem = markAllRowsCheckboxElem.closest("table").querySelector("tbody");
   const visibleSelectedTableRows = tbodyElem.querySelectorAll(`tr.${selectedRowCssClassName}:not(.d-none)`).length;
   const visibleMassActionCheckboxes = tbodyElem.querySelectorAll(
-    `tr:not(.d-none) input[name="${checkboxName}[]"]`
+    `tr:not(.d-none) input[name="${checkboxName}[]"]`,
   ).length;
 
   markAllRowsCheckboxElem.indeterminate =

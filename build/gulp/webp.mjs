@@ -22,7 +22,7 @@ export default (gulp) => {
               },
             },
           ],
-        })
+        }),
       )
       .pipe(gulp.dest("./uploads/assets"));
   };

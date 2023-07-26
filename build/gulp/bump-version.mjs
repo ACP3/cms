@@ -152,7 +152,7 @@ export default (gulp) => {
               const replace = "const VERSION = '" + newVersion + "'";
 
               return replaceAll(content, search, replace);
-            })
+            }),
           )
           .pipe(gulp.dest("./"))
           .on("finish", resolve)
@@ -218,7 +218,7 @@ export default (gulp) => {
             }
 
             return content;
-          })
+          }),
         )
         .pipe(gulp.dest("./"))
         .on("finish", resolve)
@@ -254,9 +254,9 @@ export default (gulp) => {
               .replace(
                 `[unreleased]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...${nameOfCurrentBranch}`,
                 `[unreleased]: https://gitlab.com/ACP3/cms/compare/v${newVersion}...${nameOfCurrentBranch}\n` +
-                  `[${newVersion}]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...v${newVersion}`
+                  `[${newVersion}]: https://gitlab.com/ACP3/cms/compare/v${currentVersion}...v${newVersion}`,
               );
-          })
+          }),
         )
         .pipe(gulp.dest("./"))
         .on("finish", resolve)
@@ -292,13 +292,13 @@ export default (gulp) => {
       const nextVersionBranch = Number(nameOfCurrentBranch.split(".")[0]) + 1;
 
       throw new Error(
-        `Can't do a major version bump within branch "${nameOfCurrentBranch}". Please switch to branch "${nextVersionBranch}.x"!`
+        `Can't do a major version bump within branch "${nameOfCurrentBranch}". Please switch to branch "${nextVersionBranch}.x"!`,
       );
     }
 
     if ((await git().status()).modified.length) {
       throw new Error(
-        `The working copy is not clean. Please commit all unsaved changes before running the bump-version task!`
+        `The working copy is not clean. Please commit all unsaved changes before running the bump-version task!`,
       );
     }
   }
@@ -351,9 +351,9 @@ export default (gulp) => {
             const formattedDate = getFormattedReleaseDate();
             return content.replace(
               `## [${newVersion}] - ${formattedDate}`,
-              `## [unreleased]\n\ntba\n\n## [${newVersion}] - ${formattedDate}`
+              `## [unreleased]\n\ntba\n\n## [${newVersion}] - ${formattedDate}`,
             );
-          })
+          }),
         )
         .pipe(gulp.dest("./"))
         .on("finish", resolve)

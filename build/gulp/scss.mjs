@@ -31,7 +31,7 @@ export default (gulp) => {
         gulpRename((path) => {
           path.dirname = path.dirname.substring(0, path.dirname.length - 4) + "css";
           path.extname = ".min.css";
-        })
+        }),
       )
       .pipe(gulp.dest("./uploads/assets"));
   };

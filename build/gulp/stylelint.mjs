@@ -19,7 +19,7 @@ export default (gulp) => {
       .pipe(
         gulpStylelint({
           reporters: [{ formatter: "string", console: true }],
-        })
+        }),
       );
   };
 };

@@ -23,7 +23,7 @@ gulp.task("babel", await getTask("webpack")); // @deprecated since ACP3 version 
 gulp.task("lint", gulp.parallel("stylelint", "eslint"));
 gulp.task(
   "default",
-  gulp.series(gulp.parallel("copy-assets", "lint"), gulp.parallel("scss", "webp", "png", "webpack"))
+  gulp.series(gulp.parallel("copy-assets", "lint"), gulp.parallel("scss", "webp", "png", "webpack")),
 );
 
 gulp.task("watch", async (done) => {
@@ -32,6 +32,6 @@ gulp.task("watch", async (done) => {
 
   gulp.series(
     gulp.parallel("copy-assets", "lint"),
-    gulp.parallel("scss", "webp", "png", "webpack", await getTask("watch"))
+    gulp.parallel("scss", "webp", "png", "webpack", await getTask("watch")),
   )(done);
 });
