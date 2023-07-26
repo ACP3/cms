@@ -9,12 +9,14 @@
 (function() {
     CKEDITOR.plugins.add("codemirror", {
         lang: "af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en-au,en-ca,en-gb,en,eo,es,et,eu,fa,fi,fo,fr-ca,fr,gl,gu,he,hi,hr,hu,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt-br,pt,ro,ru,sk,sl,sr-latn,sr,sv,th,tr,ug,uk,vi,zh-cn,zh", // %REMOVE_LINE_CORE%
-        version: "1.18.5",
+        version: "1.18.8",
         init: function (editor) {
             var command = editor.addCommand("codemirrorAbout", new CKEDITOR.dialogCommand("codemirrorAboutDialog"));
             command.modes = { wysiwyg: 1, source: 1 };
 
             CKEDITOR.dialog.add('codemirrorAboutDialog', this.path + 'dialogs/codemirrorAbout.js');
+			
+			editor.setKeystroke( CKEDITOR.ALT + 83, 'source' );
 
             var rootPath = this.path,
                 defaultConfig = {
@@ -137,7 +139,8 @@
                     }
                 });
             }
-            // Source mode isn't available in inline mode yet.
+
+            // Load Source Dialog
             if (editor.elementMode === CKEDITOR.ELEMENT_MODE_INLINE || editor.plugins.sourcedialog) {
 
                 // Override Source Dialog
@@ -264,7 +267,6 @@
                         });
 
                         if (editor.plugins.textselection && textRange && !editor.config.fullPage) {
-
                             var start, end;
 
                             start = OffSetToLineChannel(window["codemirror_" + editor.id], textRange.startOffset);
@@ -279,7 +281,6 @@
                             }
                         }
                     }
-
 
                     return {
                         title: editor.lang.sourcedialog.title,
@@ -306,6 +307,33 @@
                             this.getContentElement("main", "AutoComplete").setValue(config.autoCloseTags, true);
 
                             var textArea = this.getContentElement("main", "data").getInputElement().$;
+							
+                            if (editor.plugins.textselection) {
+
+                                // Get cached data, which was set while detaching editable.
+                                editor._.previousModeData = editor.getData();
+
+                                if (editor.getData()) {
+                                    if (CKEDITOR.env.gecko && !editor.focusManager.hasFocus) {
+                                        return;
+                                    }
+
+                                    var sel = editor.getSelection(), range;
+
+                                    if (sel && (range = sel.getRanges()[0])) {
+                                        wysiwygBookmark = range.createBookmark(editor);
+
+                                        if (editor.mode === "wysiwyg" && wysiwygBookmark) {
+                                            textRange = new CKEDITOR.dom.textRange(editor.getData());
+                                            textRange.moveToBookmark(wysiwygBookmark, editor);
+
+                                            editor.setData(textRange.content);
+                                        }
+                                    }
+                                }
+
+                                
+							}
 
                             // Load the content
                             this.setValueOf("main", "data", oldData = editor.getData());
@@ -691,6 +719,10 @@
                     return;
                 }
 
+                if (editor.ui.space("contents") === null) {
+                    return;
+                }
+
                 if (!IsStyleSheetAlreadyLoaded(rootPath + "css/codemirror.min.css")) {
                         CKEDITOR.document.appendStyleSheet(rootPath + "css/codemirror.min.css");
                     }
@@ -911,8 +943,8 @@
 
                 function addCKEditorKeystrokes(editorExtraKeys) {
                     var ckeditorKeystrokes = editor.keystrokeHandler.keystrokes;
-
-                    for (var i in ckeditorKeystrokes) {
+					
+					for (var i in ckeditorKeystrokes) {
                         var key = getCodeMirrorKey(i);
                         if (key !== null &&
                             key !== 'Enter' &&
@@ -1045,10 +1077,10 @@
             }
 
             editor.addCommand("source", sourcearea.commands.source);
-            if (editor.ui.addButton) {
+            if (editor.ui.addButton && editor.ui.space("contents") != null) {
                 editor.ui.addButton("Source", {
-                    label: editor.lang.codemirror.toolbar,
-                    command: "source",
+					label: editor.lang.codemirror.toolbar,
+					command: "source",
                     toolbar: "mode,10"
                 });
             }
@@ -1142,7 +1174,6 @@
                     }
 
                     if (editor.plugins.textselection && textRange && !editor.config.fullPage) {
-
                         //textRange.element = new CKEDITOR.dom.element(editor._.editable.$);
                         //textRange.select();
 
@@ -1169,6 +1200,15 @@
                     var holderWidth = holderElement.$.clientWidth + "px";
                     window["codemirror_" + editor.id].setSize(holderWidth, holderHeight);
                 }
+            });
+			
+			editor.on('beforeFocus', function(e) {
+				 
+				 if (e.editor.mode === "source") {
+					 if (!window["codemirror_" + editor.id].hasFocus()) {
+						 window["codemirror_" + editor.id].focus();
+					 }
+				 }
             });
 
             editor.on("readOnly", function () {
