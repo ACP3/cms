@@ -12,7 +12,7 @@
   document.querySelectorAll('[name="display"]').forEach((elem) => {
     elem.addEventListener("change", () => {
       const value = Number(elem.value);
-      targetContainer.classList.toggle("d-none", value === 1);
+      targetContainer.classList.toggle("d-none", value === 0);
 
       if (value === 0) {
         // Force the link target to open on the same page programmatically,
