@@ -10,7 +10,6 @@ namespace ACP3\Core\I18n;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Environment\ThemePathInterface;
-use DomainException;
 use Fisharebest\Localization\Locale;
 
 class Dictionary implements DictionaryInterface
@@ -118,7 +117,7 @@ class Dictionary implements DictionaryInterface
 
                 try {
                     $languagePacks[$isoCode] = $this->getLanguagePack($isoCode);
-                } catch (DomainException) {
+                } catch (\DomainException) {
                     // Intentionally omitted
                 }
             }
