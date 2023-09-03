@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\Menus\Repository;
 
 use ACP3\Core\NestedSet\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Core\NestedSet\Repository\NestedSetRepository;
+use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use Doctrine\DBAL\ArrayParameterType;
 
 class MenuItemRepository extends NestedSetRepository implements BlockAwareNestedSetRepositoryInterface
@@ -155,9 +156,9 @@ SQL;
     public function getMenuItemsByUri(array $uris): array
     {
         return $this->db->fetchAll(
-            "SELECT p.title, p.uri, p.left_id, p.right_id FROM {$this->getTableName()} AS c, {$this->getTableName()} AS p WHERE c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(?) GROUP BY p.uri, p.title, p.left_id, p.right_id ORDER BY p.left_id ASC",
-            [array_unique($uris)],
-            [ArrayParameterType::STRING]
+            "SELECT p.title, p.uri, p.left_id, p.right_id FROM {$this->getTableName()} AS c, {$this->getTableName()} AS p WHERE p.mode != :excludePageType AND c.left_id BETWEEN p.left_id AND p.right_id AND c.uri IN(:uris) GROUP BY p.uri, p.title, p.left_id, p.right_id ORDER BY p.left_id ASC",
+            ['excludePageType' => PageTypeEnum::HEADLINE->value, 'uris' => array_unique($uris)],
+            ['uris' => ArrayParameterType::STRING]
         );
     }
 

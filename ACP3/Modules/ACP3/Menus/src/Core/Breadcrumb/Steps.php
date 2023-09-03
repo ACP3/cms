@@ -7,14 +7,16 @@
 
 namespace ACP3\Modules\ACP3\Menus\Core\Breadcrumb;
 
-use ACP3\Core;
 use ACP3\Core\Breadcrumb\Event\StepsBuildCacheEvent;
+use ACP3\Core\Breadcrumb\Steps as CoreSteps;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Modules\ACP3\Menus;
+use ACP3\Core\I18n\Translator;
+use ACP3\Core\Router\RouterInterface;
+use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class Steps extends Core\Breadcrumb\Steps
+class Steps extends CoreSteps
 {
     /**
      * @var array<array<string, mixed>>
@@ -23,11 +25,11 @@ class Steps extends Core\Breadcrumb\Steps
 
     public function __construct(
         ContainerInterface $container,
-        Core\I18n\Translator $translator,
+        Translator $translator,
         RequestInterface $request,
-        Core\Router\RouterInterface $router,
+        RouterInterface $router,
         EventDispatcherInterface $eventDispatcher,
-        protected Menus\Repository\MenuItemRepository $menuItemRepository
+        protected readonly MenuItemRepository $menuItemRepository
     ) {
         parent::__construct($container, $translator, $request, $router, $eventDispatcher);
     }
