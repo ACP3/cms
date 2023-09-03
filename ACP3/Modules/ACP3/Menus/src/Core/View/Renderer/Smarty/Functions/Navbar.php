@@ -145,28 +145,26 @@ class Navbar extends AbstractFunction
      */
     private function processMenuItemWithoutChildren(MenuConfiguration $menuConfig, array $item, string $cssSelectors, bool $isSelected): string
     {
-        if ($item['mode'] === PageTypeEnum::HEADLINE->value) {
+        $pageType = PageTypeEnum::from($item['mode']);
+
+        if ($pageType === PageTypeEnum::HEADLINE) {
             $elem = sprintf(
                 '<span%1$s>%2$s</span>',
                 $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected),
                 $item['title']
             );
-
-            if ($menuConfig->getItemTag() === '') {
-                return $elem;
-            }
         } else {
             $elem = sprintf(
                 '<a href="%1$s"%2$s%3$s>%4$s</a>',
-                $this->getMenuItemHref(PageTypeEnum::tryFrom($item['mode']), $item['uri']),
+                $this->getMenuItemHref($pageType, $item['uri']),
                 $this->getMenuItemHrefTarget(LinkTargetEnum::tryFrom($item['target'])),
                 $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected),
                 $item['title']
             );
+        }
 
-            if ($menuConfig->getItemTag() === '') {
-                return $elem;
-            }
+        if ($menuConfig->getItemTag() === '') {
+            return $elem;
         }
 
         return sprintf('<%1$s class="%2$s">%3$s</%1$s>', $menuConfig->getItemTag(), $cssSelectors, $elem);
@@ -177,33 +175,48 @@ class Navbar extends AbstractFunction
      */
     private function processMenuItemWithChildren(string $menuName, MenuConfiguration $menuConfig, array $item, string $cssSelectors, bool $isSelected): string
     {
-        $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected, ['dropdown-toggle']);
-        $subMenuCss = '';
-        // Special styling for bootstrap enabled navigation bars
-        if ($menuConfig->isUseBootstrap() === true) {
-            $dropDownItemClassName = 'navigation-' . $menuName . '-subnav-' . $item['id'] . '-dropdown';
-            $cssSelectors .= !empty($menuConfig->getDropdownItemSelector()) ? ' ' . $menuConfig->getDropdownItemSelector() : ' dropdown';
-            $cssSelectors .= ' ' . $dropDownItemClassName;
-            $attributes .= ' data-bs-toggle="dropdown" aria-expanded="false" role="button"';
-            $subMenuCss = 'dropdown-menu ';
+        $subNavigationCssClasses = ['navigation-' . $menuName . '-subnav-' . $item['id']];
+        $pageType = PageTypeEnum::from($item['mode']);
+
+        if ($pageType === PageTypeEnum::HEADLINE) {
+            $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected);
+
+            $elem = sprintf(
+                '<span%1$s>%2$s</span>',
+                $attributes,
+                $item['title']
+            );
+            // Special styling for bootstrap enabled navigation bars
+            if ($menuConfig->isUseBootstrap() === true) {
+                $subNavigationCssClasses[] = 'list-unstyled';
+            }
+        } else {
+            $attributes = $this->prepareMenuItemHtmlAttributes($menuConfig, $item, $isSelected, ['dropdown-toggle']);
+
+            // Special styling for bootstrap enabled navigation bars
+            if ($menuConfig->isUseBootstrap() === true) {
+                $dropDownItemClassName = 'navigation-' . $menuName . '-subnav-' . $item['id'] . '-dropdown';
+                $cssSelectors .= !empty($menuConfig->getDropdownItemSelector()) ? ' ' . $menuConfig->getDropdownItemSelector() : ' dropdown';
+                $cssSelectors .= ' ' . $dropDownItemClassName;
+                $attributes .= ' data-bs-toggle="dropdown" aria-expanded="false" role="button"';
+                $subNavigationCssClasses[] = 'dropdown-menu';
+            }
+
+            $elem = sprintf(
+                '<a href="%1$s"%2$s%3$s>%4$s</a>',
+                $this->getMenuItemHref($pageType, $item['uri']),
+                $this->getMenuItemHrefTarget(LinkTargetEnum::tryFrom($item['target'])),
+                $attributes,
+                $item['title'],
+            );
         }
 
-        $link = sprintf(
-            '<a href="%1$s"%2$s%3$s>%4$s</a>',
-            $this->getMenuItemHref(PageTypeEnum::tryFrom($item['mode']), $item['uri']),
-            $this->getMenuItemHrefTarget(LinkTargetEnum::tryFrom($item['target'])),
-            $attributes,
-            $item['title'],
-        );
-
         return sprintf(
-            '<%1$s class="%2$s">%3$s<ul class="%4$snavigation-%5$s-subnav-%6$d">',
+            '<%1$s class="%2$s">%3$s<ul class="%4$s">',
             $menuConfig->getDropdownWrapperTag(),
             $cssSelectors,
-            $link,
-            $subMenuCss,
-            $menuName,
-            $item['id']
+            $elem,
+            implode(' ', $subNavigationCssClasses),
         );
     }
 
