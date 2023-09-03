@@ -31,7 +31,7 @@ npm:
       - .npm
       - node_modules
   script:
-    - if [ ! -d "node_modules" ]; then npm ci --cache .npm; fi
+    - if [ ! -d "node_modules" ]; then npm ci --no-progress --no-audit --cache .npm; fi
   artifacts:
     paths:
       - node_modules
