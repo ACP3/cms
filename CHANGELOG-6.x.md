@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Menus] Made menu item headlines usable as sub-menu entrypoints
+
+### Changed
+
+-   [Menus] Exclude menu item headlines from the breadcrumbs
+
+### Fixed
+
+-   [Menus] Fix showing/hiding the "link target" form field when toggling between making a menu item visible or not
 
 ## [6.18.1] - 2023-06-10
 
