@@ -4,7 +4,7 @@ test:php-unit:
   cache:
     key: $CI_JOB_NAME
     paths:
-      - tests/.phpunit.result.cache
+      - tests/.phpunit.cache
   script:
     - composer test-with-coverage
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
