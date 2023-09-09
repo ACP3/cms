@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [ALL] Applied various minor UI/UX improvements to the dropdown handling
 
 ## [6.19.0] - 2023-09-03
 
