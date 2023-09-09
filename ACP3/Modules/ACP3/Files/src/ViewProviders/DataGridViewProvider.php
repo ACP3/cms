@@ -98,7 +98,7 @@ class DataGridViewProvider
                     'label' => $this->translator->t('system', 'order'),
                     'type' => SortColumnRenderer::class,
                     'fields' => ['sort'],
-                    'class' => 'text-center',
+                    'class' => 'text-center text-nowrap',
                     'default_sort' => $settings['order_by'] === 'custom',
                     'custom' => [
                         'route_sort_down' => 'acp/files/index/sort/id_%d/action_down',

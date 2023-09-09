@@ -89,7 +89,7 @@ class PictureDataGridViewProvider
                     'label' => $this->translator->t('system', 'order'),
                     'type' => SortColumnRenderer::class,
                     'fields' => ['pic'],
-                    'class' => 'text-center',
+                    'class' => 'text-center text-nowrap',
                     'default_sort' => true,
                     'custom' => [
                         'route_sort_down' => 'acp/gallery/pictures/order/id_%d/action_down',

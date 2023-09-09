@@ -46,7 +46,7 @@
                                 <td>{$row.resource_id}</td>
                                 {if $can_edit_resource === true || $can_delete_resource === true}
                                     <td class="datagrid-column__actions">
-                                        <button type="button" class="btn btn-sm btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button type="button" class="btn btn-sm btn-light" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                             {icon iconSet="solid" icon="ellipsis-vertical"}
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">

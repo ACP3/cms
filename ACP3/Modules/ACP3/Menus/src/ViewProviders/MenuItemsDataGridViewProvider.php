@@ -89,7 +89,7 @@ class MenuItemsDataGridViewProvider
                     'type' => NestedSetSortColumnRenderer::class,
                     'fields' => ['left_id'],
                     'sortable' => false,
-                    'class' => 'text-center',
+                    'class' => 'text-center text-nowrap',
                     'custom' => [
                         'route_sort_down' => 'acp/menus/items/order/id_%d/action_down',
                         'route_sort_up' => 'acp/menus/items/order/id_%d/action_up',

@@ -11,7 +11,7 @@
         </li>
         {if !empty($user_sidebar.modules)}
             <li id="menu-administration" class="dropdown">
-                <a href="{uri args="acp/acp"}" id="menu-admin-label" class="list-group-item list-group-item-action border-top-0 dropdown-toggle" data-bs-toggle="dropdown">
+                <a href="{uri args="acp/acp"}" id="menu-admin-label" class="list-group-item list-group-item-action border-top-0 dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                     {icon iconSet="solid" icon="file"}
                     {lang t="users|administration"}
                 </a>
@@ -26,7 +26,7 @@
         {/if}
         {if !empty($user_sidebar.system)}
             <li id="menu-system" class="dropdown">
-                <a href="{uri args="acp/system"}" id="menu-system-label" class="list-group-item list-group-item-action border-top-0 dropdown-toggle" data-bs-toggle="dropdown">
+                <a href="{uri args="acp/system"}" id="menu-system-label" class="list-group-item list-group-item-action border-top-0 dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">
                     {icon iconSet="solid" icon="gear"}
                     {lang t="system|system"}
                 </a>

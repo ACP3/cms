@@ -63,7 +63,7 @@ class DataGridViewProvider
                     'label' => $this->translator->t('system', 'order'),
                     'type' => NestedSetSortColumnRenderer::class,
                     'fields' => ['left_id'],
-                    'class' => 'text-center',
+                    'class' => 'text-center text-nowrap',
                     'sortable' => false,
                     'custom' => [
                         'route_sort_down' => 'acp/permissions/index/order/id_%d/action_down',

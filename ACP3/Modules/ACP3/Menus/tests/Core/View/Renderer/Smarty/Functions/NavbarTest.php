@@ -39,10 +39,10 @@ class NavbarTest extends TestCase
                 <<<HTML
 <ul class="navigation-foo-block navbar-nav me-auto mb-2 mb-lg-0">
   <li class="navi-1 nav-item dropdown navigation-foo-block-subnav-1-dropdown">
-    <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" role="button">Foo</a>
+    <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="button">Foo</a>
     <ul class="navigation-foo-block-subnav-1 dropdown-menu">
       <li class="navi-2 nav-item dropdown navigation-foo-block-subnav-2-dropdown">
-        <a href="" class="dropdown-item" data-bs-toggle="dropdown" aria-expanded="false" role="button">Sub-Foo</a>
+        <a href="" class="dropdown-item" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="button">Sub-Foo</a>
         <ul class="navigation-foo-block-subnav-2 dropdown-menu">
           <li class="navi-3 nav-item">
             <span class="dropdown-header">Sub-Sub-Headline</span>
@@ -207,10 +207,10 @@ HTML
                 <<<HTML
 <ul class="navigation-foo-block navbar-nav me-auto mb-2 mb-lg-0">
   <li class="navi-1 nav-item dropdown navigation-foo-block-subnav-1-dropdown">
-    <a href="" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" aria-expanded="false" role="button">Foo</a>
+    <a href="" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="button">Foo</a>
     <ul class="navigation-foo-block-subnav-1 dropdown-menu">
       <li class="navi-2 nav-item dropdown navigation-foo-block-subnav-2-dropdown">
-        <a href="" class="dropdown-item active" data-bs-toggle="dropdown" aria-expanded="false" role="button">Sub-Foo</a>
+        <a href="" class="dropdown-item active" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="button">Sub-Foo</a>
         <ul class="navigation-foo-block-subnav-2 dropdown-menu">
           <li class="navi-3 nav-item">
             <span class="dropdown-header">Sub-Sub-Headline</span>
