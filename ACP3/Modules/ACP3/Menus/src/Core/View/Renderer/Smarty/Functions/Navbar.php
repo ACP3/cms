@@ -198,7 +198,7 @@ class Navbar extends AbstractFunction
                 $dropDownItemClassName = 'navigation-' . $menuName . '-subnav-' . $item['id'] . '-dropdown';
                 $cssSelectors .= !empty($menuConfig->getDropdownItemSelector()) ? ' ' . $menuConfig->getDropdownItemSelector() : ' dropdown';
                 $cssSelectors .= ' ' . $dropDownItemClassName;
-                $attributes .= ' data-bs-toggle="dropdown" aria-expanded="false" role="button"';
+                $attributes .= ' data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" role="button"';
                 $subNavigationCssClasses[] = 'dropdown-menu';
             }
 
