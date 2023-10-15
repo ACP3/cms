@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [WYSIWYGCKEditor] Constrain the CKEditor version to 4.22.x for now, as versions >= 4.23.x require a paid license
 
 ## [6.20.0] - 2023-09-09
 
