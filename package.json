@@ -70,7 +70,7 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.1",
     "ckeditor-codemirror-plugin": "^1.18.8",
-    "ckeditor4": "^4.23.0",
+    "ckeditor4": "~4.22.0",
     "core-js": "^3.32.1",
     "datatables.net": "^1.13.6",
     "datatables.net-bs5": "^1.13.6",
