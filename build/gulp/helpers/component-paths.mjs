@@ -69,6 +69,9 @@ const componentPathsJsProcess = [
   ...Object.values(componentPathsJson.theme).map((theme) => {
     return theme + "/*" + globPatternJsProcess;
   }),
+  ...Object.values(componentPathsJson.theme).map((theme) => {
+    return theme + "/*" + globPatternRootJsProcess;
+  }),
 ];
 
 const globPatternWebp = "/Resources/Assets/img/**/*.{gif,png,jpg}";
@@ -76,12 +79,8 @@ const globPatternWebp = "/Resources/Assets/img/**/*.{gif,png,jpg}";
 const componentPathsForWebpConversion = [
   ...Object.values(componentPathsJson.module)
     .concat(Object.values(componentPathsJson.installer))
-    .map((module) => {
-      return module + globPatternWebp;
-    }),
-  ...Object.values(componentPathsJson.theme).map((theme) => {
-    return theme + "/*" + globPatternWebp;
-  }),
+    .map((module) => module + globPatternWebp),
+  ...Object.values(componentPathsJson.theme).map((theme) => theme + "/*" + globPatternWebp),
 ];
 
 const globPatternPng = "/Resources/Assets/img/**/*.png";
@@ -89,12 +88,8 @@ const globPatternPng = "/Resources/Assets/img/**/*.png";
 const componentPathsForPngOptimization = [
   ...Object.values(componentPathsJson.module)
     .concat(Object.values(componentPathsJson.installer))
-    .map((module) => {
-      return module + globPatternPng;
-    }),
-  ...Object.values(componentPathsJson.theme).map((theme) => {
-    return theme + "/*" + globPatternPng;
-  }),
+    .map((module) => module + globPatternPng),
+  ...Object.values(componentPathsJson.theme).map((theme) => theme + "/*" + globPatternPng),
 ];
 
 const globPatternAssets = "/Resources/Assets/**/*";
@@ -102,15 +97,13 @@ const globPatternAssets = "/Resources/Assets/**/*";
 const assetFolders = [
   ...Object.values(componentPathsJson.core)
     .concat(Object.values(componentPathsJson.module), Object.values(componentPathsJson.installer))
-    .map((component) => {
-      return component + globPatternAssets;
-    }),
-  ...Object.values(componentPathsJson.theme).map((theme) => {
-    return theme + "/*" + globPatternAssets;
-  }),
+    .map((component) => component + globPatternAssets),
+  ...Object.values(componentPathsJson.theme).map((theme) => theme + "/*" + globPatternAssets),
 ];
 
 /**
+ * This function will strip all the ACP3 components, which are residing within the vendor dir.
+ * It is only used for the watch mode, as this components will not change while using it.
  *
  * @param {string[]} paths
  * @returns {string[]}

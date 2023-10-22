@@ -7,7 +7,7 @@ import webpackConfig from "../../webpack.config.mjs";
 export default (gulp) => {
   return () => {
     return gulp
-      .src(globbySync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]), {
+      .src(globbySync([...componentPaths.js.all]), {
         base: ".",
         allowEmpty: true,
         since: gulp.lastRun("webpack"),
