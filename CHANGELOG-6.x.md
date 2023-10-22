@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Core] Fixed building the JS assets, when the ACP3-component is residing within the vendor dir
+-   [Theme-Default] Fixed exporting the SCSS-files
+-   [Theme-Installer] Fixed exporting the SCSS-files
 
 ## [6.20.1] - 2023-10-15
 
