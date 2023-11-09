@@ -13,7 +13,12 @@ export default (gulp) => {
         since: gulp.lastRun("webpack"),
       })
       .pipe(gulpPlumber())
-      .pipe(webpackStream(webpackConfig))
+      .pipe(
+        webpackStream({
+          ...webpackConfig,
+          watch: process.env.GULP_MODE === "watch",
+        }),
+      )
       .pipe(gulp.dest("./uploads/assets"));
   };
 };
