@@ -8,7 +8,6 @@
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Smarty_Internal_Template_Fixture;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
@@ -24,21 +23,16 @@ class LoadModuleTest extends TestCase
     {
         $smartyInternalTemplateMock = $this->createMock(Smarty_Internal_Template_Fixture::class);
         $aclMock = $this->createMock(ACL::class);
-        $routerMock = $this->createMock(RouterInterface::class);
         $fragmentHandlerMock = $this->createMock(FragmentHandler::class);
 
         $aclMock->method('hasPermission')
             ->willReturn(true);
-        $routerMock->method('route')
-            ->with($expected)
-            ->willReturn($expected);
         $fragmentHandlerMock->method('render')
             ->with($expected, 'esi')
             ->willReturn($expected);
 
         $loadModule = new LoadModule(
             $aclMock,
-            $routerMock,
             $fragmentHandlerMock
         );
 
@@ -52,25 +46,25 @@ class LoadModuleTest extends TestCase
     {
         return [
             'with-admin-route' => [
-                'acp/foo/index/index',
+                '/acp/foo/index/index',
                 [
                     'module' => 'admin/foo/index/index/',
                 ],
             ],
             'with-widget-route' => [
-                'widget/foo/bar/index',
+                '/widget/foo/bar/index',
                 [
                     'module' => 'widget/foo/bar/index/',
                 ],
             ],
             'with-frontend-route' => [
-                'foo/bar/baz',
+                '/foo/bar/baz',
                 [
                     'module' => 'frontend/foo/bar/baz/',
                 ],
             ],
             'with-incomplete-path' => [
-                'foo/index/index',
+                '/foo/index/index',
                 [
                     'module' => 'frontend/foo/',
                 ],

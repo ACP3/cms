@@ -9,19 +9,17 @@ namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Controller\AreaEnum;
-use ACP3\Core\Router\RouterInterface;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 class LoadModule extends AbstractFunction
 {
     public function __construct(
         private readonly ACL $acl,
-        private readonly RouterInterface $router,
         private readonly FragmentHandler $fragmentHandler)
     {
     }
 
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         [$area, $module, $controller, $action] = $this->convertPathToArray($params['module']);
         $path = $area . '/' . $module . '/' . $controller . '/' . $action;
@@ -99,7 +97,7 @@ class LoadModule extends AbstractFunction
         }
 
         return $this->fragmentHandler->render(
-            $this->router->route($path . $routeArguments, true),
+            '/' . $path . $routeArguments,
             'esi',
         );
     }
