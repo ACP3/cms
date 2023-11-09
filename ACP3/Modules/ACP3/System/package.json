@@ -1,8 +1,6 @@
 {
   "name": "@acp3/module-system",
   "description": "Provides the system module for the ACP3 CMS.",
-  "main": "",
-  "directories": {},
   "scripts": {
     "build": "gulp",
     "css-lint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .stylelintcache --rd",

@@ -2,19 +2,6 @@
   "name": "acp3-cms",
   "version": "6.20.2",
   "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
-  "main": "",
-  "directories": {},
-  "scripts": {
-    "build": "gulp",
-    "css-lint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .stylelintcache --rd",
-    "css-lint:fix": "npm run css-lint -- --fix",
-    "eslint": "eslint -c .eslintrc.json --cache --cache-location=.eslintcache .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "prettier": "prettier --check --cache **/*.{js,cjs,mjs,json,md,yml}",
-    "prettier:fix": "prettier --write --cache **/*.{js,cjs,mjs,json,md,yml}",
-    "lint-all": "concurrently \"npm:prettier:fix\" \"npm:css-lint:fix\" \"npm:eslint:fix\" --kill-others-on-fail --group",
-    "prepare": "husky install"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/ACP3/cms.git"
@@ -26,6 +13,17 @@
   },
   "homepage": "https://www.acp3-cms.net",
   "private": true,
+  "scripts": {
+    "build": "gulp",
+    "css-lint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .stylelintcache --rd",
+    "css-lint:fix": "npm run css-lint -- --fix",
+    "eslint": "eslint -c .eslintrc.json --cache --cache-location=.eslintcache .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "lint-all": "concurrently \"npm:prettier:fix\" \"npm:css-lint:fix\" \"npm:eslint:fix\" --kill-others-on-fail --group",
+    "prepare": "husky install",
+    "prettier": "prettier --check --cache **/*.{js,cjs,mjs,json,md,yml}",
+    "prettier:fix": "prettier --write --cache **/*.{js,cjs,mjs,json,md,yml}"
+  },
   "devDependencies": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",

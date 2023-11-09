@@ -2,8 +2,6 @@
   "name": "acp3-cms",
   "version": "6.20.2",
   "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
-  "main": "",
-  "directories": {},
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/ACP3/cms.git"
@@ -15,6 +13,9 @@
   },
   "homepage": "https://www.acp3-cms.net",
   "private": true,
+  "scripts": {},
+  "devDependencies": {},
+  "dependencies": {},
   "browserslist": ["defaults and >= 1%", "Firefox ESR"],
   "lint-staged": {
     "!(*.min).{js,cjs,mjs}": "npm run eslint:fix",
