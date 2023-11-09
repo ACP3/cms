@@ -1,0 +1,20 @@
+{
+  "name": "@acp3/module-filemanager",
+  "description": "Provides the filemanager module for the ACP3 CMS.",
+  "main": "",
+  "directories": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/ACP3/cms.git"
+  },
+  "author": "Tino Goratsch <mail@acp3-cms.net>",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://gitlab.com/ACP3/cms/issues"
+  },
+  "homepage": "https://www.acp3-cms.net",
+  "private": true,
+  "dependencies": {
+    "rich-filemanager": "https://github.com/tinogo/RichFilemanager/tarball/rework-dependencies"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@acp3/module-wysiwyg-tinymce",
+  "description": "Provides the WYSIWYG-TinyMCE module for the ACP3 CMS.",
+  "main": "",
+  "directories": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/ACP3/cms.git"
+  },
+  "author": "Tino Goratsch <mail@acp3-cms.net>",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://gitlab.com/ACP3/cms/issues"
+  },
+  "homepage": "https://www.acp3-cms.net",
+  "private": true,
+  "dependencies": {
+    "tinymce": "^4.9.11"
+  }
+}

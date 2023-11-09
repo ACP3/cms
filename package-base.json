@@ -1,0 +1,25 @@
+{
+  "name": "acp3-cms",
+  "version": "6.20.2",
+  "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
+  "main": "",
+  "directories": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/ACP3/cms.git"
+  },
+  "author": "Tino Goratsch <mail@acp3-cms.net>",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://gitlab.com/ACP3/cms/issues"
+  },
+  "homepage": "https://www.acp3-cms.net",
+  "private": true,
+  "browserslist": ["defaults and >= 1%", "Firefox ESR"],
+  "lint-staged": {
+    "!(*.min).{js,cjs,mjs}": "npm run eslint:fix",
+    "!(*.min).{css,scss}": "npn run css-lint:fix",
+    "!(*.min).{js,cjs,mjs,json,md,yml}": "npm run prettier:fix",
+    "*.php": "docker-compose run --no-deps --rm app composer php-cs-fixer"
+  }
+}
