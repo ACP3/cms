@@ -32,7 +32,7 @@ class Tab extends AbstractBlock
 
             $tabSetIdentifier = reset($tagStack)[1]['identifier'];
 
-            $this->tabset->addTab($tabSetIdentifier, new TabDto($params['title'], $content));
+            $this->tabset->addTab($tabSetIdentifier, new TabDto($params['title'], $content, $params['name'] ?? null));
         }
 
         return '';
