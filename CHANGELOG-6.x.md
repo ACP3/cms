@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Core] Made it possible to combine multiple `package.json`-files into a single one, i.e. each ACP3 module can bring their own set of dependencies. Use `console.php acp3:components:merge-package-json` for that.
+-   [System] Made it possible to give tabs "names"
+
+### Fixed
+
+-   [Base] Fixed webpack when in watch mode
+-   [Core] Fixed a possible infinite redirect loop, when trying to access a protected page, but the current user isn't authenticated
 
 ## [6.20.2] - 2023-10-22
 
