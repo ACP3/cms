@@ -6,17 +6,18 @@ import webpackConfig from "../../webpack.config.mjs";
 
 export default (gulp) => {
   return () => {
+    const isWatchMode = process.env.GULP_MODE === "watch";
+
     return gulp
       .src(globbySync([...componentPaths.js.all]), {
         base: ".",
         allowEmpty: true,
-        since: gulp.lastRun("webpack"),
       })
       .pipe(gulpPlumber())
       .pipe(
         webpackStream({
           ...webpackConfig,
-          watch: process.env.GULP_MODE === "watch",
+          watch: isWatchMode,
         }),
       )
       .pipe(gulp.dest("./uploads/assets"));

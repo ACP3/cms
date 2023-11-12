@@ -17,7 +17,6 @@ entryPointMap.forEach((path, entryName) => {
 });
 
 export default {
-  watch: process.env.GULP_MODE === "watch",
   devtool: "source-map",
   mode: "production",
   entry: webpackEntryConfig,
