@@ -35,7 +35,7 @@ $ composer install
 
 Make sure that you have installed nvm (node version manager).
 
-If so, execute the following command from the project's root directory, to install the necessary frontend development dependencies:
+If so, execute the following commands from the project's root directory, to install the necessary frontend development dependencies:
 
 ```sh
 $ nvm install
