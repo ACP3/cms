@@ -5,19 +5,22 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Articlesshare\EventListener;
+namespace ACP3\Modules\ACP3\Share\EventListener;
 
 use ACP3\Core\Model\Event\AfterModelDeleteEvent;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Articles\Helpers;
+use ACP3\Core\Router\RoutePathPatterns;
 use ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager;
 use ACP3\Modules\ACP3\Share\Installer\Schema as ShareSchema;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class OnArticlesModelDeleteAfterListener implements EventSubscriberInterface
+class OnModelDeleteAfterListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly Modules $modules, private readonly SocialSharingManager $socialSharingManager)
-    {
+    public function __construct(
+        private readonly RoutePathPatterns $routePathPatterns,
+        private readonly Modules $modules,
+        private readonly SocialSharingManager $socialSharingManager
+    ) {
     }
 
     /**
@@ -30,16 +33,16 @@ class OnArticlesModelDeleteAfterListener implements EventSubscriberInterface
         }
 
         foreach ($event->getEntryIdList() as $entryId) {
-            $uri = sprintf(Helpers::URL_KEY_PATTERN, $entryId);
+            $route = sprintf($this->routePathPatterns->getRoutePathPattern($event->getTableName()), $entryId);
 
-            $this->socialSharingManager->deleteSharingInfo($uri);
+            $this->socialSharingManager->deleteSharingInfo($route);
         }
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            'articles.model.articles.after_delete' => '__invoke',
+            AfterModelDeleteEvent::class => '__invoke',
         ];
     }
 }
