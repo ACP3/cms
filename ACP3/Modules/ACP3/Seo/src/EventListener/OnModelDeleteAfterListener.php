@@ -5,19 +5,22 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Newsseo\EventListener;
+namespace ACP3\Modules\ACP3\Seo\EventListener;
 
 use ACP3\Core\Model\Event\AfterModelDeleteEvent;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\News\Helpers;
+use ACP3\Core\Router\RoutePathPatterns;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class OnNewsModelAfterDeleteListener implements EventSubscriberInterface
+class OnModelDeleteAfterListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly Modules $modules, private readonly UriAliasManager $uriAliasManager)
-    {
+    public function __construct(
+        private readonly RoutePathPatterns $routePathPatterns,
+        private readonly Modules $modules,
+        private readonly UriAliasManager $uriAliasManager,
+    ) {
     }
 
     /**
@@ -29,16 +32,19 @@ class OnNewsModelAfterDeleteListener implements EventSubscriberInterface
             return;
         }
 
-        foreach ($event->getEntryIdList() as $item) {
-            $uri = sprintf(Helpers::URL_KEY_PATTERN, $item);
-            $this->uriAliasManager->deleteUriAlias($uri);
+        foreach ($event->getEntryIdList() as $articleId) {
+            $route = sprintf(
+                $this->routePathPatterns->getRoutePathPattern($event->getTableName()),
+                $articleId
+            );
+            $this->uriAliasManager->deleteUriAlias($route);
         }
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            'news.model.news.after_delete' => '__invoke',
+            AfterModelDeleteEvent::class => '__invoke',
         ];
     }
 }

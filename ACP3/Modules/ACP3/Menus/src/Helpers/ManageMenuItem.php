@@ -7,9 +7,13 @@
 
 namespace ACP3\Modules\ACP3\Menus\Helpers;
 
+use ACP3\Core\Validation\Exceptions\InvalidFormTokenException;
+use ACP3\Core\Validation\Exceptions\ValidationFailedException;
+use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Modules\ACP3\Menus\Model\MenuItemsModel;
 use ACP3\Modules\ACP3\Menus\Repository\MenuItemRepository;
 use ACP3\Modules\ACP3\Menus\Services\MenuItemUpsertService;
+use Doctrine\DBAL\Exception;
 
 class ManageMenuItem
 {
@@ -20,7 +24,10 @@ class ManageMenuItem
     /**
      * @param array<string, mixed> $data
      *
-     * @throws \Doctrine\DBAL\ConnectionException
+     * @throws Exception
+     * @throws InvalidFormTokenException
+     * @throws ValidationFailedException
+     * @throws ValidationRuleNotFoundException
      */
     public function manageMenuItem(string $path, array $data = []): bool
     {

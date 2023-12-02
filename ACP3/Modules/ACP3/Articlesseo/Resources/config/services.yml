@@ -2,11 +2,6 @@ services:
   _defaults:
     autowire: true
 
-  ACP3\Modules\ACP3\Articlesseo\EventListener\:
-    resource: "../../src/EventListener/"
-    tags:
-      - { name: kernel.event_subscriber }
-
   ACP3\Modules\ACP3\Articlesseo\Extension\SitemapAvailabilityExtension:
     tags:
       - { name: seo.extension.sitemap_availability }

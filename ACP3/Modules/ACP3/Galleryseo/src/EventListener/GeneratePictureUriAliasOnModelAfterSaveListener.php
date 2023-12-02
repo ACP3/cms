@@ -11,19 +11,21 @@ use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
 use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
+use Doctrine\DBAL\Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GeneratePictureUriAliasOnModelAfterSaveListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly Modules $modules, private readonly Gallery\Repository\PictureRepository $pictureRepository, private readonly Aliases $aliases, private readonly UriAliasManager $uriAliasManager, private readonly MetaStatementsServiceInterface $metaStatements)
+    public function __construct(private readonly Modules $modules, private readonly PictureRepository $pictureRepository, private readonly Aliases $aliases, private readonly UriAliasManager $uriAliasManager, private readonly MetaStatementsServiceInterface $metaStatements)
     {
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function __invoke(AfterModelSaveEvent $event): void
     {

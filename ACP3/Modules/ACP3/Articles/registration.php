@@ -8,12 +8,14 @@
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Component\Dto\ComponentDataDto;
+use ACP3\Modules\ACP3\Articles\ModuleRegistration;
 
 ComponentRegistry::add(
     new ComponentDataDto(
         ComponentTypeEnum::MODULE,
         'articles',
         __DIR__,
-        ['core', 'system', 'users']
+        ['core', 'system', 'users'],
+        new ModuleRegistration(),
     )
 );
