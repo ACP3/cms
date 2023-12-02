@@ -1,0 +1,18 @@
+{
+  "name": "@acp3/module-social-sharing",
+  "description": "Provides the social sharing module for the ACP3 CMS.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/ACP3/cms.git"
+  },
+  "author": "Tino Goratsch <mail@acp3-cms.net>",
+  "license": "GPL-2.0-or-later",
+  "bugs": {
+    "url": "https://gitlab.com/ACP3/cms/issues"
+  },
+  "homepage": "https://www.acp3-cms.net",
+  "private": true,
+  "dependencies": {
+    "shariff": "^3.3.0"
+  }
+}

@@ -13,7 +13,7 @@
   "homepage": "https://www.acp3-cms.net",
   "private": true,
   "dependencies": {
-    "ckeditor-codemirror-plugin": "^1.18.8",
+    "ckeditor-codemirror-plugin": "^1.18.9",
     "ckeditor4": "~4.22.0"
   }
 }
