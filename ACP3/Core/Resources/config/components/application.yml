@@ -58,9 +58,9 @@ services:
     tags:
       - { name: kernel.fragment_renderer, alias: "esi" }
 
-  Symfony\Component\HttpKernel\UriSigner:
+  Symfony\Component\HttpFoundation\UriSigner:
     arguments:
-      - ""
+      - "acp3"
 
   ACP3\Core\Application\BootstrapCache\Psr6StoreFactory: ~
 
