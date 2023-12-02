@@ -7,15 +7,19 @@
 
 namespace ACP3\Modules\ACP3\Seo\Validation\ValidationRules;
 
-use ACP3\Core;
 use ACP3\Core\Validation\ValidationRules\AbstractValidationRule;
-use ACP3\Modules\ACP3\Seo;
+use ACP3\Core\Validation\ValidationRules\InternalUriValidationRule;
+use ACP3\Core\Validation\ValidationRules\UriSafeValidationRule;
+use ACP3\Modules\ACP3\Seo\Repository\SeoRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UriAliasValidationRule extends AbstractValidationRule
 {
-    public function __construct(protected Core\Validation\ValidationRules\InternalUriValidationRule $internalUriValidationRule, protected Core\Validation\ValidationRules\UriSafeValidationRule $uriSafeValidationRule, protected Seo\Repository\SeoRepository $seoRepository)
-    {
+    public function __construct(
+        private readonly InternalUriValidationRule $internalUriValidationRule,
+        private readonly UriSafeValidationRule $uriSafeValidationRule,
+        private readonly SeoRepository $seoRepository
+    ) {
     }
 
     public function isValid(bool|int|float|string|array|UploadedFile|null $data, string|array $field = '', array $extra = []): bool
@@ -34,8 +38,8 @@ class UriAliasValidationRule extends AbstractValidationRule
         }
 
         if ($this->uriSafeValidationRule->isValid($alias)) {
-            $path .= !str_ends_with($path, '/') ? '/' : '';
-            if ($path !== '/' && $this->internalUriValidationRule->isValid($path) === false) {
+            $path .= !empty($path) && !str_ends_with($path, '/') ? '/' : '';
+            if (!empty($path) && $this->internalUriValidationRule->isValid($path) === false) {
                 return false;
             }
 

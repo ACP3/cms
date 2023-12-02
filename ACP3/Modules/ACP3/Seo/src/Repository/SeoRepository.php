@@ -20,6 +20,13 @@ class SeoRepository extends Core\Repository\AbstractRepository
 
     public function uriAliasExistsByAlias(string $alias, string $path = ''): bool
     {
+        if (empty($path)) {
+            return $this->db->fetchColumn(
+                'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `alias` = ?',
+                [$alias]
+            ) > 0;
+        }
+
         return $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE `alias` = ? AND `uri` != ?',
             [$alias, $path]
