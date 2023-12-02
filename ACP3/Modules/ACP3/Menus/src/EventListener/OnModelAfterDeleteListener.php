@@ -44,7 +44,14 @@ class OnModelAfterDeleteListener implements EventSubscriberInterface
         }
 
         foreach ($event->getEntryIdList() as $entryId) {
-            $uri = sprintf($this->routePathPatterns->getRoutePathPattern($event->getTableName()), $entryId);
+            if (!$this->routePathPatterns->hasRoutePathPattern($event->getTableName())) {
+                continue;
+            }
+
+            $uri = sprintf(
+                $this->routePathPatterns->getRoutePathPattern($event->getTableName()),
+                $entryId
+            );
 
             $this->manageMenuItem->manageMenuItem($uri);
         }

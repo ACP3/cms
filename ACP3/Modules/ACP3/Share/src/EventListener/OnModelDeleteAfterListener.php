@@ -37,7 +37,14 @@ class OnModelDeleteAfterListener implements EventSubscriberInterface
         }
 
         foreach ($event->getEntryIdList() as $entryId) {
-            $route = sprintf($this->routePathPatterns->getRoutePathPattern($event->getTableName()), $entryId);
+            if (!$this->routePathPatterns->hasRoutePathPattern($event->getTableName())) {
+                continue;
+            }
+
+            $route = sprintf(
+                $this->routePathPatterns->getRoutePathPattern($event->getTableName()),
+                $entryId
+            );
 
             $this->socialSharingManager->deleteSharingInfo($route);
         }

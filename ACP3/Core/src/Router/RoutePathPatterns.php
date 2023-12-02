@@ -23,6 +23,11 @@ class RoutePathPatterns
         $this->routePathPatterns[$tableName] = $routePathPattern;
     }
 
+    public function hasRoutePathPattern(string $tableName): bool
+    {
+        return \array_key_exists($tableName, $this->routePathPatterns);
+    }
+
     public function getRoutePathPattern(string $tableName): string
     {
         return $this->routePathPatterns[$tableName];
