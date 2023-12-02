@@ -34,7 +34,7 @@ class UriAliasValidationRule extends AbstractValidationRule
         }
 
         if ($this->uriSafeValidationRule->isValid($alias)) {
-            $path .= !preg_match('=/$=', $path) ? '/' : '';
+            $path .= !str_ends_with($path, '/') ? '/' : '';
             if ($path !== '/' && $this->internalUriValidationRule->isValid($path) === false) {
                 return false;
             }
