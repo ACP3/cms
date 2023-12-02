@@ -28,6 +28,10 @@ class OnModelDeleteAfterListener implements EventSubscriberInterface
      */
     public function __invoke(AfterModelDeleteEvent $event): void
     {
+        if ($event->getModuleName() === ShareSchema::MODULE_NAME) {
+            return;
+        }
+
         if (!$this->modules->isInstalled(ShareSchema::MODULE_NAME)) {
             return;
         }

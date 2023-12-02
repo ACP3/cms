@@ -28,6 +28,10 @@ class OnModelDeleteAfterListener implements EventSubscriberInterface
      */
     public function __invoke(AfterModelDeleteEvent $event): void
     {
+        if ($event->getModuleName() === SeoSchema::MODULE_NAME) {
+            return;
+        }
+
         if (!$this->modules->isInstalled(SeoSchema::MODULE_NAME)) {
             return;
         }

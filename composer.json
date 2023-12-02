@@ -32,7 +32,6 @@
     "acp3/tests": "*",
     "acp3/module-acp": "*",
     "acp3/module-articles": "*",
-    "acp3/module-articles-menus": "*",
     "acp3/module-articles-search": "*",
     "acp3/module-articles-seo": "*",
     "acp3/module-audit-log": "*",
