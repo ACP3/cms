@@ -22,7 +22,6 @@ use ACP3\Core\Model\DataProcessor\DependencyInjection\RegisterColumnTypesCompile
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
 use ACP3\Core\WYSIWYG\DependencyInjection\RegisterWysiwygEditorsCompilerPass;
-use Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -50,8 +49,6 @@ final class ServiceContainerBuilder extends ContainerBuilder
      */
     private function setUpContainer(): void
     {
-        $this->setProxyInstantiator(new RuntimeInstantiator());
-
         $this->set('core.environment', $this->applicationPath->getApplicationMode());
         $this->set('core.environment.application_path', $this->applicationPath);
 
