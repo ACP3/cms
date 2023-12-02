@@ -5,11 +5,12 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Modules\ACP3\Galleryseo\EventListener;
+namespace ACP3\Modules\ACP3\Gallery\EventListener;
 
 use ACP3\Core\Model\Event\BeforeModelDeleteEvent;
 use ACP3\Modules\ACP3\Gallery\Model\PictureModel;
 use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
@@ -21,7 +22,7 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function __invoke(BeforeModelDeleteEvent $event): void
     {
@@ -31,7 +32,7 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     private function deletePictureAliases(int $galleryId): void
     {
