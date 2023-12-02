@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Galleryseo\EventListener;
 use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Core\Modules;
 use ACP3\Core\SEO\MetaStatementsServiceInterface;
-use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Gallery\Helpers;
 use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use ACP3\Modules\ACP3\Seo\Core\Router\Aliases;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
@@ -40,24 +40,24 @@ class GeneratePictureUriAliasOnModelAfterSaveListener implements EventSubscriber
         $pictureId = $event->getEntryId();
 
         $galleryId = $this->pictureRepository->getGalleryIdFromPictureId($pictureId);
-        $alias = $this->aliases->getUriAlias(sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
+        $alias = $this->aliases->getUriAlias(sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $galleryId), true);
         if (!empty($alias)) {
             $alias .= '/img-' . $pictureId;
         }
         $seoKeywords = $this->metaStatements->getKeywords(
-            sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
+            sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
         );
         $seoDescription = $this->metaStatements->getDescription(
-            sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
+            sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
         );
         $seoRobots = $this->metaStatements->getRobotsSetting(
-            sprintf(Gallery\Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
+            sprintf(Helpers::URL_KEY_PATTERN_GALLERY, $galleryId)
         );
 
         $robotsSetting = array_flip($this->metaStatements->getRobotsMap());
 
         $this->uriAliasManager->insertUriAlias(
-            sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $pictureId),
+            sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $pictureId),
             $alias,
             $seoKeywords,
             $seoDescription,

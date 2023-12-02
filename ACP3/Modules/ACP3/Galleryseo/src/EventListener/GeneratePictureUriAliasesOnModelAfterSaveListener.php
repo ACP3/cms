@@ -9,14 +9,15 @@ namespace ACP3\Modules\ACP3\Galleryseo\EventListener;
 
 use ACP3\Core\Model\Event\AfterModelSaveEvent;
 use ACP3\Core\Modules;
-use ACP3\Modules\ACP3\Gallery;
+use ACP3\Modules\ACP3\Gallery\Helpers;
+use ACP3\Modules\ACP3\Gallery\Repository\PictureRepository;
 use ACP3\Modules\ACP3\Seo\Helper\UriAliasManager;
 use ACP3\Modules\ACP3\Seo\Installer\Schema as SeoSchema;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class GeneratePictureUriAliasesOnModelAfterSaveListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly Modules $modules, private readonly Gallery\Repository\PictureRepository $pictureRepository, private readonly UriAliasManager $uriAliasManager)
+    public function __construct(private readonly Modules $modules, private readonly PictureRepository $pictureRepository, private readonly UriAliasManager $uriAliasManager)
     {
     }
 
@@ -29,51 +30,33 @@ class GeneratePictureUriAliasesOnModelAfterSaveListener implements EventSubscrib
             return;
         }
 
-        if ($event->isIsNewEntry() || $event->getModuleName() !== Gallery\Installer\Schema::MODULE_NAME) {
+        if ($event->isIsNewEntry()) {
             return;
         }
 
-        if ($this->isGallery($event)) {
-            $galleryId = $event->getEntryId();
-            $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
+        $galleryId = $event->getEntryId();
+        $pictures = $this->pictureRepository->getPicturesByGalleryId($galleryId);
 
-            $rawData = $event->getRawData();
-
-            foreach ($pictures as $picture) {
-                $this->uriAliasManager->insertUriAlias(
-                    sprintf(Gallery\Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
-                    !empty($rawData['alias']) ? $rawData['alias'] . '/img-' . $picture['id'] : '',
-                    $rawData['seo_keywords'],
-                    $rawData['seo_description'],
-                    $rawData['seo_robots'],
-                    $rawData['seo_title'],
-                    $rawData['seo_structured_data'],
-                    $rawData['seo_canonical'],
-                );
-            }
-        }
-    }
-
-    private function isGallery(AfterModelSaveEvent $event): bool
-    {
         $rawData = $event->getRawData();
 
-        return isset(
-            $rawData['alias'],
-            $rawData['seo_title'],
-            $rawData['seo_keywords'],
-            $rawData['seo_description'],
-            $rawData['seo_canonical'],
-            $rawData['seo_robots'],
-            $rawData['seo_structured_data'],
-            $rawData['seo_uri_pattern']
-        ) && $rawData['seo_uri_pattern'] === Gallery\Helpers::URL_KEY_PATTERN_GALLERY;
+        foreach ($pictures as $picture) {
+            $this->uriAliasManager->insertUriAlias(
+                sprintf(Helpers::URL_KEY_PATTERN_PICTURE, $picture['id']),
+                !empty($rawData['alias']) ? $rawData['alias'] . '/img-' . $picture['id'] : '',
+                $rawData['seo_keywords'],
+                $rawData['seo_description'],
+                $rawData['seo_robots'],
+                $rawData['seo_title'],
+                $rawData['seo_structured_data'],
+                $rawData['seo_canonical'],
+            );
+        }
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            AfterModelSaveEvent::class => ['__invoke', -250],
+            'gallery.model.gallery.after_save' => ['__invoke', -250],
         ];
     }
 }
