@@ -78,10 +78,6 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/tinogo/RichFilemanager-PHP"
-    },
-    {
-      "type": "vcs",
       "url": "https://github.com/tinogo/shariff-backend-php"
     }
   ],

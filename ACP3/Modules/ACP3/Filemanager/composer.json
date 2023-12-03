@@ -16,26 +16,27 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
+    "ext-json": "*",
     "acp3/core": "^6.21.0",
     "acp3/module-permissions": "^6.18.0",
     "acp3/module-system": "^6.21.0",
-    "servocoder/richfilemanager-php": "dev-master"
+    "illuminate/config": "^10.0",
+    "illuminate/container": "^10.0",
+    "illuminate/support": "^10.0",
+    "symfony/http-foundation": "^6.4|^7.0",
+    "symfony/event-dispatcher": "^6.4|^7.0"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/tinogo/RichFilemanager-PHP"
-    }
-  ],
   "suggest": {
     "acp3/setup": "Allows you to comfortably install and update the ACP3 components via an UI."
   },
   "autoload": {
     "psr-4": {
-      "ACP3\\Modules\\ACP3\\Filemanager\\": "src"
+      "ACP3\\Modules\\ACP3\\Filemanager\\": "src",
+      "RFM\\": "libs/RFM"
     },
     "files": [
-      "registration.php"
+      "registration.php",
+      "libs/RFM/helpers.php"
     ]
   },
   "autoload-dev": {

@@ -7,7 +7,8 @@ parameters:
   bootstrapFiles:
     - ./tests/bootstrap.php
   excludePaths:
-    - %rootDir%/ACP3/Modules/*/*/Resources/*
+    analyse:
+      - ./ACP3/Modules/ACP3/Filemanager/libs
   tmpDir: .phpstan-cache
   ignoreErrors:
     - '#Access to an undefined property Smarty::\$_tag_stack#'
