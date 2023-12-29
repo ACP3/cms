@@ -1,34 +1,19 @@
-version: "3.8"
-
 services:
   app:
     build:
-      context: "./build/docker/php/"
-      dockerfile: Dockerfile-8.1
-    networks:
-      - acp3-cms
-    volumes:
-      - ./:/var/www/html
-    environment:
-      - ACP3_APPLICATION_MODE=dev
-      - XDEBUG_MODE=debug
-    container_name: acp3-app
-
-  web:
-    build:
-      context: "./build/docker/apache/"
-      args:
-        APACHE_VERSION: 2.4
-    depends_on:
-      - app
+      context: .
+      dockerfile: "./build/docker/php/php81.dockerfile"
     networks:
       - acp3-cms
     ports:
       - "80:80"
     volumes:
-      - ./build/docker/apache/vhost.conf:/usr/local/apache2/conf/sites-enabled/vhost.conf:ro
-      - ./:/var/www/html:ro
-    container_name: acp3-web
+      - ./:/var/www/html
+    environment:
+      - ACP3_APPLICATION_MODE=dev
+      - XDEBUG_MODE=debug
+      - COMPOSER_ALLOW_SUPERUSER=1
+    container_name: acp3-app
 
   db:
     image: mysql:5.7
