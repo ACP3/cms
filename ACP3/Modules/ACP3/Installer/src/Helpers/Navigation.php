@@ -14,7 +14,7 @@ use ACP3\Modules\ACP3\Installer\Helpers\Navigation\NavigationStep;
 class Navigation
 {
     /**
-     * @var \ACP3\Modules\ACP3\Installer\Helpers\Navigation\NavigationStep[]
+     * @var NavigationStep[]
      */
     private array $navbar = [];
 

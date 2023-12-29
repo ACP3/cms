@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 class ACLTest extends TestCase
 {
     /**
-     * @var \ACP3\Core\ACL
+     * @var ACL
      */
     private $acl;
     /**
@@ -25,15 +25,15 @@ class ACLTest extends TestCase
      */
     private $controllerActionExistsMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&UserModelInterface
+     * @var MockObject&UserModelInterface
      */
     private $userMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&\ACP3\Core\ACL\Repository\UserRoleRepositoryInterface
+     * @var MockObject&\ACP3\Core\ACL\Repository\UserRoleRepositoryInterface
      */
     private $userRoleRepositoryMock;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&\ACP3\Core\ACL\PermissionServiceInterface
+     * @var MockObject&\ACP3\Core\ACL\PermissionServiceInterface
      */
     private $permissionServiceMock;
 

@@ -20,7 +20,7 @@ class Sort
      * Moves a database result one step upwards.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function up(string $table, string $idField, string $sortField, int $id, string $where = ''): bool
     {
@@ -31,7 +31,7 @@ class Sort
      * Moves a database result one step downwards.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function down(string $table, string $idField, string $sortField, int $id, string $where = ''): bool
     {
@@ -42,7 +42,7 @@ class Sort
      * Moves a database result one step upwards/downwards.
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     private function moveOneStep(string $action, string $table, string $idField, string $sortField, int $id, string $where = ''): bool
     {

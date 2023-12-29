@@ -20,7 +20,7 @@ class CheckPermissionListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws \ACP3\Core\ACL\Exception\AccessForbiddenException
+     * @throws AccessForbiddenException
      */
     public function __invoke(ControllerActionBeforeDispatchEvent $event): void
     {

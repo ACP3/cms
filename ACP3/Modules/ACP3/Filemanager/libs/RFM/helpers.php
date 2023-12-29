@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @param mixed[] $parameters
  *
- * @throws \Illuminate\Contracts\Container\BindingResolutionException
+ * @throws BindingResolutionException
  */
 function container(callable|string $make = null, array $parameters = []): mixed
 {

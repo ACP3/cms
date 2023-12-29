@@ -120,7 +120,7 @@ final class Output
     /**
      * @deprecated since ACP3 version 6.7.0, to be removed with 7.0.0.
      *
-     * @throws \ACP3\Core\Picture\Exception\PictureResponseException
+     * @throws PictureResponseException
      */
     public function sendResponse(): BinaryFileResponse
     {
@@ -133,7 +133,7 @@ final class Output
     /**
      * @deprecated since ACP3 version 6.7.0, to be removed with 7.0.0.
      *
-     * @throws \ACP3\Core\Picture\Exception\PictureResponseException
+     * @throws PictureResponseException
      */
     private function getMimeType(int $pictureType): string
     {

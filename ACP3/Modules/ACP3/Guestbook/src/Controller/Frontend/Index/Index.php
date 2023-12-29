@@ -27,7 +27,7 @@ class Index extends Core\Controller\AbstractWidgetAction
 
     /**
      * @throws \Doctrine\DBAL\Exception
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws ResultNotExistsException
      */
     public function __invoke(): Response
     {

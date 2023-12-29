@@ -23,7 +23,7 @@ class IsUserAuthenticatedListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws \ACP3\Core\Authentication\Exception\UnauthorizedAccessException
+     * @throws UnauthorizedAccessException
      */
     public function __invoke(ControllerActionBeforeDispatchEvent $event): void
     {

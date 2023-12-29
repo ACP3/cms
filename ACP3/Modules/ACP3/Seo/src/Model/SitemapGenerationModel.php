@@ -34,7 +34,7 @@ class SitemapGenerationModel
     }
 
     /**
-     * @throws \ACP3\Modules\ACP3\Seo\Exception\SitemapGenerationException
+     * @throws SitemapGenerationException
      */
     public function save(): bool
     {

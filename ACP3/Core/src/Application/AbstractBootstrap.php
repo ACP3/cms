@@ -26,7 +26,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
      */
     protected $container;
     /**
-     * @var \ACP3\Core\Environment\ApplicationPath
+     * @var ApplicationPath
      */
     protected $appPath;
 
@@ -101,12 +101,12 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
      */
     public function outputPage(Request $request, bool $catch): Response
     {
-        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        /** @var RequestStack $requestStack */
         $requestStack = $this->container->get(RequestStack::class);
 
         $requestStack->push($request);
 
-        /** @var \ACP3\Core\Application\ControllerActionDispatcher $controllerActionDispatcher */
+        /** @var ControllerActionDispatcher $controllerActionDispatcher */
         $controllerActionDispatcher = $this->container->get(ControllerActionDispatcher::class);
 
         try {

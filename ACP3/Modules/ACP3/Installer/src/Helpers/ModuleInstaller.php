@@ -25,7 +25,7 @@ class ModuleInstaller
     /**
      * @return array<string, bool>
      *
-     * @throws \ACP3\Modules\ACP3\System\Exception\ModuleInstallerException
+     * @throws ModuleInstallerException
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -47,7 +47,7 @@ class ModuleInstaller
      */
     private function doInstallModules(ContainerInterface $container): array
     {
-        /** @var \Psr\Container\ContainerInterface $schemaRegistrar */
+        /** @var ContainerInterface $schemaRegistrar */
         $schemaRegistrar = $container->get(SchemaRegistrar::class);
 
         $installableModules = array_filter(

@@ -10,7 +10,7 @@ namespace ACP3\Core\Helpers;
 class SecureTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \ACP3\Core\Helpers\Secure
+     * @var Secure
      */
     private $secureHelper;
 

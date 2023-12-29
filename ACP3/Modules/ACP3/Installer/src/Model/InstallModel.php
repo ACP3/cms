@@ -73,7 +73,7 @@ class InstallModel
      */
     public function installAclResources(): void
     {
-        /** @var \ACP3\Core\Installer\SchemaRegistrar $schemaRegistrar */
+        /** @var SchemaRegistrar $schemaRegistrar */
         $schemaRegistrar = $this->container->get(SchemaRegistrar::class);
 
         foreach ($schemaRegistrar->all() as $schema) {
@@ -105,7 +105,7 @@ class InstallModel
             ],
         ];
 
-        /** @var \ACP3\Core\Settings\SettingsInterface $config */
+        /** @var SettingsInterface $config */
         $config = $this->container->get(SettingsInterface::class);
 
         foreach ($settings as $module => $data) {
@@ -120,7 +120,7 @@ class InstallModel
      */
     public function createSuperUser(array $formData): void
     {
-        /** @var \ACP3\Core\Database\Connection $db */
+        /** @var Connection $db */
         $db = $this->container->get(Connection::class);
 
         $salt = $this->secure->salt(UserModel::SALT_LENGTH);
@@ -134,7 +134,7 @@ class InstallModel
             'INSERT INTO `{pre}acl_user_roles` (`user_id`, `role_id`) VALUES (1, 4);',
         ];
 
-        /** @var \ACP3\Core\Installer\SchemaHelper $schemaHelper */
+        /** @var SchemaHelper $schemaHelper */
         $schemaHelper = $this->container->get(SchemaHelper::class);
 
         $schemaHelper->executeSqlQueries($queries);
@@ -147,7 +147,7 @@ class InstallModel
     {
         /** @var \Symfony\Component\DependencyInjection\ServiceLocator<SampleDataInterface> $sampleDataRegistrar */
         $sampleDataRegistrar = $this->container->get('core.installer.sample_data_registrar');
-        /** @var \ACP3\Core\Installer\SchemaHelper $schemaHelper */
+        /** @var SchemaHelper $schemaHelper */
         $schemaHelper = $this->container->get(SchemaHelper::class);
 
         foreach ($sampleDataRegistrar->getProvidedServices() as $serviceId => $class) {

@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 class TitleTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \ACP3\Core\Breadcrumb\Title
+     * @var Title
      */
     protected $title;
     /**

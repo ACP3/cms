@@ -15,7 +15,7 @@ class OutputPageExceptionEvent extends Event
     public const NAME = 'core.output_page_exception';
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Response
+     * @var Response
      */
     private $response;
 

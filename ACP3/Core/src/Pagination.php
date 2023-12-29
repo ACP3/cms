@@ -128,7 +128,7 @@ class Pagination
     /**
      * @return array<string, mixed>[]
      *
-     * @throws \ACP3\Core\Pagination\Exception\InvalidPageException
+     * @throws InvalidPageException
      */
     public function render(): array
     {

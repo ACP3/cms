@@ -25,7 +25,7 @@ abstract class AbstractFormValidationTestCase extends TestCase
     public const XSRF_QUERY_STRING = 'module/controller/action/';
 
     /**
-     * @var \ACP3\Core\Validation\AbstractFormValidation
+     * @var AbstractFormValidation
      */
     protected $formValidation;
     /**

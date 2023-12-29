@@ -69,7 +69,7 @@ class ControllerActionDispatcher
                 ControllerActionBeforeDispatchEvent::class
             );
 
-            /** @var \ACP3\Core\Controller\InvokableActionInterface $controller */
+            /** @var InvokableActionInterface $controller */
             $controller = $this->serviceLocator->get($serviceId);
             $controller->preDispatch();
 
@@ -128,7 +128,7 @@ class ControllerActionDispatcher
      *
      * @return array<string, mixed>|Response|string|null
      *
-     * @throws \ACP3\Core\Controller\Exception\ControllerActionNotFoundException
+     * @throws ControllerActionNotFoundException
      * @throws \ReflectionException
      */
     private function executeControllerAction(InvokableActionInterface $action, array $arguments): array|Response|string|null

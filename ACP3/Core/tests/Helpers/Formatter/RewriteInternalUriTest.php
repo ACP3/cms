@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\ServerBag;
 class RewriteInternalUriTest extends TestCase
 {
     /**
-     * @var \ACP3\Core\Helpers\Formatter\RewriteInternalUri
+     * @var RewriteInternalUri
      */
     private $rewriteInternalUri;
     /**

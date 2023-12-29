@@ -23,7 +23,7 @@ class LibrariesTest extends \PHPUnit\Framework\TestCase
      */
     private $requestStackMock;
     /**
-     * @var \ACP3\Core\Assets\LibrariesCache&\PHPUnit\Framework\MockObject\MockObject
+     * @var LibrariesCache&\PHPUnit\Framework\MockObject\MockObject
      */
     private $librariesCacheMock;
 

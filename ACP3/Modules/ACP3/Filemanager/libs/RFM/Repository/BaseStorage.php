@@ -87,7 +87,7 @@ abstract class BaseStorage implements StorageInterface
     /**
      * Return storage instance that stores image thumbnails.
      *
-     * @return \RFM\Repository\StorageInterface|\RFM\Repository\Local\Storage|\RFM\Repository\S3\Storage
+     * @return StorageInterface|\RFM\Repository\Local\Storage|\RFM\Repository\S3\Storage
      */
     public function forThumbnail()
     {

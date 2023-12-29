@@ -28,7 +28,7 @@ class Smarty implements RendererInterface
         $this->smarty->registerPlugin(
             PluginTypeEnum::BLOCK->value,
             $blockName,
-            fn (array $params, ?string $content, \Smarty_Internal_Template $smarty, bool & $repeat) => $this->container->get($serviceId)($params, $content, $smarty, $repeat)
+            fn (array $params, ?string $content, \Smarty_Internal_Template $smarty, bool &$repeat) => $this->container->get($serviceId)($params, $content, $smarty, $repeat)
         );
     }
 

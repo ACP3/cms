@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 class AliasesTest extends TestCase
 {
     /**
-     * @var \ACP3\Modules\ACP3\Seo\Core\Router\Aliases
+     * @var Aliases
      */
     private $aliases;
     /**

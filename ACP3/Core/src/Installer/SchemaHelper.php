@@ -41,7 +41,7 @@ class SchemaHelper
      * @param array<string|callable> $queries
      *
      * @throws \Doctrine\DBAL\ConnectionException
-     * @throws \ACP3\Core\Installer\Exception\ModuleMigrationException
+     * @throws Exception\ModuleMigrationException
      * @throws \Doctrine\DBAL\Exception
      */
     public function executeSqlQueries(array $queries, string $moduleName = ''): void

@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 class Bootstrap extends Core\Application\AbstractBootstrap
 {
     /**
-     * @var \ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath ApplicationPath
+     * @var ApplicationPath ApplicationPath
      */
     protected $appPath;
 

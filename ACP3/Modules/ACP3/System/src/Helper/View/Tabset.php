@@ -28,7 +28,7 @@ class Tabset
     }
 
     /**
-     * @return \ACP3\Core\Helpers\View\Dto\TabDto[]
+     * @return TabDto[]
      */
     public function getTabset(string $identifier): array
     {

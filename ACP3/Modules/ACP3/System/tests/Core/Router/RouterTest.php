@@ -14,7 +14,7 @@ use ACP3\Core\Settings\SettingsInterface;
 class RouterTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \ACP3\Modules\ACP3\System\Core\Router\Router
+     * @var Router
      */
     protected $router;
     /**

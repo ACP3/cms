@@ -48,7 +48,7 @@ class Helpers
      *
      * @return array<string, mixed>
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function categoriesList(
         string $moduleName,

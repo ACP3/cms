@@ -37,7 +37,7 @@ class StepsTest extends \PHPUnit\Framework\TestCase
      */
     protected $eventDispatcherMock;
     /**
-     * @var \ACP3\Core\Breadcrumb\Steps
+     * @var Steps
      */
     protected $steps;
 
