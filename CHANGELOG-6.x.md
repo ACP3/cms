@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Base] Re-enable the rewrite module for the Apache webserver
 
 ## [6.22.0] - 2023-12-31
 
