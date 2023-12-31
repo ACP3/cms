@@ -7,7 +7,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Core] Added a plugin system for registering lazy foreign keys between modules based on route-paths
+
+### Changed
+
+-   [Base] Updated the docker-compose environment
+
+### Fixed
+
+-   [Core] Correctly reset the `Validator`'s state after validating a form
+-   [Core] Prevent the `nl2p`-method from modifying the supplied content, if it contains HTML
+-   [Emoticons] Prevent the emoticons `ContentDecorator`-method from modifying the supplied content, if it contains HTML
+
+### Deprecations
+
+-   The following have been deprecated, i.e. they are not needed for ACP3 versions >= 6.22.0 anymore:
+    -   acp3/module-articles-menus
+    -   acp3/module-articles-share
+    -   acp3/module-files-share
+    -   acp3/module-gallery-share
+    -   acp3/module-news-share
 
 ## [6.21.0] - 2023-11-12
 
