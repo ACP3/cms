@@ -17,9 +17,9 @@
   "prefer-stable": true,
   "require": {
     "ext-json": "*",
-    "acp3/core": "^6.21.0",
+    "acp3/core": "^6.22.0",
     "acp3/module-permissions": "^6.18.0",
-    "acp3/module-system": "^6.21.0",
+    "acp3/module-system": "^6.22.0",
     "illuminate/config": "^10.0",
     "illuminate/container": "^10.0",
     "illuminate/support": "^10.0",
