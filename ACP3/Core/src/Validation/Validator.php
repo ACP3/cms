@@ -11,7 +11,9 @@ use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\Exceptions\ValidationFailedException;
 use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Core\Validation\ValidationRules\ValidationRuleInterface;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Validator
@@ -103,8 +105,14 @@ class Validator
     /**
      * Validates a form.
      *
+     * As the validator (currently) holds some state, we also need to take care of that.
+     * That's why we empty out the form errors and the constraints at the beginning and end
+     * of this method.
+     *
      * @throws ValidationFailedException
      * @throws ValidationRuleNotFoundException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function validate(): void
     {
@@ -130,6 +138,8 @@ class Validator
                 $params['extra']
             );
         }
+
+        $this->constraints = [];
 
         if ($this->hasErrors()) {
             throw new ValidationFailedException($this->errors);
