@@ -20,6 +20,7 @@ RUN apt-get update -yqq && \
     echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
     docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-install -j$(nproc) gd && \
+    a2enmod rewrite && \
     apt-get autoremove -y && \
     apt-get clean -y
 
