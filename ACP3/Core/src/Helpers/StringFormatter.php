@@ -27,6 +27,11 @@ class StringFormatter
      */
     public function nl2p(string $data, bool $useLineBreaks = false): string
     {
+        // Don't do anything, if the supplied data already contains HTML
+        if ($data !== strip_tags($data)) {
+            return $data;
+        }
+
         $data = trim($data);
         $pattern = "/([\n]{1,})/i";
         $replace = "</p>\n<p>";

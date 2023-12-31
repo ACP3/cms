@@ -85,6 +85,11 @@ HTML;
                 true,
                 "<p>Foo</p>\n<p>Bar</p>\n<p>Baz<br>Lorem</p>",
             ],
+            'multi_line_with_html' => [
+                "Foo\n\n<p>bar</p>\nbaz",
+                true,
+                "Foo\n\n<p>bar</p>\nbaz",
+            ],
         ];
     }
 
