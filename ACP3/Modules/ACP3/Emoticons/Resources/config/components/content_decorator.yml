@@ -4,4 +4,4 @@ services:
 
   ACP3\Modules\ACP3\Emoticons\ContentDecorator\EmoticonsContentDecorator:
     tags:
-      - { name: core.content_decorator }
+      - { name: core.content_decorator, priority: 255 }
