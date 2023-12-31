@@ -7,7 +7,7 @@
 
 namespace ACP3\Core\Console;
 
-use ACP3\Core\Application\BootstrapInterface;
+use ACP3\Core\Application\Bootstrap;
 use ACP3\Core\Console\DependencyInjection\ServiceContainerBuilder;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
@@ -47,7 +47,7 @@ class Application
         $console = $this->container->get(\Symfony\Component\Console\Application::class);
 
         $console->setName('ACP3 CMS console application');
-        $console->setVersion(BootstrapInterface::VERSION);
+        $console->setVersion(Bootstrap::getVersion());
 
         return $console->run();
     }

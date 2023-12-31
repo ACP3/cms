@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\System\Helper;
 
-use ACP3\Core\Application\BootstrapInterface;
+use ACP3\Core\Application\Bootstrap;
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser;
@@ -32,7 +32,7 @@ class UpdateCheck
         $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
         return [
-            'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
+            'installed_version' => $this->versionParser->normalize(Bootstrap::getVersion()),
             'latest_version' => $this->versionParser->normalize($settings['update_new_version']),
             'is_latest' => $this->isLatestVersion($settings['update_new_version']),
             'url' => $settings['update_new_version_url'],
@@ -51,7 +51,7 @@ class UpdateCheck
             $data = $this->updateFileParser->parseUpdateFile(self::UPDATE_CHECK_FILE);
 
             $update = [
-                'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
+                'installed_version' => $this->versionParser->normalize(Bootstrap::getVersion()),
                 'latest_version' => $this->versionParser->normalize($data['latest_version']),
                 'is_latest' => $this->isLatestVersion($data['latest_version']),
                 'url' => $data['url'],
@@ -70,7 +70,7 @@ class UpdateCheck
     private function isLatestVersion(string $latestVersion): bool
     {
         return Comparator::greaterThanOrEqualTo(
-            $this->versionParser->normalize(BootstrapInterface::VERSION),
+            $this->versionParser->normalize(Bootstrap::getVersion()),
             $this->versionParser->normalize($latestVersion)
         );
     }

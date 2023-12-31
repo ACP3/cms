@@ -14,11 +14,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 interface BootstrapInterface extends HttpKernelInterface
 {
     /**
-     * Contains the current ACP3 version string.
-     */
-    public const VERSION = '6.21.0';
-
-    /**
      * Checks whether the ACP3 is correctly installed.
      */
     public function isInstalled(): bool;
@@ -32,4 +27,6 @@ interface BootstrapInterface extends HttpKernelInterface
      * Handle the request and output the page.
      */
     public function outputPage(Request $request, bool $catch): Response;
+
+    public static function getVersion(): string;
 }

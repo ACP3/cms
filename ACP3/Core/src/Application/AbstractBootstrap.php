@@ -10,6 +10,7 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Application\Event\OutputPageExceptionEvent;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
+use Composer\InstalledVersions;
 use Symfony\Component\ErrorHandler\ErrorHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -21,6 +22,8 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 
 abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterface
 {
+    private static ?string $version = null;
+
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
@@ -157,5 +160,20 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
         $eventDispatcher = $this->container->get('event_dispatcher');
 
         $eventDispatcher->dispatch(new TerminateEvent($this, $request, $response), KernelEvents::TERMINATE);
+    }
+
+    public static function getVersion(): string
+    {
+        if (!self::$version) {
+            $corePackageComposerJson = json_decode(
+                file_get_contents(\dirname(__DIR__, 2) . '/composer.json'),
+                true,
+                512,
+                JSON_THROW_ON_ERROR
+            );
+            self::$version = InstalledVersions::getPrettyVersion($corePackageComposerJson['name']) ?: '99.9.9-dev';
+        }
+
+        return self::$version;
     }
 }

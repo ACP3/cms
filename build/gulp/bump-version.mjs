@@ -130,35 +130,16 @@ export default (gulp) => {
    * @returns {*}
    */
   async function bumpCore(newVersion) {
-    return Promise.all([
-      new Promise((resolve, reject) => {
-        gulp
-          .src(["./package.json", "./package-base.json", "./package-lock.json"], {
-            base: "./",
-          })
-          .pipe(gulpBump({ version: newVersion }))
-          .pipe(gulp.dest("./"))
-          .on("finish", resolve)
-          .on("error", reject);
-      }),
-      new Promise((resolve, reject) => {
-        gulp
-          .src("./ACP3/Core/src/Application/BootstrapInterface.php", {
-            base: "./",
-          })
-          .pipe(
-            gulpChange((content) => {
-              const search = "const VERSION = '.+'";
-              const replace = "const VERSION = '" + newVersion + "'";
-
-              return replaceAll(content, search, replace);
-            }),
-          )
-          .pipe(gulp.dest("./"))
-          .on("finish", resolve)
-          .on("error", reject);
-      }),
-    ]);
+    return new Promise((resolve, reject) => {
+      gulp
+        .src(["./package.json", "./package-base.json", "./package-lock.json"], {
+          base: "./",
+        })
+        .pipe(gulpBump({ version: newVersion }))
+        .pipe(gulp.dest("./"))
+        .on("finish", resolve)
+        .on("error", reject);
+    });
   }
 
   /**

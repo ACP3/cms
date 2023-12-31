@@ -7,7 +7,7 @@
 
 namespace ACP3\Modules\ACP3\System\Helper;
 
-use ACP3\Core\Application\BootstrapInterface;
+use ACP3\Core\Application\Bootstrap;
 use ACP3\Core\Date;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\System\Helper\UpdateCheck\UpdateFileParser;
@@ -53,7 +53,7 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
             ->method('getSettings')
             ->willReturn([
                 'update_last_check' => (new \DateTime())->modify($lastCheck)->format('U'),
-                'update_new_version' => BootstrapInterface::VERSION,
+                'update_new_version' => Bootstrap::getVersion(),
                 'update_new_version_url' => 'https://foo.bar/',
             ]);
     }
@@ -86,7 +86,7 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
         $this->updateFileParserMock->expects(self::once())
             ->method('parseUpdateFile')
             ->willReturn([
-                'latest_version' => BootstrapInterface::VERSION,
+                'latest_version' => Bootstrap::getVersion(),
                 'url' => 'https://foobar.baz/',
             ]);
 
@@ -98,8 +98,8 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
         $this->setUpSettingsMockExpectation();
 
         $update = [
-            'installed_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
-            'latest_version' => $this->versionParser->normalize(BootstrapInterface::VERSION),
+            'installed_version' => $this->versionParser->normalize(Bootstrap::getVersion()),
+            'latest_version' => $this->versionParser->normalize(Bootstrap::getVersion()),
             'is_latest' => true,
             'url' => 'https://foo.bar/',
         ];
