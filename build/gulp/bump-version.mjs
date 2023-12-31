@@ -133,7 +133,7 @@ export default (gulp) => {
     return Promise.all([
       new Promise((resolve, reject) => {
         gulp
-          .src(["./package.json", "./package-lock.json"], {
+          .src(["./package.json", "./package-base.json", "./package-lock.json"], {
             base: "./",
           })
           .pipe(gulpBump({ version: newVersion }))
