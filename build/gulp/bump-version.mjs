@@ -87,22 +87,6 @@ export default (gulp) => {
   }
 
   /**
-   * Bumps the version number of the various ACP3 components
-   *
-   * @param {string[]} changedComponents
-   * @param {Map<string, string>} componentMap
-   * @param {string} newVersion
-   */
-  function bumpVersions(changedComponents, componentMap, newVersion) {
-    return Promise.all([
-      // We need to bump the version number of the ACP3/core package everytime (even if there hasn't been any change),
-      // as the update check is relying on this version.
-      bumpCore(newVersion),
-      bumpComponents(changedComponents, componentMap, newVersion),
-    ]);
-  }
-
-  /**
    * Bumps a given semantic version number by the given console argument
    *
    * @param cliArgument
@@ -121,25 +105,6 @@ export default (gulp) => {
     }
 
     throw new Error('Error: Please specify the arguments "major", "minor" or "patch"!');
-  }
-
-  /**
-   * Bumps the version numbers of various files of the acp3/core component
-   *
-   * @param {string} newVersion
-   * @returns {*}
-   */
-  async function bumpCore(newVersion) {
-    return new Promise((resolve, reject) => {
-      gulp
-        .src(["./package.json", "./package-base.json", "./package-lock.json"], {
-          base: "./",
-        })
-        .pipe(gulpBump({ version: newVersion }))
-        .pipe(gulp.dest("./"))
-        .on("finish", resolve)
-        .on("error", reject);
-    });
   }
 
   /**
@@ -170,7 +135,7 @@ export default (gulp) => {
    * @param {string} newVersion
    * @returns {*}
    */
-  async function bumpComponents(changedComponents, componentMap, newVersion) {
+  function bumpVersions(changedComponents, componentMap, newVersion) {
     const changedPaths = [];
     for (const [componentPath, composerPackageName] of componentMap) {
       if (!changedComponents.includes(composerPackageName)) {
