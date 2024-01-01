@@ -23,7 +23,7 @@
                 </div>
                 <div class="modal-body">
                     <label for="toc-title" class="form-label required">{lang t="system|title_for_toc"}</label>
-                    <input type="text" id="toc-title" class="form-control" required>
+                    <input type="text" id="toc-title" class="form-control">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{lang t="system|close"}</button>
