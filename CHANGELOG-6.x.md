@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [System] Fixed the form submition
 
 ## [6.22.2] - 2024-01-02
 
