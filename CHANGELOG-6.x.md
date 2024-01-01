@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [System] Fixed the duplicate modal instances when inserting page breaks
 
 ## [6.22.1] - 2023-12-31
 
