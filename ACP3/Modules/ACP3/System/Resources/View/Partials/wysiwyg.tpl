@@ -10,20 +10,24 @@
     {include file="asset:System/Partials/wysiwyg_config.tpl" js=$wysiwyg.js}
 {/javascripts}
 {if $wysiwyg.advanced === true}
-    <div id="page-break-form" class="modal fade" role="dialog" tabindex="-1">
-        <div class="modal-dialog">
+    <div id="page-break-form"
+         class="modal fade"
+         role="dialog"
+         tabindex="-1"
+         data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">{lang t="system|insert_page_break"}</h4>
+                    <h1 class="h4 modal-title">{lang t="system|insert_page_break"}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{lang t="system|close"}"></button>
                 </div>
                 <div class="modal-body">
-                    <label for="toc-title">{lang t="system|title_for_toc"}</label>
-                    <input type="text" id="toc-title" class="form-control">
+                    <label for="toc-title" class="form-label required">{lang t="system|title_for_toc"}</label>
+                    <input type="text" id="toc-title" class="form-control" required>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{lang t="system|close"}</button>
-                    <button class="btn btn-primary">{lang t="system|submit"}</button>
+                    <button class="btn btn-primary" data-bs-dismiss="modal">{lang t="system|submit"}</button>
                 </div>
             </div>
         </div>

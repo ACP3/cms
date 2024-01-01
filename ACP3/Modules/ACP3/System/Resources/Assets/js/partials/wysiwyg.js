@@ -1,11 +1,6 @@
 /* global wysiwygCallback */
 
-import Modal from "bootstrap/js/dist/modal";
-
 ((document) => {
-  const pageBreakFormEl = document.getElementById("page-break-form");
-  const modal = new Modal(pageBreakFormEl);
-
   document
     .getElementById("page-break-form")
     .querySelector(".modal-footer button.btn-primary")
@@ -22,7 +17,5 @@ import Modal from "bootstrap/js/dist/modal";
       }
 
       wysiwygCallback(text);
-
-      modal.hide();
     });
 })(document);
