@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [System] Fixed the missing animation of the floating label form groups
 
 ## [6.24.1] - 2024-01-02
 
