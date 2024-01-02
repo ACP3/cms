@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
+### Added
+
+-   [System] Added a new layout variant: `layout.simple.tpl`
+
 ### Changed
 
 -   [ALL] Replaced all `.btn-outline-secondary`-selectors with `.btn-light`
+-   [Users] Improved the visuals of the login page
 
 ## [6.23.0] - 2024-01-02
 
