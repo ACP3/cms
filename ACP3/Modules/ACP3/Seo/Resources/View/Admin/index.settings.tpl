@@ -14,7 +14,7 @@
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$sitemap_save_mode required=true label={lang t="seo|sitemap_save_mode"}}
                 {include file="asset:System/Partials/form_group.button_group.tpl" options=$sitemap_separate required=true label={lang t="seo|sitemap_separate"}}
                 {if {has_permission path="admin/seo/index/sitemap"}}
-                    {include file="asset:System/Partials/form_group.hyperlink.tpl" attributes=['class' => 'btn btn-outline-secondary', 'data-ajax-form' => 'true'] href={uri args="acp/seo/index/sitemap"} hyperlinkLabel={lang t="seo|sitemap_refresh_now"}}
+                    {include file="asset:System/Partials/form_group.hyperlink.tpl" attributes=['class' => 'btn btn-light', 'data-ajax-form' => 'true'] href={uri args="acp/seo/index/sitemap"} hyperlinkLabel={lang t="seo|sitemap_refresh_now"}}
                 {/if}
             </div>
         {/tab}

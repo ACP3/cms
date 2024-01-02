@@ -15,7 +15,7 @@
                     {include file="asset:System/Partials/form_group.input_text.tpl" name="answers[`$row@index`][text]" formFieldId="answer-`$row@index`" value=$row.text required=true maxlength=120 label={lang t="polls|answer_x" args=['%number%' => $row@index+1]}}
                 {/if}
             {/foreach}
-            {include file="asset:System/Partials/form_group.submit.tpl" name="add_answer" submit_btn_class="btn-outline-secondary" attributes=['data-hash-change' => "#tab-content-2"] submit_label={lang t="polls|add_answer"}}
+            {include file="asset:System/Partials/form_group.submit.tpl" name="add_answer" submit_btn_class="btn-light" attributes=['data-hash-change' => "#tab-content-2"] submit_label={lang t="polls|add_answer"}}
             {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
         {/tab}
     {/tabset}

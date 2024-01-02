@@ -18,7 +18,7 @@
                         {if $can_edit || $can_delete}
                             <div class="col-md text-start text-md-end">
                                 {if $can_edit}
-                                    <a href="{uri args="acp/menus/index/edit/id_`$menu.id`"}" class="btn btn-outline-secondary">
+                                    <a href="{uri args="acp/menus/index/edit/id_`$menu.id`"}" class="btn btn-light">
                                         {icon iconSet="solid" icon="pen"} {lang t="menus|admin_index_edit"}
                                     </a>
                                 {/if}

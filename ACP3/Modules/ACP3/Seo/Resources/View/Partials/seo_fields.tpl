@@ -8,7 +8,7 @@
                 <input class="form-control" type="text" name="alias" id="alias" value="{$seo.alias}">
                 <a href="{uri args="acp/seo/index/suggest"}"
                    id="seo-alias-suggestion"
-                   class="btn btn-outline-secondary"
+                   class="btn btn-light"
                    title="{lang t="seo|suggest_alias"}">
                     {icon iconSet="solid" icon="rotate"}
                     <span class="visually-hidden">{lang t="seo|suggest_alias"}</span>

@@ -26,14 +26,14 @@
                     <input type="text" id="toc-title" class="form-control">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{lang t="system|close"}</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{lang t="system|close"}</button>
                     <button class="btn btn-primary" data-bs-dismiss="modal">{lang t="system|submit"}</button>
                 </div>
             </div>
         </div>
     </div>
     <div id="page-break-link" class="mt-2">
-        <a href="#" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#page-break-form">
+        <a href="#" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#page-break-form">
             {lang t="system|insert_page_break"}
         </a>
     </div>

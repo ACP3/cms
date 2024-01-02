@@ -11,7 +11,7 @@
                    autocomplete="off"
                     {if isset($required) && $required === true} required{/if}
                     {$row.checked}>
-            <label for="{$row.id}" class="btn btn-outline-secondary">
+            <label for="{$row.id}" class="btn btn-light">
                 {$row.lang}
             </label>
         {/foreach}

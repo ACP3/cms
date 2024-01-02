@@ -22,7 +22,7 @@
                                     <div class="btn-group" role="group">
                                         {foreach $resource.select as $row}
                                             <input type="radio" class="btn-check" name="resources[{$resource.resource_id}]" id="resource-{$resource.resource_id}-{$row.value}" value="{$row.value}"{$row.selected}>
-                                            <label for="resource-{$resource.resource_id}-{$row.value}" class="btn btn-outline-secondary">
+                                            <label for="resource-{$resource.resource_id}-{$row.value}" class="btn btn-light">
                                                 {$row.lang}
                                                 {if $row.value === 2}
                                                     <small>({$resource.calculated})</small>
