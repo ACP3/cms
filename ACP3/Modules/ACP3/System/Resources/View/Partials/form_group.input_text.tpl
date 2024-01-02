@@ -19,6 +19,7 @@
                     {$attrName}="{$attrValue}"
                 {/foreach}
             {/if}
+            {if (isset($floatingLabel) && $floatingLabel === true)}placeholder="{if !empty({$label})}{$label}{/if}"{/if}
             {if (isset($required) && $required === true)} required{/if}
             {if (isset($readonly) && $readonly === true)} readonly{/if}
             {if (isset($disabled) && $disabled === true)} disabled{/if}>
