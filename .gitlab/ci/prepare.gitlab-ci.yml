@@ -19,7 +19,7 @@ composer:
     - !reference [.phpstan-changes, rules]
 
 npm:
-  image: node:18-alpine
+  image: node:18-alpine3.18
   stage: prepare
   cache:
     key:
