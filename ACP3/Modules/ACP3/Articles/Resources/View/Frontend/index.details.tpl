@@ -7,6 +7,10 @@
     {/block}
 {/if}
 
+{block EDIT_CONTENT}
+    {check_access mode="link" path="acp/articles/index/edit/id_`$page.id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+{/block}
+
 {block CONTENT}
     <div class="clearfix">
         {$page.toc}

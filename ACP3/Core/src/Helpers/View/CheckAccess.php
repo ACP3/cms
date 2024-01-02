@@ -101,6 +101,8 @@ class CheckAccess
             'uri' => $this->router->route($params['path']),
             'title' => $params['title'] ?? null,
             'class' => $params['class'] ?? null,
+            'blank' => $params['blank'] ?? false,
+            'selectors' => $params['selectors'] ?? '',
             'lang' => $lang,
         ];
     }

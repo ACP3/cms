@@ -1,5 +1,11 @@
 {extends file="asset:`$LAYOUT`"}
 
+{block EDIT_CONTENT}
+    {if !empty($files)}
+        {check_access mode="link" path="acp/categories/index/edit/id_`$files[0].category_id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+    {/if}
+{/block}
+
 {block CONTENT}
     {if !empty($categories)}
         {include file="asset:Files/Partials/categories_list.tpl" categories=$categories title={lang t="files|further_categories"}}

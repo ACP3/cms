@@ -1,5 +1,9 @@
 {extends file="asset:`$LAYOUT`"}
 
+{block EDIT_CONTENT}
+    {check_access mode="link" path="acp/contact/index/settings/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+{/block}
+
 {block CONTENT}
     <dl>
         {if !empty($contact.address)}

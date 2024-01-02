@@ -44,6 +44,7 @@
                 <h2 itemprop="name">{page_title}</h2>
             {/block}
             {event name="layout.content_before"}
+            {block EDIT_CONTENT}{/block}
             {block CONTENT}{/block}
             {event name="layout.content_after"}
         </main>

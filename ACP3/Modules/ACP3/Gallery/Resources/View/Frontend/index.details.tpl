@@ -1,5 +1,9 @@
 {extends file="asset:`$LAYOUT`"}
 
+{block EDIT_CONTENT}
+    {check_access mode="link" path="acp/gallery/pictures/edit/id_`$picture.id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+{/block}
+
 {block CONTENT}
     <article>
         <section class="text-center mb-2">

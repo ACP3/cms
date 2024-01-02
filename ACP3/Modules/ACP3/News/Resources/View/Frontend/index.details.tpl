@@ -7,6 +7,10 @@
     {/block}
 {/if}
 
+{block EDIT_CONTENT}
+    {check_access mode="link" path="acp/news/index/edit/id_`$news.id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+{/block}
+
 {block CONTENT}
     <time class="text-muted d-block mb-3" datetime="{date_format date=$news.start format="c"}">
         {date_format date=$news.start format=$dateformat}

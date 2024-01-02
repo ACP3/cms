@@ -7,6 +7,10 @@
     {/block}
 {/if}
 
+{block EDIT_CONTENT}
+    {check_access mode="link" path="acp/gallery/index/edit/id_`$gallery.id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+{/block}
+
 {block CONTENT}
     {if !empty($gallery.description)}
         {$gallery.description|rewrite_uri}

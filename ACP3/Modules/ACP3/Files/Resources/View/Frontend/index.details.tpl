@@ -7,6 +7,10 @@
     {/block}
 {/if}
 
+{block EDIT_CONTENT}
+    {check_access mode="link" path="acp/files/index/edit/id_`$file.id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+{/block}
+
 {block CONTENT}
     <time class="text-muted d-block mb-3" datetime="{date_format date=$file.start format="c"}">
         {date_format date=$file.start format=$dateformat}

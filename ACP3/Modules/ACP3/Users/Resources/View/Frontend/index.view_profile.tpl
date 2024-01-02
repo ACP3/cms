@@ -1,5 +1,9 @@
 {extends file="asset:`$LAYOUT`"}
 
+{block EDIT_CONTENT}
+    {check_access mode="link" path="acp/users/index/edit/id_`$user.id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+{/block}
+
 {block CONTENT}
     <fieldset>
         <legend>{lang t="system|general"}</legend>
