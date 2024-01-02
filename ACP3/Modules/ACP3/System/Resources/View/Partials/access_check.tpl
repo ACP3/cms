@@ -1,7 +1,7 @@
 {if $access_check.mode == 'link'}
     <a href="{$access_check.uri}"
        title="{$access_check.lang}"
-       class="btn btn-outline-secondary {$access_check.selectors}"
+       class="btn btn-light {$access_check.selectors}"
        {if $access_check.blank}target="_blank"{/if}>
         {if $access_check.iconSet !== null && $access_check.icon !== null}
             {icon iconSet=$access_check.iconSet icon=$access_check.icon cssSelectors=$access_check.class title=$access_check.title}
