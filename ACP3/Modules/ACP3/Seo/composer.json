@@ -17,8 +17,8 @@
   "prefer-stable": true,
   "require": {
     "acp3/core": "^6.22.0",
-    "acp3/module-permissions": "^6.18.0",
-    "acp3/module-system": "^6.22.0",
+    "acp3/module-permissions": "^6.24.0",
+    "acp3/module-system": "^6.24.0",
     "justinrainbow/json-schema": "^5.2",
     "thepixeldeveloper/sitemap": "^5.0"
   },
