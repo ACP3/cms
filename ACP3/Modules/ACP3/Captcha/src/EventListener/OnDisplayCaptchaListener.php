@@ -27,7 +27,10 @@ class OnDisplayCaptchaListener implements EventSubscriberInterface
                 $this->captchaExtension->getCaptcha(
                     $arguments['length'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_LENGTH,
                     $arguments['input_id'] ?? CaptchaExtensionInterface::CAPTCHA_DEFAULT_INPUT_ID,
-                    $arguments['input_only'] ?? false
+                    [
+                        'inputOnly' => $arguments['input_only'] ?? false,
+                        'floatingLabel' => $arguments['floating_label'] ?? false,
+                    ],
                 )
             );
         }

@@ -29,20 +29,27 @@ class NativeCaptchaExtension implements CaptchaExtensionInterface
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        bool $inputOnly = false
+        array $displayOptions = []
     ): string {
         if (!$this->user->isAuthenticated() && $this->hasCaptchaAccess()) {
             $token = sha1((string) mt_rand());
 
             $this->sessionHandler->set('captcha_' . $token, $this->secureHelper->salt($captchaLength));
 
-            $this->view->assign('captcha', [
-                'width' => $captchaLength * 25,
-                'id' => $formFieldId,
-                'height' => 30,
-                'input_only' => $inputOnly,
-                'token' => $token,
-            ]);
+            $this->view->assign(
+                'captcha',
+                array_merge(
+                    [
+                        'width' => $captchaLength * 25,
+                        'id' => $formFieldId,
+                        'height' => 30,
+                        'token' => $token,
+                        'inputOnly' => false,
+                        'floatingLabel' => false,
+                    ],
+                    $displayOptions
+                )
+            );
 
             return $this->view->fetchTemplate('Captcha/Partials/captcha_native.tpl');
         }

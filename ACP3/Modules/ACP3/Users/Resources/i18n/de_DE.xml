@@ -100,6 +100,7 @@
         <item key="skype">Skype</item>
         <item key="successfully_logged_out">Sie haben sich erfolgreich abgemeldet.</item>
         <item key="super_user">Super User</item>
+        <item key="to_login">Zum Login</item>
         <item key="type_in_nickname_or_email">Bitte geben Sie entweder den bei der Registrierung verwendeten Benutzernamen oder die E-Mail-Adresse ein.</item>
         <item key="type_in_pwd">Entweder ist das Passwort leer oder in der Wiederholung ist ein Tippfehler.</item>
         <item key="user_email_already_exists">Für die angegebene E-Mail-Adresse existiert bereits ein Benutzerkonto.</item>

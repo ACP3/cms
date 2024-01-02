@@ -1,7 +1,9 @@
 {extends file="asset:System/Partials/form_group.base.tpl"}
 
+{$floatingLabel=$captcha.floatingLabel}
+
 {$required=true}
-{if $captcha.input_only}
+{if $captcha.inputOnly}
     {$cssSelector=''}
 {/if}
 

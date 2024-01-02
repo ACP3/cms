@@ -33,18 +33,25 @@ class ReCaptchaCaptchaExtension implements CaptchaExtensionInterface
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        bool $inputOnly = false
+        array $displayOptions = []
     ): string {
         if (!$this->user->isAuthenticated()) {
             $settings = $this->settings->getSettings(Schema::MODULE_NAME);
 
-            $this->view->assign('captcha', [
-                'id' => $formFieldId,
-                'input_only' => $inputOnly,
-                'length' => $captchaLength,
-                'sitekey' => $settings['recaptcha_sitekey'],
-                'includeJsAssets' => $this->includeJsAssets,
-            ]);
+            $this->view->assign(
+                'captcha',
+                array_merge(
+                    [
+                        'length' => $captchaLength,
+                        'sitekey' => $settings['recaptcha_sitekey'],
+                        'includeJsAssets' => $this->includeJsAssets,
+                        'id' => $formFieldId,
+                        'inputOnly' => false,
+                        'floatingLabel' => false,
+                    ],
+                    $displayOptions
+                )
+            );
 
             if ($this->includeJsAssets) {
                 $this->includeJsAssets = false;

@@ -16,11 +16,13 @@ interface CaptchaExtensionInterface
 
     /**
      * Creates and returns the view of the captcha.
+     *
+     * @param array{floatingLabel?: bool, inputOnly?: bool} $displayOptions
      */
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        bool $inputOnly = false
+        array $displayOptions = []
     ): string;
 
     /**

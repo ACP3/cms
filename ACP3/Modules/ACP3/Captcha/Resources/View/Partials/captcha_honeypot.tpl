@@ -1,7 +1,9 @@
 {extends file="asset:System/Partials/form_group.base.tpl"}
 
+{$floatingLabel=$captcha.floatingLabel}
+
 {$formGroupSelector=' hidden'}
-{if $captcha.input_only}
+{if $captcha.inputOnly}
     {$cssSelector=''}
 {else}
     {$label={lang t="captcha|do_not_fill_out"}}

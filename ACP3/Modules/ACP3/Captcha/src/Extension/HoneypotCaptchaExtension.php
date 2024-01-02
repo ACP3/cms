@@ -25,13 +25,20 @@ class HoneypotCaptchaExtension implements CaptchaExtensionInterface
     public function getCaptcha(
         int $captchaLength = self::CAPTCHA_DEFAULT_LENGTH,
         string $formFieldId = self::CAPTCHA_DEFAULT_INPUT_ID,
-        bool $inputOnly = false
+        array $displayOptions = []
     ): string {
         if (!$this->userModel->isAuthenticated()) {
-            $this->view->assign('captcha', [
-                'id' => $formFieldId,
-                'input_only' => $inputOnly,
-            ]);
+            $this->view->assign(
+                'captcha',
+                array_merge(
+                    [
+                        'id' => $formFieldId,
+                        'inputOnly' => false,
+                        'floatingLabel' => false,
+                    ],
+                    $displayOptions
+                )
+            );
 
             return $this->view->fetchTemplate('Captcha/Partials/captcha_honeypot.tpl');
         }

@@ -100,6 +100,7 @@
         <item key="skype">Skype</item>
         <item key="successfully_logged_out">You have been successfully logged out.</item>
         <item key="super_user">Super user</item>
+        <item key="to_login">Go to login</item>
         <item key="type_in_nickname_or_email">Please either enter the E-mail address or the user name you used with the registration.</item>
         <item key="type_in_pwd">Either the password is empty or there is a typo in the repetition.</item>
         <item key="user_email_already_exists">There is already an user account registered with the same E-mail address.</item>
