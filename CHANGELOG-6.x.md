@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 -   [System] Added a new layout variant: `layout.simple.tpl`
+-   [System] Added basic support for floating labels to the various form-group templates
 
 ### Changed
 
