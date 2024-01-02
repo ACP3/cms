@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [ALL] Replaced all `.btn-outline-secondary`-selectors with `.btn-light`
 
 ## [6.23.0] - 2024-01-02
 
