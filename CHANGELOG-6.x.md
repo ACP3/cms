@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Articles] [Categories] [Contact] [Files] [Gallery] [News] Add links to the corresponding listing and detail pages to allow easier content editing
+
+### Changed
+
+-   [Acp] Improved the visuals of the Admin panel homepage
 
 ## [6.22.3] - 2024-01-02
 
