@@ -4,7 +4,7 @@
  */
 
 import autoprefixer from "autoprefixer";
-import * as dartSass from "sass";
+import * as sassEmbedded from "sass-embedded";
 import gulpSass from "gulp-sass";
 import componentPaths from "./helpers/component-paths.mjs";
 import gulpPlumber from "gulp-plumber";
@@ -13,7 +13,7 @@ import gulpRename from "gulp-rename";
 import gulpDependents from "gulp-dependents";
 import cssnano from "cssnano";
 
-const sass = gulpSass(dartSass);
+const sass = gulpSass(sassEmbedded);
 
 export default (gulp) => {
   return () => {

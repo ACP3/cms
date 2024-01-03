@@ -51,7 +51,7 @@
     "lint-staged": "^15.2.0",
     "postcss": "^8.4.32",
     "prettier": "^3.1.1",
-    "sass": "~1.64.0",
+    "sass-embedded": "~1.64.0",
     "semver": "^7.5.4",
     "simple-git": "^3.22.0",
     "stylelint": "^15.11.0",
