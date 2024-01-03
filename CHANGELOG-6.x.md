@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [Base] Replaced `sass` with `sass-embedded` to improve the `*.scss`-file transpilation performance
+-   [Base] Replace `babel` with `esbuild` to improve the `.(m)js`-files translation performance
+-   [Base] Optimized the pre-commit-hook
+-   [Base] [Tests] Moved all the code quality tool dependencies into the `acp3/tests`-package
+-   [Base] [Tests] Moved all `composer`-scripts into the `acp3/tests`-package, to make them more reusable
+    -   To make use of it, please enable the `merge-scripts`-option within your project's root-`composer.json`!
 
 ## [6.24.2] - 2024-01-02
 
