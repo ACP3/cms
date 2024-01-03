@@ -17,7 +17,7 @@
   "prefer-stable": true,
   "require": {
     "composer/semver": "^3.2",
-    "acp3/core": "^6.23.0",
+    "acp3/core": "^6.25.0",
     "acp3/module-permissions": "^6.24.0"
   },
   "suggest": {
