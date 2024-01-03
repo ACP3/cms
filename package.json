@@ -24,14 +24,15 @@
     "prettier:fix": "prettier --write --cache **/*.{js,cjs,mjs,json,md,yml}"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.7",
-    "@babel/preset-env": "^7.23.7",
     "@ronilaukkarinen/gulp-stylelint": "^14.1.2",
     "autoprefixer": "^10.4.16",
-    "babel-loader": "^9.1.3",
+    "browserslist": "^4.22.2",
     "concurrently": "^8.2.2",
     "cssnano": "^6.0.2",
     "del": "^7.1.0",
+    "esbuild": "^0.19.11",
+    "esbuild-loader": "^4.0.2",
+    "esbuild-plugin-browserslist": "^0.10.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.2",
@@ -75,7 +76,6 @@
     "js-cookie": "^3.0.5",
     "klaro": "^0.7.18",
     "photoswipe": "^5.4.3",
-    "regenerator-runtime": "^0.14.1",
     "rich-filemanager": "https://github.com/tinogo/RichFilemanager/tarball/rework-dependencies",
     "shariff": "^3.3.0",
     "tinymce": "^4.9.11"
