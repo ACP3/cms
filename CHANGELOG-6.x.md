@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Tests] Fixed executing php-cs-fixer with a custom config
 
 ## [6.25.0] - 2024-01-03
 
