@@ -6,7 +6,7 @@ test:php-unit:
     paths:
       - tests/.phpunit.cache
   script:
-    - composer test-with-coverage
+    - composer run test-with-coverage
   coverage: '/^\s*Lines:\s*\d+.\d+\%/'
   needs:
     - composer
@@ -33,7 +33,7 @@ test:php-cs-fixer:
     paths:
       - .php-cs-fixer.cache
   script:
-    - composer run-script lint
+    - composer run lint
   needs:
     - composer
   rules:
