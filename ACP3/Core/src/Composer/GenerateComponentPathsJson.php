@@ -18,6 +18,8 @@ class GenerateComponentPathsJson
     public static function execute(Event $event): int
     {
         $vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
+        require $vendorDir . '/autoload.php';
+
         $homeDir = \dirname($vendorDir);
 
         $paths = [];
