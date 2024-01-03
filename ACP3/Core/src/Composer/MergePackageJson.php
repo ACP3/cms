@@ -5,31 +5,32 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Console\Command;
+namespace ACP3\Core\Composer;
 
 use ACP3\Core\Component\ComponentRegistry;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use Composer\Script\Event;
+use MJS\TopSort\CircularDependencyException;
+use MJS\TopSort\ElementNotFoundException;
 
-class MergePackageJsonCommand extends Command
+class MergePackageJson
 {
-    protected function configure(): void
-    {
-        $this
-            ->setName('acp3:components:merge-package-json')
-            ->setDescription('This CLI command merges the package.json files of the various ACP3 components into a single one.');
-    }
-
     /**
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
      * @throws \JsonException
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public static function execute(Event $event): int
     {
-        $basePackageJsonFile = ACP3_ROOT_DIR . '/package-base.json';
+        $vendorDir = $event->getComposer()->getConfig()->get('vendor-dir');
+        require $vendorDir . '/autoload.php';
+
+        $homeDir = \dirname($vendorDir);
+
+        $basePackageJsonFile = $homeDir . '/package-base.json';
 
         if (!is_file($basePackageJsonFile)) {
-            $output->writeln("<error>Could not find package-base.json in the root ACP3 folder.\nPlease create one at first!</error>");
+            $io = $event->getIO();
+            $io->error("Could not find package-base.json in the root ACP3 folder.\nPlease create one at first!");
 
             return 1;
         }
@@ -65,7 +66,7 @@ class MergePackageJsonCommand extends Command
         }
 
         file_put_contents(
-            ACP3_ROOT_DIR . '/package.json',
+            $homeDir . '/package.json',
             json_encode($result, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES ^ JSON_PRETTY_PRINT) . "\n",
         );
 

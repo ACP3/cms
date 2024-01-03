@@ -17,6 +17,7 @@
     "php": "^8.1",
     "ext-pdo": "*",
     "ext-pdo_mysql": "*",
+    "composer/composer": "^2.6.0",
     "doctrine/dbal": "^3.0",
     "fisharebest/localization": "^1.10",
     "friendsofsymfony/http-cache": "~2.0",
@@ -64,5 +65,17 @@
     "psr-4": {
       "ACP3\\Core\\": "tests"
     }
+  },
+  "scripts": {
+    "generate-component-paths": "ACP3\\Core\\Composer\\GenerateComponentPathsJson::execute",
+    "merge-package-json": "ACP3\\Core\\Composer\\MergePackageJson::execute",
+    "post-install-cmd": [
+      "@generate-component-paths",
+      "@merge-package-json"
+    ],
+    "post-update-cmd": [
+      "@generate-component-paths",
+      "@merge-package-json"
+    ]
   }
 }

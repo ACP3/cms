@@ -18,6 +18,30 @@
     "dms/phpunit-arraysubset-asserts": "^0.5.0",
     "phpunit/phpunit": "^10.2"
   },
+  "scripts": {
+    "test": "./vendor/bin/phpunit -c ./tests/phpunit.dist.xml",
+    "test-windows": ".\\vendor\\bin\\phpunit.bat -c .\\tests\\phpunit.dist.xml",
+    "test-with-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never --log-junit junit-report.xml",
+    "lint": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --show-progress=dots -v",
+    "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --config=.php-cs-fixer.dist.php --dry-run --show-progress=dots -v",
+    "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --show-progress=dots -v",
+    "php-cs-fixer-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --config=.php-cs-fixer.dist.php --show-progress=dots -v",
+    "phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse --xdebug",
+    "phpstan-windows": ".\\vendor\\bin\\phpstan.bat analyse --xdebug",
+    "rector": "php -d memory_limit=-1 ./vendor/bin/rector process"
+  },
+  "scripts-descriptions": {
+    "test": "Runs the PHPUnits test WITHOUT coverage.",
+    "test-windows": "Runs the PHPUnits test WITHOUT coverage for Windows based systems.",
+    "test-with-coverage": "Runs the PHPUnits test WITH coverage.",
+    "lint": "Runs PHP-CS-Fixer WITHOUT fixing the code style errors.",
+    "lint-windows": "Runs PHP-CS-Fixer WITHOUT fixing the code style errors for Windows based systems.",
+    "php-cs-fixer": "Runs PHP-CS-Fixer WITH fixing the code style errors.",
+    "php-cs-fixer-windows": "Runs PHP-CS-Fixer WITH fixing the code style errors for Windows based systems.",
+    "phpstan": "Runs PHPStan.",
+    "phpstan-windows": "Runs PHPStan for Windows based systems.",
+    "rector": "Runs Rector."
+  },
   "extra": {
     "installer-name": "tests"
   }

@@ -81,18 +81,6 @@
       "url": "https://github.com/tinogo/shariff-backend-php"
     }
   ],
-  "scripts": {
-    "test": "./vendor/bin/phpunit -c ./tests/phpunit.dist.xml",
-    "test-windows": ".\\vendor\\bin\\phpunit.bat -c .\\tests\\phpunit.dist.xml",
-    "test-with-coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit -c ./tests/phpunit.dist.xml --coverage-text --colors=never --log-junit junit-report.xml",
-    "lint": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --show-progress=dots -v",
-    "lint-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --config=.php-cs-fixer.dist.php --dry-run --show-progress=dots -v",
-    "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --show-progress=dots -v",
-    "php-cs-fixer-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --config=.php-cs-fixer.dist.php --show-progress=dots -v",
-    "phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse --xdebug",
-    "phpstan-windows": ".\\vendor\\bin\\phpstan.bat analyse --xdebug",
-    "rector": "php -d memory_limit=-1 ./vendor/bin/rector process"
-  },
   "extra": {
     "merge-plugin": {
       "include": [
@@ -111,7 +99,7 @@
       "merge-dev": true,
       "merge-extra": false,
       "merge-extra-deep": false,
-      "merge-scripts": false
+      "merge-scripts": true
     }
   },
   "config": {
