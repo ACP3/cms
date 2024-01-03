@@ -33,7 +33,17 @@
     "php-cs-fixer-windows": ".\\vendor\\bin\\php-cs-fixer.bat fix --config=.php-cs-fixer.dist.php --show-progress=dots -v",
     "phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan analyse --xdebug",
     "phpstan-windows": ".\\vendor\\bin\\phpstan.bat analyse --xdebug",
-    "rector": "php -d memory_limit=-1 ./vendor/bin/rector process"
+    "rector": "php -d memory_limit=-1 ./vendor/bin/rector process",
+    "generate-component-paths": "ACP3\\Core\\Composer\\GenerateComponentPathsJson::execute",
+    "merge-package-json": "ACP3\\Core\\Composer\\MergePackageJson::execute",
+    "post-install-cmd": [
+      "@generate-component-paths",
+      "@merge-package-json"
+    ],
+    "post-update-cmd": [
+      "@generate-component-paths",
+      "@merge-package-json"
+    ]
   },
   "scripts-descriptions": {
     "test": "Runs the PHPUnits test WITHOUT coverage.",

@@ -65,17 +65,5 @@
     "psr-4": {
       "ACP3\\Core\\": "tests"
     }
-  },
-  "scripts": {
-    "generate-component-paths": "ACP3\\Core\\Composer\\GenerateComponentPathsJson::execute",
-    "merge-package-json": "ACP3\\Core\\Composer\\MergePackageJson::execute",
-    "post-install-cmd": [
-      "@generate-component-paths",
-      "@merge-package-json"
-    ],
-    "post-update-cmd": [
-      "@generate-component-paths",
-      "@merge-package-json"
-    ]
   }
 }
