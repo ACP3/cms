@@ -88,6 +88,8 @@
     "!(*.min).{js,cjs,mjs}": "npm run eslint:fix",
     "!(*.min).{css,scss}": "npn run css-lint:fix",
     "!(*.min).{js,cjs,mjs,json,md,yml}": "npm run prettier:fix",
-    "*.php": "docker-compose run --no-deps --rm app composer php-cs-fixer"
+    "*.php": "docker-compose run --no-deps --rm app sh -c \"composer php-cs-fixer\" && composer run phpstan && composer run test",
+    "composer.{json,lock}": "docker-compose run --no-deps --rm app sh -c \"composer php-cs-fixer\" && composer run phpstan && composer run test",
+    "phpstan.{neon,neon.dist}": "docker-compose run --no-deps --rm app composer run phpstan"
   }
 }
