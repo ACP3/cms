@@ -1,5 +1,5 @@
 {
-  "name": "acp3-cms",
+  "name": "@acp3/cms",
   "description": "The ACP3 CMS is a highly customizable and easy to use Web Content Management System based on PHP and MySQL.",
   "repository": {
     "type": "git",
@@ -88,8 +88,8 @@
     "!(*.min).{js,cjs,mjs}": "npm run eslint:fix",
     "!(*.min).{css,scss}": "npn run css-lint:fix",
     "!(*.min).{js,cjs,mjs,json,md,yml}": "npm run prettier:fix",
-    "*.php": "docker-compose run --no-deps --rm app sh -c \"composer php-cs-fixer\" && composer run phpstan && composer run test",
-    "composer.{json,lock}": "docker-compose run --no-deps --rm app sh -c \"composer php-cs-fixer\" && composer run phpstan && composer run test",
+    "*.php": "docker-compose run --no-deps --rm app sh -c \"composer run php-cs-fixer\" && composer run phpstan && composer run test",
+    "composer.{json,lock}": "docker-compose run --no-deps --rm app sh -c \"composer run php-cs-fixer\" && composer run phpstan && composer run test",
     "phpstan.{neon,neon.dist}": "docker-compose run --no-deps --rm app composer run phpstan"
   }
 }
