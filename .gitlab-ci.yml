@@ -10,14 +10,9 @@ stages:
 variables:
   COMPOSER_HOME: .composerhome
   COMPOSER_ALLOW_SUPERUSER: 1
-  SAST_EXCLUDED_PATHS: "tests,node_modules,vendor,./**/*.min.js"
-  SAST_GOSEC_LEVEL: 2
-  SAST_DISABLE_BABEL: "true"
   FF_USE_FASTZIP: 1
 
 include:
-  #  - template: Code-Quality.gitlab-ci.yml
-  #  - template: Security/SAST.gitlab-ci.yml
   - local: .gitlab/ci/rules.gitlab-ci.yml
   - local: .gitlab/ci/build.gitlab-ci.yml
   - local: .gitlab/ci/package-managers.gitlab-ci.yml
