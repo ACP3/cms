@@ -40,6 +40,7 @@
   rules:
     changes:
       - "ACP3/**/*.{css,js,less,scss}"
+      - "build/gulp/**/*.mjs"
       - "design/**/*.{css,js,less,scss}"
       - "installation/**/*.{css,js,less,scss}"
       - .prettierignore
