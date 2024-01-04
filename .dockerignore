@@ -20,5 +20,6 @@ vendor
 .php-cs-fixer.cache
 .phpunit.result.cache
 .stylelintcache
-compose.yml
+docker-compose.override.yml
+docker-compose.yml
 sitemap.xml
