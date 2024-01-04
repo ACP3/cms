@@ -50,7 +50,7 @@ $config['allowBulk'] = true;
  * For example, if you copy/move/rename an object that contains 1000 nested objects you will be billed for another 1000 of GET requests.
  * Original discussion: https://github.com/servocoder/RichFilemanager-PHP/issues/6
  */
-$config['aclPolicy'] = \RFM\Repository\S3\StorageHelper::ACL_POLICY_DEFAULT;
+$config['aclPolicy'] = RFM\Repository\S3\StorageHelper::ACL_POLICY_DEFAULT;
 
 /*
  * The Server-side encryption algorithm used when storing objects in S3.
@@ -77,7 +77,7 @@ $config['credentials'] = [
     'options' => [
         'use_path_style_endpoint' => false,
     ],
-    'defaultAcl' => \RFM\Repository\S3\StorageHelper::ACL_PUBLIC_READ,
+    'defaultAcl' => RFM\Repository\S3\StorageHelper::ACL_PUBLIC_READ,
     // 'cdnHostname' => 'http://example.cloudfront.net',
     'debug' => false, // bool|array
 ];
