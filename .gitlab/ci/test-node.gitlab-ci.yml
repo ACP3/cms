@@ -1,5 +1,5 @@
 test:csslint:
-  image: node:18-alpine3.18
+  image: ${CI_REGISTRY_IMAGE}:php-8.1-node-18
   stage: test
   cache:
     key: $CI_JOB_NAME
@@ -15,7 +15,7 @@ test:csslint:
     - !reference [.stylelint-changes, rules]
 
 test:prettier:
-  image: node:18-alpine3.18
+  image: ${CI_REGISTRY_IMAGE}:php-8.1-node-18
   stage: test
   cache:
     key: $CI_JOB_NAME
@@ -31,7 +31,7 @@ test:prettier:
     - !reference [.prettier-changes, rules]
 
 test:eslint:
-  image: node:18-alpine3.18
+  image: ${CI_REGISTRY_IMAGE}:php-8.1-node-18
   stage: test
   cache:
     key: $CI_JOB_NAME

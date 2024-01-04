@@ -1,6 +1,6 @@
 composer:
-  image: composer:2.6
-  stage: prepare
+  image: ${CI_REGISTRY_IMAGE}:php-8.1-node-18
+  stage: package-managers
   cache:
     key: $CI_JOB_NAME
     paths:
@@ -19,8 +19,8 @@ composer:
     - !reference [.phpstan-changes, rules]
 
 npm:
-  image: node:18-alpine3.18
-  stage: prepare
+  image: ${CI_REGISTRY_IMAGE}:php-8.1-node-18
+  stage: package-managers
   cache:
     key:
       prefix: $CI_JOB_NAME
