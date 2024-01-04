@@ -92,7 +92,7 @@ const componentPathsForPngOptimization = [
   ...Object.values(componentPathsJson.theme).map((theme) => theme + "/*" + globPatternPng),
 ];
 
-const globPatternAssets = "/Resources/Assets/**/*";
+const globPatternAssets = "/Resources/Assets/!(scss)/**";
 /** @type {string[]} */
 const assetFolders = [
   ...Object.values(componentPathsJson.core)
