@@ -1,4 +1,4 @@
-build-php81:
+build-php-node-container:
   image: docker:latest
   services:
     - docker:dind
@@ -6,24 +6,15 @@ build-php81:
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
-    - docker pull ${CI_REGISTRY_IMAGE}:php-8.1-node-18 || true
-    - docker build --cache-from ${CI_REGISTRY_IMAGE}:php-8.1-node-18 -t ${CI_REGISTRY_IMAGE}:php-8.1-node-18 -f ./build/docker/php/php81.dockerfile .
-    - docker push ${CI_REGISTRY_IMAGE}:php-8.1-node-18
+    - docker pull ${CI_REGISTRY_IMAGE}:${IMAGE_NAME} || true
+    - docker build --cache-from ${CI_REGISTRY_IMAGE}:${IMAGE_NAME} -t ${CI_REGISTRY_IMAGE}:${IMAGE_NAME} -f ./build/docker/php/${DOCKERFILE_NAME} .
+    - docker push ${CI_REGISTRY_IMAGE}:${IMAGE_NAME}
   rules:
     - !reference [.gitlab-ci-changes, rules]
     - !reference [.dockerfile-changes, rules]
-
-build-php82:
-  image: docker:latest
-  services:
-    - docker:dind
-  stage: build
-  before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-  script:
-    - docker pull ${CI_REGISTRY_IMAGE}:php-8.2-node-18 || true
-    - docker build --cache-from ${CI_REGISTRY_IMAGE}:php-8.2-node-18 -t ${CI_REGISTRY_IMAGE}:php-8.2-node-18 -f ./build/docker/php/php82.dockerfile .
-    - docker push ${CI_REGISTRY_IMAGE}:php-8.2-node-18
-  rules:
-    - !reference [.gitlab-ci-changes, rules]
-    - !reference [.dockerfile-changes, rules]
+  parallel:
+    matrix:
+      - IMAGE_NAME: "php-8.1-node-18"
+        DOCKERFILE_NAME: "php81.dockerfile"
+      - IMAGE_NAME: "php-8.1-node-18"
+        DOCKERFILE_NAME: "php82.dockerfile"
