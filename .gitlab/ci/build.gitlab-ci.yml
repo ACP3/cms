@@ -4,7 +4,7 @@ build-php81:
     - docker:dind
   stage: build
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
     - docker pull ${CI_REGISTRY_IMAGE}:php-8.1-node-18 || true
     - docker build --cache-from ${CI_REGISTRY_IMAGE}:php-8.1-node-18 -t ${CI_REGISTRY_IMAGE}:php-8.1-node-18 -f ./build/docker/php/php81.dockerfile .
@@ -19,7 +19,7 @@ build-php82:
     - docker:dind
   stage: build
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
     - docker pull ${CI_REGISTRY_IMAGE}:php-8.2-node-18 || true
     - docker build --cache-from ${CI_REGISTRY_IMAGE}:php-8.2-node-18 -t ${CI_REGISTRY_IMAGE}:php-8.2-node-18 -f ./build/docker/php/php82.dockerfile .
