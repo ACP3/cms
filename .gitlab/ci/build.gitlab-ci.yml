@@ -16,5 +16,7 @@ build-php-node-container:
     matrix:
       - IMAGE_NAME: "php-8.1-node-18"
         DOCKERFILE_NAME: "php81.dockerfile"
-      - IMAGE_NAME: "php-8.1-node-18"
+      - IMAGE_NAME: "php-8.2-node-18"
         DOCKERFILE_NAME: "php82.dockerfile"
+      - IMAGE_NAME: "php-8.3-node-18"
+        DOCKERFILE_NAME: "php83.dockerfile"
