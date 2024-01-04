@@ -1,11 +1,6 @@
-FROM node:18 AS node
-FROM php:8.2-apache
+FROM php:8.2-apache AS dev
 
-COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=node /usr/local/bin/node /usr/local/bin/node
-
-RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
-    apt-get update -yqq && \
+RUN apt-get update -yqq && \
     apt-get install git \
                     unzip \
                     zlib1g-dev \
@@ -35,3 +30,11 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && php composer-setup.php --quiet --2 \
  && mv composer.phar /usr/local/bin/composer \
  && rm composer-setup.php
+
+FROM node:18 AS node
+FROM dev AS ci
+
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm

@@ -7,7 +7,7 @@ build-php-node-container:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
   script:
     - docker pull ${CI_REGISTRY_IMAGE}:${IMAGE_NAME} || true
-    - docker build --cache-from ${CI_REGISTRY_IMAGE}:${IMAGE_NAME} -t ${CI_REGISTRY_IMAGE}:${IMAGE_NAME} -f ./build/docker/php/${DOCKERFILE_NAME} .
+    - docker build --cache-from ${CI_REGISTRY_IMAGE}:${IMAGE_NAME} -t ${CI_REGISTRY_IMAGE}:${IMAGE_NAME} -f ./build/docker/php/${DOCKERFILE_NAME} --target ci .
     - docker push ${CI_REGISTRY_IMAGE}:${IMAGE_NAME}
   rules:
     - !reference [.gitlab-ci-changes, rules]

@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: "./build/docker/php/php81.dockerfile"
+      target: dev
     networks:
       - acp3-cms
     ports:
