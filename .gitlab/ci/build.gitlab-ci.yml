@@ -1,0 +1,29 @@
+build-php81:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: build
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker pull ${CI_REGISTRY_IMAGE}:php-8.1-node-18 || true
+    - docker build --cache-from ${CI_REGISTRY_IMAGE}:php-8.1-node-18 -t ${CI_REGISTRY_IMAGE}:php-8.1-node-18 -f ./build/docker/php/php81.dockerfile .
+    - docker push ${CI_REGISTRY_IMAGE}:php-8.1-node-18
+  rules:
+    - !reference [.gitlab-ci-changes, rules]
+    - !reference [.dockerfile-changes, rules]
+
+build-php82:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: build
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker pull ${CI_REGISTRY_IMAGE}:php-8.2-node-18 || true
+    - docker build --cache-from ${CI_REGISTRY_IMAGE}:php-8.2-node-18 -t ${CI_REGISTRY_IMAGE}:php-8.2-node-18 -f ./build/docker/php/php82.dockerfile .
+    - docker push ${CI_REGISTRY_IMAGE}:php-8.2-node-18
+  rules:
+    - !reference [.gitlab-ci-changes, rules]
+    - !reference [.dockerfile-changes, rules]
