@@ -3,6 +3,11 @@
     changes:
       - ".gitlab/ci/*.yml"
 
+.dockerfile-changes:
+  rules:
+    changes:
+      - "./build/docker/*.dockerfile"
+
 .php-changes:
   rules:
     changes:
