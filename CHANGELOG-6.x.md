@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+-   No user visible changes
 
 ## [6.26.0] - 2024-01-06
 
