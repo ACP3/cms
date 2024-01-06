@@ -4,5 +4,8 @@ services:
     tags:
       - { name: acp3.controller.action }
 
+  filemanager.controller.admin.index.index:
+    class: ACP3\Modules\ACP3\Filemanager\Controller\Admin\Index\Index
+
   filemanager.controller.admin.index.richfilemanager:
     class: ACP3\Modules\ACP3\Filemanager\Controller\Admin\Index\RichFileManager

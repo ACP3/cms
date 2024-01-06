@@ -8,8 +8,9 @@
 namespace ACP3\Modules\ACP3\Filemanager\Installer;
 
 use ACP3\Core\ACL\PrivilegeEnum;
+use ACP3\Core\Installer\SchemaInterface;
 
-class Schema implements \ACP3\Core\Installer\SchemaInterface
+class Schema implements SchemaInterface
 {
     public const MODULE_NAME = 'filemanager';
 
@@ -18,6 +19,7 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
         return [
             'admin' => [
                 'index' => [
+                    'index' => PrivilegeEnum::ADMIN_VIEW,
                     'richfilemanager' => PrivilegeEnum::ADMIN_VIEW,
                 ],
             ],
