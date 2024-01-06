@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [6.26.0] - 2024-01-06
 
 ### Added
 
@@ -599,7 +599,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 -   [All] Fixed many bugs
 
-[unreleased]: https://gitlab.com/ACP3/cms/compare/v6.25.1...6.x
+[unreleased]: https://gitlab.com/ACP3/cms/compare/v6.26.0...6.x
+[6.26.0]: https://gitlab.com/ACP3/cms/compare/v6.25.1...v6.26.0
 [6.25.1]: https://gitlab.com/ACP3/cms/compare/v6.25.0...v6.25.1
 [6.25.0]: https://gitlab.com/ACP3/cms/compare/v6.24.2...v6.25.0
 [6.24.2]: https://gitlab.com/ACP3/cms/compare/v6.24.1...v6.24.2
