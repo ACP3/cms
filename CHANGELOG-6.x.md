@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+-   [Gallery] Fixed a fatal error, when the Gallerycomments module isn't present
 
 ## [6.26.1] - 2024-01-06
 
