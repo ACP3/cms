@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+-   [Base] Added a PHP 8.3 based docker image
+-   [Base] Integrated Node.js into the PHP docker image.
+
+### Changed
+
+-   [Base] Slightly optimized the `copy-assets` `gulp`-task
+-   [Base] Removed Code Climate
 
 ## [6.25.1] - 2024-01-03
 
