@@ -25,13 +25,11 @@ npm:
     key:
       prefix: $CI_JOB_NAME
       files:
-        - package.json
         - package-lock.json
     paths:
-      - .npm
       - node_modules
   script:
-    - if [ ! -d "node_modules" ]; then npm ci --no-progress --no-audit --cache .npm; fi
+    - if [ ! -d "node_modules" ]; then npm ci --no-progress --no-audit; fi
   artifacts:
     paths:
       - node_modules
