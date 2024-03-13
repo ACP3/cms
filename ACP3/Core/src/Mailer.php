@@ -243,7 +243,9 @@ class Mailer
     public function reset(): self
     {
         $this->phpMailer->clearAllRecipients();
+        $this->phpMailer->clearReplyTos();
         $this->phpMailer->clearAttachments();
+        $this->phpMailer->clearCustomHeaders();
 
         return $this;
     }

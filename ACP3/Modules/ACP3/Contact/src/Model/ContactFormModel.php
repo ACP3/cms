@@ -48,10 +48,13 @@ class ContactFormModel
                 'email' => $settings['mail'],
             ])
             ->setFrom([
+                'name' => $systemSettings['site_title'],
+                'email' => $settings['mail'],
+            ])
+            ->setReplyTo([
                 'name' => $formData['name'],
                 'email' => $formData['mail'],
-            ])
-            ->setSender($settings['mail']);
+            ]);
 
         return $this->sendEmail->execute($data);
     }
