@@ -12,7 +12,6 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Helpers\Secure;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Modules\ACP3\Users;
 use ACP3\Modules\ACP3\Users\Exception\LoginFailedException;
 use ACP3\Modules\ACP3\Users\Exception\UserAccountLockedException;
 use ACP3\Modules\ACP3\Users\Repository\UserRepository;
@@ -64,7 +63,7 @@ class AuthenticationModel implements AuthenticationModelInterface
      *
      * @throws \Exception
      */
-    public function setRememberMeCookie(int $userId, string $token, int $expiry = null): Cookie
+    public function setRememberMeCookie(int $userId, string $token, ?int $expiry = null): Cookie
     {
         if ($expiry === null) {
             $expiry = self::REMEMBER_ME_COOKIE_LIFETIME;
@@ -83,8 +82,8 @@ class AuthenticationModel implements AuthenticationModelInterface
     /**
      * Loggt einen User ein.
      *
-     * @throws Users\Exception\LoginFailedException
-     * @throws Users\Exception\UserAccountLockedException
+     * @throws LoginFailedException
+     * @throws UserAccountLockedException
      * @throws \Doctrine\DBAL\Exception
      * @throws \Exception
      */

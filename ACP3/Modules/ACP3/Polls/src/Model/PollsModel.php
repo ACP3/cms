@@ -36,7 +36,7 @@ class PollsModel extends AbstractModel implements UpdatedAtAwareModelInterface
         parent::__construct($eventDispatcher, $dataProcessor, $pollRepository);
     }
 
-    public function save(array $rawData, int $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData['updated_at'] = 'now';
 

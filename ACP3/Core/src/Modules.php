@@ -15,11 +15,11 @@ class Modules
     /**
      * @var array<string, array<string, mixed>>|null
      */
-    private array|null $modulesInfo = null;
+    private ?array $modulesInfo = null;
     /**
      * @var array<string, array<string, mixed>>|null
      */
-    private array|null $allModulesTopSorted = null;
+    private ?array $allModulesTopSorted = null;
 
     public function __construct(private readonly ModuleInfoInterface $moduleInfo)
     {

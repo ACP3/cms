@@ -18,7 +18,7 @@ class UnauthorizedAccessException extends \RuntimeException implements ForwardCo
     public function __construct(
         private readonly array $routeArguments = [],
         string $message = '',
-        \Throwable $previous = null)
+        ?\Throwable $previous = null)
     {
         parent::__construct($message, Response::HTTP_UNAUTHORIZED, $previous);
     }

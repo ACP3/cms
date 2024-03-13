@@ -21,7 +21,7 @@ class Router implements RouterInterface
     {
     }
 
-    public function route(string $path, bool $isAbsolute = false, bool $isSecure = null): string
+    public function route(string $path, bool $isAbsolute = false, ?bool $isSecure = null): string
     {
         if ($path !== '') {
             $path = $this->preparePath($path);

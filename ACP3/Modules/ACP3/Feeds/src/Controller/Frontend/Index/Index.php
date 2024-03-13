@@ -26,7 +26,7 @@ class Index extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws Core\Controller\Exception\ResultNotExistsException
      */
     public function __invoke(string $feed): Response
     {

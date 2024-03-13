@@ -20,7 +20,7 @@ class GalleryModel extends AbstractModel implements UpdatedAtAwareModelInterface
 {
     public const EVENT_PREFIX = Schema::MODULE_NAME;
 
-    public function save(array $rawData, int $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $rawData['updated_at'] = 'now';
 

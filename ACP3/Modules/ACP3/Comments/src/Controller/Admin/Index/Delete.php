@@ -26,7 +26,7 @@ class Delete extends AbstractWidgetAction
     /**
      * @return array<string, mixed>|Response
      */
-    public function __invoke(string $action = null): array|Response
+    public function __invoke(?string $action = null): array|Response
     {
         return $this->actionHelper->handleDeleteAction(
             $action,

@@ -21,7 +21,7 @@ class VoteModel
      * @param array<string, mixed> $formData
      *
      * @throws \Doctrine\DBAL\Exception
-     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
+     * @throws Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function vote(array $formData, int $pollId, string $ipAddress, string $time): bool
     {

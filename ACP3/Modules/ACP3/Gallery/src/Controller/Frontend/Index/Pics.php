@@ -26,8 +26,8 @@ class Pics extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
-     * @throws \ACP3\Core\Picture\Exception\PictureGenerateException
+     * @throws Core\Controller\Exception\ResultNotExistsException
+     * @throws Core\Picture\Exception\PictureGenerateException
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $id): Response

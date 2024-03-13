@@ -38,7 +38,7 @@ class PictureModel extends AbstractModel implements SortingAwareInterface
         parent::__construct($eventDispatcher, $dataProcessor, $pictureRepository);
     }
 
-    public function save(array $rawData, int $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         if ($entryId === null) {
             $rawData[$this->getSortingField()] = $this->getPictureSortIndex($rawData['gallery_id']);

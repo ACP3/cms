@@ -25,7 +25,7 @@ class ViewProfile extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
+     * @throws Core\Controller\Exception\ResultNotExistsException
      * @throws \Doctrine\DBAL\Exception
      */
     public function __invoke(int $id): Response

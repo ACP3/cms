@@ -64,7 +64,7 @@ abstract class BaseStorage implements StorageInterface
         }
     }
 
-    public function config(array|string $key = null, mixed $default = null): mixed
+    public function config(array|string|null $key = null, mixed $default = null): mixed
     {
         return config($this->getName() . ".{$key}", $default);
     }
@@ -87,7 +87,7 @@ abstract class BaseStorage implements StorageInterface
     /**
      * Return storage instance that stores image thumbnails.
      *
-     * @return StorageInterface|\RFM\Repository\Local\Storage|\RFM\Repository\S3\Storage
+     * @return StorageInterface|Local\Storage|S3\Storage
      */
     public function forThumbnail()
     {

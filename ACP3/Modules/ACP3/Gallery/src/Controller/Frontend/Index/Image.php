@@ -26,7 +26,7 @@ class Image extends Core\Controller\AbstractWidgetAction
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function __invoke(int $id, string $action = null)
+    public function __invoke(int $id, ?string $action = null)
     {
         set_time_limit(20);
         $picture = $this->pictureRepository->getFileById($id);

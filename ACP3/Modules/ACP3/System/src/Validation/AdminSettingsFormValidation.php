@@ -15,7 +15,7 @@ use ACP3\Modules\ACP3\System\Validation\ValidationRules\IsWysiwygEditorValidatio
 class AdminSettingsFormValidation extends Core\Validation\AbstractFormValidation
 {
     /**
-     * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
+     * @throws Core\Validation\Exceptions\ValidationFailedException
      */
     public function validate(array $formData): void
     {

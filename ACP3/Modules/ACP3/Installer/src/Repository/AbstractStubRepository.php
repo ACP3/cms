@@ -21,7 +21,7 @@ class AbstractStubRepository implements RepositoryInterface
         return $tableName;
     }
 
-    public function delete(array|int|string $entryId, string $columnName = null): int
+    public function delete(array|int|string $entryId, ?string $columnName = null): int
     {
         return 0;
     }

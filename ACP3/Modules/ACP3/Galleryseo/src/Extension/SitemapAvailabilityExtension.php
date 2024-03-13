@@ -36,7 +36,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function fetchSitemapUrls(bool $isSecure = null): void
+    protected function fetchSitemapUrls(?bool $isSecure = null): void
     {
         $this->addUrl('gallery/index/index', null, $isSecure);
 

@@ -52,10 +52,10 @@ class Helpers
      */
     public function categoriesList(
         string $moduleName,
-        int $categoryId = null,
+        ?int $categoryId = null,
         bool $categoryCreate = false,
         string $formFieldName = 'cat',
-        string $customText = null
+        ?string $customText = null
     ): array {
         $categories = $this->categoryRepository->getAllByModuleName($moduleName);
         foreach ($categories as &$category) {

@@ -28,7 +28,7 @@ interface AuthenticationModelInterface
     /**
      * Setzt den internen Authentifizierungscookie.
      */
-    public function setRememberMeCookie(int $userId, string $token, int $expiry = null): Cookie;
+    public function setRememberMeCookie(int $userId, string $token, ?int $expiry = null): Cookie;
 
     /**
      * Loggt einen User ein.

@@ -59,7 +59,7 @@ class GalleryRepository extends AbstractRepository
      *
      * @throws Exception
      */
-    public function getAll(string $time = '', int $limitStart = null, int $resultsPerPage = null): array
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = !empty($time) ? ' WHERE `active` = :active AND ' . $this->getPublicationPeriod('g.') : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

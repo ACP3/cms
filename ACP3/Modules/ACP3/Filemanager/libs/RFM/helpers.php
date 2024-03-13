@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @throws BindingResolutionException
  */
-function container(callable|string $make = null, array $parameters = []): mixed
+function container(callable|string|null $make = null, array $parameters = []): mixed
 {
     if (\is_null($make)) {
         return Container::getInstance();
@@ -45,7 +45,7 @@ function app(): Application
  *
  * @throws BindingResolutionException
  */
-function config(array|string $key = null, mixed $default = null): mixed
+function config(array|string|null $key = null, mixed $default = null): mixed
 {
     if (\is_null($key)) {
         return container('config');

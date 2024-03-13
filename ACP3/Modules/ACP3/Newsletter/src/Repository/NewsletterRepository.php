@@ -16,7 +16,7 @@ class NewsletterRepository extends Core\Repository\AbstractRepository
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function newsletterExists(int $newsletterId, int $status = null): bool
+    public function newsletterExists(int $newsletterId, ?int $status = null): bool
     {
         $where = $status !== null ? ' AND status = :status' : '';
 
@@ -42,7 +42,7 @@ class NewsletterRepository extends Core\Repository\AbstractRepository
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function countAll(int $status = null): int
+    public function countAll(?int $status = null): int
     {
         $where = $status !== null ? ' WHERE status = :status' : '';
 
@@ -57,7 +57,7 @@ class NewsletterRepository extends Core\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAll(int $status = null, int $limitStart = null, int $resultsPerPage = null): array
+    public function getAll(?int $status = null, ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = $status !== null ? ' WHERE status = :status' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

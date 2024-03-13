@@ -33,7 +33,7 @@ class ControllerActionDispatcher
      * @throws \ACP3\Core\Controller\Exception\ResultNotExistsException
      * @throws \ReflectionException
      */
-    public function dispatch(string $serviceId = null, array $arguments = []): Response
+    public function dispatch(?string $serviceId = null, array $arguments = []): Response
     {
         $controllerActionRequestEvent = new ControllerActionRequestEvent($this->request);
         $this->eventDispatcher->dispatch(

@@ -25,7 +25,7 @@ class RoleUpsertService
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function upsert(array $updatedData, int $roleId = null): int
+    public function upsert(array $updatedData, ?int $roleId = null): int
     {
         $this->roleFormValidation
             ->withRoleId($roleId)

@@ -67,8 +67,8 @@ class AdminFormValidation extends Core\Validation\AbstractFormValidation
     }
 
     /**
-     * @throws \ACP3\Core\Validation\Exceptions\ValidationFailedException
-     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
+     * @throws Core\Validation\Exceptions\ValidationFailedException
+     * @throws Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \Doctrine\DBAL\Exception
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException

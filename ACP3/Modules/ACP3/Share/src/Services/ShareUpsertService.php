@@ -24,7 +24,7 @@ class ShareUpsertService
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function upsert(array $updatedData, int $shareId = null): int
+    public function upsert(array $updatedData, ?int $shareId = null): int
     {
         $shareInfo = $this->shareModel->getOneById($shareId);
 

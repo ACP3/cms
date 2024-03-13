@@ -31,7 +31,7 @@ class DateValidationRule extends AbstractValidationRule
         return $this->checkIsValidDate($data);
     }
 
-    protected function checkIsValidDate(string $start, string $end = null): bool
+    protected function checkIsValidDate(string $start, ?string $end = null): bool
     {
         if ($this->matchIsDate($start)) {
             // Check date range

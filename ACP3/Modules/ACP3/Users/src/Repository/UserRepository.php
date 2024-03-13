@@ -28,7 +28,7 @@ class UserRepository extends Core\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function resultExistsByUserName(string $nickname, int $userId = null): bool
+    public function resultExistsByUserName(string $nickname, ?int $userId = null): bool
     {
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND nickname = ?';
@@ -46,7 +46,7 @@ class UserRepository extends Core\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function resultExistsByEmail(string $mail, int $userId = null): bool
+    public function resultExistsByEmail(string $mail, ?int $userId = null): bool
     {
         if (!empty($userId)) {
             $query = 'SELECT COUNT(*) FROM ' . $this->getTableName() . ' WHERE id != ? AND mail = ?';
@@ -106,7 +106,7 @@ class UserRepository extends Core\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAll(int $limitStart = null, int $resultsPerPage = null): array
+    public function getAll(?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 

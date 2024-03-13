@@ -148,7 +148,7 @@ class Request extends AbstractRequest
         return preg_replace('/\/page_(\d+)\//', '/', $this->query);
     }
 
-    public function setPathInfo(string $pathInfo = null): void
+    public function setPathInfo(?string $pathInfo = null): void
     {
         if ($pathInfo !== null) {
             $this->pathInfo = $pathInfo;

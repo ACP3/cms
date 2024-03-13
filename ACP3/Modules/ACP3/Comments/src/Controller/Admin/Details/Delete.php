@@ -29,7 +29,7 @@ class Delete extends Core\Controller\AbstractWidgetAction
      *
      * @throws Exception
      */
-    public function __invoke(int $id, string $action = null): array|Response
+    public function __invoke(int $id, ?string $action = null): array|Response
     {
         return $this->actionHelper->handleCustomDeleteAction(
             $action,

@@ -26,7 +26,7 @@ class EmoticonUpsertService
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function upsert(array $updatedData, ?UploadedFile $file, int $emoticonId = null): int
+    public function upsert(array $updatedData, ?UploadedFile $file, ?int $emoticonId = null): int
     {
         $this->adminFormValidation
             ->withFile($file, $emoticonId === null)

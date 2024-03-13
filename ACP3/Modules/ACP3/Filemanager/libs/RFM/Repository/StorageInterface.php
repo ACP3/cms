@@ -23,7 +23,7 @@ interface StorageInterface
     /**
      * Get configuration options specific for storage.
      */
-    public function config(array|string $key = null, mixed $default = null): mixed;
+    public function config(array|string|null $key = null, mixed $default = null): mixed;
 
     /**
      * Set user storage folder.
@@ -50,7 +50,7 @@ interface StorageInterface
      *
      * @param $options array
      */
-    public function createFolder(ItemModelInterface $target, ItemModelInterface|null $prototype, array $options): bool;
+    public function createFolder(ItemModelInterface $target, ?ItemModelInterface $prototype, array $options): bool;
 
     /**
      * Retrieve mime type of file.

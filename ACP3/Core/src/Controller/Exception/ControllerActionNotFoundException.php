@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ControllerActionNotFoundException extends \RuntimeException implements ForwardControllerActionAwareExceptionInterface
 {
-    public function __construct(string $message = '', \Throwable $previous = null)
+    public function __construct(string $message = '', ?\Throwable $previous = null)
     {
         parent::__construct($message, Response::HTTP_NOT_FOUND, $previous);
     }

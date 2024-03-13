@@ -76,7 +76,7 @@ class CommentRepository extends \ACP3\Core\Repository\AbstractRepository impleme
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAllByModule(int $moduleId, int $resultId, int $limitStart = null, int $resultsPerPage = null): array
+    public function getAllByModule(int $moduleId, int $resultId, ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
 

@@ -68,10 +68,10 @@ class AdminCategoryEditViewProvider
      * @throws \Doctrine\DBAL\Exception
      */
     private function fetchCategoryTree(
-        int $moduleId = null,
-        int $parentId = null,
-        int $leftId = null,
-        int $rightId = null
+        ?int $moduleId = null,
+        ?int $parentId = null,
+        ?int $leftId = null,
+        ?int $rightId = null
     ): array {
         if ($moduleId === null) {
             return [];

@@ -24,8 +24,8 @@ class Activate extends Core\Controller\AbstractWidgetAction
     }
 
     /**
-     * @throws \ACP3\Core\Validation\Exceptions\InvalidFormTokenException
-     * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
+     * @throws Core\Validation\Exceptions\InvalidFormTokenException
+     * @throws Core\Validation\Exceptions\ValidationRuleNotFoundException
      */
     public function __invoke(string $hash): string
     {

@@ -33,7 +33,7 @@ class RedirectMessages
     /**
      * Sets a redirect messages and redirects to the given internal path.
      */
-    public function setMessage(bool $isSuccess, string $text, string $path = null): JsonResponse|RedirectResponse
+    public function setMessage(bool $isSuccess, string $text, ?string $path = null): JsonResponse|RedirectResponse
     {
         $this->sessionHandler->getFlashBag()
             ->set($isSuccess ? 'success' : 'error', $text);

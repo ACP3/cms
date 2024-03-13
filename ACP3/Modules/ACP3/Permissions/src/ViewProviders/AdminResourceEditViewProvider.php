@@ -46,7 +46,7 @@ class AdminResourceEditViewProvider
     /**
      * @return array<string, mixed>[]
      */
-    private function fetchActiveModules(string $currentModule = null): array
+    private function fetchActiveModules(?string $currentModule = null): array
     {
         $modules = [];
         foreach ($this->modules->getInstalledModules() as $info) {
@@ -61,7 +61,7 @@ class AdminResourceEditViewProvider
     /**
      * @return array<string, mixed>[]
      */
-    private function fetchAreas(string $currentArea = null): array
+    private function fetchAreas(?string $currentArea = null): array
     {
         $areas = array_values(AreaEnum::values());
 

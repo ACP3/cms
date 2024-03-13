@@ -27,7 +27,7 @@ class GuestbookRepository extends Core\Repository\AbstractRepository implements 
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function countAll(int $notify = null): int
+    public function countAll(?int $notify = null): int
     {
         $where = ($notify === 2) ? ' WHERE active = 1' : '';
 
@@ -39,7 +39,7 @@ class GuestbookRepository extends Core\Repository\AbstractRepository implements 
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAll(int $notify = null, int $limitStart = null, int $resultsPerPage = null): array
+    public function getAll(?int $notify = null, ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = ($notify === 2) ? 'WHERE active = 1' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

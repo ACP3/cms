@@ -28,7 +28,7 @@ class Cache extends Core\Controller\AbstractWidgetAction
     /**
      * @return array<string, mixed>|Response
      */
-    public function __invoke(string $action = null): array|Response
+    public function __invoke(?string $action = null): array|Response
     {
         if ($action !== null) {
             return $this->executePurge($action);

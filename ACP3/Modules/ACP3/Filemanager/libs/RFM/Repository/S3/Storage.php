@@ -281,7 +281,7 @@ class Storage extends BaseStorage
      *
      * @param $options array
      */
-    public function createFolder(ItemModelInterface $target, ItemModelInterface $prototype = null, array $options = []): bool
+    public function createFolder(ItemModelInterface $target, ?ItemModelInterface $prototype = null, array $options = []): bool
     {
         if ($this->aclPolicy === StorageHelper::ACL_POLICY_INHERIT) {
             if (\is_null($prototype)) {

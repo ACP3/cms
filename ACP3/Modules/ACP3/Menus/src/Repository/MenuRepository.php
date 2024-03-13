@@ -24,7 +24,7 @@ class MenuRepository extends Core\Repository\AbstractRepository
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function menuExistsByName(string $menuName, int $menuId = null): bool
+    public function menuExistsByName(string $menuName, ?int $menuId = null): bool
     {
         $where = !empty($menuId) ? ' AND id != :id' : '';
 
@@ -47,7 +47,7 @@ class MenuRepository extends Core\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAllMenus(int $limitStart = null, int $resultsPerPage = null): array
+    public function getAllMenus(?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} ORDER BY title ASC, id ASC" .

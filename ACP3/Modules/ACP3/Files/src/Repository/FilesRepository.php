@@ -57,7 +57,7 @@ class FilesRepository extends Core\Repository\AbstractRepository
     /**
      * @throws \Doctrine\DBAL\Exception
      */
-    public function countAll(string $time = '', int $categoryId = null): int
+    public function countAll(string $time = '', ?int $categoryId = null): int
     {
         if ($categoryId !== null) {
             $results = $this->getAllByCategoryId($categoryId, $time);
@@ -73,7 +73,7 @@ class FilesRepository extends Core\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAllByCategoryId(int $categoryId, string $time = '', int $limitStart = null, int $resultsPerPage = null): array
+    public function getAllByCategoryId(int $categoryId, string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' AND ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);
@@ -89,7 +89,7 @@ class FilesRepository extends Core\Repository\AbstractRepository
      *
      * @throws \Doctrine\DBAL\Exception
      */
-    public function getAll(string $time = '', int $limitStart = null, int $resultsPerPage = null): array
+    public function getAll(string $time = '', ?int $limitStart = null, ?int $resultsPerPage = null): array
     {
         $where = empty($time) === false ? ' WHERE ' . $this->getPublicationPeriod() . ' AND `active` = :active' : '';
         $limitStmt = $this->buildLimitStmt($limitStart, $resultsPerPage);

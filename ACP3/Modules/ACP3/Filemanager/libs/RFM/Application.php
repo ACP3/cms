@@ -59,7 +59,7 @@ class Application
     /**
      * Application constructor.
      */
-    public function __construct(string $basePath = null)
+    public function __construct(?string $basePath = null)
     {
         if (\is_null($basePath)) {
             $basePath = realpath(__DIR__);
@@ -153,7 +153,7 @@ class Application
     /**
      * Get the base path for the application.
      */
-    public function basePath(string $path = null): string
+    public function basePath(?string $path = null): string
     {
         if (isset($this->basePath)) {
             return $this->basePath . ($path ? '/' . $path : $path);

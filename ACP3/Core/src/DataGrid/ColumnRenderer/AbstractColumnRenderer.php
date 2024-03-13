@@ -110,7 +110,7 @@ abstract class AbstractColumnRenderer implements ColumnRendererInterface
     /**
      * @param array<string, string>|string $attributeName
      */
-    protected function addHtmlAttribute(array|string $attributeName, string $attributeData = null): string
+    protected function addHtmlAttribute(array|string $attributeName, ?string $attributeData = null): string
     {
         if (\is_array($attributeName)) {
             $data = '';

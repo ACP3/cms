@@ -36,7 +36,7 @@ class NewsModel extends AbstractModel implements UpdatedAtAwareModelInterface
         parent::__construct($eventDispatcher, $dataProcessor, $newsRepository);
     }
 
-    public function save(array $rawData, int $entryId = null): int
+    public function save(array $rawData, ?int $entryId = null): int
     {
         $settings = $this->config->getSettings(Schema::MODULE_NAME);
 

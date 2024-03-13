@@ -16,11 +16,11 @@ interface RendererInterface
      */
     public function assign(array|string $name, mixed $value = null): self;
 
-    public function getTemplateVars(string $variableName = null): mixed;
+    public function getTemplateVars(?string $variableName = null): mixed;
 
-    public function fetch(string $template, string $cacheId = null, string $compileId = null, object $parent = null): string;
+    public function fetch(string $template, ?string $cacheId = null, ?string $compileId = null, ?object $parent = null): string;
 
-    public function display(string $template, string $cacheId = null, string $compileId = null, object $parent = null): void;
+    public function display(string $template, ?string $cacheId = null, ?string $compileId = null, ?object $parent = null): void;
 
     public function templateExists(string $template): bool;
 }

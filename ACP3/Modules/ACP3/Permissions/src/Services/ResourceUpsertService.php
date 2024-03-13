@@ -25,7 +25,7 @@ class ResourceUpsertService
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function upsert(array $updatedData, int $aclResourceId = null): int
+    public function upsert(array $updatedData, ?int $aclResourceId = null): int
     {
         $this->resourceFormValidation->validate($updatedData);
 

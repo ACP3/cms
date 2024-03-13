@@ -303,7 +303,7 @@ class Storage extends BaseStorage
      *
      * @param $options array
      */
-    public function createFolder(ItemModelInterface $target, ItemModelInterface $prototype = null, array $options = []): bool
+    public function createFolder(ItemModelInterface $target, ?ItemModelInterface $prototype = null, array $options = []): bool
     {
         $defaults = [
             'recursive' => true,

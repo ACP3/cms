@@ -80,7 +80,7 @@ class Smarty implements RendererInterface
         return $this;
     }
 
-    public function getTemplateVars(string $variableName = null): mixed
+    public function getTemplateVars(?string $variableName = null): mixed
     {
         return $this->smarty->getTemplateVars($variableName);
     }
@@ -88,7 +88,7 @@ class Smarty implements RendererInterface
     /**
      * @throws \SmartyException
      */
-    public function fetch(string $template, string $cacheId = null, string $compileId = null, object $parent = null): string
+    public function fetch(string $template, ?string $cacheId = null, ?string $compileId = null, ?object $parent = null): string
     {
         return $this->smarty->fetch($template, $cacheId, $compileId, $parent);
     }
@@ -96,7 +96,7 @@ class Smarty implements RendererInterface
     /**
      * @throws \SmartyException
      */
-    public function display(string $template, string $cacheId = null, string $compileId = null, object $parent = null): void
+    public function display(string $template, ?string $cacheId = null, ?string $compileId = null, ?object $parent = null): void
     {
         $this->smarty->display($template, $cacheId, $compileId, $parent);
     }

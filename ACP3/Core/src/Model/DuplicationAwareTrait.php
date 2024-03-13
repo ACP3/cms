@@ -42,7 +42,7 @@ trait DuplicationAwareTrait
     /**
      * @param array<string, mixed> $rawData
      */
-    abstract public function save(array $rawData, int $entryId = null): int;
+    abstract public function save(array $rawData, ?int $entryId = null): int;
 
     /**
      * @return array<string, mixed>

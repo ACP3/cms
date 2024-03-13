@@ -26,7 +26,7 @@ class ArticleUpsertService
      * @throws \ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException
      * @throws \Doctrine\DBAL\Exception
      */
-    public function upsert(array $updatedData, int $articleId = null): int
+    public function upsert(array $updatedData, ?int $articleId = null): int
     {
         $this->adminFormValidation
             ->withUriAlias($articleId !== null ? sprintf(Helpers::URL_KEY_PATTERN, $articleId) : '')

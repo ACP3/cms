@@ -44,7 +44,7 @@ class UpdateCheckTest extends \PHPUnit\Framework\TestCase
     {
         $this->dateMock = $this->createMock(Date::class);
         $this->settingsMock = $this->createMock(SettingsInterface::class);
-        $this->updateFileParserMock = $this->createMock(UpdateCheck\UpdateFileParser::class);
+        $this->updateFileParserMock = $this->createMock(UpdateFileParser::class);
     }
 
     private function setUpSettingsMockExpectation(string $lastCheck = '-1 hour'): void

@@ -17,7 +17,7 @@ class SitemapAvailabilityExtension extends AbstractSitemapAvailabilityExtension
         return Schema::MODULE_NAME;
     }
 
-    public function fetchSitemapUrls(bool $isSecure = null): void
+    public function fetchSitemapUrls(?bool $isSecure = null): void
     {
         $routeNames = [
             'contact/index/index',

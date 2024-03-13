@@ -160,7 +160,7 @@ class Theme implements ThemePathInterface
     /**
      * @throws \JsonException
      */
-    public function getDesignPathInternal(string $themeName = null): string
+    public function getDesignPathInternal(?string $themeName = null): string
     {
         return $this->getAvailableThemes()[$themeName ?? $this->getCurrentTheme()]['path'];
     }
@@ -168,7 +168,7 @@ class Theme implements ThemePathInterface
     /**
      * @throws \JsonException
      */
-    public function getDesignPathWeb(string $themeName = null): string
+    public function getDesignPathWeb(?string $themeName = null): string
     {
         return $this->getAvailableThemes()[$themeName ?? $this->getCurrentTheme()]['web_path'];
     }
