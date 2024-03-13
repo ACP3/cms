@@ -16,9 +16,9 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "acp3/core": "^6.22.0",
-    "acp3/module-permissions": "^6.24.0",
-    "acp3/module-system": "^6.24.0",
+    "acp3/core": "^6.26.3",
+    "acp3/module-permissions": "^6.26.3",
+    "acp3/module-system": "^6.26.3",
     "justinrainbow/json-schema": "^5.2",
     "thepixeldeveloper/sitemap": "^5.0"
   },
