@@ -18,3 +18,6 @@ services:
   core.environment:
     class: ACP3\Core\Environment\ApplicationMode
     synthetic: true
+
+  ACP3\Core\Environment\ApplicationMode:
+    alias: core.environment
