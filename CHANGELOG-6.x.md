@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [Core] Do not log some types of exceptions, when the ACP3 is in production mode
+-   [Contact] Use the `replyTo`-field for storing the contact form senders e-mail address
 
 ## [6.26.2] - 2024-01-06
 
