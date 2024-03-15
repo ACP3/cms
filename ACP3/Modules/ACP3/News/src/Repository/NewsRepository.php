@@ -9,6 +9,7 @@ namespace ACP3\Modules\ACP3\News\Repository;
 
 use ACP3\Core;
 use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\ParameterType;
 
 class NewsRepository extends Core\Repository\AbstractRepository
 {
@@ -71,7 +72,7 @@ class NewsRepository extends Core\Repository\AbstractRepository
         return (int) $this->db->fetchColumn(
             'SELECT COUNT(*) FROM ' . $this->getTableName() . " WHERE `category_id` IN(:categoryId) {$where}",
             ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
-            ['time' => \PDO::PARAM_STR, 'categoryId' => ArrayParameterType::INTEGER, 'active' => \PDO::PARAM_INT]
+            ['time' => ParameterType::STRING, 'categoryId' => ArrayParameterType::INTEGER, 'active' => ParameterType::INTEGER]
         );
     }
 
@@ -98,7 +99,7 @@ class NewsRepository extends Core\Repository\AbstractRepository
         return $this->db->fetchAll(
             "SELECT * FROM {$this->getTableName()} WHERE category_id IN(:categoryId) {$where} ORDER BY `start` DESC, `end` DESC, `id` DESC {$limitStmt}",
             ['time' => $time, 'categoryId' => $categoryId, 'active' => 1],
-            ['time' => \PDO::PARAM_STR, 'categoryId' => ArrayParameterType::INTEGER, 'active' => \PDO::PARAM_INT]
+            ['time' => ParameterType::STRING, 'categoryId' => ArrayParameterType::INTEGER, 'active' => ParameterType::INTEGER]
         );
     }
 

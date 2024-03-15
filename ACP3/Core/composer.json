@@ -18,7 +18,7 @@
     "ext-pdo": "*",
     "ext-pdo_mysql": "*",
     "composer/composer": "^2.6.0",
-    "doctrine/dbal": "^3.0",
+    "doctrine/dbal": "^4.0",
     "fisharebest/localization": "^1.10",
     "friendsofsymfony/http-cache": "~2.0",
     "giggsey/locale": "^2.0",

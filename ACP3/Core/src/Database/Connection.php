@@ -9,12 +9,18 @@ namespace ACP3\Core\Database;
 
 use ACP3\Core\Environment\ApplicationMode;
 use Doctrine\DBAL;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\DBAL\Exception as DBALException;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Types\Type;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @psalm-type WrapperParameterType = string|Type|ParameterType|ArrayParameterType
+ * @psalm-type WrapperParameterTypeArray = array<int<0, max>, WrapperParameterType>|array<string, WrapperParameterType>
+ */
 class Connection
 {
     private ?DBAL\Connection $connection = null;
@@ -82,8 +88,9 @@ class Connection
     }
 
     /**
-     * @param list<mixed>|array<string, mixed>                                     $params
-     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     * @param list<mixed>|array<string, mixed> $params
+     *
+     * @psalm-param WrapperParameterTypeArray $types
      *
      * @return array<array<string, mixed>>
      *
@@ -105,8 +112,9 @@ class Connection
     }
 
     /**
-     * @param list<mixed>|array<string, mixed>                                     $params
-     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     * @param list<mixed>|array<string, mixed> $params
+     *
+     * @psalm-param WrapperParameterTypeArray $types
      *
      * @return array<string, mixed>
      *
@@ -120,8 +128,9 @@ class Connection
     }
 
     /**
-     * @param list<mixed>|array<string, mixed>                                     $params
-     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     * @param list<mixed>|array<string, mixed> $params
+     *
+     * @psalm-param WrapperParameterTypeArray $types
      *
      * @throws DBALException
      */
@@ -131,8 +140,9 @@ class Connection
     }
 
     /**
-     * @param list<mixed>|array<string, mixed>                                     $params
-     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     * @param list<mixed>|array<string, mixed> $params
+     *
+     * @psalm-param WrapperParameterTypeArray $types
      *
      * @throws DBALException
      */
@@ -153,8 +163,9 @@ class Connection
     }
 
     /**
-     * @param list<mixed>|array<string, mixed>                                     $params
-     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     * @param list<mixed>|array<string, mixed> $params
+     *
+     * @psalm-param WrapperParameterTypeArray $types
      *
      * @throws DBALException
      */

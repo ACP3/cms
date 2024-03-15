@@ -8,9 +8,10 @@
 namespace ACP3\Modules\ACP3\Gallery\Repository;
 
 use ACP3\Core\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\Repository\AbstractDataGridRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class GalleryDataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGridRepository
+class GalleryDataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = GalleryRepository::TABLE_NAME;
 
@@ -38,12 +39,12 @@ class GalleryDataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractD
 
     protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
-        $queryBuilder->addGroupBy([
+        $queryBuilder->addGroupBy(
             'main.id',
             'main.active',
             'main.start',
             'main.end',
             'main.title',
-        ]);
+        );
     }
 }

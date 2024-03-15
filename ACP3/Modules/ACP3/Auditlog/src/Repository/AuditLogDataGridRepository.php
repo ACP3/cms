@@ -8,9 +8,11 @@
 namespace ACP3\Modules\ACP3\Auditlog\Repository;
 
 use ACP3\Core\DataGrid\ColumnPriorityQueue;
+use ACP3\Core\DataGrid\Repository\AbstractDataGridRepository;
+use ACP3\Modules\ACP3\System\Repository\ModulesRepository;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class AuditLogDataGridRepository extends \ACP3\Core\DataGrid\Repository\AbstractDataGridRepository
+class AuditLogDataGridRepository extends AbstractDataGridRepository
 {
     public const TABLE_NAME = AuditLogRepository::TABLE_NAME;
 
@@ -26,11 +28,11 @@ class AuditLogDataGridRepository extends \ACP3\Core\DataGrid\Repository\Abstract
 
     protected function addJoin(QueryBuilder $queryBuilder): void
     {
-        $queryBuilder->join('main', $this->getTableName(\ACP3\Modules\ACP3\System\Repository\ModulesRepository::TABLE_NAME), 'm', 'm.id = main.module_id');
+        $queryBuilder->join('main', $this->getTableName(ModulesRepository::TABLE_NAME), 'm', 'm.id = main.module_id');
     }
 
     protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
-        $queryBuilder->addGroupBy(['main.table_name', 'main.module_id', 'm.name']);
+        $queryBuilder->addGroupBy('main.table_name', 'main.module_id', 'm.name');
     }
 }

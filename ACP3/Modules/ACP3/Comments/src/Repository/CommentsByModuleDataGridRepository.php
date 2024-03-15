@@ -36,6 +36,6 @@ class CommentsByModuleDataGridRepository extends \ACP3\Core\DataGrid\Repository\
 
     protected function addGroupBy(QueryBuilder $queryBuilder): void
     {
-        $queryBuilder->addGroupBy(['main.module_id', 'm.name']);
+        $queryBuilder->addGroupBy('main.module_id', 'm.name');
     }
 }

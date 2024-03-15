@@ -24,7 +24,7 @@ abstract class AbstractDataGridRepository extends AbstractRepository
     {
         $queryBuilder = $this->db->getConnection()->createQueryBuilder();
         $queryBuilder
-            ->select($this->getColumns($columns))
+            ->select(...$this->getColumns($columns))
             ->from($this->getTableName(), 'main')
             ->setParameters($this->getParameters(...$queryOptions));
 

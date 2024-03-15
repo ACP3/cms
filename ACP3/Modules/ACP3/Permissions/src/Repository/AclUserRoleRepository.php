@@ -8,6 +8,7 @@
 namespace ACP3\Modules\ACP3\Permissions\Repository;
 
 use ACP3\Core;
+use Doctrine\DBAL\ParameterType;
 
 class AclUserRoleRepository extends Core\Repository\AbstractRepository implements Core\ACL\Repository\UserRoleRepositoryInterface
 {
@@ -18,7 +19,7 @@ class AclUserRoleRepository extends Core\Repository\AbstractRepository implement
         return $this->db->fetchAll(
             'SELECT r.* FROM ' . $this->getTableName() . ' AS ur JOIN ' . $this->getTableName(AclRoleRepository::TABLE_NAME) . ' AS r ON(ur.role_id = r.id) WHERE ur.user_id = ? ORDER BY r.left_id DESC',
             [$userId],
-            [\PDO::PARAM_INT]
+            [ParameterType::INTEGER]
         );
     }
 }

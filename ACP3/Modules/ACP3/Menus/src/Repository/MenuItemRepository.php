@@ -11,6 +11,7 @@ use ACP3\Core\NestedSet\Repository\BlockAwareNestedSetRepositoryInterface;
 use ACP3\Core\NestedSet\Repository\NestedSetRepository;
 use ACP3\Modules\ACP3\Menus\Enum\PageTypeEnum;
 use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\ParameterType;
 
 class MenuItemRepository extends NestedSetRepository implements BlockAwareNestedSetRepositoryInterface
 {
@@ -142,7 +143,7 @@ SQL;
         return (int) $this->db->fetchColumn(
             "SELECT m.left_id FROM {$this->getTableName()} AS m JOIN {$this->getTableName(MenuRepository::TABLE_NAME)} AS b ON(m.block_id = b.id) WHERE b.index_name = ? AND m.uri IN(?) ORDER BY LENGTH(m.uri) DESC",
             [$menuName, array_unique($uris)],
-            [\PDO::PARAM_STR, ArrayParameterType::STRING]
+            [ParameterType::STRING, ArrayParameterType::STRING]
         );
     }
 
