@@ -1,5 +1,5 @@
 release-artifact:
-  image: ${CI_REGISTRY_IMAGE}:php-8.1-node-18
+  image: ${CI_REGISTRY_IMAGE}:php-8.1-node-20
   stage: package
   script:
     - composer install --no-dev --prefer-dist -o -n --ignore-platform-reqs

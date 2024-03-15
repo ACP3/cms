@@ -31,7 +31,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && mv composer.phar /usr/local/bin/composer \
  && rm composer-setup.php
 
-FROM node:18 AS node
+FROM node:20 AS node
 FROM dev as ci
 
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
