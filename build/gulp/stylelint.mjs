@@ -4,7 +4,7 @@
  */
 
 import componentPaths from "./helpers/component-paths.mjs";
-import gulpStylelint from "@ronilaukkarinen/gulp-stylelint";
+import gStylelintEsm from "gulp-stylelint-esm";
 import gulpPlumber from "gulp-plumber";
 
 export default (gulp) => {
@@ -17,7 +17,7 @@ export default (gulp) => {
       })
       .pipe(gulpPlumber())
       .pipe(
-        gulpStylelint({
+        gStylelintEsm({
           reporters: [{ formatter: "string", console: true }],
         }),
       );
