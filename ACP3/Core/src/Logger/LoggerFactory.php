@@ -7,6 +7,7 @@
 
 namespace ACP3\Core\Logger;
 
+use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -21,13 +22,17 @@ class LoggerFactory
     }
 
     /**
-     * @param LogLevel::* $level
+     * @param LogLevel::*|null $level Default to LogLevel::DEBUG, if no level has been set explicitly
      *
      * @throws \Exception
      */
-    public function create(string $channel, string $level = LogLevel::WARNING): LoggerInterface
+    public function create(string $channel, ?string $level = null): LoggerInterface
     {
         $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
+
+        if ($level === null) {
+            $level = $this->appPath->getApplicationMode() === ApplicationMode::PRODUCTION ? LogLevel::WARNING : LogLevel::DEBUG;
+        }
 
         $stream = new StreamHandler($fileName, $level);
         $stream->setFormatter(new LineFormatter(null, null, true));
