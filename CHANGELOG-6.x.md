@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [All] Updated the NPM libraries
+-   [All] Updated the Composer libraries
+
+### Fixed
+
+-   [Core] Fixed up the "Do not log some types of exceptions, when the ACP3 is in production mode"-solution from the previous release
 
 ## [6.26.3] - 2024-03-13
 
