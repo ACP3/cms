@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+-   [All] Updated the Doctrine DBAL to version 4.x
 
 ## [6.27.0] - 2024-03-15
 
