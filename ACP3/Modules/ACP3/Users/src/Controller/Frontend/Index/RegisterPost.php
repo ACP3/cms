@@ -57,7 +57,7 @@ class RegisterPost extends Core\Controller\AbstractWidgetAction
                 return $this->alertsHelper->confirmBox(
                     $this->translator->t(
                         'users',
-                        $lastId !== false && $result !== false ? 'register_success' : 'register_error'
+                        $lastId && $result !== false ? 'register_success' : 'register_error'
                     ),
                     $this->applicationPath->getWebRoot()
                 );

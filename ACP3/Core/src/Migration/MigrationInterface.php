@@ -10,7 +10,7 @@ namespace ACP3\Core\Migration;
 interface MigrationInterface
 {
     /**
-     * @return string[]|null
+     * @return class-string<MigrationInterface>[]|null
      */
     public function dependencies(): ?array;
 

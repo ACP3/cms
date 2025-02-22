@@ -50,8 +50,6 @@ class Migrator
 
     /**
      * @return \Throwable[]|null
-     *
-     * @throws \Doctrine\DBAL\Exception
      */
     private function migrate(MigrationInterface $migration): ?array
     {

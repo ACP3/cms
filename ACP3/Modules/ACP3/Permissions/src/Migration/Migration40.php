@@ -28,7 +28,10 @@ final class Migration40 implements MigrationInterface
     {
     }
 
-    public function dependencies(): ?array
+    /**
+     * @return class-string<MigrationInterface>[]
+     */
+    public function dependencies(): array
     {
         return [Migration39::class];
     }

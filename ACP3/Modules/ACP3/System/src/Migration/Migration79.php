@@ -29,7 +29,10 @@ final class Migration79 implements MigrationInterface
     {
     }
 
-    public function dependencies(): ?array
+    /**
+     * @return class-string<MigrationInterface>[]
+     */
+    public function dependencies(): array
     {
         return [Migration78::class];
     }

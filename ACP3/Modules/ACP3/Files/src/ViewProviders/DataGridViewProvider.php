@@ -99,7 +99,7 @@ class DataGridViewProvider
                     'type' => SortColumnRenderer::class,
                     'fields' => ['sort'],
                     'class' => 'text-center text-nowrap',
-                    'default_sort' => $settings['order_by'] === 'custom',
+                    'default_sort' => true,
                     'custom' => [
                         'route_sort_down' => 'acp/files/index/sort/id_%d/action_down',
                         'route_sort_up' => 'acp/files/index/sort/id_%d/action_up',

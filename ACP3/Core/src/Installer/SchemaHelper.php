@@ -55,7 +55,7 @@ class SchemaHelper
 
         if ($this->moduleAwareRepository->coreTablesExist()) {
             $search[] = '{moduleId}';
-            $replace[] = $this->getModuleId($moduleName);
+            $replace[] = (string) $this->getModuleId($moduleName);
         }
 
         try {

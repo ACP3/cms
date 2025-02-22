@@ -92,7 +92,7 @@ final class Output
         return $this;
     }
 
-    public function getType(): ?int
+    public function getType(): int
     {
         return $this->type;
     }

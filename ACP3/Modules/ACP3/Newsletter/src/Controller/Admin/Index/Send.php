@@ -43,10 +43,10 @@ class Send extends Core\Controller\AbstractWidgetAction
             }
 
             return $this->redirectMessages->setMessage(
-                $sendNewsletterResult === true && $newsletterUpdateResult !== false,
+                $sendNewsletterResult === true && $newsletterUpdateResult,
                 $this->translator->t(
                     'newsletter',
-                    $sendNewsletterResult === true && $newsletterUpdateResult !== false
+                    $sendNewsletterResult === true && $newsletterUpdateResult
                         ? 'create_success'
                         : 'create_save_error'
                 )

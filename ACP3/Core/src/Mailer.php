@@ -43,7 +43,7 @@ class Mailer
             if (!empty($message->getRecipients())) {
                 return $message->isBcc() === true ? $this->sendBcc($message) : $this->sendTo($message);
             }
-        } catch (PHPMailerException|\Throwable $e) {
+        } catch (\Throwable $e) {
             $this->logger->error($e);
         }
 

@@ -26,7 +26,7 @@ class UriAliasManager
         $path .= $this->preparePath($path);
         $seo = $this->seoRepository->getOneByUri($path);
 
-        return !empty($seo) && $this->seoModel->delete($seo['id']) !== false;
+        return !empty($seo) && $this->seoModel->delete($seo['id']);
     }
 
     protected function preparePath(string $path): string

@@ -32,7 +32,10 @@ group by are.id, aru.role_id, aru.permission;",
     {
     }
 
-    public function dependencies(): ?array
+    /**
+     * @return class-string<MigrationInterface>[]
+     */
+    public function dependencies(): array
     {
         return [Migration38::class];
     }

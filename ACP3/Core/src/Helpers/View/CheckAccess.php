@@ -52,6 +52,7 @@ class CheckAccess
     {
         $action = [];
 
+        /** @var list<string> $query */
         $query = explode('/', strtolower($path));
 
         if (isset($query[0]) && $query[0] === 'acp') {
@@ -69,6 +70,7 @@ class CheckAccess
 
     private function getArea(string $path): AreaEnum
     {
+        /** @var list<string> $query */
         $query = explode('/', strtolower($path));
 
         if (isset($query[0]) && $query[0] === 'acp') {

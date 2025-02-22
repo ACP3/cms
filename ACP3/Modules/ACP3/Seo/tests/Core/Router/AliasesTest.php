@@ -39,7 +39,7 @@ class AliasesTest extends TestCase
     }
 
     /**
-     * @dataProvider uriAliasDataProvider()
+     * @dataProvider uriAliasDataProvider
      *
      * @param array<string, array<string, string>> $expectedAliasCache
      */

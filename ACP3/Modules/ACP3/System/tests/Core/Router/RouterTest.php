@@ -197,7 +197,7 @@ class RouterTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @dataProvider homepageRouteDataProvider()
+     * @dataProvider homepageRouteDataProvider
      */
     public function testRouteIsHomepage(string $path, bool $absolute, ?bool $isSecure, string $expected): void
     {

@@ -65,7 +65,7 @@ class ForgotPwdPost extends Core\Controller\AbstractWidgetAction
                 return $this->alertsHelper->confirmBox(
                     $this->translator->t(
                         'users',
-                        $isMailSent === true && $result !== false ? 'forgot_pwd_success' : 'forgot_pwd_error'
+                        $isMailSent === true && $result ? 'forgot_pwd_success' : 'forgot_pwd_error'
                     ),
                     $this->applicationPath->getWebRoot()
                 );

@@ -22,16 +22,16 @@ class Asset extends AbstractResource
      * fetch template and its modification time from data source.
      *
      * @param string $name   template name
-     * @param string $source template source
-     * @param int    $mtime  template modification timestamp (epoch)
+     * @param string|null $source template source
+     * @param int|null    $mtime  template modification timestamp (epoch)
      */
     protected function fetch($name, &$source, &$mtime): void
     {
         $asset = $this->fileResolver->resolveTemplatePath($name);
 
         if ($asset !== '') {
-            $source = \file_get_contents($asset);
-            $mtime = \filemtime($asset);
+            $source = (string) \file_get_contents($asset);
+            $mtime = (int) \filemtime($asset);
         } else {
             $source = null;
             $mtime = null;

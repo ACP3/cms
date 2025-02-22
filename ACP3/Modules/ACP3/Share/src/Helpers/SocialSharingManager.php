@@ -26,7 +26,7 @@ class SocialSharingManager
         $path .= $this->preparePath($path);
         $shareInfo = $this->shareRepository->getOneByUri($path);
 
-        return !empty($shareInfo) && $this->shareModel->delete($shareInfo['id']) !== false;
+        return !empty($shareInfo) && $this->shareModel->delete($shareInfo['id']);
     }
 
     private function preparePath(string $path): string

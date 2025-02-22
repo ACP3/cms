@@ -33,7 +33,6 @@ class CountryListTest extends \PHPUnit\Framework\TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        self::assertIsArray($actual);
         self::assertNotEmpty($actual);
     }
 
@@ -45,7 +44,6 @@ class CountryListTest extends \PHPUnit\Framework\TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        self::assertIsArray($actual);
         self::assertEmpty($actual);
     }
 
@@ -57,7 +55,6 @@ class CountryListTest extends \PHPUnit\Framework\TestCase
 
         $actual = $this->countryList->worldCountries();
 
-        self::assertIsArray($actual);
         self::assertEmpty($actual);
     }
 }
