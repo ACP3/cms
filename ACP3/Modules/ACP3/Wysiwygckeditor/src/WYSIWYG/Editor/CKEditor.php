@@ -9,7 +9,6 @@ namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor;
 
 use ACP3\Core\ACL;
 use ACP3\Core\Assets\IncludeJs;
-use ACP3\Core\I18n\Translator;
 use ACP3\Core\WYSIWYG\Editor\Textarea;
 use ACP3\Modules\ACP3\Filemanager\Helpers;
 
@@ -20,7 +19,7 @@ class CKEditor extends Textarea
 {
     private bool $isInitialized = false;
 
-    public function __construct(private readonly ACL $acl, private readonly IncludeJs $includeJs, private readonly Translator $translator, private readonly ?Helpers $filemanagerHelpers = null)
+    public function __construct(private readonly ACL $acl, private readonly IncludeJs $includeJs, private readonly ?Helpers $filemanagerHelpers = null)
     {
     }
 
@@ -34,7 +33,6 @@ class CKEditor extends Textarea
         parent::setParameters($params);
 
         $this->config['toolbar'] = (isset($params['toolbar']) && $params['toolbar'] === 'simple') ? 'Basic' : 'Full';
-        $this->config['height'] = ($params['height'] ?? 250) . 'px';
     }
 
     public function getData(): array
@@ -50,10 +48,6 @@ class CKEditor extends Textarea
             'data_config' => $this->configure(),
         ];
 
-        if ($wysiwyg['advanced'] === true) {
-            $wysiwyg['advanced_replace_content'] = 'CKEDITOR.instances.' . $wysiwyg['id'] . '.insertHtml(text);';
-        }
-
         return ['wysiwyg' => $wysiwyg];
     }
 
@@ -64,36 +58,9 @@ class CKEditor extends Textarea
      */
     private function configure(): string
     {
-        $this->config['entities'] = false;
-        $this->config['extraPlugins'] = 'divarea,embed,codemirror';
-        $this->config['allowedContent'] = true;
-        $this->config['embed_provider'] = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}';
-        $this->config['language'] = $this->translator->getShortIsoCode();
-        $this->config['format_tags'] = 'h1;h2;h3;h4;h5;h6;pre;p;div;address';
-        $this->config['codemirror'] = [
-            'theme' => 'default',
-            'lineNumbers' => true,
-            'lineWrapping' => true,
-            'matchBrackets' => true,
-            'autoCloseTags' => true,
-            'autoCloseBrackets' => true,
-            'enableSearchTools' => true,
-            'enableCodeFolding' => true,
-            'enableCodeFormatting' => true,
-            'autoFormatOnStart' => true,
-            'autoFormatOnUncomment' => true,
-            'highlightActiveLine' => true,
-            'highlightMatches' => true,
-            'showFormatButton' => false,
-            'showCommentButton' => false,
-            'showUncommentButton' => false,
-        ];
-
         // Full toolbar
         if (!isset($this->config['toolbar']) || $this->config['toolbar'] !== 'Basic') {
-            $this->configureFullToolbar();
-        } else { // basic toolbar
-            $this->configureBasicToolbar();
+            $this->addFileManager();
         }
 
         return json_encode($this->config, JSON_THROW_ON_ERROR);
@@ -120,55 +87,5 @@ class CKEditor extends Textarea
         }
 
         $this->config['filebrowserBrowseUrl'] = $this->filemanagerHelpers->getFilemanagerPath();
-    }
-
-    private function configureFullToolbar(): void
-    {
-        $this->config['extraPlugins'] = 'codemirror,divarea,embedbase,embed';
-
-        $this->addFileManager();
-
-        // Toolbar configuration
-        $this->config['toolbarGroups'] = [
-            ['name' => 'document', 'groups' => ['mode', 'document', 'doctools']],
-            ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
-            ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker']],
-            ['name' => 'forms'],
-            '/',
-            ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
-            ['name' => 'paragraph', 'groups' => ['list', 'indent', 'blocks', 'align', 'bidi']],
-            ['name' => 'links'],
-            ['name' => 'insert'],
-            '/',
-            ['name' => 'styles'],
-            ['name' => 'colors'],
-            ['name' => 'tools'],
-            ['name' => 'others'],
-            ['name' => 'about'],
-        ];
-    }
-
-    private function configureBasicToolbar(): void
-    {
-        $this->config['extraPlugins'] = 'divarea,codemirror';
-        $this->config['toolbar'] = [
-            [
-                'Source',
-                '-',
-                'Undo',
-                'Redo',
-                '-',
-                'Bold',
-                'Italic',
-                '-',
-                'NumberedList',
-                'BulletedList',
-                '-',
-                'Link',
-                'Unlink',
-                '-',
-                'About',
-            ],
-        ];
     }
 }
