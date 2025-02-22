@@ -19,8 +19,6 @@ release-artifact:
       - .dockerignore
       - .editorconfig
       - .env.sample
-      - .eslintignore
-      - .eslintrc.json
       - .htaccess.sample
       - .nvmrc
       - .php-cs-fixer.dist.php
@@ -35,6 +33,7 @@ release-artifact:
       - composer.lock
       - docker-compose.override.yml.sample
       - docker-compose.yml
+      - eslint.config.mjs
       - favicon.ico
       - gulpfile.js
       - index.php

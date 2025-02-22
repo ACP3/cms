@@ -1,6 +1,7 @@
 {
     "extends": [
-        "stylelint-config-twbs-bootstrap"
+        "stylelint-config-twbs-bootstrap",
+        "stylelint-prettier/recommended"
     ],
     "rules": {
         "function-disallowed-list": [
@@ -19,6 +20,10 @@
         "selector-max-compound-selectors": null,
         "selector-max-id": null,
         "selector-max-type": 3,
-        "selector-no-qualifying-type": null
+        "selector-no-qualifying-type": null,
+        "@stylistic/number-leading-zero": "always",
+        "@stylistic/value-list-comma-newline-after": "always-multi-line",
+        "@stylistic/value-list-comma-space-after": "always-single-line"
+
     }
 }

@@ -52,8 +52,7 @@
       - "ACP3/**/*.js"
       - "design/**/*.js"
       - "installation/**/*.js"
-      - .eslintignore
-      - .eslintrc.json
+      - eslint.config.mjs
 
 .stylelint-changes:
   rules:

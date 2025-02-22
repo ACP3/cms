@@ -25,7 +25,9 @@ export default (gulp) => {
       })
       .pipe(gulpPlumber())
       .pipe(gulpDependents())
-      .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
+      .pipe(
+        sass({ style: "compressed", importers: [new sassEmbedded.NodePackageImporter()] }).on("error", sass.logError),
+      )
       .pipe(gulpPostcss([autoprefixer(), cssnano()]))
       .pipe(
         gulpRename((path) => {

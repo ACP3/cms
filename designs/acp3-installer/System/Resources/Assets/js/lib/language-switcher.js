@@ -4,12 +4,10 @@
  */
 
 export default class LanguageSwitcher {
-  #languageSwitcherFormName;
   #languageSwitcherForm;
   #mustConfirm = false;
 
   constructor(languageSwitcherFormName) {
-    this.#languageSwitcherFormName = languageSwitcherFormName;
     this.#languageSwitcherForm = document.getElementById(languageSwitcherFormName);
   }
 

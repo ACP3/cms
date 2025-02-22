@@ -220,7 +220,7 @@ export class AjaxForm {
   async #decodeResponse(response) {
     try {
       return await response.clone().json();
-    } catch (error) {
+    } catch {
       return await response.clone().text();
     }
   }

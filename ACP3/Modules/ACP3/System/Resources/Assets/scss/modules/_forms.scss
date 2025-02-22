@@ -3,9 +3,9 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-@import "node_modules/bootstrap/scss/functions";
-@import "node_modules/bootstrap/scss/variables";
-@import "node_modules/bootstrap/scss/mixins";
+@import "pkg:bootstrap/scss/functions";
+@import "pkg:bootstrap/scss/variables";
+@import "pkg:bootstrap/scss/mixins";
 
 $forms-required-star-text-color: inherit !default;
 

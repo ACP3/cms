@@ -36,7 +36,7 @@
     "build": "gulp",
     "css-lint": "stylelint \"**/*.{css,scss}\" --cache --cache-location .stylelintcache --rd",
     "css-lint:fix": "npm run css-lint -- --fix",
-    "eslint": "eslint -c .eslintrc.json --cache --cache-location=.eslintcache .",
+    "eslint": "eslint -c eslint.config.mjs --cache --cache-location=.eslintcache .",
     "eslint:fix": "npm run eslint -- --fix",
     "lint-all": "concurrently \"npm:prettier:fix\" \"npm:css-lint:fix\" \"npm:eslint:fix\" --kill-others-on-fail --group",
     "prepare": "husky",
