@@ -8,7 +8,7 @@
 namespace ACP3\Modules\ACP3\Share\Shariff;
 
 use ACP3\Modules\ACP3\Share\Shariff\Backend\Buffer;
-use Http\Adapter\Guzzle6\Client;
+use Http\Adapter\Guzzle7\Client;
 use PHPUnit\Framework as PHPUnit;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\NullAdapter;
