@@ -18,7 +18,6 @@ export default [
       "**/*min.js",
       "ACP3/Modules/ACP3/Cookieconsent/Resources/Assets/js/klaro-no-css.js",
       "ACP3/Modules/ACP3/Filemanager/Resources/Assets/rich-filemanager/*",
-      "ACP3/Modules/ACP3/Wysiwygckeditor/Resources/Assets/js/ckeditor/*",
       "ACP3/Modules/ACP3/Wysiwygtinymce/Resources/Assets/js/tinymce/*",
       "ACP3/Modules/ACP3/System/Resources/Assets/js/dataTables.bootstrap5.js",
       "**/build",

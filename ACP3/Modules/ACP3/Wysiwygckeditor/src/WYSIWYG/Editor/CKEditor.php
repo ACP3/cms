@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Wysiwygckeditor\WYSIWYG\Editor;
 
 use ACP3\Core\ACL;
-use ACP3\Core\Assets\FileResolver;
 use ACP3\Core\Assets\IncludeJs;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\WYSIWYG\Editor\Textarea;
@@ -21,7 +20,7 @@ class CKEditor extends Textarea
 {
     private bool $isInitialized = false;
 
-    public function __construct(private readonly ACL $acl, private readonly FileResolver $fileResolver, private readonly IncludeJs $includeJs, private readonly Translator $translator, private readonly ?Helpers $filemanagerHelpers = null)
+    public function __construct(private readonly ACL $acl, private readonly IncludeJs $includeJs, private readonly Translator $translator, private readonly ?Helpers $filemanagerHelpers = null)
     {
     }
 
@@ -60,6 +59,8 @@ class CKEditor extends Textarea
 
     /**
      * Configures the CKEditor instance.
+     *
+     * @throws \JsonException
      */
     private function configure(): string
     {
@@ -98,17 +99,6 @@ class CKEditor extends Textarea
         return json_encode($this->config, JSON_THROW_ON_ERROR);
     }
 
-    /**
-     * Prints javascript code.
-     */
-    private function script(string $js): string
-    {
-        $out = '<script>';
-        $out .= $js;
-
-        return $out . "</script>\n";
-    }
-
     private function init(): string
     {
         if ($this->isInitialized === true) {
@@ -117,29 +107,7 @@ class CKEditor extends Textarea
 
         $this->isInitialized = true;
 
-        $ckeditorEntrypoint = $this->fileResolver->getWebStaticAssetPath('Wysiwygckeditor', 'Assets/js/ckeditor', 'ckeditor.js');
-        $basePath = substr($ckeditorEntrypoint, 0, strrpos($ckeditorEntrypoint, '/') + 1);
-
-        $out = '';
-
-        // Skip relative paths...
-        if (!str_starts_with($basePath, '..')) {
-            $out .= $this->script("window.CKEDITOR_BASEPATH='" . $basePath . "';");
-        }
-
-        $out .= '<script src="' . $ckeditorEntrypoint . "\"></script>\n";
-
-        $ckeditorPluginsDir = $basePath . 'plugins/';
-
-        $js = "CKEDITOR.plugins.addExternal('codemirror', '" . $ckeditorPluginsDir . "codemirror/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('divarea', '" . $ckeditorPluginsDir . "divarea/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('embedbase', '" . $ckeditorPluginsDir . "embedbase/');\n";
-        $js .= "CKEDITOR.plugins.addExternal('embed', '" . $ckeditorPluginsDir . "embed/');\n";
-        $js .= 'CKEDITOR.dtd.$removeEmpty[\'i\'] = false;' . "\n";
-
-        $out .= $this->script($js);
-
-        return $out . $this->includeJs->add('Wysiwygckeditor', 'partials/ckeditor');
+        return $this->includeJs->add('Wysiwygckeditor', 'partials/ckeditor');
     }
 
     private function addFileManager(): void
