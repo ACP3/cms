@@ -160,7 +160,7 @@ export class FormValidator {
 
     // highlight all input fields where the validation has failed
     errorBox.querySelectorAll("li").forEach((errorMessageLine) => {
-      let errorClass = errorMessageLine.dataset.element;
+      let errorClass = errorMessageLine.dataset.error;
 
       if (errorClass?.length > 0) {
         let elem = document.getElementById(errorClass) || formElement.querySelector('[id|="' + errorClass + '"]');
@@ -168,7 +168,7 @@ export class FormValidator {
         if (elem) {
           // Move the error message to the responsible input field(s)
           // and remove the list item from the error box container
-          this.#addErrorMessageToFormField(elem[0], errorMessageLine.innerHTML);
+          this.#addErrorMessageToFormField(elem, errorMessageLine.innerHTML);
           errorMessageLine.remove();
         }
       }
