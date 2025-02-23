@@ -49,7 +49,6 @@ import {
   ListProperties,
   Markdown,
   MediaEmbed,
-  PageBreak,
   Paragraph,
   PasteFromOffice,
   RemoveFormat,
@@ -79,7 +78,9 @@ import {
 import "ckeditor5/ckeditor5.css";
 
 const initializeCKEditorInstances = () => {
-  document.querySelectorAll(".wysiwyg-ckeditor").forEach(async (element) => {
+  window.CKEditorInstances = {};
+
+  document.querySelectorAll(".wysiwyg-ckeditor").forEach((element) => {
     const config = JSON.parse(element.dataset.wysiwygConfig);
 
     const editorConfig = {
@@ -110,7 +111,6 @@ const initializeCKEditorInstances = () => {
                 "|",
                 "specialCharacters",
                 "horizontalLine",
-                "pageBreak",
                 "link",
                 "bookmark",
                 "insertImage",
@@ -177,7 +177,6 @@ const initializeCKEditorInstances = () => {
         ListProperties,
         Markdown,
         MediaEmbed,
-        PageBreak,
         Paragraph,
         PasteFromOffice,
         RemoveFormat,
@@ -307,7 +306,9 @@ const initializeCKEditorInstances = () => {
       },
     };
 
-    await ClassicEditor.create(element, editorConfig);
+    ClassicEditor.create(element, editorConfig).then((editor) => {
+      window.CKEditorInstances[element.id] = editor;
+    });
   });
 };
 

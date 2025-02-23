@@ -48,6 +48,18 @@ class CKEditor extends Textarea
             'data_config' => $this->configure(),
         ];
 
+        if ($wysiwyg['advanced'] === true) {
+            $wysiwyg['advanced_replace_content'] = <<<JS
+const editor = window.CKEditorInstances['{$wysiwyg['id']}'];
+
+const insertPosition = editor.model.document.selection.getFirstPosition();
+const viewFragment = editor.data.processor.toView(text);
+const modelFragment = editor.data.toModel(viewFragment);
+
+editor.model.insertContent( modelFragment, insertPosition);
+JS;
+        }
+
         return ['wysiwyg' => $wysiwyg];
     }
 
