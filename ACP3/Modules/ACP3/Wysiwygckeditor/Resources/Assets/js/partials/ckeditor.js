@@ -24,7 +24,6 @@ import {
   FullPage,
   GeneralHtmlSupport,
   Heading,
-  Highlight,
   HorizontalLine,
   HtmlComment,
   HtmlEmbed,
@@ -33,7 +32,6 @@ import {
   ImageEditing,
   ImageInline,
   ImageInsert,
-  ImageInsertViaUrl,
   ImageResize,
   ImageStyle,
   ImageTextAlternative,
@@ -53,7 +51,6 @@ import {
   PasteFromOffice,
   RemoveFormat,
   ShowBlocks,
-  SimpleUploadAdapter,
   SourceEditing,
   SpecialCharacters,
   SpecialCharactersArrows,
@@ -76,6 +73,8 @@ import {
 } from "ckeditor5";
 
 import "ckeditor5/ckeditor5.css";
+import { RichFilemanager } from "../ckeditor5-richfilemanager";
+import { RichFilemanagerUploadAdapter } from "../ckeditor5-adapter-richfilemanager";
 
 const initializeCKEditorInstances = () => {
   window.CKEditorInstances = {};
@@ -114,10 +113,8 @@ const initializeCKEditorInstances = () => {
                 "link",
                 "bookmark",
                 "insertImage",
-                "insertImageViaUrl",
                 "mediaEmbed",
                 "insertTable",
-                "highlight",
                 "blockQuote",
                 "codeBlock",
                 "htmlEmbed",
@@ -152,7 +149,6 @@ const initializeCKEditorInstances = () => {
         FullPage,
         GeneralHtmlSupport,
         Heading,
-        Highlight,
         HorizontalLine,
         HtmlComment,
         HtmlEmbed,
@@ -161,7 +157,6 @@ const initializeCKEditorInstances = () => {
         ImageEditing,
         ImageInline,
         ImageInsert,
-        ImageInsertViaUrl,
         ImageResize,
         ImageStyle,
         ImageTextAlternative,
@@ -180,8 +175,9 @@ const initializeCKEditorInstances = () => {
         Paragraph,
         PasteFromOffice,
         RemoveFormat,
+        RichFilemanager,
+        RichFilemanagerUploadAdapter,
         ShowBlocks,
-        SimpleUploadAdapter,
         SourceEditing,
         SpecialCharacters,
         SpecialCharactersArrows,
@@ -276,6 +272,9 @@ const initializeCKEditorInstances = () => {
           "|",
           "resizeImage",
         ],
+        insert: {
+          integrations: ["assetManager", "url"],
+        },
       },
       licenseKey: "GPL",
       link: {
@@ -303,6 +302,11 @@ const initializeCKEditorInstances = () => {
       },
       table: {
         contentToolbar: ["tableColumn", "tableRow", "mergeTableCells", "tableProperties", "tableCellProperties"],
+      },
+      richfilemanager: {
+        options: {
+          url: config.filebrowserBrowseUrl,
+        },
       },
     };
 
