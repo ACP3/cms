@@ -13,6 +13,6 @@
   "homepage": "https://www.acp3-cms.net",
   "private": true,
   "dependencies": {
-    "ckeditor5": "^44.2.1"
+    "ckeditor5": "nightly"
   }
 }
