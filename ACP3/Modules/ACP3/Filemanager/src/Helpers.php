@@ -8,16 +8,21 @@
 namespace ACP3\Modules\ACP3\Filemanager;
 
 use ACP3\Core\Assets\FileResolver;
+use ACP3\Core\I18n\Translator;
 use ACP3\Modules\ACP3\Filemanager\Installer\Schema;
 
 class Helpers
 {
-    public function __construct(private readonly FileResolver $fileResolver)
+    public function __construct(private readonly FileResolver $fileResolver, private readonly Translator $translator)
     {
     }
 
     public function getFilemanagerPath(): string
     {
-        return $this->fileResolver->getWebStaticAssetPath(Schema::MODULE_NAME, 'Assets/rich-filemanager', 'index.html');
+        return $this->fileResolver->getWebStaticAssetPath(
+            Schema::MODULE_NAME,
+            'Assets/rich-filemanager',
+            'index.html'
+        ) . '&amp;langCode=' . $this->translator->getShortIsoCode();
     }
 }
