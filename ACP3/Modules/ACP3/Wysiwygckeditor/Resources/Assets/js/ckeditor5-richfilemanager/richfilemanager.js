@@ -8,6 +8,6 @@ export default class Richfilemanager extends Plugin {
   }
 
   static get requires() {
-    return ["Link", "RichFilemanagerUploadAdapter", RichFilemanagerEditing, RichFilemanagerUI];
+    return ["Link", RichFilemanagerEditing, RichFilemanagerUI];
   }
 }

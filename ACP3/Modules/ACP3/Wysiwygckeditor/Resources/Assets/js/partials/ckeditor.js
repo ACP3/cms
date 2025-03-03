@@ -74,7 +74,6 @@ import {
 
 import "ckeditor5/ckeditor5.css";
 import { RichFilemanager } from "../ckeditor5-richfilemanager";
-import { RichFilemanagerUploadAdapter } from "../ckeditor5-adapter-richfilemanager";
 
 const initializeCKEditorInstances = () => {
   window.CKEditorInstances = {};
@@ -176,7 +175,6 @@ const initializeCKEditorInstances = () => {
         PasteFromOffice,
         RemoveFormat,
         RichFilemanager,
-        RichFilemanagerUploadAdapter,
         ShowBlocks,
         SourceEditing,
         SpecialCharacters,
