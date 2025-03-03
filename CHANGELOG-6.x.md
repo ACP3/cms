@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+- [Wysiwygckeditor] Updated CKEditor to version 5
+- [Deps-NPM] Updated the NPM-Dependencies. Please update the import paths of your SCSS-files, if they import files from the `node_modules`-folder
+- [Deps-PHP] Updated PHPStan to version 2
+- [Deps-PHP] Updated Rector to version 2
+
+### Fixed
+
+- [Core] Fixed a deprecation warning issued by Smarty
+- [System] Fixed the client-side form validation
 
 ## [6.29.1] - 2024-04-29
 
