@@ -1,6 +1,7 @@
 import { Command } from "ckeditor5";
 
 let editorInstance;
+let windowHandle;
 
 export default class RichFilemanagerCommand extends Command {
   /**
@@ -42,11 +43,24 @@ export default class RichFilemanagerCommand extends Command {
     windowOptions += ",left=" + left;
     windowOptions += ",top=" + top;
 
-    window.open(options.url, "richfilemanager-popup", windowOptions);
+    windowHandle = window.open(options.url, "richfilemanager-popup", windowOptions);
   }
 }
 
+/**
+ *
+ * @param {String} url
+ * @constructor
+ */
 window.SetUrl = (url) => {
+  if (!editorInstance) {
+    return;
+  }
+
+  if (windowHandle) {
+    windowHandle.close();
+  }
+
   const imageCommand = editorInstance.commands.get("insertImage");
   // Check if inserting an image is actually possible - it might be possible to only insert a link.
   if (!imageCommand.isEnabled) {
@@ -58,5 +72,10 @@ window.SetUrl = (url) => {
     });
     return;
   }
-  editorInstance.execute("insertImage", { source: url });
+
+  if (url.match(/^https?:\/\/.+\.(png|jpg|jpeg|bmp|gif|webp)$/i)) {
+    editorInstance.execute("insertImage", { source: url });
+  } else {
+    editorInstance.execute("link", url);
+  }
 };
