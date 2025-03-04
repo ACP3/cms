@@ -35,7 +35,7 @@ release-artifact:
       - docker-compose.yml
       - eslint.config.mjs
       - favicon.ico
-      - gulpfile.js
+      - gulpfile.mjs
       - index.php
       - LICENSE
       - package.json
