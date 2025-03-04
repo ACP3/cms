@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+- [Base] Update the lint-staged pattern for changed PHP-related files to improve the performance
 
 ## [6.30.0] - 2025-03-03
 
