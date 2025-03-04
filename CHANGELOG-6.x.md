@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+- [Base] Fixed a typo in the `package-base.json` when trying to lint the (S)CSS-files via lint-staged
 
 ## [6.30.1] - 2025-03-04
 
