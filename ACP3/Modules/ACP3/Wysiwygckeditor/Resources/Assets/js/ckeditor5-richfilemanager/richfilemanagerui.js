@@ -1,4 +1,4 @@
-import { icons, Plugin, ButtonView, MenuBarMenuListItemButtonView } from "ckeditor5";
+import { IconBrowseFiles, Plugin, ButtonView, MenuBarMenuListItemButtonView, IconImageAssetManager } from "ckeditor5";
 
 export default class RichFilemanagerUI extends Plugin {
   /**
@@ -42,7 +42,7 @@ export default class RichFilemanagerUI extends Plugin {
   #createFileToolbarButton() {
     const t = this.editor.locale.t;
     const button = this.#createButton(ButtonView);
-    button.icon = icons.browseFiles;
+    button.icon = IconBrowseFiles;
     button.label = t("Insert image or file");
     button.tooltip = true;
     return button;
@@ -52,7 +52,7 @@ export default class RichFilemanagerUI extends Plugin {
     const t = this.editor.locale.t;
     const imageInsertUI = this.editor.plugins.get("ImageInsertUI");
     const button = this.#createButton(ButtonView);
-    button.icon = icons.imageAssetManager;
+    button.icon = IconImageAssetManager;
     button
       .bind("label")
       .to(imageInsertUI, "isImageSelected", (isImageSelected) =>
@@ -66,7 +66,7 @@ export default class RichFilemanagerUI extends Plugin {
     const t = this.editor.locale.t;
     const imageInsertUI = this.editor.plugins.get("ImageInsertUI");
     const button = this.#createButton(ButtonView);
-    button.icon = icons.imageAssetManager;
+    button.icon = IconImageAssetManager;
     button.withText = true;
     button
       .bind("label")
@@ -82,7 +82,7 @@ export default class RichFilemanagerUI extends Plugin {
   #createFileMenuBarButton() {
     const t = this.editor.locale.t;
     const button = this.#createButton(MenuBarMenuListItemButtonView);
-    button.icon = icons.browseFiles;
+    button.icon = IconBrowseFiles;
     button.withText = true;
     button.label = t("File");
     return button;
@@ -92,7 +92,7 @@ export default class RichFilemanagerUI extends Plugin {
     const translateVariableKey = this.editor.locale.t;
     const t = this.editor.locale.t;
     const button = this.#createButton(MenuBarMenuListItemButtonView);
-    button.icon = icons.imageAssetManager;
+    button.icon = IconImageAssetManager;
     button.withText = true;
     switch (type) {
       case "insertOnly":

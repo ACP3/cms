@@ -70,6 +70,7 @@ import {
   TableToolbar,
   TextTransformation,
   Underline,
+  Fullscreen,
 } from "ckeditor5";
 
 import "ckeditor5/ckeditor5.css";
@@ -87,6 +88,7 @@ const initializeCKEditorInstances = () => {
           config.toolbar !== "Full"
             ? ["sourceEditing", "|", "bold", "italic", "|", "bulletedList", "numberedList", "|", "link"]
             : [
+                "fullscreen",
                 "sourceEditing",
                 "showBlocks",
                 "findAndReplace",
@@ -140,6 +142,7 @@ const initializeCKEditorInstances = () => {
         Code,
         CodeBlock,
         Essentials,
+        Fullscreen,
         FindAndReplace,
         FontBackgroundColor,
         FontColor,
