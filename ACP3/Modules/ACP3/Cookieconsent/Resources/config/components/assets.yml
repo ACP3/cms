@@ -8,6 +8,6 @@ services:
       - ["klaro.css"]
       - ["klaro-config.js", "klaro-no-css.js"]
       - "cookieconsent"
-      - true
+      - false
     tags:
       - { name: "acp3.assets.library" }
