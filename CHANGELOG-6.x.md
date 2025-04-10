@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+- [Base] Explicitly added the Node.js minor version to the docker files
 
 ## [6.31.0] - 2025-04-10
 
