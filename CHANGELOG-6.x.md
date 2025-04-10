@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+- [Cookieconsent] Changed the CSS of the cookie consent to NOT be deferrable, to reduce a potential CLS
+- [Wysiwygckeditor] Updated the CKEditor to version v45.0.0
+- Updated the NPM and Composer dependencies
 
 ## [6.30.2] - 2025-03-04
 
