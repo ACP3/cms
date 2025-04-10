@@ -38,10 +38,12 @@ class FileResolverTest extends TestCase
 
     public function testResolveTemplatePath(): void
     {
-        $this->setUpThemeMockExpectations(
-            ['acp3'],
-            [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3']
-        );
+        $this->themeMock
+            ->method('getCurrentTheme')
+            ->willReturnOnConsecutiveCalls('acp3');
+        $this->themeMock
+            ->method('getDesignPathInternal')
+            ->willReturnOnConsecutiveCalls(ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3');
         $this->themeMock
             ->method('getThemeDependencies')
             ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
@@ -64,10 +66,12 @@ class FileResolverTest extends TestCase
 
     public function testResolveTemplatePathWithInheritance(): void
     {
-        $this->setUpThemeMockExpectations(
-            ['acp3'],
-            [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3']
-        );
+        $this->themeMock
+            ->method('getCurrentTheme')
+            ->willReturnOnConsecutiveCalls('acp3');
+        $this->themeMock
+            ->method('getDesignPathInternal')
+            ->willReturnOnConsecutiveCalls(ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3');
         $this->themeMock
             ->method('getThemeDependencies')
             ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
@@ -84,10 +88,12 @@ class FileResolverTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $this->setUpThemeMockExpectations(
-            ['acp3-inherit'],
-            [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit']
-        );
+        $this->themeMock
+            ->method('getCurrentTheme')
+            ->willReturnOnConsecutiveCalls('acp3-inherit');
+        $this->themeMock
+            ->method('getDesignPathInternal')
+            ->willReturnOnConsecutiveCalls(ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit');
         $this->themeMock
             ->method('getThemeDependencies')
             ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
@@ -100,10 +106,12 @@ class FileResolverTest extends TestCase
 
     public function testResolveTemplatePathWithMultipleInheritance(): void
     {
-        $this->setUpThemeMockExpectations(
-            ['acp3-inherit', 'acp3'],
-            [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit']
-        );
+        $this->themeMock
+            ->method('getCurrentTheme')
+            ->willReturnOnConsecutiveCalls('acp3-inherit', 'acp3');
+        $this->themeMock
+            ->method('getDesignPathInternal')
+            ->willReturnOnConsecutiveCalls(ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit');
         $this->themeMock
             ->method('getThemeDependencies')
             ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
@@ -117,26 +125,14 @@ class FileResolverTest extends TestCase
         $this->assertSamePath($expected, $actual);
     }
 
-    /**
-     * @param string[] $currentThemeCalls
-     * @param string[] $designPathInternalCalls
-     */
-    private function setUpThemeMockExpectations(array $currentThemeCalls, array $designPathInternalCalls): void
+    public function testResolveTemplatePathWithDeeplyNestedFolderStructure(): void
     {
         $this->themeMock
             ->method('getCurrentTheme')
-            ->willReturnOnConsecutiveCalls(...$currentThemeCalls);
+            ->willReturnOnConsecutiveCalls('acp3-inherit');
         $this->themeMock
             ->method('getDesignPathInternal')
-            ->willReturnOnConsecutiveCalls(...$designPathInternalCalls);
-    }
-
-    public function testResolveTemplatePathWithDeeplyNestedFolderStructure(): void
-    {
-        $this->setUpThemeMockExpectations(
-            ['acp3-inherit'],
-            [ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3']
-        );
+            ->willReturnOnConsecutiveCalls(ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3-inherit', ACP3_ROOT_DIR . '/ACP3/Core/fixtures/designs/acp3');
         $this->themeMock
             ->method('getThemeDependencies')
             ->willReturnCallback(fn (string $themeName) => match ([$themeName]) {
