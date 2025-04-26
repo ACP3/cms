@@ -28,3 +28,5 @@ build-php-node-container:
         DOCKERFILE_NAME: "php82.dockerfile"
       - IMAGE_NAME: "php-8.3-node-20"
         DOCKERFILE_NAME: "php83.dockerfile"
+      - IMAGE_NAME: "php-8.4-node-20"
+        DOCKERFILE_NAME: "php84.dockerfile"
