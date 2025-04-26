@@ -6,7 +6,7 @@
 .dockerfile-changes:
   rules:
     changes:
-      - "./build/docker/**/*.dockerfile"
+      - "./build/docker/php/*"
 
 .php-changes:
   rules:
