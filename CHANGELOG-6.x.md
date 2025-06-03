@@ -7,14 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+- [Base] [Core] Moved the `post-install-cmd` and `post-update-cmd` into the `ACP3/Base`-module
+- [SEO] Update the JSON-Schema-Validator package
 
 ## [6.32.0] - 2025-06-03
 
 ### Changed
 
 - [Base] Explicitly added the Node.js minor version to the docker files
-- [Core] [Tests] Moved the `post-install-cmd` and `post-update-cmd` into the ACP3/Core-module
+- [Core] [Tests] Moved the `post-install-cmd` and `post-update-cmd` into the `ACP3/Core`-module
 - Updated the NPM and Composer dependencies
 
 ## [6.31.0] - 2025-04-10

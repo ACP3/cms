@@ -35,7 +35,7 @@ class StructuredDataValidationRule extends AbstractValidationRule
             $json = json_decode($data, false, 512, JSON_THROW_ON_ERROR);
             $this->jsonSchemaValidator->validate(
                 $json,
-                (object) ['$ref' => 'file://' . realpath(__DIR__ . '/../../../Resources/json-schema/json-ld-schema.json')]
+                (object) ['$ref' => 'file://' . \dirname(__DIR__, 3) . '/Resources/json-schema/json-ld-schema.json']
             );
 
             return $this->jsonSchemaValidator->isValid();

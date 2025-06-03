@@ -53,18 +53,6 @@
   "suggest": {
     "ext-gd": "Allows image manipulations (resizing)"
   },
-  "scripts": {
-    "generate-component-paths": "ACP3\\Core\\Composer\\GenerateComponentPathsJson::execute",
-    "merge-package-json": "ACP3\\Core\\Composer\\MergePackageJson::execute",
-    "post-install-cmd": [
-      "@generate-component-paths",
-      "@merge-package-json"
-    ],
-    "post-update-cmd": [
-      "@generate-component-paths",
-      "@merge-package-json"
-    ]
-  },
   "autoload": {
     "psr-4": {
       "ACP3\\Core\\": "src"

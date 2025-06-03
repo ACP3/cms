@@ -19,7 +19,7 @@
     "acp3/core": "^6.30.0",
     "acp3/module-permissions": "^6.30.0",
     "acp3/module-system": "^6.30.0",
-    "justinrainbow/json-schema": "^5.2",
+    "justinrainbow/json-schema": "^6.4",
     "thepixeldeveloper/sitemap": "^5.0"
   },
   "suggest": {
