@@ -65,7 +65,7 @@
     "stylelint-prettier": "^5.0.3",
     "terser-webpack-plugin": "^5.3.14",
     "webpack-stream": "^7.0.0",
-    "yargs": "^17.7.2"
+    "yargs": "^18.0.0"
   },
   "dependencies": {
     "@fancyapps/fancybox": "^3.5.7",

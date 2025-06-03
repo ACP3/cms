@@ -3,7 +3,7 @@
  * See the LICENSE file at the top-level module directory for licencing details.
  */
 
-import yargs from "yargs/yargs";
+import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import git from "simple-git";
 import semver from "semver";
@@ -13,7 +13,7 @@ import gulpBump from "gulp-bump";
 import gulpChange from "gulp-change";
 import * as url from "url";
 
-const argv = yargs(hideBin(process.argv)).argv;
+const argv = yargs(hideBin(process.argv)).parse();
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
