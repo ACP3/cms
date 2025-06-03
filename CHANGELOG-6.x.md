@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - [Base] Explicitly added the Node.js minor version to the docker files
+- [Core] [Tests] Moved the `post-install-cmd` and `post-update-cmd` into the ACP3/Core-module
+- Updated the NPM and Composer dependencies
 
 ## [6.31.0] - 2025-04-10
 
