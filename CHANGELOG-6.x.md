@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+- [WYSIWYGCKEditor] Removed the `Markdown`-plugin to allow real source editing of the documents
 
 ## [6.33.0] - 2025-06-21
 
