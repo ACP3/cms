@@ -112,7 +112,7 @@ class CategoryRepository extends Core\NestedSet\Repository\NestedSetRepository i
      */
     public function fetchAllSortedByBlock(): array
     {
-        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY `module_id` ASC");
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY `module_id` ASC, `left_id` ASC");
     }
 
     /**
@@ -138,7 +138,7 @@ class CategoryRepository extends Core\NestedSet\Repository\NestedSetRepository i
     public function getAllDirectSiblings(int $categoryId): array
     {
         return $this->db->fetchAll(
-            "SELECT * FROM {$this->getTableName()} WHERE `parent_id` = ?",
+            "SELECT * FROM {$this->getTableName()} WHERE `parent_id` = ? ORDER BY `left_id` ASC",
             [$categoryId]
         );
     }
@@ -151,7 +151,7 @@ class CategoryRepository extends Core\NestedSet\Repository\NestedSetRepository i
     public function getAllRootCategoriesByModuleId(int $moduleId): array
     {
         return $this->db->fetchAll(
-            "SELECT * FROM {$this->getTableName()} WHERE `module_id` = ? AND `parent_id` = ?",
+            "SELECT * FROM {$this->getTableName()} WHERE `module_id` = ? AND `parent_id` = ? ORDER BY `left_id` ASC",
             [$moduleId, 0]
         );
     }
@@ -164,7 +164,7 @@ class CategoryRepository extends Core\NestedSet\Repository\NestedSetRepository i
     public function getAllRootCategoriesByModuleName(string $moduleName): array
     {
         return $this->db->fetchAll(
-            "SELECT c.* FROM {$this->getTableName()} AS c JOIN {$this->getTableName(ModulesRepository::TABLE_NAME)} AS m ON(m.id = c.module_id) WHERE m.`name` = ? AND c.`parent_id` = ?",
+            "SELECT c.* FROM {$this->getTableName()} AS c JOIN {$this->getTableName(ModulesRepository::TABLE_NAME)} AS m ON(m.id = c.module_id) WHERE m.`name` = ? AND c.`parent_id` = ? ORDER BY c.`left_id` ASC",
             [$moduleName, 0]
         );
     }

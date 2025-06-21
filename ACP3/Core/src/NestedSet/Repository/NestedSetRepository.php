@@ -187,7 +187,7 @@ abstract class NestedSetRepository extends AbstractRepository
      */
     public function fetchAll(): array
     {
-        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()}");
+        return $this->db->fetchAll("SELECT * FROM {$this->getTableName()} ORDER BY left_id ASC");
     }
 
     /**
