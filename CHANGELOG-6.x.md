@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+- Updated the NPM and Composer dependencies
+
+### Fixed
+
+- [Categories] Fixed some missing `ORDER BY-clauses when fetching lists of categories
 
 ## [6.32.1] - 2025-06-03
 
