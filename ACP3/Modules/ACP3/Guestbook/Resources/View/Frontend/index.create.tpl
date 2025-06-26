@@ -1,5 +1,6 @@
 {if $IS_AJAX}
     {$LAYOUT='System/layout.modal.tpl'}
+    {$modal=['id' => 'js-modal-create']}
 {/if}
 
 {extends file="asset:System/layout.ajax-form.tpl"}
@@ -10,6 +11,5 @@
     {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="message" value=$form.message required=true label={lang t="system|message"} editor="core.wysiwyg.textarea"}
     {event name="guestbook.layout.create"}
     {event name="captcha.event.display_captcha"}
-    <button type="submit" name="submit" class="btn btn-primary">{lang t="system|submit"}</button>
-    {$form_token}
+    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token}
 {/block}
