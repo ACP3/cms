@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+- [System] Added the `ajax-modal`-template
+
+### Changed
+
+- [Guestbook] Adjusted the guestbook to make use of the `ajax-modal`-template
+- [Guestbook] Removed the functionality to specify a user's website of a guestbook entry
+- [Guestbook] Do not publicly show a user's e-mail address on a guestbook entry
+- Updated the NPM dependencies
 
 ## [6.33.1] - 2025-06-21
 
