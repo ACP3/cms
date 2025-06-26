@@ -9,8 +9,8 @@ namespace ACP3\Modules\ACP3\Comments\ViewProviders;
 
 use ACP3\Core\Breadcrumb\Steps;
 use ACP3\Core\DataGrid\ColumnRenderer\DateColumnRenderer;
+use ACP3\Core\DataGrid\ColumnRenderer\DecoratedTextColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\IntegerColumnRenderer;
-use ACP3\Core\DataGrid\ColumnRenderer\Nl2pColumnRenderer;
 use ACP3\Core\DataGrid\ColumnRenderer\TextColumnRenderer;
 use ACP3\Core\DataGrid\DataGrid;
 use ACP3\Core\DataGrid\Input;
@@ -73,7 +73,7 @@ class DataGridByModuleViewProvider
             ], 40)
             ->addColumn([
                 'label' => $this->translator->t('system', 'message'),
-                'type' => Nl2pColumnRenderer::class,
+                'type' => DecoratedTextColumnRenderer::class,
                 'fields' => ['message'],
                 'class' => 'w-100',
             ], 30)
