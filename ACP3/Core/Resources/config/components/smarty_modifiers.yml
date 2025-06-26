@@ -6,6 +6,10 @@ services:
     tags:
       - { name: smarty.plugin.modifier, pluginName: prefix_uri }
 
+  ACP3\Core\View\Renderer\Smarty\Modifiers\Base64Encode:
+    tags:
+      - { name: smarty.plugin.modifier, pluginName: base64_encode }
+
   ACP3\Core\View\Renderer\Smarty\Modifiers\ContentDecorator:
     tags:
       - { name: smarty.plugin.modifier, pluginName: decorate }
