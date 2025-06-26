@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+- [System] Added the NPM-script `lint-all:fix`. This also modifies the script `lint-all` to really only check for code-style and -quality issues
 
 ## [6.34.1] - 2025-06-26
 
