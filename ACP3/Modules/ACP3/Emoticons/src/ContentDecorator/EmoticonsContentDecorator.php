@@ -24,7 +24,7 @@ class EmoticonsContentDecorator implements ContentDecoratorInterface
             return $content;
         }
 
-        // Don't add the emoticons, if the content contains HTML, as this can end up with unpredictable results.
+        // Don't add the emoticons if the content contains HTML, as this can end up with unpredictable results.
         if ($content !== strip_tags($content)) {
             return $content;
         }
