@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+- [System] Improved the accessibility of the newly added `ajax-modal`-template
 
 ## [6.34.0] - 2025-06-26
 
