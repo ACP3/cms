@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+- [System] Fixed the `prettier` and `prettier:fix` NPM-scripts
 
 ## [6.34.2] - 2025-06-26
 

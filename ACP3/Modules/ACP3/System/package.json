@@ -7,8 +7,8 @@
     "css-lint:fix": "npm run css-lint -- --fix",
     "eslint": "eslint -c eslint.config.mjs --cache --cache-location=.eslintcache .",
     "eslint:fix": "npm run eslint -- --fix",
-    "prettier": "prettier --cache **/*.{js,cjs,mjs,json,md,yml}",
-    "prettier:fix": "npm run prettier -- --fix",
+    "prettier": "prettier **/*.{js,cjs,mjs,json,md,yml} --check --cache",
+    "prettier:fix": "npm run prettier -- --write",
     "lint-all": "concurrently \"npm:prettier\" \"npm:css-lint\" \"npm:eslint\" --kill-others-on-fail --group",
     "lint-all:fix": "concurrently \"npm:prettier:fix\" \"npm:css-lint:fix\" \"npm:eslint:fix\" --kill-others-on-fail --group",
     "prepare": "husky"
