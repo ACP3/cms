@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- [Core] Added the new `DecoratedTextColumnRenderer`
 - [System] Added the `ajax-modal`-template
 
 ### Changed
@@ -17,6 +18,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [Guestbook] Removed the functionality to specify a user's website of a guestbook entry
 - [Guestbook] Do not publicly show a user's e-mail address on a guestbook entry
 - Updated the NPM dependencies
+
+### Fixed
+
+- [Core] Introduced the Smarty modifier `base64_encode` to fix a deprecation warning
+- [Core] Fixed the priority of `ContentDecorators` when registering them in the DI-Container
 
 ## [6.33.1] - 2025-06-21
 
