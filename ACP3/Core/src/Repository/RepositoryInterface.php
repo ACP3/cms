@@ -16,7 +16,7 @@ interface RepositoryInterface
      *
      * @param array<string, mixed> $data
      */
-    public function insert(array $data): int;
+    public function insert(array $data): ?int;
 
     public function getTableName(string $tableName = ''): string;
 

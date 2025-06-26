@@ -8,6 +8,7 @@
 namespace ACP3\Core\Repository;
 
 use ACP3\Core\Database\Connection;
+use Doctrine\DBAL\Exception;
 
 abstract class AbstractRepository implements RepositoryInterface
 {
@@ -19,16 +20,25 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
-    public function insert(array $data): int
+    public function insert(array $data): ?int
     {
-        $this->db->getConnection()->insert(
+        $affectedRows = $this->db->getConnection()->insert(
             $this->getTableName(),
             $data
         );
 
-        return (int) $this->db->getConnection()->lastInsertId();
+        try {
+            return (int) $this->db->getConnection()->lastInsertId();
+        } catch (Exception $exception) {
+            // Handle the case where some tables don't have an actual identity colum
+            if ($affectedRows > 0) {
+                return null;
+            }
+
+            throw $exception;
+        }
     }
 
     public function getTableName(string $tableName = ''): string
@@ -37,7 +47,7 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function delete(array|int|string $entryId, ?string $columnName = null): int
     {
@@ -58,7 +68,7 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function update(array $data, array|int|string $entryId): int
     {
@@ -86,7 +96,7 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function getOneById(int|string $entryId): array
     {

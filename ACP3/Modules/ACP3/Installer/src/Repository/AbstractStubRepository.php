@@ -11,7 +11,7 @@ use ACP3\Core\Repository\RepositoryInterface;
 
 class AbstractStubRepository implements RepositoryInterface
 {
-    public function insert(array $data): int
+    public function insert(array $data): ?int
     {
         return 0;
     }
