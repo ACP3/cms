@@ -14,11 +14,13 @@ class ContentDecorator
     /**
      * @var ContentDecoratorInterface[]
      */
-    private $contentDecorators = [];
+    private array $contentDecorators = [];
 
-    public function registerContentDecorator(ContentDecoratorInterface $contentDecorator): void
+    public function registerContentDecorator(ContentDecoratorInterface $contentDecorator, int $priority): void
     {
-        $this->contentDecorators[] = $contentDecorator;
+        $this->contentDecorators[$priority] = $contentDecorator;
+
+        krsort($this->contentDecorators, SORT_NUMERIC);
     }
 
     /**

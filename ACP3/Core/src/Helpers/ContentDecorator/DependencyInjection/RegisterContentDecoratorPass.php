@@ -18,8 +18,13 @@ class RegisterContentDecoratorPass implements CompilerPassInterface
     {
         $definition = $container->findDefinition(ContentDecorator::class);
 
-        foreach ($container->findTaggedServiceIds('core.content_decorator') as $serviceId => $tags) {
-            $definition->addMethodCall('registerContentDecorator', [new Reference($serviceId)]);
+        $services = $container->findTaggedServiceIds('core.content_decorator');
+        foreach ($services as $serviceId => $tags) {
+            foreach ($tags as $tag) {
+                $priority = $tag['priority'] ?? 0;
+
+                $definition->addMethodCall('registerContentDecorator', [new Reference($serviceId), $priority]);
+            }
         }
     }
 }
