@@ -38,8 +38,6 @@ class GuestbookCreateViewProvider
             'name_disabled' => false,
             'mail' => '',
             'mail_disabled' => false,
-            'website' => '',
-            'website_disabled' => false,
             'message' => '',
         ];
 
@@ -49,8 +47,6 @@ class GuestbookCreateViewProvider
             $defaults['name_disabled'] = true;
             $defaults['mail'] = $users['mail'];
             $defaults['mail_disabled'] = true;
-            $defaults['website'] = $users['website'];
-            $defaults['website_disabled'] = !empty($users['website']);
         }
 
         return $defaults;

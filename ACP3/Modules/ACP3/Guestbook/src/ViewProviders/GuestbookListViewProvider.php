@@ -41,7 +41,6 @@ class GuestbookListViewProvider
 
         return [
             'guestbook' => $guestbook,
-            'overlay' => $guestbookSettings['overlay'],
             'pagination' => $this->pagination->render(),
             'dateformat' => $guestbookSettings['dateformat'],
         ];

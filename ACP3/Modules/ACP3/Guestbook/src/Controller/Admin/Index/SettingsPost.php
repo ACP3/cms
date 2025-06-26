@@ -43,7 +43,6 @@ class SettingsPost extends Core\Controller\AbstractWidgetAction
                 'dateformat' => $this->secureHelper->strEncode($formData['dateformat']),
                 'notify' => $formData['notify'],
                 'notify_email' => $formData['notify_email'],
-                'overlay' => $formData['overlay'],
             ];
 
             return $this->config->saveSettings($data, Guestbook\Installer\Schema::MODULE_NAME);

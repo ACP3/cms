@@ -31,11 +31,6 @@
         <item key="select_notification_type">Bitte wählen Sie aus, ob auf neue Gästebucheinträge per E-Mail hingewiesen
             werden soll oder nicht.
         </item>
-        <item key="select_use_overlay">Bitte wählen Sie aus, ob neue Gästebucheinträge in einem Overlay verfasst werden
-            sollen oder nicht.
-        </item>
         <item key="send_email">E-Mail senden</item>
-        <item key="use_overlay">Neue Gästebucheinträge in Overlay verfassen</item>
-        <item key="visit_website">Website besuchen</item>
     </keys>
 </language>

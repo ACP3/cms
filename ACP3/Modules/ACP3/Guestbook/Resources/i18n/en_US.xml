@@ -29,11 +29,6 @@
         <item key="select_notification_type">Please select whether you want to be notified about new guestbook entries or
             not.
         </item>
-        <item key="select_use_overlay">Please select whether users shoud be allowed to create guestbook entries in an
-            overlay or not.
-        </item>
         <item key="send_email">Send E-mail</item>
-        <item key="use_overlay">Create guestbook entries in an overlay</item>
-        <item key="visit_website">Visit website</item>
     </keys>
 </language>

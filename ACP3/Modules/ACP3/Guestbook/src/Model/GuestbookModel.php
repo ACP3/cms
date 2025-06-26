@@ -27,7 +27,6 @@ class GuestbookModel extends AbstractModel
             'name' => TextColumnType::class,
             'user_id' => IntegerNullableColumnType::class,
             'message' => TextColumnType::class,
-            'website' => TextColumnType::class,
             'mail' => RawColumnType::class,
             'active' => IntegerColumnType::class,
         ];

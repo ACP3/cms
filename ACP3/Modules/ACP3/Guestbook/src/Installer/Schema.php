@@ -48,7 +48,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `name` VARCHAR(20) NOT NULL,
                 `user_id` INT(10) UNSIGNED,
                 `message` TEXT NOT NULL,
-                `website` VARCHAR(120) NOT NULL,
                 `mail` VARCHAR(120) NOT NULL,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`),
@@ -69,7 +68,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
             'dateformat' => 'long',
             'notify' => 0,
             'notify_email' => '',
-            'overlay' => 1,
         ];
     }
 }

@@ -37,7 +37,7 @@ class Migrator
             }
 
             // We need to ensure, that the other migrations a certain migration requires, have already been executed.
-            // Otherwise, this can result unforeseeable errors.
+            // Otherwise, this can result in unforeseeable errors.
             if ($migration->dependencies() !== null && \count(array_intersect($migration->dependencies(), $alreadyExecutedMigrations)) !== \count($migration->dependencies())) {
                 continue;
             }

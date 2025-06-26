@@ -8,7 +8,6 @@
 namespace ACP3\Modules\ACP3\Guestbook\Validation;
 
 use ACP3\Core;
-use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\Validation\AbstractFormValidation;
 
 class AdminSettingsFormValidation extends AbstractFormValidation
@@ -36,17 +35,6 @@ class AdminSettingsFormValidation extends AbstractFormValidation
                     'message' => $this->translator->t('guestbook', 'select_notification_type'),
                     'extra' => [
                         'haystack' => [0, 1, 2],
-                    ],
-                ]
-            )
-            ->addConstraint(
-                Core\Validation\ValidationRules\InArrayValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'overlay',
-                    'message' => $this->translator->t('guestbook', 'select_use_overlay'),
-                    'extra' => [
-                        'haystack' => YesNoEnum::values(),
                     ],
                 ]
             );
