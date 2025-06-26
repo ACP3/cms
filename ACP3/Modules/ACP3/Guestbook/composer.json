@@ -18,7 +18,7 @@
   "require": {
     "acp3/core": "^6.34.0",
     "acp3/module-permissions": "^6.30.0",
-    "acp3/module-system": "^6.34.0",
+    "acp3/module-system": "^6.34.1",
     "acp3/module-users": "^6.30.0"
   },
   "suggest": {
