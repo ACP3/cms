@@ -8,5 +8,6 @@
     </div>
 </div>
 {javascripts}
+    {js_libraries enable="ajax-form"}
     {include_js module="system" file="partials/ajax-modal"}
 {/javascripts}
