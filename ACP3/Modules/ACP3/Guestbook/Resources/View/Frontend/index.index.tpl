@@ -1,21 +1,10 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    <div class="modal fade" id="js-modal-create" tabindex="-1" role="dialog" aria-labelledby="js-modal-create" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="p-3 text-center">
-                    {icon iconSet="solid" icon="spinner" cssSelectors="svg-icon--spin"}
-                </div>
-            </div>
-        </div>
-    </div>
+    {include file="asset:System/Partials/ajax-modal.tpl" modal=['id' => 'js-modal-create']}
     <p class="text-center">
-        <a href="{uri args="guestbook/index/create"}" id="js-create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
+        <a href="{uri args="guestbook/index/create"}" id="js-modal-create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
     </p>
-    {javascripts}
-        {include_js module="guestbook" file="frontend/index.index"}
-    {/javascripts}
     {redirect_message}
     {if !empty($guestbook)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}

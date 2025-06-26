@@ -1,5 +1,5 @@
 {if $IS_AJAX}
-    {$LAYOUT='Guestbook/layout.modal.tpl'}
+    {$LAYOUT='System/layout.modal.tpl'}
 {/if}
 
 {extends file="asset:System/layout.ajax-form.tpl"}
