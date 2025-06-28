@@ -3,7 +3,7 @@
 {$DELETE_ROUTE={uri args="acp/permissions/resources/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/permissions/resources/create"  iconSet="solid" icon="plus" class="text-success"}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/permissions/resources/create', 'button_icon' => 'plus', 'button_icon_selectors' => 'text-success', 'button_selectors' => ' ', 'edit_path' => "acp/permissions/resources/create/", 'title' => {lang t="permissions|admin_resources_create"}]}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if isset($resources)}
