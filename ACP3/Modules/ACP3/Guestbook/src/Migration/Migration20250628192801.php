@@ -10,7 +10,7 @@ namespace ACP3\Modules\ACP3\Guestbook\Migration;
 use ACP3\Core\Database\Connection;
 use ACP3\Core\Migration\MigrationInterface;
 
-class Migration20250626181001 implements MigrationInterface
+class Migration20250628192801 implements MigrationInterface
 {
     public function __construct(private readonly Connection $db)
     {
@@ -23,13 +23,7 @@ class Migration20250626181001 implements MigrationInterface
 
     public function up(): void
     {
-        $this->db->getConnection()->delete(
-            $this->db->getPrefixedTableName('settings'),
-            [
-                'module_id' => $this->db->fetchColumn("SELECT `id` FROM `{$this->db->getPrefixedTableName('modules')}` WHERE `name` = 'guestbook'"),
-                'name' => 'overlay',
-            ]
-        );
+        $this->db->executeStatement("ALTER TABLE `{$this->db->getPrefixedTableName('guestbook')}` DROP COLUMN `website`;");
     }
 
     public function down(): void
