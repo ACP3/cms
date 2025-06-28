@@ -121,6 +121,7 @@
         <item key="flood_no_entry_possible">You have to wait for %d seconds to submit a new entry.</item>
         <item key="form_already_submitted">The form has been already submitted.</item>
         <item key="forward">Forward</item>
+        <item key="further_options">Further options</item>
         <item key="general">General</item>
         <item key="general_settings">General settings</item>
         <item key="general_statements">General statements</item>

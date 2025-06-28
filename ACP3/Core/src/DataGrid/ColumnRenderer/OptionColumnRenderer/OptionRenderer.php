@@ -15,7 +15,11 @@ class OptionRenderer
     /**
      * @var string[]
      */
-    private array $options = [];
+    private array $mainOptions = [];
+    /**
+     * @var string[]
+     */
+    private array $dropDownOptions = [];
 
     public function __construct(private readonly RouterInterface $router, private readonly Icon $icon)
     {
@@ -27,26 +31,45 @@ class OptionRenderer
         string $icon,
         string $iconSelector = '',
         bool $useAjax = false,
+        bool $shownByDefault = false,
     ): void {
-        $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
-        $value = '<li><a href="' . $this->router->route($route) . '" class="dropdown-item"' . $ajax . '>';
-        $value .= ($this->icon)('solid', str_starts_with($icon, 'fa-') ? substr($icon, 3) : $icon, ['cssSelectors' => $iconSelector]);
-        $value .= '<span class="ms-2">' . $translationPhrase . '</span>';
-        $value .= '</a></li>';
+        if ($shownByDefault) {
+            $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
+            $value = '<a href="' . $this->router->route($route) . '" class="btn btn-sm btn-light" title="' . $translationPhrase . '"' . $ajax . '>';
+            $value .= ($this->icon)('solid', str_starts_with($icon, 'fa-') ? substr($icon, 3) : $icon, ['cssSelectors' => $iconSelector]);
+            $value .= '</a>';
 
-        $this->options[] = $value;
+            $this->mainOptions[] = $value;
+        } else {
+            $ajax = $useAjax === true ? ' data-ajax-form="true"' : '';
+            $value = '<li><a href="' . $this->router->route($route) . '" class="dropdown-item"' . $ajax . '>';
+            $value .= ($this->icon)('solid', str_starts_with($icon, 'fa-') ? substr($icon, 3) : $icon, ['cssSelectors' => $iconSelector]);
+            $value .= '<span class="ms-2">' . $translationPhrase . '</span>';
+            $value .= '</a></li>';
+
+            $this->dropDownOptions[] = $value;
+        }
     }
 
     /**
      * @return string[]
      */
-    public function getOptions(): array
+    public function getDropDownOptions(): array
     {
-        return $this->options;
+        return $this->dropDownOptions;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getMainOptions(): array
+    {
+        return $this->mainOptions;
     }
 
     public function clearOptions(): void
     {
-        $this->options = [];
+        $this->mainOptions = [];
+        $this->dropDownOptions = [];
     }
 }
