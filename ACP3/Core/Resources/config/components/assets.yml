@@ -26,6 +26,7 @@ services:
   ACP3\Core\Assets\FileResolver:
     calls:
       - addStrategy: ['@ACP3\Core\Assets\FileResolver\TemplateFileCheckerStrategy']
+      - addStrategy: ['@ACP3\Core\Assets\FileResolver\AssetsManifestFileCheckerStrategy']
       - addStrategy: ['@ACP3\Core\Assets\FileResolver\MinifiedAwareFileCheckerStrategy']
       - addStrategy: ['@ACP3\Core\Assets\FileResolver\StraightFileCheckerStrategy']
 

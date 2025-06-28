@@ -16,9 +16,9 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
     protected const ASSETS_PATH_CSS = 'Assets/css';
 
     /**
-     * @var string[]|null
+     * @var string[]
      */
-    private ?array $stylesheets = null;
+    private array $stylesheets = [];
 
     public function __construct(private readonly Assets $assets, private readonly Libraries $libraries, private readonly FileResolver $fileResolver)
     {
@@ -38,14 +38,22 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
             }
 
             foreach ($library->getCss() as $stylesheet) {
-                $this->stylesheets = [
-                    ...$this->stylesheets,
-                    ...$this->fileResolver->getWebStaticAssetPath(
+                $this->addFiles(
+                    $this->fileResolver->getWebStaticAssetPath(
                         $library->getModuleName(),
                         static::ASSETS_PATH_CSS,
                         $stylesheet
                     ),
-                ];
+                );
+            }
+        }
+    }
+
+    public function addFiles(array $files): void
+    {
+        foreach ($files as $file) {
+            if (!empty($file) && !\in_array($file, $this->stylesheets, true)) {
+                $this->stylesheets[] = $file;
             }
         }
     }
@@ -56,9 +64,7 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
      */
     public function renderHtmlElement(): string
     {
-        if ($this->stylesheets === null) {
-            $this->initialize();
-        }
+        $this->initialize();
 
         $deferrableStylesheets = '';
         $deferrableStylesheetsNoScript = '';
@@ -83,8 +89,11 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
     {
         $this->assets->initializeTheme();
 
+        $backup = $this->stylesheets;
         $this->stylesheets = [];
 
         $this->fetchLibraries();
+
+        $this->addFiles($backup);
     }
 }

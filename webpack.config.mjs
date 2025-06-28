@@ -18,6 +18,7 @@ entryPointMap.forEach((path, entryName) => {
       .substring(2)
       .replace(/\.m?js/, "")
       .replaceAll("/", "-")
+      .toLocaleLowerCase()
   ] = {
     import: path,
   };

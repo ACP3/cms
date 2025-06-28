@@ -7,21 +7,21 @@
 
 namespace ACP3\Core\Assets;
 
+use ACP3\Core\Assets\Renderer\Strategies\RendererStrategyInterface;
+
 abstract class AbstractIncludeAsset
 {
-    /**
-     * @var array<string, true>
-     */
-    private array $alreadyIncluded = [];
-
-    public function __construct(private readonly Libraries $libraries, private readonly FileResolver $fileResolver)
-    {
+    public function __construct(
+        private readonly Libraries $libraries,
+        private readonly FileResolver $fileResolver,
+        private readonly RendererStrategyInterface $rendererStrategy,
+    ) {
     }
 
     /**
      * @param string[] $dependencies
      */
-    public function add(string $moduleName, string $filePath, array $dependencies = []): string
+    public function add(string $moduleName, string $filePath, array $dependencies = []): void
     {
         if (!empty($dependencies)) {
             $this->libraries->enableLibraries($dependencies);
@@ -31,20 +31,7 @@ abstract class AbstractIncludeAsset
             throw new \InvalidArgumentException('Not all necessary arguments for the function ' . __FUNCTION__ . ' were passed!');
         }
 
-        $key = $moduleName . '/' . $filePath;
-
-        // Do not include the same file multiple times
-        if (isset($this->alreadyIncluded[$key])) {
-            return '';
-        }
-
-        $this->alreadyIncluded[$key] = true;
-
-        return array_reduce(
-            $this->resolvePath($moduleName, $filePath),
-            fn ($path) => \sprintf($this->getHtmlTag(), $path),
-            ''
-        );
+        $this->rendererStrategy->addFiles($this->resolvePath($moduleName, $filePath));
     }
 
     private function hasValidParams(string $moduleName, string $filePath): bool
@@ -56,7 +43,7 @@ abstract class AbstractIncludeAsset
     /**
      * @return string[]
      */
-    private function resolvePath(string $moduleName, string $filePath): array
+    protected function resolvePath(string $moduleName, string $filePath): array
     {
         $paths = $this->fileResolver->getWebStaticAssetPath(
             $moduleName,
@@ -74,6 +61,4 @@ abstract class AbstractIncludeAsset
     abstract protected function getResourceDirectory(): string;
 
     abstract protected function getFileExtension(): string;
-
-    abstract protected function getHtmlTag(): string;
 }

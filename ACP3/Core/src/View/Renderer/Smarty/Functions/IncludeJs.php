@@ -18,7 +18,7 @@ class IncludeJs extends AbstractFunction
     /**
      * @throws \InvalidArgumentException
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         $dependencies = $params['depends'] ?? [];
 
@@ -26,6 +26,8 @@ class IncludeJs extends AbstractFunction
             $dependencies = explode(',', $dependencies);
         }
 
-        return $this->includeJs->add($params['module'] ?? '', $params['file'], $dependencies);
+        $this->includeJs->add($params['module'] ?? '', $params['file'], $dependencies);
+
+        return '';
     }
 }

@@ -65,14 +65,13 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
     {
         foreach ($this->getEnabledLibraries() as $library) {
             foreach ($library->getCss() as $stylesheet) {
-                $this->stylesheets = [
-                    ...$this->stylesheets,
-                    ...$this->fileResolver->getStaticAssetPath(
+                $this->addFiles(
+                    $this->fileResolver->getStaticAssetPath(
                         $library->getModuleName(),
                         static::ASSETS_PATH_CSS,
                         $stylesheet
                     ),
-                ];
+                );
             }
         }
     }

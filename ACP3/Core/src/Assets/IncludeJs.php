@@ -7,8 +7,18 @@
 
 namespace ACP3\Core\Assets;
 
+use ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy;
+
 class IncludeJs extends AbstractIncludeAsset
 {
+    public function __construct(
+        Libraries $libraries,
+        FileResolver $fileResolver,
+        JavaScriptRendererStrategy $jsRendererStrategy,
+    ) {
+        parent::__construct($libraries, $fileResolver, $jsRendererStrategy);
+    }
+
     protected function getResourceDirectory(): string
     {
         return 'Assets/js';
@@ -17,10 +27,5 @@ class IncludeJs extends AbstractIncludeAsset
     protected function getFileExtension(): string
     {
         return 'js';
-    }
-
-    protected function getHtmlTag(): string
-    {
-        return '<script defer src="%s"></script>';
     }
 }

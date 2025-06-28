@@ -37,12 +37,14 @@ class CKEditor extends Textarea
 
     public function getData(): array
     {
+        $this->init();
+
         $wysiwyg = [
             'friendly_name' => $this->getFriendlyName(),
             'id' => $this->id,
             'name' => $this->name,
             'value' => $this->value,
-            'js' => $this->init(),
+            'js' => '',
             'advanced' => $this->advanced,
             'required' => $this->required,
             'data_config' => $this->configure(),
@@ -78,15 +80,15 @@ JS;
         return json_encode($this->config, JSON_THROW_ON_ERROR);
     }
 
-    private function init(): string
+    private function init(): void
     {
         if ($this->isInitialized === true) {
-            return '';
+            return;
         }
 
         $this->isInitialized = true;
 
-        return $this->includeJs->add('Wysiwygckeditor', 'partials/ckeditor');
+        $this->includeJs->add('Wysiwygckeditor', 'partials/ckeditor');
     }
 
     private function addFileManager(): void

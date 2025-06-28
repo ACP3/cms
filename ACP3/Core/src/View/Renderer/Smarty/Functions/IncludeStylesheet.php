@@ -18,7 +18,7 @@ class IncludeStylesheet extends AbstractFunction
     /**
      * @throws \InvalidArgumentException
      */
-    public function __invoke(array $params, \Smarty_Internal_Template $smarty): mixed
+    public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         $dependencies = $params['depends'] ?? [];
 
@@ -26,6 +26,8 @@ class IncludeStylesheet extends AbstractFunction
             $dependencies = explode(',', $dependencies);
         }
 
-        return $this->includeStylesheet->add($params['module'] ?? '', $params['file'], $dependencies);
+        $this->includeStylesheet->add($params['module'] ?? '', $params['file'], $dependencies);
+
+        return '';
     }
 }

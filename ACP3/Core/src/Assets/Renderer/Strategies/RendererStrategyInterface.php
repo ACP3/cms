@@ -13,4 +13,9 @@ interface RendererStrategyInterface
      * Returns the completely rendered HTML element of the to be rendered assets.
      */
     public function renderHtmlElement(): string;
+
+    /**
+     * @param string[] $files
+     */
+    public function addFiles(array $files): void;
 }

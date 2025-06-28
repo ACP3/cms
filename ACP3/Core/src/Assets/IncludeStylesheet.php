@@ -7,8 +7,15 @@
 
 namespace ACP3\Core\Assets;
 
+use ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy;
+
 class IncludeStylesheet extends AbstractIncludeAsset
 {
+    public function __construct(Libraries $libraries, FileResolver $fileResolver, CSSRendererStrategy $rendererStrategy)
+    {
+        parent::__construct($libraries, $fileResolver, $rendererStrategy);
+    }
+
     protected function getResourceDirectory(): string
     {
         return 'Assets/css';
@@ -17,10 +24,5 @@ class IncludeStylesheet extends AbstractIncludeAsset
     protected function getFileExtension(): string
     {
         return 'css';
-    }
-
-    protected function getHtmlTag(): string
-    {
-        return '<link rel="stylesheet" type="text/css" href="%s">';
     }
 }

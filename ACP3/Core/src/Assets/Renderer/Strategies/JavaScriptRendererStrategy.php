@@ -15,9 +15,9 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     protected const ASSETS_PATH_JS = 'Assets/js';
 
     /**
-     * @var string[]|null
+     * @var string[]
      */
-    private ?array $javascripts = null;
+    private array $javascripts = [];
 
     public function __construct(private readonly Assets $assets, private readonly Assets\FileResolver $fileResolver, private readonly Libraries $libraries)
     {
@@ -37,14 +37,22 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
             }
 
             foreach ($library->getJs() as $javascript) {
-                $this->javascripts = [
-                    ...$this->javascripts,
-                    ...$this->fileResolver->getWebStaticAssetPath(
+                $this->addFiles(
+                    $this->fileResolver->getWebStaticAssetPath(
                         $library->getModuleName(),
                         static::ASSETS_PATH_JS,
                         $javascript
-                    ),
-                ];
+                    )
+                );
+            }
+        }
+    }
+
+    public function addFiles(array $files): void
+    {
+        foreach ($files as $file) {
+            if (!empty($file) && !\in_array($file, $this->javascripts, true)) {
+                $this->javascripts[] = $file;
             }
         }
     }
@@ -55,21 +63,19 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     protected function fetchThemeJavaScript(): void
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
-            $this->javascripts = [
-                ...$this->javascripts,
-                ...$this->fileResolver->getWebStaticAssetPath(
+            $this->addFiles(
+                $this->fileResolver->getWebStaticAssetPath(
                     'System', static::ASSETS_PATH_JS, $file
                 ),
-            ];
+            );
         }
 
         // Include the general js file of the layout
-        $this->javascripts = [
-            ...$this->javascripts,
-            ...$this->fileResolver->getWebStaticAssetPath(
+        $this->addFiles(
+            $this->fileResolver->getWebStaticAssetPath(
                 'System', static::ASSETS_PATH_JS, 'layout.js'
             ),
-        ];
+        );
     }
 
     /**
@@ -78,12 +84,10 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
      */
     public function renderHtmlElement(): string
     {
-        if ($this->javascripts === null) {
-            $this->initialize();
-        }
+        $this->initialize();
 
         return array_reduce(
-            array_unique(array_filter($this->javascripts, static fn ($jsFile) => !empty($jsFile))),
+            $this->javascripts,
             static fn ($accumulator, $javascript) => $accumulator . "<script defer src=\"{$javascript}\"></script>\n",
             ''
         );
@@ -97,9 +101,13 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     {
         $this->assets->initializeTheme();
 
+        $backup = $this->javascripts;
+
         $this->javascripts = [];
 
         $this->fetchLibraries();
         $this->fetchThemeJavaScript();
+
+        $this->addFiles($backup);
     }
 }

@@ -19,9 +19,9 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     protected const ASSETS_PATH_CSS = 'Assets/css';
 
     /**
-     * @var string[]|null
+     * @var string[]
      */
-    private ?array $stylesheets = null;
+    private array $stylesheets = [];
 
     public function __construct(
         private readonly RequestInterface $request,
@@ -46,14 +46,22 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
             }
 
             foreach ($library->getCss() as $stylesheet) {
-                $this->stylesheets = [
-                    ...$this->stylesheets,
-                    ...$this->fileResolver->getWebStaticAssetPath(
+                $this->addFiles(
+                    $this->fileResolver->getWebStaticAssetPath(
                         $library->getModuleName(),
                         static::ASSETS_PATH_CSS,
                         $stylesheet
                     ),
-                ];
+                );
+            }
+        }
+    }
+
+    public function addFiles(array $files): void
+    {
+        foreach ($files as $file) {
+            if (!empty($file) && !\in_array($file, $this->stylesheets, true)) {
+                $this->stylesheets[] = $file;
             }
         }
     }
@@ -64,24 +72,22 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     private function fetchThemeStylesheets(): void
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
-            $this->stylesheets = [
-                ...$this->stylesheets,
-                ...$this->fileResolver->getWebStaticAssetPath(
+            $this->addFiles(
+                $this->fileResolver->getWebStaticAssetPath(
                     'System',
                     static::ASSETS_PATH_CSS,
                     trim($file)
                 ),
-            ];
+            );
         }
 
-        $this->stylesheets = [
-            ...$this->stylesheets,
-            ...$this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
+        $this->addFiles(
+            $this->fileResolver->getWebStaticAssetPath(
                 'System',
                 static::ASSETS_PATH_CSS,
                 'layout.css'
             ),
-        ];
+        );
     }
 
     /**
@@ -92,35 +98,32 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         $area = $this->request->getArea();
 
         foreach ($this->modules->getInstalledModules() as $module) {
-            $this->stylesheets = [
-                ...$this->stylesheets,
-                ...$this->fileResolver->getWebStaticAssetPath(
+            $this->addFiles(
+                $this->fileResolver->getWebStaticAssetPath(
                     $module['name'],
                     static::ASSETS_PATH_CSS,
                     'style.css'
                 ),
-            ];
+            );
 
             if ($area === AreaEnum::AREA_ADMIN) {
-                $this->stylesheets = [
-                    ...$this->stylesheets,
-                    ...$this->fileResolver->getWebStaticAssetPath(
+                $this->addFiles(
+                    $this->fileResolver->getWebStaticAssetPath(
                         $module['name'],
                         static::ASSETS_PATH_CSS,
                         'admin.css'
                     ),
-                ];
+                );
             }
 
             // Append custom styles to the default module styling
-            $this->stylesheets = [
-                ...$this->stylesheets,
-                ...$this->fileResolver->getWebStaticAssetPath(
+            $this->addFiles(
+                $this->fileResolver->getWebStaticAssetPath(
                     $module['name'],
                     static::ASSETS_PATH_CSS,
                     'append.css'
                 ),
-            ];
+            );
         }
     }
 
@@ -130,9 +133,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      */
     public function renderHtmlElement(): string
     {
-        if ($this->stylesheets === null) {
-            $this->initialize();
-        }
+        $this->initialize();
 
         return array_reduce(
             array_filter($this->stylesheets, static fn ($stylesheet) => !empty($stylesheet)),
@@ -149,6 +150,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     {
         $this->assets->initializeTheme();
 
+        $backup = $this->stylesheets;
         $this->stylesheets = [];
 
         // The sort order is important here, as module should be allowed to override the styles a library provides.
@@ -156,5 +158,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         $this->fetchLibraries();
         $this->fetchModuleStylesheets();
         $this->fetchThemeStylesheets();
+
+        $this->addFiles($backup);
     }
 }
