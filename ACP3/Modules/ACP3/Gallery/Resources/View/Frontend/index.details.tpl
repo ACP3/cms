@@ -1,7 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block EDIT_CONTENT}
-    {check_access mode="link" path="acp/gallery/pictures/edit/id_`$picture.id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/gallery/pictures/edit', 'edit_path' => "acp/gallery/pictures/edit/id_`$picture.id`/", 'id' => 'js-edit-gallery-picture', 'title' => {lang t="gallery|admin_pictures_edit"}]}
 {/block}
 
 {block CONTENT}

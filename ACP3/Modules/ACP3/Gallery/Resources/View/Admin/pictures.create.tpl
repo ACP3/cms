@@ -1,3 +1,8 @@
+{if $IS_AJAX}
+    {$LAYOUT='System/layout.modal.tpl'}
+    {$modal=['id' => 'js-edit-gallery-picture']}
+{/if}
+
 {$is_multipart=true}
 
 {extends file="asset:System/layout.ajax-form.tpl"}
@@ -11,5 +16,9 @@
     {if isset($options)}
         {include file="asset:System/Partials/form_group.checkbox.tpl" options=$options label={lang t="system|options"}}
     {/if}
-    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/gallery/index/edit/id_`$gallery_id`"}}
+    {if $IS_AJAX}
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url=$BACK_URI}
+    {else}
+        {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
+    {/if}
 {/block}
