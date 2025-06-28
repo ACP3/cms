@@ -102,6 +102,7 @@ class CheckAccess
             'mode' => $params['mode'] ?? null,
             'uri' => $this->router->route($params['path']),
             'title' => $params['title'] ?? null,
+            'id' => $params['id'] ?? null,
             'class' => $params['class'] ?? null,
             'blank' => $params['blank'] ?? false,
             'selectors' => $params['selectors'] ?? '',

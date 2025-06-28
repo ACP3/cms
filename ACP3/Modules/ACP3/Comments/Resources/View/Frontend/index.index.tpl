@@ -1,6 +1,5 @@
 <section id="comments">
     <h3 class="text-center">{lang t="comments|comments"}</h3>
-    {redirect_message}
     {if !empty($comments)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $comments as $row}

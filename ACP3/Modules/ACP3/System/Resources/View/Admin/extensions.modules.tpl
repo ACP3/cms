@@ -1,7 +1,6 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {redirect_message}
     {tabset identifier="system-admin-modules"}
         {tab title={lang t="system|installed_modules"}}
             <div class="table-responsive">

@@ -1,8 +1,5 @@
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block CONTENT_BEFORE_AJAX_FORM}
-    {redirect_message}
-{/block}
 {block CONTENT_AJAX_FORM}
     {tabset identifier="system-admin-settings-form"}
         {tab title={lang t="system|general"}}

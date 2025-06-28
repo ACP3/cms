@@ -168,10 +168,18 @@ class FormAction
 
     public function setRedirectMessage(bool|int $result, string $translatedText, ?string $path = null): Response
     {
+        if ($this->request->getPost()->has('continue')) {
+            $redirectPath = $this->request->getPathInfo();
+        } elseif ($this->request->getPost()->has('back_uri')) {
+            $redirectPath = $this->request->getPost()->get('back_uri');
+        } else {
+            $redirectPath = $path;
+        }
+
         return $this->redirectMessages->setMessage(
             (bool) $result,
             $translatedText,
-            $this->request->getPost()->has('continue') ? $this->request->getPathInfo() : $path
+            $redirectPath
         );
     }
 

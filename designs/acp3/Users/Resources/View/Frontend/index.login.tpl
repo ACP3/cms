@@ -2,10 +2,6 @@
 
 {extends file="asset:System/layout.ajax-form.tpl"}
 
-{block CONTENT_BEFORE_AJAX_FORM}
-    {redirect_message}
-{/block}
-
 {block CONTENT_AJAX_FORM_URI}{uri args="users/index/login/redirect_`$redirect_uri`"}{/block}
 
 {block CONTENT_AJAX_FORM}

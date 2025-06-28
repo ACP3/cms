@@ -36,11 +36,13 @@ class RedirectResponse
     }
 
     /**
-     * Redirect to another URLs.
+     * Redirect to another URL.
      */
     private function createRedirectResponse(string $path, int $statusCode): JsonResponse|SymfonyRedirectResponse
     {
-        $path = $this->router->route($path, true);
+        if (!preg_match('=(^(https?://))|(^/)=', $path)) {
+            $path = $this->router->route($path, true);
+        }
 
         if ($this->request->isXmlHttpRequest() === true) {
             return $this->createAjaxRedirectResponse($path);

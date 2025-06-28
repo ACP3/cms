@@ -5,7 +5,6 @@
     <p class="text-center">
         <a href="{uri args="guestbook/index/create"}" id="js-modal-create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
     </p>
-    {redirect_message}
     {if !empty($guestbook)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}
         {foreach $guestbook as $row}

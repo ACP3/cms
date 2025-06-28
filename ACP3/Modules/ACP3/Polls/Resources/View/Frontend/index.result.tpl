@@ -1,7 +1,6 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {redirect_message}
     <h3>{$question}</h3>
     <table class="table table-striped">
         <thead>

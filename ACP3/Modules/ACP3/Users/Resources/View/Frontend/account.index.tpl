@@ -6,7 +6,6 @@
     {event name="users.account.index.header_bar"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
-    {redirect_message}
     {$dashboard={event name="user.account.index.dashboard"}}
     {if !empty($dashboard)}
         {$dashboard}

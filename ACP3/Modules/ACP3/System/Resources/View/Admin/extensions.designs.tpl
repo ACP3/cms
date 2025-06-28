@@ -1,7 +1,6 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {redirect_message}
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead>

@@ -5,6 +5,5 @@
     {check_access mode="link" path="acp/system/extensions/designs" iconSet="solid" icon="font"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
-    {redirect_message}
     {include file="asset:System/Partials/no_results.tpl" no_results_text={lang t="system|select_menu_item"}}
 {/block}

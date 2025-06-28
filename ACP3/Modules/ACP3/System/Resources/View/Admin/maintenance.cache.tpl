@@ -1,7 +1,6 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {redirect_message}
     <p>
         {lang t="system|delete_caches_description"}
     </p>

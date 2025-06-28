@@ -1,9 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {block CONTENT_BEFORE_AJAX_FORM}
-        {redirect_message}
-    {/block}
+    {block CONTENT_BEFORE_AJAX_FORM}{/block}
     <form action="{block CONTENT_AJAX_FORM_URI}{$REQUEST_URI}{/block}"
           method="post"
           accept-charset="UTF-8"
