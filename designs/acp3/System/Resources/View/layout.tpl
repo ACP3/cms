@@ -43,7 +43,6 @@
             {block PAGE_TITLE}
                 <h2 itemprop="name">{page_title}</h2>
             {/block}
-            {redirect_message}
             {event name="layout.content_before"}
             {block EDIT_CONTENT}{/block}
             {block CONTENT}{/block}
