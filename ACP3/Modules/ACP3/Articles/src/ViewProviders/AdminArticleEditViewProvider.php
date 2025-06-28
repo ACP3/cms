@@ -12,12 +12,20 @@ use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\View\Layout;
 use ACP3\Modules\ACP3\Articles\Helpers;
 
 class AdminArticleEditViewProvider
 {
-    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly Title $title, private readonly Translator $translator, private readonly Layout $layout)
+    public function __construct(
+        private readonly Forms $formsHelper,
+        private readonly FormToken $formTokenHelper,
+        private readonly RequestInterface $request,
+        private readonly RouterInterface $router,
+        private readonly Title $title,
+        private readonly Translator $translator,
+        private readonly Layout $layout)
     {
     }
 
@@ -41,6 +49,7 @@ class AdminArticleEditViewProvider
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN,
             'SEO_ROUTE_NAME' => !empty($article['id']) ? \sprintf(Helpers::URL_KEY_PATTERN, $article['id']) : '',
+            'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/articles', true),
         ];
     }
 

@@ -8,10 +8,7 @@
 {/if}
 
 {block EDIT_CONTENT}
-    {if {has_permission path="admin/news/index/edit"}}
-        {include file="asset:System/Partials/ajax-modal.tpl" modal=['id' => 'js-edit-news', 'size' => 'xl', 'title' => {lang t="news|admin_index_edit"}]}
-        {check_access mode="link" path="acp/news/index/edit/id_`$news.id`/" iconSet="solid" icon="pencil" id="js-edit-news-link" blank=true selectors="w-100 my-3"}
-    {/if}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/news/index/edit', 'edit_path' => "acp/news/index/edit/id_`$news.id`/", 'id' => 'js-edit-news', 'title' => {lang t="news|admin_index_edit"}]}
 {/block}
 
 {block CONTENT}
