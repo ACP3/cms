@@ -35,8 +35,6 @@ class UsersModel extends AbstractModel
             'mail' => TextColumnType::class,
             'mail_display' => BooleanColumnType::class,
             'website' => TextColumnType::class,
-            'icq' => TextColumnType::class,
-            'skype' => TextColumnType::class,
             'street' => TextColumnType::class,
             'house_number' => TextColumnType::class,
             'zip' => TextColumnType::class,

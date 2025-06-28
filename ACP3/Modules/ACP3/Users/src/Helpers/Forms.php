@@ -24,8 +24,6 @@ class Forms
     public function fetchContactDetails(
         string $defaultMail = '',
         string $defaultWebsite = '',
-        string $defaultIcqNumber = '',
-        string $defaultSkypeName = '',
     ): array {
         return [
             [
@@ -39,18 +37,6 @@ class Forms
                 'lang' => $this->translator->t('system', 'website'),
                 'value' => $this->request->getPost()->get('website', $defaultWebsite),
                 'maxlength' => '120',
-            ],
-            [
-                'name' => 'icq',
-                'lang' => $this->translator->t('users', 'icq'),
-                'value' => $this->request->getPost()->get('icq', $defaultIcqNumber),
-                'maxlength' => '9',
-            ],
-            [
-                'name' => 'skype',
-                'lang' => $this->translator->t('users', 'skype'),
-                'value' => $this->request->getPost()->get('skype', $defaultSkypeName),
-                'maxlength' => '28',
             ],
         ];
     }

@@ -13,7 +13,6 @@ use ACP3\Core\Validation\ValidationRules\BirthdayValidationRule;
 use ACP3\Modules\ACP3\Users\Enum\GenderEnum;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByEmailValidationRule;
 use ACP3\Modules\ACP3\Users\Validation\ValidationRules\AccountNotExistsByNameValidationRule;
-use ACP3\Modules\ACP3\Users\Validation\ValidationRules\IcqNumberValidationRule;
 
 abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormValidation
 {
@@ -108,14 +107,6 @@ abstract class AbstractUserFormValidation extends Core\Validation\AbstractFormVa
                     'extra' => [
                         'user_id' => $userId,
                     ],
-                ]
-            )
-            ->addConstraint(
-                IcqNumberValidationRule::class,
-                [
-                    'data' => $formData,
-                    'field' => 'icq',
-                    'message' => $this->translator->t('users', 'invalid_icq_number'),
                 ]
             );
     }

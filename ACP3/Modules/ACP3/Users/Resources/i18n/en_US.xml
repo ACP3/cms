@@ -58,9 +58,7 @@
         <item key="go_to_homepage">Homepage</item>
         <item key="go_to_previous_page">Previous page</item>
         <item key="home">Control center</item>
-        <item key="icq">ICQ-Number</item>
         <item key="invalid_birthday">Please type in a valid birthday.</item>
-        <item key="invalid_icq_number">Please type in a valid ICQ number.</item>
         <item key="language">Language</item>
         <item key="localization">Localization</item>
         <item key="log_in">Log in</item>
@@ -98,7 +96,6 @@
         <item key="select_super_user">Please select whether the user should be a super user or not.</item>
         <item key="send_email">Send E-mail</item>
         <item key="settings">Settings</item>
-        <item key="skype">Skype</item>
         <item key="successfully_logged_out">You have been successfully logged out.</item>
         <item key="super_user">Super user</item>
         <item key="to_login">Go to login</item>

@@ -73,8 +73,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `mail` VARCHAR(120) NOT NULL,
                 `mail_display` TINYINT(1) UNSIGNED NOT NULL,
                 `website` VARCHAR(120) NOT NULL,
-                `icq` VARCHAR(11) NOT NULL,
-                `skype` VARCHAR(30) NOT NULL,
                 `street` VARCHAR(120) NOT NULL,
                 `house_number` VARCHAR(5) NOT NULL,
                 `zip` VARCHAR(6) NOT NULL,

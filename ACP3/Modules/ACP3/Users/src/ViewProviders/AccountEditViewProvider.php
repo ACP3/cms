@@ -35,8 +35,6 @@ class AccountEditViewProvider
                 'contact' => $this->userFormsHelper->fetchContactDetails(
                     $user['mail'],
                     $user['website'],
-                    $user['icq'],
-                    $user['skype']
                 ),
                 'form' => array_merge($user, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),

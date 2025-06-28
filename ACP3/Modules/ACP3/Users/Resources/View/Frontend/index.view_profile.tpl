@@ -30,31 +30,13 @@
             {/if}
         </dl>
     </fieldset>
-    {if $user.mail_display == 1 || !empty($user.icq) || !empty($user.skype) || !empty($user.website)}
+    {if $user.mail_display == 1 || !empty($user.website)}
         <fieldset>
             <legend>{lang t="users|contact"}</legend>
             <dl>
                 {if $user.mail_display == 1}
                     <dt>{lang t="system|email_address"}</dt>
                     <dd>{mailto address=$user.mail encode="javascript"}</a></dd>
-                {/if}
-                {if !empty($user.icq)}
-                    <dt>{lang t="users|icq"}</dt>
-                    <dd>
-                        <a href="http://www.icq.com/{$user.icq}" target="_blank">
-                            <img src="http://web.icq.com/whitepages/online?icq={$user.icq}&amp;img=27" alt="">
-                            {$user.icq}
-                        </a>
-                    </dd>
-                {/if}
-                {if !empty($user.skype)}
-                    <dt>{lang t="users|skype"}</dt>
-                    <dd>
-                        <a href="skype:{$user.skype}?userinfo" target="_blank">
-                            <img src="http://mystatus.skype.com/smallicon/{$user.skype}" alt="">
-                            {$user.skype}
-                        </a>
-                    </dd>
                 {/if}
                 {if !empty($user.website)}
                     <dt>{lang t="system|website"}</dt>

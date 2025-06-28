@@ -61,8 +61,6 @@ class AdminUserEditViewProvider
                 'contact' => $this->userFormsHelpers->fetchContactDetails(
                     $userInfo['mail'] ?? '',
                     $userInfo['website'] ?? '',
-                    $userInfo['icq'] ?? '',
-                    $userInfo['skype'] ?? ''
                 ),
                 'form' => array_merge($userInfo, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),

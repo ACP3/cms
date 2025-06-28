@@ -58,9 +58,7 @@
         <item key="go_to_homepage">Zur Startseite</item>
         <item key="go_to_previous_page">Zur vorherigen Seite</item>
         <item key="home">Kontrollzentrum</item>
-        <item key="icq">ICQ-Nummer</item>
         <item key="invalid_birthday">Bitte geben Sie ein gültiges Geburtsdatum an.</item>
-        <item key="invalid_icq_number">Sie haben eine ungültige ICQ-Nummer eingegeben.</item>
         <item key="language">Sprache</item>
         <item key="localization">Lokalisierung</item>
         <item key="log_in">Einloggen</item>
@@ -98,7 +96,6 @@
         <item key="select_super_user">Bitte geben Sie an, ob der gewählte Benutzer Super User sein soll oder nicht.</item>
         <item key="send_email">E-Mail senden</item>
         <item key="settings">Einstellungen</item>
-        <item key="skype">Skype</item>
         <item key="successfully_logged_out">Sie haben sich erfolgreich abgemeldet.</item>
         <item key="super_user">Super User</item>
         <item key="to_login">Zum Login</item>
