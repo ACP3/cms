@@ -25,7 +25,12 @@ class UserProfileViewProvider
         $user = $this->userModel->getUserInfo($userId);
         $user['gender'] = str_replace(
             GenderEnum::values(),
-            ['', $this->translator->t('users', 'female'), $this->translator->t('users', 'male')],
+            [
+                '',
+                $this->translator->t('users', 'gender_female'),
+                $this->translator->t('users', 'gender_male'),
+                $this->translator->t('users', 'gender_divers'),
+            ],
             (string) $user['gender']
         );
 

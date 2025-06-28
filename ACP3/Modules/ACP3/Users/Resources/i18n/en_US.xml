@@ -51,6 +51,7 @@
         <item key="frontend_index_register">Register</item>
         <item key="frontend_index_view_profile">View profile</item>
         <item key="gender">Gender</item>
+        <item key="gender_divers">Divers</item>
         <item key="gender_female">Female</item>
         <item key="gender_male">Male</item>
         <item key="gender_not_specified">Not specified</item>

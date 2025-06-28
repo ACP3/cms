@@ -10,6 +10,7 @@ namespace ACP3\Modules\ACP3\Users\Helpers;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\CountryList;
 use ACP3\Core\I18n\Translator;
+use ACP3\Modules\ACP3\Users\Enum\GenderEnum;
 
 class Forms
 {
@@ -138,11 +139,10 @@ class Forms
      */
     protected function fetchGenderField(int $currentGender): array
     {
-        $genders = [
-            1 => $this->translator->t('users', 'gender_not_specified'),
-            2 => $this->translator->t('users', 'gender_female'),
-            3 => $this->translator->t('users', 'gender_male'),
-        ];
+        $genders = [];
+        foreach (GenderEnum::cases() as $case) {
+            $genders[$case->value] = $this->translator->t('users', 'gender_' . strtolower($case->name));
+        }
 
         return $this->formsHelpers->choicesGenerator('gender', $genders, $currentGender);
     }

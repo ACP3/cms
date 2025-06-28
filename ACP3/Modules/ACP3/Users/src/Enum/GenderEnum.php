@@ -16,4 +16,5 @@ enum GenderEnum: int
     case NOT_SPECIFIED = 1;
     case FEMALE = 2;
     case MALE = 3;
+    case DIVERS = 4;
 }

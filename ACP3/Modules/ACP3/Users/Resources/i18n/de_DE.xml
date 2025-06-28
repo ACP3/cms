@@ -51,8 +51,9 @@
         <item key="frontend_index_register">Registrieren</item>
         <item key="frontend_index_view_profile">Benutzerprofil ansehen</item>
         <item key="gender">Geschlecht</item>
-        <item key="gender_female">Frau</item>
-        <item key="gender_male">Mann</item>
+        <item key="gender_divers">divers</item>
+        <item key="gender_female">weiblich</item>
+        <item key="gender_male">männlich</item>
         <item key="gender_not_specified">Keine Angabe</item>
         <item key="go_to_homepage">Zur Startseite</item>
         <item key="go_to_previous_page">Zur vorherigen Seite</item>
