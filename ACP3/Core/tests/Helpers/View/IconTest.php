@@ -31,7 +31,7 @@ class IconTest extends TestCase
         $this->fileResolverMock->expects($this->once())
             ->method('getStaticAssetPath')
             ->with('system', 'Assets/svgs/solid', 'spinner.svg')
-            ->willReturn(\dirname(__DIR__, 4) . '/Modules/ACP3/System/Resources/Assets/svgs/solid/spinner.svg');
+            ->willReturn([\dirname(__DIR__, 4) . '/Modules/ACP3/System/Resources/Assets/svgs/solid/spinner.svg']);
 
         self::assertStringContainsString('<svg class="svg-icon svg-icon__spinner"', ($this->iconHelper)('solid', 'spinner'));
     }
@@ -41,7 +41,7 @@ class IconTest extends TestCase
         $this->fileResolverMock->expects($this->once())
             ->method('getStaticAssetPath')
             ->with('system', 'Assets/svgs/solid', 'spinner.svg')
-            ->willReturn(\dirname(__DIR__, 4) . '/Modules/ACP3/System/Resources/Assets/svgs/solid/spinner.svg');
+            ->willReturn([\dirname(__DIR__, 4) . '/Modules/ACP3/System/Resources/Assets/svgs/solid/spinner.svg']);
 
         $actual = ($this->iconHelper)('solid', 'spinner', ['cssSelectors' => 'my-awesome-css-selector']);
         self::assertStringContainsString('<svg class="svg-icon svg-icon__spinner my-awesome-css-selector"', $actual);
@@ -53,7 +53,7 @@ class IconTest extends TestCase
         $this->fileResolverMock->expects($this->once())
             ->method('getStaticAssetPath')
             ->with('system', 'Assets/svgs/solid', 'spinner.svg')
-            ->willReturn(\dirname(__DIR__, 4) . '/Modules/ACP3/System/Resources/Assets/svgs/solid/spinner.svg');
+            ->willReturn([\dirname(__DIR__, 4) . '/Modules/ACP3/System/Resources/Assets/svgs/solid/spinner.svg']);
 
         self::assertStringContainsString('<title>My title</title><path', ($this->iconHelper)('solid', 'spinner', ['title' => 'My title']));
     }
@@ -65,7 +65,7 @@ class IconTest extends TestCase
         $this->fileResolverMock->expects($this->once())
             ->method('getStaticAssetPath')
             ->with('system', 'Assets/svgs/solid', 'invalid-file.svg')
-            ->willReturn('');
+            ->willReturn([]);
 
         ($this->iconHelper)('solid', 'invalid-file');
     }

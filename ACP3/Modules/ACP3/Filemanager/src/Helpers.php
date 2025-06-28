@@ -23,6 +23,6 @@ class Helpers
             Schema::MODULE_NAME,
             'Assets/rich-filemanager',
             'index.html'
-        ) . '&amp;langCode=' . $this->translator->getShortIsoCode();
+        )[0] . '&amp;langCode=' . $this->translator->getShortIsoCode();
     }
 }

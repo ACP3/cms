@@ -104,11 +104,14 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     {
         foreach ($this->getEnabledLibraries() as $library) {
             foreach ($library->getCss() as $stylesheet) {
-                $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                    $library->getModuleName(),
-                    static::ASSETS_PATH_CSS,
-                    $stylesheet
-                );
+                $this->stylesheets = [
+                    ...$this->stylesheets,
+                    ...$this->fileResolver->getStaticAssetPath(
+                        $library->getModuleName(),
+                        static::ASSETS_PATH_CSS,
+                        $stylesheet
+                    ),
+                ];
             }
         }
     }
@@ -119,18 +122,24 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     private function fetchThemeStylesheets(): void
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
-            $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                'System',
-                static::ASSETS_PATH_CSS,
-                trim($file)
-            );
+            $this->stylesheets = [
+                ...$this->stylesheets,
+                ...$this->fileResolver->getStaticAssetPath(
+                    'System',
+                    static::ASSETS_PATH_CSS,
+                    trim($file)
+                ),
+            ];
         }
 
-        $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-            'System',
-            static::ASSETS_PATH_CSS,
-            'layout.css'
-        );
+        $this->stylesheets = [
+            ...$this->stylesheets,
+            ...$this->fileResolver->getStaticAssetPath(
+                'System',
+                static::ASSETS_PATH_CSS,
+                'layout.css'
+            ),
+        ];
     }
 
     /**
@@ -141,26 +150,35 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
         $area = $this->request->getArea();
 
         foreach ($this->modules->getInstalledModules() as $module) {
-            $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                $module['name'],
-                static::ASSETS_PATH_CSS,
-                'style.css'
-            );
-
-            if ($area === AreaEnum::AREA_ADMIN) {
-                $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
+            $this->stylesheets = [
+                ...$this->stylesheets,
+                ...$this->fileResolver->getStaticAssetPath(
                     $module['name'],
                     static::ASSETS_PATH_CSS,
-                    'admin.css'
-                );
+                    'style.css'
+                ),
+            ];
+
+            if ($area === AreaEnum::AREA_ADMIN) {
+                $this->stylesheets = [
+                    ...$this->stylesheets,
+                    ...$this->fileResolver->getStaticAssetPath(
+                        $module['name'],
+                        static::ASSETS_PATH_CSS,
+                        'admin.css'
+                    ),
+                ];
             }
 
             // Append custom styles to the default module styling
-            $this->stylesheets[] = $this->fileResolver->getStaticAssetPath(
-                $module['name'],
-                static::ASSETS_PATH_CSS,
-                'append.css'
-            );
+            $this->stylesheets = [
+                ...$this->stylesheets,
+                ...$this->fileResolver->getStaticAssetPath(
+                    $module['name'],
+                    static::ASSETS_PATH_CSS,
+                    'append.css'
+                ),
+            ];
         }
     }
 

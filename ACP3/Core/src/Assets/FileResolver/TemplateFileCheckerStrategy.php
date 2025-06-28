@@ -9,10 +9,10 @@ namespace ACP3\Core\Assets\FileResolver;
 
 class TemplateFileCheckerStrategy implements FileCheckerStrategyInterface
 {
-    public function findResource(string $resourcePath): ?string
+    public function findResource(string $resourcePath): ?array
     {
         if (is_file($resourcePath)) {
-            return $resourcePath;
+            return [$resourcePath];
         }
 
         return null;

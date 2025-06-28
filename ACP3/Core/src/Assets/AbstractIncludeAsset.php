@@ -40,9 +40,10 @@ abstract class AbstractIncludeAsset
 
         $this->alreadyIncluded[$key] = true;
 
-        return \sprintf(
-            $this->getHtmlTag(),
-            $this->resolvePath($moduleName, $filePath)
+        return array_reduce(
+            $this->resolvePath($moduleName, $filePath),
+            fn ($path) => \sprintf($this->getHtmlTag(), $path),
+            ''
         );
     }
 
@@ -52,19 +53,22 @@ abstract class AbstractIncludeAsset
             && preg_match('=\./=', $filePath) === 0;
     }
 
-    private function resolvePath(string $moduleName, string $filePath): string
+    /**
+     * @return string[]
+     */
+    private function resolvePath(string $moduleName, string $filePath): array
     {
-        $path = $this->fileResolver->getWebStaticAssetPath(
+        $paths = $this->fileResolver->getWebStaticAssetPath(
             $moduleName,
             $this->getResourceDirectory(),
             $filePath . '.' . $this->getFileExtension()
         );
 
-        if (!$path) {
+        if (empty($paths)) {
             throw new \RuntimeException(\sprintf('Could not find the requested file %s of module %s!', $filePath, $moduleName));
         }
 
-        return $path;
+        return $paths;
     }
 
     abstract protected function getResourceDirectory(): string;

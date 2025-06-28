@@ -56,30 +56,41 @@ class FileResolver
         $moduleName = $fragments[0];
         $templatePath = implode('/', \array_slice($fragments, 1));
 
-        return $this->getStaticAssetPath($moduleName, 'View', $templatePath);
+        return $this->getStaticAssetPath($moduleName, 'View', $templatePath)[0] ?? '';
     }
 
+    /**
+     * @return string[]
+     */
     public function getWebStaticAssetPath(
         string $moduleName,
         string $resourceDirectory = '',
         string $file = '',
-    ): string {
-        $path = $this->getStaticAssetPath($moduleName, $resourceDirectory, $file);
+    ): array {
+        $paths = $this->getStaticAssetPath($moduleName, $resourceDirectory, $file);
 
-        if ($path === '') {
-            return '';
+        if (empty($paths)) {
+            return [];
         }
 
-        $hash = hash('crc32b', (string) file_get_contents($path));
+        return array_map(
+            function ($path) {
+                $hash = hash('crc32b', (string) file_get_contents($path));
 
-        return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))) . '?' . $hash;
+                return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))) . '?' . $hash;
+            },
+            $paths
+        );
     }
 
+    /**
+     * @return string[]
+     */
     public function getStaticAssetPath(
         string $moduleName,
         string $resourceDirectory = '',
         string $file = '',
-    ): string {
+    ): array {
         if (!empty($resourceDirectory) && !str_ends_with($resourceDirectory, '/')) {
             $resourceDirectory .= '/';
         }
@@ -92,32 +103,38 @@ class FileResolver
             $this->cachedPaths[$cacheKey] = $this->resolveAssetPath($moduleName, $resourceDirectory, $file);
         }
 
-        return $this->cachedPaths[$cacheKey] ?: '';
+        return $this->cachedPaths[$cacheKey] ?: [];
     }
 
-    private function resolveAssetPath(string $moduleName, string $resourceDirectory, string $file): ?string
+    /**
+     * @return string[]|null
+     */
+    private function resolveAssetPath(string $moduleName, string $resourceDirectory, string $file): ?array
     {
         if ($this->designAssetsPath === null) {
             $this->resetTheme();
         }
 
-        $assetPath = $this->findAssetInInheritedThemes(
+        $assetPaths = $this->findAssetInInheritedThemes(
             ucfirst($moduleName),
             $resourceDirectory,
             $file
         );
 
-        $finalPath = $assetPath ?: $this->findAssetInModules($moduleName, $resourceDirectory, $file);
+        $finalPaths = $assetPaths ?: $this->findAssetInModules($moduleName, $resourceDirectory, $file);
 
-        return $finalPath !== null ? (string) realpath($finalPath) : null;
+        return $finalPaths !== null ? array_map(static fn ($finalPath) => (string) realpath($finalPath), $finalPaths) : null;
     }
 
-    private function findAssetInInheritedThemes(string $moduleName, string $resourceDirectory, string $file): ?string
+    /**
+     * @return string[]|null
+     */
+    private function findAssetInInheritedThemes(string $moduleName, string $resourceDirectory, string $file): ?array
     {
         $designAssetPath = $this->designAssetsPath . $moduleName . $resourceDirectory . $file;
 
-        if (null !== ($resourcePath = $this->findAssetInStrategies($designAssetPath))) {
-            return $resourcePath;
+        if (null !== ($resourcePaths = $this->findAssetInStrategies($designAssetPath))) {
+            return $resourcePaths;
         }
 
         $parentThemes = $this->theme->getThemeDependencies($this->currentTheme);
@@ -126,20 +143,23 @@ class FileResolver
         // Recursively iterate over the nested themes
         if ($parentTheme !== false) {
             $this->changeTheme($parentTheme);
-            $assetPath = $this->getStaticAssetPath($moduleName, $resourceDirectory, $file);
+            $assetPaths = $this->getStaticAssetPath($moduleName, $resourceDirectory, $file);
             $this->resetTheme();
 
-            return $assetPath;
+            return $assetPaths;
         }
 
         return null;
     }
 
-    private function findAssetInStrategies(string $resourcePath): ?string
+    /**
+     * @return string[]|null
+     */
+    private function findAssetInStrategies(string $resourcePath): ?array
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->isAllowed($resourcePath) && (null !== ($resource = $strategy->findResource($resourcePath)))) {
-                return $resource;
+            if ($strategy->isAllowed($resourcePath) && (null !== ($resources = $strategy->findResource($resourcePath)))) {
+                return $resources;
             }
         }
 
@@ -157,13 +177,16 @@ class FileResolver
         $this->changeTheme($this->theme->getCurrentTheme());
     }
 
-    private function findAssetInModules(string $moduleName, string $resourceDirectory, string $file): ?string
+    /**
+     * @return string[]|null
+     */
+    private function findAssetInModules(string $moduleName, string $resourceDirectory, string $file): ?array
     {
         try {
             $moduleAssetPath = ComponentRegistry::getPathByName($moduleName) . $resourceDirectory . $file;
 
-            if (null !== ($resourcePath = $this->findAssetInStrategies($moduleAssetPath))) {
-                return $resourcePath;
+            if (null !== ($resourcePaths = $this->findAssetInStrategies($moduleAssetPath))) {
+                return $resourcePaths;
             }
         } catch (ComponentNotFoundException) {
             // Intentionally omitted

@@ -24,7 +24,7 @@ class MinifiedAwareFileCheckerStrategy implements FileCheckerStrategyInterface
     ) {
     }
 
-    public function findResource(string $resourcePath): ?string
+    public function findResource(string $resourcePath): ?array
     {
         if (!$this->area) {
             $this->area = $this->areaMatcher->getAreaFromRequest($this->requestStack->getMainRequest());

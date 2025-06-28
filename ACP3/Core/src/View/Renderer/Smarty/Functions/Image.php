@@ -19,7 +19,7 @@ class Image extends AbstractFunction
     public function __invoke(array $params, \Smarty_Internal_Template $smarty): string
     {
         if (isset($params['file'], $params['module']) === true && (bool) preg_match('=\./=', (string) $params['file']) === false) {
-            $path = $this->fileResolver->getWebStaticAssetPath($params['module'], 'Assets/img', $params['file']);
+            $path = $this->fileResolver->getWebStaticAssetPath($params['module'], 'Assets/img', $params['file'])[0] ?? '';
 
             if (isset($params['absolute']) && $params['absolute'] === true) {
                 $path = $this->request->getScheme() . '://' . $this->request->getHttpHost() . $path;

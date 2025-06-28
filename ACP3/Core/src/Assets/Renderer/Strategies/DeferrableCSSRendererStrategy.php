@@ -38,11 +38,14 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
             }
 
             foreach ($library->getCss() as $stylesheet) {
-                $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
-                    $library->getModuleName(),
-                    static::ASSETS_PATH_CSS,
-                    $stylesheet
-                );
+                $this->stylesheets = [
+                    ...$this->stylesheets,
+                    ...$this->fileResolver->getWebStaticAssetPath(
+                        $library->getModuleName(),
+                        static::ASSETS_PATH_CSS,
+                        $stylesheet
+                    ),
+                ];
             }
         }
     }
@@ -61,7 +64,7 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
         $deferrableStylesheetsNoScript = '';
 
         foreach ($this->stylesheets as $stylesheet) {
-            if ($stylesheet === '') {
+            if (empty($stylesheet)) {
                 continue;
             }
 

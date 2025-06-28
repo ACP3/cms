@@ -37,11 +37,14 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
             }
 
             foreach ($library->getJs() as $javascript) {
-                $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath(
-                    $library->getModuleName(),
-                    static::ASSETS_PATH_JS,
-                    $javascript
-                );
+                $this->javascripts = [
+                    ...$this->javascripts,
+                    ...$this->fileResolver->getWebStaticAssetPath(
+                        $library->getModuleName(),
+                        static::ASSETS_PATH_JS,
+                        $javascript
+                    ),
+                ];
             }
         }
     }
@@ -52,11 +55,21 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     protected function fetchThemeJavaScript(): void
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
-            $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath('System', static::ASSETS_PATH_JS, $file);
+            $this->javascripts = [
+                ...$this->javascripts,
+                ...$this->fileResolver->getWebStaticAssetPath(
+                    'System', static::ASSETS_PATH_JS, $file
+                ),
+            ];
         }
 
         // Include the general js file of the layout
-        $this->javascripts[] = $this->fileResolver->getWebStaticAssetPath('System', static::ASSETS_PATH_JS, 'layout.js');
+        $this->javascripts = [
+            ...$this->javascripts,
+            ...$this->fileResolver->getWebStaticAssetPath(
+                'System', static::ASSETS_PATH_JS, 'layout.js'
+            ),
+        ];
     }
 
     /**
@@ -70,7 +83,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
         }
 
         return array_reduce(
-            array_filter($this->javascripts, static fn ($jsFile) => $jsFile !== ''),
+            array_unique(array_filter($this->javascripts, static fn ($jsFile) => !empty($jsFile))),
             static fn ($accumulator, $javascript) => $accumulator . "<script defer src=\"{$javascript}\"></script>\n",
             ''
         );

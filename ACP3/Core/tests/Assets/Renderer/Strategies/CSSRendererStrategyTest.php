@@ -63,8 +63,8 @@ class CSSRendererStrategyTest extends TestCase
 
         $this->fileResolverMock->method('getWebStaticAssetPath')
             ->willReturnCallback(fn (string $moduleName, string $resourceDirectory, string $file) => match ([$moduleName, $resourceDirectory, $file]) {
-                ['system', 'Assets/css', 'foo.css'] => '/ACP3/Modules/ACP3/System/Resources/Assets/css/foo.css',
-                ['System', 'Assets/css', 'layout.css'] => '',
+                ['system', 'Assets/css', 'foo.css'] => ['/ACP3/Modules/ACP3/System/Resources/Assets/css/foo.css'],
+                ['System', 'Assets/css', 'layout.css'] => [],
                 default => throw new \InvalidArgumentException(),
             });
 

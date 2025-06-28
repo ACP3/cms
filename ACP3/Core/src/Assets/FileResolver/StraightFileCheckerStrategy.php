@@ -15,11 +15,11 @@ class StraightFileCheckerStrategy implements FileCheckerStrategyInterface
     {
     }
 
-    public function findResource(string $resourcePath): ?string
+    public function findResource(string $resourcePath): ?array
     {
         $productionResourcePath = str_replace(ACP3_ROOT_DIR, $this->applicationPath->getUploadsDir() . 'assets', $resourcePath);
         if (is_file($productionResourcePath)) {
-            return $productionResourcePath;
+            return [$productionResourcePath];
         }
 
         return null;

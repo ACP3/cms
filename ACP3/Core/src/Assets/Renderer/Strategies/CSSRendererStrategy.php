@@ -46,11 +46,14 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
             }
 
             foreach ($library->getCss() as $stylesheet) {
-                $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
-                    $library->getModuleName(),
-                    static::ASSETS_PATH_CSS,
-                    $stylesheet
-                );
+                $this->stylesheets = [
+                    ...$this->stylesheets,
+                    ...$this->fileResolver->getWebStaticAssetPath(
+                        $library->getModuleName(),
+                        static::ASSETS_PATH_CSS,
+                        $stylesheet
+                    ),
+                ];
             }
         }
     }
@@ -61,18 +64,24 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     private function fetchThemeStylesheets(): void
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
-            $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
-                'System',
-                static::ASSETS_PATH_CSS,
-                trim($file)
-            );
+            $this->stylesheets = [
+                ...$this->stylesheets,
+                ...$this->fileResolver->getWebStaticAssetPath(
+                    'System',
+                    static::ASSETS_PATH_CSS,
+                    trim($file)
+                ),
+            ];
         }
 
-        $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
-            'System',
-            static::ASSETS_PATH_CSS,
-            'layout.css'
-        );
+        $this->stylesheets = [
+            ...$this->stylesheets,
+            ...$this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
+                'System',
+                static::ASSETS_PATH_CSS,
+                'layout.css'
+            ),
+        ];
     }
 
     /**
@@ -83,26 +92,35 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         $area = $this->request->getArea();
 
         foreach ($this->modules->getInstalledModules() as $module) {
-            $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
-                $module['name'],
-                static::ASSETS_PATH_CSS,
-                'style.css'
-            );
-
-            if ($area === AreaEnum::AREA_ADMIN) {
-                $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
+            $this->stylesheets = [
+                ...$this->stylesheets,
+                ...$this->fileResolver->getWebStaticAssetPath(
                     $module['name'],
                     static::ASSETS_PATH_CSS,
-                    'admin.css'
-                );
+                    'style.css'
+                ),
+            ];
+
+            if ($area === AreaEnum::AREA_ADMIN) {
+                $this->stylesheets = [
+                    ...$this->stylesheets,
+                    ...$this->fileResolver->getWebStaticAssetPath(
+                        $module['name'],
+                        static::ASSETS_PATH_CSS,
+                        'admin.css'
+                    ),
+                ];
             }
 
             // Append custom styles to the default module styling
-            $this->stylesheets[] = $this->fileResolver->getWebStaticAssetPath(
-                $module['name'],
-                static::ASSETS_PATH_CSS,
-                'append.css'
-            );
+            $this->stylesheets = [
+                ...$this->stylesheets,
+                ...$this->fileResolver->getWebStaticAssetPath(
+                    $module['name'],
+                    static::ASSETS_PATH_CSS,
+                    'append.css'
+                ),
+            ];
         }
     }
 
@@ -117,7 +135,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         }
 
         return array_reduce(
-            array_filter($this->stylesheets, static fn ($stylesheet) => $stylesheet !== ''),
+            array_filter($this->stylesheets, static fn ($stylesheet) => !empty($stylesheet)),
             static fn ($accumulator, $stylesheet) => $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '">' . "\n",
             ''
         );

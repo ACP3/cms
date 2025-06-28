@@ -11,5 +11,8 @@ interface FileCheckerStrategyInterface
 {
     public function isAllowed(string $resourcePath): bool;
 
-    public function findResource(string $resourcePath): ?string;
+    /**
+     * @return string[]|null
+     */
+    public function findResource(string $resourcePath): ?array;
 }
