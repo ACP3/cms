@@ -15,9 +15,12 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Gallery\Repository\GalleryRepository;
+use ACP3\Modules\ACP3\System\ViewProviders\BackUriTrait;
 
 class AdminGalleryPictureEditViewProvider
 {
+    use BackUriTrait;
+
     public function __construct(
         private readonly Forms $formsHelper,
         private readonly FormToken $formTokenHelper,
@@ -62,7 +65,7 @@ class AdminGalleryPictureEditViewProvider
             ),
             'gallery_id' => $picture['gallery_id'],
             'form_token' => $this->formTokenHelper->renderFormToken(),
-            'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route("acp/gallery/index/edit/id_{$picture['gallery_id']}", true),
+            'BACK_URI' => $this->getBackUri($this->router->route("acp/gallery/index/edit/id_{$picture['gallery_id']}", true)),
         ];
     }
 

@@ -15,9 +15,12 @@ use ACP3\Core\I18n\Translator;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\View\Layout;
 use ACP3\Modules\ACP3\Articles\Helpers;
+use ACP3\Modules\ACP3\System\ViewProviders\BackUriTrait;
 
 class AdminArticleEditViewProvider
 {
+    use BackUriTrait;
+
     public function __construct(
         private readonly Forms $formsHelper,
         private readonly FormToken $formTokenHelper,
@@ -49,7 +52,7 @@ class AdminArticleEditViewProvider
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => Helpers::URL_KEY_PATTERN,
             'SEO_ROUTE_NAME' => !empty($article['id']) ? \sprintf(Helpers::URL_KEY_PATTERN, $article['id']) : '',
-            'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/articles', true),
+            'BACK_URI' => $this->getBackUri($this->router->route('acp/articles', true)),
         ];
     }
 

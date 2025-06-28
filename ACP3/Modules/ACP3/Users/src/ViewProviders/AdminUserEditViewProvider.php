@@ -13,10 +13,13 @@ use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\RouterInterface;
+use ACP3\Modules\ACP3\System\ViewProviders\BackUriTrait;
 use ACP3\Modules\ACP3\Users\Helpers\Forms as UserFormsHelper;
 
 class AdminUserEditViewProvider
 {
+    use BackUriTrait;
+
     public function __construct(
         private readonly ACL $acl,
         private readonly FormToken $formTokenHelper,
@@ -63,7 +66,7 @@ class AdminUserEditViewProvider
                 ),
                 'form' => array_merge($userInfo, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
-                'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/users', true),
+                'BACK_URI' => $this->getBackUri($this->router->route('acp/users', true)),
             ]
         );
     }

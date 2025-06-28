@@ -13,9 +13,12 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Gallery\Helpers as GalleryHelpers;
+use ACP3\Modules\ACP3\System\ViewProviders\BackUriTrait;
 
 class AdminGalleryEditViewProvider
 {
+    use BackUriTrait;
+
     public function __construct(
         private readonly Forms $formsHelper,
         private readonly FormToken $formTokenHelper,
@@ -40,7 +43,7 @@ class AdminGalleryEditViewProvider
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => GalleryHelpers::URL_KEY_PATTERN_GALLERY,
             'SEO_ROUTE_NAME' => !empty($gallery['id']) ? \sprintf(GalleryHelpers::URL_KEY_PATTERN_GALLERY, $gallery['id']) : '',
-            'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/gallery', true),
+            'BACK_URI' => $this->getBackUri($this->router->route('acp/gallery', true)),
         ];
     }
 }

@@ -16,9 +16,12 @@ use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Categories\Helpers;
 use ACP3\Modules\ACP3\Files\Helpers as FilesHelpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema as FilesSchema;
+use ACP3\Modules\ACP3\System\ViewProviders\BackUriTrait;
 
 class AdminFileEditViewProvider
 {
+    use BackUriTrait;
+
     public function __construct(
         private readonly Forms $formsHelper,
         private readonly FormToken $formTokenHelper,
@@ -66,7 +69,7 @@ class AdminFileEditViewProvider
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => FilesHelpers::URL_KEY_PATTERN,
             'SEO_ROUTE_NAME' => !empty($file['id']) ? \sprintf(FilesHelpers::URL_KEY_PATTERN, $file['id']) : '',
-            'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/files', true),
+            'BACK_URI' => $this->getBackUri($this->router->route('acp/files', true)),
         ];
     }
 

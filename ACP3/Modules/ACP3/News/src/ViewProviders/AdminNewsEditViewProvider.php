@@ -17,9 +17,12 @@ use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Categories\Helpers as CategoriesHelpers;
 use ACP3\Modules\ACP3\News\Helpers as NewsHelpers;
 use ACP3\Modules\ACP3\News\Installer\Schema as NewsSchema;
+use ACP3\Modules\ACP3\System\ViewProviders\BackUriTrait;
 
 class AdminNewsEditViewProvider
 {
+    use BackUriTrait;
+
     public function __construct(
         private readonly CategoriesHelpers $categoriesHelpers,
         private readonly Forms $formsHelper,
@@ -56,7 +59,7 @@ class AdminNewsEditViewProvider
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => NewsHelpers::URL_KEY_PATTERN,
             'SEO_ROUTE_NAME' => !empty($news['id']) ? \sprintf(NewsHelpers::URL_KEY_PATTERN, $news['id']) : '',
-            'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/news', true),
+            'BACK_URI' => $this->getBackUri($this->router->route('acp/news', true)),
         ];
     }
 
