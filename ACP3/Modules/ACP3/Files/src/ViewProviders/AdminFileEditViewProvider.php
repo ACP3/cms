@@ -12,14 +12,22 @@ use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Categories\Helpers;
 use ACP3\Modules\ACP3\Files\Helpers as FilesHelpers;
 use ACP3\Modules\ACP3\Files\Installer\Schema as FilesSchema;
 
 class AdminFileEditViewProvider
 {
-    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly Helpers $categoriesHelpers, private readonly RequestInterface $request, private readonly Title $title, private readonly Translator $translator)
-    {
+    public function __construct(
+        private readonly Forms $formsHelper,
+        private readonly FormToken $formTokenHelper,
+        private readonly Helpers $categoriesHelpers,
+        private readonly RequestInterface $request,
+        private readonly RouterInterface $router,
+        private readonly Title $title,
+        private readonly Translator $translator,
+    ) {
     }
 
     /**
@@ -58,6 +66,7 @@ class AdminFileEditViewProvider
             'form_token' => $this->formTokenHelper->renderFormToken(),
             'SEO_URI_PATTERN' => FilesHelpers::URL_KEY_PATTERN,
             'SEO_ROUTE_NAME' => !empty($file['id']) ? \sprintf(FilesHelpers::URL_KEY_PATTERN, $file['id']) : '',
+            'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/files', true),
         ];
     }
 

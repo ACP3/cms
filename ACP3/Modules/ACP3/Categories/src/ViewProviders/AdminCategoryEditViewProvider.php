@@ -13,12 +13,21 @@ use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Modules;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Categories\Repository\CategoryRepository;
 
 class AdminCategoryEditViewProvider
 {
-    public function __construct(private readonly Forms $formsHelper, private readonly FormToken $formTokenHelper, private readonly Modules $modules, private readonly RequestInterface $request, private readonly Title $title, private readonly Translator $translator, private readonly CategoryRepository $categoryRepository)
-    {
+    public function __construct(
+        private readonly Forms $formsHelper,
+        private readonly FormToken $formTokenHelper,
+        private readonly Modules $modules,
+        private readonly RequestInterface $request,
+        private readonly RouterInterface $router,
+        private readonly Title $title,
+        private readonly Translator $translator,
+        private readonly CategoryRepository $categoryRepository,
+    ) {
     }
 
     /**
@@ -42,6 +51,7 @@ class AdminCategoryEditViewProvider
             ),
             'mod_list' => empty($category['id']) ? $this->fetchModules() : [],
             'form_token' => $this->formTokenHelper->renderFormToken(),
+            'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/categories', true),
         ];
     }
 

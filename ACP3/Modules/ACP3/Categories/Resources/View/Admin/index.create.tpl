@@ -1,3 +1,8 @@
+{if $IS_AJAX}
+    {$LAYOUT='System/layout.modal.tpl'}
+    {$modal=['id' => 'js-edit-categories']}
+{/if}
+
 {$is_multipart=true}
 
 {extends file="asset:System/layout.ajax-form.tpl"}
@@ -14,5 +19,9 @@
     {else}
         <input type="hidden" name="parent_id" value="{$form.parent_id}">
     {/if}
-    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/categories"}}
+    {if $IS_AJAX}
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url=$BACK_URI}
+    {else}
+        {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
+    {/if}
 {/block}

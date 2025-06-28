@@ -2,7 +2,7 @@
 
 {block EDIT_CONTENT}
     {if !empty($files)}
-        {check_access mode="link" path="acp/categories/index/edit/id_`$files[0].category_id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+        {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/categories/index/edit', 'edit_path' => "acp/categories/index/edit/id_`$files[0].category_id`/", 'id' => 'js-edit-categories', 'title' => {lang t="categories|admin_index_edit"}]}
     {/if}
 {/block}
 

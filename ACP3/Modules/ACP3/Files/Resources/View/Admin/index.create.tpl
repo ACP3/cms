@@ -1,3 +1,8 @@
+{if $IS_AJAX}
+    {$LAYOUT='System/layout.modal.tpl'}
+    {$modal=['id' => 'js-edit-files']}
+{/if}
+
 {$is_multipart=true}
 
 {extends file="asset:System/layout.ajax-form.tpl"}
@@ -24,7 +29,11 @@
         {/tab}
     {event name="core.layout.form_extension"  uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
     {/tabset}
-    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/files"}}
+    {if $IS_AJAX}
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url=$BACK_URI}
+    {else}
+        {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
+    {/if}
     {javascripts}
         {include_js module="files" file="admin/index.create"}
     {/javascripts}
