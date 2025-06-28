@@ -12,7 +12,7 @@
                                 <img src="{$row.file}" alt="{$row.title}" class="card-img-top">
                             </a>
                         {/if}
-                        <div class="card-body">
+                        <div class="card-body align-content-end">
                             <h3 class="card-title h5">{$row.title}</h3>
                             <time datetime="{date_format date=$row.start format="c"}" class="card-subtitle d-block mb-3">
                                 {date_format date=$row.start format=$dateformat}
