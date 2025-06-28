@@ -3,8 +3,8 @@
 {$DELETE_ROUTE={uri args="acp/menus/items/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/menus/items/create" iconSet="solid" icon="plus" class="text-success"}
-    {check_access mode="link" path="acp/menus/index/create" iconSet="solid" icon="table-list" class="text-info"}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/menus/items/create', 'button_icon' => 'plus', 'button_icon_selectors' => 'text-success', 'button_selectors' => ' ', 'edit_path' => "acp/menus/items/create/", 'title' => {lang t="menus|admin_items_create"}]}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/menus/index/create', 'button_icon' => 'table-list', 'button_icon_selectors' => 'text-info', 'button_selectors' => ' ', 'edit_path' => "acp/menus/index/create/", 'title' => {lang t="menus|admin_index_create"}]}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {if !empty($menus)}
