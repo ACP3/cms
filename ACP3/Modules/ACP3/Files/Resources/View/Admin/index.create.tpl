@@ -1,6 +1,6 @@
 {if $IS_AJAX}
     {$LAYOUT='System/layout.modal.tpl'}
-    {$modal=['id' => 'js-edit-files']}
+    {$modal=['id' => 'js-modal-files']}
 {/if}
 
 {$is_multipart=true}

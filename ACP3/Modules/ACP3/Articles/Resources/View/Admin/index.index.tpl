@@ -3,7 +3,7 @@
 {$DELETE_ROUTE={uri args="acp/articles/index/delete"}}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="acp/articles/index/create" iconSet="solid" icon="plus" class="text-success"}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/articles/index/create', 'button_icon' => 'plus', 'button_icon_selectors' => 'text-success', 'button_selectors' => ' ', 'edit_path' => "acp/articles/index/create/", 'id' => 'js-modal-articles', 'title' => {lang t="articles|admin_index_create"}]}
 {/block}
 {block ADMIN_GRID_CONTENT}
     {include file="asset:System/Partials/datagrid.tpl" dataTable=$grid}

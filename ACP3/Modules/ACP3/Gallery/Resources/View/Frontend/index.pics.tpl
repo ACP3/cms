@@ -8,7 +8,7 @@
 {/if}
 
 {block EDIT_CONTENT}
-    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/gallery/index/edit', 'edit_path' => "acp/gallery/index/edit/id_`$gallery.id`/", 'id' => 'js-edit-gallery', 'title' => {lang t="gallery|admin_index_edit"}]}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/gallery/index/edit', 'edit_path' => "acp/gallery/index/edit/id_`$gallery.id`/", 'id' => 'js-modal-gallery', 'title' => {lang t="gallery|admin_index_edit"}]}
 {/block}
 
 {block CONTENT}

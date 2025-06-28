@@ -1,6 +1,6 @@
 {if $IS_AJAX}
     {$LAYOUT='System/layout.modal.tpl'}
-    {$modal=['id' => 'js-edit-users']}
+    {$modal=['id' => 'js-modal-users']}
 {/if}
 
 {extends file="asset:System/layout.ajax-form.tpl"}
