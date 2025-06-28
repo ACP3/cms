@@ -13,9 +13,13 @@ for (const entryPoint of entries) {
 
 const webpackEntryConfig = {};
 entryPointMap.forEach((path, entryName) => {
-  webpackEntryConfig[entryName] = {
+  webpackEntryConfig[
+    entryName
+      .substring(2)
+      .replace(/\.m?js/, "")
+      .replaceAll("/", "-")
+  ] = {
     import: path,
-    filename: (pathData) => pathData.runtime.replace(".js", ".min.js"),
   };
 });
 
@@ -25,6 +29,9 @@ export default {
   entry: webpackEntryConfig,
   output: {
     publicPath: "",
+    filename: "[name].[contenthash].js",
+    sourceMapFilename: "[name].[contenthash].map",
+    chunkFilename: "[id].[chunkhash].js",
   },
   resolve: {
     alias: componentPaths.pathAliases,
@@ -49,6 +56,10 @@ export default {
   },
   optimization: {
     minimize: true,
+    runtimeChunk: "single",
+    splitChunks: {
+      chunks: "all",
+    },
     minimizer: [
       new TerserPlugin({
         extractComments: false,
@@ -63,6 +74,7 @@ export default {
   plugins: [
     new WebpackAssetsManifest({
       entrypoints: true,
+      entrypointsKey: false,
     }),
   ],
 };
