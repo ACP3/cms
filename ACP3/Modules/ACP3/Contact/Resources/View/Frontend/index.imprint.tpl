@@ -1,7 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block EDIT_CONTENT}
-    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/contact/index/settings', 'edit_path' => "acp/contact/index/settings/", 'id' => 'js-modal-contact-settings', 'title' => {lang t="contact|admin_index_settings"}]}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/contact/index/settings', 'edit_path' => "acp/contact/index/settings/", 'title' => {lang t="contact|admin_index_settings"}]}
 {/block}
 
 {block CONTENT}

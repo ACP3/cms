@@ -18,6 +18,10 @@ services:
     tags:
       - { name: smarty.plugin.modifier, pluginName: count }
 
+  ACP3\Core\View\Renderer\Smarty\Modifiers\Sha1:
+    tags:
+      - { name: smarty.plugin.modifier, pluginName: sha1 }
+
   ACP3\Core\View\Renderer\Smarty\Modifiers\Intval:
     tags:
       - { name: smarty.plugin.modifier, pluginName: intval }

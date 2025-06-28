@@ -25,6 +25,7 @@ import { addScriptsToHead } from "../lib/utils";
       const response = await fetch(createLinkElem.href, {
         headers: {
           "X-Requested-With": "XMLHttpRequest",
+          "X-ACP3-Content-Type": "ajax-modal",
         },
       });
 

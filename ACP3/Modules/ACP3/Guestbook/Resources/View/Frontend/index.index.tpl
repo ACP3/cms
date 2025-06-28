@@ -1,9 +1,10 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}
-    {include file="asset:System/Partials/ajax-modal.tpl" modal=['id' => 'js-modal-create', 'title' => {lang t="guestbook|create"}]}
+    {$createPathHash={uri args="guestbook/index/create"}|sha1}
+    {include file="asset:System/Partials/ajax-modal.tpl" modal=['id' => "js-modal-`$createPathHash`", 'title' => {lang t="guestbook|create"}]}
     <p class="text-center">
-        <a href="{uri args="guestbook/index/create"}" id="js-modal-create-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
+        <a href="{uri args="guestbook/index/create"}" id="js-modal-{$createPathHash}-link" title="{lang t="guestbook|create"}">{lang t="guestbook|create"}</a>
     </p>
     {if !empty($guestbook)}
         {include file="asset:System/Partials/pagination.tpl" pagination=$pagination}

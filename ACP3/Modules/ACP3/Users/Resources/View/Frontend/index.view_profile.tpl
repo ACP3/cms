@@ -1,7 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block EDIT_CONTENT}
-    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/users/index/edit', 'edit_path' => "acp/users/index/edit/id_`$user.id`/", 'id' => 'js-modal-users', 'title' => {lang t="users|admin_index_edit"}]}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/users/index/edit', 'edit_path' => "acp/users/index/edit/id_`$user.id`/", 'title' => {lang t="users|admin_index_edit"}]}
 {/block}
 
 {block CONTENT}

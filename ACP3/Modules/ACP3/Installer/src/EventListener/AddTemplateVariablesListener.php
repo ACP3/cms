@@ -28,6 +28,7 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
 
         $this->view->assign([
             'LANGUAGES' => $this->languagesDropdown($this->translator->getLocale()),
+            'PATH_INFO' => $this->request->getPathInfo(),
             'PHP_SELF' => $this->appPath->getPhpSelf(),
             'REQUEST_URI' => $this->request->getServer()->get('REQUEST_URI'),
             'ROOT_DIR' => $this->appPath->getWebRoot(),
@@ -35,6 +36,7 @@ class AddTemplateVariablesListener implements EventSubscriberInterface
             'DESIGN_PATH' => $this->theme->getDesignPathWeb(),
             'UA_IS_MOBILE' => $this->request->getUserAgent()->isMobileBrowser(),
             'IS_AJAX' => $this->request->isXmlHttpRequest(),
+            'IS_AJAX_MODAL' => $this->request->getSymfonyRequest()->headers->get('X-ACP3-Content-Type', '') === 'ajax-modal',
             'LANG_DIRECTION' => $this->translator->getDirection(),
             'LANG' => $this->translator->getShortIsoCode(),
         ]);

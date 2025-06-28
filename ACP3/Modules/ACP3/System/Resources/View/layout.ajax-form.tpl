@@ -1,3 +1,10 @@
+{if $IS_AJAX_MODAL}
+    {$LAYOUT='System/layout.modal.tpl'}
+
+    {$currentPageHash={uri args="$PATH_INFO"}|sha1}
+    {$modal=['id' => "js-modal-`$currentPageHash`"]}
+{/if}
+
 {extends file="asset:`$LAYOUT`"}
 
 {block CONTENT}

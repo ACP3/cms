@@ -1,8 +1,3 @@
-{if $IS_AJAX}
-    {$LAYOUT='System/layout.modal.tpl'}
-    {$modal=['id' => 'js-modal-create']}
-{/if}
-
 {extends file="asset:System/layout.ajax-form.tpl"}
 
 {block CONTENT_AJAX_FORM}
