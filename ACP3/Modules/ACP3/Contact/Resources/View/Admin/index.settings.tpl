@@ -21,9 +21,5 @@
             {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="picture_credits" value=$form.picture_credits toolbar="simple" label={lang t="contact|picture_credits"}}
         {/tab}
     {/tabset}
-    {if $IS_AJAX}
-        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url=$BACK_URI}
-    {else}
-        {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
-    {/if}
+    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
 {/block}

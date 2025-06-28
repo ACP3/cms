@@ -39,9 +39,5 @@
             {/block}
         {/tab}
     {/tabset}
-    {if $IS_AJAX}
-        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url=$BACK_URI}
-    {else}
-        {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
-    {/if}
+    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
 {/block}
