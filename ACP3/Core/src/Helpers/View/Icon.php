@@ -31,7 +31,7 @@ class Icon
             $title = "<title>{$options['title']}</title>";
         }
 
-        $path = $this->fileResolver->getStaticAssetPath('system', 'Assets/svgs/' . $iconSet, $icon . '.svg')[0] ?? '';
+        $path = $this->fileResolver->getStaticAssetPath('system', 'Assets/svgs/' . $iconSet, $icon . '.svg', false)[0] ?? '';
 
         if ($path === '') {
             throw new SvgIconNotFoundException(\sprintf('Could not find SVG icon "%s" from iconset "%s"', $icon, $iconSet));

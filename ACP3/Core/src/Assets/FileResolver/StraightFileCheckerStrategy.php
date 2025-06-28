@@ -19,7 +19,9 @@ class StraightFileCheckerStrategy implements FileCheckerStrategyInterface
     {
         $productionResourcePath = str_replace(ACP3_ROOT_DIR, $this->applicationPath->getUploadsDir() . 'assets', $resourcePath);
         if (is_file($productionResourcePath)) {
-            return [$productionResourcePath];
+            $hash = hash('crc32b', (string) file_get_contents($productionResourcePath));
+
+            return [$productionResourcePath . '?' . $hash];
         }
 
         return null;

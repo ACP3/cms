@@ -75,9 +75,7 @@ class FileResolver
 
         return array_map(
             function ($path) {
-                $hash = hash('crc32b', (string) file_get_contents($path));
-
-                return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR))) . '?' . $hash;
+                return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR)));
             },
             $paths
         );
@@ -90,6 +88,7 @@ class FileResolver
         string $moduleName,
         string $resourceDirectory = '',
         string $file = '',
+        bool $addCacheBuster = true,
     ): array {
         if (!empty($resourceDirectory) && !str_ends_with($resourceDirectory, '/')) {
             $resourceDirectory .= '/';
@@ -103,7 +102,13 @@ class FileResolver
             $this->cachedPaths[$cacheKey] = $this->resolveAssetPath($moduleName, $resourceDirectory, $file);
         }
 
-        return $this->cachedPaths[$cacheKey] ?: [];
+        $resolvedPaths = $this->cachedPaths[$cacheKey] ?: [];
+
+        if ($addCacheBuster === true) {
+            return $resolvedPaths;
+        }
+
+        return array_map(static fn ($path) => substr($path, 0, strrpos($path, '?')), $resolvedPaths);
     }
 
     /**
@@ -123,7 +128,7 @@ class FileResolver
 
         $finalPaths = $assetPaths ?: $this->findAssetInModules($moduleName, $resourceDirectory, $file);
 
-        return $finalPaths !== null ? array_map(static fn ($finalPath) => (string) realpath($finalPath), $finalPaths) : null;
+        return $finalPaths !== null ? array_map(static fn ($finalPath) => (string) $finalPath, $finalPaths) : null;
     }
 
     /**
