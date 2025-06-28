@@ -3,6 +3,7 @@ import componentPaths from "./build/gulp/helpers/component-paths.mjs";
 import TerserPlugin from "terser-webpack-plugin";
 import browserslist from "browserslist";
 import { resolveToEsbuildTarget } from "esbuild-plugin-browserslist";
+import { WebpackAssetsManifest } from "webpack-assets-manifest";
 
 const entries = globbySync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);
 const entryPointMap = new Map();
@@ -59,4 +60,9 @@ export default {
       }),
     ],
   },
+  plugins: [
+    new WebpackAssetsManifest({
+      entrypoints: true,
+    }),
+  ],
 };
