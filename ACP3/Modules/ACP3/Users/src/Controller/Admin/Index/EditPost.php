@@ -11,7 +11,6 @@ use ACP3\Core;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Helpers\FormAction;
-use ACP3\Core\Helpers\RedirectMessages;
 use ACP3\Modules\ACP3\Permissions\Helpers;
 use ACP3\Modules\ACP3\Users\Model\AuthenticationModel;
 use ACP3\Modules\ACP3\Users\Model\UsersModel;
@@ -29,7 +28,6 @@ class EditPost extends Core\Controller\AbstractWidgetAction
         private readonly UsersModel $usersModel,
         private readonly AdminFormValidation $adminFormValidation,
         private readonly Helpers $permissionsHelpers,
-        private readonly RedirectMessages $redirectMessages,
     ) {
         parent::__construct($context);
     }
@@ -57,7 +55,7 @@ class EditPost extends Core\Controller\AbstractWidgetAction
 
             $result = $this->usersModel->save($formData, $id);
 
-            $response = $this->redirectMessages->setMessage(
+            $response = $this->actionHelper->setRedirectMessage(
                 (bool) $result,
                 $this->translator->t('system', 'save' . ($result ? '_success' : '_error'))
             );

@@ -12,12 +12,20 @@ use ACP3\Core\Breadcrumb\Title;
 use ACP3\Core\Helpers\Forms;
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Modules\ACP3\Users\Helpers\Forms as UserFormsHelper;
 
 class AdminUserEditViewProvider
 {
-    public function __construct(private readonly ACL $acl, private readonly FormToken $formTokenHelper, private readonly Forms $formsHelpers, private readonly UserFormsHelper $userFormsHelpers, private readonly RequestInterface $request, private readonly Title $title)
-    {
+    public function __construct(
+        private readonly ACL $acl,
+        private readonly FormToken $formTokenHelper,
+        private readonly Forms $formsHelpers,
+        private readonly UserFormsHelper $userFormsHelpers,
+        private readonly RequestInterface $request,
+        private readonly RouterInterface $router,
+        private readonly Title $title,
+    ) {
     }
 
     /**
@@ -55,6 +63,7 @@ class AdminUserEditViewProvider
                 ),
                 'form' => array_merge($userInfo, $this->request->getPost()->all()),
                 'form_token' => $this->formTokenHelper->renderFormToken(),
+                'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/users', true),
             ]
         );
     }

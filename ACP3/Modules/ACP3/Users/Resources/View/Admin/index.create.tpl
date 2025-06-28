@@ -1,3 +1,8 @@
+{if $IS_AJAX}
+    {$LAYOUT='System/layout.modal.tpl'}
+    {$modal=['id' => 'js-edit-users']}
+{/if}
+
 {extends file="asset:System/layout.ajax-form.tpl"}
 
 {block CONTENT_AJAX_FORM}
@@ -34,5 +39,9 @@
             {/block}
         {/tab}
     {/tabset}
-    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/users"}}
+    {if $IS_AJAX}
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url=$BACK_URI}
+    {else}
+        {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
+    {/if}
 {/block}

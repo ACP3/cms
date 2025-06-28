@@ -1,7 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block EDIT_CONTENT}
-    {check_access mode="link" path="acp/users/index/edit/id_`$user.id`/" iconSet="solid" icon="pencil" blank=true selectors="w-100 my-3"}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/users/index/edit', 'edit_path' => "acp/users/index/edit/id_`$user.id`/", 'id' => 'js-edit-users', 'title' => {lang t="users|admin_index_edit"}]}
 {/block}
 
 {block CONTENT}
