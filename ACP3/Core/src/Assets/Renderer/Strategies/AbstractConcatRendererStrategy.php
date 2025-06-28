@@ -80,33 +80,33 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
         $cacheItem = $this->coreCachePool->getItem($cacheId);
+        $cachedAssetPath = $cacheItem->get();
 
-        if (!$cacheItem->isHit() || false === ($lastGenerated = $cacheItem->get())) {
-            $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
+        if ($cacheItem->isHit()) {
+            return $cachedAssetPath;
         }
 
+        $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
         $path = $this->buildAssetPath($filenameHash, $lastGenerated);
 
-        // If the requested minified Stylesheet doesn't exist, generate it
-        if (is_file($this->appPath->getUploadsDir() . $path) === false) {
-            // Get the enabled libraries and filter out empty entries
-            $files = array_filter(
-                $this->processLibraries(),
-                static fn ($var) => !empty($var)
-            );
+        // Get the enabled libraries and filter out empty entries
+        $files = array_filter(
+            $this->processLibraries(),
+            static fn ($var) => !empty($var)
+        );
 
+        if (\count($files) === 0) {
+            $webRootPath = null;
+        } else {
             $this->saveMinifiedAsset($files, $this->appPath->getUploadsDir() . $path);
 
-            // Save the generation-time of the requested file
-            $cacheItem->set($lastGenerated);
-            $this->coreCachePool->saveDeferred($cacheItem);
-
-            if (\count($files) === 0) {
-                return null;
-            }
+            $webRootPath = $this->appPath->getWebRoot() . 'uploads/' . $path;
         }
 
-        return $this->appPath->getWebRoot() . 'uploads/' . $path;
+        $cacheItem->set($webRootPath);
+        $this->coreCachePool->saveDeferred($cacheItem);
+
+        return $webRootPath;
     }
 
     /**
