@@ -19,7 +19,6 @@ services:
   ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy: ~
   ACP3\Core\Assets\Renderer\Strategies\ConcatCSSRendererStrategy: ~
   ACP3\Core\Assets\Renderer\Strategies\ConcatDeferrableCSSRendererStrategy: ~
-  ACP3\Core\Assets\Renderer\Strategies\ConcatJavaScriptRendererStrategy: ~
 
   ACP3\Core\Assets\FileResolver\:
     resource: "../../../src/Assets/FileResolver/"
@@ -56,7 +55,7 @@ services:
         deferrable_css_renderer_dev: '@ACP3\Core\Assets\Renderer\Strategies\DeferrableCSSRendererStrategy'
         deferrable_css_renderer_prod: '@ACP3\Core\Assets\Renderer\Strategies\ConcatDeferrableCSSRendererStrategy'
         javascript_renderer_dev: '@ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy'
-        javascript_renderer_prod: '@ACP3\Core\Assets\Renderer\Strategies\ConcatJavaScriptRendererStrategy'
+        javascript_renderer_prod: '@ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy'
     tags: ["container.service_locator"]
 
   ACP3\Core\Assets\Renderer\CSSRenderer:
