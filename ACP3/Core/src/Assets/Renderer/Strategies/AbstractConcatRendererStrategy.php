@@ -69,10 +69,10 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         ));
     }
 
-    public function getURI(): string
+    public function getURI(): ?string
     {
         // We have to initialize the theme here,
-        // i.e. enabling the required libraries of the theme + adding theme specific stylesheets and javascript files.
+        // i.e., enabling the required libraries of the theme + adding theme-specific stylesheets.
         // It has to be called before the "generateFilenameHash" method, otherwise we would get incorrect results!
         $this->assets->initializeTheme();
 
@@ -87,7 +87,7 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
 
         $path = $this->buildAssetPath($filenameHash, $lastGenerated);
 
-        // If the requested minified StyleSheet and/or the JavaScript file doesn't exist, generate it
+        // If the requested minified Stylesheet doesn't exist, generate it
         if (is_file($this->appPath->getUploadsDir() . $path) === false) {
             // Get the enabled libraries and filter out empty entries
             $files = array_filter(
@@ -97,9 +97,13 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
 
             $this->saveMinifiedAsset($files, $this->appPath->getUploadsDir() . $path);
 
-            // Save the time of the generation of the requested file
+            // Save the generation-time of the requested file
             $cacheItem->set($lastGenerated);
             $this->coreCachePool->saveDeferred($cacheItem);
+
+            if (\count($files) === 0) {
+                return null;
+            }
         }
 
         return $this->appPath->getWebRoot() . 'uploads/' . $path;
@@ -113,6 +117,10 @@ abstract class AbstractConcatRendererStrategy implements RendererStrategyInterfa
         $content = [];
         foreach ($files as $file) {
             $content[] = file_get_contents($file) . "\n";
+        }
+
+        if (\count($content) === 0) {
+            return;
         }
 
         $this->createAssetsDirectory();

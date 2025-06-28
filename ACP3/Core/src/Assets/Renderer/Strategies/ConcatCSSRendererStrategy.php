@@ -170,6 +170,12 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
      */
     public function renderHtmlElement(): string
     {
+        $cssUri = $this->getURI();
+
+        if ($cssUri === null) {
+            return '';
+        }
+
         return '<link rel="stylesheet" type="text/css" href="' . $this->getURI() . '">' . "\n";
     }
 
