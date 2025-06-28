@@ -9,13 +9,18 @@ namespace ACP3\Modules\ACP3\Contact\ViewProviders;
 
 use ACP3\Core\Helpers\FormToken;
 use ACP3\Core\Http\RequestInterface;
+use ACP3\Core\Router\RouterInterface;
 use ACP3\Core\Settings\SettingsInterface;
 use ACP3\Modules\ACP3\Contact\Installer\Schema as ContactSchema;
 
 class AdminSettingsViewProvider
 {
-    public function __construct(private readonly FormToken $formTokenHelper, private readonly RequestInterface $request, private readonly SettingsInterface $settings)
-    {
+    public function __construct(
+        private readonly FormToken $formTokenHelper,
+        private readonly RequestInterface $request,
+        private readonly RouterInterface $router,
+        private readonly SettingsInterface $settings,
+    ) {
     }
 
     /**
@@ -28,6 +33,7 @@ class AdminSettingsViewProvider
         return [
             'form' => array_merge($settings, $this->request->getPost()->all()),
             'form_token' => $this->formTokenHelper->renderFormToken(),
+            'BACK_URI' => $this->request->getServer()->get('HTTP_REFERER') ?? $this->router->route('acp/contact', true),
         ];
     }
 }

@@ -1,3 +1,8 @@
+{if $IS_AJAX}
+    {$LAYOUT='System/layout.modal.tpl'}
+    {$modal=['id' => 'js-edit-contact']}
+{/if}
+
 {extends file="asset:System/layout.ajax-form.tpl"}
 
 {block CONTENT_AJAX_FORM}
@@ -16,5 +21,9 @@
             {include file="asset:System/Partials/form_group.wysiwyg.tpl" name="picture_credits" value=$form.picture_credits toolbar="simple" label={lang t="contact|picture_credits"}}
         {/tab}
     {/tabset}
-    {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/contact"}}
+    {if $IS_AJAX}
+        {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url=$BACK_URI}
+    {else}
+        {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
+    {/if}
 {/block}
