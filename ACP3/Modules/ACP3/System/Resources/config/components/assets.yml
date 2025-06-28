@@ -58,7 +58,7 @@ services:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
       - "ajax-form"
-      - false
+      - true
       - ["bootstrap"]
       - ["loading-indicator.css"]
       - ["partials/ajax-form.js"]

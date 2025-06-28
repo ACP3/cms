@@ -130,7 +130,7 @@ class StaticAssetsListener implements EventSubscriberInterface
 
             $content = str_replace(
                 self::PLACEHOLDER_JS,
-                $this->addJavaScriptLibraries($event->getRequest()) . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_JS),
+                $this->addJavaScriptLibraries() . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_JS),
                 $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_JS)
             );
 
@@ -159,12 +159,8 @@ class StaticAssetsListener implements EventSubscriberInterface
         return $this->cssRenderer->renderHtmlElement();
     }
 
-    private function addJavaScriptLibraries(Request $request): string
+    private function addJavaScriptLibraries(): string
     {
-        if ($request->isXmlHttpRequest() === true) {
-            return '';
-        }
-
         return $this->javaScriptRenderer->renderHtmlElement();
     }
 }

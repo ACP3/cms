@@ -36,13 +36,24 @@ function lowerCaseFirstLetter(string) {
  * @param {HTMLElement} elementContainingScriptTags
  */
 export function addScriptsToHead(elementContainingScriptTags) {
-  for (const ajaxScriptElement of elementContainingScriptTags.getElementsByTagName("script")) {
-    const scriptElement = document.createElement("script");
-    if (!ajaxScriptElement.src) {
-      scriptElement.innerHTML = ajaxScriptElement.innerHTML;
-    } else {
-      scriptElement.src = ajaxScriptElement.src;
+  const currentScriptsInHead = document.querySelectorAll("head script");
+  const currentScriptSources = [];
+
+  currentScriptsInHead.forEach((scriptTag) => {
+    if (scriptTag.src) {
+      currentScriptSources.push(scriptTag.src);
     }
-    document.head.appendChild(scriptElement);
+  });
+
+  for (const ajaxScriptElement of elementContainingScriptTags.getElementsByTagName("script")) {
+    if (!ajaxScriptElement.src) {
+      const scriptElement = document.createElement("script");
+      scriptElement.innerHTML = ajaxScriptElement.innerHTML;
+      document.head.appendChild(scriptElement);
+    } else if (!currentScriptSources.includes(ajaxScriptElement.src)) {
+      const scriptElement = document.createElement("script");
+      scriptElement.src = ajaxScriptElement.src;
+      document.head.appendChild(scriptElement);
+    }
   }
 }
