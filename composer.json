@@ -113,7 +113,8 @@
       "phpstan/extension-installer": true,
       "acp3/composer-installer": true,
       "wikimedia/composer-merge-plugin": true,
-      "php-http/discovery": true
+      "php-http/discovery": true,
+      "veewee/composer-run-parallel": true
     }
   }
 }

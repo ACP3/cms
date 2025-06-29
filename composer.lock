@@ -9541,6 +9541,68 @@
             "time": "2023-09-18T14:46:04+00:00"
         },
         {
+            "name": "veewee/composer-run-parallel",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/veewee/composer-run-parallel.git",
+                "reference": "7c833bb8780fab99efc429456f3e7efc81ef7ee6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/veewee/composer-run-parallel/zipball/7c833bb8780fab99efc429456f3e7efc81ef7ee6",
+                "reference": "7c833bb8780fab99efc429456f3e7efc81ef7ee6",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "~2.0",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "react/promise": "1.2.1",
+                "symfony/process": "2.8.52"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "ComposerRunParallel\\ParallelPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "ComposerRunParallel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Toon Verwerft",
+                    "email": "toonverwerft@gmail.com"
+                }
+            ],
+            "description": "Run composer tasks in parallel",
+            "keywords": [
+                "composer",
+                "parallel",
+                "plugin",
+                "run",
+                "taskmanager"
+            ],
+            "support": {
+                "issues": "https://github.com/veewee/composer-run-parallel/issues",
+                "source": "https://github.com/veewee/composer-run-parallel/tree/1.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/veewee",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-10-21T13:49:52+00:00"
+        },
+        {
             "name": "voku/portable-ascii",
             "version": "2.0.3",
             "source": {
