@@ -38,9 +38,9 @@ export default {
   entry: webpackEntryConfig,
   output: {
     publicPath: "/uploads/assets/",
-    filename: "[name].[contenthash].js",
-    sourceMapFilename: "[name].[contenthash].map",
-    chunkFilename: "[id].[chunkhash].js",
+    filename: "js/[name].[contenthash].js",
+    sourceMapFilename: "js/[name].[contenthash].map",
+    chunkFilename: "js/[id].[chunkhash].js",
   },
   resolve: {
     alias: componentPaths.pathAliases,
@@ -99,8 +99,8 @@ export default {
     }),
     new RemoveEmptyScriptsPlugin(),
     new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
-      chunkFilename: "[id].[chunkhash].css",
+      filename: "css/[name].[contenthash].css",
+      chunkFilename: "css/[id].[chunkhash].css",
     }),
   ],
 };
