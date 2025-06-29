@@ -42,9 +42,14 @@ class AssetsManifestFileCheckerStrategy implements FileCheckerStrategyInterface
         $entrypoint = $this->getEntrypointName($resourcePath);
 
         if (\array_key_exists($entrypoint, $this->manifest)) {
+            $resolvedPaths = [
+                ...$this->manifest[$entrypoint]['assets']['js'],
+                ...($this->manifest[$entrypoint]['assets']['css'] ?? []),
+            ];
+
             return array_map(
                 fn ($path) => $this->appPath->getUploadsDir() . 'assets/' . $path,
-                $this->manifest[$entrypoint]['assets']['js']
+                $resolvedPaths
             );
         }
 

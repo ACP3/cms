@@ -19,8 +19,12 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
      */
     private array $javascripts = [];
 
-    public function __construct(private readonly Assets $assets, private readonly Assets\FileResolver $fileResolver, private readonly Libraries $libraries)
-    {
+    public function __construct(
+        private readonly Assets $assets,
+        private readonly Assets\FileResolver $fileResolver,
+        private readonly Libraries $libraries,
+        private readonly CSSRendererStrategy $cssRendererStrategy,
+    ) {
     }
 
     /**
@@ -51,6 +55,13 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     public function addFiles(array $files): void
     {
         foreach ($files as $file) {
+            // Webpack managed JS-entrypoints can contain (extracted) CSS code
+            if (str_ends_with($file, '.css')) {
+                $this->cssRendererStrategy->addFiles([$file]);
+
+                continue;
+            }
+
             if (!empty($file) && !\in_array($file, $this->javascripts, true)) {
                 $this->javascripts[] = $file;
             }
