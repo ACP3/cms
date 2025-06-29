@@ -17,7 +17,6 @@ use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use Psr\Cache\CacheItemPoolInterface;
-use tubalmartin\CssMin\Minifier;
 
 class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
 {
@@ -30,7 +29,6 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
 
     public function __construct(
         private readonly RequestInterface $request,
-        private readonly Minifier $minifier,
         private readonly UserModelInterface $userModel,
         private readonly Assets $assets,
         private readonly Assets\Libraries $libraries,
@@ -42,26 +40,16 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     ) {
     }
 
-    protected function getAssetGroup(): string
-    {
-        return 'css';
-    }
-
-    protected function getFileExtension(): string
-    {
-        return 'css';
-    }
-
     /**
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function getEnabledLibrariesAsString(): string
+    private function getEnabledLibrariesAsString(): string
     {
         return implode(',', array_map(static fn (LibraryEntity $library) => $library->getLibraryIdentifier(), $this->getEnabledLibraries()));
     }
 
-    protected function buildCacheId(): string
+    private function buildCacheId(): string
     {
         return 'assets_' . $this->generateFilenameHash();
     }
@@ -79,7 +67,7 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
                 $this->userModel->isAuthenticated(),
                 $this->themePath->getCurrentTheme(),
                 $this->getEnabledLibrariesAsString(),
-                $this->getAssetGroup(),
+                'css',
             ]
         ));
     }
@@ -136,12 +124,12 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
         $this->createAssetsDirectory();
 
         // Write the contents of the file to the uploads folder
-        file_put_contents($path, $this->compress(implode("\n", $content)), LOCK_EX);
+        file_put_contents($path, implode('', $content), LOCK_EX);
     }
 
     private function buildAssetPath(string $filenameHash, int $lastGenerated): string
     {
-        return 'assets/' . $filenameHash . '-' . $lastGenerated . '.' . $this->getFileExtension();
+        return 'assets/' . $filenameHash . '-' . $lastGenerated . '.css';
     }
 
     private function createAssetsDirectory(): void
@@ -169,7 +157,7 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    protected function processLibraries(): array
+    private function processLibraries(): array
     {
         $cacheId = $this->buildCacheId();
         $cacheItem = $this->coreCachePool->getItem($cacheId);
@@ -289,11 +277,6 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
         }
 
         return '<link rel="stylesheet" type="text/css" href="' . $this->getURI() . '">' . "\n";
-    }
-
-    protected function compress(string $assetContent): string
-    {
-        return $this->minifier->run($assetContent);
     }
 
     public function initialize(): void

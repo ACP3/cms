@@ -12,8 +12,6 @@ services:
 
   ACP3\Core\Assets: ~
 
-  tubalmartin\CssMin\Minifier: ~
-
   ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy: ~
   ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy: ~
   ACP3\Core\Assets\Renderer\Strategies\ConcatCSSRendererStrategy: ~

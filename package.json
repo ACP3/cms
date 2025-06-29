@@ -36,9 +36,10 @@
     "css-lint:fix": "npm run css-lint -- --fix",
     "eslint": "eslint -c eslint.config.mjs --cache --cache-location=.eslintcache .",
     "eslint:fix": "npm run eslint -- --fix",
-    "lint-all": "concurrently \"npm:prettier:fix\" \"npm:css-lint:fix\" \"npm:eslint:fix\" --kill-others-on-fail --group",
+    "lint-all": "concurrently \"npm:prettier\" \"npm:css-lint\" \"npm:eslint\" --kill-others-on-fail --group",
+    "lint-all:fix": "concurrently \"npm:prettier:fix\" \"npm:css-lint:fix\" \"npm:eslint:fix\" --kill-others-on-fail --group",
     "prepare": "husky",
-    "prettier": "prettier --check --cache **/*.{js,cjs,mjs,json,md,yml}",
-    "prettier:fix": "prettier --write --cache **/*.{js,cjs,mjs,json,md,yml}"
+    "prettier": "prettier **/*.{js,cjs,mjs,json,md,yml} --check --cache",
+    "prettier:fix": "npm run prettier -- --write"
   }
 }
