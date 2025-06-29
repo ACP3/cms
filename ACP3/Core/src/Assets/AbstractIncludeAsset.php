@@ -45,7 +45,7 @@ abstract class AbstractIncludeAsset
      */
     protected function resolvePath(string $moduleName, string $filePath): array
     {
-        $paths = $this->fileResolver->getWebStaticAssetPath(
+        $paths = $this->fileResolver->getStaticAssetPath(
             $moduleName,
             $this->getResourceDirectory(),
             $filePath . '.' . $this->getFileExtension()

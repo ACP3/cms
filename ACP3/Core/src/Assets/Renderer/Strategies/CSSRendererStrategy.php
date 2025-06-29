@@ -43,7 +43,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         foreach ($this->libraries->getEnabledLibraries() as $library) {
             foreach ($library->getCss() as $stylesheet) {
                 $this->addFiles(
-                    $this->fileResolver->getWebStaticAssetPath(
+                    $this->fileResolver->getStaticAssetPath(
                         $library->getModuleName(),
                         static::ASSETS_PATH_CSS,
                         $stylesheet
@@ -69,7 +69,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
             $this->addFiles(
-                $this->fileResolver->getWebStaticAssetPath(
+                $this->fileResolver->getStaticAssetPath(
                     'System',
                     static::ASSETS_PATH_CSS,
                     trim($file)
@@ -78,7 +78,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         }
 
         $this->addFiles(
-            $this->fileResolver->getWebStaticAssetPath(
+            $this->fileResolver->getStaticAssetPath(
                 'System',
                 static::ASSETS_PATH_CSS,
                 'layout.css'
@@ -95,7 +95,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
 
         foreach ($this->modules->getInstalledModules() as $module) {
             $this->addFiles(
-                $this->fileResolver->getWebStaticAssetPath(
+                $this->fileResolver->getStaticAssetPath(
                     $module['name'],
                     static::ASSETS_PATH_CSS,
                     'style.css'
@@ -104,7 +104,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
 
             if ($area === AreaEnum::AREA_ADMIN) {
                 $this->addFiles(
-                    $this->fileResolver->getWebStaticAssetPath(
+                    $this->fileResolver->getStaticAssetPath(
                         $module['name'],
                         static::ASSETS_PATH_CSS,
                         'admin.css'
@@ -114,7 +114,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
 
             // Append custom styles to the default module styling
             $this->addFiles(
-                $this->fileResolver->getWebStaticAssetPath(
+                $this->fileResolver->getStaticAssetPath(
                     $module['name'],
                     static::ASSETS_PATH_CSS,
                     'append.css'
@@ -131,7 +131,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     {
         return array_reduce(
             array_filter($this->stylesheets, static fn ($stylesheet) => !empty($stylesheet)),
-            static fn ($accumulator, $stylesheet) => $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '">' . "\n",
+            fn ($accumulator, $stylesheet) => $accumulator . '<link rel="stylesheet" type="text/css" href="' . $this->fileResolver->rewriteToWebStaticAssetPath($stylesheet) . '">' . "\n",
             ''
         );
     }

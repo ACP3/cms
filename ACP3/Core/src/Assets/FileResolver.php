@@ -73,12 +73,12 @@ class FileResolver
             return [];
         }
 
-        return array_map(
-            function ($path) {
-                return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($path, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR)));
-            },
-            $paths
-        );
+        return array_map(fn ($path) => $this->rewriteToWebStaticAssetPath($path), $paths);
+    }
+
+    public function rewriteToWebStaticAssetPath(string $filePath): string
+    {
+        return $this->appPath->getWebRoot() . str_replace(DIRECTORY_SEPARATOR, '/', substr($filePath, \strlen(ACP3_ROOT_DIR . DIRECTORY_SEPARATOR)));
     }
 
     /**

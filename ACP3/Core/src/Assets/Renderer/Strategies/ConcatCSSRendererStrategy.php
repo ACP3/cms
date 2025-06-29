@@ -43,15 +43,6 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     ) {
     }
 
-    /**
-     * @throws CircularDependencyException
-     * @throws ElementNotFoundException
-     */
-    private function getEnabledLibrariesAsString(): string
-    {
-        return implode(',', array_map(static fn (LibraryEntity $library) => $library->getLibraryIdentifier(), $this->getEnabledLibraries()));
-    }
-
     private function buildCacheId(): string
     {
         return 'assets_' . $this->generateFilenameHash();
@@ -69,7 +60,7 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
                 $this->request->getArea()->value,
                 $this->userModel->isAuthenticated(),
                 $this->themePath->getCurrentTheme(),
-                $this->getEnabledLibrariesAsString(),
+                $this->request->getPathInfo(),
                 'css',
             ]
         ));
@@ -97,14 +88,14 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
 
         // Get the enabled libraries and filter out empty entries
         $files = array_filter(
-            $this->processLibraries(),
+            $this->stylesheets,
             static fn ($var) => !empty($var)
         );
 
         if (\count($files) === 0) {
             $webRootPath = null;
         } else {
-            $this->saveMinifiedAsset($files, $this->appPath->getUploadsDir() . $path);
+            $this->saveConcatenatedAsset($files, $this->appPath->getUploadsDir() . $path);
 
             $webRootPath = $this->appPath->getWebRoot() . 'uploads/' . $path;
         }
@@ -118,11 +109,11 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     /**
      * @param string[] $files
      */
-    private function saveMinifiedAsset(array $files, string $path): void
+    private function saveConcatenatedAsset(array $files, string $path): void
     {
         $content = [];
         foreach ($files as $file) {
-            $content[] = file_get_contents($file) . "\n";
+            $content[] = file_get_contents($file);
         }
 
         if (\count($content) === 0) {
@@ -157,29 +148,6 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     private function getEnabledLibraries(): array
     {
         return array_filter($this->libraries->getEnabledLibraries(), static fn (LibraryEntity $library) => !empty($library->getCss()));
-    }
-
-    /**
-     * @return string[]
-     *
-     * @throws CircularDependencyException
-     * @throws ElementNotFoundException
-     */
-    private function processLibraries(): array
-    {
-        $cacheId = $this->buildCacheId();
-        $cacheItem = $this->coreCachePool->getItem($cacheId);
-
-        if (!$cacheItem->isHit()) {
-            $this->fetchLibraries();
-            $this->fetchThemeStylesheets();
-            $this->fetchModuleStylesheets();
-
-            $cacheItem->set($this->stylesheets);
-            $this->coreCachePool->saveDeferred($cacheItem);
-        }
-
-        return $cacheItem->get();
     }
 
     /**
@@ -288,13 +256,33 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
         return '<link rel="stylesheet" type="text/css" href="' . $cssUri . '">' . "\n";
     }
 
+    /**
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
+     * @throws InvalidArgumentException
+     */
     public function initialize(): void
     {
-        // We have to initialize the theme here,
-        // i.e., enabling the required libraries of the theme + adding theme-specific stylesheets.
-        // It has to be called before the "generateFilenameHash" method, otherwise we would get incorrect results!
-        $this->assets->initializeTheme();
+        $cacheId = $this->buildCacheId();
+        $cacheItem = $this->coreCachePool->getItem($cacheId);
 
-        $this->processLibraries();
+        if (!$cacheItem->isHit()) {
+            $backup = $this->stylesheets;
+            $this->stylesheets = [];
+
+            // We have to initialize the theme here,
+            // i.e., enabling the required libraries of the theme + adding theme-specific stylesheets.
+            // It has to be called before the "generateFilenameHash" method, otherwise we would get incorrect results!
+            $this->assets->initializeTheme();
+
+            $this->fetchLibraries();
+            $this->fetchThemeStylesheets();
+            $this->fetchModuleStylesheets();
+
+            $this->addFiles($backup);
+
+            $cacheItem->set($this->stylesheets);
+            $this->coreCachePool->saveDeferred($cacheItem);
+        }
     }
 }

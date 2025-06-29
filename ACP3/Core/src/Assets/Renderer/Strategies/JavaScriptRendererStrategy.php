@@ -38,7 +38,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
         foreach ($this->libraries->getEnabledLibraries() as $library) {
             foreach ($library->getJs() as $javascript) {
                 $this->addFiles(
-                    $this->fileResolver->getWebStaticAssetPath(
+                    $this->fileResolver->getStaticAssetPath(
                         $library->getModuleName(),
                         static::ASSETS_PATH_JS,
                         $javascript
@@ -71,7 +71,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     {
         foreach ($this->assets->fetchAdditionalThemeJsFiles() as $file) {
             $this->addFiles(
-                $this->fileResolver->getWebStaticAssetPath(
+                $this->fileResolver->getStaticAssetPath(
                     'System', static::ASSETS_PATH_JS, $file
                 ),
             );
@@ -79,7 +79,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
 
         // Include the general js file of the layout
         $this->addFiles(
-            $this->fileResolver->getWebStaticAssetPath(
+            $this->fileResolver->getStaticAssetPath(
                 'System', static::ASSETS_PATH_JS, 'layout.js'
             ),
         );
@@ -93,7 +93,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     {
         return array_reduce(
             $this->javascripts,
-            static fn ($accumulator, $javascript) => $accumulator . "<script defer src=\"{$javascript}\"></script>\n",
+            fn ($accumulator, $javascript) => $accumulator . "<script defer src=\"{$this->fileResolver->rewriteToWebStaticAssetPath($javascript)}\"></script>\n",
             ''
         );
     }
