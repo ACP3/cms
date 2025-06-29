@@ -84,7 +84,7 @@ class ConcatDeferrableCSSRendererStrategy extends ConcatCSSRendererStrategy
             return '';
         }
 
-        return '<link rel="stylesheet" href="' . $deferrableCssUri . '" media="print" onload="this.media=\'all\'; this.onload=null;">' . "\n"
+        return '<link rel="preload" href="' . $deferrableCssUri . '" as="style" onload="this.onload=null; this.rel=\'stylesheet\'">' . "\n"
             . '<noscript><link rel="stylesheet" href="' . $deferrableCssUri . '"></noscript>' . "\n";
     }
 }

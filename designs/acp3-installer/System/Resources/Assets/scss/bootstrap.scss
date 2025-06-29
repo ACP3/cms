@@ -5,31 +5,31 @@
 
 // scss-docs-start import-stack
 // Configuration
-@import "pkg:bootstrap/scss/functions";
-@import "pkg:bootstrap/scss/variables";
-@import "pkg:bootstrap/scss/variables-dark";
-@import "pkg:bootstrap/scss/maps";
-@import "pkg:bootstrap/scss/mixins";
-@import "pkg:bootstrap/scss/utilities";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
 
 // Layout & components
-@import "pkg:bootstrap/scss/root";
-@import "pkg:bootstrap/scss/reboot";
-@import "pkg:bootstrap/scss/type";
-@import "pkg:bootstrap/scss/containers";
-@import "pkg:bootstrap/scss/grid";
-@import "pkg:bootstrap/scss/tables";
-@import "pkg:bootstrap/scss/forms";
-@import "pkg:bootstrap/scss/buttons";
-@import "pkg:bootstrap/scss/transitions";
-@import "pkg:bootstrap/scss/nav";
-@import "pkg:bootstrap/scss/navbar";
-@import "pkg:bootstrap/scss/card";
-@import "pkg:bootstrap/scss/badge";
-@import "pkg:bootstrap/scss/alert";
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/alert";
 
 // Helpers
-@import "pkg:bootstrap/scss/helpers";
+@import "bootstrap/scss/helpers";
 
 // Utilities
-@import "pkg:bootstrap/scss/utilities/api";
+@import "bootstrap/scss/utilities/api";

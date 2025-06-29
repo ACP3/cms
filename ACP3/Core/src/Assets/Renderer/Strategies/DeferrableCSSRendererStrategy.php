@@ -74,7 +74,7 @@ class DeferrableCSSRendererStrategy implements CSSRendererStrategyInterface
                 continue;
             }
 
-            $deferrableStylesheets .= '<link rel="stylesheet" href="' . $stylesheet . '" media="print" onload="this.media=\'all\'; this.onload=null;">' . "\n";
+            $deferrableStylesheets .= '<link rel="preload" href="' . $stylesheet . '" as="style" onload="this.onload=null; this.rel=\'stylesheet\'">' . "\n";
             $deferrableStylesheetsNoScript .= '<link rel="stylesheet" href="' . $stylesheet . '">' . "\n";
         }
 

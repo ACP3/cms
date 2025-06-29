@@ -22,7 +22,7 @@ class AssetsManifestFileCheckerStrategy implements FileCheckerStrategyInterface
 
     public function isAllowed(string $resourcePath): bool
     {
-        return str_ends_with($resourcePath, '.js');
+        return str_ends_with($resourcePath, '.js') || str_ends_with($resourcePath, '.css');
     }
 
     /**
@@ -42,15 +42,19 @@ class AssetsManifestFileCheckerStrategy implements FileCheckerStrategyInterface
         $entrypoint = $this->getEntrypointName($resourcePath);
 
         if (\array_key_exists($entrypoint, $this->manifest)) {
-            $resolvedPaths = [
-                ...$this->manifest[$entrypoint]['assets']['js'],
-                ...($this->manifest[$entrypoint]['assets']['css'] ?? []),
-            ];
+            if (\is_array($this->manifest[$entrypoint])) {
+                $resolvedPaths = [
+                    ...$this->manifest[$entrypoint]['assets']['js'],
+                    ...($this->manifest[$entrypoint]['assets']['css'] ?? []),
+                ];
 
-            return array_map(
-                fn ($path) => $this->appPath->getUploadsDir() . 'assets/' . $path,
-                $resolvedPaths
-            );
+                return array_map(
+                    fn ($path) => $this->appPath->getUploadsDir() . 'assets/' . $path,
+                    $resolvedPaths
+                );
+            }
+
+            return $this->manifest[$entrypoint];
         }
 
         return null;
@@ -58,6 +62,10 @@ class AssetsManifestFileCheckerStrategy implements FileCheckerStrategyInterface
 
     private function getEntrypointName(string $resourcePath): string
     {
-        return strtolower(str_replace('/', '-', substr($resourcePath, \strlen(ACP3_ROOT_DIR) + 1, -3)));
+        if (str_ends_with($resourcePath, '.js')) {
+            return strtolower(str_replace('/', '-', substr($resourcePath, \strlen(ACP3_ROOT_DIR) + 1, -3)));
+        }
+
+        return strtolower(str_replace('/', '-', substr($resourcePath, \strlen(ACP3_ROOT_DIR) + 1, -4)));
     }
 }

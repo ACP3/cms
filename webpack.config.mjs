@@ -5,8 +5,14 @@ import browserslist from "browserslist";
 import { resolveToEsbuildTarget } from "esbuild-plugin-browserslist";
 import { WebpackAssetsManifest } from "webpack-assets-manifest";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import RemoveEmptyScriptsPlugin from "webpack-remove-empty-scripts";
+import * as sassEmbedded from "sass-embedded";
 
-const entries = globbySync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);
+const entries = globbySync([
+  ...componentPaths.scss.all,
+  ...componentPaths.js.all,
+  "./designs/*/*/Resources/Assets/js/!(*.min).js",
+]);
 const entryPointMap = new Map();
 for (const entryPoint of entries) {
   entryPointMap.set(entryPoint, entryPoint);
@@ -17,7 +23,8 @@ entryPointMap.forEach((path, entryName) => {
   webpackEntryConfig[
     entryName
       .substring(2)
-      .replace(/\.m?js/, "")
+      .replace(/\.((m?js)|scss)/, "")
+      .replace(/\/scss\//, "/css/")
       .replaceAll("/", "-")
       .toLocaleLowerCase()
   ] = {
@@ -44,7 +51,17 @@ export default {
         // If you enable `experiments.css` or `experiments.futureDefaults`, please uncomment line below
         // type: "javascript/auto",
         test: /\.(sa|sc|c)ss$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              sassOptions: { style: "compressed", importers: [new sassEmbedded.NodePackageImporter()] },
+            },
+          },
+        ],
       },
       {
         test: /\.m?js$/,
@@ -76,10 +93,11 @@ export default {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin(),
     new WebpackAssetsManifest({
       entrypoints: true,
       entrypointsKey: false,
     }),
+    new RemoveEmptyScriptsPlugin(),
+    new MiniCssExtractPlugin(),
   ],
 };
