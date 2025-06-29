@@ -70,7 +70,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
      */
     private function getEnabledLibraries(): array
     {
-        return array_filter($this->libraries->getEnabledLibraries(), static fn (LibraryEntity $library) => $library->getCss() && !$library->isDeferrableCss());
+        return array_filter($this->libraries->getEnabledLibraries(), static fn (LibraryEntity $library) => !empty($library->getCss()));
     }
 
     /**

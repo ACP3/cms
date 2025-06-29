@@ -12,4 +12,3 @@ services:
       - ["shariff.min.css"]
       - ["shariff.min.js"]
       - "share"
-      - true

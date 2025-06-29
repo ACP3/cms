@@ -25,7 +25,6 @@ final class LibraryEntity
         private readonly array $css = [],
         private readonly array $js = [],
         string $moduleName = '',
-        private readonly bool $deferrableCss = false,
     ) {
         if (!$moduleName) {
             throw new \InvalidArgumentException('The argument `moduleName` is required!');
@@ -83,10 +82,5 @@ final class LibraryEntity
     public function getModuleName(): string
     {
         return $this->moduleName;
-    }
-
-    public function isDeferrableCss(): bool
-    {
-        return $this->deferrableCss;
     }
 }

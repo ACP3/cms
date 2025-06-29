@@ -32,7 +32,6 @@ services:
       - ["all.css"]
       - []
       - "system"
-      - true
 
   system.assets.js-cookie:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -60,10 +59,9 @@ services:
       - "ajax-form"
       - true
       - ["bootstrap"]
-      - ["loading-indicator.css"]
+      - []
       - ["partials/ajax-form.js"]
       - "system"
-      - true
 
   system.assets.datatables:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -74,7 +72,6 @@ services:
       - ["dataTables.bootstrap5.css"]
       - []
       - "system"
-      - true
 
   system.assets.fancybox:
     deprecated:
@@ -89,7 +86,6 @@ services:
       - ["jquery.fancybox.css"]
       - ["jquery.fancybox.js"]
       - "system"
-      - true
 
   system.assets.photoswipe:
     class: ACP3\Core\Assets\Entity\LibraryEntity
@@ -100,4 +96,3 @@ services:
       - ["photoswipe.css", "photoswipe-caption.css"]
       - ["photoswipe.umd.js", "photoswipe-lightbox.umd.js"]
       - "system"
-      - true

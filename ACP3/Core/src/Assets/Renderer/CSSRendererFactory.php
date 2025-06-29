@@ -24,7 +24,6 @@ class CSSRendererFactory
     {
         return new CSSRenderer(
             $this->assetRendererStrategyServiceLocator->get('css_renderer_' . $this->applicationMode->value),
-            $this->assetRendererStrategyServiceLocator->get('deferrable_css_renderer_' . $this->applicationMode->value)
         );
     }
 }

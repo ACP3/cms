@@ -41,7 +41,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     private function fetchLibraries(): void
     {
         foreach ($this->libraries->getEnabledLibraries() as $library) {
-            if (!$library->getCss() || $library->isDeferrableCss()) {
+            if (!$library->getCss()) {
                 continue;
             }
 
