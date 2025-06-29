@@ -98,6 +98,9 @@ export default {
       entrypointsKey: false,
     }),
     new RemoveEmptyScriptsPlugin(),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+      chunkFilename: "[id].[chunkhash].css",
+    }),
   ],
 };
