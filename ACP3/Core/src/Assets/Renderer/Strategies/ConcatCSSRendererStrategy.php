@@ -16,7 +16,10 @@ use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
+use MJS\TopSort\CircularDependencyException;
+use MJS\TopSort\ElementNotFoundException;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException;
 
 class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
 {
@@ -41,8 +44,8 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     }
 
     /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
      */
     private function getEnabledLibrariesAsString(): string
     {
@@ -56,7 +59,7 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
 
     /**
      * The generated filename hash needs to take the area and the authentication status of the current user into account,
-     * as the filenames of the enabled can differ because of these settings.
+     * as the filenames of the enabled libraries can differ because of these settings.
      */
     private function generateFilenameHash(): string
     {
@@ -72,6 +75,11 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
         ));
     }
 
+    /**
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
+     * @throws InvalidArgumentException
+     */
     public function getURI(): ?string
     {
         $filenameHash = $this->generateFilenameHash();
@@ -143,8 +151,8 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     /**
      * @return LibraryEntity[]
      *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
      */
     private function getEnabledLibraries(): array
     {
@@ -154,8 +162,8 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     /**
      * @return string[]
      *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
      */
     private function processLibraries(): array
     {
@@ -177,8 +185,8 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     /**
      * Fetch all stylesheets of the enabled frontend frameworks/libraries.
      *
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
      */
     private function fetchLibraries(): void
     {
@@ -265,8 +273,9 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     }
 
     /**
-     * @throws \MJS\TopSort\CircularDependencyException
-     * @throws \MJS\TopSort\ElementNotFoundException
+     * @throws CircularDependencyException
+     * @throws ElementNotFoundException
+     * @throws InvalidArgumentException
      */
     public function renderHtmlElement(): string
     {
@@ -276,7 +285,7 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
             return '';
         }
 
-        return '<link rel="stylesheet" type="text/css" href="' . $this->getURI() . '">' . "\n";
+        return '<link rel="stylesheet" type="text/css" href="' . $cssUri . '">' . "\n";
     }
 
     public function initialize(): void

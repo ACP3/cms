@@ -23,7 +23,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
         private readonly Assets $assets,
         private readonly Assets\FileResolver $fileResolver,
         private readonly Libraries $libraries,
-        private readonly CSSRendererStrategy $cssRendererStrategy,
+        private readonly CSSRendererStrategyInterface $cssRendererStrategy,
     ) {
     }
 
@@ -36,10 +36,6 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     protected function fetchLibraries(): void
     {
         foreach ($this->libraries->getEnabledLibraries() as $library) {
-            if (!$library->getJs()) {
-                continue;
-            }
-
             foreach ($library->getJs() as $javascript) {
                 $this->addFiles(
                     $this->fileResolver->getWebStaticAssetPath(

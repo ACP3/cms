@@ -7,11 +7,11 @@
 
 namespace ACP3\Core\Assets;
 
-use ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy;
+use ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategyInterface;
 
 class IncludeStylesheet extends AbstractIncludeAsset
 {
-    public function __construct(Libraries $libraries, FileResolver $fileResolver, CSSRendererStrategy $rendererStrategy)
+    public function __construct(Libraries $libraries, FileResolver $fileResolver, CSSRendererStrategyInterface $rendererStrategy)
     {
         parent::__construct($libraries, $fileResolver, $rendererStrategy);
     }

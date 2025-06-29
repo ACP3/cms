@@ -7,14 +7,14 @@
 
 namespace ACP3\Core\Assets;
 
-use ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy;
+use ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategyInterface;
 
 class IncludeJs extends AbstractIncludeAsset
 {
     public function __construct(
         Libraries $libraries,
         FileResolver $fileResolver,
-        JavaScriptRendererStrategy $jsRendererStrategy,
+        JavaScriptRendererStrategyInterface $jsRendererStrategy,
     ) {
         parent::__construct($libraries, $fileResolver, $jsRendererStrategy);
     }

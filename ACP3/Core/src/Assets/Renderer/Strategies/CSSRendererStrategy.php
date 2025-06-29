@@ -41,10 +41,6 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     private function fetchLibraries(): void
     {
         foreach ($this->libraries->getEnabledLibraries() as $library) {
-            if (!$library->getCss()) {
-                continue;
-            }
-
             foreach ($library->getCss() as $stylesheet) {
                 $this->addFiles(
                     $this->fileResolver->getWebStaticAssetPath(

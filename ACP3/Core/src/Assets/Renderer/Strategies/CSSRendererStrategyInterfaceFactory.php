@@ -5,13 +5,12 @@
  * See the LICENSE file at the top-level module directory for licensing details.
  */
 
-namespace ACP3\Core\Assets\Renderer;
+namespace ACP3\Core\Assets\Renderer\Strategies;
 
-use ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategyInterface;
 use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
-class CSSRendererFactory
+class CSSRendererStrategyInterfaceFactory
 {
     /**
      * @param ServiceLocator<CSSRendererStrategyInterface> $cssRendererStrategyServiceLocator
@@ -20,10 +19,8 @@ class CSSRendererFactory
     {
     }
 
-    public function __invoke(): CSSRenderer
+    public function __invoke(): CSSRendererStrategyInterface
     {
-        return new CSSRenderer(
-            $this->cssRendererStrategyServiceLocator->get('css_renderer_' . $this->applicationMode->value),
-        );
+        return $this->cssRendererStrategyServiceLocator->get('css_renderer_' . $this->applicationMode->value);
     }
 }
