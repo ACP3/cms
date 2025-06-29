@@ -7,32 +7,48 @@
 
 namespace ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters;
 
+use ACP3\Core\Assets\EventListener\StaticAssetsListener;
 use ACP3\Core\Assets\Renderer\CSSRenderer;
+use ACP3\Core\Assets\Renderer\JavaScriptRenderer;
+use ACP3\Core\View\Renderer\Smarty\Filters\AbstractFilter;
 
-class MoveToHead extends AbstractMoveElementFilter
+class MoveToHead extends AbstractFilter
 {
-    public const ELEMENT_CATCHER_REGEX_PATTERN = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';
-    protected const PLACEHOLDER = '<!-- STYLESHEETS -->';
-
-    public function __construct(private readonly CSSRenderer $CSSRenderer)
+    public function __construct(private readonly CSSRenderer $CSSRenderer, private readonly JavaScriptRenderer $jsRenderer)
     {
-    }
-
-    protected function addElementFromMinifier(): string
-    {
-        return $this->CSSRenderer->renderHtmlElement();
     }
 
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
-        if (str_contains($tplOutput, (string) static::PLACEHOLDER)) {
+        if (str_contains($tplOutput, StaticAssetsListener::PLACEHOLDER_CSS)) {
+            $assets = $this->CSSRenderer->renderHtmlElement();
+            $assets .= $this->jsRenderer->renderHtmlElement();
+            $assets .= $this->addElementsFromTemplates(StaticAssetsListener::REGEX_PATTERN_CSS, $tplOutput);
+            $assets .= $this->addElementsFromTemplates(StaticAssetsListener::REGEX_PATTERN_JS, $tplOutput);
+
             $tplOutput = str_replace(
-                static::PLACEHOLDER,
-                $this->addElementFromMinifier() . $this->addElementsFromTemplates($tplOutput),
-                $this->getCleanedUpTemplateOutput($tplOutput)
+                StaticAssetsListener::PLACEHOLDER_CSS,
+                $assets,
+                $this->getCleanedUpTemplateOutput(
+                    StaticAssetsListener::REGEX_PATTERN_JS,
+                    $this->getCleanedUpTemplateOutput(StaticAssetsListener::REGEX_PATTERN_CSS, $tplOutput)
+                )
             );
         }
 
         return $tplOutput;
+    }
+
+    private function getCleanedUpTemplateOutput(string $pattern, string $tplOutput): string
+    {
+        return preg_replace($pattern, '', $tplOutput);
+    }
+
+    private function addElementsFromTemplates(string $pattern, string $tplOutput): string
+    {
+        $matches = [];
+        preg_match_all($pattern, $tplOutput, $matches);
+
+        return implode("\n", array_unique($matches[1])) . "\n";
     }
 }

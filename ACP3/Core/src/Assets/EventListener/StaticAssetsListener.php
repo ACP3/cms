@@ -21,10 +21,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class StaticAssetsListener implements EventSubscriberInterface
 {
-    private const REGEX_PATTERN_CSS = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';
-    private const REGEX_PATTERN_JS = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
-    private const PLACEHOLDER_CSS = '<!-- STYLESHEETS -->';
-    private const PLACEHOLDER_JS = '<!-- JAVASCRIPTS -->';
+    public const REGEX_PATTERN_CSS = '!@@@SMARTY:STYLESHEETS:BEGIN@@@(.*?)@@@SMARTY:STYLESHEETS:END@@@!is';
+    public const REGEX_PATTERN_JS = '!@@@SMARTY:JAVASCRIPTS:BEGIN@@@(.*?)@@@SMARTY:JAVASCRIPTS:END@@@!is';
+    public const PLACEHOLDER_CSS = '<!-- STYLESHEETS -->';
+    public const PLACEHOLDER_JS = '<!-- JAVASCRIPTS -->';
 
     /**
      * @var Request[]
