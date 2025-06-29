@@ -49,7 +49,7 @@
     {/if}
     {javascripts}
         {js_libraries enable="ajax-form"}
-        {include_js module="system" file="partials/datagrid" depends="datatables"}
+        {include_js module="system" file="partials/datagrid"}
     {/javascripts}
 {else}
     {include file="asset:System/Partials/no_results.tpl"}
