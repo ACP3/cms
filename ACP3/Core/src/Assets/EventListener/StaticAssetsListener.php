@@ -31,8 +31,13 @@ class StaticAssetsListener implements EventSubscriberInterface
      */
     private array $tracedRequests = [];
 
-    public function __construct(private readonly CSSRenderer $cssRenderer, private readonly JavaScriptRenderer $javaScriptRenderer, private readonly RequestStack $requestStack, private readonly Libraries $libraries, private readonly LibrariesCache $librariesCache)
-    {
+    public function __construct(
+        private readonly CSSRenderer $cssRenderer,
+        private readonly JavaScriptRenderer $javaScriptRenderer,
+        private readonly RequestStack $requestStack,
+        private readonly Libraries $libraries,
+        private readonly LibrariesCache $librariesCache,
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -52,13 +57,11 @@ class StaticAssetsListener implements EventSubscriberInterface
         }
 
         $this->enableLibraries($event);
-
-        $this->combineCssBlocks($event);
-        $this->combineJavaScriptBlocks($event);
+        $this->combineStaticAssetsBlocks($event);
     }
 
     /**
-     * Event subscriber for saving the libraries request cache.
+     * Event subscriber for saving the library request cache.
      * Postponing saving the cache through the kernel terminate event improves the perceived performance for the user,
      * as the response has already been sent.
      */
@@ -83,13 +86,16 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $libraries = [];
         foreach ($this->tracedRequests as $request) {
-            $libraries = array_merge($libraries, $this->librariesCache->getEnabledLibrariesByRequest($request));
+            $libraries = [
+                ...$libraries,
+                ...$this->librariesCache->getEnabledLibrariesByRequest($request),
+            ];
         }
 
         $this->libraries->enableLibraries(array_unique($libraries));
     }
 
-    private function combineCssBlocks(CacheEvent $event): void
+    private function combineStaticAssetsBlocks(CacheEvent $event): void
     {
         $response = $event->getResponse();
 
@@ -99,40 +105,27 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         $content = $response->getContent();
 
-        if (\is_string($content) && str_contains($content, self::PLACEHOLDER_CSS)) {
+        if (\is_string($content) && (str_contains($content, self::PLACEHOLDER_CSS) || str_contains($content, self::PLACEHOLDER_JS))) {
             $this->requestStack->push($event->getRequest());
 
-            $content = str_replace(
-                self::PLACEHOLDER_CSS,
-                $this->addCssLibraries() . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_CSS),
-                $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_CSS)
-            );
+            $this->cssRenderer->initialize();
+            $this->javaScriptRenderer->initialize();
 
-            $response->setContent($content);
-            $response->headers->set('Content-Length', (string) \strlen($content));
+            if (str_contains($content, self::PLACEHOLDER_CSS)) {
+                $content = str_replace(
+                    self::PLACEHOLDER_CSS,
+                    $this->cssRenderer->renderHtmlElement() . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_CSS),
+                    $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_CSS)
+                );
+            }
 
-            $this->requestStack->pop();
-        }
-    }
-
-    private function combineJavaScriptBlocks(CacheEvent $event): void
-    {
-        $response = $event->getResponse();
-
-        if (!$response) {
-            return;
-        }
-
-        $content = $response->getContent();
-
-        if (\is_string($content) && str_contains($content, self::PLACEHOLDER_JS)) {
-            $this->requestStack->push($event->getRequest());
-
-            $content = str_replace(
-                self::PLACEHOLDER_JS,
-                $this->addJavaScriptLibraries() . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_JS),
-                $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_JS)
-            );
+            if (str_contains($content, self::PLACEHOLDER_JS)) {
+                $content = str_replace(
+                    self::PLACEHOLDER_JS,
+                    $this->javaScriptRenderer->renderHtmlElement() . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_JS),
+                    $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_JS)
+                );
+            }
 
             $response->setContent($content);
             $response->headers->set('Content-Length', (string) \strlen($content));
@@ -152,15 +145,5 @@ class StaticAssetsListener implements EventSubscriberInterface
         preg_match_all($regexPattern, $tplOutput, $matches);
 
         return implode("\n", array_unique($matches[1])) . "\n";
-    }
-
-    private function addCssLibraries(): string
-    {
-        return $this->cssRenderer->renderHtmlElement();
-    }
-
-    private function addJavaScriptLibraries(): string
-    {
-        return $this->javaScriptRenderer->renderHtmlElement();
     }
 }

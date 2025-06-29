@@ -86,11 +86,6 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
 
     public function getURI(): ?string
     {
-        // We have to initialize the theme here,
-        // i.e., enabling the required libraries of the theme + adding theme-specific stylesheets.
-        // It has to be called before the "generateFilenameHash" method, otherwise we would get incorrect results!
-        $this->assets->initializeTheme();
-
         $filenameHash = $this->generateFilenameHash();
         $cacheId = 'assets-last-generated-' . $filenameHash;
 
@@ -169,6 +164,8 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     }
 
     /**
+     * @return string[]
+     *
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
@@ -297,5 +294,15 @@ class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
     protected function compress(string $assetContent): string
     {
         return $this->minifier->run($assetContent);
+    }
+
+    public function initialize(): void
+    {
+        // We have to initialize the theme here,
+        // i.e., enabling the required libraries of the theme + adding theme-specific stylesheets.
+        // It has to be called before the "generateFilenameHash" method, otherwise we would get incorrect results!
+        $this->assets->initializeTheme();
+
+        $this->processLibraries();
     }
 }

@@ -18,4 +18,6 @@ interface RendererStrategyInterface
      * @param string[] $files
      */
     public function addFiles(array $files): void;
+
+    public function initialize(): void;
 }

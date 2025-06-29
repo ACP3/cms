@@ -21,6 +21,9 @@ class MoveToHead extends AbstractFilter
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
         if (str_contains($tplOutput, StaticAssetsListener::PLACEHOLDER_CSS)) {
+            $this->CSSRenderer->initialize();
+            $this->jsRenderer->initialize();
+
             $assets = $this->CSSRenderer->renderHtmlElement();
             $assets .= $this->jsRenderer->renderHtmlElement();
             $assets .= $this->addElementsFromTemplates(StaticAssetsListener::REGEX_PATTERN_CSS, $tplOutput);

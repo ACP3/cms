@@ -13,4 +13,6 @@ interface RendererInterface
      * Returns the completely rendered HTML element of the to be rendered assets.
      */
     public function renderHtmlElement(): string;
+
+    public function initialize(): void;
 }

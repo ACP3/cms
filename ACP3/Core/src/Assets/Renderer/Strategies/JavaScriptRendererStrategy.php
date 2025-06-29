@@ -95,8 +95,6 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
      */
     public function renderHtmlElement(): string
     {
-        $this->initialize();
-
         return array_reduce(
             $this->javascripts,
             static fn ($accumulator, $javascript) => $accumulator . "<script defer src=\"{$javascript}\"></script>\n",
@@ -108,7 +106,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function initialize(): void
+    public function initialize(): void
     {
         $backup = $this->javascripts;
         $this->javascripts = [];

@@ -19,4 +19,9 @@ class JavaScriptRenderer implements RendererInterface
     {
         return $this->javaScriptRendererStrategy->renderHtmlElement();
     }
+
+    public function initialize(): void
+    {
+        $this->javaScriptRendererStrategy->initialize();
+    }
 }

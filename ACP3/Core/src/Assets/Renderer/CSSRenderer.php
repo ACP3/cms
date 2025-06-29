@@ -19,4 +19,9 @@ class CSSRenderer implements RendererInterface
     {
         return $this->cssRendererStrategy->renderHtmlElement();
     }
+
+    public function initialize(): void
+    {
+        $this->cssRendererStrategy->initialize();
+    }
 }

@@ -50,6 +50,8 @@ class CSSRendererStrategyTest extends TestCase
         $this->requestMock->method('getArea')
             ->willReturn(AreaEnum::AREA_FRONTEND);
 
+        $this->CSSRendererStrategy->initialize();
+
         self::assertEquals('', $this->CSSRendererStrategy->renderHtmlElement());
     }
 
@@ -67,6 +69,8 @@ class CSSRendererStrategyTest extends TestCase
                 ['System', 'Assets/css', 'layout.css'] => [],
                 default => throw new \InvalidArgumentException(),
             });
+
+        $this->CSSRendererStrategy->initialize();
 
         self::assertStringContainsString('<link rel="stylesheet" type="text/css" href="/ACP3/Modules/ACP3/System/Resources/Assets/css/foo.css', $this->CSSRendererStrategy->renderHtmlElement());
     }

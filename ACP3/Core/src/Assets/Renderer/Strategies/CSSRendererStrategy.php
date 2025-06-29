@@ -133,8 +133,6 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      */
     public function renderHtmlElement(): string
     {
-        $this->initialize();
-
         return array_reduce(
             array_filter($this->stylesheets, static fn ($stylesheet) => !empty($stylesheet)),
             static fn ($accumulator, $stylesheet) => $accumulator . '<link rel="stylesheet" type="text/css" href="' . $stylesheet . '">' . "\n",
@@ -146,7 +144,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function initialize(): void
+    public function initialize(): void
     {
         $backup = $this->stylesheets;
         $this->stylesheets = [];
