@@ -11,13 +11,11 @@ use ACP3\Core\Cache\Purge;
 use ACP3\Core\Controller\AbstractWidgetAction;
 use ACP3\Core\Controller\Context\Context;
 use ACP3\Core\Migration\Migrator;
-use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 
 class Index extends AbstractWidgetAction
 {
     public function __construct(
         Context $context,
-        private readonly ApplicationPath $applicationPath,
         private readonly Migrator $migrator,
     ) {
         parent::__construct($context);
@@ -60,10 +58,7 @@ class Index extends AbstractWidgetAction
 
     private function clearCaches(): void
     {
-        Purge::doPurge([
-            ACP3_ROOT_DIR . '/cache/',
-            $this->applicationPath->getUploadsDir() . 'assets',
-        ]);
+        Purge::doPurge([ACP3_ROOT_DIR . '/cache/']);
     }
 
     /**
