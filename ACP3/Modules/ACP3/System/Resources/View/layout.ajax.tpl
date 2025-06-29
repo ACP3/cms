@@ -1,3 +1,4 @@
+<!-- STYLESHEETS -->
 <!-- JAVASCRIPTS -->
 <div id="breadcrumb">
     {block BREADCRUMB}

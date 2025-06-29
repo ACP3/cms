@@ -1,3 +1,4 @@
+<!-- STYLESHEETS -->
 <!-- JAVASCRIPTS -->
 <div class="modal-header">
     <h4 class="modal-title" id="{$modal.id}-title">{page_title}</h4>
