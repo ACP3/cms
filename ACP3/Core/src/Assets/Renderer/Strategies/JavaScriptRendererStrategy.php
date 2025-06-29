@@ -56,7 +56,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     {
         foreach ($files as $file) {
             // Webpack managed JS-entrypoints can contain (extracted) CSS code
-            if (str_ends_with($file, '.css')) {
+            if (preg_match('=\.css(\?.+)?$=i', $file)) {
                 $this->cssRendererStrategy->addFiles([$file]);
 
                 continue;
@@ -110,12 +110,10 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
      */
     private function initialize(): void
     {
-        $this->assets->initializeTheme();
-
         $backup = $this->javascripts;
-
         $this->javascripts = [];
 
+        $this->assets->initializeTheme();
         $this->fetchLibraries();
         $this->fetchThemeJavaScript();
 

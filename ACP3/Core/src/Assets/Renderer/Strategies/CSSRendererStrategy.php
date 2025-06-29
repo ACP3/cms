@@ -60,7 +60,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     public function addFiles(array $files): void
     {
         foreach ($files as $file) {
-            if (!empty($file) && str_ends_with($file, '.css') && !\in_array($file, $this->stylesheets, true)) {
+            if (!empty($file) && preg_match('=\.css(\?.+)?$=i', $file) && !\in_array($file, $this->stylesheets, true)) {
                 $this->stylesheets[] = $file;
             }
         }
@@ -148,13 +148,12 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      */
     private function initialize(): void
     {
-        $this->assets->initializeTheme();
-
         $backup = $this->stylesheets;
         $this->stylesheets = [];
 
         // The sort order is important here, as module should be allowed to override the styles a library provides.
         // Also, themes should be allowed to override the styles modules defined.
+        $this->assets->initializeTheme();
         $this->fetchLibraries();
         $this->fetchModuleStylesheets();
         $this->fetchThemeStylesheets();
