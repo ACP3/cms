@@ -6,6 +6,8 @@ import { resolveToEsbuildTarget } from "esbuild-plugin-browserslist";
 import { WebpackAssetsManifest } from "webpack-assets-manifest";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import RemoveEmptyScriptsPlugin from "webpack-remove-empty-scripts";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import * as lightningcss from "lightningcss";
 import * as sassEmbedded from "sass-embedded";
 
 const entries = globbySync([
@@ -48,8 +50,6 @@ export default {
   module: {
     rules: [
       {
-        // If you enable `experiments.css` or `experiments.futureDefaults`, please uncomment line below
-        // type: "javascript/auto",
         test: /\.(sa|sc|c)ss$/i,
         use: [
           MiniCssExtractPlugin.loader,
@@ -58,7 +58,7 @@ export default {
           {
             loader: "sass-loader",
             options: {
-              sassOptions: { style: "compressed", importers: [new sassEmbedded.NodePackageImporter()] },
+              sassOptions: { importers: [new sassEmbedded.NodePackageImporter()] },
             },
           },
         ],
@@ -82,6 +82,12 @@ export default {
       chunks: "all",
     },
     minimizer: [
+      new CssMinimizerPlugin({
+        minify: CssMinimizerPlugin.lightningCssMinify,
+        minimizerOptions: {
+          targets: lightningcss.browserslistToTargets(browserslist()),
+        },
+      }),
       new TerserPlugin({
         extractComments: false,
         terserOptions: {
@@ -101,6 +107,7 @@ export default {
     new MiniCssExtractPlugin({
       filename: "css/[name].[contenthash].css",
       chunkFilename: "css/[id].[chunkhash].css",
+      ignoreOrder: true,
     }),
   ],
 };
