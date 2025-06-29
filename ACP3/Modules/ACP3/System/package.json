@@ -45,7 +45,6 @@
     "gulp-change": "^1.0.2",
     "gulp-eslint-new": "^2.4.0",
     "gulp-plumber": "^1.2.1",
-    "gulp-sass": "^6.0.1",
     "gulp-sharp-responsive": "^0.4.1",
     "gulp-stylelint-esm": "^3.0.0",
     "husky": "^9.1.7",
