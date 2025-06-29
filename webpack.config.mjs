@@ -30,7 +30,7 @@ export default {
   mode: "production",
   entry: webpackEntryConfig,
   output: {
-    publicPath: "",
+    publicPath: "/uploads/assets/",
     filename: "[name].[contenthash].js",
     sourceMapFilename: "[name].[contenthash].map",
     chunkFilename: "[id].[chunkhash].js",
