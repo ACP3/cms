@@ -4,6 +4,7 @@ import TerserPlugin from "terser-webpack-plugin";
 import browserslist from "browserslist";
 import { resolveToEsbuildTarget } from "esbuild-plugin-browserslist";
 import { WebpackAssetsManifest } from "webpack-assets-manifest";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const entries = globbySync([...componentPaths.js.all, "./designs/*/*/Resources/Assets/js/!(*.min).js"]);
 const entryPointMap = new Map();
@@ -40,8 +41,10 @@ export default {
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        // If you enable `experiments.css` or `experiments.futureDefaults`, please uncomment line below
+        // type: "javascript/auto",
+        test: /\.(sa|sc|c)ss$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
       },
       {
         test: /\.m?js$/,
@@ -73,6 +76,7 @@ export default {
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new WebpackAssetsManifest({
       entrypoints: true,
       entrypointsKey: false,
