@@ -103,7 +103,7 @@ const assetFolders = [
 
 /**
  * This function will strip all the ACP3 components, which are residing within the vendor dir.
- * It is only used for the watch mode, as this components will not change while using it.
+ * It is only used for the watch mode, as these components will not change while using it.
  *
  * @param {string[]} paths
  * @returns {string[]}
