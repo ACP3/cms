@@ -1,5 +1,9 @@
+import "photoswipe/dist/photoswipe.css";
+
+import PhotoSwipe from "photoswipe";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+
 (() => {
-  /* global PhotoSwipeLightbox, PhotoSwipe */
   const lightbox = new PhotoSwipeLightbox({
     gallery: ".gallery-pictures",
     children: ".gallery-picture-thumb",
