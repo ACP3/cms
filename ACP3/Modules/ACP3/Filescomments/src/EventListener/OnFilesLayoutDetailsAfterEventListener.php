@@ -40,7 +40,7 @@ class OnFilesLayoutDetailsAfterEventListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'files.settings.save_before' => '__invoke',
+            'files.layout.details_after' => '__invoke',
         ];
     }
 }
