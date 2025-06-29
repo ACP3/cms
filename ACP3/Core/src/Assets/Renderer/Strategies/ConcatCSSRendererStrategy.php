@@ -117,7 +117,7 @@ class ConcatCSSRendererStrategy extends AbstractConcatRendererStrategy implement
     public function addFiles(array $files): void
     {
         foreach ($files as $file) {
-            if (!empty($file) && !\in_array($file, $this->stylesheets, true)) {
+            if (!empty($file) && str_ends_with($file, '.css') && !\in_array($file, $this->stylesheets, true)) {
                 $this->stylesheets[] = $file;
             }
         }
