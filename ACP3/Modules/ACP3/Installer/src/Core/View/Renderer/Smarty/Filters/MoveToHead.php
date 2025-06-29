@@ -20,23 +20,30 @@ class MoveToHead extends AbstractFilter
 
     public function __invoke(string $tplOutput, \Smarty_Internal_Template $smarty): string
     {
-        if (str_contains($tplOutput, StaticAssetsListener::PLACEHOLDER_CSS)) {
+        if (str_contains($tplOutput, StaticAssetsListener::PLACEHOLDER_CSS) || str_contains($tplOutput, StaticAssetsListener::PLACEHOLDER_JS)) {
             $this->CSSRenderer->initialize();
             $this->jsRenderer->initialize();
 
-            $assets = $this->CSSRenderer->renderHtmlElement();
-            $assets .= $this->jsRenderer->renderHtmlElement();
-            $assets .= $this->addElementsFromTemplates(StaticAssetsListener::REGEX_PATTERN_CSS, $tplOutput);
-            $assets .= $this->addElementsFromTemplates(StaticAssetsListener::REGEX_PATTERN_JS, $tplOutput);
+            if (str_contains($tplOutput, StaticAssetsListener::PLACEHOLDER_CSS)) {
+                $assets = $this->CSSRenderer->renderHtmlElement();
+                $assets .= $this->addElementsFromTemplates(StaticAssetsListener::REGEX_PATTERN_CSS, $tplOutput);
 
-            $tplOutput = str_replace(
-                StaticAssetsListener::PLACEHOLDER_CSS,
-                $assets,
-                $this->getCleanedUpTemplateOutput(
-                    StaticAssetsListener::REGEX_PATTERN_JS,
+                $tplOutput = str_replace(
+                    StaticAssetsListener::PLACEHOLDER_CSS,
+                    $assets,
                     $this->getCleanedUpTemplateOutput(StaticAssetsListener::REGEX_PATTERN_CSS, $tplOutput)
-                )
-            );
+                );
+            }
+            if (str_contains($tplOutput, StaticAssetsListener::PLACEHOLDER_JS)) {
+                $assets = $this->jsRenderer->renderHtmlElement();
+                $assets .= $this->addElementsFromTemplates(StaticAssetsListener::REGEX_PATTERN_JS, $tplOutput);
+
+                $tplOutput = str_replace(
+                    StaticAssetsListener::PLACEHOLDER_JS,
+                    $assets,
+                    $this->getCleanedUpTemplateOutput(StaticAssetsListener::REGEX_PATTERN_JS, $tplOutput)
+                );
+            }
         }
 
         return $tplOutput;
