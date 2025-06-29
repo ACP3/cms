@@ -31,7 +31,6 @@
     "browserslist": "^4.25.1",
     "concurrently": "^9.2.0",
     "css-loader": "^7.1.2",
-    "cssnano": "^7.0.7",
     "del": "^8.0.0",
     "esbuild": "^0.25.5",
     "esbuild-loader": "^4.3.0",
