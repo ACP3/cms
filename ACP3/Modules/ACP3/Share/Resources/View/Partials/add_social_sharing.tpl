@@ -10,5 +10,4 @@
 {if !empty($sharing.services)}
     <hr>
     {load_module module="widget/share/index/index" path=$sharing.path}
-    {js_libraries enable='shariff'}
 {/if}
