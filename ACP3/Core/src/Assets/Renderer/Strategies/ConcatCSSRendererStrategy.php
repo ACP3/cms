@@ -65,7 +65,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
                 $this->request->getArea()->value,
                 $this->userModel->isAuthenticated(),
                 $this->themePath->getCurrentTheme(),
-                $this->request->getSymfonyRequest()->getPathInfo(),
+                $this->request->getPathInfo(),
                 'css',
             ]
         ));
@@ -88,8 +88,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
             return $cachedAssetPath;
         }
 
-        $lastGenerated = time(); // Assets are not cached -> set the current time as the new timestamp
-        $path = $this->buildAssetPath($filenameHash, $lastGenerated);
+        $path = $this->buildAssetPath($this->stylesheets);
 
         // Get the enabled libraries and filter out empty entries
         $files = array_filter(
@@ -116,6 +115,10 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
      */
     private function saveConcatenatedAsset(array $files, string $path): void
     {
+        if (is_file($path)) {
+            return;
+        }
+
         $content = [];
         foreach ($files as $file) {
             $content[] = file_get_contents(
@@ -133,9 +136,12 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         file_put_contents($path, $this->minifier->run(implode('', $content)), LOCK_EX);
     }
 
-    private function buildAssetPath(string $filenameHash, int $lastGenerated): string
+    /**
+     * @param string[] $files
+     */
+    private function buildAssetPath(array $files): string
     {
-        return 'assets/' . $filenameHash . '-' . $lastGenerated . '.css';
+        return 'assets/' . md5(implode('', $files)) . '.css';
     }
 
     private function createAssetsDirectory(): void

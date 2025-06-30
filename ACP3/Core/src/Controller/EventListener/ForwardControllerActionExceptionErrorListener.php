@@ -21,7 +21,7 @@ class ForwardControllerActionExceptionErrorListener implements EventSubscriberIn
 
     public function __invoke(OutputPageExceptionEvent $event): void
     {
-        // Return early, if the event has already been handled by another exception listener
+        // Return early if the event has already been handled by another exception listener
         if ($event->hasResponse()) {
             return;
         }

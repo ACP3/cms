@@ -11,6 +11,7 @@ use ACP3\Core\Assets\Libraries;
 use ACP3\Core\Assets\LibrariesCache;
 use ACP3\Core\Assets\Renderer\CSSRenderer;
 use ACP3\Core\Assets\Renderer\JavaScriptRenderer;
+use ACP3\Core\Http\RequestInterface;
 use FOS\HttpCache\SymfonyCache\CacheEvent;
 use FOS\HttpCache\SymfonyCache\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -35,6 +36,7 @@ class StaticAssetsListener implements EventSubscriberInterface
         private readonly CSSRenderer $cssRenderer,
         private readonly JavaScriptRenderer $javaScriptRenderer,
         private readonly RequestStack $requestStack,
+        private readonly RequestInterface $request,
         private readonly Libraries $libraries,
         private readonly LibrariesCache $librariesCache,
     ) {
@@ -107,6 +109,9 @@ class StaticAssetsListener implements EventSubscriberInterface
 
         if (\is_string($content) && (str_contains($content, self::PLACEHOLDER_CSS) || str_contains($content, self::PLACEHOLDER_JS))) {
             $this->requestStack->push($event->getRequest());
+
+            $this->request->setPathInfo();
+            $this->request->processQuery();
 
             $this->cssRenderer->initialize();
             $this->javaScriptRenderer->initialize();
