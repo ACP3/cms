@@ -44,6 +44,7 @@
     "symfony/polyfill-mbstring": "^1.22.0",
     "symfony/yaml": "^6.4.0",
     "toflar/psr6-symfony-http-cache-store": "^4.0",
+    "tubalmartin/cssmin": "^4.1.1",
     "webmozart/glob": "^4.6.0"
   },
   "require-dev": {

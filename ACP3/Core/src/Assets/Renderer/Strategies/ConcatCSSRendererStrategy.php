@@ -18,6 +18,7 @@ use MJS\TopSort\CircularDependencyException;
 use MJS\TopSort\ElementNotFoundException;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
+use tubalmartin\CssMin\Minifier;
 
 class ConcatCSSRendererStrategy extends CSSRendererStrategy
 {
@@ -31,6 +32,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         Modules $modules,
         FileResolver $fileResolver,
         private readonly ThemePathInterface $themePath,
+        private readonly Minifier $minifier,
     ) {
         parent::__construct($request, $assets, $libraries, $modules, $fileResolver);
     }
@@ -128,7 +130,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         $this->createAssetsDirectory();
 
         // Write the contents of the file to the uploads folder
-        file_put_contents($path, implode('', $content), LOCK_EX);
+        file_put_contents($path, $this->minifier->run(implode('', $content)), LOCK_EX);
     }
 
     private function buildAssetPath(string $filenameHash, int $lastGenerated): string
