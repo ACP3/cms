@@ -19,7 +19,7 @@
                         {/if}
                     </strong>
                     <div>
-                        <time class="badge bg-primary rounded-pill" datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
+                        <time class="badge text-bg-primary rounded-pill" datetime="{date_format date=$row.date format="c"}">{date_format date=$row.date format=$dateformat}</time>
                     </div>
                 </div>
                 <div class="card-body">

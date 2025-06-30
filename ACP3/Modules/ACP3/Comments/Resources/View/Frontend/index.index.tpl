@@ -15,7 +15,7 @@
                             {$row.name}
                         {/if}
                     </strong>
-                    <time class="badge bg-primary rounded-pill" datetime="{date_format date=$row.date format="c"}">
+                    <time class="badge text-bg-primary rounded-pill" datetime="{date_format date=$row.date format="c"}">
                         {date_format date=$row.date format=$dateformat}
                     </time>
                 </header>

@@ -19,7 +19,7 @@
                 </dt>
                 <dd>
                     {if $result === null}
-                        <span class="badge bg-success">
+                        <span class="badge text-bg-success">
                             {lang t="installer|migration_execution_success"}
                         </span>
                     {else}

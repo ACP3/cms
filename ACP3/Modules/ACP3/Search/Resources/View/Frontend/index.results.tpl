@@ -4,7 +4,7 @@
     {if !empty($results_mods)}
         {tabset identifier="search-results"}
             {foreach $results_mods as $module => $results}
-                {tab title="{lang t="`$module`|`$module`"} <span class=\"badge bg-primary rounded-pill\">{count($results)}</span>"}
+                {tab title="{lang t="`$module`|`$module`"} <span class=\"badge text-bg-primary rounded-pill\">{count($results)}</span>"}
                     {foreach $results as $result}
                         <div class="card mb-3">
                             <div class="card-header">

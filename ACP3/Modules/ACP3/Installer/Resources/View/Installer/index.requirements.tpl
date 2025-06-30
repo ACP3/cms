@@ -41,10 +41,10 @@
                         <tr>
                             <td><strong>{$row.path}</strong></td>
                             <td>
-                                <span class="badge {if $row.exists}bg-success{else}bg-danger{/if}">
+                                <span class="badge {if $row.exists}text-bg-success{else}text-bg-danger{/if}">
                                     {lang t="installer|{if $row.exists}found{else}not_found{/if}"}
                                 </span>
-                                <span class="badge {if $row.writable}bg-success{else}bg-danger{/if}">
+                                <span class="badge {if $row.writable}text-bg-success{else}text-bg-danger{/if}">
                                     {lang t="installer|{if $row.exists}writable{else}not_writable{/if}"}
                                 </span>
                             </td>
@@ -63,7 +63,7 @@
                 <ul class="list-unstyled">
                     {foreach $php_settings as $row}
                         <li>
-                            <strong>{$row.setting}</strong> <span class="badge {if $row.satisfied}bg-success{else}bg-danger{/if}">{$row.value}</span>
+                            <strong>{$row.setting}</strong> <span class="badge {if $row.satisfied}text-bg-success{else}text-bg-danger{/if}">{$row.value}</span>
                         </li>
                     {/foreach}
                 </ul>

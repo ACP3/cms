@@ -23,7 +23,7 @@
                         {else}
                             ({lang t="files|unknown_filesize"})
                         {/if}
-                        <time class="badge bg-primary rounded-pill" datetime="{date_format date=$row.start format="c"}">{date_format date=$row.start format=$dateformat}</time>
+                        <time class="badge text-bg-primary rounded-pill" datetime="{date_format date=$row.start format="c"}">{date_format date=$row.start format=$dateformat}</time>
                     </a>
                 {/foreach}
             </div>

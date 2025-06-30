@@ -9,7 +9,7 @@
                     <a href="{uri args="newsletter/archive/details/id_`$row.id`"}"
                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
                         <strong>{$row.title}</strong>
-                        <time class="badge bg-primary rounded-pill" datetime="{date_format date=$row.date format="c"}">
+                        <time class="badge text-bg-primary rounded-pill" datetime="{date_format date=$row.date format="c"}">
                             {date_format date=$row.date format="short"}
                         </time>
                     </a>

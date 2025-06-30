@@ -23,7 +23,7 @@
             <article class="card mb-3">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <a href="{uri args="news/index/details/id_`$row.id`"}">{$row.title}</a>
-                    <time class="badge bg-primary rounded-pill" datetime="{date_format date=$row.start format="c"}">
+                    <time class="badge text-bg-primary rounded-pill" datetime="{date_format date=$row.start format="c"}">
                         {date_format date=$row.start format=$dateformat}
                     </time>
                 </div>

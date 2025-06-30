@@ -9,7 +9,7 @@
                 <a href="{uri args="articles/index/details/id_`$row.id`"}"
                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     {$row.title}
-                    <time class="badge bg-primary rounded-pill" datetime="{date_format date=$row.start format="c"}">
+                    <time class="badge text-bg-primary rounded-pill" datetime="{date_format date=$row.start format="c"}">
                         {date_format date=$row.start}
                     </time>
                 </a>
