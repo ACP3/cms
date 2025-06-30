@@ -65,7 +65,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
                 $this->request->getArea()->value,
                 $this->userModel->isAuthenticated(),
                 $this->themePath->getCurrentTheme(),
-                $this->request->getPathInfo(),
+                $this->request->getSymfonyRequest()->getPathInfo(),
                 'css',
             ]
         ));
