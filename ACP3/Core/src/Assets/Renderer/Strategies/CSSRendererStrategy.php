@@ -21,7 +21,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     /**
      * @var string[]
      */
-    private array $stylesheets = [];
+    protected array $stylesheets = [];
 
     public function __construct(
         private readonly RequestInterface $request,
@@ -38,7 +38,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
      * @throws \MJS\TopSort\CircularDependencyException
      * @throws \MJS\TopSort\ElementNotFoundException
      */
-    private function fetchLibraries(): void
+    protected function fetchLibraries(): void
     {
         foreach ($this->libraries->getEnabledLibraries() as $library) {
             foreach ($library->getCss() as $stylesheet) {
@@ -65,7 +65,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     /**
      * Fetches the theme stylesheets.
      */
-    private function fetchThemeStylesheets(): void
+    protected function fetchThemeStylesheets(): void
     {
         foreach ($this->assets->fetchAdditionalThemeCssFiles() as $file) {
             $this->addFiles(
@@ -89,7 +89,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     /**
      * Fetches the stylesheets of all currently enabled modules.
      */
-    private function fetchModuleStylesheets(): void
+    protected function fetchModuleStylesheets(): void
     {
         $area = $this->request->getArea();
 
