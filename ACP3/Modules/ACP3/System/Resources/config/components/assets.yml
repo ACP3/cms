@@ -29,7 +29,7 @@ services:
       - "font-awesome"
       - false
       - []
-      - ["all.css"]
+      - ["fontawesome.css"]
       - []
       - "system"
 

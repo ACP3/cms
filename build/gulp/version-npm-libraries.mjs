@@ -41,7 +41,6 @@ export default (gulp) => {
         {
           src: [
             nodeBasePath + "/@fancyapps/fancybox/dist/jquery.fancybox.css",
-            nodeBasePath + "/@fortawesome/fontawesome-free/css/all.css",
             nodeBasePath + "/datatables.net-bs5/css/dataTables.bootstrap5.css",
             nodeBasePath + "/photoswipe/dist/photoswipe.css",
           ],
