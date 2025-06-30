@@ -23,10 +23,6 @@ export default (gulp) => {
           dest: systemBasePath + "/js",
         },
         {
-          src: [nodeBasePath + "/bootstrap/dist/fonts/*"],
-          dest: systemBasePath + "/fonts",
-        },
-        {
           src: [nodeBasePath + "/@fortawesome/fontawesome-free/webfonts/**/*"],
           dest: systemBasePath + "/webfonts",
         },
