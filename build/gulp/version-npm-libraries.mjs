@@ -71,14 +71,6 @@ export default (gulp) => {
           dest: fileManagerBasePath + "/rich-filemanager/themes",
         },
         {
-          src: nodeBasePath + "/klaro/dist/klaro.css",
-          dest: consentManagerBasePath + "/css",
-        },
-        {
-          src: nodeBasePath + "/klaro/dist/klaro-no-css.js",
-          dest: consentManagerBasePath + "/js",
-        },
-        {
           src: [nodeBasePath + "/tinymce/tinymce.min.js"],
           dest: wysiwygTinyMCEBasePath + "/js/tinymce",
         },

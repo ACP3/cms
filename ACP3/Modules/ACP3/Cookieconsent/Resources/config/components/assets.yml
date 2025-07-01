@@ -5,8 +5,8 @@ services:
       - "consentManager"
       - false
       - []
-      - ["klaro.css"]
-      - ["klaro-config.js", "klaro-no-css.js"]
+      - []
+      - ["klaro.js"]
       - "cookieconsent"
       - false
     tags:
