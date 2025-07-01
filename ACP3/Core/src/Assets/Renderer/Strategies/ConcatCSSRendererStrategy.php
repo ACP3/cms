@@ -25,7 +25,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
     public function __construct(
         private readonly RequestInterface $request,
         private readonly UserModelInterface $userModel,
-        private readonly Assets $assets,
+        Assets $assets,
         Assets\Libraries $libraries,
         private readonly ApplicationPath $appPath,
         private readonly CacheItemPoolInterface $coreCachePool,
@@ -163,19 +163,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         $cacheItem = $this->coreCachePool->getItem($cacheId);
 
         if (!$cacheItem->isHit()) {
-            $backup = $this->stylesheets;
-            $this->stylesheets = [];
-
-            // We have to initialize the theme here,
-            // i.e., enabling the required libraries of the theme + adding theme-specific stylesheets.
-            // It has to be called before the "generateFilenameHash" method, otherwise we would get incorrect results!
-            $this->assets->initializeTheme();
-
-            $this->fetchLibraries();
-            $this->fetchThemeStylesheets();
-            $this->fetchModuleStylesheets();
-
-            $this->addFiles($backup);
+            parent::initialize();
 
             $cacheItem->set($this->stylesheets);
             $this->coreCachePool->saveDeferred($cacheItem);

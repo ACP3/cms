@@ -145,7 +145,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         $backup = $this->stylesheets;
         $this->stylesheets = [];
 
-        // The sort order is important here, as module should be allowed to override the styles a library provides.
+        // The sort order is important here, as modules should be allowed to override the styles a library provides.
         // Also, themes should be allowed to override the styles modules defined.
         $this->assets->initializeTheme();
         $this->fetchLibraries();

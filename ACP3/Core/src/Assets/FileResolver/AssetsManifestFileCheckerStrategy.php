@@ -62,10 +62,8 @@ class AssetsManifestFileCheckerStrategy implements FileCheckerStrategyInterface
 
     private function getEntrypointName(string $resourcePath): string
     {
-        if (str_ends_with($resourcePath, '.js')) {
-            return strtolower(str_replace('/', '-', substr($resourcePath, \strlen(ACP3_ROOT_DIR) + 1, -3)));
-        }
+        $fileExtOffset = str_ends_with($resourcePath, '.js') ? -3 : -4;
 
-        return strtolower(str_replace('/', '-', substr($resourcePath, \strlen(ACP3_ROOT_DIR) + 1, -4)));
+        return strtolower(str_replace('/', '-', substr($resourcePath, \strlen(ACP3_ROOT_DIR) + 1, $fileExtOffset)));
     }
 }
