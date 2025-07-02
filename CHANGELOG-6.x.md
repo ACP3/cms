@@ -7,7 +7,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+- [Base][System] Minify CSS-files with `lightningcss`
+- [Core] Extended Webpack to generate an `assets-manifest.json` which the system now uses for fetching the CSS and JavaScript files
+- [Core] The `edit`-button within datagrids is now always shown
+- [System] Always show the datagrid, even if there are no entries available
+- [Users] Add the "divers" gender
+- Improved the inline edit functionality for most modules. This will make use of the newly added `ajax-modal-edit.tpl`-partial template
+
+### Changed
+
+- [Base] Removed the `scss`-gulp task. Webpack now handles this
+- [Base][System] Replaced `esbuild` with `swc`. `swc` is now also used for minification which speeds up the webpack process quite it bit
+- [Cookieconsent] Unversioned the `klaro`-assets. We let webpack handle the bundling now. Please update your `klaro`-integration!
+- [Core] Removed the `DeferrableCSSRendererStrategy`
+- [Core] Deprecated the `redirect_message`-Smarty function and moved the rendering of the redirect messages to the `layout.content_before`-template event
+- [Core] Reworked the internals of the Asset-Rendering
+- [System] Removed some unused NPM-dependencies
+- [Users] Removed outdated `icq` and `skype` profile fields
+- [Wysiwygtinymce] Updated TinyMCE to version 7.9
+- Updated the markup of the bootstrap's `badge`-component
+
+### Fixed
+
+- [Files] Fixed the missing comments section
+- [Gallery] Applied a minor styling fix for galleries which don't contain pictures yet
+- [Installer] Do not clear the `uploads/assets`-folder after updating the ACP3 via the Web-UI
+- [Guestbook] Fixed up an erroneous DB-migration
 
 ## [6.34.3] - 2025-06-26
 
