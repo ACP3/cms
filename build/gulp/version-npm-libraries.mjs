@@ -71,7 +71,10 @@ export default (gulp) => {
           dest: fileManagerBasePath + "/rich-filemanager/themes",
         },
         {
-          src: [nodeBasePath + "/tinymce/**/!(bower.json|CHANGELOG.md|composer.json|license.md|notices.txt|package.json|README.md|tinymce.d.ts|tinymce.js)"],
+          src: [
+            nodeBasePath +
+              "/tinymce/**/!(bower.json|CHANGELOG.md|composer.json|license.md|notices.txt|package.json|README.md|tinymce.d.ts|tinymce.js)",
+          ],
           dest: wysiwygTinyMCEBasePath + "/js/tinymce",
         },
       ];
