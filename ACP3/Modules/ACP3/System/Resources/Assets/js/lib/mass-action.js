@@ -47,6 +47,10 @@ export function highlightTableRow(markAllRowsCheckboxElem, massActionBarElem) {
       }
 
       const rowCheckbox = elem.querySelector(`input[name="${checkboxName}[]"]`);
+      if (!rowCheckbox) {
+        return;
+      }
+
       rowCheckbox.checked = !rowCheckbox.checked || action === "add";
     }
 
@@ -85,10 +89,14 @@ function setMarkAllCheckboxState(markAllRowsCheckboxElem, checkboxName, massActi
 
 /**
  *
- * @param {HTMLElement} massDeleteButtonElem
+ * @param {HTMLElement|undefined} massDeleteButtonElem
  * @param options
  */
 export function deleteMarkedResults(massDeleteButtonElem, options) {
+  if (!massDeleteButtonElem) {
+    return;
+  }
+
   const defaults = {
     checkBoxName: "",
     language: {

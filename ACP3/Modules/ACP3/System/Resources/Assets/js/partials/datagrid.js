@@ -11,6 +11,7 @@ import DataTable from "datatables.net-bs5/js/dataTables.bootstrap5.mjs";
 
     const table = new DataTable(elem, json);
 
+    // Callback function to be called after deleting an entry via the ajax-form handling
     window[elem.id + "ReloadDataTable"] = () => {
       table.ajax.reload(null, false);
     };
