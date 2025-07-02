@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+- [Core] Add the missing support for `admin-`- and `logged-in-`-prefixed CSS- and JS-files
 
 ## [6.35.0] - 2025-07-02
 
