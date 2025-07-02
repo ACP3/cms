@@ -23,6 +23,6 @@ trait BackUriTrait
         $referer = $this->request->getServer()->get('HTTP_REFERER');
         $pathInfo = $this->router->route($this->request->getPathInfo(), true);
 
-        return $referer !== $pathInfo ? $referer : $fallbackUri;
+        return $referer !== null && $referer !== $pathInfo ? $referer : $fallbackUri;
     }
 }
