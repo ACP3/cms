@@ -48,7 +48,9 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         ];
 
         if ($wysiwyg['advanced'] === true) {
-            $wysiwyg['advanced_replace_content'] = 'tinyMCE.execInstanceCommand(\'' . $this->id . '\',"mceInsertContent",false,text);';
+            $wysiwyg['advanced_replace_content'] = <<<JS
+tinyMCE.get('$this->id').execCommand("mceInsertContent",false,text);
+JS;
         }
 
         return ['wysiwyg' => $wysiwyg];
@@ -85,11 +87,14 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         return $this->filemanagerHelpers->getFilemanagerPath();
     }
 
+    /**
+     * @throws \JsonException
+     */
     private function configure(): string
     {
         $config = [
             'selector' => 'textarea#' . $this->id,
-            'theme' => 'modern',
+            'theme' => 'silver',
             'height' => $this->config['height'],
         ];
 
@@ -112,16 +117,16 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
     {
         if ($this->isSimpleEditor()) {
             $plugins = [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table contextmenu paste',
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor',
+                'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table',
             ];
         } else {
             $plugins = [
-                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                'searchreplace wordcount visualblocks visualchars code fullscreen',
-                'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker',
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'nonbreaking', 'save', 'table', 'directionality',
+                'emoticons',
             ];
         }
 
@@ -136,7 +141,7 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
         if ($this->isSimpleEditor()) {
             $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image';
         } else {
-            $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons';
+            $toolbar = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | preview media | forecolor backcolor emoticons';
         }
 
         return ['toolbar' => $toolbar];

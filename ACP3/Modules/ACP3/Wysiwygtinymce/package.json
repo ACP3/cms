@@ -13,6 +13,6 @@
   "homepage": "https://www.acp3-cms.net",
   "private": true,
   "dependencies": {
-    "tinymce": "^4.9.11"
+    "tinymce": "^7.9.1"
   }
 }

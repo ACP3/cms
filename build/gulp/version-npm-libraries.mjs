@@ -71,20 +71,8 @@ export default (gulp) => {
           dest: fileManagerBasePath + "/rich-filemanager/themes",
         },
         {
-          src: [nodeBasePath + "/tinymce/tinymce.min.js"],
+          src: [nodeBasePath + "/tinymce/**/!(bower.json|CHANGELOG.md|composer.json|license.md|notices.txt|package.json|README.md|tinymce.d.ts|tinymce.js)"],
           dest: wysiwygTinyMCEBasePath + "/js/tinymce",
-        },
-        {
-          src: [nodeBasePath + "/tinymce/plugins/**/*"],
-          dest: wysiwygTinyMCEBasePath + "/js/tinymce/plugins",
-        },
-        {
-          src: [nodeBasePath + "/tinymce/skins/**/*"],
-          dest: wysiwygTinyMCEBasePath + "/js/tinymce/skins",
-        },
-        {
-          src: [nodeBasePath + "/tinymce/themes/**/*"],
-          dest: wysiwygTinyMCEBasePath + "/js/tinymce/themes",
         },
       ];
 

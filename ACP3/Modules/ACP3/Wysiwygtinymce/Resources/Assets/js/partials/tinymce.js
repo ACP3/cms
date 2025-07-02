@@ -13,11 +13,12 @@ const initializeTinyMCEInstances = () => {
 
     if (typeof tinyMCEFileBrowserCallback !== "undefined") {
       fileManagerConfig = {
-        file_browser_callback: tinyMCEFileBrowserCallback,
+        file_picker_callback: tinyMCEFileBrowserCallback,
       };
     }
 
     const finalConfig = {
+      license_key: "gpl",
       ...config,
       ...fileManagerConfig,
     };

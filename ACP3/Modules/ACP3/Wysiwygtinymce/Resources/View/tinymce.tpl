@@ -1,28 +1,38 @@
 {if !$tinymce.initialized}
     {if $tinymce.filemanager_path !== null}
         <script>
-            const tinyMCEFileBrowserCallback = (field, url, type, win) => {
-                const elem = document.documentElement,
-                    body = document.getElementsByTagName('body')[0],
-                    x = win.innerWidth || elem.clientWidth || body.clientWidth,
-                    y = win.innerHeight|| elem.clientHeight|| body.clientHeight;
+            let windowHandle;
+            let tinymceFilePickerCallback;
 
-                let fileBrowserUrl = '{$tinymce.filemanager_path}?field_name=' + field;
-                if (type === 'image') {
-                    fileBrowserUrl += '&filter=image';
+            const tinyMCEFileBrowserCallback = (callback) => {
+                const elem = document.documentElement,
+                    body = document.querySelector('body'),
+                    x = window.innerWidth || elem.clientWidth || body.clientWidth,
+                    y = window.innerHeight|| elem.clientHeight|| body.clientHeight;
+
+                let fileBrowserUrl = '{$tinymce.filemanager_path}';
+
+                const width = screen.width * 0.7;
+                const height = screen.height * 0.7;
+                const left = (screen.width - width) / 2;
+                const top = (screen.height - height) / 2;
+                let windowOptions = "toolbar=no,status=no,resizable=yes,dependent=yes";
+                windowOptions += ",width=" + width;
+                windowOptions += ",height=" + height;
+                windowOptions += ",left=" + left;
+                windowOptions += ",top=" + top;
+
+                tinymceFilePickerCallback = callback;
+                windowHandle = window.open(fileBrowserUrl, "richfilemanager-popup", windowOptions);
+            }
+
+            window.SetUrl = (url) => {
+                if (windowHandle) {
+                    windowHandle.close();
                 }
 
-                tinyMCE.activeEditor.windowManager.open({
-                    file: fileBrowserUrl,
-                    title: '{lang t="filemanager|filemanager"}',
-                    width: x * 0.8,
-                    height: y * 0.8,
-                    close_previous: false
-                }, {
-                    window: win,
-                    input: field
-                });
-            }
+                tinymceFilePickerCallback(url);
+            };
         </script>
     {/if}
 {/if}
