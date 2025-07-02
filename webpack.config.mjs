@@ -25,8 +25,8 @@ entryPointMap.forEach((path, entryName) => {
   webpackEntryConfig[
     entryName
       .substring(2)
-      .replace(/\.((m?js)|scss)/, "")
-      .replace(/\/scss\//, "/css/")
+      .replaceAll("scss", "css")
+      .replace(/\.((m?js)|css)/, "")
       .replaceAll("/", "-")
       .toLocaleLowerCase()
   ] = {

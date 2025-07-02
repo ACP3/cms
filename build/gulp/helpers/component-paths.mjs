@@ -26,7 +26,7 @@ const require = createRequire(import.meta.url);
  */
 const componentPathsJson = require(file);
 
-const globPatternScss = "/Resources/Assets/scss/**/*.scss";
+const globPatternScss = "/Resources/Assets/scss/**/!(_*).scss";
 /** @type {string[]} */
 const componentPathsScss = [
   ...Object.values(componentPathsJson.module)
