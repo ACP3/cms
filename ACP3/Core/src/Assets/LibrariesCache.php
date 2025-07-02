@@ -18,7 +18,7 @@ class LibrariesCache
     /**
      * @var array<string, string[]>
      */
-    private $librariesCache = [];
+    private array $librariesCache = [];
 
     public function __construct(private readonly CacheItemPoolInterface $librariesCachePool)
     {
