@@ -88,18 +88,12 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
             return $cachedAssetPath;
         }
 
-        $path = $this->buildAssetPath($this->stylesheets);
+        $path = $this->buildAssetPath();
 
-        // Get the enabled libraries and filter out empty entries
-        $files = array_filter(
-            $this->stylesheets,
-            static fn ($var) => !empty($var)
-        );
-
-        if (\count($files) === 0) {
+        if (\count($this->stylesheets) === 0) {
             $webRootPath = null;
         } else {
-            $this->saveConcatenatedAsset($files, $this->appPath->getUploadsDir() . $path);
+            $this->saveConcatenatedAsset($this->appPath->getUploadsDir() . $path);
 
             $webRootPath = $this->appPath->getWebRoot() . 'uploads/' . $path;
         }
@@ -110,17 +104,14 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         return $webRootPath;
     }
 
-    /**
-     * @param string[] $files
-     */
-    private function saveConcatenatedAsset(array $files, string $path): void
+    private function saveConcatenatedAsset(string $path): void
     {
         if (is_file($path)) {
             return;
         }
 
         $content = [];
-        foreach ($files as $file) {
+        foreach ($this->stylesheets as $file => $unused) {
             $content[] = file_get_contents(
                 str_contains($file, '.css?') ? substr($file, 0, strrpos($file, '?')) : $file
             );
@@ -136,12 +127,9 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         file_put_contents($path, $this->minifier->run(implode('', $content)), LOCK_EX);
     }
 
-    /**
-     * @param string[] $files
-     */
-    private function buildAssetPath(array $files): string
+    private function buildAssetPath(): string
     {
-        return 'assets/' . md5(implode('', $files)) . '.css';
+        return 'assets/' . md5(implode('', array_keys($this->stylesheets))) . '.css';
     }
 
     private function createAssetsDirectory(): void

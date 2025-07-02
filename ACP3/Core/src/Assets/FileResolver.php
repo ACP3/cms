@@ -23,7 +23,7 @@ class FileResolver
     /**
      * @var string[]
      */
-    private ?array $cachedPaths = null;
+    private array $cachedPaths = [];
 
     private ?string $designAssetsPath = null;
 
@@ -98,7 +98,7 @@ class FileResolver
         }
 
         $cacheKey = $moduleName . '-' . $resourceDirectory . '-' . $file;
-        if (!isset($this->cachedPaths[$cacheKey])) {
+        if (!\array_key_exists($cacheKey, $this->cachedPaths)) {
             $this->cachedPaths[$cacheKey] = $this->resolveAssetPath($moduleName, $resourceDirectory, $file);
         }
 

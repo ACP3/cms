@@ -19,7 +19,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     protected const ASSETS_PATH_CSS = 'Assets/css';
 
     /**
-     * @var string[]
+     * @var array<string, bool>
      */
     protected array $stylesheets = [];
 
@@ -56,8 +56,8 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     public function addFiles(array $files): void
     {
         foreach ($files as $file) {
-            if (!empty($file) && preg_match('=\.css(\?.+)?$=i', $file) && !\in_array($file, $this->stylesheets, true)) {
-                $this->stylesheets[] = $file;
+            if (!empty($file) && !\array_key_exists($file, $this->stylesheets) && preg_match('=\.css(\?.+)?$=i', $file)) {
+                $this->stylesheets[$file] = true;
             }
         }
     }
@@ -130,7 +130,7 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
     public function renderHtmlElement(): string
     {
         return array_reduce(
-            array_filter($this->stylesheets, static fn ($stylesheet) => !empty($stylesheet)),
+            array_keys($this->stylesheets),
             fn ($accumulator, $stylesheet) => $accumulator . '<link rel="stylesheet" type="text/css" href="' . $this->fileResolver->rewriteToWebStaticAssetPath($stylesheet) . '">' . "\n",
             ''
         );
@@ -152,6 +152,6 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         $this->fetchModuleStylesheets();
         $this->fetchThemeStylesheets();
 
-        $this->addFiles($backup);
+        $this->addFiles(array_keys($backup));
     }
 }

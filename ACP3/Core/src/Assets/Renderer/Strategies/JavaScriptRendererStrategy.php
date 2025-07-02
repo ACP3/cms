@@ -15,7 +15,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     protected const ASSETS_PATH_JS = 'Assets/js';
 
     /**
-     * @var string[]
+     * @var array<string, bool>
      */
     private array $javascripts = [];
 
@@ -58,8 +58,8 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
                 continue;
             }
 
-            if (!empty($file) && !\in_array($file, $this->javascripts, true)) {
-                $this->javascripts[] = $file;
+            if (!empty($file) && !\array_key_exists($file, $this->javascripts)) {
+                $this->javascripts[$file] = true;
             }
         }
     }
@@ -92,7 +92,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     public function renderHtmlElement(): string
     {
         return array_reduce(
-            $this->javascripts,
+            array_keys($this->javascripts),
             fn ($accumulator, $javascript) => $accumulator . "<script defer src=\"{$this->fileResolver->rewriteToWebStaticAssetPath($javascript)}\"></script>\n",
             ''
         );
@@ -111,6 +111,6 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
         $this->fetchLibraries();
         $this->fetchThemeJavaScript();
 
-        $this->addFiles($backup);
+        $this->addFiles(array_keys($backup));
     }
 }
