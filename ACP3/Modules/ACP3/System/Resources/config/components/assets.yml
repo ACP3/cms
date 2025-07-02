@@ -47,7 +47,7 @@ services:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:
       - "bootstrap"
-      - false
+      - true
       - []
       - ["bootstrap.css"]
       - ["bootstrap.bundle.js"]

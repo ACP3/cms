@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+- [Core][System] Fix a seemingly long-standing bug with the `Libraries::includeInXmlHttpRequest()`-method
 
 ## [6.35.2] - 2025-07-02
 

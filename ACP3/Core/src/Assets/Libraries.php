@@ -118,7 +118,7 @@ class Libraries
     {
         $enabledLibraries = [];
         foreach ($this->getLibraries() as $libraryName => $options) {
-            if ($this->includeInXmlHttpRequest($options)) {
+            if ($this->includeInXmlHttpRequest($options) === false) {
                 continue;
             }
             if ($options->isEnabled() === false) {
@@ -147,7 +147,10 @@ class Libraries
 
     private function includeInXmlHttpRequest(LibraryEntity $library): bool
     {
-        return $this->getMainRequest()->isXmlHttpRequest()
-            && $library->isEnabledForAjax() === false;
+        if (!$this->getMainRequest()->isXmlHttpRequest()) {
+            return true;
+        }
+
+        return $library->isEnabledForAjax() === true;
     }
 }
