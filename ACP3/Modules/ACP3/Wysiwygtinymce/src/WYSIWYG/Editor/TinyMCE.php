@@ -15,10 +15,13 @@ use ACP3\Modules\ACP3\Filemanager\Helpers;
  */
 class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 {
-    private bool $initialized = false;
+    private bool $isInitialized = false;
 
-    public function __construct(private readonly Core\ACL $acl, private readonly Core\View $view, private readonly ?Helpers $filemanagerHelpers = null)
-    {
+    public function __construct(
+        private readonly Core\ACL $acl,
+        private readonly Core\Assets\IncludeJs $includeJs,
+        private readonly ?Helpers $filemanagerHelpers = null,
+    ) {
     }
 
     public function getFriendlyName(): string
@@ -36,12 +39,14 @@ class TinyMCE extends Core\WYSIWYG\Editor\Textarea
 
     public function getData(): array
     {
+        $this->init();
+
         $wysiwyg = [
             'friendly_name' => $this->getFriendlyName(),
             'id' => $this->id,
             'name' => $this->name,
             'value' => $this->value,
-            'js' => $this->init(),
+            'js' => '',
             'advanced' => $this->advanced,
             'required' => $this->required,
             'data_config' => $this->configure(),
@@ -56,20 +61,16 @@ JS;
         return ['wysiwyg' => $wysiwyg];
     }
 
-    private function init(): string
+    private function init(): void
     {
-        if ($this->initialized) {
-            return '';
+        if ($this->isInitialized === true) {
+            return;
         }
 
-        $this->view->assign('tinymce', [
-            'initialized' => $this->initialized,
-            'filemanager_path' => $this->getFileManagerPath(),
-        ]);
+        $this->isInitialized = true;
 
-        $this->initialized = true;
-
-        return $this->view->fetchTemplate('Wysiwygtinymce/tinymce.tpl');
+        $this->includeJs->add('Wysiwygtinymce', 'tinymce/tinymce');
+        $this->includeJs->add('Wysiwygtinymce', 'partials/tinymce');
     }
 
     private function getFileManagerPath(): ?string
@@ -96,6 +97,7 @@ JS;
             'selector' => 'textarea#' . $this->id,
             'theme' => 'silver',
             'height' => $this->config['height'],
+            'fileBrowserBrowseUrl' => $this->getFileManagerPath(),
         ];
 
         $this->configurePlugins();

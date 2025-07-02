@@ -4,16 +4,39 @@
  */
 
 /* global tinymce */
-/* global tinyMCEFileBrowserCallback */
+
+let windowHandle;
+let tinymceFilePickerCallback;
+
+window.SetUrl = (url) => {
+  if (windowHandle) {
+    windowHandle.close();
+  }
+
+  tinymceFilePickerCallback(url);
+};
 
 const initializeTinyMCEInstances = () => {
   document.querySelectorAll(".wysiwyg-tinymce").forEach((element) => {
     const config = JSON.parse(element.dataset.wysiwygConfig);
     let fileManagerConfig = {};
 
-    if (typeof tinyMCEFileBrowserCallback !== "undefined") {
+    if (config.fileBrowserBrowseUrl) {
       fileManagerConfig = {
-        file_picker_callback: tinyMCEFileBrowserCallback,
+        file_picker_callback: (callback) => {
+          const width = screen.width * 0.7;
+          const height = screen.height * 0.7;
+          const left = (screen.width - width) / 2;
+          const top = (screen.height - height) / 2;
+          let windowOptions = "toolbar=no,status=no,resizable=yes,dependent=yes";
+          windowOptions += ",width=" + width;
+          windowOptions += ",height=" + height;
+          windowOptions += ",left=" + left;
+          windowOptions += ",top=" + top;
+
+          tinymceFilePickerCallback = callback;
+          windowHandle = window.open(config.fileBrowserBrowseUrl, "richfilemanager-popup", windowOptions);
+        },
       };
     }
 
