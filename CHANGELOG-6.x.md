@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Fixed
+
+- [System] Added support for loading stylesheets for the ajax-modals
 
 ## [6.35.1] - 2025-07-02
 
 ### Fixed
 
-- [Core] Add the missing support for `admin-`- and `logged-in-`-prefixed CSS- and JS-files
+- [Core] Added the missing support for `admin-`- and `logged-in-`-prefixed CSS- and JS-files
 
 ## [6.35.0] - 2025-07-02
 

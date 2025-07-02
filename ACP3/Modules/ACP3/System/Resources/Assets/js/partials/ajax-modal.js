@@ -4,7 +4,7 @@
  */
 
 import Modal from "bootstrap/js/dist/modal";
-import { addScriptsToHead } from "../lib/utils";
+import { addScriptsToHead, addStylesheetToHead } from "../lib/utils";
 
 ((document) => {
   const ajaxModals = document.querySelectorAll("[data-ajax-modal]");
@@ -32,6 +32,7 @@ import { addScriptsToHead } from "../lib/utils";
       const modalContentElem = ajaxModal.querySelector(".modal-content");
       modalContentElem.innerHTML = await response.text();
       addScriptsToHead(modalContentElem);
+      addStylesheetToHead(modalContentElem);
 
       ajaxModal.classList.add("js-replaced-content");
     });

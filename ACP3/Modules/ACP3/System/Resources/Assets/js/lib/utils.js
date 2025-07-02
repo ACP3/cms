@@ -57,3 +57,30 @@ export function addScriptsToHead(elementContainingScriptTags) {
     }
   }
 }
+
+/**
+ * This function adds <link rel="stylesheet">-elements (e.g. after XHR requests) to the HTML documents <head>, so that the
+ * stylesheet code can actually get executed.
+ *
+ * @param {HTMLElement} elementContainingLinkTags
+ */
+export function addStylesheetToHead(elementContainingLinkTags) {
+  const currentStylesheetsInHead = document.querySelectorAll('head link[rel="stylesheet"]');
+  const currentStylesheetSources = [];
+
+  currentStylesheetsInHead.forEach((linkTag) => {
+    if (linkTag.href) {
+      currentStylesheetSources.push(linkTag.href);
+    }
+  });
+
+  for (const ajaxLinkElement of elementContainingLinkTags.querySelectorAll('link[rel="stylesheet"]')) {
+    if (!currentStylesheetSources.includes(ajaxLinkElement.href)) {
+      const linkElement = document.createElement("link");
+      linkElement.href = ajaxLinkElement.href;
+      linkElement.rel = "stylesheet";
+      linkElement.type = "text/css";
+      document.head.appendChild(linkElement);
+    }
+  }
+}
