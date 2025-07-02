@@ -2,7 +2,6 @@ import { globbySync } from "globby";
 import componentPaths from "./build/gulp/helpers/component-paths.mjs";
 import TerserPlugin from "terser-webpack-plugin";
 import browserslist from "browserslist";
-import { resolveToEsbuildTarget } from "esbuild-plugin-browserslist";
 import { WebpackAssetsManifest } from "webpack-assets-manifest";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import RemoveEmptyScriptsPlugin from "webpack-remove-empty-scripts";
@@ -67,9 +66,11 @@ export default {
         test: /\.m?js$/,
         exclude: /(node_modules)/,
         use: {
-          loader: "esbuild-loader",
+          loader: "swc-loader",
           options: {
-            target: resolveToEsbuildTarget(browserslist()),
+            env: {
+              targets: browserslist(),
+            },
           },
         },
       },
@@ -96,6 +97,7 @@ export default {
         },
       }),
       new TerserPlugin({
+        minify: TerserPlugin.swcMinify,
         extractComments: false,
         terserOptions: {
           format: {
