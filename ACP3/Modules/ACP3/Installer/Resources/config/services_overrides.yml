@@ -1,17 +1,18 @@
 services:
   _defaults:
     autowire: true
-    bind:
-      $cssRendererStrategyServiceLocator: "@core.assets.css_renderer.strategy.service_locator"
 
   ACP3\Core\Application\EventListener\AddTemplateVariablesListener:
     class: ACP3\Modules\ACP3\Installer\EventListener\AddTemplateVariablesListener
     tags:
       - { name: kernel.event_subscriber }
 
-  ACP3\Core\Assets\Renderer\CSSRendererFactory:
+  core.assets.css_renderer.strategy.service_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
-      $applicationMode: !php/const 'ACP3\Core\Environment\ApplicationMode::DEVELOPMENT'
+      - css_renderer_installer: '@ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy'
+        css_renderer_updater: '@ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy'
+    tags: ["container.service_locator"]
 
   ACP3\Core\Breadcrumb\Steps:
     arguments:
