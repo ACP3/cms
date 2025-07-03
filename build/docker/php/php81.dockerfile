@@ -32,7 +32,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
  && rm composer-setup.php
 
 FROM node:20.19 AS node
-FROM dev as ci
+FROM dev AS ci
 
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
