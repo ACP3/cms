@@ -71,6 +71,11 @@ class SettingsRepository extends AbstractRepository implements SettingsAwareRepo
             ],
             [
                 'module_name' => 'system',
+                'name' => 'security_secret',
+                'value' => 'notYetInstalled',
+            ],
+            [
+                'module_name' => 'system',
                 'name' => 'site_title',
                 'value' => 'ACP3 Installer',
             ],

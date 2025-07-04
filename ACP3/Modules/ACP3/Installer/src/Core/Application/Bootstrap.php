@@ -10,15 +10,10 @@ namespace ACP3\Modules\ACP3\Installer\Core\Application;
 use ACP3\Core;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Modules\ACP3\Installer\Core\DependencyInjection\ServiceContainerBuilder;
-use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
+use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath as InstallerApplicationPath;
 
 class Bootstrap extends Core\Application\AbstractBootstrap
 {
-    /**
-     * @var ApplicationPath ApplicationPath
-     */
-    protected $appPath;
-
     public function isInstalled(): bool
     {
         // Standardzeitzone festlegen
@@ -33,7 +28,7 @@ class Bootstrap extends Core\Application\AbstractBootstrap
 
     protected function initializeApplicationPath(): void
     {
-        $this->appPath = new ApplicationPath($this->appMode);
+        $this->appPath = new InstallerApplicationPath($this->appMode);
     }
 
     /**

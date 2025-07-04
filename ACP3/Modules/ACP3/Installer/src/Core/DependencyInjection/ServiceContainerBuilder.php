@@ -7,17 +7,16 @@
 
 namespace ACP3\Modules\ACP3\Installer\Core\DependencyInjection;
 
-use ACP3\Core\Application\BootstrapCache;
 use ACP3\Core\Assets\DependencyInjection\RegisterAssetLibraryPass;
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Controller\DependencyInjection\RegisterControllerActionsPass;
 use ACP3\Core\Environment\ApplicationMode;
+use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Installer\DependencyInjection\RegisterInstallersCompilerPass;
 use ACP3\Core\Migration\DependencyInjection\RegisterMigrationsCompilerPass;
 use ACP3\Core\Validation\DependencyInjection\RegisterValidationRulesPass;
 use ACP3\Core\View\Renderer\Smarty\DependencyInjection\RegisterSmartyPluginsPass;
-use ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -74,8 +73,6 @@ final class ServiceContainerBuilder extends ContainerBuilder
         }
 
         $loader->import(ComponentRegistry::getPathByName('installer') . '/Resources/config/services_' . $this->applicationPath->getApplicationMode()->value . '.yml');
-
-        $this->removeDefinition(BootstrapCache::class);
 
         $this->compile();
     }

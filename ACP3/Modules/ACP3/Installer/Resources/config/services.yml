@@ -13,7 +13,3 @@ services:
       - { name: kernel.event_subscriber }
 
   ACP3\Modules\ACP3\Installer\Core\Environment\ApplicationPath: "@core.environment.application_path"
-
-  ACP3\Modules\ACP3\Installer\Core\View\Renderer\Smarty\Filters\MoveToHead:
-    tags:
-      - { name: smarty.plugin.filter, filterType: output }

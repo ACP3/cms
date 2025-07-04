@@ -2,6 +2,9 @@ services:
   _defaults:
     autowire: true
 
+  ACP3\Core\Application\BootstrapCache\Psr6StoreFactory:
+    class: ACP3\Modules\ACP3\Installer\Core\Application\BootstrapCache\Psr6StoreFactory
+
   ACP3\Core\Application\EventListener\AddTemplateVariablesListener:
     class: ACP3\Modules\ACP3\Installer\EventListener\AddTemplateVariablesListener
     tags:
