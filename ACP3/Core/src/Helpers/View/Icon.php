@@ -45,7 +45,7 @@ class Icon
 
         return str_replace(
             ['<svg', '<path'],
-            ["<svg class=\"svg-icon svg-icon__{$icon}{$additionalCssSelectors}\" fill=\"currentColor\"", "{$title}<path"],
+            ["<svg class=\"svg-icon svg-icon__{$icon}{$additionalCssSelectors}\" fill=\"currentColor\" style=\"width:1em;height:1em;vertical-align:-.125em\"", "{$title}<path"],
             $iconContent
         );
     }
