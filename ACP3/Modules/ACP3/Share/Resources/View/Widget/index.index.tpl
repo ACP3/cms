@@ -1,6 +1,7 @@
-{js_libraries enable='shariff'}
-<div class="shariff"
-     data-lang="{$shariff.lang}"
-     data-url="{uri args=$shariff.path absolute=true}"
-     data-services="{$shariff.services|json_encode|escape:'html'}"
-     data-backend-url="{uri args="share"}"></div>
+{javascripts}
+    {include_js module="share" file="widget/index.index"}
+{/javascripts}
+<button class="btn btn-secondary share-button rounded-0" data-share-url="{uri args=$sharing.path absolute=true}">
+    {icon iconSet="solid" icon="share"}
+    {lang t="share|share_url"}
+</button>

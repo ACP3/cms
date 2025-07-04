@@ -3,5 +3,4 @@ services:
     autowire: true
 
   ACP3\Modules\ACP3\Share\Helpers\ShareFormFields: ~
-  ACP3\Modules\ACP3\Share\Helpers\SocialServices: ~
   ACP3\Modules\ACP3\Share\Helpers\SocialSharingManager: ~

@@ -12,20 +12,20 @@ use ACP3\Core\Http\RequestInterface;
 use ACP3\Core\Modules;
 use ACP3\Core\View;
 use ACP3\Core\View\Event\TemplateEvent;
-use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
 use ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository;
 use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddSocialSharingListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly Modules $modules, private readonly RequestInterface $request, private readonly View $view, private readonly SocialServices $socialServices, private readonly ShareRepository $shareRepository, private readonly ShareRatingsRepository $shareRatingsRepository)
+    public function __construct(private readonly Modules $modules, private readonly RequestInterface $request, private readonly View $view, private readonly ShareRepository $shareRepository, private readonly ShareRatingsRepository $shareRatingsRepository)
     {
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function __invoke(TemplateEvent $event): void
     {
@@ -38,13 +38,13 @@ class AddSocialSharingListener implements EventSubscriberInterface
 
             $sharing = [];
             if (!empty($sharingInfo)) {
+                $sharing['active'] = ((int) $sharingInfo['active']) === 1;
                 $sharing['ratings_active'] = ((int) $sharingInfo['ratings_active']) === 1;
                 $sharing['rating'] = $this->shareRatingsRepository->getRatingStatistics($sharingInfo['id']);
                 $sharing['rating']['share_id'] = $sharingInfo['id'];
 
                 if (((int) $sharingInfo['active']) === 1) {
                     $sharing['path'] = $this->request->getUriWithoutPages();
-                    $sharing['services'] = $this->socialServices->getActiveServices();
                 }
             }
 

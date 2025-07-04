@@ -22,12 +22,10 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                     'create' => PrivilegeEnum::ADMIN_CREATE,
                     'edit' => PrivilegeEnum::ADMIN_EDIT,
                     'delete' => PrivilegeEnum::ADMIN_DELETE,
-                    'settings' => PrivilegeEnum::ADMIN_SETTINGS,
                 ],
             ],
             'frontend' => [
                 'index' => [
-                    'index' => PrivilegeEnum::FRONTEND_VIEW,
                     'rate' => PrivilegeEnum::FRONTEND_VIEW,
                 ],
             ],
@@ -51,7 +49,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
                 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `uri` VARCHAR(191) NOT NULL,
                 `active` TINYINT(1) UNSIGNED NOT NULL,
-                `services` TEXT NOT NULL,
                 `ratings_active` TINYINT(1) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`),
                 UNIQUE(`uri`)
@@ -78,10 +75,6 @@ class Schema implements \ACP3\Core\Installer\SchemaInterface
 
     public function settings(): array
     {
-        return [
-            'services' => '',
-            'fb_app_id' => '',
-            'fb_secret' => '',
-        ];
+        return [];
     }
 }

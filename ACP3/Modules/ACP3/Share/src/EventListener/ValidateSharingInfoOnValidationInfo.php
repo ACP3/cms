@@ -12,13 +12,12 @@ use ACP3\Core\Helpers\Enum\YesNoEnum;
 use ACP3\Core\I18n\Translator;
 use ACP3\Core\Validation\Event\FormValidationEvent;
 use ACP3\Core\Validation\ValidationRules\InArrayValidationRule;
-use ACP3\Modules\ACP3\Share\Helpers\SocialServices;
 use ACP3\Modules\ACP3\Share\Validation\Event\SharingInfoFormValidationEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ValidateSharingInfoOnValidationInfo implements EventSubscriberInterface
 {
-    public function __construct(private readonly ACL $acl, private readonly Translator $translator, private readonly SocialServices $socialServices)
+    public function __construct(private readonly ACL $acl, private readonly Translator $translator)
     {
     }
 
@@ -28,7 +27,7 @@ class ValidateSharingInfoOnValidationInfo implements EventSubscriberInterface
             return;
         }
 
-        if (isset($event->getFormData()['share_active'], $event->getFormData()['share_customize_services'])) {
+        if (isset($event->getFormData()['share_active'])) {
             $event
                 ->getValidator()
                 ->addConstraint(
@@ -39,34 +38,6 @@ class ValidateSharingInfoOnValidationInfo implements EventSubscriberInterface
                         'message' => $this->translator->t('share', 'select_sharing_active'),
                         'extra' => [
                             'haystack' => YesNoEnum::values(),
-                        ],
-                    ]
-                )
-                ->addConstraint(
-                    InArrayValidationRule::class,
-                    [
-                        'data' => $event->getFormData(),
-                        'field' => 'share_customize_services',
-                        'message' => $this->translator->t('share', 'select_customize_services'),
-                        'extra' => [
-                            'haystack' => YesNoEnum::values(),
-                        ],
-                    ]
-                );
-        }
-
-        if (isset($event->getFormData()['share_customize_services'])
-            && $event->getFormData()['share_customize_services'] == 1) {
-            $event
-                ->getValidator()
-                ->addConstraint(
-                    InArrayValidationRule::class,
-                    [
-                        'data' => $event->getFormData(),
-                        'field' => 'share_services',
-                        'message' => $this->translator->t('share', 'select_services'),
-                        'extra' => [
-                            'haystack' => $this->socialServices->getActiveServices(),
                         ],
                     ]
                 );

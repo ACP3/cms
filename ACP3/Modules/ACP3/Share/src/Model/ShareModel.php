@@ -10,7 +10,6 @@ namespace ACP3\Modules\ACP3\Share\Model;
 use ACP3\Core\Model\AbstractModel;
 use ACP3\Core\Model\DataProcessor\ColumnType\BooleanColumnType;
 use ACP3\Core\Model\DataProcessor\ColumnType\RawColumnType;
-use ACP3\Core\Model\DataProcessor\ColumnType\SerializableColumnType;
 use ACP3\Modules\ACP3\Share\Installer\Schema;
 
 class ShareModel extends AbstractModel
@@ -34,17 +33,12 @@ class ShareModel extends AbstractModel
         $mappedData = [];
         $keys = [
             'active' => 'share_active',
-            'services' => 'share_services',
             'ratings_active' => 'share_ratings_active',
         ];
         foreach ($keys as $column => $formField) {
             if (isset($data[$formField])) {
                 $mappedData[$column] = $data[$formField];
             }
-        }
-
-        if (isset($data['share_customize_services']) && $data['share_customize_services'] == 0) {
-            $mappedData['services'] = [];
         }
 
         return $mappedData;
@@ -55,7 +49,6 @@ class ShareModel extends AbstractModel
         return [
             'uri' => RawColumnType::class,
             'active' => BooleanColumnType::class,
-            'services' => SerializableColumnType::class,
             'ratings_active' => BooleanColumnType::class,
         ];
     }

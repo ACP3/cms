@@ -31,14 +31,6 @@ export default (gulp) => {
           dest: systemBasePath + "/svgs",
         },
         {
-          src: nodeBasePath + "/shariff/dist/shariff.min.css",
-          dest: shareBasePath + "/css",
-        },
-        {
-          src: nodeBasePath + "/shariff/dist/shariff.min.js",
-          dest: shareBasePath + "/js",
-        },
-        {
           src: [
             nodeBasePath + "/@fancyapps/fancybox/dist/jquery.fancybox.css",
             nodeBasePath + "/datatables.net-bs5/css/dataTables.bootstrap5.css",

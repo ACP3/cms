@@ -37,21 +37,17 @@ class SocialSharingManager
     /**
      * Inserts/Updates the given sharing info.
      *
-     * @param string[] $services
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function saveSharingInfo(
         string $path,
         bool $active = false,
-        array $services = [],
         bool $ratingsActive = false): bool
     {
         $path .= $this->preparePath($path);
         $data = [
             'uri' => $path,
             'share_active' => $active,
-            'share_services' => $services,
             'share_ratings_active' => $ratingsActive,
         ];
 

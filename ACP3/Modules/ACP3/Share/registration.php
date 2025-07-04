@@ -8,7 +8,6 @@
 use ACP3\Core\Component\ComponentRegistry;
 use ACP3\Core\Component\ComponentTypeEnum;
 use ACP3\Core\Component\Dto\ComponentDataDto;
-use ACP3\Modules\ACP3\Share\ModuleRegistration;
 
 ComponentRegistry::add(
     new ComponentDataDto(
@@ -16,6 +15,5 @@ ComponentRegistry::add(
         'share',
         __DIR__,
         ['core', 'system'],
-        new ModuleRegistration()
     )
 );

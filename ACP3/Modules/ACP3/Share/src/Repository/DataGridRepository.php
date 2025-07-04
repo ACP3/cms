@@ -41,7 +41,6 @@ class DataGridRepository extends AbstractDataGridRepository
             'main.id',
             'main.uri',
             'main.active',
-            'main.services',
             'main.ratings_active',
         );
     }

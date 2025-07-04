@@ -7,7 +7,7 @@
         {include_js module="share" file="partials/rating"}
     {/javascripts}
 {/if}
-{if !empty($sharing.services)}
+{if $sharing.active === true}
     <hr>
     {load_module module="widget/share/index/index" path=$sharing.path}
 {/if}
