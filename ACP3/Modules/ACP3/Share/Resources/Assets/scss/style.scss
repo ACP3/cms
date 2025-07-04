@@ -9,7 +9,7 @@
 $rating-star-color-default: #777 !default;
 $rating-star-color-active: #e3cf7a !default;
 
-$rating-star-font-size: 24px !default;
+$rating-star-font-size: 1.5rem !default;
 
 .rating {
   position: relative;
@@ -21,11 +21,6 @@ $rating-star-font-size: 24px !default;
     .rating__average {
       visibility: hidden;
     }
-  }
-
-  .svg-icon__star {
-    width: $rating-star-font-size;
-    height: $rating-star-font-size;
   }
 }
 
@@ -45,6 +40,7 @@ $rating-star-font-size: 24px !default;
 .rating__star {
   display: inline-block;
   margin-bottom: 0;
+  font-size: $rating-star-font-size;
   color: $rating-star-color-default;
   cursor: pointer;
 
