@@ -4,6 +4,7 @@ services:
 
   ACP3\Core\Helpers\View\CheckAccess: ~
   ACP3\Core\Helpers\View\Icon: ~
+  ACP3\Core\Helpers\View\LoadModule: ~
   ACP3\Core\Helpers\Alerts: ~
   ACP3\Core\Helpers\Date: ~
   ACP3\Core\Helpers\Forms: ~

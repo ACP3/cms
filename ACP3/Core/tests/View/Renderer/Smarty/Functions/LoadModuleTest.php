@@ -7,10 +7,8 @@
 
 namespace ACP3\Core\View\Renderer\Smarty\Functions;
 
-use ACP3\Core\ACL;
 use ACP3\Core\Smarty_Internal_Template_Fixture;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 class LoadModuleTest extends TestCase
 {
@@ -22,18 +20,15 @@ class LoadModuleTest extends TestCase
     public function testInvoke(string $expected, array $params): void
     {
         $smartyInternalTemplateMock = $this->createMock(Smarty_Internal_Template_Fixture::class);
-        $aclMock = $this->createMock(ACL::class);
-        $fragmentHandlerMock = $this->createMock(FragmentHandler::class);
+        $loadModuleViewHelperMock = $this->createMock(\ACP3\Core\Helpers\View\LoadModule::class);
 
-        $aclMock->method('hasPermission')
-            ->willReturn(true);
-        $fragmentHandlerMock->method('render')
-            ->with($expected, 'esi')
+        $loadModuleViewHelperMock
+            ->method('__invoke')
+            ->with($params['module'], [])
             ->willReturn($expected);
 
         $loadModule = new LoadModule(
-            $aclMock,
-            $fragmentHandlerMock
+            $loadModuleViewHelperMock,
         );
 
         self::assertEquals($expected, ($loadModule)($params, $smartyInternalTemplateMock));

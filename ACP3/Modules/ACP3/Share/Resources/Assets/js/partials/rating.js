@@ -14,7 +14,7 @@ delegateEvent(ratingWrapper, "click", ".rating__star-input", () => {
   document.getElementById("js-rating-form-submit").click();
 });
 
-// For touch-based devices (i.e. w/o support for the hover event), we have to get a little creative
+// For touch-based devices (i.e., w/o support for the hover event), we have to get a little creative
 // if there are already ratings and the user taps into an area within the average rating.
 delegateEvent(ratingWrapper, "click", ".rating__average .rating__star", (event, elem) => {
   const elemIndex = [...elem.parentElement.children].indexOf(elem);
