@@ -36,16 +36,18 @@ class AddSocialSharingListener implements EventSubscriberInterface
         if ($this->request->getArea() === AreaEnum::AREA_FRONTEND) {
             $sharingInfo = $this->shareRepository->getOneByUri($this->request->getUriWithoutPages());
 
-            $sharing = [];
-            if (!empty($sharingInfo)) {
-                $sharing['active'] = ((int) $sharingInfo['active']) === 1;
-                $sharing['ratings_active'] = ((int) $sharingInfo['ratings_active']) === 1;
-                $sharing['rating'] = $this->shareRatingsRepository->getRatingStatistics($sharingInfo['id']);
-                $sharing['rating']['share_id'] = $sharingInfo['id'];
+            if (empty($sharingInfo)) {
+                return;
+            }
 
-                if (((int) $sharingInfo['active']) === 1) {
-                    $sharing['path'] = $this->request->getUriWithoutPages();
-                }
+            $sharing = [];
+            $sharing['active'] = ((int) $sharingInfo['active']) === 1;
+            $sharing['ratings_active'] = ((int) $sharingInfo['ratings_active']) === 1;
+            $sharing['rating'] = $this->shareRatingsRepository->getRatingStatistics($sharingInfo['id']);
+            $sharing['rating']['share_id'] = $sharingInfo['id'];
+
+            if (((int) $sharingInfo['active']) === 1) {
+                $sharing['path'] = $this->request->getUriWithoutPages();
             }
 
             $this->view->assign('sharing', $sharing);

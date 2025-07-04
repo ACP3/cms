@@ -1,4 +1,4 @@
-{if !empty($sharing) && $sharing.ratings_active === true}
+{if $sharing.ratings_active === true}
     <hr>
     <div id="rating-wrapper">
         {include file="asset:Share/Partials/rating.tpl" rating=$sharing.rating}
