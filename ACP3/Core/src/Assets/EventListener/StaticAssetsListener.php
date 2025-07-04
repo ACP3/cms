@@ -116,21 +116,34 @@ class StaticAssetsListener implements EventSubscriberInterface
             $this->cssRenderer->initialize();
             $this->javaScriptRenderer->initialize();
 
+            // Replace only the first occurrences of the STYLESHEETS- and JAVASCRIPTS-placeholders.
+            // This prevents us from duplicating the static assets, if modules loaded via `load_module()` bring their own assets with them.
             if (str_contains($content, self::PLACEHOLDER_CSS)) {
-                $content = str_replace(
-                    self::PLACEHOLDER_CSS,
+                $content = preg_replace(
+                    '/' . preg_quote(self::PLACEHOLDER_CSS, '/') . '/',
                     $this->cssRenderer->renderHtmlElement() . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_CSS),
-                    $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_CSS)
+                    $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_CSS),
+                    1
+                );
+            }
+            if (str_contains($content, self::PLACEHOLDER_JS)) {
+                $content = preg_replace(
+                    '/' . preg_quote(self::PLACEHOLDER_JS, '/') . '/',
+                    $this->javaScriptRenderer->renderHtmlElement() . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_JS),
+                    $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_JS),
+                    1
                 );
             }
 
-            if (str_contains($content, self::PLACEHOLDER_JS)) {
-                $content = str_replace(
+            // Replace all the remaining placeholders
+            $content = str_replace(
+                [
+                    self::PLACEHOLDER_CSS,
                     self::PLACEHOLDER_JS,
-                    $this->javaScriptRenderer->renderHtmlElement() . $this->addElementsFromTemplates($content, self::REGEX_PATTERN_JS),
-                    $this->getCleanedUpTemplateOutput($content, self::REGEX_PATTERN_JS)
-                );
-            }
+                ],
+                '',
+                $content
+            );
 
             $response->setContent($content);
             $response->headers->set('Content-Length', (string) \strlen($content));
