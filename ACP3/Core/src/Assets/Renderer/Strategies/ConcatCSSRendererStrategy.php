@@ -30,7 +30,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         private readonly ApplicationPath $appPath,
         private readonly CacheItemPoolInterface $coreCachePool,
         Modules $modules,
-        FileResolver $fileResolver,
+        private readonly FileResolver $fileResolver,
         private readonly ThemePathInterface $themePath,
         private readonly Minifier $minifier,
     ) {
@@ -93,9 +93,9 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         if (\count($this->stylesheets) === 0) {
             $webRootPath = null;
         } else {
-            $this->saveConcatenatedAsset($this->appPath->getUploadsDir() . $path);
+            $this->saveConcatenatedAsset($path);
 
-            $webRootPath = $this->appPath->getWebRoot() . 'uploads/' . $path;
+            $webRootPath = $this->fileResolver->rewriteToWebStaticAssetPath($path);
         }
 
         $cacheItem->set($webRootPath);
@@ -121,20 +121,19 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
             return;
         }
 
-        $this->createAssetsDirectory();
+        $this->createAssetsDirectory($path);
 
-        // Write the contents of the file to the uploads folder
         file_put_contents($path, $this->minifier->run(implode('', $content)), LOCK_EX);
     }
 
     private function buildAssetPath(): string
     {
-        return 'assets/' . md5(implode('', array_keys($this->stylesheets))) . '.css';
+        return $this->appPath->getUploadsDir() . 'assets/' . md5(implode('', array_keys($this->stylesheets))) . '.css';
     }
 
-    private function createAssetsDirectory(): void
+    private function createAssetsDirectory(string $path): void
     {
-        $concurrentDirectory = $this->appPath->getUploadsDir() . 'assets';
+        $concurrentDirectory = \dirname($path);
         if (!is_dir($concurrentDirectory) && !mkdir($concurrentDirectory, 0755) && !is_dir($concurrentDirectory)) {
             throw new \RuntimeException(\sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
