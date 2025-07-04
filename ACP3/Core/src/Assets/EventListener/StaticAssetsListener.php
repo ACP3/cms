@@ -113,8 +113,8 @@ class StaticAssetsListener implements EventSubscriberInterface
             $this->request->setPathInfo();
             $this->request->processQuery();
 
-            $this->cssRenderer->initialize();
             $this->javaScriptRenderer->initialize();
+            $this->cssRenderer->initialize();
 
             // Replace only the first occurrences of the STYLESHEETS- and JAVASCRIPTS-placeholders.
             // This prevents us from duplicating the static assets, if modules loaded via `load_module()` bring their own assets with them.
