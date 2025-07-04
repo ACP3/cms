@@ -3,16 +3,6 @@ services:
     tags:
       - { name: acp3.assets.library }
 
-  system.assets.polyfill:
-    class: ACP3\Core\Assets\Entity\LibraryEntity
-    arguments:
-      - "polyfill"
-      - false
-      - []
-      - []
-      - ["partials/polyfill.min.js"]
-      - "system"
-
   system.assets.jquery:
     class: ACP3\Core\Assets\Entity\LibraryEntity
     arguments:

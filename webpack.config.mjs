@@ -69,6 +69,8 @@ export default {
           loader: "swc-loader",
           options: {
             env: {
+              coreJs: "3.43",
+              mode: "usage",
               targets: browserslist(),
             },
           },
