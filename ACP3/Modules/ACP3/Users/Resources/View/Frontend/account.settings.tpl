@@ -12,5 +12,5 @@
             {include file="asset:Users/Partials/password_fields.tpl" field_name='new_pwd' translator_phrase="new_pwd"}
         {/tab}
     {/tabset}
-    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="acp/users/account"}}
+    {include file="asset:System/Partials/form_group.submit.tpl" form_token=$form_token back_url={uri args="users/account"}}
 {/block}
