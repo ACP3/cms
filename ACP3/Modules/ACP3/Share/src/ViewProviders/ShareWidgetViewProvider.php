@@ -7,8 +7,17 @@
 
 namespace ACP3\Modules\ACP3\Share\ViewProviders;
 
+use ACP3\Modules\ACP3\Share\Repository\ShareRatingsRepository;
+use ACP3\Modules\ACP3\Share\Repository\ShareRepository;
+
 class ShareWidgetViewProvider
 {
+    public function __construct(
+        private readonly ShareRepository $shareRepository,
+        private readonly ShareRatingsRepository $shareRatingsRepository,
+    ) {
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -16,10 +25,24 @@ class ShareWidgetViewProvider
     {
         $path = urldecode($path);
 
+        $sharingInfo = $this->shareRepository->getOneByUri($path);
+
+        if (empty($sharingInfo)) {
+            return [];
+        }
+
+        $sharing = [];
+        $sharing['active'] = ((int) $sharingInfo['active']) === 1;
+        $sharing['ratings_active'] = ((int) $sharingInfo['ratings_active']) === 1;
+        $sharing['rating'] = $this->shareRatingsRepository->getRatingStatistics($sharingInfo['id']);
+        $sharing['rating']['share_id'] = $sharingInfo['id'];
+
+        if (((int) $sharingInfo['active']) === 1) {
+            $sharing['path'] = $path;
+        }
+
         return [
-            'sharing' => [
-                'path' => $path,
-            ],
+            'sharing' => $sharing,
         ];
     }
 }
