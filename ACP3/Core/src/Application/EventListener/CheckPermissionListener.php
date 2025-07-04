@@ -10,12 +10,12 @@ namespace ACP3\Core\Application\EventListener;
 use ACP3\Core\ACL;
 use ACP3\Core\ACL\Exception\AccessForbiddenException;
 use ACP3\Core\Application\Event\ControllerActionBeforeDispatchEvent;
-use ACP3\Core\Controller\AreaEnum;
+use ACP3\Core\Environment\ApplicationMode;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CheckPermissionListener implements EventSubscriberInterface
 {
-    public function __construct(private readonly ACL $acl)
+    public function __construct(private readonly ApplicationMode $applicationMode, private readonly ACL $acl)
     {
     }
 
@@ -24,7 +24,7 @@ class CheckPermissionListener implements EventSubscriberInterface
      */
     public function __invoke(ControllerActionBeforeDispatchEvent $event): void
     {
-        if ($event->getArea() === AreaEnum::AREA_INSTALL) {
+        if (\in_array($this->applicationMode, [ApplicationMode::INSTALLER, ApplicationMode::UPDATER], true)) {
             return;
         }
 
