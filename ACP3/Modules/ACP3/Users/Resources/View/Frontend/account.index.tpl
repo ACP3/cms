@@ -1,8 +1,8 @@
 {extends file="asset:System/layout.header-bar.tpl"}
 
 {block HEADER_BAR_OPTIONS}
-    {check_access mode="link" path="users/account/edit" iconSet="solid" icon="pen" class="text-info"}
-    {check_access mode="link" path="users/account/settings" iconSet="solid" icon="gear"}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'frontend/users/account/edit', 'button_icon' => 'pen', 'button_icon_selectors' => 'text-info', 'button_selectors' => ' ', 'edit_path' => "users/account/edit/", 'title' => {lang t="users|frontend_account_edit"}]}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'frontend/users/account/settings', 'button_icon' => 'gear', 'button_selectors' => ' ', 'edit_path' => "users/account/settings/", 'title' => {lang t="users|frontend_account_settings"}]}
     {event name="users.account.index.header_bar"}
 {/block}
 {block CONTENT_AFTER_HEADER_BAR}
