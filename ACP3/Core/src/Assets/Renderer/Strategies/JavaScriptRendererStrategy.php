@@ -17,7 +17,7 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
     /**
      * @var array<string, bool>
      */
-    private array $javascripts = [];
+    protected array $javascripts = [];
 
     public function __construct(
         private readonly Assets $assets,

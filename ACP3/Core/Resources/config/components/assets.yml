@@ -3,6 +3,7 @@ services:
     autowire: true
     bind:
       $cssRendererStrategyServiceLocator: "@core.assets.css_renderer.strategy.service_locator"
+      $javaScriptRendererStrategyServiceLocator: "@core.assets.js_renderer.strategy.service_locator"
       $applicationMode: "@core.environment"
       $coreCachePool: "@core.cache_item_pool"
 
@@ -21,8 +22,12 @@ services:
   ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategyInterface:
     factory: '@ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategyInterfaceFactory'
 
+  ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategyInterfaceFactory: ~
+
   ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy: ~
-  ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategyInterface: '@ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy'
+  ACP3\Core\Assets\Renderer\Strategies\CachingJavaScriptRendererStrategy: ~
+  ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategyInterface:
+    factory: '@ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategyInterfaceFactory'
 
   ACP3\Core\Assets\FileResolver\:
     resource: "../../../src/Assets/FileResolver/"
@@ -59,8 +64,17 @@ services:
         css_renderer_prod: '@ACP3\Core\Assets\Renderer\Strategies\ConcatCSSRendererStrategy'
     tags: ["container.service_locator"]
 
+  core.assets.js_renderer.strategy.service_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - js_renderer_dev: '@ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy'
+        js_renderer_prod: '@ACP3\Core\Assets\Renderer\Strategies\CachingJavaScriptRendererStrategy'
+    tags: ["container.service_locator"]
+
   ACP3\Core\Assets\Renderer\CSSRenderer:
     factory: '@ACP3\Core\Assets\Renderer\CSSRendererFactory'
   ACP3\Core\Assets\Renderer\CSSRendererFactory: ~
 
-  ACP3\Core\Assets\Renderer\JavaScriptRenderer: ~
+  ACP3\Core\Assets\Renderer\JavaScriptRenderer:
+    factory: '@ACP3\Core\Assets\Renderer\JavaScriptRendererFactory'
+  ACP3\Core\Assets\Renderer\JavaScriptRendererFactory: ~

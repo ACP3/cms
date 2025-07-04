@@ -14,6 +14,13 @@ services:
         css_renderer_updater: '@ACP3\Core\Assets\Renderer\Strategies\CSSRendererStrategy'
     tags: ["container.service_locator"]
 
+  core.assets.js_renderer.strategy.service_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - js_renderer_installer: '@ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy'
+        js_renderer_updater: '@ACP3\Core\Assets\Renderer\Strategies\JavaScriptRendererStrategy'
+    tags: ["container.service_locator"]
+
   ACP3\Core\Breadcrumb\Steps:
     arguments:
       $container: "@core.controller.controller_action_locator"

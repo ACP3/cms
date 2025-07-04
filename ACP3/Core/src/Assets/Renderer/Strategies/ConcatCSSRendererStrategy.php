@@ -55,7 +55,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
 
     /**
      * The generated filename hash needs to take the area and the authentication status of the current user into account,
-     * as the filenames of the enabled libraries can differ because of these settings.
+     * as the filenames of the included assets can differ because of these settings.
      */
     private function generateFilenameHash(): string
     {
@@ -154,6 +154,8 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
 
             $cacheItem->set($this->stylesheets);
             $this->coreCachePool->saveDeferred($cacheItem);
+        } else {
+            $this->addFiles(array_keys($cacheItem->get()));
         }
     }
 
