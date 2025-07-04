@@ -10,7 +10,9 @@ namespace ACP3\Core\Application;
 use ACP3\Core\Application\Event\OutputPageExceptionEvent;
 use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
+use ACP3\Core\Logger\LoggerFactory;
 use Composer\InstalledVersions;
+use Symfony\Component\ErrorHandler\BufferingLogger;
 use Symfony\Component\ErrorHandler\ErrorHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -90,7 +92,10 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
     {
         $isProduction = $this->appMode === ApplicationMode::PRODUCTION;
 
-        $errorHandler = new ErrorHandler(null, !$isProduction);
+        $errorHandler = new ErrorHandler(new BufferingLogger(), !$isProduction);
+        $errorHandler->setDefaultLogger(
+            (new LoggerFactory($this->appPath))->create('exception')
+        );
 
         if ($isProduction) {
             $errorHandler->scopeAt(0, true);
