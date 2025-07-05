@@ -64,6 +64,11 @@ class JavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
         }
     }
 
+    public function getFiles(): array
+    {
+        return $this->javascripts;
+    }
+
     /**
      * Fetches the theme javascript files.
      */

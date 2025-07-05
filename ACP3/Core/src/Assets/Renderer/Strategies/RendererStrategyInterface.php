@@ -19,5 +19,10 @@ interface RendererStrategyInterface
      */
     public function addFiles(array $files): void;
 
+    /**
+     * @return array<string, bool>
+     */
+    public function getFiles(): array;
+
     public function initialize(): void;
 }

@@ -62,6 +62,11 @@ class CSSRendererStrategy implements CSSRendererStrategyInterface
         }
     }
 
+    public function getFiles(): array
+    {
+        return $this->stylesheets;
+    }
+
     /**
      * Fetches the theme stylesheets.
      */

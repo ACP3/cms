@@ -13,28 +13,24 @@ use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
-use ACP3\Core\Modules;
 use MJS\TopSort\CircularDependencyException;
 use MJS\TopSort\ElementNotFoundException;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use tubalmartin\CssMin\Minifier;
 
-class ConcatCSSRendererStrategy extends CSSRendererStrategy
+class ConcatCSSRendererStrategy implements CSSRendererStrategyInterface
 {
     public function __construct(
+        private readonly CSSRendererStrategy $cssRendererStrategy,
         private readonly RequestInterface $request,
         private readonly UserModelInterface $userModel,
-        Assets $assets,
-        Assets\Libraries $libraries,
         private readonly ApplicationPath $appPath,
         private readonly CacheItemPoolInterface $coreCachePool,
-        Modules $modules,
         private readonly FileResolver $fileResolver,
         private readonly ThemePathInterface $themePath,
         private readonly Minifier $minifier,
     ) {
-        parent::__construct($request, $assets, $libraries, $modules, $fileResolver);
     }
 
     /**
@@ -90,7 +86,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
 
         $path = $this->buildAssetPath();
 
-        if (\count($this->stylesheets) === 0) {
+        if (\count($this->cssRendererStrategy->getFiles()) === 0) {
             $webRootPath = null;
         } else {
             $this->saveConcatenatedAsset($path);
@@ -111,7 +107,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         }
 
         $content = [];
-        foreach ($this->stylesheets as $file => $unused) {
+        foreach ($this->cssRendererStrategy->getFiles() as $file => $unused) {
             $content[] = file_get_contents(
                 str_contains($file, '.css?') ? substr($file, 0, strrpos($file, '?')) : $file
             );
@@ -128,7 +124,7 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
 
     private function buildAssetPath(): string
     {
-        return $this->appPath->getUploadsDir() . 'assets/' . md5(implode('', array_keys($this->stylesheets))) . '.css';
+        return $this->appPath->getUploadsDir() . 'assets/' . md5(implode('', array_keys($this->cssRendererStrategy->getFiles()))) . '.css';
     }
 
     private function createAssetsDirectory(string $path): void
@@ -150,9 +146,9 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
         $cacheItem = $this->coreCachePool->getItem($cacheId);
 
         if (!$cacheItem->isHit()) {
-            parent::initialize();
+            $this->cssRendererStrategy->initialize();
 
-            $cacheItem->set($this->stylesheets);
+            $cacheItem->set($this->cssRendererStrategy->getFiles());
             $this->coreCachePool->saveDeferred($cacheItem);
         } else {
             $this->addFiles(array_keys($cacheItem->get()));
@@ -162,5 +158,15 @@ class ConcatCSSRendererStrategy extends CSSRendererStrategy
     private function buildCacheId(): string
     {
         return 'assets_' . $this->generateFilenameHash();
+    }
+
+    public function addFiles(array $files): void
+    {
+        $this->cssRendererStrategy->addFiles($files);
+    }
+
+    public function getFiles(): array
+    {
+        return $this->cssRendererStrategy->getFiles();
     }
 }

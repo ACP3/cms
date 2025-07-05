@@ -7,7 +7,6 @@
 
 namespace ACP3\Core\Assets\Renderer\Strategies;
 
-use ACP3\Core\Assets;
 use ACP3\Core\Authentication\Model\UserModelInterface;
 use ACP3\Core\Environment\ThemePathInterface;
 use ACP3\Core\Http\RequestInterface;
@@ -16,17 +15,15 @@ use MJS\TopSort\ElementNotFoundException;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 
-class CachingJavaScriptRendererStrategy extends JavaScriptRendererStrategy
+class CachingJavaScriptRendererStrategy implements JavaScriptRendererStrategyInterface
 {
     public function __construct(
+        private readonly JavaScriptRendererStrategy $javaScriptRendererStrategy,
         private readonly RequestInterface $request,
         private readonly UserModelInterface $userModel,
         private readonly ThemePathInterface $themePath,
         private readonly CacheItemPoolInterface $coreCachePool,
-        private readonly Assets\FileResolver $fileResolver,
-        private readonly CSSRendererStrategyInterface $cssRendererStrategy,
     ) {
-        parent::__construct($this->fileResolver, $this->cssRendererStrategy);
     }
 
     /**
@@ -40,9 +37,9 @@ class CachingJavaScriptRendererStrategy extends JavaScriptRendererStrategy
         $cacheItem = $this->coreCachePool->getItem($cacheId);
 
         if (!$cacheItem->isHit()) {
-            parent::initialize();
+            $this->javaScriptRendererStrategy->initialize();
 
-            $cacheItem->set($this->javascripts);
+            $cacheItem->set($this->javaScriptRendererStrategy->getFiles());
             $this->coreCachePool->saveDeferred($cacheItem);
         } else {
             $this->addFiles(array_keys($cacheItem->get()));
@@ -70,5 +67,20 @@ class CachingJavaScriptRendererStrategy extends JavaScriptRendererStrategy
                 'js',
             ]
         ));
+    }
+
+    public function renderHtmlElement(): string
+    {
+        return $this->javaScriptRendererStrategy->renderHtmlElement();
+    }
+
+    public function addFiles(array $files): void
+    {
+        $this->javaScriptRendererStrategy->addFiles($files);
+    }
+
+    public function getFiles(): array
+    {
+        return $this->javaScriptRendererStrategy->getFiles();
     }
 }
