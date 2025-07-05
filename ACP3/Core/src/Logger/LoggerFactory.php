@@ -31,7 +31,7 @@ class LoggerFactory
         $fileName = $this->appPath->getCacheDir() . 'logs/' . $channel . '.log';
 
         if ($level === null) {
-            $level = $this->appPath->getApplicationMode() === ApplicationMode::PRODUCTION ? LogLevel::WARNING : LogLevel::DEBUG;
+            $level = $this->appPath->getApplicationMode() === ApplicationMode::DEVELOPMENT ? LogLevel::DEBUG : LogLevel::WARNING;
         }
 
         $stream = new StreamHandler($fileName, $level);
