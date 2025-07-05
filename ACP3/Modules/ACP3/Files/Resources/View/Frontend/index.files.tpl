@@ -1,9 +1,7 @@
 {extends file="asset:`$LAYOUT`"}
 
 {block EDIT_CONTENT}
-    {if !empty($files)}
-        {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/categories/index/edit', 'edit_path' => "acp/categories/index/edit/id_`$files[0].category_id`/", 'title' => {lang t="categories|admin_index_edit"}]}
-    {/if}
+    {include file="asset:System/Partials/ajax-modal-edit.tpl" modal=['acl_resource' => 'admin/categories/index/edit', 'edit_path' => "acp/categories/index/edit/id_`$category_id`/", 'title' => {lang t="categories|admin_index_edit"}]}
 {/block}
 
 {block CONTENT}

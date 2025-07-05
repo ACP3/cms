@@ -33,6 +33,7 @@ class FilesByCategoryIdViewProvider
         $settings = $this->settings->getSettings(FilesSchema::MODULE_NAME);
 
         return [
+            'category_id' => $categoryId,
             'categories' => $this->categoryRepository->getAllDirectSiblings($categoryId),
             'dateformat' => $settings['dateformat'],
             'files' => $this->filesRepository->getAllByCategoryId($categoryId, $this->date->getCurrentDateTime()),
