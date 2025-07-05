@@ -2,6 +2,8 @@
  * Copyright (c) by the ACP3 Developers.
  * See the LICENSE file at the top-level module directory for licensing details.
  */
+import "../../scss/_ckeditor-bootstrap.scss";
+
 import {
   ClassicEditor,
   Alignment,

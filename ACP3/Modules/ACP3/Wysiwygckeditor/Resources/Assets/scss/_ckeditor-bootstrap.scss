@@ -1,0 +1,13 @@
+/*
+ * Configure the z-index of the editor UI, so when inside a Bootstrap
+ * modal, it will be rendered over the modal.
+ */
+:root {
+  --ck-z-default: 100;
+  /* stylelint-disable-next-line function-disallowed-list */
+  --ck-z-panel: calc(var(--ck-z-default) + 999);
+}
+
+.ck-content .table {
+  width: auto;
+}

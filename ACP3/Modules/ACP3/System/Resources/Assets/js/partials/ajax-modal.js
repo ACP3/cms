@@ -11,7 +11,7 @@ import { addScriptsToHead, addStylesheetToHead } from "../lib/utils";
 
   ajaxModals.forEach((ajaxModal) => {
     const createLinkElem = document.getElementById(ajaxModal.id + "-link");
-    const modal = new Modal(ajaxModal, { backdrop: "static" });
+    const modal = new Modal(ajaxModal, { backdrop: "static", focus: false });
 
     createLinkElem.addEventListener("click", async (e) => {
       e.preventDefault();
