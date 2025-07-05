@@ -7,19 +7,15 @@
 
 namespace ACP3\Core\Installer;
 
-use ACP3\Core\Database\Connection;
 use ACP3\Core\Modules\InstallerInterface;
-use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
 use ACP3\Core\Settings\Repository\SettingsAwareRepositoryInterface;
 
-class SchemaInstaller extends SchemaHelper implements InstallerInterface
+class SchemaInstaller implements InstallerInterface
 {
     public function __construct(
-        Connection $db,
-        ModuleAwareRepositoryInterface $systemModuleRepository,
+        private readonly SchemaHelper $schemaHelper,
         private readonly SettingsAwareRepositoryInterface $systemSettingsRepository,
     ) {
-        parent::__construct($db, $systemModuleRepository);
     }
 
     /**
@@ -33,7 +29,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             return true;
         }
 
-        $this->executeSqlQueries($schema->createTables(), $schema->getModuleName());
+        $this->schemaHelper->executeSqlQueries($schema->createTables(), $schema->getModuleName());
 
         return $this->addToModulesTable($schema->getModuleName())
             && $this->installSettings($schema->getModuleName(), $schema->settings());
@@ -44,7 +40,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     private function moduleNeedsInstallation(SchemaInterface $schema): bool
     {
-        return !$this->getModuleAwareRepository()->moduleExists($schema->getModuleName());
+        return !$this->schemaHelper->getModuleAwareRepository()->moduleExists($schema->getModuleName());
     }
 
     /**
@@ -56,7 +52,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
             'name' => $moduleName,
         ];
 
-        return (bool) $this->getModuleAwareRepository()->insert($insertValues);
+        return (bool) $this->schemaHelper->getModuleAwareRepository()->insert($insertValues);
     }
 
     /**
@@ -67,7 +63,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     private function installSettings(string $moduleName, array $settings): bool
     {
         if (\count($settings) > 0) {
-            $moduleId = $this->getModuleId($moduleName);
+            $moduleId = $this->schemaHelper->getModuleId($moduleName);
             foreach ($settings as $key => $value) {
                 $insertValues = [
                     'module_id' => $moduleId,
@@ -87,7 +83,7 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
     public function uninstall(SchemaInterface $schema): bool
     {
         try {
-            $this->executeSqlQueries($schema->removeTables(), $schema->getModuleName());
+            $this->schemaHelper->executeSqlQueries($schema->removeTables(), $schema->getModuleName());
         } catch (\Throwable) {
             return false;
         }
@@ -100,6 +96,6 @@ class SchemaInstaller extends SchemaHelper implements InstallerInterface
      */
     private function removeFromModulesTable(string $moduleName): bool
     {
-        return $this->getModuleAwareRepository()->delete($this->getModuleId($moduleName)) > 0;
+        return $this->schemaHelper->getModuleAwareRepository()->delete($this->schemaHelper->getModuleId($moduleName)) > 0;
     }
 }

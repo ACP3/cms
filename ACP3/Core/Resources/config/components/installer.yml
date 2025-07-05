@@ -32,10 +32,6 @@ services:
 
   ACP3\Core\Installer\SchemaHelper:
     public: true
-    calls:
-      - ["setContainer", ["@service_container"]]
 
   ACP3\Core\Installer\SchemaInstaller:
     public: true
-    calls:
-      - ["setContainer", ["@service_container"]]

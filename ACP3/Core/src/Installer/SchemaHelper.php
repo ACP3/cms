@@ -9,25 +9,11 @@ namespace ACP3\Core\Installer;
 
 use ACP3\Core\Database\Connection;
 use ACP3\Core\Repository\ModuleAwareRepositoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SchemaHelper
 {
-    use ContainerAwareTrait;
-
     public function __construct(private readonly Connection $db, private readonly ModuleAwareRepositoryInterface $moduleAwareRepository)
     {
-    }
-
-    public function getContainer(): ContainerInterface
-    {
-        return $this->container;
-    }
-
-    public function getDb(): Connection
-    {
-        return $this->db;
     }
 
     public function getModuleAwareRepository(): ModuleAwareRepositoryInterface
