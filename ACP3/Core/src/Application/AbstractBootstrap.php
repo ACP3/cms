@@ -12,6 +12,7 @@ use ACP3\Core\Environment\ApplicationMode;
 use ACP3\Core\Environment\ApplicationPath;
 use ACP3\Core\Logger\LoggerFactory;
 use Composer\InstalledVersions;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\ErrorHandler\BufferingLogger;
 use Symfony\Component\ErrorHandler\ErrorHandler;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,15 +27,8 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
 {
     private static ?string $version = null;
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-    /**
-     * @var ApplicationPath
-     */
-    protected $appPath;
-
+    protected ?ContainerInterface $container = null;
+    protected ApplicationPath $appPath;
     private bool $booted = false;
 
     /**
@@ -94,7 +88,7 @@ abstract class AbstractBootstrap implements BootstrapInterface, TerminableInterf
 
         $errorHandler = new ErrorHandler(new BufferingLogger(), !$isProduction);
         $errorHandler->setDefaultLogger(
-            (new LoggerFactory($this->appPath))->create('exception')
+            (new LoggerFactory($this->appPath))->create('system')
         );
 
         if ($isProduction) {
