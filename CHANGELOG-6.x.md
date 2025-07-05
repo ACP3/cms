@@ -7,7 +7,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Added
+
+- [Core] Added our logger to the `ErrorHandler`, so that we can see all errors
+- [Core] Added the View-Helper `LoadModule` so that no templates with the sole purpose of calling the `load_module`-Smarty-function need to exist anymore
+- [Files] Made the frontend category editing available even when there are no downloads in this category, yet
+- [Users] Open the user profile edit and user profile settings in an AJAX modal
+
+### Changed
+
+- [Core] Added inline-styles for the SVG-icons to reduce possible CLS
+- [Share] Removed `shariff` in favor if the browser's native share dialog
+- [System] Removed the unnecessary `polyfill` ACP3-asset-library and its usages
+
+### Fixed
+
+- [Core] Fixed the asset rendering when the ACP3 is in production mode
+- [Users] Fixed the redirect target when a user edited their profile or changed the settings
+- Various other changes and improvements
 
 ## [6.35.4] - 2025-07-04
 
