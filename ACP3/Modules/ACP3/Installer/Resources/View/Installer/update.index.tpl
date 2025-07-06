@@ -10,7 +10,5 @@
             </div>
         </div>
     </form>
-    {javascripts}
-        {js_libraries enable="ajax-form"}
-    {/javascripts}
+    {js_libraries enable="ajax-form"}
 {/block}

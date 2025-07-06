@@ -8,7 +8,5 @@
     {include file="asset:System/Partials/form_group.button_group.tpl" options=$category_in_breadcrumb required=true label={lang t="news|display_category_in_breadcrumb"}}
     {event name="news.layout.settings"}
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/news"}}
-    {javascripts}
-        {include_js module="news" file="admin/index.settings"}
-    {/javascripts}
+    {include_js module="news" file="admin/index.settings"}
 {/block}

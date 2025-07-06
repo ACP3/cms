@@ -80,8 +80,6 @@
             {/tab}
         {/if}
     {/tabset}
-    {javascripts}
-        {js_libraries enable="ajax-form"}
-        {include_js module="system" file="partials/hash-change"}
-    {/javascripts}
+    {js_libraries enable="ajax-form"}
+    {include_js module="system" file="partials/hash-change"}
 {/block}

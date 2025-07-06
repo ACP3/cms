@@ -60,9 +60,7 @@
                     {lang t="installer|submit"}
                 </button>
             </form>
-            {javascripts}
-                {include_js file="language-switcher" module="system"}
-            {/javascripts}
+            {include_js file="language-switcher" module="system"}
         </div>
     </footer>
 </div>

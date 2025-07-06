@@ -3,6 +3,4 @@
 {include file="asset:System/Partials/form_group.select.tpl" options=$blocks labelRequired=true label={lang t="menus|menu_bar"}}
 {include file="asset:Menus/Partials/form_group.parent_menu_item.tpl" name="parent_id" formFieldId="parent-id" menuItems=$menuItems label={lang t="menus|superior_page"} emptyOptionLabel={lang t="menus|no_superior_page"}}
 {include file="asset:System/Partials/form_group.button_group.tpl" options=$display required=true label={lang t="menus|display_item"}}
-{javascripts}
-    {include_js module="menus" file="partials/manage-menu-item"}
-{/javascripts}
+{include_js module="menus" file="partials/manage-menu-item"}

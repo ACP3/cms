@@ -24,10 +24,8 @@
     </div>
     <button type="submit" id="js-rating-form-submit" name="submit" class="d-none">{lang t="system|submit"}</button>
 </form>
-{javascripts}
-    {js_libraries enable="ajax-form"}
-    {include_js module="share" file="partials/rating"}
-{/javascripts}
+{js_libraries enable="ajax-form"}
+{include_js module="share" file="partials/rating"}
 {if isset($rating.already_rated) && $rating.already_rated}
     <div class="small rating__already-rated">
         <em>{lang t="share|already_rated"}</em>

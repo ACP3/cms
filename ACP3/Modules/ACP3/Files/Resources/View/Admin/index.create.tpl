@@ -22,10 +22,8 @@
             {include file="asset:Categories/Partials/form_group.categories.tpl" name="cat" categories=$categories required=true label={lang t="categories|category"}}
             {event name="files.layout.upsert" form_data=$form}
         {/tab}
-    {event name="core.layout.form_extension"  uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
+        {event name="core.layout.form_extension"  uri_pattern=$SEO_URI_PATTERN path=$SEO_ROUTE_NAME}
     {/tabset}
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url=$BACK_URI}
-    {javascripts}
-        {include_js module="files" file="admin/index.create"}
-    {/javascripts}
+    {include_js module="files" file="admin/index.create"}
 {/block}

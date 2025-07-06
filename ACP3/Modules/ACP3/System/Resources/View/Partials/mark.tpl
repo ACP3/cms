@@ -13,7 +13,4 @@
         </div>
     </div>
 </div>
-
-{javascripts}
-    {include_js module="system" file="partials/mass-action"}
-{/javascripts}
+{include_js module="system" file="partials/mass-action"}

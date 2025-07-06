@@ -30,7 +30,5 @@
     <input type="hidden" name="seo_uri_pattern" value="{$seo.uri_pattern}">
 {/if}
 {if !isset($disable_alias_suggest)}
-    {javascripts}
-        {include_js module="seo" file="partials/suggest_alias"}
-    {/javascripts}
+    {include_js module="seo" file="partials/suggest_alias"}
 {/if}

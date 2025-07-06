@@ -33,9 +33,7 @@
             {/foreach}
         </div>
         {event name="share.layout.add_social_sharing"}
-        {javascripts}
-            {include_js module="gallery" file="frontend/index.pics"}
-        {/javascripts}
+        {include_js module="gallery" file="frontend/index.pics"}
     {else}
         {include file="asset:System/Partials/no_results.tpl" no_results_text={lang t="gallery|no_pictures"}}
     {/if}

@@ -85,9 +85,7 @@
                         {icon iconSet="solid" icon="rotate"}
                         {lang t="installer|check_again"}
                     </a>
-                    {javascripts}
-                        {js_libraries enable="ajax-form"}
-                    {/javascripts}
+                    {js_libraries enable="ajax-form"}
                 {else}
                     <a href="{uri args="installer/index/install"}" class="btn btn-outline-primary">{lang t="installer|installer_index_install"}</a>
                 {/if}

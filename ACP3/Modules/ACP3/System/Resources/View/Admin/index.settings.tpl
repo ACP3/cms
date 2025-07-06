@@ -45,7 +45,5 @@
         {/tab}
     {/tabset}
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token}
-    {javascripts}
-        {include_js module="system" file="admin/index.settings"}
-    {/javascripts}
+    {include_js module="system" file="admin/index.settings"}
 {/block}

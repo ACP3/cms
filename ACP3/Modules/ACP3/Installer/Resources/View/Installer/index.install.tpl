@@ -27,7 +27,5 @@
         {/tab}
     {/tabset}
     {include file="asset:System/Partials/form_group.submit.tpl"}
-    {javascripts}
-        {include_js module="installer" file="partials/available_databases"}
-    {/javascripts}
+    {include_js module="installer" file="partials/available_databases"}
 {/block}

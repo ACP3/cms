@@ -11,6 +11,4 @@
         </div>
     </div>
 </div>
-{javascripts}
-    {include_js module="system" file="partials/ajax-modal"}
-{/javascripts}
+{include_js module="system" file="partials/ajax-modal"}

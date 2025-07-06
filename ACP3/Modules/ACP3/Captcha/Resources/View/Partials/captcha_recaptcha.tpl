@@ -13,8 +13,8 @@
          data-sitekey="{$captcha.sitekey}"{if $captcha.length < 5} data-size="compact"{/if}></div>
     <div id="{$captcha.id}"></div>
     {if $captcha.includeJsAssets}
+        {include_js module="captcha" file="partials/recaptcha.onload"}
         {javascripts}
-            {include_js module="captcha" file="partials/recaptcha.onload"}
             <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit&amp;hl={$LANG}"
                     async
                     defer></script>

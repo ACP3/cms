@@ -20,7 +20,5 @@
         {/tab}
     {/tabset}
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/seo"}}
-    {javascripts}
-        {include_js module="seo" file="admin/index.settings"}
-    {/javascripts}
+    {include_js module="seo" file="admin/index.settings"}
 {/block}

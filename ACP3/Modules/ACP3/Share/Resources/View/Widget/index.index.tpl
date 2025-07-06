@@ -11,8 +11,6 @@
             {icon iconSet="solid" icon="share"}
             {lang t="share|share_url"}
         </button>
-        {javascripts}
-            {include_js module="share" file="widget/index.index"}
-        {/javascripts}
+        {include_js module="share" file="widget/index.index"}
     {/if}
 {/if}

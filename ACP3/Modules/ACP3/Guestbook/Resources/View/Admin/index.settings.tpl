@@ -6,7 +6,5 @@
     {include file="asset:System/Partials/form_group.input_text.tpl" name="notify_email" value=$form.notify_email formGroupId="guestbook-entry-notification-wrapper" labelRequired=true label={lang t="guestbook|notification_email"}}
     {event name="guestbook.layout.settings"}
     {include file="asset:System/Partials/form_group.submit_split.tpl" form_token=$form_token back_url={uri args="acp/guestbook"}}
-    {javascripts}
-        {include_js module="guestbook" file="admin/index.settings"}
-    {/javascripts}
+    {include_js module="guestbook" file="admin/index.settings"}
 {/block}

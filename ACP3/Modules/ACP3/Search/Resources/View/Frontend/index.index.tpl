@@ -9,7 +9,5 @@
         {include file="asset:System/Partials/form_group.button_group.tpl" options=$sort_hits required=true label={lang t="search|sort_hits"}}
     </div>
     {include file="asset:System/Partials/form_group.submit.tpl" submit_label={lang t="search|submit_search"}}
-    {javascripts}
-        {include_js module="search" file="frontend/index.index"}
-    {/javascripts}
+    {include_js module="search" file="frontend/index.index"}
 {/block}

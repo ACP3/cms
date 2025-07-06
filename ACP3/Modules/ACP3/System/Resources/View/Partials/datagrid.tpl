@@ -46,7 +46,5 @@
         {/if}
     </table>
 {/if}
-{javascripts}
-    {js_libraries enable="ajax-form"}
-    {include_js module="system" file="partials/datagrid"}
-{/javascripts}
+{js_libraries enable="ajax-form"}
+{include_js module="system" file="partials/datagrid"}

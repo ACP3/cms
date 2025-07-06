@@ -79,10 +79,8 @@
                 {include file="asset:System/Partials/mark.tpl" dataGridIdentifier="resources-table"}
             {/if}
         </form>
-        {javascripts}
-            {js_libraries enable="ajax-form"}
-            {include_js module="permissions" file="admin/resources.index"}
-        {/javascripts}
+        {js_libraries enable="ajax-form"}
+        {include_js module="permissions" file="admin/resources.index"}
     {else}
         {include file="asset:System/Partials/no_results.tpl"}
     {/if}

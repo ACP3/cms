@@ -2,6 +2,4 @@
 <div id="publication-period-wrapper">
     {datepicker name=['start', 'end'] value=$publication_period}
 </div>
-{javascripts}
-    {include_js module="system" file="partials/form.publication"}
-{/javascripts}
+{include_js module="system" file="partials/form.publication"}
