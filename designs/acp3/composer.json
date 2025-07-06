@@ -17,7 +17,7 @@
   "prefer-stable": true,
   "require": {
     "acp3/core": "^6.36.0",
-    "acp3/module-menus": "^6.35.0"
+    "acp3/module-menus": "^6.36.1"
   },
   "autoload": {
     "files": [

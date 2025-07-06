@@ -17,9 +17,9 @@
   "prefer-stable": true,
   "require": {
     "acp3/core": "^6.36.0",
-    "acp3/module-system": "^6.36.0",
+    "acp3/module-system": "^6.36.1",
     "acp3/module-users": "^6.36.0",
-    "acp3/theme-installer": "^6.36.0",
+    "acp3/theme-installer": "^6.36.1",
     "composer/semver": "^3.2"
   },
   "autoload": {

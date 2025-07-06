@@ -17,8 +17,8 @@
   "prefer-stable": true,
   "require": {
     "acp3/core": "^6.35.0",
-    "acp3/module-permissions": "^6.35.0",
-    "acp3/module-system": "^6.35.0",
+    "acp3/module-permissions": "^6.36.1",
+    "acp3/module-system": "^6.36.1",
     "acp3/module-users": "^6.35.0",
     "acp3/module-categories": "^6.35.0"
   },
