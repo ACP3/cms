@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+- [ALL] Removed most `{javascripts}`-Smarty-block usages. We are now using it only for places, where we have to render `<script>`-tags manually
+
+### Fixed
+
+- [Wysiwygckeditor] Fixed some minor visual bugs when opening the CKEditor in a Bootstrap modal
 
 ## [6.36.0] - 2025-07-05
 
