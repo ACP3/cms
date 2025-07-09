@@ -43,6 +43,7 @@ class UsersModel extends AbstractModel
             'country' => TextColumnType::class,
             'country_display' => BooleanColumnType::class,
             'registration_date' => DateTimeColumnType::class,
+            'remember_me_token' => TextColumnType::class,
         ];
     }
 }
