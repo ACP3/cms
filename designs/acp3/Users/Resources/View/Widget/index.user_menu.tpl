@@ -37,7 +37,7 @@
                     {/if}
                 </ul>
             {/if}
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a href="{uri args="users/account"}" class="nav-link">
                         {icon iconSet="solid" icon="house"}
