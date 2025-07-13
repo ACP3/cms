@@ -56,7 +56,7 @@ class FileResolver
         $moduleName = $fragments[0];
         $templatePath = implode('/', \array_slice($fragments, 1));
 
-        return $this->getStaticAssetPath($moduleName, 'View', $templatePath)[0] ?? '';
+        return $this->getStaticAssetPath($moduleName, 'View', $templatePath, false)[0] ?? '';
     }
 
     /**
@@ -108,7 +108,7 @@ class FileResolver
             return $resolvedPaths;
         }
 
-        return array_map(static fn ($path) => substr($path, 0, strrpos($path, '?')), $resolvedPaths);
+        return array_map(static fn ($path) => substr($path, 0, strrpos($path, '?') ?: null), $resolvedPaths);
     }
 
     /**
