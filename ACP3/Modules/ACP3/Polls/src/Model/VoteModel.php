@@ -7,27 +7,31 @@
 
 namespace ACP3\Modules\ACP3\Polls\Model;
 
-use ACP3\Core;
+use ACP3\Core\Authentication\Model\UserModelInterface;
+use ACP3\Core\Validation\Exceptions\ValidationRuleNotFoundException;
 use ACP3\Core\Validation\ValidationRules\IntegerValidationRule;
+use ACP3\Core\Validation\Validator;
 use ACP3\Modules\ACP3\Polls\Repository\VoteRepository;
 
 class VoteModel
 {
-    public function __construct(protected Core\Validation\Validator $validator, protected Core\Authentication\Model\UserModelInterface $userModel, protected VoteRepository $voteRepository)
-    {
+    public function __construct(
+        private readonly Validator $validator,
+        private readonly UserModelInterface $userModel,
+        private readonly VoteRepository $voteRepository,
+    ) {
     }
 
     /**
      * @param array<string, mixed> $formData
      *
      * @throws \Doctrine\DBAL\Exception
-     * @throws Core\Validation\Exceptions\ValidationRuleNotFoundException
+     * @throws ValidationRuleNotFoundException
      */
-    public function vote(array $formData, int $pollId, string $ipAddress, string $time): bool
+    public function vote(array $formData, int $pollId, string $ipAddress, string $time): void
     {
         $answers = $formData['answer'];
 
-        $result = false;
         $userId = $this->userModel->isAuthenticated() ? $this->userModel->getUserId() : null;
 
         // Multiple Answers
@@ -44,10 +48,8 @@ class VoteModel
                     'ip' => $ipAddress,
                     'time' => $time,
                 ];
-                $result = $this->voteRepository->insert($insertValues);
+                $this->voteRepository->insert($insertValues);
             }
         }
-
-        return $result;
     }
 }
