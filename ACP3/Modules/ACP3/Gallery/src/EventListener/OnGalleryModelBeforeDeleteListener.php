@@ -27,17 +27,17 @@ class OnGalleryModelBeforeDeleteListener implements EventSubscriberInterface
     public function __invoke(BeforeModelDeleteEvent $event): void
     {
         foreach ($event->getEntryIdList() as $item) {
-            $this->deletePictureAliases($item);
+            $this->deletePictures($item);
         }
     }
 
     /**
      * @throws Exception
      */
-    private function deletePictureAliases(int $galleryId): void
+    private function deletePictures(int $galleryId): void
     {
         foreach ($this->pictureRepository->getPicturesByGalleryId($galleryId) as $picture) {
-            $this->pictureModel->delete($picture['uri']);
+            $this->pictureModel->delete($picture['id']);
         }
     }
 
