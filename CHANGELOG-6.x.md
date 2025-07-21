@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [unreleased]
 
-tba
+### Changed
+
+- Updated the NPM dependencies
+
+### Fixed
+
+- [Core] Fix an edge-case with the Browser-Cache-Buster handling in the `FileResolver`
+- [Gallery] Fixed deleting a gallery
+- [Installer] Fixed installing the ACP3
+- [Polls] Fixed voting for polls
+- [System] Do not attempt to display `.webp`-files, if there aren't any
 
 ## [6.36.1] - 2025-07-06
 
