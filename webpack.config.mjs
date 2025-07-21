@@ -53,7 +53,6 @@ export default {
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader",
-          "postcss-loader",
           {
             loader: "sass-loader",
             options: {
@@ -69,7 +68,7 @@ export default {
           loader: "swc-loader",
           options: {
             env: {
-              coreJs: "3.43",
+              coreJs: "3.44",
               mode: "usage",
               targets: browserslist(),
             },
