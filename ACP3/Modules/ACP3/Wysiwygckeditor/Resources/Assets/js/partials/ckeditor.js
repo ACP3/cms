@@ -298,6 +298,9 @@ const initializeCKEditorInstances = () => {
           reversed: true,
         },
       },
+      mediaEmbed: {
+        previewsInData: true,
+      },
       menuBar: {
         isVisible: config.toolbar === "Full",
       },
